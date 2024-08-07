@@ -495,17 +495,18 @@ function loadDataTable(params){
 					var data = table.row( this ).data();
 										       console.log(data);
 					console.log(data.idx);
+					
 					var url;	
 					if (data.idx.substring(0,1)=="J"){
 						console.log("jisang");
-						url="/jisang/groundDetail?idx="+data.idx;
+						url="/jisang/groundDetail?idx="+data.idx+"&index="+data.index;
 					}
 					else if (data.idx.substring(0,1)=="G"){
-						url="/gover/occupationDetails?idx="+data.idx;
+						url="/gover/occupationDetails?idx="+data.idx+"&index="+data.index;
 						
 					}
 					else if (data.idx.substring(0,1)=="N"){
-						url="/notset/unsetOccupationDetails?idx="+data.idx;
+						url="/notset/unsetOccupationDetails?idx="+data.idx+"&index="+data.index;
 						
 					}
 					else return;					   

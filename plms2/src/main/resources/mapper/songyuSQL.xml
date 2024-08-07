@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			,jm.jm_jimok_text AS jimok_text
 			,js.js_souja_name AS souja_name
 			,jm.jm_jijuk_area AS jijuk_area
-			,'' as address
+			,concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun) as address
 			
 			,jm.jm_cancel_yn AS cancel_yn
 			,jm.jm_dosiplan as dosiplan
@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,gp.gp_jimok_text AS jimok_text
 		,null AS souja_name
 		,gp.gp_jijuk_area AS jijuk_area
-		,'' as address
+		,concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun) as address
 		
 		,gm.gm_cancel_yn as cancel_yn
 		,gp.gp_dosiplan as dosiplan
@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			,nm.nm_jimok_text AS jimok_text
 			,ns.ns_souja_name AS souja_name
 			,nm.nm_jijuk_area AS jijuk_area
-			,'' as address
+			,concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun) as address
 			
 			,null as cancel_yn
 			,null as dosiplan
@@ -97,8 +97,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="selectAllList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	SELECT *,(row_number() over()) as no FROM (	
 		(
-			SELECT 
-			jm.jm_jisang_no AS idx
+			SELECT
+			jm.jm_idx as index 
+			,jm.jm_jisang_no AS idx
 			,'jisang' as right_type
 			,'지상권' as right
 			,jm.jm_jisa AS jisa 
@@ -141,7 +142,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UNION ALL 
 		(
 			SELECT 
-		gm.gm_gover_no AS idx
+			gm.gm_idx as index 
+		,gm.gm_gover_no AS idx
 		,'gover' as right_type
 		,'점용' as right
 		,gm.gm_jisa AS jisa
@@ -182,7 +184,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UNION ALL
 		(
 			SELECT 
-			nm.nm_notset_no AS idx
+			nm.nm_idx as index 
+			,nm.nm_notset_no AS idx
 			,'notset' as right_type
 			,'미설정' as right
 			,nm.nm_jisa AS jisa 
@@ -226,10 +229,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	and r.cancel_yn=#{cancelYn}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
-	and r.dosiplan like '${dosiplan}%'
+	and r.dosiplan=#{dosiplan}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	and r.address=#{address}
+	and r.address like '${address}%'
 	</if>
 	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
 	and r.right_type in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>

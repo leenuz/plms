@@ -124,9 +124,9 @@ margin:10px;
     <title>지상권</title>
   </head>
 <th:block layout:fragment="content">
-    <div class="groundDetailWrappers">
+     <div class="groundDetailWrappers">
         <!--header삽입-->
-  
+    
     <main id="groundDetail">
         
         <div class="mainTitle">
@@ -168,22 +168,23 @@ margin:10px;
                             </ul>
                             <ul class="contents">
                                 <li class="content01 content">
-                                    G-004666
+                                   [[${resultData.jm_jisang_no}]]
                                 </li>
                                 <li class="content02 content">
-                                    서울지사
+                                   [[${resultData.jm_jisa}]]
                                 </li>
                                 <li class="content03 content">
-                                    N
+                               		[[${resultData.jm_pipe_yn}]]
+                                 
                                 </li>
                                 <li class="content04 content">
-                                    송유관로
+                                    [[${resultData.jm_yongdo}]]
                                 </li>
                                 <li class="content05 content">
-                                    &#160
+                                    [[${resultData.jm_pipe_name}]]
                                 </li>
                                 <li class="content06 content">
-                                    단선
+                                    [[${resultData.jm_sun_gubun}]]
                                 </li>
                             </ul>
                         </div>
@@ -194,10 +195,10 @@ margin:10px;
                             </ul>
                             <ul class="contents">
                                 <li class="content01 content">
-                                    서울특별시 서초구 원지동 28
+                                    [[${resultData.address}]]
                                 </li>
                                 <li class="content02 content">
-                                    3,008
+                                    [[${resultData.jm_jijuk_area}]]
                                 </li>
                             </ul>
                         </div>
@@ -209,7 +210,7 @@ margin:10px;
                             </ul>
                             <ul class="contents">
                                 <li class="content01 content">
-                                    전
+                                    [[${resultData.jm_jimok_text}]]
                                 </li>
                                 <li class="content02 content">
                                     N
@@ -238,24 +239,26 @@ margin:10px;
                                 <li class="title05 title">연락처 1</li>
                                 <li class="title05 title">연락처 2</li>
                             </ul>
-                            <ul class="contents">
+                            <ul class="contents" th:each="val:${soujaList}">
+                            	
+                            
                                 <li class="content01 content">
-                                    1
+                                    [[${val.no}]]
                                 </li>
                                 <li class="content02 content">
-                                    1/2
+                                   [[${val.js_jibun}]]
                                 </li>
                                 <li class="content02 content">
-                                    홍길동
+                                    [[${val.js_souja_name}]]
                                 </li>
                                 <li class="content04 content">
-                                    서울특별시 서초구 서초동 1
+                                    [[${val.js_address}]]
                                 </li>
                                 <li class="content05 content">
-                                    02-654-5548
+                                    [[${val.js_home_number}]]
                                 </li>
                                 <li class="content05 content">
-                                    010-1234-1234
+                                    [[${val.js_pone_number}]]
                                 </li>
                             </ul>
                             <ul class="contents">
@@ -316,34 +319,34 @@ margin:10px;
                             </ul>
                             <ul class="contents">
                                 <li class="content01 content">
-                                    Y
+                                   [[${resultData.jm_comple_yn}]]
                                 </li>
                                 <li class="content02 content">
-                                    75
+                                    [[${resultData.jm_pyeonib_area}]]
                                 </li>
                                 <li class="content03 content">
-                                    북서쪽
+                                    [[${resultData.jm_location}]]
                                 </li>
                                 <li class="content04 content">
                                     기공승낙서
                                 </li>
                                 <li class="content05 content">
-                                    1996-10-25
+                                    [[${resultData.jm_deunggi_date}]]
                                 </li>
                                 <li class="content06 content">
-                                    50000
+                                   [[${resultData.jm_deunggi_no}]]
                                 </li>
                                 <li class="content06 content">
-                                    서울지방법원 등기국
+                                    [[${resultData.jm_deunggiso}]]
                                 </li>
                                 <li class="content06 content">
-                                    &#160
+                                    [[${resultData.jm_dosiplan}]]
                                 </li>
                                 <li class="content06 content">
-                                    1996-05-20
+                                    [[${resultData.jm_chuideuk_date}]]
                                 </li>
                                 <li class="content06 content">
-                                    90000857
+                                    [[${resultData.jm_jasan_no}]]
                                 </li>
                             </ul>
                         </div>
@@ -353,7 +356,7 @@ margin:10px;
                             </ul>
                             <ul class="contents">
                                 <li class="content01 content">
-                                    지상권존속기간중 지료는 지급치 아니하고 증액하지 아니한다.
+                                    [[${resultData.jm_special_cont}]]
                                 </li>
                             </ul>
                         </div>
@@ -636,7 +639,13 @@ margin:10px;
         <section class="parcelAttachments">
             <div class="subTitle">
                 필지 첨부파일
-                <span class="myPc">내 PC</span>
+                <!-- span -> button으로 수정 -->
+                <!-- <span class="myPc">내 PC</span> -->
+                <!-- <button class="myPc">내 PC</button> -->
+                <div class="fileBtnWrap">
+                    <input type="file" id="groundDetail_myPcFiles">
+                    <label for="groundDetail_myPcFiles">내 PC</label>
+                </div>
             </div>
 
             <div class="fileUploadWrap">
@@ -736,25 +745,39 @@ margin:10px;
                             </ul>
                             <ul class="contents lastContents">
                                 <li class="content01 content">
-                                    등기설정
+                                    <!-- 등기설정 -->
+                                     <!-- input 추가 -->
+                                     <input type="text" placeholder="등기설정" readonly class="notWriteInput">
                                 </li>
                                 <li class="content02 content">
-                                    계약체결
+                                    <!-- 계약체결 -->
+                                     <!-- input 추가 -->
+                                     <input type="text" placeholder="계약체결" readonly class="notWriteInput">
                                 </li>
                                 <li class="content03 content">
-                                    이슈없음
+                                    <!-- 이슈없음 -->
+                                     <!-- input 추가 -->
+                                    <input type="text" placeholder="이슈없음" readonly class="notWriteInput">
                                 </li>
                                 <li class="content03 content">
-                                    이슈없음
+                                    <!-- 이슈없음 -->
+                                     <!-- input 추가 -->
+                                    <input type="text" placeholder="이슈없음" readonly class="notWriteInput">
                                 </li>
                                 <li class="content03 content">
-                                    이슈없음
+                                    <!-- 이슈없음 -->
+                                     <!-- input 추가 -->
+                                    <input type="text" placeholder="이슈없음" readonly class="notWriteInput">
                                 </li>
                                 <li class="content01 content">
-                                    신규등록
+                                    <!-- 신규등록 -->
+                                     <!-- input 추가 -->
+                                    <input type="text" placeholder="신규등록" readonly class="notWriteInput">
                                 </li>
                                 <li class="content04 content">
-                                    2024-04-01 09:46:01
+                                    <!-- 2024-04-01 09:46:01 -->
+                                     <!-- input 추가 -->
+                                    <input type="text" placeholder="2024-04-01 09:46:01" readonly class="notWriteInput">
                                 </li>
                                 <li class="content04 content btnBox">
                                     <div class="btnWrap">
@@ -925,7 +948,9 @@ margin:10px;
                             <div class="contentScr">
                                 <ul class="contents">
                                     <li class="content01 content">
-                                        2022-11-01
+                                        <!-- 2022-11-01 -->
+                                         <!-- input 추가 -->
+                                        <input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
                                     </li>
                                     <li class="content02 content editSpace">
                                         <input type="text" readonly placeholder="김철수" class="editingContent">
@@ -962,7 +987,9 @@ margin:10px;
                                 </ul>
                                 <ul class="contents">
                                     <li class="content01 content">
-                                        2022-11-01
+                                        <!-- 2022-11-01 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
                                     </li>
                                     <li class="content02 content editSpace">
                                         <input type="text" readonly placeholder="김철수" class="editingContent">
@@ -999,7 +1026,9 @@ margin:10px;
                                 </ul>
                                 <ul class="contents">
                                     <li class="content01 content">
-                                        2022-11-01
+                                        <!-- 2022-11-01 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
                                     </li>
                                     <li class="content02 content editSpace">
                                         <input type="text" readonly placeholder="김철수" class="editingContent">
@@ -1036,7 +1065,9 @@ margin:10px;
                                 </ul>
                                 <ul class="contents">
                                     <li class="content01 content">
-                                        2022-11-01
+                                        <!-- 2022-11-01 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
                                     </li>
                                     <li class="content02 content editSpace">
                                         <input type="text" readonly placeholder="김철수" class="editingContent">
@@ -1073,7 +1104,9 @@ margin:10px;
                                 </ul>
                                 <ul class="contents">
                                     <li class="content01 content">
-                                        2022-11-01
+                                        <!-- 2022-11-01 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
                                     </li>
                                     <li class="content02 content editSpace">
                                         <input type="text" readonly placeholder="김철수" class="editingContent">

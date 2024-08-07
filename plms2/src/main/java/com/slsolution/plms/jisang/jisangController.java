@@ -238,32 +238,24 @@ public class jisangController {
 //        list = dbService.getList();
 		HashMap params = new HashMap();
 		ArrayList<HashMap>  list=new ArrayList<HashMap>();
-		//List<CountryModel> list = masterDataBaseService.getCountry();
-		//ArrayList<HashMap> list = sqlSession.selectList("selectAllList",params);
-				
-//		list=mainService.selectQuery("jisangSQL.selectAllList", params);
-//        log.info("jisang /list:"+list.toString());
-        //nhServ1.test();
-        //ts.Test1();
-//        HashMap<String,Object> resultmap=new HashMap();
-//        resultmap.put("resultCode","0000");
-//        resultmap.put("resultData",list);
-//        resultmap.put("resultMessage","success");
-//        JSONObject obj =new JSONObject(resultmap);
-////        System.out.println(obj);
-//       
-//      //log.info("jo:"+jo);
-//      			response.setCharacterEncoding("UTF-8");
-//      			response.setHeader("Access-Control-Allow-Origin", "*");
-//      			response.setHeader("Cache-Control", "no-cache");
-//      			response.resetBuffer();
-//      			response.setContentType("application/json");
-//      			//response.getOutputStream().write(jo);
-//      			response.getWriter().print(obj);
-//      			response.getWriter().flush();
-//       // return new ModelAndView("dbTest", "list", list);
-        
-//      			mav.addObject("resultList",list);
+		
+		String idx = httpRequest.getParameter("idx");
+		String index = httpRequest.getParameter("index");
+		
+		params.put("idx",idx);
+		params.put("index",index);
+		log.info("params:"+params);
+		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+		log.info("data:"+data.get(0));
+		log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
+		log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
+		log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
+		log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+		log.info("souja count:"+soujaList.size());
+		log.info("soujaList:"+soujaList);
+      			mav.addObject("resultData",data.get(0));
+      			mav.addObject("soujaList",soujaList);
       			mav.setViewName("content/jisang/groundDetail");
       			return mav;
     }
