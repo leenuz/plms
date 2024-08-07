@@ -21,6 +21,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			
 			,jm.jm_cancel_yn AS cancel_yn
 			,jm.jm_dosiplan as dosiplan
+			,case
+			WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)>0 THEN 'Y'
+			WHEN  (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)=0 THEN 'N'
+		 END AS toji_plan
 			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
 			where 1=1
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -44,6 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 		,gm.gm_cancel_yn as cancel_yn
 		,gp.gp_dosiplan as dosiplan
+		,null as toji_plan
 			FROM gover_master gm 
 			LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
 			
@@ -68,6 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			
 			,null as cancel_yn
 			,null as dosiplan
+			,null as toji_plan
 			FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
 			where 1=1
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -90,6 +96,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</if> 
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 	and r.address like '${address}%'
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
+	and r.toji_plan=#{toji_plan_type}
 	</if>
 	
 </select>
@@ -129,7 +138,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,null as pay_money
 		,jm.jm_cancel_yn AS cancel_yn
 		,jm.jm_dosiplan as dosiplan
-		
+		,case
+			WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)>0 THEN 'Y'
+			WHEN  (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)=0 THEN 'N'
+		 END AS toji_plan
 			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
 			where 1=1
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -171,7 +183,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,gpp.gp_pay_money as pay_money
 		,gm.gm_cancel_yn AS cancel_yn
 		,gp.gp_dosiplan as dosiplan
-		
+		,null as toji_plan
 			FROM gover_master gm 
 			LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
 			LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
@@ -214,6 +226,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,null as pay_money
 		,null as cancel_yn
 		,NULL AS dosiplan
+		,NULL as toji_plan
 			FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
 			where 1=1
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -237,6 +250,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
 	and r.right_type in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
 	</if> 
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
+	and r.toji_plan=#{toji_plan_type}
+	</if>
 	
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 	ORDER BY ${orderCol} ${desc}

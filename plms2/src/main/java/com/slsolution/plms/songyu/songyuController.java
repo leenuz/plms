@@ -315,6 +315,7 @@ public class songyuController {
 				String right_type=req.getParameter("right_type");
 				String dosiplan=req.getParameter("dosiplan");
 				String address=req.getParameter("saddr");
+				String toji_plan_type=req.getParameter("toji_plan_type");
 				
 				Map map=req.getParameterMap();
 		        log.info("draw:"+draw);
@@ -327,6 +328,7 @@ public class songyuController {
 		        log.info("jisa:"+jisa);
 		        log.info("manage_no:"+manage_no);
 		        log.info("right_type:"+right_type);
+		        log.info("toji_plan_type:"+toji_plan_type);
 		       
 		        
 				HashMap params = new HashMap();
@@ -337,6 +339,7 @@ public class songyuController {
 				params.put("idx",manage_no);
 				params.put("dosiplan",dosiplan);
 				params.put("address",address);
+				params.put("toji_plan_type",toji_plan_type);
 				
 				String[] right_arr= {};
 				right_arr=right_type.split(",");
