@@ -733,5 +733,54 @@
 		)
 	
 	</insert>
+	<insert id="dosi_master" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="dm_idx" keyProperty="dm_idx">
+		
+		INSERT INTO dosi_master 
+		(
+		
+		 dm_dosi_no
+		 ,dm_sido_nm
+		 ,dm_sgg_nm
+		 ,dm_emd_nm
+		 ,dm_ri_nm
+		 ,dm_jibun
+		 ,dm_jisa
+		 ,dm_jijuk_area
+		 ,dm_dosiplan
+		 ,dm_addrcode
+		 ,dm_pnu
+		 ,dm_jimok_text
+		 ,dm_toji_type
+		 ,dm_pipe_yn
+		 ,dm_length
+		 ,dm_soyouja
+		 ,dm_master_yn
+		 ,dm_dosi_seq
+		 
+		 ) 
+		 VALUES (
+		  #{DOSI_NO}
+		  ,#{SIDO_NM}
+		  ,#{SGG_NM}
+		  ,#{EMD_NM}
+		  ,#{RI_NM}
+		  ,#{JIBUN}
+		  ,#{JISA}
+		  ,NULLIF(cast(#{JIJUK_AREA} as varchar),'')::numeric
+		  
+		  ,#{DOSIPLAN}
+		  ,#{ADDRCODE}
+		  ,#{PNU}
+		  ,#{JIMOK_TEXT}
+		  ,#{TOJI_TYPE}
+		  ,#{PIPE_YN}
+		  ,#{LENGTH}
+		  ,#{SOYOUJA}
+		  ,#{MASTER_YN}
+		  ,#{DOSI_SEQ}
+		   
+		)
+	
+	</insert>
 	
 </mapper>
