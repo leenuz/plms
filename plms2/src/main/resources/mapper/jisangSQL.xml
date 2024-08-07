@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jisangSQL">
+<select id="selectAllList" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[
+		select * from jisang_master 
+	]]></select>
+	<select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[
+		select jm_set_money,jm_save_status from jisang_master 
+	]]></select>
+</mapper>

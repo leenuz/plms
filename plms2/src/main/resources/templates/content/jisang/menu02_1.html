@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      
+      layout:decorate="~{layout/default_layout}">
+ <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  
+
+
+
+ 
+  
+   
+  
+	  <link th:href="@{/css/common.css}" rel="stylesheet" />
+	
+ <link rel="stylesheet" href="/css/menu01/menu01_1.css" /> 
+	  
+		<script src="/js/songyu/menu01.js"></script>	
+		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
+		<style>
+		div.dt-top-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+div.dt-center-in-div {
+  margin: 0 auto;
+      float: right;
+    margin-right: 30px;
+   
+}
+div.dt-center-in-div>div{
+
+display:inline;
+}
+
+div.dt-filter-spacer {
+  margin: 10px 0;
+  border:1px solid red;
+}
+
+
+.dt-title{
+
+text-align:center;
+width:180px;
+float:left;
+
+}
+.dt-buttons{
+display:inline-block;
+
+width:180px;
+
+}
+.dt-length{
+display:inline-block;
+}
+.dt-button{
+
+color:white;
+background-color:#4e5871;
+font-size:15px;
+font-weight:600;
+border-radius:10px;
+background-image:url(/assets/media/menu01/download.png);
+background-size:11px;
+background-repeat:no-repeat;
+background-position:123px center;
+text-aline:left;
+margin-right:10px;
+width:159px;
+height:38px;
+
+}
+
+.dt-paging {
+text-align: center;
+}
+
+.dt-paging-button {
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: #007bff !important;
+    font-size: 15px;
+    font-weight: 600;
+    
+    
+}
+
+.bottom{
+text-align:center;
+
+}
+.top{
+
+text-align:right;
+margin:10px;
+
+}
+
+		</style>
+		
+    <title>지상권</title>
+  </head>
+<th:block layout:fragment="content">
+    <!-- Begin Page Content -->
+    <!--권리확보현황-->
+    <div id="dopcoSurfacePart">
+      <!--header삽입-->
+
+      <div class="surfacePartWrappers" style="margin-left:100px;">
+        <div class="surfacePartTitleBoxs">
+          <h5>권리확보현황</h5>
+        </div>
+       <form id="searchForm" onSubmit="return false;">
+       
+      
+        <section class="surfaceSectionBoxs">
+          <div class="surfacePartSectionCont">
+            <div class="surfacePartSectionContDevide">
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>지사</p></li>
+                <div class="selectWrappers">
+                  <select
+                    name="jisa"
+                    class="menuHiddenSelect01"
+                    id="menuHiddenSelectBox01_1"
+                    hidden>
+                    <option value="">전체</option>
+                     <th:block th:each="val:${jisaList}">
+	                    <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+	                    </th:block>
+                  </select>
+                </div>
+                <div class="surfaceSelects">
+                  <button type="button" class="surfaceSelectsTitleBtn">전체</button>
+                  <div class="sufaceSelectList">
+                    <ul class="surfaceSelectListMember">
+                      <li><p>전체</p></li>
+                      <th:block th:each="val:${jisaList}">
+                          <li><p th:text="${val.jm_jisa_name}">Y</p></li>
+                          <th:block>
+                    </ul>
+                    
+                  </div>
+                 
+                </div>
+              </ul>
+              <ul class="inputControlBoxs sectionMenuListBoxs">
+                <li class="selectTitle"><p>관리번호</p></li>
+                <div class="inputControlList">
+                  <input type="text" name="manage_no" placeholder="관리번호입력" />
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>토지유형</p></li>
+                <div class="selectWrappers">
+                  <select
+                    name="toji_type"
+                    class="menuHiddenSelect01"
+                    id="menuHiddenSelectBox01_2"
+                    hidden>
+                    <option value="전체">전체</option>
+                    <option value="Y">Y</option>
+                    <option value="N">N</option>
+                   
+                  </select>
+                </div>
+                <div class="surfaceSelects">
+                  <button type="button" class="surfaceSelectsTitleBtn">전체</button>
+                  <div class="sufaceSelectList smallHeight">
+                    <ul class="surfaceSelectListMember">
+                      <li><p>전체</p></li>
+                      <li><p>Y</p></li>
+                      <li><p>N</p></li>
+                    </ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>권리확보유형</p></li>
+                
+                
+                <div class="surfaceSelects">
+                  <button class="surfaceSelectsTitleBtn">전체</button>
+                  <div class="sufaceSelectList">
+                    <ul class="surfaceSelectListMember checkBoxsContent">
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="companylandCheckBox01"
+                          name="songyu_type_all" />
+                        <label for="companylandCheckBox01"></label>
+                        <p>전체</p>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="companylandCheckBox02"
+                          name="songyu_type_jisang" />
+                        <label for="companylandCheckBox02"></label>
+                        <p>지상권</p>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="companylandCheckBox03"
+                          name="songyu_type_notset" />
+                        <label for="companylandCheckBox03"></label>
+                        <p>미설정</p>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="companylandCheckBox04"
+                          name="songyu_type_gover" />
+                        <label for="companylandCheckBox04"></label>
+                        <p>점용</p>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="companylandCheckBox05"
+                          name="songyu_type_toji" />
+                        <label for="companylandCheckBox05"></label>
+                        <p>회사토지</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>도시계획유형</p></li>
+                <div class="selectWrappers">
+                  <select
+                    name="dosiplan"
+                    class="menuHiddenSelect01"
+                    id="menuHiddenSelectBox01_3"
+                    hidden>
+                    <option value="전체">전체</option>
+                    <option value="Y">Y</option>
+                    <option value="N">N</option>
+                   
+                  </select>
+                </div>
+                <div class="surfaceSelects">
+                  <button class="surfaceSelectsTitleBtn">전체</button>
+                  <div class="sufaceSelectList smallHeight">
+                    <ul class="surfaceSelectListMember">
+                      <li><p>전체</p></li>
+                      <li><p>Y</p></li>
+                      <li><p>N</p></li>
+                    </ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>토지개발대상</p></li>
+                <div class="selectWrappers">
+                  <select
+                    name="toji_plan_type"
+                    class="menuHiddenSelect01"
+                    id="menuHiddenSelectBox01_4"
+                    hidden>
+                    <option value="전체">전체</option>
+                    <option value="Y">Y</option>
+                    <option value="N">N</option>
+                   
+                  </select>
+                </div>
+                <div class="surfaceSelects">
+                  <button class="surfaceSelectsTitleBtn">전체</button>
+                  <div class="sufaceSelectList smallHeight">
+                    <ul class="surfaceSelectListMember">
+                      <li><p>전체</p></li>
+                      <li><p>Y</p></li>
+                      <li><p>N</p></li>
+                    </ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <div class="checkBoxControlList">
+                  <p>권리중복필지</p>
+                  <input type="checkbox" id="OverlapCheck01" />
+                  <label for="OverlapCheck01"></label>
+                </div>
+              </ul>
+            </div>
+            <!-- 라디오버튼 있는 섹션-->
+            <div class="surfacePartSectionContDevide">
+              <p class="devideSecondTitles">주소</p>
+              <div class="surfacePartSectionRadioBoxs">
+                <ul class="radioBoxs">
+                  <li>
+                    <input type="radio" name="askMenu01" value="0"/><span>입력형</span>
+                  </li>
+                  <li class="addressInput">
+                    <input name="addressFull"
+                      type="search"
+                      placeholder="주소입력"
+                      class="searchInputBox01" />
+                  </li>
+                </ul>
+                <ul class="radioBoxs menuRadioEvet01">
+                  <li>
+                    <input type="radio" name="askMenu01" value="1"/><span>선택형</span>
+                  </li>
+                  <li>
+                  <div class="selectWrappers">
+	                  <select name="sido" id="sido" hidden>
+	                    <option value="">전체</option>
+	                   <th:block th:each="val:${sidoList}">
+	                    <option th:text="${val.sm_name}" th:value="${val.sm_name}"></option>
+	                    </th:block>
+	                   
+	                  </select>
+                	</div>
+                    <div class="surfaceSelects">
+                      <button class="surfaceSelectsTitleBtn" id="sidoText">전체</button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember">
+                          <li><p>전체</p></li>
+                          <th:block th:each="val:${sidoList}">
+                          <li><p th:text="${val.sm_name}">Y</p></li>
+                          <th:block>
+                        
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                  	<div class="selectWrappers">
+	                  <select name="sgg" id="sgg" hidden>
+	                   <option value="">전체</option>
+	                  </select>
+	                </div>
+                    <div class="surfaceSelects">
+                      <button class="surfaceSelectsTitleBtn" id="sggText">전체</button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember" id="sggUl">
+                          <li><p>전체</p></li>
+                        <!--   <th:block th:each="sido:${sidolist}">
+                          	<li><p th:text="${sido.sm_name}"></p></li>
+                          </th:block> -->
+                        
+                          <li><p>N</p></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                  	<div class="selectWrappers">
+	                  <select name="emd" id="emd" hidden>
+	                  <option value="">전체</option>
+	                  </select>
+	                </div>
+                    <div class="surfaceSelects">
+                      <button class="surfaceSelectsTitleBtn"  id="emdText">전체</button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember" id="emdUl">
+                          <li><p>전체</p></li>
+                          <li><p>Y</p></li>
+                          <li><p>N</p></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                  	<div class="selectWrappers">
+	                  <select name="ri" id="ri" hidden>
+	                  <option value="">전체</option>
+	                  </select>
+	                </div>
+                    <div class="surfaceSelects">
+                      <button class="surfaceSelectsTitleBtn"  id="riText">전체</button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember" id="riUl">
+                          <li><p>전체</p></li>
+                          <li><p>Y</p></li>
+                          <li><p>N</p></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li style="padding: 0px 3px">
+                    <div class="inputControlList">
+                      <input name=jibun id="jibun"
+                        type="text"
+                        placeholder="지번입력"
+                        class="menuAdderssInput01" />
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <!--surfacePartSectionRadioBoxs-->
+              <div class="surfacePartSectionBtnBoxs">
+                <button class="registerBtn" id="registerBtn">조회하기</button>
+                <a
+                  class="queryBtn"
+                  href="/songyu/notsetAdd"
+                  >미설정 / 미점용 등록</a
+                >
+              </div>
+            </div>
+          </div>
+          <!--surfacePartSectionCont-->
+        </section>
+        </form>
+        
+      
+        <main>
+          <div class="surfaceMainContentWrapper">
+            <div class="surfaceMainContent">
+              <div class="dataTitles">
+                <h5>총 검색 건 수<span id="dataTableTotalCount">154</span>건</h5>
+              
+                  </div>
+                </div>
+              </div>
+           
+               
+               <div class="">
+				<table id="userTable" class="cell-border nowrap" style="width:200%;" >
+    <thead>
+        <tr>
+            <th >순번</th>
+            <th >담당지사</th>
+            <th >주소</th>
+            <th>자산분류번호</th>
+            
+            <th>지목</th>
+            <th>소유자</th>
+            <th>지적면적</th>
+            <th>편입면적</th>
+            <th>취득일</th>
+            <th>등기여부</th>
+            <th>등기일</th> <!-- 11 -->
+            <th>사용승락여부</th>
+            <th>지도</th>
+           
+            
+        </tr>
+    </thead>
+    <!-- tbody 태그 필요 없다. -->
+</table>
+
+			  </div>
+              
+              <!-- 데이터박스 -->
+              
+              <!--dataBoxswrappers-->
+              
+              <!--boardPageBoxs-->
+              
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script type="module" src="/js/module/surfaceMain.js"></script>
+    <script src="/js/menu01/menuLinkEvet.js"></script>
+    <script src="/js/menu01/radioEvet.js"></script>
+    <script src="/js/menu01/resultPageEvet.js"></script>
+</th:block>
+</html>

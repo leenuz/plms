@@ -1,0 +1,869 @@
+@charset "UTF-8";
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body * {
+    font-family: pretendard;
+}
+
+li {
+    list-style: none;
+}
+
+select {
+    outline: 0;
+    border: 1px solid #CFDDF2;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #6E7D88;
+    text-indent: 12px;
+}
+
+input {
+    border: 0;
+    outline: 0;
+}
+
+input:focus {
+    border: 0;
+}
+
+textarea:focus {
+    border: 0;
+    outline: 0;
+}
+
+button {
+    border: 0;
+}
+
+/* css추가 */ 
+
+.groundDetailWrappers{
+
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.groundDetailWrappers::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+.groundDetailWrappers::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+  }
+
+
+.groundDetailHeader{
+    width: 100px;
+    height: 100vh;
+    float:left;
+}
+
+#groundDetail {
+    width: calc(100% - 100px);
+    padding: 0 20px;
+    box-sizing: border-box;
+    float: left;
+}
+
+#groundDetail .mainTitle {
+    padding: 30px 0;
+    border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+
+#groundDetail .mainTitle h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #31394C;
+    padding-left: 20px;
+    box-sizing: border-box;
+
+}
+#groundDetail .subTitle {
+    font-size: 18px;
+    font-weight: 700;
+    color: #31394C;
+    margin-bottom: 24px;
+}
+
+#groundDetail .basicOwnerInfo {
+    padding: 40px 0;
+}
+.thirdTitle h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2B7DE1;
+    margin-bottom: 15px;
+}
+.contWrap {
+    width: 100%;
+}
+.contBox {
+}
+.contBoxMini01 {
+    width: 46.2%;
+}
+.contBoxMini02 {
+    width: 52.5%;
+}
+#groundDetail .basicOwnerInfo .contWrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+#groundDetail .mapFigure {
+    background: url(/assets/media/menu01/images/groundMap.png) no-repeat center;
+    background-size: cover;
+}
+#groundDetail .contentDetailBox {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #CDDBF0;
+    overflow: hidden;
+}
+#groundDetail .basicOwnerInfo .contentDetailBox {
+    height: 272px;
+}
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth1 {
+    width: 100%;
+}
+#groundDetail .titles {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+    background: #F7F9FC;
+}
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth1 .titles .title {
+    width: 16.6%;
+}
+#groundDetail .titles .title {
+    border-right: 1px solid #CDDBF0;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #000;
+    box-sizing: border-box;
+}
+#groundDetail .titles .title:last-child {
+    border-right: 0;
+}
+#groundDetail .contents {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+}
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth1 .contents .content {
+    width: 16.6%;
+}
+#groundDetail .contents .content {
+    border-right: 1px solid #CDDBF0;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+    box-sizing: border-box;
+}
+#groundDetail .contents .content:last-child {
+    border-right: 0;
+}
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth2 {
+    width: 100%;
+}
+
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth2 .titles {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+    background: #F7F9FC;
+}
+
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth2 .titles .title {
+    width: 40%; 
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #000;
+}
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth2 .titles .title.title01 {
+    width: 60%;
+}
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth2 .contents {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+}
+
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth2 .contents .content {
+    width: 40%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+}
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth2 .contents .content.content01 {
+    width: 60%;
+}
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth3 {
+    width: 100%;
+}
+
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth3 .titles {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+    background: #F7F9FC;
+}
+
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth3 .titles .title {
+    width: 33%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #000;
+}
+
+
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth3 .contents {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+}
+
+#groundDetail .basicOwnerInfo .contBoxMini02 .depth3 .contents .content {
+    width: 33%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+}
+.viewDetailButton {
+    width: 116px;
+    height: 27px;
+    border-radius: 20px;
+    background: rgba(204, 224, 255, 0.6);
+    color: #2B7DE1;
+    font-size: 13px;
+    font-weight: 600;
+}
+#groundDetail .basicOwnerInfo .contBoxMini03 {
+    width: 100%;
+}
+#groundDetail .contBoxMini03 .contentDetailBox {
+    height: 137px;
+}
+#groundDetail .basicOwnerInfo .contBoxMini03 .contents:last-child {
+    border-bottom: 0;
+}
+#groundDetail .basicOwnerInfo .contBoxMini03 .titles .title {
+    width: 10%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+}
+#groundDetail .basicOwnerInfo .contBoxMini03 .titles .title04 {
+    width: 38.2%;
+}
+#groundDetail .basicOwnerInfo .contBoxMini03 .titles .title05 {
+    width: 17.5%;
+}
+#groundDetail .basicOwnerInfo .contBoxMini03 .contents .content {
+    width: 10%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+}
+#groundDetail .basicOwnerInfo .contBoxMini03 .contents .content04 {
+    width: 38.2%;
+}
+#groundDetail .basicOwnerInfo .contBoxMini03 .contents .content05 {
+    width: 17.5%;
+}
+#groundDetail .surfaceRightInfo {
+    padding-bottom: 40px;
+}
+#groundDetail .surfaceRightInfo .titles {
+}
+#groundDetail .surfaceRightInfo .contWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+#groundDetail .surfaceRightInfo .contentDetailBox .depth1 .titles .title {
+    width: 16.6%;
+    text-align: center;
+    line-height: 45px;
+}
+#groundDetail .surfaceRightInfo .contentDetailBox .depth1 .titles .title.title02 {
+    width: 50%;
+}
+#groundDetail .surfaceRightInfo .contentDetailBox .depth1 .contents .content {
+    width: 16.6%;
+    text-align: center;
+    line-height: 45px;
+}
+#groundDetail .surfaceRightInfo .contentDetailBox .depth1 .contents .content.content02 {
+    width: 50%;
+}
+#groundDetail .surfaceRightInfo .contentDetailBox .depth2 .titles .title {
+    width: 100%;
+    text-align: center;
+}
+#groundDetail .surfaceRightInfo .contentDetailBox .depth2 .contents .content {
+    width: 100%;
+    text-align: center;
+}
+#groundDetail .surfaceRightInfo .contentDetailBox .depth2 .contents:last-child {
+    border-bottom: 0;
+}
+#groundDetail .lastContents {
+    border-bottom: 0;
+}
+.fileDownloadBtn {
+    width: 116px;
+    height: 27px;
+    border-radius: 20px;
+    background: #4E5871;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+.downloadIcon {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    background: url(/assets/media/menu01/images/download.png) no-repeat center;
+    background-size: contain;
+}
+#groundDetail .surfaceRightInfo .contentDetailBox .depth1 .contents .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#groundDetail .surfaceRightInfo .contentDetailBox .depth1 .contents .content.btnsWrap {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#groundDetail > section {
+    padding-bottom: 40px;
+    
+}
+#groundDetail .usageApproval .contentDetailBox .depth1 .titles .title {
+    width: 8.5%;
+}
+#groundDetail .usageApproval .contentDetailBox .depth1 .titles .title.title03 {
+    width: 13.3%;
+}
+#groundDetail .usageApproval .contentDetailBox .depth1 .titles .title.title04 {
+    width: 18.1%;
+}
+#groundDetail .usageApproval .contentDetailBox .depth1 .titles .title.title05 {
+    width: 22.3%;
+}
+#groundDetail .usageApproval .contentDetailBox .depth1 .contents .content {
+    width: 8.5%;
+}
+#groundDetail .usageApproval .contentDetailBox .depth1 .contents .content.content03 {
+    width: 13.3%;
+}
+#groundDetail .usageApproval .contentDetailBox .depth1 .contents .content.content04 {
+    width: 18.1%;
+}
+#groundDetail .usageApproval .contentDetailBox .depth1 .contents .content.content05 {
+    width: 22.3%;
+}
+#groundDetail .mergedSurfaceInfo {
+    padding-bottom: 40px;
+}
+#groundDetail .mergedSurfaceInfo .depth1 .titles .title {
+    width: 8.6%;
+}
+#groundDetail .mergedSurfaceInfo .depth1 .titles .title.title02 {
+    width: 10.1%;
+}
+#groundDetail .mergedSurfaceInfo .depth1 .titles .title.title04 {
+    width: 33.1%;
+}
+#groundDetail .mergedSurfaceInfo .depth1 .contents .content {
+    width: 8.6%;
+}
+#groundDetail .mergedSurfaceInfo .depth1 .contents .content.content02 {
+    width: 10.1%;
+}
+
+#groundDetail .mergedSurfaceInfo .depth1 .contents .content.content04 {
+    width: 33.1%;
+}
+#groundDetail .changeHistory .depth1 .titles .title {
+    width: 15.2%;
+}
+#groundDetail .changeHistory .depth1 .titles .title.title01 {
+    width: 6.8%;
+}
+#groundDetail .changeHistory .depth1 .titles .title.title04 {
+    width: 62.1%;
+}
+#groundDetail .changeHistory .depth1 .contents .content {
+    width: 15.2%;
+}
+#groundDetail .changeHistory .depth1 .contents .content.content01 {
+    width: 6.8%;
+}
+#groundDetail .changeHistory .depth1 .contents .content.content04 {
+    width: 62.1%;
+}
+#groundDetail .parcelAttachments .fileUploadWrap {
+    width: 100%;
+    margin-bottom: 18px;
+    height: 130px;
+    overflow-y: scroll;
+    border: 1px dashed #CDDBF0;
+    border-radius: 5px;
+}
+#groundDetail .parcelAttachments .fileUploadWrap::-webkit-scrollbar {
+    width: 4px;
+}
+
+#groundDetail .parcelAttachments .fileUploadWrap::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+
+#groundDetail .parcelAttachments .fileUploadBox {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    background: #F7F9FC;
+}
+
+#groundDetail .parcelAttachments .fileUploadBox p {
+    font-size: 14px;
+    font-weight: 600;
+    color: #88A2C8;
+}
+
+#groundDetail .parcelAttachments .contentScr {
+    height: 90px;
+}
+#groundDetail .contentScr {
+    overflow-y: scroll;
+}
+#groundDetail .contentScr::-webkit-scrollbar {
+    width: 4px;
+}
+
+#groundDetail .contentScr::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+#groundDetail .myPc {
+    width: 81px;
+    height: 27px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #2B7DE1;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+#groundDetail .parcelAttachments .subTitle {
+    display: flex;
+    align-items: center;
+    gap: 21px;
+}
+.fileUploadIcon {
+    width: 35px;
+    height: 35px;
+}
+#groundDetail .parcelAttachments .contWrap {
+    margin-bottom: 18px;
+}
+#groundDetail .parcelAttachments .contentDetailBox {
+    margin-bottom: 18px;
+}
+#groundDetail .parcelAttachments .depth1 .titles {
+    padding-right: 4px;
+    box-sizing: border-box;
+}
+#groundDetail .parcelAttachments .depth1 .titles .title {
+    width: 16%;
+}
+#groundDetail .parcelAttachments .depth1 .titles .title.title03 {
+    width: 59%;
+}
+#groundDetail .parcelAttachments .depth1 .titles .title.title01 {
+    width: 8.6%;
+}
+#groundDetail .parcelAttachments .depth1 .contents .content {
+    width: 16%;
+}
+#groundDetail .parcelAttachments .depth1 .contents .content.content03 {
+    width: 59%;
+}
+#groundDetail .parcelAttachments .depth1 .contents .content.content01 {
+    width: 8.6%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* label */
+
+#groundDetail input[type=checkbox] {
+    display: none;
+}
+
+#groundDetail label {
+    width: 21px;
+    height: 21px;
+    border-radius: 5px;
+    background: #EFF6FF;
+    display: inline-block;
+    position: relative;
+}
+#groundDetail input[type=checkbox]:checked ~ label {
+    background: #4E5871;
+}
+#groundDetail input[type=checkbox]:checked ~ label::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 14px;
+    height: 10px;
+    background: url(/assets/media/menu01/images/checkIcon.png) no-repeat center;
+    background-size: contain;
+    
+}
+#groundDetail .addBtn {
+    color: #fff;
+    background: #2B7DE1;
+}
+
+#groundDetail .delBtn {
+    background: #9A9A9A;
+    color: #fff;
+}
+#groundDetail .registBtn {
+    background: #4E5871;
+    color: #fff;
+}
+#groundDetail .editing .newBtnWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#groundDetail .editing .registBtn {
+    display: block;
+    border: 0;
+}
+.fileBtn {
+    width: 129px;
+    height: 37px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+.fileSaveBtn {
+    background: #2B7DE1;
+    color: #fff;
+}
+#groundDetail .btnWrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+#groundDetail .potentialIssues .depth1 .titles .title {
+    width: 8.6%;
+}
+
+#groundDetail .potentialIssues .depth1 .titles .title.title03 {
+    width: 16.2%;
+}
+#groundDetail .potentialIssues .depth1 .titles .title.title04 {
+    width: 12.5%;
+}
+
+#groundDetail .potentialIssues .depth1 .contents .content {
+    width: 8.6%;
+}
+
+#groundDetail .potentialIssues .depth1 .contents .content.content03 {
+    width: 16.2%;
+}
+#groundDetail .potentialIssues .depth1 .contents .content.content04 {
+    width: 12.5%;
+}
+#groundDetail .potentialIssues .contWrap .depth1 .contents .content04 {
+
+}
+#groundDetail .potentialIssues .contWrap .depth1 .contents .content04 .btnWrap {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #CDDBF0;
+}
+
+#groundDetail .potentialIssues .contWrap .depth1 .contents .content04 .btnWrap:last-child {
+    border-right: 0;
+}
+#groundDetail .potentialIssues .btnBox {
+    display: flex;
+}
+#groundDetail .miniBtn {
+    width: 74px;
+    height: 27px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#groundDetail .addBtn {
+    background: #fff;
+    border: 1px solid #2B7DE1;
+    color: #2B7DE1;
+}
+
+#groundDetail .delBtn {
+    background: #9A9A9A;
+    color: #fff;
+}
+#groundDetail .editBtn {
+    background: rgba(204, 224, 255, 0.6);
+    color: #2B7DE1;
+}
+
+#groundDetail .potentialIssuesChangeHistory .titles .title {
+    width: 5.6%;
+}
+#groundDetail .potentialIssuesChangeHistory .titles .title.title02 {
+    width: 8.4%;
+}
+#groundDetail .potentialIssuesChangeHistory .titles .title.title03 {
+    width: 13.4%;
+}
+#groundDetail .potentialIssuesChangeHistory .titles .title.title04 {
+    width: 59.2%;
+}
+#groundDetail .potentialIssuesChangeHistory .contents .content {
+    width: 5.6%;
+}
+#groundDetail .potentialIssuesChangeHistory .contents .content.content02 {
+    width: 8.4%;
+}
+#groundDetail .potentialIssuesChangeHistory .contents .content.content03 {
+    width: 13.4%;
+}
+#groundDetail .potentialIssuesChangeHistory .contents .content.content04 {
+    width: 59.2%;
+}
+
+/* 잠재이슈 대응방안 메뉴얼 */
+
+#groundDetail .potentialIssuesResponseManual .titles .title {
+    width: 11.8%;
+}
+#groundDetail .potentialIssuesResponseManual .titles .title.title01 {
+    width: 69.5%;
+}
+#groundDetail .potentialIssuesResponseManual .titles .title.title02 {
+    width: 6.4%;
+}
+#groundDetail .potentialIssuesResponseManual .contents .content {
+    width: 11.8%;
+}
+#groundDetail .potentialIssuesResponseManual .contents .content.content01 {
+    width: 69.5%;
+}
+#groundDetail .potentialIssuesResponseManual .contents .content.content02 {
+    width: 6.4%;
+}
+#groundDetail .potentialIssuesResponseManual .contWrap .depth1 .contents .content.btnsWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 메모 */
+#groundDetail .memoSection .titles {
+    padding-right: 4px;
+    box-sizing: border-box;
+}
+#groundDetail .memoSection .titles .title {
+    width: 11.2%;
+}
+#groundDetail .memoSection .titles .title.title03 {
+    width: 59.4%;
+}
+#groundDetail .memoSection .titles .title.title04 {
+    width: 6.5%;
+}
+#groundDetail .memoSection .contents .content {
+    width: 11.2%;
+}
+#groundDetail .memoSection .contents .content.content03 {
+    width: 59.4%;
+}
+#groundDetail .memoSection .contents .content.content04 {
+    width: 6.5%;
+}
+#groundDetail .memoSection .contents .content.btnBox {
+    display: flex;
+}
+#groundDetail .memoSection .contents .content.btnBox .editBefore,
+#groundDetail .memoSection .contents .content.btnBox .editAfter {
+    width: 100%;
+}
+#groundDetail .memoSection .contents .content.btnBox .editBefore {
+    display: flex;
+    justify-content: center;
+}
+#groundDetail .memoSection .contents.editing .content.btnBox .editBefore {
+    display: none;
+}
+#groundDetail .memoSection .contents .content.btnBox .editAfter {
+    display: none;
+}
+#groundDetail .memoSection .contents.editing .content.btnBox .editAfter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#groundDetail .memoSection .contents .content.btnBox .btnWrap {
+    width: 50%;
+    justify-content: center;
+}
+#groundDetail .memoSection .contents .content.btnBox .btnWrap:first-child {
+    border-right: 1px solid #CDDBF0;
+}
+#groundDetail .memoSection .contentScr {
+    height: 180px;
+}
+
+
+/* 수정 전일 때 */
+
+
+#groundDetail .memoSection .contents .editSpace input[type=text] {
+    color: #3C3C3C;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+
+}
+#groundDetail .memoSection .contents .editSpace input[type=text]::placeholder {
+    
+    color: #3C3C3C;
+}
+
+/* 수정중일때 */
+
+#groundDetail .memoSection .contents.editing .editSpace {
+    padding: 6px;
+    box-sizing: border-box;
+    line-height: normal;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#groundDetail .memoSection .contents.editing .editSpace .editingContent {
+    border-radius: 10px;
+    background: #EDF2F9;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #6E7D88;
+    
+}
+#groundDetail .memoSection .contents.editing .editSpace .editingHideContent {
+    display: none;
+}
+#groundDetail .memoSection .contents.editing .editSpace .editBtn {
+    background: rgba(180, 180, 180, 0.6);
+    color: #707070;
+}
+#groundDetail .memoSection .contents.editing .editSpace input[type=text] {
+    color: #6E7D88;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+
+}
+#groundDetail .memoSection .contents.editing .editSpace input[type=text]::placeholder {
+    
+    color: #6E7D88;
+}
+
+
+/* 이전, 출력 버튼 */
+
+.finalBtnBox {
+    padding-bottom: 40px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.finalBtn {
+    width: 116px;
+    height: 44px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.finalBtn.backBtn {
+    background: #919191;
+}
+
+.finalBtn.printBtn {
+    background: #2B7DE1;
+}

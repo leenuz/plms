@@ -1,0 +1,182 @@
+<link rel="stylesheet" href="/assets/css/popup/issuePopup.css" />
+<div id="editIssuePopup">
+  <div class="popupWrap">
+    <h2>
+      <p>잠재이슈 수정</p>
+      <span class="topCloseBtn"></span>
+    </h2>
+
+    <ul class="popupCont">
+      <li>
+        <span class="subject">권리확보</span>
+        <div class="popupInputWrap">
+          <div class="inputArea">
+            <input type="radio" name="groundRight" id="groundRightSet" />
+            <label for="groundRightSet">지상권 설정</label>
+          </div>
+          <div class="inputArea">
+            <input type="radio" name="groundRight" id="groundRightUnset" />
+            <label for="groundRightUnset">지상권 미설정</label>
+          </div>
+          <div class="inputArea">
+            <input type="radio" name="groundRight" id="occupancy" />
+            <label for="occupancy">점용</label>
+          </div>
+          <div class="inputArea">
+            <input type="radio" name="groundRight" id="noOccupancy" />
+            <label for="noOccupancy">미점용</label>
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="subject">계약여부</span>
+        <div class="popupInputWrap">
+          <div class="inputArea">
+            <input type="radio" name="contractStatus" id="contractSigned" />
+            <label for="contractSigned">계약 체결</label>
+          </div>
+          <div class="inputArea">
+            <input type="radio" name="contractStatus" id="contractNotSigned" />
+            <label for="contractNotSigned">계약 미체결</label>
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="subject">대분류</span>
+        <section class="PopupCustomSelectBox">
+          <button class="PopupCustomSelectView">
+            이슈없음
+            <figure></figure>
+          </button>
+
+          <ul class="PopupCustomSelectBtns">
+            <li><button class="PopupMoreSelectBtn">이슈없음01</button></li>
+            <li><button class="PopupMoreSelectBtn">이슈없음02</button></li>
+            <li><button class="PopupMoreSelectBtn">이슈없음03</button></li>
+            <li><button class="PopupMoreSelectBtn">이슈없음04</button></li>
+          </ul>
+        </section>
+      </li>
+      <li>
+        <span class="subject">중분류</span>
+        <section class="PopupCustomSelectBox">
+          <button class="PopupCustomSelectView">
+            이슈없음
+            <figure></figure>
+          </button>
+
+          <ul class="PopupCustomSelectBtns">
+            <li><button class="PopupMoreSelectBtn">이슈없음01</button></li>
+            <li><button class="PopupMoreSelectBtn">이슈없음02</button></li>
+            <li><button class="PopupMoreSelectBtn">이슈없음03</button></li>
+            <li><button class="PopupMoreSelectBtn">이슈없음04</button></li>
+          </ul>
+        </section>
+      </li>
+      <li>
+        <span class="subject">세분류</span>
+        <section class="PopupCustomSelectBox">
+          <button class="PopupCustomSelectView">
+            이슈없음
+            <figure></figure>
+          </button>
+
+          <ul class="PopupCustomSelectBtns">
+            <li><button class="PopupMoreSelectBtn">이슈없음01</button></li>
+            <li><button class="PopupMoreSelectBtn">이슈없음02</button></li>
+            <li><button class="PopupMoreSelectBtn">이슈없음03</button></li>
+            <li><button class="PopupMoreSelectBtn">이슈없음04</button></li>
+          </ul>
+        </section>
+      </li>
+      <li class="textareaCont">
+        <span class="subject">사유</span>
+        <div class="popupTextWrap">
+          <textarea
+            name=""
+            id=""
+            placeholder="사유를 입력해주세요."
+            maxlength="200"></textarea>
+        </div>
+      </li>
+    </ul>
+
+    <div class="lastBtnBox btnWrap">
+      <button class="saveBtn finalBtn">저장</button>
+      <button class="backBtn finalBtn">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 팝업 select click 시 .PopupCustomSelectBtns 나오게
+
+  const eidtIssuecustomSelectView = document.querySelectorAll(
+    ".PopupCustomSelectView"
+  );
+
+  eidtIssuecustomSelectView.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      btn.classList.toggle("active");
+      if (btn.nextElementSibling) {
+        btn.nextElementSibling.classList.toggle("active");
+      }
+    });
+  });
+  // 대분류, 중분류, 소분류 안에 button click 했을 때 해당 내용으로 바뀌게하기
+
+  const eidtIssuePopupMoreSelectBtn = document.querySelectorAll(
+    "#editIssuePopup .PopupMoreSelectBtn"
+  );
+
+  eidtIssuePopupMoreSelectBtn.forEach((moreBtn) => {
+    moreBtn.addEventListener("click", function () {
+      var moreBtnText = moreBtn.innerText;
+      console.log(moreBtnText);
+      const parentMoreBtn = moreBtn.closest(
+        "#editIssuePopup .PopupCustomSelectBtns"
+      );
+      const editViewBtn = parentMoreBtn.previousElementSibling;
+
+      while (editViewBtn.firstChild) {
+        editViewBtn.removeChild(editViewBtn.firstChild);
+      }
+
+      // 새로운 텍스트 노드를 추가합니다.
+      const textNode = document.createTextNode(moreBtnText);
+      editViewBtn.appendChild(textNode);
+
+      // figure 요소를 다시 추가합니다.
+      const figure = document.createElement("figure");
+      editViewBtn.appendChild(figure);
+
+      editViewBtn.classList.remove("active");
+      parentMoreBtn.classList.remove("active");
+    });
+  });
+
+  // 저장, 닫기 버튼 click시 팝업 사라지게
+  const eidtIssuePopupFinalBtns = document.querySelectorAll(
+    "#editIssuePopup .popupWrap .lastBtnBox .finalBtn"
+  );
+
+  eidtIssuePopupFinalBtns.forEach((button) => {
+    button.addEventListener("click", function () {
+      const PopupWrap = button.closest(".popupWrap");
+      PopupWrap.classList.remove("active");
+    });
+  });
+
+  // x 버튼 click시 팝업 사라지게
+
+  const eidtIssuetopCloseBtn = document.querySelectorAll(
+    "#editIssuePopup .popupWrap .topCloseBtn"
+  );
+
+  eidtIssuetopCloseBtn.forEach((topClosebutton) => {
+    topClosebutton.addEventListener("click", function () {
+      const PopupWrap = topClosebutton.closest(".popupWrap");
+      PopupWrap.classList.remove("active");
+    });
+  });
+</script>

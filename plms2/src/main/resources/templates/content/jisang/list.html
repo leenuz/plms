@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+    
+ <th:block layout:fragment="head">
+    	<title>지상권리스트조회</title>
+		
+     
+     
+        
+     
+    </th:block>
+<body>
+
+	 <th:block layout:fragment="header" th:include="/fragments/header :: header(title='aaa')"></th:block>
+	  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+	   <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-responsive/3.0.2/dataTables.responsive.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="https://datatables.net/media/css/site-examples.css">
+	  <link th:href="@{/css/common.css}" rel="stylesheet" />
+		<script src="/js/jisang/list.js"></script>	   
+
+	   <style>
+            .dataTables_paginate {
+                float: left !important;
+            }
+        </style>
+        
+        
+        
+        
+        
+        
+        <div layout:fragment="content" class="content">
+            <h2>지상권조회</h2>
+            
+            <table border="1">
+				
+				<th:block th:each="r1:${resultList}">
+				<tr><td th:text="${r1.jm_comple_yn}"></td></tr>
+				</th:block>
+				
+			</table>
+        </div>
+        
+      
+
+        
+        <table id="dataTable" width="100%">
+  <thead id="sql_result_head">
+    <tr>
+      <th>col1</th>
+      <th>col2</th>
+    </tr>
+  </thead>
+  <tbody>
+	  
+  </tbody>
+</table>
+        
+        
+        <th:block layout:fragment="footer" th:include="@{/fragments/footer}"></th:block>
+</body>
+
+</html>

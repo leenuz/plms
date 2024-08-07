@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="commonSQL">
+
+	
+	<select id="selectAllJisaList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+		select * from jisa_master
+		]]>
+	</select>
+	<select id="selectYongdoList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+		select * from jisan_yongdo
+		]]>
+	</select>
+	<select id="selectPipeNameList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+		select * from jisa_zone_name where jzn_jisa_fk=#{idx}
+		]]>
+	</select>
+	<select id="selectJimokList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+		select * from jimok_master 
+		]]>
+	</select>
+	<select id="selectAddressList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+		select * from jijuk_master_2022 where juso like concat('%',#{address},'%')
+		]]>
+	</select>
+	<select id="selectLcodeList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+		select * from jijuk_master_2022 where bcode like concat(#{address},'%')
+		]]>
+	</select>
+	<select id="getSidoMaster" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+		select * from sido_master order by sm_name 
+		]]>
+	</select>
+	<select id="getSigunMaster" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+		 select sm_gugun from sigun_master where sm_sido=#{key} 
+		]]>
+	</select>
+	<select id="getDongMaster" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+			SELECT bm_dong FROM bdong_master where bm_sido=#{sidoKey} AND bm_sigungu = #{gugunKey}
+		]]>
+	</select>
+	<select id="getRiMaster" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+			SELECT rm_ri FROM ri_master where rm_sido=#{sidoKey} AND rm_sigungu = #{gugunKey} AND rm_dong = #{dongKey}
+		]]>
+	</select>
+</mapper>

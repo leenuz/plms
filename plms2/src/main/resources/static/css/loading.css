@@ -1,0 +1,14 @@
+.loading{
+	
+		    display: none;
+		    position: absolute;
+		    left: 50%;
+		    top: 30%;
+		    z-index: 1000;
+		    transform: translate(-50%, -50%);
+		    width: 500px;
+		    height: 500px;
+		    
+	
+		   
+ }

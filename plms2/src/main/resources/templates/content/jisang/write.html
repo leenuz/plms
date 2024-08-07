@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+
+<th:block layout:fragment="content">
+	
+	<link rel="stylesheet" href="/css/jisang/write.css">
+	<link rel="stylesheet" href="/css/loading.css">
+	<script src="/js/common/common.js"></script>
+	<script src="/js/jisang/write.js"></script>
+	<script src="/js/common/upload.js"></script>
+
+    <!-- 팝업 -->
+<div class="popup_bg" id="popup_bg"></div>
+<div class="popup" id="popup">
+	<div class="card">
+		<div class="card-header">
+			<h2>This is Popup!!</h2>
+  <a href="#" class="close" id="popup_close">[X]</a>
+		</div>
+		<div class="card-body" style="">
+			<table id="addrPopupTable">
+				<thead>
+				<th>aaa</th>
+				</thead>
+				<tbody>
+					<td>11111</td>
+				</tbody>
+			</table>
+		</div>
+		<div class="card-footer"></div>
+	</div>
+  
+</div>
+<!-- // 팝업 끝 -->
+
+<!--- 로딩바 -->
+<div class="justify-content-center loading" id="loadingBar" >
+  <div class="spinner-border text-primary" role="status" style="width:10rem;height:10rem;">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<!--- 로딩바끝 -->
+
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+		<form class="jisang" action="/jisang/api/Save" method="post" name="jisanWriteForm" onsubmit="return false">
+        <div class="card">
+			
+            	<div class="form-group">
+					<div class="row">
+						<div class="col-1">담당지사</div>
+	                    <div class="col-1">관로일치여부</div>
+	                    <div class="col-1">용도</div>
+	                    <div class="col-1">관로명(구간)</div>                        
+						<div class="col-1">단/복선</div>
+						<div class="col-1">국공유지여부</div>
+						<div class="col-1">지적면적</div>
+						<div class="col-1">지목</div>
+						<div class="col-1">관리제외필지</div>
+						<div class="col-1">회계처리필요여부</div>
+						
+					</div> 
+					<div class="row">
+						<div class="col-1">
+							<select name="jisa" id="jisa">
+								<option >지사선택</option>
+								<option th:each="val:${resultJisaList}" th:value="${val?.jm_idx}" th:utext="${val?.jm_jisa_name}">경인지사</option>
+							</select>
+						</div>
+	                    <div class="col-1">
+							<select name="pipe_yn">
+								<option >선택</option>
+								<option value="Y">Y</option>
+								<option value="N">N</option>
+							</select>
+						</div>
+	                    <div class="col-1">
+							<select name="yongdo">
+								<option >선택</option>
+								<option th:each="val:${resultJisaList}" th:value="${val?.jm_idx}" th:utext="${val?.jm_jisa_name}">경인지사</option>
+							</select>
+						</div>
+	                    <div class="col-1">
+							<select name="pipe_name" id="pipe_name">
+								<option >선택</option>
+								<option th:each="val:${resultJisaList}" th:value="${val?.jm_idx}" th:utext="${val?.jm_jisa_name}">경인지사</option>
+							</select>
+						</div>                        
+						<div class="col-1">
+							<select name="sun_gubun" id="sun_gubun">
+								<option >선택</option>
+								<option >단선</option>
+								<option >복선</option>
+							</select>
+						</div>
+						<div class="col-1">
+							<select name="gover_own_yn">
+								<option >선택</option>
+								<option value="Y">Y</option>
+								<option value="N">N</option>
+							</select>
+							
+						</div>
+						<div class="col-1"><input type="jijuk_area" class="form-control form-control-user" id="jijuk_area" placeholder="지적면적"></div>
+						<div class="col-1">
+							<select name="jimok_text" id="jimok_text">
+								<option >선택</option>
+								<option th:each="val:${resultJimokList}" th:value="${val?.jm_idx}" th:utext="${val?.jm_name}">지목</option>
+							</select>
+						</div>
+						<div class="col-1"><input type="checkbox" class="form-control"></div>
+						<div class="col-1">
+							<select name="account_yn">
+								<option >선택</option>
+								<option value="Y">Y</option>
+								<option value="N">N</option>
+							</select>
+						</div>
+					</div>    
+					<div class="row">
+						<div class="col-1">주소</div>
+						<div class="col-9"><input type="address" class="form-control form-control-user" id="address" placeholder="주소"></div>
+	                    
+					</div>    
+					<div class="row">
+						<div class="col-1"><input type="radio" name="ra1" id="ra1" value="0" checked class="form-control form-control-user">입력형</div>
+						<div class="col-1"><input type="radio" name="ra1" id="ra2" value="1" class="form-control form-control-user">선택형</div>
+						<div class="col-1">주소</div>
+						<div class="col-7" id="divAddress1"><input type="saddress" class="form-control form-control-user" id="saddress" placeholder="주소입력"></div>
+						<div class="col-7 row" id="divAddress2" style="display:none;">
+							<div class="col-2" >
+								<select id="sidomaster">
+									<option >전체</option>
+									<option >서울시</option>
+								</select>
+						</div>
+						<div class="col-2">
+								<select  id="sigunmaster">
+									<option >전체</option>
+									<option >시군구</option>
+								</select>
+						</div>
+						<div class="col-2">
+								<select id="dongmaster">
+									<option >전체</option>
+									<option >읍면동</option>
+								</select>
+						</div>
+						<div class="col-2">
+								<select id="rimaster">
+									<option >전체</option>
+									<option >리</option>
+								</select>
+						</div>
+						<div class="col-1">지번</div>
+	                    <div class="col-2"><input type="text"  class="form-control form-control-user"></div>
+						</div>
+	                    <div class="col-1"><input type="button"  class="form-control form-control-user" value="검색" id="addrButton"></div>
+					</div>
+					                                     
+                                            
+                </div>
+                                        
+             
+		</div>
+		
+		<!--- new card -->
+		<br>
+		 <div class="card">
+			 <div class="card-header">소유자정보</div>
+			 <div class="card-body">
+				 <table class="table table-bordered">
+					  <thead>
+					    <tr>
+					      <th scope="col">공유지분</th>
+					      <th scope="col">성명</th>
+					      <th scope="col">주소</th>
+					      <th scope="col">연락처1</th>
+					      <th scope="col">연락처2</th>
+					      <th scope="col">추가/삭제</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <td >
+							  	<select name="comple_yn"> <!--등기여부-->
+									<option >선택</option>
+									<option value="Y">Y</option>
+									<option value="N">N</option>
+								</select>
+						  </td>
+					      <td><input type="text"/></td>
+					      <td><input type="text"/></td>
+					      <td><input type="text"/></td>
+					      <td><input type="text"/></td>
+					      <td><button>추가</button> <button>삭제</button></td>
+					    </tr>
+					    
+					  </tbody>
+				</table>
+			 </div>
+		 </div>
+		 
+		 <!--- new card -->
+		<br>
+		 <div class="card">
+			 <div class="card-header">지상권정보</div>
+			 <div class="card-body">
+				 <table class="table table-bordered">
+					  <thead>
+					    <tr>
+					      <th scope="col">등기여부</th>
+					      <th scope="col">편입면적</th>
+					      <th scope="col">위치</th>
+					      <th scope="col">계약유형</th>
+					      <th scope="col">등기일</th>
+					      <th scope="col">등기번호</th>
+					      <th scope="col">등기소</th>
+					      <th scope="col">도시계획<br>결정여부</th>
+					      <th scope="col">취득일</th>
+					      <th scope="col">자산분류번호</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <th scope="col">
+							<select name="comple_yn"> <!--등기여부-->
+								<option >선택</option>
+								<option value="Y">Y</option>
+								<option value="N">N</option>
+							</select>
+						  </th>
+					      <th scope="col-1"><input type="text"/></th>
+					      <th scope="col-1"><input type="text"/></th>
+					      	<th scope="col">
+								<select name="comple_yn"> <!--계약유형-->
+									<option >선택</option>
+									<option value="11">11111</option>
+									
+								</select>
+							</th>
+					      <th scope="col">
+							  
+							  <input type="text"  id="date-range" placeholder="Select Date Range" style="width:100px;" >
+						  </th>	 
+							
+						 
+					      <th scope="col"><input type="text"/></th>
+					      <th scope="col"><input type="text"/></th>
+					      <th scope="col">
+							  <select name="comple_yn"> <!--도시계획 결정여부-->
+									<option >선택</option>
+									<option value="11">11111</option>
+									
+								</select>
+						  </th>
+					      <th scope="col">
+							  <input type="text"  id="date-range1" placeholder="Select Date Range" style="width:100px;" >
+						  </th>
+					      <th scope="col"><input type="text"/></th> <!-- 자산분류번호-->
+					    </tr>
+					    
+					  </tbody>
+					  <tfoot>
+						  <tr><td colspan=10>특약사항</td></tr>
+						   <tr><td colspan=10>지상권존속기간중 지료는 지급치 아니하고 증액하지 아니한다.</td></tr>
+					  </tfoot>
+				</table>
+			 </div>
+		 </div>
+		 
+		  <!--- new card -->
+		<br>
+		 <div class="card">
+			 
+			 <div class="card-header">첨부파일</div>
+			 <div class="card-body">
+				  <div id="fileUpload" class="dragAndDropDiv">Drag & Drop Files Here or Browse Files</div>
+        			<input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
+        			<div id="status"></div>
+			 </div>
+			 <div class="card-footer">
+				 
+			 </div>
+		 </div>
+		 
+		  <!--- new card -->
+		<br>
+		 <div class="card">
+			 <div class="card-header">등록메모</div>
+			 <div class="card-body">
+				 <textarea></textarea>
+			 </div>
+		 </div>
+		 
+		 <br>
+		 <div class="row">
+			 <div class="col-12">
+				 <input type="submit" value="저장">
+			 
+		 </div>
+		</form>	
+    </div> <!-- container -->
+   
+</th:block>
+</html>

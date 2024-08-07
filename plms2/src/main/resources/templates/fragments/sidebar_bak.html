@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="sidebarFragment">
+ <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+		console.log("sidebar  ready ....");
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            
+            $("#wrapper").toggleClass("toggled");
+
+            $('#wrapper.toggled').find("#sidebar-wrapper").find(".collapse").collapse('hide');
+            
+        });
+    });
+    $(document).on("click","#menu-toggle",function(e){
+		console.log("menu toogle click ....");
+		// e.preventDefault();
+            $("#wrapper").attr("display","none");
+           // $("#wrapper").toggleClass("toggled");
+			$("#wrapper").removeClass("toggled");
+            //$('#wrapper.toggled').find("#sidebar-wrapper").find(".collapse").collapse('hide');
+	});
+</script>
+
+
+<div class="surfaceHeader main_header"></div>
+     <!-- Sidebar -->
+     <!-- Sidebar -->
+    <div id="wrapper" class="toggled" style="display:block !important;">
+		<!-- <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"> -->
+	    <ul class="navbar-nav  bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" style="color:black">
+	       
+	            <li>
+	                <!--menu toggle button -->
+	                <button id="menu-toggle" type="button" data-toggle="button" class="btn btn-default btn-xs">
+	                    <i class="fa fa-exchange fa-fw" style="color:black">버튼</i>
+	                </button>
+	            </li>
+	            <li class="nav-item active">
+                <a class="nav-link" href="/jisang/view/list">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>지상권관리조회</span></a>
+            	</li>
+            	<li class="nav-item active">
+                <a class="nav-link" href="/jisang/write">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>지상권등록</span></a>
+            	</li>
+	       
+	    </ul>
+    </div> 
+    <!-- End of Sidebar --> 
+    <!-- End of Sidebar -->
+    
+
+</th:block>
+
+</html>

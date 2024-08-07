@@ -1,0 +1,61 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+<title>TMS TEST 0.0.1</title>
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/openlayers@4.6.5/dist/ol.min.css"> -->
+
+</head>
+<body class="parent" style="height:100%">
+
+		
+
+  
+    <div class="child" style="width:20%">
+
+		   <h3>파일 업로드</h3>
+		<form id="fileUploadForm" method="post" action="/fileUpload"  
+				enctype="multipart/form-data">
+			파일 : <input type="file" id="uploadFile" name="uploadFile">		
+			<input type="submit" value="업로드">
+		</form>
+		
+		<h3>여러 개의 파일 업로드</h3>
+		<form id="fileUploadFormMulti" method="post" 
+			action="/fileUploadMultiple" 
+								enctype="multipart/form-data">
+			파일 : <input type="file" id="uploadFileMulti" name="uploadFileMulti" 					   																		multiple="multiple">
+			<input type="submit" value="업로드">
+		</form>
+		
+		<h3>파일명 변경하지 않고 파일 업로드</h3>
+		<form id="fileOriginNameUploadForm" method="post" 
+			action="/fileOriginNameUpload"
+				enctype="multipart/form-data">
+			파일 : <input type="file" id="uploadFile" name="uploadFile">		
+			<input type="submit" value="업로드">
+		</form>
+		   
+		  <hr>
+		 
+		  <p>111</p>
+		
+	</div>
+
+  
+  
+
+
+
+
+  
+<script>
+	
+
+
+
+
+</script>
+ 
+</body>
+
+</html>

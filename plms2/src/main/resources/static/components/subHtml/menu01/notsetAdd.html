@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>미설정/미점용 내역 등록</title>
+    <link rel="stylesheet" href="../../../assets/css/menu01/notsetAdd.css" />
+    <link rel="stylesheet" href="../../../assets/css/header.css" />
+    <title>지상권</title>
+  </head>
+  <body>
+    <div class="notsetAddWrappers">
+      <!--header삽입-->
+      <div class="surfaceHeader notsetAddHeader"></div>
+      <main id="notsetAdd">
+        <div class="mainTitle">
+          <h1>미설정/미점용 내역 등록</h1>
+        </div>
+        <section class="defaultInfo">
+          <div class="subTitle">기본 정보</div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title01">담당지사</li>
+                <li class="title02">관로일치여부</li>
+                <li class="title03">관로명(구간)</li>
+                <li class="title04">단/복선</li>
+                <li class="title05">관경1</li>
+                <li class="title06">관경2</li>
+                <li class="title07">국공유지여부</li>
+                <li class="title08">지적면적(㎡)</li>
+                <li class="title09">지목</li>
+                <li class="title10">관리제외필지</li>
+              </ul>
+              <ul class="contents">
+              
+                <li class="content01 content">
+                  <section class="customSelectBox">
+                    <button class="customSelectView">
+                      충청지사
+                      <figure></figure>
+                    </button>
+
+                    <ul class="customSelectBtns">
+                      <li><button class="moreSelectBtn">충청지사</button></li>
+                      <li><button class="moreSelectBtn">충청지사</button></li>
+                      <li><button class="moreSelectBtn">충청지사</button></li>
+                      <li><button class="moreSelectBtn">충청지사</button></li>
+                      <li><button class="moreSelectBtn">충청지사</button></li>
+                      <li><button class="moreSelectBtn">충청지사</button></li>
+                    </ul>
+                  </section>
+                </li>
+                <li class="content02 content">
+                  <section class="customSelectBox">
+                    <button class="customSelectView">
+                      N
+                      <figure></figure>
+                    </button>
+
+                    <ul class="customSelectBtns">
+                      <li><button class="moreSelectBtn">N</button></li>
+                      <li><button class="moreSelectBtn">N</button></li>
+                      <li><button class="moreSelectBtn">N</button></li>
+                      <li><button class="moreSelectBtn">N</button></li>
+                    </ul>
+                  </section>
+                </li>
+                <li class="content03 content">
+                  <section class="customSelectBox">
+                    <button class="customSelectView">
+                      경인구간
+                      <figure></figure>
+                    </button>
+
+                    <ul class="customSelectBtns">
+                      <li><button class="moreSelectBtn">경인구간</button></li>
+                      <li><button class="moreSelectBtn">경인구간</button></li>
+                      <li><button class="moreSelectBtn">경인구간</button></li>
+                    </ul>
+                  </section>
+                </li>
+                <li class="content04 content">
+                  <section class="customSelectBox">
+                    <button class="customSelectView">
+                      복선
+                      <figure></figure>
+                    </button>
+
+                    <ul class="customSelectBtns">
+                      <li><button class="moreSelectBtn">복선</button></li>
+                      <li><button class="moreSelectBtn">복선</button></li>
+                      <li><button class="moreSelectBtn">복선</button></li>
+                    </ul>
+                  </section>
+                </li>
+                <li class="content05 content">
+                  <input type="text" />
+                </li>
+                <li class="content06 content">
+                  <input type="text" />
+                </li>
+                <li class="content07 content">
+                  <section class="customSelectBox">
+                    <button class="customSelectView">
+                      Y
+                      <figure></figure>
+                    </button>
+
+                    <ul class="customSelectBtns">
+                      <li><button class="moreSelectBtn">Y</button></li>
+                      <li><button class="moreSelectBtn">Y</button></li>
+                      <li><button class="moreSelectBtn">Y</button></li>
+                    </ul>
+                  </section>
+                </li>
+                <li class="content08 content">
+                  <input type="text" />
+                </li>
+                <li class="content09 content">
+                  <section class="customSelectBox">
+                    <button class="customSelectView">
+                      하천
+                      <figure></figure>
+                    </button>
+
+                    <ul class="customSelectBtns">
+                      <li><button class="moreSelectBtn">하천</button></li>
+                      <li><button class="moreSelectBtn">하천</button></li>
+                      <li><button class="moreSelectBtn">하천</button></li>
+                    </ul>
+                  </section>
+                </li>
+                <li class="content10 content checkboxWrap">
+                  <input type="checkbox" id="notsetAddCheckbox01" />
+                  <label
+                    for="notsetAddCheckbox01"
+                    class="customCheckBoxLabel01"></label>
+                </li>
+              </ul>
+            </div>
+            <div class="depth2">
+              <ul class="titles">
+                <li class="title01">주소</li>
+                <li class="title02">주소 검색</li>
+              </ul>
+              <ul class="contents">
+                <li class="content01">경기도 고양시 덕양구 강매동 1</li>
+                <li class="content02">
+                  <ul class="radioBox">
+                    <li class="inputArea inputArea01">
+                      <div class="inputWrap">
+                        <input
+                          type="radio"
+                          id="writeInput"
+                          name="addressInput" />
+                        <label for="writeInput">입력형</label>
+                      </div>
+
+                      <input
+                        type="text"
+                        placeholder="주소 입력"
+                        class="addressInputBox01" />
+                      <button class="SearchAddressBtn notsetAddPopBtn">
+                        검색
+                      </button>
+                    </li>
+                    <li class="inputArea inputArea02 selectRadioEvet01">
+                      <div class="inputWrap">
+                        <input
+                          type="radio"
+                          id="selectInput"
+                          name="addressInput" />
+                        <label for="selectInput">선택형</label>
+                      </div>
+                      <section class="customSelectBox">
+                        <button class="customSelectView">
+                          전체
+                          <figure></figure>
+                        </button>
+
+                        <ul class="customSelectBtns">
+                          <li><button class="moreSelectBtn">전체</button></li>
+                          <li><button class="moreSelectBtn">전체</button></li>
+                          <li><button class="moreSelectBtn">전체</button></li>
+                        </ul>
+                      </section>
+                      <section class="customSelectBox">
+                        <button class="customSelectView">
+                          전체
+                          <figure></figure>
+                        </button>
+
+                        <ul class="customSelectBtns">
+                          <li><button class="moreSelectBtn">전체</button></li>
+                          <li><button class="moreSelectBtn">전체</button></li>
+                          <li><button class="moreSelectBtn">전체</button></li>
+                        </ul>
+                      </section>
+                      <section class="customSelectBox">
+                        <button class="customSelectView">
+                          전체
+                          <figure></figure>
+                        </button>
+
+                        <ul class="customSelectBtns">
+                          <li><button class="moreSelectBtn">전체</button></li>
+                          <li><button class="moreSelectBtn">전체</button></li>
+                          <li><button class="moreSelectBtn">전체</button></li>
+                        </ul>
+                      </section>
+                      <section class="customSelectBox">
+                        <button class="customSelectView">
+                          전체
+                          <figure></figure>
+                        </button>
+
+                        <ul class="customSelectBtns">
+                          <li><button class="moreSelectBtn">전체</button></li>
+                          <li><button class="moreSelectBtn">전체</button></li>
+                          <li><button class="moreSelectBtn">전체</button></li>
+                        </ul>
+                      </section>
+                      <input
+                        type="text"
+                        placeholder="지번 입력"
+                        class="addressInputBox02" />
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="ownerInfo">
+          <div class="subTitle">소유자 정보</div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title01">공유지분</li>
+                <li class="title02">성명</li>
+                <li class="title03">주소</li>
+                <li class="title04">연락처1</li>
+                <li class="title05">연락처2</li>
+                <li class="title06">추가/삭제</li>
+              </ul>
+              <ul class="contents">
+                <li class="content01 content">
+                  <input type="text" />
+                </li>
+                <li class="content02 content">
+                  <input type="text" />
+                </li>
+                <li class="content03 content">
+                  <input type="text" />
+                </li>
+                <li class="content04 content">
+                  <input type="text" />
+                </li>
+                <li class="content05 content">
+                  <input type="text" />
+                </li>
+                <li class="content06 content">
+                  <div class="btnWrap">
+                    <button class="addBtn miniBtn">추가</button>
+                  </div>
+                  <div class="btnWrap">
+                    <button class="delBtn miniBtn">삭제</button>
+                  </div>
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content01 content">
+                  <input type="text" />
+                </li>
+                <li class="content02 content">
+                  <input type="text" />
+                </li>
+                <li class="content03 content">
+                  <input type="text" />
+                </li>
+                <li class="content04 content">
+                  <input type="text" />
+                </li>
+                <li class="content05 content">
+                  <input type="text" />
+                </li>
+                <li class="content06 content">
+                  <div class="btnWrap">
+                    <button class="addBtn miniBtn">추가</button>
+                  </div>
+                  <div class="btnWrap">
+                    <button class="delBtn miniBtn">삭제</button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="attachFileInfo">
+          <div class="subTitle">
+            첨부파일 정보
+            <span class="myPc">내 PC</span>
+          </div>
+
+          <div class="fileUploadWrap">
+            <div class="fileUploadBox">
+              <img
+                src="/assets/media/menu01/images/file-upload.png"
+                alt="파일 업로드 아이콘" />
+              <p>파일을 마우스로 끌어오세요.</p>
+            </div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title01">선택</li>
+                <li class="title02">파일명</li>
+              </ul>
+              <ul class="contents">
+                <li class="content01 content checkboxWrap">
+                  <input type="checkbox" id="notsetAddCheckbox02" />
+                  <label
+                    for="notsetAddCheckbox02"
+                    class="customCheckBoxLabel02"></label>
+                </li>
+                <li class="content02 content">
+                  <p class="fileName">파일명.pdf</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="btnWrap">
+            <button class="fileDelBtn delBtn">선택파일 삭제</button>
+          </div>
+        </section>
+        <section class="memoSection">
+          <div class="subTitle">메모</div>
+
+          <textarea
+            name=""
+            id=""
+            placeholder="내용을 입력해주세요. (200자 이내)"
+            maxlength="200"></textarea>
+        </section>
+
+        <div class="finalBtnBox btnWrap">
+          <button class="backBtn finalBtn">이전</button>
+          <button class="saveBtn finalBtn">저장</button>
+        </div>
+      </main>
+    </div>
+    <div class="notsetAddResultPop"></div>
+    <!-- script -->
+    <script src="/js/menu01/notsetAdd.js"></script>
+    <script type="module" src="/js/module/surfaceMain.js"></script>
+  </body>
+</html>

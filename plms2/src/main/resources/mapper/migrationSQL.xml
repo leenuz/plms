@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="migrationSQL">
+
+<insert id="goverPnu" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="gp_idx" keyProperty="gp_idx">
+		
+		INSERT INTO gover_pnu
+		(
+		 
+			 gp_gover_no
+			 ,gp_pnu
+			 ,gp_addrcode
+			 ,gp_sido_nm
+			 ,gp_sgg_nm
+			 ,gp_emd_nm
+			 ,gp_ri_nm
+			 ,gp_jibun
+			 ,gp_jibun_full
+			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVER_OWN_YN)">
+			 ,gp_gover_own_yn
+			 </if>
+			 ,gp_jijuk_area
+			 ,gp_jimok_text
+			 ,gp_dosiplan
+			 ,gp_pmt_status
+			 ,gp_echo_no
+			 ,gp_gover_length
+			 ,gp_gover_area
+			 ,gp_seq
+			 ,gp_adm_office
+			 ,gp_use_purpos
+			 ,gp_rep_flag
+			 ,gp_pipe_overlap_yn
+			 ,gp_wdate
+		)
+		 VALUES 
+		(
+			  #{GOVER_NO}
+			  ,#{PNU}
+			  ,#{ADDRCODE}
+			  ,#{SIDO_NM}
+			  ,#{SGG_NM}
+			  ,#{EMD_NM}
+			  ,#{RI_NM}
+			  ,#{JIBUN}
+			  ,#{JIBUN_FULL}
+			  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVER_OWN_YN)">
+			  ,#{GOVER_OWN_YN}
+			  </if>
+			  ,NULLIF(cast(#{JIJUK_AREA} as varchar),'')::numeric
+			  ,#{JIMOK_TEXT}
+			  ,#{DOSIPLAN}
+			  ,#{PMT_STATUS}
+			  ,#{ECHO_NO}
+			  ,NULLIF(cast(#{GOVER_LENGTH} as varchar),'')::numeric
+			  ,NULLIF(cast(#{GOVER_AREA} as varchar),'')::numeric
+			  ,#{SEQ}
+			  ,#{ADM_OFFICE}
+			  ,#{USE_PURPOS}
+			  ,#{REP_FLAG}
+			  ,#{PIPE_OVERLAP_YN}
+			  ,Now()
+			  
+		  
+		  )
+
+	
+	</insert>
+
+
+<insert id="notsetMaster" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="nm_idx" keyProperty="nm_idx">
+		
+		INSERT INTO notset_master 
+		(
+		 
+			 nm_notset_no
+			 ,nm_sido_nm
+			 ,nm_sgg_nm
+			 ,nm_emd_nm
+			 ,nm_ri_nm
+			 ,nm_jibun
+			 ,nm_jisa
+			 ,nm_jijuk_area
+			 ,nm_pipe_name
+			 ,nm_sun_gubun
+			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVER_OWN_YN)">
+			 ,nm_gover_own_yn
+			 </if>
+			 ,nm_addrcode
+			 ,nm_pnu
+			 ,nm_jimok_text
+			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOCKEY)">
+			 ,nm_dockey
+			 </if>
+			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PIPE_YN)">
+			 ,nm_pipe_yn
+			 </if>
+			 ,nm_pipe_meter
+			 ,nm_pipe_meter2
+			 ,nm_toji_type
+			 ,nm_del_flag
+			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(COMPLE_YN)">
+			 ,nm_comple_yn
+			 </if>
+			 ,nm_wdate
+			 
+		 ) 
+		 VALUES (
+			  #{NOTSET_NO}
+			  ,#{SIDO_NM}
+			  ,#{SGG_NM}
+			  ,#{EMD_NM}
+			  ,#{RI_NM}
+			  ,#{JIBUN}
+			  ,#{JISA}
+			  ,#{JIJUK_AREA}
+			  ,#{PIPE_NAME}
+			  ,#{SUN_GUBUN}
+			  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVER_OWN_YN)">
+			  ,#{GOVER_OWN_YN}
+			  </if>
+			  ,#{ADDRCODE}
+			  ,#{PNU}
+			  ,#{JIMOK_TEXT}
+			  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOCKEY)">
+			  ,#{DOCKEY}
+			  </if>
+			  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PIPE_YN)">
+			  ,#{PIPE_YN}
+			  </if>
+			  ,NULLIF(cast(#{PIPE_METER} as varchar),'')::numeric
+			  ,NULLIF(cast(#{PIPE_METER2} as varchar),'')::numeric
+			  ,#{TOJI_TYPE}
+			  ,#{DEL_FLAG}
+			  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(COMPLE_YN)">
+			  ,#{COMPLE_YN}
+			  </if>
+			  ,Now()
+			  
+		  
+		  )
+
+	
+	</insert>
+
+
+
+
+<insert id="dopcoMaster" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="dom_idx" keyProperty="dom_idx">
+		
+		INSERT INTO dopco_master 
+		(
+		 
+			 dom_dopco_no,dom_sido_nm,dom_sgg_nm,dom_emd_nm,dom_ri_nm,dom_jibun,dom_addrcode
+			 ,dom_jisa,dom_dopco_status
+			 ,dom_yongdo,dom_pipe_name,dom_sun_gubun
+			 ,dom_jijuk_area
+			 ,dom_gover_own_yn
+			 ,dom_dosiplan
+			 ,dom_jasan_no
+			 ,dom_comple_yn
+			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DEUNGGI_DATE)">
+			 ,dom_deunggi_date
+			 </if>
+			 ,dom_deunggi_no
+			 ,dom_deunggiso
+			 ,dom_pnu
+			 ,dom_cancel_yn
+			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCLE_DATE)">
+			 ,dom_cancel_date
+			 </if>
+			 ,dom_cancel_name
+			 ,dom_cancel_empcd
+			 ,dom_jimok_text
+			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CHUIDEUK_DATE)">
+			 ,dom_chuideuk_date
+			 </if>
+			 ,dom_jasan_money
+			 ,dom_souja_name
+		 ) 
+		 VALUES (
+			  #{DOPCO_NO},#{SIDO_NM},#{SGG_NM},#{EMD_NM},#{RI_NM},#{JIBUN},#{ADDRCODE}
+			  ,#{JISA},#{DOPCO_STATUS},#{YONGDO},#{PIPE_NAME},#{SUN_GUBUN}
+			  ,#{JIJUK_AREA}
+			  ,#{GOVER_OWN_YN}
+			  ,#{DOSIPLAN}
+			  ,#{JASAN_NO}
+			  ,#{COMPLE_YN}
+			  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DEUNGGI_DATE)">
+			  ,date '1899-12-30'+#{DEUNGGI_DATE}::int
+			  </if>
+			  ,#{DEUNGGI_NO}
+			  ,#{DEUNGGISO}
+			  ,#{PNU}
+			  ,#{CANCLE_YN}
+			  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCLE_DATE)">
+			  ,date '1899-12-30'+#{CANCLE_DATE}::int
+			  </if>
+			  ,#{CANCLE_NAME}
+			  ,#{CANCLE_EMPCD}
+			  ,#{JIMOK_TEXT}
+			  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CHUIDEUK_DATE)">
+			  ,date '1899-12-30'+#{CHUIDEUK_DATE}::int
+			  </if>
+			  ,NULLIF(cast(#{JASAN_MONEY} as varchar),'')::numeric
+			  ,#{SOUJA_NAME}
+		  
+		  )
+
+	
+	</insert>
+
+
+<insert id="goverMaster" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="gm_idx" keyProperty="gm_idx">
+		
+		INSERT INTO gover_master 
+		(
+		 
+		 gm_gover_no,gm_jisa,gm_yongdo,gm_pipe_name,gm_sun_gubun
+		 
+		 ,gm_pipe_meter
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCLE_YN)">
+		 ,gm_cancel_yn
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCLE_DATE)">
+		 ,gm_cancel_date
+		 </if>
+		  ,gm_cancel_name
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCEL_EMPCD)">
+		 ,gm_cancel_empcd
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(USE_PURPOS)">
+		 ,gm_use_purpos
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVER_ST_DATE)">
+		 ,gm_gover_st_date
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVER_ED_DATE)">
+		 ,gm_gover_ed_date
+		 </if>
+		 ,gm_pmt_status
+		 ,gm_dockey,gm_pmt_office,gm_adm_office,gm_office_depart,gm_office_charege
+		 ,gm_office_contact,gm_office_mobile,gm_gover_period
+		 ,gm_pipe_meter2
+		 ,gm_save_status,gm_newregreason,gm_occunonpayreason,gm_permpossyn
+		 ,gm_occuprepayyn
+	
+
+		 ) 
+		 VALUES (
+		  #{GOVER_NO},#{JISA},#{YONGDO},#{PIPE_NAME},#{SUN_GUBUN}
+		  ,NULLIF(cast(#{PIPE_METER} as varchar),'')::numeric 
+		 
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCLE_YN)">
+		  ,#{CANCLE_YN}
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCLE_DATE)">
+		  ,date '1899-12-30'+#{CANCLE_DATE}::int
+		  </if>
+		  ,#{CANCLE_NAME}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCEL_EMPCD)">
+		  ,#{CANCEL_EMPCD}
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(USE_PURPOS)">
+		  ,#{USE_PURPOS}
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVER_ST_DATE)">
+		  ,date '1899-12-30'+#{GOVER_ST_DATE}::int
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVER_ED_DATE)">
+		  ,date '1899-12-30'+#{GOVER_ED_DATE}::int
+		  </if>
+		  ,#{PMT_STATUS}
+		  ,#{DOCKEY},#{PMT_OFFICE},#{ADM_OFFICE},#{OFFICE_DEPART},#{OFFICE_CHARGE}
+		  ,#{OFFICE_CONTACT},#{OFFICE_MOBILE},#{GOVER_PERIOD}
+		
+		  ,NULLIF(cast(#{PIPE_METER2} as varchar),'')::int 
+		  
+		  ,#{SAVE_STATUS},#{NEWREGREASON},#{OCCUNONPAYREASON},#{PERMPOSSYN}
+		  ,#{OCCUPREPAYYN}
+		  
+		
+		  )
+
+	
+	</insert>
+
+
+<insert id="jisangMaster" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jm_idx" keyProperty="jm_idx">
+		
+		INSERT INTO jisang_master 
+		(
+		 
+		 jm_jisang_no, jm_sido_nm, jm_sgg_nm, jm_emd_nm, jm_ri_nm,
+		 jm_jibun, jm_jisa
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CHUIDEUK_DATE)">
+		 ,jm_chuideuk_date
+		 </if>
+		 ,jm_chuideuk_money,jm_jijuk_area, 
+		 jm_pipe_name,jm_sun_gubun,jm_yongdo,jm_dosiplan,jm_comple_yn,
+		 jm_pyeonib_area,jm_use_state,jm_deunggi_date,jm_deunggi_no,jm_deunggiso,
+		 jm_jasan_no,jm_cancel_yn,jm_cancel_date,jm_cancel_empcd,jm_cancel_name,
+		 jm_cancel_bosang_yn,jm_cancel_bosang_money,jm_gover_own_yn,jm_bunhal_yn,jm_bunhal_date,
+		 jm_bunhal_reason,jm_bunhal_org_no,jm_addrcode,jm_pnu,jm_gammoney,
+		 jm_remainder_money,jm_location,jm_special_cont,jm_jimok_text,jm_jibun_2,
+		 jm_dockey,jm_toji_type,jm_bunhal_comment,jm_cancel_comment,jm_cancel_reason,
+		 jm_jsaan_money,jm_merge_comment,jm_merge_no,jm_merge_reason,jm_merge_rep_yn,
+		 jm_pipe_yn,jm_save_status,jm_set_money,jm_permitted_yn,jm_wdate,
+		 jm_udate
+		 ) 
+		 VALUES (
+		  #{JISANG_NO}, #{SIDO_NM}, #{SGG_NM}, #{EMD_NM}, #{RI_NM},
+		  #{JIBUN}, #{JISA}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CHUIDEUK_DATE)" >
+		  ,date '1899-12-30'+#{CHUIDEUK_DATE}::int
+		  </if>
+		  ,#{CHUIDEUK_MONEY},#{JIJUK_AREA},
+		  #{PIPE_NAME}, #{SUN_GUBUN}, #{YONGDO}, #{DOSIPLAN}, #{COMPLE_YN}, 
+		   #{PYEONIB_AREA}, #{USE_STATE}, #{DEUNGGI_DATE}, #{DEUNGGI_NO}, #{DEUNGGISO},
+		   #{JASAN_NO}, #{CANCLE_YN}, #{CANCLE_DATE}, #{CANCLE_EMPCD}, #{CANCLE_NAME}, 
+		   #{CANCLE_BOSANG_YN}, #{CANCLE_BOSANG_MONEY}, #{GOVER_OWN_YN}, #{BUNHAL_YN},#{BUNHAL_DATE}, 
+		   #{BUNHAL_REASON},#{BUNHAL_ORG_NO}, #{ADDRCODE}, #{PNU}, #{GAMMONEY},
+		    #{REMAINDER_MONEY},#{LOCATION}, #{SPECIAL_CONT}, #{JIMOK_TEXT}, #{JIBUN_2}, 
+		    #{DOCKEY},#{TOJI_TYPE}, #{BUNHAL_COMMENT}, #{CANCLE_COMMENT}, #{CANCLE_REASON},
+		    #{JASAN_MONEY},#{MERGE_COMMENT},#{MERGE_NO},#{MERGE_REASON},#{MERGE_REP_YN},
+		    #{PIPE_YN},#{SAVE_STATUS}, #{SET_MONEY},#{PERMITTED_YN},'',
+		     ''
+		   )
+
+	
+	</insert>
+	
+	<insert id="jisangMaster1" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jm_idx" keyProperty="jm_idx">
+		
+		INSERT INTO jisang_master 
+		(
+		 
+		 jm_jisang_no, jm_sido_nm, jm_sgg_nm, jm_emd_nm, jm_ri_nm
+		 ,jm_jibun, jm_jisa
+<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CHUIDEUK_DATE)">
+		 ,jm_chuideuk_date
+</if>
+		 ,jm_chuideuk_money
+		 ,jm_jijuk_area
+		 ,jm_pipe_name,jm_sun_gubun,jm_yongdo,jm_dosiplan,jm_comple_yn
+		 ,jm_pyeonib_area
+		 ,jm_use_state
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DEUNGGI_DATE)" >
+		 ,jm_deunggi_date
+		 </if>
+		 ,jm_deunggi_no,jm_deunggiso
+		 ,jm_jasan_no,jm_cancel_yn
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCLE_DATE)" >
+		 ,jm_cancel_date
+		 </if>
+		 ,jm_cancel_empcd,jm_cancel_name
+		 ,jm_cancel_bosang_yn,jm_cancel_bosang_money,jm_gover_own_yn,jm_bunhal_yn
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUNHAL_DATE)" >
+		 ,jm_bunhal_date
+		 </if>
+		 ,jm_udate
+		 
+		 ) 
+		 VALUES (
+		  #{JISANG_NO}, #{SIDO_NM}, #{SGG_NM}, #{EMD_NM}, #{RI_NM}
+		  ,#{JIBUN}, #{JISA}
+		   <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CHUIDEUK_DATE)" >
+		  ,date '1899-12-30'+#{CHUIDEUK_DATE}::int
+		  </if>
+		  ,NULLIF(cast(#{CHUIDEUK_MONEY} as varchar),'')::numeric 
+		  ,nullif(cast(#{JIJUK_AREA} as varchar),''):: integer
+		  ,#{PIPE_NAME}, #{SUN_GUBUN}, #{YONGDO}, #{DOSIPLAN}, #{COMPLE_YN}
+		  ,nullif(cast(#{PYEONIB_AREA} as varchar),''):: numeric
+		  , #{USE_STATE}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DEUNGGI_DATE)" >
+		  ,date '1899-12-30'+#{DEUNGGI_DATE}::int
+		  </if>
+		  , #{DEUNGGI_NO}, #{DEUNGGISO}
+		  ,#{JASAN_NO}, #{CANCLE_YN}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCLE_DATE)" >
+		  ,date '1899-12-30'+#{CANCLE_DATE}::int
+		  </if>
+		  , #{CANCLE_EMPCD}, #{CANCLE_NAME}
+		  ,#{CANCLE_BOSANG_YN}
+		  ,nullif(cast(#{CANCLE_BOSANG_MONEY} as varchar),'')::numeric, #{GOVER_OWN_YN}, #{BUNHAL_YN}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUNHAL_DATE)" >
+		  ,date '1899-12-30'+#{BUNHAL_DATE}::int
+		  </if>
+		  ,Now()
+		 
+		   )
+	
+	</insert>
+	<insert id="jisang_souja" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="js_idx" keyProperty="js_idx">
+		
+		INSERT INTO jisang_souja 
+		(
+		 
+		 js_jisang_no, js_jibun, js_souja_name
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESS)" >
+		 , js_address
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PONE_NUMBER)" >
+		 , js_pone_number
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(HOME_NUMBER)" >
+		 ,js_home_number
+		 </if>
+		 
+		 ) 
+		 VALUES (
+		  #{JISANG_NO}, #{JIBUN}, #{SOUJA_NAME}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESS)" >
+		 , #{ADDRESS}
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PONE_NUMBER)" >
+		 , #{PONE_NUMBER}
+		   
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(HOME_NUMBER)" >
+			,#{HOME_NUMBER}	
+		 </if>
+		  
+		  
+		   )
+	
+	</insert>
+	<insert id="notset_souja" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="ns_idx" keyProperty="ns_idx">
+		
+		INSERT INTO notset_souja 
+		(
+		 
+		 ns_notset_no, ns_jibun, ns_souja_name
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESS)" >
+		 , ns_address
+		 </if>
+		
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CONTACT)" >
+		 ,ns_contact
+		 </if>
+		 
+		 ) 
+		 VALUES (
+		  #{NOTSET_NO}, #{JIBUN}, #{SOUJA_NAME}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESS)" >
+		 , #{ADDRESS}
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CONTACT)" >
+		 , #{CONTACT}
+		   
+		 </if>
+		 
+		  
+		   )
+	
+	</insert>
+	
+	<insert id="gover_permit" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="gp_idx" keyProperty="gp_idx">
+		
+		INSERT INTO gover_permit
+		(
+		 gp_gover_no
+		 ,gp_pmt_no
+		 ,gp_pmt_name
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SISEOLNAME)" >
+		 ,gp_siseolname
+		 </if>
+		 ,gp_pmt_office
+		 ,gp_gover_length
+		 ,gp_gover_area
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ST_DATE)" >
+		 ,gp_pmt_st_date
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ED_DATE)" >
+		 ,gp_pmt_ed_date
+		 </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(NEXT_DATE)" >
+		 ,gp_next_date
+		 </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUSEO)" >
+		 ,gp_buseo
+		 </if>
+		 ,gp_nm
+		 ,gp_phone_number
+		 ,gp_pay_way
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PAY_DATE)" >
+		 ,gp_pay_date
+		 </if>
+		 ,gp_pay_money
+		 ,gp_seq
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(UPDATE_DATE)" >
+		 ,gp_update_date
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_FIRST_DATE)" >
+		 ,gp_pmt_first_date
+		 </if>
+		 ,gp_pmt_unit
+		 ,gp_pmt_cnt
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOSIPLAN)" >
+		 ,gp_dosiplan
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ECHO_NO)" >
+		 ,gp_echo_no
+		 </if>
+		 ,gp_dockey
+		 ,gp_adm_office
+		 ,gp_pay_vat
+		 
+		 ) 
+		 VALUES (
+		  #{GOVER_NO}
+		  ,#{PMT_NO}
+		  ,NULLIF(cast(#{PMT_NAME} as varchar),'')::varchar 
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SISEOLNAME)" >
+		  ,#{SISEOLNAME}
+		  </if>
+		  ,#{PMT_OFFICE}
+		  ,NULLIF(cast(#{GOVER_LENGTH} as varchar),'')::numeric
+		  ,NULLIF(cast(#{GOVER_AREA} as varchar),'')::numeric
+		 
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ST_DATE)" >
+		  ,date '1899-12-30'+#{PMT_ST_DATE}::int
+		  </if>
+		 
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ED_DATE)" >
+		  ,date '1899-12-30'+#{PMT_ED_DATE}::int
+		  </if>
+		  
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(NEXT_DATE)" >
+		  ,date '1899-12-30'+#{NEXT_DATE}::int
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUSEO)" >
+		  ,#{BUSEO}
+		  </if>
+		  ,NULLIF(cast(#{NM} as varchar),'')::varchar
+		  
+		  ,NULLIF(cast(#{PHONE_NUMBER} as varchar),'')::varchar
+		 
+		  ,#{PAY_WAY}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PAY_DATE)" >
+		  ,date '1899-12-30'+#{PAY_DATE}::int
+		  </if>
+		 ,NULLIF(cast(#{PAY_MONEY} as varchar),'')::numeric
+		  
+		  ,#{SEQ}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(UPDATE_DATE)" >
+		  ,date '1899-12-30'+#{UPDATE_DATE}::int
+		  </if>
+		
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_FIRST_DATE)" >
+		  ,date '1899-12-30'+#{PMT_FIRST_DATE}::int
+		  </if>
+		 ,NULLIF(cast(#{PMT_UNIT} as varchar),'')::varchar 
+		  ,NULLIF(cast(#{PMT_CNT} as varchar),'')::varchar
+		  
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOSIPLAN)" >
+		  ,#{DOSIPLAN}
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ECHO_NO)" >
+		  ,#{ECHO_NO}
+		  </if>
+		  ,NULLIF(cast(#{DOCKEY} as varchar),'')::varchar
+		  ,#{ADM_OFFICE}
+		  ,#{PAY_VAT}
+		  	 
+		  
+		 )
+	
+	</insert>
+	<insert id="gover_permit1" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="gp_idx" keyProperty="gp_idx">
+		
+		INSERT INTO gover_permit
+		(
+		 gp_gover_no
+		 ,gp_pmt_no
+		 ,gp_pmt_name
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SISEOLNAME)" >
+		 ,gp_siseolname
+		 </if>
+		 ,gp_pmt_office
+		 ,gp_gover_length
+		 ,gp_gover_area
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ST_DATE)" >
+		 ,gp_pmt_st_date
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ED_DATE)" >
+		 ,gp_pmt_ed_date
+		 </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(NEXT_DATE)" >
+		 ,gp_next_date
+		 </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUSEO)" >
+		 ,gp_buseo
+		 </if>
+		 ,gp_nm
+		 ,gp_phone_number
+		 ,gp_pay_way
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PAY_DATE)" >
+		 ,gp_pay_date
+		 </if>
+		 ,gp_pay_money
+		 ,gp_seq
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(UPDATE_DATE)" >
+		 ,gp_update_date
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_FIRST_DATE)" >
+		 ,gp_pmt_first_date
+		 </if>
+		 ,gp_pmt_unit
+		 ,gp_pmt_cnt
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOSIPLAN)" >
+		 ,gp_dosiplan
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ECHO_NO)" >
+		 ,gp_echo_no
+		 </if>
+		 ,gp_dockey
+		 ,gp_adm_office
+		 ,gp_pay_vat
+		 
+		 ) 
+		 VALUES (
+		  #{GOVER_NO}
+		  ,#{PMT_NO}
+		  ,NULLIF(cast(#{PMT_NAME} as varchar),'')::varchar 
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SISEOLNAME)" >
+		  ,#{SISEOLNAME}
+		  </if>
+		  ,#{PMT_OFFICE}
+		  ,#{GOVER_LENGTH}
+		  ,#{GOVER_AREA}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ST_DATE)" >
+		  ,date '1899-12-30'+#{PMT_ST_DATE}::int
+		  </if>
+		 
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ED_DATE)" >
+		  ,date '1899-12-30'+#{PMT_ED_DATE}::int
+		  </if>
+		  
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(NEXT_DATE)" >
+		  ,date '1899-12-30'+#{NEXT_DATE}::int
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUSEO)" >
+		  ,#{BUSEO}
+		  </if>
+		  ,NULLIF(cast(#{NM} as varchar),'')::varchar
+		  
+		  ,NULLIF(cast(#{PHONE_NUMBER} as varchar),'')::varchar
+		 
+		  ,#{PAY_WAY}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PAY_DATE)" >
+		  ,date '1899-12-30'+#{PAY_DATE}::int
+		  </if>
+		 
+		  ,#{PAY_MONEY}
+		  ,#{SEQ}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(UPDATE_DATE)" >
+		  ,date '1899-12-30'+#{UPDATE_DATE}::int
+		  </if>
+		
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_FIRST_DATE)" >
+		  ,date '1899-12-30'+#{PMT_FIRST_DATE}::int
+		  </if>
+		 ,NULLIF(cast(#{PMT_UNIT} as varchar),'')::varchar 
+		  ,NULLIF(cast(#{PMT_CNT} as varchar),'')::varchar
+		  
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOSIPLAN)" >
+		  ,#{DOSIPLAN}
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ECHO_NO)" >
+		  ,#{ECHO_NO}
+		  </if>
+		  ,NULLIF(cast(#{DOCKEY} as varchar),'')::varchar
+		  ,#{ADM_OFFICE}
+		  ,#{PAY_VAT}
+		  	 
+		  
+		 )
+	
+	</insert>
+	
+	
+	<insert id="sigun" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="sm_idx" keyProperty="sm_idx">
+		
+		INSERT INTO sigun_master 
+		(
+		
+		 sm_sido
+		 ,sm_gugun
+		 ,sm_lcode
+		 ,sm_hcode
+		 ,sm_pcode
+		 ,sm_x
+		 ,sm_y
+		 ) 
+		 VALUES (
+		  #{SIDO}
+		  ,#{SIGUNGU}
+		  ,#{L_CODE}
+		  ,#{H_CODE}
+		  ,#{P_CODE}
+		  ,#{X}
+		  ,#{Y} 
+		)
+	
+	</insert>
+	
+	<insert id="bdong" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="bm_idx" keyProperty="bm_idx">
+		
+		INSERT INTO bdong_master 
+		(
+		
+		 bm_sido
+		 ,bm_sigungu
+		 ,bm_dong
+		 ,bm_lcode
+		 ,bm_hcode
+		 ,bm_pcode
+		 ,bm_x
+		 ,bm_y
+		 ) 
+		 VALUES (
+		  #{SIDO}
+		  ,#{SIGUNGU}
+		  ,#{DONG}
+		  ,#{L_CODE}
+		  ,#{H_CODE}
+		  ,#{P_CODE}
+		  ,#{X}
+		  ,#{Y} 
+		)
+	
+	</insert>
+	
+</mapper>

@@ -1,0 +1,222 @@
+<script>
+  const surfaceMenuWrapOpen = () => {
+    //header 세줄버튼 클릭시, 뜨는 메뉴
+    let navOpen = document.querySelector(".navOpen");
+    let mainNav = document.querySelector(".navWrap");
+    navOpen.addEventListener("click", function () {
+      const answer = mainNav.classList.contains("active");
+      if (answer == true) {
+        mainNav.classList.remove("active");
+      } else {
+        mainNav.classList.add("active");
+      }
+    });
+  };
+  surfaceMenuWrapOpen();
+
+  //각 메뉴별 sub메뉴 뜨게하기
+  const hiddenMenuOpenEvet = () => {
+    const surfaceMenuBtn = document.querySelectorAll(".surfaceMenuBtn");
+    const hiddenMenuBoxs = document.querySelectorAll(".hiddenMenuBoxs");
+    const path = window.location.pathname;
+    console.log(path);
+
+    //URL에 따라 메뉴불빛 유지
+    if (
+      path === `/components/subHtml/menu01/menu01_1.html` ||
+      path === `/components/subHtml/menu01/menu01_2.html` ||
+      path === `/components/subHtml/menu01/menu01_3.html` ||
+      path === `/components/subHtml/menu01/notsetAdd.html` ||
+      path === `/components/subHtml/menu01/notsetaddRevise.html` ||
+      path === `/components/subHtml/menu01/groundDetail.html` ||
+      path === `/components/subHtml/menu01/companyLandDetails.html` ||
+      path === `/components/subHtml/menu01/occupationDetails.html` ||
+      path === `/components/subHtml/menu01/unsetOccupationDetails.html`
+    ) {
+      surfaceMenuBtn[1].classList.add("active");
+    }
+
+    surfaceMenuBtn.forEach((btn, index) => {
+      // 메뉴 버튼 클릭 이벤트
+      btn.addEventListener("click", () => {
+        // 현재 버튼과 일치하지 않는 모든 버튼의 active 제거
+        surfaceMenuBtn.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.classList.remove("active");
+            otherBtn.classList.remove("addClick");
+          }
+        });
+
+        btn.classList.toggle("addClick");
+
+        if (btn.classList.contains("addClick")) {
+          btn.classList.add("active");
+          hiddenMenuBoxs.forEach((box, boxIndex) => {
+            // 메뉴 버튼과 hiddenMenuBoxs 인덱스 번호가 일치하면 메뉴를 열거나 닫음
+            if (index - 1 === boxIndex) {
+              console.log(btn);
+              box.classList.add("surfacemunuOpen");
+            } else {
+              console.log(btn, "사라짐");
+              box.classList.remove("surfacemunuOpen");
+            }
+          });
+        } else {
+          hiddenMenuBoxs.forEach((boxs) => {
+            boxs.classList.remove("surfacemunuOpen");
+          });
+          btn.classList.remove("active");
+          btn.classList.remove("addClick");
+        }
+      });
+    });
+  };
+
+  hiddenMenuOpenEvet();
+</script>
+<!-- header -->
+<header>
+  <div class="navWrap">
+    <div class="mainNav">
+      <ul class="mainnavList">
+        <li><a href="#">공간정보포털</a></li>
+        <li><a href="#">송유관로 관리자시스템</a></li>
+        <li><a href="#">지상권 관리시스템</a></li>
+        <li><a href="#">관리자 시스템</a></li>
+        <li><a href="#">공지사항 / 자료실</a></li>
+      </ul>
+    </div>
+  </div>
+  <nav>
+    <ul class="navBtn">
+      <li>
+        <button class="navOpen">
+          <img src="/assets/media/nav/nav.png" alt="navIcon" />
+        </button>
+      </li>
+    </ul>
+    <ul class="navMenu">
+      <li>
+        <button class="surfaceMenuBtn">
+          <span
+            ><img src="/assets/media/nav/surfaceMap.png" alt="mapIcon" /></span
+          >지도
+        </button>
+      </li>
+      <li>
+        <button class="surfaceMenuBtn">
+          <span
+            ><img
+              src="/assets/media/nav/surfaceHammer.png"
+              alt="nowDopco" /></span
+          >송유관로 현황
+        </button>
+        <div class="hiddenMenuBoxs">
+          <div class="hiddenMenuList">
+            <a href="/songyu/menu01">권리확보현황</a>
+            <a href="/songyu/menu02"
+              >권리제외필지조회</a
+            >
+            <a href="/songyu/menu03">권리필지조회</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <button class="surfaceMenuBtn">
+          <span
+            ><img src="/assets/media/nav/surfaceMenu.png" alt="surface" /></span
+          >지상권
+        </button>
+        <div class="hiddenMenuBoxs">
+          <div class="hiddenMenuList">
+            <a href="#">지상권 조회</a>
+            <a href="#">지상권 등록</a>
+            <a href="#">지상권 해지</a>
+            <a href="#">지상권 분할</a>
+            <a href="#">지상권 합필</a>
+            <a href="#">지상권 사용승낙</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <button class="surfaceMenuBtn">
+          <span
+            ><img
+              src="/assets/media/nav/surfacePrivate.png"
+              alt="private" /></span
+          >점용
+        </button>
+        <div class="hiddenMenuBoxs">
+          <div class="hiddenMenuList">
+            <a href="#">점용 마스터 조회</a>
+            <a href="#">점용료 납부 / 전자결재</a>
+            <a href="#">점용 내역 해지</a>
+            <a href="#">허가관청 관리</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <button class="surfaceMenuBtn">
+          <span
+            ><img
+              src="/assets/media/nav/surfaceGround.png"
+              alt="develop" /></span
+          >토지개발
+        </button>
+        <div class="hiddenMenuBoxs">
+          <div class="hiddenMenuList">
+            <a href="#">토지개발 조회</a>
+            <a href="#">토지개발 신규등록</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <button class="surfaceMenuBtn">
+          <span
+            ><img
+              src="/assets/media/nav/surfaceGround.png"
+              alt="company" /></span
+          >회사토지
+        </button>
+        <div class="hiddenMenuBoxs">
+          <div class="hiddenMenuList">
+            <a href="#">회사토지조회</a>
+            <a href="#">회사토지 신규등록</a>
+            <a href="#">회사토지처분</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <button class="surfaceMenuBtn">
+          <span
+            ><img src="/assets/media/nav/surfaceIssue.png" alt="issue" /></span
+          >이슈
+        </button>
+        <div class="hiddenMenuBoxs">
+          <div class="hiddenMenuList">
+            <a href="#">이슈코드 관리</a>
+            <a href="#">민원관리</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <button class="surfaceMenuBtn">
+          <span><img src="/assets/media/nav/total.png" alt="totalIcon" /></span
+          >통계
+        </button>
+      </li>
+    </ul>
+    <ul class="login">
+      <li>
+        <img src="/assets/media/nav/Ellipse 1.png" alt="loginImg" />
+      </li>
+      <li>
+        <button>
+          <span
+            ><img src="/assets/media/nav/logout.png" alt="logoutIcon"
+          /></span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</header>

@@ -1,0 +1,826 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="../../../assets/css/header.css" />
+    <link rel="stylesheet" href="../../../assets/css/menu01/menu01_3.css" />
+    <title>지상권</title>
+  </head>
+  <body>
+    <!--관리필지조회-->
+    <div id="dopcoSurfacePart03">
+      <!--header삽입-->
+      <div class="surfaceHeader"></div>
+      <div class="surfacePartWrappers">
+        <div class="surfacePartTitleBoxs">
+          <h5>관리필지조회</h5>
+        </div>
+        <section class="surfaceSectionBoxs">
+          <div class="surfacePartSectionCont">
+            <div class="surfacePartSectionContDevide">
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>지사</p></li>
+                <div class="surfaceSelects">
+                  <button class="surfaceSelectsTitleBtn">전체</button>
+                  <div class="sufaceSelectList">
+                    <ul class="surfaceSelectListMember">
+                      <li><p>전체</p></li>
+                      <li><p>서울지사</p></li>
+                      <li><p>경인지사</p></li>
+                      <li><p>대전지사</p></li>
+                      <li><p>충청지사</p></li>
+                      <li><p>충청지사</p></li>
+                      <li><p>충청지사</p></li>
+                      <li><p>충청지사</p></li>
+                    </ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="inputControlBoxs sectionMenuListBoxs">
+                <li class="selectTitle"><p>관리번호</p></li>
+                <div class="inputControlList">
+                  <input type="text" placeholder="지번입력" />
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>토지유형</p></li>
+                <div class="surfaceSelects">
+                  <button class="surfaceSelectsTitleBtn">전체</button>
+                  <div class="sufaceSelectList smallHeight">
+                    <ul class="surfaceSelectListMember">
+                      <li><p>전체</p></li>
+                      <li><p>Y</p></li>
+                      <li><p>N</p></li>
+                    </ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>권리확보유형</p></li>
+                <div class="surfaceSelects">
+                  <button class="surfaceSelectsTitleBtn">전체</button>
+                  <div class="sufaceSelectList">
+                    <ul class="surfaceSelectListMember checkBoxsContent">
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="companyland03_CheckBox01"
+                          name="companyland03" />
+                        <label for="companyland03_CheckBox01"></label>
+                        <p>전체</p>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="companyland03_CheckBox02"
+                          name="companyland03" />
+                        <label for="companyland03_CheckBox02"></label>
+                        <p>지상권</p>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="companyland03_CheckBox03"
+                          name="companyland03" />
+                        <label for="companyland03_CheckBox03"></label>
+                        <p>미설정</p>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="companyland03_CheckBox04"
+                          name="companyland03" />
+                        <label for="companyland03_CheckBox04"></label>
+                        <p>점용</p>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="companyland03_CheckBox05"
+                          name="companyland03" />
+                        <label for="companyland03_CheckBox05"></label>
+                        <p>회사토지</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>도시계획유형</p></li>
+                <div class="surfaceSelects">
+                  <button class="surfaceSelectsTitleBtn">전체</button>
+                  <div class="sufaceSelectList smallHeight">
+                    <ul class="surfaceSelectListMember">
+                      <li><p>전체</p></li>
+                      <li><p>Y</p></li>
+                      <li><p>N</p></li>
+                    </ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <div class="checkBoxControlList">
+                  <p>권리중복필지</p>
+                  <input type="checkbox" id="OverlapCheck02" />
+                  <label for="OverlapCheck02"></label>
+                </div>
+              </ul>
+            </div>
+            <!-- 라디오버튼 있는 섹션-->
+            <div class="surfacePartSectionContDevide">
+              <p class="devideSecondTitles">주소</p>
+              <div class="surfacePartSectionRadioBoxs">
+                <ul class="radioBoxs">
+                  <li>
+                    <input type="radio" name="askMenu03" /><span>입력형</span>
+                  </li>
+                  <li class="addressInput">
+                    <input
+                      type="search"
+                      placeholder="주소입력"
+                      class="searchInputBox03" />
+                  </li>
+                </ul>
+                <ul class="radioBoxs menuRadioEvet03">
+                  <li>
+                    <input type="radio" name="askMenu03" /><span>선택형</span>
+                  </li>
+                  <li>
+                    <div class="surfaceSelects">
+                      <button class="surfaceSelectsTitleBtn">전체</button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember">
+                          <li><p>전체</p></li>
+                          <li><p>Y</p></li>
+                          <li><p>N</p></li>
+                          <li><p>N</p></li>
+                          <li><p>N</p></li>
+                          <li><p>N</p></li>
+                          <li><p>N</p></li>
+                          <li><p>N</p></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="surfaceSelects">
+                      <button class="surfaceSelectsTitleBtn">전체</button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember">
+                          <li><p>전체</p></li>
+                          <li><p>Y</p></li>
+                          <li><p>N</p></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="surfaceSelects">
+                      <button class="surfaceSelectsTitleBtn">전체</button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember">
+                          <li><p>전체</p></li>
+                          <li><p>Y</p></li>
+                          <li><p>N</p></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="surfaceSelects">
+                      <button class="surfaceSelectsTitleBtn">전체</button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember">
+                          <li><p>전체</p></li>
+                          <li><p>Y</p></li>
+                          <li><p>N</p></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li style="padding: 0px 3px">
+                    <div class="inputControlList">
+                      <input
+                        type="text"
+                        placeholder="지번입력"
+                        class="menuAdderssInput03" />
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <!--surfacePartSectionRadioBoxs-->
+              <div class="surfacePartSectionBtnBoxs">
+                <button class="registerBtn">조회하기</button>
+              </div>
+            </div>
+          </div>
+          <!--surfacePartSectionCont-->
+        </section>
+        <main>
+          <div class="surfaceMainContentWrapper">
+            <div class="surfaceMainContent">
+              <div class="dataTitles">
+                <h5>총 검색 건 수<span>154</span>건</h5>
+                <div class="surfaceMainContentDownloadBoxs">
+                  <button class="excelDownload">엑셀 다운로드</button>
+                  <div class="surfaceSelects">
+                    <button class="surfaceSelectsTitleBtn">10건</button>
+                    <div class="sufaceSelectList smallHeight">
+                      <ul class="surfaceSelectListMember">
+                        <li><p>10건</p></li>
+                        <li><p>10건</p></li>
+                        <li><p>10건</p></li>
+                        <li><p>10건</p></li>
+                        <li><p>10건</p></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 데이터박스 -->
+              <div class="dataBoxswrappers">
+                <div class="dataBoxCont dataBoxsFirst">
+                  <ul class="dataTitle">
+                    <li class="smallWidth"><p>순번</p></li>
+                    <li><p>담당지사</p></li>
+                    <li class="largeWidth"><p>주소</p></li>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>경인지사</p></li>
+                      <li class="largeWidth">
+                        <p>서울특별시 강북구 개화동 118-1</p>
+                      </li>
+                    </a>
+                  </ul>
+                </div>
+                <!-- 오른쪽 좌우스크롤 가진 데이터박스 -->
+                <div class="dataBoxCont dataBoxsSecond">
+                  <div class="scrollContentBoxies">
+                    <ul class="dataTitle">
+                      <li class="smallWidth"><p>관로저촉</p></li>
+                      <li class="extraSmallWidth"><p>관경</p></li>
+                      <li class="extraSmallWidth"><p>지목</p></li>
+                      <li class="smallWidth"><p>소유자</p></li>
+                      <li><p>면적</p></li>
+                      <li><p>토지유형</p></li>
+                      <li><p>권리확보</p></li>
+                      <li><p>자산번호</p></li>
+                      <li><p>관리번호</p></li>
+                      <li class="smallWidth"><p>등기여부</p></li>
+                      <li><p>계약유형</p></li>
+                      <li><p>취득일</p></li>
+                      <li class="mediumWidth"><p>점용기간</p></li>
+                      <li><p>점용납부일</p></li>
+                      <li class="extraSmallWidth"><p>설정면적</p></li>
+                      <li class="extraSmallWidth"><p>설정연장</p></li>
+                      <li><p>자산금액</p></li>
+                      <li><p>납부금액</p></li>
+                      <li><p>등기/점용 여부</p></li>
+                      <li class="smallWidth"><p>계약 허가 여부</p></li>
+                      <li><p>이슈유형대분류</p></li>
+                      <li><p>이슈유형중분류</p></li>
+                      <li><p>이슈유형세분류</p></li>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>회사토지</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>회사토지</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>미설정</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>미설정</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>미설정</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>지상권</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>지상권</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>지상권</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>지상권</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>지상권</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>점용</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>지상권</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent">
+                      <a href="">
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li class="extraSmallWidth"><p>14</p></li>
+                        <li class="extraSmallWidth"><p>전</p></li>
+                        <li class="smallWidth"><p>홍길동</p></li>
+                        <li><p>262.28</p></li>
+                        <li><p>사유지</p></li>
+                        <li class="ForLink"><p>미설정</p></li>
+                        <li><p>9000857</p></li>
+                        <li><p>J_000858</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>기공승낙서</p></li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="mediumWidth">
+                          <p>2021-01-01 ~ 2025-06-30</p>
+                        </li>
+                        <li><p>2023-08-18</p></li>
+                        <li class="extraSmallWidth"><p>1.1</p></li>
+                        <li class="extraSmallWidth"><p>3</p></li>
+                        <li><p></p></li>
+                        <li><p>354,300</p></li>
+                        <li><p>GY</p></li>
+                        <li class="smallWidth"><p>Y</p></li>
+                        <li><p>점용료 납부</p></li>
+                        <li><p>이슈없음</p></li>
+                        <li><p>이슈없음</p></li>
+                      </a>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!--dataBoxswrappers-->
+              <div class="boardPageBoxs">
+                <ul>
+                  <li class="arrowLeftWrapper">
+                    <button>
+                      <img
+                        src="/assets/media/menu01/arrowRightLine02.png"
+                        alt="preBtnImg" />
+                    </button>
+                    <button>
+                      <img
+                        src="/assets/media/menu01/arrowRightLine01.png"
+                        alt="preBtnImg" />
+                    </button>
+                  </li>
+                  <li class="pageCountBoxs">
+                    <p>1</p>
+                    <p>2</p>
+                    <p>3</p>
+                    <p>4</p>
+                    <p>5</p>
+                  </li>
+                  <li class="arrowRightWrapper">
+                    <button>
+                      <img
+                        src="/assets/media/menu01/arrowRightLine01.png"
+                        alt="nextBtnImg" />
+                    </button>
+                    <button>
+                      <img
+                        src="/assets/media/menu01/arrowRightLine02.png"
+                        alt="nextBtnImg" />
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <!--boardPageBoxs-->
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script type="module" src="../../surfaceMain.js"></script>
+    <script src="../../js/menu01/menuLinkEvet.js"></script>
+    <script src="../../js/menu01/radioEvet.js"></script>
+    <script src="../../js/menu01/resultPageEvet.js"></script>
+  </body>
+</html>

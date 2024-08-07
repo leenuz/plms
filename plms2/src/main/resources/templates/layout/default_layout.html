@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+  
+  <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+  
+  
+    <!-- 공통 헤더-->
+  <th:block th:replace="~{fragments/header :: headFragment}"></th:block>
+
+    <body id="page-top">
+		<div id="dopcoAllWrappers">
+		
+				<div style="float:left;width:150px;">
+					 <th:block th:replace="~{fragments/sidebar :: sidebarFragment}"></th:block>
+				</div>
+		        <div class="dopcoAllwrappersBoxs" >
+					<div style="margin-left:110px;">
+						<!-- 본문-->
+                    	<th:block layout:fragment="content"></th:block>
+					</div>
+				</div>
+			</div>
+		     
+		      
+    	</div>
+    	<script type="module" src="/js/module/surfaceMain.js"></script>
+    
+    </body>
+    
+    
+</html>

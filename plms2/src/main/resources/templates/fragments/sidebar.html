@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="sidebarFragment">
+
+<script type="text/javascript">
+    $(document).ready(function() {
+		console.log("sidebar  ready ....");
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            
+            $("#wrapper").toggleClass("toggled");
+
+            $('#wrapper.toggled').find("#sidebar-wrapper").find(".collapse").collapse('hide');
+            
+        });
+    });
+    $(document).on("click","#menu-toggle",function(e){
+		console.log("menu toogle click ....");
+		// e.preventDefault();
+            $("#wrapper").attr("display","none");
+           // $("#wrapper").toggleClass("toggled");
+			$("#wrapper").removeClass("toggled");
+            //$('#wrapper.toggled').find("#sidebar-wrapper").find(".collapse").collapse('hide');
+	});
+</script>
+
+
+<div class="surfaceHeader main_header" ></div>
+    
+    <!-- End of Sidebar --> 
+    <!-- End of Sidebar -->
+    
+
+</th:block>
+
+</html>
