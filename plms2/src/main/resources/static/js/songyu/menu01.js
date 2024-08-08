@@ -284,6 +284,7 @@ function loadDataTable(params){
 						d.manage_no=params.manage_no;
 						d.toji_type=params.toji_type;
 						d.toji_plan_type=params.toji_plan_type;
+						d.right_overlap=params.OverlapCheck01;
 						
 						var right_type="";
 						if (params.songyu_type_all!=undefined && params.songyu_type_all!=null) right_type="";

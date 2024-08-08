@@ -317,6 +317,7 @@ public class songyuController {
 				String address=req.getParameter("saddr");
 				String toji_plan_type=req.getParameter("toji_plan_type");
 				String toji_type=req.getParameter("toji_type");
+				String right_overlap=req.getParameter("right_overlap");
 				Map map=req.getParameterMap();
 		        log.info("draw:"+draw);
 		        log.info("length:"+length);
@@ -341,7 +342,7 @@ public class songyuController {
 				params.put("address",address);
 				params.put("toji_plan_type",toji_plan_type);
 				params.put("toji_type",toji_type);
-				
+				params.put("right_overlap",right_overlap);
 				String[] right_arr= {};
 				right_arr=right_type.split(",");
 				params.put("right_type", right_arr);

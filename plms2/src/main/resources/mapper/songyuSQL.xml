@@ -8,110 +8,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="selectTotalCount" parameterType="java.util.HashMap" resultType="Integer">
 	SELECT count(*) as count FROM (	
 		(
-			SELECT 
-			jm.jm_jisang_no AS idx
-			,'jisang' as right_type
-			,jm.jm_jisa AS jisa 
-			,jm.jm_pipe_yn AS pipe_yn
-			,jm.jm_pipe_meter AS pipe_meter
-			,jm.jm_jimok_text AS jimok_text
-			,js.js_souja_name AS souja_name
-			,jm.jm_jijuk_area AS jijuk_area
-			,concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun) as address
-			
-			,jm.jm_cancel_yn AS cancel_yn
-			,jm.jm_dosiplan as dosiplan
-			,case
-			WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)>0 THEN 'Y'
-			WHEN  (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)=0 THEN 'N'
-		 END AS toji_plan
-		 ,jm.jm_toji_type AS toji_type
-			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-			where 1=1
-			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-			and jm.jm_jisa=#{jisa}
-			</if>
-			
-		
-		)
-		UNION ALL 
-		(
-			SELECT 
-		gm.gm_gover_no AS idx
-		,'gover' as right_type
-		,gm.gm_jisa AS jisa
-		,gp.gp_pipe_overlap_yn AS pipe_yn
-		,gm.gm_pipe_meter AS pipe_meter
-		,gp.gp_jimok_text AS jimok_text
-		,null AS souja_name
-		,gp.gp_jijuk_area AS jijuk_area
-		,concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun) as address
-		
-		,gm.gm_cancel_yn as cancel_yn
-		,gp.gp_dosiplan as dosiplan
-		,null as toji_plan
-		,null as toji_type
-			FROM gover_master gm 
-			LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
-			
-			where 1=1
-			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-			and gm.gm_jisa=#{jisa}
-			</if>
-		
-		)
-		UNION ALL
-		(
-			SELECT 
-			nm.nm_notset_no AS idx
-			,'notset' as right_type
-			,nm.nm_jisa AS jisa 
-			,nm.nm_pipe_yn AS pipe_yn
-			,nm.nm_pipe_meter AS pipe_meter
-			,nm.nm_jimok_text AS jimok_text
-			,ns.ns_souja_name AS souja_name
-			,nm.nm_jijuk_area AS jijuk_area
-			,concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun) as address
-			
-			,null as cancel_yn
-			,null as dosiplan
-			,null as toji_plan
-			,nm.nm_toji_type as toji_type
-			FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-			where 1=1
-			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-			and nm.nm_jisa=#{jisa}
-			</if>
-		)
-	) as r 
-	where 1=1
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-	and r.idx=#{idx}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
-	and r.cancel_yn=#{cancelYn}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
-	and r.dosiplan=#{dosiplan}
-	</if>
-	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
-	and r.right_type in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
-	</if> 
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	and r.address like '${address}%'
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
-	and r.toji_plan=#{toji_plan_type}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
-	and r.toji_type=#{toji_type}
-	</if>
-	
-</select>
-
-<select id="selectAllList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-	SELECT *,(row_number() over()) as no FROM (	
-		(
 			SELECT
 			jm.jm_idx as index 
 			,jm.jm_jisang_no AS idx
@@ -130,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,jm.jm_emd_nm AS emd_nm
 		,jm.jm_ri_nm AS ri_nm
 		,jm.jm_jibun AS jibun
-		,concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun) as address
+		,trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
 		,COALESCE(jm.jm_jasan_no,'') AS jasan_no
 		,COALESCE(jm.jm_comple_yn,'') AS comple_yn
 		,COALESCE(jm.jm_permitted_yn,'') AS permitted_yn
@@ -176,7 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,gp.gp_emd_nm AS emd_nm
 		,gp.gp_ri_nm AS ri_nm
 		,gp.gp_jibun AS jibun
-		,concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun) as address
+		,trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
 		,COALESCE('','') AS jasan_no
 		,COALESCE('','') AS comple_yn
 		,COALESCE('','') AS permitted_yn
@@ -218,7 +114,193 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,nm.nm_emd_nm AS emd_nm
 		,nm.nm_ri_nm AS ri_nm
 		,nm.nm_jibun AS jibun
-		,concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun) as address
+		,trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
+		,COALESCE('','') AS jasan_no
+		,COALESCE('','') AS comple_yn
+		,COALESCE('','') AS permitted_yn
+		,COALESCE(null::date,null) AS chuideuk_date
+		
+		,COALESCE('','') AS gover_date
+		,null as pay_date
+		,null as gover_area
+		,null as gover_length
+		,null as jasan_money
+		,null as pay_money
+		,null as cancel_yn
+		,NULL AS dosiplan
+		,NULL as toji_plan
+			FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
+			where 1=1
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and nm.nm_jisa=#{jisa}
+			</if>
+		)
+	) as r 
+	where 1=1
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+	and r.idx=#{idx}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
+	and r.cancel_yn=#{cancelYn}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
+	and r.dosiplan=#{dosiplan}
+	</if>
+	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
+	and r.right_type in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
+	</if> 
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+	and r.address like '${address}%'
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
+	and r.toji_plan=#{toji_plan_type}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
+	and (SELECT COUNT(o.address) AS overlap 
+		FROM
+		  (
+		  		(
+					SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
+					FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
+					where 1=1
+		
+				)
+				UNION ALL 
+				(
+					SELECT trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
+					FROM gover_master gm 
+					LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
+					LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
+					where 1=1
+		
+				)
+				UNION ALL
+				(
+					SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
+					FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
+					where 1=1
+		
+				)
+		  
+		  ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
+	and r.toji_type=#{toji_type}
+	</if>
+	
+</select>
+
+<select id="selectAllList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	SELECT *,(row_number() over()) as no
+	 FROM (	
+		(
+			SELECT
+			jm.jm_idx as index 
+			,jm.jm_jisang_no AS idx
+			,'jisang' as right_type
+			,'지상권' as right
+			,jm.jm_jisa AS jisa 
+			,COALESCE(jm.jm_pipe_yn,'N') AS pipe_yn
+			,jm.jm_toji_type AS toji_type
+			,jm.jm_pipe_meter AS pipe_meter
+			,jm.jm_jimok_text AS jimok_text
+			,js.js_souja_name AS souja_name
+			,COALESCE(jm.jm_jijuk_area,null) AS jijuk_area
+			
+			,jm.jm_sido_nm AS sido_nm
+		,jm.jm_sgg_nm AS sgg_nm
+		,jm.jm_emd_nm AS emd_nm
+		,jm.jm_ri_nm AS ri_nm
+		,jm.jm_jibun AS jibun
+		,trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
+		,COALESCE(jm.jm_jasan_no,'') AS jasan_no
+		,COALESCE(jm.jm_comple_yn,'') AS comple_yn
+		,COALESCE(jm.jm_permitted_yn,'') AS permitted_yn
+		
+		,COALESCE(jm.jm_chuideuk_date,null) AS chuideuk_date
+		,COALESCE('','') AS gover_date
+		,null as pay_date
+		,null as gover_area
+		,null as gover_length
+		,jm.jm_jasan_money as jasan_money
+		,null as pay_money
+		,jm.jm_cancel_yn AS cancel_yn
+		,jm.jm_dosiplan as dosiplan
+		,case
+			WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)>0 THEN 'Y'
+			WHEN  (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)=0 THEN 'N'
+		 END AS toji_plan
+			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
+			where 1=1
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and jm.jm_jisa=#{jisa}
+			</if>
+			
+			
+		
+		)
+		UNION ALL 
+		(
+			SELECT 
+			gm.gm_idx as index 
+		,gm.gm_gover_no AS idx
+		,'gover' as right_type
+		,'점용' as right
+		,gm.gm_jisa AS jisa
+		,COALESCE(gp.gp_pipe_overlap_yn,'N') AS pipe_yn
+		,null AS toji_type
+		,gm.gm_pipe_meter AS pipe_meter
+		,gp.gp_jimok_text AS jimok_text
+		,gm.gm_adm_office AS souja_name
+		,gp.gp_jijuk_area AS jijuk_area
+		,gp.gp_sido_nm AS sido_nm
+		,gp.gp_sgg_nm AS sgg_nm
+		,gp.gp_emd_nm AS emd_nm
+		,gp.gp_ri_nm AS ri_nm
+		,gp.gp_jibun AS jibun
+		,trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
+		,COALESCE('','') AS jasan_no
+		,COALESCE('','') AS comple_yn
+		,COALESCE('','') AS permitted_yn
+		,null AS chuideuk_date
+		,concat(gm.gm_gover_st_date,'~',gm.gm_gover_ed_date) AS gover_date
+		,gpp.gp_pay_date as pay_date
+		,gpp.gp_gover_area as gover_area
+		,gpp.gp_gover_length as gover_length
+		,null as jasan_money
+		,gpp.gp_pay_money as pay_money
+		,gm.gm_cancel_yn AS cancel_yn
+		,gp.gp_dosiplan as dosiplan
+		,null as toji_plan
+			FROM gover_master gm 
+			LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
+			LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
+			where 1=1
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and gm.gm_jisa=#{jisa}
+			</if>
+		
+		)
+		UNION ALL
+		(
+			SELECT 
+			nm.nm_idx as index 
+			,nm.nm_notset_no AS idx
+			,'notset' as right_type
+			,'미설정' as right
+			,nm.nm_jisa AS jisa 
+			,COALESCE(nm.nm_pipe_yn,'N') AS pipe_yn
+			,nm.nm_toji_type AS toji_type
+			,nm.nm_pipe_meter AS pipe_meter
+			,nm.nm_jimok_text AS jimok_text
+			,ns.ns_souja_name AS souja_name
+			,nm.nm_jijuk_area AS jijuk_area
+			,nm.nm_sido_nm AS sido_nm
+		,nm.nm_sgg_nm AS sgg_nm
+		,nm.nm_emd_nm AS emd_nm
+		,nm.nm_ri_nm AS ri_nm
+		,nm.nm_jibun AS jibun
+		,trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
 		,COALESCE('','') AS jasan_no
 		,COALESCE('','') AS comple_yn
 		,COALESCE('','') AS permitted_yn
@@ -261,6 +343,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
 	and r.toji_type=#{toji_type}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
+	and (SELECT COUNT(o.address) AS overlap 
+		FROM
+		  (
+		  		(
+					SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
+					FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
+					where 1=1
+		
+				)
+				UNION ALL 
+				(
+					SELECT trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
+					FROM gover_master gm 
+					LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
+					LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
+					where 1=1
+		
+				)
+				UNION ALL
+				(
+					SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
+					FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
+					where 1=1
+		
+				)
+		  
+		  ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
 	</if>
 	
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
