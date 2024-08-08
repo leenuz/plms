@@ -316,7 +316,7 @@ public class songyuController {
 				String dosiplan=req.getParameter("dosiplan");
 				String address=req.getParameter("saddr");
 				String toji_plan_type=req.getParameter("toji_plan_type");
-				
+				String toji_type=req.getParameter("toji_type");
 				Map map=req.getParameterMap();
 		        log.info("draw:"+draw);
 		        log.info("length:"+length);
@@ -340,6 +340,7 @@ public class songyuController {
 				params.put("dosiplan",dosiplan);
 				params.put("address",address);
 				params.put("toji_plan_type",toji_plan_type);
+				params.put("toji_type",toji_type);
 				
 				String[] right_arr= {};
 				right_arr=right_type.split(",");

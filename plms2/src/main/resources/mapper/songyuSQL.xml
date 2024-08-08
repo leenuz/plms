@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)>0 THEN 'Y'
 			WHEN  (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)=0 THEN 'N'
 		 END AS toji_plan
+		 ,jm.jm_toji_type AS toji_type
 			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
 			where 1=1
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -49,6 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,gm.gm_cancel_yn as cancel_yn
 		,gp.gp_dosiplan as dosiplan
 		,null as toji_plan
+		,null as toji_type
 			FROM gover_master gm 
 			LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
 			
@@ -74,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			,null as cancel_yn
 			,null as dosiplan
 			,null as toji_plan
+			,nm.nm_toji_type as toji_type
 			FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
 			where 1=1
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -99,6 +102,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
 	and r.toji_plan=#{toji_plan_type}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
+	and r.toji_type=#{toji_type}
 	</if>
 	
 </select>
@@ -202,7 +208,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			,'미설정' as right
 			,nm.nm_jisa AS jisa 
 			,COALESCE(nm.nm_pipe_yn,'N') AS pipe_yn
-			,null AS toji_type
+			,nm.nm_toji_type AS toji_type
 			,nm.nm_pipe_meter AS pipe_meter
 			,nm.nm_jimok_text AS jimok_text
 			,ns.ns_souja_name AS souja_name
@@ -252,6 +258,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</if> 
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
 	and r.toji_plan=#{toji_plan_type}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
+	and r.toji_type=#{toji_type}
 	</if>
 	
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
