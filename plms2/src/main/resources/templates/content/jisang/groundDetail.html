@@ -359,12 +359,15 @@ margin:10px;
                                 <li class="title03 title">파일보기</li>
                                 <li class="title04 title">파일저장</li>
                             </ul>
-                            <ul class="contents">
+                             <ul class="contents" th:if="${atcFileList==null}">
+								<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+							 </ul>
+                            <ul class="contents" th:each="val:${atcFileList}">
                                 <li class="content01 content">
-                                    2024-03-31
+                                    [[${val.ja_wdate}]]
                                 </li>
                                 <li class="content02 content">
-                                    서울특별시 서초구 원지동 28.pdf
+                                    [[${val.ja_file_nm}]]
                                 </li>
                                 <li class="content03 content">
                                     <button class="viewDetailButton">보기</button>
@@ -373,48 +376,7 @@ margin:10px;
                                     <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
                                 </li>
                             </ul>
-                            <ul class="contents">
-                                <li class="content01 content">
-                                    2024-03-31
-                                </li>
-                                <li class="content02 content">
-                                    원지동 28 등기부등본.pdf
-                                </li>
-                                <li class="content03 content">
-                                    <button class="viewDetailButton">보기</button>
-                                </li>
-                                <li class="content04 content btnsWrap">
-                                    <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                </li>
-                            </ul>
-                            <ul class="contents">
-                                <li class="content01 content">
-                                    2024-03-31
-                                </li>
-                                <li class="content02 content">
-                                    파일명.pdf
-                                </li>
-                                <li class="content03 content">
-                                    <button class="viewDetailButton">보기</button>
-                                </li>
-                                <li class="content04 content btnsWrap">
-                                    <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                </li>
-                            </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    2024-03-31
-                                </li>
-                                <li class="content02 content">
-                                    파일명.png
-                                </li>
-                                <li class="content03 content">
-                                    <button class="viewDetailButton">보기</button>
-                                </li>
-                                <li class="content04 content btnsWrap">
-                                    <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                </li>
-                            </ul>
+                            
                         </div>
                     </div>
 

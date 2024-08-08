@@ -228,7 +228,7 @@ public class jisangController {
     }
 	
 	
-	//groundDetail
+	//groundDetail  상세 조회
 	@GetMapping(path="/groundDetail") //http://localhost:8080/api/get/dbTest
     public ModelAndView groundDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
@@ -247,13 +247,16 @@ public class jisangController {
 		log.info("params:"+params);
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 		log.info("data:"+data.get(0));
 		log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
 		log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
 		log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
 		log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+		
 		log.info("souja count:"+soujaList.size());
 		log.info("soujaList:"+soujaList);
+		log.info("atcFileList:"+atcFileList);
       			mav.addObject("resultData",data.get(0));
       			mav.addObject("soujaList",soujaList);
       			mav.setViewName("content/jisang/groundDetail");
