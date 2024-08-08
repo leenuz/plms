@@ -39,6 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,jm.jm_jasan_money as jasan_money
 		,null as pay_money
 		,jm.jm_cancel_yn AS cancel_yn
+		,jm.jm_manage_yn as manage_yn
 		,jm.jm_dosiplan as dosiplan
 		,case
 			WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)>0 THEN 'Y'
@@ -84,6 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,null as jasan_money
 		,gpp.gp_pay_money as pay_money
 		,gm.gm_cancel_yn AS cancel_yn
+		,null as manage_yn
 		,gp.gp_dosiplan as dosiplan
 		,null as toji_plan
 			FROM gover_master gm 
@@ -127,6 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,null as jasan_money
 		,null as pay_money
 		,null as cancel_yn
+		,nm.nm_manage_yn as manage_yn
 		,NULL AS dosiplan
 		,NULL as toji_plan
 			FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
@@ -142,6 +145,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
 	and r.cancel_yn=#{cancelYn}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
+	and r.manage_yn=#{manageYn}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
 	and r.dosiplan=#{dosiplan}
@@ -225,6 +231,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,jm.jm_jasan_money as jasan_money
 		,null as pay_money
 		,jm.jm_cancel_yn AS cancel_yn
+		,jm.jm_manage_yn as manage_yn
 		,jm.jm_dosiplan as dosiplan
 		,case
 			WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)>0 THEN 'Y'
@@ -270,6 +277,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,null as jasan_money
 		,gpp.gp_pay_money as pay_money
 		,gm.gm_cancel_yn AS cancel_yn
+		,null as manage_yn
 		,gp.gp_dosiplan as dosiplan
 		,null as toji_plan
 			FROM gover_master gm 
@@ -313,6 +321,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,null as jasan_money
 		,null as pay_money
 		,null as cancel_yn
+		,nm.nm_manage_yn as manage_yn
 		,NULL AS dosiplan
 		,NULL as toji_plan
 			FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
@@ -328,6 +337,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
 	and r.cancel_yn=#{cancelYn}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
+	and r.manage_yn=#{manageYn}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
 	and r.dosiplan=#{dosiplan}
@@ -375,7 +387,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</if>
 	
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
-	ORDER BY ${orderCol} ${desc}
+	ORDER BY r.${orderCol} ${desc}
 	</if>
 	<if test="length>0"> 
 	 limit #{length} offset #{start}

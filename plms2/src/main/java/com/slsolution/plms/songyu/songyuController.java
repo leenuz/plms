@@ -616,7 +616,7 @@ public class songyuController {
 				params.put("jisa",req.getParameter("jisa"));
 				params.put("idx",manage_no);
 				
-				params.put("cancelYn","Y");
+				params.put("manageYn","Y");
 				if (orderColumn==null || orderColumn.equals("null")) {
 					log.info("----------null--------");
 					orderColumn="0";

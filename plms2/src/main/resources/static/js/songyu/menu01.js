@@ -333,7 +333,7 @@ function loadDataTable(params){
 						console.log("-------------json---------------");
 						console.log(json);
 						$("#dataTableTotalCount").html(json.recordsTotal);
-						$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
+						//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
 						return json.data;
 					}
 					
