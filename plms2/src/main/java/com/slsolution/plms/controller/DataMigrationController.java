@@ -176,6 +176,7 @@ public class DataMigrationController {
           	else if (mapperName.equals("sigun")) mainService.InsertQuery("migrationSQL.sigun", param);
           	else if (mapperName.equals("bdong")) mainService.InsertQuery("migrationSQL.bdong", param);
           	else if (mapperName.equals("dosi_master")) mainService.InsertQuery("migrationSQL.dosi_master", param);
+          	else if (mapperName.equals("jisang_atcfile")) mainService.InsertQuery("migrationSQL.jisang_atcfile", param);
           	else {
           		processCode="0001";
           		break;

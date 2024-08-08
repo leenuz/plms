@@ -783,4 +783,29 @@
 	
 	</insert>
 	
+	<insert id="jisang_atcfile" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="ja_idx" keyProperty="ja_idx">
+		
+		INSERT INTO jisang_atcfile 
+		(
+		
+		 ja_jisang_no
+		 ,ja_seq
+		 ,ja_file_path
+		 ,ja_file_nm
+		 ,ja_file_seq
+		 
+		 ) 
+		 VALUES (
+		  #{JISANG_NO}
+		  ,NULLIF(cast(#{SEQ} as varchar),'')::integer
+		
+		  ,#{FILE_PATH}
+		  ,#{FILE_NM}
+		  ,#{FILE_SEQ}
+		 
+		   
+		)
+	
+	</insert>
+	
 </mapper>
