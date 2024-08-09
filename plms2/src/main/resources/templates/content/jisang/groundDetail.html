@@ -359,7 +359,7 @@ margin:10px;
                                 <li class="title03 title">파일보기</li>
                                 <li class="title04 title">파일저장</li>
                             </ul>
-                             <ul class="contents" th:if="${atcFileList==null}">
+                             <ul class="contents" th:if="${atcFileList.size()==0}">
 								<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
 							 </ul>
                             <ul class="contents" th:each="val:${atcFileList}">
@@ -394,7 +394,7 @@ margin:10px;
                 <div class="contBox">
                     <div class="contentDetailBox">
                         <div class="depth1">
-                            <ul class="titles">
+                            <ul class="titles" >
                                 <li class="title01 title">순번</li>
                                 <li class="title02 title">문서번호</li>
                                 <li class="title03 title">사용 목적</li>
@@ -405,9 +405,12 @@ margin:10px;
                                 <li class="title06 title">등록상태</li>
                                 <li class="title06 title">ECHO 문서보기</li>
                             </ul>
-                            <ul class="contents lastContents">
+                             <ul class="contents lastContents"  th:if="${jisangPermitList.size()==0}">
+								<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+							 </ul>
+                            <ul class="contents lastContents" th:each="val:${jisangPermitList}">
                                 <li class="content01 content">
-                                    1
+                                   1
                                 </li>
                                 <li class="content02 content">
                                     P_000006
@@ -462,7 +465,11 @@ margin:10px;
                                 <li class="title06 title">설정금액</li>
                                 <li class="title06 title">위치보기</li>
                             </ul>
-                            <ul class="contents">
+                            
+                            <ul class="contents "  th:if="${jisangMergeList.size()==0}">
+								<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+							 </ul>
+                            <ul class="contents" th:each="val:${jisangMergeList}">
                                 <li class="content01 content">
                                     9006412
                                 </li>
@@ -491,35 +498,7 @@ margin:10px;
                                     <button class="viewDetailButton">위치보기</button>
                                 </li>
                             </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    9006412
-                                </li>
-                                <li class="content02 content">
-                                    J_006387
-                                </li>
-                                <li class="content03 content">
-                                    서울지사
-                                </li>
-                                <li class="content04 content">
-                                    서울특별시 서초구 서초동 202
-                                </li>
-                                <li class="content05 content">
-                                    답
-                                </li>
-                                <li class="content06 content">
-                                    170
-                                </li>
-                                <li class="content06 content">
-                                    90
-                                </li>
-                                <li class="content06 content">
-                                    &#160
-                                </li>
-                                <li class="content06 content">
-                                    <button class="viewDetailButton">위치보기</button>
-                                </li>
-                            </ul>
+                            
                         </div>
                     </div>
 
@@ -543,7 +522,10 @@ margin:10px;
                                 <li class="title02 title">구분</li>
                                 <li class="title04 title">내용</li>
                             </ul>
-                            <ul class="contents">
+                            <ul class="contents "  th:if="${jisangModifyList.size()==0}">
+								<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+							 </ul>
+                            <ul class="contents" th:each="val:${jisangModifyList}">
                                 <li class="content01 content">
                                     1
                                 </li>
@@ -557,20 +539,7 @@ margin:10px;
                                     &#160
                                 </li>
                             </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    2
-                                </li>
-                                <li class="content02 content">
-                                    2024-04-02 15:40:01
-                                </li>
-                                <li class="content03 content">
-                                    파일 정보
-                                </li>
-                                <li class="content04 content">
-                                    &#160
-                                </li>
-                            </ul>
+                            
                         </div>
                     </div>
 

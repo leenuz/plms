@@ -37,6 +37,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	</select>
 	
+	<select id="selectPermitList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as no 
+		from jisang_master jm left join jisang_permit_master jpm on jpm.jpm_dockey=jm.jm_dockey
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+		and jm.jm_jisang_no=#{idx}
+		</if>
+			AND jm.jm_dockey IS NOT null
+		AND jpm.jpm_dockey IS NOT null
+		
+		
+	</select>
+	
+	
 	<select id="selectAtcFileList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *,(row_number() over()) as no 
 		from jisang_atcfile 
@@ -46,6 +60,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		
 		
+	</select>
+	
+	<select id="selectModifyList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as no 
+		from jisang_modify 
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+		and jm_jisang_no=#{idx}
+		</if>
+			
+	</select>
+	<select id="selectMergeList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as no 
+		from jisang_merge 
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+		and jm_jisang_no=#{idx}
+		</if>
+			
 	</select>
 	
 	

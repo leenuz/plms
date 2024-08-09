@@ -808,4 +808,144 @@
 	
 	</insert>
 	
+	<insert id="jisang_permit_master" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jpm_idx" keyProperty="jpm_idx">
+		
+		INSERT INTO jisang_permit_master 
+		(
+		
+		 jpm_pmt_no
+		 ,jpm_use_purpos
+		 ,jpm_echo_no
+		 ,jpm_use_st_date
+		 ,jpm_use_ed_date
+		 ,jpm_spot_result
+		 ,jpm_review
+		 ,jpm_contract
+		 ,jpm_pmt_status
+		 ,jpm_dockey
+		 
+		 ) 
+		 VALUES (
+		  #{PMT_NO}
+		  ,#{USE_PURPOS}
+		  ,#{ECHO_NO}
+		  ,date '1899-12-30'+#{USE_ST_DATE}::int
+		  ,date '1899-12-30'+#{USE_ED_DATE}::int
+		  
+		  ,#{SPOT_RESULT}
+		  ,#{RIVEW}
+		  ,#{CONTRACT}
+		  ,#{PMT_STATUS}
+		  ,#{DOCKEY}
+		  
+		 
+		   
+		)
+	
+	</insert>
+	
+	<insert id="jisang_modify" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jm_idx" keyProperty="jm_idx">
+		
+		INSERT INTO jisang_modify 
+		(
+		
+		 jm_modify_date
+		 ,jm_gubun
+		 ,jm_cont
+		 ,jm_echo
+		 ,jm_erp
+		 ,jm_files
+		 ,jm_jisang_no
+		 ,jm_user_name
+		 ,jm_user_id
+		 ) 
+		 VALUES (
+		  date '1899-12-30'+#{MODIFY_DATE}::int
+		  ,#{GUBUN}
+		  ,#{CONT}
+		  ,#{ECHO}
+		  ,#{ERP}
+		  ,#{FILES}
+		  ,#{JISANG_NO}
+		  ,#{USER_NAME}
+		  ,#{USER_ID}
+		  	   
+		)
+	
+	</insert>
+	<insert id="jisang_merge" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jm_idx" keyProperty="jm_idx">
+		
+		INSERT INTO jisang_merge 
+		(
+		
+		 jm_jisang_no
+		 ,jm_sido_nm
+		 ,jm_sgg_nm
+		 ,jm_emd_nm
+		 ,jm_ri_nm
+		 ,jm_jibun
+		 ,jm_pnu
+		 ,jm_jisa
+		 ,jm_jimok_text
+		 ,jm_jijuk_area
+		 ,jm_pyeonib_area
+		 ,jm_set_money
+		 ,jm_jasan_no
+		 ,jm_rep_jisang_no
+		 ) 
+		 VALUES (
+		 #{JISANG_NO}
+		 ,#{SIDO_NM}
+		 ,#{SGG_NM}
+		 ,#{EMD_NM}
+		 ,#{RI_NM}
+		 ,#{JIBUN}
+		 ,#{PNU}
+		 ,#{JISA}
+		 ,#{JIMOK_TEXT}
+		 ,NULLIF(cast(#{JIJUK_AREA} as varchar),'')::numeric
+		 ,NULLIF(cast(#{PYEONIB_AREA} as varchar),'')::numeric
+		 ,NULLIF(cast(#{SET_MONEY} as varchar),'')::numeric
+		 ,#{JASAN_NO}
+		 ,#{REP_JIANG_NO}
+		  	  	   
+		)
+	
+	</insert>
+	
+	<insert id="jisang_merge1" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jm_idx" keyProperty="jm_idx">
+		
+		INSERT INTO jisang_merge 
+		(
+		
+		 jm_jisang_no
+		 ,jm_sido_nm
+		 ,jm_sgg_nm
+		 ,jm_emd_nm
+		 ,jm_ri_nm
+		 ,jm_jibun
+		 ,jm_pnu
+		,jm_jisa
+		 ,jm_jimok_text
+		 ,jm_jijuk_area
+		 ,jm_yeonib_area
+		 
+		 ) 
+		 VALUES (
+		 #{JISANG_NO}
+		 ,#{SIDO_NM}
+		 ,#{SGG_NM}
+		 ,#{EMD_NM}
+		 ,#{RI_NM}
+		 ,#{JIBUN}
+		 ,#{PNU}
+		 ,#{JISA}
+		 ,#{JIMOK_TEXT}
+		 ,NULLIF(cast(#{JIJUK_AREA} as varchar),'')::numeric
+		 ,NULLIF(cast(#{PYEONIB_AREA} as varchar),'')::numeric
+		   	   
+		)
+	
+	</insert>
+	
 </mapper>
