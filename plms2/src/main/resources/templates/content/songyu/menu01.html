@@ -184,7 +184,6 @@ margin:10px;
                     <option value="">전체</option>
                     <option value="사유지">사유지</option>
                     <option value="국유지">국유지</option>
-                   
                   </select>
                 </div>
                 <div class="surfaceSelects">
@@ -200,8 +199,19 @@ margin:10px;
               </ul>
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle"><p>권리확보유형</p></li>
-                
-                
+                  <div class="selectWrappers">
+                      <select
+                              name="songyu_type"
+                              class="menuHiddenSelect01"
+                              id="menuHiddenSelectBox01_5"
+                              hidden>
+                          <option value="" selected>전체</option>
+                          <option value="지상권">지상권</option>
+                          <option value="미설정">미설정</option>
+                          <option value="점용">점용</option>
+                          <option value="회사토지">회사토지</option>
+                      </select>
+                  </div>
                 <div class="surfaceSelects">
                   <button class="surfaceSelectsTitleBtn">전체</button>
                   <div class="sufaceSelectList">
@@ -210,7 +220,7 @@ margin:10px;
                         <input
                           type="checkbox"
                           id="companylandCheckBox01"
-                          name="songyu_type_all" />
+                          name="songyu_type_all" checked />
                         <label for="companylandCheckBox01"></label>
                         <p>전체</p>
                       </li>

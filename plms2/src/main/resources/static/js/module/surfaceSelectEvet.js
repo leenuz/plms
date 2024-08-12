@@ -62,7 +62,8 @@ const surfaceSelectEvet = (selectBtnElements,  selectListElements) => {
 
    const surfaceSelectsTitleBtn = document.querySelectorAll(selectBtnElements);
    const surfaceSelectList = document.querySelectorAll(selectListElements);
-   
+   const selectedValues = {}; // 선택된 값들을 저장할 객체
+
    console.log(surfaceSelectsTitleBtn);
    
    
@@ -96,52 +97,7 @@ const surfaceSelectEvet = (selectBtnElements,  selectListElements) => {
    
       });
   
-	  console.log("---------------list----------------");   
-//console.log(list);
-	 /* surfaceSelectList.forEach((list) => {
-		//console.log(list);
-		console.log(this.html());
-	            list.addEventListener("click" , (event) => {
-	             
-	              const thisBtns = event.target.parentElement.parentElement.parentElement.previousElementSibling;
-	              const selectContent =  event.target.parentElement.parentElement.parentElement.parentElement.previousElementSibling.children[0];//셀렉박스
-	              let currentSelect = selectContent.getAttribute("id");//셀렉박스아이디 가져오기
-	              console.log("id:"+currentSelect);
-	              if (event.target.nodeName === "P") {
-
-	                  //권리확보현황, 권리제외필지조회, 권리필지조회 권리확보유형클릭시
-	                  if( currentSelect === "menuHiddenSelectBox01_3" || currentSelect === "menuHiddenSelectBox02_3" ||  currentSelect === "menuHiddenSelectBox03_3"){
-	                      return surfaceSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
-	                      surfaceSelectList.forEach((lists) => lists.classList.remove("active"));
-	                  }
-					  else{ 
-	                      let currentSelectValue = document.getElementById(currentSelect); //현재 셀렉박스 가져오기
-						  console.log("currentSelectValue:"+currentSelectValue);
-						  console.log("event.target.innerText:"+event.target.innerText);
-						 
-						// $("#"+currentSelect).val(event.target.innerText).attr("selected","selected");
-						$("#sido").val("강원특별자치도").attr("selected","selected");
-						 console.log(currentSelect+":"+$("#"+currentSelect).val());
-	                      return thisBtns.innerText = event.target.innerText,
-	                      $(currentSelectValue).val(event.target.innerText),//셀렉박스 값에 현재 클릭된 값의 텍스트 담기
-						  $("#"+currentSelect).val(event.target.innerText),
-						  $("#"+currentSelect).trigger("change"),
-						 //$(currentSelectValue).val(currentSelectValue.value),
-	                      console.log("currentSelectValue.value:"+currentSelectValue.value), //셀렉박스값표시
-	                      surfaceSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
-	                      surfaceSelectList.forEach((lists) => lists.classList.remove("active"));
-						 
-	                  }
-
-	              }
-	                  
-	              if(event.target.nodeName === "LABEL" || event.target.nodeName === "INPUT[TYPE='CHECKBOX']" ){ return; }
-
-
-	        });
-
-	      }); //end surfaceSelectList.forEach*/
-    
+	  console.log("---------------list----------------");
    });
    
    surfaceSelectList.forEach((list) => {
@@ -156,40 +112,128 @@ const surfaceSelectEvet = (selectBtnElements,  selectListElements) => {
    	              if (event.target.nodeName === "P") {
 
    	                  //권리확보현황, 권리제외필지조회, 권리필지조회 권리확보유형클릭시
-   	                  if( currentSelect === "menuHiddenSelectBox02_3" ||  currentSelect === "menuHiddenSelectBox03_3"){
+   	                  if( currentSelect === "menuHiddenSelectBox02_3"){
    	                      return surfaceSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
    	                      surfaceSelectList.forEach((lists) => lists.classList.remove("active"));
    	                  }
-   					  else{ 
+   	                  else if(currentSelect === "menuHiddenSelectBox01_5" || currentSelect === "menuHiddenSelectBox03_5"){
+   	                  }
+   					  else{
    	                      let currentSelectValue = document.getElementById(currentSelect); //현재 셀렉박스 가져오기
-   						 /* console.log("currentSelectValue:"+currentSelectValue);
-   						  console.log("event.target.innerText:"+event.target.innerText);*/
-   						 
-   						// $("#"+currentSelect).val(event.target.innerText).attr("selected","selected");
-   						//$("#sido").val("강원특별자치도").attr("selected","selected");
-   						 //console.log(currentSelect+":"+$("#"+currentSelect).val());
-   	                      return thisBtns.innerText = event.target.innerText,
-   	                      $(currentSelectValue).val(event.target.innerText),//셀렉박스 값에 현재 클릭된 값의 텍스트 담기
-   						  $("#"+currentSelect).val(event.target.innerText),
-   						  $("#"+currentSelect).trigger("change"),
-   						 //$(currentSelectValue).val(currentSelectValue.value),
-   	                      console.log("currentSelectValue.value:"+currentSelectValue.value), //셀렉박스값표시
-   	                      surfaceSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
-   	                      surfaceSelectList.forEach((lists) => lists.classList.remove("active"));
+   	                      selectedValues[currentSelect] = [event.target.innerText]; // 해당 셀렉박스에 대한 선택값 초기화
+                          updateSelectBox(currentSelect, thisBtns);
    						 
    	                  }
 
    	              }
    	                  
-   	              if(event.target.nodeName === "LABEL" || event.target.nodeName === "INPUT[TYPE='CHECKBOX']" ){ return; }
+   	              if (event.target.nodeName === "LABEL" || event.target.nodeName === "INPUT" && event.target.type === "checkbox") {
+//                      let checkbox = event.target.nodeName === "LABEL" ? event.target.previousElementSibling : event.target;
+//                      let value = checkbox.nextElementSibling.nextElementSibling.innerText;
+                      let checkbox = event.target.nodeName === "LABEL" ? event.target.previousElementSibling : event.target;
+                      let value = checkbox.nextElementSibling.nextElementSibling ? checkbox.nextElementSibling.nextElementSibling.innerText : event.target.nextElementSibling.innerText;
 
 
+                      if (!selectedValues[currentSelect]) {
+                          selectedValues[currentSelect] = [];
+                      }
+
+                      if (value === "전체") {
+                          const checkFlag = isAnyCheckboxChecked(checkbox);
+                          if (checkbox.checked || !checkFlag) {
+                              checkbox.checked = true; // "전체"가 체크된 상태에서 체크 해제되지 않도록 유지
+                          } else {
+                              selectedValues[currentSelect] = ["전체"];
+                              uncheckAllExcept(checkbox);
+                              updateSelectBoxWithoutClosing(currentSelect, thisBtns);
+                          }
+                      }else {
+                           // "전체" 체크 해제 로직 추가
+                           uncheckAllOption(checkbox);
+
+                           if (checkbox.checked) {
+                               selectedValues[currentSelect] = selectedValues[currentSelect].filter(val => val !== "전체");
+                               selectedValues[currentSelect].push(value);
+                           } else {
+                               selectedValues[currentSelect] = selectedValues[currentSelect].filter((val) => val !== value);
+                               if (selectedValues[currentSelect].length === 0) {
+                                   selectedValues[currentSelect] = ["전체"];
+                                   checkAllOption(checkbox);
+                               }
+                           }
+                           updateSelectBoxWithoutClosing(currentSelect, thisBtns);
+                      }
+                  }
    	        });
 
    	      }); //end surfaceSelectList.forEach
    
-   
-   
+          function updateSelectBox(selectId, btn) {
+              let currentSelectValue = document.getElementById(selectId);
+              let selectedText = selectedValues[selectId].join(", ");
+
+              btn.innerText = selectedText;
+              if (currentSelectValue) {
+                  $(currentSelectValue).val(selectedText);
+                  $("#" + selectId).val(selectedText);
+                  $("#" + selectId).trigger("change");
+              }
+              surfaceSelectsTitleBtn.forEach((btn) => btn.classList.remove("active"));
+              surfaceSelectList.forEach((lists) => lists.classList.remove("active"));
+          }
+          function updateSelectBoxWithoutClosing(selectId, btn) {
+              let currentSelectValue = document.getElementById(selectId);
+              let selectedText = selectedValues[selectId].join(", ");
+
+               btn.innerText = selectedText;
+               if (currentSelectValue) {
+                   $(currentSelectValue).val(selectedText);
+                   $("#" + selectId).val(selectedText);
+                   $("#" + selectId).trigger("change");
+               }
+          }
+
+          function uncheckAllExcept(exceptCheckbox) {
+              const checkboxes = exceptCheckbox.closest('ul').querySelectorAll('input[type="checkbox"]');
+              checkboxes.forEach(checkbox => {
+                  if (checkbox !== exceptCheckbox) {
+                      checkbox.checked = false;
+                  }
+              });
+          }
+
+          function uncheckAllOption(exceptCheckbox) {
+              const checkboxes = exceptCheckbox.closest('ul').querySelectorAll('input[type="checkbox"]');
+              checkboxes.forEach(checkbox => {
+                  if (checkbox.nextElementSibling.nextElementSibling.innerText === "전체") {
+                      checkbox.checked = false;
+                  }
+              });
+          }
+
+          function checkAllOption(exceptCheckbox) {
+              const checkboxes = exceptCheckbox.closest('ul').querySelectorAll('input[type="checkbox"]');
+              checkboxes.forEach(checkbox => {
+                  if (checkbox.nextElementSibling.nextElementSibling.innerText === "전체") {
+                      checkbox.checked = true;
+                  }
+              });
+          }
+
+          function isAnyCheckboxChecked(checkboxListSelector) {
+              // 체크박스 리스트를 가져온다.
+              const checkboxes = checkboxListSelector.closest('ul').querySelectorAll('input[type="checkbox"]');
+
+              // 체크박스 중 하나라도 체크되어 있는지 확인한다.
+              for (let checkbox of checkboxes) {
+                  if (checkbox.checked) {
+                      return true; // 하나라도 체크된 것이 있으면 true를 반환
+                  }
+              }
+
+              // 모든 체크박스가 체크되지 않은 경우 false를 반환
+              return false;
+          }
    }
 
 
