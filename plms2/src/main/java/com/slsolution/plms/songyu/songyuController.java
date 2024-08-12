@@ -457,24 +457,21 @@ public class songyuController {
 //				
 				String jisa = req.getParameter("jisa");
 				String manage_no = req.getParameter("manage_no");
-				String type_gover=req.getParameter("type_gover");
-				String type_jisang=req.getParameter("type_jisang");
-				String type_notset=req.getParameter("type_notset");
-				String type_dopco=req.getParameter("type_dopco");
+//				String type_gover=req.getParameter("type_gover");
+//				String type_jisang=req.getParameter("type_jisang");
+//				String type_notset=req.getParameter("type_notset");
+//				String type_dopco=req.getParameter("type_dopco");
+		String right_type=req.getParameter("right_type");
+		String dosiplan=req.getParameter("dosiplan");
+		String address=req.getParameter("saddr");
+		String toji_type=req.getParameter("toji_type");
+		log.info("toji_type:"+toji_type);
+
 				Map map=req.getParameterMap();
 		        log.info("draw:"+draw);
 		        log.info("length:"+length);
 		        
 		        	//log.info("mx:"+mx);
-		        	
-		       
-		        
-		        log.info("jisa:"+jisa);
-		        log.info("manage_no:"+manage_no);
-		        log.info("type_gover:"+type_gover);
-		        log.info("type_jisang:"+type_jisang);
-		        log.info("type_notset:"+type_notset);
-		        log.info("type_dopco:"+type_dopco);
 		        
 				HashMap params = new HashMap();
 				params.put("draw",draw);
@@ -482,7 +479,15 @@ public class songyuController {
 				params.put("length",length);
 				params.put("jisa",req.getParameter("jisa"));
 				params.put("idx",manage_no);
-				
+		params.put("dosiplan",dosiplan);
+		params.put("address",address);
+		params.put("toji_type",toji_type);
+
+
+		String[] right_arr= {};
+		right_arr=right_type.split(",");
+		params.put("right_type", right_arr);
+
 				params.put("cancelYn","N");
 				if (orderColumn==null || orderColumn.equals("null")) {
 					log.info("----------null--------");

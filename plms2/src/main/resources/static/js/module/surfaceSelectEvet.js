@@ -116,7 +116,7 @@ const surfaceSelectEvet = (selectBtnElements,  selectListElements) => {
    	                      return surfaceSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
    	                      surfaceSelectList.forEach((lists) => lists.classList.remove("active"));
    	                  }
-   	                  else if(currentSelect === "menuHiddenSelectBox01_5" || currentSelect === "menuHiddenSelectBox03_5"){
+   	                  else if(currentSelect === "menuHiddenSelectBox01_5" || currentSelect === "menuHiddenSelectBox02_5"|| currentSelect === "menuHiddenSelectBox03_5"){
    	                  }
    					  else{
    	                      let currentSelectValue = document.getElementById(currentSelect); //현재 셀렉박스 가져오기
