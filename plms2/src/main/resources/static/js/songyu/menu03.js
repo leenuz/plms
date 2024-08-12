@@ -20,21 +20,21 @@ loadDataTable("");
 
 //조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
 $(document).on("click","#registerBtn",function(){
-       console.log($("#menuHiddenSelectBox01_1").val());
+       console.log($("#menuHiddenSelectBox03_1").val());
 	   console.log($("#searchForm").serialize());
 	   
-	   var formSerializeArray = $('#searchForm').serializeArray();
+	   var formSerializeArray = $('#searchForm').serializeArray();
 	   console.log(formSerializeArray)
-	   var object = {};
-	   for (var i = 0; i < formSerializeArray.length; i++){
-	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+	   var object = {};
+	   for (var i = 0; i < formSerializeArray.length; i++){
+	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
 	   }
 	   
-	   var json = JSON.stringify(formSerializeArray);
+	   var json = JSON.stringify(formSerializeArray);
 	  
 	  console.log("----------jsonobj------------");
 	  console.log(json);
-	  console.log("object askMenu01:"+object.askMenu01); 
+	  console.log("object askMenu03:"+object.askMenu03);
 	  
 	  
 	  
@@ -231,7 +231,7 @@ function datatablebasic(){
 }
 
 
-// Korean    var lang_kor = {        "decimal" : "",        "emptyTable" : "데이터가 없습니다.",        "info" : "_START_ - _END_ (총 _TOTAL_ 명)",        "infoEmpty" : "0명",        "infoFiltered" : "(전체 _MAX_ 명 중 검색결과)",        "infoPostFix" : "",        "thousands" : ",",        "lengthMenu" : "_MENU_ 개씩 보기",        "loadingRecords" : "로딩중...",        "processing" : "처리중...",        "search" : "검색 : ",        "zeroRecords" : "검색된 데이터가 없습니다.",        "paginate" : {            "first" : "첫 페이지",            "last" : "마지막 페이지",            "next" : "다음",            "previous" : "이전"        },        "aria" : {            "sortAscending" : " :  오름차순 정렬",            "sortDescending" : " :  내림차순 정렬"        }    };
+// Korean    var lang_kor = {        "decimal" : "",        "emptyTable" : "데이터가 없습니다.",        "info" : "_START_ - _END_ (총 _TOTAL_ 명)",        "infoEmpty" : "0명",        "infoFiltered" : "(전체 _MAX_ 명 중 검색결과)",        "infoPostFix" : "",        "thousands" : ",",        "lengthMenu" : "_MENU_ 개씩 보기",        "loadingRecords" : "로딩중...",        "processing" : "처리중...",        "search" : "검색 : ",        "zeroRecords" : "검색된 데이터가 없습니다.",        "paginate" : {            "first" : "첫 페이지",            "last" : "마지막 페이지",            "next" : "다음",            "previous" : "이전"        },        "aria" : {            "sortAscending" : " :  오름차순 정렬",            "sortDescending" : " :  내림차순 정렬"        }    };
 
 
 function loadDataTable(params){
@@ -283,13 +283,31 @@ function loadDataTable(params){
 						d.jisa=ljsIsNull(params.jisa)?'':params.jisa;
 						d.manage_no=params.manage_no;
 						d.toji_type=params.toji_type;
-						d.type_gover=params.songyu_type_gover;
-						d.type_jisang=params.songyu_type_jisang;
-						d.type_notset=params.songyu_type_notset;
-						d.type_dopco=params.songyu_type_togi;
 						d.dosiplan=params.togi_plan_type;
-						console.log("askmenu:"+params.askMenu01);
-						if (params.askMenu01=="0") d.saddr=params.addressFull;
+						d.right_overlap=params.OverlapCheck02;
+						console.log("askmenu:"+params.askMenu03);
+
+						var right_type="";
+                        if (params.songyu_type_all!=undefined && params.songyu_type_all!=null) right_type="";
+                        else {
+                            if (params.songyu_type_gover!=undefined && params.songyu_type_gover!=null) right_type+=",gover";
+                            if (params.songyu_type_jisang!=undefined && params.songyu_type_jisang!=null) right_type+=",jisang";
+                            if (params.songyu_type_notset!=undefined && params.songyu_type_notset!=null) right_type+=",notset";
+                            if (params.songyu_type_toji!=undefined && params.songyu_type_toji!=null) right_type+=",dopco";
+                        }
+                        console.log("right_type:"+right_type.substr(1));
+                        d.right_type=right_type.substr(1);
+                        d.dosiplan=params.dosiplan;
+
+                        var ask=(params.askMenu03==undefined || params.askMenu03==null)?'0':params.askMenu03;
+                        console.log("askmenu:"+ask);
+
+
+//						if (params.askMenu01=="0") d.saddr=params.addressFull;
+                        if (ask=="0") {
+							console.log("---------3--------------");
+							d.saddr=(params.addressFull==undefined || params.addressFull==null)?'':params.addressFull;
+						}
 						else{
 							console.log("----------------------------1--------------");
 							console.log(ljsIsNull(params.sgg));
@@ -304,7 +322,8 @@ function loadDataTable(params){
 							//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
 							//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
 							console.log("addrs:"+addrs);
-							d.saddr=addrs;
+//							d.saddr=addrs;
+							d.saddr=(addrs==undefined || addrs==null)?'':addrs;
 							//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
 						} 
 	 

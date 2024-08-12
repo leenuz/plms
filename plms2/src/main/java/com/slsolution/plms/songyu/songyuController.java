@@ -259,9 +259,22 @@ public class songyuController {
 	
 	@GetMapping(path="/menu03") //http://localhost:8080/api/get/dbTest
     public ModelAndView viewMenu03(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+
+		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+		ArrayList<HashMap> yongdolist = mainService.selectQuery("commonSQL.selectYongdoList",params);
+		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+
 		ModelAndView mav=new ModelAndView();
-				mav.setViewName("content/songyu/menu03");
-      			return mav;
+		mav.addObject("jisaList",jisalist);
+		mav.addObject("resultYongdoList",yongdolist);
+		mav.addObject("resultJimokList",jimoklist);
+		mav.addObject("sidoList",sidolist);
+		mav.setViewName("content/songyu/menu03");
+		return mav;
     }
 	
 	@RequestMapping(value="/menu01DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
@@ -472,7 +485,7 @@ public class songyuController {
 		        log.info("length:"+length);
 		        
 		        	//log.info("mx:"+mx);
-		        
+
 				HashMap params = new HashMap();
 				params.put("draw",draw);
 				params.put("start",start);
@@ -585,6 +598,7 @@ public class songyuController {
 				String orderColumn=req.getParameter("order[0][column]");
 				String orderDirection = req.getParameter("order[0][dir]");
 				String orderColumnName=req.getParameter("columns[" + orderColumn + "][data]");
+
 				log.info("orderColumn:"+orderColumn);
 				log.info("orderColumnName:"+orderColumnName);
 				log.info("orderDirection:"+orderDirection);
@@ -595,6 +609,11 @@ public class songyuController {
 //				
 				String jisa = req.getParameter("jisa");
 				String manage_no = req.getParameter("manage_no");
+				String right_type=req.getParameter("right_type");
+				String dosiplan=req.getParameter("dosiplan");
+				String address=req.getParameter("saddr");
+				String toji_type=req.getParameter("toji_type");
+				String right_overlap=req.getParameter("right_overlap");
 				String type_gover=req.getParameter("type_gover");
 				String type_jisang=req.getParameter("type_jisang");
 				String type_notset=req.getParameter("type_notset");
@@ -613,13 +632,22 @@ public class songyuController {
 		        log.info("type_jisang:"+type_jisang);
 		        log.info("type_notset:"+type_notset);
 		        log.info("type_dopco:"+type_dopco);
-		        
+				log.info("right_type:"+right_type);
+
 				HashMap params = new HashMap();
 				params.put("draw",draw);
 				params.put("start",start);
 				params.put("length",length);
 				params.put("jisa",req.getParameter("jisa"));
 				params.put("idx",manage_no);
+				params.put("dosiplan",dosiplan);
+				params.put("address",address);
+				params.put("toji_type",toji_type);
+				params.put("right_overlap",right_overlap);
+
+				String[] right_arr= {};
+				right_arr=right_type.split(",");
+				params.put("right_type", right_arr);
 				
 				params.put("manageYn","Y");
 				if (orderColumn==null || orderColumn.equals("null")) {

@@ -119,25 +119,46 @@ margin:10px;
         <div class="surfacePartTitleBoxs">
           <h5>관리필지조회</h5>
         </div>
+        <form id="searchForm" onSubmit="return false;">
         <section class="surfaceSectionBoxs">
           <div class="surfacePartSectionCont">
             <div class="surfacePartSectionContDevide">
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle"><p>지사</p></li>
+                <div class="selectWrappers">
+                  <select
+                    name="jisa"
+                    class="menuHiddenSelect03"
+                    id="menuHiddenSelectBox03_1"
+                    hidden>
+                    <option value="">전체</option>
+                      <th:block th:each="val:${jisaList}">
+                        <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+                      </th:block>
+                  </select>
+                </div>
                 <div class="surfaceSelects">
-                  <button class="surfaceSelectsTitleBtn">전체</button>
+                  <button type="button" class="surfaceSelectsTitleBtn">전체</button>
                   <div class="sufaceSelectList">
                     <ul class="surfaceSelectListMember">
                       <li><p>전체</p></li>
-                      <li><p>서울지사</p></li>
-                      <li><p>경인지사</p></li>
-                      <li><p>대전지사</p></li>
-                      <li><p>충청지사</p></li>
-                      <li><p>충청지사</p></li>
-                      <li><p>충청지사</p></li>
-                      <li><p>충청지사</p></li>
+                      <th:block th:each="val:${jisaList}">
+                        <li><p th:text="${val.jm_jisa_name}">Y</p></li>
+                      <th:block>
                     </ul>
                   </div>
+<!--                  <div class="sufaceSelectList">-->
+<!--                    <ul class="surfaceSelectListMember">-->
+<!--                      <li><p>전체</p></li>-->
+<!--                      <li><p>서울지사</p></li>-->
+<!--                      <li><p>경인지사</p></li>-->
+<!--                      <li><p>대전지사</p></li>-->
+<!--                      <li><p>충청지사</p></li>-->
+<!--                      <li><p>충청지사</p></li>-->
+<!--                      <li><p>충청지사</p></li>-->
+<!--                      <li><p>충청지사</p></li>-->
+<!--                    </ul>-->
+<!--                  </div>-->
                 </div>
               </ul>
               <ul class="inputControlBoxs sectionMenuListBoxs">
@@ -148,19 +169,43 @@ margin:10px;
               </ul>
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle"><p>토지유형</p></li>
+                <div class="selectWrappers">
+                  <select
+                    name="toji_type"
+                    class="menuHiddenSelect03"
+                    id="menuHiddenSelectBox03_2"
+                    hidden>
+                    <option value="">전체</option>
+                    <option value="사유지">사유지</option>
+                    <option value="국유지">국유지</option>
+                  </select>
+                </div>
                 <div class="surfaceSelects">
-                  <button class="surfaceSelectsTitleBtn">전체</button>
+                  <button type="button" class="surfaceSelectsTitleBtn">전체</button>
                   <div class="sufaceSelectList smallHeight">
                     <ul class="surfaceSelectListMember">
                       <li><p>전체</p></li>
-                      <li><p>Y</p></li>
-                      <li><p>N</p></li>
+                      <li><p>국유지</p></li>
+                      <li><p>사유지</p></li>
                     </ul>
                   </div>
                 </div>
               </ul>
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle"><p>권리확보유형</p></li>
+                  <div class="selectWrappers">
+                      <select
+                              name="songyu_type"
+                              class="menuHiddenSelect03"
+                              id="menuHiddenSelectBox03_5"
+                              hidden>
+                          <option value="" selected>전체</option>
+                          <option value="지상권">지상권</option>
+                          <option value="미설정">미설정</option>
+                          <option value="점용">점용</option>
+                          <option value="회사토지">회사토지</option>
+                      </select>
+                  </div>
                 <div class="surfaceSelects">
                   <button class="surfaceSelectsTitleBtn">전체</button>
                   <div class="sufaceSelectList">
@@ -168,41 +213,41 @@ margin:10px;
                       <li>
                         <input
                           type="checkbox"
-                          id="companyland03_CheckBox01"
-                          name="companyland03" />
-                        <label for="companyland03_CheckBox01"></label>
+                          id="companylandCheckBox01"
+                          name="songyu_type_all" checked/>
+                        <label for="companylandCheckBox01"></label>
                         <p>전체</p>
                       </li>
                       <li>
                         <input
                           type="checkbox"
-                          id="companyland03_CheckBox02"
-                          name="companyland03" />
-                        <label for="companyland03_CheckBox02"></label>
+                          id="companylandCheckBox02"
+                          name="songyu_type_jisang" />
+                        <label for="companylandCheckBox02"></label>
                         <p>지상권</p>
                       </li>
                       <li>
                         <input
                           type="checkbox"
-                          id="companyland03_CheckBox03"
-                          name="companyland03" />
-                        <label for="companyland03_CheckBox03"></label>
+                          id="companylandCheckBox03"
+                          name="songyu_type_notset" />
+                        <label for="companylandCheckBox03"></label>
                         <p>미설정</p>
                       </li>
                       <li>
                         <input
                           type="checkbox"
-                          id="companyland03_CheckBox04"
-                          name="companyland03" />
-                        <label for="companyland03_CheckBox04"></label>
+                          id="companylandCheckBox04"
+                          name="songyu_type_gover" />
+                        <label for="companylandCheckBox04"></label>
                         <p>점용</p>
                       </li>
                       <li>
                         <input
                           type="checkbox"
-                          id="companyland03_CheckBox05"
-                          name="companyland03" />
-                        <label for="companyland03_CheckBox05"></label>
+                          id="companylandCheckBox05"
+                          name="songyu_type_toji" />
+                        <label for="companylandCheckBox05"></label>
                         <p>회사토지</p>
                       </li>
                     </ul>
@@ -211,6 +256,18 @@ margin:10px;
               </ul>
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle"><p>도시계획유형</p></li>
+                <div class="selectWrappers">
+                  <select
+                    name="dosiplan"
+                    class="menuHiddenSelect03"
+                    id="menuHiddenSelectBox03_3"
+                    hidden>
+                    <option value="">전체</option>
+                    <option value="Y">Y</option>
+                    <option value="N">N</option>
+
+                  </select>
+                </div>
                 <div class="surfaceSelects">
                   <button class="surfaceSelectsTitleBtn">전체</button>
                   <div class="sufaceSelectList smallHeight">
@@ -236,10 +293,10 @@ margin:10px;
               <div class="surfacePartSectionRadioBoxs">
                 <ul class="radioBoxs">
                   <li>
-                    <input type="radio" name="askMenu03" /><span>입력형</span>
+                    <input type="radio" name="askMenu03" value="0" checked /><span>입력형</span>
                   </li>
                   <li class="addressInput">
-                    <input
+                    <input name="addressFull"
                       type="search"
                       placeholder="주소입력"
                       class="searchInputBox03" />
@@ -247,20 +304,57 @@ margin:10px;
                 </ul>
                 <ul class="radioBoxs menuRadioEvet03">
                   <li>
-                    <input type="radio" name="askMenu03" /><span>선택형</span>
+                    <input type="radio" name="askMenu03" value="1"/><span>선택형</span>
                   </li>
                   <li>
+                    <div class="selectWrappers">
+                      <select name="sido" id="sido" hidden>
+                          <option value="">전체</option>
+                          <th:block th:each="val:${sidoList}">
+                            <option th:text="${val.sm_name}" th:value="${val.sm_name}"></option>
+                          </th:block>
+                      </select>
+                    </div>
                     <div class="surfaceSelects">
-                      <button class="surfaceSelectsTitleBtn">전체</button>
+                      <button class="surfaceSelectsTitleBtn" id="sidoText">전체</button>
                       <div class="sufaceSelectList smallHeight">
                         <ul class="surfaceSelectListMember">
+                            <li><p>전체</p></li>
+                            <th:block th:each="val:${sidoList}">
+                                <li><p th:text="${val.sm_name}">Y</p></li>
+                                <th:block>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="selectWrappers">
+                      <select name="sgg" id="sgg" hidden>
+                        <option value="">전체</option>
+                      </select>
+                    </div>
+                    <div class="surfaceSelects">
+                      <button class="surfaceSelectsTitleBtn" id="sggText">전체</button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember" id="sggUl">
+                          <li><p>전체</p></li>
+                          <li><p>N</p></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="selectWrappers">
+                      <select name="emd" id="emd" hidden>
+                        <option value="">전체</option>
+                      </select>
+                    </div>
+                    <div class="surfaceSelects">
+                      <button class="surfaceSelectsTitleBtn" id="emdText">전체</button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember" id="emdUl">
                           <li><p>전체</p></li>
                           <li><p>Y</p></li>
-                          <li><p>N</p></li>
-                          <li><p>N</p></li>
-                          <li><p>N</p></li>
-                          <li><p>N</p></li>
-                          <li><p>N</p></li>
                           <li><p>N</p></li>
                         </ul>
                       </div>
@@ -268,33 +362,9 @@ margin:10px;
                   </li>
                   <li>
                     <div class="surfaceSelects">
-                      <button class="surfaceSelectsTitleBtn">전체</button>
+                      <button class="surfaceSelectsTitleBtn" id="riText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember">
-                          <li><p>전체</p></li>
-                          <li><p>Y</p></li>
-                          <li><p>N</p></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="surfaceSelects">
-                      <button class="surfaceSelectsTitleBtn">전체</button>
-                      <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember">
-                          <li><p>전체</p></li>
-                          <li><p>Y</p></li>
-                          <li><p>N</p></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="surfaceSelects">
-                      <button class="surfaceSelectsTitleBtn">전체</button>
-                      <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember">
+                        <ul class="surfaceSelectListMember" id="riUl">
                           <li><p>전체</p></li>
                           <li><p>Y</p></li>
                           <li><p>N</p></li>
@@ -304,7 +374,7 @@ margin:10px;
                   </li>
                   <li style="padding: 0px 3px">
                     <div class="inputControlList">
-                      <input
+                      <input name=jibun id="jibun"
                         type="text"
                         placeholder="지번입력"
                         class="menuAdderssInput03" />
@@ -314,12 +384,13 @@ margin:10px;
               </div>
               <!--surfacePartSectionRadioBoxs-->
               <div class="surfacePartSectionBtnBoxs">
-                <button class="registerBtn">조회하기</button>
+                <button class="registerBtn" id="registerBtn">조회하기</button>
               </div>
             </div>
           </div>
           <!--surfacePartSectionCont-->
         </section>
+        </form>
         <main>
           <div class="surfaceMainContentWrapper">
             <div class="surfaceMainContent">
