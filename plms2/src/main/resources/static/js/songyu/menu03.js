@@ -498,10 +498,25 @@ function loadDataTable(params){
 					
 					
 					var data = table.row( this ).data();
-										       console.log(data);
-					console.log(data.idx);						   
+//										       console.log(data);
+					console.log("***************** " + data.idx);
 					var url="/songyu/menu01_detail?idx="+data.idx;
-					window.location = url;						   
+					if (data.idx.substring(0,1)=="J"){ //지상권
+                        console.log("jisang");
+                        url="/jisang/groundDetail?idx="+data.idx+"&index="+data.index;
+                    }
+                    else if (data.idx.substring(0,1)=="G"){ //점용
+                        url="/gover/occupationDetails?idx="+data.idx+"&index="+data.index;
+
+                    }
+                    else if (data.idx.substring(0,1)=="N"){ //미설정
+                        url="/notset/unsetOccupationDetails?idx="+data.idx+"&index="+data.index;
+
+                    }else if (data.idx.substring(0,1)=="T"){ //토지
+                         url="/toji/tojiDetails?idx="+data.idx+"&index="+data.index;
+                    }
+                    else return;
+					window.location = url;
 											   
 			    });
 			

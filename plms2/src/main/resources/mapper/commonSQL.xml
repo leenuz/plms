@@ -84,6 +84,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	
 	</insert>
+
+	<delete id="pnuAtcDelete" parameterType="java.util.HashMap">
+
+		delete from pnu_atcfile
+		where pa_idx = #{pa_idx}
+
+	</delete>
 	
 	
 </mapper>

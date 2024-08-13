@@ -604,8 +604,8 @@ margin:10px;
                             <div class="contentScr">
                                 <ul class="contents" th:each="val:${jisangPnuAtcFileList}">
                                     <li class="content01 content">
-                                        <input type="checkbox"  th:field="*{jisangPnuAtcFileList}"  th:value="${val.pa_idx}">
-                                        <label for="groundcustomCheckbox03"></label>
+                                        <input type="checkbox" th:id="'checkbox_' + ${val.pa_idx}" class="file-checkbox" th:value="${val.pa_idx}">
+                                        <label th:for="'checkbox_' + ${val.pa_idx}"></label>
                                     </li>
                                     <li class="content02 content">
                                         [[${val.pa_wdate}]]
@@ -614,7 +614,7 @@ margin:10px;
                                         [[${val.pa_file_nm}]]
                                     </li>
                                     <li class="content04 content">
-                                        <button class="viewDetailButton">보기</button>
+                                        <button class="viewDetailButton" th:onclick="openFilePopup([[${val.pa_file_path}]])">보기</button>
                                     </li>
                                 </ul>
                                 
@@ -624,7 +624,7 @@ margin:10px;
 
                     <div class="btnWrap">
                         <button class="fileBtn fileSaveBtn" id="fileSaveBtn">첨부파일 저장</button>
-                        <button class="fileBtn delBtn">선택파일 삭제</button>
+                        <button class="fileBtn delBtn" id="deleteSelectedBtn">선택파일 삭제</button>
                     </div>
                 </div>
             </div>

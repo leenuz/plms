@@ -2,6 +2,8 @@ package com.slsolution.plms.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,6 +13,10 @@ import java.util.Properties;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.ui.Model;
@@ -734,8 +740,90 @@ StringBuilder sb=new StringBuilder();
       			response.getWriter().flush();
        // return new ModelAndView("dbTest", "list", list);
     }
-    
-    
+
+    @RequestMapping(value="/pnuAtcDelete", method = {RequestMethod.GET, RequestMethod.POST})
+    public void pnuAtcDelete(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+
+        //일반웹형식
+//		Properties requestParams = CommonUtil.convertToProperties(httpRequest);
+//        log.info("requestParams:"+requestParams);
+
+//        //json으로 넘어올때
+        String getRequestBody = ParameterUtil.getRequestBodyToStr(httpRequest);
+        log.info("getRequestBody:"+getRequestBody);
+        JSONObject json=new JSONObject(getRequestBody.toString());
+        JSONArray idxarr=json.getJSONArray("fileIds");
+        log.info("idxarr:"+idxarr);
+        log.info("idxarr0:"+idxarr.get(0));
+
+        int fsize=idxarr.length();
+
+        for(int i=0;i<fsize;i++) {
+            log.info("delete IDX:"+idxarr.get(i));
+
+            HashMap params = new HashMap();
+            JSONObject jsonObject = (JSONObject) idxarr.get(i);
+            params.put("pa_idx", jsonObject.get("value"));
+            mainService.DeleteQuery("commonSQL.pnuAtcDelete", params);
+
+            //파일 삭제 부분.
+            // 파일 경로 생성
+            String filePath = GC.getPnuAtcFileDir();; //설정파일로 뺀다.
+            String originalFilename = jsonObject.get("fileName").toString();
+            String fileFullPath = filePath+"/"+originalFilename; //파일 전체 경로
+
+            File file = new File(fileFullPath);
+            // 파일이 존재하는지 확인
+            if (file.exists()) {
+                // 파일 삭제
+                if (file.delete()) {
+                    //파일 삭제 성공
+                } else {
+                    //파일 삭제 실패시 에러
+                }
+            } else {
+                //파일 없을때 에러
+            }
+
+        }
+
+        HashMap<String,Object> resultmap=new HashMap();
+        resultmap.put("resultCode","0000");
+        resultmap.put("resultData",idxarr);
+        resultmap.put("resultMessage","success");
+        JSONObject obj =new JSONObject(resultmap);
+
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Cache-Control", "no-cache");
+        response.resetBuffer();
+        response.setContentType("application/json");
+        //response.getOutputStream().write(jo);
+        response.getWriter().print(obj);
+        response.getWriter().flush();
+        // return new ModelAndView("dbTest", "list", list);
+    }
+
+    //파일 읽기 전용 API
+    @GetMapping("/downloadFile")
+    public ResponseEntity<Resource> downloadFile(@RequestParam String filePath) throws IOException {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            throw new RuntimeException("File not found");
+        }
+
+        Resource resource = new FileSystemResource(file);
+
+        String contentType = Files.probeContentType(Paths.get(file.getAbsolutePath()));
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getName() + "\"")
+                .body(resource);
+    }
 
     
     
