@@ -391,7 +391,7 @@ button {
     width: 100%;
 }
 #occupationDetails .landInfoEdit .contBoxMini04 .depth2 .contents {
-    height: 90px;
+    /*height: 90px;*/
 }
 #occupationDetails .landInfoEdit .contBoxMini04 .contents .content01 {
     width:5.6%;
@@ -401,6 +401,19 @@ button {
 }
 #occupationDetails .landInfoEdit .contBoxMini04 .contents .content06 {
     width:12.4%;
+}
+.contentDetailBox .depth2 .contents {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* 버튼의 부모 요소가 전체 높이를 차지하게 함 */
+}
+
+.contentDetailBox .depth2 .viewAllBtn {
+    display: block;
+    margin: 0 auto;
+    width: 150px; /* 버튼의 너비를 고정 */
+    text-align: center;
 }
 
 #occupationDetails .occupationPermitBasicInfo {
