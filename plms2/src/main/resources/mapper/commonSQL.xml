@@ -42,9 +42,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 	<select id="getSigunMaster" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		<![CDATA[
-		 select sm_gugun from sigun_master where sm_sido=#{key} 
-		]]>
+		
+		 select sm_gugun from sigun_master 
+		 where 1=1
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(key)" > 
+		 and sm_sido=#{key} 
+		 </if>
+		
 	</select>
 	<select id="getDongMaster" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<![CDATA[

@@ -1,17 +1,18 @@
+var uploadFiles=new Array();
   $(document).ready(function(){
 
- var objDragAndDrop = $(".dragAndDropDiv");
+ var objDragAndDrop = $(".fileUploadBox");
                 
-                $(document).on("dragenter",".dragAndDropDiv",function(e){
+                $(document).on("dragenter",".fileUploadBox",function(e){
                     e.stopPropagation();
                     e.preventDefault();
                     $(this).css('border', '2px solid #0B85A1');
                 });
-                $(document).on("dragover",".dragAndDropDiv",function(e){
+                $(document).on("dragover",".fileUploadBox",function(e){
                     e.stopPropagation();
                     e.preventDefault();
                 });
-                $(document).on("drop",".dragAndDropDiv",function(e){
+                $(document).on("drop",".fileUploadBox",function(e){
                     
                     $(this).css('border', '2px dotted #0B85A1');
                     e.preventDefault();
@@ -49,8 +50,8 @@
                    {
                         var fd = new FormData();
                         fd.append('file', files[i]);
-                 
-                        var status = new createStatusbar(obj); //Using this we can set progress.
+                 		
+                        var status = new createStatusbar(obj.parent().parent().find("#fileListDiv ").find("#flist")); //Using this we can set progress.
                         status.setFileNameSize(files[i].name,files[i].size);
                         sendFileToServer(fd,status);
                  
@@ -60,10 +61,11 @@
                 var rowCount=0;
                 function createStatusbar(obj){
 					console.log("----------start createStatusBar------------");
-                        console.log(obj);
+                        console.log(obj.parent().parent().find("#status").parent().html());
+					var uobj=obj.parent().parent().find("#status");	
                     rowCount++;
-                    var row="odd";
-                    if(rowCount %2 ==0) row ="even";
+                    var row="";
+                    //if(rowCount %2 ==0) row ="even";
                     this.statusbar = $("<div class='statusbar "+row+"'></div>");
                     this.filename = $("<div class='filename'></div>").appendTo(this.statusbar);
                     this.size = $("<div class='filesize'></div>").appendTo(this.statusbar);
@@ -136,7 +138,8 @@
                             status.setProgress(100);
                  			console.log(data);
                  			console.log(data.resultData);
-                            //$("#status1").append("File upload Done<br>");           
+                            //$("#status1").append("File upload Done<br>");    
+							uploadFiles.push(data.resultData.fpath);       
                         }
                     }); 
                  

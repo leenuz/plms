@@ -327,7 +327,10 @@ public class songyuController {
 				String manage_no = req.getParameter("manage_no");
 				String right_type=req.getParameter("right_type");
 				String dosiplan=req.getParameter("dosiplan");
+				
 				String address=req.getParameter("saddr");
+				if (address.equals("undefined")) address=null;
+				
 				String toji_plan_type=req.getParameter("toji_plan_type");
 				String toji_type=req.getParameter("toji_type");
 				String right_overlap=req.getParameter("right_overlap");

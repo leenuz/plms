@@ -231,6 +231,8 @@ public class jisangController {
 	//groundDetail  상세 조회
 	@GetMapping(path="/groundDetail") //http://localhost:8080/api/get/dbTest
     public ModelAndView groundDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 		ModelAndView mav=new ModelAndView();
 		
 		
@@ -245,6 +247,7 @@ public class jisangController {
 		params.put("idx",idx);
 		params.put("index",index);
 		log.info("params:"+params);
+		
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
@@ -252,7 +255,8 @@ public class jisangController {
 		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
 		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
 		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
-		
+		params.put("pnu", data.get(0).get("jm_pnu"));
+		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
 		
 		log.info("params:"+params);
 		log.info("data:"+data.get(0));
@@ -261,7 +265,7 @@ public class jisangController {
 		log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
 		log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
 		log.info("jisangPermitList:"+jisangPermitList);
-		
+		log.info("jisangIssueList:"+jisangIssueList);
 		log.info("souja count:"+soujaList.size());
 		log.info("soujaList:"+soujaList);
 		log.info("atcFileList:"+atcFileList);
@@ -271,6 +275,7 @@ public class jisangController {
       			mav.addObject("atcFileList",atcFileList);
       			mav.addObject("jisangModifyList",jisangModifyList);
       			mav.addObject("jisangMergeList",jisangMergeList);
+      			mav.addObject("jisangIssueList",jisangIssueList);
       			mav.setViewName("content/jisang/groundDetail");
       			return mav;
     }

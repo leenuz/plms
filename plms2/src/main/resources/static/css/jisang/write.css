@@ -66,12 +66,13 @@
                 vertical-align:top;
             }
             .statusbar:nth-child(odd){
-                background:#EBEFF0;
+                /* background:#EBEFF0; */
+               /*  border-bottom: 1px solid #A9CCD1; */
             }
             .filename{
                 display:inline-block;
                 vertical-align:top;
-                width:250px;
+                width:70%;
             }
             .filesize{
                 display:inline-block;

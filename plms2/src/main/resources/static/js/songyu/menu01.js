@@ -46,6 +46,7 @@ $(document).on("click","#registerBtn",function(){
 $(document).on("change","#sido",function(){
 	console.log("----------start sido change -------------");
 	$("#sido").val($("#sidoText").text()).attr("selected","selected");
+	if ($("#sido").val()==null) return;
 	var allData={"key":$("#sido").val()}
 					   console.log(allData);
 					  $.ajax({

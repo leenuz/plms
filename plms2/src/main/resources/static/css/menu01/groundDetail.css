@@ -26,6 +26,8 @@ select {
 input {
     border: 0;
     outline: 0;
+    width:100%;
+    text-align:center;
 }
 
 input:focus {
@@ -120,7 +122,7 @@ button {
     gap: 20px;
 }
 #groundDetail .mapFigure {
-    background: url(/assets/media/menu01/images/groundMap.png) no-repeat center;
+    /* background: url(/assets/media/menu01/images/groundMap.png) no-repeat center; */
     background-size: cover;
 }
 #groundDetail .contentDetailBox {
@@ -446,9 +448,9 @@ button {
 }
 #groundDetail .parcelAttachments .fileUploadWrap {
     width: 100%;
-    margin-bottom: 18px;
-    height: 130px;
-    overflow-y: scroll;
+  /*   margin-bottom: 18px; */
+    height: 150px;
+    /* overflow-y: scroll; */
     border: 1px dashed #CDDBF0;
     border-radius: 5px;
 }

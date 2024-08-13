@@ -7,6 +7,7 @@
  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
     <link
       rel="stylesheet"
       as="style"
@@ -23,8 +24,9 @@
 	  <link th:href="@{/css/common.css}" rel="stylesheet" />
 	
  <link rel="stylesheet" href="/css/menu01/groundDetail.css">
-	  
-		<script src="/js/jisang/groundDetail.js"></script>	
+ <link rel="stylesheet" href="/css/jisang/write.css">
+		<script src="/js/jisang/groundDetail.js"></script>
+			<script src="/js/common/upload.js"></script>
 		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 		<style>
@@ -145,8 +147,8 @@ margin:10px;
                     <div class="thirdTitle">
                         <h2>・참고 지적도</h2>
                     </div>
-
-                    <div class="contentDetailBox mapFigure"></div>
+					<iframe src="http://211.196.153.235:7070/geoserver/dopcogis/wms?service=WMS&version=1.1.1&request=GetMap&layers=dopcogis%3Adxf_test&bbox=128.48537837663474,35.926544471907825,128.48578475095366,35.927040257710196&width=660&height=214&srs=EPSG%3A4326&styles=&format=application/openlayers" class="contentDetailBox mapFigure"></iframe>
+                    <!--  <div class="contentDetailBox mapFigure"></div> -->
 
                 </div>
 
@@ -548,7 +550,7 @@ margin:10px;
 
 
         </section>
-        <div class="card">
+        <!-- <div class="card">
 			 
 			 <div class="card-header">첨부파일</div>
 			 <div class="card-body">
@@ -559,27 +561,35 @@ margin:10px;
 			 <div class="card-footer">
 				 
 			 </div>
-		 </div>
+		 </div> -->
         <section class="parcelAttachments">
+       	 <form name="uploadForm" method="post" enctype="multipart/form-data">
             <div class="subTitle">
                 필지 첨부파일
                 <!-- span -> button으로 수정 -->
                 <!-- <span class="myPc">내 PC</span> -->
                 <!-- <button class="myPc">내 PC</button> -->
                 <div class="fileBtnWrap">
-                    <input type="file" id="groundDetail_myPcFiles">
+                    <!-- <input type="file" id="groundDetail_myPcFiles"> -->
+                    <input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
                     <label for="groundDetail_myPcFiles">내 PC</label>
                 </div>
             </div>
 
             <div class="fileUploadWrap">
-                <div class="fileUploadBox">
+             	<div id="fileUpload" class="fileUploadBox" style="">
+                <!-- <div class="fileUploadBox"> -->
                     <img src="/assets/media/menu01/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
                     <p>파일을 마우스로 끌어오세요.</p>
                 </div>
+               
             </div>
-
+			<div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>
+			</form>
+			<br>
             <div class="contWrap">
+            
+            
                 <div class="contBox">
                     <div class="contentDetailBox">
                         <div class="depth1">
@@ -640,7 +650,7 @@ margin:10px;
                     </div>
 
                     <div class="btnWrap">
-                        <button class="fileBtn fileSaveBtn">첨부파일 저장</button>
+                        <button class="fileBtn fileSaveBtn" id="fileSaveBtn">첨부파일 저장</button>
                         <button class="fileBtn delBtn">선택파일 삭제</button>
                     </div>
                 </div>
@@ -667,41 +677,41 @@ margin:10px;
                                 <li class="title04 title">등록일시</li>
                                 <li class="title04 title ">편집</li>
                             </ul>
-                            <ul class="contents lastContents">
+                            <ul class="contents lastContents" th:each="val:${jisangIssueList}">
                                 <li class="content01 content">
                                     <!-- 등기설정 -->
                                      <!-- input 추가 -->
-                                     <input type="text" placeholder="등기설정" readonly class="notWriteInput">
+                                     <input type="text" placeholder="등기설정" th:value="${val.comple_yn}" readonly class="notWriteInput">
                                 </li>
                                 <li class="content02 content">
                                     <!-- 계약체결 -->
                                      <!-- input 추가 -->
-                                     <input type="text" placeholder="계약체결" readonly class="notWriteInput">
+                                     <input type="text" placeholder="계약체결" th:value="${val.permitted_yn}" readonly class="notWriteInput">
                                 </li>
                                 <li class="content03 content">
                                     <!-- 이슈없음 -->
                                      <!-- input 추가 -->
-                                    <input type="text" placeholder="이슈없음" readonly class="notWriteInput">
+                                    <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth1}" readonly class="notWriteInput">
                                 </li>
                                 <li class="content03 content">
                                     <!-- 이슈없음 -->
                                      <!-- input 추가 -->
-                                    <input type="text" placeholder="이슈없음" readonly class="notWriteInput">
+                                    <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth2}" readonly class="notWriteInput">
                                 </li>
                                 <li class="content03 content">
                                     <!-- 이슈없음 -->
                                      <!-- input 추가 -->
-                                    <input type="text" placeholder="이슈없음" readonly class="notWriteInput">
+                                    <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth3}" readonly class="notWriteInput">
                                 </li>
                                 <li class="content01 content">
                                     <!-- 신규등록 -->
                                      <!-- input 추가 -->
-                                    <input type="text" placeholder="신규등록" readonly class="notWriteInput">
+                                    <input type="text" placeholder="신규등록" th:value="${val.pi_issue_comment}" readonly class="notWriteInput">
                                 </li>
                                 <li class="content04 content">
                                     <!-- 2024-04-01 09:46:01 -->
                                      <!-- input 추가 -->
-                                    <input type="text" placeholder="2024-04-01 09:46:01" readonly class="notWriteInput">
+                                    <input type="text" placeholder="2024-04-01 09:46:01" th:value="${val.issue_date}" readonly class="notWriteInput">
                                 </li>
                                 <li class="content04 content btnBox">
                                     <div class="btnWrap">

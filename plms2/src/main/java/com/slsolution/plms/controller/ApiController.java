@@ -443,7 +443,7 @@ StringBuilder sb=new StringBuilder();
          
         Iterator<String> itr =  multipartRequest.getFileNames();
         
-        String filePath = "D:/test"; //설정파일로 뺀다.
+        String filePath = "D:/plms2_data/temp"; //설정파일로 뺀다.
         HashMap<String,Object> resultmap=new HashMap();
         ArrayList<HashMap> resultdataarr=new ArrayList<HashMap>();
         HashMap resultdata=new HashMap();

@@ -948,4 +948,77 @@
 	
 	</insert>
 	
+	<insert id="potential_issue" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="pi_idx" keyProperty="pi_idx">
+		
+		INSERT INTO  potential_issue
+		(
+		pi_pnu
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MANAGE_NO)" >
+		,pi_manage_no
+		</if>
+		,pi_code_depth1
+		,pi_code_depth2
+		,pi_code_depth3
+		,pi_issue_comment
+		,pi_issue_date
+		,pi_seq
+		,pi_del_flag
+		,pi_del_comment
+		,pi_registed_yn
+		,pi_permitted_yn
+		,pi_address_code
+		,pi_jibun
+		
+		 
+		 ) 
+		 VALUES (
+		 #{PNU}
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MANAGE_NO)" >
+		 ,#{MANAGE_NO}
+		 </if>
+		 
+		 ,#{CODE_DEPTH1}
+		 ,#{CODE_DEPTH2}
+		 ,#{CODE_DEPTH3}
+		 ,#{ISSUE_COMMENT}
+		 ,Now()
+		 ,#{SEQ}
+		 ,#{DEL_FLAG}
+		 ,#{DEL_COMMENT}
+		 ,#{REGISTED_YN}
+		 ,#{PERMITTED_YN}
+		 ,#{ADDRCODE}
+		 ,#{JIBUN}
+		   	   
+		)
+	
+	</insert>
+	<insert id="potential_issue_history" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="pih_idx" keyProperty="pih_idx">
+		
+		INSERT INTO  potential_issue_history
+		(
+		pih_pnu
+		,pih_history_seq
+		,pih_seq
+		,pih_history_type
+		,pih_content
+		,pih_history_date
+		,pih_addrcode
+		,pih_jibun
+		
+		 
+		 ) 
+		 VALUES (
+		 #{PNU}
+		 ,#{HISTORY_SEQ}
+		 ,#{SEQ}
+		 ,#{HISTORY_TYPE}
+		 ,#{CONTENT}
+		 ,NOW()
+		 ,#{ADDRCODE}
+		 ,#{JIBUN}
+		)
+	
+	</insert>
+	
 </mapper>

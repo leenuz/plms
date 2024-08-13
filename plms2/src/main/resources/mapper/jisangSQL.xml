@@ -80,6 +80,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 			
 	</select>
+	<select id="selectIssueList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select (row_number() over()) as NO
+		 , to_char(pi_issue_date,'YYYY-MM-DD HH:MM:SS') as issue_date
+		 ,*
+		  FROM potential_issue PI
+		  LEFT JOIN 
+		  (
+		
+				SELECT 
+				jm.jm_jisang_no AS manage_no
+				,COALESCE(jm.jm_comple_yn,'') AS comple_yn
+				,COALESCE(jm.jm_permitted_yn,'') AS permitted_yn
+				,SUBSTRING(jm.jm_jisang_no,1,1) AS rtype
+				 FROM jisang_master jm
+				 
+				 UNION all
+				 
+				 
+					SELECT 
+				gm.gm_gover_no AS manage_no
+				,COALESCE('','') AS comple_yn
+				,COALESCE('','') AS permitted_yn
+				,SUBSTRING(gm.gm_gover_no,1,1) AS rtype
+				
+				 FROM gover_master gm
+				 
+				 UNION all
+				 
+				 	SELECT 
+				nm.nm_notset_no AS manage_no
+				,COALESCE('','') AS comple_yn
+				,COALESCE('','') AS permitted_yn
+				,SUBSTRING(nm.nm_notset_no,1,1) AS rtype
+				 FROM notset_master nm
+		 
+		 ) AS u
+		 ON PI.pi_manage_no = u.manage_no
+		 WHERE 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+		and pi_manage_no=#{idx}
+		</if>
+			
+	</select>
 	
 	
 	<select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[

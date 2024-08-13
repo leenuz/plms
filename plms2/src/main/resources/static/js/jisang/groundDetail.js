@@ -91,3 +91,18 @@ const groundIssueReviseOpen = () => {
 }
 
 groundIssueReviseOpen();
+
+
+
+
+$(document).on("click","#fileSaveBtn",function(){
+	console.log("--------------start fileSaveBtn---------");
+	console.log(uploadFiles);
+	//console.log($("#uploadForm").serialize());
+	var files=$("input[name='fileUpload']")[0].files;
+	for(var i=0;i<files.length;i++){
+		console.log("filename:"+files[i].name);
+	}
+	
+	
+});
