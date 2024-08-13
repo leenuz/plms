@@ -139,7 +139,7 @@ margin:10px;
             <div class="subTitle">
                 기본/소유자 정보
             </div>
-
+			
             <div class="contWrap">
 
                 <div class="contBox contBoxMini01">
@@ -170,6 +170,8 @@ margin:10px;
                             </ul>
                             <ul class="contents">
                                 <li class="content01 content">
+                                <input type="hidden" name="manage_no" id="manage_no" th:value="${resultData.jm_jisang_no}"/>
+                                <input type="hidden" name="pnu" id="pnu" th:value="${resultData.jm_pnu}"/>
                                    [[${resultData.jm_jisang_no}]]
                                 </li>
                                 <li class="content02 content">
@@ -587,7 +589,7 @@ margin:10px;
 			<div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>
 			</form>
 			<br>
-            <div class="contWrap">
+            <div class="contWrap" id="pnuAtcFilesDiv">
             
             
                 <div class="contBox">
@@ -600,51 +602,22 @@ margin:10px;
                                 <li class="title04 title">파일보기</li>
                             </ul>
                             <div class="contentScr">
-                                <ul class="contents">
+                                <ul class="contents" th:each="val:${jisangPnuAtcFileList}">
                                     <li class="content01 content">
-                                        <input type="checkbox" id="groundcustomCheckbox03">
+                                        <input type="checkbox"  th:field="*{jisangPnuAtcFileList}"  th:value="${val.pa_idx}">
                                         <label for="groundcustomCheckbox03"></label>
                                     </li>
                                     <li class="content02 content">
-                                        2024-04-02 15:40:01
+                                        [[${val.pa_wdate}]]
                                     </li>
                                     <li class="content03 content">
-                                        서울특별시 서초구 원지동 28.pdf
+                                        [[${val.pa_file_nm}]]
                                     </li>
                                     <li class="content04 content">
                                         <button class="viewDetailButton">보기</button>
                                     </li>
                                 </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        <input type="checkbox" id="groundcustomCheckbox04">
-                                        <label for="groundcustomCheckbox04"></label>
-                                    </li>
-                                    <li class="content02 content">
-                                        2024-04-02 15:40:01
-                                    </li>
-                                    <li class="content03 content">
-                                        서울특별시 서초구 원지동 28.pdf
-                                    </li>
-                                    <li class="content04 content">
-                                        <button class="viewDetailButton">보기</button>
-                                    </li>
-                                </ul>
-                                <ul class="contents lastContents">
-                                    <li class="content01 content">
-                                        <input type="checkbox" id="groundcustomCheckbox05">
-                                        <label for="groundcustomCheckbox05"></label>
-                                    </li>
-                                    <li class="content02 content">
-                                        2024-04-02 15:40:01
-                                    </li>
-                                    <li class="content03 content">
-                                        원지동 28 등기부등본.pdf
-                                    </li>
-                                    <li class="content04 content">
-                                        <button class="viewDetailButton">보기</button>
-                                    </li>
-                                </ul>
+                                
                             </div>
                         </div>
                     </div>

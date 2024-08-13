@@ -7,8 +7,10 @@ import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,7 @@ import com.slsolution.plms.MainService;
 
 import com.slsolution.plms.json.JSONObject;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -257,6 +260,7 @@ public class jisangController {
 		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
 		params.put("pnu", data.get(0).get("jm_pnu"));
 		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
+		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
 		
 		log.info("params:"+params);
 		log.info("data:"+data.get(0));
@@ -269,6 +273,8 @@ public class jisangController {
 		log.info("souja count:"+soujaList.size());
 		log.info("soujaList:"+soujaList);
 		log.info("atcFileList:"+atcFileList);
+		log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+		
       			mav.addObject("resultData",data.get(0));
       			mav.addObject("soujaList",soujaList);
       			mav.addObject("jisangPermitList",jisangPermitList);
@@ -276,9 +282,38 @@ public class jisangController {
       			mav.addObject("jisangModifyList",jisangModifyList);
       			mav.addObject("jisangMergeList",jisangMergeList);
       			mav.addObject("jisangIssueList",jisangIssueList);
+      			mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
       			mav.setViewName("content/jisang/groundDetail");
       			return mav;
     }
 	
+	@PostMapping(path="/getAtcFileData") //http://localhost:8080/api/get/dbTest
+    public ModelAndView getAtcFileData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		
+		String idx = httpRequest.getParameter("manage_no");
+		String pnu = httpRequest.getParameter("pnu");
+		
+		params.put("idx",idx);
+		params.put("pnu",pnu);
+		log.info("params:"+params);
+		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+		mav.setViewName("content/jisang/groundDetail :: #pnuAtcFilesDiv");
+		return mav;
+	}
+	
+	
+	
+//	@PostMapping("/getAtcFileData")
+//    public String getAtcFileData(Model model, HttpServletRequest httpRequest) {
+//		
+////		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
+//      model.addAttribute("Data", "");
+//      return "statistics/yearchart :: #tableStat";
+//    }
+
 	
 }

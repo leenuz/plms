@@ -3,6 +3,7 @@ package com.slsolution.plms.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -28,7 +29,7 @@ import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.MainService;
 
 import com.slsolution.plms.ParameterUtil;
-
+import com.slsolution.plms.json.JSONArray;
 import com.slsolution.plms.json.JSONObject;
 import com.slsolution.plms.model.BoardModel;
 import com.slsolution.plms.model.CountryModel;
@@ -670,6 +671,64 @@ StringBuilder sb=new StringBuilder();
        // return new ModelAndView("dbTest", "list", list);
     }
     
+    @RequestMapping(value="/pnuAtcUpload", method = {RequestMethod.GET, RequestMethod.POST}) 
+    public void pnuAtcUpload(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+        
+		//일반웹형식
+//		Properties requestParams = CommonUtil.convertToProperties(httpRequest);
+//        log.info("requestParams:"+requestParams);
+        
+        
+        
+//        //json으로 넘어올때
+        String getRequestBody = ParameterUtil.getRequestBodyToStr(httpRequest);
+        log.info("getRequestBody:"+getRequestBody);
+        JSONObject json=new JSONObject(getRequestBody.toString());
+        log.info("manage_no:"+json.get("manage_no"));
+        JSONArray jarr=json.getJSONArray("files");
+        log.info("jarr:"+jarr);
+        log.info("jarr0:"+jarr.get(0));
+        
+        int fsize=jarr.length();
+        ArrayList<HashMap>  list=new ArrayList<HashMap>();
+        for(int i=0;i<fsize;i++) {
+        	log.info("filepath:"+jarr.get(i));
+        	log.info("filename:"+jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", ""));
+        	
+        	HashMap params = new HashMap();
+          params.put("manage_no",json.get("manage_no"));
+          params.put("pnu",json.get("pnu"));
+          params.put("filepath",jarr.get(i));
+          params.put("filename",jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", ""));
+          params.put("fileseq",i);
+          params.put("pmt_no",i);
+          mainService.InsertQuery("commonSQL.pnuAtcUpload", params);
+        }
+        
+		
+//		list=mainService.selectQuery("commonSQL.getRiMaster", params);
+//		log.info("sidomaster list:"+list);
+//		//        List<TestDTO> list = new ArrayList<TestDTO>();
+////        list = dbService.getList();
+		
+        HashMap<String,Object> resultmap=new HashMap();
+        resultmap.put("resultCode","0000");
+        resultmap.put("resultData",list);
+        resultmap.put("resultMessage","success");
+        JSONObject obj =new JSONObject(resultmap);
+//        System.out.println(obj);
+       
+      //log.info("jo:"+jo);
+      			response.setCharacterEncoding("UTF-8");
+      			response.setHeader("Access-Control-Allow-Origin", "*");
+      			response.setHeader("Cache-Control", "no-cache");
+      			response.resetBuffer();
+      			response.setContentType("application/json");
+      			//response.getOutputStream().write(jo);
+      			response.getWriter().print(obj);
+      			response.getWriter().flush();
+       // return new ModelAndView("dbTest", "list", list);
+    }
     
     
 

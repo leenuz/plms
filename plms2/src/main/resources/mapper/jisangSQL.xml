@@ -123,6 +123,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 			
 	</select>
+	<select id="selectPnuAtcFileList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as no 
+		from pnu_atcfile 
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+		and pa_manage_no=#{idx}
+		</if>
+		and pa_pnu=#{pnu}
+		
+			
+	</select>
 	
 	
 	<select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[

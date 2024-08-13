@@ -60,4 +60,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT rm_ri FROM ri_master where rm_sido=#{sidoKey} AND rm_sigungu = #{gugunKey} AND rm_dong = #{dongKey}
 		]]>
 	</select>
+	
+	<insert id="pnuAtcUpload" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="pa_idx" keyProperty="pa_idx">
+		
+		INSERT INTO  pnu_atcfile
+		(
+		 pa_pnu
+		,pa_file_nm
+		,pa_file_path
+		,pa_file_seq
+		,pa_pmt_no
+		,pa_manage_no
+		
+		 ) 
+		 VALUES (
+		 #{pnu}
+		 ,#{filename}
+		 ,#{filepath}
+		 ,#{fileseq}
+		 ,#{pmt_no}
+		
+		 ,#{manage_no}
+		)
+	
+	</insert>
+	
+	
 </mapper>
