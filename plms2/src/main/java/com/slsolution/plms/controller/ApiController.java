@@ -25,10 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+
 import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.MainService;
 
 import com.slsolution.plms.ParameterUtil;
+import com.slsolution.plms.config.GlobalConfig;
 import com.slsolution.plms.json.JSONArray;
 import com.slsolution.plms.json.JSONObject;
 import com.slsolution.plms.model.BoardModel;
@@ -50,6 +52,9 @@ public class ApiController {
 	
 	@Autowired
 	private MainService mainService;
+	
+	 @Autowired
+	 private GlobalConfig GC;
 	
 StringBuilder sb=new StringBuilder();
 	
@@ -444,7 +449,7 @@ StringBuilder sb=new StringBuilder();
          
         Iterator<String> itr =  multipartRequest.getFileNames();
         
-        String filePath = "D:/plms2_data/temp"; //설정파일로 뺀다.
+        String filePath = GC.getPnuAtcFileDir(); //설정파일로 뺀다.
         HashMap<String,Object> resultmap=new HashMap();
         ArrayList<HashMap> resultdataarr=new ArrayList<HashMap>();
         HashMap resultdata=new HashMap();
