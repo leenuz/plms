@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="notsetSQL">
+    <select id="selectAllList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select * from notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
+        where 1=1
+        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
+            and nm.nm_notset_no=#{idx}
+        </if>
+        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(index)">
+            and nm_idx=cast(${index} as varchar)
+        </if>
+    </select>
+    <select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select *
+        ,concat(nm_sido_nm,' ',nm_sgg_nm,' ',nm_ri_nm,' ',nm_jibun) as address
+        from notset_master
+        where 1=1
+        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
+            and nm_notset_no=#{idx}
+        </if>
+        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(index)">
+            and nm_idx=cast(#{index} as integer)
+        </if>
+
+    </select>
+    <select id="selectSoyujaData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select *,(row_number() over()) as no
+        from notset_souja
+        where 1=1
+        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
+            and ns_notset_no=#{idx}
+        </if>
+
+
+    </select>
+
+    <select id="selectAtcFileList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select na_idx,na_notset_no,na_seq,na_file_path,na_file_nm,na_file_seq, to_char(na_wdate, 'yyyy-mm-dd') as na_wdate,(row_number() over()) as no
+        from notset_atcfile
+        where 1=1
+        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
+            and na_notset_no=#{idx}
+        </if>
+
+
+    </select>
+
+    <select id="selectModifyList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select nm_idx,to_char(nm_modify_date, 'yyyy-mm-dd') as nm_modify_date,nm_gubun,nm_cont,nm_echo,nm_erp,nm_files,nm_notset_no,nm_user_name,nm_user_id,(row_number() over()) as no
+        from notset_modify
+        where 1=1
+        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
+            and nm_notset_no=#{idx}
+        </if>
+
+    </select>
+
+<!--    <select id="selectMergeList" parameterType="java.util.HashMap" resultType="java.util.HashMap">-->
+<!--        select *,(row_number() over()) as no-->
+<!--        from notset_merge-->
+<!--        where 1=1-->
+<!--        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">-->
+<!--            and nm_notset_no=#{idx}-->
+<!--        </if>-->
+
+<!--    </select>-->
+
+    <select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[
+		select nm_set_money,nm_save_status from notset_master
+	]]></select>
+</mapper>

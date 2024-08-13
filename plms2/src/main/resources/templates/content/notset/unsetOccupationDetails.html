@@ -2,33 +2,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      
+
       layout:decorate="~{layout/default_layout}">
- <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
+            rel="stylesheet"
+            as="style"
+            crossorigin
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
 
 
+    <link th:href="@{/css/common.css}" rel="stylesheet"/>
 
- 
-  
-   
-  
-	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	
- < <link rel="stylesheet" href="/css/menu01/unsetOccupationDetails.css">
-	  
-		<!-- <script src="/js/notset/unsetOccupationDetails.js"></script>	 -->
-		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
-		div.dt-top-container {
+    <
+    <link rel="stylesheet" href="/css/menu01/unsetOccupationDetails.css">
+
+    <!-- <script src="/js/notset/unsetOccupationDetails.js"></script>	 -->
+    <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
+    <style>
+        div.dt-top-container {
   display: grid;
   grid-template-columns: auto auto auto;
 }
@@ -119,277 +114,420 @@ margin:10px;
 
 }
 
-		</style>
-		
+    </style>
+
     <title>지상권</title>
-  </head>
+</head>
 <th:block layout:fragment="content">
-     <div class="unsetOccupationDetailsWrappers">
-             <!--header삽입-->
-     
-    <main id="unsetOccupationDetails">
-        
-        <div class="mainTitle">
-            <h1>미설정/미점용 상세정보</h1>
-        </div>
+    <div class="unsetOccupationDetailsWrappers">
+        <!--header삽입-->
 
-        <section class="basicOwnerInfo">
-            <div class="subTitle">
-                기본/소유자 정보
+        <main id="unsetOccupationDetails">
+
+            <div class="mainTitle">
+                <h1>미설정/미점용 상세정보</h1>
             </div>
 
-            <div class="contWrap">
-
-                <div class="contBox contBoxMini01">
-
-                    <div class="thirdTitle">
-                        <h2>・참고 지적도</h2>
-                    </div>
-
-                    <div class="contentDetailBox mapFigure"></div>
-
+            <section class="basicOwnerInfo">
+                <div class="subTitle">
+                    기본/소유자 정보
                 </div>
 
-                <div class="contBox contBoxMini02">
+                <div class="contWrap">
 
-                    <div class="thirdTitle">
-                        <h2>・기본 정보</h2>
-                    </div>
+                    <div class="contBox contBoxMini01">
 
-                    <div class="contentDetailBox">
-                        <div class="depth1">
-                            <ul class="titles">
-                                <li class="title01 title">관리번호</li>
-                                <li class="title02 title">담당지사</li>
-                                <li class="title03 title">관로일치여부</li>
-                                <li class="title04 title">관로명(구간)</li>
-                            </ul>
-                            <ul class="contents">
-                                <li class="content01 content">
-                                    N-000858
-                                </li>
-                                <li class="content02 content">
-                                    서울지사
-                                </li>
-                                <li class="content03 content">
-                                    N
-                                </li>
-                                <li class="content04 content">
-                                    SNP구간
-                                </li>
-                            </ul>
+                        <div class="thirdTitle">
+                            <h2>・참고 지적도</h2>
                         </div>
-                        <div class="depth2">
-                            <ul class="titles">
-                                <li class="title01 title">관경</li>
-                                <li class="title02 title">단/복선</li>
-                                <li class="title03 title">주소</li>
-                            </ul>
-                            <ul class="contents">
-                                <li class="content01 content">
-                                    &#160
-                                </li>
-                                <li class="content02 content">
-                                    단선
-                                </li>
-                                <li class="content03 content">
-                                    광주광역시 북구 용전동 401-1
-                                </li>
-                            </ul>
+
+                        <div class="contentDetailBox mapFigure"></div>
+
+                    </div>
+
+                    <div class="contBox contBoxMini02">
+
+                        <div class="thirdTitle">
+                            <h2>・기본 정보</h2>
                         </div>
-                        <div class="depth3">
-                            <ul class="titles">
-                                <li class="title01 title">국공유지여부</li>
-                                <li class="title02 title">지적면적(m²)</li>
-                                <li class="title03 title">지목</li>
-                            </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    &#160
-                                </li>
-                                <li class="content02 content">
-                                    3,008
-                                </li>
-                                <li class="content03 content">
-                                    전
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="contBox contBoxMini03">
-
-                    <div class="thirdTitle">
-                        <h2>・소유자 정보</h2>
-                    </div>
-
-                    <div class="contentDetailBox">
-                        <div class="depth1">
-                            <ul class="titles">
-                                <li class="title01 title">순번</li>
-                                <li class="title02 title">공유지분</li>
-                                <li class="title03 title">성명</li>
-                                <li class="title04 title">주소</li>
-                                <li class="title05 title">연락처 1</li>
-                                <li class="title05 title">연락처 2</li>
-                            </ul>
-                            <ul class="contents">
-                                <li class="content01 content">
-                                    1
-                                </li>
-                                <li class="content02 content">
-                                    1/2
-                                </li>
-                                <li class="content03 content">
-                                    홍길동
-                                </li>
-                                <li class="content04 content">
-                                    서울특별시 서초구 서초동 1
-                                </li>
-                                <li class="content05 content">
-                                    02-654-5548
-                                </li>
-                                <li class="content05 content">
-                                    010-1234-1234
-                                </li>
-                            </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    1
-                                </li>
-                                <li class="content02 content">
-                                    1/2
-                                </li>
-                                <li class="content03 content">
-                                    홍길동
-                                </li>
-                                <li class="content04 content">
-                                    서울특별시 서초구 서초동 1
-                                </li>
-                                <li class="content05 content">
-                                    02-654-5548
-                                </li>
-                                <li class="content05 content">
-                                    010-1234-1234
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-        </section>
-        <section class="occupationPermitBasicInfo">
-            <div class="subTitle">
-                미설정/미점용 정보
-            </div>
-
-            <div class="contWrap">
-
-                <!-- 첨부파일 -->
-
-                <div class="contBox contBoxMini06">
-
-                    <div class="thirdTitle">
-                        <h2>・첨부파일</h2>
-                    </div>
-
-                    
-                    <div class="contentDetailBox">
-                        <div class="depth1">
-                            <ul class="titles">
-                                <li class="title01 title">등록일</li>
-                                <li class="title02 title">파일명</li>
-                                <li class="title03 title">파일보기</li>
-                                <li class="title04 title">파일저장</li>
-                            </ul>
-                            <div class="contentScr">
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        2024-03-31
-                                    </li>
-                                    <li class="content02 content">
-                                        서울특별시 서초구 원지동 28.pdf
-                                    </li>
-                                    <li class="content03 content">
-                                        <button class="viewDetailButton">상세보기</button>
-                                    </li>
-                                    <li class="content04 content">
-                                        <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                    </li>
+                        <div class="contentDetailBox">
+                            <div class="depth1">
+                                <ul class="titles">
+                                    <li class="title01 title">관리번호</li>
+                                    <li class="title02 title">담당지사</li>
+                                    <li class="title03 title">관로일치여부</li>
+                                    <li class="title04 title">관로명(구간)</li>
                                 </ul>
                                 <ul class="contents">
                                     <li class="content01 content">
-                                        2024-03-31
+                                        [[${resultData.nm_notset_no}]]
                                     </li>
                                     <li class="content02 content">
-                                        원지동 28 등기부등본.pdf
+                                        [[${resultData.nm_jisa}]]
                                     </li>
                                     <li class="content03 content">
-                                        <button class="viewDetailButton">상세보기</button>
+                                        [[${resultData.nm_pipe_yn}]]
                                     </li>
                                     <li class="content04 content">
-                                        <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
+                                        [[${resultData.nm_pipe_name}]]
                                     </li>
+                                </ul>
+                            </div>
+                            <div class="depth2">
+                                <ul class="titles">
+                                    <li class="title01 title">관경</li>
+                                    <li class="title02 title">단/복선</li>
+                                    <li class="title03 title">주소</li>
+                                </ul>
+                                <ul class="contents">
+                                    <li class="content01 content">
+                                        [[${resultData.nm_pipe_meter}]]
+                                    </li>
+                                    <li class="content02 content">
+                                        [[${resultData.nm_sun_gubun}]]
+                                    </li>
+                                    <li class="content03 content">
+                                        [[${resultData.address}]]
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="depth3">
+                                <ul class="titles">
+                                    <li class="title01 title">국공유지여부</li>
+                                    <li class="title02 title">지적면적(m²)</li>
+                                    <li class="title03 title">지목</li>
                                 </ul>
                                 <ul class="contents lastContents">
                                     <li class="content01 content">
-                                        2024-03-31
+                                        [[${resultData.nm_gover_own_yn}]]
                                     </li>
                                     <li class="content02 content">
-                                        원지동 28 등기부등본.pdf
+                                        [[${resultData.nm_jijuk_area}]]
+                                    </li>
+                                    <li class="content03 content">
+                                        [[${resultData.nm_jimok_text}]]
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="contBox contBoxMini03">
+
+                        <div class="thirdTitle">
+                            <h2>・소유자 정보</h2>
+                        </div>
+
+                        <div class="contentDetailBox">
+                            <div class="depth1">
+                                <ul class="titles">
+                                    <li class="title01 title">순번</li>
+                                    <li class="title02 title">공유지분</li>
+                                    <li class="title03 title">성명</li>
+                                    <li class="title04 title">주소</li>
+                                    <li class="title05 title">연락처 1</li>
+                                    <li class="title05 title">연락처 2</li>
+                                </ul>
+
+                                <ul class="contents" th:each="val:${soujaList}">
+                                    <li class="content01 content">
+                                        [[${val.no}]]
+                                    </li>
+                                    <li class="content02 content">
+                                        [[${val.ns_jibun}]]
+                                    </li>
+                                    <li class="content02 content">
+                                        [[${val.ns_souja_name}]]
+                                    </li>
+                                    <li class="content04 content">
+                                        [[${val.ns_address}]]
+                                    </li>
+                                    <li class="content05 content">
+                                        [[${val.ns_home_number}]]
+                                    </li>
+                                    <li class="content05 content">
+                                        [[${val.ns_pone_number}]]
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+            <section class="occupationPermitBasicInfo">
+                <div class="subTitle">
+                    미설정/미점용 정보
+                </div>
+
+                <div class="contWrap">
+
+                    <!-- 첨부파일 -->
+
+                    <div class="contBox contBoxMini06">
+
+                        <div class="thirdTitle">
+                            <h2>・첨부파일</h2>
+                        </div>
+
+
+                        <div class="contentDetailBox">
+                            <div class="depth1">
+                                <ul class="titles">
+                                    <li class="title01 title">등록일</li>
+                                    <li class="title02 title">파일명</li>
+                                    <li class="title03 title">파일보기</li>
+                                    <li class="title04 title">파일저장</li>
+                                </ul>
+                                <ul class="contents" th:if="${atcFileList.size()==0}">
+                                    <li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+                                </ul>
+
+                                <ul class="contents" th:each="val:${atcFileList}">
+                                    <li class="content01 content">
+                                        [[${val.na_wdate}]]
+                                    </li>
+                                    <li class="content02 content">
+                                        [[${val.na_file_nm}]]
                                     </li>
                                     <li class="content03 content">
                                         <button class="viewDetailButton">상세보기</button>
                                     </li>
                                     <li class="content04 content">
                                         <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </section>
+
+            <!-- 변경 이력 -->
+            <section class="changeHistory">
+                <div class="subTitle">
+                    변경이력
+                </div>
+
+                <div class="contWrap">
+                    <div class="contBox">
+                        <div class="contentDetailBox">
+                            <div class="depth1">
+                                <ul class="titles">
+                                    <li class="title01 title">순번</li>
+                                    <li class="title02 title">변경일시</li>
+                                    <li class="title02 title">구분</li>
+                                    <li class="title04 title">내용</li>
+                                </ul>
+
+                                <ul class="contents" th:if="${notsetModifyList.size()==0}">
+                                    <li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+                                </ul>
+
+                                <ul class="contents" th:each="val:${notsetModifyList}">
+                                    <li class="content01 content">
+                                        [[${val.nm_idx}]]
+                                    </li>
+                                    <li class="content02 content">
+                                        [[${val.nm_modify_date}]]
+                                    </li>
+                                    <li class="content03 content">
+                                        [[${val.nm_gubun}]]
+                                    </li>
+                                    <li class="content04 content">
+                                        [[${val.nm_cont}]]
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </section>
+            <!-- 필지 첨부파일 -->
+            <section class="parcelAttachments">
+                <div class="subTitle">
+                    필지 첨부파일
+                    <span class="myPc">내 PC</span>
+                </div>
+
+                <div class="fileUploadWrap">
+                    <div class="fileUploadBox">
+                        <img src="/assets/media/menu01/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
+                        <p>파일을 마우스로 끌어오세요.</p>
+                    </div>
+                </div>
+
+                <div class="contWrap">
+                    <div class="contBox">
+                        <div class="contentDetailBox">
+                            <div class="depth1">
+                                <ul class="titles">
+                                    <li class="title01 title">선택</li>
+                                    <li class="title02 title">등록일</li>
+                                    <li class="title03 title">파일명</li>
+                                    <li class="title04 title">파일보기</li>
+                                </ul>
+                                <div class="contentScr">
+                                    <ul class="contents">
+                                        <li class="content01 content">
+                                            <input type="checkbox" id="unOccupcustomCheckbox03">
+                                            <label for="unOccupcustomCheckbox03"></label>
+                                        </li>
+                                        <li class="content02 content">
+                                            2024-03-31 15:40:01
+                                        </li>
+                                        <li class="content03 content">
+                                            서울특별시 서초구 원지동 28.pdf
+                                        </li>
+                                        <li class="content04 content">
+                                            <button class="viewDetailButton">보기</button>
+                                        </li>
+                                    </ul>
+                                    <ul class="contents">
+                                        <li class="content01 content">
+                                            <input type="checkbox" id="unOccupcustomCheckbox04">
+                                            <label for="unOccupcustomCheckbox04"></label>
+                                        </li>
+                                        <li class="content02 content">
+                                            2024-03-31 15:40:01
+                                        </li>
+                                        <li class="content03 content">
+                                            파일명.pdf
+                                        </li>
+                                        <li class="content04 content">
+                                            <button class="viewDetailButton">보기</button>
+                                        </li>
+                                    </ul>
+                                    <ul class="contents lastContents">
+                                        <li class="content01 content">
+                                            <input type="checkbox" id="unOccupcustomCheckbox05">
+                                            <label for="unOccupcustomCheckbox05"></label>
+                                        </li>
+                                        <li class="content02 content">
+                                            2024-04-02 15:40:01
+                                        </li>
+                                        <li class="content03 content">
+                                            파일명.pdf
+                                        </li>
+                                        <li class="content04 content">
+                                            <button class="viewDetailButton">보기</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="btnWrap">
+                            <button class="fileBtn fileSaveBtn">첨부파일 저장</button>
+                            <button class="fileBtn delBtn">선택파일 삭제</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+            <!-- 잠재이슈 -->
+            <section class="potentialIssues">
+                <div class="subTitle">
+                    잠재이슈
+                    <button class="issueAdd unsetOccuIssueRegisPopBtn">이슈등록</button>
+                </div>
+                <div class="contWrap">
+                    <div class="contBox contBox07">
+                        <div class="contentDetailBox">
+                            <div class="depth1">
+                                <ul class="titles">
+                                    <li class="title01 title">등기여부</li>
+                                    <li class="title02 title">계약여부</li>
+                                    <li class="title03 title">이슈유형(대분류)</li>
+                                    <li class="title03 title">이슈유형(중분류)</li>
+                                    <li class="title03 title">이슈유형(세분류)</li>
+                                    <li class="title01 title">등록사유</li>
+                                    <li class="title04 title">등록일시</li>
+                                    <li class="title04 title ">편집</li>
+                                </ul>
+                                <ul class="contents lastContents">
+                                    <li class="content01 content">
+                                        등기설정
+                                    </li>
+                                    <li class="content02 content">
+                                        계약체결
+                                    </li>
+                                    <li class="content03 content">
+                                        이슈없음
+                                    </li>
+                                    <li class="content03 content">
+                                        이슈없음
+                                    </li>
+                                    <li class="content03 content">
+                                        이슈없음
+                                    </li>
+                                    <li class="content01 content">
+                                        신규등록
+                                    </li>
+                                    <li class="content04 content">
+                                        2024-04-01 09:46:01
+                                    </li>
+                                    <li class="content04 content btnBox">
+                                        <div class="btnWrap">
+                                            <button class="editBtn miniBtn unsetOccupationIssueReviseBtn">수정</button>
+                                        </div>
+                                        <div class="btnWrap">
+                                            <button class="delBtn miniBtn">삭제</button>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div>
 
+            </section>
 
-        </section>
+            <!-- 잠재이슈 변경 이력 -->
+            <section class="potentialIssuesChangeHistory">
+                <div class="subTitle">
+                    잠재이슈 변경 이력
+                </div>
 
-        <!-- 변경 이력 -->
-        <section class="changeHistory">
-            <div class="subTitle">
-                변경이력
-            </div>
-
-            <div class="contWrap">
-                <div class="contBox">
-                    <div class="contentDetailBox">
-                        <div class="depth1">
-                            <ul class="titles">
-                                <li class="title01 title">순번</li>
-                                <li class="title02 title">변경일시</li>
-                                <li class="title02 title">구분</li>
-                                <li class="title04 title">내용</li>
-                            </ul>
-                            <div class="contentScr">
+                <div class="contWrap">
+                    <div class="contBox">
+                        <div class="contentDetailBox">
+                            <div class="depth1">
+                                <ul class="titles">
+                                    <li class="title01 title">순번</li>
+                                    <li class="title02 title">구분</li>
+                                    <li class="title03 title">변경일자</li>
+                                    <li class="title04 title">내용</li>
+                                    <li class="title03 title">사유</li>
+                                </ul>
                                 <ul class="contents">
                                     <li class="content01 content">
-                                        1
+                                        3
                                     </li>
                                     <li class="content02 content">
-                                        2024-04-02 15:40:01
+                                        이슈 삭제
                                     </li>
                                     <li class="content03 content">
-                                        소유자 정보
+                                        2024-04-01 11:21:04
                                     </li>
                                     <li class="content04 content">
-                                        소유자 성명 변경 (‘김재환외2’ > ‘김재환’)<br>
-소유자 주소변경 (‘광주광역시 북구 황계로 55번길 112동 501호' -> ‘광주광역시 북구 황계로 55번길 11, 2동 501호(운암동, 삼호아파트)’)
+                                        [기공승낙서 미존재 > 토지소유자 협의없이 매설 > 오류/무단매설]
+                                    </li>
+                                    <li class="content03 content">
+                                        이슈 중복 등록
                                     </li>
                                 </ul>
                                 <ul class="contents">
@@ -397,545 +535,332 @@ margin:10px;
                                         2
                                     </li>
                                     <li class="content02 content">
-                                        2024-04-02 15:40:01
+                                        이슈 수정
                                     </li>
                                     <li class="content03 content">
-                                        파일 정보
+                                        2024-04-01 11:21:04
                                     </li>
                                     <li class="content04 content">
-                                        허가관청 변경 (‘’ -> 여수시)<br>
-관리기관 변경 (‘’ -> ‘도로관리사업소')
+                                        [이슈없음 > 이슈없음 > 이슈없음] -> [기공승낙서 미존재 > 토지소유자 협의없이 매설 > 오류/무단매설]
+                                    </li>
+                                    <li class="content03 content">
+                                        신규 등록
                                     </li>
                                 </ul>
                                 <ul class="contents lastContents">
                                     <li class="content01 content">
-                                        3
+                                        1
                                     </li>
                                     <li class="content02 content">
-                                        2024-04-02 15:40:01
+                                        신규 등록
                                     </li>
                                     <li class="content03 content">
-                                        기본 정보
+                                        2024-04-01 11:21:04
                                     </li>
                                     <li class="content04 content">
-                                        허가관청 변경  (‘’ -> 여수시)
-                                        관리기관 변경 (‘’ -> ‘도로관리사업소’)
+                                        [이슈없음 > 이슈없음 > 이슈없음]
+                                    </li>
+                                    <li class="content03 content">
+                                        신규 등록
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div>
 
 
-        </section>
-        <!-- 필지 첨부파일 -->
-        <section class="parcelAttachments">
-            <div class="subTitle">
-                필지 첨부파일
-                <span class="myPc">내 PC</span>
-            </div>
+            </section>
 
-            <div class="fileUploadWrap">
-                <div class="fileUploadBox">
-                    <img src="/assets/media/menu01/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
-                    <p>파일을 마우스로 끌어오세요.</p>
+            <!-- 잠재이슈 대응방안 메뉴얼 -->
+
+
+            <section class="potentialIssuesResponseManual">
+                <div class="subTitle">
+                    잠재이슈 대응방안 메뉴얼
                 </div>
-            </div>
 
-            <div class="contWrap">
-                <div class="contBox">
-                    <div class="contentDetailBox">
-                        <div class="depth1">
-                            <ul class="titles">
-                                <li class="title01 title">선택</li>
-                                <li class="title02 title">등록일</li>
-                                <li class="title03 title">파일명</li>
-                                <li class="title04 title">파일보기</li>
-                            </ul>
-                            <div class="contentScr">
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        <input type="checkbox" id="unOccupcustomCheckbox03">
-                                        <label for="unOccupcustomCheckbox03"></label>
-                                    </li>
-                                    <li class="content02 content">
-                                        2024-03-31 15:40:01
-                                    </li>
-                                    <li class="content03 content">
-                                        서울특별시 서초구 원지동 28.pdf
-                                    </li>
-                                    <li class="content04 content">
-                                        <button class="viewDetailButton">보기</button>
-                                    </li>
+
+                <div class="contWrap">
+                    <div class="contBox">
+                        <div class="contentDetailBox">
+                            <div class="depth1">
+                                <ul class="titles">
+                                    <li class="title01 title">매뉴얼명</li>
+                                    <li class="title02 title">버전</li>
+                                    <li class="title03 title">개정일자</li>
+                                    <li class="title04 title">다운로드</li>
                                 </ul>
                                 <ul class="contents">
                                     <li class="content01 content">
-                                        <input type="checkbox" id="unOccupcustomCheckbox04">
-                                        <label for="unOccupcustomCheckbox04"></label>
+                                        계약자와 현재소유자가 다른 경우 (5년이내)
                                     </li>
                                     <li class="content02 content">
-                                        2024-03-31 15:40:01
+                                        1.0
                                     </li>
                                     <li class="content03 content">
-                                        파일명.pdf
+                                        2024-04-02 15:40:01
                                     </li>
-                                    <li class="content04 content">
-                                        <button class="viewDetailButton">보기</button>
+                                    <li class="content04 content btnsWrap">
+                                        <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
                                     </li>
                                 </ul>
                                 <ul class="contents lastContents">
                                     <li class="content01 content">
-                                        <input type="checkbox" id="unOccupcustomCheckbox05">
-                                        <label for="unOccupcustomCheckbox05"></label>
+                                        토지소유자가 아닌자와 계약 (20년 초과)
                                     </li>
                                     <li class="content02 content">
-                                        2024-04-02 15:40:01
+                                        1.0
                                     </li>
                                     <li class="content03 content">
-                                        파일명.pdf
+                                        2024-04-02 15:40:01
                                     </li>
-                                    <li class="content04 content">
-                                        <button class="viewDetailButton">보기</button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="btnWrap">
-                        <button class="fileBtn fileSaveBtn">첨부파일 저장</button>
-                        <button class="fileBtn delBtn">선택파일 삭제</button>
-                    </div>
-                </div>
-            </div>
-
-
-        </section>
-        <!-- 잠재이슈 -->
-        <section class="potentialIssues">
-            <div class="subTitle">
-                잠재이슈
-                <button class="issueAdd unsetOccuIssueRegisPopBtn">이슈등록</button>
-            </div>
-            <div class="contWrap">
-                <div class="contBox contBox07">
-                    <div class="contentDetailBox">
-                        <div class="depth1">
-                            <ul class="titles">
-                                <li class="title01 title">등기여부</li>
-                                <li class="title02 title">계약여부</li>
-                                <li class="title03 title">이슈유형(대분류)</li>
-                                <li class="title03 title">이슈유형(중분류)</li>
-                                <li class="title03 title">이슈유형(세분류)</li>
-                                <li class="title01 title">등록사유</li>
-                                <li class="title04 title">등록일시</li>
-                                <li class="title04 title ">편집</li>
-                            </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    등기설정
-                                </li>
-                                <li class="content02 content">
-                                    계약체결
-                                </li>
-                                <li class="content03 content">
-                                    이슈없음
-                                </li>
-                                <li class="content03 content">
-                                    이슈없음
-                                </li>
-                                <li class="content03 content">
-                                    이슈없음
-                                </li>
-                                <li class="content01 content">
-                                    신규등록
-                                </li>
-                                <li class="content04 content">
-                                    2024-04-01 09:46:01
-                                </li>
-                                <li class="content04 content btnBox">
-                                    <div class="btnWrap">
-                                        <button class="editBtn miniBtn unsetOccupationIssueReviseBtn">수정</button>
-                                    </div>
-                                    <div class="btnWrap">
-                                        <button class="delBtn miniBtn">삭제</button>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- 잠재이슈 변경 이력 -->
-        <section class="potentialIssuesChangeHistory">
-            <div class="subTitle">
-                잠재이슈 변경 이력
-            </div>
-
-            <div class="contWrap">
-                <div class="contBox">
-                    <div class="contentDetailBox">
-                        <div class="depth1">
-                            <ul class="titles">
-                                <li class="title01 title">순번</li>
-                                <li class="title02 title">구분</li>
-                                <li class="title03 title">변경일자</li>
-                                <li class="title04 title">내용</li>
-                                <li class="title03 title">사유</li>
-                            </ul>
-                            <ul class="contents">
-                                <li class="content01 content">
-                                    3
-                                </li>
-                                <li class="content02 content">
-                                    이슈 삭제
-                                </li>
-                                <li class="content03 content">
-                                    2024-04-01 11:21:04
-                                </li>
-                                <li class="content04 content">
-                                    [기공승낙서 미존재 > 토지소유자 협의없이 매설 > 오류/무단매설]
-                                </li>
-                                <li class="content03 content">
-                                    이슈 중복 등록
-                                </li>
-                            </ul>
-                            <ul class="contents">
-                                <li class="content01 content">
-                                    2
-                                </li>
-                                <li class="content02 content">
-                                    이슈 수정
-                                </li>
-                                <li class="content03 content">
-                                    2024-04-01 11:21:04
-                                </li>
-                                <li class="content04 content">
-                                    [이슈없음 > 이슈없음 > 이슈없음] -> [기공승낙서 미존재 > 토지소유자 협의없이 매설 > 오류/무단매설]
-                                </li>
-                                <li class="content03 content">
-                                    신규 등록
-                                </li>
-                            </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    1
-                                </li>
-                                <li class="content02 content">
-                                    신규 등록
-                                </li>
-                                <li class="content03 content">
-                                    2024-04-01 11:21:04
-                                </li>
-                                <li class="content04 content">
-                                    [이슈없음 > 이슈없음 > 이슈없음]
-                                </li>
-                                <li class="content03 content">
-                                    신규 등록
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </section>
-
-        <!-- 잠재이슈 대응방안 메뉴얼 -->
-
-
-        <section class="potentialIssuesResponseManual">
-            <div class="subTitle">
-                잠재이슈 대응방안 메뉴얼
-            </div>
-
-
-            <div class="contWrap">
-                <div class="contBox">
-                    <div class="contentDetailBox">
-                        <div class="depth1">
-                            <ul class="titles">
-                                <li class="title01 title">매뉴얼명</li>
-                                <li class="title02 title">버전</li>
-                                <li class="title03 title">개정일자</li>
-                                <li class="title04 title">다운로드</li>
-                            </ul>
-                            <ul class="contents">
-                                <li class="content01 content">
-                                    계약자와 현재소유자가 다른 경우 (5년이내)
-                                </li>
-                                <li class="content02 content">
-                                    1.0
-                                </li>
-                                <li class="content03 content">
-                                    2024-04-02 15:40:01
-                                </li>
-                                <li class="content04 content btnsWrap">
-                                    <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                </li>
-                            </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    토지소유자가 아닌자와 계약 (20년 초과)
-                                </li>
-                                <li class="content02 content">
-                                    1.0
-                                </li>
-                                <li class="content03 content">
-                                    2024-04-02 15:40:01
-                                </li>
-                                <li class="content04 content btnsWrap">
-                                    <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </section>
-
-        <!-- 메모 -->
-
-        <section class="memoSection">
-            <div class="subTitle">
-                메모
-            </div>
-        
-        
-            <div class="contWrap">
-                <div class="contBox">
-                    <div class="contentDetailBox">
-                        <div class="depth1">
-                            <ul class="titles">
-                                <li class="title01 title">작성일시</li>
-                                <li class="title02 title">작성자</li>
-                                <li class="title03 title">내용</li>
-                                <li class="title04 title">수정</li>
-                                <li class="title05 title">추가/삭제</li>
-                            </ul>
-                            <div class="contentScr">
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        2022-11-01
-                                    </li>
-                                    <li class="content02 content editSpace">
-                                        <input type="text" readonly placeholder="김철수" class="editingContent">
-                                    </li>
-                                    <li class="content03 content editSpace">
-                                        <input type="text" readonly placeholder="협의중" class="editingContent">
-                                    </li>
-                                    <li class="content04 content editSpace">
-                                        <div class="btnsWrap">
-                                            <button class="editBtn miniBtn">수정</button>
-                                        </div>
-                                    </li>
-                                    <li class="content05 content btnBox">
-
-                                        <!-- 수정하지 않을 때 -->
-
-                                        <div class="editBefore">
-                                            <div class="btnWrap">
-                                                <button class="addBtn miniBtn">추가</button>
-                                            </div>
-                                            <div class="btnWrap">
-                                                <button class="delBtn miniBtn">삭제</button>
-                                            </div>
-                                        </div>
-
-                                        <!-- 수정할 때 -->
-
-                                        <div class="editAfter">
-                                            <div class="newBtnWrap">
-                                                <button class="registBtn miniBtn">등록</button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        2022-11-01
-                                    </li>
-                                    <li class="content02 content editSpace">
-                                        <input type="text" readonly placeholder="김철수" class="editingContent">
-                                    </li>
-                                    <li class="content03 content editSpace">
-                                        <input type="text" readonly placeholder="협의중" class="editingContent">
-                                    </li>
-                                    <li class="content04 content editSpace">
-                                        <div class="btnsWrap">
-                                            <button class="editBtn miniBtn">수정</button>
-                                        </div>
-                                    </li>
-                                    <li class="content05 content btnBox">
-
-                                        <!-- 수정하지 않을 때 -->
-
-                                        <div class="editBefore">
-                                            <div class="btnWrap">
-                                                <button class="addBtn miniBtn">추가</button>
-                                            </div>
-                                            <div class="btnWrap">
-                                                <button class="delBtn miniBtn">삭제</button>
-                                            </div>
-                                        </div>
-
-                                        <!-- 수정할 때 -->
-
-                                        <div class="editAfter">
-                                            <div class="newBtnWrap">
-                                                <button class="registBtn miniBtn">등록</button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        2022-11-01
-                                    </li>
-                                    <li class="content02 content editSpace">
-                                        <input type="text" readonly placeholder="김철수" class="editingContent">
-                                    </li>
-                                    <li class="content03 content editSpace">
-                                        <input type="text" readonly placeholder="협의중" class="editingContent">
-                                    </li>
-                                    <li class="content04 content editSpace">
-                                        <div class="btnsWrap">
-                                            <button class="editBtn miniBtn">수정</button>
-                                        </div>
-                                    </li>
-                                    <li class="content05 content btnBox">
-
-                                        <!-- 수정하지 않을 때 -->
-
-                                        <div class="editBefore">
-                                            <div class="btnWrap">
-                                                <button class="addBtn miniBtn">추가</button>
-                                            </div>
-                                            <div class="btnWrap">
-                                                <button class="delBtn miniBtn">삭제</button>
-                                            </div>
-                                        </div>
-
-                                        <!-- 수정할 때 -->
-
-                                        <div class="editAfter">
-                                            <div class="newBtnWrap">
-                                                <button class="registBtn miniBtn">등록</button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        2022-11-01
-                                    </li>
-                                    <li class="content02 content editSpace">
-                                        <input type="text" readonly placeholder="김철수" class="editingContent">
-                                    </li>
-                                    <li class="content03 content editSpace">
-                                        <input type="text" readonly placeholder="협의중" class="editingContent">
-                                    </li>
-                                    <li class="content04 content editSpace">
-                                        <div class="btnsWrap">
-                                            <button class="editBtn miniBtn">수정</button>
-                                        </div>
-                                    </li>
-                                    <li class="content05 content btnBox">
-
-                                        <!-- 수정하지 않을 때 -->
-
-                                        <div class="editBefore">
-                                            <div class="btnWrap">
-                                                <button class="addBtn miniBtn">추가</button>
-                                            </div>
-                                            <div class="btnWrap">
-                                                <button class="delBtn miniBtn">삭제</button>
-                                            </div>
-                                        </div>
-
-                                        <!-- 수정할 때 -->
-
-                                        <div class="editAfter">
-                                            <div class="newBtnWrap">
-                                                <button class="registBtn miniBtn">등록</button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        2022-11-01
-                                    </li>
-                                    <li class="content02 content editSpace">
-                                        <input type="text" readonly placeholder="김철수" class="editingContent">
-                                    </li>
-                                    <li class="content03 content editSpace">
-                                        <input type="text" readonly placeholder="협의중" class="editingContent">
-                                    </li>
-                                    <li class="content04 content editSpace">
-                                        <div class="btnsWrap">
-                                            <button class="editBtn miniBtn">수정</button>
-                                        </div>
-                                    </li>
-                                    <li class="content05 content btnBox">
-
-                                        <!-- 수정하지 않을 때 -->
-
-                                        <div class="editBefore">
-                                            <div class="btnWrap">
-                                                <button class="addBtn miniBtn">추가</button>
-                                            </div>
-                                            <div class="btnWrap">
-                                                <button class="delBtn miniBtn">삭제</button>
-                                            </div>
-                                        </div>
-
-                                        <!-- 수정할 때 -->
-
-                                        <div class="editAfter">
-                                            <div class="newBtnWrap">
-                                                <button class="registBtn miniBtn">등록</button>
-                                            </div>
-                                        </div>
+                                    <li class="content04 content btnsWrap">
+                                        <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+            </section>
+
+            <!-- 메모 -->
+
+            <section class="memoSection">
+                <div class="subTitle">
+                    메모
+                </div>
+
+
+                <div class="contWrap">
+                    <div class="contBox">
+                        <div class="contentDetailBox">
+                            <div class="depth1">
+                                <ul class="titles">
+                                    <li class="title01 title">작성일시</li>
+                                    <li class="title02 title">작성자</li>
+                                    <li class="title03 title">내용</li>
+                                    <li class="title04 title">수정</li>
+                                    <li class="title05 title">추가/삭제</li>
+                                </ul>
+                                <div class="contentScr">
+                                    <ul class="contents">
+                                        <li class="content01 content">
+                                            2022-11-01
+                                        </li>
+                                        <li class="content02 content editSpace">
+                                            <input type="text" readonly placeholder="김철수" class="editingContent">
+                                        </li>
+                                        <li class="content03 content editSpace">
+                                            <input type="text" readonly placeholder="협의중" class="editingContent">
+                                        </li>
+                                        <li class="content04 content editSpace">
+                                            <div class="btnsWrap">
+                                                <button class="editBtn miniBtn">수정</button>
+                                            </div>
+                                        </li>
+                                        <li class="content05 content btnBox">
+
+                                            <!-- 수정하지 않을 때 -->
+
+                                            <div class="editBefore">
+                                                <div class="btnWrap">
+                                                    <button class="addBtn miniBtn">추가</button>
+                                                </div>
+                                                <div class="btnWrap">
+                                                    <button class="delBtn miniBtn">삭제</button>
+                                                </div>
+                                            </div>
+
+                                            <!-- 수정할 때 -->
+
+                                            <div class="editAfter">
+                                                <div class="newBtnWrap">
+                                                    <button class="registBtn miniBtn">등록</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <ul class="contents">
+                                        <li class="content01 content">
+                                            2022-11-01
+                                        </li>
+                                        <li class="content02 content editSpace">
+                                            <input type="text" readonly placeholder="김철수" class="editingContent">
+                                        </li>
+                                        <li class="content03 content editSpace">
+                                            <input type="text" readonly placeholder="협의중" class="editingContent">
+                                        </li>
+                                        <li class="content04 content editSpace">
+                                            <div class="btnsWrap">
+                                                <button class="editBtn miniBtn">수정</button>
+                                            </div>
+                                        </li>
+                                        <li class="content05 content btnBox">
+
+                                            <!-- 수정하지 않을 때 -->
+
+                                            <div class="editBefore">
+                                                <div class="btnWrap">
+                                                    <button class="addBtn miniBtn">추가</button>
+                                                </div>
+                                                <div class="btnWrap">
+                                                    <button class="delBtn miniBtn">삭제</button>
+                                                </div>
+                                            </div>
+
+                                            <!-- 수정할 때 -->
+
+                                            <div class="editAfter">
+                                                <div class="newBtnWrap">
+                                                    <button class="registBtn miniBtn">등록</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <ul class="contents">
+                                        <li class="content01 content">
+                                            2022-11-01
+                                        </li>
+                                        <li class="content02 content editSpace">
+                                            <input type="text" readonly placeholder="김철수" class="editingContent">
+                                        </li>
+                                        <li class="content03 content editSpace">
+                                            <input type="text" readonly placeholder="협의중" class="editingContent">
+                                        </li>
+                                        <li class="content04 content editSpace">
+                                            <div class="btnsWrap">
+                                                <button class="editBtn miniBtn">수정</button>
+                                            </div>
+                                        </li>
+                                        <li class="content05 content btnBox">
+
+                                            <!-- 수정하지 않을 때 -->
+
+                                            <div class="editBefore">
+                                                <div class="btnWrap">
+                                                    <button class="addBtn miniBtn">추가</button>
+                                                </div>
+                                                <div class="btnWrap">
+                                                    <button class="delBtn miniBtn">삭제</button>
+                                                </div>
+                                            </div>
+
+                                            <!-- 수정할 때 -->
+
+                                            <div class="editAfter">
+                                                <div class="newBtnWrap">
+                                                    <button class="registBtn miniBtn">등록</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <ul class="contents">
+                                        <li class="content01 content">
+                                            2022-11-01
+                                        </li>
+                                        <li class="content02 content editSpace">
+                                            <input type="text" readonly placeholder="김철수" class="editingContent">
+                                        </li>
+                                        <li class="content03 content editSpace">
+                                            <input type="text" readonly placeholder="협의중" class="editingContent">
+                                        </li>
+                                        <li class="content04 content editSpace">
+                                            <div class="btnsWrap">
+                                                <button class="editBtn miniBtn">수정</button>
+                                            </div>
+                                        </li>
+                                        <li class="content05 content btnBox">
+
+                                            <!-- 수정하지 않을 때 -->
+
+                                            <div class="editBefore">
+                                                <div class="btnWrap">
+                                                    <button class="addBtn miniBtn">추가</button>
+                                                </div>
+                                                <div class="btnWrap">
+                                                    <button class="delBtn miniBtn">삭제</button>
+                                                </div>
+                                            </div>
+
+                                            <!-- 수정할 때 -->
+
+                                            <div class="editAfter">
+                                                <div class="newBtnWrap">
+                                                    <button class="registBtn miniBtn">등록</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <ul class="contents">
+                                        <li class="content01 content">
+                                            2022-11-01
+                                        </li>
+                                        <li class="content02 content editSpace">
+                                            <input type="text" readonly placeholder="김철수" class="editingContent">
+                                        </li>
+                                        <li class="content03 content editSpace">
+                                            <input type="text" readonly placeholder="협의중" class="editingContent">
+                                        </li>
+                                        <li class="content04 content editSpace">
+                                            <div class="btnsWrap">
+                                                <button class="editBtn miniBtn">수정</button>
+                                            </div>
+                                        </li>
+                                        <li class="content05 content btnBox">
+
+                                            <!-- 수정하지 않을 때 -->
+
+                                            <div class="editBefore">
+                                                <div class="btnWrap">
+                                                    <button class="addBtn miniBtn">추가</button>
+                                                </div>
+                                                <div class="btnWrap">
+                                                    <button class="delBtn miniBtn">삭제</button>
+                                                </div>
+                                            </div>
+
+                                            <!-- 수정할 때 -->
+
+                                            <div class="editAfter">
+                                                <div class="newBtnWrap">
+                                                    <button class="registBtn miniBtn">등록</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+
+
+            <!-- 참고 -->
+
+
+            <div class="finalBtnBox btnWrap">
+                <button class="printBtn finalBtn">출력</button>
+                <button class="finalBtn switchBtn">지상권 전환</button>
+<!--                <button class="backBtn finalBtn">이전</button>-->
+                <input class="backBtn finalBtn" type="button" value="이전" onclick="history.back();" />
+                <button class="finalBtn editBtn"><a href="/components/subHtml/menu01/notsetaddRevise.html"
+                                                    class="reviseLink">수정</a></button>
             </div>
-        
-        
-        </section>
 
 
-        <!-- 참고 -->
-
-
-        <div class="finalBtnBox btnWrap">
-            <button class="printBtn finalBtn">출력</button>
-            <button class="finalBtn switchBtn">지상권 전환</button>
-            <button class="backBtn finalBtn">이전</button>
-            <button class="finalBtn editBtn"><a href="/components/subHtml/menu01/notsetaddRevise.html" class="reviseLink">수정</a></button>
-        </div>
-
-
-
-    </main>
-</div>
-<div class="unsetOccupationIssueRegisterPopWrapper"></div>
-<div class="unsetOccupationIssueRevisePopWrapper"></div>
+        </main>
+    </div>
+    <div class="unsetOccupationIssueRegisterPopWrapper"></div>
+    <div class="unsetOccupationIssueRevisePopWrapper"></div>
     <!-- script -->
-     <!-- <script src="../../js/menu01/unsetOccupationDetails.js"></script> -->
-     <script type="module" src="/js/module/surfaceMain.js"></script>
+    <!-- <script src="../../js/menu01/unsetOccupationDetails.js"></script> -->
+    <script type="module" src="/js/module/surfaceMain.js"></script>
 </th:block>
 </html>

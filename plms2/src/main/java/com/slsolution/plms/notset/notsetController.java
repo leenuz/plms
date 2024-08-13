@@ -66,6 +66,31 @@ public class notsetController {
 //	       // return new ModelAndView("dbTest", "list", list);
 	        
 //	      			mav.addObject("resultList",list);
+
+			String idx = httpRequest.getParameter("idx");
+			String index = httpRequest.getParameter("index");
+
+			params.put("idx",idx);
+			params.put("index",index);
+			log.info("idx:"+idx);
+			log.info("index:"+index);
+
+			ArrayList<HashMap> data = mainService.selectQuery("notsetSQL.selectAllData",params);
+			ArrayList<HashMap> soujaList = mainService.selectQuery("notsetSQL.selectSoyujaData",params);
+			ArrayList<HashMap> atcFileList = mainService.selectQuery("notsetSQL.selectAtcFileList",params);
+
+//			ArrayList<HashMap> notsetPermitList = mainService.selectQuery("notsetSQL.selectPermitList",params);
+			ArrayList<HashMap> notsetModifyList = mainService.selectQuery("notsetSQL.selectModifyList",params);
+//			ArrayList<HashMap> notsetMergeList = mainService.selectQuery("notsetSQL.selectMergeList",params);
+
+			mav.addObject("resultData",data.get(0));
+			mav.addObject("soujaList",soujaList);
+			mav.addObject("atcFileList",atcFileList);
+
+//			mav.addObject("notsetPermitList",notsetPermitList);
+			mav.addObject("notsetModifyList",notsetModifyList);
+//			mav.addObject("notsetMergeList",notsetMergeList);
+
 	      			mav.setViewName("content/notset/unsetOccupationDetails");
 	      			return mav;
 	    }
