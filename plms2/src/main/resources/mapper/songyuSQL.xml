@@ -203,6 +203,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT
 			jm.jm_idx as index 
 			,jm.jm_jisang_no AS idx
+			,0 as gidx
 			,'jisang' as right_type
 			,'지상권' as right
 			,jm.jm_jisa AS jisa 
@@ -251,6 +252,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT 
 			gm.gm_idx as index 
 		,gm.gm_gover_no AS idx
+		,coalesce(gp.gp_idx,0) as gidx
 		,'gover' as right_type
 		,'점용' as right
 		,gm.gm_jisa AS jisa
@@ -294,6 +296,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT 
 			nm.nm_idx as index 
 			,nm.nm_notset_no AS idx
+			,0 as gidx
 			,'notset' as right_type
 			,'미설정' as right
 			,nm.nm_jisa AS jisa 

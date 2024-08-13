@@ -502,14 +502,14 @@ function loadDataTable(params){
 					var url;	
 					if (data.idx.substring(0,1)=="J"){
 						console.log("jisang");
-						url="/jisang/groundDetail?idx="+data.idx+"&index="+data.index;
+						url="/jisang/groundDetail?idx="+data.idx+"&index="+data.index+"&gidx=0";
 					}
 					else if (data.idx.substring(0,1)=="G"){
-						url="/gover/occupationDetails?idx="+data.idx+"&index="+data.index;
+						url="/gover/occupationDetails?idx="+data.idx+"&index="+data.index+"&gidx="+data.gidx;
 						
 					}
 					else if (data.idx.substring(0,1)=="N"){
-						url="/notset/unsetOccupationDetails?idx="+data.idx+"&index="+data.index;
+						url="/notset/unsetOccupationDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
 						
 					}
 					else return;					   

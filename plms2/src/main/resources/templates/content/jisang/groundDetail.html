@@ -25,7 +25,7 @@
 	
  <link rel="stylesheet" href="/css/menu01/groundDetail.css">
  <link rel="stylesheet" href="/css/jisang/write.css">
-		<script src="/js/jisang/groundDetail.js"></script>
+		<!-- <script src="/js/jisang/groundDetail.js"></script> -->
 			<script src="/js/common/upload.js"></script>
 		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
@@ -819,8 +819,8 @@ margin:10px;
                                 <li class="title04 title">수정</li>
                                 <li class="title05 title">추가/삭제</li>
                             </ul>
-                            <div class="contentScr">
-                                <ul class="contents">
+                            <div class="contentScr" >
+                                <ul class="contents" th:each="val:${jisangMemoList}">
                                     <li class="content01 content">
                                         <!-- 2022-11-01 -->
                                          <!-- input 추가 -->
@@ -859,134 +859,18 @@ margin:10px;
                                         </div>
                                     </li>
                                 </ul>
-                                <ul class="contents">
+                                
+                                <ul class="contents" th:if="${jisangMemoList.size()==0}">
                                     <li class="content01 content">
                                         <!-- 2022-11-01 -->
                                         <!-- input 추가 -->
-                                        <input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
+                                        <input type="text" readonly placeholder="" class="notWriteInput">
                                     </li>
                                     <li class="content02 content editSpace">
-                                        <input type="text" readonly placeholder="김철수" class="editingContent">
+                                        <input type="text" readonly placeholder="" class="editingContent">
                                     </li>
                                     <li class="content03 content editSpace">
-                                        <input type="text" readonly placeholder="협의중" class="editingContent">
-                                    </li>
-                                    <li class="content04 content editSpace">
-                                        <div class="btnsWrap">
-                                            <button class="editBtn miniBtn">수정</button>
-                                        </div>
-                                    </li>
-                                    <li class="content05 content btnBox">
-
-                                        <!-- 수정하지 않을 때 -->
-
-                                        <div class="editBefore">
-                                            <div class="btnWrap">
-                                                <button class="addBtn miniBtn">추가</button>
-                                            </div>
-                                            <div class="btnWrap">
-                                                <button class="delBtn miniBtn">삭제</button>
-                                            </div>
-                                        </div>
-
-                                        <!-- 수정할 때 -->
-
-                                        <div class="editAfter">
-                                            <div class="newBtnWrap">
-                                                <button class="registBtn miniBtn">등록</button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        <!-- 2022-11-01 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
-                                    </li>
-                                    <li class="content02 content editSpace">
-                                        <input type="text" readonly placeholder="김철수" class="editingContent">
-                                    </li>
-                                    <li class="content03 content editSpace">
-                                        <input type="text" readonly placeholder="협의중" class="editingContent">
-                                    </li>
-                                    <li class="content04 content editSpace">
-                                        <div class="btnsWrap">
-                                            <button class="editBtn miniBtn">수정</button>
-                                        </div>
-                                    </li>
-                                    <li class="content05 content btnBox">
-
-                                        <!-- 수정하지 않을 때 -->
-
-                                        <div class="editBefore">
-                                            <div class="btnWrap">
-                                                <button class="addBtn miniBtn">추가</button>
-                                            </div>
-                                            <div class="btnWrap">
-                                                <button class="delBtn miniBtn">삭제</button>
-                                            </div>
-                                        </div>
-
-                                        <!-- 수정할 때 -->
-
-                                        <div class="editAfter">
-                                            <div class="newBtnWrap">
-                                                <button class="registBtn miniBtn">등록</button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        <!-- 2022-11-01 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
-                                    </li>
-                                    <li class="content02 content editSpace">
-                                        <input type="text" readonly placeholder="김철수" class="editingContent">
-                                    </li>
-                                    <li class="content03 content editSpace">
-                                        <input type="text" readonly placeholder="협의중" class="editingContent">
-                                    </li>
-                                    <li class="content04 content editSpace">
-                                        <div class="btnsWrap">
-                                            <button class="editBtn miniBtn">수정</button>
-                                        </div>
-                                    </li>
-                                    <li class="content05 content btnBox">
-
-                                        <!-- 수정하지 않을 때 -->
-
-                                        <div class="editBefore">
-                                            <div class="btnWrap">
-                                                <button class="addBtn miniBtn">추가</button>
-                                            </div>
-                                            <div class="btnWrap">
-                                                <button class="delBtn miniBtn">삭제</button>
-                                            </div>
-                                        </div>
-
-                                        <!-- 수정할 때 -->
-
-                                        <div class="editAfter">
-                                            <div class="newBtnWrap">
-                                                <button class="registBtn miniBtn">등록</button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        <!-- 2022-11-01 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
-                                    </li>
-                                    <li class="content02 content editSpace">
-                                        <input type="text" readonly placeholder="김철수" class="editingContent">
-                                    </li>
-                                    <li class="content03 content editSpace">
-                                        <input type="text" readonly placeholder="협의중" class="editingContent">
+                                        <input type="text" readonly placeholder="" class="editingContent">
                                     </li>
                                     <li class="content04 content editSpace">
                                         <div class="btnsWrap">
@@ -1040,7 +924,7 @@ margin:10px;
     </div>
     <div class="groundIssueRevisePopWrappers"></div>
     <!-- script -->
-    <!--  <script src="/js/jisang/groundDetail.js"></script> -->
+    <script src="/js/jisang/groundDetail.js"></script>
      <script type="module" src="/js/module/surfaceMain.js"></script>
 </th:block>
 </html>

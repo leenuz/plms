@@ -263,6 +263,7 @@ public class jisangController {
 		
 		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
 		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
+		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("jisangSQL.selectMemoList",params);
 		log.info("params:"+params);
 		log.info("data:"+data.get(0));
 		log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
@@ -276,6 +277,8 @@ public class jisangController {
 		log.info("atcFileList:"+atcFileList);
 		log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
 		log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
+		log.info("jisangMemoList:"+jisangMemoList);
+		
       			mav.addObject("resultData",data.get(0));
       			mav.addObject("soujaList",soujaList);
       			mav.addObject("jisangPermitList",jisangPermitList);
@@ -286,10 +289,13 @@ public class jisangController {
       			mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
       			mav.addObject("jisangIssueList",jisangIssueList);
       			mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
+      			mav.addObject("jisangMemoList",jisangMemoList);
       			mav.setViewName("content/jisang/groundDetail");
       			return mav;
     }
 	
+	
+	//아이디를 기준으로 해당 영역만 리플래쉬 되도록 하는 로직
 	@PostMapping(path="/getAtcFileData") //http://localhost:8080/api/get/dbTest
     public ModelAndView getAtcFileData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
