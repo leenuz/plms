@@ -227,6 +227,9 @@ public class goverController {
 			ArrayList<HashMap> permitList = mainService.selectQuery("goverSQL.selectPermitList",params);
 			ArrayList<HashMap> pnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
 
+//			params.put("pnu", data.get(0).get("gm_gover_no"));
+
+			ArrayList<HashMap> goverPnuAtcFileList = mainService.selectQuery("goverSQL.selectPnuAtcFileList",params);
 //			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
 //			ArrayList<HashMap> jisangModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
 //			ArrayList<HashMap> jisangMergeList = mainService.selectQuery("goverSQL.selectMergeList",params);
@@ -246,6 +249,8 @@ public class goverController {
 			mav.addObject("resultData",data.get(0));
 			mav.addObject("permitList",permitList);
 			mav.addObject("pnuList",pnuList);
+
+			mav.addObject("goverPnuAtcFileList",goverPnuAtcFileList);
 //			mav.addObject("atcFileList",atcFileList);
 //			mav.addObject("jisangModifyList",jisangModifyList);
 //			mav.addObject("jisangMergeList",jisangMergeList);

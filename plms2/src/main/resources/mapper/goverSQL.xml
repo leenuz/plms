@@ -43,7 +43,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and gp_gover_no=#{idx}
 		</if>
+	</select>
 
+	<select id="selectPnuAtcFileList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as no
+		from pnu_atcfile
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and pa_manage_no=#{idx}
+		</if>
 
 	</select>
 </mapper>
