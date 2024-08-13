@@ -260,8 +260,9 @@ public class jisangController {
 		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
 		params.put("pnu", data.get(0).get("jm_pnu"));
 		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
-		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
 		
+		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
 		log.info("params:"+params);
 		log.info("data:"+data.get(0));
 		log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
@@ -274,15 +275,17 @@ public class jisangController {
 		log.info("soujaList:"+soujaList);
 		log.info("atcFileList:"+atcFileList);
 		log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
-		
+		log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
       			mav.addObject("resultData",data.get(0));
       			mav.addObject("soujaList",soujaList);
       			mav.addObject("jisangPermitList",jisangPermitList);
       			mav.addObject("atcFileList",atcFileList);
       			mav.addObject("jisangModifyList",jisangModifyList);
       			mav.addObject("jisangMergeList",jisangMergeList);
-      			mav.addObject("jisangIssueList",jisangIssueList);
+      			
       			mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+      			mav.addObject("jisangIssueList",jisangIssueList);
+      			mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
       			mav.setViewName("content/jisang/groundDetail");
       			return mav;
     }

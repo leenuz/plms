@@ -118,11 +118,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 ) AS u
 		 ON PI.pi_manage_no = u.manage_no
 		 WHERE 1=1
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-		and pi_manage_no=#{idx}
-		</if>
+		
+		and pi_pnu=#{pnu}
 			
 	</select>
+	<select id="selectIssueHistoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *,(row_number() over()) as no 
+		 FROM  potential_issue pi left join potential_issue_history pih on pi.pi_pnu=pih.pih_pnu 
+		WHERE 1=1
+		and pih_pnu=#{pnu}
+		
+			
+	</select>
+	
 	<select id="selectPnuAtcFileList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *,(row_number() over()) as no 
 		from pnu_atcfile 
