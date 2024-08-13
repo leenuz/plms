@@ -9,4 +9,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[
 		select gm_idx,gm_youngdo  from gover_master 
 	]]></select>
+
+	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *
+		from gover_master
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and gm_gover_no=#{idx}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(index)" >
+			and gm_idx=cast(#{index} as integer)
+		</if>
+
+	</select>
+
+	<select id="selectPermitList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as no
+		from gover_master gm left join gover_permit gp on gp.gp_gover_no=gm.gm_gover_no
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and gp.gp_gover_no=#{idx}
+		</if>
+		AND gm.gm_dockey IS NOT null
+		AND gp.gp_dockey IS NOT null
+
+
+	</select>
+
+	<select id="selectPnuList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as no
+		from gover_pnu
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and gp_gover_no=#{idx}
+		</if>
+
+
+	</select>
 </mapper>

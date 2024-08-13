@@ -90,3 +90,44 @@ const occupationIssueReviseOpen = () => {
 }
 
 occupationIssueReviseOpen();
+
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. 모든 depth2의 ul 요소를 선택
+    const depth2UlElements = document.querySelectorAll(".contBoxMini04 .contentDetailBox .depth2 .contents");
+
+    if (depth2UlElements.length > 1) {
+        // 2. 마지막 ul을 제외한 나머지 ul 요소 제거 및 높이 합산
+        let totalHeight = 0;
+
+        depth2UlElements.forEach((ul, index) => {
+            const ulHeight = ul.offsetHeight;
+
+            if (index !== depth2UlElements.length - 1) {
+                totalHeight += ulHeight; // 삭제할 ul의 높이 합산
+                ul.remove(); // ul 태그 삭제
+            } else {
+                // 마지막 ul에 이전 ul들의 높이를 추가
+                totalHeight += ulHeight;
+                ul.style.height = `${totalHeight}px`;
+                ul.style.display = 'flex';
+                ul.style.justifyContent = 'center';
+                ul.style.alignItems = 'center';
+            }
+        });
+
+        // 3. 마지막 ul에 있는 버튼을 가운데 정렬
+        const lastUlElement = depth2UlElements[depth2UlElements.length - 1];
+        const lastButton = lastUlElement.querySelector(".viewAllBtn");
+
+        // 마지막 li 요소의 내용을 모두 제거하고 버튼만 남김
+        const lastLiElement = lastButton.parentElement;
+        lastLiElement.innerHTML = '';
+        lastLiElement.appendChild(lastButton);
+
+        // 마지막 버튼 스타일 적용
+        lastButton.style.display = 'block';
+        lastButton.style.margin = '0 auto';
+        lastButton.style.width = '150px';
+        lastButton.style.textAlign = 'center';
+    }
+});

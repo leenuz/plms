@@ -24,7 +24,7 @@
 	
  <link rel="stylesheet" href="/css/menu01/occupationDetails.css">
 	  
-		<script src="/js/jisang/groundDetail.js"></script>	
+		<script src="/js/gover/occupationDetails.js"></script>
 		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 		<style>
@@ -168,22 +168,22 @@ margin:10px;
                             </ul>
                             <ul class="contents">
                                 <li class="content01 content">
-                                    G-004666
+                                    [[${resultData.gm_gover_no}]]
                                 </li>
                                 <li class="content02 content">
-                                    전남지사
+                                    [[${resultData.gm_jisa}]]
                                 </li>
                                 <li class="content03 content">
-                                    송유관로
+                                    [[${resultData.gm_yongdo}]]
                                 </li>
                                 <li class="content04 content">
-                                    호남구간
+                                    [[${resultData.gm_pipe_name}]]
                                 </li>
                                 <li class="content05 content">
-                                    단선
+                                    [[${resultData.gm_sun_gubun}]]
                                 </li>
                                 <li class="content06 content">
-                                    18
+                                    [[${resultData.gm_pipe_meter}]]
                                 </li>
                             </ul>
                         </div>
@@ -195,13 +195,13 @@ margin:10px;
                             </ul>
                             <ul class="contents">
                                 <li class="content01 content">
-                                    송유관
+                                    [[${resultData.gm_use_purpos}]]
                                 </li>
                                 <li class="content02 content">
-                                    2017-02-25 ~ 2027-02-24
+                                    [[${resultData.gm_gover_st_date}]] ~ [[${resultData.gm_gover_ed_date}]]
                                 </li>
                                 <li class="content03 content">
-                                    &#160
+                                    [[${resultData.gm_newregreason}]]
                                 </li>
                             </ul>
                         </div>
@@ -214,16 +214,16 @@ margin:10px;
                             </ul>
                             <ul class="contents">
                                 <li class="content01 content">
-                                    Y
+                                    [[${resultData.gm_permpossyn}]]
                                 </li>
                                 <li class="content02 content">
-                                    관할관청의 미청구
+                                    [[${resultData.gm_occunonpayreason}]]
                                 </li>
                                 <li class="content02 content">
-                                    N
+                                    [[${resultData.gm_occuprepayyn}]]
                                 </li>
                                 <li class="content02 content">
-                                    2024-07-01
+                                    [[${resultData.gm_occuprepaydate}]]
                                 </li>
                             </ul>
                         </div>
@@ -273,7 +273,7 @@ margin:10px;
                         <span class="landListViewBtn">토지 목록 보이기</span>
                     </div>
 
-                    <div class="contentDetailBox">
+                    <div class="contentDetailBox" style="align-items:flex-start">
                         <div class="depth1">
                             <ul class="titles">
                                 <li class="title01 title">순번</li>
@@ -283,41 +283,21 @@ margin:10px;
                                 <li class="title05 title">면적(m²)</li>
                                 <li class="title06 title">보기</li>
                             </ul>
-                            <ul class="contents">
+                            <ul class="contents" th:each="val:${pnuList}">
                                 <li class="content01 content">
-                                    1
+                                    [[${val.gp_gover_no}]]
                                 </li>
                                 <li class="content02 content">
-                                    광주광역시 관산구 도천동 620-6
+                                    [[${val.gp_sido_nm}]] [[${val.gp_sgg_nm}]] [[${val.gp_emd_nm}]] [[${val.gp_ri_nm}]] [[${val.gp_jibun}]]
                                 </li>
                                 <li class="content03 content">
-                                    이슈 삭제
+                                    [[${val.gp_jijuk_area}]]
                                 </li>
                                 <li class="content04 content">
-                                    이슈 삭제
+                                    [[${val.gp_gover_length}]]
                                 </li>
                                 <li class="content05 content">
-                                    2024-04-01 11:21:04
-                                </li>
-                                <li class="content06 content">
-                                    <button class="viewDetailButton">위치보기</button>
-                                </li>
-                            </ul>
-                            <ul class="contents">
-                                <li class="content01 content">
-                                    2
-                                </li>
-                                <li class="content02 content">
-                                    광주광역시 광산구 도천동 624-1
-                                </li>
-                                <li class="content03 content">
-                                    이슈 수정
-                                </li>
-                                <li class="content04 content">
-                                    이슈 수정
-                                </li>
-                                <li class="content05 content">
-                                    이슈 수정
+                                    [[${val.gp_gover_area}]]
                                 </li>
                                 <li class="content06 content">
                                     <button class="viewDetailButton">위치보기</button>
@@ -330,7 +310,7 @@ margin:10px;
                                     전체 위치보기
                                 </li>
                             </ul>
-                            <ul class="contents">
+                            <ul class="contents" th:each="val:${pnuList}">
                                 <li class="content01 content">
                                     <button class="viewAllBtn">전체 위치보기</button>
                                 </li>
@@ -374,68 +354,35 @@ margin:10px;
                                 <li class="title09 title">도시계획결정여부</li>
                                 <li class="title10 title">결재문서 조회</li>
                             </ul>
-                            <ul class="contents">
+                            <ul class="contents" th:each="val:${permitList}">
                                 <li class="content01 content">
-                                    1
+                                    [[${val.gp_gover_no}]]
                                 </li>
                                 <li class="content02 content">
-                                    &#160
+                                    [[${val.gp_pmt_no}]]
                                 </li>
                                 <li class="content03 content">
-                                    &#160
+                                    [[${val.gp_pmt_name}]]
                                 </li>
                                 <li class="content04 content">
-                                    도천동 624-1
+                                    [[${val.gp_siseolname}]]
                                 </li>
                                 <li class="content05 content">
-                                    광산구청
+                                    [[${val.gp_pmt_office}]]
                                 </li>
                                 <li class="content06 content">
-                                    광산구청
+                                    [[${val.gp_adm_office}]]
                                 </li>
                                 <li class="content07 content">
-                                    18
+                                    [[${val.gp_gover_length}]]
                                 </li>
                                 <li class="content08 content">
-                                    18
+                                    [[${val.gp_gover_area}]]
                                 </li>
                                 <li class="content09 content">
-                                    Y
+                                    [[${val.gp_dosiplan}]]
                                 </li>
                                 <li class="content10 content">
-                                    <button class="viewDetailButton">상세보기</button>
-                                </li>
-                            </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    2
-                                </li>
-                                <li class="content02 content">
-                                    제2013-98
-                                </li>
-                                <li class="content03 content">
-                                    하천
-                                </li>
-                                <li class="content04 content">
-                                    풍영정천
-                                </li>
-                                <li class="content05 content">
-                                    광주광역시 광산구
-                                </li>
-                                <li class="content06 content">
-                                    &#160
-                                </li>
-                                <li class="content07 content">
-                                    &#160
-                                </li>
-                                <li class="content08 content">
-                                    18
-                                </li>
-                                <li class="content09 content">
-                                    &#160
-                                </li>
-                                <li class="content10 content">
-                                    
                                     <button class="viewDetailButton">상세보기</button>
                                 </li>
                             </ul>
@@ -460,15 +407,9 @@ margin:10px;
                                 <li class="title01 title">순번</li>
                                 
                             </ul>
-                            <ul class="contents">
+                            <ul class="contents" th:each="val:${permitList}">
                                 <li class="content01 content">
-                                    1
-                                </li>
-                                
-                            </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    2
+                                    [[${val.gp_gover_no}]]
                                 </li>
                                 
                             </ul>
@@ -485,31 +426,15 @@ margin:10px;
                                 <li class="title01 title">종료일</li>
                                 <li class="title01 title">부서</li>
                             </ul>
-
-
-
-
-                            <ul class="contents">
+                            <ul class="contents" th:each="val:${permitList}">
                                 <li class="content01 content">
-                                    2014-01-01
+                                    [[${val.gp_pmt_st_date}]]
                                 </li>
                                 <li class="content01 content">
-                                    &#160
+                                    [[${val.gp_pmt_ed_date}]]
                                 </li>
                                 <li class="content01 content">
-                                    &#160
-                                </li>
-                                
-                            </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    2018-01-01
-                                </li>
-                                <li class="content01 content">
-                                    &#160
-                                </li>
-                                <li class="content01 content">
-                                    건설과
+                                    [[${val.gp_buseo}]]
                                 </li>
                                 
                             </ul>
@@ -524,25 +449,12 @@ margin:10px;
                                 <li class="title01 title">담당자</li>
                                 <li class="title01 title">연락처</li>
                             </ul>
-
-
-
-
-                            <ul class="contents">
+                            <ul class="contents" th:each="val:${permitList}">
                                 <li class="content01 content">
-                                    김철수
+                                    [[${val.gp_nm}]]
                                 </li>
                                 <li class="content01 content">
-                                    02-960-8081
-                                </li>
-                                
-                            </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    &#160
-                                </li>
-                                <li class="content01 content">
-                                    &#160
+                                    [[${val.gp_phone_number}]]
                                 </li>
                                 
                             </ul>
@@ -558,31 +470,15 @@ margin:10px;
                                 <li class="title01 title">납부연월일</li>
                                 <li class="title01 title">금액</li>
                             </ul>
-
-
-
-
-                            <ul class="contents">
+                            <ul class="contents" th:each="val:${permitList}">
                                 <li class="content01 content">
-                                    가상계좌
+                                    [[${val.gp_pay_way}]]
                                 </li>
                                 <li class="content01 content">
-                                    2018-03-27
+                                    [[${val.gp_pay_date}]]
                                 </li>
                                 <li class="content01 content">
-                                    20,040
-                                </li>
-                                
-                            </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    &#160
-                                </li>
-                                <li class="content01 content">
-                                    &#160
-                                </li>
-                                <li class="content01 content">
-                                    18,560
+                                    [[${val.gp_pay_money}]]
                                 </li>
                                 
                             </ul>
@@ -594,17 +490,7 @@ margin:10px;
                                 <li class="title01 title">점용료 납부 /<br>
                                     전자결재조회</li>
                             </ul>
-
-
-
-
-                            <ul class="contents">
-                                <li class="content01 content">
-                                    <button class="viewDetailButton">상세보기</button>
-                                </li>
-                                
-                            </ul>
-                            <ul class="contents lastContents">
+                            <ul class="contents" th:each="val:${permitList}">
                                 <li class="content01 content">
                                     <button class="viewDetailButton">상세보기</button>
                                 </li>
@@ -727,7 +613,7 @@ margin:10px;
                                         기본 정보
                                     </li>
                                     <li class="content04 content">
-                                        허가관청 변경  (‘’ -> 여수시)
+                                        허가관청 변경  (‘’ -> 여수시)
                                         관리기관 변경 (‘’ -> ‘도로관리사업소’)
                                     </li>
                                 </ul>
@@ -742,7 +628,7 @@ margin:10px;
                                         기본 정보
                                     </li>
                                     <li class="content04 content">
-                                        허가관청 변경  (‘’ -> 여수시)
+                                        허가관청 변경  (‘’ -> 여수시)
                                         관리기관 변경 (‘’ -> ‘도로관리사업소’)
                                     </li>
                                 </ul>
