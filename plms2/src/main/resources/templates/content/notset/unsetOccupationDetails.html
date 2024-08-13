@@ -18,8 +18,9 @@
 
     <
     <link rel="stylesheet" href="/css/menu01/unsetOccupationDetails.css">
-
-    <!-- <script src="/js/notset/unsetOccupationDetails.js"></script>	 -->
+    <link rel="stylesheet" href="/css/jisang/write.css">
+     <script src="/js/notset/unsetOccupationDetails.js"></script>
+     <script src="/js/common/upload.js"></script>
     <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
     <style>
@@ -161,6 +162,9 @@ margin:10px;
                                 </ul>
                                 <ul class="contents">
                                     <li class="content01 content">
+                                        <input type="hidden" name="manage_no" id="manage_no" th:value="${resultData.nm_notset_no}"/>
+                                        <input type="hidden" name="pnu" id="pnu" th:value="${resultData.nm_pnu}"/>
+
                                         [[${resultData.nm_notset_no}]]
                                     </li>
                                     <li class="content02 content">
@@ -289,7 +293,7 @@ margin:10px;
 
                                 <ul class="contents" th:each="val:${atcFileList}">
                                     <li class="content01 content">
-                                        [[${val.na_wdate}]]
+                                        [[${val.wdate}]]
                                     </li>
                                     <li class="content02 content">
                                         [[${val.na_file_nm}]]
@@ -337,7 +341,7 @@ margin:10px;
                                         [[${val.nm_idx}]]
                                     </li>
                                     <li class="content02 content">
-                                        [[${val.nm_modify_date}]]
+                                        [[${val.modify_date}]]
                                     </li>
                                     <li class="content03 content">
                                         [[${val.nm_gubun}]]
@@ -357,19 +361,27 @@ margin:10px;
             </section>
             <!-- 필지 첨부파일 -->
             <section class="parcelAttachments">
+                <form name="uploadForm" method="post" enctype="multipart/form-data">
                 <div class="subTitle">
                     필지 첨부파일
-                    <span class="myPc">내 PC</span>
+<!--                    <span class="myPc">내 PC</span>-->
+                    <div class="fileBtnWrap">
+                        <!-- <input type="file" id="groundDetail_myPcFiles"> -->
+                        <input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
+                        <label for="groundDetail_myPcFiles" class="myPc">내 PC</label>
+                    </div>
                 </div>
 
                 <div class="fileUploadWrap">
-                    <div class="fileUploadBox">
+                    <div id="fileUpload" class="fileUploadBox" style="">
                         <img src="/assets/media/menu01/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
                         <p>파일을 마우스로 끌어오세요.</p>
                     </div>
                 </div>
-
-                <div class="contWrap">
+                    <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>
+                </form>
+                <br>
+                <div class="contWrap" id="pnuAtcFilesDiv">
                     <div class="contBox">
                         <div class="contentDetailBox">
                             <div class="depth1">
@@ -380,58 +392,29 @@ margin:10px;
                                     <li class="title04 title">파일보기</li>
                                 </ul>
                                 <div class="contentScr">
-                                    <ul class="contents">
+                                    <ul class="contents" th:each="val:${notsetPnuAtcFileList}">
                                         <li class="content01 content">
-                                            <input type="checkbox" id="unOccupcustomCheckbox03">
-                                            <label for="unOccupcustomCheckbox03"></label>
+                                            <input type="checkbox" th:id="'checkbox_' + ${val.pa_idx}" class="file-checkbox" th:value="${val.pa_idx}">
+                                            <label th:for="'checkbox_' + ${val.pa_idx}"></label>
                                         </li>
                                         <li class="content02 content">
-                                            2024-03-31 15:40:01
+                                            [[${val.pa_wdate}]]
                                         </li>
                                         <li class="content03 content">
-                                            서울특별시 서초구 원지동 28.pdf
+                                            [[${val.pa_file_nm}]]
                                         </li>
                                         <li class="content04 content">
-                                            <button class="viewDetailButton">보기</button>
+                                            <button class="viewDetailButton" th:onclick="openFilePopup([[${val.pa_file_path}]])">보기</button>
                                         </li>
                                     </ul>
-                                    <ul class="contents">
-                                        <li class="content01 content">
-                                            <input type="checkbox" id="unOccupcustomCheckbox04">
-                                            <label for="unOccupcustomCheckbox04"></label>
-                                        </li>
-                                        <li class="content02 content">
-                                            2024-03-31 15:40:01
-                                        </li>
-                                        <li class="content03 content">
-                                            파일명.pdf
-                                        </li>
-                                        <li class="content04 content">
-                                            <button class="viewDetailButton">보기</button>
-                                        </li>
-                                    </ul>
-                                    <ul class="contents lastContents">
-                                        <li class="content01 content">
-                                            <input type="checkbox" id="unOccupcustomCheckbox05">
-                                            <label for="unOccupcustomCheckbox05"></label>
-                                        </li>
-                                        <li class="content02 content">
-                                            2024-04-02 15:40:01
-                                        </li>
-                                        <li class="content03 content">
-                                            파일명.pdf
-                                        </li>
-                                        <li class="content04 content">
-                                            <button class="viewDetailButton">보기</button>
-                                        </li>
-                                    </ul>
+
                                 </div>
                             </div>
                         </div>
 
                         <div class="btnWrap">
-                            <button class="fileBtn fileSaveBtn">첨부파일 저장</button>
-                            <button class="fileBtn delBtn">선택파일 삭제</button>
+                            <button class="fileBtn fileSaveBtn" id="fileSaveBtn">첨부파일 저장</button>
+                            <button class="fileBtn delBtn" id="deleteSelectedBtn">선택파일 삭제</button>
                         </div>
                     </div>
                 </div>
@@ -458,31 +441,45 @@ margin:10px;
                                     <li class="title04 title">등록일시</li>
                                     <li class="title04 title ">편집</li>
                                 </ul>
-                                <ul class="contents lastContents">
+                                <ul class="contents lastContents" th:each="val:${notsetIssueList}">
                                     <li class="content01 content">
-                                        등기설정
+                                        <!-- 등기설정 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" placeholder="등기설정" th:value="${val.comple_yn}" readonly class="notWriteInput">
                                     </li>
                                     <li class="content02 content">
-                                        계약체결
+                                        <!-- 계약체결 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" placeholder="계약체결" th:value="${val.permitted_yn}" readonly class="notWriteInput">
                                     </li>
                                     <li class="content03 content">
-                                        이슈없음
+                                        <!-- 이슈없음 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth1}" readonly class="notWriteInput">
                                     </li>
                                     <li class="content03 content">
-                                        이슈없음
+                                        <!-- 이슈없음 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth2}" readonly class="notWriteInput">
                                     </li>
                                     <li class="content03 content">
-                                        이슈없음
+                                        <!-- 이슈없음 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth3}" readonly class="notWriteInput">
                                     </li>
                                     <li class="content01 content">
-                                        신규등록
+                                        <!-- 신규등록 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" placeholder="신규등록" th:value="${val.pi_issue_comment}" readonly class="notWriteInput">
                                     </li>
                                     <li class="content04 content">
-                                        2024-04-01 09:46:01
+                                        <!-- 2024-04-01 09:46:01 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" placeholder="2024-04-01 09:46:01" th:value="${val.issue_date}" readonly class="notWriteInput">
                                     </li>
                                     <li class="content04 content btnBox">
                                         <div class="btnWrap">
-                                            <button class="editBtn miniBtn unsetOccupationIssueReviseBtn">수정</button>
+                                            <button class="editBtn miniBtn groundIssueReviseBtn">수정</button>
                                         </div>
                                         <div class="btnWrap">
                                             <button class="delBtn miniBtn">삭제</button>
@@ -493,6 +490,7 @@ margin:10px;
                         </div>
                     </div>
                 </div>
+
 
             </section>
 
@@ -513,55 +511,22 @@ margin:10px;
                                     <li class="title04 title">내용</li>
                                     <li class="title03 title">사유</li>
                                 </ul>
-                                <ul class="contents">
+
+                                <ul class="contents" th:each="val:${notsetIssueHistoryList}">
                                     <li class="content01 content">
-                                        3
+                                        [[${val.pih_history_seq}]]
                                     </li>
                                     <li class="content02 content">
-                                        이슈 삭제
+                                        [[${val.pih_history_type}]]
                                     </li>
                                     <li class="content03 content">
-                                        2024-04-01 11:21:04
+                                        [[${val.history_date}]]
                                     </li>
                                     <li class="content04 content">
-                                        [기공승낙서 미존재 > 토지소유자 협의없이 매설 > 오류/무단매설]
+                                        [[${val.pih_content}]]
                                     </li>
                                     <li class="content03 content">
-                                        이슈 중복 등록
-                                    </li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        2
-                                    </li>
-                                    <li class="content02 content">
-                                        이슈 수정
-                                    </li>
-                                    <li class="content03 content">
-                                        2024-04-01 11:21:04
-                                    </li>
-                                    <li class="content04 content">
-                                        [이슈없음 > 이슈없음 > 이슈없음] -> [기공승낙서 미존재 > 토지소유자 협의없이 매설 > 오류/무단매설]
-                                    </li>
-                                    <li class="content03 content">
-                                        신규 등록
-                                    </li>
-                                </ul>
-                                <ul class="contents lastContents">
-                                    <li class="content01 content">
-                                        1
-                                    </li>
-                                    <li class="content02 content">
-                                        신규 등록
-                                    </li>
-                                    <li class="content03 content">
-                                        2024-04-01 11:21:04
-                                    </li>
-                                    <li class="content04 content">
-                                        [이슈없음 > 이슈없음 > 이슈없음]
-                                    </li>
-                                    <li class="content03 content">
-                                        신규 등록
+                                        사유
                                     </li>
                                 </ul>
                             </div>

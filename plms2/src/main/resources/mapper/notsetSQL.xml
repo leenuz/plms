@@ -38,7 +38,7 @@
     </select>
 
     <select id="selectAtcFileList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        select na_idx,na_notset_no,na_seq,na_file_path,na_file_nm,na_file_seq, to_char(na_wdate, 'yyyy-mm-dd') as na_wdate,(row_number() over()) as no
+        select *,to_char(na_wdate, 'yyyy-mm-dd') as wdate,(row_number() over()) as no
         from notset_atcfile
         where 1=1
         <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
@@ -49,11 +49,22 @@
     </select>
 
     <select id="selectModifyList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        select nm_idx,to_char(nm_modify_date, 'yyyy-mm-dd') as nm_modify_date,nm_gubun,nm_cont,nm_echo,nm_erp,nm_files,nm_notset_no,nm_user_name,nm_user_id,(row_number() over()) as no
+        select *,to_char(nm_modify_date, 'yyyy-mm-dd') as modify_date,(row_number() over()) as no
         from notset_modify
         where 1=1
         <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
             and nm_notset_no=#{idx}
+        </if>
+
+    </select>
+
+    <select id="selectIssueHistoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select *, (row_number() over()) as NO, to_char(pih_history_date,'YYYY-MM-DD HH:MM:SS') as history_date
+        from potential_issue_history
+        where 1=1
+        and pih_history_seq between 1 and 5 order by pih_history_seq desc
+        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
+<!--            and pih_seq=(select pi_seq from potential_issue where pi_manage_no=#{idx})-->
         </if>
 
     </select>
