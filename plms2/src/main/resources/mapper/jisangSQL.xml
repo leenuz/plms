@@ -144,6 +144,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+	<select id="selectIssueCodeAtcFileList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as no 
+		from issue_code_atc_file 
+		where 1=1
+		
+		and icaf_code in (#{issueManualCode1},#{issueManualCode2},#{issueManualCode3})
+		
+			
+	</select>
+	
 	
 	
 	<select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[

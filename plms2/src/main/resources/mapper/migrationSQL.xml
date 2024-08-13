@@ -808,6 +808,63 @@
 	
 	</insert>
 	
+	<insert id="gover_atcfile" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="ga_idx" keyProperty="ga_idx">
+		
+		INSERT INTO gover_atcfile 
+		(
+		
+		 ga_gover_no
+		 ,ga_seq
+		 ,ga_file_path
+		 ,ga_file_nm
+		 ,ga_file_seq
+		 ,ga_pmt_no
+		 
+		 ) 
+		 VALUES (
+		  #{GOVER_NO}
+		  ,NULLIF(cast(#{SEQ} as varchar),'')::integer
+		
+		  ,#{FILE_PATH}
+		  ,#{FILE_NM}
+		  ,#{FILE_SEQ}
+		  ,#{PMT_NO}
+		 
+		   
+		)
+	
+	</insert>
+	<insert id="issue_code_atc_file" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="icaf_idx" keyProperty="icaf_idx">
+		
+		INSERT INTO issue_code_atc_file 
+		(
+		
+		 icaf_code
+		 ,icaf_file_nm
+		 ,icaf_file_path
+		 ,icaf_seq
+		 ,icaf_file_seq
+		 ,icaf_file_version
+		 ,icaf_file_regdate
+		 ,icaf_manual_title
+		 
+		 ) 
+		 VALUES (
+		  #{CODE}
+		  ,#{FILE_NM}
+		  ,#{FILE_PATH}
+		  ,NULLIF(cast(#{SEQ} as varchar),'')::int
+		  ,NULLIF(cast(#{FILE_SEQ} as varchar),'')::int
+		  ,#{FILE_VERSION}
+		  ,Now()
+		 
+		  ,#{MANUAL_TITLE}
+		  
+		   
+		)
+	
+	</insert>
+	
 	<insert id="jisang_permit_master" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jpm_idx" keyProperty="jpm_idx">
 		
 		INSERT INTO jisang_permit_master 

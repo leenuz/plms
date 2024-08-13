@@ -740,7 +740,7 @@ StringBuilder sb=new StringBuilder();
       			response.getWriter().flush();
        // return new ModelAndView("dbTest", "list", list);
     }
-<<<<<<< Updated upstream
+
 
     @RequestMapping(value="/pnuAtcDelete", method = {RequestMethod.GET, RequestMethod.POST})
     public void pnuAtcDelete(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
@@ -825,7 +825,7 @@ StringBuilder sb=new StringBuilder();
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getName() + "\"")
                 .body(resource);
     }
-=======
+
     
     
     @PostMapping(path="/putMemoData") //http://localhost:8080/api/get/dbTest
@@ -876,7 +876,7 @@ StringBuilder sb=new StringBuilder();
 	}
     
     
->>>>>>> Stashed changes
+
 
     
     

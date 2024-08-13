@@ -261,9 +261,18 @@ public class jisangController {
 		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
 		params.put("pnu", data.get(0).get("jm_pnu"));
 		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
-		
+		log.info("jisangIssueList size:"+jisangIssueList.size());
+		if (jisangIssueList.size()>0) {
+			log.info("1:"+jisangIssueList.get(0).get("pi_code_depth1"));
+			log.info("2:"+jisangIssueList.get(0).get("pi_code_depth2"));
+			log.info("3:"+jisangIssueList.get(0).get("pi_code_depth3"));
+			params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
+			params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
+			params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
+		}
 		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
 		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
+		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 		log.info("params:"+params);
 		log.info("data:"+data.get(0));
@@ -279,6 +288,7 @@ public class jisangController {
 		log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
 		log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
 		log.info("jisangMemoList:"+jisangMemoList);
+		log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
 		
       			mav.addObject("resultData",data.get(0));
       			mav.addObject("soujaList",soujaList);
@@ -291,6 +301,7 @@ public class jisangController {
       			mav.addObject("jisangIssueList",jisangIssueList);
       			mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
       			mav.addObject("memoList",jisangMemoList);
+      			mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
       			mav.setViewName("content/jisang/groundDetail");
       			return mav;
     }

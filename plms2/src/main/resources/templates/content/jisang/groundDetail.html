@@ -764,34 +764,21 @@ margin:10px;
                                 <li class="title03 title">개정일자</li>
                                 <li class="title04 title">다운로드</li>
                             </ul>
-                            <ul class="contents">
+                            <ul class="contents" th:each="val:${jisangIssueCodeAtcFileList}">
                                 <li class="content01 content">
-                                    계약자와 현재소유자가 다른 경우 (5년이내)
+                                    [[${val.icaf_manual_title}]]
                                 </li>
                                 <li class="content02 content">
-                                    1.0
+                                    [[${val.icaf_file_version}]]
                                 </li>
                                 <li class="content03 content">
-                                    2024-04-02 15:40:01
+                                    [[${val.icaf_file_regdate}]]
                                 </li>
                                 <li class="content04 content btnsWrap">
                                     <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
                                 </li>
                             </ul>
-                            <ul class="contents lastContents">
-                                <li class="content01 content">
-                                    토지소유자가 아닌자와 계약 (20년 초과)
-                                </li>
-                                <li class="content02 content">
-                                    1.0
-                                </li>
-                                <li class="content03 content">
-                                    2024-04-02 15:40:01
-                                </li>
-                                <li class="content04 content btnsWrap">
-                                    <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                </li>
-                            </ul>
+                            
                         </div>
                     </div>
                 </div>

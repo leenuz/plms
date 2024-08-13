@@ -555,12 +555,13 @@ button {
 }
 
 #groundDetail label {
-    width: 21px;
+    width: 80px;
     height: 21px;
     border-radius: 5px;
     background: #EFF6FF;
     display: inline-block;
     position: relative;
+    text-align:center;
 }
 #groundDetail input[type=checkbox]:checked ~ label {
     background: #4E5871;
