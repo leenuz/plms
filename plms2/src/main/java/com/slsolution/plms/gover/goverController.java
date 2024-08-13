@@ -216,9 +216,41 @@ public class goverController {
 //	      			response.getWriter().print(obj);
 //	      			response.getWriter().flush();
 //	       // return new ModelAndView("dbTest", "list", list);
-	        
-//	      			mav.addObject("resultList",list);
-	      			mav.setViewName("content/gover/occupationDetails");
-	      			return mav;
+
+			String idx = httpRequest.getParameter("idx");
+			String index = httpRequest.getParameter("index");
+
+			params.put("idx",idx);
+			params.put("index",index);
+			log.info("params:"+params);
+			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
+			ArrayList<HashMap> permitList = mainService.selectQuery("goverSQL.selectPermitList",params);
+			ArrayList<HashMap> pnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
+
+//			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
+//			ArrayList<HashMap> jisangModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
+//			ArrayList<HashMap> jisangMergeList = mainService.selectQuery("goverSQL.selectMergeList",params);
+
+			log.info("params:"+params);
+			log.info("data:"+data.get(0));
+//			log.info("jm_pipe_yn:"+data.get(0).get("gm_pipe_yn"));
+			log.info("gm_youngdo:"+data.get(0).get("gm_youngdo"));
+			log.info("gm_pipe_name:"+data.get(0).get("gm_pipe_name"));
+//			log.info("jm_jijuk_area:"+data.get(0).get("gm_jijuk_area"));
+//			log.info("jisangPermitList:"+jisangPermitList);
+//
+//			log.info("souja count:"+soujaList.size());
+//			log.info("soujaList:"+soujaList);
+//			log.info("atcFileList:"+atcFileList);
+
+			mav.addObject("resultData",data.get(0));
+			mav.addObject("permitList",permitList);
+			mav.addObject("pnuList",pnuList);
+//			mav.addObject("atcFileList",atcFileList);
+//			mav.addObject("jisangModifyList",jisangModifyList);
+//			mav.addObject("jisangMergeList",jisangMergeList);
+
+			mav.setViewName("content/gover/occupationDetails");
+			return mav;
 	    }
 }
