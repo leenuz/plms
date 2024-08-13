@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
+import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.MainService;
@@ -740,6 +740,7 @@ StringBuilder sb=new StringBuilder();
       			response.getWriter().flush();
        // return new ModelAndView("dbTest", "list", list);
     }
+<<<<<<< Updated upstream
 
     @RequestMapping(value="/pnuAtcDelete", method = {RequestMethod.GET, RequestMethod.POST})
     public void pnuAtcDelete(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
@@ -824,6 +825,58 @@ StringBuilder sb=new StringBuilder();
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getName() + "\"")
                 .body(resource);
     }
+=======
+    
+    
+    @PostMapping(path="/putMemoData") //http://localhost:8080/api/get/dbTest
+    public ModelAndView putMemoData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		
+		String manage_no = httpRequest.getParameter("manage_no");
+		String wname = httpRequest.getParameter("wname");
+		String wmemo = httpRequest.getParameter("wmemo");
+		String mode= httpRequest.getParameter("mode");
+		String idx=httpRequest.getParameter("idx");
+		
+		params.put("manage_no",manage_no);
+		params.put("wname",wname);
+		params.put("wmemo",wmemo);
+		params.put("idx",idx);
+		
+		log.info("params:"+params);
+		if (mode.equals("insert")) mainService.InsertQuery("commonSQL.putMemoData", params);
+		else mainService.InsertQuery("commonSQL.updateMemoData", params);
+		 ArrayList<HashMap> memoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+		 mav.addObject("memoList",memoList);
+			mav.setViewName("content/jisang/groundDetail :: #memoDiv");
+			return mav;
+	}
+    
+    
+    @PostMapping(path="/deleteMemoData") //http://localhost:8080/api/get/dbTest
+    public ModelAndView deleteMemoData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		
+		
+		String idx=httpRequest.getParameter("idx");
+	
+		params.put("idx",idx);
+		
+		log.info("params:"+params);
+		mainService.InsertQuery("commonSQL.deleteMemoData", params);
+		
+		 ArrayList<HashMap> memoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+		 mav.addObject("memoList",memoList);
+			mav.setViewName("content/jisang/groundDetail :: #memoDiv");
+			return mav;
+	}
+    
+    
+>>>>>>> Stashed changes
 
     
     

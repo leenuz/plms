@@ -248,6 +248,7 @@ public class jisangController {
 		String index = httpRequest.getParameter("index");
 		
 		params.put("idx",idx);
+		params.put("manage_no",idx);
 		params.put("index",index);
 		log.info("params:"+params);
 		
@@ -263,7 +264,7 @@ public class jisangController {
 		
 		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
 		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
-		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("jisangSQL.selectMemoList",params);
+		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 		log.info("params:"+params);
 		log.info("data:"+data.get(0));
 		log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
@@ -289,7 +290,7 @@ public class jisangController {
       			mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
       			mav.addObject("jisangIssueList",jisangIssueList);
       			mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
-      			mav.addObject("jisangMemoList",jisangMemoList);
+      			mav.addObject("memoList",jisangMemoList);
       			mav.setViewName("content/jisang/groundDetail");
       			return mav;
     }
@@ -313,6 +314,10 @@ public class jisangController {
 		mav.setViewName("content/jisang/groundDetail :: #pnuAtcFilesDiv");
 		return mav;
 	}
+	
+	
+	
+	
 	
 	
 	

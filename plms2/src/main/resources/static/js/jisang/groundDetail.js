@@ -148,8 +148,41 @@ const editBefore = document.querySelectorAll('#groundDetail .memoSection .conten
 const editAfter = document.querySelectorAll('#groundDetail .memoSection .contents .content.btnBox .editAfter');
 const editContent = document.querySelectorAll('#groundDetail .editSpace');
 const registBtn = document.querySelectorAll('#groundDetail .registBtn');
+const delBtn = document.querySelectorAll('#groundDetail .delBtn');
 console.log("--------------------");
 console.log(memoEditBtn);
+
+
+
+function loadMemoEditBtn(){
+	memoEditBtn.forEach((btn) => {
+		
+	    btn.addEventListener('click', function () {
+	        var thisEditContent = btn.closest('.contents');
+	        console.log(thisEditContent);
+
+	        thisEditContent.classList.add('editing');
+	        
+	        // const inputs = thisEditContent.querySelectorAll('input');
+	        const inputs = thisEditContent.querySelectorAll('.editSpace input');
+
+	        if (thisEditContent.classList.contains('editing')) {
+	            inputs.forEach(input => {
+	                input.removeAttribute('readonly');
+	            });
+	        } else {
+	            inputs.forEach(input => {
+	                input.setAttribute('readonly', 'readonly');
+	            });
+	        }
+
+
+
+	    })
+	})
+
+}
+
 memoEditBtn.forEach((btn) => {
 	
     btn.addEventListener('click', function () {
@@ -180,9 +213,9 @@ if(registBtn) {
     registBtn.forEach((regiBtn)=> {
         regiBtn.addEventListener('click',function(){
 
-           /* var thisEditContent01 = regiBtn.closest('.contents');
+            var thisEditContent01 = regiBtn.closest('.contents');
             thisEditContent01.classList.remove('editing')
-
+			/*
             const inputs = thisEditContent01.querySelectorAll('input');
             inputs.forEach(input => {
                 input.setAttribute('readonly', 'readonly');
@@ -192,9 +225,73 @@ if(registBtn) {
 			
 			
 			console.log("------------registBtn end-------------");
+			console.log($(thisEditContent01).find("#wname").val());
+			console.log($(thisEditContent01).find("#wmemo").val());
+			console.log($(thisEditContent01).find("#idx").val());
+			var idx=$(thisEditContent01).find("#idx").val();
+			var mode="";
+			if (idx==0 || idx=="undefiled" ||idx==null) mode="insert";
+			else mode="update";
+			var mparams={"mode":mode,"idx":idx,"manage_no":$("#manage_no").val(), "wname":$(thisEditContent01).find("#wname").val(),"wmemo":$(thisEditContent01).find("#wmemo").val()};
+			console.log(mparams);
+			$.ajax({
+			      url: "/api/putMemoData",
+			      type: "POST",
+			      data: mparams,
+				  success:function(memoList){
+					$('#memoDiv').replaceWith(memoList);
+					loadMemoEditBtn();
+					
+				  }
+			 });
         })
     })
 }
+
+
+
+if(delBtn) {
+    delBtn.forEach((dBtn)=> {
+        dBtn.addEventListener('click',function(){
+
+            var thisEditContent01 = dBtn.closest('.contents');
+          //  thisEditContent01.classList.remove('editing')
+			/*
+            const inputs = thisEditContent01.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.setAttribute('readonly', 'readonly');
+            });*/
+			
+			
+			
+			
+			console.log("------------delBtn end-------------");
+			
+			console.log($(thisEditContent01).find("#idx").val());
+			var idx=$(thisEditContent01).find("#idx").val();
+			var mode="";
+			if (idx==0 || idx=="undefiled" ||idx==null) {
+			return;
+				}
+			
+			var mparams={"idx":$(thisEditContent01).find("#idx").val()};
+			console.log(mparams);
+			$.ajax({
+			      url: "/api/deleteMemoData",
+			      type: "POST",
+			      data: mparams,
+			 })
+			 .done(function (fragment) {
+				$('#memoDiv').replaceWith(fragment);
+				scrFn_loadScript('/js/jisang/groundDetail.js');
+			  });
+        })
+    })
+	
+	
+}
+
+
 
 /* 잠재이슈 수정 팝업 오픈 */
 
@@ -244,9 +341,40 @@ const groundIssueReviseOpen = () => {
 
 groundIssueReviseOpen();
 
-
-
-
+/*
+$(document).on("click","#deleteMemoBtn",function(){
+	console.log("--------start--- deletememobtn--------");
+	
+	var thisDeleteContent = delBtn.closest('.contents');
+	var idx=$(thisDeleteContent).find("#idx").val();
+				var mode="";
+				if (idx==0 || idx=="undefiled" ||idx==null) {
+					return;
+				}
+				
+				var mparams={"idx":idx};
+				console.log(mparams);
+				$.ajax({
+				      url: "/api/deleteMemoData",
+				      type: "POST",
+				      data: mparams,
+				 })
+				 .done(function (fragment) {
+				
+				  });
+})
+*/
+/*
+$(document).on("click",".editBtn",function(){
+	console.log("--------editBtn click----------------");
+	console.log($(this).parent().parent().parent().parent().html());
+	 var ele=$(this).parent().parent().parent().parent();
+	 $(this).parent().parent().parent().parent().attr("class","editing");
+	 console.log($(this).parent().parent().parent().parent().html());
+	  $(ele).addClass("editing");
+	 console.log(ele);
+})
+*/
 
 
 

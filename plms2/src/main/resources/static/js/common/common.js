@@ -55,3 +55,36 @@ function ljsIsNull(str){
 	return rtn;
 }
 
+
+
+
+function scrFn_loadScript(url, callback, charset='UTF-8')
+{
+    // <head> 를 찾음
+    var head = document.getElementsByTagName('head')[0];
+    
+    // script 라는 Element를 만듦
+    var script = document.createElement('script');
+    
+    script.type = 'text/javascript';
+    script.charset = charset;
+    
+    var loaded = false;
+
+    // Firefox, Chrome 등, script.onload를 이용해서 로딩 완료 여부를 확인한다.
+    script.onload = function ()
+    {
+        if (callback)
+        {
+            callback();
+        }
+    }
+    
+    // 스크립트 경로 지정
+    script.src = url;
+    
+    // <head>에 script 추가
+    head.appendChild(script);
+}
+
+

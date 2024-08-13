@@ -92,5 +92,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</delete>
 	
+	<insert id="putMemoData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="mm_idx" keyProperty="mm_idx">
+		
+		INSERT INTO  memo_master
+		(
+		 mm_manage_no
+		 ,mm_user_name
+		 ,mm_memo
+		 ,mm_wdate
+		
+		 ) 
+		 VALUES (
+		 #{manage_no}
+		 ,#{wname}
+		 ,#{wmemo}
+		 ,Now()
+		)
+	
+	</insert>
+	<insert id="updateMemoData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="mm_idx" keyProperty="mm_idx">
+		
+		update  memo_master set 
+		
+		
+		 mm_user_name = #{wname}
+		 ,mm_memo = #{wmemo}
+		 ,mm_wdate = Now()
+		
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+		and  mm_idx=${idx}
+		</if>
+	
+	</insert>
+	
+	<insert id="deleteMemoData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="mm_idx" keyProperty="mm_idx">
+		
+		delete from  memo_master 
+		where 1=1
+		
+		and  mm_idx=${idx}
+		
+	
+	</insert>
+	
+	<select id="selectMemoList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as no 
+		from memo_master 
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
+		and mm_manage_no=#{manage_no}
+		</if>
+			
+	</select>
+	
 	
 </mapper>
