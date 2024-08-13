@@ -167,6 +167,7 @@ public class DataMigrationController {
           	}
           	log.info("param["+i+"]:"+param);
           	if (mapperName.equals("jisang_souja")) mainService.InsertQuery("migrationSQL.jisang_souja", param);
+          	if (mapperName.equals("jisang_master")) mainService.InsertQuery("migrationSQL.jisangMaster1", param);
           	else if (mapperName.equals("notset_souja")) mainService.InsertQuery("migrationSQL.notset_souja", param);
           	else if (mapperName.equals("gover_master")) mainService.InsertQuery("migrationSQL.goverMaster", param);
           	else if (mapperName.equals("dopco_master")) mainService.InsertQuery("migrationSQL.dopcoMaster", param);
