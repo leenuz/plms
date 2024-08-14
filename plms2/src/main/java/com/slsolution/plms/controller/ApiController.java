@@ -863,8 +863,9 @@ StringBuilder sb=new StringBuilder();
 		
 		
 		String idx=httpRequest.getParameter("idx");
-	
+		String manage_no = httpRequest.getParameter("manage_no");
 		params.put("idx",idx);
+		params.put("manage_no",manage_no);
 		
 		log.info("params:"+params);
 		mainService.InsertQuery("commonSQL.deleteMemoData", params);
@@ -885,9 +886,11 @@ StringBuilder sb=new StringBuilder();
 		
 		
 		String idx=httpRequest.getParameter("idx");
+		String manage_no = httpRequest.getParameter("manage_no");
 	
 		params.put("idx",idx);
 		
+		params.put("manage_no",manage_no);
 		log.info("params:"+params);
 		
 		
