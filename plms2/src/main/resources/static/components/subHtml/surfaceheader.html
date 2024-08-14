@@ -22,6 +22,8 @@
     console.log(path);
 
     //URL에 따라 메뉴불빛 유지
+    //URL에 따라 메뉴불빛 유지
+    //송유관로현황
     if (
       path === `/components/subHtml/menu01/menu01_1.html` ||
       path === `/components/subHtml/menu01/menu01_2.html` ||
@@ -34,6 +36,65 @@
       path === `/components/subHtml/menu01/unsetOccupationDetails.html`
     ) {
       surfaceMenuBtn[1].classList.add("active");
+    }
+    //지상권
+    else if (
+      path === `/components/subHtml/menu02/menu02_1.html` ||
+      path === `/components/subHtml/menu02/menu02_2.html` ||
+      path === `/components/subHtml/menu02/menu02_3.html` ||
+      path === `/components/subHtml/menu02/menu02_4.html` ||
+      path === `/components/subHtml/menu02/menu02_5.html` ||
+      path === `/components/subHtml/menu02/divisionRegister.html` ||
+      path === `/components/subHtml/menu02/easementDetails.html` ||
+      path === `/components/subHtml/menu02/easementModification.html` ||
+      path === `/components/subHtml/menu02/forDivisionEasementDetails.html` ||
+      path === `/components/subHtml/menu02/landRightMerge.html` ||
+      path === `/components/subHtml/menu02/landRightsRegistration.html` ||
+      path === `/components/subHtml/menu02/landTerminationRegistration.html` ||
+      path === `/components/subHtml/menu02/usePermitDetail.html` ||
+      path === `/components/subHtml/menu02/usePermitEdit.html` ||
+      path === `/components/subHtml/menu02/usePermitRegister.html`
+    ) {
+      surfaceMenuBtn[2].classList.add("active");
+    } //점용
+    else if (
+      path === `/components/subHtml/menu03/menu03_1.html` ||
+      path === `/components/subHtml/menu03/menu03_2.html` ||
+      path === `/components/subHtml/menu03/menu03_3.html` ||
+      path === `/components/subHtml/menu03/feeDetail.html` ||
+      path === `/components/subHtml/menu03/masterEdit.html` ||
+      path === `/components/subHtml/menu03/masterReg.html` ||
+      path === `/components/subHtml/menu03/occupancyEndReg.html` ||
+      path === `/components/subHtml/menu03/orgAdmin.html` ||
+      path === `/components/subHtml/menu03/useDetail.html`
+    ) {
+      surfaceMenuBtn[3].classList.add("active");
+    } //토지개발
+    else if (
+      path === `/components/subHtml/menu04/menu04_1.html` ||
+      path === `/components/subHtml/menu04/landDevInfo.html` ||
+      path === `/components/subHtml/menu04/landEdit.html` ||
+      path === `/components/subHtml/menu04/landReg.html`
+    ) {
+      surfaceMenuBtn[4].classList.add("active");
+    } //회사토지
+    else if (
+      path === `/components/subHtml/menu05/menu05_1.html` ||
+      path === `/components/subHtml/menu05/menu05_2.html` ||
+      path === `/components/subHtml/menu05/compLandInfo.html` ||
+      path === `/components/subHtml/menu05/compLandEdit.html` ||
+      path === `/components/subHtml/menu05/compLandReg.html` ||
+      path === `/components/subHtml/menu05/compLandDispReg.html`
+    ) {
+      surfaceMenuBtn[5].classList.add("active");
+    } //민원관리
+    else if (
+      path === `/components/subHtml/menu06/menu06_1.html` ||
+      path === `/components/subHtml/menu06/codeMgmt.html` ||
+      path === `/components/subHtml/menu06/issueCodeMgmt.html` ||
+      path === `/components/subHtml/menu06/complaintManage.html`
+    ) {
+      surfaceMenuBtn[6].classList.add("active");
     }
 
     surfaceMenuBtn.forEach((btn, index) => {
@@ -129,12 +190,12 @@
         </button>
         <div class="hiddenMenuBoxs">
           <div class="hiddenMenuList">
-            <a href="#">지상권 조회</a>
-            <a href="#">지상권 등록</a>
-            <a href="#">지상권 해지</a>
-            <a href="#">지상권 분할</a>
-            <a href="#">지상권 합필</a>
-            <a href="#">지상권 사용승낙</a>
+            <a href="/jisang/menu02/menu02_1">지상권 조회</a>
+            <a href="/jisang/menu02/landRightsRegistration">지상권 등록</a>
+            <a href="/jisang/menu02/menu02_2">지상권 해지</a>
+            <a href="/jisang/menu02/menu02_3">지상권 분할</a>
+            <a href="/jisang/menu02/menu02_4">지상권 합필</a>
+            <a href="/jisang/menu02/menu02_5">지상권 사용승낙</a>
           </div>
         </div>
       </li>

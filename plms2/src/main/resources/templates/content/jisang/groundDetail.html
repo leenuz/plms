@@ -580,12 +580,12 @@ margin:10px;
             <div class="subTitle">
                 필지 첨부파일
                 <!-- span -> button으로 수정 -->
-                <!-- <span class="myPc">내 PC</span> -->
+                <span class="myPc">내 PC</span>
                 <!-- <button class="myPc">내 PC</button> -->
                 <div class="fileBtnWrap">
                     <!-- <input type="file" id="groundDetail_myPcFiles"> -->
                     <input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
-                    <label for="groundDetail_myPcFiles">내 PC</label>
+                    <!-- <label for="groundDetail_myPcFiles">내 PC</label> -->
                 </div>
             </div>
 
@@ -844,7 +844,7 @@ margin:10px;
                                                 <button class="addBtn miniBtn">추가</button>
                                             </div>
                                             <div class="btnWrap">
-                                                <button class="delBtn miniBtn">삭제</button>
+                                                <button class="delBtn miniBtn" id="deleteMemoBtn">삭제</button>
                                             </div>
                                         </div>
 
@@ -932,7 +932,7 @@ margin:10px;
 
                                         <div class="editAfter">
                                             <div class="newBtnWrap">
-                                                <button class="registBtn miniBtn">등록</button>
+                                                <button class="registBtn miniBtn" id="deleteMemoBtn">등록</button>
                                             </div>
                                         </div>
                                     </li>

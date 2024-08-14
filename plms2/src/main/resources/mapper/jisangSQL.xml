@@ -138,9 +138,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 		and pa_manage_no=#{idx}
 		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pnu)" >
 		and pa_pnu=#{pnu}
-		
-			
+		</if>
 	</select>
 	
 	

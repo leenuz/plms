@@ -339,6 +339,20 @@ public class jisangController {
 //      model.addAttribute("Data", "");
 //      return "statistics/yearchart :: #tableStat";
 //    }
+	
+	
+	
+	//groundDetail  상세 조회
+		@GetMapping(path="/menu02/menu02_01") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView menu02_01(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			
+			return mav;
+		}
+	
+	
 
 	
 }

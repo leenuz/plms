@@ -289,6 +289,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and gm.gm_jisa=#{jisa}
 			</if>
+			and gp.gp_pnu is not null
 		
 		)
 		UNION ALL
@@ -376,6 +377,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
 					LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
 					where 1=1 and gp.gp_gover_no = gm.gm_gover_no
+					and gp.gp_pnu is not null
 		
 				)
 				UNION ALL

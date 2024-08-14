@@ -699,9 +699,12 @@ StringBuilder sb=new StringBuilder();
         JSONArray jarr=json.getJSONArray("files");
         log.info("jarr:"+jarr);
         log.info("jarr0:"+jarr.get(0));
+//        HashMap resParam = new HashMap();
+//        resParam
         
         int fsize=jarr.length();
         ArrayList<HashMap>  list=new ArrayList<HashMap>();
+        ArrayList<HashMap>  param=new ArrayList<HashMap>();
         for(int i=0;i<fsize;i++) {
         	log.info("filepath:"+jarr.get(i));
         	log.info("filename:"+jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", ""));
@@ -721,10 +724,11 @@ StringBuilder sb=new StringBuilder();
 //		log.info("sidomaster list:"+list);
 //		//        List<TestDTO> list = new ArrayList<TestDTO>();
 ////        list = dbService.getList();
-		
+         
         HashMap<String,Object> resultmap=new HashMap();
         resultmap.put("resultCode","0000");
-        resultmap.put("resultData",list);
+        resultmap.put("resultData","");
+        resultmap.put("params",param);
         resultmap.put("resultMessage","success");
         JSONObject obj =new JSONObject(resultmap);
 //        System.out.println(obj);
