@@ -147,8 +147,8 @@ margin:10px;
                     <div class="thirdTitle">
                         <h2>・참고 지적도</h2>
                     </div>
-
-                    <div class="contentDetailBox mapFigure"></div>
+                    <iframe src="http://211.196.153.235:7070/geoserver/dopcogis/wms?service=WMS&version=1.1.1&request=GetMap&layers=dopcogis%3Adxf_test&bbox=128.48537837663474,35.926544471907825,128.48578475095366,35.927040257710196&width=660&height=214&srs=EPSG%3A4326&styles=&format=application/openlayers" class="contentDetailBox mapFigure"></iframe>
+                    <!--<div class="contentDetailBox mapFigure"></div>-->
 
                 </div>
 
@@ -525,22 +525,20 @@ margin:10px;
                             <ul class="contents" th:if="${atcFileList.size()==0}">
                                 <li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
                             </ul>
-                            <div class="contentScr">
-                                <ul class="contents" th:each="val:${atcFileList}">
-                                    <li class="content01 content">
-                                        [[${val.ga_wdate}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${val.ga_file_nm}]]
-                                    </li>
-                                    <li class="content03 content">
-                                        <button class="viewDetailButton">상세보기</button>
-                                    </li>
-                                    <li class="content04 content btnsWrap">
-                                        <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                    </li>
-                                </ul>
-                            </div>
+                            <ul class="contents" th:each="val:${atcFileList}">
+                                <li class="content01 content">
+                                    [[${val.ga_wdate}]]
+                                </li>
+                                <li class="content02 content">
+                                    [[${val.ga_file_nm}]]
+                                </li>
+                                <li class="content03 content">
+                                    <button class="viewDetailButton">상세보기</button>
+                                </li>
+                                <li class="content04 content btnsWrap">
+                                    <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
