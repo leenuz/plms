@@ -171,7 +171,6 @@ margin:10px;
                             <ul class="contents">
                                 <li class="content01 content">
                                     <input type="hidden" name="manage_no" id="manage_no" th:value="${resultData.gm_gover_no}"/>
-<!--                                    <input type="hidden" name="pnu" id="pnu" th:value="${resultData.gm_pnu}"/>-->
                                     [[${resultData.gm_gover_no}]]
                                 </li>
                                 <li class="content02 content">
@@ -250,6 +249,7 @@ margin:10px;
                                 <li class="title05 title">보기</li>
                             </ul>
                             <ul class="contents" th:each="val:${pnuTargetList}">
+                                <input type="hidden" name="pnu" id="pnu" th:value="${val.gp_pnu}"/>
                                 <li class="content01 content">
                                     [[${val.gp_sido_nm}]] [[${val.gp_sgg_nm}]] [[${val.gp_emd_nm}]] [[${val.gp_ri_nm}]] [[${val.gp_jibun}]]
                                 </li>
@@ -260,7 +260,7 @@ margin:10px;
                                     [[${val.gp_gover_length}]]
                                 </li>
                                 <li class="content04 content">
-                                    [[${val.gp_gover_area}]]
+                                    [[${val.gp_gover_area}]] [[${val.gp_pnu}]]
                                 </li>
                                 <li class="content05 content">
                                     <button class="viewDetailButton">위치보기</button>

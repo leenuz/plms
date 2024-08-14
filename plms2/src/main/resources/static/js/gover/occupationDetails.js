@@ -148,7 +148,7 @@ $(document).on("click","#fileSaveBtn",function(){
 	for(var i=0;i<files.length;i++){
 		console.log("filename:"+files[i].name);
 	}*/
-	var params={"manage_no":$("#manage_no").val(),"files":uploadFiles};
+	var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val(),"files":uploadFiles};
 	url="/api/pnuAtcUpload";
 	$.ajax({
 
