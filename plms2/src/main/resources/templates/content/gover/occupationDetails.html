@@ -24,7 +24,7 @@
 	
  <link rel="stylesheet" href="/css/menu01/occupationDetails.css">
      <link rel="stylesheet" href="/css/jisang/write.css">
-	  
+
 		<script src="/js/gover/occupationDetails.js"></script>
      <script src="/js/common/upload.js"></script>
 		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
@@ -249,18 +249,18 @@ margin:10px;
                                 <li class="title04 title">면적(m²)</li>
                                 <li class="title05 title">보기</li>
                             </ul>
-                            <ul class="contents">
+                            <ul class="contents" th:each="val:${pnuTargetList}">
                                 <li class="content01 content">
-                                    광주광역시 광산구 도천동 620-6
+                                    [[${val.gp_sido_nm}]] [[${val.gp_sgg_nm}]] [[${val.gp_emd_nm}]] [[${val.gp_ri_nm}]] [[${val.gp_jibun}]]
                                 </li>
                                 <li class="content02 content">
-                                    15,728.03
+                                    [[${val.gp_jijuk_area}]]
                                 </li>
                                 <li class="content03 content">
-                                    1,800
+                                    [[${val.gp_gover_length}]]
                                 </li>
                                 <li class="content04 content">
-                                    20
+                                    [[${val.gp_gover_area}]]
                                 </li>
                                 <li class="content05 content">
                                     <button class="viewDetailButton">위치보기</button>
@@ -481,8 +481,8 @@ margin:10px;
                                 <li class="content01 content">
                                     [[${val.gp_pay_date}]]
                                 </li>
-                                <li class="content01 content">
-                                    [[${val.gp_pay_money}]]
+                                <li class="content01 content" th:data-money="${val.gp_pay_money}">
+                                    <span></span>
                                 </li>
                                 
                             </ul>
@@ -522,46 +522,21 @@ margin:10px;
                                 <li class="title03 title">파일보기</li>
                                 <li class="title04 title">파일저장</li>
                             </ul>
+                            <ul class="contents" th:if="${atcFileList.size()==0}">
+                                <li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+                            </ul>
                             <div class="contentScr">
-                                <ul class="contents">
+                                <ul class="contents" th:each="val:${atcFileList}">
                                     <li class="content01 content">
-                                        2024-03-31
+                                        [[${val.ga_wdate}]]
                                     </li>
                                     <li class="content02 content">
-                                        서울특별시 서초구 원지동 28.pdf
+                                        [[${val.ga_file_nm}]]
                                     </li>
                                     <li class="content03 content">
                                         <button class="viewDetailButton">상세보기</button>
                                     </li>
-                                    <li class="content04 content">
-                                        <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                    </li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        2024-03-31
-                                    </li>
-                                    <li class="content02 content">
-                                        원지동 28 등기부등본.pdf
-                                    </li>
-                                    <li class="content03 content">
-                                        <button class="viewDetailButton">상세보기</button>
-                                    </li>
-                                    <li class="content04 content">
-                                        <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                    </li>
-                                </ul>
-                                <ul class="contents lastContents">
-                                    <li class="content01 content">
-                                        2024-03-31
-                                    </li>
-                                    <li class="content02 content">
-                                        원지동 28 등기부등본.pdf
-                                    </li>
-                                    <li class="content03 content">
-                                        <button class="viewDetailButton">상세보기</button>
-                                    </li>
-                                    <li class="content04 content">
+                                    <li class="content04 content btnsWrap">
                                         <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
                                     </li>
                                 </ul>

@@ -127,6 +127,15 @@ document.addEventListener("DOMContentLoaded", function() {
         lastButton.style.width = '150px';
         lastButton.style.textAlign = 'center';
     }
+
+    //금액 숫자 포멧팅
+    document.querySelectorAll('.content01').forEach(function(element) {
+        const money = parseInt(element.getAttribute('data-money'), 10);
+        if (!isNaN(money)) {
+            const formatted = money.toLocaleString();
+            element.querySelector('span').textContent = formatted;
+        }
+    });
 });
 
 
