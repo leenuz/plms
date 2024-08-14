@@ -280,3 +280,96 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+//메모 기능
+$(document).on("click",".addBtn",function(){
+	console.log("--------addBtn click----------------");
+
+	var MainContentDiv = this.closest('.contentScr');
+	var thisNullContent = $(MainContentDiv).find("ul").eq(0).html();
+	console.log(MainContentDiv);
+	console.log("-------------------------");
+	console.log(thisNullContent);
+	$(MainContentDiv).append("<ul class='contents'>"+thisNullContent+"</ul>");
+
+});
+
+$(document).on("click",".editBtn",function(){
+	console.log("--------editBtn click----------------");
+	var thisContent = this.closest('.contents');
+	console.log(thisContent);
+	thisContent.classList.add('editing');
+	const inputs = thisContent.querySelectorAll('.editSpace input');
+
+	        if (thisContent.classList.contains('editing')) {
+	            inputs.forEach(input => {
+	                input.removeAttribute('readonly');
+	            });
+	        } else {
+	            inputs.forEach(input => {
+	                input.setAttribute('readonly', 'readonly');
+	            });
+	        }
+
+});
+
+$(document).on("click",".registBtn",function(){
+		var thisContent = this.closest('.contents');
+	            thisContent.classList.remove('editing')
+
+				const inputs = thisContent.querySelectorAll('input');
+				            inputs.forEach(input => {
+				                input.setAttribute('readonly', 'readonly');
+				            });
+
+
+
+
+							console.log("------------registBtn end-------------");
+							console.log($(thisContent).find("#wname").val());
+							console.log($(thisContent).find("#wmemo").val());
+							console.log($(thisContent).find("#idx").val());
+							var idx=$(thisContent).find("#idx").val();
+							var mode="";
+							if (idx==0 || idx=="undefiled" ||idx==null) mode="insert";
+							else mode="update";
+							var mparams={"mode":mode,"idx":idx,"manage_no":$("#manage_no").val(), "wname":$(thisContent).find("#wname").val(),"wmemo":$(thisContent).find("#wmemo").val()};
+							console.log(mparams);
+							$.ajax({
+							      url: "/api/putMemoData",
+							      type: "POST",
+							      data: mparams,
+								  success:function(memoList){
+									$('#memoDiv').replaceWith(memoList);
+									loadMemoEditBtn();
+
+								  }
+							 });
+
+});
+
+$(document).on("click",".delBtn",function(){
+	var thisContent = this.closest('.contents');
+
+
+	console.log("------------delBtn end-------------");
+
+	console.log($(thisContent).find("#idx").val());
+	var idx=$(thisContent).find("#idx").val();
+	var mode="";
+	if (idx==0 || idx=="undefiled" ||idx==null) {
+	return;
+		}
+
+	var mparams={"idx":$(thisContent).find("#idx").val(),"manage_no":$("#manage_no").val()};
+	console.log(mparams);
+	$.ajax({
+	      url: "/api/deleteMemoData",
+	      type: "POST",
+	      data: mparams,
+	 })
+	 .done(function (fragment) {
+		$('#memoDiv').replaceWith(fragment);
+
+	  });
+});

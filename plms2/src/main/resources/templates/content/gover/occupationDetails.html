@@ -953,7 +953,7 @@ margin:10px;
                                         </div>
                                     </li>
                                 </ul>
-                                <ul class="contents">
+                                <ul class="contents" th:each="val:${memoList}">
                                     <li class="content01 content">
                                         <input type="hidden" th:value="${val.mm_idx}" id="idx">
                                         <input type="text" readonly placeholder="2022-11-01" id="wdate" th:value="${val.mm_wdate}" class="notWriteInput">
