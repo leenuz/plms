@@ -343,15 +343,55 @@ public class jisangController {
 	
 	
 	//groundDetail  상세 조회
-		@GetMapping(path="/menu02/menu02_01") //http://localhost:8080/api/get/dbTest
-	    public ModelAndView menu02_01(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		@GetMapping(path="/menu02_1") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView menu02_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			ModelAndView mav=new ModelAndView();
-			
+			mav.setViewName("content/jisang/menu02_1");
 			return mav;
 		}
-	
+		
+		@GetMapping(path="/menu02_2") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView menu02_2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/jisang/menu02_2");
+			return mav;
+		}
+		@GetMapping(path="/menu02_3") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView menu02_3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/jisang/menu02_3");
+			return mav;
+		}
+		@GetMapping(path="/menu02_4") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView menu02_4(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/jisang/menu02_4");
+			return mav;
+		}
+		@GetMapping(path="/menu02_5") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView menu02_5(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/jisang/menu02_5");
+			return mav;
+		}
+		@GetMapping(path="/landRightsRegistration") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView landRightsRegistration(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/jisang/landRightsRegistration");
+			return mav;
+		}
 	
 
 	

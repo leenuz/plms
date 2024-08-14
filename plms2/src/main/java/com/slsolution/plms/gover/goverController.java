@@ -278,4 +278,38 @@ public class goverController {
 			mav.setViewName("content/gover/occupationDetails");
 			return mav;
 	    }
+		
+		@GetMapping(path="/menu03_1") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView menu03_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/gover/menu03_1");
+			return mav;
+		}
+		
+		@GetMapping(path="/menu03_2") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView menu03_2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/gover/menu03_2");
+			return mav;
+		}
+		@GetMapping(path="/menu03_3") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView menu03_3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/gover/menu03_3");
+			return mav;
+		}
+		@GetMapping(path="/orgAdmin") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView orgAdmin(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/gover/orgAdmin");
+			return mav;
+		}
 }
