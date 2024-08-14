@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지상권 내역 등록</title>
+    <link rel="stylesheet" href="/assets/css/menu02/landRightsRegistration.css">
+    <link rel="stylesheet" href="/assets/css/header.css" />
+</head>
+<body>
+    <div class="landRightsRegistrationWrappers">
+        <div class="landRightsRegistrationHeader"></div>
+    <main id="landRightsRegistration">
+        
+        <div class="mainTitle">
+            <h1>지상권 내역 등록</h1>
+        </div>
+
+        <section class="defaultInfo">
+            <div class="subTitle">
+                기본 정보
+            </div>
+
+            <div class="contWrap">
+                <div class="depth1">
+                    <ul class="titles">
+                        <li class="title01 title">담당지사</li>
+                        <li class="title02 title">관로일치여부</li>
+                        <li class="title03 title">용도</li>
+                        <li class="title04 title">관로명(구간)</li>
+                        <li class="title">단/복선</li>
+                        <li class="title02 title">국공유지여부</li>
+                        <li class="title05 title">지적면적(㎡)</li>
+                        <li class="title05 title">지목</li>
+                        <li class="title05 title">관리제외필지</li>
+                        <li class="title05 title">회계처리필요여부</li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content01 content selectContentArea">
+                            <div class="hiddenSelectBox">
+                                <!-- name도 추가 -->
+                                <select name="landRightsRegistSelectBox01" id="landRightsRegistSelectBox01" hidden>
+                                    <option value="서울지사1">서울지사1</option>
+                                    <option value="서울지사2">서울지사2</option>
+                                    <option value="서울지사3">서울지사3</option>
+                                    <option value="서울지사4">서울지사4</option>
+                                    <option value="서울지사5">서울지사5</option>
+                                    <option value="서울지사6">서울지사6</option>
+                                    <option value="서울지사7">서울지사7</option>
+                                    <option value="서울지사8">서울지사8</option>
+                                    <option value="서울지사9">서울지사9</option>
+                                    <option value="서울지사10">서울지사10</option>
+                                </select>
+                            
+                            </div>
+                            <section class="customSelectBox">
+                                <button class="customSelectView">
+                                    서울지사
+                                </button>
+
+                                <ul class="customSelectBtns">
+                                    <!-- createCustomLiLandRegist() -->
+                                </ul>
+                            </section>
+                        </li>
+                        <li class="content02 content selectContentArea">
+                            <div class="hiddenSelectBox">
+                                <!-- name도 추가 -->
+                                <select name="landRightsRegistSelectBox02" id="landRightsRegistSelectBox02" hidden>
+                                    <option value="Y1">Y1</option>
+                                    <option value="Y2">Y2</option>
+                                    <option value="Y3">Y3</option>
+                                    <option value="Y4">Y4</option>
+                                    <option value="Y5">Y5</option>
+                                    <option value="Y6">Y6</option>
+                                    <option value="Y7">Y7</option>
+                                    <option value="Y8">Y8</option>
+                                    <option value="Y9">Y9</option>
+                                    <option value="Y10">Y10</option>
+                                </select>
+                            
+                            </div>
+                            <section class="customSelectBox">
+                                <button class="customSelectView">
+                                    Y
+                                    
+                                </button>
+                            
+                                <ul class="customSelectBtns">
+                                    <!-- createCustomLiLandRegist() -->
+                                </ul>
+                            </section>
+                        </li>
+                        <li class="content03 content selectContentArea">
+                            <div class="hiddenSelectBox">
+                                <!-- name도 추가 -->
+                                <select name="landRightsRegistSelectBox03" id="landRightsRegistSelectBox03" hidden>
+                                    <option value="송유관로1">송유관로1</option>
+                                    <option value="송유관로2">송유관로2</option>
+                                    <option value="송유관로3">송유관로3</option>
+                                    <option value="송유관로4">송유관로4</option>
+                                    <option value="송유관로5">송유관로5</option>
+                                    <option value="송유관로6">송유관로6</option>
+                                    <option value="송유관로7">송유관로7</option>
+                                    <option value="송유관로8">송유관로8</option>
+                                    <option value="송유관로9">송유관로9</option>
+                                    <option value="송유관로10">송유관로10</option>
+                                </select>
+                            
+                            </div>
+                            <section class="customSelectBox">
+                                <button class="customSelectView">
+                                    송유관로
+                                    
+                                </button>
+                            
+                                <ul class="customSelectBtns">
+                                    <!-- createCustomLiLandRegist() -->
+                                </ul>
+                            </section>
+                        </li>
+                        <li class="content04 content selectContentArea">
+                            <div class="hiddenSelectBox">
+                                <!-- name도 추가 -->
+                                <select name="landRightsRegistSelectBox04" id="landRightsRegistSelectBox04" hidden>
+                                    <option value="SNP구간1">SNP구간1</option>
+                                    <option value="SNP구간2">SNP구간2</option>
+                                    <option value="SNP구간3">SNP구간3</option>
+                                    <option value="SNP구간4">SNP구간4</option>
+                                    <option value="SNP구간5">SNP구간5</option>
+                                    <option value="SNP구간6">SNP구간6</option>
+                                    <option value="SNP구간7">SNP구간7</option>
+                                    <option value="SNP구간8">SNP구간8</option>
+                                    <option value="SNP구간9">SNP구간9</option>
+                                    <option value="SNP구간10">SNP구간10</option>
+                                </select>
+                            
+                            </div>
+                            <section class="customSelectBox">
+                                <button class="customSelectView">
+                                    SNP구간
+                                </button>
+                            
+                                <ul class="customSelectBtns">
+                                    <!-- createCustomLiLandRegist() -->
+                                </ul>
+                            </section>
+                        </li>
+                        <li class="content selectContentArea">
+                            <div class="hiddenSelectBox">
+                                <!-- name도 추가 -->
+                                <select name="landRightsRegistSelectBox05" id="landRightsRegistSelectBox05" hidden>
+                                    <option value="복선1">복선1</option>
+                                    <option value="복선2">복선2</option>
+                                    <option value="복선3">복선3</option>
+                                    <option value="복선4">복선4</option>
+                                    <option value="복선5">복선5</option>
+                                    <option value="복선6">복선6</option>
+                                    <option value="복선7">복선7</option>
+                                    <option value="복선8">복선8</option>
+                                    <option value="복선9">복선9</option>
+                                    <option value="복선10">복선10</option>
+                                </select>
+                            
+                            </div>
+                            <section class="customSelectBox">
+                                <button class="customSelectView">
+                                    복선
+                                </button>
+                            
+                                <ul class="customSelectBtns">
+                                    <!-- <li><button class="moreSelectBtn">복선1</button></li>
+                                    <li><button class="moreSelectBtn">복선2</button></li>
+                                    <li><button class="moreSelectBtn">복선3</button></li> -->
+                                </ul>
+                            </section>
+                        </li>
+                        <li class="content02 content selectContentArea">
+                            <div class="hiddenSelectBox">
+                                <!-- name도 추가 -->
+                                <select name="landRightsRegistSelectBox06" id="landRightsRegistSelectBox06" hidden>
+                                    <option value="Y1">Y1</option>
+                                    <option value="Y2">Y2</option>
+                                    <option value="Y3">Y3</option>
+                                    <option value="Y4">Y4</option>
+                                    <option value="Y5">Y5</option>
+                                    <option value="Y6">Y6</option>
+                                    <option value="Y7">Y7</option>
+                                    <option value="Y8">Y8</option>
+                                    <option value="Y9">Y9</option>
+                                    <option value="Y10">Y10</option>
+                                </select>
+                            
+                            </div>
+                            <section class="customSelectBox">
+                                <button class="customSelectView">
+                                    Y
+                                    
+                                </button>
+                            
+                                <ul class="customSelectBtns">
+                                    <!-- createCustomLiLandRegist() -->
+                                </ul>
+                            </section>
+                        </li>
+                        <li class="content05 content">
+                            <input type="text" placeholder="182">
+                        </li>
+                        <li class="content05 content selectContentArea">
+                            <div class="hiddenSelectBox">
+                                <!-- name도 추가 -->
+                                <select name="landRightsRegistSelectBox07" id="landRightsRegistSelectBox07" hidden>
+                                    <option value="하천1">하천1</option>
+                                    <option value="하천2">하천2</option>
+                                    <option value="하천3">하천3</option>
+                                    <option value="하천4">하천4</option>
+                                    <option value="하천5">하천5</option>
+                                    <option value="하천6">하천6</option>
+                                    <option value="하천7">하천7</option>
+                                    <option value="하천8">하천8</option>
+                                    <option value="하천9">하천9</option>
+                                    <option value="하천10">하천10</option>
+                                </select>
+                            
+                            </div>
+                            <section class="customSelectBox">
+                                <button class="customSelectView">
+                                    하천
+                                    
+                                </button>
+                            
+                                <ul class="customSelectBtns">
+                                    <!-- createCustomLiLandRegist() -->
+                                </ul>
+                            </section>
+                            
+                        </li>
+                        <li class="content05 content checkboxWrap">
+                            <input type="checkbox" id="landRightsRegistration_excluded-parcel">
+                            <label for="landRightsRegistration_excluded-parcel"></label>
+                        </li>
+                        <li class="content05 content selectContentArea">
+                            <div class="hiddenSelectBox">
+                                <!-- name도 추가 -->
+                                <select name="landRightsRegistSelectBox08" id="landRightsRegistSelectBox08" hidden>
+                                    <option value="Y1">Y1</option>
+                                    <option value="Y2">Y2</option>
+                                    <option value="Y3">Y3</option>
+                                    <option value="Y4">Y4</option>
+                                    <option value="Y5">Y5</option>
+                                    <option value="Y6">Y6</option>
+                                    <option value="Y7">Y7</option>
+                                    <option value="Y8">Y8</option>
+                                    <option value="Y9">Y9</option>
+                                    <option value="Y10">Y10</option>
+                                </select>
+                            
+                            </div>
+                            <section class="customSelectBox">
+                                <button class="customSelectView">
+                                    Y
+                                    
+                                </button>
+                        
+                                <ul class="customSelectBtns">
+                                    <!-- createCustomLiLandRegist() -->
+                                </ul>
+                            </section>
+                        </li>
+                    </ul>
+                </div>
+                <div class="depth2">
+                    <ul class="titles">
+                        <li class="title01">주소</li>
+                        <li class="title02">주소 입력 선택 방식</li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content01">
+                            <input type="text" placeholder="경기도 고양시 덕양구 강매동 1" readonly class="notWriteInput">
+                        </li>
+                        <li class="content02">
+                            <ul class="radioBox">
+                                <li class="inputArea inputArea01">
+                                    <div class="inputWrap">
+                                        <input type="radio" name="landRightsRegistration_addressInput">
+                                        <label>입력형</label>
+                                    </div>
+
+                                    <input type="text" placeholder="주소 입력" class="largeWidth">
+                                </li>
+                                <li class="inputArea inputArea02">
+                                    <div class="inputWrap">
+                                        <input type="radio" name="landRightsRegistration_addressInput">
+                                        <label>선택형</label>
+                                    </div>
+
+                                    <div class="selectContentArea">
+                                        <div class="hiddenSelectBox">
+                                            <!-- name도 추가 -->
+                                            <select name="landRightsRegistSelectBox09" id="landRightsRegistSelectBox09" hidden>
+                                                <option value="전체1">전체1</option>
+                                                <option value="전체2">전체2</option>
+                                                <option value="전체3">전체3</option>
+                                                <option value="전체4">전체4</option>
+                                                <option value="전체5">전체5</option>
+                                                <option value="전체6">전체6</option>
+                                                <option value="전체7">전체7</option>
+                                                <option value="전체8">전체8</option>
+                                                <option value="전체9">전체9</option>
+                                                <option value="전체10">전체10</option>
+                                            </select>
+                                        
+                                        </div>
+                                        <section class="customSelectBox">
+                                            <button class="customSelectView">
+                                                전체
+                                                
+                                            </button>
+                                        
+                                            <ul class="customSelectBtns">
+                                                <!-- createCustomLiLandRegist() -->
+                                            </ul>
+                                        </section>
+                                    </div>
+                                    <div class="selectContentArea">
+                                        <div class="hiddenSelectBox">
+                                            <!-- name도 추가 -->
+                                            <select name="landRightsRegistSelectBox10" id="landRightsRegistSelectBox10" hidden>
+                                                <option value="전체1">전체1</option>
+                                                <option value="전체2">전체2</option>
+                                                <option value="전체3">전체3</option>
+                                                <option value="전체4">전체4</option>
+                                                <option value="전체5">전체5</option>
+                                                <option value="전체6">전체6</option>
+                                                <option value="전체7">전체7</option>
+                                                <option value="전체8">전체8</option>
+                                                <option value="전체9">전체9</option>
+                                                <option value="전체10">전체10</option>
+                                            </select>
+                                        
+                                        </div>
+                                        <section class="customSelectBox">
+                                            <button class="customSelectView">
+                                                전체
+                                                
+                                            </button>
+                                        
+                                            <ul class="customSelectBtns">
+                                            <!-- createCustomLiLandRegist() -->
+                                            </ul>
+                                        </section>
+                                    </div>
+                                    <div class="selectContentArea">
+                                        <div class="hiddenSelectBox">
+                                            <!-- name도 추가 -->
+                                            <select name="landRightsRegistSelectBox11" id="landRightsRegistSelectBox11" hidden>
+                                                <option value="전체1">전체1</option>
+                                                <option value="전체2">전체2</option>
+                                                <option value="전체3">전체3</option>
+                                                <option value="전체4">전체4</option>
+                                                <option value="전체5">전체5</option>
+                                                <option value="전체6">전체6</option>
+                                                <option value="전체7">전체7</option>
+                                                <option value="전체8">전체8</option>
+                                                <option value="전체9">전체9</option>
+                                                <option value="전체10">전체10</option>
+                                            </select>
+                                        
+                                        </div>
+                                        <section class="customSelectBox">
+                                            <button class="customSelectView">
+                                                전체
+                                                
+                                            </button>
+                                        
+                                            <ul class="customSelectBtns">
+                                                <!-- createCustomLiLandRegist() -->
+                                            </ul>
+                                        </section>
+                                    </div>
+                                    <div class="selectContentArea">
+                                        <div class="hiddenSelectBox">
+                                            <!-- name도 추가 -->
+                                            <select name="landRightsRegistSelectBox12" id="landRightsRegistSelectBox12" hidden>
+                                                <option value="전체1">전체1</option>
+                                                <option value="전체2">전체2</option>
+                                                <option value="전체3">전체3</option>
+                                                <option value="전체4">전체4</option>
+                                                <option value="전체5">전체5</option>
+                                                <option value="전체6">전체6</option>
+                                                <option value="전체7">전체7</option>
+                                                <option value="전체8">전체8</option>
+                                                <option value="전체9">전체9</option>
+                                                <option value="전체10">전체10</option>
+                                            </select>
+                                        
+                                        </div>
+                                        <section class="customSelectBox">
+                                            <button class="customSelectView">
+                                                전체
+                                                
+                                            </button>
+                                        
+                                            <ul class="customSelectBtns">
+                                                <!-- createCustomLiLandRegist() -->
+                                            </ul>
+                                        </section>
+                                    </div>
+                    
+                                    <input type="text" placeholder="지번 입력">
+
+                                </li>
+                            </ul>
+                            <div class="inputBtnArea">
+                                <button class="SearchAddressBtn active landRightsSearchBtn">검색</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="ownerInfo">
+            <div class="subTitle">
+                소유자 정보
+            </div>
+
+            <div class="contWrap">
+                <div class="depth1">
+                    <ul class="titles">
+                        <li class="title01">공유지분</li>
+                        <li class="title02">성명</li>
+                        <li class="title03">주소</li>
+                        <li class="title04">연락처1</li>
+                        <li class="title05">연락처2</li>
+                        <li class="title06">추가/삭제</li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content01 content editSpace">
+                            <input type="text" class="editingContent" readonly placeholder="1">
+                        </li>
+                        <li class="content02 content editSpace">
+                            <input type="text" class="editingContent" readonly placeholder="송기분">
+                        </li>
+                        <li class="content03 content editSpace">
+                            <input type="text" class="editingContent" readonly placeholder="경기도 고양시 덕양구 강매동">
+                        </li>
+                        <li class="content04 content editSpace">
+                            <input type="text" class="editingContent" readonly placeholder="010-5188-5188">
+                        </li>
+                        <li class="content05 content editSpace" readonly>
+                            <input type="text" class="editingContent">
+                        </li>
+                        <li class="content06 content btnBox">
+                            <!-- 수정하지 않을 때 -->
+                            
+                            <div class="editBefore">
+                                <div class="btnWrap">
+                                    <button class="addBtn miniBtn">추가</button>
+                                </div>
+                                <div class="btnWrap">
+                                    <button class="delBtn miniBtn">삭제</button>
+                                </div>
+                            </div>
+                            
+                            <!-- 수정할 때 -->
+                            
+                            <div class="editAfter">
+                                <div class="newBtnWrap">
+                                    <button class="registBtn miniBtn">추가</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content01 content editSpace">
+                            <input type="text" class="editingContent" readonly placeholder="1">
+                        </li>
+                        <li class="content02 content editSpace">
+                            <input type="text" class="editingContent" readonly placeholder="송기분">
+                        </li>
+                        <li class="content03 content editSpace">
+                            <input type="text" class="editingContent" readonly placeholder="경기도 고양시 덕양구 강매동">
+                        </li>
+                        <li class="content04 content editSpace">
+                            <input type="text" class="editingContent" readonly placeholder="010-5188-5188">
+                        </li>
+                        <li class="content05 content editSpace" readonly>
+                            <input type="text" class="editingContent">
+                        </li>
+                        <li class="content06 content btnBox">
+                            <!-- 수정하지 않을 때 -->
+                            
+                            <div class="editBefore">
+                                <div class="btnWrap">
+                                    <button class="addBtn miniBtn">추가</button>
+                                </div>
+                                <div class="btnWrap">
+                                    <button class="delBtn miniBtn">삭제</button>
+                                </div>
+                            </div>
+                            
+                            <!-- 수정할 때 -->
+                            
+                            <div class="editAfter">
+                                <div class="newBtnWrap">
+                                    <button class="registBtn miniBtn">추가</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </section>
+        <section class="surfaceRightInfo">
+            <div class="subTitle">
+                지상권 정보
+            </div>
+        
+            <div class="contWrap">
+                <div class="depth1">
+                    <ul class="titles">
+                        <li class="title01 title">등기여부</li>
+                        <li class="title02 title">편입면적(m²)</li>
+                        <li class="title03 title">위치</li>
+                        <li class="title04 title">계약유형</li>
+                        <li class="title05 title">등기일</li>
+                        <li class="title06 title">등기번호</li>
+                        <li class="title06 title">등기소</li>
+                        <li class="title06 title">도시계획 결정여부</li>
+                        <li class="title06 title">취득일</li>
+                        <li class="title06 title">자산분류번호</li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content02 content selectContentArea">
+                            <div class="hiddenSelectBox">
+                                <!-- name도 추가 -->
+                                <select name="landRightsRegistSelectBox13" id="landRightsRegistSelectBox13" hidden>
+                                    <option value="Y1">Y1</option>
+                                    <option value="Y2">Y2</option>
+                                    <option value="Y3">Y3</option>
+                                    <option value="Y4">Y4</option>
+                                    <option value="Y5">Y5</option>
+                                    <option value="Y6">Y6</option>
+                                    <option value="Y7">Y7</option>
+                                    <option value="Y8">Y8</option>
+                                    <option value="Y9">Y9</option>
+                                    <option value="Y10">Y10</option>
+                                </select>
+                            
+                            </div>
+                            <section class="customSelectBox">
+                                <button class="customSelectView">
+                                    Y
+                                    
+                                </button>
+                        
+                                <ul class="customSelectBtns">
+                                    <!-- createCustomLiLandRegist() -->
+                                </ul>
+                            </section>
+                        </li>
+                        <li class="content02 content normalLineHeight">
+                            <input type="text" placeholder="75">
+                        </li>
+                        <li class="content03 content">
+                            <input type="text" placeholder="북서쪽">
+                        </li>
+                        <li class="content04 content selectContentArea">
+                            <div class="hiddenSelectBox">
+                                <!-- name도 추가 -->
+                                <select name="landRightsRegistSelectBox14" id="landRightsRegistSelectBox14" hidden>
+                                    <option value="기공승낙서1">기공승낙서1</option>
+                                    <option value="기공승낙서2">기공승낙서2</option>
+                                    <option value="기공승낙서3">기공승낙서3</option>
+                                    <option value="기공승낙서4">기공승낙서4</option>
+                                    <option value="기공승낙서5">기공승낙서5</option>
+                                    <option value="기공승낙서6">기공승낙서6</option>
+                                    <option value="기공승낙서7">기공승낙서7</option>
+                                    <option value="기공승낙서8">기공승낙서8</option>
+                                    <option value="기공승낙서9">기공승낙서9</option>
+                                    <option value="기공승낙서10">기공승낙서10</option>
+                                </select>
+                            
+                            </div>
+                            <section class="customSelectBox">
+                                <button class="customSelectView">
+                                    기공승낙서
+                                    
+                                </button>
+                            
+                                <ul class="customSelectBtns">
+                                    <!-- createCustomLiLandRegist() -->
+                                </ul>
+                            </section>
+                        </li>
+                        <li class="content05 content">
+                            <div class="dateInputWrap">
+                                <input type="date" data-placeholder="24/01/01" required aria-required="true">
+                            </div>
+                        </li>
+                        <li class="content06 content">
+                            <input type="text" placeholder="50000">
+                        </li>
+                        <li class="content06 content">
+                            <input type="text" placeholder="서울지방법원 등기국">
+                        </li>
+                        <li class="content06 content selectContentArea">
+                            <div class="hiddenSelectBox">
+                                <!-- name도 추가 -->
+                                <select name="landRightsRegistSelectBox15" id="landRightsRegistSelectBox15" hidden>
+                                    <option value="여부1">여부1</option>
+                                    <option value="여부2">여부2</option>
+                                    <option value="여부3">여부3</option>
+                                    <option value="여부4">여부4</option>
+                                    <option value="여부5">여부5</option>
+                                    <option value="여부6">여부6</option>
+                                    <option value="여부7">여부7</option>
+                                    <option value="여부8">여부8</option>
+                                    <option value="여부9">여부9</option>
+                                    <option value="여부10">여부10</option>
+                                </select>
+                            
+                            </div>
+                            <section class="customSelectBox">
+                                <button class="customSelectView">
+                                    &#160
+                                    
+                                </button>
+                            
+                                <ul class="customSelectBtns">
+                                    <!-- createCustomLiLandRegist() -->
+                                </ul>
+                            </section>
+                        </li>
+                        <li class="content06 content">
+                            <div class="dateInputWrap">
+                                <input type="date" data-placeholder="24/01/01" required aria-required="true">
+                            </div>
+                        </li>
+                        <li class="content06 content">
+                            <input type="text" placeholder="90000857">
+                        </li>
+                    </ul>
+                </div>
+                <div class="depth2">
+                    <ul class="titles">
+                        <li class="title01 title">특약사항</li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content01 content">
+                            <input type="text" placeholder="지상권존속기간중 지료는 지급치 아니하고 증액하지 아니한다.">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        
+        
+        </section>
+
+
+
+        <section class="attachFileInfo">
+            <div class="subTitle">
+                첨부파일
+                <div class="fileBtnWrap">
+                    <input type="file" id="easementModification_myPcFiles">
+                    <label for="easementModification_myPcFiles">내 PC</label>
+                </div>
+            </div>
+
+            <div class="fileUploadWrap">
+                <div class="fileUploadBox">
+                    <img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
+                    <p>파일을 마우스로 끌어오세요.</p>
+                </div>
+            </div>
+
+            <div class="contWrap">
+                <div class="depth1">
+                    <ul class="titles">
+                        <li class="title01 allSelectCheck">
+                            <!-- 선택 -->
+
+                            <input type="checkbox" id="landRightsRegistration_file_select_all" name="landRightsRegistration_file_select_all">
+                            <label for="landRightsRegistration_file_select_all"></label>
+                        </li>
+                        <li class="title02">파일명</li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content01 content checkboxWrap">
+                            <input type="checkbox" id="landRightsRegistration_attachFile" name="landRightsRegistration_attachFile">
+                            <label for="landRightsRegistration_attachFile"></label>
+                        </li>
+                        <li class="content02 content">
+                            <input type="text" placeholder="파일명.pdf" class="notWriteInput" readonly>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content01 content checkboxWrap">
+                            <input type="checkbox" id="landRightsRegistration_attachFile02" name="landRightsRegistration_attachFile">
+                            <label for="landRightsRegistration_attachFile02"></label>
+                        </li>
+                        <li class="content02 content">
+                            <input type="text" placeholder="파일명.pdf" class="notWriteInput" readonly>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="btnWrap">
+                <button class="fileDelBtn delBtn">선택파일 삭제</button>
+            </div>
+
+
+        </section>
+
+        <section class="memoSection">
+            <div class="subTitle">
+                등록 메모
+            </div>
+        
+            <textarea placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200"></textarea>
+        
+        </section>
+
+        
+
+        <div class="finalBtnBox btnWrap">
+            <button class="backBtn grayBtn finalBtn">이전</button>
+            <button class="saveBtn vividBlueBtn finalBtn">저장</button>
+        </div>
+    
+
+    </main>
+</div>
+<div class="landRightSearchResultPopWrapper"></div>
+    <!-- script -->
+    <script src="../../js/menu02/landRightsRegistration.js"></script>
+    <script type="module" src="/components/surfaceMain.js"></script>
+</body>
+</html>

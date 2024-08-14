@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회사토지 등록</title>
+    <link rel="stylesheet" href="/assets/css/header.css" />
+    <link rel="stylesheet" href="/assets/css/menu05/compLandReg.css" />
+  </head>
+  <body>
+    <!-- 회사토지 등록 -->
+    <div class="compLandRegWrappers">
+      <div class="compLandRegHeader"></div>
+      <main id="compLandReg">
+        <div class="mainTitle">
+          <h1>회사토지 등록</h1>
+        </div>
+
+        <!-- 기본 정보 -->
+        <section class="basicOwnerInfo">
+          <div class="subTitle">기본 정보</div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">담당지사</li>
+                <li class="title">용도</li>
+                <li class="title">관로명(구간)</li>
+                <li class="title">단/복선</li>
+              </ul>
+              <ul class="contents">
+                <li class="content selectContentArea">
+                  <div class="hiddenSelectBox">
+                    <select
+                      name="compLandRegSelectBox01"
+                      id="compLandRegSelectBox01"
+                      hidden>
+                      <option value="전체">전체</option>
+                      <option value="서울지사">서울지사</option>
+                      <option value="경인지사">경인지사</option>
+                      <option value="대전지사">대전지사</option>
+                      <option value="충청지사">충청지사</option>
+                      <option value="영남지사">영남지사</option>
+                      <option value="전남지사">전남지사</option>
+                      <option value="전북지사">전북지사</option>
+                      <option value="경남지사">경남지사</option>
+                      <option value="강원지사">강원지사</option>
+                    </select>
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">서울지사</button>
+
+                    <ul class="customSelectBtns"></ul>
+                  </section>
+                </li>
+                <li class="content selectContentArea">
+                  <div class="hiddenSelectBox">
+                    <select
+                      name="compLandRegSelectBox02"
+                      id="compLandRegSelectBox02"
+                      hidden>
+                      <option value="선택">선택</option>
+                      <option value="송유관로">송유관로</option>
+                      <option value="밸브박스">밸브박스</option>
+                      <option value="가압소">가압소</option>
+                      <option value="저유소">저유소</option>
+                      <option value="펌프장">펌프장</option>
+                      <option value="시설물">시설물</option>
+                    </select>
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">선택</button>
+
+                    <ul class="customSelectBtns"></ul>
+                  </section>
+                </li>
+                <li class="content selectContentArea">
+                  <div class="hiddenSelectBox">
+                    <select
+                      name="compLandRegSelectBox03"
+                      id="compLandRegSelectBox03"
+                      hidden>
+                      <option value="전체">전체</option>
+                      <option value="SNP 구간">SNP 구간</option>
+                      <option value="광주지선">광주지선</option>
+                    </select>
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">선택</button>
+
+                    <ul class="customSelectBtns"></ul>
+                  </section>
+                </li>
+                <li class="content selectContentArea">
+                  <div class="hiddenSelectBox">
+                    <select
+                      name="compLandRegSelectBox04"
+                      id="compLandRegSelectBox04"
+                      hidden>
+                      <option value="단선">단선</option>
+                      <option value="복선">복선</option>
+                    </select>
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">선택</button>
+
+                    <ul class="customSelectBtns"></ul>
+                  </section>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 소속 토지 정보 -->
+        <section class="rightsDetails">
+          <div class="subTitle">소속 토지 정보</div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">행정구역</li>
+                <li class="title">국공유지 여부</li>
+                <li class="title">지적면적(㎡)</li>
+                <li class="title">지목</li>
+              </ul>
+              <ul class="contents">
+                <li class="content inputWrap">
+                  <div class="inputBox">
+                    <input type="text" />
+                  </div>
+                  <button class="searchBtn">검색</button>
+                </li>
+                <li class="content selectContentArea">
+                  <div class="hiddenSelectBox">
+                    <select
+                      name="compLandRegSelectBox05"
+                      id="compLandRegSelectBox05"
+                      hidden>
+                      <option value="Y">Y</option>
+                      <option value="N">N</option>
+                    </select>
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">Y/N</button>
+
+                    <ul class="customSelectBtns"></ul>
+                  </section>
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content selectContentArea">
+                  <div class="hiddenSelectBox">
+                    <select
+                      name="compLandRegSelectBox06"
+                      id="compLandRegSelectBox06"
+                      hidden>
+                      <option value="선택">선택</option>
+                      <option value="선택1">선택1</option>
+                      <option value="선택2">선택2</option>
+                      <option value="선택3">선택3</option>
+                      <option value="선택4">선택4</option>
+                      <option value="선택5">선택5</option>
+                      <option value="선택6">선택6</option>
+                      <option value="선택7">선택7</option>
+                      <option value="선택8">선택8</option>
+                      <option value="선택9">선택9</option>
+                    </select>
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">선택</button>
+
+                    <ul class="customSelectBtns"></ul>
+                  </section>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 회사 토지 지상권 정보 -->
+        <section class="compLandLease">
+          <div class="subTitle">회사 토지 지상권 정보</div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">도시 계획 설정여부</li>
+                <li class="title">현재 활용 현황</li>
+                <li class="title">취득일</li>
+                <li class="title">자산분류번호</li>
+              </ul>
+              <ul class="contents">
+                <li class="content selectContentArea">
+                  <div class="hiddenSelectBox">
+                    <select
+                      name="compLandRegSelectBox07"
+                      id="compLandRegSelectBox07"
+                      hidden>
+                      <option value="Y">Y</option>
+                      <option value="N">N</option>
+                    </select>
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">Y/N</button>
+
+                    <ul class="customSelectBtns"></ul>
+                  </section>
+                </li>
+                <li class="content">
+                  <input type="text" />
+                </li>
+                <li class="content">
+                  <div class="dateInputWrap">
+                    <input
+                      type="date"
+                      data-placeholder="날짜선택"
+                      required
+                      aria-required="true" />
+                  </div>
+                </li>
+                <li class="content">
+                  <input type="text" />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 권리확보 내역 -->
+        <section class="securedRights">
+          <div class="subTitle">권리확보 내역</div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">완결여부</li>
+                <li class="title">등기일</li>
+                <li class="title">등기번호</li>
+                <li class="title">등기소</li>
+              </ul>
+              <ul class="contents">
+                <li class="content selectContentArea">
+                  <div class="hiddenSelectBox">
+                    <select
+                      name="compLandRegSelectBox08"
+                      id="compLandRegSelectBox08"
+                      hidden>
+                      <option value="Y">Y</option>
+                      <option value="N">N</option>
+                    </select>
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">Y/N</button>
+                    <ul class="customSelectBtns"></ul>
+                  </section>
+                </li>
+                <li class="content">
+                  <div class="dateInputWrap">
+                    <input
+                      type="date"
+                      data-placeholder="날짜선택"
+                      required
+                      aria-required="true" />
+                  </div>
+                </li>
+                <li class="content">
+                  <input type="text" />
+                </li>
+                <li class="content">
+                  <input type="text" />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 후순위 권리 내역 -->
+        <section class="subordinateRts">
+          <div class="subTitle">후순위 권리 내역</div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">권리명</li>
+                <li class="title">설정금액</li>
+                <li class="title">설정일</li>
+                <li class="title">처분일</li>
+                <li class="title">성명</li>
+                <li class="title">연락처</li>
+                <li class="title largeWidth">주소</li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input type="text" />
+                </li>
+                <li class="content">
+                  <input type="text" />
+                </li>
+                <li class="content">
+                  <div class="dateInputWrap">
+                    <input
+                      type="date"
+                      data-placeholder="날짜선택"
+                      required
+                      aria-required="true" />
+                  </div>
+                </li>
+                <li class="content">
+                  <div class="dateInputWrap">
+                    <input
+                      type="date"
+                      data-placeholder="날짜선택"
+                      required
+                      aria-required="true" />
+                  </div>
+                </li>
+                <li class="content">
+                  <input type="text" />
+                </li>
+                <li class="content">
+                  <input type="text" />
+                </li>
+                <li class="content largeWidth">
+                  <input type="text" />
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="btnWrap">
+            <button class="contentAddBtn">권리내역 추가</button>
+          </div>
+        </section>
+        <!-- 첨부파일 -->
+        <section class="attachFileInfo">
+          <div class="subTitle">
+            <div class="subTitleText">첨부파일</div>
+            <div class="subTitleEx">
+              *개당 20MB 이하의 파일만 안정적으로 업로드 가능합니다.
+            </div>
+            <div class="fileBtnWrap">
+              <input type="file" id="compLandReg_myPcFiles" />
+              <label for="compLandReg_myPcFiles">내 PC</label>
+            </div>
+          </div>
+
+          <div class="fileUploadWrap">
+            <div class="fileUploadBox">
+              <img
+                src="/assets/media/menu05/images/file-upload.png"
+                alt="파일 업로드 아이콘"
+                class="fileUploadIcon" />
+              <p>파일을 마우스로 끌어오세요.</p>
+            </div>
+          </div>
+        </section>
+        <!-- 메모 -->
+        <section class="memoSection">
+          <div class="subTitle">메모</div>
+
+          <textarea
+            placeholder="내용을 입력해주세요. (200자 이내)"
+            maxlength="200"></textarea>
+        </section>
+        <div class="finalBtnBox btnWrap">
+          <button class="prevBtn finalBtn">이전</button>
+          <button class="registBtn finalBtn">등록</button>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="/components/surfaceMain.js"></script>
+    <script src="/components/js/menu05/compLandReg.js"></script>
+  </body>
+</html>

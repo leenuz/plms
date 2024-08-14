@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>토지개발 등록</title>
+    <link rel="stylesheet" href="/assets/css/header.css" />
+    <link rel="stylesheet" href="/assets/css/menu04/landReg.css" />
+  </head>
+  <body>
+    <!-- 토지개발 등록 -->
+    <div class="landRegWrappers">
+      <div class="landRegHeader"></div>
+      <main id="landReg">
+        <div class="mainTitle">
+          <h1>토지개발 등록</h1>
+        </div>
+
+        <!-- 기본 정보 -->
+        <section class="defaultInfo">
+          <div class="subTitle">
+            <div class="subTitleText">기본정보</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <table>
+                <caption class="hiddenCaption">
+                  기본정보
+                </caption>
+
+                <thead>
+                  <tr>
+                    <th rowspan="2">사업명</th>
+                    <th colspan="2">사업기간</th>
+                    <th rowspan="2">시행자(발주자)</th>
+                    <th rowspan="2">사업자</th>
+                  </tr>
+                  <tr>
+                    <th>시작일</th>
+                    <th>종료일</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>
+                      <input type="text" />
+                    </td>
+                    <td>
+                      <div class="dateInputWrap">
+                        <input
+                          type="date"
+                          data-placeholder="24/01/01"
+                          required
+                          aria-required="true" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="dateInputWrap">
+                        <input
+                          type="date"
+                          data-placeholder="24/01/01"
+                          required
+                          aria-required="true" />
+                      </div>
+                    </td>
+                    <td>
+                      <input type="text" />
+                    </td>
+                    <td>
+                      <input type="text" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <!-- 시행자 관할 부서 -->
+        <section class="adminDept">
+          <div class="subTitle">
+            <div class="subTitleText">시행자 관할 부서</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">부서명</li>
+                <li class="title">담당자</li>
+                <li class="title">연락처</li>
+                <li class="title smallWidth">추가/삭제</li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input type="text" />
+                </li>
+                <li class="content">
+                  <input type="text" />
+                </li>
+                <li class="content">
+                  <input type="text" />
+                </li>
+                <li class="content btnBox smallWidth">
+                  <div class="newBtnWrap">
+                    <button class="registBtn miniBtn">추가</button>
+                  </div>
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input type="text" />
+                </li>
+                <li class="content">
+                  <input type="text" />
+                </li>
+                <li class="content">
+                  <input type="text" />
+                </li>
+                <li class="content btnBox smallWidth">
+                  <div class="btnWrap">
+                    <button class="addBtn miniBtn">추가</button>
+                  </div>
+                  <div class="btnWrap">
+                    <button class="delBtn miniBtn">삭제</button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 토지 정보 -->
+        <section class="landInfo">
+          <div class="subTitle">
+            <div class="subTitleText">토지 정보</div>
+            <div class="subTitleBtnBox">
+              <button class="middleBtn whiteBtn excelUpBtn landRegExcelPopBtn">
+                엑셀 업로드
+              </button>
+            </div>
+          </div>
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title smallWidth">선택</li>
+                <li class="title smallWidth">순번</li>
+                <li class="title">권리확보</li>
+                <li class="title smallWidth">대표필지</li>
+                <li class="title middleWidth">관로저촉</li>
+                <li class="title middleWidth">담당지사</li>
+                <li class="title addressWidth">주소</li>
+                <li class="title">지목</li>
+                <li class="title">연장</li>
+                <li class="title">면적</li>
+                <li class="title middleWidth">소유자</li>
+                <li class="title middleWidth">보기</li>
+                <li class="title middleWidth">추가/삭제</li>
+              </ul>
+              <ul class="contents">
+                <li class="content checkboxWrap smallWidth">
+                  <!-- 선택 -->
+                  <input type="checkbox" id="landReg_Checkbox01" />
+                  <label for="landReg_Checkbox01"></label>
+                </li>
+                <li class="content smallWidth">
+                  <!-- 순번 -->
+                  <input
+                    type="text"
+                    placeholder="1"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <!-- 권리확보 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content checkboxWrap smallWidth">
+                  <!-- 대표필지 -->
+                  <input type="checkbox" id="landRegMainParcelChk_Checkbox01" />
+                  <label for="landRegMainParcelChk_Checkbox01"></label>
+                </li>
+                <li class="content middleWidth">
+                  <!-- 관로저촉 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content middleWidth">
+                  <!-- 담당지사 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content addressWidth">
+                  <!-- 주소 -->
+                  <div class="addressData">
+                    <input type="text" class="notWriteInput" readonly />
+                  </div>
+                  <button class="searchAddressBtn landRegSearchBtn">
+                    검색
+                  </button>
+                </li>
+                <li class="content">
+                  <!-- 지목 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content">
+                  <!-- 연장 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content">
+                  <!-- 면적 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content middleWidth">
+                  <!-- 소유자 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content middleWidth btnBox">
+                  <!-- 보기 -->
+                  <button class="viewDetailButton lightBlueBtn">
+                    위치보기
+                  </button>
+                </li>
+                <li class="content middleWidth btnBox">
+                  <div class="newBtnWrap">
+                    <button class="registBtn miniBtn">추가</button>
+                  </div>
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content checkboxWrap smallWidth">
+                  <!-- 선택 -->
+                  <input type="checkbox" id="landReg_Checkbox02" />
+                  <label for="landReg_Checkbox02"></label>
+                </li>
+                <li class="content smallWidth">
+                  <!-- 순번 -->
+                  <input
+                    type="text"
+                    placeholder="2"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <!-- 권리확보 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content checkboxWrap smallWidth">
+                  <!-- 대표필지 -->
+                  <input type="checkbox" id="landRegMainParcelChk_Checkbox02" />
+                  <label for="landRegMainParcelChk_Checkbox02"></label>
+                </li>
+                <li class="content middleWidth">
+                  <!-- 관로저촉 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content middleWidth">
+                  <!-- 담당지사 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content addressWidth">
+                  <!-- 주소 -->
+                  <div class="addressData">
+                    <input type="text" class="notWriteInput" readonly />
+                  </div>
+                  <button class="searchAddressBtn landRegSearchBtn">
+                    검색
+                  </button>
+                </li>
+                <li class="content">
+                  <!-- 지목 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content">
+                  <!-- 연장 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content">
+                  <!-- 면적 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content middleWidth">
+                  <!-- 소유자 -->
+                  <input type="text" class="notWriteInput" readonly />
+                </li>
+                <li class="content middleWidth btnBox">
+                  <!-- 보기 -->
+                  <button class="viewDetailButton lightBlueBtn">
+                    위치보기
+                  </button>
+                </li>
+                <li class="content middleWidth btnBox">
+                  <div class="btnWrap">
+                    <button class="addBtn miniBtn">추가</button>
+                  </div>
+                  <div class="btnWrap">
+                    <button class="delBtn miniBtn">삭제</button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 대표토지 정보 -->
+        <section class="mainLandInfo">
+          <div class="subTitle">
+            <div class="subTitleText">대표토지 정보</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title middleWidth">권리확보</li>
+                <li class="title middleWidth">관로저촉</li>
+
+                <li class="title addressWidth">주소</li>
+                <li class="title">지목</li>
+                <li class="title">연장</li>
+                <li class="title">면적</li>
+                <li class="title largeWidth">소유자</li>
+                <li class="title middleWidth">지도</li>
+              </ul>
+              <ul class="contents">
+                <li class="content middleWidth">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content middleWidth">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+
+                <li class="content addressWidth">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content largeWidth">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content middleWidth btnBox">
+                  <button class="viewDetailButton lightBlueBtn">
+                    위치보기
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 첨부파일 -->
+        <section class="attachFileInfo">
+          <div class="subTitle">
+            <div class="subTitleText">필지 첨부파일</div>
+            <div class="fileBtnWrap">
+              <input type="file" id="landReg_myPcFiles" />
+              <label for="landReg_myPcFiles">내 PC</label>
+            </div>
+          </div>
+
+          <div class="fileUploadWrap">
+            <div class="fileUploadBox">
+              <img
+                src="/assets/media/menu04/images/file-upload.png"
+                alt="파일 업로드 아이콘"
+                class="fileUploadIcon" />
+              <p>파일을 마우스로 끌어오세요.</p>
+            </div>
+          </div>
+        </section>
+        <div class="finalBtnBox btnWrap">
+          <button class="finalBtn prevBtn">이전</button>
+          <button class="finalBtn registBtn">등록</button>
+        </div>
+      </main>
+    </div>
+    <div class="landRegExcelPopWrapper"></div>
+    <div class="landRegSearchPopWrapper"></div>
+    <script type="module" src="/components/surfaceMain.js"></script>
+    <script src="/components/js/menu04/landReg.js"></script>
+  </body>
+</html>

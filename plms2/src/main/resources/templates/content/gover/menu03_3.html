@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="/assets/css/header.css" />
+    <link rel="stylesheet" href="/assets/css/menu03/menu03_3.css" />
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <title>점용료 내역 해지</title>
+  </head>
+  <body>
+    <!--점용료 내역 해지-->
+    <div id="dopcoPrivateUse03">
+      <!--header삽입-->
+      <div class="privateUse_header03"></div>
+      <div class="privateUseWrappers03">
+        <div class="privateUseTitleBoxs">
+          <h5>점용료 내역 해지</h5>
+        </div>
+        <section class="privateUseSectionBoxs">
+          <div class="privateUseSectionCont">
+            <div class="privateUseSectionContDevide">
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>지사</p></li>
+                <!--수정부분 지사-->
+                <div class="privateUseSelectWrappers">
+                  <select
+                    name=""
+                    class="privateUseHiddenSelect03"
+                    id="privateUseSelectBox03_1"
+                    hidden>
+                    <option value="전체">전체</option>
+                    <option value="서울지사">서울지사</option>
+                    <option value="경인지사">경인지사</option>
+                    <option value="대전지사">대전지사</option>
+                    <option value="부산지사">부산지사</option>
+                    <option value="충청지사">충청지사</option>
+                    <option value="충청지사">충청지사</option>
+                    <option value="충청지사">충청지사</option>
+                  </select>
+                </div>
+                <!--보여지는 셀렉박스-->
+                <div class="privateUseSelects">
+                  <button class="privateUseSelectsTitleBtn"></button>
+                  <div class="sufaceSelectList">
+                    <ul class="surfaceSelectListMember"></ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="inputControlBoxs sectionMenuListBoxs">
+                <li class="selectTitle"><p>관리번호</p></li>
+                <div class="inputControlList">
+                  <input type="text" />
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>점용구분</p></li>
+                <!--수정부분 지사-->
+                <div class="privateUseSelectWrappers">
+                  <select
+                    name=""
+                    class="privateUseHiddenSelect03"
+                    id="privateUseSelectBox03_2"
+                    hidden>
+                    <option value="전체">전체</option>
+                    <option value="공원부지점용">공원부지점용</option>
+                    <option value="국유지사용">국유지사용</option>
+                    <option value="녹지점용">녹지점용</option>
+                    <option value="국유림전용">국유림전용</option>
+                    <option value="농업수자원부지사용">
+                      농업수자원부지사용
+                    </option>
+                    <option value="농업시설목적외사용">
+                      농업시설목적외사용
+                    </option>
+                    <option value="도로점용">도로점용</option>
+                    <option value="고속도로점용">고속도로점용</option>
+                    <option value="철도부지점용">철도부지점용</option>
+                    <option value="하천점용">하천점용</option>
+                    <option value="구거점용 등">구거점용 등</option>
+                    <option value="항만시설사용">항만시설사용</option>
+                    <option value="공유수면사용">공유수면사용</option>
+                  </select>
+                </div>
+                <!--보여지는 셀렉박스-->
+                <div class="privateUseSelects">
+                  <button class="privateUseSelectsTitleBtn"></button>
+                  <div class="sufaceSelectList">
+                    <ul class="surfaceSelectListMember selectChoice"></ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>허가관청</p></li>
+                <!--수정부분 지사-->
+                <div class="privateUseSelectWrappers">
+                  <select
+                    name=""
+                    class="privateUseHiddenSelect03"
+                    id="privateUseSelectBox03_3"
+                    hidden>
+                    <option value="전체">전체</option>
+                    <option value="경기고속도로(주)">경기고속도로(주)</option>
+                    <option value="과천시">과천시</option>
+                    <option value="서울특별시">서울특별시</option>
+                    <option value="성남시">성남시</option>
+                    <option value="수원시">수원시</option>
+                    <option value="안산시">안산시</option>
+                  </select>
+                </div>
+                <!--보여지는 셀렉박스-->
+                <div class="privateUseSelects">
+                  <button class="privateUseSelectsTitleBtn"></button>
+                  <div class="sufaceSelectList">
+                    <ul class="surfaceSelectListMember otherDefault01"></ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>관리기간</p></li>
+                <!--수정부분 지사-->
+                <div class="privateUseSelectWrappers">
+                  <select
+                    name=""
+                    class="privateUseHiddenSelect03"
+                    id="privateUseSelectBox03_4"
+                    hidden>
+                    <option value="전체">전체</option>
+                    <option value="하천팀">하천팀</option>
+                    <option value="공원농림과">공원농림과</option>
+                  </select>
+                </div>
+                <!--보여지는 셀렉박스-->
+                <div class="privateUseSelects">
+                  <button class="privateUseSelectsTitleBtn"></button>
+                  <div class="sufaceSelectList smallHeight">
+                    <ul class="surfaceSelectListMember otherDefault02"></ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>해지여부</p></li>
+                <!--수정부분 지사-->
+                <div class="privateUseSelectWrappers">
+                  <select
+                    name=""
+                    class="privateUseHiddenSelect03"
+                    id="privateUseSelectBox03_5"
+                    hidden>
+                    <option value="전체">전체</option>
+                    <option value="해지">해지</option>
+                    <option value="미해지">미해지</option>
+                  </select>
+                </div>
+                <!--보여지는 셀렉박스-->
+                <div class="privateUseSelects">
+                  <button class="privateUseSelectsTitleBtn"></button>
+                  <div class="sufaceSelectList smallHeight">
+                    <ul class="surfaceSelectListMember"></ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="inputControlBoxs sectionMenuListBoxs">
+                <li class="selectTitle"><p>납부일시</p></li>
+                <div class="inputControlList dateListBox">
+                  <input type="date" />
+                  <span>-</span>
+                  <input type="date" />
+                </div>
+              </ul>
+            </div>
+            <!-- 라디오버튼 있는 섹션-->
+            <div class="privateUseSectionContDevide">
+              <p class="devideSecondTitles">주소</p>
+              <div class="privateUseSectionRadioBoxs">
+                <ul class="radioBoxs">
+                  <li>
+                    <input type="radio" name="privateUseRadio03" /><span
+                      >입력형</span
+                    >
+                  </li>
+                  <li class="addressInput">
+                    <input
+                      type="search"
+                      placeholder="주소입력"
+                      class="searchInputBox03" />
+                  </li>
+                </ul>
+                <ul class="radioBoxs menuRadioEvet03">
+                  <li>
+                    <input type="radio" name="privateUseRadio03" /><span
+                      >선택형</span
+                    >
+                  </li>
+                  <li>
+                    <!--수정부분 지사-->
+                    <div class="privateUseSelectWrappers">
+                      <select
+                        name=""
+                        class="privateUseHiddenSelect03"
+                        id="privateUseSelectBox03_6"
+                        hidden>
+                        <option value="전체">전체</option>
+                        <option value="Y1">Y1</option>
+                        <option value="N2">N2</option>
+                        <option value="N3">N3</option>
+                        <option value="N4">N4</option>
+                        <option value="N5">N5</option>
+                        <option value="N6">N6</option>
+                        <option value="N7">N7</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="privateUseSelects">
+                      <button class="privateUseSelectsTitleBtn"></button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember"></ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <!--수정부분 지사-->
+                    <div class="privateUseSelectWrappers">
+                      <select
+                        name=""
+                        class="privateUseHiddenSelect03"
+                        id="privateUseSelectBox03_7"
+                        hidden>
+                        <option value="전체">전체</option>
+                        <option value="Y">Y</option>
+                        <option value="N">N</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="privateUseSelects">
+                      <button class="privateUseSelectsTitleBtn"></button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember"></ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <!--수정부분 지사-->
+                    <div class="privateUseSelectWrappers">
+                      <select
+                        name=""
+                        class="privateUseHiddenSelect03"
+                        id="privateUseSelectBox03_8"
+                        hidden>
+                        <option value="전체1">전체1</option>
+                        <option value="Y2">Y2</option>
+                        <option value="N3">N3</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="privateUseSelects">
+                      <button class="privateUseSelectsTitleBtn"></button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember"></ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <!--수정부분 지사-->
+                    <div class="privateUseSelectWrappers">
+                      <select
+                        name=""
+                        class="privateUseHiddenSelect03"
+                        id="privateUseSelectBox03_9"
+                        hidden>
+                        <option value="전체11">전체11</option>
+                        <option value="Y22">Y22</option>
+                        <option value="N33">N33</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="privateUseSelects">
+                      <button class="privateUseSelectsTitleBtn"></button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember"></ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li style="padding: 0px 3px">
+                    <div class="inputControlList">
+                      <input
+                        type="text"
+                        placeholder="지번입력"
+                        class="menuAdderssInput03" />
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <!--privateUseSectionRadioBoxs-->
+              <div class="privateUseSectionBtnBoxs">
+                <button class="privateUseRegisterBtn">조회하기</button>
+              </div>
+            </div>
+          </div>
+          <!--privateUseSectionCont-->
+        </section>
+        <main>
+          <div class="privateUseMainContentWrapper">
+            <div class="privateUseMainContent">
+              <div class="dataTitles">
+                <h5>총 검색 건 수<span>154</span>건</h5>
+                <div class="privateUseMainContentDownloadBoxs">
+                  <button class="privateUseExcelDownload">엑셀 다운로드</button>
+                  <!--수정부분 지사-->
+                  <div class="privateUseSelectWrappers">
+                    <select
+                      name=""
+                      class="privateUseHiddenSelect03"
+                      id="privateUseSelectBox03_10"
+                      hidden>
+                      <option value="10건">10건</option>
+                      <option value="11건">11건</option>
+                      <option value="12건">12건</option>
+                      <option value="13건">13건</option>
+                    </select>
+                  </div>
+                  <!--보여지는 셀렉박스-->
+                  <div class="privateUseSelects">
+                    <button class="privateUseSelectsTitleBtn"></button>
+                    <div class="sufaceSelectList smallHeight">
+                      <ul class="surfaceSelectListMember"></ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 데이터박스 -->
+              <div class="dataBoxswrappers">
+                <div class="dataBoxCont dataBoxsFirst03">
+                  <ul class="dataTitle">
+                    <li class="smallWidth"><p>순번</p></li>
+                    <li><p>담당지사</p></li>
+                    <li class="largeWidth"><p>주소</p></li>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="smallWidth"><p>1</p></li>
+                      <li><p>서울지사</p></li>
+                      <li class="largeWidth">
+                        <p>경기도 화성시 오산동 967-1261</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="smallWidth"><p>2</p></li>
+                      <li><p>충청지사</p></li>
+                      <li class="largeWidth">
+                        <p>경기도 화성시 오산동 967-1261</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="smallWidth"><p>3</p></li>
+                      <li><p>서울지사</p></li>
+                      <li class="largeWidth">
+                        <p>경기도 화성시 오산동 967-1261</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="smallWidth"><p>4</p></li>
+                      <li><p>서울지사</p></li>
+                      <li class="largeWidth">
+                        <p>경기도 화성시 오산동 967-1261</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="smallWidth"><p>5</p></li>
+                      <li><p>서울지사</p></li>
+                      <li class="largeWidth">
+                        <p>경기도 화성시 오산동 967-1261</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="smallWidth"><p>6</p></li>
+                      <li><p>서울지사</p></li>
+                      <li class="largeWidth">
+                        <p>경기도 화성시 오산동 967-1261</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="smallWidth"><p>7</p></li>
+                      <li><p>서울지사</p></li>
+                      <li class="largeWidth">
+                        <p>경기도 화성시 오산동 967-1261</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="smallWidth"><p>8</p></li>
+                      <li><p>서울지사</p></li>
+                      <li class="largeWidth">
+                        <p>경기도 화성시 오산동 967-1261</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="smallWidth"><p>9</p></li>
+                      <li><p>서울지사</p></li>
+                      <li class="largeWidth">
+                        <p>경기도 화성시 오산동 967-1261</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="smallWidth"><p>10</p></li>
+                      <li><p>서울지사</p></li>
+                      <li class="largeWidth">
+                        <p>경기도 화성시 오산동 967-1261</p>
+                      </li>
+                    </a>
+                  </ul>
+                </div>
+                <!-- 오른쪽 좌우스크롤 가진 데이터박스 -->
+                <div class="dataBoxCont dataBoxsSecond03">
+                  <div class="scrollContentBoxies">
+                    <ul class="dataTitle">
+                      <li class="smallWidth"><p>점용관리번호</p></li>
+                      <li class="extraSmallWidth"><p>필지수</p></li>
+                      <li class="extraSmallWidth"><p>지목</p></li>
+                      <li class="smallWidth"><p>점용구분</p></li>
+                      <li><p>점용기간</p></li>
+                      <li class="extraSmallWidth"><p>연장</p></li>
+                      <li class="extraSmallWidth"><p>면적</p></li>
+                      <li><p>허가관청</p></li>
+                      <li><p>관리기관</p></li>
+                      <li><p>납부일</p></li>
+                      <li><p>납부금액</p></li>
+                      <li><p>해지여부</p></li>
+                      <li><p>해지일</p></li>
+                      <li><p>지도</p></li>
+                      <li><p>ECHO 문서보기</p></li>
+                    </ul>
+                    <ul class="dataContent privateLink03">
+                      <a href="" class="linkCont">
+                        <li class="smallWidth"><p>G_000100</p></li>
+                        <li class="extraSmallWidth"><p>답</p></li>
+                        <li class="extraSmallWidth"><p>대</p></li>
+                        <li class="smallWidth"><p>농업수자원부지사용</p></li>
+                        <li><p>2020-01-01 ~ 2025-06-30</p></li>
+                        <li class="extraSmallWidth"><p>56.23</p></li>
+                        <li class="extraSmallWidth"><p>5,816.77</p></li>
+                        <li><p>인천광역시경제자유구역청</p></li>
+                        <li><p>수도권본부-재산지원처</p></li>
+                        <li><p>2020-01-01</p></li>
+                        <li><p>41,800,200</p></li>
+                        <li><p>미해지</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <div class="privateBtnHiddenBoxs">
+                            <button class="privateRemoveBtn">
+                              <a
+                                href="/components/subHtml/menu03/occupancyEndReg.html"
+                                >해지</a
+                              >
+                            </button>
+                            <p class="removeDate">2024-02-21</p>
+                          </div>
+                        </li>
+                        <li>
+                          <button class="btnDesign">위치보기</button>
+                        </li>
+                        <li>
+                          <button class="btnDesign">상세보기</button>
+                        </li>
+                      </div>
+                    </ul>
+                    <ul class="dataContent privateLink03">
+                      <a href="" class="linkCont">
+                        <li class="smallWidth"><p>G_000100</p></li>
+                        <li class="extraSmallWidth"><p>답</p></li>
+                        <li class="extraSmallWidth"><p>대</p></li>
+                        <li class="smallWidth"><p>농업수자원부지사용</p></li>
+                        <li><p>2020-01-01 ~ 2025-06-30</p></li>
+                        <li class="extraSmallWidth"><p>56.23</p></li>
+                        <li class="extraSmallWidth"><p>5,816.77</p></li>
+                        <li><p>인천광역시경제자유구역청</p></li>
+                        <li><p>수도권본부-재산지원처</p></li>
+                        <li><p>2020-01-01</p></li>
+                        <li><p>41,800,200</p></li>
+                        <li><p>미해지</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <div class="privateBtnHiddenBoxs">
+                            <button class="privateRemoveBtn">
+                              <a
+                                href="/components/subHtml/menu03/occupancyEndReg.html"
+                                >해지</a
+                              >
+                            </button>
+                            <p class="removeDate">2024-02-21</p>
+                          </div>
+                        </li>
+                        <li>
+                          <button class="btnDesign">위치보기</button>
+                        </li>
+                        <li>
+                          <button class="btnDesign">상세보기</button>
+                        </li>
+                      </div>
+                    </ul>
+                    <ul class="dataContent privateLink03">
+                      <a href="" class="linkCont">
+                        <li class="smallWidth"><p>G_000100</p></li>
+                        <li class="extraSmallWidth"><p>답</p></li>
+                        <li class="extraSmallWidth"><p>대</p></li>
+                        <li class="smallWidth"><p>농업수자원부지사용</p></li>
+                        <li><p>2020-01-01 ~ 2025-06-30</p></li>
+                        <li class="extraSmallWidth"><p>56.23</p></li>
+                        <li class="extraSmallWidth"><p>5,816.77</p></li>
+                        <li><p>인천광역시경제자유구역청</p></li>
+                        <li><p>수도권본부-재산지원처</p></li>
+                        <li><p>2020-01-01</p></li>
+                        <li><p>41,800,200</p></li>
+                        <li><p>미해지</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <div class="privateBtnHiddenBoxs">
+                            <button class="privateRemoveBtn">
+                              <a
+                                href="/components/subHtml/menu03/occupancyEndReg.html"
+                                >해지</a
+                              >
+                            </button>
+                            <p class="removeDate">2024-02-21</p>
+                          </div>
+                        </li>
+                        <li>
+                          <button class="btnDesign">위치보기</button>
+                        </li>
+                        <li>
+                          <button class="btnDesign">상세보기</button>
+                        </li>
+                      </div>
+                    </ul>
+                    <ul class="dataContent privateLink03">
+                      <a href="" class="linkCont">
+                        <li class="smallWidth"><p>G_000100</p></li>
+                        <li class="extraSmallWidth"><p>답</p></li>
+                        <li class="extraSmallWidth"><p>대</p></li>
+                        <li class="smallWidth"><p>농업수자원부지사용</p></li>
+                        <li><p>2020-01-01 ~ 2025-06-30</p></li>
+                        <li class="extraSmallWidth"><p>56.23</p></li>
+                        <li class="extraSmallWidth"><p>5,816.77</p></li>
+                        <li><p>인천광역시경제자유구역청</p></li>
+                        <li><p>수도권본부-재산지원처</p></li>
+                        <li><p>2020-01-01</p></li>
+                        <li><p>41,800,200</p></li>
+                        <li><p>미해지</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <div class="privateBtnHiddenBoxs">
+                            <button class="privateRemoveBtn">
+                              <a
+                                href="/components/subHtml/menu03/occupancyEndReg.html"
+                                >해지</a
+                              >
+                            </button>
+                            <p class="removeDate">2024-02-21</p>
+                          </div>
+                        </li>
+                        <li>
+                          <button class="btnDesign">위치보기</button>
+                        </li>
+                        <li>
+                          <button class="btnDesign">상세보기</button>
+                        </li>
+                      </div>
+                    </ul>
+                    <ul class="dataContent privateLink03">
+                      <a href="" class="linkCont">
+                        <li class="smallWidth"><p>G_000100</p></li>
+                        <li class="extraSmallWidth"><p>답</p></li>
+                        <li class="extraSmallWidth"><p>대</p></li>
+                        <li class="smallWidth"><p>농업수자원부지사용</p></li>
+                        <li><p>2020-01-01 ~ 2025-06-30</p></li>
+                        <li class="extraSmallWidth"><p>56.23</p></li>
+                        <li class="extraSmallWidth"><p>5,816.77</p></li>
+                        <li><p>인천광역시경제자유구역청</p></li>
+                        <li><p>수도권본부-재산지원처</p></li>
+                        <li><p>2020-01-01</p></li>
+                        <li><p>41,800,200</p></li>
+                        <li><p>미해지</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <div class="privateBtnHiddenBoxs">
+                            <button class="privateRemoveBtn">
+                              <a
+                                href="/components/subHtml/menu03/occupancyEndReg.html"
+                                >해지</a
+                              >
+                            </button>
+                            <p class="removeDate">2024-02-21</p>
+                          </div>
+                        </li>
+                        <li>
+                          <button class="btnDesign">위치보기</button>
+                        </li>
+                        <li>
+                          <button class="btnDesign">상세보기</button>
+                        </li>
+                      </div>
+                    </ul>
+                    <ul class="dataContent privateLink03">
+                      <a href="" class="linkCont">
+                        <li class="smallWidth"><p>G_000100</p></li>
+                        <li class="extraSmallWidth"><p>답</p></li>
+                        <li class="extraSmallWidth"><p>대</p></li>
+                        <li class="smallWidth"><p>농업수자원부지사용</p></li>
+                        <li><p>2020-01-01 ~ 2025-06-30</p></li>
+                        <li class="extraSmallWidth"><p>56.23</p></li>
+                        <li class="extraSmallWidth"><p>5,816.77</p></li>
+                        <li><p>인천광역시경제자유구역청</p></li>
+                        <li><p>수도권본부-재산지원처</p></li>
+                        <li><p>2020-01-01</p></li>
+                        <li><p>41,800,200</p></li>
+                        <li><p>미해지</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <div class="privateBtnHiddenBoxs">
+                            <button class="privateRemoveBtn">
+                              <a
+                                href="/components/subHtml/menu03/occupancyEndReg.html"
+                                >해지</a
+                              >
+                            </button>
+                            <p class="removeDate">2024-02-21</p>
+                          </div>
+                        </li>
+                        <li>
+                          <button class="btnDesign">위치보기</button>
+                        </li>
+                        <li>
+                          <button class="btnDesign">상세보기</button>
+                        </li>
+                      </div>
+                    </ul>
+                    <ul class="dataContent privateLink03">
+                      <a href="" class="linkCont">
+                        <li class="smallWidth"><p>G_000100</p></li>
+                        <li class="extraSmallWidth"><p>답</p></li>
+                        <li class="extraSmallWidth"><p>대</p></li>
+                        <li class="smallWidth"><p>농업수자원부지사용</p></li>
+                        <li><p>2020-01-01 ~ 2025-06-30</p></li>
+                        <li class="extraSmallWidth"><p>56.23</p></li>
+                        <li class="extraSmallWidth"><p>5,816.77</p></li>
+                        <li><p>인천광역시경제자유구역청</p></li>
+                        <li><p>수도권본부-재산지원처</p></li>
+                        <li><p>2020-01-01</p></li>
+                        <li><p>41,800,200</p></li>
+                        <li><p>미해지</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <div class="privateBtnHiddenBoxs">
+                            <button class="privateRemoveBtn">
+                              <a
+                                href="/components/subHtml/menu03/occupancyEndReg.html"
+                                >해지</a
+                              >
+                            </button>
+                            <p class="removeDate">2024-02-21</p>
+                          </div>
+                        </li>
+                        <li>
+                          <button class="btnDesign">위치보기</button>
+                        </li>
+                        <li>
+                          <button class="btnDesign">상세보기</button>
+                        </li>
+                      </div>
+                    </ul>
+                    <ul class="dataContent privateLink03">
+                      <a href="" class="linkCont">
+                        <li class="smallWidth"><p>G_000100</p></li>
+                        <li class="extraSmallWidth"><p>답</p></li>
+                        <li class="extraSmallWidth"><p>대</p></li>
+                        <li class="smallWidth"><p>농업수자원부지사용</p></li>
+                        <li><p>2020-01-01 ~ 2025-06-30</p></li>
+                        <li class="extraSmallWidth"><p>56.23</p></li>
+                        <li class="extraSmallWidth"><p>5,816.77</p></li>
+                        <li><p>인천광역시경제자유구역청</p></li>
+                        <li><p>수도권본부-재산지원처</p></li>
+                        <li><p>2020-01-01</p></li>
+                        <li><p>41,800,200</p></li>
+                        <li><p>미해지</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <div class="privateBtnHiddenBoxs">
+                            <button class="privateRemoveBtn">
+                              <a
+                                href="/components/subHtml/menu03/occupancyEndReg.html"
+                                >해지</a
+                              >
+                            </button>
+                            <p class="removeDate">2024-02-21</p>
+                          </div>
+                        </li>
+                        <li>
+                          <button class="btnDesign">위치보기</button>
+                        </li>
+                        <li>
+                          <button class="btnDesign">상세보기</button>
+                        </li>
+                      </div>
+                    </ul>
+                    <ul class="dataContent privateLink03">
+                      <a href="" class="linkCont">
+                        <li class="smallWidth"><p>G_000100</p></li>
+                        <li class="extraSmallWidth"><p>답</p></li>
+                        <li class="extraSmallWidth"><p>대</p></li>
+                        <li class="smallWidth"><p>농업수자원부지사용</p></li>
+                        <li><p>2020-01-01 ~ 2025-06-30</p></li>
+                        <li class="extraSmallWidth"><p>56.23</p></li>
+                        <li class="extraSmallWidth"><p>5,816.77</p></li>
+                        <li><p>인천광역시경제자유구역청</p></li>
+                        <li><p>수도권본부-재산지원처</p></li>
+                        <li><p>2020-01-01</p></li>
+                        <li><p>41,800,200</p></li>
+                        <li><p>미해지</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <div class="privateBtnHiddenBoxs">
+                            <button class="privateRemoveBtn">
+                              <a
+                                href="/components/subHtml/menu03/occupancyEndReg.html"
+                                >해지</a
+                              >
+                            </button>
+                            <p class="removeDate">2024-02-21</p>
+                          </div>
+                        </li>
+                        <li>
+                          <button class="btnDesign">위치보기</button>
+                        </li>
+                        <li>
+                          <button class="btnDesign">상세보기</button>
+                        </li>
+                      </div>
+                    </ul>
+                    <ul class="dataContent privateLink03">
+                      <a href="" class="linkCont">
+                        <li class="smallWidth"><p>G_000100</p></li>
+                        <li class="extraSmallWidth"><p>답</p></li>
+                        <li class="extraSmallWidth"><p>대</p></li>
+                        <li class="smallWidth"><p>농업수자원부지사용</p></li>
+                        <li><p>2020-01-01 ~ 2025-06-30</p></li>
+                        <li class="extraSmallWidth"><p>56.23</p></li>
+                        <li class="extraSmallWidth"><p>5,816.77</p></li>
+                        <li><p>인천광역시경제자유구역청</p></li>
+                        <li><p>수도권본부-재산지원처</p></li>
+                        <li><p>2020-01-01</p></li>
+                        <li><p>41,800,200</p></li>
+                        <li><p>미해지</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <div class="privateBtnHiddenBoxs">
+                            <button class="privateRemoveBtn">
+                              <a
+                                href="/components/subHtml/menu03/occupancyEndReg.html"
+                                >해지</a
+                              >
+                            </button>
+                            <p class="removeDate">2024-02-21</p>
+                          </div>
+                        </li>
+                        <li>
+                          <button class="btnDesign">위치보기</button>
+                        </li>
+                        <li>
+                          <button class="btnDesign">상세보기</button>
+                        </li>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!--dataBoxswrappers-->
+              <div class="boardPageBoxs">
+                <ul>
+                  <li class="arrowLeftWrapper">
+                    <button>
+                      <img
+                        src="/assets/media/menu01/arrowRightLine02.png"
+                        alt="preBtnImg" />
+                    </button>
+                    <button>
+                      <img
+                        src="/assets/media/menu01/arrowRightLine01.png"
+                        alt="preBtnImg" />
+                    </button>
+                  </li>
+                  <li class="pageCountBoxs">
+                    <p>1</p>
+                    <p>2</p>
+                    <p>3</p>
+                    <p>4</p>
+                    <p>5</p>
+                  </li>
+                  <li class="arrowRightWrapper">
+                    <button>
+                      <img
+                        src="/assets/media/menu01/arrowRightLine01.png"
+                        alt="nextBtnImg" />
+                    </button>
+                    <button>
+                      <img
+                        src="/assets/media/menu01/arrowRightLine02.png"
+                        alt="nextBtnImg" />
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <!--boardPageBoxs-->
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script type="module" src="/components/surfaceMain.js"></script>
+    <script src="/components/js/menu03/privateUseLinkEvet.js"></script>
+    <script src="/components/js/menu03/privateUseRadioEvet.js"></script>
+    <script src="/components/js/menu01/resultPageEvet.js"></script>
+  </body>
+</html>
