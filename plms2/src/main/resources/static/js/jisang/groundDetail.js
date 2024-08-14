@@ -8,6 +8,16 @@ $(document).on("click","#fileSaveBtn",function(){
 	for(var i=0;i<files.length;i++){
 		console.log("filename:"+files[i].name);
 	}*/
+	var manage_no=$("#manage_no").val();
+		if (manage_no==null || manage_no=="undefined"){
+			alert("지상권 관리 번호를 찾을수 없습니다.");
+			return;
+		}
+		console.log(uploadFiles.length);
+		if (uploadFiles.length<1){
+			alert("첨부파일이 없습니다.");
+					return;
+		}
 	var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val(),"files":uploadFiles};
 	url="/api/pnuAtcUpload";
 	$.ajax({
@@ -393,6 +403,14 @@ $(document).on("click",".addBtn",function(){
 
 $(document).on("click",".addBtn",function(){
 	console.log("--------addBtn click----------------");
+	var thisContent = this.closest('.contents');
+	var wname=$(thisContent).find("#wname").val();
+	var wmemo=$(thisContent).find("#wmemo").val();
+	var idx=$(thisContent).find("#idx").val();
+	if (idx==null || idx==undefined){
+		alert("현재 필드 부터 작성후 추가를 해주세요.");
+		return;
+	}
 	
 	var MainContentDiv = this.closest('.contentScr');
 	var thisNullContent = $(MainContentDiv).find("ul").eq(0).html();
@@ -435,13 +453,24 @@ $(document).on("click",".registBtn",function(){
 							
 							
 							
-							console.log("------------registBtn end-------------");
+							console.log("------------registBtn start-------------");
 							console.log($(thisContent).find("#wname").val());
 							console.log($(thisContent).find("#wmemo").val());
 							console.log($(thisContent).find("#idx").val());
+							var wname=$(thisContent).find("#wname").val();
+							var wmemo=$(thisContent).find("#wmemo").val();
 							var idx=$(thisContent).find("#idx").val();
+							var manage_no=$("#manage_no").val();
 							var mode="";
-							if (idx==0 || idx=="undefiled" ||idx==null) mode="insert";
+							if (manage_no=="undefined" || manage_no==null || manage_no=="") {
+								alert("입력한 데이터가 없습니다.");
+								return;
+							}
+							if (wname=="undefined" || wname==null || wname=="" || wname==undefined){
+								alert("내용을 확인해주세요.");
+								return;
+							}
+							if (idx==0 || idx=="undefined" ||idx==null) mode="insert";
 							else mode="update";
 							var mparams={"mode":mode,"idx":idx,"manage_no":$("#manage_no").val(), "wname":$(thisContent).find("#wname").val(),"wmemo":$(thisContent).find("#wmemo").val()};
 							console.log(mparams);
@@ -463,17 +492,23 @@ $(document).on("click","#deleteMemoBtn",function(){
 	var thisContent = this.closest('.contents');
 
 
-	console.log("------------delBtn end-------------");
+	console.log("------------deleteMemoBtn end-------------");
 
 	console.log($(thisContent).find("#idx").val());
 	var idx=$(thisContent).find("#idx").val();
+	var manage_no=$("#manage_no").val();
+	if (manage_no=="undefined" || manage_no==null || manage_no=="") {
+		alert("입력한 데이터가 없습니다.");
+		return;
+	}
 	var mode="";
-	if (idx==0 || idx=="undefiled" ||idx==null) {
+	if (idx==0 || idx=="undefined" ||idx==null) {
 	return;
 		}
-
+     
 	var mparams={"idx":$(thisContent).find("#idx").val(),"manage_no":$("#manage_no").val()};
 	console.log(mparams);
+	
 	$.ajax({
 	      url: "/api/deleteMemoData",
 	      type: "POST",
