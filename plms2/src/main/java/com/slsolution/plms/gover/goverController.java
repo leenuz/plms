@@ -219,26 +219,40 @@ public class goverController {
 
 			String idx = httpRequest.getParameter("idx");
 			String index = httpRequest.getParameter("index");
+			String gidx = httpRequest.getParameter("gidx");
 
 			params.put("idx",idx);
 			params.put("index",index);
-			log.info("params:"+params);
+//			log.info("params:"+params);
 			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
 			ArrayList<HashMap> permitList = mainService.selectQuery("goverSQL.selectPermitList",params);
 			ArrayList<HashMap> pnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
+			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
 
-//			params.put("pnu", data.get(0).get("gm_gover_no"));
+			HashMap targetParam = new HashMap();
+			targetParam.put("idx",Integer.parseInt(gidx));
+			ArrayList<HashMap> pnuTargetList = new ArrayList<HashMap>();
+			if(!gidx.equals("0")){
+				pnuTargetList = mainService.selectQuery("goverSQL.selectPnuTargetList",targetParam);
+				params.put("pnu", pnuTargetList.get(0).get("gp_pnu"));
 
-			ArrayList<HashMap> goverPnuAtcFileList = mainService.selectQuery("goverSQL.selectPnuAtcFileList",params);
+			}
+
+
+//			ArrayList<HashMap> goverPnuAtcFileList = mainService.selectQuery("goverSQL.selectPnuAtcFileList",params);
+			ArrayList<HashMap> goverPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
 //			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
 //			ArrayList<HashMap> jisangModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
 //			ArrayList<HashMap> jisangMergeList = mainService.selectQuery("goverSQL.selectMergeList",params);
 
 			log.info("params:"+params);
 			log.info("data:"+data.get(0));
+			log.info("pnu:"+pnuTargetList.get(0).get("gp_pnu"));
 //			log.info("jm_pipe_yn:"+data.get(0).get("gm_pipe_yn"));
 			log.info("gm_youngdo:"+data.get(0).get("gm_youngdo"));
 			log.info("gm_pipe_name:"+data.get(0).get("gm_pipe_name"));
+			log.info("permitList:"+permitList);
+			log.info("atcFileList:"+atcFileList);
 //			log.info("jm_jijuk_area:"+data.get(0).get("gm_jijuk_area"));
 //			log.info("jisangPermitList:"+jisangPermitList);
 //
@@ -249,6 +263,8 @@ public class goverController {
 			mav.addObject("resultData",data.get(0));
 			mav.addObject("permitList",permitList);
 			mav.addObject("pnuList",pnuList);
+			mav.addObject("atcFileList",atcFileList);
+			mav.addObject("pnuTargetList",pnuTargetList);
 
 			mav.addObject("goverPnuAtcFileList",goverPnuAtcFileList);
 //			mav.addObject("atcFileList",atcFileList);

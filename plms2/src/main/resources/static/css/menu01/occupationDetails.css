@@ -122,7 +122,7 @@ button {
     gap: 20px;
 }
 #occupationDetails .mapFigure {
-    background: url(/assets/media/menu01/images/groundMap.png) no-repeat center;
+    /*background: url(/assets/media/menu01/images/groundMap.png) no-repeat center;*/
     background-size: cover;
 }
 #occupationDetails .contentDetailBox {
