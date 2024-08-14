@@ -1,0 +1,1234 @@
+@charset "utf-8";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url("../header.css");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  margin: 0;
+  font-family: Pretendard;
+  /* overflow-x: hidden; */
+}
+
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+span {
+  margin: 0;
+  font-family: Pretendard;
+}
+ul li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  font-family: Pretendard;
+}
+button {
+  border: none;
+  background: transparent;
+  text-align: center;
+}
+button:hover {
+  cursor: pointer;
+}
+input {
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+select:focus {
+  outline: none;
+}
+
+#dopcosurfaceInquire03 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+#dopcosurfaceInquire03::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcosurfaceInquire03::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcosurfaceInquire03 .inquire_header03 {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+#dopcosurfaceInquire03 .surfaceInquireWrappers {
+  width: calc(100% - 100px);
+  height: 100%;
+  margin: 0 auto;
+  float: left;
+}
+
+/* 타이틀 */
+#dopcosurfaceInquire03 .surfaceInquireWrappers .surfaceInquireTitleBoxs {
+  padding: 30px 0px 25px;
+}
+
+#dopcosurfaceInquire03 .surfaceInquireWrappers .surfaceInquireTitleBoxs h5 {
+  color: #31394c;
+  font-size: 22px;
+  padding: 0px 50px;
+}
+
+/* section */
+
+#dopcosurfaceInquire03 .surfaceInquireWrappers .surfaceInquireSectionBoxs {
+  padding: 0px 20px;
+  margin: 0 auto;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont {
+  width: 100%;
+  height: 253px;
+  padding: 10px 0px;
+  margin: 0 auto;
+  border-radius: 20px;
+  border: 1px solid #cddbf099;
+  background-color: #f7f9fc;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide {
+  /* width: 100%; */
+  height: 50%;
+  width: 97%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide:last-child {
+  margin-top: 3px;
+  justify-content: space-between;
+  align-items: start;
+}
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide:first-child {
+  border-bottom: 1px solid #cddbf099;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .sectionMenuListBoxs {
+  width: 13.5%;
+  height: 100%;
+  background-color: transparent;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .sectionMenuListBoxs
+  .selectTitle {
+  padding: 10px 0px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .sectionMenuListBoxs
+  .selectTitle
+  p {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4e5871;
+}
+
+/* 공통 셀렉박스 */
+
+#dopcosurfaceInquire03 .surfaceInquireSelects {
+  max-width: 203px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: #fff;
+  position: relative;
+}
+
+#dopcosurfaceInquire03 .surfaceInquireSelects .surfaceInquireSelectsTitleBtn {
+  width: 100%;
+  padding: 0px 15px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  display: block;
+  background-color: transparent;
+  text-align: left;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  background-image: url(/assets/media/menu01/surfaceNavArrowdown.png);
+  background-size: 20px;
+  background-position: 94% center;
+  background-repeat: no-repeat;
+  color: #6e7d88;
+  filter: grayscale(100);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .surfaceInquireSelectsTitleBtn.active {
+  color: #2b7de1;
+  border: 1px solid #2b7de1;
+  filter: grayscale(0);
+}
+
+#dopcosurfaceInquire03 .surfaceInquireSelects .sufaceSelectList {
+  position: absolute;
+  top: 47px;
+  left: 0;
+  width: 100%;
+  height: 0px;
+  border-radius: 10px;
+  border: none;
+  background-color: #fff;
+  border: 1px solid #acbdd7;
+  opacity: 0;
+  transition: 300ms;
+  overflow: hidden;
+}
+
+#dopcosurfaceInquire03 .surfaceInquireSelects .sufaceSelectList.active {
+  display: block;
+  height: 243px;
+  z-index: 9999;
+  opacity: 1;
+  transition: height 500ms;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .sufaceSelectList.smallHeight.active {
+  opacity: 1;
+  display: block;
+  height: 150px;
+  transition: height 500ms;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .sufaceSelectList.extrasmallHeight.active {
+  opacity: 1;
+  display: block;
+  height: 100px;
+  transition: height 500ms;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .sufaceSelectList
+  .surfaceSelectListMember {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background-color: transparent;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+/* 셀릭박스 스크롤바 */
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar-track {
+}
+
+/* 셀렉박스내 체크박스 */
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .sufaceSelectList
+  .surfaceSelectListMember.checkBoxsContent
+  li
+  label {
+  width: 25px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 5px;
+  background-color: #e0e8f2;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .sufaceSelectList
+  .surfaceSelectListMember.checkBoxsContent
+  li
+  input[type="checkbox"] {
+  display: none;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .sufaceSelectList
+  .surfaceSelectListMember.checkBoxsContent
+  li
+  input[type="checkbox"]:checked
+  + label {
+  background-color: #4e5871;
+  background-image: url(/assets/media/menu01/checkFill.png);
+  background-repeat: no-repeat;
+  background-size: 15px;
+  background-position: center center;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .sufaceSelectList
+  .surfaceSelectListMember
+  li {
+  padding: 0px 10px;
+  height: 41px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 5px;
+  margin: 6px 5px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .sufaceSelectList
+  .surfaceSelectListMember
+  li:hover {
+  background-color: #edf2f9;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireSelects
+  .sufaceSelectList
+  .surfaceSelectListMember
+  li
+  p {
+  color: #4e5871;
+  font-size: 15px;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .inputControlBoxs
+  .inputControlList
+  input[type="text"] {
+  width: 173px;
+  height: 44px;
+  padding: 0px 15px;
+  border-radius: 10px;
+  background-color: #edf2f9;
+  color: #6e7d88;
+  font-size: 15px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .devideSecondTitles {
+  padding: 20px 20px 0px 0px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #4e5871;
+}
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs {
+  width: 86.1%;
+  height: 100%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li {
+  padding: 0px 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs:nth-child(2)
+  li:first-child {
+  padding: 0px 3px;
+}
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs:nth-child(2)
+  li {
+  padding: 0px 8.5px 0px 3px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li
+  input[type="radio"] {
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li
+  span {
+  font-size: 15px;
+  color: #31394c;
+  padding: 0px 30px 0px 5px;
+  font-family: Pretendard;
+  font-weight: 600;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li.addressInput
+  input[type="search"] {
+  background-color: #edf2f9;
+  width: 868px;
+  padding: 0px 10px;
+  height: 44px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+/* 주소란 셀렉박스 width값 */
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li
+  .surfaceInquireSelects {
+  min-width: 164px;
+}
+
+/* 셀렉박스 스크롤바 */
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li
+  .surfaceInquireSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li
+  .surfaceInquireSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li
+  .inputControlList
+  input[type="text"] {
+  width: 136px;
+  height: 44px;
+  padding: 0px 15px;
+  border-radius: 10px;
+  background-color: #edf2f9;
+  color: #6e7d88;
+  font-size: 15px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionBtnBoxs {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  height: 100%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionBtnBoxs
+  button {
+  height: 44px;
+  border-radius: 10px;
+  display: block;
+  margin: 5px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionBtnBoxs
+  .surfaceInquireRegisterBtn {
+  padding: 0px 40px;
+  background-color: #2b7de1;
+  color: #fff;
+}
+
+/* 메인화면 */
+
+#dopcosurfaceInquire03 .surfaceInquireMainContentWrapper {
+  margin: 0 auto;
+  padding: 15px 20px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent {
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles {
+  padding: 10px 20px;
+  position: relative;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles
+  h5 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles
+  h5
+  span {
+  color: #2b7de1;
+  padding: 0px 8px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles
+  .surfaceInquireMainContentDownloadBoxs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles
+  .surfaceInquireMainContentDownloadBoxs
+  .surfaceInquireExcelDownload {
+  width: 159px;
+  padding: 0px 30px;
+  height: 38px;
+  line-height: 39px;
+  border-radius: 10px;
+  background-color: #4e5871;
+  font-size: 15px;
+  font-weight: 600;
+  background-image: url(/assets/media/menu01/download.png);
+  background-size: 11px;
+  background-repeat: no-repeat;
+  background-position: 123px center;
+  color: #fff;
+  text-align: left;
+  margin-right: 10px;
+}
+
+/* 총 검색건수의 셀렉박스 */
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles
+  .surfaceInquireMainContentDownloadBoxs
+  .surfaceInquireSelects {
+  width: 137px;
+  height: 38px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles
+  .surfaceInquireMainContentDownloadBoxs
+  .surfaceInquireSelects
+  .sufaceSelectList {
+  top: 40px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  height: 527px;
+  margin-top: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow-x: hidden;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers.scroll {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers::-webkit-scrollbar-track {
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont {
+  width: 30%;
+  height: 100%;
+  float: left;
+  position: absolute;
+  top: 0;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond02 {
+  width: 70%;
+  height: auto;
+  overflow-x: scroll;
+  overflow-y: visible;
+  left: 30%;
+  border-left: 1px solid #cddbf0;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond02
+  .scrollContentBoxies {
+  width: 170%;
+  height: 100%;
+}
+
+/* 스크롤바 */
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond02::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond02::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond02::-webkit-scrollbar-track {
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle {
+  height: 71px;
+  background-color: #f7f9fc;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont:last-child
+  .dataTitle
+  ul
+  li {
+  width: 400px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li {
+  width: 30%;
+  height: 100%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li {
+  border-right: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li:last-child {
+  border-right: none;
+}
+
+/* 타이틀 li 사이즈별 퍼센트 목록 */
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.extraSmallWidth {
+  width: 15%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.smallWidth {
+  width: 20%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.mediumWidth {
+  width: 50%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.largeWidth {
+  width: 70%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul
+  li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li
+  p {
+  font-size: 14px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: #3c3c3c;
+  font-size: 14px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent.divideLink03
+  a {
+  width: 186%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent.divideLink03
+  a
+  li:last-child {
+  border-right: 1px solid #cddbf0;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  a.mouseEvet {
+  color: #2b7de1;
+}
+
+/* 지상권분할 a링크 */
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent.divideLink03
+  a.mouseEvet {
+  color: #2b7de1;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li {
+  width: 30%;
+  height: 44px;
+  border-right: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li:last-child {
+  border-right: none;
+}
+
+/* 컨텐츠 li 사이즈별 목록 */
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li.extraSmallWidth {
+  width: 15%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li.smallWidth {
+  width: 20%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li.mediumWidth {
+  width: 50%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li.largeWidth {
+  width: 70%;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li
+  button.btnDesign {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  color: #2b7de1;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #cce0ff99;
+  cursor: default;
+  position: absolute;
+  z-index: 999;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li
+  p {
+  text-align: center;
+  font-size: 14px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs {
+  padding: 30px 0px;
+  margin: 0 auto;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li
+  button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li
+  button
+  img {
+  height: 20px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li.arrowLeftWrapper
+  button {
+  margin-right: 10px;
+}
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li.arrowRightWrapper
+  button {
+  margin-left: 10px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li.arrowLeftWrapper
+  img {
+  transform: rotate(180deg);
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li.pageCountBoxs
+  p {
+  font-size: 14px;
+  width: 29px;
+  height: 29px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+  margin-right: 12px;
+  color: #b1bad0;
+  font-weight: 700;
+  cursor: pointer;
+}
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li.pageCountBoxs
+  p:last-child {
+  margin-right: 0px;
+}
+
+#dopcosurfaceInquire03
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li.pageCountBoxs
+  p.active {
+  background-color: #edf2f9;
+  color: #2b7de1;
+}
