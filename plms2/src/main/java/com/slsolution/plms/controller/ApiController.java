@@ -876,6 +876,30 @@ StringBuilder sb=new StringBuilder();
 	}
     
     
+    @PostMapping(path="/getMemoData") //http://localhost:8080/api/get/dbTest
+    public ModelAndView getMemoData(HttpServletRequest httpRequest, HttpServletResponse response,Model model) throws Exception {
+		ModelAndView mav=new ModelAndView();
+    	
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		
+		
+		String idx=httpRequest.getParameter("idx");
+	
+		params.put("idx",idx);
+		
+		log.info("params:"+params);
+		
+		
+		 ArrayList<HashMap> memoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+		// model.addAttribute("memoList", memoList);
+		 mav.addObject("memoList",memoList);
+			//mav.setViewName("content/jisang/groundDetail :: #memoDiv");
+		 mav.setViewName("content/jisang/groundDetail :: #memoDiv");
+			return mav;
+	}
+    
+    
 
 
     

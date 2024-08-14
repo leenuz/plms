@@ -121,6 +121,17 @@ margin:10px;
 
 }
 
+
+.ol-unselectable{
+ border:1px solid red;
+}
+#map {
+    clear: both;
+    position: relative;
+    width: 100% !important;
+    height: 214px;
+    border: 1px solid black;
+}
 		</style>
 		
     <title>지상권</title>
@@ -806,7 +817,7 @@ margin:10px;
                                 <li class="title04 title">수정</li>
                                 <li class="title05 title">추가/삭제</li>
                             </ul>
-                            <div class="contentScr" id="memoDiv">
+                            <div class="contentScr" id="memoDiv" >
                                 <ul class="contents" th:each="val:${memoList}">
                                     <li class="content01 content">
                                         <!-- 2022-11-01 -->

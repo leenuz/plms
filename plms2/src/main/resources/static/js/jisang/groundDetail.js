@@ -375,6 +375,25 @@ $(document).on("click",".editBtn",function(){
 	 console.log(ele);
 })
 */
-
+$(document).on("click",".addBtn",function(){
+	console.log("--------addBtn click----------------");
+	console.log($(this).parent().parent().parent().parent().html());
+	var dBtn = document.querySelectorAll('#groundDetail .delBtn');
+	console.log(dBtn);
+	var thisDeleteContent = this.closest('.contents');
+	console.log(thisDeleteContent);
+		var idx=$(thisDeleteContent).find("#idx").val();
+		var mparams={"idx":idx};
+		console.log(mparams);
+		$.ajax({
+						      url: "/api/getMemoData",
+						      type: "POST",
+						      data: mparams,
+						 })
+						 .done(function (fragment) {
+							$('#memoDiv').replaceWith(fragment);
+						  });
+	 
+})
 
 
