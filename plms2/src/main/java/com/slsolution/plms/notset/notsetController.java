@@ -41,8 +41,10 @@ public class notsetController {
 
 			params.put("idx",idx);
 			params.put("index",index);
+			params.put("manage_no",idx);
 			log.info("idx:"+idx);
 			log.info("index:"+index);
+
 
 			ArrayList<HashMap> data = mainService.selectQuery("notsetSQL.selectAllData",params);
 			ArrayList<HashMap> soujaList = mainService.selectQuery("notsetSQL.selectSoyujaData",params);
@@ -53,9 +55,18 @@ public class notsetController {
 			params.put("pnu", data.get(0).get("nm_pnu"));
 
 			ArrayList<HashMap> notsetIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
-			ArrayList<HashMap> notsetIssueHistoryList = mainService.selectQuery("notsetSQL.selectIssueHistoryList",params);
+			if (notsetIssueList.size()>0) {
 
+				params.put("issueManualCode1", notsetIssueList.get(0).get("pi_code_depth1"));
+				params.put("issueManualCode2", notsetIssueList.get(0).get("pi_code_depth2"));
+				params.put("issueManualCode3", notsetIssueList.get(0).get("pi_code_depth3"));
+			}
+			ArrayList<HashMap> notsetIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
+
+			ArrayList<HashMap> notsetIssueHistoryList = mainService.selectQuery("notsetSQL.selectIssueHistoryList",params);
 			ArrayList<HashMap> notsetPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+			ArrayList<HashMap> notsetMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+
 			mav.addObject("resultData",data.get(0));
 			mav.addObject("soujaList",soujaList);
 			mav.addObject("atcFileList",atcFileList);
@@ -65,9 +76,12 @@ public class notsetController {
 //			mav.addObject("notsetMergeList",notsetMergeList);
 
 			mav.addObject("notsetIssueList",notsetIssueList);
+			mav.addObject("jisangIssueCodeAtcFileList",notsetIssueCodeAtcFileList);
+
 			mav.addObject("notsetIssueHistoryList",notsetIssueHistoryList);
 
 			mav.addObject("notsetPnuAtcFileList",notsetPnuAtcFileList);
+			mav.addObject("memoList",notsetMemoList);
 
 	      			mav.setViewName("content/notset/unsetOccupationDetails");
 	      			return mav;

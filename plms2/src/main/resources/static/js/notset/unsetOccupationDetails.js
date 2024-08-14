@@ -3,15 +3,47 @@ const editBefore = document.querySelectorAll('#unsetOccupationDetails .memoSecti
 const editAfter = document.querySelectorAll('#unsetOccupationDetails .memoSection .contents .content.btnBox .editAfter');
 const editContent = document.querySelectorAll('#unsetOccupationDetails .editSpace');
 const registBtn = document.querySelectorAll('#unsetOccupationDetails .registBtn');
+const delBtn = document.querySelectorAll('#groundDetail .delBtn');
+
+//function loadMemoEditBtn(){
+//	memoEditBtn.forEach((btn) => {
+//
+//	    btn.addEventListener('click', function () {
+//	        var thisEditContent = btn.closest('.contents');
+//	        console.log(thisEditContent);
+//
+//	        thisEditContent.classList.add('editing');
+//
+//	        // const inputs = thisEditContent.querySelectorAll('input');
+//	        const inputs = thisEditContent.querySelectorAll('.editSpace input');
+//
+//	        if (thisEditContent.classList.contains('editing')) {
+//	            inputs.forEach(input => {
+//	                input.removeAttribute('readonly');
+//	            });
+//	        } else {
+//	            inputs.forEach(input => {
+//	                input.setAttribute('readonly', 'readonly');
+//	            });
+//	        }
+//
+//
+//
+//	    })
+//	})
+//
+//}
 
 //memoEditBtn.forEach((btn) => {
+//
 //    btn.addEventListener('click', function () {
 //        var thisEditContent = btn.closest('.contents');
 //        console.log(thisEditContent);
 //
 //        thisEditContent.classList.add('editing');
 //
-//        const inputs = thisEditContent.querySelectorAll('input');
+//        // const inputs = thisEditContent.querySelectorAll('input');
+//        const inputs = thisEditContent.querySelectorAll('.editSpace input');
 //
 //        if (thisEditContent.classList.contains('editing')) {
 //            inputs.forEach(input => {
@@ -27,21 +59,80 @@ const registBtn = document.querySelectorAll('#unsetOccupationDetails .registBtn'
 //
 //    })
 //})
-
-if(registBtn) {
-    registBtn.forEach((regiBtn)=> {
-        regiBtn.addEventListener('click',function(){
-
-            var thisEditContent01 = regiBtn.closest('.contents');
-            thisEditContent01.classList.remove('editing')
-
-            const inputs = thisEditContent01.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.setAttribute('readonly', 'readonly');
-            });
-        })
-    })
-}
+//
+//
+//if(registBtn) {
+//    registBtn.forEach((regiBtn)=> {
+//        regiBtn.addEventListener('click',function(){
+//
+//            var thisEditContent01 = regiBtn.closest('.contents');
+//            thisEditContent01.classList.remove('editing')
+//
+////            const inputs = thisEditContent01.querySelectorAll('input');
+////            inputs.forEach(input => {
+////                input.setAttribute('readonly', 'readonly');
+////            });
+//
+//var idx=$(thisEditContent01).find("#idx").val();
+//			var mode="";
+//			if (idx==0 || idx=="undefiled" ||idx==null) mode="insert";
+//			else mode="update";
+//			var mparams={"mode":mode,"idx":idx,"manage_no":$("#manage_no").val(), "wname":$(thisEditContent01).find("#wname").val(),"wmemo":$(thisEditContent01).find("#wmemo").val()};
+//			console.log(mparams);
+//			$.ajax({
+//			      url: "/api/putMemoData",
+//			      type: "POST",
+//			      data: mparams,
+//				  success:function(memoList){
+//					$('#memoDiv').replaceWith(memoList);
+//					loadMemoEditBtn();
+//
+//				  }
+//			 });
+//        })
+//    })
+//}
+//
+//if(delBtn) {
+//    delBtn.forEach((dBtn)=> {
+//        dBtn.addEventListener('click',function(){
+//
+//            var thisEditContent01 = dBtn.closest('.contents');
+//          //  thisEditContent01.classList.remove('editing')
+//			/*
+//            const inputs = thisEditContent01.querySelectorAll('input');
+//            inputs.forEach(input => {
+//                input.setAttribute('readonly', 'readonly');
+//            });*/
+//
+//
+//
+//
+//			console.log("------------delBtn end-------------");
+//
+//			console.log($(thisEditContent01).find("#idx").val());
+//			var idx=$(thisEditContent01).find("#idx").val();
+//			var mode="";
+//			if (idx==0 || idx=="undefiled" ||idx==null) {
+//			return;
+//				}
+//
+//			var mparams={"idx":$(thisEditContent01).find("#idx").val()};
+//			console.log(mparams);
+//			$.ajax({
+//			      url: "/api/deleteMemoData",
+//			      type: "POST",
+//			      data: mparams,
+//			 })
+//			 .done(function (fragment) {
+//				$('#memoDiv').replaceWith(fragment);
+//				scrFn_loadScript('/js/jisang/groundDetail.js');
+//			  });
+//        })
+//    })
+//
+//
+//}
 
 
 /* 이슈등록 클릭시 팝업오픈 */
@@ -96,7 +187,7 @@ const unsetOccupationIssueReviseOpen = () => {
 
        const unsetOccupationIssueRevisePop = document.querySelector(".unsetOccupationIssueRevisePopWrapper");
        let htmlFilePath = '/components/popuphtml/editIssuePopup.html'; // 삽입할 html 파일 경로
-  
+
        let xhr = new XMLHttpRequest();
        xhr.open('GET', htmlFilePath, true);
        xhr.onreadystatechange = function() {
@@ -120,14 +211,14 @@ const unsetOccupationIssueReviseOpen = () => {
       }
         
      // 삽입된 html내 스크립트 실행 함수
-//     const runScriptsInElement = (element) => {
-//       const scripts = element.getElementsByTagName('script');
-//       for (let i = 0; i < scripts.length; i++) {
-//           const script = document.createElement('script');
-//           script.textContent = scripts[i].textContent;
-//           document.body.appendChild(script).parentNode.removeChild(script);
-//       }
-//   }
+     const runScriptsInElement = (element) => {
+       const scripts = element.getElementsByTagName('script');
+       for (let i = 0; i < scripts.length; i++) {
+           const script = document.createElement('script');
+           script.textContent = scripts[i].textContent;
+           document.body.appendChild(script).parentNode.removeChild(script);
+       }
+   }
 
 }
 unsetOccupationIssueReviseOpen();
@@ -141,7 +232,7 @@ $(document).on("click","#fileSaveBtn",function(){
 	for(var i=0;i<files.length;i++){
 		console.log("filename:"+files[i].name);
 	}*/
-	var params={"manage_no":$("#manage_no").val(),"files":uploadFiles};
+	var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val(),"files":uploadFiles};
 	url="/api/pnuAtcUpload";
 	$.ajax({
 
@@ -238,38 +329,173 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log("Deleting files with IDs:", selectedFiles);
 
             // 서버로 삭제 요청 보내기 (예: AJAX 요청)
-            fetch('/api/pnuAtcDelete', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ fileIds: selectedFiles }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.resultMessage == "success") {
-                    // 성공적으로 삭제되었을 경우 체크박스와 관련된 리스트 항목 삭제
+//            fetch('/api/pnuAtcDelete', {
+//                method: 'POST',
+//                headers: {
+//                    'Content-Type': 'application/json',
+//                },
+//                body: JSON.stringify({ fileIds: selectedFiles }),
+//            })
+//            .then(response => response.json())
+//            .then(data => {
+//                if (data.resultMessage == "success") {
+//                    // 성공적으로 삭제되었을 경우 체크박스와 관련된 리스트 항목 삭제
+//
+//                    alert('선택된 파일이 삭제되었습니다.');
+//                    var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val()};
+//                    $.ajax({
+//                           url: "/jisang/getAtcFileData",
+//                           type: "POST",
+//                           data: params,
+//                       })
+//                       .done(function (fragment) {
+//                           $('#pnuAtcFilesDiv').replaceWith(fragment);
+//                       });
+//                } else {
+//                    alert('파일 삭제에 실패하였습니다.');
+//                }
+//            })
+//            .catch(error => {
+//                console.error('Error:', error);
+//                alert('파일 삭제 중 오류가 발생하였습니다.');
+//            });
 
-                    alert('선택된 파일이 삭제되었습니다.');
-                    var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val()};
-                    $.ajax({
-                           url: "/jisang/getAtcFileData",
-                           type: "POST",
-                           data: params,
-                       })
-                       .done(function (fragment) {
-                           $('#pnuAtcFilesDiv').replaceWith(fragment);
-                       });
-                } else {
-                    alert('파일 삭제에 실패하였습니다.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('파일 삭제 중 오류가 발생하였습니다.');
-            });
+$.ajax({
+    url: '/api/pnuAtcDelete',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({ fileIds: selectedFiles })
+})
+.done(function(data) {
+    if (data.resultMessage == "success") {
+        // 성공적으로 삭제되었을 경우 체크박스와 관련된 리스트 항목 삭제
+        alert('선택된 파일이 삭제되었습니다.');
+
+        var params = {
+            "manage_no": $("#manage_no").val(),
+            "pnu": $("#pnu").val()
+        };
+
+        $.ajax({
+            url: "/jisang/getAtcFileData",
+            type: "POST",
+            data: params
+        })
+        .done(function(fragment) {
+            $('#pnuAtcFilesDiv').replaceWith(fragment);
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            console.error('Error:', textStatus, errorThrown);
+            alert('파일 목록을 가져오는 중 오류가 발생하였습니다.');
+        });
+    } else {
+        alert('파일 삭제에 실패하였습니다.');
+    }
+})
+.fail(function(jqXHR, textStatus, errorThrown) {
+    console.error('Error:', textStatus, errorThrown);
+    alert('파일 삭제 중 오류가 발생하였습니다.');
+});
+
+
+
         } else {
             alert('삭제할 파일을 선택해 주세요.');
         }
     });
+});
+
+$(document).on("click",".addBtn",function(){
+	console.log("--------addBtn click----------------");
+
+	var MainContentDiv = this.closest('.contentScr');
+	var thisNullContent = $(MainContentDiv).find("ul").eq(0).html();
+	console.log(MainContentDiv);
+	console.log("-------------------------");
+	console.log(thisNullContent);
+	$(MainContentDiv).append("<ul class='contents'>"+thisNullContent+"</ul>");
+
+});
+
+
+
+$(document).on("click",".editBtn",function(){
+	console.log("--------editBtn click----------------");
+	var thisContent = this.closest('.contents');
+	console.log(thisContent);
+	thisContent.classList.add('editing');
+	const inputs = thisContent.querySelectorAll('.editSpace input');
+
+	        if (thisContent.classList.contains('editing')) {
+	            inputs.forEach(input => {
+	                input.removeAttribute('readonly');
+	            });
+	        } else {
+	            inputs.forEach(input => {
+	                input.setAttribute('readonly', 'readonly');
+	            });
+	        }
+
+});
+
+$(document).on("click",".registBtn",function(){
+		var thisContent = this.closest('.contents');
+	            thisContent.classList.remove('editing')
+
+				const inputs = thisContent.querySelectorAll('input');
+				            inputs.forEach(input => {
+				                input.setAttribute('readonly', 'readonly');
+				            });
+
+
+
+
+							console.log("------------registBtn end-------------");
+							console.log($(thisContent).find("#wname").val());
+							console.log($(thisContent).find("#wmemo").val());
+							console.log($(thisContent).find("#idx").val());
+							var idx=$(thisContent).find("#idx").val();
+							var mode="";
+							if (idx==0 || idx=="undefiled" ||idx==null) mode="insert";
+							else mode="update";
+							var mparams={"mode":mode,"idx":idx,"manage_no":$("#manage_no").val(), "wname":$(thisContent).find("#wname").val(),"wmemo":$(thisContent).find("#wmemo").val()};
+							console.log(mparams);
+							$.ajax({
+							      url: "/api/putMemoData",
+							      type: "POST",
+							      data: mparams,
+								  success:function(memoList){
+									$('#memoDiv').replaceWith(memoList);
+//									loadMemoEditBtn();
+
+								  }
+							 });
+
+});
+
+
+$(document).on("click",".delBtn",function(){
+	var thisContent = this.closest('.contents');
+
+
+	console.log("------------delBtn end-------------");
+
+	console.log($(thisContent).find("#idx").val());
+	var idx=$(thisContent).find("#idx").val();
+	var mode="";
+	if (idx==0 || idx=="undefiled" ||idx==null) {
+	return;
+		}
+
+	var mparams={"idx":$(thisContent).find("#idx").val(),"manage_no":$("#manage_no").val()};
+	console.log(mparams);
+	$.ajax({
+	      url: "/api/deleteMemoData",
+	      type: "POST",
+	      data: mparams,
+	 })
+	 .done(function (fragment) {
+		$('#memoDiv').replaceWith(fragment);
+
+	  });
 });
