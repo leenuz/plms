@@ -48,7 +48,7 @@ $(document).on("click","#fileSaveBtn",function(){
 						//$("#pnuAtcFilesDiv").replaceWith()
 						uploadFiles=[];
 						$("#fileListDiv div").remove();
-						$("#fileListDiv").append("<div></div>");
+						$("#fileListDiv").append("<div id='flist'></div>");
 						$.ajax({
 						       url: "/jisang/getAtcFileData",
 						       type: "POST",
