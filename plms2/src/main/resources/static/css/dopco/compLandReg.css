@@ -1,0 +1,580 @@
+@charset "UTF-8";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body * {
+  font-family: pretendard;
+}
+
+a {
+  text-decoration: none;
+  color: #3c3c3c;
+}
+
+li {
+  list-style: none;
+}
+
+input {
+  border: 0;
+  outline: 0;
+}
+
+input:focus {
+  border: 0;
+}
+
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+
+button {
+  border: 0;
+}
+
+.lightBlueBtn {
+  color: #2b7de1;
+  background: rgba(204, 224, 255, 0.6);
+}
+.middleBtn {
+  width: 159px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.navyBtn {
+  background-color: #4e5871;
+  color: #fff;
+}
+
+.whiteBtn {
+  background-color: #fff;
+  border: 1px solid #4e5871;
+  color: #4e5871;
+}
+
+.searchAddressBtn {
+  width: 54px;
+  height: 27px;
+  border-radius: 20px;
+  background: #2b7de1;
+  color: #fff;
+}
+.fileDownloadBtn {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: #4e5871;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.downloadIcon {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  background: url(/assets/media/menu05/images/download.png) no-repeat center;
+  background-size: contain;
+}
+
+/* css추가 */
+
+.compLandRegWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.compLandRegWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.compLandRegWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.compLandRegHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+/**/
+
+#compLandReg {
+  width: calc(100% - 100px);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+#compLandReg .contWrap {
+  width: 100%;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+#compLandReg .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+
+#compLandReg .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+#compLandReg .subTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #31394c;
+  margin-bottom: 24px;
+  position: relative;
+}
+#compLandReg input[type="text"] {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 10px;
+  background: #edf2f9;
+}
+
+#compLandReg input[type="text"].notWriteInput {
+  background: transparent;
+}
+
+#compLandReg input[type="text"]::placeholder {
+  color: #3c3c3c;
+}
+#compLandReg .contWrap .titles,
+#compLandReg .contWrap .contents {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  border-bottom: 1px solid #cddbf0;
+}
+#compLandReg .contWrap .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+#compLandReg .titles .title,
+#compLandReg .contents .content {
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border-right: 1px solid #cddbf0;
+}
+#compLandReg .titles .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#compLandReg .contWrap .titles li:last-child {
+  border-right: 0;
+}
+#compLandReg .contents .content:last-child {
+  border-right: 0;
+}
+#compLandReg .contWrap .depth1 .titles {
+  border-radius: 5px 5px 0 0;
+  background: #f7f9fc;
+}
+/* date */
+#compLandReg .dateInputWrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  position: relative;
+  background: url(/assets/media/menu05/images/calendarInputIcon.png) no-repeat
+    left 8px center;
+  background-size: 18px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#compLandReg input[type="date"] {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+  color: transparent;
+  background: transparent;
+  text-align: right;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+#compLandReg input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+#compLandReg input[type="date"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #6e7d88;
+}
+#compLandReg input[type="date"]:focus,
+#compLandReg input[type="date"]:valid {
+  color: #6e7d88;
+}
+#compLandReg input[type="date"]:focus::before,
+#compLandReg input[type="date"]:valid::before {
+  content: "";
+}
+/* selectbox */
+#compLandReg .customSelectBox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#compLandReg .customSelectBox .customSelectView {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6e7d88;
+  background: #fff;
+  text-align-last: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  box-sizing: border-box;
+  background: url(/assets/media/menu05/images/arrowDown.png) no-repeat right 8px
+    center;
+  background-size: 21px;
+}
+#compLandReg .customSelectBox .customSelectView.active {
+  background: url(/assets/media/menu05/images/arrowDownBlue.png) no-repeat right
+    8px center;
+  background-size: 21px;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+#compLandReg .customSelectBox .customSelectBtns {
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 4px);
+  box-sizing: border-box;
+  max-height: 0;
+  overflow-y: hidden;
+  z-index: 10;
+  transition: 500ms;
+  opacity: 0;
+  border: 1px solid #acbdd7;
+}
+#compLandReg .customSelectBox .customSelectBtns.active {
+  padding: 6px 0;
+  border-radius: 10px;
+  background: #fff;
+  max-height: 233px;
+  overflow-y: scroll;
+  transition: 500ms;
+  opacity: 1;
+}
+
+#compLandReg .customSelectBox .customSelectBtns li {
+  padding: 0;
+  height: 41px;
+}
+.moreSelectBtn {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4e5871;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  text-align-last: left;
+  padding-left: 12px;
+  box-sizing: border-box;
+}
+#compLandReg .customSelectBox .customSelectBtns::-webkit-scrollbar {
+  width: 4px;
+}
+
+#compLandReg .customSelectBox .customSelectBtns::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+/* 기본정보 */
+#compLandReg .basicOwnerInfo {
+  padding: 27px 0 40px 0;
+}
+#compLandReg .basicOwnerInfo .contWrap .title {
+  width: calc(100% / 4);
+}
+#compLandReg .basicOwnerInfo .contWrap .content {
+  width: calc(100% / 4);
+}
+/* 소속 토지 정보 */
+#compLandReg .rightsDetails {
+  padding-bottom: 40px;
+}
+#compLandReg .rightsDetails .contWrap .title {
+  width: calc(100% / 4);
+}
+#compLandReg .rightsDetails .contWrap .content {
+  width: calc(100% / 4);
+}
+#compLandReg .rightsDetails .inputWrap {
+  display: flex;
+  gap: 5px;
+}
+#compLandReg .rightsDetails .searchBtn {
+  width: 59px;
+  height: 33px;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 10px;
+}
+#compLandReg .rightsDetails .inputBox {
+  width: calc(100% - 59px);
+}
+/* 회사 토지 지상권 정보 */
+#compLandReg .compLandLease {
+  padding-bottom: 40px;
+}
+#compLandReg .compLandLease .contWrap .title {
+  width: calc(100% / 4);
+}
+#compLandReg .compLandLease .contWrap .content {
+  width: calc(100% / 4);
+}
+#compLandReg .compLandLease .inputWrap {
+  display: flex;
+  gap: 5px;
+}
+#compLandReg .compLandLease .searchBtn {
+  width: 59px;
+  height: 33px;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 10px;
+}
+#compLandReg .compLandLease .inputBox {
+  width: calc(100% - 59px);
+}
+/* 권리확보 내역 */
+#compLandReg .securedRights {
+  padding-bottom: 40px;
+}
+#compLandReg .securedRights .contWrap .title {
+  width: calc(100% / 4);
+}
+#compLandReg .securedRights .contWrap .content {
+  width: calc(100% / 4);
+}
+#compLandReg .securedRights .inputWrap {
+  display: flex;
+  gap: 5px;
+}
+#compLandReg .securedRights .searchBtn {
+  width: 59px;
+  height: 33px;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 10px;
+}
+#compLandReg .securedRights .inputBox {
+  width: calc(100% - 59px);
+}
+/* 후순위 권리 내역 */
+#compLandReg .subordinateRts {
+  padding-bottom: 40px;
+}
+#compLandReg .subordinateRts .contWrap .title {
+  width: calc((100% - 25%) / 6);
+}
+#compLandReg .subordinateRts .contWrap .content {
+  width: calc((100% - 25%) / 6);
+}
+#compLandReg .subordinateRts .contWrap .largeWidth {
+  width: 25%;
+}
+#compLandReg .subordinateRts .inputWrap {
+  display: flex;
+  gap: 5px;
+}
+#compLandReg .subordinateRts .searchBtn {
+  width: 59px;
+  height: 33px;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 10px;
+}
+#compLandReg .subordinateRts .inputBox {
+  width: calc(100% - 59px);
+}
+#compLandReg .subordinateRts .btnWrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+#compLandReg .subordinateRts .contentAddBtn {
+  width: 129px;
+  height: 37px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+  margin-top: 16px;
+}
+/* 첨부파일  */
+#compLandReg .attachFileInfo {
+  padding-bottom: 40px;
+}
+
+#compLandReg .attachFileInfo .subTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#compLandReg .attachFileInfo .subTitleEx {
+  color: #2b7de1;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+#compLandReg .attachFileInfo .fileUploadWrap {
+  width: 100%;
+  margin-bottom: 18px;
+  height: 130px;
+  overflow-y: scroll;
+  border: 1px dashed #cddbf0;
+  border-radius: 5px;
+}
+
+.fileUploadIcon {
+  width: 35px;
+  height: 35px;
+}
+
+#compLandReg .attachFileInfo .fileUploadWrap::-webkit-scrollbar {
+  width: 4px;
+}
+
+#compLandReg .attachFileInfo .fileUploadWrap::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#compLandReg .attachFileInfo .fileUploadBox {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #f7f9fc;
+}
+
+#compLandReg .attachFileInfo .fileUploadBox p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #88a2c8;
+}
+
+#compLandReg input[type="file"] {
+  display: none;
+}
+
+.fileBtnWrap label {
+  width: 81px;
+  height: 27px;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 메모 */
+#compLandReg .memoSection {
+  padding-bottom: 40px;
+}
+
+#compLandReg textarea {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #cddbf0;
+  background: #f7f9fc;
+  padding: 15px;
+  box-sizing: border-box;
+  height: 118px;
+  resize: none;
+}
+
+#compLandReg textarea::placeholder {
+  color: #88a2c8;
+}
+
+#compLandReg textarea::-webkit-scrollbar {
+  width: 4px;
+}
+
+#compLandReg textarea::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+/* 이전, 저장 버튼 */
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 10px;
+}
+#compLandReg .finalBtnBox .prevBtn {
+  background: #bfbfbf;
+  color: #fff;
+}
+#compLandReg .finalBtnBox .registBtn {
+  background: #2b7de1;
+  color: #fff;
+}

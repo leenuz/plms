@@ -1,0 +1,636 @@
+@charset "UTF-8";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body * {
+  font-family: pretendard;
+}
+
+a {
+  text-decoration: none;
+  color: #3c3c3c;
+}
+
+li {
+  list-style: none;
+}
+
+select {
+  outline: 0;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #6e7d88;
+  text-indent: 12px;
+}
+
+.authHistBtn {
+  width: 139px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+input {
+  border: 0;
+  outline: 0;
+}
+
+input:focus {
+  border: 0;
+}
+
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+
+button {
+  border: 0;
+}
+table {
+  border-collapse: collapse;
+}
+textarea {
+  resize: none;
+  border: 0;
+  color: #3c3c3c;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+textarea::placeholder {
+  color: #3c3c3c;
+  font-size: 14px;
+  font-weight: 500;
+}
+.contentScr {
+  overflow-y: scroll;
+  border-radius: 0 0 5px 5px;
+}
+.titleScr {
+  padding-right: 4px;
+}
+#occupancyEndReg .contentScr::-webkit-scrollbar {
+  width: 4px;
+}
+#occupancyEndReg .contentScr::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+#occupancyEndReg .changeHistory textarea {
+  width: 100%;
+  height: 100%;
+}
+.hiddenCaption {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+}
+
+.lightBlueBtn {
+  color: #2b7de1;
+  background: rgba(204, 224, 255, 0.6);
+}
+.deepGrayBtn {
+  background: #636363;
+  color: #fff;
+}
+.middleBtn {
+  width: 159px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.navyBtn {
+  background-color: #4e5871;
+  color: #fff;
+}
+
+.whiteBtn {
+  background-color: #fff;
+  border: 1px solid #4e5871;
+  color: #4e5871;
+}
+
+.searchAddressBtn {
+  width: 54px;
+  height: 27px;
+  border-radius: 20px;
+  background: #2b7de1;
+  color: #fff;
+}
+
+.moreSelectBtn {
+  font-size: 15px;
+  font-weight: 500;
+  color: #4e5871;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  text-align-last: left;
+  padding-left: 12px;
+  box-sizing: border-box;
+}
+
+.fileDownloadBtn {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: #4e5871;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+.authHistBtn {
+  width: 139px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+/* 이전, 저장 버튼 */
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+.vividBlueBtn {
+  background: #2b7de1;
+  color: #fff;
+}
+
+.grayBtn {
+  background: #919191;
+  color: #fff;
+}
+
+.lightBlueBtn {
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+}
+
+.blueBorderBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+
+#occupancyEndReg .dateInputBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+}
+#occupancyEndReg .dateInputWrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  position: relative;
+  background: url(/assets/media/menu03/images/calendarInputIcon.png) no-repeat
+    left 8px center;
+  background-size: 18px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+#occupancyEndReg input[type="date"] {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+  color: transparent;
+  background: transparent;
+  text-align: left;
+  text-indent: 25px;
+  font-size: 15px;
+  font-weight: 500;
+}
+#occupancyEndReg input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+#occupancyEndReg input[type="date"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 50%;
+  left: 25px;
+  transform: translateY(-50%);
+  color: #6e7d88;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+#occupancyEndReg input[type="date"]:focus,
+#occupancyEndReg input[type="date"]:valid {
+  color: #6e7d88;
+}
+
+#occupancyEndReg input[type="date"]:focus::before,
+#occupancyEndReg input[type="date"]:valid::before {
+  content: "";
+}
+
+/* css추가 */
+
+.occupancyEndRegWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.occupancyEndRegWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.occupancyEndRegWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.occupancyEndRegHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+/**/
+
+/*  */
+#occupancyEndReg * {
+  font-family: pretendard;
+}
+
+#occupancyEndReg {
+  width: calc(100% - 100px);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+
+#occupancyEndReg .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+
+#occupancyEndReg .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#occupancyEndReg .subTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #31394c;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+#occupancyEndReg .subTitleBtnBox {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  transform: translateY(-25%);
+  right: 0;
+}
+
+#occupancyEndReg .contents .content {
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border-right: 1px solid #cddbf0;
+}
+
+#occupancyEndReg .contents .content:last-child {
+  border-right: 0;
+}
+#occupancyEndReg .defaultInfo {
+  /* padding: 40px 0; */
+  padding: 27px 0 40px 0;
+}
+
+#occupancyEndReg .defaultInfo .subTitle {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 21px;
+}
+
+#occupancyEndReg .contWrap {
+  width: 100%;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+
+#occupancyEndReg .contWrap .titles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+}
+
+#occupancyEndReg .contWrap .depth1 .titles {
+  border-radius: 5px 5px 0 0;
+}
+
+#occupancyEndReg .contWrap .titles li {
+  height: 100%;
+  text-align: center;
+  line-height: 45px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+
+#occupancyEndReg .contWrap .titles li:last-child {
+  border-right: 0;
+}
+
+#occupancyEndReg .contWrap .contents {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #fff;
+  border-bottom: 1px solid #cddbf0;
+}
+
+#occupancyEndReg .contWrap .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+#occupancyEndReg .defaultInfo .contWrap .title {
+  width: 10.9%;
+}
+
+#occupancyEndReg .defaultInfo .contWrap .content {
+  width: 10.9%;
+}
+#occupancyEndReg .defaultInfo .contWrap .depth1 .largeWidth {
+  width: 23.6%;
+}
+
+#occupancyEndReg .defaultInfo .contWrap .depth2 .largeWidth {
+  width: 53%;
+}
+
+#occupancyEndReg .defaultInfo .contWrap .depth2 .middleWidth {
+  width: 17.6%;
+}
+#occupancyEndReg .inputWrap {
+  border-right: 1px solid #cddbf0;
+  padding: 6px 8px;
+}
+
+#occupancyEndReg .inputWrap:last-child {
+  border-right: 0;
+}
+
+#occupancyEndReg input[type="text"] {
+  width: 100%;
+  height: 100%;
+  background: #edf2f9;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+#occupancyEndReg input[type="text"].notWriteInput {
+  background: transparent;
+}
+#occupancyEndReg input[type="text"]::placeholder {
+  color: #3c3c3c;
+}
+
+/* 소속 토지 정보 */
+
+#occupancyEndReg .landAdressInfo {
+  padding-bottom: 40px;
+}
+
+#occupancyEndReg .landAdressInfo .contWrap .title {
+  width: 11%;
+}
+
+#occupancyEndReg .landAdressInfo .contWrap .content {
+  width: 11%;
+}
+
+#occupancyEndReg .landAdressInfo .contWrap .middleWidth {
+  width: 9%;
+}
+
+#occupancyEndReg .landAdressInfo .contWrap .smallWidth {
+  width: 5.5%;
+}
+
+#occupancyEndReg .landAdressInfo .contWrap .largeWidth {
+  width: 50.9%;
+}
+
+#occupancyEndReg .landAdressInfo .contentScr {
+  height: 180px;
+}
+
+#occupancyEndReg .landAdressInfo .contWrap .depth1 .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+#occupancyEndReg .miniBtn {
+  width: 74px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+#occupancyEndReg .viewDetailButton {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+}
+
+#occupancyEndReg .btnBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 점용 허가 정보 */
+
+#occupancyEndReg .permitInfo {
+  padding-bottom: 40px;
+}
+#occupancyEndReg .permitInfo .title {
+  width: 5.8%;
+}
+#occupancyEndReg .permitInfo .content {
+  width: 5.8%;
+}
+#occupancyEndReg .permitInfo .largeWidth {
+  width: 13.3%;
+}
+#occupancyEndReg .permitInfo .middleWidth {
+  width: 11.5%;
+}
+
+/* 점용 허가 및 점용료 납부현황 */
+#occupancyEndReg .permFeeStat {
+  padding-bottom: 40px;
+}
+#occupancyEndReg .permFeeStat .contWrap {
+  border: 1px solid #cddbf0;
+}
+#occupancyEndReg .permFeeStat table {
+  width: 100%;
+  border-radius: 5px;
+  border: 0;
+}
+/* border 정리 */
+
+#occupancyEndReg table tr {
+  border-bottom: 1px solid #cddbf0;
+}
+#occupancyEndReg table th,
+#occupancyEndReg table td {
+  border-right: 1px solid #cddbf0;
+  height: 45px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+#occupancyEndReg table thead tr:first-of-type th:first-of-type {
+  border-radius: 5px 0 0 0;
+}
+#occupancyEndReg table thead tr:first-of-type th:last-of-type {
+  border-radius: 0 5px 0 0;
+}
+/* 맨 오른쪽 보더 빼기 */
+#occupancyEndReg table thead tr th:last-of-type {
+  border-right: 0;
+}
+#occupancyEndReg table tbody tr td:last-of-type {
+  border-right: 0;
+}
+/* 맨 밑 보더 빼기 */
+#occupancyEndReg table tbody tr:last-of-type {
+  border-bottom: 0;
+}
+#occupancyEndReg .permFeeStat table th {
+  width: 14.1%;
+}
+#occupancyEndReg .permFeeStat table td {
+  width: 14.1%;
+}
+/* 배경색 깔기 */
+#occupancyEndReg table tr:first-of-type th {
+  background: #f7f9fc;
+}
+#occupancyEndReg table thead tr:last-of-type th {
+  background: #ecf1f8;
+}
+#occupancyEndReg .permFeeStat table th.largeWidth {
+  width: 10.8%;
+}
+#occupancyEndReg .permFeeStat table th.middleWidth {
+  width: 8%;
+}
+#occupancyEndReg .permFeeStat table th.smallWidth {
+  width: 5%;
+}
+#occupancyEndReg .permFeeStat table td.largeWidth {
+  width: 10.8%;
+}
+#occupancyEndReg .permFeeStat table td.middleWidth {
+  width: 8%;
+}
+#occupancyEndReg .permFeeStat table td.smallWidth {
+  width: 5%;
+}
+
+/* 점용 해지 정보 */
+
+#occupancyEndReg .occupancyEndInfo {
+  padding-bottom: 40px;
+}
+#occupancyEndReg .occupancyEndInfo .contWrap {
+  overflow: hidden;
+}
+#occupancyEndReg .occupancyEndInfo .depth1 {
+  display: flex;
+}
+#occupancyEndReg .occupancyEndInfo .depth1 .rowListBox {
+  width: 50%;
+  display: flex;
+  height: 45px;
+}
+#occupancyEndReg .occupancyEndInfo .depth1 .rowListBox .title {
+  width: 34%;
+  background: #f7f9fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+#occupancyEndReg .occupancyEndInfo .depth1 .rowListBox .content {
+  padding: 5px;
+  box-sizing: border-box;
+  flex-grow: 1;
+  border-left: 1px solid #cddbf0;
+  border-right: 1px solid #cddbf0;
+}
+#occupancyEndReg .occupancyEndInfo .depth1 .rowListBox:last-child .content {
+  border-right: 0;
+}

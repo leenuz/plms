@@ -1,0 +1,489 @@
+@charset "UTF-8";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body * {
+  font-family: pretendard;
+}
+
+a {
+  text-decoration: none;
+  color: #3c3c3c;
+}
+li {
+  list-style: none;
+}
+input {
+  border: 0;
+  outline: 0;
+}
+
+input:focus {
+  border: 0;
+}
+
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+table {
+  border-collapse: collapse;
+}
+
+button {
+  border: 0;
+}
+
+.lightBlueBtn {
+  color: #2b7de1;
+  background: rgba(204, 224, 255, 0.6);
+}
+
+.middleBtn {
+  width: 159px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.attachFileBtn {
+  width: 129px;
+  height: 37px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.navyBtn {
+  background-color: #4e5871;
+  color: #fff;
+}
+
+.whiteBtn {
+  background-color: #fff;
+  border: 1px solid #4e5871;
+  color: #4e5871;
+}
+.hiddenCaption {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+}
+
+.searchAddressBtn {
+  width: 54px;
+  height: 27px;
+  border-radius: 20px;
+  background: #2b7de1;
+  color: #fff;
+}
+.contentScr {
+  overflow-y: scroll;
+  border-radius: 0 0 5px 5px;
+}
+
+.titleScr {
+  padding-right: 4px;
+}
+
+/* css추가 */
+
+.landDevInfoWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.landDevInfoWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.landDevInfoWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.landDevInfoHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+/**/
+
+#landDevInfo * {
+  font-family: pretendard;
+}
+
+#landDevInfo {
+  width: calc(100% - 100px);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+#landDevInfo .contentScr::-webkit-scrollbar {
+  width: 4px;
+}
+
+#landDevInfo .contentScr::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#landDevInfo .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+
+#landDevInfo .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#landDevInfo .subTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #31394c;
+  margin-bottom: 24px;
+  position: relative;
+}
+#landDevInfo .btnBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#landDevInfo .contents .content {
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border-right: 1px solid #cddbf0;
+}
+#landDevInfo .viewDetailButton {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+}
+#landDevInfo input[type="text"] {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+#landDevInfo input[type="text"].notWriteInput {
+  background: transparent;
+}
+#landDevInfo input[type="text"]::placeholder {
+  color: #3c3c3c;
+}
+#landDevInfo .contents .content:last-child {
+  border-right: 0;
+}
+#landDevInfo .defaultInfo {
+  padding: 27px 0 40px 0;
+}
+
+#landDevInfo .defaultInfo .subTitle {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 21px;
+}
+
+#landDevInfo .contWrap {
+  width: 100%;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+
+#landDevInfo .contWrap .titles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+  border-radius: 5px 5px 0 0;
+}
+
+#landDevInfo .contWrap .depth1 .titles {
+  border-radius: 5px 5px 0 0;
+}
+
+#landDevInfo .contWrap .titles li {
+  height: 100%;
+  text-align: center;
+  line-height: 45px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+
+#landDevInfo .contWrap .titles li:last-child {
+  border-right: 0;
+}
+
+#landDevInfo .contWrap .contents {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #fff;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+
+#landDevInfo .contWrap .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+#landDevInfo .defaultInfo .contWrap .title {
+  width: 11.1%;
+}
+#landDevInfo .defaultInfo .contWrap .content {
+  width: 11.1%;
+}
+#landDevInfo .defaultInfo table {
+  width: 100%;
+  border-radius: 5px;
+  bottom: 0;
+}
+/* 배경색 깔기 */
+#landDevInfo table thead tr:first-of-type {
+  background: #f7f9fc;
+}
+#landDevInfo table thead tr:last-of-type {
+  background: #ecf1f8;
+}
+#landDevInfo .defaultInfo table tr {
+  height: 45px;
+  border-bottom: 1px solid #cddbf0;
+  font-size: 14px;
+  font-weight: 500;
+}
+#landDevInfo .defaultInfo table tr th,
+#landDevInfo .defaultInfo table tr td {
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+  height: 45px;
+}
+#landDevInfo .defaultInfo table tr:first-of-type th:last-of-type {
+  border-right: 0;
+}
+#landDevInfo .defaultInfo table tr td:last-of-type {
+  border-right: 0;
+}
+#landDevInfo .defaultInfo table tbody tr:last-of-type {
+  border-bottom: 0;
+}
+#landDevInfo table thead tr:first-of-type th:first-of-type {
+  border-radius: 5px 0 0 0;
+}
+#landDevInfo table thead tr:first-of-type th:last-of-type {
+  border-radius: 0 5px 0 0;
+}
+/* 시행자 관할 부서 */
+#landDevInfo .adminDept {
+  padding-bottom: 40px;
+}
+#landDevInfo .adminDept .titles .title {
+  width: calc(100% / 3);
+}
+#landDevInfo .adminDept .contents .content {
+  width: calc(100% / 3);
+}
+/* 대표토지 정보 */
+#landDevInfo .mainLandInfo {
+  padding-bottom: 40px;
+}
+#landDevInfo .mainLandInfo .title {
+  width: 6.9%;
+}
+#landDevInfo .mainLandInfo .content {
+  width: 6.9%;
+}
+#landDevInfo .mainLandInfo .middleWidth {
+  width: 8.9%;
+}
+#landDevInfo .mainLandInfo .largeWidth {
+  width: 12.3%;
+}
+#landDevInfo .mainLandInfo .addressWidth {
+  width: 28.3%;
+}
+/* 소속토지 정보 */
+#landDevInfo .subLandInfo {
+  padding-bottom: 40px;
+}
+
+#landDevInfo .subLandInfo .title {
+  width: 6.9%;
+}
+
+#landDevInfo .subLandInfo .content {
+  width: 6.9%;
+}
+
+#landDevInfo .subLandInfo .middleWidth {
+  width: 8.9%;
+}
+
+#landDevInfo .subLandInfo .largeWidth {
+  width: 12.3%;
+}
+
+#landDevInfo .subLandInfo .addressWidth {
+  width: 28.3%;
+}
+/* 첨부파일 정보 */
+#landDevInfo .attachFileInfo {
+  padding-bottom: 40px;
+}
+
+#landDevInfo .attachFileInfo .title {
+  width: 15.8%;
+}
+
+#landDevInfo .attachFileInfo .content {
+  width: 15.8%;
+}
+
+#landDevInfo .attachFileInfo .fileNameWidth {
+  width: 67.9%;
+}
+
+#landDevInfo .attachFileInfo .contentScr {
+  /* height: 135px; */
+  height: calc(45px * 5);
+}
+/* 전자결재문서 열람 */
+#landDevInfo .eDocView {
+  padding-bottom: 40px;
+}
+/* label */
+#landDevInfo input[type="checkbox"] {
+  display: none;
+}
+#landDevInfo .eDocView .title {
+  width: 33.4%;
+}
+#landDevInfo .eDocView .content {
+  width: 33.4%;
+}
+#landDevInfo .eDocView .smallWidth {
+  width: 6.1%;
+}
+#landDevInfo .eDocView .middleWidth {
+  width: 27.1%;
+}
+#landDevInfo .eDocView .checkboxWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#landDevInfo .eDocView .checkboxWrap label {
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+  position: relative;
+}
+#landDevInfo input[type="checkbox"]:checked ~ label {
+  background: #4e5871;
+}
+
+#landDevInfo input[type="checkbox"]:checked ~ label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 10px;
+  background: url(/assets/media/menu04/images/checkIcon.png) no-repeat center;
+  background-size: contain;
+}
+#landDevInfo .eDocView .btnWrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+  gap: 10px;
+}
+#landDevInfo .eDocView .btnWrap .addBtn {
+  border: 1px solid #31394c;
+  background: #fff;
+  color: #31394c;
+}
+#landDevInfo .eDocView .btnWrap .delBtn {
+  background: #9a9a9a;
+  color: #fff;
+}
+/* 이전, 저장 버튼 */
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+#landDevInfo .finalBtnBox .prevBtn {
+  background: #bfbfbf;
+  color: #fff;
+}
+#landDevInfo .finalBtnBox .deleteBtn {
+  background: #666666;
+  color: #fff;
+}
+#landDevInfo .finalBtnBox .completeBtn {
+  background: #ff6c2d;
+  color: #fff;
+}
+#landDevInfo .finalBtnBox .printBtn {
+  background: #2b7de1;
+  color: #fff;
+}
+#landDevInfo .finalBtnBox .editBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+
+/* css추가 */
+
+#landDevInfo .finalBtnBox .editBtn a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #2b7de1;
+}
+
+#landDevInfo .finalBtnBox .editBtn a:visited {
+  color: #2b7de1;
+}

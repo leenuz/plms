@@ -1,0 +1,348 @@
+@charset "UTF-8";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body * {
+  font-family: pretendard;
+}
+
+a {
+  text-decoration: none;
+  color: #3c3c3c;
+}
+
+li {
+  list-style: none;
+}
+
+input {
+  border: 0;
+  outline: 0;
+}
+
+input:focus {
+  border: 0;
+}
+
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+
+button {
+  border: 0;
+}
+
+.lightBlueBtn {
+  color: #2b7de1;
+  background: rgba(204, 224, 255, 0.6);
+}
+.middleBtn {
+  width: 159px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.navyBtn {
+  background-color: #4e5871;
+  color: #fff;
+}
+
+.whiteBtn {
+  background-color: #fff;
+  border: 1px solid #4e5871;
+  color: #4e5871;
+}
+
+.searchAddressBtn {
+  width: 54px;
+  height: 27px;
+  border-radius: 20px;
+  background: #2b7de1;
+  color: #fff;
+}
+.fileDownloadBtn {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: #4e5871;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.downloadIcon {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  background: url(/assets/media/menu05/images/download.png) no-repeat center;
+  background-size: contain;
+}
+
+/* css추가 */
+
+.compLandInfoWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.compLandInfoWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.compLandInfoWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.compLandInfoHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+/**/
+
+#compLandInfo {
+  width: calc(100% - 100px);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+
+#compLandInfo .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+
+#compLandInfo .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+#compLandInfo .subTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #31394c;
+  margin-bottom: 24px;
+  position: relative;
+}
+#compLandInfo .thirdTitle {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+#compLandInfo .thirdTitle h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2b7de1;
+}
+#compLandInfo .viewLocation {
+  width: 81px;
+  height: 27px;
+  border-radius: 20px;
+  background: #2b7de1;
+  color: #fff;
+}
+#compLandInfo .titles,
+#compLandInfo .contents {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 45px;
+  border-bottom: 1px solid #cddbf0;
+}
+#compLandInfo .titles {
+  background: #f7f9fc;
+}
+#compLandInfo .title,
+#compLandInfo .content {
+  height: 100%;
+  border-right: 1px solid #cddbf0;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#compLandInfo .title:last-child,
+#compLandInfo .content:last-child {
+  border-right: 0;
+}
+#compLandInfo input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 10px;
+}
+#compLandInfo input[type="text"].notWriteInput::placeholder {
+  color: #3c3c3c;
+}
+#compLandInfo .contentDetailBox {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+#compLandInfo .contentDetailBox .titles:first-child {
+  border-radius: 5px 5px 0 0;
+}
+#compLandInfo .contentDetailBox > div:last-child .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+/* 기본, 소유자 정보 */
+#compLandInfo .basicOwnerInfo {
+  padding: 27px 0 40px 0;
+}
+#compLandInfo .basicOwnerInfo .contentDetailBox .depth1 .title {
+  width: 8.95%;
+}
+#compLandInfo .basicOwnerInfo .contentDetailBox .depth1 .content {
+  width: 8.95%;
+}
+#compLandInfo .basicOwnerInfo .contentDetailBox .depth1 .addressWidth {
+  width: 28.2%;
+}
+#compLandInfo .basicOwnerInfo .contentDetailBox .depth2 .title {
+  width: 18%;
+}
+#compLandInfo .basicOwnerInfo .contentDetailBox .depth2 .content {
+  width: 18%;
+}
+#compLandInfo .basicOwnerInfo .contentDetailBox .depth2 .middleWidth {
+  width: 34.8%;
+}
+/* 권리내역 */
+#compLandInfo .rightsDetails {
+  padding-bottom: 40px;
+}
+#compLandInfo .rightsDetails .contBox {
+  margin-bottom: 23px;
+}
+#compLandInfo .rightsDetails .contBox:last-child {
+  margin-bottom: 0;
+}
+/* 권리확보내역 */
+#compLandInfo .rightsDetails .securedRights .contentDetailBox .title {
+  width: 22.4%;
+}
+#compLandInfo .rightsDetails .securedRights .contentDetailBox .content {
+  width: 22.4%;
+}
+#compLandInfo .rightsDetails .securedRights .contentDetailBox .smallWidth {
+  width: 15.3%;
+}
+#compLandInfo .rightsDetails .securedRights .contentDetailBox .largeWidth {
+  width: 39.6%;
+}
+/* 후순위 권리 */
+#compLandInfo .rightsDetails .subordinateRts .contentDetailBox .title {
+  width: 11.9%;
+}
+
+#compLandInfo .rightsDetails .subordinateRts .contentDetailBox .content {
+  width: 11.9%;
+}
+
+#compLandInfo .rightsDetails .subordinateRts .contentDetailBox .middleWidth {
+  width: 16.8%;
+}
+
+#compLandInfo .rightsDetails .subordinateRts .contentDetailBox .largeWidth {
+  width: 24.9%;
+}
+/* 회사 보유 토지 스캔 파일 */
+#compLandInfo .rightsDetails .landScanFiles .contentDetailBox .smallWidth {
+  width: 16.4%;
+}
+#compLandInfo .rightsDetails .landScanFiles .contentDetailBox .largeWidth {
+  width: calc(100% - 16.4%);
+}
+/* 변경이력 */
+#compLandInfo .changeHistory {
+  padding-bottom: 40px;
+}
+#compLandInfo .changeHistory .title {
+  width: 18.1%;
+}
+#compLandInfo .changeHistory .content {
+  width: 18.1%;
+}
+#compLandInfo .changeHistory .smallWidth {
+  width: 8.5%;
+}
+#compLandInfo .changeHistory .largeWidth {
+  width: 56.1%;
+}
+/* 메모 */
+#compLandInfo .memoSection {
+  padding-bottom: 40px;
+}
+#compLandInfo .memoSection .title {
+  width: 10.5%;
+}
+#compLandInfo .memoSection .content {
+  width: 10.5%;
+}
+#compLandInfo .memoSection .largeWidth {
+  width: calc(100% - 10.5%);
+}
+/* 버튼 */
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+#compLandInfo .finalBtnBox .editBtn {
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+}
+#compLandInfo .finalBtnBox .printBtn {
+  background: #2b7de1;
+  color: #fff;
+}
+#compLandInfo .finalBtnBox .prevBtn {
+  background: #bfbfbf;
+  color: #fff;
+}
+
+/* css 추가 */
+#compLandInfo .finalBtnBox .editBtn a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2b7de1;
+}
+
+#compLandInfo .finalBtnBox .editBtn a:visited {
+  color: #2b7de1;
+}
+/**/

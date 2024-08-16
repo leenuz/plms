@@ -1,0 +1,271 @@
+@charset "UTF-8";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body * {
+  font-family: pretendard;
+}
+
+a {
+  text-decoration: none;
+  color: #3c3c3c;
+}
+
+li {
+  list-style: none;
+}
+
+input {
+  border: 0;
+  outline: 0;
+}
+
+input:focus {
+  border: 0;
+}
+
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+
+button {
+  border: 0;
+}
+table {
+  border-collapse: collapse;
+}
+.hiddenCaption {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+}
+#orgAdmin .pendingApprovalBtn {
+  color: #2b7de1;
+  background: rgba(204, 224, 255, 0.6);
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+#orgAdmin .deleteBtn {
+  background: #8a8a8a;
+  color: #fff;
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  /* 삭제버튼은 display:none */
+  display: none;
+}
+#orgAdmin .contWrap .btnWrap {
+  width: 100%;
+  height: 100%;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  position: relative;
+}
+/* 추가 */
+#orgAdmin .contWrap .btnWrap .btnBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 이전, 저장 버튼 */
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+.vividBlueBtn {
+  background: #2b7de1;
+  color: #fff;
+}
+
+.contentScr {
+  overflow-y: scroll;
+  border-radius: 0 0 5px 5px;
+}
+
+/* css추가 */
+
+.orgAdminWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.orgAdminWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.orgAdminWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.orgAdminHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+/**/
+
+#orgAdmin * {
+  font-family: pretendard;
+}
+
+#orgAdmin {
+  width: calc(100% - 100px);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+
+#orgAdmin .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+  margin-bottom: 32px;
+}
+
+#orgAdmin .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#orgAdmin input[type="text"] {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+#orgAdmin input[type="text"].notWriteInput {
+  background: transparent;
+}
+#orgAdmin input[type="text"]::placeholder {
+  color: #3c3c3c;
+}
+#orgAdmin .contWrap {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  height: 827px;
+  overflow-y: scroll;
+}
+#orgAdmin table {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 5px;
+  table-layout: fixed;
+  position: relative;
+}
+#orgAdmin table tbody {
+  width: 100%;
+  height: 100%;
+}
+#orgAdmin table thead {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+#orgAdmin table tr {
+  width: 100%;
+  border-bottom: 1px solid #cddbf0;
+}
+.titleScr {
+  padding-right: 4px;
+  box-sizing: border-box;
+}
+#orgAdmin .contentScr::-webkit-scrollbar {
+  width: 4px;
+}
+#orgAdmin .contentScr::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+#orgAdmin .tableArea {
+  padding-bottom: 40px;
+}
+/* border 정리 */
+#orgAdmin table th,
+#orgAdmin table td {
+  border-right: 1px solid #cddbf0;
+  height: 45px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 500;
+}
+#orgAdmin table thead tr:first-of-type th:first-of-type {
+  border-radius: 5px 0 0 0;
+}
+#orgAdmin table thead tr:first-of-type th:last-of-type {
+  border-radius: 0 5px 0 0;
+}
+/* 맨 오른쪽 보더 빼기 */
+#orgAdmin table thead tr th:last-of-type {
+  border-right: 0;
+}
+#orgAdmin table tbody tr td:last-of-type {
+  border-right: 0;
+}
+/* 맨 밑 보더 빼기 */
+#orgAdmin table tbody tr:last-of-type {
+  border-bottom: 0;
+}
+#orgAdmin .tableArea table th {
+  width: 22%;
+  color: #000;
+}
+#orgAdmin .tableArea table td {
+  width: 22%;
+  color: #3c3c3c;
+}
+/* 배경색 깔기 */
+#orgAdmin table tr:first-of-type th {
+  background: #f7f9fc;
+}
+#orgAdmin .tableArea table th.largeWidth {
+  width: 10.8%;
+}
+#orgAdmin .tableArea table th.middleWidth {
+  width: 8%;
+}
+#orgAdmin .tableArea table th.smallWidth {
+  width: 5%;
+}
+#orgAdmin .tableArea table td.largeWidth {
+  width: 10.8%;
+}
+#orgAdmin .tableArea table td.middleWidth {
+  width: 8%;
+}
+#orgAdmin .tableArea table td.smallWidth {
+  width: 5%;
+}

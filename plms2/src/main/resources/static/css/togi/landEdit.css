@@ -1,0 +1,644 @@
+@charset "UTF-8";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body * {
+  font-family: pretendard;
+}
+
+a {
+  text-decoration: none;
+  color: #3c3c3c;
+}
+li {
+  list-style: none;
+}
+input {
+  border: 0;
+  outline: 0;
+}
+
+input:focus {
+  border: 0;
+}
+
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+table {
+  border-collapse: collapse;
+}
+
+button {
+  border: 0;
+}
+
+.lightBlueBtn {
+  color: #2b7de1;
+  background: rgba(204, 224, 255, 0.6);
+}
+
+.middleBtn {
+  width: 159px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.attachFileBtn {
+  width: 129px;
+  height: 37px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.navyBtn {
+  background-color: #4e5871;
+  color: #fff;
+}
+
+.whiteBtn {
+  background-color: #fff;
+  border: 1px solid #4e5871;
+  color: #4e5871;
+}
+.hiddenCaption {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+}
+
+.searchAddressBtn {
+  width: 54px;
+  height: 27px;
+  border-radius: 20px;
+  background: #2b7de1;
+  color: #fff;
+}
+.contentScr {
+  overflow-y: scroll;
+  border-radius: 0 0 5px 5px;
+}
+
+.titleScr {
+  padding-right: 4px;
+}
+.excelUpBtn {
+  background: url(/assets/media/menu04/images/excelUpload.png) no-repeat right
+    34px center;
+  background-size: 18px;
+  text-align: left;
+  text-indent: 34px;
+}
+
+/* 체크박스 */
+
+#landEdit .checkboxWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#landEdit .checkboxWrap label {
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+  position: relative;
+}
+/* label */
+#landEdit input[type="checkbox"] {
+  display: none;
+}
+
+#landEdit input[type="checkbox"] ~ label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+  display: inline-block;
+  position: relative;
+}
+
+#landEdit input[type="checkbox"]:checked ~ label {
+  background: #4e5871;
+}
+
+#landEdit input[type="checkbox"]:checked ~ label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 10px;
+  background: url(/assets/media/menu04/images/checkIcon.png) no-repeat center;
+  background-size: contain;
+}
+
+/* css추가 */
+
+.landEditWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.landEditWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.landEditWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.landEditHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+/**/
+
+#landEdit * {
+  font-family: pretendard;
+}
+
+#landEdit {
+  width: calc(100% - 100px);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+#landEdit .contentScr::-webkit-scrollbar {
+  width: 4px;
+}
+
+#landEdit .contentScr::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#landEdit .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+
+#landEdit .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#landEdit .subTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #31394c;
+  margin-bottom: 24px;
+  position: relative;
+}
+#landEdit .subTitleBtnBox {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  transform: translateY(-25%);
+  right: 0;
+}
+#landEdit .btnBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#landEdit .contents .content {
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border-right: 1px solid #cddbf0;
+}
+#landEdit .viewDetailButton {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+}
+#landEdit input[type="text"] {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  background: #edf2f9;
+  border-radius: 10px;
+}
+#landEdit input[type="text"].notWriteInput {
+  background: transparent;
+}
+#landEdit input[type="text"]::placeholder {
+  color: #3c3c3c;
+}
+/* date */
+#landEdit .dateInputWrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  position: relative;
+  background: url(/assets/media/menu04/images/calendarInputIcon.png) no-repeat
+    left 8px center;
+  background-size: 18px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#landEdit input[type="date"] {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+  color: transparent;
+  background: transparent;
+  text-align: left;
+  padding-left: 44px;
+  box-sizing: border-box;
+}
+
+#landEdit input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#landEdit input[type="date"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 50%;
+  left: 44px;
+  transform: translateY(-50%);
+  color: #6e7d88;
+}
+
+#landEdit input[type="date"]:focus,
+#landEdit input[type="date"]:valid {
+  color: #6e7d88;
+}
+
+#landEdit input[type="date"]:focus::before,
+#landEdit input[type="date"]:valid::before {
+  content: "";
+}
+#landEdit .contents .content:last-child {
+  border-right: 0;
+}
+#landEdit .defaultInfo {
+  padding: 27px 0 40px 0;
+}
+
+#landEdit .defaultInfo .subTitle {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 21px;
+}
+
+#landEdit .contWrap {
+  width: 100%;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+
+#landEdit .contWrap .titles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+  border-radius: 5px 5px 0 0;
+}
+
+#landEdit .contWrap .depth1 .titles {
+  border-radius: 5px 5px 0 0;
+}
+
+#landEdit .contWrap .titles li {
+  height: 100%;
+  text-align: center;
+  line-height: 45px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+
+#landEdit .contWrap .titles li:last-child {
+  border-right: 0;
+}
+
+#landEdit .contWrap .contents {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #fff;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+
+#landEdit .contWrap .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+#landEdit .miniBtn {
+  width: 74px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+#landEdit .addBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+#landEdit .delBtn {
+  background: #9a9a9a;
+  color: #fff;
+}
+#landEdit .registBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+
+#landEdit .defaultInfo .contWrap .title {
+  width: 11.1%;
+}
+#landEdit .defaultInfo .contWrap .content {
+  width: 11.1%;
+}
+#landEdit .defaultInfo table {
+  width: 100%;
+  border-radius: 5px;
+  table-layout: fixed;
+}
+/* 배경색 깔기 */
+#landEdit table thead tr:first-of-type {
+  background: #f7f9fc;
+}
+#landEdit table thead tr:last-of-type {
+  background: #ecf1f8;
+}
+#landEdit .defaultInfo table tr {
+  height: 45px;
+  border-bottom: 1px solid #cddbf0;
+  font-size: 14px;
+  font-weight: 500;
+}
+#landEdit .defaultInfo table tr th,
+#landEdit .defaultInfo table tr td {
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+  height: 45px;
+}
+#landEdit .defaultInfo table tr td {
+  padding: 5px;
+  box-sizing: border-box;
+}
+#landEdit .defaultInfo table tr:first-of-type th:last-of-type {
+  border-right: 0;
+}
+#landEdit .defaultInfo table tr td:last-of-type {
+  border-right: 0;
+}
+#landEdit .defaultInfo table tbody tr:last-of-type {
+  border-bottom: 0;
+}
+#landEdit table thead tr:first-of-type th:first-of-type {
+  border-radius: 5px 0 0 0;
+}
+#landEdit table thead tr:first-of-type th:last-of-type {
+  border-radius: 0 5px 0 0;
+}
+/* 시행자 관할 부서 */
+#landEdit .adminDept {
+  padding-bottom: 40px;
+}
+#landEdit .adminDept .title {
+  width: calc((100% - 11.9%) / 3);
+}
+#landEdit .adminDept .content {
+  width: calc((100% - 11.9%) / 3);
+}
+#landEdit .adminDept .smallWidth {
+  width: 11.9%;
+}
+#landEdit .adminDept .btnBox {
+  padding: 0;
+}
+#landEdit .adminDept .contents .content.btnBox .btnWrap {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#landEdit .adminDept .contents .content.btnBox .btnWrap:first-child {
+  border-right: 1px solid #cddbf0;
+}
+/* 토지정보 */
+#landEdit .landInfo {
+  padding-bottom: 40px;
+}
+#landEdit .landInfo .title {
+  width: 6%;
+}
+#landEdit .landInfo .content {
+  width: 6%;
+}
+#landEdit .landInfo .smallWidth {
+  width: 3%;
+}
+#landEdit .landInfo .middleWidth {
+  width: 9.9%;
+}
+#landEdit .landInfo .addressWidth {
+  width: 17.9%;
+}
+#landEdit .landInfo .contents .addressWidth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+#landEdit .landInfo .contents .addressWidth .addressData input {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#landEdit .landInfo .btnBox {
+  padding: 0;
+}
+#landEdit .landInfo .contents .content.btnBox .btnWrap {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#landEdit .landInfo .contents .content.btnBox .btnWrap:first-child {
+  border-right: 1px solid #cddbf0;
+}
+
+/* 대표토지 정보 */
+#landEdit .mainLandInfo {
+  padding-bottom: 40px;
+}
+#landEdit .mainLandInfo .title {
+  width: 9.5%;
+}
+#landEdit .mainLandInfo .content {
+  width: 9.5%;
+}
+#landEdit .mainLandInfo .middleWidth {
+  width: 10.3%;
+}
+#landEdit .mainLandInfo .largeWidth {
+  width: 12.3%;
+}
+#landEdit .mainLandInfo .addressWidth {
+  width: 28.3%;
+}
+/* 소속토지 정보 */
+#landEdit .subLandInfo {
+  padding-bottom: 40px;
+}
+
+#landEdit .subLandInfo .title {
+  width: 6.9%;
+}
+
+#landEdit .subLandInfo .content {
+  width: 6.9%;
+}
+
+#landEdit .subLandInfo .middleWidth {
+  width: 8.9%;
+}
+
+#landEdit .subLandInfo .largeWidth {
+  width: 12.3%;
+}
+
+#landEdit .subLandInfo .addressWidth {
+  width: 28.3%;
+}
+/* 첨부파일 정보 */
+#landEdit .attachFileInfo {
+  padding-bottom: 40px;
+}
+#landEdit .attachFileInfo .subTitle {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+}
+
+#landEdit .attachFileInfo .fileUploadWrap {
+  width: 100%;
+  margin-bottom: 18px;
+  height: 130px;
+  overflow-y: scroll;
+  border: 1px dashed #cddbf0;
+  border-radius: 5px;
+}
+.fileUploadIcon {
+  width: 35px;
+  height: 35px;
+}
+#landEdit .attachFileInfo .fileUploadWrap::-webkit-scrollbar {
+  width: 4px;
+}
+
+#landEdit .attachFileInfo .fileUploadWrap::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#landEdit .attachFileInfo .fileUploadBox {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #f7f9fc;
+}
+
+#landEdit .attachFileInfo .fileUploadBox p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #88a2c8;
+}
+#landEdit input[type="file"] {
+  display: none;
+}
+
+.fileBtnWrap label {
+  width: 81px;
+  height: 27px;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 이전, 저장 버튼 */
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+#landEdit .finalBtnBox .saveBtn {
+  background: #2b7de1;
+  color: #fff;
+}
+#landEdit .finalBtnBox .prevBtn {
+  background: #bfbfbf;
+  color: #fff;
+}
