@@ -24,7 +24,7 @@
 	
  <link rel="stylesheet" href="/css/jisang/landRightsRegistration.css" /> 
 	  
-		<!-- <script src="/js/songyu/menu01.js"></script> -->
+		<!-- <script src="/js/songyu/menu01.js"></script> -->	
 		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 		<style>
@@ -133,6 +133,7 @@ margin:10px;
         </div>
 
         <section class="defaultInfo">
+        <form id="searchForm" onSubmit="return false;">
             <div class="subTitle">
                 기본 정보
             </div>
@@ -155,23 +156,17 @@ margin:10px;
                         <li class="content01 content selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="landRightsRegistSelectBox01" id="landRightsRegistSelectBox01" hidden>
-                                    <option value="서울지사1">서울지사1</option>
-                                    <option value="서울지사2">서울지사2</option>
-                                    <option value="서울지사3">서울지사3</option>
-                                    <option value="서울지사4">서울지사4</option>
-                                    <option value="서울지사5">서울지사5</option>
-                                    <option value="서울지사6">서울지사6</option>
-                                    <option value="서울지사7">서울지사7</option>
-                                    <option value="서울지사8">서울지사8</option>
-                                    <option value="서울지사9">서울지사9</option>
-                                    <option value="서울지사10">서울지사10</option>
+                                <select name="jisa" id="landRightsRegistSelectBox01" hidden>
+                                    <option value="" selected>전체</option>
+				                     <th:block th:each="val:${jisaList}">
+					                    <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+					                    </th:block>
                                 </select>
                             
                             </div>
                             <section class="customSelectBox">
                                 <button class="customSelectView">
-                                    서울지사
+                                    전체
                                 </button>
 
                                 <ul class="customSelectBtns">
@@ -182,23 +177,17 @@ margin:10px;
                         <li class="content02 content selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="landRightsRegistSelectBox02" id="landRightsRegistSelectBox02" hidden>
-                                    <option value="Y1">Y1</option>
-                                    <option value="Y2">Y2</option>
-                                    <option value="Y3">Y3</option>
-                                    <option value="Y4">Y4</option>
-                                    <option value="Y5">Y5</option>
-                                    <option value="Y6">Y6</option>
-                                    <option value="Y7">Y7</option>
-                                    <option value="Y8">Y8</option>
-                                    <option value="Y9">Y9</option>
-                                    <option value="Y10">Y10</option>
+                                <select name="overlap_yn" id="landRightsRegistSelectBox02" hidden>
+                                	<option value="" selected>선택</option>
+                                    <option value="Y">Y</option>
+                                    <option value="N">N</option>
+                                   
                                 </select>
                             
                             </div>
                             <section class="customSelectBox">
                                 <button class="customSelectView">
-                                    Y
+                                    선택
                                     
                                 </button>
                             
@@ -210,23 +199,21 @@ margin:10px;
                         <li class="content03 content selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="landRightsRegistSelectBox03" id="landRightsRegistSelectBox03" hidden>
-                                    <option value="송유관로1">송유관로1</option>
-                                    <option value="송유관로2">송유관로2</option>
-                                    <option value="송유관로3">송유관로3</option>
-                                    <option value="송유관로4">송유관로4</option>
-                                    <option value="송유관로5">송유관로5</option>
-                                    <option value="송유관로6">송유관로6</option>
-                                    <option value="송유관로7">송유관로7</option>
-                                    <option value="송유관로8">송유관로8</option>
-                                    <option value="송유관로9">송유관로9</option>
-                                    <option value="송유관로10">송유관로10</option>
+                                <select name="youngdo" id="landRightsRegistSelectBox03" hidden>
+                                    <option value="" selected>선택</option>
+                                    <option value="송유관로">송유관로</option>
+                                    <option value="밸브박스">밸브박스</option>
+                                    <option value="가압소">가압소</option>
+                                    <option value="저유소">저유소</option>
+                                    <option value="펌프장">펌프장</option>
+                                    <option value="시설물">시설물</option>
+                                   
                                 </select>
                             
                             </div>
                             <section class="customSelectBox">
                                 <button class="customSelectView">
-                                    송유관로
+                                    선택
                                     
                                 </button>
                             
@@ -238,26 +225,20 @@ margin:10px;
                         <li class="content04 content selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="landRightsRegistSelectBox04" id="landRightsRegistSelectBox04" hidden>
-                                    <option value="SNP구간1">SNP구간1</option>
-                                    <option value="SNP구간2">SNP구간2</option>
-                                    <option value="SNP구간3">SNP구간3</option>
-                                    <option value="SNP구간4">SNP구간4</option>
-                                    <option value="SNP구간5">SNP구간5</option>
-                                    <option value="SNP구간6">SNP구간6</option>
-                                    <option value="SNP구간7">SNP구간7</option>
-                                    <option value="SNP구간8">SNP구간8</option>
-                                    <option value="SNP구간9">SNP구간9</option>
-                                    <option value="SNP구간10">SNP구간10</option>
+                                <select name="pipe_name" id="landRightsRegistSelectBox04" hidden>
+                                    <option value="" selected>선택</option>
+                                    <option value="SNP구간">SNP구간</option>
+                                    <option value="과천지선">과천지선</option>
+                                    
                                 </select>
                             
                             </div>
                             <section class="customSelectBox">
                                 <button class="customSelectView">
-                                    SNP구간
+                                    선택
                                 </button>
                             
-                                <ul class="customSelectBtns">
+                                <ul class="customSelectBtns" id="pipe_name_ul">
                                     <!-- createCustomLiLandRegist() -->
                                 </ul>
                             </section>
@@ -265,23 +246,16 @@ margin:10px;
                         <li class="content selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="landRightsRegistSelectBox05" id="landRightsRegistSelectBox05" hidden>
-                                    <option value="복선1">복선1</option>
-                                    <option value="복선2">복선2</option>
-                                    <option value="복선3">복선3</option>
-                                    <option value="복선4">복선4</option>
-                                    <option value="복선5">복선5</option>
-                                    <option value="복선6">복선6</option>
-                                    <option value="복선7">복선7</option>
-                                    <option value="복선8">복선8</option>
-                                    <option value="복선9">복선9</option>
-                                    <option value="복선10">복선10</option>
+                                <select name="sun_gubun" id="landRightsRegistSelectBox05" hidden>
+                                    <option value="" selected>선택</option>
+                                    <option value="단선">단선</option>
+                                    <option value="복선">복선</option>
                                 </select>
                             
                             </div>
                             <section class="customSelectBox">
                                 <button class="customSelectView">
-                                    복선
+                                    선택
                                 </button>
                             
                                 <ul class="customSelectBtns">
@@ -294,23 +268,16 @@ margin:10px;
                         <li class="content02 content selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="landRightsRegistSelectBox06" id="landRightsRegistSelectBox06" hidden>
-                                    <option value="Y1">Y1</option>
-                                    <option value="Y2">Y2</option>
-                                    <option value="Y3">Y3</option>
-                                    <option value="Y4">Y4</option>
-                                    <option value="Y5">Y5</option>
-                                    <option value="Y6">Y6</option>
-                                    <option value="Y7">Y7</option>
-                                    <option value="Y8">Y8</option>
-                                    <option value="Y9">Y9</option>
-                                    <option value="Y10">Y10</option>
+                                <select name="gover_own_yn" id="landRightsRegistSelectBox06" hidden>
+                                    <option value="" selected>선택</option>
+                                    <option value="Y">Y</option>
+                                    <option value="N">N</option>
                                 </select>
                             
                             </div>
                             <section class="customSelectBox">
                                 <button class="customSelectView">
-                                    Y
+                                    선택
                                     
                                 </button>
                             
@@ -320,28 +287,20 @@ margin:10px;
                             </section>
                         </li>
                         <li class="content05 content">
-                            <input type="text" placeholder="182">
+                            <input name="jijuk_area" type="text" placeholder="182">
                         </li>
                         <li class="content05 content selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="landRightsRegistSelectBox07" id="landRightsRegistSelectBox07" hidden>
-                                    <option value="하천1">하천1</option>
-                                    <option value="하천2">하천2</option>
-                                    <option value="하천3">하천3</option>
-                                    <option value="하천4">하천4</option>
-                                    <option value="하천5">하천5</option>
-                                    <option value="하천6">하천6</option>
-                                    <option value="하천7">하천7</option>
-                                    <option value="하천8">하천8</option>
-                                    <option value="하천9">하천9</option>
-                                    <option value="하천10">하천10</option>
+                                <select name="jimok_text" id="landRightsRegistSelectBox07" hidden>
+                                    <option >선택</option>
+								<option th:each="val:${resultJimokList}" th:value="${val?.jm_name}" th:utext="${val?.jm_name}">지목</option>
                                 </select>
                             
                             </div>
                             <section class="customSelectBox">
                                 <button class="customSelectView">
-                                    하천
+                                    선택
                                     
                                 </button>
                             
@@ -352,23 +311,17 @@ margin:10px;
                             
                         </li>
                         <li class="content05 content checkboxWrap">
-                            <input type="checkbox" id="landRightsRegistration_excluded-parcel">
+                            <input type="checkbox" name="cancel_yn" id="landRightsRegistration_excluded-parcel">
                             <label for="landRightsRegistration_excluded-parcel"></label>
                         </li>
                         <li class="content05 content selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="landRightsRegistSelectBox08" id="landRightsRegistSelectBox08" hidden>
-                                    <option value="Y1">Y1</option>
-                                    <option value="Y2">Y2</option>
-                                    <option value="Y3">Y3</option>
-                                    <option value="Y4">Y4</option>
-                                    <option value="Y5">Y5</option>
-                                    <option value="Y6">Y6</option>
-                                    <option value="Y7">Y7</option>
-                                    <option value="Y8">Y8</option>
-                                    <option value="Y9">Y9</option>
-                                    <option value="Y10">Y10</option>
+                                <select name="account_yn" id="landRightsRegistSelectBox08" hidden>
+                                    <option value="">선택</option>
+                                    <option value="Y">Y</option>
+                                    <option value="N">N</option>
+                                    
                                 </select>
                             
                             </div>
@@ -398,11 +351,11 @@ margin:10px;
                             <ul class="radioBox">
                                 <li class="inputArea inputArea01">
                                     <div class="inputWrap">
-                                        <input type="radio" name="landRightsRegistration_addressInput">
+                                        <input type="radio" name="landRightsRegistration_addressInput" checked>
                                         <label>입력형</label>
                                     </div>
 
-                                    <input type="text" placeholder="주소 입력" class="largeWidth">
+                                    <input type="text" name="address" placeholder="주소 입력" class="largeWidth">
                                 </li>
                                 <li class="inputArea inputArea02">
                                     <div class="inputWrap">
@@ -413,17 +366,9 @@ margin:10px;
                                     <div class="selectContentArea">
                                         <div class="hiddenSelectBox">
                                             <!-- name도 추가 -->
-                                            <select name="landRightsRegistSelectBox09" id="landRightsRegistSelectBox09" hidden>
-                                                <option value="전체1">전체1</option>
-                                                <option value="전체2">전체2</option>
-                                                <option value="전체3">전체3</option>
-                                                <option value="전체4">전체4</option>
-                                                <option value="전체5">전체5</option>
-                                                <option value="전체6">전체6</option>
-                                                <option value="전체7">전체7</option>
-                                                <option value="전체8">전체8</option>
-                                                <option value="전체9">전체9</option>
-                                                <option value="전체10">전체10</option>
+                                            <select name="sido" id="landRightsRegistSelectBox09" hidden>
+                                                <option >선택</option>
+												<option th:each="val:${sidoList}" th:value="${val?.sm_name}" th:utext="${val?.sm_name}">지목</option>
                                             </select>
                                         
                                         </div>
@@ -433,7 +378,7 @@ margin:10px;
                                                 
                                             </button>
                                         
-                                            <ul class="customSelectBtns">
+                                            <ul class="customSelectBtns" id="sido_ul">
                                                 <!-- createCustomLiLandRegist() -->
                                             </ul>
                                         </section>
@@ -441,7 +386,7 @@ margin:10px;
                                     <div class="selectContentArea">
                                         <div class="hiddenSelectBox">
                                             <!-- name도 추가 -->
-                                            <select name="landRightsRegistSelectBox10" id="landRightsRegistSelectBox10" hidden>
+                                            <select name="gugun" id="landRightsRegistSelectBox10" hidden>
                                                 <option value="전체1">전체1</option>
                                                 <option value="전체2">전체2</option>
                                                 <option value="전체3">전체3</option>
@@ -461,7 +406,7 @@ margin:10px;
                                                 
                                             </button>
                                         
-                                            <ul class="customSelectBtns">
+                                            <ul class="customSelectBtns" id="gugun_ul">
                                             <!-- createCustomLiLandRegist() -->
                                             </ul>
                                         </section>
@@ -528,12 +473,13 @@ margin:10px;
                                 </li>
                             </ul>
                             <div class="inputBtnArea">
-                                <button class="SearchAddressBtn active landRightsSearchBtn">검색</button>
+                                <button class="SearchAddressBtn active landRightsSearchBtn" id="basicSearchBtn">검색</button>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
+            </form>
         </section>
         <section class="ownerInfo">
             <div class="subTitle">
@@ -853,7 +799,7 @@ margin:10px;
 <div class="landRightSearchResultPopWrapper"></div>
     <!-- script -->
     <script src="/js/jisang/landRightsRegistration.js"></script>
-     <script type="module" src="/js/module/surfaceMain.js"></script>
+    <script type="module" src="/js/module/surfaceMain.js"></script>
    
 </th:block>
 </html>

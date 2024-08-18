@@ -1,3 +1,6 @@
+
+console.log("----------------common.js start----------------");
+
 function isEmpty(str,mode){
 	//mode string s , number n
 	var newStr=str;
@@ -86,5 +89,62 @@ function scrFn_loadScript(url, callback, charset='UTF-8')
     // <head>에 script 추가
     head.appendChild(script);
 }
+
+
+$(document).on("change","#sido",function(){
+	console.log("----------start sido change -------------");
+	$("#sido").val($("#sidoText").text()).attr("selected","selected");
+	if ($("#sido").val()==null) return;
+	var allData={"key":$("#sido").val()}
+					   console.log(allData);
+					  $.ajax({
+
+					    url: "/api/getSigunMaster",
+					    data:JSON.stringify(allData),
+					    async: true,
+					    type:"POST",
+					    dataType: "json",
+					    contentType: 'application/json; charset=utf-8',
+					    success: function(rt,jqXHR) {
+					      console.log(rt);
+						  var data=rt.resultData;
+						 
+						  $("#sggUl li").remove();
+						  $("#sgg option").remove();
+						  
+						  $("#sggUl").append("<li><p>전체</p></li>");
+						  $("#sgg").append("<option value=''>전체</option>");
+						  for(var i=0;i<data.length;i++){
+							console.log(data[i].sgg_nm);
+							$("#sggUl").append("<li><p>"+data[i].sm_gugun+"</p></li>");
+							$("#sgg").append("<option>"+data[i].sm_gugun+"</option>");
+						  }
+						  
+						  console.log("sido:"+$("#sido").val());
+						  $("#sido").val($("#sido").val()).attr("selected","selected");
+					     // downloadExcel(rt.results);
+					    },
+					    beforeSend: function() {
+					      //(이미지 보여주기 처리)
+					      //$('#load').show();
+					    },
+					    complete: function() {
+					      //(이미지 감추기 처리)
+					      //$('#load').hide();
+					
+					
+					    },
+					    error: function(jqXHR, textStatus, errorThrown,responseText) {
+					      //alert("ajax error \n" + textStatus + " : " + errorThrown);
+					
+					      console.log(jqXHR);
+					      console.log(jqXHR.readyState);
+					      console.log(jqXHR.responseText);
+					      console.log(jqXHR.responseJSON);
+					
+					    }
+					  }) //end ajax 
+})	 
+	 
 
 

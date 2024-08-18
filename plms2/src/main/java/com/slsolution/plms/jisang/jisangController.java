@@ -388,7 +388,16 @@ public class jisangController {
 	    public ModelAndView landRightsRegistration(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+			log.info("sidolist:"+sidolist);
 			ModelAndView mav=new ModelAndView();
+			mav.addObject("jisaList",jisalist);
+			mav.addObject("resultJimokList",jimoklist);
+			mav.addObject("sidoList",sidolist);
 			mav.setViewName("content/jisang/landRightsRegistration");
 			return mav;
 		}

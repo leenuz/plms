@@ -4,10 +4,9 @@ createCustomLiLandRegist();
 
 function createCustomLiLandRegist() {
     const contentItems = document.querySelectorAll('.selectContentArea');
-	console.log("---------createCustomLiLandRegist---------------");
+
     contentItems.forEach(contentItem => {
         const notsetAddSelectBox = contentItem.querySelector('select');
-	//	console.log(notsetAddSelectBox);
         // select가 없으면 return
         if (!notsetAddSelectBox) return;
 
@@ -16,83 +15,15 @@ function createCustomLiLandRegist() {
 
         for (let i = 0; i < notsetAddSelectBox.length; i++) {
             const optionValue = notsetAddSelectBox.options[i].value;
-			
             const li = document.createElement('li');
-			
             const button = document.createElement('button');
             button.classList.add('moreSelectBtn');
             button.type = 'button';
-			if (optionValue=="") button.textContent="전체";
-            else button.textContent = optionValue;
-			//console.log("----button---");
-			//console.log(button);
+            button.textContent = optionValue;
             li.appendChild(button);
-			//console.log($(li).html());
             customSelectBtns.appendChild(li);
         }
     });
-}
-
-function loadCustomLiLandRegist(ele) {
-	/*console.log("---------ele---------------");
-	console.log($(ele).html());
-    */
-    console.log("---------loadCustomLiLandRegist---------------");
-	
-	var thisContent = ele.closest('li').find("select");
-	const customSelectBox = ele.closest('.customSelectBox');
-	//console.log($(customSelectBox).html());
-	$(customSelectBox).find("li").remove();
-	var customSelectBtns = customSelectBox.find('.customSelectBtns');
-	
-	//console.log($(customSelectBtns).html());
-	var optList=thisContent[0];
-	//console.log(optList.length);
-	//console.log(optList);
-	for (let i = 0; i < optList.length; i++) {
-		const optionValue = optList.options[i].value;
-		//console.log(optionValue);
-		const li = document.createElement('li');
-					//console.log(li);
-		            const button = document.createElement('button');
-		            button.classList.add('moreSelectBtn');
-		            button.type = 'button';
-					if (optionValue=="") button.textContent="전체";
-		            else button.textContent = optionValue;
-					//console.log("----button---");
-					//console.log(button);
-					
-		            li.appendChild(button);
-					//console.log($(li).html());
-		            $(customSelectBtns).append(li);
-		
-	}
-    /*contentItems.forEach(contentItem => {
-        const notsetAddSelectBox = contentItem.querySelector('select');
-		console.log(notsetAddSelectBox);
-        // select가 없으면 return
-        if (!notsetAddSelectBox) return;
-
-        const customSelectBox = contentItem.querySelector('.customSelectBox');
-        const customSelectBtns = customSelectBox.querySelector('.customSelectBtns');
-
-        for (let i = 0; i < notsetAddSelectBox.length; i++) {
-            const optionValue = notsetAddSelectBox.options[i].value;
-            const li = document.createElement('li');
-			console.log(li);
-            const button = document.createElement('button');
-            button.classList.add('moreSelectBtn');
-            button.type = 'button';
-			if (optionValue=="") button.textContent="전체";
-            else button.textContent = optionValue;
-			console.log("----button---");
-			console.log(button);
-			
-            li.appendChild(button);
-			console.log($(li).html());
-            customSelectBtns.appendChild(li);
-        }
-    });*/
 }
 
 
@@ -116,7 +47,6 @@ const MoreSelectBtn = document.querySelectorAll('.moreSelectBtn')
 
 MoreSelectBtn.forEach((moreBtn) => {
     moreBtn.addEventListener('click', function () {
-		console.log("-------MoreSelectBtn---click--------------");
         var moreSelectBtnText = moreBtn.innerText;
         console.log(moreSelectBtnText);
         const parentMoreSelectBtn = moreBtn.closest('.customSelectBtns')
@@ -137,12 +67,8 @@ MoreSelectBtn.forEach((moreBtn) => {
 
         const nearByContent = moreBtn.closest('.selectContentArea');
         const nearBySelectBox = nearByContent.querySelector('select');
-		console.log(nearBySelectBox);
-		$(nearBySelectBox).val(moreBtn.textContent);
-		$(nearBySelectBox).trigger("change");
         nearBySelectBox.value = moreBtn.textContent;
         console.log(`Selected value: ${nearBySelectBox.value}`);
-		
 
 
     })
@@ -294,12 +220,11 @@ const landRightSearchOpenPopUp = () => {
        xhr.send();
        console.log('landRightSearchResultPop 작동');
        landRightsSearchBtn.addEventListener("click" , () => {
-		console.log("-------검색버튼 클릭-----------");
-		console.log($("#searchForm").serialize());
-          /* const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+       
+           const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
            landRightsSearchBtn.classList.add("open");
-           popupOpen.classList.add("active");*/
-		
+           popupOpen.classList.add("active");
+
        })
 
    // 삽입된 html내 스크립트 실행 함수
@@ -316,158 +241,3 @@ const landRightSearchOpenPopUp = () => {
 }
 
 landRightSearchOpenPopUp();
-
-$(document).on("change","#landRightsRegistSelectBox01",function(){
-	
-	console.log("----landRightsRegistSelectBox01-----------");	
-	changPipeName();
-	$("#pipe_name_ul li").remove();
-	loadCustomLiLandRegist($("#pipe_name_ul"));
-});
-
-function changPipeName(){
-			 var url="/api/getPipeName";
-	console.log("----changePipeName()-----------");		 
-	var requestData={"jisaIdx":$("#landRightsRegistSelectBox01").val()};
-	
-	console.log(requestData);
-		 $.ajax({
-			
-				url:url,
-				type:'POST',
-				contentType:"application/json",
-				data:JSON.stringify(requestData),
-				async:false,
-				dataType:"json",
-				success:function(response){
-					console.log(response);
-					if (response.success="Y"){
-						console.log("response.success Y");
-						console.log("response.resultData length:"+response.resultData.length);
-						console.log(response.resultData[0]);
-						$("#landRightsRegistSelectBox04 option").remove();
-						$("#landRightsRegistSelectBox04").append('<option>선택</option>');
-						for(var i=0;i<response.resultData.length;i++){
-							$("#landRightsRegistSelectBox04").append('<option>'+response.resultData[i].jzn_zone_name+'</option>');
-						}
-						
-					}
-					else {
-						console.log("response.success N");
-					}
-				},
-				error:function(jqXHR,textStatus,errorThrown){
-					alert("landRightsRegistSelectBox04 ajax error\n"+textStatus+":"+errorThrown);
-				}
-			
-		});
-}
-$(document).ready(function(){
-	//getSidoMaster();	
-});
-
-
-function getSidoMaster(){
-	
-	
-	
-			 var url="/api/getSidoMaster";
-			 
-	var requestData={};
-	console.log(requestData);
-		 $.ajax({
-			
-				url:url,
-				type:'POST',
-				contentType:"application/json",
-				data:JSON.stringify(requestData),
-				async:false,
-				dataType:"json",
-				success:function(response){
-					console.log(response);
-					if (response.success="Y"){
-						console.log("response.success Y");
-						console.log("response.resultData length:"+response.resultData.length);
-						console.log(response.resultData);
-						$("#landRightsRegistSelectBox09 option").remove();
-						$("#landRightsRegistSelectBox09").append('<option>선택</option>');
-						for(var i=0;i<response.resultData.length;i++){
-							$("#landRightsRegistSelectBox09").append('<option value='+response.resultData[i].sm_name+'>'+response.resultData[i].sm_name+'</option>');
-						}
-						loadCustomLiLandRegist($("#sido_ul"));
-					}
-					else {
-						console.log("response.success N");
-					}
-				},
-				error:function(jqXHR,textStatus,errorThrown){
-					alert("getSidoMaster ajax error\n"+textStatus+":"+errorThrown);
-				}
-			
-		});
-}
-
-$(document).on("change","#landRightsRegistSelectBox09",function(){
-	console.log("----------landRightsRegistSelectBox09--------------");
-		getSigunMaster($("#landRightsRegistSelectBox09 option:selected").val());
-	})
-	
-	
-
-	/*$(document).on("change","#landRightsRegistSelectBox10",function(){
-		getDongMaster($("#landRightsRegistSelectBox10 option:selected").val());
-	})
-*/
-
-	
-	
-	
-	function getSigunMaster(key){
-				 var url="/api/getSigunMaster";
-				 
-		var requestData={"key":key};
-		console.log(requestData);
-			 $.ajax({
-				
-					url:url,
-					type:'POST',
-					contentType:"application/json",
-					data:JSON.stringify(requestData),
-					async:false,
-					dataType:"json",
-					success:function(response){
-						console.log(response);
-						if (response.success="Y"){
-							console.log("response.success Y");
-							console.log("response.resultData length:"+response.resultData.length);
-							console.log(response.resultData);
-							$("#landRightsRegistSelectBox10 option").remove();
-							$("#landRightsRegistSelectBox10").append('<option>선택</option>');
-							for(var i=0;i<response.resultData.length;i++){
-								$("#landRightsRegistSelectBox10").append('<option value='+response.resultData[i].sm_gugun+'>'+response.resultData[i].sm_gugun+'</option>');
-							}
-							loadCustomLiLandRegist($("#gugun_ul"));
-						}
-						else {
-							console.log("response.success N");
-						}
-					},
-					error:function(jqXHR,textStatus,errorThrown){
-						alert("getSidoMaster ajax error\n"+textStatus+":"+errorThrown);
-					}
-				
-			});
-	}
-
-
-	$(document).on("change","#sigunmaster",function(){
-		getDongMaster($("#sigunmaster option:selected").val());
-	})
-
-/*
-$(document).on("click","#basicSearchBtn",function(){
-	
-	console.log("-----basicSearchBtn click------------");
-	
-});
-*/

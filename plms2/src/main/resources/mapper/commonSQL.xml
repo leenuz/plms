@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="selectPipeNameList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<![CDATA[
-		select * from jisa_zone_name where jzn_jisa_fk=#{idx}
+		select * from jisa_zone_name where jzn_jisa=#{idx}
 		]]>
 	</select>
 	<select id="selectJimokList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
