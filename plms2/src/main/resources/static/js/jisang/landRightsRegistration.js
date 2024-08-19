@@ -110,8 +110,39 @@ customSelectView.forEach((btn) => {
 } )
 
 
-// customSelectBtns 리스트 click 했을 때 해당 내용으로 바뀌게하기
 
+$(document).on("click",".moreSelectBtn",function(){
+	console.log("---------------moreselectBtn--click----");
+	var moreSelectBtnText = this.innerText;
+	console.log("moreSelectBtnText:"+this.innerText);
+	const parentMoreSelectBtn = this.closest('.customSelectBtns')
+	       const EditCustomViewBtn = parentMoreSelectBtn.previousElementSibling;
+
+	       while (EditCustomViewBtn.firstChild) {
+	           EditCustomViewBtn.removeChild(EditCustomViewBtn.firstChild);
+	       }
+
+	       // 새로운 텍스트 노드를 추가합니다.
+	       const textNode = document.createTextNode(moreSelectBtnText);
+	       EditCustomViewBtn.appendChild(textNode);
+
+	       EditCustomViewBtn.classList.remove('active')
+	       parentMoreSelectBtn.classList.remove('active')
+
+	       // 선택한 걸 select의 value값으로 변경하기
+
+	       const nearByContent = this.closest('.selectContentArea');
+	       const nearBySelectBox = nearByContent.querySelector('select');
+		console.log(nearBySelectBox);
+		$(nearBySelectBox).val(this.textContent);
+		$(nearBySelectBox).trigger("change");
+	       nearBySelectBox.value = this.textContent;
+	       console.log(`Selected value: ${nearBySelectBox.value}`);
+	
+});
+
+// customSelectBtns 리스트 click 했을 때 해당 내용으로 바뀌게하기
+/*
 const MoreSelectBtn = document.querySelectorAll('.moreSelectBtn')
 
 MoreSelectBtn.forEach((moreBtn) => {
@@ -146,7 +177,7 @@ MoreSelectBtn.forEach((moreBtn) => {
 
 
     })
-})
+})*/
 
 
 // 소유자 정보 추가 click시 이벤트
