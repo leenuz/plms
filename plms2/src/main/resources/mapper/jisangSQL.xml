@@ -154,8 +154,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			
 	</select>
 	
-	
-	
+	<!-- selectBasicSearchList 지적정보에서 검색-->
+	<select id="selectBasicSearchList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as no 
+		FROM jisang_master jm LEFT JOIN jijuk_master_2022 jm2 ON jm2.pnu=jm.jm_pnu
+		WHERE 1=1
+		AND jm2.pnu IS NOT null
+		
+			
+	</select>
 	<select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[
 		select jm_set_money,jm_save_status from jisang_master 
 	]]></select>

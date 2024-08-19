@@ -34,21 +34,23 @@ function createCustomLiLandRegist() {
 }
 
 function loadCustomLiLandRegist(ele) {
-	/*console.log("---------ele---------------");
+	console.log("---------ele---------------");
 	console.log($(ele).html());
-    */
+    
     console.log("---------loadCustomLiLandRegist---------------");
 	
-	var thisContent = ele.closest('li').find("select");
+	var thisContent = ele.parent().parent().find('select');
+	console.log("---------thisContent---------------");
+	console.log($(thisContent).html());
 	const customSelectBox = ele.closest('.customSelectBox');
-	//console.log($(customSelectBox).html());
+	console.log($(customSelectBox).html());
 	$(customSelectBox).find("li").remove();
 	var customSelectBtns = customSelectBox.find('.customSelectBtns');
-	
-	//console.log($(customSelectBtns).html());
+	console.log("---------customSelectBtns---------------");
+	console.log($(customSelectBtns).html());
 	var optList=thisContent[0];
 	//console.log(optList.length);
-	//console.log(optList);
+	console.log(optList);
 	for (let i = 0; i < optList.length; i++) {
 		const optionValue = optList.options[i].value;
 		//console.log(optionValue);
@@ -303,9 +305,94 @@ const allCheckEventLandRightsRegist = () => {
 allCheckEventLandRightsRegist();
 
 
+$(document).on("click","#basicSearchBtn",function(){
+	
+	console.log("-----basicSearchBtn click------------");
+	
+	
+		   
+		  
+		   console.log('landRightSearchResultPop 작동');
+		   console.log("-------검색버튼 클릭-----------");
+		   		console.log($("#searchForm").serialize());
+		   		var formSerializeArray = $('#searchForm').serializeArray();
+		   			   console.log(formSerializeArray);
+					  /* console.log($("#searchResultPopDiv").html());*/
+		              
+		   		   
+				   //searchResultPopDiv 화면뿌릴 DIV
+				   	   $.ajax({
+				   	   	  url: "/jisang/getBasicSearchData",
+				   	   	  type: "POST",
+				   	   	  data: formSerializeArray,
+				   	   })
+				   	   .done(function (fragment) {
+						//runScriptsInElement(landRightSearchResultPop); // 삽입된 html내 스크립트 실행 함수 호출
+						//console.log($("#searchResultPopDiv").html());
+				   	      $('#searchResultPopDiv').replaceWith(fragment);
+						  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+						  	    console.log($(popupOpen).html());
+						  	   //			   		              landRightsSearchBtn.classList.add("open");
+						  	   $(popupOpen).addClass("open");
+						  	   			   		              popupOpen.classList.add("active");
+						 
+				   	   	});
+				   	   
+});
 
+
+$(document).on("click",".finalBtn",function(){
+	console.log("---------finalBtn class click------------");
+	console.log($("#searchResultPopDiv").html());
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	//console.log($(targetDiv).html());
+	$("#popupWrap").toggleClass("active");
+	/*const PopupFinalBtns =  document.querySelectorAll('.popupWrap .lastBtnBox .finalBtn');
+	const PopupWrap = PopupFinalBtns.closest('.popupWrap');
+	            this.classList.toggle("active");
+	            this.classList.toggle('active');*/
+	//$("#searchResultPopDiv").
+});
+// 저장, 닫기 버튼 click시 팝업 사라지게
+
+	const PopupFinalBtns =  document.querySelectorAll('.popupWrap .lastBtnBox .finalBtn');
+
+	    PopupFinalBtns.forEach((button) => {
+	        button.addEventListener('click',function(){
+	           
+	        })
+	    })
+
+	// x 버튼 click시 팝업 사라지게
+
+	const topCloseBtn = document.querySelectorAll('.popupWrap .topCloseBtn');
+	    if(topCloseBtn){
+
+	        topCloseBtn.forEach((topClosebutton) => {
+
+	            topClosebutton.addEventListener('click',function(){
+	                const PopupWrap = topClosebutton.closest('.popupWrap');
+	                PopupWrap.classList.remove("active");
+	            })
+	        })
+	    }
+
+$(document).on("click",".resultSelectBtn",function(){
+	console.log("----------resultSelectBtn-click--------");
+	console.log($(this).parent().parent().html());
+	var pnu=$(this).parent().parent().find(".popContent01").html();
+	var address=$(this).parent().parent().find(".popContent02").html();
+	var jibun=$(this).parent().parent().find(".popContent03").html();
+	console.log("pnu:"+pnu);
+	console.log("address:"+address);
+	console.log("jibun:"+jibun);
+	
+	
+})
+		
+		
 /* js추가 검색팝업오픈 */
-
+/*
 const landRightSearchOpenPopUp = () => {
 
     const landRightsSearchBtn = document.querySelector(".landRightsSearchBtn");
@@ -327,14 +414,31 @@ const landRightSearchOpenPopUp = () => {
        landRightsSearchBtn.addEventListener("click" , () => {
 		console.log("-------검색버튼 클릭-----------");
 		console.log($("#searchForm").serialize());
-          /* const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+		var formSerializeArray = $('#searchForm').serializeArray();
+			   console.log(formSerializeArray);
+           const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
            landRightsSearchBtn.classList.add("open");
-           popupOpen.classList.add("active");*/
+           popupOpen.classList.add("active");
+		   console.log($("#searchResultPopDiv").html());
+		   //searchResultPopDiv 화면뿌릴 DIV
+		   $.ajax({
+		   	  url: "/jisang/getBasicSearchData",
+		   	  type: "POST",
+		   	  data: formSerializeArray,
+		   })
+		   .done(function (fragment) {
+		      $('#searchResultPopDiv').replaceWith(fragment);
+		   	});
+		   
 		
-       })
+       	})
 
-   // 삽입된 html내 스크립트 실행 함수
-   const runScriptsInElement = (element) => {
+  
+
+    }
+}
+*/
+const runScriptsInElement = (element) => {
        const scripts = element.getElementsByTagName('script');
        for (let i = 0; i < scripts.length; i++) {
            const script = document.createElement('script');
@@ -343,10 +447,7 @@ const landRightSearchOpenPopUp = () => {
        }
    }
 
-    }
-}
-
-landRightSearchOpenPopUp();
+//landRightSearchOpenPopUp();
 
 $(document).on("change","#landRightsRegistSelectBox01",function(){
 	
@@ -377,7 +478,7 @@ function changPipeName(){
 						console.log("response.resultData length:"+response.resultData.length);
 						console.log(response.resultData[0]);
 						$("#landRightsRegistSelectBox04 option").remove();
-						$("#landRightsRegistSelectBox04").append('<option>선택</option>');
+						$("#landRightsRegistSelectBox04").append('<option value="">선택</option>');
 						for(var i=0;i<response.resultData.length;i++){
 							$("#landRightsRegistSelectBox04").append('<option>'+response.resultData[i].jzn_zone_name+'</option>');
 						}
@@ -421,7 +522,7 @@ function getSidoMaster(){
 						console.log("response.resultData length:"+response.resultData.length);
 						console.log(response.resultData);
 						$("#landRightsRegistSelectBox09 option").remove();
-						$("#landRightsRegistSelectBox09").append('<option>선택</option>');
+						$("#landRightsRegistSelectBox09").append('<option value="">전체</option>');
 						for(var i=0;i<response.resultData.length;i++){
 							$("#landRightsRegistSelectBox09").append('<option value='+response.resultData[i].sm_name+'>'+response.resultData[i].sm_name+'</option>');
 						}
@@ -445,10 +546,15 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	
 	
 
-	/*$(document).on("change","#landRightsRegistSelectBox10",function(){
-		getDongMaster($("#landRightsRegistSelectBox10 option:selected").val());
+	$(document).on("change","#landRightsRegistSelectBox10",function(){
+		getDongMaster($("#landRightsRegistSelectBox09 option:selected").val(),$("#landRightsRegistSelectBox10 option:selected").val());
 	})
-*/
+	
+	$(document).on("change","#landRightsRegistSelectBox11",function(){
+			getRiMaster($("#landRightsRegistSelectBox09 option:selected").val(),$("#landRightsRegistSelectBox10 option:selected").val(),$("#landRightsRegistSelectBox11 option:selected").val());
+		})
+
+
 
 	
 	
@@ -473,9 +579,10 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 							console.log("response.resultData length:"+response.resultData.length);
 							console.log(response.resultData);
 							$("#landRightsRegistSelectBox10 option").remove();
-							$("#landRightsRegistSelectBox10").append('<option>선택</option>');
+							$("#landRightsRegistSelectBox10").append('<option value="">전체</option>');
 							for(var i=0;i<response.resultData.length;i++){
-								$("#landRightsRegistSelectBox10").append('<option value='+response.resultData[i].sm_gugun+'>'+response.resultData[i].sm_gugun+'</option>');
+								console.log("<option value='"+response.resultData[i].sm_gugun+"'>"+response.resultData[i].sm_gugun+"</option>");
+								$("#landRightsRegistSelectBox10").append('<option value="'+response.resultData[i].sm_gugun+'">'+response.resultData[i].sm_gugun+'</option>');
 							}
 							loadCustomLiLandRegist($("#gugun_ul"));
 						}
@@ -490,15 +597,88 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 			});
 	}
 
+	
+	
+	function getDongMaster(sidoKey,gugunKey){
+				 var url="/api/getDongMaster";
+				 
+		var requestData={"sidoKey":sidoKey,"gugunKey":gugunKey};
+		console.log(requestData);
+			 $.ajax({
+				
+					url:url,
+					type:'POST',
+					contentType:"application/json",
+					data:JSON.stringify(requestData),
+					async:false,
+					dataType:"json",
+					success:function(response){
+						console.log(response);
+						if (response.success="Y"){
+							console.log("response.success Y");
+							console.log("response.resultData length:"+response.resultData.length);
+							console.log(response.resultData);
+							$("#landRightsRegistSelectBox11 option").remove();
+							$("#landRightsRegistSelectBox11").append('<option value="">전체</option>');
+							for(var i=0;i<response.resultData.length;i++){
+								$("#landRightsRegistSelectBox11").append('<option value="'+response.resultData[i].bm_dong+'">'+response.resultData[i].bm_dong+'</option>');
+							}
+							loadCustomLiLandRegist($("#dong_ul"));
+						}
+						else {
+							console.log("response.success N");
+						}
+					},
+					error:function(jqXHR,textStatus,errorThrown){
+						alert("getDongMaster ajax error\n"+textStatus+":"+errorThrown);
+					}
+				
+			});
+	}
+	
+	
+	function getRiMaster(sidoKey,gugunKey,dongKey){
+					 var url="/api/getRiMaster";
+					 
+			var requestData={"sidoKey":sidoKey,"gugunKey":gugunKey,"dongKey":dongKey};
+			console.log(requestData);
+				 $.ajax({
+					
+						url:url,
+						type:'POST',
+						contentType:"application/json",
+						data:JSON.stringify(requestData),
+						async:false,
+						dataType:"json",
+						success:function(response){
+							console.log(response);
+							if (response.success="Y"){
+								console.log("response.success Y");
+								console.log("response.resultData length:"+response.resultData.length);
+								console.log(response.resultData);
+								$("#landRightsRegistSelectBox12 option").remove();
+								$("#landRightsRegistSelectBox12").append('<option value="">전체</option>');
+								for(var i=0;i<response.resultData.length;i++){
+									$("#landRightsRegistSelectBox12").append('<option value="'+response.resultData[i].bm_dong+'">'+response.resultData[i].bm_dong+'</option>');
+								}
+								loadCustomLiLandRegist($("#ri_ul"));
+							}
+							else {
+								console.log("response.success N");
+							}
+						},
+						error:function(jqXHR,textStatus,errorThrown){
+							alert("getDongMaster ajax error\n"+textStatus+":"+errorThrown);
+						}
+					
+				});
+		}
+	
 
 	$(document).on("change","#sigunmaster",function(){
 		getDongMaster($("#sigunmaster option:selected").val());
 	})
+	
+	
+	
 
-/*
-$(document).on("click","#basicSearchBtn",function(){
-	
-	console.log("-----basicSearchBtn click------------");
-	
-});
-*/

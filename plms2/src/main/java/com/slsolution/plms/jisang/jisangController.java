@@ -401,6 +401,27 @@ public class jisangController {
 			mav.setViewName("content/jisang/landRightsRegistration");
 			return mav;
 		}
+		
+		//아이디를 기준으로 해당 영역만 리플래쉬 되도록 하는 로직
+		@PostMapping(path="/getBasicSearchData") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView getBasicSearchData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			ModelAndView mav=new ModelAndView();
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			
+			String jisa = httpRequest.getParameter("jisa");
+			String pnu = httpRequest.getParameter("pnu");
+			
+			params.put("jisa",jisa);
+			//params.put("pnu",pnu);
+			log.info("params:"+params);
+			ArrayList<HashMap> jisangBasicSearchList = mainService.selectQuery("jisangSQL.selectBasicSearchList",params);
+			log.info("jisangBasicSearchList:"+jisangBasicSearchList);
+			mav.addObject("jisangBasicSearchList",jisangBasicSearchList);
+			mav.setViewName("content/jisang/landRightsRegistration :: #searchResultPopDiv");
+			return mav;
+		}
+		
 	
 
 	

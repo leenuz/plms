@@ -293,7 +293,7 @@ margin:10px;
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
                                 <select name="jimok_text" id="landRightsRegistSelectBox07" hidden>
-                                    <option >선택</option>
+                                    <option value="">선택</option>
 								<option th:each="val:${resultJimokList}" th:value="${val?.jm_name}" th:utext="${val?.jm_name}">지목</option>
                                 </select>
                             
@@ -367,7 +367,7 @@ margin:10px;
                                         <div class="hiddenSelectBox">
                                             <!-- name도 추가 -->
                                             <select name="sido" id="landRightsRegistSelectBox09" hidden>
-                                                <option >선택</option>
+                                                <option value="">전체</option>
 												<option th:each="val:${sidoList}" th:value="${val?.sm_name}" th:utext="${val?.sm_name}">지목</option>
                                             </select>
                                         
@@ -387,16 +387,8 @@ margin:10px;
                                         <div class="hiddenSelectBox">
                                             <!-- name도 추가 -->
                                             <select name="gugun" id="landRightsRegistSelectBox10" hidden>
-                                                <option value="전체1">전체1</option>
-                                                <option value="전체2">전체2</option>
-                                                <option value="전체3">전체3</option>
-                                                <option value="전체4">전체4</option>
-                                                <option value="전체5">전체5</option>
-                                                <option value="전체6">전체6</option>
-                                                <option value="전체7">전체7</option>
-                                                <option value="전체8">전체8</option>
-                                                <option value="전체9">전체9</option>
-                                                <option value="전체10">전체10</option>
+                                                <option value="">전체</option>
+                                              
                                             </select>
                                         
                                         </div>
@@ -415,16 +407,8 @@ margin:10px;
                                         <div class="hiddenSelectBox">
                                             <!-- name도 추가 -->
                                             <select name="landRightsRegistSelectBox11" id="landRightsRegistSelectBox11" hidden>
-                                                <option value="전체1">전체1</option>
-                                                <option value="전체2">전체2</option>
-                                                <option value="전체3">전체3</option>
-                                                <option value="전체4">전체4</option>
-                                                <option value="전체5">전체5</option>
-                                                <option value="전체6">전체6</option>
-                                                <option value="전체7">전체7</option>
-                                                <option value="전체8">전체8</option>
-                                                <option value="전체9">전체9</option>
-                                                <option value="전체10">전체10</option>
+                                                <option value="">전체</option>
+                                              
                                             </select>
                                         
                                         </div>
@@ -434,7 +418,7 @@ margin:10px;
                                                 
                                             </button>
                                         
-                                            <ul class="customSelectBtns">
+                                            <ul class="customSelectBtns" id="dong_ul">
                                                 <!-- createCustomLiLandRegist() -->
                                             </ul>
                                         </section>
@@ -443,16 +427,8 @@ margin:10px;
                                         <div class="hiddenSelectBox">
                                             <!-- name도 추가 -->
                                             <select name="landRightsRegistSelectBox12" id="landRightsRegistSelectBox12" hidden>
-                                                <option value="전체1">전체1</option>
-                                                <option value="전체2">전체2</option>
-                                                <option value="전체3">전체3</option>
-                                                <option value="전체4">전체4</option>
-                                                <option value="전체5">전체5</option>
-                                                <option value="전체6">전체6</option>
-                                                <option value="전체7">전체7</option>
-                                                <option value="전체8">전체8</option>
-                                                <option value="전체9">전체9</option>
-                                                <option value="전체10">전체10</option>
+                                                <option value="">전제</option>
+                                                
                                             </select>
                                         
                                         </div>
@@ -462,7 +438,7 @@ margin:10px;
                                                 
                                             </button>
                                         
-                                            <ul class="customSelectBtns">
+                                            <ul class="customSelectBtns" id="ri_ul">
                                                 <!-- createCustomLiLandRegist() -->
                                             </ul>
                                         </section>
@@ -796,7 +772,52 @@ margin:10px;
 
     </main>
 </div>
-<div class="landRightSearchResultPopWrapper"></div>
+<div class="landRightSearchResultPopWrapper" id="searchResultPopDiv">
+
+<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+    <div id="searchResultsPopup">
+        <div class="popupWrap" id="popupWrap">
+            <h2>
+                <p>검색결과</p>
+                <span class="topCloseBtn"></span>
+            </h2>
+
+            <div class="popupCont">
+                <ul class="popTitles">
+                    <li class="popTitle01">PNU</li>
+                    <li class="popTitle02">주소</li>
+                    <li class="popTitle03">지번</li>
+                    <li class="popTitle04">선택</li>
+                </ul>
+                <div class="popContentBox" >
+                    <ul class="popContents" th:each="val:${jisangBasicSearchList}">
+                        <li class="popContent01"> [[${val.pnu}]]</li>
+                        <li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.ri_nm}]]</li>
+                        <li class="popContent03">[[${val.jibun}]]</li>
+                        <li class="popContent04">
+                            <button class="resultSelectBtn">선택</button>
+                        </li>
+                    </ul>
+                    <ul class="popContents">
+                        <li class="popContent01">115001100010010001</li>
+                        <li class="popContent02">서울특별시 강서구 개화동</li>
+                        <li class="popContent03">1-1</li>
+                        <li class="popContent04">
+                            <button class="resultSelectBtn">선택</button>
+                        </li>
+                    </ul>
+                    
+                </div>
+            </div>
+
+            <div class="lastBtnBox btnWrap">
+                <button class="backBtn finalBtn">닫기</button>
+                <button class="saveBtn finalBtn">PNU 없이 선택</button>
+            </div>
+        </div>
+    </div>
+
+</div>
     <!-- script -->
     <script src="/js/jisang/landRightsRegistration.js"></script>
     <script type="module" src="/js/module/surfaceMain.js"></script>
