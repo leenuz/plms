@@ -140,38 +140,39 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="surfaceInquireSelectWrappers">
                   <select
-                    name=""
+                    name="jisa"
                     class="surfaceInquireHiddenSelect02"
-                    id="surfaceInquireSelectBox02_1"
+                    id="surfaceInquireHiddenSelect02_1"
                     hidden>
-                    <option value="전체">전체</option>
-                    <option value="서울지사">서울지사</option>
-                    <option value="경인지사">경인지사</option>
-                    <option value="대전지사">대전지사</option>
-                    <option value="부산지사">부산지사</option>
-                    <option value="충청지사">충청지사</option>
-                    <option value="충청지사">충청지사</option>
-                    <option value="충청지사">충청지사</option>
+                    <option value="">전체</option>
+                    <th:block th:each="val:${jisaList}">
+                      <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+                    </th:block>
                   </select>
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="surfaceInquireSelects">
-                  <button class="surfaceInquireSelectsTitleBtn"></button>
+                  <button class="surfaceInquireSelectsTitleBtn">전체</button>
                   <div class="sufaceSelectList">
-                    <ul class="surfaceSelectListMember"></ul>
+                    <ul class="surfaceSelectListMember">
+                      <li><p>전체</p></li>
+                      <th:block th:each="val:${jisaList}">
+                        <li><p th:text="${val.jm_jisa_name}">Y</p></li>
+                      </th:block>
+                    </ul>
                   </div>
                 </div>
               </ul>
               <ul class="inputControlBoxs sectionMenuListBoxs">
                 <li class="selectTitle"><p>소유자</p></li>
                 <div class="inputControlList">
-                  <input type="text" />
+                  <input type="text" name="souja"/>
                 </div>
               </ul>
               <ul class="inputControlBoxs sectionMenuListBoxs">
                 <li class="selectTitle"><p>자산분류번호</p></li>
                 <div class="inputControlList">
-                  <input type="text" />
+                  <input type="text" name=""/>
                 </div>
               </ul>
               <ul class="selectContent sectionMenuListBoxs">

@@ -30,9 +30,16 @@ window.addEventListener("load" , () => {
              return surfaceSelectEvet("#dopcoSurfacePart03 .surfaceSelectsTitleBtn" ,"#dopcoSurfacePart03 .sufaceSelectList"),
              handleCheckboxes(companyland03);
             }
-
-
-
+            else if(pathName === `/jisang/menu02_1`){
+                const companyland04 = document.getElementsByName("companyland04");
+                return surfaceSelectEvet("#dopcoSurfacePart .surfaceSelectsTitleBtn" ,"#dopcoSurfacePart .sufaceSelectList"),
+                handleCheckboxes(companyland04);
+            }
+             else if(pathName === `/jisang/menu02_2`){
+                const companyland05 = document.getElementsByName("companyland05");
+                return surfaceSelectEvet("#dopcosurfaceInquire02 .surfaceInquireSelectsTitleBtn" ,"#dopcosurfaceInquire02 .sufaceSelectList"),
+                handleCheckboxes(companyland05);
+            }
       }
 
       selecBoxsEvetWrappers();
