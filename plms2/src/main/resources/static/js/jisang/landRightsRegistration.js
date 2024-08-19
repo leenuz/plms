@@ -190,7 +190,67 @@ const editAfter = document.querySelectorAll('#landRightsRegistration .ownerInfo 
 const editContent = document.querySelectorAll('#landRightsRegistration .editSpace');
 const registBtn = document.querySelectorAll('#landRightsRegistration .registBtn');
 
-ownerInfoAddBtn.forEach((btn) => {
+
+$(document).on("click",".addBtn",function(){
+	console.log("---------addBtn click-----------");
+	var thisEditContent = this.closest('.contents');
+	        console.log(thisEditContent);
+			thisEditContent.classList.add('editing');
+			const inputs = thisEditContent.querySelectorAll('input');
+
+			        if (thisEditContent.classList.contains('editing')) {
+			            inputs.forEach(input => {
+			                input.removeAttribute('readonly');
+			            });
+			        } else {
+			            inputs.forEach(input => {
+			                input.setAttribute('readonly', 'readonly');
+			            });
+			        }
+});
+$(document).on("click","#completeSoujaBtn",function(){
+		console.log("------------completeSoujaBtn click---------");
+		var thisUl=$(this).parent().parent().parent().parent();
+		console.log($(thisUl).html());
+		var addUl=$("#soujaHiddenUl").html();
+		
+		var input=$(thisUl).find("input");
+		console.log(input);
+		console.log(input.length);
+		console.log("0:"+$(input).eq(0).val());
+		if ($(input).eq(0).val()=="" || $(input).eq(1).val()=="") {
+			//alert("소유자 정보를 정확하게 입력해주세요!");
+			$(thisUl).removeClass("editing");
+			$("#soujaDiv").append('<ul class="contents" id="soujaUl">'+addUl+'</ul>');
+			return;
+		}
+		//if ($(input).eq(0).html()=="" || )
+		
+		$(thisUl).removeClass("editing");
+		/*for(var i=0;i<input.length;i++) {
+			console.log($(input).eq(i).parent().html());
+		}*/
+					        
+					            /*$(input).forEach(input => {
+					                input.setAttribute('readonly', 'readonly');
+					            });*/
+					        
+		
+});
+
+
+$(document).on("click","#deleteSoujaBtn",function(){
+	console.log("------------deleteSoujaBtn click---------");
+	var thisUl=$(this).parent().parent().parent().parent();
+	var thisContents=$(this).parent().parent().parent().parent().parent().find(".contents");
+	console.log($(thisContents).html());
+	console.log($(thisContents).length);
+	if ($(thisContents).length<=2) return;
+	$(thisUl).remove();
+	
+});
+
+/*ownerInfoAddBtn.forEach((btn) => {
     btn.addEventListener('click', function () {
         var thisEditContent = btn.closest('.contents');
         console.log(thisEditContent);
@@ -213,7 +273,7 @@ ownerInfoAddBtn.forEach((btn) => {
 
     });
 });
-
+*/
 // 추가 버튼 click 이벤트
 
 if (registBtn) {
@@ -236,8 +296,10 @@ if (registBtn) {
 const radioButtons = document.querySelectorAll('#landRightsRegistration .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea .inputWrap input[name="landRightsRegistration_addressInput"]');
 const inputAreas = document.querySelectorAll('#landRightsRegistration .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea');
 
+console.log(radioButtons);
 radioButtons.forEach((radio) => {
     radio.addEventListener('click', () => {
+		console.log("----------radio button click-------------");
         inputAreas.forEach((area) => {
             if (area.contains(radio)) {
                 area.querySelectorAll(':scope > *:not(.inputWrap)').forEach((child) => {
@@ -302,7 +364,7 @@ const allCheckEventLandRightsRegist = () => {
     }
 }
 
-allCheckEventLandRightsRegist();
+//allCheckEventLandRightsRegist();
 
 
 $(document).on("click","#basicSearchBtn",function(){
@@ -386,9 +448,15 @@ $(document).on("click",".resultSelectBtn",function(){
 	console.log("pnu:"+pnu);
 	console.log("address:"+address);
 	console.log("jibun:"+jibun);
+	$("#maddress").val(address+" "+jibun);
+	$("#mpnu").val(pnu);
+	$("#mjibun").val(jibun);
+	
 	
 	
 })
+
+
 		
 		
 /* js추가 검색팝업오픈 */
@@ -680,5 +748,181 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	})
 	
 	
+	
+	var uploadFiles=new Array();
+	  $(document).ready(function(){
+
+	 var objDragAndDrop = $(".fileUploadBox");
+	                
+	                $(document).on("dragenter",".fileUploadBox",function(e){
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                    $(this).css('border', '2px solid #0B85A1');
+	                });
+	                $(document).on("dragover",".fileUploadBox",function(e){
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                });
+	                $(document).on("drop",".fileUploadBox",function(e){
+	                    
+	                    $(this).css('border', '2px dotted #0B85A1');
+	                    e.preventDefault();
+	                    var files = e.originalEvent.dataTransfer.files;
+	                
+	                    handleFileUpload(files,objDragAndDrop);
+	                });
+	                
+	                $(document).on('dragenter', function (e){
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                });
+	                $(document).on('dragover', function (e){
+	                  e.stopPropagation();
+	                  e.preventDefault();
+	                  objDragAndDrop.css('border', '2px dotted #0B85A1');
+	                });
+	                $(document).on('drop', function (e){
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                });
+	                //drag 영역 클릭시 파일 선택창
+	                objDragAndDrop.on('click',function (e){
+	                    $('input[type=file]').trigger('click');
+	                });
+	 
+	                $('input[type=file]').on('change', function(e) {
+	                    var files = e.originalEvent.target.files;
+	                    handleFileUpload(files,objDragAndDrop);
+	                });
+	                
+	                function handleFileUpload(files,obj)
+	                {
+	                   for (var i = 0; i < files.length; i++) 
+	                   {
+	                        var fd = new FormData();
+	                        fd.append('file', files[i]);
+	                 		
+	                        var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
+	                      //  status.setFileNameSize(files[i].name,files[i].size);
+	                        sendFileToServer(fd,status);
+	                 
+	                   }
+	                }
+	                
+	                var rowCount=0;
+	                function createStatusbar(obj,name,size,no){
+						console.log("----------start createStatusBar------------");
+	                        console.log(obj.html());
+						/*var uobj=obj.parent().parent().find("#status");	
+	                    rowCount++;
+	                    var row="";
+	                    //if(rowCount %2 ==0) row ="even";
+	                    this.statusbar = $('<ul class="contents" id="fileListUl">');
+	                    this.filename = $('<div class='filename'></div>').appendTo(this.statusbar);
+	                    this.size = $("<div class='filesize'></div>").appendTo(this.statusbar);
+	                   // this.progressBar = $("<div class='progressBar'><div></div></div>").appendTo(this.statusbar);
+	                    this.abort = $("<div class='abort'>중지</div>").appendTo(this.statusbar);*/
+						
+						var sizeStr="";
+						                        var sizeKB = size/1024;
+						                        if(parseInt(sizeKB) > 1024){
+						                            var sizeMB = sizeKB/1024;
+						                            sizeStr = sizeMB.toFixed(2)+" MB";
+						                        }else{
+						                            sizeStr = sizeKB.toFixed(2)+" KB";
+						                        }
+						
+	                    var row='<ul class="contents" id="fileListUl">';
+						row+='<li class="content01 content checkboxWrap">';
+						row+='<input type="checkbox" id="landRightsRegistration_attachFile'+no+'" name="landRightsRegistration_attachFile" >';
+						row+='<label for="landRightsRegistration_attachFile"></label>';
+						row+='</li>';
+						row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
+	                    obj.after(row);
+						
+						var radio=$(row).find('input');
+						console.log("---------------radio checkbox----------");
+						$(radio).find('input').attr("disabled",false);
+	                 	console.log($(radio).parent().html());
+						
+	                   /* this.setFileNameSize = function(name,size){
+	                        var sizeStr="";
+	                        var sizeKB = size/1024;
+	                        if(parseInt(sizeKB) > 1024){
+	                            var sizeMB = sizeKB/1024;
+	                            sizeStr = sizeMB.toFixed(2)+" MB";
+	                        }else{
+	                            sizeStr = sizeKB.toFixed(2)+" KB";
+	                        }
+	                 
+	                        $(#)
+	                        this.size.html(sizeStr);
+	                    }*/
+	                    
+	                    /*this.setProgress = function(progress){       
+	                        var progressBarWidth =progress*this.progressBar.width()/ 100;  
+	                        this.progressBar.find('div').animate({ width: progressBarWidth }, 10).html(progress + "% ");
+	                        if(parseInt(progress) >= 100)
+	                        {
+	                            this.abort.hide();
+	                        }
+	                    }
+	                    
+	                    this.setAbort = function(jqxhr){
+	                        var sb = this.statusbar;
+	                        this.abort.click(function()
+	                        {
+	                            jqxhr.abort();
+	                            sb.hide();
+	                        });
+	                    }*/
+	                }
+	                
+	                function sendFileToServer(formData,status)
+	                {
+	                    var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+	                    var extraData ={}; //Extra Data.
+	                    var jqXHR=$.ajax({
+	                            xhr: function() {
+	                            var xhrobj = $.ajaxSettings.xhr();
+	                            if (xhrobj.upload) {
+	                                    xhrobj.upload.addEventListener('progress', function(event) {
+	                                        var percent = 0;
+	                                        var position = event.loaded || event.position;
+	                                        var total = event.total;
+	                                        if (event.lengthComputable) {
+	                                            percent = Math.ceil(position / total * 100);
+	                                        }
+	                                        //Set progress
+	                                      //  status.setProgress(percent);
+	                                    }, false);
+	                                }
+	                            return xhrobj;
+	                        },
+	                        url: uploadURL,
+	                        type: "POST",
+	                        contentType:false,
+	                        processData: false,
+	                        cache: false,
+	                        data: formData,
+	                        success: function(data){
+	                           // status.setProgress(100);
+	                 			console.log(data);
+	                 			console.log(data.resultData);
+	                            //$("#status1").append("File upload Done<br>");    
+								uploadFiles.push(data.resultData.fpath);    
+								//allCheckEventLandRightsRegist();   
+	                        }
+	                    }); 
+	                 
+	                    //status.setAbort(jqXHR);
+	                }
+	                
+	 });
+	 
+	 
+	 $(document).on("click","input:checkbox[name='landRightsRegistration_attachFile']",function(){
+		console.log("check box click");
+	 })
 	
 

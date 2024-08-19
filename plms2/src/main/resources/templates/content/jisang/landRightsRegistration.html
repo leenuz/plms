@@ -23,7 +23,7 @@
 	  <link th:href="@{/css/common.css}" rel="stylesheet" />
 	
  <link rel="stylesheet" href="/css/jisang/landRightsRegistration.css" /> 
-	  
+	
 		<!-- <script src="/js/songyu/menu01.js"></script> -->	
 		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
@@ -345,7 +345,9 @@ margin:10px;
                     </ul>
                     <ul class="contents">
                         <li class="content01">
-                            <input type="text" placeholder="경기도 고양시 덕양구 강매동 1" readonly class="notWriteInput">
+                        	
+                        	
+                            <input type="text" name="maddress" id="maddress" placeholder="경기도 고양시 덕양구 강매동 1" readonly class="notWriteInput">
                         </li>
                         <li class="content02">
                             <ul class="radioBox">
@@ -461,9 +463,10 @@ margin:10px;
             <div class="subTitle">
                 소유자 정보
             </div>
-
+			<input type="hidden" name="mpnu" id="mpnu"/>
+            <input type="hidden" name="mjibun" id="mjibun"/>
             <div class="contWrap">
-                <div class="depth1">
+                <div class="depth1" id="soujaDiv">
                     <ul class="titles">
                         <li class="title01">공유지분</li>
                         <li class="title02">성명</li>
@@ -472,80 +475,81 @@ margin:10px;
                         <li class="title05">연락처2</li>
                         <li class="title06">추가/삭제</li>
                     </ul>
-                    <ul class="contents">
+                    <ul class="contents" id="soujaHiddenUl" style="display:none;">
                         <li class="content01 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="1">
+                            <input type="text" class="editingContent" readonly placeholder="ex)1/2">
                         </li>
                         <li class="content02 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="송기분">
+                            <input type="text" class="editingContent" readonly placeholder="ex)홍길동">
                         </li>
                         <li class="content03 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="경기도 고양시 덕양구 강매동">
+                            <input type="text" class="editingContent" readonly placeholder="ex)주소만입력">
                         </li>
                         <li class="content04 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="010-5188-5188">
+                            <input type="text" class="editingContent" readonly placeholder="ex)000-0000-0000">
                         </li>
                         <li class="content05 content editSpace" readonly>
                             <input type="text" class="editingContent">
                         </li>
                         <li class="content06 content btnBox">
-                            <!-- 수정하지 않을 때 -->
+                            <!-- 수정입력할때 -->
                             
                             <div class="editBefore">
                                 <div class="btnWrap">
-                                    <button class="addBtn miniBtn">추가</button>
+                                    <button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
                                 </div>
                                 <div class="btnWrap">
-                                    <button class="delBtn miniBtn">삭제</button>
+                                    <button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
                                 </div>
                             </div>
                             
-                            <!-- 수정할 때 -->
+                            <!-- 수정완료할 때 -->
                             
                             <div class="editAfter">
                                 <div class="newBtnWrap">
-                                    <button class="registBtn miniBtn">추가</button>
+                                    <button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                    <ul class="contents">
+                    <ul class="contents" id="soujaUl">
                         <li class="content01 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="1">
+                            <input type="text" class="editingContent" readonly placeholder="ex)1/2">
                         </li>
                         <li class="content02 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="송기분">
+                            <input type="text" class="editingContent" readonly placeholder="ex)홍길동">
                         </li>
                         <li class="content03 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="경기도 고양시 덕양구 강매동">
+                            <input type="text" class="editingContent" readonly placeholder="ex)주소만입력">
                         </li>
                         <li class="content04 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="010-5188-5188">
+                            <input type="text" class="editingContent" readonly placeholder="ex)000-0000-0000">
                         </li>
                         <li class="content05 content editSpace" readonly>
                             <input type="text" class="editingContent">
                         </li>
                         <li class="content06 content btnBox">
-                            <!-- 수정하지 않을 때 -->
+                            <!-- 수정입력할때 -->
                             
                             <div class="editBefore">
                                 <div class="btnWrap">
-                                    <button class="addBtn miniBtn">추가</button>
+                                    <button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
                                 </div>
                                 <div class="btnWrap">
-                                    <button class="delBtn miniBtn">삭제</button>
+                                    <button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
                                 </div>
                             </div>
                             
-                            <!-- 수정할 때 -->
+                            <!-- 수정완료할 때 -->
                             
                             <div class="editAfter">
                                 <div class="newBtnWrap">
-                                    <button class="registBtn miniBtn">추가</button>
+                                    <button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
                                 </div>
                             </div>
                         </li>
                     </ul>
+                    
 
                 </div>
             </div>
@@ -573,23 +577,17 @@ margin:10px;
                         <li class="content02 content selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="landRightsRegistSelectBox13" id="landRightsRegistSelectBox13" hidden>
-                                    <option value="Y1">Y1</option>
-                                    <option value="Y2">Y2</option>
-                                    <option value="Y3">Y3</option>
-                                    <option value="Y4">Y4</option>
-                                    <option value="Y5">Y5</option>
-                                    <option value="Y6">Y6</option>
-                                    <option value="Y7">Y7</option>
-                                    <option value="Y8">Y8</option>
-                                    <option value="Y9">Y9</option>
-                                    <option value="Y10">Y10</option>
+                                <select name="mcomple_yn" id="landRightsRegistSelectBox13" hidden>
+                                    <option value="">선택</option>
+                                    <option value="Y">Y</option>
+                                    <option value="N">N</option>
+                                    
                                 </select>
                             
                             </div>
                             <section class="customSelectBox">
                                 <button class="customSelectView">
-                                    Y
+                                    선택
                                     
                                 </button>
                         
@@ -599,31 +597,27 @@ margin:10px;
                             </section>
                         </li>
                         <li class="content02 content normalLineHeight">
-                            <input type="text" placeholder="75">
+                            <input type="text" placeholder="75" name="mpyeonib_area">
                         </li>
                         <li class="content03 content">
-                            <input type="text" placeholder="북서쪽">
+                            <input type="text" placeholder="북서쪽" name="mloacation">
                         </li>
                         <li class="content04 content selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="landRightsRegistSelectBox14" id="landRightsRegistSelectBox14" hidden>
-                                    <option value="기공승낙서1">기공승낙서1</option>
-                                    <option value="기공승낙서2">기공승낙서2</option>
-                                    <option value="기공승낙서3">기공승낙서3</option>
-                                    <option value="기공승낙서4">기공승낙서4</option>
-                                    <option value="기공승낙서5">기공승낙서5</option>
-                                    <option value="기공승낙서6">기공승낙서6</option>
-                                    <option value="기공승낙서7">기공승낙서7</option>
-                                    <option value="기공승낙서8">기공승낙서8</option>
-                                    <option value="기공승낙서9">기공승낙서9</option>
-                                    <option value="기공승낙서10">기공승낙서10</option>
+                                <select name="mpermit_yn" id="landRightsRegistSelectBox14" hidden>
+                                    <option value="">선택</option>
+                                    <option value="계약서">계약서</option>
+                                    <option value="기공승낙서">기공승낙서</option>
+                                    <option value="기공&계약">기공&계약</option>
+                                    <option value="없음">없음</option>
+                                  
                                 </select>
                             
                             </div>
                             <section class="customSelectBox">
                                 <button class="customSelectView">
-                                    기공승낙서
+                                    선택
                                     
                                 </button>
                             
@@ -634,35 +628,29 @@ margin:10px;
                         </li>
                         <li class="content05 content">
                             <div class="dateInputWrap">
-                                <input type="date" data-placeholder="24/01/01" required aria-required="true">
+                                <input type="date" name="mdeunggi_date" data-placeholder="24/01/01" required aria-required="true">
                             </div>
                         </li>
                         <li class="content06 content">
-                            <input type="text" placeholder="50000">
+                            <input type="text" name="mdeunggi_no" placeholder="50000">
                         </li>
                         <li class="content06 content">
-                            <input type="text" placeholder="서울지방법원 등기국">
+                            <input type="text" name="mdeunggiso" placeholder="한국법원 등기국">
                         </li>
                         <li class="content06 content selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="landRightsRegistSelectBox15" id="landRightsRegistSelectBox15" hidden>
-                                    <option value="여부1">여부1</option>
-                                    <option value="여부2">여부2</option>
-                                    <option value="여부3">여부3</option>
-                                    <option value="여부4">여부4</option>
-                                    <option value="여부5">여부5</option>
-                                    <option value="여부6">여부6</option>
-                                    <option value="여부7">여부7</option>
-                                    <option value="여부8">여부8</option>
-                                    <option value="여부9">여부9</option>
-                                    <option value="여부10">여부10</option>
+                                <select name="mdosi_plan" id="landRightsRegistSelectBox15" hidden>
+                                    <option value="">선택</option>
+                                    <option value="Y">Y</option>
+                                    <option value="N">N</option>
+                                   
                                 </select>
                             
                             </div>
                             <section class="customSelectBox">
                                 <button class="customSelectView">
-                                    &#160
+                                    선택
                                     
                                 </button>
                             
@@ -673,11 +661,11 @@ margin:10px;
                         </li>
                         <li class="content06 content">
                             <div class="dateInputWrap">
-                                <input type="date" data-placeholder="24/01/01" required aria-required="true">
+                                <input type="date" name="mchuideuk_date" data-placeholder="24/01/01" required aria-required="true">
                             </div>
                         </li>
                         <li class="content06 content">
-                            <input type="text" placeholder="90000857">
+                            <input type="text" name="mjasan_no" placeholder="90000857">
                         </li>
                     </ul>
                 </div>
@@ -687,7 +675,7 @@ margin:10px;
                     </ul>
                     <ul class="contents">
                         <li class="content01 content">
-                            <input type="text" placeholder="지상권존속기간중 지료는 지급치 아니하고 증액하지 아니한다.">
+                            <input type="text" name="special_cont" placeholder="지상권존속기간중 지료는 지급치 아니하고 증액하지 아니한다.">
                         </li>
                     </ul>
                 </div>
@@ -699,10 +687,11 @@ margin:10px;
 
 
         <section class="attachFileInfo">
+        <form name="uploadForm" method="post" enctype="multipart/form-data">
             <div class="subTitle">
                 첨부파일
                 <div class="fileBtnWrap">
-                    <input type="file" id="easementModification_myPcFiles">
+                    <input type="file" name="fileUpload" id="easementModification_myPcFiles">
                     <label for="easementModification_myPcFiles">내 PC</label>
                 </div>
             </div>
@@ -713,10 +702,11 @@ margin:10px;
                     <p>파일을 마우스로 끌어오세요.</p>
                 </div>
             </div>
-
+			<!-- <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div> -->
+			</form>
             <div class="contWrap">
-                <div class="depth1">
-                    <ul class="titles">
+                <div class="depth1" id="fileListDiv">
+                    <ul class="titles" id="fileTitleUl">
                         <li class="title01 allSelectCheck">
                             <!-- 선택 -->
 
@@ -725,24 +715,7 @@ margin:10px;
                         </li>
                         <li class="title02">파일명</li>
                     </ul>
-                    <ul class="contents">
-                        <li class="content01 content checkboxWrap">
-                            <input type="checkbox" id="landRightsRegistration_attachFile" name="landRightsRegistration_attachFile">
-                            <label for="landRightsRegistration_attachFile"></label>
-                        </li>
-                        <li class="content02 content">
-                            <input type="text" placeholder="파일명.pdf" class="notWriteInput" readonly>
-                        </li>
-                    </ul>
-                    <ul class="contents">
-                        <li class="content01 content checkboxWrap">
-                            <input type="checkbox" id="landRightsRegistration_attachFile02" name="landRightsRegistration_attachFile">
-                            <label for="landRightsRegistration_attachFile02"></label>
-                        </li>
-                        <li class="content02 content">
-                            <input type="text" placeholder="파일명.pdf" class="notWriteInput" readonly>
-                        </li>
-                    </ul>
+                    
                 </div>
             </div>
 
