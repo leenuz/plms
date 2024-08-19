@@ -24,7 +24,7 @@
 	
  <link rel="stylesheet" href="/css/menu01/menu01_1.css" /> 
 	  
-		<script src="/js/songyu/menu01.js"></script>	
+		<script src="/js/jisang/menu02_1.js"></script>
 		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 		<style>
@@ -168,16 +168,24 @@ margin:10px;
                 </div>
               </ul>
               <ul class="inputControlBoxs sectionMenuListBoxs">
-                <li class="selectTitle"><p>관리번호</p></li>
+                <li class="selectTitle"><p>소유자</p></li>
                 <div class="inputControlList">
-                  <input type="text" name="manage_no" placeholder="관리번호입력" />
+                  <input type="text" name="souja"/>
                 </div>
               </ul>
+              <ul class="inputControlBoxs sectionMenuListBoxs">
+                <li class="selectTitle"><p>자산분류번호</p></li>
+                <div class="inputControlList">
+                  <input type="text" name="jasan_no"/>
+                </div>
+              </ul>
+
+
               <ul class="selectContent sectionMenuListBoxs">
-                <li class="selectTitle"><p>토지유형</p></li>
+                <li class="selectTitle"><p>등기여부</p></li>
                 <div class="selectWrappers">
                   <select
-                    name="toji_type"
+                    name="comple_yn"
                     class="menuHiddenSelect01"
                     id="menuHiddenSelectBox01_2"
                     hidden>
@@ -188,83 +196,6 @@ margin:10px;
                   </select>
                 </div>
                 <div class="surfaceSelects">
-                  <button type="button" class="surfaceSelectsTitleBtn">전체</button>
-                  <div class="sufaceSelectList smallHeight">
-                    <ul class="surfaceSelectListMember">
-                      <li><p>전체</p></li>
-                      <li><p>Y</p></li>
-                      <li><p>N</p></li>
-                    </ul>
-                  </div>
-                </div>
-              </ul>
-              <ul class="selectContent sectionMenuListBoxs">
-                <li class="selectTitle"><p>권리확보유형</p></li>
-                
-                
-                <div class="surfaceSelects">
-                  <button class="surfaceSelectsTitleBtn">전체</button>
-                  <div class="sufaceSelectList">
-                    <ul class="surfaceSelectListMember checkBoxsContent">
-                      <li>
-                        <input
-                          type="checkbox"
-                          id="companylandCheckBox01"
-                          name="songyu_type_all" />
-                        <label for="companylandCheckBox01"></label>
-                        <p>전체</p>
-                      </li>
-                      <li>
-                        <input
-                          type="checkbox"
-                          id="companylandCheckBox02"
-                          name="songyu_type_jisang" />
-                        <label for="companylandCheckBox02"></label>
-                        <p>지상권</p>
-                      </li>
-                      <li>
-                        <input
-                          type="checkbox"
-                          id="companylandCheckBox03"
-                          name="songyu_type_notset" />
-                        <label for="companylandCheckBox03"></label>
-                        <p>미설정</p>
-                      </li>
-                      <li>
-                        <input
-                          type="checkbox"
-                          id="companylandCheckBox04"
-                          name="songyu_type_gover" />
-                        <label for="companylandCheckBox04"></label>
-                        <p>점용</p>
-                      </li>
-                      <li>
-                        <input
-                          type="checkbox"
-                          id="companylandCheckBox05"
-                          name="songyu_type_toji" />
-                        <label for="companylandCheckBox05"></label>
-                        <p>회사토지</p>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </ul>
-              <ul class="selectContent sectionMenuListBoxs">
-                <li class="selectTitle"><p>도시계획유형</p></li>
-                <div class="selectWrappers">
-                  <select
-                    name="dosiplan"
-                    class="menuHiddenSelect01"
-                    id="menuHiddenSelectBox01_3"
-                    hidden>
-                    <option value="전체">전체</option>
-                    <option value="Y">Y</option>
-                    <option value="N">N</option>
-                   
-                  </select>
-                </div>
-                <div class="surfaceSelects">
                   <button class="surfaceSelectsTitleBtn">전체</button>
                   <div class="sufaceSelectList smallHeight">
                     <ul class="surfaceSelectListMember">
@@ -275,38 +206,64 @@ margin:10px;
                   </div>
                 </div>
               </ul>
-              <ul class="selectContent sectionMenuListBoxs">
-                <li class="selectTitle"><p>토지개발대상</p></li>
-                <div class="selectWrappers">
-                  <select
-                    name="toji_plan_type"
-                    class="menuHiddenSelect01"
-                    id="menuHiddenSelectBox01_4"
-                    hidden>
-                    <option value="전체">전체</option>
-                    <option value="Y">Y</option>
-                    <option value="N">N</option>
-                   
-                  </select>
-                </div>
-                <div class="surfaceSelects">
-                  <button class="surfaceSelectsTitleBtn">전체</button>
-                  <div class="sufaceSelectList smallHeight">
-                    <ul class="surfaceSelectListMember">
-                      <li><p>전체</p></li>
-                      <li><p>Y</p></li>
-                      <li><p>N</p></li>
-                    </ul>
-                  </div>
+              <ul class="inputControlBoxs sectionMenuListBoxs">
+                <li class="selectTitle"><p>취득기간</p></li>
+                <div class="inputControlList dateListBox">
+                  <input type="date" />
+                  <span>-</span>
+                  <input type="date" />
                 </div>
               </ul>
-              <ul class="selectContent sectionMenuListBoxs">
-                <div class="checkBoxControlList">
-                  <p>권리중복필지</p>
-                  <input type="checkbox" id="OverlapCheck01" />
-                  <label for="OverlapCheck01"></label>
-                </div>
-              </ul>
+                <ul class="selectContent sectionMenuListBoxs">
+                    <li class="selectTitle"><p>회계처리 필요여부</p></li>
+                    <div class="selectWrappers">
+                        <select
+                                name=""
+                                class="menuHiddenSelect01"
+                                id="menuHiddenSelectBox01_2"
+                                hidden>
+                            <option value="전체">전체</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+
+                        </select>
+                    </div>
+                    <div class="surfaceSelects">
+                        <button class="surfaceSelectsTitleBtn">전체</button>
+                        <div class="sufaceSelectList smallHeight">
+                            <ul class="surfaceSelectListMember">
+                                <li><p>전체</p></li>
+                                <li><p>Y</p></li>
+                                <li><p>N</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </ul>
+                <ul class="selectContent sectionMenuListBoxs">
+                    <li class="selectTitle"><p>지목</p></li>
+                    <div class="selectWrappers">
+                        <select
+                                name="comple_yn"
+                                class="menuHiddenSelect01"
+                                id="menuHiddenSelectBox01_2"
+                                hidden>
+                            <option value="전체">전체</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+
+                        </select>
+                    </div>
+                    <div class="surfaceSelects">
+                        <button class="surfaceSelectsTitleBtn">전체</button>
+                        <div class="sufaceSelectList smallHeight">
+                            <ul class="surfaceSelectListMember">
+                                <li><p>전체</p></li>
+                                <li><p>Y</p></li>
+                                <li><p>N</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </ul>
             </div>
             <!-- 라디오버튼 있는 섹션-->
             <div class="surfacePartSectionContDevide">
@@ -314,7 +271,7 @@ margin:10px;
               <div class="surfacePartSectionRadioBoxs">
                 <ul class="radioBoxs">
                   <li>
-                    <input type="radio" name="askMenu01" value="0"/><span>입력형</span>
+                    <input type="radio" name="askMenu01" value="0" checked/><span>입력형</span>
                   </li>
                   <li class="addressInput">
                     <input name="addressFull"
@@ -417,11 +374,10 @@ margin:10px;
               <!--surfacePartSectionRadioBoxs-->
               <div class="surfacePartSectionBtnBoxs">
                 <button class="registerBtn" id="registerBtn">조회하기</button>
-                <a
-                  class="queryBtn"
-                  href="/songyu/notsetAdd"
-                  >미설정 / 미점용 등록</a
-                >
+<!--                <a-->
+<!--                  class="queryBtn"-->
+<!--                  href="/songyu/notsetAdd"-->
+<!--                  >미설정 / 미점용 등록</a>-->
               </div>
             </div>
           </div>
