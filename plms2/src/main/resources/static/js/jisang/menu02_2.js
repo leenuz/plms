@@ -6,7 +6,7 @@ var table;
 
 
 $(document).ready(function() {
-  console.log("jisang/menu02_1.js start");
+  console.log("jisang/menu02_2.js start");
   /*$('#jisa').niceSelect();*/
 //testAjax();
 //init_Table();
@@ -22,25 +22,25 @@ loadDataTable("");
 $(document).on("click","#registerBtn",function(){
        console.log($("#menuHiddenSelectBox01_1").val());
 	   console.log($("#searchForm").serialize());
-	   
-	   var formSerializeArray = $('#searchForm').serializeArray();
+
+	   var formSerializeArray = $('#searchForm').serializeArray();
 	   console.log(formSerializeArray)
-	   var object = {};
-	   for (var i = 0; i < formSerializeArray.length; i++){
-	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+	   var object = {};
+	   for (var i = 0; i < formSerializeArray.length; i++){
+	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
 	   }
-	   
-	   var json = JSON.stringify(formSerializeArray);
-	  
+
+	   var json = JSON.stringify(formSerializeArray);
+
 	  console.log("----------jsonobj------------");
 	  console.log(json);
-	  console.log("object askMenu01:"+object.askMenu01); 
-	  
-	  
-	  
+	  console.log("object askMenu01:"+object.askMenu01);
+
+
+
 	   loadDataTable(object);
 	   console.log("-----------------------");
-	   
+
      })
 
 $(document).on("change","#sido",function(){
@@ -60,10 +60,10 @@ $(document).on("change","#sido",function(){
 					    success: function(rt,jqXHR) {
 					      console.log(rt);
 						  var data=rt.resultData;
-						 
+
 						  $("#sggUl li").remove();
 						  $("#sgg option").remove();
-						  
+
 						  $("#sggUl").append("<li><p>전체</p></li>");
 						  $("#sgg").append("<option value=''>전체</option>");
 						  for(var i=0;i<data.length;i++){
@@ -71,7 +71,7 @@ $(document).on("change","#sido",function(){
 							$("#sggUl").append("<li><p>"+data[i].sm_gugun+"</p></li>");
 							$("#sgg").append("<option>"+data[i].sm_gugun+"</option>");
 						  }
-						  
+
 						  console.log("sido:"+$("#sido").val());
 						  $("#sido").val($("#sido").val()).attr("selected","selected");
 					     // downloadExcel(rt.results);
@@ -83,17 +83,17 @@ $(document).on("change","#sido",function(){
 					    complete: function() {
 					      //(이미지 감추기 처리)
 					      //$('#load').hide();
-					
-					
+
+
 					    },
 					    error: function(jqXHR, textStatus, errorThrown,responseText) {
 					      //alert("ajax error \n" + textStatus + " : " + errorThrown);
-					
+
 					      console.log(jqXHR);
 					      console.log(jqXHR.readyState);
 					      console.log(jqXHR.responseText);
 					      console.log(jqXHR.responseJSON);
-					
+
 					    }
 					  }) //end ajax
 })
@@ -199,18 +199,18 @@ $(document).on("change","#emd",function(){
 					    },
 					    error: function(jqXHR, textStatus, errorThrown,responseText) {
 					      //alert("ajax error \n" + textStatus + " : " + errorThrown);
-					
+
 					      console.log(jqXHR);
 					      console.log(jqXHR.readyState);
 					      console.log(jqXHR.responseText);
 					      console.log(jqXHR.responseJSON);
-					
+
 					    }
-					  }) //end ajax 
-})	 
-	 
-	 
-	 
+					  }) //end ajax
+})
+
+
+
 
 function datatablebasic(){
 	new DataTable('#basicTable', {
@@ -238,14 +238,14 @@ function datatablebasic(){
 function loadDataTable(params){
 	console.log("-----start loadDataTable----------");
 	console.log(params);
-	
+
 	//var json=JSON.stringify(params);
 
 	table=$('#userTable').DataTable({
-		
+
 		fixedColumns:{
 			start:3,
-			
+
 			},
 		scrollCollapse:true,
 		scrollX:true,
@@ -255,9 +255,9 @@ function loadDataTable(params){
 		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
 		dom:'<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
 		 buttons: [{extend:'excel',text:'엑셀 다운로드'}],
-				
-		
-				    
+
+
+
 				pageLength: 20,
                 bPaginate: true,
                 bLengthChange: true,
@@ -342,44 +342,60 @@ function loadDataTable(params){
         			$('td:eq(0)', nRow).html(iDisplayIndexFull +1);
 					return nRow;
     			},*/
+  columns : [
+                    {data: "no","orderable":false},
+                    {data: "jisa"},
+                    {data:"address"},
+                    {data:"jasan_no","defaultContent":""},
+                    {data: "jimok_text","defaultContent":""}, //5
+                    {data: "souja_name","defaultContent":""},
+                    {data: "jijuk_area","defaultContent":""},
+                    {data: "pyeonib_area","defaultContent":""},
+                    {data: "chuideuk_date"},
+                     {data: "deunggi_date"},
+                    {data: "cancel_yn"},//해지여부
+                    {data: "cancel_date"},//해지요청일
+                     {
+                         data: "idx",
+                         render: function(data, type, row, meta) {
+                             return `<button class="viewDetailButton">상세보기</button> `;
+                         }
+                     }, //상세보기 수정필요
+                   {
+                         data: "idx",
+                         render: function(data, type, row, meta) {
+                             return `<button class="viewDetailButton">위치보기</button> `;
+                         }
+                     },// 지도보기 데이터 수정필요
+                      {
+                          data: "idx",
+                          render: function(data, type, row, meta) {
+                              return `<button class="viewDetailButton">문서보기</button> `;
+                          }
+                      }// ECHO 문서보기 수정필요
+                ],
+                columnDefs:[
 
-                   columns : [
-                                  {data: "no","orderable":false},
-                                  {data: "jisa"},
-                                  {data:"address"},
-                                  {data:"jasan_no","defaultContent":""},
-                                  {data: "jimok_text","defaultContent":""}, //5
-                                  {data: "souja_name","defaultContent":""},
-                                  {data: "jijuk_area","defaultContent":""},
-                                  {data: "pyeonib_area","defaultContent":""},
-                                  {data: "chuideuk_date"},
-                                  {data: "comple_yn"},
-                                  {data: "deunggi_date"},
-                                  {data: "save_status"},
-                                 {
-                                       data: "idx", // 지도보기 데이터 수정해야함
-                                       render: function(data, type, row, meta) {
-                                           return `<button class="viewDetailButton">위치보기</button> `;
-                                       }
-                                   }
-                              ],
-                              columnDefs:[
+					{"className": "dt-head-center", "targets": "_all"},
+					{className: 'dt-center',"targets": "_all"},
+					{targets:[0],width:"50px"},
+					{targets:[1],width:"150px"},
+					{targets:[2],width:"400px"}, //주소
+					{targets:[3],width:"150px"},
+					{targets:[4],width:"100px"},
+					{targets:[5],width:"200px"}, //소유자
+					{targets:[6],width:"150px"},
+					{targets:[7],width:"150px"},
+                    {targets:[8],width:"200px"},
+                    {targets:[9],width:"200px"}, //등기일
+                    {targets:[10],width:"100px"}, //해지여부
+                    {targets:[11],width:"200px"},//해지요청일
+                    {targets:[12],width:"100px"}, // 상세보기
+                    {targets:[13],width:"100px"}, // 지도보기
+                    {targets:[14],width:"100px"}, // 문서보기
 
-              					{"className": "dt-head-center", "targets": "_all"},
-              					{className: 'dt-center',"targets": "_all"},
-              					{targets:[0],width:"50px"},
-              					{targets:[1],width:"150px"},
-              					{targets:[2],width:"400px"}, //주소
-              					{targets:[3],width:"150px"},
-              					{targets:[4],width:"100px"},
-              					{targets:[5],width:"200px"}, //소유자
-              					{targets:[6],width:"150px"},
-              					{targets:[7],width:"150px"},
-                                  {targets:[8],width:"200px"},
-                                  {targets:[9],width:"100px"}, //등기여부
-                                  {targets:[10],width:"200px"}, //등기일
-                                  {targets:[11],width:"100px"},
-                                  {targets:[12],width:"100px"}, //지도보기
+
+
 
 
 				]
@@ -390,24 +406,23 @@ function loadDataTable(params){
 
 
 			table.on('click','tr',function() {
+			    var target = $(event.target);
 
-					var target = $(event.target);
+                    var isButtonCell = target.closest('td').index() === 12 || target.closest('td').index() === 13 || target.closest('td').index() === 14;
 
-                        var isButtonCell = target.closest('td').index() === 12 ;
+                    if (isButtonCell) {
+                        return;
+                    } else {
+                        // 다른 열을 클릭했을 때만 상세 페이지로 이동
+                        console.log("--------------tr click---------------------");
 
-                        if (isButtonCell) {
-                            return;
-                        } else {
-                            // 다른 열을 클릭했을 때만 상세 페이지로 이동
-                            console.log("--------------tr click---------------------");
+                        var data = table.row(this).data();
+                        console.log(data);
+                        console.log(data.idx);
 
-                            var data = table.row(this).data();
-                            console.log(data);
-                            console.log(data.idx);
-
-                            var url = "/jisang/groundDetail?idx=" + data.idx;
-                            window.location = url;
-                        }
+                        var url = "/jisang/groundDetail?idx=" + data.idx;
+                        window.location = url;
+                    }
 											   
 			    });
 			

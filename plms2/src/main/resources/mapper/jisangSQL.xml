@@ -166,4 +166,186 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[
 		select jm_set_money,jm_save_status from jisang_master 
 	]]></select>
+
+	<select id="selectJisangList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *,
+		(row_number() OVER()) AS no
+		FROM (
+		SELECT jm.jm_idx AS index,
+		jm.jm_jisang_no AS idx,
+		0 AS gidx,
+		jm.jm_jisa AS jisa,
+		jm.jm_save_status AS save_status,
+		jm.jm_account_yn AS account_yn,
+		jm.jm_cancel_date AS cancel_date,
+		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
+		jm.jm_toji_type AS toji_type,
+		jm.jm_pipe_meter AS pipe_meter,
+		jm.jm_jimok_text AS jimok_text,
+		js.js_souja_name AS souja_name,
+		COALESCE(jm.jm_jijuk_area, NULL) AS jijuk_area,
+		COALESCE(jm.jm_pyeonib_area, NULL) AS pyeonib_area,
+		jm.jm_sido_nm AS sido_nm,
+		jm.jm_sgg_nm AS sgg_nm,
+		jm.jm_emd_nm AS emd_nm,
+		jm.jm_ri_nm AS ri_nm,
+		jm.jm_jibun AS jibun,
+		jm.jm_deunggi_date AS deunggi_date,
+		TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
+		COALESCE(jm.jm_jasan_no, '') AS jasan_no,
+		COALESCE(jm.jm_comple_yn, '') AS comple_yn,
+		COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
+		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
+		COALESCE('', '') AS gover_date,
+		NULL AS pay_date,
+		NULL AS gover_area,
+		NULL AS gover_length,
+		jm.jm_jasan_money AS jasan_money,
+		NULL AS pay_money,
+		jm.jm_cancel_yn AS cancel_yn,
+		jm.jm_manage_yn AS manage_yn,
+		jm.jm_dosiplan AS dosiplan,
+		CASE
+		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jm.jm_pnu) > 0 THEN 'Y'
+		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jm.jm_pnu) = 0 THEN 'N'
+		END AS toji_plan
+		FROM jisang_master jm
+		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
+		WHERE 1 = 1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and jm.jm_jisa=#{jisa}
+		</if>
+		) AS r
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and r.idx=#{idx}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
+			and r.cancel_yn=#{cancelYn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
+			and r.manage_yn=#{manageYn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
+			and r.dosiplan=#{dosiplan}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '${address}%'
+		</if>
+		<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
+			and r.right_type in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
+			and r.toji_plan=#{toji_plan_type}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
+			and r.toji_type=#{toji_type}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
+			and (SELECT COUNT(o.address) AS overlap
+			FROM
+			(
+			(
+			SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
+			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
+			where 1=1
+
+			)
+			) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+		</if>
+
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+			ORDER BY r.${orderCol} ${desc}
+		</if>
+		<if test="length>0">
+			limit #{length} offset #{start}
+		</if>
+
+	</select>
+
+	<select id="selectTotalCount" parameterType="java.util.HashMap" resultType="Integer">
+		SELECT count(*) as count FROM (
+		SELECT jm.jm_idx AS index,
+		jm.jm_jisang_no AS idx,
+		0 AS gidx,
+		jm.jm_jisa AS jisa,
+		jm.jm_save_status AS save_status,
+		jm.jm_account_yn AS account_yn,
+		jm.jm_cancel_date AS cancel_date,
+		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
+		jm.jm_toji_type AS toji_type,
+		jm.jm_pipe_meter AS pipe_meter,
+		jm.jm_jimok_text AS jimok_text,
+		js.js_souja_name AS souja_name,
+		COALESCE(jm.jm_jijuk_area, NULL) AS jijuk_area,
+		COALESCE(jm.jm_pyeonib_area, NULL) AS pyeonib_area,
+		jm.jm_sido_nm AS sido_nm,
+		jm.jm_sgg_nm AS sgg_nm,
+		jm.jm_emd_nm AS emd_nm,
+		jm.jm_ri_nm AS ri_nm,
+		jm.jm_jibun AS jibun,
+		jm.jm_deunggi_date AS deunggi_date,
+		TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
+		COALESCE(jm.jm_jasan_no, '') AS jasan_no,
+		COALESCE(jm.jm_comple_yn, '') AS comple_yn,
+		COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
+		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
+		COALESCE('', '') AS gover_date,
+		NULL AS pay_date,
+		NULL AS gover_area,
+		NULL AS gover_length,
+		jm.jm_jasan_money AS jasan_money,
+		NULL AS pay_money,
+		jm.jm_cancel_yn AS cancel_yn,
+		jm.jm_manage_yn AS manage_yn,
+		jm.jm_dosiplan AS dosiplan,
+		CASE
+		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jm.jm_pnu) > 0 THEN 'Y'
+		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jm.jm_pnu) = 0 THEN 'N'
+		END AS toji_plan
+		FROM jisang_master jm
+		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
+		WHERE 1 = 1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and nm.nm_jisa=#{jisa}
+		</if>
+		) AS r
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and r.idx=#{idx}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
+			and r.cancel_yn=#{cancelYn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
+			and r.manage_yn=#{manageYn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
+			and r.dosiplan=#{dosiplan}
+		</if>
+		<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
+			and r.right_type in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
+			and r.toji_plan=#{toji_plan_type}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
+			and (SELECT COUNT(o.address) AS overlap
+			FROM
+			(
+			(
+			SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
+			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
+			where 1=1
+			)
+
+			) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
+			and r.toji_type=#{toji_type}
+		</if>
+	</select>
 </mapper>
