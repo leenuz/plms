@@ -580,3 +580,11 @@ $(document).on("click","#deleteSelectedBtn",function(){
 	            alert('삭제할 파일을 선택해 주세요.');
 	        }
 });
+
+
+$(document).on("click","#jijukNewWindowBtn",function(){
+	window.open('http://202.68.225.158:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'jijukWindow', 'width=1024,height=768');
+});
+
+
+

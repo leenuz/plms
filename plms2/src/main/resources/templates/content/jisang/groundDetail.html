@@ -152,13 +152,15 @@ margin:10px;
             </div>
 			
             <div class="contWrap">
-
+				
                 <div class="contBox contBoxMini01">
-
-                    <div class="thirdTitle">
-                        <h2>・참고 지적도</h2>
-                    </div>
-					<iframe src="http://211.196.153.235:7070/geoserver/dopcogis/wms?service=WMS&version=1.1.1&request=GetMap&layers=dopcogis%3Adxf_test&bbox=128.48537837663474,35.926544471907825,128.48578475095366,35.927040257710196&width=660&height=214&srs=EPSG%3A4326&styles=&format=application/openlayers" class="contentDetailBox mapFigure"></iframe>
+				<div class="thirdTitle" style="width:100%;">
+					<div style="display:inline-block;"><h2>・참고 지적도</h2></div>
+					<div style="display:inline-block;float:right;"><button class="viewDetailButton" onClick="moveToCityHall();">이동</button></div>
+					<div style="display:inline-block;float:right;"><button class="viewDetailButton" id="jijukNewWindowBtn">크게보기</button></div>
+				</div>
+                   <iframe src="http://202.68.225.158:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17" class="contentDetailBox mapFigure"></iframe>
+					<!-- <iframe src="http://211.196.153.235:7070/geoserver/dopcogis/wms?service=WMS&version=1.1.1&request=GetMap&layers=dopcogis%3Adxf_test&bbox=128.48537837663474,35.926544471907825,128.48578475095366,35.927040257710196&width=660&height=214&srs=EPSG%3A4326&styles=&format=application/openlayers" class="contentDetailBox mapFigure"></iframe> -->
                     <!--  <div class="contentDetailBox mapFigure"></div> -->
 
                 </div>
