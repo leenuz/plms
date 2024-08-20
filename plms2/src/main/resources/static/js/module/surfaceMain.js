@@ -1,6 +1,8 @@
 import { surfaceHeaderEvet } from './surfaceHeader.js';
 import { surfaceSelectEvet , handleCheckboxes } from './surfaceSelectEvet.js';
 
+import { surfaceInquireSelectEvet , surfaceInquireCheckboxes } from './surfaceInquireSelectEvet.js';
+
 
 window.addEventListener("load" , () => {
 
@@ -31,9 +33,9 @@ window.addEventListener("load" , () => {
              handleCheckboxes(companyland03);
             }
             else if(pathName === `/jisang/menu02_1`){
-                const companyland04 = document.getElementsByName("companyland04");
-                return surfaceSelectEvet("#dopcoSurfacePart .surfaceSelectsTitleBtn" ,"#dopcoSurfacePart .sufaceSelectList"),
-                handleCheckboxes(companyland04);
+                const inquireCheckCont01 = document.getElementsByName("inquireCheckCont01");
+                return surfaceInquireSelectEvet("#dopcoSurfacePart .surfaceSelectsTitleBtn" ,"#dopcoSurfacePart .sufaceSelectList","#dopcosurfaceInquire .sufaceSelectList .surfaceSelectListMember" , ".surfaceInquireHiddenSelect01" , "inquireCheckCont01"),
+                surfaceInquireCheckboxes(inquireCheckCont01);
             }
              else if(pathName === `/jisang/menu02_2`){
                 const companyland05 = document.getElementsByName("companyland05");

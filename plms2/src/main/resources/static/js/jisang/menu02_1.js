@@ -23,14 +23,41 @@ $(document).on("click","#registerBtn",function(){
        console.log($("#menuHiddenSelectBox01_1").val());
 	   console.log($("#searchForm").serialize());
 	   
-	   var formSerializeArray = $('#searchForm').serializeArray();
+	   var formSerializeArray = $('#searchForm').serializeArray();
 	   console.log(formSerializeArray)
-	   var object = {};
-	   for (var i = 0; i < formSerializeArray.length; i++){
-	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+	   // 체크박스의 id와 value를 수집하여 formData에 추가
+//       $('#searchForm input[type="checkbox"]').each(function() {
+//           if ($(this).is(':checked')) {
+//               formSerializeArray.push({
+//                   name: $(this).attr('id'), // id를 name으로 사용
+//                   value: $(this).val()       // value는 동일하게 유지
+//               });
+//           }
+//       });
+       // 체크박스 값들을 조합하여 문자열로 만들기
+       var jimokText = ''; // 빈 문자열 초기화
+
+       // .choiceCheckWrapper 안의 체크된 체크박스 값 수집
+       $('.choiceCheckWrapper input[type="checkbox"]:checked').each(function() {
+           jimokText += $(this).attr('name') + ','; // 값들 사이에 쉼표(,)로 구분
+       });
+
+       // 마지막 쉼표 제거
+       if (jimokText.endsWith(',')) {
+           jimokText = jimokText.slice(0, -1);
+       }
+
+       formSerializeArray.push({
+           name: 'jimok_text',
+           value: jimokText
+       });
+
+	   var object = {};
+	   for (var i = 0; i < formSerializeArray.length; i++){
+	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
 	   }
 	   
-	   var json = JSON.stringify(formSerializeArray);
+	   var json = JSON.stringify(formSerializeArray);
 	  
 	  console.log("----------jsonobj------------");
 	  console.log(json);
@@ -238,7 +265,7 @@ function datatablebasic(){
 function loadDataTable(params){
 	console.log("-----start loadDataTable----------");
 	console.log(params);
-	
+
 	//var json=JSON.stringify(params);
 
 	table=$('#userTable').DataTable({
@@ -288,6 +315,14 @@ function loadDataTable(params){
 						d.right_overlap=params.OverlapCheck01;
 
 						d.dosiplan=params.dosiplan;
+                        d.jimok_text=params.jimok_text;
+                        d.comple_yn=params.comple_yn;
+                        d.deunggi_date=params.start_date + '~' + params.end_date;
+                        d.save_status=params.account_yn;
+                        d.start_date = params.start_date;
+                        d.end_date = params.end_date;
+
+
 						var ask=(params.askMenu01==undefined || params.askMenu01==null)?'0':params.askMenu01;
 						console.log("askmenu:"+ask);
 
@@ -345,17 +380,19 @@ function loadDataTable(params){
 
                    columns : [
                                   {data: "no","orderable":false},
-                                  {data: "jisa"},
-                                  {data:"address"},
+                                  {data: "jisa","defaultContent":""},
+                                  {data:"address","defaultContent":""},
                                   {data:"jasan_no","defaultContent":""},
                                   {data: "jimok_text","defaultContent":""}, //5
                                   {data: "souja_name","defaultContent":""},
                                   {data: "jijuk_area","defaultContent":""},
                                   {data: "pyeonib_area","defaultContent":""},
-                                  {data: "chuideuk_date"},
-                                  {data: "comple_yn"},
-                                  {data: "deunggi_date"},
-                                  {data: "save_status"},
+                                  {data: "chuideuk_date","defaultContent":""},
+                                  {data: "comple_yn","defaultContent":""},
+                                  {data: "deunggi_date","defaultContent":""},
+                                  {data: "save_status","defaultContent":""},
+                                  {date: "start_date","defaultContent":""},
+                                  {date: "end_date","defaultContent":""},
                                  {
                                        data: "idx", // 지도보기 데이터 수정해야함
                                        render: function(data, type, row, meta) {

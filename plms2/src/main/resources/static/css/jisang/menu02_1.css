@@ -1,0 +1,2975 @@
+@charset "utf-8";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url("../header.css");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  margin: 0;
+  font-family: Pretendard;
+  /* overflow-x: hidden; */
+}
+
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+span {
+  margin: 0;
+  font-family: Pretendard;
+}
+ul li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  font-family: Pretendard;
+}
+button {
+  border: none;
+  background: transparent;
+  text-align: center;
+}
+button:hover {
+  cursor: pointer;
+}
+input {
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+select:focus {
+  outline: none;
+}
+
+#dopcoSurfacePart {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  overflow-y: scroll;
+}
+
+#dopcoSurfacePart {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+#dopcoSurfacePart::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcoSurfacePart::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoSurfacePart .surfaceHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+#dopcoSurfacePart .surfacePartWrappers {
+  width: calc(100% - 100px);
+  height: 100%;
+  margin: 0 auto;
+  float: left;
+}
+
+/* 스크롤바 Inquire */
+
+#dopcoSurfacePart::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcoSurfacePart::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoSurfacePart .inquire_header {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+#dopcoSurfacePart .surfaceInquireWrappers {
+  width: calc(100% - 100px);
+  height: 100%;
+  margin: 0 auto;
+  float: left;
+}
+
+/* 타이틀 */
+#dopcoSurfacePart .surfacePartWrappers .surfacePartTitleBoxs {
+  padding: 30px 0px 25px;
+}
+
+#dopcoSurfacePart .surfacePartWrappers .surfacePartTitleBoxs h5 {
+  color: #31394c;
+  font-size: 22px;
+  padding: 0px 50px;
+}
+
+/* 타이틀 Inquire */
+#dopcoSurfacePart .surfaceInquireWrappers .surfaceInquireTitleBoxs {
+  padding: 30px 0px 25px;
+}
+
+#dopcoSurfacePart .surfaceInquireWrappers .surfaceInquireTitleBoxs h5 {
+  color: #31394c;
+  font-size: 22px;
+  padding: 0px 50px;
+}
+
+
+/* section */
+
+#dopcoSurfacePart .surfacePartWrappers .surfaceSectionBoxs {
+  padding: 0px 20px;
+  margin: 0 auto;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont {
+  width: 100%;
+  height: 253px;
+  padding: 10px 0px;
+  margin: 0 auto;
+  border-radius: 20px;
+  border: 1px solid #cddbf099;
+  background-color: #f7f9fc;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide {
+  /* width: 100%; */
+  height: 50%;
+  width: 97%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide:last-child {
+  margin-top: 3px;
+  justify-content: space-between;
+  align-items: start;
+}
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide:first-child {
+  border-bottom: 1px solid #cddbf099;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .sectionMenuListBoxs {
+  width: 30%;
+  /* padding: 0px 10px; */
+  height: 100%;
+  margin: 0 auto;
+  background-color: transparent;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .sectionMenuListBoxs
+  .selectTitle {
+  padding: 10px 0px;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .sectionMenuListBoxs
+  .selectTitle
+  p {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4e5871;
+}
+
+/* section Inquire */
+
+#dopcoSurfacePart .surfaceInquireWrappers .surfaceInquireSectionBoxs {
+  padding: 0px 20px;
+  margin: 0 auto;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont {
+  width: 100%;
+  height: 253px;
+  padding: 10px 0px;
+  margin: 0 auto;
+  border-radius: 20px;
+  border: 1px solid #cddbf099;
+  background-color: #f7f9fc;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide {
+  /* width: 100%; */
+  height: 50%;
+  width: 97%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide:last-child {
+  margin-top: 3px;
+  justify-content: space-between;
+  align-items: start;
+}
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide:first-child {
+  border-bottom: 1px solid #cddbf099;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .sectionMenuListBoxs {
+  width: 30%;
+  height: 100%;
+  margin: 0 auto;
+  background-color: transparent;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .sectionMenuListBoxs
+  .selectTitle {
+  padding: 10px 0px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .sectionMenuListBoxs
+  .selectTitle
+  p {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4e5871;
+}
+
+/* 공통 셀렉박스 */
+
+#dopcoSurfacePart .surfaceSelects {
+  max-width: 203px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: #fff;
+  position: relative;
+}
+
+/* 공통 셀렉박스 Inquire */
+
+/*
+#dopcoSurfacePart .surfaceSelects {
+  max-width: 203px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: #fff;
+  position: relative;
+}
+*/
+
+/* 지목 셀렉박스 */
+
+#dopcoSurfacePart .surfaceSelects.widthAdd {
+  min-width: 310px;
+}
+
+/**/
+
+#dopcoSurfacePart .surfaceSelects .surfaceSelectsTitleBtn {
+  width: 100%;
+  padding: 0px 15px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  display: block;
+  background-color: transparent;
+  text-align: left;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  background-image: url(/assets/media/menu01/surfaceNavArrowdown.png);
+  background-size: 20px;
+  background-position: 94% center;
+  background-repeat: no-repeat;
+  color: #6e7d88;
+  filter: grayscale(100);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#dopcoSurfacePart .surfaceSelects .surfaceSelectsTitleBtn.active {
+  color: #2b7de1;
+  border: 1px solid #2b7de1;
+  filter: grayscale(0);
+}
+
+#dopcoSurfacePart .surfaceSelects .sufaceSelectList {
+  position: absolute;
+  top: 47px;
+  left: 0;
+  width: 100%;
+  height: 0px;
+  border-radius: 10px;
+  border: none;
+  background-color: #fff;
+  border: 1px solid #acbdd7;
+  opacity: 0;
+  transition: 300ms;
+  overflow: hidden;
+}
+
+#dopcoSurfacePart .surfaceSelects .sufaceSelectList.active {
+  display: block;
+  height: 243px;
+  z-index: 9999;
+  opacity: 1;
+  transition: height 500ms;
+}
+
+#dopcoSurfacePart .surfaceSelects .sufaceSelectList.smallHeight.active {
+  opacity: 1;
+  display: block;
+  height: 150px;
+  transition: height 500ms;
+}
+
+#dopcoSurfacePart .surfaceSelects .sufaceSelectList .surfaceSelectListMember {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background-color: transparent;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+/* 셀릭박스 스크롤바 */
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar-track {
+}
+
+/* 셀렉박스내 체크박스 */
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember.checkBoxsContent
+  li
+  label {
+  width: 25px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 5px;
+  background-color: #e0e8f2;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember.checkBoxsContent
+  li
+  input[type="checkbox"] {
+  display: none;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember.checkBoxsContent
+  li
+  input[type="checkbox"]:checked
+  + label {
+  background-color: #4e5871;
+  background-image: url(/assets/media/menu01/checkFill.png);
+  background-repeat: no-repeat;
+  background-size: 15px;
+  background-position: center center;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember
+  li {
+  padding: 0px 10px;
+  height: 41px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 5px;
+  margin: 6px 5px;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember
+  li:hover {
+  background-color: #edf2f9;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember
+  li
+  p {
+  color: #4e5871;
+  font-size: 15px;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+
+/* date css */
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .inputControlBoxs
+  .dateListBox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 203px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: #fff;
+  border: 1px solid #cfddf2;
+  filter: grayscale(100);
+  background-image: url(/assets/media/menu02/date.png);
+  background-position: 7px 15px;
+  background-size: 15px;
+  background-repeat: no-repeat;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .inputControlBoxs
+  .dateListBox.active {
+  filter: grayscale(0);
+  color: #2b7de1;
+  border: 1px solid #2b7de1;
+  background-image: url(/assets/media/menu02/calendarColor.png);
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .inputControlBoxs
+  .dateListBox
+  span {
+  font-size: 10px;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .inputControlBoxs
+  .inputControlList
+  input[type="text"] {
+  width: 173px;
+  height: 44px;
+  padding: 0px 15px;
+  border-radius: 10px;
+  background-color: #edf2f9;
+  color: #6e7d88;
+  font-size: 15px;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .inputControlBoxs
+  .dateListBox
+  input[type="date"] {
+  width: 42%;
+  height: 100%;
+  font-size: 13px;
+  margin: 0px 3px;
+  text-align: center;
+  word-spacing: -3px;
+  background-color: transparent;
+  position: relative;
+  color: #2b7de1;
+  font-family: Pretendard;
+}
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .inputControlBoxs
+  .dateListBox
+  input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .inputControlBoxs
+  .dateListBox
+  input[type="date"]::-webkit-inner-spin-button {
+  /* display: none; */
+  appearance: none;
+}
+
+
+
+/* 권리중복필지 체크박스 */
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .checkBoxControlList {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .checkBoxControlList
+  p {
+  font-size: 15px;
+  color: #4e5871;
+  font-weight: 600;
+  padding: 0px 10px;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .checkBoxControlList
+  input[type="checkbox"] {
+  display: none;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .checkBoxControlList
+  label {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background-color: #e0e8f2;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .checkBoxControlList
+  input[type="checkbox"]:checked
+  + label {
+  background-color: #4e5871;
+  background-image: url(/assets/media/menu01/checkFill.png);
+  background-repeat: no-repeat;
+  background-size: 15px;
+  background-position: center center;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .devideSecondTitles {
+  padding: 20px 20px 0px 0px;
+}
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionRadioBoxs {
+  width: 73%;
+  height: 100%;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionRadioBoxs
+  .radioBoxs {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionRadioBoxs
+  .radioBoxs
+  li {
+  padding: 0px 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionRadioBoxs
+  .radioBoxs:nth-child(2)
+  li:first-child {
+  padding: 0px 3px;
+}
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionRadioBoxs
+  .radioBoxs:nth-child(2)
+  li {
+  padding: 0px 8.5px 0px 3px;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionRadioBoxs
+  .radioBoxs
+  li
+  input[type="radio"] {
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionRadioBoxs
+  .radioBoxs
+  li
+  span {
+  font-size: 15px;
+  color: #31394c;
+  padding: 0px 30px 0px 5px;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionRadioBoxs
+  .radioBoxs
+  li.addressInput
+  input[type="search"] {
+  background-color: #edf2f9;
+  width: 868px;
+  padding: 0px 10px;
+  height: 44px;
+  border-radius: 10px;
+}
+
+/* 주소란 셀렉박스 width값 */
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionRadioBoxs
+  .radioBoxs
+  li
+  .surfaceSelects {
+  min-width: 164px;
+}
+
+/* 셀렉박스 스크롤바 */
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionRadioBoxs
+  .radioBoxs
+  li
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionRadioBoxs
+  .radioBoxs
+  li
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionRadioBoxs
+  .radioBoxs
+  li
+  .inputControlList
+  input[type="text"] {
+  width: 136px;
+  height: 44px;
+  padding: 0px 15px;
+  border-radius: 10px;
+  background-color: #edf2f9;
+  color: #6e7d88;
+  font-size: 15px;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionBtnBoxs {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  height: 100%;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionBtnBoxs
+  button,
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionBtnBoxs
+  a {
+  height: 44px;
+  border-radius: 10px;
+  display: block;
+  margin: 5px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionBtnBoxs
+  a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionBtnBoxs
+  .registerBtn {
+  padding: 0px 40px;
+  background-color: #2b7de1;
+  color: #fff;
+}
+
+#dopcoSurfacePart
+  .surfacePartWrappers
+  .surfaceSectionBoxs
+  .surfacePartSectionCont
+  .surfacePartSectionContDevide
+  .surfacePartSectionBtnBoxs
+  .queryBtn {
+  padding: 0px 36px;
+  background-color: #e5efff;
+  color: #2b7de1;
+}
+
+/* 메인화면 */
+
+#dopcoSurfacePart .surfaceMainContentWrapper {
+  margin: 0 auto;
+  padding: 15px 20px;
+}
+
+#dopcoSurfacePart .surfaceMainContentWrapper .surfaceMainContent {
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+#dopcoSurfacePart .surfaceMainContentWrapper .surfaceMainContent .dataTitles {
+  padding: 10px 20px;
+  position: relative;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataTitles
+  h5 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataTitles
+  h5
+  span {
+  color: #2b7de1;
+  padding: 0px 8px;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataTitles
+  .surfaceMainContentDownloadBoxs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataTitles
+  .surfaceMainContentDownloadBoxs
+  .excelDownload {
+  width: 159px;
+  padding: 0px 30px;
+  height: 38px;
+  line-height: 39px;
+  border-radius: 10px;
+  background-color: #4e5871;
+  font-size: 15px;
+  font-weight: 600;
+  background-image: url(/assets/media/menu01/download.png);
+  background-size: 11px;
+  background-repeat: no-repeat;
+  background-position: 123px center;
+  color: #fff;
+  text-align: left;
+  margin-right: 10px;
+}
+
+/* 총 검색건수의 셀렉박스 */
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataTitles
+  .surfaceMainContentDownloadBoxs
+  .surfaceSelects {
+  width: 83px;
+  height: 38px;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataTitles
+  .surfaceMainContentDownloadBoxs
+  .surfaceSelects
+  .sufaceSelectList {
+  top: 40px;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  height: 537px;
+  margin-top: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+/* 스크롤바 */
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers::-webkit-scrollbar-track {
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont {
+  width: 30%;
+  height: 100%;
+  float: left;
+  position: absolute;
+  top: 0;
+}
+
+/* .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont:first-child {
+  border-right: 1px solid #cddbf0;
+} */
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont:first-child
+  ul {
+  border-right: 1px solid #cddbf0;
+}
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond {
+  width: 70%;
+  height: auto;
+  overflow-x: scroll;
+  overflow-y: visible;
+  left: 30.1%;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond
+  .scrollContentBoxies {
+  width: 350%;
+  height: 100%;
+}
+
+/* 스크롤바 */
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond::-webkit-scrollbar-track {
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle {
+  height: 71px;
+  background-color: #f7f9fc;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont:last-child
+  .dataTitle
+  ul
+  li {
+  width: 400px;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li {
+  width: 30%;
+  height: 100%;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li {
+  border-right: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+}
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li:last-child {
+  border-right: none;
+}
+
+/* 타이틀 li 사이즈별 퍼센트 목록 */
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.extraSmallWidth {
+  width: 15%;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.smallWidth {
+  width: 20%;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.mediumWidth {
+  width: 50%;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.largeWidth {
+  width: 70%;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul
+  li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li
+  p {
+  font-size: 14px;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: #3c3c3c;
+  font-size: 14px;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  a.mouseEvet {
+  color: #2b7de1;
+}
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  a
+  li {
+  width: 30%;
+  height: 44px;
+  border-right: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+}
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  a
+  li:last-child {
+  border-right: none;
+}
+
+/* 컨텐츠 li 사이즈별 목록 */
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  ul.dataContent
+  a
+  li.extraSmallWidth {
+  width: 15%;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  ul.dataContent
+  a
+  li.smallWidth {
+  width: 20%;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  ul.dataContent
+  a
+  li.mediumWidth {
+  width: 50%;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  ul.dataContent
+  a
+  li.largeWidth {
+  width: 70%;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  a
+  li
+  p {
+  text-align: center;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .boardPageBoxs {
+  padding: 30px 0px;
+  margin: 0 auto;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .boardPageBoxs
+  ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .boardPageBoxs
+  ul
+  li {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .boardPageBoxs
+  ul
+  li
+  button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .boardPageBoxs
+  ul
+  li
+  button
+  img {
+  height: 20px;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .boardPageBoxs
+  ul
+  li.arrowLeftWrapper
+  button {
+  margin-right: 10px;
+}
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .boardPageBoxs
+  ul
+  li.arrowRightWrapper
+  button {
+  margin-left: 10px;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .boardPageBoxs
+  ul
+  li.arrowLeftWrapper
+  img {
+  transform: rotate(180deg);
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .boardPageBoxs
+  ul
+  li.pageCountBoxs
+  p {
+  font-size: 14px;
+  width: 29px;
+  height: 29px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+  margin-right: 12px;
+  color: #b1bad0;
+  font-weight: 700;
+  cursor: pointer;
+}
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .boardPageBoxs
+  ul
+  li.pageCountBoxs
+  p:last-child {
+  margin-right: 0px;
+}
+
+#dopcoSurfacePart
+  .surfaceMainContentWrapper
+  .surfaceMainContent
+  .boardPageBoxs
+  ul
+  li.pageCountBoxs
+  p.active {
+  background-color: #edf2f9;
+  color: #2b7de1;
+}
+
+/* Inquire 속성 설정 */
+#dopcoSurfacePart .surfaceSelects .surfaceSelectsTitleBtn {
+  width: 100%;
+  padding: 0px 15px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  display: block;
+  background-color: transparent;
+  text-align: left;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  background-image: url(/assets/media/menu01/surfaceNavArrowdown.png);
+  background-size: 20px;
+  background-position: 94% center;
+  background-repeat: no-repeat;
+  color: #6e7d88;
+  filter: grayscale(100);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .surfaceSelectsTitleBtn.active {
+  color: #2b7de1;
+  border: 1px solid #2b7de1;
+  filter: grayscale(0);
+}
+
+/* 지목 셀렉박스 */
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .surfaceSelectsTitleBtn
+  .countNum {
+  width: 30px;
+  height: 30px;
+  background-color: #4e5871;
+  border-radius: 8px;
+  color: #fff;
+  position: absolute;
+  right: 80px;
+  font-size: 13px;
+  text-align: center;
+  line-height: 30px;
+  font-style: normal;
+  display: none;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .surfaceSelectsTitleBtn
+  .countNum.active {
+  display: inline-block;
+  z-index: 999;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .surfaceSelectsTitleBtn
+  span {
+  padding: 0px 8px;
+  display: inline-block;
+  line-height: 31px;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  color: #2b7de1;
+  font-size: 13px;
+  text-align: center;
+  background-color: #ebf2fd;
+  margin-right: 3px;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .surfaceSelectsTitleBtn
+  span
+  .listRemoveBtn {
+  color: #9dc2f1;
+  display: inline-block;
+  padding: 3px;
+  position: relative;
+  z-index: 999;
+  font-size: 15px;
+}
+
+/**/
+
+#dopcoSurfacePart .surfaceSelects .sufaceSelectList {
+  position: absolute;
+  top: 47px;
+  left: 0;
+  width: 100%;
+  height: 0px;
+  border-radius: 10px;
+  border: none;
+  background-color: #fff;
+  border: 1px solid #acbdd7;
+  opacity: 0;
+  transition: 300ms;
+  overflow: hidden;
+}
+
+#dopcoSurfacePart .surfaceSelects .sufaceSelectList.active {
+  display: block;
+  height: 243px;
+  z-index: 9999;
+  opacity: 1;
+  transition: height 500ms;
+}
+
+/* 지목셀렉박스의 .sufaceSelectList scrollAdd에 스크롤 추가 */
+
+#dopcoSurfacePart .surfaceSelects .sufaceSelectList.scrollAdd.active {
+  overflow-y: scroll;
+  display: block;
+  height: 320px;
+  z-index: 9999;
+  opacity: 1;
+  transition: height 500ms;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList.smallHeight.active {
+  opacity: 1;
+  display: block;
+  height: 150px;
+  transition: height 500ms;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList.extrasmallHeight.active {
+  opacity: 1;
+  display: block;
+  height: 100px;
+  transition: height 500ms;
+}
+
+/* 지목 셀렉박스 */
+
+#dopcoSurfacePart .surfaceSelects .sufaceSelectList .hiddenBoxs {
+  position: absolute;
+  background-color: #fff;
+  width: 100%;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .hiddenBoxs
+  .addChoiceBoxs {
+  padding: 10px 0px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .hiddenBoxs
+  .addChoiceBoxs
+  h5 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4e5871;
+  margin-left: 19px;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .hiddenBoxs
+  .addChoiceBoxs
+  button.resetBtn {
+  font-size: 14px;
+  width: 75px;
+  height: 30px;
+  color: #2b7de1;
+  background: url(/assets/media/menu02/reset.png);
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 15px;
+  position: relative;
+  z-index: 9999;
+}
+
+#dopcoSurfacePart .surfaceSelects .sufaceSelectList .addChoiceCont {
+  margin: 5px 10px;
+  border-bottom: 1px solid #cddbf0;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .addChoiceCont
+  .choiceCheckWrapper {
+  width: 100%;
+  height: 100%;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .addChoiceCont
+  .choiceCheckWrapper
+  li {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 5px;
+  margin: 6px 5px;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .addChoiceCont
+  .choiceCheckWrapper
+  li
+  label {
+  width: 15px;
+  height: 15px;
+  margin-right: 8px;
+  border-radius: 4px;
+  background-color: #e0e8f2;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .addChoiceCont
+  .choiceCheckWrapper
+  li
+  input[type="checkbox"] {
+  display: none;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .addChoiceCont
+  .choiceCheckWrapper
+  li
+  input[type="checkbox"]:checked
+  + label {
+  background-color: #4e5871;
+  background-image: url(/assets/media/menu01/checkFill.png);
+  background-repeat: no-repeat;
+  background-size: 10px;
+  background-position: center center;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .addChoiceCont
+  .choiceCheckWrapper
+  li
+  p {
+  color: #4e5871;
+  font-size: 15px;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .hiddenBoxs
+  .addChoiceBoxs {
+  display: flex;
+}
+
+/* 지목셀렉박스내 닫기,저장버튼 */
+
+#dopcoSurfacePart .surfaceSelects .checkboxRegisterBtnWrap {
+  position: absolute;
+  top: 360px;
+  width: 100%;
+  z-index: 9999;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .checkboxRegisterBtnWrap
+  .surfaceInquireSelectRegisterBtnBoxs {
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .checkboxRegisterBtnWrap
+  .surfaceInquireSelectRegisterBtnBoxs
+  button {
+  flex: 1;
+  height: 35px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  background-color: #2b7de1;
+  color: #fff;
+  position: relative;
+  top: 0px;
+  margin: 0px 6px;
+  box-shadow: 8px 8px 30px #fff;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .checkboxRegisterBtnWrap
+  .surfaceInquireSelectRegisterBtnBoxs
+  button:first-child {
+  background-color: #d6d6d6;
+  color: #636363;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList.active
+  ~ .checkboxRegisterBtnWrap
+  .surfaceInquireSelectRegisterBtnBoxs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/**/
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background-color: transparent;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+/* 셀릭박스 스크롤바 */
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar-track {
+}
+
+/* 지목 셀렉박스내 스크롤 */
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList.scrollAdd::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList.scrollAdd::-webkit-scrollbar-thumb {
+  height: 20%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember.checkBoxsContent {
+  top: 100px;
+  overflow: visible;
+}
+
+/* 지목 셀렉박스내 체크박스 */
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember.checkBoxsContent
+  li
+  label {
+  width: 15px;
+  height: 15px;
+  margin-right: 8px;
+  border-radius: 4px;
+  background-color: #e0e8f2;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember.checkBoxsContent
+  li
+  input[type="checkbox"] {
+  display: none;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember.checkBoxsContent
+  li
+  input[type="checkbox"]:checked
+  + label {
+  background-color: #4e5871;
+  background-image: url(/assets/media/menu01/checkFill.png);
+  background-repeat: no-repeat;
+  background-size: 10px;
+  background-position: center center;
+}
+
+/**/
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember
+  li {
+  padding: 0px 10px;
+  height: 41px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 5px;
+  margin: 6px 5px;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember.checkBoxsContent
+  li:last-child {
+  padding-bottom: 70px;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember
+  li:hover {
+  background-color: #edf2f9;
+}
+
+#dopcoSurfacePart
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember
+  li
+  p {
+  color: #4e5871;
+  font-size: 15px;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .inputControlBoxs
+  .inputControlList
+  input[type="text"] {
+  width: 173px;
+  height: 44px;
+  padding: 0px 15px;
+  border-radius: 10px;
+  background-color: #edf2f9;
+  color: #6e7d88;
+  font-size: 15px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .inputControlBoxs
+  .dateListBox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 203px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: #fff;
+  border: 1px solid #cfddf2;
+  filter: grayscale(100);
+  background-image: url(/assets/media/menu02/date.png);
+  background-position: 7px 15px;
+  background-size: 15px;
+  background-repeat: no-repeat;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .inputControlBoxs
+  .dateListBox.active {
+  filter: grayscale(0);
+  color: #2b7de1;
+  border: 1px solid #2b7de1;
+  background-image: url(/assets/media/menu02/calendarColor.png);
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .inputControlBoxs
+  .dateListBox
+  input[type="date"] {
+  width: 42%;
+  height: 100%;
+  font-size: 13px;
+  margin: 0px 3px;
+  text-align: center;
+  word-spacing: -3px;
+  background-color: transparent;
+  position: relative;
+  color: #2b7de1;
+  font-family: Pretendard;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .inputControlBoxs
+  .dateListBox
+  span {
+  font-size: 10px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .inputControlBoxs
+  .dateListBox
+  input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid green; */
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .inputControlBoxs
+  .dateListBox
+  input[type="date"]::-webkit-inner-spin-button {
+  /* display: none; */
+  appearance: none;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .devideSecondTitles {
+  padding: 20px 20px 0px 0px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #4e5871;
+}
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs {
+  width: 86%;
+  height: 100%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li {
+  padding: 0px 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs:nth-child(2)
+  li:first-child {
+  padding: 0px 3px;
+}
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs:nth-child(2)
+  li {
+  padding: 0px 8.5px 0px 3px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li
+  input[type="radio"] {
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li
+  span {
+  font-size: 15px;
+  color: #31394c;
+  font-family: Pretendard;
+  font-weight: 600;
+  padding: 0px 30px 0px 5px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li.addressInput
+  input[type="search"] {
+  background-color: #edf2f9;
+  width: 868px;
+  padding: 0px 10px;
+  height: 44px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+/* 주소란 셀렉박스 width값 */
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li
+  .surfaceSelects {
+  min-width: 164px;
+}
+
+/* 셀렉박스 스크롤바 */
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li
+  .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionRadioBoxs
+  .radioBoxs
+  li
+  .inputControlList
+  input[type="text"] {
+  width: 136px;
+  height: 44px;
+  padding: 0px 15px;
+  border-radius: 10px;
+  background-color: #edf2f9;
+  color: #6e7d88;
+  font-size: 15px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionBtnBoxs {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  height: 100%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionBtnBoxs
+  button {
+  height: 44px;
+  border-radius: 10px;
+  display: block;
+  margin: 5px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireWrappers
+  .surfaceInquireSectionBoxs
+  .surfaceInquireSectionCont
+  .surfaceInquireSectionContDevide
+  .surfaceInquireSectionBtnBoxs
+  .surfaceInquireRegisterBtn {
+  padding: 0px 40px;
+  background-color: #2b7de1;
+  color: #fff;
+}
+
+/* 메인화면 */
+
+#dopcoSurfacePart .surfaceInquireMainContentWrapper {
+  margin: 0 auto;
+  padding: 15px 20px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent {
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles {
+  padding: 10px 20px;
+  position: relative;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles
+  h5 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles
+  h5
+  span {
+  color: #2b7de1;
+  padding: 0px 8px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles
+  .surfaceInquireMainContentDownloadBoxs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles
+  .surfaceInquireMainContentDownloadBoxs
+  .surfaceInquireExcelDownload {
+  width: 159px;
+  padding: 0px 30px;
+  height: 38px;
+  line-height: 39px;
+  border-radius: 10px;
+  background-color: #4e5871;
+  font-size: 15px;
+  font-weight: 600;
+  background-image: url(/assets/media/menu01/download.png);
+  background-size: 11px;
+  background-repeat: no-repeat;
+  background-position: 123px center;
+  color: #fff;
+  text-align: left;
+  margin-right: 10px;
+}
+
+/* 총 검색건수의 셀렉박스 */
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles
+  .surfaceInquireMainContentDownloadBoxs
+  .surfaceSelects {
+  width: 137px;
+  height: 38px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataTitles
+  .surfaceInquireMainContentDownloadBoxs
+  .surfaceSelects
+  .sufaceSelectList {
+  top: 40px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  height: 527px;
+  margin-top: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow-x: hidden;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers.scroll {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers::-webkit-scrollbar-track {
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont {
+  width: 30%;
+  height: 100%;
+  float: left;
+  position: absolute;
+  top: 0;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond02 {
+  width: 70%;
+  height: auto;
+  overflow-x: scroll;
+  overflow-y: visible;
+  left: 30%;
+  border-left: 1px solid #cddbf0;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond02
+  .scrollContentBoxies {
+  width: 150%;
+  height: 100%;
+}
+
+/* 스크롤바 */
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond02::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond02::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond02::-webkit-scrollbar-track {
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle {
+  height: 71px;
+  background-color: #f7f9fc;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont:last-child
+  .dataTitle
+  ul
+  li {
+  width: 400px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li {
+  width: 30%;
+  height: 100%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li {
+  border-right: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li:last-child {
+  border-right: none;
+}
+
+/* 타이틀 li 사이즈별 퍼센트 목록 */
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.extraSmallWidth {
+  width: 15%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.smallWidth {
+  width: 20%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.mediumWidth {
+  width: 50%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.largeWidth {
+  width: 70%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul
+  li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li
+  p {
+  font-size: 14px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent.divideLink01
+  a {
+  width: 246%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: #3c3c3c;
+  font-size: 14px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent.divideLink01
+  a
+  li:last-child {
+  border-right: 1px solid #cddbf0;
+}
+
+/* 위치보기, 문서보기 버튼박스 */
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent.divideLink01
+  .dataContBtnBox {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent.divideLink01
+  .dataContBtnBox
+  li {
+  flex: 1;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  a.mouseEvet {
+  color: #2b7de1;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li {
+  width: 30%;
+  height: 44px;
+  border-right: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li:last-child {
+  border-right: none;
+}
+
+/* 컨텐츠 li 사이즈별 목록 */
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li.extraSmallWidth {
+  width: 15%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li.smallWidth {
+  width: 20%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li.mediumWidth {
+  width: 50%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li.largeWidth {
+  width: 70%;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li
+  button.positionBtn {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  color: #2b7de1;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #cce0ff99;
+  position: relative;
+  z-index: 999;
+  cursor: default;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li
+  p {
+  text-align: center;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs {
+  padding: 30px 0px;
+  margin: 0 auto;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li
+  button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li
+  button
+  img {
+  height: 20px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li.arrowLeftWrapper
+  button {
+  margin-right: 10px;
+}
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li.arrowRightWrapper
+  button {
+  margin-left: 10px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li.arrowLeftWrapper
+  img {
+  transform: rotate(180deg);
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li.pageCountBoxs
+  p {
+  font-size: 14px;
+  width: 29px;
+  height: 29px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+  margin-right: 12px;
+  color: #b1bad0;
+  font-weight: 700;
+  cursor: pointer;
+}
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li.pageCountBoxs
+  p:last-child {
+  margin-right: 0px;
+}
+
+#dopcoSurfacePart
+  .surfaceInquireMainContentWrapper
+  .surfaceInquireMainContent
+  .boardPageBoxs
+  ul
+  li.pageCountBoxs
+  p.active {
+  background-color: #edf2f9;
+  color: #2b7de1;
+}

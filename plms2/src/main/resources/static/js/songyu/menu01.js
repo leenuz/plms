@@ -293,7 +293,7 @@ function loadDataTable(params){
 							if (params.songyu_type_gover!=undefined && params.songyu_type_gover!=null) right_type+=",gover";
 							if (params.songyu_type_jisang!=undefined && params.songyu_type_jisang!=null) right_type+=",jisang";
 							if (params.songyu_type_notset!=undefined && params.songyu_type_notset!=null) right_type+=",notset";
-							if (params.songyu_type_toji!=undefined && params.songyu_type_toji!=null) right_type+=",dopco";	
+							if (params.songyu_type_toji!=undefined && params.songyu_type_toji!=null) right_type+=",dopco";
 						}
 						
 						console.log("right_type:"+right_type.substr(1));

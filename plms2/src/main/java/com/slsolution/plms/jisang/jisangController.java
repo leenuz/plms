@@ -354,11 +354,13 @@ public class jisangController {
 			HashMap params = new HashMap();
 			ArrayList<HashMap>  list=new ArrayList<HashMap>();
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			ModelAndView mav=new ModelAndView();
 			mav.setViewName("content/jisang/menu02_1");
 
 			mav.addObject("jisaList",jisalist);
+			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);
 			return mav;
 		}
