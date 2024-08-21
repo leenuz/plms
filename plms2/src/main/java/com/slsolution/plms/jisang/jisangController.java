@@ -422,6 +422,64 @@ public class jisangController {
 			mav.setViewName("content/jisang/landRightsRegistration");
 			return mav;
 		}
+		@GetMapping(path="/landTerminationRegistration") //http://localhost:8080/api/get/dbTest
+		public ModelAndView landTerminationRegistration(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+
+			String idx = httpRequest.getParameter("idx");
+			String index = httpRequest.getParameter("index");
+
+			params.put("idx",idx);
+			params.put("manage_no",idx);
+			params.put("index",index);
+			log.info("params:"+params);
+
+			ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+			ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+			ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+
+			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+			ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
+			ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
+
+			params.put("pnu", data.get(0).get("jm_pnu"));
+
+			ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+
+			log.info("params:"+params);
+			log.info("sidolist:"+sidolist);
+			log.info("data:"+data.get(0));
+			log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
+			log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
+			log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
+			log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+			log.info("jisangPermitList:"+jisangPermitList);
+			log.info("souja count:"+soujaList.size());
+			log.info("soujaList:"+soujaList);
+			log.info("atcFileList:"+atcFileList);
+			log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+
+			ModelAndView mav=new ModelAndView();
+			mav.addObject("jisaList",jisalist);
+			mav.addObject("resultJimokList",jimoklist);
+			mav.addObject("sidoList",sidolist);
+
+			mav.addObject("resultData",data.get(0));
+			mav.addObject("soujaList",soujaList);
+			mav.addObject("jisangPermitList",jisangPermitList);
+			mav.addObject("atcFileList",atcFileList);
+			mav.addObject("jisangModifyList",jisangModifyList);
+			mav.addObject("jisangMergeList",jisangMergeList);
+
+			mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+			mav.setViewName("content/jisang/landTerminationRegistration");
+			return mav;
+		}
 		
 		//아이디를 기준으로 해당 영역만 리플래쉬 되도록 하는 로직
 		@PostMapping(path="/getBasicSearchData") //http://localhost:8080/api/get/dbTest
