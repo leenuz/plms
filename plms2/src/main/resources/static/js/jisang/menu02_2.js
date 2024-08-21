@@ -38,7 +38,7 @@ $(document).on("click","#registerBtn",function(){
 
 
 
-	   loadDataTable(json);
+	   loadDataTable(object);
 	   console.log("-----------------------");
 
      })
@@ -290,7 +290,7 @@ function loadDataTable(params){
                         d.souja=params.souja;
                         d.jasan_no=params.jasan_no;
 						d.dosiplan=params.dosiplan;
-						d.cancel_yn=params.comple_yn;
+						d.cancel_yn=params.cancel_yn;
                         d.deunggi_date=params.start_date + '~' + params.end_date;
                         d.account_yn=params.account_yn;
                         d.start_date = params.start_date;
@@ -360,18 +360,23 @@ function loadDataTable(params){
                     {data: "pyeonib_area","defaultContent":""},
                     {data: "chuideuk_date"},
                      {data: "deunggi_date"},
-                    {data: "cancel_yn"},//해지여부
+                    {
+                        data: "cancel_yn",
+                         render: function(data, type, row, meta) {
+                              return data==="Y" ? "해지" : "미해지";
+                         }
+                        },//해지여부
                     {data: "cancel_date"},//해지요청일
                      {
                          data: "idx",
                          render: function(data, type, row, meta) {
-                             return `<button class="viewDetailButton">상세보기</button> `;
+                            return `<button class="viewDetailButton">상세보기</button>`;
                          }
                      }, //상세보기 수정필요
                    {
                          data: "idx",
                          render: function(data, type, row, meta) {
-                             return `<button class="viewDetailButton">위치보기</button> `;
+                                return `<button class="viewDetailButton" >위치보기</button> `;
                          }
                      },// 지도보기 데이터 수정필요
                       {
@@ -401,31 +406,25 @@ function loadDataTable(params){
                     {targets:[13],width:"100px"}, // 지도보기
                     {targets:[14],width:"100px"}, // 문서보기
 
-
-
-
-
 				]
 
             });
 
-
-
-
 			table.on('click','tr',function() {
 			    var target = $(event.target);
-
-                    var isButtonCell = target.closest('td').index() === 12 || target.closest('td').index() === 13 || target.closest('td').index() === 14;
+                    var data = table.row(this).data();
+                    var isButtonCell = target.closest('td').index() === 13 || target.closest('td').index() === 14;
 
                     if (isButtonCell) {
-                        return;
-                    } else {
-                        // 다른 열을 클릭했을 때만 상세 페이지로 이동
-                        console.log("--------------tr click---------------------");
+                       if(target.closest('td').index() === 13){
+                       //지도보기 클릭
+                           mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
+//                            mapWindow = window.open('http://10.168.0.247:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'mapWindow', 'width=2048,height=1024');
+                       }else{
+                       // ECHO 문서보기 클릭
 
-                        var data = table.row(this).data();
-                        console.log(data);
-                        console.log(data.idx);
+                       }
+                    } else {
 
                         var url = "/jisang/groundDetail?idx=" + data.idx;
                         window.location = url;
@@ -454,4 +453,3 @@ function loadDataTable(params){
 			
 			      // console.log($('#userTable').DataTable().page.info().recordsTotal);
 }
-

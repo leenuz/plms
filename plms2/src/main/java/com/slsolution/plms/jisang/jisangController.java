@@ -552,6 +552,7 @@ public class jisangController {
 		String[] jimokArray = jimok_text != null && !jimok_text.trim().isEmpty() ? jimok_text.split(",") : new String[0]; // 빈 배열로 초기화
 
 		String comple_yn=req.getParameter("comple_yn");
+		String cancel_yn=req.getParameter("cancel_yn");
 		String deunggi_date=req.getParameter("deunggi_date");
 		String account_yn=req.getParameter("account_yn"); //회계처리 필요여부
 		String start_date=req.getParameter("start_date");
@@ -573,6 +574,7 @@ public class jisangController {
 
 		params.put("jimokArray", jimokArray);
 		params.put("comple_yn", comple_yn);
+		params.put("cancel_yn", cancel_yn);
 		params.put("deunggi_date", deunggi_date);
 		params.put("account_yn", account_yn);
 		params.put("start_date", start_date);
