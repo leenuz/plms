@@ -293,7 +293,8 @@ const surfaceInquireSelectEvet = (selectBtn, selectList , selectListText , selec
                 else{ 
                     let currentSelectValue = document.getElementById(currentSelect); //현재 셀렉박스 가져오기
                     return thisBtns.innerText = event.target.innerText,
-                    $(currentSelectValue).val(event.target.innerText),//셀렉박스 값에 현재 클릭된 값의 텍스트 담기 
+                    $(currentSelectValue).val(event.target.innerText),//셀렉박스 값에 현재 클릭된 값의 텍스트 담기
+                    $(currentSelectValue).trigger("change"),
                     console.log(currentSelectValue.value), //셀렉박스값표시
                     surfaceSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
                     surfaceSelectList.forEach((lists) => lists.classList.remove("active"));
