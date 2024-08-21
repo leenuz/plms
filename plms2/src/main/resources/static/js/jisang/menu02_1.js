@@ -318,7 +318,7 @@ function loadDataTable(params){
                         d.jimok_text=params.jimok_text;
                         d.comple_yn=params.comple_yn;
                         d.deunggi_date=params.start_date + '~' + params.end_date;
-                        d.save_status=params.account_yn;
+                        d.account_yn=params.account_yn;
                         d.start_date = params.start_date;
                         d.end_date = params.end_date;
 
@@ -390,7 +390,7 @@ function loadDataTable(params){
                                   {data: "chuideuk_date","defaultContent":""},
                                   {data: "comple_yn","defaultContent":""},
                                   {data: "deunggi_date","defaultContent":""},
-                                  {data: "save_status","defaultContent":""},
+                                  {data: "account_yn","defaultContent":""},
                                   {date: "start_date","defaultContent":""},
                                   {date: "end_date","defaultContent":""},
                                  {
