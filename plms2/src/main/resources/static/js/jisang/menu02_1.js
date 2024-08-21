@@ -310,12 +310,11 @@ function loadDataTable(params){
 						//d=params;
 						d.jisa=ljsIsNull(params.jisa)?'':params.jisa;
 						d.manage_no=params.manage_no;
-						d.toji_type=params.toji_type;
-						d.toji_plan_type=params.toji_plan_type;
-						d.right_overlap=params.OverlapCheck01;
-
+                        d.souja=params.souja;
+                        d.jasan_no=params.jasan_no;
 						d.dosiplan=params.dosiplan;
-                        d.jimok_text=params.jimok_text;
+//                        d.jimok_text=params.jimok_text;
+                        d.jimok_text=ljsIsNull(params.jimok_text)?'':params.jimok_text;
                         d.comple_yn=params.comple_yn;
                         d.deunggi_date=params.start_date + '~' + params.end_date;
                         d.account_yn=params.account_yn;
@@ -391,8 +390,8 @@ function loadDataTable(params){
                                   {data: "comple_yn","defaultContent":""},
                                   {data: "deunggi_date","defaultContent":""},
                                   {data: "account_yn","defaultContent":""},
-                                  {date: "start_date","defaultContent":""},
-                                  {date: "end_date","defaultContent":""},
+//                                  {date: "start_date","defaultContent":""},
+//                                  {date: "end_date","defaultContent":""},
                                  {
                                        data: "idx", // 지도보기 데이터 수정해야함
                                        render: function(data, type, row, meta) {

@@ -194,6 +194,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
 		COALESCE(jm.jm_jasan_no, '') AS jasan_no,
 		COALESCE(jm.jm_comple_yn, '') AS comple_yn,
+
 		COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
 		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
 		COALESCE('', '') AS gover_date,
@@ -230,16 +231,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and r.dosiplan=#{dosiplan}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			and r.address like '${address}%'
+			and r.address like '%${address}%'
 		</if>
-		<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
-			and r.right_type in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jimokArray) and jimokArray.length > 0">
+			and r.jimok_text IN
+			<foreach item="item" index="index" collection="jimokArray" open="(" separator="," close=")">
+				#{item}
+			</foreach>
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
-			and r.toji_plan=#{toji_plan_type}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(souja)" >
+			and r.souja_name like '%${souja}%'
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
-			and r.toji_type=#{toji_type}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
+			and r.jasan_no like '%${jasan_no}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
+			and r.comple_yn=#{comple_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
+			and r.account_yn=#{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+			and r.deunggi_date::date between #{start_date}::date and #{end_date}::date
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
 			and (SELECT COUNT(o.address) AS overlap
@@ -307,7 +320,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
 		WHERE 1 = 1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-			and nm.nm_jisa=#{jisa}
+			and jm.jm_jisa=#{jisa}
 		</if>
 		) AS r
 		where 1=1
@@ -323,14 +336,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
 			and r.dosiplan=#{dosiplan}
 		</if>
-		<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
-			and r.right_type in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
-		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			and r.address like '${address}%'
+			and r.address like '%${address}%'
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
-			and r.toji_plan=#{toji_plan_type}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jimokArray) and jimokArray.length > 0">
+			and r.jimok_text IN
+			<foreach item="item" index="index" collection="jimokArray" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(souja)" >
+			and r.souja_name like '%${souja}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
+			and r.jasan_no like '%${jasan_no}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
+			and r.comple_yn=#{comple_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
+			and r.account_yn=#{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+			and r.deunggi_date::date between #{start_date}::date and #{end_date}::date
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
 			and (SELECT COUNT(o.address) AS overlap

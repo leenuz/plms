@@ -540,28 +540,44 @@ public class jisangController {
 
 		String jisa = req.getParameter("jisa");
 		String manage_no = req.getParameter("manage_no");
-		String right_type=req.getParameter("right_type");
 		String dosiplan=req.getParameter("dosiplan");
 		String address=req.getParameter("saddr");
-		String toji_type=req.getParameter("toji_type");
-		String right_overlap=req.getParameter("right_overlap");
-		String type_gover=req.getParameter("type_gover");
-		String type_jisang=req.getParameter("type_jisang");
-		String type_notset=req.getParameter("type_notset");
-		String type_dopco=req.getParameter("type_dopco");
+
+		String souja = req.getParameter("souja");
+		String jasan_no = req.getParameter("jasan_no");
+
+		String jimok_text = req.getParameter("jimok_text");
+//		String jimok_text = req.getParameter("jimok_text");
+//		String jimok_text ="전,과수원,목장용지";
+		String[] jimokArray = jimok_text != null && !jimok_text.trim().isEmpty() ? jimok_text.split(",") : new String[0]; // 빈 배열로 초기화
+
+		String comple_yn=req.getParameter("comple_yn");
+		String deunggi_date=req.getParameter("deunggi_date");
+		String account_yn=req.getParameter("account_yn"); //회계처리 필요여부
+		String start_date=req.getParameter("start_date");
+		String end_date=req.getParameter("end_date");
+
 		Map map=req.getParameterMap();
 
 		HashMap params = new HashMap();
 		params.put("draw",draw);
 		params.put("start",start);
 		params.put("length",length);
-		params.put("jisa",req.getParameter("jisa"));
+		params.put("jisa",jisa);
 		params.put("idx",manage_no);
 		params.put("dosiplan",dosiplan);
 		params.put("address",address);
-		params.put("toji_type",toji_type);
-		params.put("right_overlap",right_overlap);
-//
+
+		params.put("souja",souja);
+		params.put("jasan_no",jasan_no);
+
+		params.put("jimokArray", jimokArray);
+		params.put("comple_yn", comple_yn);
+		params.put("deunggi_date", deunggi_date);
+		params.put("account_yn", account_yn);
+		params.put("start_date", start_date);
+		params.put("end_date", end_date);
+
 //		String[] right_arr= {};
 //		right_arr=right_type.split(",");
 //		params.put("right_type", right_arr);
