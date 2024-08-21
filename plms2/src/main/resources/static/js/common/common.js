@@ -1,6 +1,12 @@
 
 console.log("----------------common.js start----------------");
 
+ 
+ 
+
+
+
+
 function isEmpty(str,mode){
 	//mode string s , number n
 	var newStr=str;
@@ -12,6 +18,8 @@ function isEmpty(str,mode){
 	return newStr;
 	
 }
+
+
 
 
 function loadingShow(){

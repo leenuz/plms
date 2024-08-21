@@ -4,9 +4,12 @@ import { surfaceSelectEvet , handleCheckboxes } from './surfaceSelectEvet.js';
 import { surfaceInquireSelectEvet , surfaceInquireCheckboxes } from './surfaceInquireSelectEvet.js';
 
 
+
+console.log("---------------------------surfaceMain.js start----------------------");
+
 window.addEventListener("load" , () => {
 
-
+	console.log("---------------------------surfaceMain.js start-----load-----------------");
       //header함수 실행
       surfaceHeaderEvet();
 

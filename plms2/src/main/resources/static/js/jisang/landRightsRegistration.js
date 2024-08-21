@@ -292,7 +292,7 @@ if (registBtn) {
 }
 
 // 기본 정보 -> 주소 검색
-
+/*
 const radioButtons = document.querySelectorAll('#landRightsRegistration .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea .inputWrap input[name="landRightsRegistration_addressInput"]');
 const inputAreas = document.querySelectorAll('#landRightsRegistration .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea');
 
@@ -313,7 +313,7 @@ radioButtons.forEach((radio) => {
         });
 
     });
-});
+});*/
 
 const checkedRadio = document.querySelector('#landRightsRegistration .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea .inputWrap input[name="landRightsRegistration_addressInput"]:checked');
 if (checkedRadio) {
@@ -364,7 +364,20 @@ const allCheckEventLandRightsRegist = () => {
     }
 }
 
-//allCheckEventLandRightsRegist();
+allCheckEventLandRightsRegist();
+
+
+$(document).on("click","#deleteFileBtn",function(){
+	//const attachFiles = document.querySelectorAll('input:checkbox[name="landRightsRegistration_attachFile"]:checked');
+	/*$('input:checkbox[name=landRightsRegistration_attachFile]').each(function (index) {
+		if($(this).is(":checked")==true){
+	    	console.log($(this).val());
+	    }
+	})*/
+	const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+	console.log(clickedAttachFiles);
+})
+
 
 
 $(document).on("click","#basicSearchBtn",function(){
@@ -835,7 +848,7 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	                    var row='<ul class="contents" id="fileListUl">';
 						row+='<li class="content01 content checkboxWrap">';
 						row+='<input type="checkbox" id="landRightsRegistration_attachFile'+no+'" name="landRightsRegistration_attachFile" >';
-						row+='<label for="landRightsRegistration_attachFile"></label>';
+						row+='<label for="landRightsRegistration_attachFile'+no+'"></label>';
 						row+='</li>';
 						row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
 	                    obj.after(row);
@@ -920,9 +933,9 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	                
 	 });
 	 
-	 
+	/* 
 	 $(document).on("click","input:checkbox[name='landRightsRegistration_attachFile']",function(){
 		console.log("check box click");
 	 })
-	
+	*/
 

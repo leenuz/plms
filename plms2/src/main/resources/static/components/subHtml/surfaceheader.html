@@ -1,5 +1,27 @@
 <script>
+	 var mapWindow;
+
+	//새 창 열기
+	function openMapWindow() {
+	//1. 지도 샘플 페이지
+	 mapWindow = window.open('http://10.168.0.247:8080/', 'mapWindow', 'width=2000,height=1000');
+	//2. 송유관 - 2pms 메인
+	//mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
+	//mapWindow = window.open('http://10.168.0.247:8080/sample/map/2pms.html', 'mapWindow', 'width=2048,height=1024');
+	//sessionStorage.setItem("2pmsMap",mapWindow);
+	//window.name=mapWindow;
+	}
+
+	
+	 window.addEventListener('message', function(event) {
+	console.log("Received message from map window:", event.data);
+	}, false); 
+
+
+	</script>
+<script>
   const surfaceMenuWrapOpen = () => {
+console.log("------------survaceMenuWrapOpen--start--------------");
     //header 세줄버튼 클릭시, 뜨는 메뉴
     let navOpen = document.querySelector(".navOpen");
     let mainNav = document.querySelector(".navWrap");
@@ -137,29 +159,6 @@
   
   
   
-  var mapWindow;
-//새 창 열기
-function openMapWindow() {
-//1. 지도 샘플 페이지
-//mapWindow = window.open('http://10.168.0.247:8080/sample', 'mapWindow', 'width=800,height=600');
-//2. 송유관 - 2pms 메인
-mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
-}
-
-function moveToCityHall() {
-if (mapWindow) {
-var cityHallCoords = { lon: 126.9779692, lat: 37.566535, zoom: 16 };
-//mapWindow.postMessage(cityHallCoords, 'http://10.168.0.247:8080/'); // 특정 사이트에 전송
-mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송
-} else {
-alert("지도가 열려 있지 않습니다.");
-}
-}
-window.addEventListener('message', function(event) {
-console.log("Received message from map window:", event.data);
-}, false);
-
-
 </script>
 <!-- header -->
 <header>

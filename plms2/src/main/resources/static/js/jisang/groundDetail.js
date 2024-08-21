@@ -1,4 +1,28 @@
-
+var mapWindow;
+$(document).on("click","#moveMap",function(){
+	//openMapWindow();
+	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
+	moveToCityHall();
+})
+function moveToCityHall() {
+		console.log("--------moveToCityHall-------------");
+		//console.log(sessionStorage.getItem("2pmsMap"));
+		//var mapW=window.mapWindow;
+		//console.log(window.name);
+		//var mapW=window.name;
+	if (mapWindow) {
+	
+		var cityHallCoords = { lon: 126.9779692, lat: 37.566535, zoom: 16 };
+		//mapWindow.postMessage(cityHallCoords, 'http://10.168.0.247:8080/'); // 특정 사이트에 전송
+		mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송
+	} else {
+	alert("지도가 열려 있지 않습니다.");
+	/* 	mapWindow = window.open('http://10.168.0.247:8080/', 'mapWindow', 'width=2000,height=1000');
+		var cityHallCoords = { lon: 126.9779692, lat: 37.566535, zoom: 16 };
+		//mapWindow.postMessage(cityHallCoords, 'http://10.168.0.247:8080/'); // 특정 사이트에 전송
+		mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송 */
+	}
+	}
 
 $(document).on("click","#fileSaveBtn",function(){
 	console.log("--------------start fileSaveBtn---------");
@@ -583,7 +607,9 @@ $(document).on("click","#deleteSelectedBtn",function(){
 
 
 $(document).on("click","#jijukNewWindowBtn",function(){
-	window.open('http://202.68.225.158:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'jijukWindow', 'width=1024,height=768');
+	//window.open('http://202.68.225.158:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'jijukWindow', 'width=1024,height=768');
+	window.open('http://202.68.225.158:8080/mapJijuk?lon=128.4923014&lat=35.908302&lv=17', 'jijukWindow', 'width=1024,height=768');
+	//http://10.168.0.247:8080/sample/map/2pms.html
 });
 
 
