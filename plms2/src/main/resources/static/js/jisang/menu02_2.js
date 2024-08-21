@@ -38,7 +38,7 @@ $(document).on("click","#registerBtn",function(){
 
 
 
-	   loadDataTable(object);
+	   loadDataTable(json);
 	   console.log("-----------------------");
 
      })
@@ -287,7 +287,14 @@ function loadDataTable(params){
 						d.toji_plan_type=params.toji_plan_type;
 						d.right_overlap=params.OverlapCheck01;
 
+                        d.souja=params.souja;
+                        d.jasan_no=params.jasan_no;
 						d.dosiplan=params.dosiplan;
+						d.cancel_yn=params.comple_yn;
+                        d.deunggi_date=params.start_date + '~' + params.end_date;
+                        d.account_yn=params.account_yn;
+                        d.start_date = params.start_date;
+                        d.end_date = params.end_date;
 						var ask=(params.askMenu01==undefined || params.askMenu01==null)?'0':params.askMenu01;
 						console.log("askmenu:"+ask);
 

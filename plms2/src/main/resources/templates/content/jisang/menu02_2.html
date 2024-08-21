@@ -132,6 +132,8 @@ margin:10px;
         <div class="surfaceInquireTitleBoxs">
           <h5>지상권 내역 해지</h5>
         </div>
+        <form id="searchForm" onSubmit="return false;">
+
         <section class="surfaceInquireSectionBoxs">
           <div class="surfaceInquireSectionCont">
             <div class="surfaceInquireSectionContDevide">
@@ -172,7 +174,7 @@ margin:10px;
               <ul class="inputControlBoxs sectionMenuListBoxs">
                 <li class="selectTitle"><p>자산분류번호</p></li>
                 <div class="inputControlList">
-                  <input type="text" name=""/>
+                  <input type="text" name="jasan_no"/>
                 </div>
               </ul>
               <ul class="selectContent sectionMenuListBoxs">
@@ -180,28 +182,33 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="surfaceInquireSelectWrappers">
                   <select
-                    name=""
+                    name="cancel_yn"
                     class="surfaceInquireHiddenSelect02"
                     id="surfaceInquireSelectBox02_2"
                     hidden>
+                    <option value="">전체</option>
                     <option value="Y">Y</option>
                     <option value="N">N</option>
                   </select>
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="surfaceInquireSelects">
-                  <button class="surfaceInquireSelectsTitleBtn"></button>
-                  <div class="sufaceSelectList extrasmallHeight">
-                    <ul class="surfaceSelectListMember selectChoice"></ul>
+                  <button class="surfaceInquireSelectsTitleBtn">전체</button>
+                  <div class="sufaceSelectList smallHeight">
+                    <ul class="surfaceSelectListMember">
+                      <li><p>전체</p></li>
+                      <li><p>Y</p></li>
+                      <li><p>N</p></li>
+                    </ul>
                   </div>
                 </div>
               </ul>
               <ul class="inputControlBoxs sectionMenuListBoxs">
                 <li class="selectTitle"><p>취득기간</p></li>
                 <div class="inputControlList dateListBox">
-                  <input type="date" />
+                  <input type="date" name="start_date"/>
                   <span>-</span>
-                  <input type="date" />
+                  <input type="date" name="end_date"/>
                 </div>
               </ul>
               <ul class="selectContent sectionMenuListBoxs">
@@ -209,19 +216,24 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="surfaceInquireSelectWrappers">
                   <select
-                    name=""
+                    name="account_yn"
                     class="surfaceInquireHiddenSelect02"
                     id="surfaceInquireSelectBox02_3"
                     hidden>
+                    <option value="">전체</option>
                     <option value="Y">Y</option>
                     <option value="N">N</option>
                   </select>
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="surfaceInquireSelects">
-                  <button class="surfaceInquireSelectsTitleBtn"></button>
-                  <div class="sufaceSelectList extrasmallHeight">
-                    <ul class="surfaceSelectListMember selectChoice"></ul>
+                  <button class="surfaceInquireSelectsTitleBtn">전체</button>
+                  <div class="sufaceSelectList smallHeight">
+                    <ul class="surfaceSelectListMember">
+                      <li><p>전체</p></li>
+                      <li><p>Y</p></li>
+                      <li><p>N</p></li>
+                    </ul>
                   </div>
                 </div>
               </ul>
@@ -232,10 +244,10 @@ margin:10px;
               <div class="surfaceInquireSectionRadioBoxs">
                 <ul class="radioBoxs">
                   <li>
-                    <input type="radio" name="surfaceInquireRadio02" /><span >입력형</span >
+                    <input type="radio" name="surfaceInquireRadio02" value="0" checked/><span >입력형</span >
                   </li>
                   <li class="addressInput">
-                    <input
+                    <input name="addressFull"
                       type="search"
                       placeholder="주소입력"
                       class="searchInputBox02" />
@@ -243,101 +255,97 @@ margin:10px;
                 </ul>
                 <ul class="radioBoxs menuRadioEvet02">
                   <li>
-                    <input type="radio" name="surfaceInquireRadio02" /><span >선택형</span
+                    <input type="radio" name="surfaceInquireRadio02" value="1"/><span >선택형</span
                     >
                   </li>
                   <li>
                     <!--수정부분 지사-->
                     <div class="surfaceInquireSelectWrappers">
-                      <select
-                        name=""
-                        class="surfaceInquireHiddenSelect02"
-                        id="surfaceInquireSelectBox02_4"
-                        hidden>
-                        <option value="전체">전체</option>
-                        <option value="Y1">Y1</option>
-                        <option value="N2">N2</option>
-                        <option value="N3">N3</option>
-                        <option value="N4">N4</option>
-                        <option value="N5">N5</option>
-                        <option value="N6">N6</option>
-                        <option value="N7">N7</option>
+                      <select name="sido" id="sido" hidden>
+                        <option value="">전체</option>
+                        <th:block th:each="val:${sidoList}">
+                          <option th:text="${val.sm_name}" th:value="${val.sm_name}"></option>
+                        </th:block>
+
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="surfaceInquireSelects">
-                      <button class="surfaceInquireSelectsTitleBtn"></button>
+                      <button class="surfaceInquireSelectsTitleBtn" id="sidoText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember">
+                          <li><p>전체</p></li>
+                          <th:block th:each="val:${sidoList}">
+                            <li><p th:text="${val.sm_name}">Y</p></li>
+                            <th:block>
+
+                        </ul>
                       </div>
                     </div>
                   </li>
                   <li>
                     <!--수정부분 지사-->
                     <div class="surfaceInquireSelectWrappers">
-                      <select
-                        name=""
-                        class="surfaceInquireHiddenSelect02"
-                        id="surfaceInquireSelectBox02_5"
-                        hidden>
-                        <option value="전체">전체</option>
-                        <option value="Y">Y</option>
-                        <option value="N">N</option>
+                      <select name="sgg" id="sgg" hidden>
+                        <option value="">전체</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="surfaceInquireSelects">
-                      <button class="surfaceInquireSelectsTitleBtn"></button>
+                      <button class="surfaceInquireSelectsTitleBtn" id="sggText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember" id="sggUl">
+                          <li><p>전체</p></li>
+                          <!--   <th:block th:each="sido:${sidolist}">
+                                <li><p th:text="${sido.sm_name}"></p></li>
+                            </th:block> -->
+
+                          <li><p>N</p></li>
+                        </ul>
                       </div>
                     </div>
                   </li>
                   <li>
                     <!--수정부분 지사-->
                     <div class="surfaceInquireSelectWrappers">
-                      <select
-                        name=""
-                        class="surfaceInquireHiddenSelect02"
-                        id="surfaceInquireSelectBox02_6"
-                        hidden>
-                        <option value="전체1">전체1</option>
-                        <option value="Y2">Y2</option>
-                        <option value="N3">N3</option>
+                      <select name="emd" id="emd" hidden>
+                        <option value="">전체</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="surfaceInquireSelects">
-                      <button class="surfaceInquireSelectsTitleBtn"></button>
+                      <button class="surfaceInquireSelectsTitleBtn" id="emdText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember" id="emdUl">
+                          <li><p>전체</p></li>
+                          <li><p>Y</p></li>
+                          <li><p>N</p></li>
+                        </ul>
                       </div>
                     </div>
                   </li>
                   <li>
                     <!--수정부분 지사-->
                     <div class="surfaceInquireSelectWrappers">
-                      <select
-                        name=""
-                        class="surfaceInquireHiddenSelect02"
-                        id="surfaceInquireSelectBox02_7"
-                        hidden>
-                        <option value="전체11">전체11</option>
-                        <option value="Y22">Y22</option>
-                        <option value="N33">N33</option>
+                      <select name="ri" id="ri" hidden>
+                        <option value="">전체</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="surfaceInquireSelects">
-                      <button class="surfaceInquireSelectsTitleBtn"></button>
+                      <button class="surfaceInquireSelectsTitleBtn" id="riText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember" id="riUl">
+                          <li><p>전체</p></li>
+                          <li><p>Y</p></li>
+                          <li><p>N</p></li>
+                        </ul>
                       </div>
                     </div>
                   </li>
                   <li style="padding: 0px 3px">
                     <div class="inputControlList">
-                      <input
+                      <input name=jibun id="jibun"
                         type="text"
                         placeholder="지번입력"
                         class="menuAdderssInput02" />
@@ -347,7 +355,7 @@ margin:10px;
               </div>
               <!--surfaceInquireSectionRadioBoxs-->
               <div class="surfaceInquireSectionBtnBoxs">
-                <button class="surfaceInquireRegisterBtn">조회하기</button>
+                <button class="surfaceInquireRegisterBtn" id="registerBtn">조회하기</button>
                 <a
                   class="queryBtn"
                   href="/components/subHtml/menu02/landTerminationRegistration.html"
@@ -358,6 +366,7 @@ margin:10px;
           </div>
           <!--surfaceInquireSectionCont-->
         </section>
+        </form>
         <main>
           <div class="surfaceInquireMainContentWrapper">
             <div class="surfaceInquireMainContent">

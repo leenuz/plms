@@ -25,15 +25,6 @@ $(document).on("click","#registerBtn",function(){
 	   
 	   var formSerializeArray = $('#searchForm').serializeArray();
 	   console.log(formSerializeArray)
-	   // 체크박스의 id와 value를 수집하여 formData에 추가
-//       $('#searchForm input[type="checkbox"]').each(function() {
-//           if ($(this).is(':checked')) {
-//               formSerializeArray.push({
-//                   name: $(this).attr('id'), // id를 name으로 사용
-//                   value: $(this).val()       // value는 동일하게 유지
-//               });
-//           }
-//       });
        // 체크박스 값들을 조합하여 문자열로 만들기
        var jimokText = ''; // 빈 문자열 초기화
 
