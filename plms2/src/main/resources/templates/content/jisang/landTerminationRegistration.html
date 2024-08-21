@@ -252,90 +252,46 @@ margin:10px;
                     <li class="contactInfoWidth title">연락처 1</li>
                     <li class="contactInfoWidth title">연락처 2</li>
                   </ul>
-                  <ul class="contents">
+                  <ul class="contents" th:each="val:${soujaList}">
                     <li class="numInfoWidth content">
                       <input
                         type="text"
-                        placeholder="1"
+                        th:placeholder="${val.no}"
                         readonly
                         class="notWriteInput" />
                     </li>
                     <li class="content">
                       <input
                         type="text"
-                        placeholder="1/2"
+                        th:placeholder="${val.js_jibun}"
                         readonly
                         class="notWriteInput" />
                     </li>
                     <li class="content">
                       <input
                         type="text"
-                        placeholder="홍길동"
+                        th:placeholder="${val.js_souja_name}"
                         readonly
                         class="notWriteInput" />
                     </li>
                     <li class="addressInfoWidth content">
                       <input
                         type="text"
-                        placeholder="서울특별시 서초구 서초동 1"
+                        th:placeholder="${val.js_address}"
                         readonly
                         class="notWriteInput" />
                     </li>
                     <li class="contactInfoWidth content">
                       <input
                         type="text"
-                        placeholder="02-654-5548"
+                        th:placeholder="${val.js_home_number}"
                         readonly
                         class="notWriteInput" />
                     </li>
                     <li class="contactInfoWidth content">
                       <input
                         type="text"
-                        placeholder="010-1234-1234"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                  </ul>
-                  <ul class="contents lastContents">
-                    <li class="numInfoWidth content">
-                      <input
-                        type="text"
-                        placeholder="2"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="content">
-                      <input
-                        type="text"
-                        placeholder="1/2"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="content">
-                      <input
-                        type="text"
-                        placeholder="홍길동"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="addressInfoWidth content">
-                      <input
-                        type="text"
-                        placeholder="서울특별시 서초구 서초동 202"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="contactInfoWidth content">
-                      <input
-                        type="text"
-                        placeholder="02-654-5548"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="contactInfoWidth content">
-                      <input
-                        type="text"
-                        placeholder="010-1234-1234"
+                        th:placeholder="${val.js_pone_number}"
                         readonly
                         class="notWriteInput" />
                     </li>
@@ -367,56 +323,64 @@ margin:10px;
                   <li class="content">
                     <input
                       type="text"
-                      placeholder="90000857"
+                      th:placeholder="${resultData.jm_jasan_no}"
                       readonly
                       class="notWriteInput" />
                   </li>
                   <li class="content">
                     <input
                       type="text"
-                      placeholder="1996-05-20"
+                      th:placeholder="${resultData.jm_chuideuk_date}"
                       readonly
                       class="notWriteInput" />
                   </li>
                   <li class="content">
                     <input
                       type="text"
-                      placeholder="75"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input type="text" readonly class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="1996-10-25"
+                      th:placeholder="${resultData.jm_pyeonib_area}"
                       readonly
                       class="notWriteInput" />
                   </li>
                   <li class="content">
                     <input
                       type="text"
-                      placeholder="50000"
+                      th:placeholder="${resultData.jm_use_state}"
                       readonly
                       class="notWriteInput" />
                   </li>
                   <li class="content">
                     <input
                       type="text"
-                      placeholder="서울지방법원 등기국"
+                      th:placeholder="${resultData.jm_deunggi_date}"
                       readonly
                       class="notWriteInput" />
                   </li>
                   <li class="content">
-                    <input type="text" readonly class="notWriteInput" />
+                    <input
+                      type="text"
+                      th:placeholder="${resultData.jm_deunggi_no}"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content">
+                    <input
+                      type="text"
+                      th:placeholder="${resultData.jm_deunggiso}"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content">
+                    <input
+                      type="text"
+                      th:placeholder="${resultData.jm_dosiplan}"
+                      readonly
+                      class="notWriteInput" />
                   </li>
                   <li class="content">
                     <div class="dateInputWrap">
                       <input
                         type="date"
-                        data-placeholder="24/01/01"
+                        th:data-placeholder="${resultData.jm_cancel_date}"
                         required
                         aria-required="true" />
                     </div>
@@ -427,19 +391,19 @@ margin:10px;
                 <ul class="rowListBox">
                   <li class="title">취득금액</li>
                   <li class="content">
-                    <input type="text" placeholder="직접입력" />
+                    <input type="text" placeholder="직접입력" th:value="${resultData.jm_chuideuk_money}" />
                   </li>
                 </ul>
                 <ul class="rowListBox">
                   <li class="title">감가삼각충당금</li>
                   <li class="content">
-                    <input type="text" placeholder="직접입력" />
+                    <input type="text" placeholder="직접입력" th:value="${resultData.jm_gammoney}" />
                   </li>
                 </ul>
                 <ul class="rowListBox">
                   <li class="title">잔존가액</li>
                   <li class="content lastRowList">
-                    <input type="text" placeholder="직접입력" />
+                    <input type="text" placeholder="직접입력" th:value="${resultData.jm_remainder_money}" />
                   </li>
                 </ul>
               </div>
@@ -472,7 +436,7 @@ margin:10px;
               <ul class="rowListBox">
                 <li class="title">보상금액</li>
                 <li class="content lastRowList">
-                  <input type="text" placeholder="직접입력" />
+                  <input type="text" placeholder="직접입력" th:value="${resultData.jm_cancel_bosang_money}" />
                 </li>
               </ul>
             </div>
@@ -481,129 +445,68 @@ margin:10px;
 
         <!-- 첨부파일 -->
         <section class="attachFileInfo">
+        <form name="uploadForm" method="post" enctype="multipart/form-data">
           <div class="subTitle">
             첨부파일
+            <span class="myPc">내 PC</span>
             <div class="fileBtnWrap">
-              <input type="file" id="landTerminationRegistration_myPcFiles" />
-              <label for="landTerminationRegistration_myPcFiles">내 PC</label>
+              <input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
             </div>
           </div>
 
           <div class="fileUploadWrap">
-            <div class="fileUploadBox">
+            <div id="fileUpload" class="fileUploadBox" style="">
               <img
-                src="/assets/media/menu02/images/file-upload.png"
-                alt="파일 업로드 아이콘"
-                class="fileUploadIcon" />
+                src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
               <p>파일을 마우스로 끌어오세요.</p>
             </div>
           </div>
+          <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>
+        </form>
 
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="titles titleScr">
-                <li class="title selectWidth allSelectCheck">
-                  <!-- 선택 -->
+          <div class="contWrap" id="pnuAtcFilesDiv">
+            <div class="contBox">
+              <div class="contentDetailBox">
+                <div class="depth1">
+                  <ul class="titles titleScr">
+                    <li class="title selectWidth allSelectCheck">선택</li>
+                    <li class="title">등록일</li>
+                    <li class="title fileNameWidth">파일명</li>
+                    <li class="title">파일보기</li>
+                  </ul>
+                  <div class="contentScr">
+                    <ul class="contents" th:each="val:${jisangPnuAtcFileList}">
+                      <li class="selectWidth content checkboxWrap">
+                        <input type="checkbox" th:id="'checkbox_' + ${val.pa_idx}" class="file-checkbox" th:value="${val.pa_idx}">
+                        <label th:for="'checkbox_' + ${val.pa_idx}"></label>
+                      </li>
+                      <li class="content registDateWidth">
+                        <input
+                          type="text"
+                          th:placeholder="${val.pa_wdate}"
+                          readonly
+                          class="notWriteInput" />
+                      </li>
+                      <li class="content fileNameWidth">
+                        <input
+                          type="text"
+                          th:placeholder="${val.pa_file_nm}"
+                          readonly
+                          class="notWriteInput" />
+                      </li>
+                      <li class="content">
+                        <button class="viewDetailButton" th:onclick="openFilePopup([[${val.pa_file_path}]])">보기</button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
 
-                  <input
-                    type="checkbox"
-                    id="landTerminationRegistration_file_select_all"
-                    name="landTerminationRegistration_file_select_all" />
-                  <label
-                    for="landTerminationRegistration_file_select_all"></label>
-                </li>
-                <li class="title">등록일</li>
-                <li class="title fileNameWidth">파일명</li>
-                <li class="title">파일보기</li>
-              </ul>
-              <div class="contentScr">
-                <ul class="contents">
-                  <li class="selectWidth content checkboxWrap">
-                    <input
-                      type="checkbox"
-                      id="landTerminationRegistration_attachFile01"
-                      name="landTerminationRegistration_attachFile" />
-                    <label
-                      for="landTerminationRegistration_attachFile01"></label>
-                  </li>
-                  <li class="content registDateWidth">
-                    <input
-                      type="text"
-                      placeholder="2024-03-31 15:40:01"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="파일명.pdf"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <button class="viewDetailButton">보기</button>
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="selectWidth content checkboxWrap">
-                    <input
-                      type="checkbox"
-                      id="landTerminationRegistration_attachFile02"
-                      name="landTerminationRegistration_attachFile" />
-                    <label
-                      for="landTerminationRegistration_attachFile02"></label>
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2024-03-31 15:40:01"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="파일명.pdf"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <button class="viewDetailButton">보기</button>
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="selectWidth content checkboxWrap">
-                    <input
-                      type="checkbox"
-                      id="landTerminationRegistration_attachFile03"
-                      name="landTerminationRegistration_attachFile" />
-                    <label
-                      for="landTerminationRegistration_attachFile03"></label>
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2024-03-31 15:40:01"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="파일명.pdf"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <button class="viewDetailButton">보기</button>
-                  </li>
-                </ul>
+              <div class="btnWrap">
+                <button class="fileBtn fileSaveBtn" id="fileSaveBtn">첨부파일 저장</button>
+                <button class="fileDelBtn delBtn" id="deleteSelectedBtn">선택파일 삭제</button>
               </div>
             </div>
-          </div>
-
-          <div class="btnWrap">
-            <button class="fileDelBtn delBtn">선택파일 삭제</button>
           </div>
         </section>
 
@@ -615,7 +518,7 @@ margin:10px;
               <ul class="rowListBox">
                 <li class="title">해지사유</li>
                 <li class="content inputWrap">
-                  <input type="text" placeholder="직접입력" />
+                  <input type="text" placeholder="직접입력" th:value="${resultData.jm_cancel_reason}"/>
                 </li>
               </ul>
             </div>
@@ -623,7 +526,7 @@ margin:10px;
               <ul class="rowListBox">
                 <li class="title">검토의견</li>
                 <li class="content lastRowList">
-                  <textarea placeholder="직접입력"></textarea>
+                  <textarea placeholder="직접입력" th:value="${resultData.jm_cancel_comment}"></textarea>
                 </li>
               </ul>
             </div>
