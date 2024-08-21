@@ -70,6 +70,18 @@ select:focus {
     color: #2B7DE1;
     font-size: 13px;
     font-weight: 600;
+
+}
+
+.regisRemoveBtn {
+width: 116px;
+    height: 27px;
+    border-radius: 20px;
+  background-color: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+   font-size: 13px;
+      font-weight: 600;
 }
 
 /* 스크롤바 */

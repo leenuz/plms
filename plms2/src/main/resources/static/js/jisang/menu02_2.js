@@ -367,10 +367,19 @@ function loadDataTable(params){
                          }
                         },//해지여부
                     {data: "cancel_date"},//해지요청일
+
                      {
-                         data: "idx",
+                         data: "cancel_date",
                          render: function(data, type, row, meta) {
-                            return `<button class="viewDetailButton">상세보기</button>`;
+                        console.log("data : "+ data);
+                         if(data === null){
+                            return ` <button class="regisRemoveBtn">해지등록</button>`;
+                         }else{
+                            return ` <button class="viewDetailButton">상세보기</button>`;
+                         }
+//                            return ` <button class="viewDetailButton">상세보기</button>
+//                                     <button class="regisRemoveBtn">해지등록</button>
+//                            `;
                          }
                      }, //상세보기 수정필요
                    {
@@ -413,10 +422,20 @@ function loadDataTable(params){
 			table.on('click','tr',function() {
 			    var target = $(event.target);
                     var data = table.row(this).data();
-                    var isButtonCell = target.closest('td').index() === 13 || target.closest('td').index() === 14;
+                    var isButtonCell = target.closest('td').index() === 12 ||target.closest('td').index() === 13 || target.closest('td').index() === 14;
+                    var url;
 
                     if (isButtonCell) {
-                       if(target.closest('td').index() === 13){
+                       if(target.closest('td').index() === 12){
+                            const buttonClass = event.target.className;
+
+                            if(buttonClass=="regisRemoveBtn"){
+                                url= "/jisang/landTerminationRegistration?idx=" + data.idx +"&index=" +data.index;        //해지등록
+                            }else{
+                                url = "/jisang/groundDetail?idx=" + data.idx+"&index=" +data.index;      //상세보기
+                            }
+                             window.location = url;
+                       }else if(target.closest('td').index() === 13){
                        //지도보기 클릭
                            mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
 //                            mapWindow = window.open('http://10.168.0.247:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'mapWindow', 'width=2048,height=1024');
@@ -426,7 +445,7 @@ function loadDataTable(params){
                        }
                     } else {
 
-                        var url = "/jisang/groundDetail?idx=" + data.idx;
+                        url = "/jisang/groundDetail?idx=" + data.idx;
                         window.location = url;
                     }
 											   
