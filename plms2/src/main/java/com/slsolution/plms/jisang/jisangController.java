@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.MainService;
+import com.slsolution.plms.ParameterUtil;
 import com.slsolution.plms.config.GlobalConfig;
 import com.slsolution.plms.json.JSONObject;
 
@@ -47,12 +48,12 @@ public class jisangController {
     public void Save(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
         
 		//일반웹형식
-		Properties requestParams = CommonUtil.convertToProperties(httpRequest);
-        log.info("requestParams:"+requestParams);
+//		Properties requestParams = CommonUtil.convertToProperties(httpRequest);
+//        log.info("requestParams:"+requestParams);
         
 //        //json으로 넘어올때
-//        String getRequestBody = ParameterUtil.getRequestBodyToStr(httpRequest);
-//        log.info("getRequestBody:"+getRequestBody);
+        String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
+        log.info("getRequestBody:"+requestParams);
         
 //        List<TestDTO> list = new ArrayList<TestDTO>();
 //        list = dbService.getList();

@@ -59,7 +59,7 @@ public class MainController {
 //
 //	        log.info("messageSourceAccessor : {}", messageSourceAccessor.getMessage("hello"));
 //	        log.info("messageSourceAccessor with LocaleResolver : {}", messageSourceAccessor.getMessage("hello", localeResolver.resolveLocale(request)));
-	    	modelAndView.setViewName("index2");
+	    	modelAndView.setViewName("index");
 	    	return modelAndView;
 	    }
 	@RequestMapping("/datatables")

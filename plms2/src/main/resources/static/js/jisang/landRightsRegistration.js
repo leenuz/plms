@@ -376,6 +376,15 @@ $(document).on("click","#deleteFileBtn",function(){
 	})*/
 	const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
 	console.log(clickedAttachFiles);
+	console.log(uploadFiles);
+	for(var i=0;i<clickedAttachFiles.length;i++){
+		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
+		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
+		$(delEle).remove();
+		
+		
+	}
+	
 })
 
 
@@ -415,9 +424,54 @@ $(document).on("click","#basicSearchBtn",function(){
 				   	   
 });
 
-
-$(document).on("click",".finalBtn",function(){
+//저장버튼
+$(document).on("click","#finalBtn",function(){
 	console.log("---------finalBtn class click------------");
+	console.log($("#saveForm").serialize());
+	var formSerializeArray = $('#saveForm').serializeArray();
+				   console.log(formSerializeArray);
+				   url="/jisang/api/Save"; 
+				   $.ajax({
+				   			
+				   				url:url,
+				   				type:'POST',
+				   				contentType:"application/json",
+				   				data:JSON.stringify(formSerializeArray),
+				   				
+				   				dataType:"json",
+				   				beforeSend:function(request){
+				   					console.log("beforesend ........................");
+				   					loadingShow();
+				   				},
+				   				success:function(response){
+				   					loadingHide();
+				   					console.log(response);
+				   					if (response.success="Y"){
+				   						console.log("response.success Y");
+				   						console.log("response.resultData length:"+response.resultData.length);
+				   						/*$("#popup_bg").show();
+				   						$("#popup").show(500);
+				   						//$("#addrPopupLayer tbody td").remove();
+				   						for(var i=0;i<response.resultData.length;i++){
+				   							$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+				   						}*/
+				   					}
+				   					else {
+				   						console.log("response.success N");
+				   					}
+				   				},
+				   				error:function(jqXHR,textStatus,errorThrown){
+				   					alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+				   				}
+				   			
+				   		}); 
+	
+});
+
+
+
+$(document).on("click","#popupCloseBtn",function(){
+	console.log("---------popupCloseBtn class click------------");
 	console.log($("#searchResultPopDiv").html());
 	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
 	//console.log($(targetDiv).html());
