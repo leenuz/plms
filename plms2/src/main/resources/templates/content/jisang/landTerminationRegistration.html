@@ -26,8 +26,7 @@
     <link rel="stylesheet" href="/css/jisang/landTerminationRegistration.css" />
     <link rel="stylesheet" href="/css/jisang/write.css">
     <link rel="stylesheet" href="/assets/css/header.css" />
-    <script src="/js/common/upload.js"></script>
-
+    <!--<script src="/js/common/upload.js"></script>-->
     <style>
 		div.dt-top-container {
   display: grid;
@@ -225,10 +224,9 @@ margin:10px;
                             <option value="N">N</option>
                           </select>
                         </div>
-                        <section class="customSelectBox">
+                        <section class="customSelectBox" th:data-selected="${resultData.jm_account_yn}">
                           <button class="customSelectView">Y</button>
                           <ul class="customSelectBtns">
-                            <!-- createCustomLiLandTermination() -->
                           </ul>
                         </section>
                       </li>
@@ -424,12 +422,16 @@ margin:10px;
                   <div class="inputBox">
                     <input
                       type="radio"
-                      name="landTerminationRegistrationCompensation" />유
+                      name="landTerminationRegistrationCompensation"
+                      value="Y"
+                      th:checked="${resultData.jm_cancel_bosang_yn == 'Y'}"/>유
                   </div>
                   <div class="inputBox">
                     <input
                       type="radio"
-                      name="landTerminationRegistrationCompensation" />무
+                      name="landTerminationRegistrationCompensation"
+                      value="N"
+                      th:checked="${resultData.jm_cancel_bosang_yn == 'N'}"/>무
                   </div>
                 </li>
               </ul>
@@ -448,28 +450,29 @@ margin:10px;
         <form name="uploadForm" method="post" enctype="multipart/form-data">
           <div class="subTitle">
             첨부파일
-            <span class="myPc">내 PC</span>
             <div class="fileBtnWrap">
-              <input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
+              <input type="file" name="fileUpload" id="landTerminationRegistration_myPcFiles">
+              <label for="landTerminationRegistration_myPcFiles">내 PC</label>
             </div>
           </div>
 
           <div class="fileUploadWrap">
-            <div id="fileUpload" class="fileUploadBox" style="">
-              <img
-                src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
+            <div class="fileUploadBox">
+              <img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
               <p>파일을 마우스로 끌어오세요.</p>
             </div>
           </div>
-          <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>
+          <!--<div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>-->
+          <!--<div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>-->
         </form>
 
-          <div class="contWrap" id="pnuAtcFilesDiv">
-            <div class="contBox">
-              <div class="contentDetailBox">
-                <div class="depth1">
-                  <ul class="titles titleScr">
-                    <li class="title selectWidth allSelectCheck">선택</li>
+          <div class="contWrap">
+                <div class="depth1" id="fileListDiv">
+                  <ul class="titles titleScr" id="fileTitleUl">
+                    <li class="title selectWidth allSelectCheck">
+                      <input type="checkbox" id="landRightsRegistration_file_select_all" name="landTerminationRegistration_file_select_all">
+                      <label for="landRightsRegistration_file_select_all"></label>
+                    </li>
                     <li class="title">등록일</li>
                     <li class="title fileNameWidth">파일명</li>
                     <li class="title">파일보기</li>
@@ -503,11 +506,8 @@ margin:10px;
               </div>
 
               <div class="btnWrap">
-                <button class="fileBtn fileSaveBtn" id="fileSaveBtn">첨부파일 저장</button>
                 <button class="fileDelBtn delBtn" id="deleteSelectedBtn">선택파일 삭제</button>
               </div>
-            </div>
-          </div>
         </section>
 
         <section class="reasonTermination">
@@ -626,10 +626,7 @@ margin:10px;
                   <button class="attachDelBtn miniBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input
-                    type="file"
-                    id="landTerminationRegistration_myPcFiles01" />
-                  <label for="landTerminationRegistration_myPcFiles01"
+                  <label
                     >파일보기</label
                   >
                 </li>
@@ -646,11 +643,7 @@ margin:10px;
                   <button class="attachDelBtn miniBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input
-                    type="file"
-                    id="landTerminationRegistration_myPcFiles02" />
-                  <label for="landTerminationRegistration_myPcFiles02"
-                    >파일보기</label
+                  <label>파일보기</label
                   >
                 </li>
               </ul>
@@ -666,11 +659,7 @@ margin:10px;
                   <button class="attachDelBtn miniBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input
-                    type="file"
-                    id="landTerminationRegistration_myPcFiles03" />
-                  <label for="landTerminationRegistration_myPcFiles03"
-                    >파일보기</label
+                  <label>파일보기</label
                   >
                 </li>
               </ul>
@@ -686,11 +675,7 @@ margin:10px;
                   <button class="attachDelBtn miniBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input
-                    type="file"
-                    id="landTerminationRegistration_myPcFiles04" />
-                  <label for="landTerminationRegistration_myPcFiles04"
-                    >파일보기</label
+                  <label>파일보기</label
                   >
                 </li>
               </ul>
@@ -706,11 +691,7 @@ margin:10px;
                   <button class="attachDelBtn miniBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input
-                    type="file"
-                    id="landTerminationRegistration_myPcFiles05" />
-                  <label for="landTerminationRegistration_myPcFiles05"
-                    >파일보기</label
+                  <label>파일보기</label
                   >
                 </li>
               </ul>
@@ -726,11 +707,7 @@ margin:10px;
                   <button class="attachDelBtn miniBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input
-                    type="file"
-                    id="landTerminationRegistration_myPcFiles06" />
-                  <label for="landTerminationRegistration_myPcFiles06"
-                    >파일보기</label
+                  <label>파일보기</label
                   >
                 </li>
               </ul>
@@ -746,11 +723,7 @@ margin:10px;
                   <button class="attachDelBtn miniBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input
-                    type="file"
-                    id="landTerminationRegistration_myPcFiles07" />
-                  <label for="landTerminationRegistration_myPcFiles07"
-                    >파일보기</label
+                  <label>파일보기</label
                   >
                 </li>
               </ul>
@@ -766,12 +739,7 @@ margin:10px;
                   <button class="attachDelBtn miniBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input
-                    type="file"
-                    id="landTerminationRegistration_myPcFiles08" />
-                  <label for="landTerminationRegistration_myPcFiles08"
-                    >파일보기</label
-                  >
+                  <label>파일보기</label>
                 </li>
               </ul>
             </div>
