@@ -440,6 +440,22 @@ public class jisangController {
 			ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 
+			//임시 저장 된 테이블 조회 시 있으면, 해당 테이블 뿌리기.
+			ArrayList<HashMap> dataTmp = mainService.selectQuery("jisangSQL.selectAllTmpData",params);
+			if(dataTmp.size() > 0) {
+				// dataTmp의 데이터를 하나씩 처리
+				HashMap<String, Object> tmpMap = dataTmp.get(0);
+				HashMap<String, Object> newMap = new HashMap<>();
+
+				// tmpMap의 모든 키를 순회하면서 "jmt_"를 "jm_"으로 바꾼 후 newMap에 넣음
+				for (Map.Entry<String, Object> entry : tmpMap.entrySet()) {
+					String newKey = entry.getKey().replace("jmt_", "jm_");
+					newMap.put(newKey, entry.getValue());
+				}
+				data.remove(0);
+				data.add(newMap);
+			}
+
 			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
 			ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
 			ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
@@ -778,5 +794,45 @@ public class jisangController {
 
 		log.info("params:"+params);
 		mainService.InsertQuery("jisangSQL.upsertJisangMasterTmp",params);
+	}
+
+	@PostMapping(path="/commitJisangTmp")
+	public void commitJisangTmp(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+
+		String jisang_no = httpRequest.getParameter("jisang_no");
+		String jIdx = httpRequest.getParameter("jIdx");
+
+		params.put("idx",jisang_no);
+		params.put("index",jIdx);
+
+		log.info("params:"+params);
+		//임시 저장 된 테이블 조회
+		ArrayList<HashMap> dataTmp = mainService.selectQuery("jisangSQL.selectAllTmpData",params);
+		if(dataTmp.size() > 0) {
+			// dataTmp의 데이터를 하나씩 처리
+			HashMap<String, Object> tmpMap = dataTmp.get(0);
+			HashMap<String, Object> updatedRow = new HashMap<>();
+
+			// jmt_ 컬럼명을 jm_으로 변경
+			for (Map.Entry<String, Object> entry : tmpMap.entrySet()) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+
+				if (key.startsWith("jmt_")) {
+					String newKey = key.replace("jmt_", "jm_");
+					updatedRow.put(newKey, value);
+				}
+			}
+
+			// 업데이트 쿼리 실행 (jm_jisang_no, jm_idx 기준)
+			mainService.UpdateQuery("jisangSQL.updateJisangMaster", updatedRow);
+
+			// 해당 레코드 jisang_master_tmp 에서 삭제
+			mainService.DeleteQuery("jisangSQL.deleteJisangMasterTmp", params);
+	}
+
 	}
 }

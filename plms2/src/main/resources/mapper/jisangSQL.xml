@@ -380,6 +380,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 
+	<select id="selectAllTmpData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *
+		,concat(jmt_sido_nm,' ',jmt_sgg_nm,' ',jmt_ri_nm,' ',jmt_jibun) as address
+		from jisang_master_tmp
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and jmt_jisang_no=#{idx}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(index)" >
+			and jmt_idx=cast(#{index} as integer)
+		</if>
+
+	</select>
+
 	<insert id="upsertJisangMasterTmp" parameterType="map">
 		INSERT INTO jisang_master_tmp (
 		jmt_jisang_no,
@@ -402,7 +416,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		jmt_deunggi_no,
 		jmt_deunggiso,
 		jmt_dosiplan,
-		<!--jmt_account_yn,-->
+		jmt_account_yn,
 		jmt_cancel_date,
 		jmt_chuideuk_money,
 		jmt_gammoney,
@@ -432,7 +446,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{deunggi_no},
 		#{deunggiso},
 		#{dosiplan},
-		<!--#{account_yn},-->
+		#{account_yn},
 		TO_DATE(#{cancel_date},'YYYY-MM-DD'),
 		#{chuideuk_money},
 		#{gammoney},
@@ -462,7 +476,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		jmt_deunggi_no = EXCLUDED.jmt_deunggi_no,
 		jmt_deunggiso = EXCLUDED.jmt_deunggiso,
 		jmt_dosiplan = EXCLUDED.jmt_dosiplan,
-<!--		jmt_account_yn = EXCLUDED.jmt_account_yn,-->
+		jmt_account_yn = EXCLUDED.jmt_account_yn,
 		jmt_cancel_date = EXCLUDED.jmt_cancel_date,
 		jmt_chuideuk_money = EXCLUDED.jmt_chuideuk_money,
 		jmt_gammoney = EXCLUDED.jmt_gammoney,
@@ -473,4 +487,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		jmt_cancel_comment = EXCLUDED.jmt_cancel_comment;
 	</insert>
 
+	<update id="updateJisangMaster" parameterType="map">
+		UPDATE jisang_master
+		SET
+		jm_jisa = #{jm_jisa},
+		jm_yongdo = #{jm_yongdo},
+		jm_pipe_name = #{jm_pipe_name},
+		jm_sun_gubun = #{jm_sun_gubun},
+		jm_sido_nm = #{jm_sido_nm},
+		jm_sgg_nm = #{jm_sgg_nm},
+		jm_ri_nm = #{jm_ri_nm},
+		jm_jibun = #{jm_jibun},
+		jm_jijuk_area = #{jm_jijuk_area},
+		jm_gover_own_yn = #{jm_gover_own_yn},
+		jm_jasan_no = #{jm_jasan_no},
+		jm_chuideuk_date = TO_DATE(#{jm_chuideuk_date}, 'YYYY-MM-DD'),
+		jm_pyeonib_area = #{jm_pyeonib_area},
+		jm_use_state = #{jm_use_state},
+		jm_deunggi_date = TO_DATE(#{jm_deunggi_date}, 'YYYY-MM-DD'),
+		jm_deunggi_no = #{jm_deunggi_no},
+		jm_deunggiso = #{jm_deunggiso},
+		jm_dosiplan = #{jm_dosiplan},
+		jm_cancel_date = TO_DATE(#{jm_cancel_date}, 'YYYY-MM-DD'),
+		jm_chuideuk_money = #{jm_chuideuk_money},
+		jm_gammoney = #{jm_gammoney},
+		jm_remainder_money = #{jm_remainder_money},
+		jm_cancel_bosang_yn = #{jm_cancel_bosang_yn},
+		jm_cancel_bosang_money = #{jm_cancel_bosang_money},
+		jm_cancel_reason = #{jm_cancel_reason},
+		jm_cancel_comment = #{jm_cancel_comment}
+		WHERE jm_jisang_no = #{jm_jisang_no}
+		AND jm_idx = cast(#{jm_idx} as integer)
+	</update>
+
+	<delete id="deleteJisangMasterTmp" parameterType="map">
+		DELETE FROM jisang_master_tmp
+		WHERE jmt_jisang_no = #{idx}
+		AND jmt_idx = cast(#{index} as integer)
+	</delete>
 </mapper>

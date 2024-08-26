@@ -394,6 +394,7 @@ margin:10px;
                       <input
                         type="date"
                         th:data-placeholder="${resultData.jm_cancel_date}"
+                        th:value="${resultData.jm_cancel_date}"
                         id="cancel_date"
                         required
                         aria-required="true" />
@@ -542,7 +543,7 @@ margin:10px;
               <ul class="rowListBox">
                 <li class="title">검토의견</li>
                 <li class="content lastRowList">
-                  <textarea placeholder="직접입력" th:value="${resultData.jm_cancel_comment}" id="cancel_comment"></textarea>
+                  <textarea placeholder="직접입력" th:text="${resultData.jm_cancel_comment}" id="cancel_comment"></textarea>
                 </li>
               </ul>
             </div>
@@ -763,19 +764,24 @@ margin:10px;
         </section>
 
         <div class="finalBtnBox btnWrap">
+          <button
+            class="saveBtn vividBlueBtn finalBtn"
+            id="commit"
+            style="display:none"
+            th:idx="${resultData.jm_jisang_no}" th:index="${resultData.jm_idx}">
+            상신 수락
+          </button>
           <button class="backBtn grayBtn finalBtn">이전</button>
           <button
             class="saveBtn vividBlueBtn finalBtn"
             id="save_btn"
-            form="landTerminationRegistration_Form"
             th:idx="${resultData.jm_jisang_no}" th:index="${resultData.jm_idx}">
             저장
           </button>
           <button
             class="lightBlueBtn approvalBtn finalBtn"
             type="submit"
-            id="submit_btn"
-            form="landTerminationRegistration_Form">
+            id="submit_btn">
             상신
           </button>
         </div>
@@ -784,6 +790,6 @@ margin:10px;
 
     <!-- script -->
     <script src="../../js/jisang/landTerminationRegistration.js"></script>
-    <script type="module" src="/components/surfaceMain.js"></script>
+    <!--<script type="module" src="/components/surfaceMain.js"></script>-->
   </th:block>>
 </html>

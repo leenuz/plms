@@ -438,15 +438,47 @@ $(document).on("click","#save_btn",function(){
     console.log("-----------------------");
     })
 
+//상신 버튼 클릭 시 동작 이벤트
+$(document).on("click","#submit_btn",function(){
+//    const jmJisangNo = $(this).attr('idx');
+//    const jmIdx = $(this).attr('index');
+
+    $('#commit').css('display', 'block')
+    })
+
+//상신 수락 버튼 클릭 시 동작 이벤트
+$(document).on("click","#commit",function(){
+    loadingShow();
+    const jmJisangNo = $(this).attr('idx');
+    const jmIdx = $(this).attr('index');
+
+    const formData = {
+            jisang_no: jmJisangNo || '',  // 지상번호
+            jIdx: jmIdx || ''  // 지상 인덱스
+        };
+
+    $.ajax({
+          url: "/jisang/commitJisangTmp",
+          type: "POST",
+          data: formData,
+     })
+     .done(function (fragment) {
+        loadingHide();
+        $('#commit').css('display', 'none');
+        alert("상신 처리 완료.");
+     });
+    })
+
 
 function landTerminationSave(params){
+    loadingShow();
     $.ajax({
           url: "/jisang/landTerminationSave",
           type: "POST",
           data: params,
      })
      .done(function (fragment) {
-        $('#memoDiv').replaceWith(fragment);
-        scrFn_loadScript('/js/jisang/groundDetail.js');
-      });
+        loadingHide();
+        alert("저장이 완료 되었습니다.");
+     });
 }
