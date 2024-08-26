@@ -157,9 +157,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- selectBasicSearchList 지적정보에서 검색-->
 	<select id="selectBasicSearchList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *,(row_number() over()) as no 
-		FROM jisang_master jm LEFT JOIN jijuk_master_2022 jm2 ON jm2.pnu=jm.jm_pnu
+		FROM jijuk_master_2022 jm2 
 		WHERE 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+		and jm2.sido_nm=#{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			and regexp_replace(jm2.sgg_nm,'[\"]','','g')=#{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			and regexp_replace(jm2.emd_nm,'[\"]','','g')=#{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			and regexp_replace(jm2.ri_nm,'[\"]','','g')=#{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			and jm2.jibun like '%${jibun}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and regexp_replace(jm2.juso,'[\"]','','g') like '%${address}%'
+		</if>
 		AND jm2.pnu IS NOT null
+		limit 1
+		
 		
 			
 	</select>
@@ -380,6 +400,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 
+
 	<select id="selectAllTmpData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *
 		,concat(jmt_sido_nm,' ',jmt_sgg_nm,' ',jmt_ri_nm,' ',jmt_jibun) as address
@@ -525,4 +546,129 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE jmt_jisang_no = #{idx}
 		AND jmt_idx = cast(#{index} as integer)
 	</delete>
+
+	
+	
+	<!-- 지상기본정보 seq 가져오기 -->
+	<select id="selectJisangMasterNextval" parameterType="java.util.HashMap" resultType="Integer">
+		SELECT NEXTVAL('jisang_master_jm_idx_seq')
+	</select>
+	
+	<!-- 지상권기본정보 저장 -->
+	<insert id="insertJisangData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jm_idx" keyProperty="jm_idx">
+		
+		INSERT INTO jisang_master 
+		(
+		 
+		 jm_jisang_no, jm_sido_nm, jm_sgg_nm, jm_emd_nm, jm_ri_nm
+		 ,jm_jibun, jm_jisa
+<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(chuideuk_date)">
+		 ,jm_chuideuk_date
+</if>
+<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(chuideuk_money)" >
+		 ,jm_chuideuk_money
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jijuk_area)" >
+		 ,jm_jijuk_area
+		 </if>
+		 ,jm_pipe_name,jm_sun_gubun,jm_yongdo
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
+		 ,jm_dosiplan
+		 </if>
+		 ,jm_comple_yn
+		 ,jm_pyeonib_area
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(use_state)" >
+		 ,jm_use_state
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(deunggi_date)" >
+		 ,jm_deunggi_date
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(deunggi_no)" >
+		 ,jm_deunggi_no
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(deunggiso)" >
+		 ,jm_deunggiso
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
+		 ,jm_jasan_no
+		 </if>
+		 ,jm_gover_own_yn
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pnu)" >
+		 ,jm_pnu
+		 </if>
+		 ,jm_udate
+		 
+		 ) 
+		 VALUES (
+		  #{seq}, #{sido_nm}, #{sgg_nm}, #{emd_nm}, #{ri_nm}
+		  ,#{jibun}, #{jisa}
+		   <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(chuideuk_date)" >
+		  ,#{chuideuk_date}::date
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(chuideuk_money)" >
+		  ,NULLIF(cast(#{chuideuk_money} as varchar),'')::numeric 
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jijuk_area)" >
+		  ,nullif(cast(#{jijuk_area} as varchar),''):: integer
+		  </if>
+		  ,#{pipe_name}, #{sun_gubun}, #{yongdo}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
+		  , #{dosiplan}
+		  </if>
+		  , #{comple_yn}
+		  ,nullif(cast(#{pyeonib_area} as varchar),''):: numeric 
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(use_state)" >
+		  , #{use_state}
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(deunggi_date)" >
+		  ,#{deunggi_date}::date
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(deunggi_no)" >
+		  , #{deunggi_no}
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(deunggiso)" >
+		  , #{deunggiso}
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
+		  ,#{jasan_no}
+		  </if>
+		  , #{gover_own_yn}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pnu)" >
+		  ,#{pnu}
+		  </if>
+		  ,Now()
+		 
+		   )
+	
+	<!-- 지상기본정보 --></insert>
+	
+	
+	
+	<insert id="insertJisangSoujaData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="js_idx" keyProperty="js_idx">
+		
+		INSERT INTO jisang_souja 
+		(
+		 
+		 js_jisang_no
+		 ,js_jibun
+		 ,js_souja_name
+		 ,js_address
+		 ,js_phone_number
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(soujaContact2)" >
+		 ,js_home_number
+		 </if>
+		 ) 
+		 VALUES (
+		  #{seq}
+		  ,#{jibun}
+		  ,#{soujaName}
+		  ,#{soujaAddress}
+		  ,#{soujaContact1}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(soujaContact2)" >
+		  ,#{soujaContact2}
+		  </if>
+		    )
+	
+	</insert>
+
 </mapper>

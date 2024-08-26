@@ -2,14 +2,19 @@ package com.slsolution.plms;
 
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.slsolution.plms.json.JSONArray;
 import com.slsolution.plms.json.JSONException;
 import com.slsolution.plms.json.JSONObject;
@@ -80,5 +85,24 @@ public class CommonUtil {
 	     return list;                                                         
 	                                                                          
 	 }
+	
+	public static Map<String, Object> getMapFromJsonObject(JSONObject jsonObj){
+	    Map<String, Object> map = null;
+	    
+	    try {
+	       map = new ObjectMapper().readValue(jsonObj.toString(), Map.class);
+	    } catch (JsonParseException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    } catch (JsonMappingException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }
+	    return map;
+	}
+
 
 }

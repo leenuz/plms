@@ -218,11 +218,18 @@ $(document).on("click","#completeSoujaBtn",function(){
 		console.log(input);
 		console.log(input.length);
 		console.log("0:"+$(input).eq(0).val());
-		if ($(input).eq(0).val()=="" || $(input).eq(1).val()=="") {
-			//alert("소유자 정보를 정확하게 입력해주세요!");
+		
+		if ($(input).eq(0).val()=="" || $(input).eq(1).val()=="" || $(input).eq(2).val()=="" ||  $(input).eq(3).val()==""){
+			alert("입력사항을 체크하세요! 공유지분,성명,주소는 필수 입력입니다.");
+			return;
+		}
+		
+		
+		if ($(input).eq(0).val()!="" && $(input).eq(1).val()!="" && $(input).eq(2).val()!="" && $(input).eq(3).val()!="") {
+		//	alert("소유자 정보를 정확하게 입력해주세요!");
 			$(thisUl).removeClass("editing");
 			$("#soujaDiv").append('<ul class="contents" id="soujaUl">'+addUl+'</ul>');
-			return;
+			//return;
 		}
 		//if ($(input).eq(0).html()=="" || )
 		
@@ -276,7 +283,7 @@ $(document).on("click","#deleteSoujaBtn",function(){
 */
 // 추가 버튼 click 이벤트
 
-if (registBtn) {
+/*if (registBtn) {
     registBtn.forEach((regiBtn) => {
         regiBtn.addEventListener('click', function () {
 
@@ -289,7 +296,7 @@ if (registBtn) {
             });
         })
     })
-}
+}*/
 
 // 기본 정보 -> 주소 검색
 /*
@@ -398,8 +405,8 @@ $(document).on("click","#basicSearchBtn",function(){
 		  
 		   console.log('landRightSearchResultPop 작동');
 		   console.log("-------검색버튼 클릭-----------");
-		   		console.log($("#searchForm").serialize());
-		   		var formSerializeArray = $('#searchForm').serializeArray();
+		   		console.log($("#saveForm").serialize());
+		   		var formSerializeArray = $('#saveForm').serializeArray();
 		   			   console.log(formSerializeArray);
 					  /* console.log($("#searchResultPopDiv").html());*/
 		              
@@ -428,15 +435,101 @@ $(document).on("click","#basicSearchBtn",function(){
 $(document).on("click","#finalBtn",function(){
 	console.log("---------finalBtn class click------------");
 	console.log($("#saveForm").serialize());
+	
+	//데이터를 가공해서 넘김다
+	
+	
 	var formSerializeArray = $('#saveForm').serializeArray();
 				   console.log(formSerializeArray);
+				   
+				   len = formSerializeArray.length;
+				   var dataObj = {}; 
+				   for (i=0; i<len; i++) {  
+					dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
+				   }
+				   
+				   console.log("------dataObj--------");
+				   console.log(dataObj);
+				      
+				   
+				   
+				   
+				   
+				   const soujaUls = document.querySelectorAll('#soujaUl');
+				   const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+				   console.log(attachFileUls);
+				   
+				//   console.log(soujaUls);
+				   var soujaArr=new Array();
+				   for(var i=0;i<soujaUls.length;i++){
+					    console.log(soujaUls[i]);
+						console.log($(soujaUls[i]).find("#soujaJibun").val());
+						var soujaJibun=$(soujaUls[i]).find("#soujaJibun").val();
+						var soujaName=$(soujaUls[i]).find("#soujaName").val();
+						var soujaAddress=$(soujaUls[i]).find("#soujaAddress").val();
+						var soujaContact1=$(soujaUls[i]).find("#soujaContact1").val();
+						var soujaContact2=$(soujaUls[i]).find("#soujaContact2").val();
+						
+						soujaJibun=(soujaJibun=="undefined" || soujaJibun=="" || soujaJibun==null)?"":soujaJibun;
+						soujaName=(soujaName=="undefined" || soujaName=="" || soujaName==null)?"":soujaName;
+						soujaAddress=(soujaAddress=="undefined" || soujaAddress=="" || soujaAddress==null)?"":soujaAddress;
+						soujaContact1=(soujaContact1=="undefined" || soujaContact1=="" || soujaContact1==null)?"":soujaContact1;
+						soujaContact2=(soujaContact2=="undefined" || soujaContact2=="" || soujaContact2==null)?"":soujaContact2;
+						var soujaInfo={"jibun":soujaJibun,"soujaName":soujaName,"soujaAddress":soujaAddress,"soujaContact1":soujaContact1,"soujaContact2":soujaContact2};
+						if (soujaJibun!="" && soujaName!="" && soujaAddress!="" && soujaContact1!="") soujaArr.push(soujaInfo);
+				   }
+				   var files=new Array();
+				   for(var i=0;i<attachFileUls.length;i++){
+					console.log($(attachFileUls[i]).parent().parent().html());
+						var fname=$(attachFileUls[i]).parent().parent().find("#filename").attr('placeholder');
+						console.log(fname);
+						files.push(fname);
+					}
+				   
+					console.log("--------files---------");
+					console.log(files);
+					
+				   console.log("--------soujaArr------");
+				   console.log(soujaArr);
+				   dataObj.soujaInfo=soujaArr;
+				   dataObj.uploadFiles=files;
+				   
+				   //필수정보체크
+				   console.log("jisa:"+dataObj.jisa);
+				   if (!checkData(dataObj.jisa,"s","담당지사를 입력해주세요!")) return;
+				   else if (!checkData(dataObj.overlap_yn,"s","관로일치여부블 입력해주세요!")) return;
+				   else if (!checkData(dataObj.youngdo,"s","용도블 입력해주세요!")) return;
+				   else if (!checkData(dataObj.pipe_name,"s","관로명(구간)을 입력해주세요!")) return;
+				   else if (!checkData(dataObj.sun_gubun,"s","선구분을 입력해주세요!")) return;
+				   else if (!checkData(dataObj.gover_own_yn,"s","국공유지여부를 입력해주세요!")) return;
+				   else if (!checkData(dataObj.jijuk_area,"s","지적면적을 입력해주세요!")) return;
+				   else if (!checkData(dataObj.jimok_text,"s","지목을 입력해주세요!")) return;
+				   else if (!checkData(dataObj.account_yn,"s","회계처리필요여부블 입력해주세요!")) return;
+				   else if (!checkData(dataObj.maddress,"s","주소블 입력해주세요!")) return;
+				   else if (soujaArr<=0) {
+					alert("소유자 정보를 입력해주세요!");
+					return;
+				   }
+				   else if (!checkData(dataObj.mcomple_yn,"s","등기여부블 입력해주세요!")) return;
+				   else if (!checkData(dataObj.mpyeonib_area,"s","편입면적을 입력해주세요!")) return;
+				   else if (!checkData(dataObj.mpermit_yn,"s","계약유형을 입력해주세요!")) return;
+				   
+				   
+				   
+				   
+				   
+				   console.log("------dataObj--------");
+				   			   console.log(dataObj);
+				   
+				   
+				  
 				   url="/jisang/api/Save"; 
 				   $.ajax({
 				   			
 				   				url:url,
 				   				type:'POST',
 				   				contentType:"application/json",
-				   				data:JSON.stringify(formSerializeArray),
+				   				data:JSON.stringify(dataObj),
 				   				
 				   				dataType:"json",
 				   				beforeSend:function(request){
@@ -449,6 +542,7 @@ $(document).on("click","#finalBtn",function(){
 				   					if (response.success="Y"){
 				   						console.log("response.success Y");
 				   						console.log("response.resultData length:"+response.resultData.length);
+										alert("정상적으로 등록 되었습니다.");
 				   						/*$("#popup_bg").show();
 				   						$("#popup").show(500);
 				   						//$("#addrPopupLayer tbody td").remove();
@@ -462,6 +556,7 @@ $(document).on("click","#finalBtn",function(){
 				   				},
 				   				error:function(jqXHR,textStatus,errorThrown){
 				   					alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+									return false;
 				   				}
 				   			
 				   		}); 
@@ -512,12 +607,22 @@ $(document).on("click",".resultSelectBtn",function(){
 	var pnu=$(this).parent().parent().find(".popContent01").html();
 	var address=$(this).parent().parent().find(".popContent02").html();
 	var jibun=$(this).parent().parent().find(".popContent03").html();
+	var sido_nm=$(this).parent().parent().find(".popContent0201").html();
+	var sgg_nm=$(this).parent().parent().find(".popContent0202").html();
+	var emd_nm=$(this).parent().parent().find(".popContent0203").html();
+	var ri_nm=$(this).parent().parent().find(".popContent0204").html();
 	console.log("pnu:"+pnu);
 	console.log("address:"+address);
 	console.log("jibun:"+jibun);
 	$("#maddress").val(address+" "+jibun);
+	$("#raddress").val(address+" "+jibun);
 	$("#mpnu").val(pnu);
 	$("#mjibun").val(jibun);
+	$("#sido_nm").val(sido_nm);
+	$("#sgg_nm").val(sgg_nm);
+	$("#emd_nm").val(emd_nm);
+	$("#ri_nm").val(ri_nm);
+	
 	
 	
 	
@@ -864,6 +969,8 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	                
 	                function handleFileUpload(files,obj)
 	                {
+						console.log("-------------handleFileUpload---------------");
+						console.log(files);
 	                   for (var i = 0; i < files.length; i++) 
 	                   {
 	                        var fd = new FormData();
@@ -976,8 +1083,10 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	                           // status.setProgress(100);
 	                 			console.log(data);
 	                 			console.log(data.resultData);
+								//console.log("-------------sendFileToServer-----------------------");
+								//console.log($(this).parent().parent().parent().parent());
 	                            //$("#status1").append("File upload Done<br>");    
-								uploadFiles.push(data.resultData.fpath);    
+								//uploadFiles.push(data.resultData.fpath);    
 								//allCheckEventLandRightsRegist();   
 	                        }
 	                    }); 

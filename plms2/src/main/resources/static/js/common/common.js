@@ -7,7 +7,7 @@ console.log("----------------common.js start----------------");
 
 
 
-function isEmpty(str,mode){
+/*function EmptyToStr(str,mode){
 	//mode string s , number n
 	var newStr=str;
 	if (newStr==null || newStr == "" || newStr==undefined || newStr=="undefined"){
@@ -16,6 +16,18 @@ function isEmpty(str,mode){
 	}
 	
 	return newStr;
+	
+}*/
+function isEmpty(str,mode){
+	//mode string s , number n
+	var newStr=str;
+	if (newStr==null || newStr == "" || newStr==undefined || newStr=="undefined"){
+		/*if (mode=="n") newStr=0;
+		else newStr="";*/
+		return true;
+	}
+	
+	return false;
 	
 }
 
@@ -155,4 +167,16 @@ $(document).on("change","#sido",function(){
 })	 
 	 
 
+
+function checkData(str,mode,message="오류메세지 미확인"){
+	console.log("--------checkData---------");
+	console.log("str:"+str);
+	console.log("mode:"+mode);
+	if (this.isEmpty(str,mode)) {
+		console.log("------------------null-------------");
+		alert(message);
+		return false;
+	}
+	return true;
+}
 

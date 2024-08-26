@@ -131,9 +131,9 @@ margin:10px;
         <div class="mainTitle">
             <h1>지상권 내역 등록</h1>
         </div>
-
+ <form name="saveForm"  id="saveForm" onSubmit="return false;">
         <section class="defaultInfo">
-        <form id="searchForm" onSubmit="return false;">
+        
             <div class="subTitle">
                 기본 정보
             </div>
@@ -141,16 +141,16 @@ margin:10px;
             <div class="contWrap">
                 <div class="depth1">
                     <ul class="titles">
-                        <li class="title01 title">담당지사</li>
-                        <li class="title02 title">관로일치여부</li>
-                        <li class="title03 title">용도</li>
-                        <li class="title04 title">관로명(구간)</li>
-                        <li class="title">단/복선</li>
-                        <li class="title02 title">국공유지여부</li>
-                        <li class="title05 title">지적면적(㎡)</li>
-                        <li class="title05 title">지목</li>
+                        <li class="title01 title">*담당지사</li>
+                        <li class="title02 title">*관로일치여부</li>
+                        <li class="title03 title">*용도</li>
+                        <li class="title04 title">*관로명(구간)</li>
+                        <li class="title">*단/복선</li>
+                        <li class="title02 title">*국공유지여부</li>
+                        <li class="title05 title">*지적면적(㎡)</li>
+                        <li class="title05 title">*지목</li>
                         <li class="title05 title">관리제외필지</li>
-                        <li class="title05 title">회계처리필요여부</li>
+                        <li class="title05 title">*회계처리필요여부</li>
                     </ul>
                     <ul class="contents">
                         <li class="content01 content selectContentArea">
@@ -327,7 +327,7 @@ margin:10px;
                             </div>
                             <section class="customSelectBox">
                                 <button class="customSelectView">
-                                    Y
+                                    선택
                                     
                                 </button>
                         
@@ -340,20 +340,20 @@ margin:10px;
                 </div>
                 <div class="depth2">
                     <ul class="titles">
-                        <li class="title01">주소</li>
+                        <li class="title01">*주소</li>
                         <li class="title02">주소 입력 선택 방식</li>
                     </ul>
                     <ul class="contents">
                         <li class="content01">
                         	
                         	
-                            <input type="text" name="maddress" id="maddress" placeholder="경기도 고양시 덕양구 강매동 1" readonly class="notWriteInput">
+                            <input type="text" name="raddress" id="raddress" placeholder="경기도 고양시 덕양구 강매동 1" readonly class="notWriteInput">
                         </li>
                         <li class="content02">
                             <ul class="radioBox">
                                 <li class="inputArea inputArea01">
                                     <div class="inputWrap">
-                                        <input type="radio" name="landRightsRegistration_addressInput" checked>
+                                        <input type="radio" name="landRightsRegistration_addressInput"  value="0" checked>
                                         <label>입력형</label>
                                     </div>
 
@@ -361,7 +361,7 @@ margin:10px;
                                 </li>
                                 <li class="inputArea inputArea02">
                                     <div class="inputWrap">
-                                        <input type="radio" name="landRightsRegistration_addressInput">
+                                        <input type="radio" name="landRightsRegistration_addressInput" value="1">
                                         <label>선택형</label>
                                     </div>
 
@@ -446,7 +446,7 @@ margin:10px;
                                         </section>
                                     </div>
                     
-                                    <input type="text" placeholder="지번 입력">
+                                    <input type="text" name="mjibun" placeholder="지번 입력">
 
                                 </li>
                             </ul>
@@ -457,12 +457,13 @@ margin:10px;
                     </ul>
                 </div>
             </div>
-            </form>
+           
         </section>
-        <form name="saveForm"  id="saveForm" onSubmit="return false;">
+       
+        <input type="hidden" name="maddress" id="maddress"/>
         <section class="ownerInfo">
             <div class="subTitle">
-                소유자 정보
+                *소유자 정보
             </div>
 			<input type="hidden" name="mpnu" id="mpnu"/>
             <input type="hidden" name="mjibun" id="mjibun"/>
@@ -478,19 +479,19 @@ margin:10px;
                     </ul>
                     <ul class="contents" id="soujaHiddenUl" style="display:none;">
                         <li class="content01 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="ex)1/2">
+                            <input type="text" class="editingContent" name="soujaJibun" readonly placeholder="ex)1/2">
                         </li>
                         <li class="content02 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="ex)홍길동">
+                            <input type="text" class="editingContent" name="soujaName" readonly placeholder="ex)홍길동">
                         </li>
                         <li class="content03 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="ex)주소만입력">
+                            <input type="text" class="editingContent" name="soujaAddress" readonly placeholder="ex)주소만입력">
                         </li>
                         <li class="content04 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="ex)000-0000-0000">
+                            <input type="text" class="editingContent" name="soujaContact1" readonly placeholder="ex)000-0000-0000">
                         </li>
-                        <li class="content05 content editSpace" readonly>
-                            <input type="text" class="editingContent">
+                        <li class="content05 content editSpace"  readonly>
+                            <input type="text" class="editingContent" name="soujaContact2">
                         </li>
                         <li class="content06 content btnBox">
                             <!-- 수정입력할때 -->
@@ -515,19 +516,19 @@ margin:10px;
                     </ul>
                     <ul class="contents" id="soujaUl">
                         <li class="content01 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="ex)1/2">
+                            <input type="text" class="editingContent" name="soujaJibun" id="soujaJibun" readonly placeholder="ex)1/2">
                         </li>
                         <li class="content02 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="ex)홍길동">
+                            <input type="text" class="editingContent" name="soujaName" id="soujaName" readonly placeholder="ex)홍길동">
                         </li>
                         <li class="content03 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="ex)주소만입력">
+                            <input type="text" class="editingContent"  name="soujaAddress" id="soujaAddress" readonly placeholder="ex)주소만입력">
                         </li>
                         <li class="content04 content editSpace">
-                            <input type="text" class="editingContent" readonly placeholder="ex)000-0000-0000">
+                            <input type="text" class="editingContent" name="soujaContact1" id="soujaContact1" readonly placeholder="ex)000-0000-0000">
                         </li>
                         <li class="content05 content editSpace" readonly>
-                            <input type="text" class="editingContent">
+                            <input type="text" class="editingContent" name="soujaContact2" id="soujaContact2">
                         </li>
                         <li class="content06 content btnBox">
                             <!-- 수정입력할때 -->
@@ -563,10 +564,10 @@ margin:10px;
             <div class="contWrap">
                 <div class="depth1">
                     <ul class="titles">
-                        <li class="title01 title">등기여부</li>
-                        <li class="title02 title">편입면적(m²)</li>
+                        <li class="title01 title">*등기여부</li>
+                        <li class="title02 title">*편입면적(m²)</li>
                         <li class="title03 title">위치</li>
-                        <li class="title04 title">계약유형</li>
+                        <li class="title04 title">*계약유형</li>
                         <li class="title05 title">등기일</li>
                         <li class="title06 title">등기번호</li>
                         <li class="title06 title">등기소</li>
@@ -688,7 +689,7 @@ margin:10px;
 
 
         <section class="attachFileInfo">
-        <form name="uploadForm" method="post" enctype="multipart/form-data">
+       <!--  <form name="uploadForm" method="post" enctype="multipart/form-data"> -->
             <div class="subTitle">
                 첨부파일
                 <div class="fileBtnWrap">
@@ -704,7 +705,7 @@ margin:10px;
                 </div>
             </div>
 			<!-- <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div> -->
-			</form>
+			<!-- </form> -->
             <div class="contWrap">
                 <div class="depth1" id="fileListDiv">
                     <ul class="titles" id="fileTitleUl">
@@ -734,11 +735,15 @@ margin:10px;
                 등록 메모
             </div>
         
-            <textarea placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200" name="memo"></textarea>
+            <textarea name="jisangMemo" placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200" >11111</textarea>
         
         </section>
 
-        
+        <input type="hidden" name="sido_nm" id="sido_nm"></input>
+        <input type="hidden" name="sgg_nm" id="sgg_nm"></input>
+        <input type="hidden" name="emd_nm" id="emd_nm"></input>
+        <input type="hidden" name="ri_nm" id="ri_nm"></input>
+       
 
         <div class="finalBtnBox btnWrap">
             <button class="backBtn grayBtn finalBtn">이전</button>
@@ -769,25 +774,23 @@ margin:10px;
                     <ul class="popContents" th:each="val:${jisangBasicSearchList}">
                         <li class="popContent01"> [[${val.pnu}]]</li>
                         <li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.ri_nm}]]</li>
+                        <ii class="popContent0201" hidden>[[${val.sido_nm}]]</ii>
+                        <ii class="popContent0202" hidden>[[${val.sgg_nm}]]</ii>
+                        <ii class="popContent0203" hidden>[[${val.emd_nm}]]</ii>
+                        <ii class="popContent0204" hidden>[[${val.ri_nm}]]</ii>
                         <li class="popContent03">[[${val.jibun}]]</li>
                         <li class="popContent04">
+                        	
                             <button class="resultSelectBtn">선택</button>
                         </li>
                     </ul>
-                    <ul class="popContents">
-                        <li class="popContent01">115001100010010001</li>
-                        <li class="popContent02">서울특별시 강서구 개화동</li>
-                        <li class="popContent03">1-1</li>
-                        <li class="popContent04">
-                            <button class="resultSelectBtn">선택</button>
-                        </li>
-                    </ul>
+                   
                     
                 </div>
             </div>
 
             <div class="lastBtnBox btnWrap">
-                <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+                <button class="backBtn finalBtn" id="popupCloseBtn">닫기1</button>
                 <button class="saveBtn finalBtn">PNU 없이 선택</button>
             </div>
         </div>
