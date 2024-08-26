@@ -678,5 +678,105 @@ public class jisangController {
 
 	}
 
-	
+	@PostMapping(path="/landTerminationSave")
+	public void landTerminationSave(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+
+		String jisa = httpRequest.getParameter("jisa");	//담당지사
+		String yongdo = httpRequest.getParameter("yongdo");	//용도
+		String pipe_name = httpRequest.getParameter("pipe_name");	//관로명(구간)
+		String sun_gubun = httpRequest.getParameter("sun_gubun");	//단/복선
+		String sido_nm = httpRequest.getParameter("sido_nm");	//주소
+		String sgg_nm = httpRequest.getParameter("sgg_nm");	//주소
+		String ri_nm = httpRequest.getParameter("ri_nm");	//주소
+		String jibun = httpRequest.getParameter("jibun");	//주소
+		String jijuk_area = httpRequest.getParameter("jijuk_area");	//지적면적(m²)
+		String gover_own_yn = httpRequest.getParameter("gover_own_yn");	//국공유지여부
+
+		String jasan_no = httpRequest.getParameter("jasan_no");	//자산분류번호
+		String chuideuk_date = httpRequest.getParameter("chuideuk_date");	//취득일자
+		String pyeonib_area = httpRequest.getParameter("pyeonib_area");	//편입면적(m2)
+		String use_state = httpRequest.getParameter("use_state");	//사용현황
+		String deunggi_date = httpRequest.getParameter("deunggi_date");	 //등기일
+		String deunggi_no = httpRequest.getParameter("deunggi_no");	//등기번호
+		String deunggiso = httpRequest.getParameter("deunggiso");	//등기소
+		String dosiplan = httpRequest.getParameter("dosiplan");	//도시계획 결정여부
+
+		String account_yn = httpRequest.getParameter("account_yn");
+		String cancel_date = httpRequest.getParameter("cancel_date");
+		String chuideuk_money = httpRequest.getParameter("chuideuk_money");
+		String gammoney = httpRequest.getParameter("gammoney");
+		String remainder_money = httpRequest.getParameter("remainder_money");
+		String cancel_bosang_yn = httpRequest.getParameter("cancel_bosang_yn");
+		String cancel_bosang_money = httpRequest.getParameter("cancel_bosang_money");
+		String cancel_reason = httpRequest.getParameter("cancel_reason");
+		String cancel_comment = httpRequest.getParameter("cancel_comment");
+
+		String jisang_no = httpRequest.getParameter("jisang_no");
+		String jIdx = httpRequest.getParameter("jIdx");
+
+		params.put("jisa",jisa);
+		params.put("yongdo",yongdo);
+		params.put("pipe_name",pipe_name);
+		params.put("sun_gubun",sun_gubun);
+		params.put("sido_nm",sido_nm);
+		params.put("sgg_nm",sgg_nm);
+		params.put("ri_nm",ri_nm);
+		params.put("jibun",jibun);
+		if (jijuk_area != null && !jijuk_area.trim().isEmpty()) {
+			params.put("jijuk_area",Integer.parseInt(jijuk_area));
+		} else {
+			params.put("jijuk_area", null);
+		}
+		params.put("gover_own_yn",gover_own_yn);
+
+		params.put("jasan_no",jasan_no);
+		params.put("chuideuk_date",chuideuk_date);
+		if (pyeonib_area != null && !pyeonib_area.trim().isEmpty()) {
+			params.put("pyeonib_area",Integer.parseInt(pyeonib_area));
+		} else {
+			params.put("pyeonib_area", null);
+		}
+		params.put("use_state",use_state);
+		params.put("deunggi_date",deunggi_date);
+		params.put("deunggi_no",deunggi_no);
+		params.put("deunggiso",deunggiso);
+		params.put("dosiplan",dosiplan);
+
+		params.put("account_yn",account_yn);
+		params.put("cancel_date",cancel_date);
+		if (chuideuk_money != null && !chuideuk_money.trim().isEmpty()) {
+			params.put("chuideuk_money", Integer.parseInt(chuideuk_money));
+		} else {
+			params.put("chuideuk_money", null);
+		}
+		if (gammoney != null && !gammoney.trim().isEmpty()) {
+			params.put("gammoney",Integer.parseInt(gammoney));
+		} else {
+			params.put("gammoney", null);
+		}
+		if (remainder_money != null && !remainder_money.trim().isEmpty()) {
+			params.put("remainder_money",Integer.parseInt(remainder_money));
+		} else {
+			params.put("remainder_money", null);
+		}
+
+		params.put("cancel_bosang_yn",cancel_bosang_yn);
+
+		if (cancel_bosang_money != null && !cancel_bosang_money.trim().isEmpty()) {
+			params.put("cancel_bosang_money",Integer.parseInt(cancel_bosang_money));
+		} else {
+			params.put("cancel_bosang_money", null);
+		}
+		params.put("cancel_reason",cancel_reason);
+		params.put("cancel_comment",cancel_comment);
+
+		params.put("jisang_no",jisang_no);
+		params.put("idx",Integer.parseInt(jIdx));
+
+		log.info("params:"+params);
+		mainService.InsertQuery("jisangSQL.upsertJisangMasterTmp",params);
+	}
 }

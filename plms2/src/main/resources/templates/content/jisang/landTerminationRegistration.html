@@ -136,7 +136,6 @@ margin:10px;
   <th:block layout:fragment="content">
     <!-- 지상권 해지 등록 -->
     <div class="landTerminationRegistrationWrapper">
-      <div class="landTerminationRegistrationHeader"></div>
       <main id="landTerminationRegistration">
         <div class="mainTitle">
           <h1>지상권 해지 등록</h1>
@@ -162,7 +161,7 @@ margin:10px;
                     <li class="addressInfoWidth title">주소</li>
                     <li class="title">지적면적(m²)</li>
                     <li class="title">국공유지여부</li>
-                    <li class="title">회계처리 필요여부</li>
+                    <li class="title">회계처리 필요여부*</li>
                   </ul>
                     <ul class="contents lastContents">
                       <li class="content">
@@ -170,26 +169,31 @@ margin:10px;
                           type="text"
                           th:placeholder="${resultData.jm_jisa}"
                           readonly
-                          class="notWriteInput" />
+                          id="jisa"
+                          class="notWriteInput"
+                          />
                       </li>
                       <li class="content">
                         <input
                           type="text"
                           th:placeholder="${resultData.jm_yongdo}"
                           readonly
-                          class="notWriteInput" />
+                          id="yongdo"
+                          class="notWriteInput"/>
                       </li>
                       <li class="content">
                         <input type="text"
                            th:placeholder="${resultData.jm_pipe_name}"
                            readonly
-                           class="notWriteInput" />
+                           id="pipe_name"
+                           class="notWriteInput"/>
                       </li>
                       <li class="content">
                         <input
                           type="text"
                           th:placeholder="${resultData.jm_sun_gubun}"
                           readonly
+                          id="sun_gubun"
                           class="notWriteInput" />
                       </li>
                       <li class="addressInfoWidth content">
@@ -197,6 +201,7 @@ margin:10px;
                           type="text"
                           th:placeholder="${resultData.address}"
                           readonly
+                          id="address"
                           class="notWriteInput" />
                       </li>
                       <li class="content">
@@ -204,6 +209,7 @@ margin:10px;
                           type="text"
                           th:placeholder="${resultData.jm_jijuk_area}"
                           readonly
+                          id="jijuk_area"
                           class="notWriteInput" />
                       </li>
                       <li class="content">
@@ -211,6 +217,7 @@ margin:10px;
                           type="text"
                           th:placeholder="${resultData.jm_gover_own_yn}"
                           readonly
+                          id="gover_own_yn"
                           class="notWriteInput" />
                       </li>
                       <li class="content selectContentArea">
@@ -315,7 +322,7 @@ margin:10px;
                   <li class="title">등기번호</li>
                   <li class="title">등기소</li>
                   <li class="title">도시계획 결정여부</li>
-                  <li class="title">해지일자</li>
+                  <li class="title">해지일자*</li>
                 </ul>
                 <ul class="contents">
                   <li class="content">
@@ -323,6 +330,7 @@ margin:10px;
                       type="text"
                       th:placeholder="${resultData.jm_jasan_no}"
                       readonly
+                      id="jasan_no"
                       class="notWriteInput" />
                   </li>
                   <li class="content">
@@ -330,6 +338,7 @@ margin:10px;
                       type="text"
                       th:placeholder="${resultData.jm_chuideuk_date}"
                       readonly
+                      id="chuideuk_date"
                       class="notWriteInput" />
                   </li>
                   <li class="content">
@@ -337,6 +346,7 @@ margin:10px;
                       type="text"
                       th:placeholder="${resultData.jm_pyeonib_area}"
                       readonly
+                      id="pyeonib_area"
                       class="notWriteInput" />
                   </li>
                   <li class="content">
@@ -344,6 +354,7 @@ margin:10px;
                       type="text"
                       th:placeholder="${resultData.jm_use_state}"
                       readonly
+                      id="use_state"
                       class="notWriteInput" />
                   </li>
                   <li class="content">
@@ -351,6 +362,7 @@ margin:10px;
                       type="text"
                       th:placeholder="${resultData.jm_deunggi_date}"
                       readonly
+                      id="deunggi_date"
                       class="notWriteInput" />
                   </li>
                   <li class="content">
@@ -358,6 +370,7 @@ margin:10px;
                       type="text"
                       th:placeholder="${resultData.jm_deunggi_no}"
                       readonly
+                      id="deunggi_no"
                       class="notWriteInput" />
                   </li>
                   <li class="content">
@@ -365,6 +378,7 @@ margin:10px;
                       type="text"
                       th:placeholder="${resultData.jm_deunggiso}"
                       readonly
+                      id="deunggiso"
                       class="notWriteInput" />
                   </li>
                   <li class="content">
@@ -372,6 +386,7 @@ margin:10px;
                       type="text"
                       th:placeholder="${resultData.jm_dosiplan}"
                       readonly
+                      id="dosiplan"
                       class="notWriteInput" />
                   </li>
                   <li class="content">
@@ -379,6 +394,7 @@ margin:10px;
                       <input
                         type="date"
                         th:data-placeholder="${resultData.jm_cancel_date}"
+                        id="cancel_date"
                         required
                         aria-required="true" />
                     </div>
@@ -389,19 +405,19 @@ margin:10px;
                 <ul class="rowListBox">
                   <li class="title">취득금액</li>
                   <li class="content">
-                    <input type="text" placeholder="직접입력" th:value="${resultData.jm_chuideuk_money}" />
+                    <input type="text" placeholder="직접입력" th:value="${resultData.jm_chuideuk_money}" id="chuideuk_money" />
                   </li>
                 </ul>
                 <ul class="rowListBox">
                   <li class="title">감가삼각충당금</li>
                   <li class="content">
-                    <input type="text" placeholder="직접입력" th:value="${resultData.jm_gammoney}" />
+                    <input type="text" placeholder="직접입력" th:value="${resultData.jm_gammoney}" id="gammoney" />
                   </li>
                 </ul>
                 <ul class="rowListBox">
                   <li class="title">잔존가액</li>
                   <li class="content lastRowList">
-                    <input type="text" placeholder="직접입력" th:value="${resultData.jm_remainder_money}" />
+                    <input type="text" placeholder="직접입력" th:value="${resultData.jm_remainder_money}" id="remainder_money" />
                   </li>
                 </ul>
               </div>
@@ -412,7 +428,7 @@ margin:10px;
         <!-- 지상권 해지관련 보상정보 -->
 
         <section class="compensationInfo">
-          <div class="subTitle">지상권 해지관련 보상정보</div>
+          <div class="subTitle">지상권 해지관련 보상정보*</div>
 
           <div class="contWrap">
             <div class="depth1">
@@ -438,7 +454,7 @@ margin:10px;
               <ul class="rowListBox">
                 <li class="title">보상금액</li>
                 <li class="content lastRowList">
-                  <input type="text" placeholder="직접입력" th:value="${resultData.jm_cancel_bosang_money}" />
+                  <input type="text" placeholder="직접입력" th:value="${resultData.jm_cancel_bosang_money}" id="cancel_bosang_money" />
                 </li>
               </ul>
             </div>
@@ -478,27 +494,27 @@ margin:10px;
                     <li class="title">파일보기</li>
                   </ul>
                   <div class="contentScr">
-                    <ul class="contents" th:each="val:${jisangPnuAtcFileList}">
+                    <ul class="contents" th:each="val:${atcFileList}">
                       <li class="selectWidth content checkboxWrap">
-                        <input type="checkbox" th:id="'checkbox_' + ${val.pa_idx}" class="file-checkbox" th:value="${val.pa_idx}">
-                        <label th:for="'checkbox_' + ${val.pa_idx}"></label>
+                        <input type="checkbox" th:id="'checkbox_' + ${val.ja_idx}" class="file-checkbox" th:value="${val.ja_idx}">
+                        <label th:for="'checkbox_' + ${val.ja_idx}"></label>
                       </li>
                       <li class="content registDateWidth">
                         <input
                           type="text"
-                          th:placeholder="${val.pa_wdate}"
+                          th:placeholder="${val.ja_wdate}"
                           readonly
                           class="notWriteInput" />
                       </li>
                       <li class="content fileNameWidth">
                         <input
                           type="text"
-                          th:placeholder="${val.pa_file_nm}"
+                          th:placeholder="${val.ja_file_nm}"
                           readonly
                           class="notWriteInput" />
                       </li>
                       <li class="content">
-                        <button class="viewDetailButton" th:onclick="openFilePopup([[${val.pa_file_path}]])">보기</button>
+                        <button class="viewDetailButton" th:onclick="openFilePopup([[${val.ja_file_path}]])">보기</button>
                       </li>
                     </ul>
                   </div>
@@ -511,14 +527,14 @@ margin:10px;
         </section>
 
         <section class="reasonTermination">
-          <div class="subTitle">해지사유 및 검토의견</div>
+          <div class="subTitle">해지사유 및 검토의견*</div>
 
           <div class="contWrap">
             <div class="depth1">
               <ul class="rowListBox">
                 <li class="title">해지사유</li>
                 <li class="content inputWrap">
-                  <input type="text" placeholder="직접입력" th:value="${resultData.jm_cancel_reason}"/>
+                  <input type="text" placeholder="직접입력" th:value="${resultData.jm_cancel_reason}" id="cancel_reason"/>
                 </li>
               </ul>
             </div>
@@ -526,7 +542,7 @@ margin:10px;
               <ul class="rowListBox">
                 <li class="title">검토의견</li>
                 <li class="content lastRowList">
-                  <textarea placeholder="직접입력" th:value="${resultData.jm_cancel_comment}"></textarea>
+                  <textarea placeholder="직접입력" th:value="${resultData.jm_cancel_comment}" id="cancel_comment"></textarea>
                 </li>
               </ul>
             </div>
@@ -534,7 +550,7 @@ margin:10px;
         </section>
 
         <section class="attachDocuments">
-          <div class="subTitle">첨부 서류</div>
+          <div class="subTitle">첨부 서류*</div>
 
           <div class="contWrap">
             <div class="depth1">
@@ -750,12 +766,15 @@ margin:10px;
           <button class="backBtn grayBtn finalBtn">이전</button>
           <button
             class="saveBtn vividBlueBtn finalBtn"
-            form="landTerminationRegistration_Form">
+            id="save_btn"
+            form="landTerminationRegistration_Form"
+            th:idx="${resultData.jm_jisang_no}" th:index="${resultData.jm_idx}">
             저장
           </button>
           <button
             class="lightBlueBtn approvalBtn finalBtn"
             type="submit"
+            id="submit_btn"
             form="landTerminationRegistration_Form">
             상신
           </button>

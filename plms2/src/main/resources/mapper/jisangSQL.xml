@@ -379,4 +379,98 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and r.toji_type=#{toji_type}
 		</if>
 	</select>
+
+	<insert id="upsertJisangMasterTmp" parameterType="map">
+		INSERT INTO jisang_master_tmp (
+		jmt_jisang_no,
+		jmt_idx,
+		jmt_jisa,
+		jmt_yongdo,
+		jmt_pipe_name,
+		jmt_sun_gubun,
+		jmt_sido_nm,
+		jmt_sgg_nm,
+		jmt_ri_nm,
+		jmt_jibun,
+		jmt_jijuk_area,
+		jmt_gover_own_yn,
+		jmt_jasan_no,
+		jmt_chuideuk_date,
+		jmt_pyeonib_area,
+		jmt_use_state,
+		jmt_deunggi_date,
+		jmt_deunggi_no,
+		jmt_deunggiso,
+		jmt_dosiplan,
+		<!--jmt_account_yn,-->
+		jmt_cancel_date,
+		jmt_chuideuk_money,
+		jmt_gammoney,
+		jmt_remainder_money,
+		jmt_cancel_bosang_yn,
+		jmt_cancel_bosang_money,
+		jmt_cancel_reason,
+		jmt_cancel_comment
+		) VALUES (
+		#{jisang_no},
+		#{idx},
+		#{jisa},
+		#{yongdo},
+		#{pipe_name},
+		#{sun_gubun},
+		#{sido_nm},
+		#{sgg_nm},
+		#{ri_nm},
+		#{jibun},
+		#{jijuk_area},
+		#{gover_own_yn},
+		#{jasan_no},
+		TO_DATE(#{chuideuk_date},'YYYY-MM-DD'),
+		#{pyeonib_area},
+		#{use_state},
+		TO_DATE(#{deunggi_date},'YYYY-MM-DD'),
+		#{deunggi_no},
+		#{deunggiso},
+		#{dosiplan},
+		<!--#{account_yn},-->
+		TO_DATE(#{cancel_date},'YYYY-MM-DD'),
+		#{chuideuk_money},
+		#{gammoney},
+		#{remainder_money},
+		#{cancel_bosang_yn},
+		#{cancel_bosang_money},
+		#{cancel_reason},
+		#{cancel_comment}
+		)
+		ON CONFLICT (jmt_jisang_no, jmt_idx)
+		DO UPDATE SET
+		jmt_jisa = EXCLUDED.jmt_jisa,
+		jmt_yongdo = EXCLUDED.jmt_yongdo,
+		jmt_pipe_name = EXCLUDED.jmt_pipe_name,
+		jmt_sun_gubun = EXCLUDED.jmt_sun_gubun,
+		jmt_sido_nm = EXCLUDED.jmt_sido_nm,
+		jmt_sgg_nm = EXCLUDED.jmt_sgg_nm,
+		jmt_ri_nm = EXCLUDED.jmt_ri_nm,
+		jmt_jibun = EXCLUDED.jmt_jibun,
+		jmt_jijuk_area = EXCLUDED.jmt_jijuk_area,
+		jmt_gover_own_yn = EXCLUDED.jmt_gover_own_yn,
+		jmt_jasan_no = EXCLUDED.jmt_jasan_no,
+		jmt_chuideuk_date = EXCLUDED.jmt_chuideuk_date,
+		jmt_pyeonib_area = EXCLUDED.jmt_pyeonib_area,
+		jmt_use_state = EXCLUDED.jmt_use_state,
+		jmt_deunggi_date = EXCLUDED.jmt_deunggi_date,
+		jmt_deunggi_no = EXCLUDED.jmt_deunggi_no,
+		jmt_deunggiso = EXCLUDED.jmt_deunggiso,
+		jmt_dosiplan = EXCLUDED.jmt_dosiplan,
+<!--		jmt_account_yn = EXCLUDED.jmt_account_yn,-->
+		jmt_cancel_date = EXCLUDED.jmt_cancel_date,
+		jmt_chuideuk_money = EXCLUDED.jmt_chuideuk_money,
+		jmt_gammoney = EXCLUDED.jmt_gammoney,
+		jmt_remainder_money = EXCLUDED.jmt_remainder_money,
+		jmt_cancel_bosang_yn = EXCLUDED.jmt_cancel_bosang_yn,
+		jmt_cancel_bosang_money = EXCLUDED.jmt_cancel_bosang_money,
+		jmt_cancel_reason = EXCLUDED.jmt_cancel_reason,
+		jmt_cancel_comment = EXCLUDED.jmt_cancel_comment;
+	</insert>
+
 </mapper>
