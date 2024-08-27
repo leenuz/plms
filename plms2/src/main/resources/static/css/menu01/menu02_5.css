@@ -1190,27 +1190,6 @@ select:focus {
   z-index: 999;
 }
 
-#userTable
-td
-button.btnDesign {
-	
-  width: 116px;
-  height: 27px;
-  border-radius: 20px;
-  color: #2b7de1;
-  font-size: 13px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #cce0ff99;
-  cursor: default;
-  position: relative;
-  z-index: 999;
-}
-
-
-
 #dopcosurfaceInquire05
   .surfaceInquireMainContentWrapper
   .surfaceInquireMainContent

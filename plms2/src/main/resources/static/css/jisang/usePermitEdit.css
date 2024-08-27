@@ -1,0 +1,963 @@
+@charset "UTF-8";
+* {
+  padding: 0;
+  margin: 0;
+}
+body * {
+  font-family: pretendard;
+}
+li {
+  list-style: none;
+}
+select {
+  outline: 0;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #6e7d88;
+  text-indent: 12px;
+}
+textarea {
+  border: 0;
+  outline: 0;
+}
+.viewDetailButton {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+  font-size: 13px;
+  font-weight: 600;
+}
+#usePermitEdit .lightBlueBtn {
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+}
+input {
+  border: 0;
+  outline: 0;
+}
+input:focus {
+  border: 0;
+}
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+button {
+  border: 0;
+}
+
+/* css추가 */
+
+.usePermitEditWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.usePermitEditWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.usePermitEditWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.usePermitEditHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+/**/
+
+#usePermitEdit * {
+  font-family: pretendard;
+}
+
+#usePermitEdit {
+  width: calc(100% - 100px);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+
+#usePermitEdit .miniBtn {
+  width: 68px;
+  height: 27px;
+  border-radius: 20px;
+}
+
+#usePermitEdit input[type="text"]::placeholder {
+  color: #6e7d88;
+}
+.disabled {
+  pointer-events: none;
+}
+.normalLineHeight {
+  line-height: normal;
+}
+.thirdTitle h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2b7de1;
+  margin-bottom: 15px;
+}
+#usePermitEdit > section {
+  padding-bottom: 40px;
+}
+#usePermitEdit .contents .content {
+  border-right: 1px solid #cddbf0;
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+  box-sizing: border-box;
+}
+#usePermitEdit .contents .content:last-child {
+  border-right: 0;
+}
+#usePermitEdit .titles.titleScr {
+  padding-right: 4px;
+  box-sizing: border-box;
+}
+#usePermitEdit .contentScr {
+  overflow-y: scroll;
+}
+
+#usePermitEdit .contentScr::-webkit-scrollbar {
+  width: 4px;
+}
+
+#usePermitEdit .contentScr::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+.SearchAddressBtn {
+  display: inline-block;
+  width: 86px;
+  height: 44px;
+  border-radius: 100px;
+  background: #cdd2dd;
+  color: #949aac;
+  font-size: 15px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.SearchAddressBtn.active {
+  display: inline-block;
+  width: 86px;
+  height: 44px;
+  border-radius: 100px;
+  background: #4e5871;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+}
+.moreSelectBtn {
+  font-size: 15px;
+  font-weight: 500;
+  color: #4e5871;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  text-align-last: left;
+  padding-left: 12px;
+  box-sizing: border-box;
+}
+
+#usePermitEdit .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+#usePermitEdit .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#usePermitEdit .subTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #31394c;
+  margin-bottom: 24px;
+}
+#usePermitEdit .contWrap {
+  width: 100%;
+}
+/* border-radius */
+#usePermitEdit .titles .title:first-child {
+  border-radius: 5px 0 0 0;
+}
+/* 대상토지 */
+#usePermitEdit .searchAddressBtn {
+  width: 54px;
+  height: 27px;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 20px;
+}
+#usePermitEdit .targetLand {
+  padding: 27px 0 40px 0;
+}
+#usePermitEdit .targetLand .contWrap {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+#usePermitEdit .targetLand .contWrap .titles {
+  height: 90px;
+}
+#usePermitEdit .targetLand .contWrap .title {
+  width: 9.7%;
+}
+#usePermitEdit .targetLand .titles .title.addressInfoWidth {
+  width: 34.3%;
+}
+#usePermitEdit .targetLand .titles .title.titleBox {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+}
+#usePermitEdit .titles .title.titleBox .secondTitles {
+  display: flex;
+  border-top: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+  background: #ecf1f8;
+  box-sizing: border-box;
+}
+#usePermitEdit .titles .title.titleBox .secondTitles .secondTitle {
+  width: 120px;
+}
+#usePermitEdit
+  .titles
+  .title.titleBox
+  .secondTitles
+  .secondTitle.largeSecondTitle {
+  width: 172px;
+}
+#usePermitEdit .targetLand .titles .title.titleBtnWrap {
+  width: 10.7%;
+}
+#usePermitEdit .targetLand .contWrap .content {
+  width: 9.7%;
+}
+
+#usePermitEdit .targetLand .contents .content.addressInfoWidth {
+  width: 34.3%;
+}
+#usePermitEdit .targetLand .contents .content.addressInfoBox {
+  gap: 12px;
+}
+
+#usePermitEdit .targetLand .contents .content.contentBox {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  height: 100%;
+}
+
+#usePermitEdit .targetLand .contents .content.contentBox .secondContents {
+  height: 100%;
+  display: flex;
+}
+
+#usePermitEdit
+  .targetLand
+  .contents
+  .content.contentBox
+  .secondContents
+  .secondContent {
+  width: 120px;
+  border-right: 1px solid #cddbf0;
+}
+#usePermitEdit
+  .targetLand
+  .contents
+  .content.contentBox
+  .secondContents
+  .secondContent.largeSecondTitle {
+  width: 172px;
+}
+#usePermitEdit .targetLand .contents .content.titleBtnWrap {
+  width: 10.7%;
+  padding: 0;
+}
+#usePermitEdit
+  .targetLand
+  .contents
+  .content.contentBox
+  .secondContents
+  .secondContent:last-child {
+  border-right: 0;
+}
+#usePermitEdit .targetLand .contWrap .titles {
+  border-bottom: 0;
+}
+/* 기본 설정 */
+#usePermitEdit .contWrap .titles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+#usePermitEdit .contWrap .depth1 .titles {
+  border-radius: 5px 5px 0 0;
+}
+#usePermitEdit .contWrap .titles li {
+  height: 100%;
+  text-align: center;
+  line-height: 45px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+  /* flex-grow: 1; */
+}
+#usePermitEdit .contWrap .titles li:last-child {
+  border-right: 0;
+}
+#usePermitEdit .contWrap .depth1 .contents {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #fff;
+  border-top: 1px solid #cddbf0;
+}
+#usePermitEdit .contWrap .depth1 .contents li {
+  height: 100%;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#usePermitEdit .contWrap .depth1 .contents li .addressData {
+  width: 50%;
+}
+#usePermitEdit .contWrap .depth1 .contents li p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#usePermitEdit .contWrap .depth1 .contents:last-child {
+  border-radius: 0 0 5px 5px;
+  border-bottom: 0;
+}
+#usePermitEdit .contWrap .depth1 .contents li.content {
+  border-right: 1px solid #cddbf0;
+}
+#usePermitEdit .contWrap .depth1 .contents li:last-child {
+  border-right: 0;
+}
+#usePermitEdit .contWrap .contents.lastContents {
+  border-bottom: 0;
+}
+#usePermitEdit .contWrap .contents li .customSelectBox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+/* #usePermitEdit .contWrap .contents li .customSelectBox .customSelectView {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #6e7d88;
+  text-align-last: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  box-sizing: border-box;
+  background: url(/assets/media/menu02/images/arrowDown.png) no-repeat right
+    10px center;
+  background-color: #fff;
+  background-size: 21px;
+}
+#usePermitEdit
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectView.active {
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+  background: url(/assets/media/menu02/images/arrowDownBlue.png) no-repeat right
+    10px center;
+} */
+/* #usePermitEdit .contWrap .contents li .customSelectBox .customSelectBtns {
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 4px);
+  box-sizing: border-box;
+  max-height: 0;
+  overflow-y: hidden;
+  z-index: 10;
+  transition: 500ms;
+  opacity: 0;
+  border: 1px solid #acbdd7;
+}
+#usePermitEdit
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns.active {
+  padding: 6px 0;
+  border-radius: 10px;
+  background: #fff;
+  max-height: 233px;
+  overflow-y: scroll;
+  transition: 500ms;
+  opacity: 1;
+}
+
+#usePermitEdit .contWrap .contents li .customSelectBox .customSelectBtns li {
+  padding: 0;
+  height: 41px;
+}
+
+#usePermitEdit
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns::-webkit-scrollbar {
+  width: 4px;
+}
+
+#usePermitEdit
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+} */
+
+#usePermitEdit .contents .content.btnBox .btnWrap {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #cddbf0;
+  height: 100%;
+  box-sizing: border-box;
+}
+#usePermitEdit .contents .content.btnBox .btnWrap:last-child {
+  border-right: 0;
+}
+
+#usePermitEdit input[type="text"] {
+  width: 100%;
+  height: 100%;
+  background: #edf2f9;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* css추가 */
+#usePermitEdit .depth1 input[type="text"] {
+  text-align: center;
+}
+/**/
+
+#usePermitEdit input[type="text"]::placeholder {
+  text-align: center;
+  text-indent: 0;
+}
+#usePermitEdit input[type="checkbox"] {
+  display: none;
+}
+.checkboxWrap label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+}
+/* date */
+#usePermitEdit .dateInputWrap {
+  /* width: 205px; */
+  width: 250px;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  position: relative;
+  background: url(/assets/media/menu02/images/calendarInputIcon.png) no-repeat
+    left 8px center;
+  background-size: 18px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#usePermitEdit input[type="date"] {
+  width: 40%;
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+  color: transparent;
+  background: transparent;
+  text-align: right;
+  padding: 0 10px;
+}
+
+#usePermitEdit input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#usePermitEdit input[type="date"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  color: #6e7d88;
+}
+
+#usePermitEdit input[type="date"]:focus,
+#usePermitEdit input[type="date"]:valid {
+  color: #6e7d88;
+}
+
+#usePermitEdit input[type="date"]:focus::before,
+#usePermitEdit input[type="date"]:valid::before {
+  content: "";
+}
+
+#usePermitEdit .contents .content.btnBox .btnWrap {
+  width: 50%;
+  justify-content: center;
+}
+
+#usePermitEdit .contents .content.btnBox .btnWrap:first-child {
+  border-right: 1px solid #cddbf0;
+}
+
+#usePermitEdit .miniBtn {
+  width: 74px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+#usePermitEdit .addBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+#usePermitEdit .delBtn {
+  background: #9a9a9a;
+  color: #fff;
+}
+#usePermitEdit .createBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+#usePermitEdit .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f7f9fc;
+  font-size: 14px;
+  font-weight: 500;
+  height: 100%;
+}
+#usePermitEdit .content {
+  height: 100%;
+  padding: 6px 8px;
+  box-sizing: border-box;
+}
+
+/* 합병사유 및 검토의견 */
+
+#usePermitEdit .mergeTermination {
+}
+#usePermitEdit .mergeTermination .contWrap {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+#usePermitEdit .mergeTermination .contWrap .depth1 .rowListBox {
+  height: 45px;
+  border-bottom: 1px solid #cddbf0;
+}
+#usePermitEdit .mergeTermination .contWrap .depth2 .rowListBox {
+  border-bottom: 1px solid #cddbf0;
+}
+#usePermitEdit .mergeTermination .contWrap .depth2 .rowListBox:last-child {
+  border-bottom: 0;
+}
+#usePermitEdit .mergeTermination .contWrap .depth2:last-child {
+  border-bottom: 0;
+}
+#usePermitEdit .mergeTermination .contWrap .depth2:last-child .title {
+  border-radius: 0 0 0 5px;
+}
+#usePermitEdit .mergeTermination .contWrap .rowListBox {
+  display: flex;
+  height: 100%;
+}
+#usePermitEdit .mergeTermination .contWrap .rowListBox .title {
+  width: 8.5%;
+  height: auto;
+  border-right: 1px solid #cddbf0;
+}
+#usePermitEdit
+  .mergeTermination
+  .contWrap
+  .depth1:first-child
+  .rowListBox
+  .title:first-of-type {
+  border-radius: 5px 0 0 0;
+}
+#usePermitEdit .mergeTermination .contWrap .rowListBox .rowListContents {
+  width: 91.5%;
+}
+#usePermitEdit
+  .mergeTermination
+  .contWrap
+  .rowListBox
+  .rowListContents
+  .rowListContent {
+  padding: 6px 8px;
+  height: 100%;
+  box-sizing: border-box;
+}
+#usePermitEdit
+  .mergeTermination
+  .contWrap
+  .rowListBox
+  .rowListContents
+  .rowListContent
+  input[type="text"] {
+  background: transparent;
+  text-align: left;
+}
+#usePermitEdit
+  .mergeTermination
+  .contWrap
+  .rowListBox
+  .rowListContents
+  .rowListContent
+  input[type="text"]::placeholder {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+  text-indent: 11px;
+  text-align: left;
+}
+
+#usePermitEdit
+  .mergeTermination
+  .contWrap
+  .rowListBox
+  .rowListContents
+  .content.fullContent {
+  padding: 0;
+  height: auto;
+  border-bottom: 1px solid #cddbf0;
+}
+#usePermitEdit
+  .mergeTermination
+  .contWrap
+  .rowListBox
+  .rowListContents
+  .fullContent.lastContents {
+  border-bottom: 0;
+}
+#usePermitEdit
+  .mergeTermination
+  .contWrap
+  .rowListBox
+  .rowListContents
+  .rowListMiniTitle {
+  height: 43px;
+  font-size: 14px;
+  font-weight: 500;
+  background: #ecf1f8;
+  border-bottom: 1px solid #cddbf0;
+}
+#usePermitEdit
+  .mergeTermination
+  .contWrap
+  .rowListBox
+  .rowListContents
+  .rowListMiniTitle
+  p {
+  line-height: 43px;
+  padding-left: 12px;
+  box-sizing: border-box;
+}
+#usePermitEdit
+  .mergeTermination
+  .contWrap
+  .rowListBox
+  .rowListContents
+  .rowListArea {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  box-sizing: border-box;
+}
+#usePermitEdit
+  .mergeTermination
+  .contWrap
+  .rowListBox
+  .rowListContents
+  .rowListArea
+  textarea::placeholder {
+  vertical-align: middle;
+}
+
+#usePermitEdit textarea {
+  width: 100%;
+  border-radius: 10px;
+  background: #edf2f9;
+  padding: 15px 19px;
+  box-sizing: border-box;
+  height: 100%;
+  resize: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+#usePermitEdit textarea::placeholder {
+  color: #3c3c3c;
+}
+#usePermitEdit textarea::-webkit-scrollbar {
+  width: 4px;
+}
+#usePermitEdit textarea::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+/* 첨부서류 */
+
+#usePermitEdit .attachDocuments {
+}
+#usePermitEdit .attachDocuments .contWrap {
+  display: flex;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+#usePermitEdit .attachDocuments .contWrap .depth1 {
+  width: 39.8%;
+  border-right: 1px solid #cddbf0;
+}
+#usePermitEdit .attachDocuments .contWrap .depth2 {
+  width: calc(100% - 39.8%);
+}
+#usePermitEdit .attachDocuments .contWrap .depth1 .titles .title {
+  width: 100%;
+}
+#usePermitEdit .attachDocuments .contWrap .titles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+}
+#usePermitEdit .attachDocuments .contWrap .titles .title {
+  height: 100%;
+}
+#usePermitEdit .attachDocuments .contWrap .depth2 .titles .title.delContWidth {
+  width: 16.2%;
+}
+#usePermitEdit .attachDocuments .contWrap .depth2 .titles .selectFileWidth {
+  width: 10.39%;
+}
+#usePermitEdit .attachDocuments .contWrap .contentListBox {
+  width: 100%;
+  box-sizing: border-box;
+  /* height: 360px; */
+  display: flex;
+}
+#usePermitEdit .attachDocuments .contWrap .contentListBox .essentialDocument {
+  width: 21.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #cddbf0;
+}
+#usePermitEdit .attachDocuments .contWrap .contentListBox .essentialDocument p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+}
+#usePermitEdit .attachDocuments .contWrap .contentListBox .essentialDocuList {
+  width: calc(100% - 21.5%);
+}
+#usePermitEdit
+  .attachDocuments
+  .contWrap
+  .contentListBox
+  .essentialDocuList
+  li {
+  width: 100%;
+  height: 45px;
+  border-bottom: 1px solid #cddbf0;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+}
+#usePermitEdit
+  .attachDocuments
+  .contWrap
+  .contentListBox
+  .essentialDocuList
+  li:last-child {
+  border-bottom: 0;
+}
+#usePermitEdit .attachDocuments .contWrap .depth2 .titles .title {
+  width: 66.3%;
+}
+#usePermitEdit
+  .attachDocuments
+  .contWrap
+  .depth2
+  .titles
+  .title.selectFileWidth {
+  width: 17.2%;
+}
+#usePermitEdit .attachDocuments .contWrap .depth2 .contents {
+  display: flex;
+  height: 45px;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+#usePermitEdit .attachDocuments .contWrap .depth2 .contents:last-child {
+  border-bottom: 0;
+}
+#usePermitEdit .attachDocuments .contWrap .depth2 .contents .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 66.3%;
+}
+#usePermitEdit .attachDocuments .contWrap .depth2 .contents .content p {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#usePermitEdit
+  .attachDocuments
+  .contWrap
+  .depth2
+  .contents
+  .content.delContWidth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16.2%;
+}
+#usePermitEdit
+  .attachDocuments
+  .contWrap
+  .depth2
+  .contents
+  .content.selectFileWidth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 17.2%;
+}
+#usePermitEdit .attachDelBtn {
+  background: #636363;
+  color: #fff;
+}
+
+/* 첨부파일 정보 */
+#usePermitEdit input[type="file"] {
+  display: none;
+}
+
+.lightfileBtnWrap label {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* 이전, 저장 버튼 */
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 10px;
+}
+.finalBtn.backBtn {
+  background: #919191;
+}
+.finalBtn.saveBtn {
+  background: #2b7de1;
+}
+.finalBtn.vividBlueBtn {
+  background: #2b7de1;
+}
+.finalBtn.grayBtn {
+  background: #919191;
+}
+
+/*  */
+#usePermitEdit input[type="text"].notWriteInput {
+  text-indent: 0;
+  text-align: center;
+  color: #3c3c3c;
+  background: transparent;
+}
+#usePermitEdit input[type="text"].notWriteInput::placeholder {
+  color: #3c3c3c;
+}
+#usePermitEdit
+  .attachDocuments
+  .essentialDocuList
+  input[type="text"]::placeholder {
+  text-align: left;
+}

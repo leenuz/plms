@@ -1158,4 +1158,48 @@
 	
 	</insert>
 	
+	
+	<insert id="permit_togi" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jpt_idx" keyProperty="jpt_idx">
+		
+		INSERT INTO jisang_permit_togi 
+		(
+		 jpt_pmt_no
+		 ,jpt_jisang_no
+		 ,jpt_addrcode
+		 ,jpt_soyuja
+		 ,jpt_pmt_user
+		 ,jpt_jimok
+		 ,jpt_all_area
+		 ,jpt_set_area
+		 ,jpt_set_money
+		 ,jpt_sido_nm
+		 ,jpt_sgg_nm
+		 ,jpt_emd_nm
+		 ,jpt_ri_nm
+		 ,jpt_jibun
+		 ,jpt_addr
+		 ,jpt_jasan_no
+		 
+		 ) 
+		 VALUES (
+		 #{PMT_NO}
+		 ,#{JISANG_NO}
+		 ,#{ADDRCODE}
+		 ,#{SOYUJA}
+		 ,#{PMT_USER}
+		 ,#{JIMOK}
+		 ,NULLIF(cast(#{ALL_AREA} as varchar),'')::numeric
+		 ,NULLIF(cast(#{SET_AREA} as varchar),'')::numeric
+		 ,#{SET_MONEY}
+		 ,#{SIDO_NM}
+		 ,#{SGG_NM}
+		 ,#{EMD_NM}
+		 ,#{RI_NM}
+		 ,#{JIBUN}
+		 ,#{ADDR}
+		 ,#{JASAN_NO}
+		 )
+	
+	</insert>
+	
 </mapper>

@@ -178,7 +178,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and regexp_replace(jm2.juso,'[\"]','','g') like '%${address}%'
 		</if>
 		AND jm2.pnu IS NOT null
-		limit 1
+		limit 10
 		
 		
 			
@@ -300,6 +300,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</select>
 
+
+
+
 	<select id="selectTotalCount" parameterType="java.util.HashMap" resultType="Integer">
 		SELECT count(*) as count FROM (
 		SELECT jm.jm_idx AS index,
@@ -400,6 +403,66 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and r.toji_type=#{toji_type}
 		</if>
 	</select>
+	
+	<select id="selectJisangPermitTotalCount" parameterType="java.util.HashMap" resultType="Integer">
+		SELECT count(*) as count FROM (
+		SELECT jpm.jpm_idx AS index,
+		jpm.jpm_pmt_no AS idx,
+		jpm.jpm_echo_no as echo_no,
+		jpm.jpm_use_purpos as use_purpos,
+		jpm.jpm_use_st_date as use_st_date,
+		jpm.jpm_use_ed_date as use_ed_date,
+		jpm.jpm_spot_result as spot_result,
+		jpm.jpm_review as review,
+		jpm.jpm_contract as contract,
+		jpm.jpm_pmt_status as status,
+		jpm.jpm_dockey as dockey
+		
+		FROM jisang_permit_master jpm
+		) as r
+		WHERE 1 = 1
+		
+	</select>
+	 <select id="selectJisangPermitList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *,
+		(row_number() OVER()) AS no
+		FROM (
+		SELECT jpm.jpm_idx AS index,
+		jpm.jpm_pmt_no AS idx,
+		jpm.jpm_echo_no as echo_no,
+		jpm.jpm_use_purpos as use_purpos,
+		jpm.jpm_use_st_date as use_st_date,
+		jpm.jpm_use_ed_date as use_ed_date,
+		jpm.jpm_spot_result as spot_result,
+		jpm.jpm_review as review,
+		jpm.jpm_contract as contract,
+		jpm.jpm_pmt_status as pmt_status,
+		jpm.jpm_dockey as dockey,
+		jpt.jpt_jisang_no AS jisang_no,
+		jpt.jpt_pmt_user as pmt_user
+		,jpt.jpt_soyuja as soyuja
+		,jpt.jpt_jimok as jimok
+		,jpt.jpt_jasan_no as jasan_no
+		,jpt.jpt_addr as addr
+		,jm.jm_jisa as jisa
+		FROM jisang_permit_master jpm
+			LEFT JOIN jisang_permit_togi jpt ON jpt.jpt_pmt_no=jpm.jpm_pmt_no
+			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jpt_jisang_no
+		WHERE 1 = 1
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+			ORDER BY ${orderCol} ${desc}
+		</if>
+		
+		) AS r
+		where 1=1
+		
+		<if test="length>0">
+			limit #{length} offset #{start}
+		</if>
+		
+
+	</select> 
 
 
 	<select id="selectAllTmpData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
