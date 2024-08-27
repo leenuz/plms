@@ -9,6 +9,13 @@ body * {
 li {
   list-style: none;
 }
+table {
+  border-collapse: collapse;
+}
+caption {
+  text-indent: -9999px;
+  height: 0;
+}
 select {
   outline: 0;
   border: 1px solid #cfddf2;
@@ -48,23 +55,23 @@ button {
 
 /* css추가 */
 
-.forDivisionEasementDetails {
+.divisionRegisterWrappers {
   overflow-y: scroll;
 }
 
 /* 스크롤바 */
 
-.forDivisionEasementDetails::-webkit-scrollbar {
+.divisionRegisterWrappers::-webkit-scrollbar {
   width: 3px;
 }
 
-.forDivisionEasementDetails::-webkit-scrollbar-thumb {
+.divisionRegisterWrappers::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-.forDivisionEasementDetailsHeader {
+.divisionRegisterHeader {
   width: 100px;
   height: 100vh;
   float: left;
@@ -72,32 +79,25 @@ button {
 
 /**/
 
-#forDivisionEasementDetails * {
+#divisionRegister * {
   font-family: pretendard;
 }
 
-#forDivisionEasementDetails {
-  /* width: 100%;
-    padding: 0 20px;
-    box-sizing: border-box; */
+#divisionRegister {
   width: calc(100% - 100px);
   padding: 0 20px;
   box-sizing: border-box;
   float: left;
 }
 
-#forDivisionEasementDetails .miniBtn {
+#divisionRegister .miniBtn {
   width: 68px;
   height: 27px;
   border-radius: 20px;
 }
 
-#forDivisionEasementDetails input[type="text"]::placeholder {
+#divisionRegister input[type="text"]::placeholder {
   color: #6e7d88;
-  text-align: center;
-}
-.disabled {
-  pointer-events: none;
 }
 .fileUploadIcon {
   width: 35px;
@@ -109,10 +109,10 @@ button {
   color: #2b7de1;
   margin-bottom: 15px;
 }
-#forDivisionEasementDetails > section {
+#divisionRegister > section {
   padding-bottom: 40px;
 }
-#forDivisionEasementDetails .contents .content {
+#divisionRegister .contents .content {
   border-right: 1px solid #cddbf0;
   height: 100%;
   text-align: center;
@@ -121,41 +121,25 @@ button {
   color: #3c3c3c;
   box-sizing: border-box;
 }
-#forDivisionEasementDetails .contents .content:last-child {
+#divisionRegister .contents .content:last-child {
   border-right: 0;
 }
-#forDivisionEasementDetails
-  .attachFileInfo
-  .fileUploadWrap::-webkit-scrollbar {
-  width: 4px;
-}
-
-#forDivisionEasementDetails
-  .attachFileInfo
-  .fileUploadWrap::-webkit-scrollbar-thumb {
-  height: 30%;
-  border-radius: 10px;
-  background: #d2d2d2;
-}
-#forDivisionEasementDetails .titles.titleScr {
+#divisionRegister .titles.titleScr {
   padding-right: 4px;
   box-sizing: border-box;
 }
-#forDivisionEasementDetails .contentScr {
+#divisionRegister .contentScr {
   overflow-y: scroll;
 }
 
-#forDivisionEasementDetails .contentScr::-webkit-scrollbar {
+#divisionRegister .contentScr::-webkit-scrollbar {
   width: 4px;
 }
 
-#forDivisionEasementDetails .contentScr::-webkit-scrollbar-thumb {
+#divisionRegister .contentScr::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
-}
-#forDivisionEasementDetails .attachFileInfo .contentScr {
-  height: 90px;
 }
 .SearchAddressBtn {
   display: inline-block;
@@ -166,6 +150,7 @@ button {
   color: #949aac;
   font-size: 15px;
   font-weight: 600;
+  flex-shrink: 0;
 }
 .SearchAddressBtn.active {
   display: inline-block;
@@ -189,89 +174,133 @@ button {
   padding-left: 12px;
   box-sizing: border-box;
 }
-
-#forDivisionEasementDetails .basicOwnerInfo {
-  padding: 27px 0 40px 0;
-}
-#forDivisionEasementDetails .mainTitle {
+#divisionRegister .mainTitle {
   padding: 30px 0;
   border-bottom: 1px solid rgba(110, 125, 136, 0.2);
 }
-#forDivisionEasementDetails .mainTitle h1 {
+#divisionRegister .mainTitle h1 {
   font-size: 22px;
   font-weight: 700;
   color: #31394c;
   padding-left: 20px;
   box-sizing: border-box;
 }
-#forDivisionEasementDetails .subTitle {
+#divisionRegister .subTitle {
   font-size: 18px;
   font-weight: 700;
   color: #31394c;
   margin-bottom: 24px;
 }
-#forDivisionEasementDetails .contWrap {
+#divisionRegister .contWrap {
   width: 100%;
 }
-#forDivisionEasementDetails .basicOwnerInfo .contWrap {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  gap: 20px;
+/* border-radius */
+#divisionRegister .titles .title:first-child {
+  border-radius: 5px 0 0 0;
 }
-#forDivisionEasementDetails .basicOwnerInfo .contWrap .contBox {
-  width: 100%;
+/* 대상토지 */
+#divisionRegister .searchAddressBtn {
+  width: 54px;
+  height: 27px;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 20px;
+  flex-shrink: 0;
 }
-#forDivisionEasementDetails .contentDetailBox {
+#divisionRegister .targetLand {
+  /* padding: 40px 0; */
+  padding: 27px 0 40px 0;
+}
+#divisionRegister .targetLand .contWrap {
   border: 1px solid #cddbf0;
   border-radius: 5px;
 }
-/* 대상토지, 소유자 정보 */
-
-.basicOwnerInfo .contentDetailBox .titles {
+#divisionRegister .targetLand .contWrap .titles {
+  height: 90px;
+}
+#divisionRegister .targetLand .contWrap .title {
+  width: 9.5%;
+}
+#divisionRegister .targetLand .titles .title.numInfoWidth {
+  width: 12%;
+}
+#divisionRegister .targetLand .titles .title.addressInfoWidth {
+  width: 32.1%;
+}
+#divisionRegister .targetLand .titles .title.titleBox {
+  width: 36.4%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 }
-
-.basicOwnerInfo .contentDetailBox .titles .title01 {
-  margin-right: 20px; /* Add spacing between the titles */
-}
-
-.basicOwnerInfo .contentDetailBox .contents {
+#divisionRegister .titles .title.titleBox .secondTitles {
+  width: 100%;
   display: flex;
-  align-items: center;
+  border-top: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+  background: #ecf1f8;
+  box-sizing: border-box;
+}
+#divisionRegister .titles .title.titleBox .secondTitles .secondTitle {
+  width: 170px;
+}
+#divisionRegister .targetLand .contWrap .content {
+  width: 9.5%;
 }
 
-#forDivisionEasementDetails .basicOwnerInfo .titles .title {
-  width: 9.1%;
+#divisionRegister .targetLand .contents .content.numInfoWidth {
+  width: 12%;
 }
-#forDivisionEasementDetails
-  .basicContentDetailBox
-  .titles
-  .title.addressInfoWidth {
-  width: 36.9%;
+
+#divisionRegister .targetLand .contents .content.addressInfoWidth {
+  width: 32.1%;
 }
-#forDivisionEasementDetails .basicContentDetailBox .contents .content {
-  width: 9.1%;
+
+#divisionRegister .targetLand .contents .content.contentBox {
+  width: 36.4%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  height: 100%;
 }
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contWrap
-  .contentDetailBox .addressInfoWidth {
-  width: 36.9%;
+
+#divisionRegister .targetLand .contents .content.contentBox .secondContents {
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
-#forDivisionEasementDetails .contWrap .titles {
+
+#divisionRegister
+  .targetLand
+  .contents
+  .content.contentBox
+  .secondContents
+  .secondContent {
+  /* width: 25%; */
+  width: 170px;
+  border-right: 1px solid #cddbf0;
+}
+#divisionRegister
+  .targetLand
+  .contents
+  .content.contentBox
+  .secondContents
+  .secondContent:last-child {
+  border-right: 0;
+}
+/* 기본 설정 */
+#divisionRegister .contWrap .titles {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   height: 45px;
   background: #f7f9fc;
   border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
 }
-#forDivisionEasementDetails .contWrap .depth1 .titles {
+#divisionRegister .contWrap .depth1 .titles {
   border-radius: 5px 5px 0 0;
 }
-#forDivisionEasementDetails .contWrap .titles li {
+#divisionRegister .contWrap .titles li {
   height: 100%;
   text-align: center;
   line-height: 45px;
@@ -282,18 +311,18 @@ button {
   box-sizing: border-box;
   /* flex-grow: 1; */
 }
-#forDivisionEasementDetails .contWrap .titles li:last-child {
+#divisionRegister .contWrap .titles li:last-child {
   border-right: 0;
 }
-#forDivisionEasementDetails .contWrap .depth1 .contents {
+#divisionRegister .contWrap .depth1 .contents {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   height: 47px;
-  /* background: #fff; */
+  background: #fff;
   border-bottom: 1px solid #cddbf0;
 }
-#forDivisionEasementDetails .contWrap .depth1 .contents li {
+#divisionRegister .contWrap .depth1 .contents li {
   height: 100%;
   padding: 6px 8px;
   box-sizing: border-box;
@@ -301,29 +330,24 @@ button {
   justify-content: center;
   align-items: center;
 }
-#forDivisionEasementDetails .contWrap .depth1 .contents:last-child {
+#divisionRegister .contWrap .depth1 .contents:last-child {
   border-radius: 0 0 5px 5px;
 }
-#forDivisionEasementDetails .contWrap .depth1 .contents li.content {
+#divisionRegister .contWrap .depth1 .contents li.content {
   border-right: 1px solid #cddbf0;
 }
-#forDivisionEasementDetails .contWrap .depth1 .contents li:last-child {
+#divisionRegister .contWrap .depth1 .contents li:last-child {
   border-right: 0;
 }
-#forDivisionEasementDetails .contWrap .contents.lastContents {
+#divisionRegister .contWrap .contents.lastContents {
   border-bottom: 0;
 }
-#forDivisionEasementDetails .contWrap .contents li .customSelectBox {
+#divisionRegister .customSelectBox {
   width: 100%;
   height: 100%;
   position: relative;
 }
-#forDivisionEasementDetails
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectView {
+#divisionRegister .contWrap .customSelectBox .customSelectView {
   width: 100%;
   height: 100%;
   border: 1px solid #cfddf2;
@@ -332,42 +356,26 @@ button {
   font-size: 14px;
   font-weight: 500;
   color: #6e7d88;
-  background: #fff;
   text-align-last: left;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 9px 12px;
   box-sizing: border-box;
-  background: url(/assets/media/menu02/images/arrowDown.png) no-repeat right 8px
-    center;
+  background: url(/assets/media/menu02/images/arrowDown.png) no-repeat right
+    10px center;
+  background-color: #fff;
   background-size: 21px;
 }
-#forDivisionEasementDetails
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectView.active {
-  background: url(/assets/media/menu02/images/arrowDownBlue.png) no-repeat right
-    8px center;
-  background-size: 21px;
-}
-#forDivisionEasementDetails
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectView.active {
+#divisionRegister .contWrap .customSelectBox .customSelectView.active {
   border: 1px solid #2b7de1;
   color: #2b7de1;
+  background: url(/assets/media/menu02/images/arrowDownBlue.png) no-repeat right
+    10px center;
+    /* 추가 */
+  background-size: 21px;
 }
-#forDivisionEasementDetails
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectBtns {
+#divisionRegister .contWrap .customSelectBox .customSelectBtns {
   position: absolute;
   width: 100%;
   top: calc(100% + 4px);
@@ -379,31 +387,7 @@ button {
   opacity: 0;
   border: 1px solid #acbdd7;
 }
-#forDivisionEasementDetails
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectBtns::-webkit-scrollbar {
-  width: 4px;
-}
-#forDivisionEasementDetails
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectBtns::-webkit-scrollbar-thumb {
-  height: 30%;
-  border-radius: 10px;
-  background: #d2d2d2;
-}
-
-#forDivisionEasementDetails
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectBtns.active {
+#divisionRegister .contWrap .customSelectBox .customSelectBtns.active {
   padding: 6px 0;
   border-radius: 10px;
   background: #fff;
@@ -413,250 +397,364 @@ button {
   opacity: 1;
 }
 
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .contents:last-child {
-  border-bottom: 0;
-}
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .titles .title01 {
-  /* width: 173px; */
-  width: 9.72%;
+#divisionRegister .contWrap .customSelectBox .customSelectBtns li {
+  padding: 0;
+  height: 41px;
 }
 
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .titles .title02 {
-  /* width: 287px; */
-  width: 16.13%;
+#divisionRegister
+  .contWrap
+  .customSelectBox
+  .customSelectBtns::-webkit-scrollbar {
+  width: 4px;
 }
 
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .titles .title03 {
-  /* width: 496px; */
-  width: 27.88%;
+#divisionRegister
+  .contWrap
+  .customSelectBox
+  .customSelectBtns::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
 }
+/* 토지분할 */
 
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .titles .title04 {
-  /* width: 309px; */
-  width: 17.37%;
+#divisionRegister .landDivision .contWrap .titles .title {
+  width: 3.9%;
 }
-
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .titles .title05 {
-  /* width: 309px; */
-  width: 17.37%;
+#divisionRegister .landDivision .contWrap .titles .title.numInfoWidth {
+  width: 2.9%;
 }
-
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .titles .title06 {
-  /* width: 205px; */
-  width: 11.52%;
+#divisionRegister .landDivision .contWrap .titles .title.addressInfoWidth {
+  /* width: 28.6%; */
+  width: 27.6%;
 }
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .contents .content01 {
-  /* width: 173px; */
-   width: 6.8%;
+#divisionRegister .landDivision .contWrap .titles .title.middleWidth {
+  width: 6.8%;
 }
-
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .contents .content02 {
-  /* width: 287px; */
-  width: 12.5%;
+#divisionRegister .landDivision .contWrap .contents .content {
+  width: 3.9%;
 }
-
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .contents .content03 {
-  /* width: 496px; */
-  width: 27.88%;
+#divisionRegister .landDivision .contWrap .contents .content .addressData {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .contents .content04 {
-  /* width: 309px; */
-  width: 17.37%;
+#divisionRegister .landDivision .contWrap .contents .numInfoWidth {
+  width: 2.9%;
 }
-
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .contents .content05 {
-  /* width: 309px; */
-  width: 17.37%;
+#divisionRegister .landDivision .contWrap .contents .addressInfoWidth {
+  /* width: 28.6%; */
+  width: 27.6%;
+  gap: 12px;
 }
-
-#forDivisionEasementDetails .ownerInfo .contWrap .depth1 .contents .content06 {
-  /* width: 205px; */
-  width: 11.52%;
+#divisionRegister .landDivision .contWrap .contents .middleWidth {
+  width: 6.8%;
+}
+#divisionRegister .landDivision .contents .content.contentBox .secondContents {
+  width: 100%;
+  height: 100%;
   display: flex;
   padding: 0;
 }
-#forDivisionEasementDetails
-  .ownerInfo
-  .contWrap
-  .depth1
+#divisionRegister
+  .landDivision
   .contents
-  .content06
-  .btnWrap {
+  .content.contentBox
+  .secondContents
+  .secondContent {
+  border-right: 1px solid #cddbf0;
+  width: 90px;
+}
+#divisionRegister
+  .landDivision
+  .contents
+  .content.contentBox
+  .secondContents
+  .secondContent:last-child {
+  border-right: 0;
+}
+#divisionRegister .landDivision .contWrap {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+#divisionRegister .landDivision .contWrap .titles {
+  height: 90px;
+}
+#divisionRegister .landDivision .contWrap .titles .title.titleBox {
+  /* width: 19.5%; */
+  width: auto;
+  display: flex;
+  flex-direction: column;
+}
+#divisionRegister .landDivision .contWrap .titles .title.titleBtnWrap {
+  width: 10.1%;
+}
+#divisionRegister .landDivision .contWrap .titleBox .secondTitles {
+  display: flex;
+  width: 100%;
+  border-top: 1px solid #cddbf0;
+  border-top: 1px solid #cddbf0;
+}
+#divisionRegister .landDivision .contWrap .titleBox .secondTitles .secondTitle {
+  width: 90px;
+}
+#divisionRegister .landDivision .contWrap .contents .content.contentBox {
+  /* width: 19.5%; */
+  width: auto;
+  padding: 0;
+}
+#divisionRegister .landDivision .contWrap .contents .titleBtnWrap {
+  width: 10.1%;
+  padding: 0;
+}
+/* 추가 삭제 버튼 */
+
+#divisionRegister .contents .content.btnBox .editBefore,
+#divisionRegister .contents .content.btnBox .editAfter {
+  width: 100%;
+}
+
+#divisionRegister .contents .content.btnBox .editBefore {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+#divisionRegister .contents.editing .content.btnBox .editBefore {
+  display: none;
+}
+
+#divisionRegister .contents .content.btnBox .editAfter {
+  display: none;
+}
+
+#divisionRegister .contents.editing .content.btnBox .editAfter {
+  display: block;
+}
+
+#divisionRegister .contents .content.btnBox .btnWrap {
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   border-right: 1px solid #cddbf0;
+  height: 100%;
 }
-#forDivisionEasementDetails
-  .ownerInfo
-  .contWrap
-  .depth1
-  .contents
-  .content06
-  .btnWrap:last-child {
+#divisionRegister .contents .content.btnBox .btnWrap:last-child {
   border-right: 0;
 }
 
+/* 해지정보 */
+#divisionRegister .terminationInfo .contWrap {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+#divisionRegister .terminationInfo .contWrap .depth1 .titles {
+  height: 90px;
+}
+#divisionRegister .terminationInfo .contWrap .depth1 .title {
+  width: 10%;
+}
+#divisionRegister .terminationInfo .contWrap .depth1 .content {
+  width: 10%;
+}
+#divisionRegister .terminationInfo .contWrap .depth1 .addressInfoWidth {
+  /* width: 35%; */
+  width: 32%;
+}
 
-#forDivisionEasementDetails
-  .ownerInfo
+#divisionRegister .terminationInfo .contWrap .depth1 .titleBox {
+  flex-direction: column;
+  width: auto;
+}
+#divisionRegister .terminationInfo .contWrap .depth1 .content.contentBox {
+  padding: 0;
+  width: auto;
+}
+#divisionRegister .terminationInfo .contWrap .depth1 .content .secondContents {
+  display: flex;
+  height: 100%;
+}
+
+/* css 추가*/
+
+#divisionRegister
+  .terminationInfo
   .contWrap
   .depth1
   .contents
-  .content06
-  .btnWrap {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  input[type="text"] {
+  text-align: center;
+}
+
+#divisionRegister .landDivision .contWrap .depth1 input[type="text"] {
+  text-align: center;
+}
+
+/**/
+
+#divisionRegister
+  .terminationInfo
+  .titles
+  .titleBox
+  .secondTitles
+  .secondTitle {
+  width: 170px;
+}
+#divisionRegister
+  .terminationInfo
+  .contents
+  .contentBox
+  .secondContents
+  .secondContent {
+  width: 170px;
+  height: 100%;
   border-right: 1px solid #cddbf0;
 }
-#forDivisionEasementDetails
-  .ownerInfo
-  .contWrap
-  .depth1
+#divisionRegister
+  .terminationInfo
   .contents
-  .content06
-  .btnWrap:last-child {
+  .contentBox
+  .secondContents
+  .secondContent:last-child {
   border-right: 0;
 }
-#forDivisionEasementDetails .miniBtn {
+#divisionRegister input[type="text"] {
+  width: 100%;
+  height: 100%;
+  background: #edf2f9;
+  border-radius: 10px;
+  /* text-indent: 19px; */
+  font-size: 14px;
+  font-weight: 500;
+}
+#divisionRegister input[type="text"]::placeholder {
+  text-align: center;
+  text-indent: 0;
+  color: #3c3c3c;
+}
+#divisionRegister input[type="checkbox"] {
+  display: none;
+}
+.checkboxWrap label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+}
+
+/* date */
+#divisionRegister .dateInputWrap {
+  width: 187px;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  position: relative;
+  background: url(/assets/media/menu02/images/calendarInputIcon.png) no-repeat
+    left 8px center;
+  background-size: 18px;
+}
+#divisionRegister input[type="date"] {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: transparent;
+  background: transparent;
+  text-align: right;
+  /* 추가 */
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+#divisionRegister input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 187px;
+  height: 100%;
+}
+
+#divisionRegister input[type="date"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 50%;
+  /* right: 8px; */
+  right: 10px;
+  transform: translateY(-50%);
+  color: #6e7d88;
+}
+
+#divisionRegister input[type="date"]:focus,
+#divisionRegister input[type="date"]:valid {
+  color: #6e7d88;
+}
+
+#divisionRegister input[type="date"]:focus::before,
+#divisionRegister input[type="date"]:valid::before {
+  content: "";
+}
+
+/* label */
+
+#divisionRegister input[type="checkbox"] {
+  display: none;
+}
+
+#divisionRegister input[type="checkbox"] ~ label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+  display: inline-block;
+  position: relative;
+}
+
+#divisionRegister input[type="checkbox"]:checked ~ label {
+  background: #4e5871;
+}
+
+#divisionRegister input[type="checkbox"]:checked ~ label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 10px;
+  background: url(/assets/media/menu02/images/checkIcon.png) no-repeat center;
+  background-size: contain;
+}
+
+#divisionRegister .miniBtn {
   width: 74px;
   height: 27px;
   border-radius: 20px;
   font-size: 13px;
   font-weight: 600;
 }
-#forDivisionEasementDetails .addBtn {
+#divisionRegister .addBtn {
   background: #fff;
   border: 1px solid #2b7de1;
   color: #2b7de1;
 }
-#forDivisionEasementDetails .delBtn {
+#divisionRegister .delBtn {
   background: #9a9a9a;
   color: #fff;
 }
-#forDivisionEasementDetails .registBtn {
+#divisionRegister .registBtn {
   background: #fff;
   border: 1px solid #2b7de1;
   color: #2b7de1;
   /* background: #4E5871;
     color: #fff; */
 }
-
-/* 지상권 정보 */
-
-#forDivisionEasementDetails .basicOwnerInfo {
-  padding-bottom: 40px;
-}
-#forDivisionEasementDetails .basicOwnerInfo .contWrap {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contBoxMini07
-  .depth1
-  .titles
-  .title {
-  width: 11.1%;
-}
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contBoxMini07
-  .depth1
-  .contents {
-  border-radius: 0;
-}
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contBoxMini07
-  .depth1
-  .contents
-  .content {
-  width: 11.1%;
-}
-#forDivisionEasementDetails .basicOwnerInfo .contBoxMini07 .depth2 {
-  display: flex;
-  border-radius: 0 0 5px 5px;
-}
-
-/*css 추가*/
-
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contBoxMini07
-  .depth2
-  input[type="text"] {
-  text-align: center;
-}
-
-#forDivisionEasementDetails
-  .compensationInfo
-  .contWrap
-  .depth1
-  input[type="text"] {
-  text-align: center;
-}
-
-/**/
-
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contBoxMini07
-  .depth2
-  .rowListBox {
-  width: 33.3%;
-  display: flex;
-  align-items: center;
-  height: 45px;
-}
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contBoxMini07
-  .depth2
-  .rowListBox
-  li {
-  border-right: 1px solid #cddbf0;
-}
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contBoxMini07
-  .depth2
-  .rowListBox
-  li.lastRowList {
-  border-right: 0;
-}
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contBoxMini07
-  .depth2
-  .rowListBox:first-child
-  .title {
-  border-radius: 0px 0px 0px 5px;
-}
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contBoxMini07
-  .depth2
-  .rowListBox:last-child
-  .content {
-  border-radius: 0px 0px 5px 0px;
-}
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contBoxMini07
-  .depth2
-  .rowListBox
-  .title {
-  width: 50%;
-  background: #f7f9fc;
-}
-#forDivisionEasementDetails .title {
+#divisionRegister .title {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -664,483 +762,60 @@ button {
   font-weight: 500;
   height: 100%;
 }
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contBoxMini07
-  .depth2
-  .rowListBox
-  .content {
-  width: 50%;
-}
-#forDivisionEasementDetails .content {
+#divisionRegister .content {
   height: 100%;
   padding: 6px 8px;
   box-sizing: border-box;
 }
-#forDivisionEasementDetails .contWrap li input[type="text"] {
-  width: 100%;
-  height: 100%;
-  background: #edf2f9;
-  border-radius: 10px;
-}
-#forDivisionEasementDetails .contWrap li input[type="text"]::placeholder {
-  color: #6e7d88;
+#divisionRegister input[type="text"]::placeholder {
+  text-indent: 19px;
 }
 
-#forDivisionEasementDetails .basicOwnerInfo .depth1 .contents .content {
-  width: 16.6%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#forDivisionEasementDetails .basicOwnerInfo .depth2 .titles .title {
-  width: 100%;
-  text-align: center;
-}
-#forDivisionEasementDetails .basicOwnerInfo .depth2 .contents {
-  height: 45px;
-}
-#forDivisionEasementDetails .basicOwnerInfo .depth2 .contents .content {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-}
-#forDivisionEasementDetails .basicOwnerInfo .contWrap .contentDetailBox .depth2 {
-    width: 30.8%;
-    border-right: 1px solid #CDDBF0;
-}
+/* 분할사유 및 검토의견 */
 
-
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .depth2
-  .contents
-  .content.content01 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#divisionRegister .reasonTermination {
 }
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectBtns::-webkit-scrollbar {
-  width: 4px;
-}
-
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectBtns::-webkit-scrollbar-thumb {
-  height: 30%;
-  border-radius: 10px;
-  background: #d2d2d2;
-}
-
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contWrap
-  .contentDetailBox
-  .contents
-  li
-  .customSelectBox {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectView {
-  width: 100%;
-  height: 100%;
-  border: 1px solid #cfddf2;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #6e7d88;
-  background: #fff;
-  text-align-last: left;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 9px 12px;
-  box-sizing: border-box;
-}
-/*
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectView
-  figure {
-  width: 21px;
-  height: 21px;
-  background: url(/assets/media/menu02/images/arrowDown.png) no-repeat center;
-}
-
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectView.active
-  figure {
-  width: 21px;
-  height: 21px;
-  background: url(/assets/media/menu02/images/arrowDownBlue.png) no-repeat
-    center;
-} */
-
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectView.active {
-  border: 1px solid #2b7de1;
-  color: #2b7de1;
-}
-
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectBtns {
-  position: absolute;
-  width: 100%;
-  top: calc(100% + 4px);
-  box-sizing: border-box;
-  max-height: 0;
-  overflow-y: hidden;
-  z-index: 10;
-  transition: 500ms;
-  opacity: 0;
-  border: 1px solid #acbdd7;
-}
-
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectBtns.active {
-  padding: 6px 0;
-  border-radius: 10px;
-  background: #fff;
-  max-height: 233px;
-  overflow-y: scroll;
-  transition: 500ms;
-  opacity: 1;
-}
-
-#forDivisionEasementDetails
-  .basicOwnerInfo
-  .contWrap
-  .contents
-  li
-  .customSelectBox
-  .customSelectBtns
-  li {
-  padding: 0;
-  height: 41px;
-}
-
-/* 지상권 해지관련 보상정보 */
-#forDivisionEasementDetails .compensationInfo .contWrap {
+#divisionRegister .reasonTermination .contWrap {
   border: 1px solid #cddbf0;
   border-radius: 5px;
 }
-#forDivisionEasementDetails .compensationInfo .contWrap .depth1 {
-  display: flex;
-}
-#forDivisionEasementDetails .compensationInfo .contWrap .depth1 .rowListBox {
-  width: 50%;
-  display: flex;
-  align-items: center;
-  height: 45px;
-}
-#forDivisionEasementDetails
-  .compensationInfo
-  .contWrap
-  .depth1
-  .rowListBox
-  li {
-  border-right: 1px solid #cddbf0;
-}
-#forDivisionEasementDetails
-  .compensationInfo
-  .contWrap
-  .depth1
-  .rowListBox
-  li.lastRowList {
-  border-right: 0;
-}
-#forDivisionEasementDetails
-  .compensationInfo
-  .contWrap
-  .depth1
-  .rowListBox
-  .title {
-  width: 31.9%;
-  background: #f7f9fc;
-}
-#forDivisionEasementDetails
-  .compensationInfo
-  .contWrap
-  .depth1
-  .rowListBox:first-of-type
-  .title:first-child {
-  border-radius: 5px 0 0 5px;
-}
-#forDivisionEasementDetails
-  .compensationInfo
-  .contWrap
-  .depth1
-  .rowListBox
-  .content {
-  width: 69.1%;
-}
-#forDivisionEasementDetails
-  .compensationInfo
-  .contWrap
-  .depth1
-  .rowListBox
-  .inputWrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-}
-#forDivisionEasementDetails
-  .compensationInfo
-  .contWrap
-  .depth1
-  .rowListBox
-  .inputWrap
-  .inputBox {
-  font-size: 15px;
-  font-weight: 600;
-  color: #31394c;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-}
-
-/* 첨부파일 정보 */
-#forDivisionEasementDetails input[type="file"] {
-  display: none;
-}
-
-.fileBtnWrap label {
-  width: 81px;
-  height: 27px;
-  background: #2b7de1;
-  color: #fff;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.lightfileBtnWrap label {
-  width: 116px;
-  height: 27px;
-  border-radius: 20px;
-  background: rgba(204, 224, 255, 0.6);
-  color: #2b7de1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 600;
-}
-#forDivisionEasementDetails .myPc {
-  width: 81px;
-  height: 27px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #2b7de1;
-  color: #fff;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-#forDivisionEasementDetails .attachFileInfo {
-  padding-bottom: 40px;
-}
-#forDivisionEasementDetails .attachFileInfo .subTitle {
-  display: flex;
-  align-items: center;
-  gap: 21px;
-}
-#forDivisionEasementDetails .attachFileInfo .fileUploadWrap {
-  width: 100%;
-  margin-bottom: 18px;
-  height: 130px;
-  overflow-y: scroll;
-  border: 1px dashed #cddbf0;
-  border-radius: 5px;
-}
-#forDivisionEasementDetails .attachFileInfo .fileUploadBox {
-  width: 100%;
-  height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  background: #f7f9fc;
-}
-#forDivisionEasementDetails .attachFileInfo .fileUploadBox p {
-  font-size: 14px;
-  font-weight: 600;
-  color: #88a2c8;
-}
-#forDivisionEasementDetails .attachFileInfo .contWrap {
-  border: 1px solid #cddbf0;
-  border-radius: 5px;
-}
-#forDivisionEasementDetails
-  .attachFileInfo
-  .contWrap
-  .depth1
-  .contents:last-child {
-  border-bottom: 0;
-}
-#forDivisionEasementDetails .attachFileInfo .contWrap .depth1 .title {
-  width: 15%;
-}
-#forDivisionEasementDetails .attachFileInfo .contWrap .depth1 .content {
-  width: 15%;
-}
-#forDivisionEasementDetails .attachFileInfo .contWrap .depth1 .selectWidth {
-  width: 8.5%;
-}
-#forDivisionEasementDetails .attachFileInfo .contWrap .depth1 .fileNameWidth {
-  width: 59.6%;
-  flex-grow: 1;
-}
-
-#forDivisionEasementDetails
-  .attachFileInfo
-  .contWrap
-  .depth1
-  .contents
-  .content01 {
-  width: 154px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#forDivisionEasementDetails
-  .attachFileInfo
-  .contWrap
-  .depth1
-  .contents
-  .content02 {
-  width: auto;
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#forDivisionEasementDetails
-  .attachFileInfo
-  .contWrap
-  .depth1
-  .contents
-  .content02
-  .fileName {
-  text-align: center;
-  color: #3c3c3c;
-  font-size: 14px;
-  font-weight: 500;
-}
-#forDivisionEasementDetails .attachFileInfo .btnWrap {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 15px;
-}
-.fileDelBtn {
-  width: 129px;
-  height: 37px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 600;
-}
-#forDivisionEasementDetails
-  .attachFileInfo
-  .contWrap
-  .depth1
-  .titles
-  .allSelectCheck {
-  line-height: normal;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-/* 분할 사유 및 검토의견 */
-
-#forDivisionEasementDetails .reasonTermination .contWrap {
-  border: 1px solid #cddbf0;
-  border-radius: 5px;
-}
-#forDivisionEasementDetails .reasonTermination .contWrap .depth1 {
+#divisionRegister .reasonTermination .contWrap .depth1 .rowListBox {
   height: 45px;
   border-bottom: 1px solid #cddbf0;
 }
-#forDivisionEasementDetails .reasonTermination .contWrap .depth2 {
-  height: 200px;
+#divisionRegister .reasonTermination .contWrap .depth2 {
 }
-#forDivisionEasementDetails .reasonTermination .contWrap .rowListBox {
+#divisionRegister .reasonTermination .contWrap .depth2 .rowListBox:last-child {
+  border-bottom: 0;
+}
+#divisionRegister .reasonTermination .contWrap .depth2:last-child .title {
+  border-radius: 0 0 0 5px;
+}
+#divisionRegister .reasonTermination .contWrap .rowListBox {
   display: flex;
-  height: 100%;
+  border-bottom: 1px solid #cddbf0;
 }
-#forDivisionEasementDetails .reasonTermination .contWrap .rowListBox input {
-  text-align-last: left;
-  text-indent: 19px;
+#divisionRegister .reasonTermination .contWrap .depth2 .rowListBox {
+  height: 105px;
 }
-#forDivisionEasementDetails .reasonTermination .contWrap .rowListBox .title {
+#divisionRegister .reasonTermination .contWrap .rowListBox .title {
   width: 8.5%;
   height: 100%;
   border-right: 1px solid #cddbf0;
-  background: #f7f9fc;
 }
-#forDivisionEasementDetails
+#divisionRegister
   .reasonTermination
   .contWrap
-  .rowListBox:first-child
-  .title:first-child {
-  border-radius: 5px 0 0 5px;
+  .depth1:first-child
+  .rowListBox
+  .title:first-of-type {
+  border-radius: 5px 0 0 0;
 }
-#forDivisionEasementDetails .reasonTermination .contWrap .rowListBox .content {
+#divisionRegister .reasonTermination .contWrap .rowListBox .content {
   width: 91.5%;
 }
 
-#forDivisionEasementDetails textarea {
+#divisionRegister textarea {
   width: 100%;
   border-radius: 10px;
   background: #edf2f9;
@@ -1149,14 +824,14 @@ button {
   height: 100%;
   resize: none;
 }
-#forDivisionEasementDetails textarea::placeholder {
+#divisionRegister textarea::placeholder {
   color: #6e7d88;
 }
-#forDivisionEasementDetails textarea::-webkit-scrollbar {
+#divisionRegister textarea::-webkit-scrollbar {
   width: 4px;
 }
 
-#forDivisionEasementDetails textarea::-webkit-scrollbar-thumb {
+#divisionRegister textarea::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
@@ -1164,50 +839,46 @@ button {
 
 /* 첨부서류 */
 
-#forDivisionEasementDetails .attachDocuments {
+#divisionRegister .attachDocuments {
 }
-#forDivisionEasementDetails .attachDocuments .contWrap {
+#divisionRegister .attachDocuments .contWrap {
   display: flex;
   border: 1px solid #cddbf0;
   border-radius: 5px;
   overflow: hidden;
 }
-#forDivisionEasementDetails .attachDocuments .contWrap .depth1 {
+#divisionRegister .attachDocuments .contWrap .depth1 {
   width: 39.8%;
   border-right: 1px solid #cddbf0;
 }
-#forDivisionEasementDetails .attachDocuments .contWrap .depth2 {
+#divisionRegister .attachDocuments .contWrap .depth2 {
   width: calc(100% - 39.8%);
 }
-#forDivisionEasementDetails .attachDocuments .contWrap .depth1 .titles .title {
+#divisionRegister .attachDocuments .contWrap .depth1 .titles .title {
   width: 100%;
 }
-#forDivisionEasementDetails .attachDocuments .contWrap .titles {
+#divisionRegister .attachDocuments .contWrap .titles {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   height: 45px;
 }
-#forDivisionEasementDetails .attachDocuments .contWrap .titles .title {
+#divisionRegister .attachDocuments .contWrap .titles .title {
   height: 100%;
 }
-#forDivisionEasementDetails .attachDocuments .contWrap .titles .delContWidth {
+#divisionRegister .attachDocuments .contWrap .titles .delContWidth {
   width: 9.7%;
 }
-#forDivisionEasementDetails
-  .attachDocuments
-  .contWrap
-  .titles
-  .selectFileWidth {
+#divisionRegister .attachDocuments .contWrap .titles .selectFileWidth {
   width: 10.39%;
 }
-#forDivisionEasementDetails .attachDocuments .contWrap .contentListBox {
+#divisionRegister .attachDocuments .contWrap .contentListBox {
   width: 100%;
   box-sizing: border-box;
   /* height: 360px; */
   display: flex;
 }
-#forDivisionEasementDetails
+#divisionRegister
   .attachDocuments
   .contWrap
   .contentListBox
@@ -1218,7 +889,7 @@ button {
   align-items: center;
   border-right: 1px solid #cddbf0;
 }
-#forDivisionEasementDetails
+#divisionRegister
   .attachDocuments
   .contWrap
   .contentListBox
@@ -1228,14 +899,14 @@ button {
   font-weight: 500;
   color: #3c3c3c;
 }
-#forDivisionEasementDetails
+#divisionRegister
   .attachDocuments
   .contWrap
   .contentListBox
   .essentialDocuList {
   width: calc(100% - 21.5%);
 }
-#forDivisionEasementDetails
+#divisionRegister
   .attachDocuments
   .contWrap
   .contentListBox
@@ -1252,7 +923,7 @@ button {
   font-weight: 500;
   color: #3c3c3c;
 }
-#forDivisionEasementDetails
+#divisionRegister
   .attachDocuments
   .contWrap
   .contentListBox
@@ -1260,10 +931,10 @@ button {
   li:last-child {
   border-bottom: 0;
 }
-#forDivisionEasementDetails .attachDocuments .contWrap .depth2 .titles .title {
+#divisionRegister .attachDocuments .contWrap .depth2 .titles .title {
   width: 66.3%;
 }
-#forDivisionEasementDetails
+#divisionRegister
   .attachDocuments
   .contWrap
   .depth2
@@ -1271,7 +942,7 @@ button {
   .title.delContWidth {
   width: 16.2%;
 }
-#forDivisionEasementDetails
+#divisionRegister
   .attachDocuments
   .contWrap
   .depth2
@@ -1279,34 +950,25 @@ button {
   .title.selectFileWidth {
   width: 17.2%;
 }
-#forDivisionEasementDetails .attachDocuments .contWrap .depth2 .contents {
+#divisionRegister .attachDocuments .contWrap .depth2 .contents {
   display: flex;
   height: 45px;
   border-bottom: 1px solid #cddbf0;
   box-sizing: border-box;
 }
-#forDivisionEasementDetails
-  .attachDocuments
-  .contWrap
-  .depth2
-  .contents:last-child {
+#divisionRegister .attachDocuments .contWrap .depth2 .contents:last-child {
   border-bottom: 0;
 }
-#forDivisionEasementDetails
-  .attachDocuments
-  .contWrap
-  .depth2
-  .contents
-  .content {
+#divisionRegister .attachDocuments .contWrap .depth2 .contents .content {
   width: 66.3%;
   line-height: 45px;
   padding: 0;
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-#forDivisionEasementDetails
+#divisionRegister
   .attachDocuments
   .contWrap
   .depth2
@@ -1317,7 +979,7 @@ button {
   align-items: center;
   width: 16.2%;
 }
-#forDivisionEasementDetails
+#divisionRegister
   .attachDocuments
   .contWrap
   .depth2
@@ -1328,9 +990,29 @@ button {
   align-items: center;
   width: 17.2%;
 }
-#forDivisionEasementDetails .attachDelBtn {
+#divisionRegister .attachDelBtn {
   background: #636363;
   color: #fff;
+}
+
+/* file */
+
+/* 첨부파일 정보 */
+#divisionRegister input[type="file"] {
+  display: none;
+}
+
+.lightfileBtnWrap label {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 /* 이전, 저장 버튼 */
@@ -1361,22 +1043,16 @@ button {
   color: #2b7de1;
 }
 
-#forDivisionEasementDetails .contWrap input[type="text"].notWriteInput {
+#divisionRegister input[type="text"].notWriteInput {
   background: transparent;
+  text-indent: 0;
 }
-#forDivisionEasementDetails
-  .contWrap
-  input[type="text"].notWriteInput::placeholder {
-  color: #3c3c3c;
-  font-size: 14px;
-  font-weight: 500;
+#divisionRegister input[type="text"].notWriteInput::placeholder {
+  text-indent: 0;
 }
-#forDivisionEasementDetails .contWrap .essentialDocuList input[type="text"] {
-  text-align-last: left;
-}
-#forDivisionEasementDetails
-  .contWrap
+#divisionRegister
+  .attachDocuments
   .essentialDocuList
   input[type="text"]::placeholder {
-  text-indent: 0;
+  text-align: left;
 }
