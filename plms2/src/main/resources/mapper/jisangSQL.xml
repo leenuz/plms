@@ -670,5 +670,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    )
 	
 	</insert>
+	
+	<insert id="insertJisangUploadData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="ja_idx" keyProperty="ja_idx">
+		
+		INSERT INTO jisang_atcfile 
+		(
+		 
+		 ja_jisang_no
+		 ,ja_seq
+		 ,ja_file_path
+		 ,ja_file_nm
+		 ,ja_file_seq
+		) 
+		 VALUES (
+		  #{jisangNo}
+		  ,#{seq}::integer
+		  ,#{fpath}
+		  ,#{fname}
+		  ,#{fseq}
+		  
+		    )
+	
+	</insert>
 
 </mapper>

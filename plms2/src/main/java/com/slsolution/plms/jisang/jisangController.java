@@ -47,7 +47,9 @@ public class jisangController {
 	 private GlobalConfig GC;
 	
 	 
-	 @Transactional
+	 
+
+	@Transactional
 	@RequestMapping(value="/api/Save", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
     public void Save(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
         
@@ -80,7 +82,7 @@ public class jisangController {
         JSONObject requestJsonObj=new JSONObject(requestParams);
         
         HashMap<String,Object> requestMap= new HashMap<>();
-        ArrayList attachArr=new ArrayList();
+       //ArrayList attachArr=new ArrayList();
 //        ArrayList soujaJibunArr=new ArrayList(); //소유자지분정보
 //        ArrayList soujaNameArr=new ArrayList(); //소유자명
 //        ArrayList soujaAddrArr=new ArrayList(); //소유자주소
@@ -130,8 +132,8 @@ public class jisangController {
 //        	 
 //        	
 //        }
-        	requestMap.put("attachFiles",attachArr);
-        	requestMap.put("soujaInfo",requestJsonObj.getJSONArray("soujaInfo"));
+        	//requestMap.put("uploadFiles",requestJsonObj.getJSONArray("uploadFiles"));
+        	//requestMap.put("soujaInfo",requestJsonObj.getJSONArray("soujaInfo"));
 //        requestMap.put("soujaNames",soujaNameArr);
 //        requestMap.put("soujaAddrs",soujaAddrArr);
 //        requestMap.put("soujaCont1s",soujaCont2Arr);
@@ -186,7 +188,32 @@ public class jisangController {
     			mainService.InsertQuery("jisangSQL.insertJisangSoujaData", soujaMap);
     		}
     		
+    		//첨부파일 등록
     		
+    		JSONArray uploadJsonArray=requestJsonObj.getJSONArray("uploadFiles");
+    		log.info("uploadJsonArray:"+uploadJsonArray);
+    		for(int i=0;i<uploadJsonArray.length();i++) {
+    			//JSONObject obj=new JSONObject(uploadJsonArray.get(i).toString());
+    			String fname=uploadJsonArray.get(i).toString();
+    			log.info("fname:"+fname);
+    			
+    			
+    			 HashMap<String, Object> filesMap= new HashMap<>();
+//    			
+//    			filesMap=CommonUtil.JsonArraytoMap(obj);
+//    			
+    			filesMap.put("jisangNo","J_"+String.format("%06d",seq));
+    			filesMap.put("seq",String.format("%06d",seq));
+    			filesMap.put("fseq",i);
+    			filesMap.put("fname",fname);
+    			
+    			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+    			 String dataPath = GC.getJisangFileDataDir(); //설정파일로 뺀다.
+    			 filesMap.put("fpath",dataPath+"/"+fname);
+    			 CommonUtil.moveFile(fname, tempPath, dataPath);
+//    			log.info("filesMap:"+filesMap);
+    			mainService.InsertQuery("jisangSQL.insertJisangUploadData", filesMap);
+    		}
         
        
         

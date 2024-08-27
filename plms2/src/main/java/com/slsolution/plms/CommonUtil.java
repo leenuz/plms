@@ -2,6 +2,7 @@ package com.slsolution.plms;
 
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -104,5 +105,26 @@ public class CommonUtil {
 	    return map;
 	}
 
+	
+	 public static void moveFile(String fileName, String beforeFilePath, String afterFilePath) {
+	        //String path = afterFilePath+"/"+folderName;
+	        String newfilePath = afterFilePath+"/"+fileName;
+	        String orgFilePath=beforeFilePath+"/"+fileName;
+	        File dir = new File(afterFilePath);
+
+	        if (!dir.exists()) { //폴더 없으면 폴더 생성
+	            dir.mkdirs();
+	        }
+	        
+	        try{
+	            File file =new File(orgFilePath);
+
+	            // 옮기 고자 하는 경로로 파일 이동
+	            file.renameTo(new File(newfilePath));            
+	        }catch(Exception e){
+	            e.printStackTrace();
+	        }
+	    }
+	
 
 }
