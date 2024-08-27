@@ -47,7 +47,7 @@ public class jisangController {
 	 private GlobalConfig GC;
 	
 	 
-	 
+
 
 	@Transactional
 	@RequestMapping(value="/api/Save", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
@@ -191,24 +191,24 @@ public class jisangController {
     		}
     		
     		//첨부파일 등록
-    		
+
     		JSONArray uploadJsonArray=requestJsonObj.getJSONArray("uploadFiles");
     		log.info("uploadJsonArray:"+uploadJsonArray);
     		for(int i=0;i<uploadJsonArray.length();i++) {
     			//JSONObject obj=new JSONObject(uploadJsonArray.get(i).toString());
     			String fname=uploadJsonArray.get(i).toString();
     			log.info("fname:"+fname);
-    			
-    			
+
+
     			 HashMap<String, Object> filesMap= new HashMap<>();
-//    			
+//
 //    			filesMap=CommonUtil.JsonArraytoMap(obj);
-//    			
+//
     			filesMap.put("jisangNo","J_"+String.format("%06d",seq));
     			filesMap.put("seq",String.format("%06d",seq));
     			filesMap.put("fseq",i);
     			filesMap.put("fname",fname);
-    			
+
     			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
     			 String dataPath = GC.getJisangFileDataDir(); //설정파일로 뺀다.
     			 filesMap.put("fpath",dataPath+"/"+fname);
@@ -481,7 +481,62 @@ public class jisangController {
       			mav.setViewName("content/jisang/groundDetail");
       			return mav;
     }
-	
+	@GetMapping(path="/groundDetail2") //http://localhost:8080/api/get/dbTest
+	public ModelAndView groundDetail2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		ModelAndView mav=new ModelAndView();
+
+
+//        List<TestDTO> list = new ArrayList<TestDTO>();
+//        list = dbService.getList();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+
+		String idx = httpRequest.getParameter("idx");
+		String index = httpRequest.getParameter("index");
+
+		params.put("idx",idx);
+		params.put("manage_no",idx);
+		params.put("index",index);
+		log.info("params:"+params);
+
+		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+
+		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
+		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
+		params.put("pnu", data.get(0).get("jm_pnu"));
+		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
+		log.info("jisangIssueList size:"+jisangIssueList.size());
+		if (jisangIssueList.size()>0) {
+
+			params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
+			params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
+			params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
+		}
+		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
+		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
+		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+
+		mav.addObject("resultData",data.get(0));
+		mav.addObject("soujaList",soujaList);
+		mav.addObject("jisangPermitList",jisangPermitList);
+		mav.addObject("atcFileList",atcFileList);
+		mav.addObject("jisangModifyList",jisangModifyList);
+		mav.addObject("jisangMergeList",jisangMergeList);
+
+		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+		mav.addObject("jisangIssueList",jisangIssueList);
+		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
+		mav.addObject("memoList",jisangMemoList);
+		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+		mav.setViewName("content/jisang/groundDetail2");
+		return mav;
+	}
 	
 	//아이디를 기준으로 해당 영역만 리플래쉬 되도록 하는 로직
 	@PostMapping(path="/getAtcFileData") //http://localhost:8080/api/get/dbTest
@@ -557,8 +612,18 @@ public class jisangController {
 	    public ModelAndView menu02_3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+
 			ModelAndView mav=new ModelAndView();
 			mav.setViewName("content/jisang/menu02_3");
+
+			mav.addObject("jisaList",jisalist);
+			mav.addObject("sidoList",sidolist);
+
+
 			return mav;
 		}
 		@GetMapping(path="/menu02_4") //http://localhost:8080/api/get/dbTest
@@ -705,7 +770,24 @@ public class jisangController {
 			mav.setViewName("content/jisang/landRightsRegistration :: #searchResultPopDiv");
 			return mav;
 		}
-		
+
+	@PostMapping(path="/getJibunListData") //http://localhost:8080/api/get/dbTest
+	public ModelAndView getJibunListData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+
+		String idx = httpRequest.getParameter("idx");
+		params.put("idx",idx);
+
+		ArrayList<HashMap> jibunList = mainService.selectQuery("jisangSQL.selectJibunList",params);
+		log.info("*idx* : " + idx);
+		log.info("*jibunList* : " + jibunList);
+
+		mav.addObject("jibunList",jibunList);
+
+		mav.setViewName("content/jisang/menu02_3 :: #searchResultPopDiv");
+		return mav;
+	}
 		
 		@RequestMapping(value = "/fileUpload/post") //ajax에서 호출하는 부분
 	    @ResponseBody
@@ -882,6 +964,114 @@ public class jisangController {
 
 	}
 
+	@RequestMapping(value="/menu02BunhalDataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+	public ResponseEntity<?> datatableList02Bunhal(HttpServletRequest req, HttpServletResponse res) throws Exception {
+
+		//일반웹형식
+		Properties requestParams = CommonUtil.convertToProperties(req);
+
+		HashMap<String, String> returnHash = new HashMap<String, String>();
+		Enumeration<String> obj1 = req.getParameterNames();
+		int cnt=0;
+
+		while (obj1.hasMoreElements())
+		{
+			String paramName = obj1.nextElement();
+			String paramValue = req.getParameter(paramName);
+			returnHash.put(paramName, paramValue);
+		}
+
+		int draw = Integer.parseInt(req.getParameter("draw"));
+		int start = Integer.parseInt(req.getParameter("start"));
+		int length = Integer.parseInt(req.getParameter("length"));
+		String orderColumn=req.getParameter("order[0][column]");
+		String orderDirection = req.getParameter("order[0][dir]");
+		String orderColumnName=req.getParameter("columns[" + orderColumn + "][data]");
+
+		String[] order_cols=req.getParameterValues("order");
+
+		String jisa = req.getParameter("jisa");
+		String manage_no = req.getParameter("manage_no");
+		String address=req.getParameter("saddr");
+		String souja = req.getParameter("souja");
+		String jasan_no = req.getParameter("jasan_no");
+		String account_yn=req.getParameter("account_yn"); //회계처리 필요여부
+
+		Map map=req.getParameterMap();
+
+		HashMap params = new HashMap();
+		params.put("draw",draw);
+		params.put("start",start);
+		params.put("length",length);
+		params.put("jisa",jisa);
+		params.put("idx",manage_no);
+		params.put("address",address);
+
+		params.put("souja",souja);
+		params.put("jasan_no",jasan_no);
+		params.put("account_yn", account_yn);
+
+		params.put("manageYn","Y");
+		if (orderColumn==null || orderColumn.equals("null")) {
+			log.info("----------null--------");
+			orderColumn="0";
+		}
+		if (Integer.parseInt(orderColumn)>0  ) {
+			params.put("orderCol",orderColumnName);
+			params.put("desc",orderDirection);
+
+		}
+		else {
+			params.put("orderCol","");
+			params.put("desc","");
+		}
+		log.info("params:"+params);
+
+		Object count= mainService.selectCountQuery("jisangSQL.selectJisangBunhalCount", params);
+		int total=(int)count;
+
+		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangBunhalList",params);
+
+		log.info("list:"+list);
+
+
+		HashMap<String,Object> resultmap=new HashMap();
+		resultmap.put("draw",draw);
+		resultmap.put("recordsTotal",total);
+		resultmap.put("recordsFiltered",total);
+		resultmap.put("data",list);
+
+
+		JSONObject obj =new JSONObject(resultmap);
+		log.info("obj:"+obj);
+		return ResponseEntity.ok(obj.toString());
+
+	}
+
+	@GetMapping(path="/forDivisionEasementDetails") //http://localhost:8080/api/get/dbTest
+	public ModelAndView forDivisionEasementDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+
+		String idx = httpRequest.getParameter("idx");
+		String index = httpRequest.getParameter("index");
+
+		params.put("idx",idx);
+		params.put("manage_no",idx);
+		params.put("index",index);
+
+		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+
+		ModelAndView mav=new ModelAndView();
+
+		mav.addObject("resultData",data.get(0));
+		mav.addObject("soujaList",soujaList);
+
+		log.info("soujaList:"+soujaList);
+		mav.setViewName("content/jisang/forDivisionEasementDetails");
+		return mav;
+	}
 	@PostMapping(path="/landTerminationSave")
 	public void landTerminationSave(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();

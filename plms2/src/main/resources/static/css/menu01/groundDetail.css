@@ -871,3 +871,8 @@ button {
 .finalBtn.printBtn {
     background: #2B7DE1;
 }
+
+.finalBtn.bunhalBtn {
+     background: rgba(204, 224, 255, 0.6);
+        color: #2B7DE1;
+}
