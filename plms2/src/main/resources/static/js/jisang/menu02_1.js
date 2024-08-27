@@ -287,6 +287,7 @@ function loadDataTable(params){
                 bServerSide: true,
                 searching: false,
 				destroy:true,
+				order:[[12,'desc']],
 
                 rowReorder:{
 					dataSrc:'b_seq'
@@ -368,24 +369,19 @@ function loadDataTable(params){
     			},*/
 
                    columns : [
-                                  {data: "no","orderable":false},
+                                  {data: "no","orderable":false},//0
                                   {data: "jisa","defaultContent":""},
                                   {data:"address","defaultContent":""},
                                   {data:"jasan_no","defaultContent":""},
-                                  {data: "jimok_text","defaultContent":""}, //5
-                                  {data: "souja_name","defaultContent":""},
+                                  {data: "jimok_text","defaultContent":""}, 
+                                  {data: "souja_name","defaultContent":""},//5
                                   {data: "jijuk_area","defaultContent":""},
                                   {data: "pyeonib_area","defaultContent":""},
                                   {data: "chuideuk_date","defaultContent":""},
                                   {data: "comple_yn","defaultContent":""},
-                                  {data: "deunggi_date","defaultContent":""},
+                                  {data: "deunggi_date","defaultContent":""},//10
                                   {data: "account_yn","defaultContent":""},
-                                 {
-                                       data: "idx", // 지도보기 데이터 수정해야함
-                                       render: function(data, type, row, meta) {
-                                           return `<button class="viewDetailButton">위치보기</button> `;
-                                       }
-                                   }
+                                  {data: "idx"}
                               ],
                               columnDefs:[
 
@@ -403,7 +399,12 @@ function loadDataTable(params){
                                   {targets:[9],width:"100px"}, //등기여부
                                   {targets:[10],width:"200px"}, //등기일
                                   {targets:[11],width:"100px"},
-                                  {targets:[12],width:"100px"}, //지도보기
+                                  {targets:[12]
+									,width:"100px"
+									,render: function(data, type, row, meta) {
+									     return `<button class="viewDetailButton">위치보기</button> `;
+									 }
+								}, //지도보기
 
 
 				]

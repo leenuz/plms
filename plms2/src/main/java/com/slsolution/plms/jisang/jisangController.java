@@ -147,6 +147,8 @@ public class jisangController {
 //        log.info("soujaJibuns count:"+soujaJibunArr.size());
         	Object seq= mainService.selectCountQuery("jisangSQL.selectJisangMasterNextval", requestMap);
     		int nseq=(int)seq;
+    		log.info("##seq###:"+seq);
+    		requestMap.put("idx",seq);
     		requestMap.put("seq","J_"+String.format("%06d",seq));
     		requestMap.put("sido_nm", requestJsonObj.get("sido_nm"));
     		requestMap.put("sgg_nm", requestJsonObj.get("sgg_nm"));

@@ -236,6 +236,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and jm.jm_jisa=#{jisa}
 		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+			ORDER BY ${orderCol} ${desc}
+		</if>
+		
 		) AS r
 		where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
@@ -289,13 +293,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			)
 			) as o  WHERE o.address = r.address GROUP BY o.address ) >1
 		</if>
-
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
-			ORDER BY r.${orderCol} ${desc}
-		</if>
-		<if test="length>0">
+<if test="length>0">
 			limit #{length} offset #{start}
 		</if>
+		
 
 	</select>
 
@@ -559,8 +560,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 		INSERT INTO jisang_master 
 		(
-		 
-		 jm_jisang_no, jm_sido_nm, jm_sgg_nm, jm_emd_nm, jm_ri_nm
+		 jm_idx
+		 ,jm_jisang_no, jm_sido_nm, jm_sgg_nm, jm_emd_nm, jm_ri_nm
 		 ,jm_jibun, jm_jisa
 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(chuideuk_date)">
 		 ,jm_chuideuk_date
@@ -600,7 +601,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 
 		 ) 
 		 VALUES (
-		  #{seq}, #{sido_nm}, #{sgg_nm}, #{emd_nm}, #{ri_nm}
+		  #{idx}
+		  ,#{seq}, #{sido_nm}, #{sgg_nm}, #{emd_nm}, #{ri_nm}
 		  ,#{jibun}, #{jisa}
 		   <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(chuideuk_date)" >
 		  ,#{chuideuk_date}::date
