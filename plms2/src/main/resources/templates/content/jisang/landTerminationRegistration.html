@@ -441,12 +441,14 @@ margin:10px;
                       type="radio"
                       name="landTerminationRegistrationCompensation"
                       value="Y"
+                      id="radioYes"
                       th:checked="${resultData.jm_cancel_bosang_yn == 'Y'}"/>유
                   </div>
                   <div class="inputBox">
                     <input
                       type="radio"
                       name="landTerminationRegistrationCompensation"
+                      id="radioNo"
                       value="N"
                       th:checked="${resultData.jm_cancel_bosang_yn == 'N'}"/>무
                   </div>
@@ -535,7 +537,7 @@ margin:10px;
               <ul class="rowListBox">
                 <li class="title">해지사유</li>
                 <li class="content inputWrap">
-                  <input type="text" placeholder="직접입력" th:value="${resultData.jm_cancel_reason}" id="cancel_reason"/>
+                  <input type="text" placeholder="직접입력 (최소 10자 이상)" th:value="${resultData.jm_cancel_reason}" id="cancel_reason"/>
                 </li>
               </ul>
             </div>
@@ -543,7 +545,7 @@ margin:10px;
               <ul class="rowListBox">
                 <li class="title">검토의견</li>
                 <li class="content lastRowList">
-                  <textarea placeholder="직접입력" th:text="${resultData.jm_cancel_comment}" id="cancel_comment"></textarea>
+                  <textarea placeholder="직접입력 (최소 10자 이상)" th:text="${resultData.jm_cancel_comment}" id="cancel_comment"></textarea>
                 </li>
               </ul>
             </div>
@@ -771,7 +773,7 @@ margin:10px;
             th:idx="${resultData.jm_jisang_no}" th:index="${resultData.jm_idx}">
             상신 수락
           </button>
-          <button class="backBtn grayBtn finalBtn">이전</button>
+          <button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
           <button
             class="saveBtn vividBlueBtn finalBtn"
             id="save_btn"

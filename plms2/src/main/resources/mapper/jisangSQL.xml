@@ -227,12 +227,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		jm.jm_cancel_yn AS cancel_yn,
 		jm.jm_manage_yn AS manage_yn,
 		jm.jm_dosiplan AS dosiplan,
+		jjm.x AS x,
+		jjm.y AS y,
 		CASE
 		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jm.jm_pnu) > 0 THEN 'Y'
 		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jm.jm_pnu) = 0 THEN 'N'
 		END AS toji_plan
 		FROM jisang_master jm
 		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
+		LEFT JOIN jijuk_master_2022 jjm ON jjm.pnu= jm.jm_pnu
 		WHERE 1 = 1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and jm.jm_jisa=#{jisa}
@@ -751,7 +754,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		jmt_cancel_bosang_yn,
 		jmt_cancel_bosang_money,
 		jmt_cancel_reason,
-		jmt_cancel_comment
+		jmt_cancel_comment,
+		jmt_cancel_yn
 		) VALUES (
 		#{jisang_no},
 		#{idx},
@@ -781,7 +785,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{cancel_bosang_yn},
 		#{cancel_bosang_money},
 		#{cancel_reason},
-		#{cancel_comment}
+		#{cancel_comment},
+		'Y'
 		)
 		ON CONFLICT (jmt_jisang_no, jmt_idx)
 		DO UPDATE SET
@@ -842,7 +847,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		jm_cancel_bosang_yn = #{jm_cancel_bosang_yn},
 		jm_cancel_bosang_money = #{jm_cancel_bosang_money},
 		jm_cancel_reason = #{jm_cancel_reason},
-		jm_cancel_comment = #{jm_cancel_comment}
+		jm_cancel_comment = #{jm_cancel_comment},
+		jm_cancel_yn = 'Y'
 		WHERE jm_jisang_no = #{jm_jisang_no}
 		AND jm_idx = cast(#{jm_idx} as integer)
 	</update>

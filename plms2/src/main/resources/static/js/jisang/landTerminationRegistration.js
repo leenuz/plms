@@ -469,6 +469,15 @@ $(document).on("click","#commit",function(){
      });
     })
 
+//지상권 해지보상유무 라디오 버튼 클릭 시 이벤트 (유)
+$(document).on("click","#radioYes",function(){
+    $('#cancel_bosang_money').val('')
+    })
+
+//지상권 해지보상유무 라디오 버튼 클릭 시 이벤트 (무)
+$(document).on("click","#radioNo",function(){
+    $('#cancel_bosang_money').val('0')
+    })
 
 function landTerminationSave(params){
     loadingShow();
