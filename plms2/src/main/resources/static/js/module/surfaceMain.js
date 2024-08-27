@@ -41,9 +41,24 @@ window.addEventListener("load" , () => {
                 surfaceInquireCheckboxes(inquireCheckCont01);
             }
              else if(pathName === `/jisang/menu02_2`){
-                const companyland05 = document.getElementsByName("companyland05");
+                const dopcosurfaceInquire02 = document.getElementsByName("dopcosurfaceInquire02");
                 return surfaceSelectEvet("#dopcosurfaceInquire02 .surfaceInquireSelectsTitleBtn" ,"#dopcosurfaceInquire02 .sufaceSelectList"),
-                handleCheckboxes(companyland05);
+                handleCheckboxes(dopcosurfaceInquire02);
+            }
+             else if(pathName === `/jisang/menu02_3`){
+                const dopcosurfaceInquire03 = document.getElementsByName("dopcosurfaceInquire03");
+                return surfaceSelectEvet("#dopcosurfaceInquire03 .surfaceInquireSelectsTitleBtn" ,"#dopcosurfaceInquire03 .sufaceSelectList"),
+                handleCheckboxes(dopcosurfaceInquire03);
+            }
+             else if(pathName === `/jisang/menu02_4`){
+                const dopcosurfaceInquire04 = document.getElementsByName("dopcosurfaceInquire04");
+                return surfaceSelectEvet("#dopcosurfaceInquire04 .surfaceInquireSelectsTitleBtn" ,"#dopcosurfaceInquire04 .sufaceSelectList"),
+                handleCheckboxes(dopcosurfaceInquire04);
+            }
+             else if(pathName === `/jisang/menu02_5`){
+                const dopcosurfaceInquire05 = document.getElementsByName("dopcosurfaceInquire05");
+                return surfaceSelectEvet("#dopcosurfaceInquire05 .surfaceInquireSelectsTitleBtn" ,"#dopcosurfaceInquire05 .sufaceSelectList"),
+                handleCheckboxes(dopcosurfaceInquire05);
             }
       }
 

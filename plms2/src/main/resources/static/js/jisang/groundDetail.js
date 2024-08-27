@@ -24,6 +24,15 @@ function moveToCityHall() {
 	}
 	}
 
+
+$(document).on("click",".bunhalBtn",function(){
+     const urlParams = new URL(location.href).searchParams;
+      const idx = urlParams.get('idx');
+      const index = urlParams.get('index');
+	  url = "/jisang/forDivisionEasementDetails?idx=" + idx + "&index=" + index ;
+      window.location = url;
+});
+
 $(document).on("click","#fileSaveBtn",function(){
 	console.log("--------------start fileSaveBtn---------");
 	console.log(uploadFiles);

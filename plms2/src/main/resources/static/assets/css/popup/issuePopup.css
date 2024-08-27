@@ -344,3 +344,7 @@ textarea:focus {
     border-radius: 10px;
     background: #d2d2d2;
 }
+
+.popupWrap .popupCont .popContentBox .popContents {
+    border-bottom: 1px solid rgba(205, 219, 240, 0.6);
+}

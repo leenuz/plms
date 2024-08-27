@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+
+      layout:decorate="~{layout/default_layout}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link
+          rel="stylesheet"
+          as="style"
+          crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+
+  <link th:href="@{/css/common.css}" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/jisang/forDivisionEasementDetails.css" />
+  <link rel="stylesheet" href="/css/jisang/write.css">
+  <!-- <script src="/js/jisang/groundDetail.js"></script> -->
+  <script src="/js/common/upload.js"></script>
+  <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
+  <style>
+    div.dt-top-container {
+display: grid;
+grid-template-columns: auto auto auto;
+}
+
+div.dt-center-in-div {
+margin: 0 auto;
+  float: right;
+margin-right: 30px;
+
+}
+div.dt-center-in-div>div{
+
+display:inline;
+}
+
+div.dt-filter-spacer {
+margin: 10px 0;
+border:1px solid red;
+}
+
+
+.dt-title{
+
+text-align:center;
+width:180px;
+float:left;
+
+}
+.dt-buttons{
+display:inline-block;
+
+width:180px;
+
+}
+.dt-length{
+display:inline-block;
+}
+.dt-button{
+
+color:white;
+background-color:#4e5871;
+font-size:15px;
+font-weight:600;
+border-radius:10px;
+background-image:url(/assets/media/menu01/download.png);
+background-size:11px;
+background-repeat:no-repeat;
+background-position:123px center;
+text-aline:left;
+margin-right:10px;
+width:159px;
+height:38px;
+
+}
+
+.dt-paging {
+text-align: center;
+}
+
+.dt-paging-button {
+box-sizing: border-box;
+display: inline-block;
+min-width: 1.5em;
+padding: 0.5em 1em;
+margin-left: 2px;
+text-align: center;
+text-decoration: none !important;
+cursor: pointer;
+
+border: 1px solid transparent;
+border-radius: 2px;
+background: transparent;
+color: #007bff !important;
+font-size: 15px;
+font-weight: 600;
+
+
+}
+
+.bottom{
+text-align:center;
+
+}
+.top{
+
+text-align:right;
+margin:10px;
+
+}
+
+
+.ol-unselectable{
+border:1px solid red;
+}
+#map {
+clear: both;
+position: relative;
+width: 100% !important;
+height: 214px;
+border: 1px solid black;
+}
+  </style>
+
+  <title>지상권</title>
+</head>
+<th:block layout:fragment="content">
+  <div class="groundDetailWrappers">
+    <!--header삽입-->
+
+    <main id="forDivisionEasementDetails">
+      <div class="mainTitle">
+        <h1>지상권 분할 등록</h1>
+      </div>
+
+      <section class="basicOwnerInfo">
+        <div class="subTitle">
+          대상토지
+        </div>
+
+        <div class="contWrap">
+
+          <div class="contentDetailBox">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title01 title">지상권번호</li>
+                <li class="title02 addressInfoWidth">주소</li>
+
+              </ul>
+              <ul class="contents">
+                <li class="content01 content">
+                  [[${resultData.jm_jisang_no}]]
+                </li>
+                <li class="content01 content">
+                  [[${resultData.address}]]
+                </li>
+              </ul>
+            </div>
+
+            <div class="depth2">
+              <ul class="titles">
+                <li class="title01 title">지상권설정</li>
+              </ul>
+              <ul class="titles bluetitle">
+                <li class="title01 title">지목</li>
+                <li class="title01 title">지적면적</li>
+                <li class="title01 title">편입면적</li>
+                <li class="title01 title">자산번호</li>
+              </ul>
+              <ul class="contents" >
+                <li class="content01 content">
+                  [[${resultData.jm_jimok_text ?: ''}]]
+                </li>
+                <li class="content01 content">
+                  [[${resultData.jm_jijuk_area}]]
+                </li>
+                <li class="content01 content">
+                  [[${resultData.jm_pyeonib_area}]]
+                </li>
+                <li class="content01 content">
+                  [[${resultData.jm_jasan_no}]]
+                </li>
+              </ul>
+            </div>
+
+            <div class="depth3">
+              <ul class="titles">
+                <li class="title01 title">소유자</li>
+                <li class="title01 title">회계처리필요여부</li>
+
+              </ul>
+              <ul class="contents">
+                <li class="content01 content" th:each="souja : ${soujaList}">
+                  [[${souja.js_souja_name}]]
+                </li>
+                <li class="content01 content">
+                  [[${resultData.jm_permitted_yn}]]
+                </li>
+              </ul>
+            </div>
+
+
+            </div>
+
+
+</div>
+      </section>
+
+
+      <!-- 잠재이슈 -->
+
+
+
+
+      <!-- 잠재이슈 대응방안 메뉴얼 -->
+
+
+
+      <!-- 메모 -->
+
+
+
+
+      <section class="reasonTermination">
+        <div class="subTitle">분할사유 및 검토의견*</div>
+
+        <div class="contWrap">
+          <div class="depth1">
+            <ul class="rowListBox">
+              <li class="title">분할일자</li>
+              <li class="content inputWrap">
+<!--                <input type="text" placeholder="직접입력" th:value="${bunhalData.jb_bunhal_date}" id="cancel_date"/>-->
+              </li>
+            </ul>
+          </div>
+          <div class="depth1">
+            <ul class="rowListBox">
+              <li class="title">해지사유</li>
+              <li class="content inputWrap">
+<!--                <input type="text" placeholder="직접입력" th:value="${bunhalData.jb_bunhal_reason}" id="cancel_reason"/>-->
+              </li>
+            </ul>
+          </div>
+          <div class="depth2">
+            <ul class="rowListBox">
+              <li class="title">검토의견</li>
+              <li class="content lastRowList">
+<!--                <textarea placeholder="직접입력" th:text="${bunhalData.jb_bunhal_comment}" id="cancel_comment"></textarea>-->
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="attachDocuments">
+        <div class="subTitle">첨부 서류*</div>
+
+        <div class="contWrap">
+          <div class="depth1">
+            <ul class="titles">
+              <li class="title">파일내용</li>
+            </ul>
+
+            <div class="contentListBox">
+              <div class="essentialDocument">
+                <p>필수 증빙서류</p>
+              </div>
+
+              <ul class="essentialDocuList">
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="1. 등기사항 전부 증명서"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="2. 토지대장"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="3. 지적도 (관로표기)"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="4. 현장사진"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="5. 검토의견서"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="6. 도면, 민원인 관계서류 등"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="7. 지상권해지 승낙서/위임장"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="8. 지상권 해지요청 공문서(신청서)"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="depth2">
+            <ul class="titles">
+              <li class="title">파일명</li>
+              <li class="title delContWidth">삭제</li>
+              <li class="title selectFileWidth">파일선택</li>
+            </ul>
+
+            <ul class="contents">
+              <li class="content">
+                <input
+                        type="text"
+                        placeholder="토지사용승락서.docx"
+                        readonly
+                        class="notWriteInput" />
+              </li>
+              <li class="content delContWidth">
+                <button class="attachDelBtn miniBtn">삭제</button>
+              </li>
+              <li class="content selectFileWidth lightfileBtnWrap">
+                <label
+                >파일보기</label
+                >
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input
+                        type="text"
+                        placeholder="등기부등본2.tif"
+                        readonly
+                        class="notWriteInput" />
+              </li>
+              <li class="content delContWidth">
+                <button class="attachDelBtn miniBtn">삭제</button>
+              </li>
+              <li class="content selectFileWidth lightfileBtnWrap">
+                <label>파일보기</label
+                >
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input
+                        type="text"
+                        placeholder="지적도.tif"
+                        readonly
+                        class="notWriteInput" />
+              </li>
+              <li class="content delContWidth">
+                <button class="attachDelBtn miniBtn">삭제</button>
+              </li>
+              <li class="content selectFileWidth lightfileBtnWrap">
+                <label>파일보기</label
+                >
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input
+                        type="text"
+                        placeholder="현장사진.jpg"
+                        readonly
+                        class="notWriteInput" />
+              </li>
+              <li class="content delContWidth">
+                <button class="attachDelBtn miniBtn">삭제</button>
+              </li>
+              <li class="content selectFileWidth lightfileBtnWrap">
+                <label>파일보기</label
+                >
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input
+                        type="text"
+                        placeholder="검토의견서.tif"
+                        readonly
+                        class="notWriteInput" />
+              </li>
+              <li class="content delContWidth">
+                <button class="attachDelBtn miniBtn">삭제</button>
+              </li>
+              <li class="content selectFileWidth lightfileBtnWrap">
+                <label>파일보기</label
+                >
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input
+                        type="text"
+                        placeholder="관계서류.docx"
+                        readonly
+                        class="notWriteInput" />
+              </li>
+              <li class="content delContWidth">
+                <button class="attachDelBtn miniBtn">삭제</button>
+              </li>
+              <li class="content selectFileWidth lightfileBtnWrap">
+                <label>파일보기</label
+                >
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input
+                        type="text"
+                        placeholder="해지승낙서.docx"
+                        readonly
+                        class="notWriteInput" />
+              </li>
+              <li class="content delContWidth">
+                <button class="attachDelBtn miniBtn">삭제</button>
+              </li>
+              <li class="content selectFileWidth lightfileBtnWrap">
+                <label>파일보기</label
+                >
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input
+                        type="text"
+                        placeholder="해지요청공문서.docx"
+                        readonly
+                        class="notWriteInput" />
+              </li>
+              <li class="content delContWidth">
+                <button class="attachDelBtn miniBtn">삭제</button>
+              </li>
+              <li class="content selectFileWidth lightfileBtnWrap">
+                <label>파일보기</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <div class="finalBtnBox btnWrap">
+
+        <button class="backBtn grayBtn finalBtn">이전</button>
+        <button
+                class="saveBtn vividBlueBtn finalBtn"
+                id="save_btn"
+                th:idx="${resultData.jm_jisang_no}" th:index="${resultData.jm_idx}">
+         임시 저장
+        </button>
+        <button
+                class="lightBlueBtn approvalBtn finalBtn"
+                type="submit"
+                id="submit_btn">
+          상신
+        </button>
+      </div>
+
+
+    </main>
+
+  </div>
+  <div class="groundIssueRevisePopWrappers"></div>
+  <!-- script -->
+<!--  <script src="/js/jisang/groundDetail.js"></script>-->
+  <script src="../../js/jisang/landTerminationRegistration.js"></script>
+   <script type="module" src="/js/module/surfaceMain.js"></script>
+</th:block>
+</html>
