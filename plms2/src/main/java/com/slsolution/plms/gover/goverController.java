@@ -33,6 +33,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/gover")
 @CrossOrigin(origins="*",allowedHeaders="*")
 public class goverController {
+	
+	
 	@Autowired
 	private MainService mainService;
 	
