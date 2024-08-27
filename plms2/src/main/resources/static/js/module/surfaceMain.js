@@ -1,9 +1,9 @@
 import { surfaceHeaderEvet } from './surfaceHeader.js';
 import { surfaceSelectEvet , handleCheckboxes } from './surfaceSelectEvet.js';
 
-import { surfaceInquireSelectEvet , surfaceInquireCheckboxes } from './surfaceInquireSelectEvet.js';
+//import { surfaceInquireSelectEvet , surfaceInquireCheckboxes } from './surfaceInquireSelectEvet.js';
 
-
+import { surfaceInquireSelectEvet , surfaceInquireCheckboxes } from '/js/jisang/surfaceInquireSelectEvet.js';
 
 console.log("---------------------------surfaceMain.js start----------------------");
 
@@ -57,7 +57,7 @@ window.addEventListener("load" , () => {
             }
              else if(pathName === `/jisang/menu02_5`){
                 const dopcosurfaceInquire05 = document.getElementsByName("dopcosurfaceInquire05");
-                return surfaceSelectEvet("#dopcosurfaceInquire05 .surfaceInquireSelectsTitleBtn" ,"#dopcosurfaceInquire05 .sufaceSelectList"),
+               	return surfaceInquireSelectEvet("#dopcosurfaceInquire05 .surfaceInquireSelectsTitleBtn" ,"#dopcosurfaceInquire05 .sufaceSelectList"  ,"#dopcosurfaceInquire05 .sufaceSelectList .surfaceSelectListMember" , ".surfaceInquireHiddenSelect05");
                 handleCheckboxes(dopcosurfaceInquire05);
             }
       }

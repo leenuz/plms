@@ -132,6 +132,7 @@ margin:10px;
         <div class="surfaceInquireTitleBoxs">
           <h5>지상권 사용 승락</h5>
         </div>
+        <form id="searchForm" onSubmit="return false;">
         <section class="surfaceInquireSectionBoxs">
           <div class="surfaceInquireSectionCont">
             <div class="surfaceInquireSectionContDevide">
@@ -140,23 +141,19 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="surfaceInquireSelectWrappers">
                   <select
-                    name=""
+                    name="jisa"
                     class="surfaceInquireHiddenSelect05"
                     id="surfaceInquireSelectBox05_1"
                     hidden>
-                    <option value="전체">전체</option>
-                    <option value="서울지사">서울지사</option>
-                    <option value="경인지사">경인지사</option>
-                    <option value="대전지사">대전지사</option>
-                    <option value="부산지사">부산지사</option>
-                    <option value="충청지사">충청지사</option>
-                    <option value="충청지사">충청지사</option>
-                    <option value="충청지사">충청지사</option>
+                    <option value="">전체</option>
+                     <th:block th:each="val:${jisaList}">
+	                    <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+	                    </th:block>
                   </select>
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="surfaceInquireSelects">
-                  <button class="surfaceInquireSelectsTitleBtn"></button>
+                  <button class="surfaceInquireSelectsTitleBtn">전체</button>
                   <div class="sufaceSelectList">
                     <ul class="surfaceSelectListMember"></ul>
                   </div>
@@ -167,11 +164,11 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="surfaceInquireSelectWrappers">
                   <select
-                    name=""
+                    name="status"
                     class="surfaceInquireHiddenSelect05"
                     id="surfaceInquireSelectBox05_2"
                     hidden>
-                    <option value="전체">전체</option>
+                    <option value="">전체</option>
                     <option value="임시저장">임시저장</option>
                     <option value="결재상신">결재상신</option>
                     <option value="결재완료">결재완료</option>
@@ -192,7 +189,7 @@ margin:10px;
               <div class="surfaceInquireSectionRadioBoxs">
                 <ul class="radioBoxs">
                   <li>
-                    <input type="radio" name="surfaceInquireRadio05" /><span
+                    <input type="radio" name="askMenu01"  value="0"/><span
                       >입력형</span
                     >
                   </li>
@@ -205,7 +202,7 @@ margin:10px;
                 </ul>
                 <ul class="radioBoxs menuRadioEvet05">
                   <li>
-                    <input type="radio" name="surfaceInquireRadio05" /><span
+                    <input type="radio" name="askMenu01" value="1" /><span
                       >선택형</span
                     >
                   </li>
@@ -213,25 +210,39 @@ margin:10px;
                     <!--수정부분 지사-->
                     <div class="surfaceInquireSelectWrappers">
                       <select
-                        name=""
+                        name="sido_nm" 
                         class="surfaceInquireHiddenSelect05"
-                        id="surfaceInquireSelectBox05_3"
+                        id="sido_nm"
                         hidden>
-                        <option value="전체">전체</option>
-                        <option value="Y1">Y1</option>
-                        <option value="N2">N2</option>
-                        <option value="N3">N3</option>
-                        <option value="N4">N4</option>
-                        <option value="N5">N5</option>
-                        <option value="N6">N6</option>
-                        <option value="N7">N7</option>
+                         <option value="">전체</option>
+	                   <th:block th:each="val:${sidoList}">
+	                    <option th:text="${val.sm_name}" th:value="${val.sm_name}"></option>
+	                    </th:block>
+	                   
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="surfaceInquireSelects">
-                      <button class="surfaceInquireSelectsTitleBtn"></button>
+                      <button class="surfaceInquireSelectsTitleBtn" id="sidoText">전체</button>
+                      <div class="sufaceSelectList smallHeight" id="sido_nm_ul_div">
+                        <ul class="surfaceSelectListMember" id="sido_ul"></ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <!--수정부분 지사-->
+                    <div class="surfaceInquireSelectWrappers">
+                      <select name="sgg" id="sgg" hidden>
+	                   <option value="">전체</option>
+	                  </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="surfaceInquireSelects">
+                      <button class="surfaceInquireSelectsTitleBtn" id="sggText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember" id="sggUl">
+                        <li><p>전체</p></li>
+                        </ul>
                       </div>
                     </div>
                   </li>
@@ -239,41 +250,20 @@ margin:10px;
                     <!--수정부분 지사-->
                     <div class="surfaceInquireSelectWrappers">
                       <select
-                        name=""
+                        name="emd"
                         class="surfaceInquireHiddenSelect05"
-                        id="surfaceInquireSelectBox05_4"
+                        id="emd"
                         hidden>
-                        <option value="전체">전체</option>
-                        <option value="Y">Y</option>
-                        <option value="N">N</option>
-                      </select>
-                    </div>
-                    <!--보여지는 셀렉박스-->
-                    <div class="surfaceInquireSelects">
-                      <button class="surfaceInquireSelectsTitleBtn"></button>
-                      <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <!--수정부분 지사-->
-                    <div class="surfaceInquireSelectWrappers">
-                      <select
-                        name=""
-                        class="surfaceInquireHiddenSelect05"
-                        id="surfaceInquireSelectBox05_5"
-                        hidden>
-                        <option value="전체1">전체1</option>
+                        <option value="">전체</option>
                         <option value="Y2">Y2</option>
                         <option value="N3">N3</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="surfaceInquireSelects">
-                      <button class="surfaceInquireSelectsTitleBtn"></button>
+                      <button class="surfaceInquireSelectsTitleBtn" id="emdText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember" id="emdUl"></ul>
                       </div>
                     </div>
                   </li>
@@ -281,26 +271,26 @@ margin:10px;
                     <!--수정부분 지사-->
                     <div class="surfaceInquireSelectWrappers">
                       <select
-                        name=""
+                        name="ri"
                         class="surfaceInquireHiddenSelect05"
-                        id="surfaceInquireSelectBox05_6"
+                        id="ri"
                         hidden>
-                        <option value="전체11">전체11</option>
+                        <option value="">전체</option>
                         <option value="Y22">Y22</option>
                         <option value="N33">N33</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="surfaceInquireSelects">
-                      <button class="surfaceInquireSelectsTitleBtn"></button>
+                      <button class="surfaceInquireSelectsTitleBtn" id="riText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember" id="riUl"></ul>
                       </div>
                     </div>
                   </li>
                   <li style="padding: 0px 3px">
                     <div class="inputControlList">
-                      <input
+                      <input name="jibun"
                         type="text"
                         placeholder="지번입력"
                         class="menuAdderssInput05" />
@@ -310,7 +300,7 @@ margin:10px;
               </div>
               <!--surfaceInquireSectionRadioBoxs-->
               <div class="surfaceInquireSectionBtnBoxs">
-                <button class="surfaceInquireRegisterBtn">조회하기</button>
+                <button class="surfaceInquireRegisterBtn" id="searchBtn">조회하기</button>
                 <a
                   class="queryBtn"
                   href="/jisang/usePermitRegister"
@@ -321,6 +311,7 @@ margin:10px;
           </div>
           <!--surfaceInquireSectionCont-->
         </section>
+        </form>
         <main>
         
         <div class="surfaceInquireMainContentWrapper">
@@ -378,6 +369,7 @@ margin:10px;
     <script type="module" src="/js/module/surfaceMain.js"></script>
     <script src="/js/jisang/surfaceInquireLinkEvet.js"></script>
     <script src="/js/jisang/surfaceInquireradioEvet.js"></script>
+    
     <!-- <script src="/js/module/resultPageEvet.js"></script> -->
   </th:block>
 </html>

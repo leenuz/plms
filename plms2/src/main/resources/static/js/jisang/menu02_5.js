@@ -19,30 +19,15 @@ loadDataTable("");
 
 
 //조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
-$(document).on("click","#registerBtn",function(){
+$(document).on("click","#searchBtn",function(){
        console.log($("#menuHiddenSelectBox01_1").val());
 	   console.log($("#searchForm").serialize());
 	   
 	   var formSerializeArray = $('#searchForm').serializeArray();
 	   console.log(formSerializeArray)
        // 체크박스 값들을 조합하여 문자열로 만들기
-       var jimokText = ''; // 빈 문자열 초기화
-
-       // .choiceCheckWrapper 안의 체크된 체크박스 값 수집
-       $('.choiceCheckWrapper input[type="checkbox"]:checked').each(function() {
-           jimokText += $(this).attr('name') + ','; // 값들 사이에 쉼표(,)로 구분
-       });
-
-       // 마지막 쉼표 제거
-       if (jimokText.endsWith(',')) {
-           jimokText = jimokText.slice(0, -1);
-       }
-
-       formSerializeArray.push({
-           name: 'jimok_text',
-           value: jimokText
-       });
-
+  
+      
 	   var object = {};
 	   for (var i = 0; i < formSerializeArray.length; i++){
 	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
@@ -61,11 +46,11 @@ $(document).on("click","#registerBtn",function(){
 	   
      })
 
-$(document).on("change","#sido",function(){
+$(document).on("change","#sido_nm",function(){
 	console.log("----------start sido change -------------");
-	$("#sido").val($("#sidoText").text()).attr("selected","selected");
-	if ($("#sido").val()==null) return;
-	var allData={"key":$("#sido").val()}
+	$("#sido_nm").val($("#sidoText").text()).attr("selected","selected");
+	if ($("#sido_nm").val()==null) return;
+	var allData={"key":$("#sido_nm").val()}
 					   console.log(allData);
 					  $.ajax({
 
@@ -228,7 +213,8 @@ $(document).on("change","#emd",function(){
 })	 
 	 
 	 
-	 
+
+
 
 function datatablebasic(){
 	new DataTable('#basicTable', {
@@ -300,17 +286,11 @@ function loadDataTable(params){
 					datatype:"json",
                     data: function(d){
 						//d=params;
-					/*	d.jisa=ljsIsNull(params.jisa)?'':params.jisa;
-						d.manage_no=params.manage_no;
-                        d.souja=params.souja;
-                        d.jasan_no=params.jasan_no;
-						d.dosiplan=params.dosiplan;
-                        d.jimok_text=ljsIsNull(params.jimok_text)?'':params.jimok_text;
-                        d.comple_yn=params.comple_yn;
-                        d.deunggi_date=params.start_date + '~' + params.end_date;
-                        d.account_yn=params.account_yn;
-                        d.start_date = params.start_date;
-                        d.end_date = params.end_date;
+						
+						d.jisa=ljsIsNull(params.jisa)?'':params.jisa;
+						
+                        
+                        
 
 
 						var ask=(params.askMenu01==undefined || params.askMenu01==null)?'0':params.askMenu01;
@@ -324,7 +304,7 @@ function loadDataTable(params){
 						else{
 							console.log("----------------------------1--------------");
 							console.log(ljsIsNull(params.sgg));
-							var addrs=params.sido;
+							var addrs=params.sido_nm;
 							console.log("addrs:"+addrs);
 							if (ljsIsNull(params.sgg)) addrs=addrs+"";
 							else addrs=addrs+" "+params.sgg;
@@ -340,7 +320,7 @@ function loadDataTable(params){
 						}
 
 						console.log("saddr:"+d.saddr);
-						console.log(params);*/
+						console.log(params);
 						console.log("-----------d-----------");
 						console.log(d);
 					},

@@ -504,7 +504,7 @@ public class songyuController {
 		right_arr=right_type.split(",");
 		params.put("right_type", right_arr);
 
-				params.put("cancelYn","N");
+				params.put("cancelYn","Y");
 				if (orderColumn==null || orderColumn.equals("null")) {
 					log.info("----------null--------");
 					orderColumn="0";
