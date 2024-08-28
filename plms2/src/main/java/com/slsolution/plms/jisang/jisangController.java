@@ -1413,4 +1413,33 @@ public class jisangController {
       			return mav;
     }
 	
+	@GetMapping(path="/usePermitEdit") //http://localhost:8080/api/get/dbTest
+    public ModelAndView usePermitEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		ModelAndView mav=new ModelAndView();
+		
+		
+//        List<TestDTO> list = new ArrayList<TestDTO>();
+//        list = dbService.getList();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		
+		String idx = httpRequest.getParameter("idx");
+		String index = httpRequest.getParameter("index");
+		
+		params.put("idx",idx);
+		params.put("manage_no",idx);
+		params.put("index",index);
+		log.info("params:"+params);
+		
+		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
+		
+		
+      			mav.addObject("resultData",data.get(0));
+      			
+      			mav.setViewName("content/jisang/usePermitEdit");
+      			return mav;
+    }
+	
 }
