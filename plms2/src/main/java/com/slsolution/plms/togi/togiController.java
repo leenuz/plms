@@ -42,5 +42,21 @@ public class togiController {
 		mav.setViewName("content/togi/landReg");
 		return mav;
 	}
+	@GetMapping(path="/landDevInfo") //http://localhost:8080/api/get/dbTest
+    public ModelAndView landDevInfo(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/togi/landDevInfo");
+		return mav;
+	}
+	@GetMapping(path="/landEdit") //http://localhost:8080/api/get/dbTest
+    public ModelAndView landEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/togi/landEdit");
+		return mav;
+	}
 	
 }
