@@ -406,7 +406,7 @@ function loadDataTable(params){
 
 
 
-			/*table.on('click','tr',function() {
+			table.on('click','tr',function() {
 
 					var target = $(event.target);
 
@@ -422,11 +422,11 @@ function loadDataTable(params){
                             console.log(data);
                             console.log(data.idx);
 
-                            var url = "/jisang/groundDetail?idx=" + data.idx;
+                            var url = "/jisang/usePermitDetail?idx=" + data.idx;
                             window.location = url;
                         }
 											   
-			    });*/
+			    });
 			
 			/*$("table th").resizable({
 				handles:'e',
