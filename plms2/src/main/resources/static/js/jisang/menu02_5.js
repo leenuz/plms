@@ -288,7 +288,8 @@ function loadDataTable(params){
 						//d=params;
 						
 						d.jisa=ljsIsNull(params.jisa)?'':params.jisa;
-						
+						d.status=ljsIsNull(params.status)?'':params.status;
+						d.jibun=ljsIsNull(params.jibun)?'':params.jibun;
                         
                         
 
@@ -315,7 +316,7 @@ function loadDataTable(params){
 							//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
 							//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
 							console.log("addrs:"+addrs);
-							d.saddr=(addrs==undefined || addrs==null)?'':addrs;
+							d.saddr=(addrs==undefined || addrs==null || addrs=="undefined")?'':addrs;
 							//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
 						}
 

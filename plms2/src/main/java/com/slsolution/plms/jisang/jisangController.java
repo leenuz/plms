@@ -601,6 +601,7 @@ public class jisangController {
 			HashMap params = new HashMap();
 			ArrayList<HashMap>  list=new ArrayList<HashMap>();
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			//ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectJisangListDemo",params); //demo
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			ModelAndView mav=new ModelAndView();
 			mav.setViewName("content/jisang/menu02_2");
@@ -961,7 +962,8 @@ public class jisangController {
 		Object count= mainService.selectCountQuery("jisangSQL.selectTotalCount", params);
 		int total=(int)count;
 
-		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangList",params);
+		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangList",params);
+		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
 		log.info("list:"+list);
 
 
@@ -1004,25 +1006,14 @@ public class jisangController {
 		String[] order_cols=req.getParameterValues("order");
 
 		String jisa = req.getParameter("jisa");
-		String manage_no = req.getParameter("manage_no");
-		String dosiplan=req.getParameter("dosiplan");
+		
 		String address=req.getParameter("saddr");
-
+		String jibun = req.getParameter("jibun");
 		String souja = req.getParameter("souja");
 		String jasan_no = req.getParameter("jasan_no");
-
-		String jimok_text = req.getParameter("jimok_text");
-//		String jimok_text = req.getParameter("jimok_text");
-//		String jimok_text ="전,과수원,목장용지";
-		String[] jimokArray = jimok_text != null && !jimok_text.trim().isEmpty() ? jimok_text.split(",") : new String[0]; // 빈 배열로 초기화
-
-		String comple_yn=req.getParameter("comple_yn");
-		String cancel_yn=req.getParameter("cancel_yn");
-		String deunggi_date=req.getParameter("deunggi_date");
-		String account_yn=req.getParameter("account_yn"); //회계처리 필요여부
-		String start_date=req.getParameter("start_date");
-		String end_date=req.getParameter("end_date");
-
+		String status = req.getParameter("status");
+		
+		
 		Map map=req.getParameterMap();
 
 		HashMap params = new HashMap();
@@ -1030,26 +1021,10 @@ public class jisangController {
 		params.put("start",start);
 		params.put("length",length);
 		params.put("jisa",jisa);
-		params.put("idx",manage_no);
-		params.put("dosiplan",dosiplan);
+		params.put("status",status);
+		params.put("jibun",jibun);
 		params.put("address",address);
 
-		params.put("souja",souja);
-		params.put("jasan_no",jasan_no);
-
-		params.put("jimokArray", jimokArray);
-		params.put("comple_yn", comple_yn);
-		params.put("cancel_yn", cancel_yn);
-		params.put("deunggi_date", deunggi_date);
-		params.put("account_yn", account_yn);
-		params.put("start_date", start_date);
-		params.put("end_date", end_date);
-
-//		String[] right_arr= {};
-//		right_arr=right_type.split(",");
-//		params.put("right_type", right_arr);
-
-		params.put("manageYn","Y");
 		if (orderColumn==null || orderColumn.equals("null")) {
 			log.info("----------null--------");
 			orderColumn="0";

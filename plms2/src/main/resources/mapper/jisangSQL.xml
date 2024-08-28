@@ -304,6 +304,121 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</select>
 
+<select id="selectJisangListDemo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *,
+		(row_number() OVER()) AS no
+		FROM (
+		SELECT jm.jm_idx AS index,
+		jm.jm_jisang_no AS idx,
+		0 AS gidx,
+		jm.jm_jisa AS jisa,
+		jm.jm_save_status AS save_status,
+		jm.jm_account_yn AS account_yn,
+		jm.jm_cancel_date AS cancel_date,
+		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
+		jm.jm_toji_type AS toji_type,
+		jm.jm_pipe_meter AS pipe_meter,
+		jm.jm_jimok_text AS jimok_text,
+		js.js_souja_name AS souja_name,
+		COALESCE(jm.jm_jijuk_area, NULL) AS jijuk_area,
+		COALESCE(jm.jm_pyeonib_area, NULL) AS pyeonib_area,
+		jm.jm_sido_nm AS sido_nm,
+		jm.jm_sgg_nm AS sgg_nm,
+		jm.jm_emd_nm AS emd_nm,
+		jm.jm_ri_nm AS ri_nm,
+		jm.jm_jibun AS jibun,
+		jm.jm_deunggi_date AS deunggi_date,
+		TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
+		COALESCE(jm.jm_jasan_no, '') AS jasan_no,
+		COALESCE(jm.jm_comple_yn, '') AS comple_yn,
+
+		COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
+		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
+		COALESCE('', '') AS gover_date,
+		NULL AS pay_date,
+		NULL AS gover_area,
+		NULL AS gover_length,
+		jm.jm_jasan_money AS jasan_money,
+		NULL AS pay_money,
+		jm.jm_cancel_yn AS cancel_yn,
+		jm.jm_manage_yn AS manage_yn,
+		jm.jm_dosiplan AS dosiplan,
+		'126.613134733938' AS x,
+		'33.4692482054001' AS y,
+		CASE
+		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jm.jm_pnu) > 0 THEN 'Y'
+		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jm.jm_pnu) = 0 THEN 'N'
+		END AS toji_plan
+		FROM jisang_master jm
+		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
+		
+		WHERE 1 = 1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and jm.jm_jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+			ORDER BY ${orderCol} ${desc}
+		</if>
+		
+		) AS r
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and r.idx=#{idx}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)" >
+			and r.cancel_yn=#{cancel_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
+			and r.manage_yn=#{manageYn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
+			and r.dosiplan=#{dosiplan}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jimokArray) and jimokArray.length > 0">
+			and r.jimok_text IN
+			<foreach item="item" index="index" collection="jimokArray" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(souja)" >
+			and r.souja_name like '%${souja}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
+			and r.jasan_no like '%${jasan_no}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
+			and r.comple_yn=#{comple_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)" >
+			and r.cancel_yn=#{cancel_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
+			and r.account_yn=#{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+			and r.deunggi_date::date between #{start_date}::date and #{end_date}::date
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
+			and (SELECT COUNT(o.address) AS overlap
+			FROM
+			(
+			(
+			SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
+			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
+			where 1=1
+
+			)
+			) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+		</if>
+<if test="length>0">
+			limit #{length} offset #{start}
+		</if>
+		
+
+	</select>
 
 
 
@@ -420,12 +535,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		jpm.jpm_spot_result as spot_result,
 		jpm.jpm_review as review,
 		jpm.jpm_contract as contract,
-		jpm.jpm_pmt_status as status,
-		jpm.jpm_dockey as dockey
-		
+		jpm.jpm_pmt_status as pmt_status,
+		jpm.jpm_dockey as dockey,
+		jpt.jpt_jisang_no AS jisang_no,
+		jpt.jpt_pmt_user as pmt_user
+		,jpt.jpt_soyuja as soyuja
+		,jpt.jpt_jimok as jimok
+		,jpt.jpt_jasan_no as jasan_no
+		,jpt.jpt_addr as addr
+		,jpt.jpt_jibun as jibun
+		,jm.jm_jisa as jisa
+		 
 		FROM jisang_permit_master jpm
+			LEFT JOIN jisang_permit_togi jpt ON jpt.jpt_pmt_no=jpm.jpm_pmt_no
+			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jpt_jisang_no
 		) as r
 		WHERE 1 = 1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+		and r.jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(status)" >
+		and r.pmt_status=#{status}
+		</if>
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+		and r.addr like '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+		and r.jibun = #{jibun}
+		</if>
+		
+		
 		
 	</select>
 	 <select id="selectJisangPermitList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -449,7 +589,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,jpt.jpt_jimok as jimok
 		,jpt.jpt_jasan_no as jasan_no
 		,jpt.jpt_addr as addr
+		,jpt.jpt_jibun as jibun
 		,jm.jm_jisa as jisa
+		 
 		FROM jisang_permit_master jpm
 			LEFT JOIN jisang_permit_togi jpt ON jpt.jpt_pmt_no=jpm.jpm_pmt_no
 			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jpt_jisang_no
@@ -461,6 +603,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 		) AS r
 		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+		and r.jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(status)" >
+		and r.pmt_status=#{status}
+		</if>
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+		and r.addr like '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+		and r.jibun = #{jibun}
+		</if>
+		
 		
 		<if test="length>0">
 			limit #{length} offset #{start}
