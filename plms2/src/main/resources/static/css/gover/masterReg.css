@@ -1,0 +1,935 @@
+@charset "UTF-8";
+* {
+  padding: 0;
+  margin: 0;
+}
+body * {
+  font-family: pretendard;
+}
+a {
+  text-decoration: none;
+  color: #3c3c3c;
+}
+li {
+  list-style: none;
+}
+select {
+  outline: 0;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #6e7d88;
+  text-indent: 12px;
+}
+input {
+  border: 0;
+  outline: 0;
+}
+input:focus {
+  border: 0;
+}
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+button {
+  border: 0;
+}
+.fileUploadIcon {
+  width: 35px;
+  height: 35px;
+}
+.lightBlueBtn {
+  color: #2b7de1;
+  background: rgba(204, 224, 255, 0.6);
+}
+.excelDownBtn {
+  background: url(/assets/media/menu03/images/excelDownload.png) no-repeat right
+    28px center;
+  background-size: 18px;
+  text-align: left;
+  text-indent: 28px;
+}
+.excelUpBtn {
+  background: url(/assets/media/menu03/images/excelUpload.png) no-repeat right
+    34px center;
+  background-size: 18px;
+  text-align: left;
+  text-indent: 34px;
+}
+.middleBtn {
+  width: 159px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.navyBtn {
+  background-color: #4e5871;
+  color: #fff;
+}
+.whiteBtn {
+  background-color: #fff;
+  border: 1px solid #4e5871;
+  color: #4e5871;
+}
+.searchAddressBtn {
+  width: 54px;
+  height: 27px;
+  border-radius: 20px;
+  background: #2b7de1;
+  color: #fff;
+}
+.moreSelectBtn {
+  /* font-size: 15px; */
+  font-size: 14px;
+  font-weight: 500;
+  color: #4e5871;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  text-align-last: left;
+  padding-left: 12px;
+  box-sizing: border-box;
+}
+
+/* css추가 */
+
+.masterRegWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.masterRegWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.masterRegWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.masterRegHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+/**/
+
+#masterReg * {
+  font-family: pretendard;
+}
+
+#masterReg {
+  width: calc(100%);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+
+#masterReg .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+
+#masterReg .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+#masterReg .subTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #31394c;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+#masterReg .subTitleBtnBox {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  transform: translateY(-25%);
+  right: 0;
+}
+#masterReg .contents .content {
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border-right: 1px solid #cddbf0;
+}
+#masterReg .contents .content:last-child {
+  border-right: 0;
+}
+
+#masterReg .contents .content.checkboxWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* selectbox 스크롤 */
+#masterReg .customSelectBox .customSelectBtns::-webkit-scrollbar {
+  width: 4px;
+}
+
+#masterReg .customSelectBox .customSelectBtns::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+#masterReg .attachFileInfo .fileUploadWrap::-webkit-scrollbar {
+  width: 4px;
+}
+
+#masterReg .attachFileInfo .fileUploadWrap::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#masterReg .defaultInfo {
+  /* padding: 40px 0; */
+  padding: 27px 0 40px 0;
+}
+#masterReg .contWrap {
+  width: 100%;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+#masterReg .contWrap .titles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+}
+#masterReg .contWrap .depth1 .titles {
+  border-radius: 5px 5px 0 0;
+}
+#masterReg .contWrap .titles li {
+  height: 100%;
+  text-align: center;
+  /* line-height: 45px; */
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+  /* 추가 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#masterReg .contWrap .titles li:last-child {
+  border-right: 0;
+}
+#masterReg .contWrap .contents {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 47px;
+  background: #fff;
+  border-bottom: 1px solid #cddbf0;
+}
+#masterReg .defaultInfo .contWrap .title {
+  width: 7.3%;
+}
+#masterReg .defaultInfo .contWrap .content {
+  width: 7.3%;
+}
+#masterReg .defaultInfo .contWrap .largeTitle {
+  width: 11.2%;
+}
+/* 추가 */
+#masterReg .defaultInfo .contWrap .depth1 .titles.active {
+  height: 90px;
+}
+#masterReg .defaultInfo .contWrap .secondTitleWrap {
+  display: none;
+  width: 100%;
+  height: 45px;
+}
+#masterReg .defaultInfo .contWrap .secondTitleWrap.active {
+  display: block;
+}
+#masterReg .defaultInfo .contWrap .titles .secondTitles {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background: #ecf1f8;
+  border-top: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+#masterReg .defaultInfo .contWrap .titles .secondTitles .secondTitle {
+  width: 50%;
+}
+#masterReg .contWrap .titles .titleBox .titleText {
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#masterReg .lineWrap {
+  position: relative;
+  height: 100%;
+}
+/* 추가 */
+#masterReg .lineWrap .lineContent {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+#masterReg .lineWrap .lineContent.active {
+  display: block;
+}
+#masterReg .singleLine {
+  height: 100%;
+  /* position: absolute;
+  top: 0;
+  left: 0; */
+  /* display: none; */
+}
+#masterReg .singleLine .inputWrap {
+  height: 100%;
+}
+#masterReg .doubleLine {
+  display: flex;
+  height: 100%;
+  /* position: absolute;
+  top: 0;
+  left: 0; */
+}
+/* 추가 */
+#masterReg .doubleLine .inputWrap {
+  width: 50%;
+}
+#masterReg .customSelectBox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#masterReg .customSelectBox .customSelectView {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  /* font-size: 15px; */
+  font-size: 14px;
+  font-weight: 500;
+  color: #6e7d88;
+  background: #fff;
+  text-align-last: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  box-sizing: border-box;
+  background: url(/assets/media/menu03/images/arrowDown.png) no-repeat right 8px
+    center;
+  background-size: 18px;
+}
+#masterReg .customSelectBox .customSelectView.active {
+  background: url(/assets/media/menu03/images/arrowDownBlue.png) no-repeat right
+    8px center;
+  background-size: 18px;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+#masterReg .customSelectBox .customSelectBtns {
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 4px);
+  box-sizing: border-box;
+  max-height: 0;
+  overflow-y: hidden;
+  z-index: 10;
+  transition: 500ms;
+  opacity: 0;
+  border: 1px solid #acbdd7;
+}
+#masterReg .customSelectBox .customSelectBtns.active {
+  padding: 6px 0;
+  border-radius: 10px;
+  background: #fff;
+  max-height: 233px;
+  overflow-y: scroll;
+  transition: 500ms;
+  opacity: 1;
+}
+
+#masterReg .customSelectBox .customSelectBtns li {
+  padding: 0;
+  height: 41px;
+}
+#masterReg .contents .content.inputArea {
+  display: flex;
+  padding: 0;
+}
+#masterReg .inputWrap {
+  border-right: 1px solid #cddbf0;
+  padding: 6px 8px;
+  box-sizing: border-box;
+}
+#masterReg .inputWrap:last-child {
+  border-right: 0;
+}
+#masterReg .contWrap .contents li input[type="text"] {
+  width: 100%;
+  height: 100%;
+  background: #edf2f9;
+  border-radius: 10px;
+  text-align: center;
+}
+#masterReg .contWrap .contents li input[type="text"].notWriteInput {
+  background: transparent;
+}
+#masterReg .contWrap .contents li input[type="text"]::placeholder {
+  color: #3c3c3c;
+}
+#masterReg .contWrap .contents li input[type="text"]::placeholder {
+  text-align: center;
+  text-indent: 0;
+}
+#masterReg input[type="checkbox"] {
+  display: none;
+}
+.checkboxWrap label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+}
+/* date */
+#masterReg .dateBar {
+  width: 10px;
+  height: 2px;
+  background: #cfddf2;
+}
+#masterReg .dateInputBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+}
+#masterReg .dateInputWrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  position: relative;
+  background: url(/assets/media/menu03/images/calendarInputIcon.png) no-repeat
+    left 8px center;
+  background-size: 18px;
+}
+#masterReg input[type="date"] {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+  color: transparent;
+  background: transparent;
+  text-align: right;
+  /* 추가 */
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+/* 기본 달력 투명하게, 클릭너비 넓히기 */
+#masterReg input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+#masterReg input[type="date"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #6e7d88;
+}
+
+#masterReg input[type="date"]:focus,
+#masterReg input[type="date"]:valid {
+  color: #6e7d88;
+}
+
+#masterReg input[type="date"]:focus::before,
+#masterReg input[type="date"]:valid::before {
+  content: "";
+}
+
+/* label */
+
+#masterReg input[type="checkbox"] {
+  display: none;
+}
+
+#masterReg input[type="checkbox"] ~ label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+  display: inline-block;
+  position: relative;
+}
+
+#masterReg .allSelectCheck input[type="checkbox"] ~ label {
+  background: #dce7f5;
+}
+
+#masterReg input[type="checkbox"]:checked ~ label {
+  background: #4e5871;
+}
+
+#masterReg input[type="checkbox"]:checked ~ label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 10px;
+  background: url(/assets/media/menu03/images/checkIcon.png) no-repeat center;
+  background-size: contain;
+}
+
+/* depth2 */
+#masterReg .defaultInfo .contWrap .depth2 .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+#masterReg .defaultInfo .contWrap .depth2 .title {
+  width: 12%;
+}
+#masterReg .defaultInfo .contWrap .depth2 .content {
+  width: 12%;
+}
+#masterReg .defaultInfo .contWrap .depth2 .dateLargeTitle {
+  width: 15.7%;
+}
+
+/* 메모 */
+
+#masterReg .memoSection .contents .content.btnBox {
+  display: flex;
+}
+
+/* 소속 토지 정보 */
+
+#masterReg .landAdressInfo {
+  padding-bottom: 40px;
+}
+#masterReg .landAdressInfo .contWrap .title {
+  width: 5%;
+}
+#masterReg .landAdressInfo .contWrap .content {
+  width: 5%;
+}
+#masterReg .landAdressInfo .contWrap .addressInfoWidth {
+  width: 24%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* css추가 */
+
+#masterReg .landAdressInfo .contWrap .addressInfoWidth .addressData {
+  width: 50%;
+}
+/**/
+
+#masterReg .landAdressInfo .contWrap .middleWidth {
+  width: 9.2%;
+}
+#masterReg .landAdressInfo .contWrap .smallWidth {
+  width: 3%;
+}
+#masterReg .landAdressInfo .contWrap .largeWidth {
+  width: 11.8%;
+}
+#masterReg .landAdressInfo .contWrap .btnBox {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#masterReg .landAdressInfo .contents .content.btnBox .editBefore,
+#masterReg .landAdressInfo .contents .content.btnBox .editAfter {
+  width: 100%;
+  height: 100%;
+}
+
+#masterReg .landAdressInfo .contents .content.btnBox .editBefore {
+  display: flex;
+  justify-content: center;
+}
+
+#masterReg .landAdressInfo .contents.editing .content.btnBox .editBefore {
+  display: none;
+}
+
+#masterReg .landAdressInfo .contents .content.btnBox .editAfter {
+  display: none;
+}
+
+#masterReg .landAdressInfo .contents.editing .content.btnBox .editAfter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#masterReg .landAdressInfo .contents .content.btnBox .btnWrap {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#masterReg .landAdressInfo .contents .content.btnBox .btnWrap:first-child {
+  border-right: 1px solid #cddbf0;
+}
+
+#masterReg .landAdressInfo .contentScr {
+  height: 180px;
+}
+#masterReg .landAdressInfo .contWrap .depth1 .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+#masterReg .miniBtn {
+  width: 74px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+#masterReg .addBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+#masterReg .delBtn {
+  background: #9a9a9a;
+  color: #fff;
+}
+#masterReg .registBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+
+/* 첨부파일 정보 */
+#masterReg .myPc {
+  width: 81px;
+  height: 27px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+#masterReg .attachFileInfo {
+  padding-bottom: 40px;
+}
+#masterReg .attachFileInfo .subTitle {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+}
+#masterReg .attachFileInfo .fileUploadWrap {
+  width: 100%;
+  margin-bottom: 18px;
+  height: 130px;
+  overflow-y: scroll;
+  border: 1px dashed #cddbf0;
+  border-radius: 5px;
+}
+#masterReg .attachFileInfo .fileUploadBox {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #f7f9fc;
+}
+#masterReg .attachFileInfo .fileUploadBox p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #88a2c8;
+}
+.fileDelBtn {
+  width: 129px;
+  height: 37px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+/* 메모 */
+
+#masterReg .memoSection {
+  padding-bottom: 40px;
+}
+#masterReg textarea {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #cddbf0;
+  background: #f7f9fc;
+  padding: 15px;
+  box-sizing: border-box;
+  height: 118px;
+  resize: none;
+}
+#masterReg textarea::placeholder {
+  color: #88a2c8;
+}
+#masterReg textarea::-webkit-scrollbar {
+  width: 4px;
+}
+
+#masterReg textarea::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+/* 이전, 저장 버튼 */
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+.finalBtn.vividBlueBtn {
+  background: #2b7de1;
+  color: #fff;
+}
+
+.finalBtn.grayBtn {
+  background: #919191;
+  color: #fff;
+}
+
+.finalBtn.lightBlueBtn {
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+}
+.finalBtn.blueBorderBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+
+/*  */
+#masterReg input[type="file"] {
+  display: none;
+}
+#masterReg .fileBtnWrap {
+  display: flex;
+  gap: 6px;
+}
+.fileBtnWrap label {
+  width: 81px;
+  height: 27px;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+#masterReg .fileBtnWrap .myboxBtn {
+  width: 81px;
+  height: 27px;
+  color: #fff;
+  background: #2B7DE1;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
+#masterReg .attachFileInfo .fileLargeWrap {
+  width: 100%;
+  position: relative;
+  height: 130px;
+}
+#masterReg .attachFileInfo .fileUploadDisplay {
+  display: none;
+}
+
+#masterReg .attachFileInfo .fileUploadDisplay.active {
+  display: block;
+}
+
+#masterReg .fileSaveBtn {
+  width: 129px;
+  height: 37px;
+  background: #2B7DE1;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  display: none;
+}
+
+#masterReg .fileSaveBtn.active {
+  display: block;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap {
+  width: 100%;
+  margin-bottom: 18px;
+  height: 130px;
+  overflow-y: scroll;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#masterReg .attachFileInfo .fileUploadAfterWrap::-webkit-scrollbar {
+  width: 4px;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+/* 파일이 업로드 된 모습 */
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter {
+  display: inline-block;
+  width: 100%;
+  background: #fff;
+  min-height: 150px;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .titles {
+  height: 45px;
+  background: #F7F9FC;
+  border-radius: 5px 5px 0 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 6px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #CDDBF0;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .contents {
+  height: 45px;
+  background: transparent;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .title {
+  width: 11.3%;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .title p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  text-align: center;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .content {
+  width: 11.3%;
+  height: auto;
+  border-right: 0;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .content p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3C3C3C;
+  text-align: center;
+}
+
+#masterReg .attachFileInfo .btnWrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .btnbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .filenameBox {
+  padding-left: 40px;
+  box-sizing: border-box;
+  width: 76.1%;
+  position: relative;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .filenameBox p {
+  text-align: left;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .filenameBox .typeIcon {
+  width: 17px;
+  height: 17px;
+  /* background: url(../../media/menu01/images/hwpfileIcon.png) no-repeat center; */
+  background: url(../../media/menu01/images/fileExtensionIcon.png) no-repeat center;
+  background-size: 17px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 15px;
+}
+
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .allDeleteFileBtn,
+#masterReg .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .fileDeleteBtn {
+  width: 32px;
+  height: 32px;
+  background: url(../../media/menu01/images/fileDeleteBtnIcon.png) no-repeat center;
+  background-size: 32px;
+}

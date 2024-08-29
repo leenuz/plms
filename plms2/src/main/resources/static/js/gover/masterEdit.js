@@ -23,7 +23,7 @@ const createCustomLiMasterEdit = () => {
         }
     });
 }
-createCustomLiMasterEdit();
+//createCustomLiMasterEdit();
 
 
 const customSelectView = document.querySelectorAll('.customSelectView')
@@ -134,7 +134,7 @@ const allCheckEventMasterEdit = () => {
     }
 }
 
-allCheckEventMasterEdit();
+//allCheckEventMasterEdit();
 
 
 /* 변경이력불러오기 */

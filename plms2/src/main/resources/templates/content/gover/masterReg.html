@@ -1,16 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      
+      layout:decorate="~{layout/default_layout}">
+ <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>점용 마스터 등록</title>
-    <link rel="stylesheet" href="/assets/css/header.css" />
-    <link rel="stylesheet" href="/assets/css/menu03/masterReg.css" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  
+	  <link th:href="@{/css/common.css}" rel="stylesheet" />
+	  <link rel="stylesheet" href="/css/gover/masterReg.css" /> 
+	  
+		<script src="/js/gover/menu03_1.js"></script>	
+		 <!--<script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
+		<style>
+		div.dt-top-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+div.dt-center-in-div {
+  margin: 0 auto;
+      float: right;
+    margin-right: 30px;
+   
+}
+div.dt-center-in-div>div{
+
+display:inline;
+}
+
+div.dt-filter-spacer {
+  margin: 10px 0;
+  border:1px solid red;
+}
+
+
+.dt-title{
+
+text-align:center;
+width:180px;
+float:left;
+
+}
+.dt-buttons{
+display:inline-block;
+
+width:180px;
+
+}
+.dt-length{
+display:inline-block;
+}
+.dt-button{
+
+color:white;
+background-color:#4e5871;
+font-size:15px;
+font-weight:600;
+border-radius:10px;
+background-image:url(/assets/media/menu01/download.png);
+background-size:11px;
+background-repeat:no-repeat;
+background-position:123px center;
+text-aline:left;
+margin-right:10px;
+width:159px;
+height:38px;
+
+}
+
+.dt-paging {
+text-align: center;
+}
+
+.dt-paging-button {
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: #007bff !important;
+    font-size: 15px;
+    font-weight: 600;
+    
+    
+}
+
+.bottom{
+text-align:center;
+
+}
+.top{
+
+text-align:right;
+margin:10px;
+
+}
+
+		</style>
+		
+    <title>점용 마스터</title>
   </head>
-  <body>
+<th:block layout:fragment="content">
     <!-- 점용 마스터 등록 -->
     <div class="masterRegWrappers">
-      <div class="masterRegHeader"></div>
+     
       <main id="masterReg">
         <div class="mainTitle">
           <h1>점용 마스터 등록</h1>
@@ -33,16 +141,7 @@
                 <li class="title">용도</li>
                 <li class="title largeTitle">관로명(구간)</li>
                 <li class="title">단/복선</li>
-                <li class="title titleBox">
-                  <!-- class 추가 -->
-                  <p class="titleText">관경</p>
-                  <div class="secondTitleWrap">
-                    <ul class="secondTitles">
-                      <li class="secondTitle">West</li>
-                      <li class="secondTitle">East</li>
-                    </ul>
-                  </div>
-                </li>
+                <li class="title">관경</li>
                 <li class="title">감면여부</li>
               </ul>
               <ul class="contents">
@@ -180,22 +279,17 @@
                 </li>
                 <!-- 단선, 복선 -->
                 <li class="content lineWrap inputArea">
-                  <!-- class추가 -->
-                  <div class="lineContent">
-                    <div class="doubleLine">
-                      <div class="inputWrap">
-                        <input type="text" />
-                      </div>
-                      <div class="inputWrap">
-                        <input type="text" />
-                      </div>
+                  <div class="doubleLine">
+                    <div class="inputWrap">
+                      <input type="text" />
+                    </div>
+                    <div class="inputWrap">
+                      <input type="text" />
                     </div>
                   </div>
-                  <div class="lineContent">
-                    <div class="singleLine">
-                      <div class="inputWrap">
-                        <input type="text" />
-                      </div>
+                  <div class="singleLine">
+                    <div class="inputWrap">
+                      <input type="text" />
                     </div>
                   </div>
                 </li>
@@ -394,159 +488,153 @@
                 <li class="title">보기</li>
                 <li class="title middleWidth">추가/삭제</li>
               </ul>
-              <!-- content 감싸는 box 추가 -->
-              <div class="contentsBox">
-                <ul class="contents">
-                  <li class="content smallWidth">
-                    <!-- 순번 -->
+              <ul class="contents">
+                <li class="content smallWidth">
+                  <!-- 순번 -->
+                  <input
+                    type="text"
+                    class="notWriteInput"
+                    readonly
+                    placeholder="1" />
+                </li>
+                <li class="content largeWidth selectContentArea">
+                  <!-- 관리기관 -->
+                  <div class="hiddenSelectBox">
+                    <!-- name도 추가 -->
+                    <select
+                      name="masterRegSelectBox12"
+                      id="masterRegSelectBox12"
+                      hidden>
+                      <option value="전체">전체</option>
+                      <option value="강서구-건설과">강서구-건설과</option>
+                      <option value="한강사업본부-운영총괄과">
+                        한강사업본부-운영총괄과
+                      </option>
+                      <option value="안전건설과">안전건설과</option>
+                      <option value="덕양구-안전건설과">
+                        덕양구-안전건설과
+                      </option>
+                      <option value="전체6">전체6</option>
+                      <option value="전체7">전체7</option>
+                      <option value="전체8">전체8</option>
+                      <option value="전체9">전체9</option>
+                      <option value="전체10">전체10</option>
+                    </select>
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">전체</button>
+                    <ul class="customSelectBtns"></ul>
+                  </section>
+                </li>
+                <li class="content middleWidth selectContentArea">
+                  <!-- 국공유지 여부 -->
+                  <div class="hiddenSelectBox">
+                    <!-- name도 추가 -->
+                    <select
+                      name="masterRegSelectBox13"
+                      id="masterRegSelectBox13"
+                      hidden>
+                      <option value="국유지">국유지</option>
+                      <option value="사유지">사유지</option>
+                    </select>
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">선택</button>
+                    <ul class="customSelectBtns"></ul>
+                  </section>
+                </li>
+                <li class="content checkboxWrap">
+                  <!-- 대표필지 -->
+                  <input type="checkbox" id="masterRegSelectBox_Checkbox02" />
+                  <label for="masterRegSelectBox_Checkbox02"></label>
+                </li>
+                <li class="content addressInfoWidth">
+                  <!-- 주소 -->
+                  <div class="addressData">
                     <input
                       type="text"
-                      class="notWriteInput contentsNum"
+                      class="notWriteInput"
                       readonly
-                      placeholder="1" />
-                  </li>
-                  <li class="content largeWidth selectContentArea">
-                    <!-- 관리기관 -->
-                    <div class="hiddenSelectBox">
-                      <!-- name도 추가 -->
-                      <select
-                        name="masterRegSelectBox12"
-                        id="masterRegSelectBox12"
-                        hidden>
-                        <option value="전체">전체</option>
-                        <option value="강서구-건설과">강서구-건설과</option>
-                        <option value="한강사업본부-운영총괄과">
-                          한강사업본부-운영총괄과
-                        </option>
-                        <option value="안전건설과">안전건설과</option>
-                        <option value="덕양구-안전건설과">
-                          덕양구-안전건설과
-                        </option>
-                        <option value="전체6">전체6</option>
-                        <option value="전체7">전체7</option>
-                        <option value="전체8">전체8</option>
-                        <option value="전체9">전체9</option>
-                        <option value="전체10">전체10</option>
-                      </select>
-                    </div>
-                    <section class="customSelectBox">
-                      <button class="customSelectView">전체</button>
-                      <ul class="customSelectBtns"></ul>
-                    </section>
-                  </li>
-                  <li class="content middleWidth selectContentArea">
-                    <!-- 국공유지 여부 -->
-                    <div class="hiddenSelectBox">
-                      <!-- name도 추가 -->
-                      <select
-                        name="masterRegSelectBox13"
-                        id="masterRegSelectBox13"
-                        hidden>
-                        <option value="국유지">국유지</option>
-                        <option value="사유지">사유지</option>
-                      </select>
-                    </div>
-                    <section class="customSelectBox">
-                      <button class="customSelectView">선택</button>
-                      <ul class="customSelectBtns"></ul>
-                    </section>
-                  </li>
-                  <li class="content checkboxWrap">
-                    <!-- 대표필지 -->
-                    <input type="checkbox" id="masterRegSelectBox_Checkbox02" />
-                    <label for="masterRegSelectBox_Checkbox02"></label>
-                  </li>
-                  <li class="content addressInfoWidth">
-                    <!-- 주소 -->
-                    <div class="addressData">
-                      <input
-                        type="text"
-                        class="notWriteInput"
-                        readonly
-                        placeholder="서울특별시 서초구 서초동 1" />
-                    </div>
-                    <button class="searchAddressBtn">검색</button>
-                  </li>
-                  <li class="content middleWidth">
-                    <!-- PNU -->
-                    <input type="text" />
-                  </li>
-                  <li class="content selectContentArea">
-                    <!-- 지목 -->
-                    <div class="hiddenSelectBox">
-                      <!-- name도 추가 -->
-                      <select
-                        name="masterRegSelectBox14"
-                        id="masterRegSelectBox14"
-                        hidden>
-                        <option value="전1">전1</option>
-                        <option value="전2">전2</option>
-                        <option value="전3">전3</option>
-                        <option value="전4">전4</option>
-                        <option value="전5">전5</option>
-                        <option value="전6">전6</option>
-                        <option value="전7">전7</option>
-                        <option value="전8">전8</option>
-                        <option value="전9">전9</option>
-                        <option value="전10">전10</option>
-                      </select>
-                    </div>
-                    <section class="customSelectBox">
-                      <button class="customSelectView">전</button>
-                      <ul class="customSelectBtns"></ul>
-                    </section>
-                  </li>
-                  <li class="content">
-                    <!-- 점용연장 -->
-                    <input type="text" />
-                  </li>
-                  <li class="content">
-                    <!-- 점용면적 -->
-                    <input type="text" />
-                  </li>
-                  <li class="content middleWidth selectContentArea">
-                    <!-- 관로일치 여부 -->
-                    <div class="hiddenSelectBox">
-                      <!-- name도 추가 -->
-                      <select
-                        name="masterRegSelectBox15"
-                        id="masterRegSelectBox15"
-                        hidden>
-                        <option value="지사선택필요1">지사선택필요1</option>
-                        <option value="지사선택필요2">지사선택필요2</option>
-                        <option value="지사선택필요3">지사선택필요3</option>
-                        <option value="지사선택필요4">지사선택필요4</option>
-                        <option value="지사선택필요5">지사선택필요5</option>
-                        <option value="지사선택필요6">지사선택필요6</option>
-                        <option value="지사선택필요7">지사선택필요7</option>
-                        <option value="지사선택필요8">지사선택필요8</option>
-                        <option value="지사선택필요9">지사선택필요9</option>
-                        <option value="지사선택필요10">지사선택필요10</option>
-                      </select>
-                    </div>
-                    <section class="customSelectBox">
-                      <button class="customSelectView">지사선택필요</button>
-                      <ul class="customSelectBtns"></ul>
-                    </section>
-                  </li>
-                  <li class="content btnBox">
-                    <button class="miniBtn lightBlueBtn viewDetailButton">
-                      위치보기
-                    </button>
-                  </li>
-                  <li class="middleWidth content btnBox">
-                    <div class="newBtnWrap">
-                      <!-- 버튼 class명 변경 -->
-                      <!-- <button class="registBtn miniBtn">추가</button> -->
-                      <button class="addBtn miniBtn">추가</button>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <!-- 주석처리 -->
-              <!-- <ul class="contents">
+                      placeholder="서울특별시 서초구 서초동 1" />
+                  </div>
+                  <button class="searchAddressBtn">검색</button>
+                </li>
+                <li class="content middleWidth">
+                  <!-- PNU -->
+                  <input type="text" />
+                </li>
+                <li class="content selectContentArea">
+                  <!-- 지목 -->
+                  <div class="hiddenSelectBox">
+                    <!-- name도 추가 -->
+                    <select
+                      name="masterRegSelectBox14"
+                      id="masterRegSelectBox14"
+                      hidden>
+                      <option value="전1">전1</option>
+                      <option value="전2">전2</option>
+                      <option value="전3">전3</option>
+                      <option value="전4">전4</option>
+                      <option value="전5">전5</option>
+                      <option value="전6">전6</option>
+                      <option value="전7">전7</option>
+                      <option value="전8">전8</option>
+                      <option value="전9">전9</option>
+                      <option value="전10">전10</option>
+                    </select>
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">전</button>
+                    <ul class="customSelectBtns"></ul>
+                  </section>
+                </li>
+                <li class="content">
+                  <!-- 점용연장 -->
+                  <input type="text" />
+                </li>
+                <li class="content">
+                  <!-- 점용면적 -->
+                  <input type="text" />
+                </li>
+                <li class="content middleWidth selectContentArea">
+                  <!-- 관로일치 여부 -->
+                  <div class="hiddenSelectBox">
+                    <!-- name도 추가 -->
+                    <select
+                      name="masterRegSelectBox15"
+                      id="masterRegSelectBox15"
+                      hidden>
+                      <option value="지사선택필요1">지사선택필요1</option>
+                      <option value="지사선택필요2">지사선택필요2</option>
+                      <option value="지사선택필요3">지사선택필요3</option>
+                      <option value="지사선택필요4">지사선택필요4</option>
+                      <option value="지사선택필요5">지사선택필요5</option>
+                      <option value="지사선택필요6">지사선택필요6</option>
+                      <option value="지사선택필요7">지사선택필요7</option>
+                      <option value="지사선택필요8">지사선택필요8</option>
+                      <option value="지사선택필요9">지사선택필요9</option>
+                      <option value="지사선택필요10">지사선택필요10</option>
+                    </select>
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">지사선택필요</button>
+                    <ul class="customSelectBtns"></ul>
+                  </section>
+                </li>
+                <li class="content btnBox">
+                  <button class="miniBtn lightBlueBtn viewDetailButton">
+                    위치보기
+                  </button>
+                </li>
+                <li class="middleWidth content btnBox">
+                  <div class="newBtnWrap">
+                    <button class="registBtn miniBtn">추가</button>
+                  </div>
+                </li>
+              </ul>
+              <ul class="contents">
                 <li class="content smallWidth">
-                  순번
+                  <!-- 순번 -->
                   <input
                     type="text"
                     class="notWriteInput"
@@ -554,9 +642,9 @@
                     placeholder="2" />
                 </li>
                 <li class="content largeWidth selectContentArea">
-                  관리기관
+                  <!-- 관리기관 -->
                   <div class="hiddenSelectBox">
-                    name도 추가
+                    <!-- name도 추가 -->
                     <select
                       name="masterRegSelectBox16"
                       id="masterRegSelectBox16"
@@ -583,9 +671,9 @@
                   </section>
                 </li>
                 <li class="content middleWidth selectContentArea">
-                  국공유지 여부
+                  <!-- 국공유지 여부 -->
                   <div class="hiddenSelectBox">
-                    name도 추가
+                    <!-- name도 추가 -->
                     <select
                       name="masterRegSelectBox17"
                       id="masterRegSelectBox17"
@@ -608,12 +696,12 @@
                   </section>
                 </li>
                 <li class="content checkboxWrap">
-                  대표필지
+                  <!-- 대표필지 -->
                   <input type="checkbox" id="masterRegSelectBox_Checkbox03" />
                   <label for="masterRegSelectBox_Checkbox03"></label>
                 </li>
                 <li class="content addressInfoWidth">
-                  주소
+                  <!-- 주소 -->
                   <div class="addressData">
                     <input
                       type="text"
@@ -624,13 +712,13 @@
                   <button class="searchAddressBtn">검색</button>
                 </li>
                 <li class="content middleWidth">
-                  PNU
+                  <!-- PNU -->
                   <input type="text" />
                 </li>
                 <li class="content selectContentArea">
-                  지목
+                  <!-- 지목 -->
                   <div class="hiddenSelectBox">
-                    name도 추가
+                    <!-- name도 추가 -->
                     <select
                       name="masterRegSelectBox18"
                       id="masterRegSelectBox18"
@@ -653,17 +741,17 @@
                   </section>
                 </li>
                 <li class="content">
-                  점용연장
+                  <!-- 점용연장 -->
                   <input type="text" />
                 </li>
                 <li class="content">
-                  점용면적
+                  <!-- 점용면적 -->
                   <input type="text" />
                 </li>
                 <li class="content middleWidth selectContentArea">
-                  관로일치 여부
+                  <!-- 관로일치 여부 -->
                   <div class="hiddenSelectBox">
-                    name도 추가
+                    <!-- name도 추가 -->
                     <select
                       name="masterRegSelectBox19"
                       id="masterRegSelectBox19"
@@ -698,7 +786,7 @@
                     <button class="delBtn miniBtn">삭제</button>
                   </div>
                 </li>
-              </ul> -->
+              </ul>
             </div>
           </div>
         </section>
@@ -707,62 +795,19 @@
           <div class="subTitle">
             <div class="subTitleText">첨부파일</div>
             <div class="fileBtnWrap">
-              <!-- multiple 속성 추가 -->
-              <input type="file" id="masterReg_myPcFiles" multiple />
+              <input type="file" id="masterReg_myPcFiles" />
               <label for="masterReg_myPcFiles">내 PC</label>
-              <!-- 버튼 추가 -->
-              <button class="myboxBtn">MYBOX</button>
             </div>
           </div>
 
-          <div class="fileLargeWrap">
-            <div class="fileUploadWrap fileUploadDisplay">
-              <label for="masterReg_myPcFiles" class="fileUploadBox">
-                <img
-                  src="/assets/media/menu03/images/file-upload.png"
-                  alt="파일 업로드 아이콘"
-                  class="fileUploadIcon" />
-                <p>파일을 마우스로 끌어오세요.</p>
-              </label>
+          <div class="fileUploadWrap">
+            <div class="fileUploadBox">
+              <img
+                src="/assets/media/menu03/images/file-upload.png"
+                alt="파일 업로드 아이콘"
+                class="fileUploadIcon" />
+              <p>파일을 마우스로 끌어오세요.</p>
             </div>
-            <div class="fileUploadAfterWrap fileUploadDisplay">
-              <!-- 추가, 업로드시 나오는 거 -->
-              <div class="fileUploadAfter">
-                <ul class="titles">
-                  <li class="btnbox">
-                    <button class="allDeleteFileBtn"></button>
-                  </li>
-                  <li class="title filenameBox">
-                    <p>파일명</p>
-                  </li>
-                  <li class="title">
-                    <p>업로드 상태</p>
-                  </li>
-                  <li class="title">
-                    <p>용량</p>
-                  </li>
-                </ul>
-                <!-- <ul class="contents">
-                              <li class="btnbox"><button class="fileDeleteBtn"></button></li>
-                              <li class="content filenameBox">
-                                <figure class="typeIcon"></figure>
-                                <p class="fileNameText">Welcome to Hwp.hwp</p>
-                              </li>
-                              <li class="content">
-                                <p>-</p>
-                              </li>
-                              <li class="content">
-                                <p class="fileSizeText">23.00KB</p>
-                              </li>
-                            </ul> -->
-              </div>
-            </div>
-          </div>
-          <div class="btnWrap">
-            <!-- 주석처리 -->
-            <!-- <button class="fileDelBtn delBtn">선택파일 삭제</button> -->
-            <!-- 추가 -->
-            <button class="fileSaveBtn">파일 저장</button>
           </div>
         </section>
 
@@ -786,10 +831,9 @@
         </div>
       </main>
     </div>
-    <div class="masterRegSearchPopWrapper"></div>
     <div class="masterRegExcelPopWrapper"></div>
     <!-- script -->
-    <script type="module" src="/components/surfaceMain.js"></script>
-    <script src="/components/js/menu03/masterReg.js"></script>
-  </body>
+    <script type="module" src="/js/module/surfaceMain.js"></script>
+    <script src="/js/gover/masterReg.js"></script>
+ </th:block>
 </html>
