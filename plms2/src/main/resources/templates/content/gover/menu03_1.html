@@ -13,11 +13,19 @@
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   
+
+
+
+ 
+  
+   
+  
 	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	  <link rel="stylesheet" href="/css/gover/menu03_1.css" /> 
+	
+ <link rel="stylesheet" href="/css/gover/menu03_1.css" /> 
 	  
 		<script src="/js/gover/menu03_1.js"></script>	
-		 <!--<script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 		<style>
 		div.dt-top-container {
@@ -124,7 +132,6 @@ margin:10px;
         <div class="privateUseTitleBoxs">
           <h5>점용 마스터</h5>
         </div>
-		<form id="searchForm" onSubmit="return false;">
         <section class="privateUseSectionBoxs">
           <div class="privateUseSectionCont">
             <div class="privateUseSectionContDevide">
@@ -133,19 +140,23 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="privateUseSelectWrappers">
                   <select
-                    name="jisa"
+                    name=""
                     class="privateUseHiddenSelect01"
                     id="privateUseSelectBox01_1"
                     hidden>
-					<option value="">전체</option>
-					                    <th:block th:each="val:${jisaList}">
-					                    <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
-					                    </th:block>
+                    <option value="전체">전체</option>
+                    <option value="서울지사">서울지사</option>
+                    <option value="경인지사">경인지사</option>
+                    <option value="대전지사">대전지사</option>
+                    <option value="부산지사">부산지사</option>
+                    <option value="충청지사">충청지사</option>
+                    <option value="충청지사">충청지사</option>
+                    <option value="충청지사">충청지사</option>
                   </select>
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="privateUseSelects">
-                  <button class="privateUseSelectsTitleBtn">션택</button>
+                  <button class="privateUseSelectsTitleBtn"></button>
                   <div class="sufaceSelectList">
                     <ul class="surfaceSelectListMember"></ul>
                   </div>
@@ -154,7 +165,7 @@ margin:10px;
               <ul class="inputControlBoxs sectionMenuListBoxs">
                 <li class="selectTitle"><p>관리번호</p></li>
                 <div class="inputControlList">
-                  <input type="text"name="gover_no"/>
+                  <input type="text" />
                 </div>
               </ul>
               <ul class="selectContent sectionMenuListBoxs">
@@ -162,11 +173,11 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="privateUseSelectWrappers">
                   <select
-                    name="use_purpos"
+                    name=""
                     class="privateUseHiddenSelect01"
                     id="privateUseSelectBox01_2"
                     hidden>
-                    <option value="">전체</option>
+                    <option value="전체">전체</option>
                     <option value="공원부지점용">공원부지점용</option>
                     <option value="국유지사용">국유지사용</option>
                     <option value="녹지점용">녹지점용</option>
@@ -199,11 +210,11 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="privateUseSelectWrappers">
                   <select
-                    name="pmt_office"
+                    name=""
                     class="privateUseHiddenSelect01"
                     id="privateUseSelectBox01_3"
                     hidden>
-                    <option value="">전체</option>
+                    <option value="전체">전체</option>
                     <option value="경기고속도로(주)">경기고속도로(주)</option>
                     <option value="과천시">과천시</option>
                     <option value="서울특별시">서울특별시</option>
@@ -225,11 +236,11 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="privateUseSelectWrappers">
                   <select
-                    name="adm_office"
+                    name=""
                     class="privateUseHiddenSelect01"
                     id="privateUseSelectBox01_4"
                     hidden>
-                    <option value="">전체</option>
+                    <option value="전체">전체</option>
                     <option value="하천팀">하천팀</option>
                     <option value="공원농림과">공원농림과</option>
                   </select>
@@ -242,13 +253,12 @@ margin:10px;
                   </div>
                 </div>
               </ul>
-			  <!-- 승인 상태 name 추가해야됨.-->
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle"><p>승인상태</p></li>
                 <!--수정부분 지사-->
                 <div class="privateUseSelectWrappers">
                   <select
-                    name="save_status"
+                    name=""
                     class="privateUseHiddenSelect01"
                     id="privateUseSelectBox01_5"
                     hidden>
@@ -271,11 +281,12 @@ margin:10px;
               <div class="privateUseSectionRadioBoxs">
                 <ul class="radioBoxs">
                   <li>
-                    <input type="radio" name="askMenu01" value="0" checked />
-					<span>입력형</span>
+                    <input type="radio" name="privateUseRadio01" /><span
+                      >입력형</span
+                    >
                   </li>
                   <li class="addressInput">
-                    <input name="addressFull"
+                    <input
                       type="search"
                       placeholder="주소입력"
                       class="searchInputBox01" />
@@ -283,86 +294,102 @@ margin:10px;
                 </ul>
                 <ul class="radioBoxs menuRadioEvet01">
                   <li>
-                    <input type="radio"  name="askMenu01" value="1"/>
-					<span>선택형</span>
+                    <input type="radio" name="privateUseRadio01" /><span
+                      >선택형</span
+                    >
                   </li>
-				  
                   <li>
                     <!--수정부분 지사-->
                     <div class="privateUseSelectWrappers">
                       <select
-                        name="sido_nm"
+                        name=""
                         class="privateUseHiddenSelect01"
-                        id="sido_nm"
-                        hidden
-					  >
-						<option value="">전체</option>
-						<th:block th:each="val:${sidoList}">
-						  <option th:text="${val.sm_name}" th:value="${val.sm_name}"></option>
-						</th:block>
+                        id="privateUseSelectBox01_6"
+                        hidden>
+                        <option value="전체">전체</option>
+                        <option value="Y1">Y1</option>
+                        <option value="N2">N2</option>
+                        <option value="N3">N3</option>
+                        <option value="N4">N4</option>
+                        <option value="N5">N5</option>
+                        <option value="N6">N6</option>
+                        <option value="N7">N7</option>
                       </select>
                     </div>
-					
                     <!--보여지는 셀렉박스-->
                     <div class="privateUseSelects">
-                      <button class="privateUseSelectsTitleBtn"  id="sidoText"></button>
-                      <div class="sufaceSelectList smallHeight" id="sido_nm_ul_div">
-                        <ul class="surfaceSelectListMember" id="sido_ul"></ul>
+                      <button class="privateUseSelectsTitleBtn"></button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember"></ul>
                       </div>
                     </div>
                   </li>
-				  
                   <li>
                     <!--수정부분 지사-->
                     <div class="privateUseSelectWrappers">
-						<select name="sgg" id="sgg" hidden>
-							                   <option value="">전체</option>
-							                  </select>
+                      <select
+                        name=""
+                        class="privateUseHiddenSelect01"
+                        id="privateUseSelectBox01_7"
+                        hidden>
+                        <option value="전체">전체</option>
+                        <option value="Y">Y</option>
+                        <option value="N">N</option>
+                      </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="privateUseSelects">
-                      <button class="privateUseSelectsTitleBtn"  id="sggText">전체</button>
+                      <button class="privateUseSelectsTitleBtn"></button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember" id="sggUl"></ul>
+                        <ul class="surfaceSelectListMember"></ul>
                       </div>
                     </div>
                   </li>
-				  
                   <li>
                     <!--수정부분 지사-->
                     <div class="privateUseSelectWrappers">
-						<select name="emd" id="emd" hidden>
-							                  <option value="">전체</option>
-							                  </select>
+                      <select
+                        name=""
+                        class="privateUseHiddenSelect01"
+                        id="privateUseSelectBox01_8"
+                        hidden>
+                        <option value="전체1">전체1</option>
+                        <option value="Y2">Y2</option>
+                        <option value="N3">N3</option>
+                      </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="privateUseSelects">
-                      <button class="privateUseSelectsTitleBtn" id="emdText">전체</button>
+                      <button class="privateUseSelectsTitleBtn"></button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember" id="emdUl"></ul>
+                        <ul class="surfaceSelectListMember"></ul>
                       </div>
                     </div>
                   </li>
-				  
                   <li>
                     <!--수정부분 지사-->
                     <div class="privateUseSelectWrappers">
-						<select name="ri" id="ri" hidden>
-						                  <option value="">전체</option>
-						                  </select>
+                      <select
+                        name=""
+                        class="privateUseHiddenSelect01"
+                        id="privateUseSelectBox01_9"
+                        hidden>
+                        <option value="전체11">전체11</option>
+                        <option value="Y22">Y22</option>
+                        <option value="N33">N33</option>
+                      </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="privateUseSelects">
-                      <button class="privateUseSelectsTitleBtn" id="riText">전체</button>
+                      <button class="privateUseSelectsTitleBtn"></button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember" id="riUl"></ul>
+                        <ul class="surfaceSelectListMember"></ul>
                       </div>
                     </div>
                   </li>
-				  
                   <li style="padding: 0px 3px">
                     <div class="inputControlList">
-                      <input name=jibun id="jibun"
+                      <input
                         type="text"
                         placeholder="지번입력"
                         class="menuAdderssInput01" />
@@ -370,25 +397,24 @@ margin:10px;
                   </li>
                 </ul>
               </div>
-			  
               <!--privateUseSectionRadioBoxs-->
               <div class="privateUseSectionBtnBoxs">
-                <button class="privateUseRegisterBtn" id="searchBtn">조회하기</button>
+                <button class="privateUseRegisterBtn">조회하기</button>
                 <a
                   class="queryBtn"
                   href="/components/subHtml/menu03/masterReg.html"
-                  >신규등록</a>
+                  >신규등록</a
+                >
               </div>
             </div>
           </div>
           <!--privateUseSectionCont-->
         </section>
-		</form>
         <main>
           <div class="surfaceMainContentWrapper">
             <div class="surfaceMainContent">
               <div class="dataTitles">
-                <h5>총 검색 건 수<span id="dataTableTotalCount"></span>건</h5>
+                <h5>총 검색 건 수<span id="dataTableTotalCount">154</span>건</h5>
               
                   </div>
                 </div>
@@ -402,19 +428,18 @@ margin:10px;
 				            <th >순번</th>
 				            <th >담당지사</th>
 				            <th >주소</th>
-				            <th>점용관리번호</th>
+				            <th>자산분류번호</th>
 				            
-				            <th>허가관청</th>
-				            <th>관리기관</th>
-				            <th>필지수</th>
 				            <th>지목</th>
-				            <th>점용구분</th>
-				            <th>점용기간</th>
-				            <th>연장</th> <!-- 11 -->
-				            <th>면적</th>
-				            <th>납부일</th>
-							<th>납부금액</th>
-							<th>지도</th>				           
+				            <th>소유자</th>
+				            <th>지적면적</th>
+				            <th>편입면적</th>
+				            <th>취득일</th>
+				            <th>등기여부</th>
+				            <th>등기일</th> <!-- 11 -->
+				            <th>사용승락여부</th>
+				            <th>지도</th>
+				           
 				            
 				        </tr>
 				    </thead>
