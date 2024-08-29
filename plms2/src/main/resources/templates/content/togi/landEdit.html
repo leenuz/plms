@@ -22,7 +22,7 @@
   
 	  <link th:href="@{/css/common.css}" rel="stylesheet" />
 	
- <link rel="stylesheet" href="/css/togi/landReg.css" /> 
+ <link rel="stylesheet" href="/css/togi/landEdit.css" /> 
 	  
 	<!-- 	<script src="/js/songyu/menu01.js"></script>	 -->
 		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
@@ -124,12 +124,12 @@ margin:10px;
     <title>토지개발 등록</title>
   </head>
 <th:block layout:fragment="content">
-    <!-- 토지개발 등록 -->
-    <div class="landRegWrappers">
-     
-      <main id="landReg">
+    <!-- 토지개발 수정 -->
+    <div class="landEditWrappers">
+    
+      <main id="landEdit">
         <div class="mainTitle">
-          <h1>토지개발 등록</h1>
+          <h1>토지개발 수정</h1>
         </div>
 
         <!-- 기본 정보 -->
@@ -161,7 +161,9 @@ margin:10px;
                 <tbody>
                   <tr>
                     <td>
-                      <input type="text" />
+                      <input
+                        type="text"
+                        placeholder="세종안성고속도로 건설구간" />
                     </td>
                     <td>
                       <div class="dateInputWrap">
@@ -182,10 +184,10 @@ margin:10px;
                       </div>
                     </td>
                     <td>
-                      <input type="text" />
+                      <input type="text" placeholder="한국도로공사" />
                     </td>
                     <td>
-                      <input type="text" />
+                      <input type="text" placeholder="대우건설" />
                     </td>
                   </tr>
                 </tbody>
@@ -209,13 +211,13 @@ margin:10px;
               </ul>
               <ul class="contents">
                 <li class="content">
-                  <input type="text" />
+                  <input type="text" placeholder="충남지역본부" />
                 </li>
                 <li class="content">
-                  <input type="text" />
+                  <input type="text" placeholder="김경진" />
                 </li>
                 <li class="content">
-                  <input type="text" />
+                  <input type="text" placeholder="010-6231-5051" />
                 </li>
                 <li class="content btnBox smallWidth">
                   <div class="newBtnWrap">
@@ -250,7 +252,7 @@ margin:10px;
           <div class="subTitle">
             <div class="subTitleText">토지 정보</div>
             <div class="subTitleBtnBox">
-              <button class="middleBtn whiteBtn excelUpBtn landRegExcelPopBtn">
+              <button class="middleBtn whiteBtn excelUpBtn landEditExcelPopBtn">
                 엑셀 업로드
               </button>
             </div>
@@ -288,7 +290,7 @@ margin:10px;
                 </li>
                 <li class="content">
                   <!-- 권리확보 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content checkboxWrap smallWidth">
                   <!-- 대표필지 -->
@@ -297,36 +299,36 @@ margin:10px;
                 </li>
                 <li class="content middleWidth">
                   <!-- 관로저촉 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content middleWidth">
                   <!-- 담당지사 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content addressWidth">
                   <!-- 주소 -->
                   <div class="addressData">
                     <input type="text" class="notWriteInput" readonly />
                   </div>
-                  <button class="searchAddressBtn landRegSearchBtn">
+                  <button class="searchAddressBtn landEditSearchBtn">
                     검색
                   </button>
                 </li>
                 <li class="content">
                   <!-- 지목 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content">
                   <!-- 연장 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content">
                   <!-- 면적 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content middleWidth">
                   <!-- 소유자 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content middleWidth btnBox">
                   <!-- 보기 -->
@@ -356,7 +358,7 @@ margin:10px;
                 </li>
                 <li class="content">
                   <!-- 권리확보 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content checkboxWrap smallWidth">
                   <!-- 대표필지 -->
@@ -365,36 +367,36 @@ margin:10px;
                 </li>
                 <li class="content middleWidth">
                   <!-- 관로저촉 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content middleWidth">
                   <!-- 담당지사 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content addressWidth">
                   <!-- 주소 -->
                   <div class="addressData">
                     <input type="text" class="notWriteInput" readonly />
                   </div>
-                  <button class="searchAddressBtn landRegSearchBtn">
+                  <button class="searchAddressBtn landEditSearchBtn">
                     검색
                   </button>
                 </li>
                 <li class="content">
                   <!-- 지목 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content">
                   <!-- 연장 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content">
                   <!-- 면적 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content middleWidth">
                   <!-- 소유자 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" readonly class="notWriteInput" />
                 </li>
                 <li class="content middleWidth btnBox">
                   <!-- 보기 -->
@@ -470,8 +472,8 @@ margin:10px;
           <div class="subTitle">
             <div class="subTitleText">필지 첨부파일</div>
             <div class="fileBtnWrap">
-              <input type="file" id="landReg_myPcFiles" />
-              <label for="landReg_myPcFiles">내 PC</label>
+              <input type="file" id="landEdit_myPcFiles" />
+              <label for="landEdit_myPcFiles">내 PC</label>
             </div>
           </div>
 
@@ -487,13 +489,13 @@ margin:10px;
         </section>
         <div class="finalBtnBox btnWrap">
           <button class="finalBtn prevBtn">이전</button>
-          <button class="finalBtn registBtn">등록</button>
+          <button class="finalBtn saveBtn">저장</button>
         </div>
       </main>
     </div>
-    <div class="landRegExcelPopWrapper"></div>
-    <div class="landRegSearchPopWrapper"></div>
+    <div class="landEditExcelPopWrapper"></div>
+    <div class="landEditSearchPopWrapper"></div>
     <script type="module" src="/js/module/surfaceMain.js"></script>
-    <script src="/js/togi/landReg.js"></script>
+    <script src="/js/togi/landEdit.js"></script>
  </th:block>
 </html>

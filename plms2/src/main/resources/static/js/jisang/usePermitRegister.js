@@ -1,5 +1,5 @@
 /*  토지추가검색팝업오픈  */
-
+/*
 const landAddSearchResultOpenPopUp = () => {
 
    const landAddSearchBtn = document.querySelectorAll(".landPopBtn");
@@ -8,7 +8,7 @@ const landAddSearchResultOpenPopUp = () => {
 
    if(landAddSearchBtn.length > 0){
       
-      let xhr = new XMLHttpRequest();
+      /*let xhr = new XMLHttpRequest();
       xhr.open('GET', htmlFilePath, true);
       xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 200) {
@@ -46,5 +46,5 @@ const landAddSearchResultOpenPopUp = () => {
      
 
 }
-
-landAddSearchResultOpenPopUp();
+*/
+/*landAddSearchResultOpenPopUp();*/

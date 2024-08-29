@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      
+      layout:decorate="~{layout/default_layout}">
+ <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  
+
+
+
+ 
+  
+   
+  
+	  <link th:href="@{/css/common.css}" rel="stylesheet" />
+	
+ <link rel="stylesheet" href="/css/togi/landDevInfo.css" /> 
+	  
+	<!-- 	<script src="/js/songyu/menu01.js"></script>	 -->
+		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
+		<style>
+		div.dt-top-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+div.dt-center-in-div {
+  margin: 0 auto;
+      float: right;
+    margin-right: 30px;
+   
+}
+div.dt-center-in-div>div{
+
+display:inline;
+}
+
+div.dt-filter-spacer {
+  margin: 10px 0;
+  border:1px solid red;
+}
+
+
+.dt-title{
+
+text-align:center;
+width:180px;
+float:left;
+
+}
+.dt-buttons{
+display:inline-block;
+
+width:180px;
+
+}
+.dt-length{
+display:inline-block;
+}
+.dt-button{
+
+color:white;
+background-color:#4e5871;
+font-size:15px;
+font-weight:600;
+border-radius:10px;
+background-image:url(/assets/media/menu01/download.png);
+background-size:11px;
+background-repeat:no-repeat;
+background-position:123px center;
+text-aline:left;
+margin-right:10px;
+width:159px;
+height:38px;
+
+}
+
+.dt-paging {
+text-align: center;
+}
+
+.dt-paging-button {
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: #007bff !important;
+    font-size: 15px;
+    font-weight: 600;
+    
+    
+}
+
+.bottom{
+text-align:center;
+
+}
+.top{
+
+text-align:right;
+margin:10px;
+
+}
+
+		</style>
+		
+    <title>토지개발 등록</title>
+  </head>
+<th:block layout:fragment="content">
+   <!-- 토지 개발정보 -->
+    <div class="landDevInfoWrappers">
+     
+      <main id="landDevInfo">
+        <div class="mainTitle">
+          <h1>토지 개발정보</h1>
+        </div>
+
+        <!-- 기본 정보 -->
+        <section class="defaultInfo">
+          <div class="subTitle">
+            <div class="subTitleText">기본정보</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <table>
+                <caption class="hiddenCaption">
+                  기본정보
+                </caption>
+
+                <thead>
+                  <tr>
+                    <th rowspan="2">사업명</th>
+                    <th colspan="2">사업기간</th>
+                    <th rowspan="2">시행자(발주자)</th>
+                    <th rowspan="2">사업자</th>
+                  </tr>
+                  <tr>
+                    <th>시작일</th>
+                    <th>종료일</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>
+                      <input
+                        type="text"
+                        placeholder="ILI 결함부(5번밸브 인근) 송유관이설"
+                        readonly
+                        class="notWriteInput" />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        placeholder="2024-04-01"
+                        readonly
+                        class="notWriteInput" />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        placeholder="2024-06-30"
+                        readonly
+                        class="notWriteInput" />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        placeholder="대한송유관공사"
+                        readonly
+                        class="notWriteInput" />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        placeholder="대한송유관공사"
+                        readonly
+                        class="notWriteInput" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <!-- 시행자 관할 부서 -->
+        <section class="adminDept">
+          <div class="subTitle">
+            <div class="subTitleText">시행자 관할 부서</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">부서명</li>
+                <li class="title">담당자</li>
+                <li class="title">연락처</li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="충남지역본부"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="김경진"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="010-6231-5051"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 대표토지 정보 -->
+        <section class="mainLandInfo">
+          <div class="subTitle">
+            <div class="subTitleText">대표토지 정보</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title largeWidth">권리확보</li>
+                <li class="title middleWidth">관로저촉</li>
+                <li class="title middleWidth">담당지사</li>
+                <li class="title addressWidth">주소</li>
+                <li class="title">지목</li>
+                <li class="title">연장</li>
+                <li class="title">면적</li>
+                <li class="title largeWidth">소유자</li>
+                <li class="title middleWidth">지도</li>
+              </ul>
+              <ul class="contents">
+                <li class="content largeWidth">
+                  <input
+                    type="text"
+                    placeholder="점용"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    placeholder="Y"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    placeholder="경인지사"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content addressWidth">
+                  <input
+                    type="text"
+                    placeholder="인천광역시 계양구 장기동 115-161"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="3316"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content largeWidth">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content middleWidth btnBox">
+                  <button class="viewDetailButton lightBlueBtn">
+                    위치보기
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 소속토지 정보 -->
+        <section class="subLandInfo">
+          <div class="subTitle">
+            <div class="subTitleText">소속토지 정보</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title largeWidth">권리확보</li>
+                <li class="title middleWidth">관로저촉</li>
+                <li class="title middleWidth">담당지사</li>
+                <li class="title addressWidth">주소</li>
+                <li class="title">지목</li>
+                <li class="title">연장</li>
+                <li class="title">면적</li>
+                <li class="title largeWidth">소유자</li>
+                <li class="title middleWidth">지도</li>
+              </ul>
+              <ul class="contents">
+                <li class="content largeWidth">
+                  <input
+                    type="text"
+                    placeholder="점용"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    placeholder="Y"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    placeholder="경인지사"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content addressWidth">
+                  <input
+                    type="text"
+                    placeholder="인천광역시 계양구 장기동 115-161"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="3316"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content largeWidth">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content middleWidth btnBox">
+                  <button class="viewDetailButton lightBlueBtn">
+                    위치보기
+                  </button>
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content largeWidth">
+                  <input
+                    type="text"
+                    placeholder="점용"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    placeholder="Y"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    placeholder="경인지사"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content addressWidth">
+                  <input
+                    type="text"
+                    placeholder="인천광역시 계양구 장기동 115-161"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="3316"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content largeWidth">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content middleWidth btnBox">
+                  <button class="viewDetailButton lightBlueBtn">
+                    위치보기
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 첨부파일 -->
+        <section class="attachFileInfo">
+          <div class="subTitle">
+            <div class="subTitleText">첨부파일</div>
+          </div>
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">날짜</li>
+                <li class="title fileNameWidth">파일명</li>
+                <li class="title">파일보기</li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="2022-06-30"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content fileNameWidth">
+                  <input
+                    type="text"
+                    placeholder="경과보고 4. hwp"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content btnBox">
+                  <button class="viewDetailButton lightBlueBtn">
+                    상세보기 <span class="downloadIcon"></span>
+                  </button>
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="2022-06-21"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content fileNameWidth">
+                  <input
+                    type="text"
+                    placeholder="지적측량 결과 - 평택시 월곡동 산32-6번지.pdf"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content btnBox">
+                  <button class="viewDetailButton lightBlueBtn">
+                    상세보기 <span class="downloadIcon"></span>
+                  </button>
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="2022-06-21"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content fileNameWidth">
+                  <input
+                    type="text"
+                    placeholder="송유관 측량 표시.hwp"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content btnBox">
+                  <button class="viewDetailButton lightBlueBtn">
+                    상세보기 <span class="downloadIcon"></span>
+                  </button>
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="2022-06-21"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content fileNameWidth">
+                  <input
+                    type="text"
+                    placeholder="송유관 측량 표시.hwp"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content btnBox">
+                  <button class="viewDetailButton lightBlueBtn">
+                    상세보기 <span class="downloadIcon"></span>
+                  </button>
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="2022-06-21"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content fileNameWidth">
+                  <input
+                    type="text"
+                    placeholder="송유관 측량 표시.hwp"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content btnBox">
+                  <button class="viewDetailButton lightBlueBtn">
+                    상세보기 <span class="downloadIcon"></span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 전자결재문서 열람 -->
+        <section class="eDocView">
+          <div class="subTitle">
+            <div class="subTitleText">전자결재 문서 열람</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title smallWidth">선택</li>
+                <li class="title middleWidth">문서번호</li>
+                <li class="title">제목</li>
+                <li class="title">승인일</li>
+              </ul>
+              <ul class="contents">
+                <li class="content smallWidth checkboxWrap">
+                  <input type="checkbox" id="landDevInfo_eDocView_Checkbox01" />
+                  <label for="landDevInfo_eDocView_Checkbox01"></label>
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="현장지원팀"
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="광양노후관 개량구간 공사"
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="2023-07-05"
+                    class="notWriteInput" />
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content smallWidth checkboxWrap">
+                  <input type="checkbox" id="landDevInfo_eDocView_Checkbox02" />
+                  <label for="landDevInfo_eDocView_Checkbox02"></label>
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="현장지원팀"
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="광양노후관 개량구간 공사"
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="2023-07-05"
+                    class="notWriteInput" />
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content smallWidth checkboxWrap">
+                  <input type="checkbox" id="landDevInfo_eDocView_Checkbox03" />
+                  <label for="landDevInfo_eDocView_Checkbox03"></label>
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="현장지원팀"
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="광양노후관 개량구간 공사"
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="2023-07-05"
+                    class="notWriteInput" />
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content smallWidth checkboxWrap">
+                  <input type="checkbox" id="landDevInfo_eDocView_Checkbox04" />
+                  <label for="landDevInfo_eDocView_Checkbox04"></label>
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="현장지원팀"
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="광양노후관 개량구간 공사"
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="2023-07-05"
+                    class="notWriteInput" />
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content smallWidth checkboxWrap">
+                  <input type="checkbox" id="landDevInfo_eDocView_Checkbox05" />
+                  <label for="landDevInfo_eDocView_Checkbox05"></label>
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="현장지원팀"
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="광양노후관 개량구간 공사"
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    readonly
+                    placeholder="2023-07-05"
+                    class="notWriteInput" />
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="btnWrap">
+            <button class="attachFileBtn addBtn approvalBtn">추가</button>
+            <button class="attachFileBtn delBtn">삭제</button>
+          </div>
+        </section>
+
+        <div class="finalBtnBox btnWrap">
+          <button class="finalBtn prevBtn">이전</button>
+          <button class="finalBtn deleteBtn">삭제</button>
+          <button class="finalBtn completeBtn">완료처리</button>
+          <button class="finalBtn printBtn">출력</button>
+          <button class="finalBtn editBtn">
+            <a href="/components/subHtml/menu04/landEdit.html">수정</a>
+          </button>
+        </div>
+      </main>
+    </div>
+    <div class="landDevInfoApprovalPopWrapper"></div>
+    <script type="module" src="/js/module/surfaceMain.js"></script>
+    <script src="/js/togi/landDevInfo.js"></script>
+ </th:block>
+</html>

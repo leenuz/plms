@@ -331,6 +331,14 @@ public class goverController {
 			return mav;
 		}
 		
+		@GetMapping(path="/masterReg") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView masterReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/gover/masterReg");
+			return mav;
+		}
 		
 		
 		@RequestMapping(value="/menu03_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest

@@ -1,150 +1,20 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      
-      layout:decorate="~{layout/default_layout}">
- <head>
+<html lang="en">
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
-
-
-
- 
-  
-   
-  
-	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	
- <link rel="stylesheet" href="/css/jisang/usePermitEdit.css">
- <link rel="stylesheet" href="/css/jisang/write.css">
-		<!-- <script src="/js/jisang/groundDetail.js"></script> -->
-			<script src="/js/common/upload.js"></script>
-		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
-		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
-
-div.dt-center-in-div {
-  margin: 0 auto;
-      float: right;
-    margin-right: 30px;
-   
-}
-div.dt-center-in-div>div{
-
-display:inline;
-}
-
-div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
-}
-
-
-.dt-title{
-
-text-align:center;
-width:180px;
-float:left;
-
-}
-.dt-buttons{
-display:inline-block;
-
-width:180px;
-
-}
-.dt-length{
-display:inline-block;
-}
-.dt-button{
-
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
-
-}
-
-.dt-paging {
-text-align: center;
-}
-
-.dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-    
-    
-}
-
-.bottom{
-text-align:center;
-
-}
-.top{
-
-text-align:right;
-margin:10px;
-
-}
-
-
-.ol-unselectable{
- border:1px solid red;
-}
-#map {
-    clear: both;
-    position: relative;
-    width: 100% !important;
-    height: 214px;
-    border: 1px solid black;
-}
-		</style>
-		
-    <title>지상권</title>
+    <title>지상권 사용승락 상세내용 조회</title>
+    <link rel="stylesheet" href="/assets/css/menu02/usePermitDetail.css" />
+    <link rel="stylesheet" href="/assets/css/header.css" />
   </head>
-<th:block layout:fragment="content">
-    <!-- 지상권  사용승락 수정 -->
-    <div class="usePermitEditWrappers">
-     
-      <main id="usePermitEdit">
+  <body>
+    <!-- 지상권 사용승락 상세내용 조회 -->
+    <div class="usePermitDetailWrappers">
+      <div class="usePermitDetailHeader"></div>
+      <main id="usePermitDetail">
         <div class="mainTitle">
-          <h1>지상권 사용승락 수정</h1>
+          <h1>지상권 사용승락 상세내용 조회</h1>
         </div>
-
         <!-- 대상토지 -->
         <section class="targetLand">
           <div class="subTitle">대상토지</div>
@@ -165,9 +35,7 @@ margin:10px;
                 </li>
                 <li class="title">소유자</li>
                 <li class="title">사용자</li>
-                <li class="title titleBtnWrap">추가/삭제</li>
               </ul>
-
               <ul class="contents">
                 <li class="content addressInfoWidth addressInfoBox">
                   <div class="addressData">
@@ -177,7 +45,6 @@ margin:10px;
                       readonly
                       class="notWriteInput" />
                   </div>
-                  <button class="searchAddressBtn">검색</button>
                 </li>
                 <li class="content contentBox">
                   <ul class="secondContents">
@@ -203,7 +70,7 @@ margin:10px;
                         class="notWriteInput" />
                     </li>
                     <li class="secondContent largeSecondTitle">
-                      <input type="text" />
+                      <input type="text" readonly placeholder="4,732,000" />
                     </li>
                     <li class="secondContent">
                       <input
@@ -228,15 +95,8 @@ margin:10px;
                     readonly
                     class="notWriteInput" />
                 </li>
-                <li class="content titleBtnWrap btnBox">
-                  <!-- 맨 윗줄 기본값 -->
-                  <div class="newBtnWrap">
-                    <button class="createBtn miniBtn">추가</button>
-                  </div>
-                </li>
               </ul>
-              <!--추가,삭제버튼 들어간 ul-->
-              <ul class="contents">
+              <ul class="contents lastContents">
                 <li class="content addressInfoWidth addressInfoBox">
                   <div class="addressData">
                     <input
@@ -245,7 +105,6 @@ margin:10px;
                       readonly
                       class="notWriteInput" />
                   </div>
-                  <button class="searchAddressBtn">검색</button>
                 </li>
                 <li class="content contentBox">
                   <ul class="secondContents">
@@ -271,7 +130,7 @@ margin:10px;
                         class="notWriteInput" />
                     </li>
                     <li class="secondContent largeSecondTitle">
-                      <input type="text" />
+                      <input type="text" readonly placeholder="8,000,000" />
                     </li>
                     <li class="secondContent">
                       <input
@@ -295,14 +154,6 @@ margin:10px;
                     placeholder="이미자"
                     readonly
                     class="notWriteInput" />
-                </li>
-                <li class="content titleBtnWrap btnBox">
-                  <div class="btnWrap">
-                    <button class="addBtn miniBtn">추가</button>
-                  </div>
-                  <div class="btnWrap">
-                    <button class="delBtn miniBtn">삭제</button>
-                  </div>
                 </li>
               </ul>
             </div>
@@ -329,17 +180,17 @@ margin:10px;
               <div class="rowListBox">
                 <div class="title">사용기간</div>
                 <ul class="rowListContents">
-                  <li class="content inputWrap">
+                  <li class="content inputWrap noClickEvent">
                     <div class="dateInputWrap">
                       <input
                         type="date"
-                        data-placeholder="24/01/01"
+                        data-placeholder="2021-04-13"
                         required
                         aria-required="true" />
-                      <span>-</span>
+                      <span>~</span>
                       <input
                         type="date"
-                        data-placeholder="30/03/31"
+                        data-placeholder="2035-11-30"
                         required
                         aria-required="true" />
                     </div>
@@ -357,6 +208,7 @@ margin:10px;
                     </div>
                     <div class="rowListArea">
                       <textarea
+                        readonly
                         placeholder="송유관과 신축건물 예정지와의 이격거리 : 4.5m"></textarea>
                     </div>
                   </li>
@@ -366,7 +218,8 @@ margin:10px;
                     </div>
                     <div class="rowListArea">
                       <textarea
-                        placeholder="송유관과 신축건물 예정지와의 이격거리 4.5m로 송유관 안전에는 문제 없음"></textarea>
+                        placeholder="송유관과 신축건물 예정지와의 이격거리 4.5m로 송유관 안전에는 문제 없음"
+                        readonly></textarea>
                     </div>
                   </li>
                   <li class="content inputWrap fullContent lastContents">
@@ -375,7 +228,8 @@ margin:10px;
                     </div>
                     <div class="rowListArea">
                       <textarea
-                        placeholder="송유관 매설지역에는 일체의 터파기를 하지 않기로 협의함"></textarea>
+                        placeholder="송유관 매설지역에는 일체의 터파기를 하지 않기로 협의함"
+                        readonly></textarea>
                     </div>
                   </li>
                 </ul>
@@ -481,8 +335,7 @@ margin:10px;
                 <li class="title">
                   <p>파일명</p>
                 </li>
-                <li class="title delContWidth">삭제</li>
-                <li class="title selectFileWidth">파일선택</li>
+                <li class="title selectFileWidth">파일보기</li>
               </ul>
 
               <ul class="contents">
@@ -493,12 +346,8 @@ margin:10px;
                     readonly
                     class="notWriteInput" />
                 </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitEdit_myPcFiles01" />
-                  <label for="usePermitEdit_myPcFiles01">파일보기</label>
+                <li class="content selectFileWidth">
+                  <button class="viewDetailButton">파일보기</button>
                 </li>
               </ul>
               <ul class="contents">
@@ -509,12 +358,8 @@ margin:10px;
                     readonly
                     class="notWriteInput" />
                 </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitEdit_myPcFiles02" />
-                  <label for="usePermitEdit_myPcFiles02">파일보기</label>
+                <li class="content selectFileWidth">
+                  <button class="viewDetailButton">파일보기</button>
                 </li>
               </ul>
               <ul class="contents">
@@ -525,12 +370,8 @@ margin:10px;
                     readonly
                     class="notWriteInput" />
                 </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitEdit_myPcFiles03" />
-                  <label for="usePermitEdit_myPcFiles03">파일보기</label>
+                <li class="content selectFileWidth">
+                  <button class="viewDetailButton">파일보기</button>
                 </li>
               </ul>
               <ul class="contents">
@@ -541,12 +382,8 @@ margin:10px;
                     readonly
                     class="notWriteInput" />
                 </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitEdit_myPcFiles04" />
-                  <label for="usePermitEdit_myPcFiles04">파일보기</label>
+                <li class="content selectFileWidth">
+                  <button class="viewDetailButton">파일보기</button>
                 </li>
               </ul>
               <ul class="contents">
@@ -557,12 +394,8 @@ margin:10px;
                     readonly
                     class="notWriteInput" />
                 </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitEdit_myPcFiles05" />
-                  <label for="usePermitEdit_myPcFiles05">파일보기</label>
+                <li class="content selectFileWidth">
+                  <button class="viewDetailButton">파일보기</button>
                 </li>
               </ul>
               <ul class="contents">
@@ -573,12 +406,8 @@ margin:10px;
                     readonly
                     class="notWriteInput" />
                 </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitEdit_myPcFiles06" />
-                  <label for="usePermitEdit_myPcFiles06">파일보기</label>
+                <li class="content selectFileWidth">
+                  <button class="viewDetailButton">파일보기</button>
                 </li>
               </ul>
               <ul class="contents">
@@ -589,12 +418,8 @@ margin:10px;
                     readonly
                     class="notWriteInput" />
                 </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitEdit_myPcFiles07" />
-                  <label for="usePermitEdit_myPcFiles07">파일보기</label>
+                <li class="content selectFileWidth">
+                  <button class="viewDetailButton">파일보기</button>
                 </li>
               </ul>
               <ul class="contents">
@@ -605,12 +430,8 @@ margin:10px;
                     readonly
                     class="notWriteInput" />
                 </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitEdit_myPcFiles08" />
-                  <label for="usePermitEdit_myPcFiles08">파일보기</label>
+                <li class="content selectFileWidth">
+                  <button class="viewDetailButton">파일보기</button>
                 </li>
               </ul>
               <ul class="contents">
@@ -621,12 +442,8 @@ margin:10px;
                     readonly
                     class="notWriteInput" />
                 </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitEdit_myPcFiles09" />
-                  <label for="usePermitEdit_myPcFiles09">파일보기</label>
+                <li class="content selectFileWidth">
+                  <button class="viewDetailButton">파일보기</button>
                 </li>
               </ul>
               <ul class="contents">
@@ -637,12 +454,8 @@ margin:10px;
                     readonly
                     class="notWriteInput" />
                 </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitEdit_myPcFiles10" />
-                  <label for="usePermitEdit_myPcFiles10">파일보기</label>
+                <li class="content selectFileWidth">
+                  <button class="viewDetailButton">파일보기</button>
                 </li>
               </ul>
             </div>
@@ -651,13 +464,16 @@ margin:10px;
 
         <div class="finalBtnBox btnWrap">
           <button class="backBtn finalBtn grayBtn">이전</button>
-          <button class="saveBtn finalBtn vividBlueBtn">저장</button>
-          <button class="approvalBtn finalBtn lightBlueBtn">상신</button>
+          <button class="cancelBtn finalBtn vividBlueBtn">결재취소</button>
+          <button class="deleteBtn finalBtn grayBtn">삭제</button>
+          <button class="approvalBtn finalBtn vividBlueBtn">상신</button>
+          <button class="saveBtn finalBtn lightBlueBtn">
+            <a href="/components/subHtml/menu02/usePermitEdit.html">수정</a>
+          </button>
         </div>
       </main>
     </div>
-    <div class="usePermitEditLandSearchWrapper"></div>
-    <script src="/components/js/menu02/usePermitEdit.js"></script>
+    <!-- script -->
     <script type="module" src="/components/surfaceMain.js"></script>
-</th:block>
+  </body>
 </html>
