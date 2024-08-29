@@ -77,219 +77,195 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<select id="selectGoverList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT *,
-		(row_number() OVER()) AS no
-		FROM (
-		SELECT jm.jm_idx AS index,
-		jm.jm_jisang_no AS idx,
-		0 AS gidx,
-		jm.jm_jisa AS jisa,
-		jm.jm_save_status AS save_status,
-		jm.jm_account_yn AS account_yn,
-		jm.jm_cancel_date AS cancel_date,
-		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
-		jm.jm_toji_type AS toji_type,
-		jm.jm_pipe_meter AS pipe_meter,
-		jm.jm_jimok_text AS jimok_text,
-		js.js_souja_name AS souja_name,
-		COALESCE(jm.jm_jijuk_area, NULL) AS jijuk_area,
-		COALESCE(jm.jm_pyeonib_area, NULL) AS pyeonib_area,
-		jm.jm_sido_nm AS sido_nm,
-		jm.jm_sgg_nm AS sgg_nm,
-		jm.jm_emd_nm AS emd_nm,
-		jm.jm_ri_nm AS ri_nm,
-		jm.jm_jibun AS jibun,
-		jm.jm_deunggi_date AS deunggi_date,
-		TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
-		COALESCE(jm.jm_jasan_no, '') AS jasan_no,
-		COALESCE(jm.jm_comple_yn, '') AS comple_yn,
-
-		COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
-		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
-		COALESCE('', '') AS gover_date,
-		NULL AS pay_date,
-		NULL AS gover_area,
-		NULL AS gover_length,
-		jm.jm_jasan_money AS jasan_money,
-		NULL AS pay_money,
-		jm.jm_cancel_yn AS cancel_yn,
-		jm.jm_manage_yn AS manage_yn,
-		jm.jm_dosiplan AS dosiplan,
-		CASE
-		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jm.jm_pnu) > 0 THEN 'Y'
-		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jm.jm_pnu) = 0 THEN 'N'
-		END AS toji_plan
-		FROM jisang_master jm
-		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
-		WHERE 1 = 1
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-			and jm.jm_jisa=#{jisa}
+	    SELECT *,
+	           (row_number() OVER()) AS no
+	    FROM (
+	        SELECT gm.gm_idx AS index,
+	        	   gm.gm_gover_no AS idx,
+	               gm.gm_yongdo AS yongdo,
+	               0 AS gidx,
+	               gm.gm_pipe_name AS pipename,
+	               gm.gm_sun_gubun AS sun_gubun,
+	               gm.gm_pipe_meter AS pipe_meter,
+	               gm.gm_cancel_yn AS cancel_yn,
+	               gm.gm_cancel_date AS cancel_date,
+	               gm.gm_cancel_name AS cancel_name,
+	               gm.gm_cancel_empcd AS cancel_empcd,
+	               gm.gm_use_purpos AS use_purpos,
+	               gm.gm_gover_st_date AS gover_st_date,
+	               gm.gm_gover_ed_date AS gover_ed_date,
+	               CONCAT(gm.gm_gover_st_date, ' ~ ', gm.gm_gover_ed_date) AS period,
+	               gm.gm_pmt_status AS pmt_status,
+	               gm.gm_dockey AS dockey,
+	               gm.gm_pmt_office AS pmt_office,
+	               gm.gm_adm_office AS adm_office,
+	               gm.gm_office_depart AS office_depart,
+	               gm.gm_office_charege AS office_charege,
+	               gm.gm_office_contact AS office_contact,
+	               gm.gm_office_mobile AS office_mobile,
+	               gm.gm_gover_period AS gover_period,
+	               gm.gm_pipe_meter2 AS pipe_meter2,
+	               gm.gm_save_status AS save_status,
+	               gm.gm_newregreason AS newregreason,
+	               gm.gm_occunonpayreason AS occunonpayreason,
+	               gm.gm_permpossyn AS permpossyn,
+	               gm.gm_occuprepayyn AS occuprepayyn,
+	               gm.gm_occuprepaydate AS occuprepaydate,
+	               gm.gm_udate AS udate,
+	               gm.gm_jisa AS jisa,
+	               gm.gm_gover_no AS gover_no,
+	               gm.gm_wdate AS wdate,
+	               gp.gp_sido_nm AS sido_nm,
+	               gp.gp_sgg_nm AS sgg_nm,
+	               gp.gp_emd_nm AS emd_nm,
+	               gp.gp_ri_nm AS ri_nm,
+	               gp.gp_jibun AS jibun,
+	               TRIM(CONCAT(gp.gp_sido_nm, ' ', gp.gp_sgg_nm, ' ', gp.gp_ri_nm, ' ', gp.gp_jibun)) AS address,
+	               gp.gp_gover_length AS gover_length,
+	               gp.gp_gover_area AS gover_area,
+	               gp.gp_jimok_text AS jimok_text,
+	               gpm.gp_pay_date AS pay_date,
+	               gpm.gp_pay_money AS pay_money
+	        FROM gover_master gm
+	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
+	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
+	        WHERE 1 = 1
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+	        and gm.gm_jisa=#{jisa}
+	        </if>
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+	        ORDER BY ${orderCol} ${desc}
+	        </if>
+	    ) AS r
+	    where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
+			and r.gover_no=#{gover_no}
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
-			ORDER BY ${orderCol} ${desc}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(user_purpos)" >
+			and r.user_purpos=#{user_purpos}
 		</if>
-		
-		) AS r
-		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pmt_office)" >
+			and r.pmt_office=#{pmt_office}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(adm_office)" >
+			and r.adm_office=#{adm_office}
+		</if>
+<!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(save_status)" >
+			and r.save_status=#{save_status}
+		</if>-->
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-			and r.idx=#{idx}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)" >
-			and r.cancel_yn=#{cancel_yn}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
-			and r.manage_yn=#{manageYn}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
-			and r.dosiplan=#{dosiplan}
+			and r.idx like '%${idx}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and r.address like '%${address}%'
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jimokArray) and jimokArray.length > 0">
-			and r.jimok_text IN
-			<foreach item="item" index="index" collection="jimokArray" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(souja)" >
-			and r.souja_name like '%${souja}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
-			and r.jasan_no like '%${jasan_no}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
-			and r.comple_yn=#{comple_yn}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)" >
-			and r.cancel_yn=#{cancel_yn}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
-			and r.account_yn=#{account_yn}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
-			and r.deunggi_date::date between #{start_date}::date and #{end_date}::date
-		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
 			and (SELECT COUNT(o.address) AS overlap
-			FROM
-			(
-			(
-			SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
-			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-			where 1=1
-
-			)
+			FROM(
+				(
+				SELECT trim(concat(gm.gm_sido_nm,' ',gm.gm_sgg_nm,' ',gm.gm_ri_nm,' ',gm.gm_jibun)) as address
+				FROM gover_master gm 
+				LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
+				where 1=1
+				)
 			) as o  WHERE o.address = r.address GROUP BY o.address ) >1
 		</if>
-<if test="length>0">
+		<if test="length>0">
 			limit #{length} offset #{start}
 		</if>
-		
-
 	</select>
-
-
-
 
 	<select id="selectTotalCount" parameterType="java.util.HashMap" resultType="Integer">
-		SELECT count(*) as count FROM (
-		SELECT gm.gm_idx AS index,
-		jm.jm_jisang_no AS idx,
-		0 AS gidx,
-		jm.jm_jisa AS jisa,
-		jm.jm_save_status AS save_status,
-		jm.jm_account_yn AS account_yn,
-		jm.jm_cancel_date AS cancel_date,
-		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
-		jm.jm_toji_type AS toji_type,
-		jm.jm_pipe_meter AS pipe_meter,
-		jm.jm_jimok_text AS jimok_text,
-		js.js_souja_name AS souja_name,
-		COALESCE(jm.jm_jijuk_area, NULL) AS jijuk_area,
-		COALESCE(jm.jm_pyeonib_area, NULL) AS pyeonib_area,
-		jm.jm_sido_nm AS sido_nm,
-		jm.jm_sgg_nm AS sgg_nm,
-		jm.jm_emd_nm AS emd_nm,
-		jm.jm_ri_nm AS ri_nm,
-		jm.jm_jibun AS jibun,
-		jm.jm_deunggi_date AS deunggi_date,
-		TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
-		COALESCE(jm.jm_jasan_no, '') AS jasan_no,
-		COALESCE(jm.jm_comple_yn, '') AS comple_yn,
-		COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
-		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
-		COALESCE('', '') AS gover_date,
-		NULL AS pay_date,
-		NULL AS gover_area,
-		NULL AS gover_length,
-		jm.jm_jasan_money AS jasan_money,
-		NULL AS pay_money,
-		jm.jm_cancel_yn AS cancel_yn,
-		jm.jm_manage_yn AS manage_yn,
-		jm.jm_dosiplan AS dosiplan,
-		CASE
-		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jm.jm_pnu) > 0 THEN 'Y'
-		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jm.jm_pnu) = 0 THEN 'N'
-		END AS toji_plan
-		FROM gover_master gm
-		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
-		WHERE 1 = 1
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-			and jm.jm_jisa=#{jisa}
-		</if>
-		) AS r
-		where 1=1
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-			and r.idx=#{idx}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
-			and r.cancel_yn=#{cancelYn}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
-			and r.manage_yn=#{manageYn}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
-			and r.dosiplan=#{dosiplan}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			and r.address like '%${address}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jimokArray) and jimokArray.length > 0">
-			and r.jimok_text IN
-			<foreach item="item" index="index" collection="jimokArray" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(souja)" >
-			and r.souja_name like '%${souja}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
-			and r.jasan_no like '%${jasan_no}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
-			and r.comple_yn=#{comple_yn}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
-			and r.account_yn=#{account_yn}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
-			and r.deunggi_date::date between #{start_date}::date and #{end_date}::date
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-			and (SELECT COUNT(o.address) AS overlap
-			FROM
-			(
-			(
-			SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
-			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-			where 1=1
-			)
-
-			) as o  WHERE o.address = r.address GROUP BY o.address ) >1
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
-			and r.toji_type=#{toji_type}
-		</if>
+	    SELECT COUNT(*) as count
+	    FROM (
+	        SELECT gm.gm_idx AS index,
+	        	   gm.gm_gover_no AS idx,
+	               gm.gm_yongdo AS yongdo,
+	               0 AS gidx,
+	               gm.gm_pipe_name AS pipename,
+	               gm.gm_sun_gubun AS sun_gubun,
+	               gm.gm_pipe_meter AS pipe_meter,
+	               gm.gm_cancel_yn AS cancel_yn,
+	               gm.gm_cancel_date AS cancel_date,
+	               gm.gm_cancel_name AS cancel_name,
+	               gm.gm_cancel_empcd AS cancel_empcd,
+	               gm.gm_use_purpos AS use_purpos,
+	               gm.gm_gover_st_date AS gover_st_date,
+	               gm.gm_gover_ed_date AS gover_ed_date,
+	               CONCAT(gm.gm_gover_st_date, ' ~ ', gm.gm_gover_ed_date) AS period,
+	               gm.gm_pmt_status AS pmt_status,
+	               gm.gm_dockey AS dockey,
+	               gm.gm_pmt_office AS pmt_office,
+	               gm.gm_adm_office AS adm_office,
+	               gm.gm_office_depart AS office_depart,
+	               gm.gm_office_charege AS office_charege,
+	               gm.gm_office_contact AS office_contact,
+	               gm.gm_office_mobile AS office_mobile,
+	               gm.gm_gover_period AS gover_period,
+	               gm.gm_pipe_meter2 AS pipe_meter2,
+	               gm.gm_save_status AS save_status,
+	               gm.gm_newregreason AS newregreason,
+	               gm.gm_occunonpayreason AS occunonpayreason,
+	               gm.gm_permpossyn AS permpossyn,
+	               gm.gm_occuprepayyn AS occuprepayyn,
+	               gm.gm_occuprepaydate AS occuprepaydate,
+	               gm.gm_udate AS udate,
+	               gm.gm_jisa AS jisa,
+	               gm.gm_gover_no AS gover_no,
+	               gm.gm_wdate AS wdate,
+	               gp.gp_sido_nm AS sido_nm,
+	               gp.gp_sgg_nm AS sgg_nm,
+	               gp.gp_emd_nm AS emd_nm,
+	               gp.gp_ri_nm AS ri_nm,
+	               gp.gp_jibun AS jibun,
+	               TRIM(CONCAT(gp.gp_sido_nm, ' ', gp.gp_sgg_nm, ' ', gp.gp_ri_nm, ' ', gp.gp_jibun)) AS address,
+	               gp.gp_gover_length AS gover_length,
+	               gp.gp_gover_area AS gover_area,
+	               gp.gp_jimok_text AS jimok_text,
+	               gpm.gp_pay_date AS pay_date,
+	               gpm.gp_pay_money AS pay_money
+	        FROM gover_master gm
+	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
+	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
+	        WHERE 1 = 1
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+	        and gm.gm_jisa=#{jisa}
+	        </if>
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+	        ORDER BY ${orderCol} ${desc}
+	        </if>
+	    ) AS r
+	    WHERE 1 = 1
+	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
+	        and r.gover_no=#{gover_no}
+	    </if>
+	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(user_purpos)" >
+	        and r.user_purpos=#{user_purpos}
+	    </if>
+	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pmt_office)" >
+	        and r.pmt_office=#{pmt_office}
+	    </if>
+	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(adm_office)" >
+	        and r.adm_office=#{adm_office}
+	    </if>
+	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+	        and r.idx like '%${idx}%'
+	    </if>
+	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+	        and r.address like '%${address}%'
+	    </if>
+	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
+	        and (SELECT COUNT(o.address) AS overlap
+	        FROM(
+	            (
+	            SELECT trim(concat(gm.gm_sido_nm,' ',gm.gm_sgg_nm,' ',gm.gm_ri_nm,' ',gm.gm_jibun)) as address
+	            FROM gover_master gm 
+	            LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
+	            where 1=1
+	            )
+	        ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+	    </if>
 	</select>
+
+	
 </mapper>

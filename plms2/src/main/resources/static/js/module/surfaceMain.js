@@ -4,6 +4,7 @@ import { surfaceSelectEvet , handleCheckboxes } from './surfaceSelectEvet.js';
 //import { surfaceInquireSelectEvet , surfaceInquireCheckboxes } from './surfaceInquireSelectEvet.js';
 
 import { surfaceInquireSelectEvet , surfaceInquireCheckboxes } from '/js/jisang/surfaceInquireSelectEvet.js';
+import { privateUseSelectEvet } from '/js/gover/privateUseSelecEvet.js';
 
 console.log("---------------------------surfaceMain.js start----------------------");
 
@@ -60,6 +61,9 @@ window.addEventListener("load" , () => {
                	return surfaceInquireSelectEvet("#dopcosurfaceInquire05 .surfaceInquireSelectsTitleBtn" ,"#dopcosurfaceInquire05 .sufaceSelectList"  ,"#dopcosurfaceInquire05 .sufaceSelectList .surfaceSelectListMember" , ".surfaceInquireHiddenSelect05");
                 handleCheckboxes(dopcosurfaceInquire05);
             }
+			else if(pathName === `/gover/menu03_1`){
+			    return privateUseSelectEvet("#dopcoPrivateUse01 .privateUseSelectsTitleBtn" ,"#dopcoPrivateUse01 .sufaceSelectList"  ,"#dopcoPrivateUse01 .sufaceSelectList .surfaceSelectListMember" , ".privateUseHiddenSelect01");
+			 }
       }
 
       selecBoxsEvetWrappers();
