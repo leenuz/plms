@@ -1163,6 +1163,16 @@ select:focus {
   z-index: 999;
 }
 
+.btnDesign {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: rgba(204, 224, 255, 0.6);
+  color: #2B7DE1;
+  font-size: 13px;
+  font-weight: 600;
+}
+
 #dopcosurfaceInquire04
   .surfaceInquireMainContentWrapper
   .surfaceInquireMainContent

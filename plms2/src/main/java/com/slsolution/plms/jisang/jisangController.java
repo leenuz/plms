@@ -634,6 +634,16 @@ public class jisangController {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			ModelAndView mav=new ModelAndView();
+
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+
+			mav.addObject("jisaList",jisalist);
+			mav.addObject("resultJimokList",jimoklist);
+			mav.addObject("sidoList",sidolist);
 			mav.setViewName("content/jisang/menu02_4");
 			return mav;
 		}

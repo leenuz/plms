@@ -1,12 +1,11 @@
 
 
-    
 var table;
-     
+
 
 
 $(document).ready(function() {
-  console.log("jisang/menu02_1.js start");
+  console.log("jisang/menu02_2.js start");
   /*$('#jisa').niceSelect();*/
 //testAjax();
 //init_Table();
@@ -14,51 +13,29 @@ loadDataTable("");
 
 });
 
-
-
-
-
 //조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
 $(document).on("click","#registerBtn",function(){
        console.log($("#menuHiddenSelectBox01_1").val());
 	   console.log($("#searchForm").serialize());
-	   
+
 	   var formSerializeArray = $('#searchForm').serializeArray();
 	   console.log(formSerializeArray)
-       // 체크박스 값들을 조합하여 문자열로 만들기
-       var jimokText = ''; // 빈 문자열 초기화
-
-       // .choiceCheckWrapper 안의 체크된 체크박스 값 수집
-       $('.choiceCheckWrapper input[type="checkbox"]:checked').each(function() {
-           jimokText += $(this).attr('name') + ','; // 값들 사이에 쉼표(,)로 구분
-       });
-
-       // 마지막 쉼표 제거
-       if (jimokText.endsWith(',')) {
-           jimokText = jimokText.slice(0, -1);
-       }
-
-       formSerializeArray.push({
-           name: 'jimok_text',
-           value: jimokText
-       });
-
 	   var object = {};
 	   for (var i = 0; i < formSerializeArray.length; i++){
 	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
 	   }
-	   
+
 	   var json = JSON.stringify(formSerializeArray);
-	  
+
 	  console.log("----------jsonobj------------");
 	  console.log(json);
-	  console.log("object askMenu01:"+object.askMenu01); 
-	  
-	  
-	  
+	  console.log("object askMenu01:"+object.askMenu01);
+
+
+
 	   loadDataTable(object);
 	   console.log("-----------------------");
-	   
+
      })
 
 $(document).on("change","#sido",function(){
@@ -78,10 +55,10 @@ $(document).on("change","#sido",function(){
 					    success: function(rt,jqXHR) {
 					      console.log(rt);
 						  var data=rt.resultData;
-						 
+
 						  $("#sggUl li").remove();
 						  $("#sgg option").remove();
-						  
+
 						  $("#sggUl").append("<li><p>전체</p></li>");
 						  $("#sgg").append("<option value=''>전체</option>");
 						  for(var i=0;i<data.length;i++){
@@ -89,7 +66,7 @@ $(document).on("change","#sido",function(){
 							$("#sggUl").append("<li><p>"+data[i].sm_gugun+"</p></li>");
 							$("#sgg").append("<option>"+data[i].sm_gugun+"</option>");
 						  }
-						  
+
 						  console.log("sido:"+$("#sido").val());
 						  $("#sido").val($("#sido").val()).attr("selected","selected");
 					     // downloadExcel(rt.results);
@@ -101,17 +78,17 @@ $(document).on("change","#sido",function(){
 					    complete: function() {
 					      //(이미지 감추기 처리)
 					      //$('#load').hide();
-					
-					
+
+
 					    },
 					    error: function(jqXHR, textStatus, errorThrown,responseText) {
 					      //alert("ajax error \n" + textStatus + " : " + errorThrown);
-					
+
 					      console.log(jqXHR);
 					      console.log(jqXHR.readyState);
 					      console.log(jqXHR.responseText);
 					      console.log(jqXHR.responseJSON);
-					
+
 					    }
 					  }) //end ajax
 })
@@ -217,18 +194,18 @@ $(document).on("change","#emd",function(){
 					    },
 					    error: function(jqXHR, textStatus, errorThrown,responseText) {
 					      //alert("ajax error \n" + textStatus + " : " + errorThrown);
-					
+
 					      console.log(jqXHR);
 					      console.log(jqXHR.readyState);
 					      console.log(jqXHR.responseText);
 					      console.log(jqXHR.responseJSON);
-					
+
 					    }
-					  }) //end ajax 
-})	 
-	 
-	 
-	 
+					  }) //end ajax
+})
+
+
+
 
 function datatablebasic(){
 	new DataTable('#basicTable', {
@@ -243,15 +220,11 @@ function datatablebasic(){
     columnDefs:[
 					{"className": "dt-head-center", "targets": "_all"},
 					{className: 'dt-center',"targets": "_all"},
-					{targets:[0],width:"100px"},
-					{targets:[1],width:"300px"},
+					{targets:[1],width:"100px"},
+					{targets:[2],width:"300px"},
 				]
 	});
 }
-
-
-// Korean    var lang_kor = {        "decimal" : "",        "emptyTable" : "데이터가 없습니다.",        "info" : "_START_ - _END_ (총 _TOTAL_ 명)",        "infoEmpty" : "0명",        "infoFiltered" : "(전체 _MAX_ 명 중 검색결과)",        "infoPostFix" : "",        "thousands" : ",",        "lengthMenu" : "_MENU_ 개씩 보기",        "loadingRecords" : "로딩중...",        "processing" : "처리중...",        "search" : "검색 : ",        "zeroRecords" : "검색된 데이터가 없습니다.",        "paginate" : {            "first" : "첫 페이지",            "last" : "마지막 페이지",            "next" : "다음",            "previous" : "이전"        },        "aria" : {            "sortAscending" : " :  오름차순 정렬",            "sortDescending" : " :  내림차순 정렬"        }    };
-
 
 function loadDataTable(params){
 	console.log("-----start loadDataTable----------");
@@ -260,10 +233,10 @@ function loadDataTable(params){
 	//var json=JSON.stringify(params);
 
 	table=$('#userTable').DataTable({
-		
+
 		fixedColumns:{
-			start:3,
-			
+			start:4,
+
 			},
 		scrollCollapse:true,
 		scrollX:true,
@@ -273,9 +246,9 @@ function loadDataTable(params){
 		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
 		dom:'<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
 		 buttons: [{extend:'excel',text:'엑셀 다운로드'}],
-				
-		
-				    
+
+
+
 				pageLength: 20,
                 bPaginate: true,
                 bLengthChange: true,
@@ -287,7 +260,7 @@ function loadDataTable(params){
                 bServerSide: true,
                 searching: false,
 				destroy:true,
-				order:[[12,'desc']],
+				order:[[14,'desc']],
 
                 rowReorder:{
 					dataSrc:'b_seq'
@@ -302,17 +275,18 @@ function loadDataTable(params){
 						//d=params;
 						d.jisa=ljsIsNull(params.jisa)?'':params.jisa;
 						d.manage_no=params.manage_no;
+						d.toji_type=params.toji_type;
+						d.toji_plan_type=params.toji_plan_type;
+						d.right_overlap=params.OverlapCheck01;
+
                         d.souja=params.souja;
                         d.jasan_no=params.jasan_no;
 						d.dosiplan=params.dosiplan;
-                        d.jimok_text=ljsIsNull(params.jimok_text)?'':params.jimok_text;
-                        d.comple_yn=params.comple_yn;
+						d.cancel_yn=params.cancel_yn;
                         d.deunggi_date=params.start_date + '~' + params.end_date;
                         d.account_yn=params.account_yn;
                         d.start_date = params.start_date;
                         d.end_date = params.end_date;
-
-
 						var ask=(params.askMenu01==undefined || params.askMenu01==null)?'0':params.askMenu01;
 						console.log("askmenu:"+ask);
 
@@ -351,11 +325,6 @@ function loadDataTable(params){
 						//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
 						return json.data;
 					}
-
-
-
-
-
                 },
 				initComplete:function(){
 
@@ -367,107 +336,95 @@ function loadDataTable(params){
         			$('td:eq(0)', nRow).html(iDisplayIndexFull +1);
 					return nRow;
     			},*/
+  columns : [
+                    {
+                        render: function(data, type, row, meta) {
+                            return `<input type="checkbox" id="inquirecombCheck01" /> <label for="inquirecombCheck01"></label>`;
+                        },
+                        "orderable":false
+                    },
+                    {data: "no","orderable":false},
+                    {data: "jisa"},
+                    {data:"address"},
+                    {data:"jasan_no","defaultContent":""},
+                    {data: "jimok_text","defaultContent":""}, //5
+                    {data: "souja_name","defaultContent":""},
+                    {data: "jijuk_area","defaultContent":""},
+                    {data: "pyeonib_area","defaultContent":""},
+                    {data: "chuideuk_date"},
+                     {data: "deunggi_date"},
+                    {
+                        data: "cancel_yn",
+                         render: function(data, type, row, meta) {
+                              return `<button class="btnDesign positionPopBtn">지번보기</button>`;
+                         }
+                        },//해지여부
+                    {data: "cancel_date"},//합필요청일
+                   {
+                         data: "idx",
+                         render: function(data, type, row, meta) {
+                                return `<button class="btnDesign" >위치보기</button> `;
+                         }
+                     },// 지도보기 데이터 수정필요
+                      {
+                          data: "idx",
+                          render: function(data, type, row, meta) {
+                              return `<button class="btnDesign">문서보기</button> `;
+                          }
+                      }// ECHO 문서보기 수정필요
+                ],
+                columnDefs:[
 
-                   columns : [
-                                  {data: "no","orderable":false},//0
-                                  {data: "jisa","defaultContent":""},
-                                  {data:"address","defaultContent":""},
-                                  {data:"jasan_no","defaultContent":""},
-                                  {data: "jimok_text","defaultContent":""}, 
-                                  {data: "souja_name","defaultContent":""},//5
-                                  {data: "jijuk_area","defaultContent":""},
-                                  {data: "pyeonib_area","defaultContent":""},
-                                  {data: "chuideuk_date","defaultContent":""},
-                                  {data: "comple_yn","defaultContent":""},
-                                  {data: "deunggi_date","defaultContent":""},//10
-                                  {data: "account_yn","defaultContent":""},
-                                  {data: "idx"}
-                              ],
-                              columnDefs:[
-
-              					{"className": "dt-head-center", "targets": "_all"},
-              					{className: 'dt-center',"targets": "_all"},
-              					{targets:[0],width:"50px"},
-              					{targets:[1],width:"150px"},
-              					{targets:[2],width:"400px"}, //주소
-              					{targets:[3],width:"150px"},
-              					{targets:[4],width:"100px"},
-              					{targets:[5],width:"200px"}, //소유자
-              					{targets:[6],width:"150px"},
-              					{targets:[7],width:"150px"},
-                                  {targets:[8],width:"200px"},
-                                  {targets:[9],width:"100px"}, //등기여부
-                                  {targets:[10],width:"200px"}, //등기일
-                                  {targets:[11],width:"100px"},
-                                  {targets:[12]
-									,width:"100px"
-									,render: function(data, type, row, meta) {
-									     return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
-									 }
-								}, //지도보기
-
-
+					{"className": "dt-head-center", "targets": "_all"},
+					{className: 'dt-center',"targets": "_all"},
+					{targets:[0],width:"50px"},
+					{targets:[1],width:"50px"},
+					{targets:[2],width:"150px"},
+					{targets:[3],width:"400px"}, //주소
+					{targets:[4],width:"150px"},
+					{targets:[5],width:"100px"},
+					{targets:[6],width:"200px"}, //소유자
+					{targets:[7],width:"150px"},
+					{targets:[8],width:"150px"},
+                    {targets:[9],width:"200px"},
+                    {targets:[10],width:"200px"}, //등기일
+                    {targets:[11],width:"150px"}, //폐세된 지번
+                    {targets:[12],width:"200px"},//합필요청일
+                    {targets:[13],width:"150px"}, // 위치보기
+                    {targets:[14],width:"150px"}, // 문서보기
 				]
 
             });
 
-
-
-
 			table.on('click','tr',function() {
+			    var target = $(event.target);
+                    var data = table.row(this).data();
+                    var isButtonCell = target.closest('td').index() === 0 || target.closest('td').index() === 11 ||target.closest('td').index() === 13 || target.closest('td').index() === 14;
+                    var url;
 
-					var target = $(event.target);
+                    if (isButtonCell) {
+                       if(target.closest('td').index() === 12){
+                            const buttonClass = event.target.className;
 
-                        var isButtonCell = target.closest('td').index() === 12 ;
+                            if(buttonClass=="regisRemoveBtn"){
+                                url= "/jisang/landTerminationRegistration?idx=" + data.idx +"&index=" +data.index;        //해지등록
+                            }else{
+                                url = "/jisang/groundDetail?idx=" + data.idx+"&index=" +data.index;      //상세보기
+                            }
+                             window.location = url;
+                       }else if(target.closest('td').index() === 13){
+                       //지도보기 클릭
+                           mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
+//                            mapWindow = window.open('http://10.168.0.247:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'mapWindow', 'width=2048,height=1024');
+                       }else{
+                       // ECHO 문서보기 클릭
 
-                        if (isButtonCell) {
-                            return;
-                        } else {
-                            // 다른 열을 클릭했을 때만 상세 페이지로 이동
-                            console.log("--------------tr click---------------------");
+                       }
+                    } else {
 
-                            var data = table.row(this).data();
-                            console.log(data);
-                            console.log(data.idx);
+                        url = "/jisang/groundDetail?idx=" + data.idx;
+                        window.location = url;
+                    }
 
-                            var url = "/jisang/groundDetail?idx=" + data.idx;
-                            window.location = url;
-                        }
-											   
 			    });
 }
-
-$(document).on("click","#moveMap",function(){
-	//openMapWindow();
-//	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
-	const x = $(this).attr('x')
-	const y = $(this).attr('y')
-	moveToCityHall(x,y);
-})
-function moveToCityHall(x,y) {
-		console.log("--------moveToCityHall-------------");
-		//console.log(sessionStorage.getItem("2pmsMap"));
-		//var mapW=window.mapWindow;
-		//console.log(window.name);
-		//var mapW=window.name;
-	if (mapWindow) {
-	    var cityHallCoords = {};
-
-        if(x != 'null' && y != 'null'){
-//            cityHallCoords = { lon: 126.9779692, lat: 37.566535, zoom: 16 }; //테스트를 위해 임시로 넣어둠
-            cityHallCoords = { lon: y, lat: x, zoom: 16 };
-            mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송
-        }
-        else{
-            alert("해당 위치에 대한 좌표가 없습니다.");
-        }
-		//mapWindow.postMessage(cityHallCoords, 'http://10.168.0.247:8080/'); // 특정 사이트에 전송
-
-	} else {
-	    alert("지도가 열려 있지 않습니다.");
-	/* 	mapWindow = window.open('http://10.168.0.247:8080/', 'mapWindow', 'width=2000,height=1000');
-		var cityHallCoords = { lon: 126.9779692, lat: 37.566535, zoom: 16 };
-		//mapWindow.postMessage(cityHallCoords, 'http://10.168.0.247:8080/'); // 특정 사이트에 전송
-		mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송 */
-	}
-	}
