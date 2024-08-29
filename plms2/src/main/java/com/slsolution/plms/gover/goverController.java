@@ -438,26 +438,27 @@ public class goverController {
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			ModelAndView mav=new ModelAndView();
 			
-//			log.info("마스터 수정 컨트롤러 동작");
-////	        List<TestDTO> list = new ArrayList<TestDTO>();
-////	        list = dbService.getList();
-//			HashMap params = new HashMap();
-//			ArrayList<HashMap>  list=new ArrayList<HashMap>();
-//			
-//			String idx = httpRequest.getParameter("idx");
-//			String index = httpRequest.getParameter("index");
-//			
-//			params.put("idx",idx);
-//			params.put("gover_no",idx);
-//			params.put("index",index);
-//			log.info("params:"+params);
-//			
-//			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
+			log.info("마스터 수정 컨트롤러 동작");
+//	        List<TestDTO> list = new ArrayList<TestDTO>();
+//	        list = dbService.getList();
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			
+			String idx = httpRequest.getParameter("idx");
+			String index = httpRequest.getParameter("index");
+			
+			params.put("idx",idx);
+			params.put("gover_no",idx);
+			params.put("index",index);
+			log.info("params:"+params);
+
+			// 점용 마스터 조회
+			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
+			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
+			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
+			
 ////			ArrayList<HashMap> soujaList = mainService.selectQuery("goverSQL.selectSoyujaData",params);
-////			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
-////			
 ////			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
-////			ArrayList<HashMap> jisangModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
 ////			ArrayList<HashMap> jisangMergeList = mainService.selectQuery("goverSQL.selectMergeList",params);
 ////			params.put("pnu", data.get(0).get("jm_pnu"));
 ////			ArrayList<HashMap> jisangIssueList = mainService.selectQuery("goverSQL.selectIssueList",params);
@@ -491,19 +492,20 @@ public class goverController {
 ////			log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
 ////			log.info("jisangMemoList:"+jisangMemoList);
 ////			log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
-//
-//			mav.addObject("resultData",data.get(0));
-////  		mav.addObject("soujaList",soujaList);
-////  		mav.addObject("jisangPermitList",jisangPermitList);
-////  		mav.addObject("atcFileList",atcFileList);
-////  		mav.addObject("jisangModifyList",jisangModifyList);
-////  		mav.addObject("jisangMergeList",jisangMergeList);
-////  		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
-////  		mav.addObject("jisangIssueList",jisangIssueList);
-////  		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
-////  		mav.addObject("memoList",jisangMemoList);
-////  		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
-//  			
+
+			mav.addObject("resultData",data.get(0));
+	  		mav.addObject("goverModifyList",goverModifyList);
+	  		mav.addObject("atcFileList",atcFileList);
+	  		
+//  		mav.addObject("soujaList",soujaList);
+//  		mav.addObject("jisangPermitList",jisangPermitList);
+//  		mav.addObject("jisangMergeList",jisangMergeList);
+//  		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+//  		mav.addObject("jisangIssueList",jisangIssueList);
+//  		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
+//  		mav.addObject("memoList",jisangMemoList);
+//  		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+  			
   			mav.setViewName("content/gover/masterEdit");
   			return mav;
 	    }
