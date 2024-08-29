@@ -291,7 +291,17 @@ public class goverController {
 	    public ModelAndView menu03_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			ModelAndView mav=new ModelAndView();
+			
+			mav.addObject("jisaList",jisalist);
+			mav.addObject("resultJimokList",jimoklist);
+			mav.addObject("sidoList",sidolist);
+			
 			mav.setViewName("content/gover/menu03_1");
 			return mav;
 		}
@@ -334,6 +344,7 @@ public class goverController {
 		@RequestMapping(value="/menu03_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 		public ResponseEntity<?> datatableList03_1(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
+			
 			//일반웹형식
 			Properties requestParams = CommonUtil.convertToProperties(req);
 
@@ -358,46 +369,29 @@ public class goverController {
 			String[] order_cols=req.getParameterValues("order");
 
 			String jisa = req.getParameter("jisa");
-			String manage_no = req.getParameter("manage_no");
-			String dosiplan=req.getParameter("dosiplan");
+			String gover_no = req.getParameter("gover_no");
+			String user_purpos=req.getParameter("user_purpos");
+			String pmt_office = req.getParameter("pmt_office");
+			String adm_office = req.getParameter("adm_office");
+			String save_status=req.getParameter("save_status");
+			String idx=req.getParameter("idx");
 			String address=req.getParameter("saddr");
 
-			String souja = req.getParameter("souja");
-			String jasan_no = req.getParameter("jasan_no");
-
-			String jimok_text = req.getParameter("jimok_text");
-//			String jimok_text = req.getParameter("jimok_text");
-//			String jimok_text ="전,과수원,목장용지";
-			String[] jimokArray = jimok_text != null && !jimok_text.trim().isEmpty() ? jimok_text.split(",") : new String[0]; // 빈 배열로 초기화
-
-			String comple_yn=req.getParameter("comple_yn");
-			String cancel_yn=req.getParameter("cancel_yn");
-			String deunggi_date=req.getParameter("deunggi_date");
-			String account_yn=req.getParameter("account_yn"); //회계처리 필요여부
-			String start_date=req.getParameter("start_date");
-			String end_date=req.getParameter("end_date");
-
-			Map map=req.getParameterMap();
+			Map map = req.getParameterMap();
 
 			HashMap params = new HashMap();
 			params.put("draw",draw);
 			params.put("start",start);
 			params.put("length",length);
+			
 			params.put("jisa",jisa);
-			params.put("idx",manage_no);
-			params.put("dosiplan",dosiplan);
-			params.put("address",address);
-
-			params.put("souja",souja);
-			params.put("jasan_no",jasan_no);
-
-			params.put("jimokArray", jimokArray);
-			params.put("comple_yn", comple_yn);
-			params.put("cancel_yn", cancel_yn);
-			params.put("deunggi_date", deunggi_date);
-			params.put("account_yn", account_yn);
-			params.put("start_date", start_date);
-			params.put("end_date", end_date);
+			params.put("gover_no",gover_no);
+			params.put("user_purpos",user_purpos);
+			params.put("pmt_office",pmt_office);
+			params.put("adm_office",adm_office);
+			params.put("save_status",save_status);
+			params.put("idx", idx);
+			params.put("address", address);
 
 //			String[] right_arr= {};
 //			right_arr=right_type.split(",");
@@ -425,7 +419,6 @@ public class goverController {
 			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList",params);
 			log.info("list:"+list);
 
-
 			HashMap<String,Object> resultmap=new HashMap();
 			resultmap.put("draw",draw);
 			resultmap.put("recordsTotal",total);
@@ -437,4 +430,81 @@ public class goverController {
 			return ResponseEntity.ok(obj.toString());
 
 		}
+		
+		//masterEdit  상세 조회
+		@GetMapping(path="/masterEdit") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView masterEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			
+			log.info("마스터 수정 컨트롤러 동작");
+//	        List<TestDTO> list = new ArrayList<TestDTO>();
+//	        list = dbService.getList();
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			
+			String idx = httpRequest.getParameter("idx");
+			String index = httpRequest.getParameter("index");
+			
+			params.put("idx",idx);
+			params.put("gover_no",idx);
+			params.put("index",index);
+			log.info("params:"+params);
+			
+			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
+//			ArrayList<HashMap> soujaList = mainService.selectQuery("goverSQL.selectSoyujaData",params);
+//			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
+//			
+//			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
+//			ArrayList<HashMap> jisangModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
+//			ArrayList<HashMap> jisangMergeList = mainService.selectQuery("goverSQL.selectMergeList",params);
+//			params.put("pnu", data.get(0).get("jm_pnu"));
+//			ArrayList<HashMap> jisangIssueList = mainService.selectQuery("goverSQL.selectIssueList",params);
+//			log.info("jisangIssueList size:"+jisangIssueList.size());
+//			
+//			if (jisangIssueList.size()>0) {
+//				log.info("1:"+jisangIssueList.get(0).get("pi_code_depth1"));
+//				log.info("2:"+jisangIssueList.get(0).get("pi_code_depth2"));
+//				log.info("3:"+jisangIssueList.get(0).get("pi_code_depth3"));
+//				params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
+//				params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
+//				params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
+//			}
+//			
+//			ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("goverSQL.selectPnuAtcFileList",params);
+//			ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("goverSQL.selectIssueHistoryList",params);
+//			ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("goverSQL.selectIssueCodeAtcFileList",params);
+//			ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+//			log.info("params:"+params);
+//			log.info("data:"+data.get(0));
+//			log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
+//			log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
+//			log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
+//			log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+//			log.info("jisangPermitList:"+jisangPermitList);
+//			log.info("jisangIssueList:"+jisangIssueList);
+//			log.info("souja count:"+soujaList.size());
+//			log.info("soujaList:"+soujaList);
+//			log.info("atcFileList:"+atcFileList);
+//			log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+//			log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
+//			log.info("jisangMemoList:"+jisangMemoList);
+//			log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+
+			mav.addObject("resultData",data.get(0));
+//  		mav.addObject("soujaList",soujaList);
+//  		mav.addObject("jisangPermitList",jisangPermitList);
+//  		mav.addObject("atcFileList",atcFileList);
+//  		mav.addObject("jisangModifyList",jisangModifyList);
+//  		mav.addObject("jisangMergeList",jisangMergeList);
+//  		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+//  		mav.addObject("jisangIssueList",jisangIssueList);
+//  		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
+//  		mav.addObject("memoList",jisangMemoList);
+//  		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+  			
+  			mav.setViewName("content/gover/masterEdit");
+  			return mav;
+	    }
 }
