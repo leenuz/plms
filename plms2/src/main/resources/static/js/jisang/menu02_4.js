@@ -38,6 +38,16 @@ $(document).on("click","#registerBtn",function(){
 
      })
 
+//합필하기 클릭시 이벤트
+$(document).on("click","#mergeBtn",function(){
+
+	   var formSerializeArray = $('#searchForm').serializeArray();
+
+       url= "/jisang/landRightMerge?idx=";    //합필등록
+       window.location = url;
+
+     })
+
 $(document).on("change","#sido",function(){
 	console.log("----------start sido change -------------");
 	$("#sido").val($("#sidoText").text()).attr("selected","selected");
@@ -354,9 +364,14 @@ function loadDataTable(params){
                     {data: "chuideuk_date"},
                      {data: "deunggi_date"},
                     {
-                        data: "cancel_yn",
+                        data: "jm_merge_rep_yn",
                          render: function(data, type, row, meta) {
-                              return `<button class="btnDesign positionPopBtn">지번보기</button>`;
+//                              if(data === 'Y'){
+//                                 return `<button class="btnDesign positionPopBtn">지번보기</button>`;
+//                              }else{
+//                                 return ``;
+//                              }
+                              return `<button class="btnDesign positionPopBtn">지번보기</button>`; //테스트를 위해서 버튼으로 남겨둠
                          }
                         },//해지여부
                     {data: "cancel_date"},//합필요청일

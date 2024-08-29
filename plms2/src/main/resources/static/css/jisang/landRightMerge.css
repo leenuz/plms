@@ -1,0 +1,999 @@
+@charset "UTF-8";
+* {
+  padding: 0;
+  margin: 0;
+}
+body * {
+  font-family: pretendard;
+}
+li {
+  list-style: none;
+}
+select {
+  outline: 0;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #6e7d88;
+  text-indent: 12px;
+}
+textarea {
+  border: 0;
+  outline: 0;
+}
+.viewDetailButton {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+  font-size: 13px;
+  font-weight: 600;
+}
+#landRightMerge .lightBlueBtn {
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+}
+input {
+  border: 0;
+  outline: 0;
+}
+input:focus {
+  border: 0;
+}
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+button {
+  border: 0;
+}
+/* 추가 */
+label {
+  cursor: pointer;
+}
+
+/* css추가 */
+
+.landRightMergeWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.landRightMergeWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.landRightMergeWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.landRightMergeHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+
+/**/
+
+#landRightMerge * {
+  font-family: pretendard;
+}
+
+#landRightMerge {
+  width: calc(100% - 100px);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+
+#landRightMerge .miniBtn {
+  width: 68px;
+  height: 27px;
+  border-radius: 20px;
+}
+
+#landRightMerge input[type="text"]::placeholder {
+  color: #6e7d88;
+}
+.disabled {
+  pointer-events: none;
+}
+.thirdTitle h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2b7de1;
+  margin-bottom: 15px;
+}
+#landRightMerge > section {
+  padding-bottom: 40px;
+}
+#landRightMerge .contents .content {
+  border-right: 1px solid #cddbf0;
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+  box-sizing: border-box;
+}
+#landRightMerge .contents .content:last-child {
+  border-right: 0;
+}
+#landRightMerge .titles.titleScr {
+  padding-right: 4px;
+  box-sizing: border-box;
+}
+#landRightMerge .contentScr {
+  overflow-y: scroll;
+}
+
+#landRightMerge .contentScr::-webkit-scrollbar {
+  width: 4px;
+}
+
+#landRightMerge .contentScr::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+.SearchAddressBtn {
+  display: inline-block;
+  width: 86px;
+  height: 44px;
+  border-radius: 100px;
+  background: #cdd2dd;
+  color: #949aac;
+  font-size: 15px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.SearchAddressBtn.active {
+  display: inline-block;
+  width: 86px;
+  height: 44px;
+  border-radius: 100px;
+  background: #4e5871;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+}
+.moreSelectBtn {
+  /* font-size: 15px; */
+  font-size: 14px;
+  font-weight: 500;
+  color: #4e5871;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  text-align-last: left;
+  padding-left: 12px;
+  box-sizing: border-box;
+}
+
+#landRightMerge .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+#landRightMerge .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#landRightMerge .subTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #31394c;
+  margin-bottom: 24px;
+}
+#landRightMerge .contWrap {
+  width: 100%;
+}
+/* border-radius */
+#landRightMerge .titles .title:first-child {
+  border-radius: 5px 0 0 0;
+}
+/* 대상토지 */
+#landRightMerge .searchAddressBtn {
+  width: 54px;
+  height: 27px;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 20px;
+}
+#landRightMerge .targetLand {
+  /* padding: 40px 0; */
+  padding: 27px 0 40px 0;
+}
+#landRightMerge .targetLand .contWrap {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+#landRightMerge .targetLand .contWrap .titles {
+  height: 90px;
+}
+#landRightMerge .targetLand .contWrap .title {
+  width: 6.29%;
+}
+#landRightMerge .targetLand .titles .title.addressInfoWidth {
+  width: 24.5%;
+}
+#landRightMerge .targetLand .titles .title.titleBox {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+}
+#landRightMerge .titles .title.titleBox .secondTitles {
+  display: flex;
+  border-top: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+  background: #ecf1f8;
+  box-sizing: border-box;
+}
+#landRightMerge .titles .title.titleBox .secondTitles .secondTitle {
+  width: 90px;
+}
+#landRightMerge
+  .titles
+  .title.titleBox
+  .secondTitles
+  .secondTitle.largeSecondTitle {
+  width: 125px;
+}
+#landRightMerge .targetLand .titles .title.titleBtnWrap {
+  /* width: 10.1%; */
+  width: 10.3%;
+}
+#landRightMerge .targetLand .contWrap .content {
+  width: 6.29%;
+}
+
+#landRightMerge .targetLand .contents .content.addressInfoWidth {
+  width: 24.5%;
+}
+#landRightMerge .targetLand .contents .content.addressInfoBox {
+  gap: 12px;
+}
+
+#landRightMerge .targetLand .contents .content.contentBox {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  height: 100%;
+}
+
+#landRightMerge .targetLand .contents .content.contentBox .secondContents {
+  height: 100%;
+  display: flex;
+}
+
+#landRightMerge
+  .targetLand
+  .contents
+  .content.contentBox
+  .secondContents
+  .secondContent {
+  width: 90px;
+  border-right: 1px solid #cddbf0;
+}
+#landRightMerge
+  .targetLand
+  .contents
+  .content.contentBox
+  .secondContents
+  .secondContent.largeSecondTitle {
+  width: 125px;
+}
+#landRightMerge .targetLand .contents .content.titleBtnWrap {
+  /* 수정 */
+  /* width: 10.1%; */
+  width: 10.3%;
+  padding: 0;
+}
+#landRightMerge
+  .targetLand
+  .contents
+  .content.contentBox
+  .secondContents
+  .secondContent:last-child {
+  border-right: 0;
+}
+/* 기본 설정 */
+#landRightMerge .contWrap .titles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+#landRightMerge .contWrap .depth1 .titles {
+  border-radius: 5px 5px 0 0;
+}
+#landRightMerge .contWrap .titles li {
+  height: 100%;
+  text-align: center;
+  line-height: 45px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+  /* flex-grow: 1; */
+}
+#landRightMerge .contWrap .titles li:last-child {
+  border-right: 0;
+}
+#landRightMerge .contWrap .depth1 .contents {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #fff;
+  border-bottom: 1px solid #cddbf0;
+}
+#landRightMerge .contWrap .depth1 .contents li {
+  height: 100%;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#landRightMerge .contWrap .depth1 .contents li .addressData {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#landRightMerge .contWrap .depth1 .contents li p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#landRightMerge .contWrap .depth1 .contents:last-child {
+  border-radius: 0 0 5px 5px;
+  border-bottom: 0;
+}
+#landRightMerge .contWrap .depth1 .contents li.content {
+  border-right: 1px solid #cddbf0;
+}
+#landRightMerge .contWrap .depth1 .contents li:last-child {
+  border-right: 0;
+}
+#landRightMerge .contWrap .contents.lastContents {
+  border-bottom: 0;
+}
+#landRightMerge .contWrap .contents li .customSelectBox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#landRightMerge .contWrap .contents li .customSelectBox .customSelectView {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  /* font-size: 15px; */
+  font-size: 14px;
+  font-weight: 500;
+  color: #6e7d88;
+  text-align-last: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  box-sizing: border-box;
+  background: url(/assets/media/menu02/images/arrowDown.png) no-repeat right
+    10px center;
+  background-color: #fff;
+  background-size: 21px;
+}
+#landRightMerge
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectView.active {
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+  background: url(/assets/media/menu02/images/arrowDownBlue.png) no-repeat right
+    10px center;
+  /* 추가 */
+  background-size: 21px;
+}
+#landRightMerge .contWrap .contents li .customSelectBox .customSelectBtns {
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 4px);
+  box-sizing: border-box;
+  max-height: 0;
+  overflow-y: hidden;
+  z-index: 10;
+  transition: 500ms;
+  opacity: 0;
+  border: 1px solid #acbdd7;
+}
+#landRightMerge
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns.active {
+  padding: 6px 0;
+  border-radius: 10px;
+  background: #fff;
+  max-height: 233px;
+  overflow-y: scroll;
+  transition: 500ms;
+  opacity: 1;
+}
+
+#landRightMerge .contWrap .contents li .customSelectBox .customSelectBtns li {
+  padding: 0;
+  height: 41px;
+}
+
+#landRightMerge
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns::-webkit-scrollbar {
+  width: 4px;
+}
+
+#landRightMerge
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+/* 합병토지 */
+
+#landRightMerge .landDivision .contWrap .titles .title {
+  width: 6%;
+}
+#landRightMerge .landDivision .contWrap .titles .title.addressInfoWidth {
+  width: 27%;
+}
+#landRightMerge .landDivision .contWrap .titles .title.middleWidth {
+  width: 9.4%;
+}
+#landRightMerge .landDivision .contWrap .contents .content {
+  width: 6%;
+}
+#landRightMerge .landDivision .contWrap .contents .numInfoWidth {
+  width: 2.9%;
+}
+#landRightMerge .landDivision .contWrap .contents .addressInfoWidth {
+  width: 27%;
+  gap: 12px;
+}
+#landRightMerge .landDivision .contWrap .contents .middleWidth {
+  width: 9.4%;
+}
+#landRightMerge .landDivision .contents .content.contentBox .secondContents {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 0;
+}
+#landRightMerge
+  .landDivision
+  .contents
+  .content.contentBox
+  .secondContents
+  .secondContent {
+  border-right: 1px solid #cddbf0;
+  width: 176px;
+}
+#landRightMerge
+  .landDivision
+  .contents
+  .content.contentBox
+  .secondContents
+  .secondContent:last-child {
+  border-right: 0;
+}
+
+/* css추가 */
+#landRightMerge
+  .landDivision
+  .contents
+  .content.contentBox
+  .secondContents
+  .secondContent
+  input[type="text"] {
+  text-align: center;
+  text-indent: 0px;
+}
+
+/**/
+
+#landRightMerge .landDivision .contWrap {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+#landRightMerge .landDivision .contWrap .titles {
+  height: 90px;
+}
+#landRightMerge .landDivision .contWrap .titles .title.titleBox {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+}
+#landRightMerge .landDivision .contWrap .titles .title.titleBtnWrap {
+  width: 10.1%;
+}
+
+#landRightMerge .landDivision .contWrap .titleBox .secondTitles {
+  display: flex;
+  width: 100%;
+  border-top: 1px solid #cddbf0;
+  border-top: 1px solid #cddbf0;
+}
+#landRightMerge .landDivision .contWrap .titleBox .secondTitles .secondTitle {
+  width: 176px;
+}
+#landRightMerge .landDivision .contWrap .contents .content.contentBox {
+  /* width: 19.5%; */
+  width: auto;
+  padding: 0;
+}
+#landRightMerge .landDivision .contWrap .contents .titleBtnWrap {
+  width: 10.1%;
+  padding: 0;
+}
+/* 추가 삭제 버튼 */
+
+#landRightMerge .contents .content.btnBox .editBefore,
+#landRightMerge .contents .content.btnBox .editAfter {
+  width: 100%;
+}
+
+#landRightMerge .contents .content.btnBox .editBefore {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+#landRightMerge .contents.editing .content.btnBox .editBefore {
+  display: none;
+}
+
+#landRightMerge .contents .content.btnBox .editAfter {
+  display: none;
+}
+
+#landRightMerge .contents.editing .content.btnBox .editAfter {
+  display: block;
+}
+
+#landRightMerge .contents .content.btnBox .btnWrap {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #cddbf0;
+  height: 100%;
+  box-sizing: border-box;
+}
+#landRightMerge .contents .content.btnBox .btnWrap:last-child {
+  border-right: 0;
+}
+/* label */
+#landRightMerge input[type="text"] {
+  width: 100%;
+  height: 100%;
+  background: #edf2f9;
+  border-radius: 10px;
+  text-indent: 19px;
+  font-size: 14px;
+  font-weight: 500;
+}
+#landRightMerge input[type="checkbox"] {
+  display: none;
+}
+.checkboxWrap label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+}
+#landRightMerge input[type="checkbox"] {
+  display: none;
+}
+
+#landRightMerge input[type="checkbox"]~label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+  display: inline-block;
+  position: relative;
+}
+#landRightMerge input[type="checkbox"]:checked~label {
+  background: #4e5871;
+}
+
+#landRightMerge input[type="checkbox"]:checked~label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 10px;
+  background: url(/assets/media/menu02/images/checkIcon.png) no-repeat center;
+  background-size: contain;
+}
+#landRightMerge .contWrap .depth1 .contents li input[type="date"] {
+  width: 100%;
+  height: 100%;
+}
+
+#landRightMerge .contents .content.btnBox .editBefore,
+#landRightMerge .contents .content.btnBox .editAfter {
+  width: 100%;
+}
+
+#landRightMerge .contents .content.btnBox .editBefore {
+  display: flex;
+  justify-content: center;
+}
+
+#landRightMerge .contents.editing .content.btnBox .editBefore {
+  display: none;
+}
+
+#landRightMerge .contents .content.btnBox .editAfter {
+  display: none;
+}
+
+#landRightMerge .contents.editing .content.btnBox .editAfter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#landRightMerge .contents .content.btnBox .btnWrap {
+  width: 50%;
+  justify-content: center;
+}
+
+/* #landRightMerge .contents .content.btnBox .btnWrap:first-child {
+  border-right: 1px solid #cddbf0;
+} */
+
+#landRightMerge .miniBtn {
+  width: 74px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+#landRightMerge .addBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+#landRightMerge .delBtn {
+  background: #9a9a9a;
+  color: #fff;
+}
+#landRightMerge .registBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+  /* background: #4E5871;
+    color: #fff; */
+}
+#landRightMerge .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f7f9fc;
+  font-size: 14px;
+  font-weight: 500;
+  height: 100%;
+}
+#landRightMerge .content {
+  height: 100%;
+  padding: 6px 8px;
+  box-sizing: border-box;
+}
+
+/* 합병사유 및 검토의견 */
+
+#landRightMerge .mergeTermination {
+}
+#landRightMerge .mergeTermination .contWrap {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+#landRightMerge .mergeTermination .contWrap .depth1 {
+  height: 45px;
+  border-bottom: 1px solid #cddbf0;
+}
+#landRightMerge .mergeTermination .contWrap .depth2 {
+  height: 200px;
+  border-bottom: 1px solid #cddbf0;
+}
+#landRightMerge .mergeTermination .contWrap .depth2:last-child {
+  border-bottom: 0;
+}
+#landRightMerge .mergeTermination .contWrap .depth2:last-child .title {
+  border-radius: 0 0 0 5px;
+}
+#landRightMerge .mergeTermination .contWrap .rowListBox {
+  display: flex;
+  height: 100%;
+}
+#landRightMerge
+  .mergeTermination
+  .contWrap
+  .rowListBox
+  .content.dateInputWrap
+  input {
+  width: 187px;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+}
+#landRightMerge .mergeTermination .contWrap .rowListBox .title {
+  width: 8.5%;
+  height: 100%;
+  border-right: 1px solid #cddbf0;
+}
+#landRightMerge
+  .mergeTermination
+  .contWrap
+  .depth1:first-child
+  .rowListBox
+  .title:first-of-type {
+  border-radius: 5px 0 0 0;
+}
+#landRightMerge .mergeTermination .contWrap .rowListBox .content {
+  width: 91.5%;
+}
+
+#landRightMerge textarea {
+  width: 100%;
+  border-radius: 10px;
+  background: #edf2f9;
+  padding: 15px 19px;
+  box-sizing: border-box;
+  height: 100%;
+  resize: none;
+  font-size: 14px;
+}
+#landRightMerge textarea::placeholder {
+  color: #6e7d88;
+}
+#landRightMerge textarea::-webkit-scrollbar {
+  width: 4px;
+}
+
+#landRightMerge textarea::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+/* 첨부서류 */
+#landRightMerge .attachDocuments .contWrap {
+  display: flex;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+#landRightMerge .attachDocuments .contWrap .depth1 {
+  width: 39.8%;
+  border-right: 1px solid #cddbf0;
+}
+#landRightMerge .attachDocuments .contWrap .depth2 {
+  width: calc(100% - 39.8%);
+}
+#landRightMerge .attachDocuments .contWrap .depth1 .titles .title {
+  width: 100%;
+}
+#landRightMerge .attachDocuments .contWrap .titles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+}
+#landRightMerge .attachDocuments .contWrap .titles .title {
+  height: 100%;
+}
+#landRightMerge .attachDocuments .contWrap .titles .delContWidth {
+  width: 9.7%;
+}
+#landRightMerge .attachDocuments .contWrap .titles .selectFileWidth {
+  width: 10.39%;
+}
+#landRightMerge .attachDocuments .contWrap .contentListBox {
+  width: 100%;
+  box-sizing: border-box;
+  /* height: 360px; */
+  display: flex;
+}
+#landRightMerge .attachDocuments .contWrap .contentListBox .essentialDocument {
+  width: 21.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #cddbf0;
+}
+#landRightMerge
+  .attachDocuments
+  .contWrap
+  .contentListBox
+  .essentialDocument
+  p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+}
+#landRightMerge .attachDocuments .contWrap .contentListBox .essentialDocuList {
+  width: calc(100% - 21.5%);
+}
+#landRightMerge
+  .attachDocuments
+  .contWrap
+  .contentListBox
+  .essentialDocuList
+  li {
+  width: 100%;
+  height: 45px;
+  border-bottom: 1px solid #cddbf0;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+}
+#landRightMerge
+  .attachDocuments
+  .contWrap
+  .contentListBox
+  .essentialDocuList
+  li:last-child {
+  border-bottom: 0;
+}
+#landRightMerge .attachDocuments .contWrap .depth2 .titles .title {
+  width: 66.3%;
+}
+#landRightMerge .attachDocuments .contWrap .depth2 .titles .title.delContWidth {
+  width: 16.2%;
+}
+#landRightMerge
+  .attachDocuments
+  .contWrap
+  .depth2
+  .titles
+  .title.selectFileWidth {
+  width: 17.2%;
+}
+#landRightMerge .attachDocuments .contWrap .depth2 .contents {
+  display: flex;
+  height: 45px;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+#landRightMerge .attachDocuments .contWrap .depth2 .contents:last-child {
+  border-bottom: 0;
+}
+#landRightMerge .attachDocuments .contWrap .depth2 .contents .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 66.3%;
+}
+#landRightMerge .attachDocuments .contWrap .depth2 .contents .content p {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#landRightMerge
+  .attachDocuments
+  .contWrap
+  .depth2
+  .contents
+  .content.delContWidth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16.2%;
+}
+#landRightMerge
+  .attachDocuments
+  .contWrap
+  .depth2
+  .contents
+  .content.selectFileWidth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 17.2%;
+}
+#landRightMerge .attachDelBtn {
+  background: #636363;
+  color: #fff;
+}
+
+/* file */
+
+/* 첨부파일 정보 */
+#landRightMerge input[type="file"] {
+  display: none;
+}
+
+.lightfileBtnWrap label {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* 이전, 저장 버튼 */
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 10px;
+}
+.finalBtn.backBtn {
+  background: #919191;
+}
+.finalBtn.saveBtn {
+  background: #2b7de1;
+}
+.finalBtn.temporarySaveBtn {
+  background: #2b7de1;
+}
+
+#landRightMerge input[type="text"].notWriteInput {
+  background: transparent;
+  text-align: center;
+  text-indent: 0;
+}
+#landRightMerge input[type="text"].notWriteInput::placeholder {
+  color: #3c3c3c;
+}
+#landRightMerge
+  .attachDocuments
+  .essentialDocuList
+  input[type="text"]::placeholder {
+  text-align: left;
+}
