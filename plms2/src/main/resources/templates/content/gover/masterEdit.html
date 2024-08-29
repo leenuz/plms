@@ -5,116 +5,114 @@
       
       layout:decorate="~{layout/default_layout}">
  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
       as="style"
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   
-	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	  <link rel="stylesheet" href="/css/gover/masterEdit.css" /> 
+	<link th:href="@{/css/common.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="/css/gover/masterEdit.css" /> 
 	  
-		<!-- <script src="/js/gover/menu03_1.js"></script>	 -->
-		 <!--<script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
+	<!-- <script src="/js/gover/menu03_1.js"></script>	 -->
+	<!--<script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
+	<style>
 		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
+		  display: grid;
+		  grid-template-columns: auto auto auto;
+		}
 
-div.dt-center-in-div {
-  margin: 0 auto;
-      float: right;
-    margin-right: 30px;
-   
-}
-div.dt-center-in-div>div{
-
-display:inline;
-}
-
-div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
-}
-
-
-.dt-title{
-
-text-align:center;
-width:180px;
-float:left;
-
-}
-.dt-buttons{
-display:inline-block;
-
-width:180px;
-
-}
-.dt-length{
-display:inline-block;
-}
-.dt-button{
-
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
-
-}
-
-.dt-paging {
-text-align: center;
-}
-
-.dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-    
-    
-}
-
-.bottom{
-text-align:center;
-
-}
-.top{
-
-text-align:right;
-margin:10px;
-
-}
-
-		</style>
+		div.dt-center-in-div {
+		  margin: 0 auto;
+		      float: right;
+		    margin-right: 30px;
+		   
+		}
+		div.dt-center-in-div>div{
 		
-    <title>점용 마스터</title>
-  </head>
+		display:inline;
+		}
+		div.dt-filter-spacer {
+		  margin: 10px 0;
+		  border:1px solid red;
+		}
+		
+		.dt-title{
+		
+		text-align:center;
+		width:180px;
+		float:left;
+		
+		}
+		.dt-buttons{
+		display:inline-block;
+		
+		width:180px;
+		
+		}
+		.dt-length{
+		display:inline-block;
+		}
+		.dt-button{
+		
+		color:white;
+		background-color:#4e5871;
+		font-size:15px;
+		font-weight:600;
+		border-radius:10px;
+		background-image:url(/assets/media/menu01/download.png);
+		background-size:11px;
+		background-repeat:no-repeat;
+		background-position:123px center;
+		text-aline:left;
+		margin-right:10px;
+		width:159px;
+		height:38px;
+		
+		}
+		
+		.dt-paging {
+		text-align: center;
+		}
+		
+		.dt-paging-button {
+		  box-sizing: border-box;
+		  display: inline-block;
+		  min-width: 1.5em;
+		  padding: 0.5em 1em;
+		  margin-left: 2px;
+		  text-align: center;
+		  text-decoration: none !important;
+		  cursor: pointer;
+		  
+		  border: 1px solid transparent;
+		  border-radius: 2px;
+		  background: transparent;
+		  color: #007bff !important;
+		    font-size: 15px;
+		    font-weight: 600;
+		    
+		    
+		}
+		
+		.bottom{
+		text-align:center;
+		
+		}
+		.top{
+		
+		text-align:right;
+		margin:10px;
+		
+		}
+
+	</style>
+	<title>점용 마스터</title>
+</head>
+
 <th:block layout:fragment="content">
    <!-- 점용 마스터 수정 -->
     <div class="masterEditWrappers">
@@ -153,151 +151,195 @@ margin:10px;
               </ul>
               <ul class="contents">
                 <li class="content">
-                  <input
-                    type="text"
-                    placeholder="G_00011"
-                    readonly
-                    class="notWriteInput" />
+				  <!-- 관리 번호 -->
+				  <input type="hidden" name="gover_no" id="gover_no" th:value="${resultData.gm_gover_no}"/>
+				  [[${resultData.gm_gover_no}]]
                 </li>
                 <li class="content selectContentArea">
                   <!-- 담당지사 -->
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
-                    <select
-                      name="masterEditSelectBox01"
-                      id="masterEditSelectBox01"
-                      hidden>
-                      <option value="전체">전체</option>
-                      <option value="서울지사">서울지사</option>
-                      <option value="경인지사">경인지사</option>
-                      <option value="대전지사">대전지사</option>
-                      <option value="충청지사">충청지사</option>
-                      <option value="영남지사">영남지사</option>
-                      <option value="전남지사">전남지사</option>
-                      <option value="전북지사">전북지사</option>
-                      <option value="경남지사">경남지사</option>
-                      <option value="강원지사">강원지사</option>
-                    </select>
+					<select
+			            name="masterEditSelectBox01"
+			            id="masterEditSelectBox01"
+			            hidden>
+			            <option value="전체" th:selected="${resultData.gm_jisa == '전체'}">전체</option>
+			            <option value="서울지사" th:selected="${resultData.gm_jisa == '서울지사'}">서울지사</option>
+			            <option value="경인지사" th:selected="${resultData.gm_jisa == '경인지사'}">경인지사</option>
+			            <option value="대전지사" th:selected="${resultData.gm_jisa == '대전지사'}">대전지사</option>
+			            <option value="충청지사" th:selected="${resultData.gm_jisa == '충청지사'}">충청지사</option>
+			            <option value="영남지사" th:selected="${resultData.gm_jisa == '영남지사'}">영남지사</option>
+			            <option value="전남지사" th:selected="${resultData.gm_jisa == '전남지사'}">전남지사</option>
+			            <option value="전북지사" th:selected="${resultData.gm_jisa == '전북지사'}">전북지사</option>
+			            <option value="경남지사" th:selected="${resultData.gm_jisa == '경남지사'}">경남지사</option>
+			            <option value="강원지사" th:selected="${resultData.gm_jisa == '강원지사'}">강원지사</option>
+			        </select>
                   </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">경인지사</button>
+				  <section class="customSelectBox">
+			          <!-- 버튼에 초기값 표시 -->
+			          <button class="customSelectView">[[${resultData.gm_jisa}]]</button>
 
-                    <ul class="customSelectBtns"></ul>
-                  </section>
+			          <ul class="customSelectBtns">
+			              <!-- 버튼 리스트 생성 -->
+			              <li><button type="button" class="moreSelectBtn">전체</button></li>
+			              <li><button type="button" class="moreSelectBtn">서울지사</button></li>
+			              <li><button type="button" class="moreSelectBtn">경인지사</button></li>
+			              <li><button type="button" class="moreSelectBtn">대전지사</button></li>
+			              <li><button type="button" class="moreSelectBtn">충청지사</button></li>
+			              <li><button type="button" class="moreSelectBtn">영남지사</button></li>
+			              <li><button type="button" class="moreSelectBtn">전남지사</button></li>
+			              <li><button type="button" class="moreSelectBtn">전북지사</button></li>
+			              <li><button type="button" class="moreSelectBtn">경남지사</button></li>
+			              <li><button type="button" class="moreSelectBtn">강원지사</button></li>
+			          </ul>
+			      </section>
                 </li>
-                <li class="content largeTitle selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="masterEditSelectBox02"
-                      id="masterEditSelectBox02"
-                      hidden>
-                      <option value="전체">전체</option>
-                      <option value="경기고속도로(주)">경기고속도로(주)</option>
-                      <option value="과천시">과천시</option>
-                      <option value="서울특별시">서울특별시</option>
-                      <option value="성남시">성남시</option>
-                      <option value="수원시">수원시</option>
-                      <option value="안성시">안성시</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">인천광역시</button>
-
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-                <li class="content largeTitle selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="masterEditSelectBox03"
-                      id="masterEditSelectBox03"
-                      hidden>
-                      <option value="전체">전체</option>
-                      <option value="하천팀">하천팀</option>
-                      <option value="공원농림과">공원농림과</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">서구-건설과</button>
-
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-                <li class="content largeTitle">
-                  <input type="text" placeholder="공원녹지과" />
-                </li>
+				
+				<!-- 허가관청 -->
+				<li class="content largeTitle selectContentArea">
+				  <div class="hiddenSelectBox">
+				    <select
+				      name="masterEditSelectBox02"
+				      id="masterEditSelectBox02"
+				      hidden>
+				      <option value="전체" th:selected="${resultData.gm_pmt_office == '전체'}">전체</option>
+				      <option value="경기고속도로(주)" th:selected="${resultData.gm_pmt_office == '경기고속도로(주)'}">경기고속도로(주)</option>
+				      <option value="과천시" th:selected="${resultData.gm_pmt_office == '과천시'}">과천시</option>
+				      <option value="서울특별시" th:selected="${resultData.gm_pmt_office == '서울특별시'}">서울특별시</option>
+				      <option value="성남시" th:selected="${resultData.gm_pmt_office == '성남시'}">성남시</option>
+				      <option value="수원시" th:selected="${resultData.gm_pmt_office == '수원시'}">수원시</option>
+				      <option value="안성시" th:selected="${resultData.gm_pmt_office == '안성시'}">안성시</option>
+				    </select>
+				  </div>
+				  <section class="customSelectBox">
+				    <button class="customSelectView">[[${resultData.gm_pmt_office}]]</button>
+				    <ul class="customSelectBtns">
+				      <li><button type="button" class="moreSelectBtn">전체</button></li>
+				      <li><button type="button" class="moreSelectBtn">경기고속도로(주)</button></li>
+				      <li><button type="button" class="moreSelectBtn">과천시</button></li>
+				      <li><button type="button" class="moreSelectBtn">서울특별시</button></li>
+				      <li><button type="button" class="moreSelectBtn">성남시</button></li>
+				      <li><button type="button" class="moreSelectBtn">수원시</button></li>
+				      <li><button type="button" class="moreSelectBtn">안성시</button></li>
+				    </ul>
+				  </section>
+				</li>
+				
+				<!-- 관리기간 -->
+				<li class="content largeTitle selectContentArea">
+				  <div class="hiddenSelectBox">
+				    <select
+				      name="masterEditSelectBox03"
+				      id="masterEditSelectBox03"
+				      hidden>
+				      <option value="전체" th:selected="${resultData.gm_adm_office == '전체'}">전체</option>
+				      <option value="하천팀" th:selected="${resultData.gm_adm_office == '하천팀'}">하천팀</option>
+				      <option value="공원농림과" th:selected="${resultData.gm_adm_office == '공원농림과'}">공원농림과</option>
+				    </select>
+				  </div>
+				  <section class="customSelectBox">
+				    <button class="customSelectView">[[${resultData.gm_adm_office}]]</button>
+				    <ul class="customSelectBtns">
+				      <li><button type="button" class="moreSelectBtn">전체</button></li>
+				      <li><button type="button" class="moreSelectBtn">하천팀</button></li>
+				      <li><button type="button" class="moreSelectBtn">공원농림과</button></li>
+				    </ul>
+				  </section>
+				</li>
+				
+				<!-- 부서 -->
+				<li class="content largeTitle">
+				  <input type="text" placeholder="공원녹지과" th:value="${resultData.gm_office_depart}" />
+				</li>
+				<!-- 담당자 -->
                 <li class="content">
-                  <input type="text" placeholder="김지훈" />
+                  <input type="text" placeholder="김지훈" th:value="${resultData.gm_office_charege}"/>
                 </li>
+				<!-- 연락처 -->
                 <li class="content largeTitle">
-                  <input type="text" placeholder="032-560-4803" />
+                  <input type="text" placeholder="032-560-4803" th:value="${resultData.gm_office_contact}" />
                 </li>
-                <li class="content selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="masterEditSelectBox04"
-                      id="masterEditSelectBox04"
-                      hidden>
-                      <option value="선택">선택</option>
-                      <option value="송유관로">송유관로</option>
-                      <option value="밸브박스">밸브박스</option>
-                      <option value="가압소">가압소</option>
-                      <option value="저유소">저유소</option>
-                      <option value="펌프장">펌프장</option>
-                      <option value="시설물">시설물</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">송유관로</button>
-
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-                <li class="content largeTitle selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="masterEditSelectBox05"
-                      id="masterEditSelectBox05"
-                      hidden>
-                      <option value="전체">전체</option>
-                      <option value="SNP 구간">SNP 구간</option>
-                      <option value="광주지선">광주지선</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">경인구간</button>
-
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-                <li class="content selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="masterEditSelectBox06"
-                      id="masterEditSelectBox06"
-                      hidden>
-                      <option value="단선">단선</option>
-                      <option value="복선">복선</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">복선</button>
-
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
+				
+				<!-- 용도 -->
+				<li class="content selectContentArea">
+				  <div class="hiddenSelectBox">
+				    <select
+				      name="masterEditSelectBox04"
+				      id="masterEditSelectBox04"
+				      hidden>
+				      <option value="선택" th:selected="${resultData.gm_yongdo == '선택'}">선택</option>
+				      <option value="송유관로" th:selected="${resultData.gm_yongdo == '송유관로'}">송유관로</option>
+				      <option value="밸브박스" th:selected="${resultData.gm_yongdo == '밸브박스'}">밸브박스</option>
+				      <option value="가압소" th:selected="${resultData.gm_yongdo == '가압소'}">가압소</option>
+				      <option value="저유소" th:selected="${resultData.gm_yongdo == '저유소'}">저유소</option>
+				      <option value="펌프장" th:selected="${resultData.gm_yongdo == '펌프장'}">펌프장</option>
+				      <option value="시설물" th:selected="${resultData.gm_yongdo == '시설물'}">시설물</option>
+				    </select>
+				  </div>
+				  <section class="customSelectBox">
+				    <button class="customSelectView">[[${resultData.gm_yongdo}]]</button>
+				    <ul class="customSelectBtns">
+				      <li><button type="button" class="moreSelectBtn">선택</button></li>
+				      <li><button type="button" class="moreSelectBtn">송유관로</button></li>
+				      <li><button type="button" class="moreSelectBtn">밸브박스</button></li>
+				      <li><button type="button" class="moreSelectBtn">가압소</button></li>
+				      <li><button type="button" class="moreSelectBtn">저유소</button></li>
+				      <li><button type="button" class="moreSelectBtn">펌프장</button></li>
+				      <li><button type="button" class="moreSelectBtn">시설물</button></li>
+				    </ul>
+				  </section>
+				</li>
+				
+				<!-- 관로명(구간) -->
+				<li class="content largeTitle selectContentArea">
+				  <div class="hiddenSelectBox">
+				    <select
+				      name="masterEditSelectBox05"
+				      id="masterEditSelectBox05"
+				      hidden>
+				      <option value="전체" th:selected="${resultData.gm_pipe_name == '전체'}">전체</option>
+				      <option value="SNP 구간" th:selected="${resultData.gm_pipe_name == 'SNP 구간'}">SNP 구간</option>
+				      <option value="광주지선" th:selected="${resultData.gm_pipe_name == '광주지선'}">광주지선</option>
+				    </select>
+				  </div>
+				  <section class="customSelectBox">
+				    <button class="customSelectView">[[${resultData.gm_pipe_name}]]</button>
+				    <ul class="customSelectBtns">
+				      <li><button type="button" class="moreSelectBtn">전체</button></li>
+				      <li><button type="button" class="moreSelectBtn">SNP 구간</button></li>
+				      <li><button type="button" class="moreSelectBtn">광주지선</button></li>
+				    </ul>
+				  </section>
+				</li>
+				
+				<!-- 단/복선 -->
+				<li class="content selectContentArea">
+				  <div class="hiddenSelectBox">
+				    <select
+				      name="masterEditSelectBox06"
+				      id="masterEditSelectBox06"
+				      hidden>
+				      <option value="단선" th:selected="${resultData.gm_sun_gubun == '단선'}">단선</option>
+				      <option value="복선" th:selected="${resultData.gm_sun_gubun == '복선'}">복선</option>
+				    </select>
+				  </div>
+				  <section class="customSelectBox">
+				    <button class="customSelectView">[[${resultData.gm_sun_gubun}]]</button>
+				    <ul class="customSelectBtns">
+				      <li><button type="button" class="moreSelectBtn">단선</button></li>
+				      <li><button type="button" class="moreSelectBtn">복선</button></li>
+				    </ul>
+				  </section>
+				</li>
+				
+				<!-- 관경 -->
                 <li class="content inputArea lineWrap">
                   <div class="doubleLine">
                     <div class="inputWrap">
-                      <input type="text" placeholder="30" />
+                      <input type="text" placeholder="30" th:value="${resultData.gm_pipe_meter}"/>
                     </div>
                     <div class="inputWrap">
-                      <input type="text" placeholder="30" />
+                      <input type="text" placeholder="30" th:value="${resultData.gm_pipe_meter2}"/>
                     </div>
                   </div>
                   <div class="singleLine">
@@ -306,23 +348,27 @@ margin:10px;
                     </div>
                   </div>
                 </li>
-                <li class="content selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="masterEditSelectBox07"
-                      id="masterEditSelectBox07"
-                      hidden>
-                      <option value="Y">Y</option>
-                      <option value="N">N</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">N</button>
-
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
+				
+				<!-- 감면여부 -->
+				<li class="content selectContentArea">
+				  <div class="hiddenSelectBox">
+				    <select
+				      name="masterEditSelectBox07"
+				      id="masterEditSelectBox07"
+				      hidden>
+				      <option value="Y" th:selected="${resultData.gm_permpossyn == 'Y'}">Y</option>
+				      <option value="N" th:selected="${resultData.gm_permpossyn == 'N'}">N</option>
+				    </select>
+				  </div>
+				  <section class="customSelectBox">
+				    <button class="customSelectView">[[${resultData.gm_permpossyn}]]</button>
+				    <ul class="customSelectBtns">
+				      <li><button type="button" class="moreSelectBtn">Y</button></li>
+				      <li><button type="button" class="moreSelectBtn">N</button></li>
+				    </ul>
+				  </section>
+				</li>
+				
               </ul>
             </div>
             <div class="depth2">
@@ -336,142 +382,180 @@ margin:10px;
                 <li class="title">점용료 선납 여부</li>
                 <li class="title">선납기한</li>
               </ul>
+			  
               <ul class="contents">
-                <li class="content selectContentArea">
-                  <!-- 점용구분 -->
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="masterEditSelectBox08"
-                      id="masterEditSelectBox08"
-                      hidden>
-                      <option value="전체">전체</option>
-                      <option value="공원부지점용">공원부지점용</option>
-                      <option value="국유지사용">국유지사용</option>
-                      <option value="녹지점용">녹지점용</option>
-                      <option value="국유림점용">국유림점용</option>
-                      <option value="농업수자원부지사용">
-                        농업수자원부지사용
-                      </option>
-                      <option value="농업시설목적외사용">
-                        농업시설목적외사용
-                      </option>
-                      <option value="도로점용">도로점용</option>
-                      <option value="고속도로점용">고속도로점용</option>
-                      <option value="철도부지점용">철도부지점용</option>
-                      <option value="하천점용">하천점용</option>
-                      <option value="구거점용 등">구거점용 등</option>
-                      <option value="항만시설사용">항만시설사용</option>
-                      <option value="공유수면사용">공유수면사용</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">공원부지점용</button>
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-                <li class="content inputWrap dateLargeTitle">
-                  <!-- 점용기간 -->
-                  <div class="dateInputBox">
-                    <div class="dateInputWrap">
-                      <input
-                        type="date"
-                        data-placeholder="22/01/01"
-                        required
-                        aria-required="true" />
-                    </div>
-                    <span class="dateBar"></span>
-                    <div class="dateInputWrap">
-                      <input
-                        type="date"
-                        data-placeholder="22/12/31"
-                        required
-                        aria-required="true" />
-                    </div>
-                  </div>
-                </li>
-                <li class="content">
-                  <!-- 점용갱신주기 -->
-                  <input type="text" placeholder="1년" />
-                </li>
-                <li class="content selectContentArea">
-                  <!-- 신규등록사유 -->
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="masterEditSelectBox09"
-                      id="masterEditSelectBox09"
-                      hidden>
-                      <option value="선택">선택</option>
-                      <option value="사유지의 국유지 편입">
-                        사유지의 국유지 편입
-                      </option>
-                      <option value="ILI결과 발견지번">ILI결과 발견지번</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">선택</button>
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-                <li class="content selectContentArea">
-                  <!-- 허가증보유여부 -->
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="masterEditSelectBox10"
-                      id="masterEditSelectBox10"
-                      hidden>
-                      <option value="Y">Y</option>
-                      <option value="N">N</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">N</button>
+				<!-- 점용구분 -->
+				<li class="content selectContentArea">
+				  <div class="hiddenSelectBox">
+				    <!-- name도 추가 -->
+				    <select
+				      name="masterEditSelectBox08"
+				      id="masterEditSelectBox08"
+				      hidden>
+				      <option value="전체" th:selected="${resultData.gm_use_purpos == '전체'}">전체</option>
+				      <option value="공원부지점용" th:selected="${resultData.gm_use_purpos == '공원부지점용'}">공원부지점용</option>
+				      <option value="국유지사용" th:selected="${resultData.gm_use_purpos == '국유지사용'}">국유지사용</option>
+				      <option value="녹지점용" th:selected="${resultData.gm_use_purpos == '녹지점용'}">녹지점용</option>
+				      <option value="국유림점용" th:selected="${resultData.gm_use_purpos == '국유림점용'}">국유림점용</option>
+				      <option value="농업수자원부지사용" th:selected="${resultData.gm_use_purpos == '농업수자원부지사용'}">농업수자원부지사용</option>
+				      <option value="농업시설목적외사용" th:selected="${resultData.gm_use_purpos == '농업시설목적외사용'}">농업시설목적외사용</option>
+				      <option value="도로점용" th:selected="${resultData.gm_use_purpos == '도로점용'}">도로점용</option>
+				      <option value="고속도로점용" th:selected="${resultData.gm_use_purpos == '고속도로점용'}">고속도로점용</option>
+				      <option value="철도부지점용" th:selected="${resultData.gm_use_purpos == '철도부지점용'}">철도부지점용</option>
+				      <option value="하천점용" th:selected="${resultData.gm_use_purpos == '하천점용'}">하천점용</option>
+				      <option value="구거점용 등" th:selected="${resultData.gm_use_purpos == '구거점용 등'}">구거점용 등</option>
+				      <option value="항만시설사용" th:selected="${resultData.gm_use_purpos == '항만시설사용'}">항만시설사용</option>
+				      <option value="공유수면사용" th:selected="${resultData.gm_use_purpos == '공유수면사용'}">공유수면사용</option>
+				    </select>
+				  </div>
+				  <section class="customSelectBox">
+				    <!-- 버튼에 초기값 표시 -->
+				    <button class="customSelectView">[[${resultData.gm_use_purpos}]]</button>
 
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-                <li class="content selectContentArea">
-                  <!-- 점용료미납부사유 -->
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="masterEditSelectBox11"
-                      id="masterEditSelectBox11"
-                      hidden>
-                      <option value="선택">선택</option>
-                      <option value="영구 무상점용">영구 무상점용</option>
-                      <option value="소액 미청구">소액 미청구</option>
-                      <option value="관할관청의 미청구">
-                        관할관청의 미청구
-                      </option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">관할관청의 미청구</button>
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-                <li class="content checkboxWrap">
-                  <!-- 점용료 선납 여부 -->
-                  <input type="checkbox" id="masterEditSelectBox_Checkbox01" />
-                  <label for="masterEditSelectBox_Checkbox01"></label>
-                </li>
+				    <ul class="customSelectBtns">
+				      <!-- 버튼 리스트 생성 -->
+				      <li><button type="button" class="moreSelectBtn">전체</button></li>
+				      <li><button type="button" class="moreSelectBtn">공원부지점용</button></li>
+				      <li><button type="button" class="moreSelectBtn">국유지사용</button></li>
+				      <li><button type="button" class="moreSelectBtn">녹지점용</button></li>
+				      <li><button type="button" class="moreSelectBtn">국유림점용</button></li>
+				      <li><button type="button" class="moreSelectBtn">농업수자원부지사용</button></li>
+				      <li><button type="button" class="moreSelectBtn">농업시설목적외사용</button></li>
+				      <li><button type="button" class="moreSelectBtn">도로점용</button></li>
+				      <li><button type="button" class="moreSelectBtn">고속도로점용</button></li>
+				      <li><button type="button" class="moreSelectBtn">철도부지점용</button></li>
+				      <li><button type="button" class="moreSelectBtn">하천점용</button></li>
+				      <li><button type="button" class="moreSelectBtn">구거점용 등</button></li>
+				      <li><button type="button" class="moreSelectBtn">항만시설사용</button></li>
+				      <li><button type="button" class="moreSelectBtn">공유수면사용</button></li>
+				    </ul>
+				  </section>
+				</li>
+
+				<!-- 점용기간 -->				
+				<li class="content inputWrap dateLargeTitle">
+				  <div class="dateInputBox">
+				    <div class="dateInputWrap">
+				      <input
+				        type="date"
+				        data-placeholder="22/01/01"
+				        required
+				        aria-required="true"
+				        th:value="${resultData.gm_gover_st_date}" />
+				    </div>
+				    <span class="dateBar"></span>
+				    <div class="dateInputWrap">
+				      <input
+				        type="date"
+				        data-placeholder="22/12/31"
+				        required
+				        aria-required="true"
+				        th:value="${resultData.gm_gover_ed_date}" />
+				    </div>
+				  </div>
+				</li>
+
+				<!-- 점용갱신주기 -->				
                 <li class="content">
-                  <!-- 선납기한 -->
-                  <div class="dateInputWrap">
-                    <input
-                      type="date"
-                      data-placeholder="22/01/01"
-                      required
-                      aria-required="true" />
-                  </div>
+                  <input type="text" placeholder="1년" th:value="${resultData.gm_gover_period}"/>
                 </li>
+
+				<!-- 신규등록사유 -->				
+				<li class="content selectContentArea">
+				  <div class="hiddenSelectBox">
+				    <!-- name도 추가 -->
+				    <select
+				      name="masterEditSelectBox09"
+				      id="masterEditSelectBox09"
+				      hidden>
+				      <option value="선택" th:selected="${resultData.gm_newregreason == '선택'}">선택</option>
+				      <option value="사유지의 국유지 편입" th:selected="${resultData.gm_newregreason == '사유지의 국유지 편입'}">사유지의 국유지 편입</option>
+				      <option value="ILI결과 발견지번" th:selected="${resultData.gm_newregreason == 'ILI결과 발견지번'}">ILI결과 발견지번</option>
+				    </select>
+				  </div>
+				  <section class="customSelectBox">
+				    <button class="customSelectView">[[${resultData.gm_newregreason}]]</button>
+				    <ul class="customSelectBtns">
+				      <li><button type="button" class="moreSelectBtn">선택</button></li>
+				      <li><button type="button" class="moreSelectBtn">사유지의 국유지 편입</button></li>
+				      <li><button type="button" class="moreSelectBtn">ILI결과 발견지번</button></li>
+				    </ul>
+				  </section>
+				</li>
+
+				<!-- 허가증보유여부 -->				
+				<li class="content selectContentArea">
+				  <div class="hiddenSelectBox">
+				    <!-- name도 추가 -->
+				    <select
+				      name="masterEditSelectBox10"
+				      id="masterEditSelectBox10"
+				      hidden>
+				      <option value="Y" th:selected="${resultData.gm_permpossyn == 'Y'}">Y</option>
+				      <option value="N" th:selected="${resultData.gm_permpossyn == 'N'}">N</option>
+				    </select>
+				  </div>
+				  <section class="customSelectBox">
+				    <button class="customSelectView">[[${resultData.gm_permpossyn}]]</button>
+				    <ul class="customSelectBtns">
+				      <li><button type="button" class="moreSelectBtn">Y</button></li>
+				      <li><button type="button" class="moreSelectBtn">N</button></li>
+				    </ul>
+				  </section>
+				</li>
+
+				<!-- 점용료미납부사유 -->				
+				<li class="content selectContentArea">
+				  <div class="hiddenSelectBox">
+				    <!-- name도 추가 -->
+				    <select
+				      name="masterEditSelectBox11"
+				      id="masterEditSelectBox11"
+				      hidden>
+				      <option value="선택" th:selected="${resultData.gm_occunonpayreason == '선택'}">선택</option>
+				      <option value="영구 무상점용" th:selected="${resultData.gm_occunonpayreason == '영구 무상점용'}">영구 무상점용</option>
+				      <option value="소액 미청구" th:selected="${resultData.gm_occunonpayreason == '소액 미청구'}">소액 미청구</option>
+				      <option value="관할관청의 미청구" th:selected="${resultData.gm_occunonpayreason == '관할관청의 미청구'}">관할관청의 미청구</option>
+				    </select>
+				  </div>
+				  <section class="customSelectBox">
+				    <button class="customSelectView">[[${resultData.gm_occunonpayreason}]]</button>
+				    <ul class="customSelectBtns">
+				      <li><button type="button" class="moreSelectBtn">선택</button></li>
+				      <li><button type="button" class="moreSelectBtn">영구 무상점용</button></li>
+				      <li><button type="button" class="moreSelectBtn">소액 미청구</button></li>
+				      <li><button type="button" class="moreSelectBtn">관할관청의 미청구</button></li>
+				    </ul>
+				  </section>
+				</li>
+
+				<!-- 점용료 선납 여부 -->
+				<li class="content checkboxWrap">
+				  <input 
+				    type="checkbox" 
+				    id="masterEditSelectBox_Checkbox01"
+				    th:checked="${resultData.gm_occuprepayyn == 'Y'}" />
+				  <label for="masterEditSelectBox_Checkbox01"></label>
+				</li>
+
+				<!-- 선납기한 -->
+				<li class="content">
+				  <div class="dateInputWrap">
+				    <input
+				      type="date"
+				      data-placeholder="22/01/01"
+				      required
+				      aria-required="true"
+				      th:value="${resultData.gm_occuprepaydate}" />
+				  </div>
+				</li>
               </ul>
             </div>
           </div>
         </section>
+		
+		<!-- 소속 토지 정보 -->
+		
         <section class="landAdressInfo">
           <div class="subTitle">
             <div class="subTitleText">소속 토지 정보</div>
@@ -822,6 +906,8 @@ margin:10px;
           </div>
         </section>
 
+		<!-- 첨부파일 -->
+		
         <section class="attachFileInfo">
           <div class="subTitle">
             <div class="subTitleText">첨부파일</div>
@@ -841,6 +927,7 @@ margin:10px;
             </div>
           </div>
 
+		  <!-- 첨부파일 목록 -->
           <div class="contWrap">
             <div class="depth1">
               <ul class="titles titleScr">
@@ -856,357 +943,107 @@ margin:10px;
                 <li class="title fileNameWidth">파일명</li>
                 <li class="title">파일보기</li>
               </ul>
-              <div class="contentScr">
-                <ul class="contents">
-                  <li class="selectWidth content checkboxWrap">
-                    <input
-                      type="checkbox"
-                      id="masterEdit_attachFile01"
-                      name="masterEdit_attachFile" />
-                    <label for="masterEdit_attachFile01"></label>
-                  </li>
-                  <li class="content registDateWidth">
-                    <input
-                      type="text"
-                      placeholder="2024-03-31 15:40:01"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="파일명.pdf"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content viewBtnBox">
-                    <button class="viewDetailButton lightBlueBtn">보기</button>
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="selectWidth content checkboxWrap">
-                    <input
-                      type="checkbox"
-                      id="masterEdit_attachFile02"
-                      name="masterEdit_attachFile" />
-                    <label for="masterEdit_attachFile02"></label>
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2024-03-31 15:40:01"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="파일명.pdf"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content viewBtnBox">
-                    <button class="viewDetailButton lightBlueBtn">보기</button>
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="selectWidth content checkboxWrap">
-                    <input
-                      type="checkbox"
-                      id="masterEdit_attachFile03"
-                      name="masterEdit_attachFile" />
-                    <label for="masterEdit_attachFile03"></label>
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2024-03-31 15:40:01"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="파일명.pdf"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content viewBtnBox">
-                    <button class="viewDetailButton lightBlueBtn">보기</button>
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="selectWidth content checkboxWrap">
-                    <input
-                      type="checkbox"
-                      id="masterEdit_attachFile04"
-                      name="masterEdit_attachFile" />
-                    <label for="masterEdit_attachFile04"></label>
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2024-03-31 15:40:01"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="파일명.pdf"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content viewBtnBox">
-                    <button class="viewDetailButton lightBlueBtn">보기</button>
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="selectWidth content checkboxWrap">
-                    <input
-                      type="checkbox"
-                      id="masterEdit_attachFile05"
-                      name="masterEdit_attachFile" />
-                    <label for="masterEdit_attachFile05"></label>
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2024-03-31 15:40:01"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="파일명.pdf"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content viewBtnBox">
-                    <button class="viewDetailButton lightBlueBtn">보기</button>
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="selectWidth content checkboxWrap">
-                    <input
-                      type="checkbox"
-                      id="masterEdit_attachFile06"
-                      name="masterEdit_attachFile" />
-                    <label for="masterEdit_attachFile06"></label>
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2024-03-31 15:40:01"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="파일명.pdf"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content viewBtnBox">
-                    <button class="viewDetailButton lightBlueBtn">보기</button>
-                  </li>
-                </ul>
-              </div>
+			  
+			  <div class="contentScr">
+		          <!-- 첨부파일 목록 반복문 -->
+		          <ul class="contents" th:each="file, iterStat : ${atcFileList}">
+		            <li class="selectWidth content checkboxWrap">
+		              <input
+		                type="checkbox"
+		                th:id="'masterEdit_attachFile' + ${iterStat.index + 1}"
+		                name="masterEdit_attachFile" />
+		              <label th:for="'masterEdit_attachFile' + ${iterStat.index + 1}"></label>
+		            </li>
+		            <li class="content registDateWidth">
+		              <input
+		                type="text"
+		                th:value="${file.ga_wdate}"
+		                readonly
+		                class="notWriteInput" />
+		            </li>
+		            <li class="content fileNameWidth">
+		              <input
+		                type="text"
+		                th:value="${file.ga_file_nm}"
+		                readonly
+		                class="notWriteInput" />
+		            </li>
+		            <li class="content viewBtnBox">
+		              <a th:href="@{${file.ga_file_path}}" class="viewDetailButton lightBlueBtn" target="_blank">보기</a>
+		            </li>
+		          </ul>
+		        </div>
             </div>
           </div>
 
-          <!-- 추가 -->
+          <!-- 추가(버튼) -->
           <div class="btnWrap">
             <button class="attachFileBtn vividBlueBtn">선택파일 저장</button>
             <button class="attachFileBtn grayBtn">선택파일 삭제</button>
           </div>
         </section>
 
-        <!-- 변경이력 -->
+		<!-- 변경이력 -->
+		<section class="changeHistory">
+		  <div class="subTitle">
+		    <div class="subTitleText">변경이력</div>
+		  </div>
 
-        <section class="changeHistory">
-          <div class="subTitle">
-            <div class="subTitleText">변경이력</div>
-          </div>
-
-          <div class="contWrap">
-            <div class="contBox">
-              <div class="contentDetailBox">
-                <div class="depth1">
-                  <ul class="titles titleScr">
-                    <li class="title smallWidth">순번</li>
-                    <li class="title">변경일시</li>
-                    <li class="title">구분</li>
-                    <li class="title largeWidth">내용</li>
-                  </ul>
-                  <div class="contentScr">
-                    <ul class="contents">
-                      <li class="content smallWidth">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="1"
-                          readonly />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="2024-04-02 15:40:01"
-                          readonly />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="기본 정보"
-                          readonly />
-                      </li>
-                      <li class="content largeWidth">
-                        <input type="text" class="notWriteInput" readonly />
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content smallWidth">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="2"
-                          readonly />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="2024-04-02 15:40:01"
-                          readonly />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="허가 정보 및 납부 현황"
-                          readonly />
-                      </li>
-                      <li class="content largeWidth">
-                        <input type="text" class="notWriteInput" readonly />
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content smallWidth">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="3"
-                          readonly />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="2024-04-02 15:40:01"
-                          readonly />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="파일 정보"
-                          readonly />
-                      </li>
-                      <li class="content largeWidth">
-                        <input type="text" class="notWriteInput" readonly />
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content smallWidth">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="4"
-                          readonly />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="2024-04-02 15:40:01"
-                          readonly />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="파일 정보"
-                          readonly />
-                      </li>
-                      <li class="content largeWidth">
-                        <input type="text" class="notWriteInput" readonly />
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content smallWidth">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="5"
-                          readonly />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="2024-04-02 15:40:01"
-                          readonly />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="파일 정보"
-                          readonly />
-                      </li>
-                      <li class="content largeWidth">
-                        <input type="text" class="notWriteInput" readonly />
-                      </li>
-                    </ul>
-                    <ul class="contents lastContents">
-                      <li class="content smallWidth">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="6"
-                          readonly />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="2024-04-02 15:40:01"
-                          readonly />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          class="notWriteInput"
-                          placeholder="파일 정보"
-                          readonly />
-                      </li>
-                      <li class="content largeWidth">
-                        <input type="text" class="notWriteInput" readonly />
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+		  <div class="contWrap">
+		    <div class="contBox">
+		      <div class="contentDetailBox">
+		        <div class="depth1">
+		          <ul class="titles titleScr">
+		            <li class="title smallWidth">순번</li>
+		            <li class="title">변경일시</li>
+		            <li class="title">구분</li>
+		            <li class="title largeWidth">내용</li>
+		          </ul>
+		          <div class="contentScr">
+		            <!-- 변경이력 리스트를 반복문으로 출력 -->
+		            <ul class="contents" th:each="history, iterStat : ${goverModifyList}">
+		              <li class="content smallWidth">
+		                <!-- 순번 -->
+		                <input
+		                  type="text"
+		                  class="notWriteInput"
+		                  th:value="${iterStat.index + 1}"
+		                  readonly />
+		              </li>
+		              <li class="content">
+		                <!-- 변경일시 -->
+		                <input
+		                  type="text"
+		                  class="notWriteInput"
+		                  th:value="${history.modify_date}"
+		                  readonly />
+		              </li>
+		              <li class="content">
+		                <!-- 구분 -->
+		                <input
+		                  type="text"
+		                  class="notWriteInput"
+		                  th:value="${history.gubun}"
+		                  readonly />
+		              </li>
+		              <li class="content largeWidth">
+		                <!-- 내용 -->
+		                <input
+		                  type="text"
+		                  class="notWriteInput"
+		                  th:value="${history.cont}"
+		                  readonly />
+		              </li>
+		            </ul>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</section>
 
         <!-- 메모 -->
-
+		
         <section class="memoSection onlyReadMemo">
           <div class="subTitle">
             <div class="subTitleText">메모</div>

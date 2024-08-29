@@ -233,3 +233,18 @@ const masterEditExcelPopOpenEvet = () => {
 }
 
 masterEditExcelPopOpenEvet();
+
+// 선택된 버튼 값이 select 박스의 값으로 동기화되도록 JavaScript를 추가합니다.
+document.querySelectorAll('.moreSelectBtn').forEach(button => {
+    button.addEventListener('click', function() {
+        var selectedValue = button.textContent;
+        
+        // 버튼에 선택된 값 표시
+        var customSelectViewBtn = button.closest('.customSelectBox').querySelector('.customSelectView');
+        customSelectViewBtn.textContent = selectedValue;
+
+        // 숨겨진 select 태그의 값 업데이트
+        var selectBox = button.closest('.selectContentArea').querySelector('select');
+        selectBox.value = selectedValue;
+    });
+});
