@@ -972,8 +972,8 @@ public class jisangController {
 		Object count= mainService.selectCountQuery("jisangSQL.selectTotalCount", params);
 		int total=(int)count;
 
-		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangList",params);
-		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
+		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangList",params);
+		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
 		log.info("list:"+list);
 
 

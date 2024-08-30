@@ -69,7 +69,7 @@ const landRegInfoAddBtnEvent01 = () => {
     })
 
 }
-landRegInfoAddBtnEvent01();
+//landRegInfoAddBtnEvent01();
 
 // ul의 순번을 구하는 함수
 
@@ -243,7 +243,7 @@ const landRegInfoAddBtnEvent02 = () => {
     })
 
 }
-landRegInfoAddBtnEvent02();
+//landRegInfoAddBtnEvent02();
 
 // 파일 첨부시 모습 변경
 
@@ -337,7 +337,7 @@ const landRegFileEvent = () => {
     })
 
 }
-landRegFileEvent()
+//landRegFileEvent()
 
 /* 검색결과팝업 */
 // 검색결과 선택박스 포함된 팝업
@@ -461,6 +461,6 @@ const landRegExcelPopEvet = () => {
 
 }
 
-landRegExcelPopEvet();
+//landRegExcelPopEvet();
 
 

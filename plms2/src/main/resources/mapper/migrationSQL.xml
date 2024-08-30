@@ -257,7 +257,7 @@
 		  ,#{CANCLE_YN}
 		  </if>
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCLE_DATE)">
-		  ,date '1899-12-30'+#{CANCLE_DATE}::int
+		  ,TO_DATE(#{CANCLE_DATE},'MM/DD/YY')
 		  </if>
 		  ,#{CANCLE_NAME}
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCEL_EMPCD)">
@@ -267,10 +267,10 @@
 		  ,#{USE_PURPOS}
 		  </if>
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVER_ST_DATE)">
-		  ,date '1899-12-30'+#{GOVER_ST_DATE}::int
+		  ,TO_DATE(#{GOVER_ST_DATE},'MM/DD/YY')
 		  </if>
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVER_ED_DATE)">
-		  ,date '1899-12-30'+#{GOVER_ED_DATE}::int
+		  ,TO_DATE(#{GOVER_ED_DATE},'MM/DD/YY')
 		  </if>
 		  ,#{PMT_STATUS}
 		  ,#{DOCKEY},#{PMT_OFFICE},#{ADM_OFFICE},#{OFFICE_DEPART},#{OFFICE_CHARGE}
@@ -338,7 +338,10 @@
 		(
 		 
 		 jm_jisang_no, jm_sido_nm, jm_sgg_nm, jm_emd_nm, jm_ri_nm
-		 ,jm_jibun, jm_jisa
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JIBUN)" >
+		 ,jm_jibun
+		 </if>
+		 , jm_jisa
 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CHUIDEUK_DATE)">
 		 ,jm_chuideuk_date
 </if>
@@ -365,9 +368,12 @@
 		 ) 
 		 VALUES (
 		  #{JISANG_NO}, #{SIDO_NM}, #{SGG_NM}, #{EMD_NM}, #{RI_NM}
-		  ,#{JIBUN}, #{JISA}
+		   <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JIBUN)" >
+		  ,#{JIBUN}
+		  </if>
+		  , #{JISA}
 		   <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CHUIDEUK_DATE)" >
-		  ,date '1899-12-30'+#{CHUIDEUK_DATE}::int
+		  ,TO_DATE(#{CHUIDEUK_DATE},'MM/DD/YY')
 		  </if>
 		  ,NULLIF(cast(#{CHUIDEUK_MONEY} as varchar),'')::numeric 
 		  ,nullif(cast(#{JIJUK_AREA} as varchar),''):: integer
@@ -375,18 +381,18 @@
 		  ,nullif(cast(#{PYEONIB_AREA} as varchar),''):: numeric
 		  , #{USE_STATE}
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DEUNGGI_DATE)" >
-		  ,date '1899-12-30'+#{DEUNGGI_DATE}::int
+		  ,TO_DATE(#{DEUNGGI_DATE},'MM/DD/YY')
 		  </if>
 		  , #{DEUNGGI_NO}, #{DEUNGGISO}
 		  ,#{JASAN_NO}, #{CANCLE_YN}
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCLE_DATE)" >
-		  ,date '1899-12-30'+#{CANCLE_DATE}::int
+		  ,TO_DATE(#{CANCLE_DATE},'MM/DD/YY')
 		  </if>
 		  , #{CANCLE_EMPCD}, #{CANCLE_NAME}
 		  ,#{CANCLE_BOSANG_YN}
 		  ,nullif(cast(#{CANCLE_BOSANG_MONEY} as varchar),'')::numeric, #{GOVER_OWN_YN}, #{BUNHAL_YN}
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUNHAL_DATE)" >
-		  ,date '1899-12-30'+#{BUNHAL_DATE}::int
+		  ,TO_DATE(#{BUNHAL_DATE},'MM/DD/YY')
 		  </if>
 		  ,Now()
 		 
@@ -521,15 +527,15 @@
 		  ,NULLIF(cast(#{GOVER_AREA} as varchar),'')::numeric
 		 
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ST_DATE)" >
-		  ,date '1899-12-30'+#{PMT_ST_DATE}::int
+		  ,TO_DATE(#{PMT_ST_DATE},'MM/DD/YY')
 		  </if>
 		 
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ED_DATE)" >
-		  ,date '1899-12-30'+#{PMT_ED_DATE}::int
+		  ,TO_DATE(#{PMT_ED_DATE},'MM/DD/YY')
 		  </if>
 		  
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(NEXT_DATE)" >
-		  ,date '1899-12-30'+#{NEXT_DATE}::int
+		  ,TO_DATE(#{NEXT_DATE},'MM/DD/YY')
 		  </if>
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUSEO)" >
 		  ,#{BUSEO}
@@ -540,17 +546,16 @@
 		 
 		  ,#{PAY_WAY}
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PAY_DATE)" >
-		  ,date '1899-12-30'+#{PAY_DATE}::int
+		  ,TO_DATE(#{PAY_DATE},'MM/DD/YY')
 		  </if>
-		 ,NULLIF(cast(#{PAY_MONEY} as varchar),'')::numeric
-		  
-		  ,#{SEQ}
+		  ,NULLIF(regexp_replace(cast(#{PAY_MONEY} as VARCHAR),',|원','','g'),'')::numeric
+		  ,NULLIF(cast(#{SEQ} as varchar),'')::numeric
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(UPDATE_DATE)" >
-		  ,date '1899-12-30'+#{UPDATE_DATE}::int
+		  ,TO_DATE(#{UPDATE_DATE},'MM/DD/YY')
 		  </if>
 		
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_FIRST_DATE)" >
-		  ,date '1899-12-30'+#{PMT_FIRST_DATE}::int
+		  ,TO_DATE(#{PMT_FIRST_DATE},'MM/DD/YY')
 		  </if>
 		 ,NULLIF(cast(#{PMT_UNIT} as varchar),'')::varchar 
 		  ,NULLIF(cast(#{PMT_CNT} as varchar),'')::varchar
@@ -680,7 +685,118 @@
 		 )
 	
 	</insert>
+	<insert id="gover_permit2" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="gp_idx" keyProperty="gp_idx">
+		
+		INSERT INTO gover_permit
+		(
+		 gp_gover_no
+		 ,gp_pmt_no
+		 ,gp_pmt_name
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SISEOLNAME)" >
+		 ,gp_siseolname
+		 </if>
+		 ,gp_pmt_office
+		 ,gp_gover_length
+		 ,gp_gover_area
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ST_DATE)" >
+		 ,gp_pmt_st_date
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ED_DATE)" >
+		 ,gp_pmt_ed_date
+		 </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(NEXT_DATE)" >
+		 ,gp_next_date
+		 </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUSEO)" >
+		 ,gp_buseo
+		 </if>
+		 ,gp_nm
+		 ,gp_phone_number
+		 ,gp_pay_way
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PAY_DATE)" >
+		 ,gp_pay_date
+		 </if>
+		 ,gp_pay_money
+		 ,gp_seq
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(UPDATE_DATE)" >
+		 ,gp_update_date
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_FIRST_DATE)" >
+		 ,gp_pmt_first_date
+		 </if>
+		 ,gp_pmt_unit
+		 ,gp_pmt_cnt
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOSIPLAN)" >
+		 ,gp_dosiplan
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ECHO_NO)" >
+		 ,gp_echo_no
+		 </if>
+		 ,gp_dockey
+		 ,gp_adm_office
+		 ,gp_pay_vat
+		 
+		 ) 
+		 VALUES (
+		  #{GOVER_NO}
+		  ,#{PMT_NO}
+		  ,NULLIF(cast(#{PMT_NAME} as varchar),'')::varchar 
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SISEOLNAME)" >
+		  ,#{SISEOLNAME}
+		  </if>
+		  ,#{PMT_OFFICE}
+		  ,NULLIF(cast(#{GOVER_LENGTH} as varchar),'')::numeric
+		  ,NULLIF(cast(#{GOVER_AREA} as varchar),'')::numeric
+		 
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ST_DATE)" >
+		  ,TO_DATE(#{PMT_ST_DATE},'YY/MM/DD')
+		  </if>
+		 
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ED_DATE)" >
+		  ,TO_DATE(#{PMT_ED_DATE},'YY/MM/DD')
+		  </if>
+		  
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(NEXT_DATE)" >
+		  ,TO_DATE(#{NEXT_DATE},'YY/MM/DD')
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUSEO)" >
+		  ,#{BUSEO}
+		  </if>
+		  ,NULLIF(cast(#{NM} as varchar),'')::varchar
+		  
+		  ,NULLIF(cast(#{PHONE_NUMBER} as varchar),'')::varchar
+		 
+		  ,#{PAY_WAY}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PAY_DATE)" >
+		  ,TO_DATE(#{PAY_DATE},'YY/MM/DD')
+		  </if>
+		 ,NULLIF(replace(cast('404,040' as VARCHAR),',',''),'')::numeric
+		  
+		  ,#{SEQ}::numeric
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(UPDATE_DATE)" >
+		  ,TO_DATE(#{UPDATE_DATE},'YY/MM/DD')
+		  </if>
+		
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_FIRST_DATE)" >
+		  ,TO_DATE(#{PMT_FIRST_DATE},'YY/MM/DD')
+		  </if>
+		 ,NULLIF(cast(#{PMT_UNIT} as varchar),'')::varchar 
+		  ,NULLIF(cast(#{PMT_CNT} as varchar),'')::varchar
+		  
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOSIPLAN)" >
+		  ,#{DOSIPLAN}
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ECHO_NO)" >
+		  ,#{ECHO_NO}
+		  </if>
+		  ,NULLIF(cast(#{DOCKEY} as varchar),'')::varchar
+		  ,#{ADM_OFFICE}
+		  ,#{PAY_VAT}
+		  	 
+		  
+		 )
 	
+	</insert>
 	
 	<insert id="sigun" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="sm_idx" keyProperty="sm_idx">
 		

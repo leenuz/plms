@@ -173,6 +173,55 @@ $.ajax({
 }
 
 
+function isDate(value) {
+    // YYYY-MM-DD 형식 체크
+    var dateRegex = /^\d{2}-\d{2}-\d{2}$/;
+    return dateRegex.test(value) || !isNaN(Date.parse(value));
+}
+function isDate1(value) {
+    var parsedDate = Date.parse(value);
+    return !isNaN(parsedDate);
+}
+function isDate2(value) {
+    // YYYY-MM-DD 형식 체크
+    var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    return dateRegex.test(value);
+}
+
+//배열자체가 빈배열이 아니고 그 요소중에 빈값이 하나라도 있으면 true 반환.
+function isArrayEmpty(arr){
+     console.log("-----isArrayEmpty start------");
+    console.log(arr); 
+	var hasNull = false;
+	if (arr===null || arr===undefined || arr==""){
+			 console.log("--------arr null---------"); 	
+		 return false;
+	}
+	for (var i = 0; i < arr.length; i++) {
+	    if (arr[i] === null || arr[i]==="" || arr[i]===undefined) {
+	        hasNull = true;
+	        break;
+	    }
+	}
+	console.log(hasNull); 
+	 console.log("-----isArrayEmpty end------");
+	
+	return hasNull;
+}
+
+function getArrayEmptyCount(arr){
+	var hasNull =0;
+
+	for (var i = 0; i < arr.length; i++) {
+	    if (arr[i] === null || arr[i]==="" || arr[i]===undefined) {
+	        hasNull++;
+	        
+	    }
+	}
+	return hasNull;
+}
+
+
 $(document).on("change","#my_file_input",function(e){
 	console.log("start my_file_input");
 	 var files = e.target.files; //input file 객체를 가져온다.
@@ -191,39 +240,200 @@ $(document).on("change","#my_file_input",function(e){
  
            //바이너리 형태로 엑셀파일을 읽는다.
            var workbook = XLSX.read(data, {type: 'binary'});
+           var worksheet=workbook.Sheets[workbook.SheetNames[0]];
+           /* var i=0;
+           for (var cell in worksheet) {
+        	    if (worksheet.hasOwnProperty(cell) && cell[0] !== '!') { // 메타데이터 제외
+        	        worksheet[cell].t = 's'; // 셀 타입을 무조건 텍스트('s')로 설정
+        		}
+           } */
            
+           EXCEL_JSON = XLSX.utils.sheet_to_json(worksheet,{raw:false,cellDates:false});
            //엑셀파일의 시트 정보를 읽어서 JSON 형태로 변환한다.
-           workbook.SheetNames.forEach(function(item, index, array) {
+            workbook.SheetNames.forEach(function(item, index, array) {
 			    headers=get_header_row(workbook.Sheets[item]);
 			   console.log(headers);
+			   /* console.log(item);
+			   console.log(index);
+			   console.log(array);
+			   
                EXCEL_JSON = XLSX.utils.sheet_to_json(workbook.Sheets[item]);
-             // console.log(EXCEL_JSON);
+              console.log(EXCEL_JSON); */
               	
-           });//end. forEach
+           });//end. forEach */
            
            //excel 내용 header와 비교해서 공백이라 안넘어온 header 빈정보 삽입
-           for(j=0;j<headers.length;j++){
+            for(j=0;j<headers.length;j++){
 			  		for(jj=0;jj<EXCEL_JSON.length;jj++){
 						  
 						  if (!EXCEL_JSON[jj].hasOwnProperty(headers[j])){
 							  
 						//	console.log(jj+"="+headers[j]);
-							//console.log(EXCEL_JSON[jj]);
+							/* 
+							if (!isDate(EXCEL_JSON[jj].JIBUN)){
+								console.log(jj+":"+EXCEL_JSON[jj].JIBUN);
+							} */
 							EXCEL_JSON[jj][headers[j]]="";  
 						  }
 					  }	
 		   		}
-               
+           console.log(EXCEL_JSON);
+            if ($("#dbname").val()=="jisang_master"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+									
+									var txt=EXCEL_JSON[j].JIBUN;
+									var chuideuk_date=EXCEL_JSON[j].CHUIDEUK_DATE;
+									var deunggi_date=EXCEL_JSON[j].DEUNGGI_DATE;
+									var cancle_date=EXCEL_JSON[j].CANCLE_DATE;
+									var bunhal_date=EXCEL_JSON[j].BUNHAL_DATE;
+									
+									
+									
+									var arr=txt.split("/");
+									var chuideuk_date_arr=chuideuk_date.split("/");
+									var deunggi_date_arr=deunggi_date.split("/");
+									var cancle_date_arr=cancle_date.split("/");
+									var bunhal_date_arr=bunhal_date.split("/");
+									
+									
+									if (arr.length>1){
+										//console.log(j+":"+"true"+":"+txt);
+										EXCEL_JSON[j].JIBUN=arr[0]+"-"+arr[1];
+										//console.log(EXCEL_JSON[j]);
+									}
+									
+									if (chuideuk_date_arr[0]>12) EXCEL_JSON[j].CHUIDEUK_DATE=chuideuk_date_arr[1]+"/"+chuideuk_date_arr[2]+"/"+chuideuk_date_arr[0];
+									if (deunggi_date_arr[0]>12) EXCEL_JSON[j].DEUNGGI_DATE=deunggi_date_arr[1]+"/"+deunggi_date_arr[2]+"/"+deunggi_date_arr[0];
+									if (cancle_date_arr[0]>12) EXCEL_JSON[j].CANCLE_DATE=cancle_date_arr[1]+"/"+cancle_date_arr[2]+"/"+cancle_date_arr[0];
+									if (bunhal_date_arr[0]>12) EXCEL_JSON[j].BUNHAL_DATE=bunhal_date_arr[1]+"/"+bunhal_date_arr[2]+"/"+bunhal_date_arr[0];
+									/* if (j>70 && j<80){
+										
+										console.log(EXCEL_JSON[j]);
+										console.log(arr);
+										if (isDate(txt)) {
+											
+											console.log(j+":"+"true"+":"+txt);
+										}
+										else console.log(j+":"+"false"+":"+txt);
+									} */
+									
+				}
+			}
+            else if ($("#dbname").val()=="gover_master"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					
+					
+					var gover_st_date=EXCEL_JSON[j].GOVER_ST_DATE;
+					var gover_ed_date=EXCEL_JSON[j].GOVER_ED_DATE;
+					var cancle_date=EXCEL_JSON[j].CANCLE_DATE;
+					
+					
+					
+					
+					var gover_st_date_arr=gover_st_date.split("/");
+					var gover_ed_date_arr=gover_ed_date.split("/");
+					var cancle_date_arr=cancle_date.split("/");
+					
+					
+					
+					
+					if (gover_st_date_arr[0]>12) EXCEL_JSON[j].GOVER_ST_DATE=gover_st_date_arr[1]+"/"+gover_st_date_arr[2]+"/"+gover_st_date_arr[0];
+					if (gover_ed_date_arr[0]>12) EXCEL_JSON[j].GOVER_ED_DATE=gover_ed_date_arr[1]+"/"+gover_ed_date_arr[2]+"/"+gover_ed_date_arr[0];
+					if (cancle_date_arr[0]>12) EXCEL_JSON[j].CANCLE_DATE=cancle_date_arr[1]+"/"+cancle_date_arr[2]+"/"+cancle_date_arr[0];
+					
+					/* if (j>70 && j<80){
+						
+						console.log(EXCEL_JSON[j]);
+						console.log(arr);
+						if (isDate(txt)) {
+							
+							console.log(j+":"+"true"+":"+txt);
+						}
+						else console.log(j+":"+"false"+":"+txt);
+					} */
+					
+				} //end for
+            }else if ($("#dbname").val()=="gover_permit"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					
+					
+					var pmt_st_date=EXCEL_JSON[j].PMT_ST_DATE;
+					var pmt_ed_date=EXCEL_JSON[j].PMT_ED_DATE;
+					var next_date=EXCEL_JSON[j].NEXT_DATE;
+					var update_date=EXCEL_JSON[j].UPDATE_DATE;
+					var pmt_first_date=EXCEL_JSON[j].PMT_FIRST_DATE;
+					var pay_date=EXCEL_JSON[j].PAY_DATE;
+					
+					
+					
+					var pmt_st_date_arr=pmt_st_date.split("/");
+					var pmt_ed_date_arr=pmt_ed_date.split("/");
+					var next_date_arr=next_date.split("/");
+					var update_date_arr=update_date.split("/");
+					var pmt_first_date_arr=pmt_first_date.split("/");
+					var pay_date_arr=pay_date.split("/");
+					
+					
+					
+					/* if (j>130 && j<140){
+						console.log(EXCEL_JSON[j]);
+						console.log(EXCEL_JSON[j].PMT_FIRST_DATE);
+						console.log(pmt_first_date_arr.length);
+						console.log(pmt_first_date_arr);
+						console.log("pmt_st_date_arr:"+pmt_st_date_arr);
+						
+						if (isArrayEmpty(pmt_first_date_arr)) {
+							console.log(pmt_first_date_arr.length);
+							
+						}
+						console.log("0:"+pmt_first_date_arr[0]);
+						console.log("1:"+pmt_first_date_arr[1]);
+						console.log("2:"+pmt_first_date_arr[2]);
+					} */
+					
+					
+					if (pmt_st_date_arr[0]>12 ) EXCEL_JSON[j].PMT_ST_DATE=pmt_st_date_arr[1]+"/"+pmt_st_date_arr[2]+"/"+pmt_st_date_arr[0];
+					if (pmt_ed_date_arr[0]>12) EXCEL_JSON[j].PMT_ED_DATE=pmt_ed_date_arr[1]+"/"+pmt_ed_date_arr[2]+"/"+pmt_ed_date_arr[0];
+					if (next_date_arr[0]>12) EXCEL_JSON[j].NEXT_DATE=next_date_arr[1]+"/"+next_date_arr[2]+"/"+next_date_arr[0];
+					if (update_date_arr[0]>12) EXCEL_JSON[j].UPDATE_DATE=update_date_arr[1]+"/"+update_date_arr[2]+"/"+update_date_arr[0];
+					if (pmt_first_date_arr[0]>12) {
+							console.log("-----------------over-------------");
+							EXCEL_JSON[j].PMT_FIRST_DATE=pmt_first_date_arr[1]+"/"+pmt_first_date_arr[2]+"/"+pmt_first_date_arr[0];
+					}
+					if (pay_date_arr[0]>12) EXCEL_JSON[j].PAY_DATE=pay_date_arr[1]+"/"+pay_date_arr[2]+"/"+pay_date_arr[0];
+					
+					/* if (j>130 && j<140){
+						
+						console.log(EXCEL_JSON[j].PMT_FIRST_DATE);
+						
+					} */
+					/* if (j>70 && j<80){
+						
+						console.log(EXCEL_JSON[j]);
+						console.log(arr);
+						if (isDate(txt)) {
+							
+							console.log(j+":"+"true"+":"+txt);
+						}
+						else console.log(j+":"+"false"+":"+txt);
+					} */
+					
+				} //end for
+            }
+           	
+           
+                
            
            
-                 // console.log(EXCEL_JSON);
+                  console.log(EXCEL_JSON);
                 //  console.log(""+EXCEL_JSON.length);
-                 
+                // return;
                   //EXCEL_JSON.length
                  // for(i=0;i<10;i++){
 					 // console.log(EXCEL_JSON[i].ADDRESS+"|"+EXCEL_JSON[i].ZIPCODE);
 					   var allData={"exceljson":EXCEL_JSON,"dbname":$("#dbname").val()}
 					   console.log(allData);
+					  // return;
 					  $.ajax({
 
 					    url: "http://localhost:8080/data/migration",
