@@ -120,6 +120,7 @@ margin:10px;
     <div class="masterRegWrappers">
      
       <main id="masterReg">
+		<form id="saveForm" onSubmit="return false;">
         <div class="mainTitle">
           <h1>점용 마스터 등록</h1>
         </div>
@@ -145,8 +146,9 @@ margin:10px;
                 <li class="title">감면여부</li>
               </ul>
               <ul class="contents">
+				
+				<!-- 담당지사 -->
                 <li class="content selectContentArea">
-                  <!-- 담당지사 -->
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
@@ -171,6 +173,8 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				
+				<!-- 허가관청 -->
                 <li class="content largeTitle selectContentArea">
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
@@ -193,6 +197,8 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				
+				<!-- 관리기간 -->
                 <li class="content largeTitle selectContentArea">
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
@@ -211,15 +217,20 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				
+				<!-- 부서 -->
                 <li class="content largeTitle">
-                  <input type="text" />
+                  <input type="text" name="office_depart" />
                 </li>
+				<!-- 담당자 -->
                 <li class="content">
-                  <input type="text" />
+                  <input type="text" name="office_charege"/>
                 </li>
+				<!-- 연락처 -->
                 <li class="content largeTitle">
-                  <input type="text" />
+                  <input type="text" name="office_contact"/>
                 </li>
+				<!-- 용도 -->
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
@@ -242,6 +253,7 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				<!-- 관로명 -->
                 <li class="content largeTitle selectContentArea">
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
@@ -260,6 +272,7 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				<!-- 단/복선 -->
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
@@ -277,22 +290,23 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
-                <!-- 단선, 복선 -->
+                <!-- 관경 -->
                 <li class="content lineWrap inputArea">
                   <div class="doubleLine">
                     <div class="inputWrap">
-                      <input type="text" />
+                      <input type="text" name="pipe_meter"/>
                     </div>
                     <div class="inputWrap">
-                      <input type="text" />
+                      <input type="text" name="pipe_meter2"/>
                     </div>
                   </div>
                   <div class="singleLine">
                     <div class="inputWrap">
-                      <input type="text" />
+                      <input type="text"/>
                     </div>
                   </div>
                 </li>
+				<!-- 감면여부 -->
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
@@ -324,8 +338,8 @@ margin:10px;
                 <li class="title">선납기한</li>
               </ul>
               <ul class="contents">
+				<!-- 점용구분 -->
                 <li class="content selectContentArea">
-                  <!-- 점용구분 -->
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
@@ -357,11 +371,11 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				<!-- 점용기간 -->
                 <li class="content inputWrap dateLargeTitle">
-                  <!-- 점용기간 -->
                   <div class="dateInputBox">
                     <div class="dateInputWrap">
-                      <input
+                      <input name="gover_st_date"
                         type="date"
                         data-placeholder="24/01/01"
                         required
@@ -369,7 +383,7 @@ margin:10px;
                     </div>
                     <span class="dateBar"></span>
                     <div class="dateInputWrap">
-                      <input
+                      <input name="gover_ed_date"
                         type="date"
                         data-placeholder="24/01/01"
                         required
@@ -377,12 +391,12 @@ margin:10px;
                     </div>
                   </div>
                 </li>
+				<!-- 점용갱신주기 -->
                 <li class="content">
-                  <!-- 점용갱신주기 -->
-                  <input type="text" />
+                  <input type="text" name="gover_period"/>
                 </li>
+				<!-- 신규등록사유 -->
                 <li class="content selectContentArea">
-                  <!-- 신규등록사유 -->
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
@@ -401,8 +415,8 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				<!-- 허가증보유여부 -->
                 <li class="content selectContentArea">
-                  <!-- 허가증보유여부 -->
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
@@ -419,8 +433,8 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				<!-- 점용료미납부사유 -->
                 <li class="content selectContentArea">
-                  <!-- 점용료미납부사유 -->
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
@@ -440,13 +454,13 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				<!-- 점용료 선납 여부 -->
                 <li class="content checkboxWrap">
-                  <!-- 점용료 선납 여부 -->
-                  <input type="checkbox" id="masterRegSelectBox_Checkbox01" />
+                  <input type="checkbox" id="masterRegSelectBox_Checkbox01" name="occuprepayyn"/>
                   <label for="masterRegSelectBox_Checkbox01"></label>
                 </li>
+				<!-- 선납기한 -->
                 <li class="content">
-                  <!-- 선납기한 -->
                   <div class="dateInputWrap">
                     <input
                       type="date"
@@ -489,20 +503,20 @@ margin:10px;
                 <li class="title middleWidth">추가/삭제</li>
               </ul>
               <ul class="contents">
+				<!-- 순번 -->
                 <li class="content smallWidth">
-                  <!-- 순번 -->
                   <input
                     type="text"
                     class="notWriteInput"
                     readonly
                     placeholder="1" />
                 </li>
+				<!-- 관리기관 -->
                 <li class="content largeWidth selectContentArea">
-                  <!-- 관리기관 -->
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox12"
+                      name="adm_office"
                       id="masterRegSelectBox12"
                       hidden>
                       <option value="전체">전체</option>
@@ -526,12 +540,12 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				<!-- 국공유지 여부 -->
                 <li class="content middleWidth selectContentArea">
-                  <!-- 국공유지 여부 -->
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox13"
+                      name="gover_own_yn"
                       id="masterRegSelectBox13"
                       hidden>
                       <option value="국유지">국유지</option>
@@ -543,13 +557,13 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				<!-- 대표필지 -->
                 <li class="content checkboxWrap">
-                  <!-- 대표필지 -->
-                  <input type="checkbox" id="masterRegSelectBox_Checkbox02" />
+                  <input type="checkbox" id="masterRegSelectBox_Checkbox02" name=""/>
                   <label for="masterRegSelectBox_Checkbox02"></label>
                 </li>
+				<!-- 주소 -->
                 <li class="content addressInfoWidth">
-                  <!-- 주소 -->
                   <div class="addressData">
                     <input
                       type="text"
@@ -559,12 +573,12 @@ margin:10px;
                   </div>
                   <button class="searchAddressBtn">검색</button>
                 </li>
+				<!-- PNU -->
                 <li class="content middleWidth">
-                  <!-- PNU -->
                   <input type="text" />
                 </li>
+				<!-- 지목 -->
                 <li class="content selectContentArea">
-                  <!-- 지목 -->
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
@@ -588,16 +602,16 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				<!-- 점용연장 -->
                 <li class="content">
-                  <!-- 점용연장 -->
                   <input type="text" />
                 </li>
+				<!-- 점용면적 -->
                 <li class="content">
-                  <!-- 점용면적 -->
                   <input type="text" />
                 </li>
+				<!-- 관로일치 여부 -->
                 <li class="content middleWidth selectContentArea">
-                  <!-- 관로일치 여부 -->
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
@@ -621,6 +635,7 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
+				<!-- 보기 -->
                 <li class="content btnBox">
                   <button class="miniBtn lightBlueBtn viewDetailButton">
                     위치보기
@@ -826,9 +841,10 @@ margin:10px;
           <button class="newIssueBtn blueBorderBtn finalBtn">
             이슈신규생성
           </button>
-          <button class="draftSaveBtn lightBlueBtn finalBtn">임시저장</button>
+          <button class="draftSaveBtn lightBlueBtn finalBtn" id="draftSaveBtn">임시저장</button>
           <button class="requestBtn vividBlueBtn finalBtn">승인요청</button>
         </div>
+		</form>
       </main>
     </div>
     <div class="masterRegExcelPopWrapper"></div>
