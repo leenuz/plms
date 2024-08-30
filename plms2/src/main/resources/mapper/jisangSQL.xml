@@ -157,7 +157,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- selectBasicSearchList 지적정보에서 검색-->
 	<select id="selectBasicSearchList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *,(row_number() over()) as no 
-		FROM jijuk_master_2022 jm2
+		FROM jijuk_2024 jm2
 		WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
 		and jm2.sido_nm=#{sido_nm}
@@ -235,7 +235,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		END AS toji_plan
 		FROM jisang_master jm
 		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
-		LEFT JOIN jijuk_master_2022 jjm ON jjm.pnu= jm.jm_pnu
+		LEFT JOIN jijuk_2024 jjm ON jjm.pnu= jm.jm_pnu
 		WHERE 1 = 1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and jm.jm_jisa=#{jisa}
@@ -728,7 +728,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM jisang_master jm
 		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
 		LEFT JOIN jisang_bunhal jb ON jb.jb_jisang_no = jm.jm_jisang_no
-		LEFT JOIN jijuk_master_2022 jjm ON jjm.pnu= jm.jm_pnu
+		LEFT JOIN jijuk_2024 jjm ON jjm.pnu= jm.jm_pnu
 		WHERE 1 = 1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and jb.jb_jisa=#{jisa}
@@ -844,7 +844,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM jisang_master jm
 		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
 		LEFT JOIN jisang_bunhal jb ON jb.jb_jisang_no = jm.jm_jisang_no
-		LEFT JOIN jijuk_master_2022 jjm ON jjm.pnu= jm.jm_pnu
+		LEFT JOIN jijuk_2024 jjm ON jjm.pnu= jm.jm_pnu
 		WHERE 1 = 1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and jb.jb_jisa=#{jisa}

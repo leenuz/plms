@@ -28,12 +28,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="selectAddressList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<![CDATA[
-		select * from jijuk_master_2022 where juso like concat('%',#{address},'%')
+		select * from jijuk_2024 where juso like concat('%',#{address},'%')
 		]]>
 	</select>
 	<select id="selectLcodeList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<![CDATA[
-		select * from jijuk_master_2022 where bcode like concat(#{address},'%')
+		select * from jijuk_2024 where bcode like concat(#{address},'%')
 		]]>
 	</select>
 	<select id="getSidoMaster" parameterType="java.util.HashMap" resultType="java.util.HashMap">
