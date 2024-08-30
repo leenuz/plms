@@ -175,6 +175,7 @@ public class DataMigrationController {
           	else if (mapperName.equals("notset_master")) mainService.InsertQuery("migrationSQL.notsetMaster", param);
           	else if (mapperName.equals("gover_pnu")) mainService.InsertQuery("migrationSQL.goverPnu", param);
           	else if (mapperName.equals("gover_permit")) mainService.InsertQuery("migrationSQL.gover_permit", param);
+          	else if (mapperName.equals("gover_permit2")) mainService.InsertQuery("migrationSQL.gover_permit2", param);
           	else if (mapperName.equals("sigun")) mainService.InsertQuery("migrationSQL.sigun", param);
           	else if (mapperName.equals("bdong")) mainService.InsertQuery("migrationSQL.bdong", param);
           	else if (mapperName.equals("dosi_master")) mainService.InsertQuery("migrationSQL.dosi_master", param);
