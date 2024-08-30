@@ -66,8 +66,7 @@ window.addEventListener("load" , () => {
                 handleCheckboxes(dopcosurfaceInquire05);
             }
 			else if(pathName === `/gover/menu03_1`){
-			    return privateUseSelectEvet("#dopcoPrivateUse01 .privateUseSelectsTitleBtn" ,"#dopcoPrivateUse01 .sufaceSelectList"  ,"#dopcoPrivateUse01 .sufaceSelectList .surfaceSelectListMember" , ".privateUseHiddenSelect01", "inquireCheckCont01"),
-				surfaceInquireCheckboxes(inquireCheckCont01);
+			    return privateUseSelectEvet("#dopcoPrivateUse01 .privateUseSelectsTitleBtn" ,"#dopcoPrivateUse01 .sufaceSelectList"  ,"#dopcoPrivateUse01 .sufaceSelectList .surfaceSelectListMember" , ".privateUseHiddenSelect01", "inquireCheckCont01");
 			 }
 			else if(pathName === `/gover/masterEdit`){
  			   return privateUseSelectEvet("#masterEditWrappers .privateUseSelectsTitleBtn" ,"#masterEditWrappers .sufaceSelectList"  ,"#masterEditWrappers .sufaceSelectList .surfaceSelectListMember" , ".privateUseHiddenSelect01");

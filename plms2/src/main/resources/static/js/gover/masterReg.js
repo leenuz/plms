@@ -5,8 +5,6 @@ $(document).ready(function() {
   /*$('#jisa').niceSelect();*/
 //testAjax();
 //init_Table();
-loadDataTable("");
-
 });
 
 // '임시저장' 버튼 클릭 시, 폼 데이터를 로그로 출력

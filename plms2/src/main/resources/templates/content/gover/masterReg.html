@@ -152,7 +152,7 @@ margin:10px;
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox01"
+                      name="jisa"
                       id="masterRegSelectBox01"
                       hidden>
                       <option value="전체">전체</option>
@@ -179,7 +179,7 @@ margin:10px;
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox02"
+                      name="pmt_office"
                       id="masterRegSelectBox02"
                       hidden>
                       <option value="전체">전체</option>
@@ -235,7 +235,7 @@ margin:10px;
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox04"
+                      name="yongdo"
                       id="masterRegSelectBox04"
                       hidden>
                       <option value="선택">선택</option>
@@ -258,7 +258,7 @@ margin:10px;
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox05"
+                      name="pipe_name"
                       id="masterRegSelectBox05"
                       hidden>
                       <option value="전체">전체</option>
@@ -277,7 +277,7 @@ margin:10px;
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox06"
+                      name="sun_gubun"
                       id="masterRegSelectBox06"
                       hidden>
                       <option value="단선">단선</option>
@@ -294,7 +294,7 @@ margin:10px;
                 <li class="content lineWrap inputArea">
                   <div class="doubleLine">
                     <div class="inputWrap">
-                      <input type="text" name="pipe_meter"/>
+                      <input type="text" name="pipe_meter1"/>
                     </div>
                     <div class="inputWrap">
                       <input type="text" name="pipe_meter2"/>
@@ -302,7 +302,7 @@ margin:10px;
                   </div>
                   <div class="singleLine">
                     <div class="inputWrap">
-                      <input type="text"/>
+                      <input type="text" name="pipe_meter_single"/>
                     </div>
                   </div>
                 </li>
@@ -343,7 +343,7 @@ margin:10px;
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox08"
+                      name="user_purpos"
                       id="masterRegSelectBox08"
                       hidden>
                       <option value="전체">전체</option>
@@ -400,7 +400,7 @@ margin:10px;
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox09"
+                      name="newregreason"
                       id="masterRegSelectBox09"
                       hidden>
                       <option value="선택">선택</option>
@@ -420,7 +420,7 @@ margin:10px;
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox10"
+                      name="permpossyn"
                       id="masterRegSelectBox10"
                       hidden>
                       <option value="Y">Y</option>
@@ -438,7 +438,7 @@ margin:10px;
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox11"
+                      name="occunonpayreason"
                       id="masterRegSelectBox11"
                       hidden>
                       <option value="선택">선택</option>
@@ -462,7 +462,7 @@ margin:10px;
 				<!-- 선납기한 -->
                 <li class="content">
                   <div class="dateInputWrap">
-                    <input
+                    <input name="occuprepaydate"
                       type="date"
                       data-placeholder="24/01/01"
                       required
@@ -473,6 +473,9 @@ margin:10px;
             </div>
           </div>
         </section>
+		
+		<!-- 소속 토지 정보 -->
+		
         <section class="landAdressInfo">
           <div class="subTitle">
             <div class="subTitleText">소속 토지 정보</div>
@@ -559,13 +562,13 @@ margin:10px;
                 </li>
 				<!-- 대표필지 -->
                 <li class="content checkboxWrap">
-                  <input type="checkbox" id="masterRegSelectBox_Checkbox02" name=""/>
+                  <input type="checkbox" id="masterRegSelectBox_Checkbox02" name="rep_flag"/>
                   <label for="masterRegSelectBox_Checkbox02"></label>
                 </li>
 				<!-- 주소 -->
                 <li class="content addressInfoWidth">
                   <div class="addressData">
-                    <input
+                    <input name="주소"
                       type="text"
                       class="notWriteInput"
                       readonly
@@ -575,14 +578,14 @@ margin:10px;
                 </li>
 				<!-- PNU -->
                 <li class="content middleWidth">
-                  <input type="text" />
+                  <input type="text" name="pnu"/>
                 </li>
 				<!-- 지목 -->
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox14"
+                      name="jimok_text"
                       id="masterRegSelectBox14"
                       hidden>
                       <option value="전1">전1</option>
@@ -604,18 +607,18 @@ margin:10px;
                 </li>
 				<!-- 점용연장 -->
                 <li class="content">
-                  <input type="text" />
+                  <input type="text" name="gover_length"/>
                 </li>
 				<!-- 점용면적 -->
                 <li class="content">
-                  <input type="text" />
+                  <input type="text" name="gover_area"/>
                 </li>
 				<!-- 관로일치 여부 -->
                 <li class="content middleWidth selectContentArea">
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox15"
+                      name="관로일치 여부"
                       id="masterRegSelectBox15"
                       hidden>
                       <option value="지사선택필요1">지사선택필요1</option>
