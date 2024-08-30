@@ -481,8 +481,8 @@ public class jisangController {
       			mav.setViewName("content/jisang/groundDetail");
       			return mav;
     }
-	@GetMapping(path="/groundDetail2") //http://localhost:8080/api/get/dbTest
-	public ModelAndView groundDetail2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+	@GetMapping(path="/forDivisionEasementDetails") //http://localhost:8080/api/get/dbTest
+	public ModelAndView forDivisionEasementDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 		ModelAndView mav=new ModelAndView();
@@ -534,7 +534,7 @@ public class jisangController {
 		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
 		mav.addObject("memoList",jisangMemoList);
 		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
-		mav.setViewName("content/jisang/groundDetail2");
+		mav.setViewName("content/jisang/forDivisionEasementDetails");
 		return mav;
 	}
 	
@@ -1016,14 +1016,14 @@ public class jisangController {
 		String[] order_cols=req.getParameterValues("order");
 
 		String jisa = req.getParameter("jisa");
-		
+
 		String address=req.getParameter("saddr");
 		String jibun = req.getParameter("jibun");
 		String souja = req.getParameter("souja");
 		String jasan_no = req.getParameter("jasan_no");
 		String status = req.getParameter("status");
-		
-		
+
+
 		Map map=req.getParameterMap();
 
 		HashMap params = new HashMap();
@@ -1153,28 +1153,34 @@ public class jisangController {
 
 	}
 
-	@GetMapping(path="/forDivisionEasementDetails") //http://localhost:8080/api/get/dbTest
-	public ModelAndView forDivisionEasementDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+	@GetMapping(path="/divisionRegister") //http://localhost:8080/api/get/dbTest
+	public ModelAndView divisionRegister(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		HashMap params = new HashMap();
 		ArrayList<HashMap>  list=new ArrayList<HashMap>();
 
 		String idx = httpRequest.getParameter("idx");
 		String index = httpRequest.getParameter("index");
+		String js_idx = httpRequest.getParameter("js_idx") != null ? httpRequest.getParameter("js_idx") : "0";
 
 		params.put("idx",idx);
 		params.put("manage_no",idx);
 		params.put("index",index);
+		params.put("js_idx",js_idx);
+
+		log.info("**params**" + params);
 
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+		ArrayList<HashMap> jibunList = mainService.selectQuery("jisangSQL.selectJibunList",params);
 
 		ModelAndView mav=new ModelAndView();
 
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("soujaList",soujaList);
-
+		mav.addObject("jibunList",jibunList);
+		log.info("resultData:"+ data.get(0));
 		log.info("soujaList:"+soujaList);
-		mav.setViewName("content/jisang/forDivisionEasementDetails");
+		mav.setViewName("content/jisang/divisionRegister");
 		return mav;
 	}
 	@PostMapping(path="/landTerminationSave")
@@ -1392,7 +1398,41 @@ public class jisangController {
       			mav.setViewName("content/jisang/usePermitRegister");
       			return mav;
     }
-	
+	@PostMapping(path="/getJibunAddress") //http://localhost:8080/api/get/dbTest
+	public ModelAndView getJibunAddress(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		//log.info("httpRequest:"+Arrays.toString(httpRequest));
+
+		String address=httpRequest.getParameter("address");
+		String sido_nm = httpRequest.getParameter("sido_nm");	//주소
+		String sgg_nm = httpRequest.getParameter("sgg_nm");	//주소
+		String emd_nm = httpRequest.getParameter("emd_nm");	//주소
+		String ri_nm = httpRequest.getParameter("ri_nm");	//주소
+		String jibun = httpRequest.getParameter("jibun");	//주소
+		String pnu = httpRequest.getParameter("pnu");
+
+		if (ri_nm != null) {
+			params.put("ri_nm",ri_nm);
+		} else {
+			params.put("ri_nm", "");
+		}
+
+		params.put("address", address);
+		params.put("sido_nm",sido_nm);
+		params.put("sgg_nm",sgg_nm);
+		params.put("emd_nm",emd_nm);
+		params.put("ri_nm",ri_nm);
+		params.put("jibun", jibun);
+		params.put("pnu", pnu);
+
+		log.info("params:"+params);
+		ArrayList<HashMap> addressList = mainService.selectQuery("jisangSQL.bunhalAddressSearch",params);
+		mav.addObject("addressList",addressList);
+		mav.setViewName("content/jisang/divisionRegister :: #searchResultPopDiv");
+		return mav;
+	}
 	
 	@GetMapping(path="/usePermitDetail") //http://localhost:8080/api/get/dbTest
     public ModelAndView usePermitDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {

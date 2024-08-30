@@ -29,7 +29,8 @@ $(document).on("click",".bunhalBtn",function(){
      const urlParams = new URL(location.href).searchParams;
       const idx = urlParams.get('idx');
       const index = urlParams.get('index');
-	  url = "/jisang/forDivisionEasementDetails?idx=" + idx + "&index=" + index ;
+       const js_idx = urlParams.get('js_idx');
+	  url = "/jisang/divisionRegister?idx=" + idx + "&index=" + index + "&js_idx=" + js_idx ;
       window.location = url;
 });
 

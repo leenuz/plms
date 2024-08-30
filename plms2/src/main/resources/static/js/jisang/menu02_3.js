@@ -431,8 +431,8 @@ function loadDataTable(params){
 
                        }
                     } else {
-
-                        url = "/jisang/groundDetail2?idx=" + data.idx+"&index=" +data.index;
+                        js_idx = data.js_idx != null? data.js_idx : "";
+                        url = "/jisang/forDivisionEasementDetails?idx=" + data.idx+"&index=" +data.index +"&js_idx="+js_idx;
                         window.location = url;
                     }
 											   

@@ -2,38 +2,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-
+      
       layout:decorate="~{layout/default_layout}">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  
 
-  <link
-          rel="stylesheet"
-          as="style"
-          crossorigin
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
 
-  <link th:href="@{/css/common.css}" rel="stylesheet" />
-
-  <link rel="stylesheet" href="/css/jisang/forDivisionEasementDetails.css" />
-  <link rel="stylesheet" href="/css/jisang/write.css">
-  <!-- <script src="/js/jisang/groundDetail.js"></script> -->
-  <script src="/js/common/upload.js"></script>
-  <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-  <style>
-    div.dt-top-container {
-display: grid;
-grid-template-columns: auto auto auto;
+ 
+  
+   
+  
+	  <link th:href="@{/css/common.css}" rel="stylesheet" />
+	
+ <link rel="stylesheet" href="/css/menu01/groundDetail.css">
+ <link rel="stylesheet" href="/css/jisang/write.css">
+		<!-- <script src="/js/jisang/groundDetail.js"></script> -->
+			<script src="/js/common/upload.js"></script>
+		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
+		<style>
+		div.dt-top-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
 }
 
 div.dt-center-in-div {
-margin: 0 auto;
-  float: right;
-margin-right: 30px;
-
+  margin: 0 auto;
+      float: right;
+    margin-right: 30px;
+   
 }
 div.dt-center-in-div>div{
 
@@ -41,8 +47,8 @@ display:inline;
 }
 
 div.dt-filter-spacer {
-margin: 10px 0;
-border:1px solid red;
+  margin: 10px 0;
+  border:1px solid red;
 }
 
 
@@ -85,23 +91,23 @@ text-align: center;
 }
 
 .dt-paging-button {
-box-sizing: border-box;
-display: inline-block;
-min-width: 1.5em;
-padding: 0.5em 1em;
-margin-left: 2px;
-text-align: center;
-text-decoration: none !important;
-cursor: pointer;
-
-border: 1px solid transparent;
-border-radius: 2px;
-background: transparent;
-color: #007bff !important;
-font-size: 15px;
-font-weight: 600;
-
-
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: #007bff !important;
+    font-size: 15px;
+    font-weight: 600;
+    
+    
 }
 
 .bottom{
@@ -117,627 +123,850 @@ margin:10px;
 
 
 .ol-unselectable{
-border:1px solid red;
+ border:1px solid red;
 }
 #map {
-clear: both;
-position: relative;
-width: 100% !important;
-height: 214px;
-border: 1px solid black;
+    clear: both;
+    position: relative;
+    width: 100% !important;
+    height: 214px;
+    border: 1px solid black;
 }
-  </style>
-
-  <title>지상권</title>
-</head>
+		</style>
+		
+    <title>지상권</title>
+  </head>
 <th:block layout:fragment="content">
-  <div class="divisionRegisterWrappers">
-    <main id="divisionRegister">
-
-      <div class="mainTitle">
-        <h1>지상권 분할 등록</h1>
-      </div>
-
-      <!-- 대상토지 -->
-      <section class="targetLand">
-        <div class="subTitle">
-          대상토지
+     <div class="groundDetailWrappers">
+        <!--header삽입-->
+    
+    <main id="groundDetail">
+        
+        <div class="mainTitle">
+            <h1>지상권 상세정보</h1>
         </div>
 
-        <div class="contWrap">
+        <section class="basicOwnerInfo">
+            <div class="subTitle">
+                기본/소유자 정보
+            </div>
+			
+            <div class="contWrap">
+				
+                <div class="contBox contBoxMini01">
+				<div class="thirdTitle" style="width:100%;">
+					<div style="display:inline-block;"><h2>・참고 지적도</h2></div>
+					<div style="display:inline-block;float:right;"><button class="viewDetailButton" id="moveMap">이동</button></div>
+					<div style="display:inline-block;float:right;"><button class="viewDetailButton" id="jijukNewWindowBtn">크게보기</button></div>
+				</div>
+                   <iframe src="http://10.168.0.247:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17" class="contentDetailBox mapFigure"></iframe>
+					<!-- <iframe src="http://211.196.153.235:7070/geoserver/dopcogis/wms?service=WMS&version=1.1.1&request=GetMap&layers=dopcogis%3Adxf_test&bbox=128.48537837663474,35.926544471907825,128.48578475095366,35.927040257710196&width=660&height=214&srs=EPSG%3A4326&styles=&format=application/openlayers" class="contentDetailBox mapFigure"></iframe> -->
+                    <!--  <div class="contentDetailBox mapFigure"></div> -->
 
-          <div class="depth1">
-            <ul class="titles">
-              <li class="title numInfoWidth">지상권번호</li>
-              <li class="title addressInfoWidth">주소</li>
-              <li class="title titleBox ">
-                지상권설정
-                <ul class="secondTitles">
-                  <li class="secondTitle">지목</li>
-                  <li class="secondTitle">지적면적</li>
-                  <li class="secondTitle">편입면적</li>
-                  <li class="secondTitle">자산번호</li>
-                </ul>
-              </li>
-              <li class="title">소유자</li>
-              <li class="title">회계처리필요여부*</li>
-            </ul>
-            <ul class="contents lastContents">
-              <li class="content numInfoWidth">
-                <input type="text" th:placeholder="${resultData.jm_jisang_no}" readonly class="notWriteInput">
-              </li>
-              <li class="content addressInfoWidth">
-                <input type="text" th:placeholder="${resultData.address}" readonly class="notWriteInput">
-              </li>
-              <li class="content contentBox">
-                <ul class="secondContents">
-                  <li class="secondContent">
-                    <input type="text" th:placeholder="${resultData.jm_jimok_text ?: ''}" readonly class="notWriteInput">
-                  </li>
-                  <li class="secondContent">
-                    <input type="text" th:placeholder="${resultData.jm_jijuk_area}" readonly class="notWriteInput">
-                  </li>
-                  <li class="secondContent">
-                    <input type="text" th:placeholder="${resultData.jm_pyeonib_area}" readonly class="notWriteInput">
-                  </li>
-                  <li class="secondContent">
-                    <input type="text" th:placeholder="${resultData.jm_jasan_no}" readonly class="notWriteInput">
-                  </li>
-                </ul>
-              </li>
-              <li class="content" th:each="souja : ${soujaList}">
-                <input type="text" th:placeholder="${souja.js_souja_name?: ''}" readonly class="notWriteInput">
-              </li>
-              <li class="content selectContentArea">
-                <div class="hiddenSelectBox">
-                  <!-- name도 추가 -->
-                  <select name="divisionRegistSelectBox01" id="divisionRegistSelectBox01" hidden>
-                    <option value="Y">Y</option>
-                    <option value="N">N</option>
-                  </select>
-                </div>
-                <section class="customSelectBox" th:data-selected="${resultData.jm_account_yn}">
-                  <button class="customSelectView">Y</button>
-                  <ul class="customSelectBtns">
-                  </ul>
-                </section>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- 토지분할 -->
-      <section class="landDivision">
-        <div class="subTitle">
-          토지분할
-        </div>
-
-        <div class="contWrap">
-
-          <div class="depth1">
-            <ul class="titles">
-              <li class="title numInfoWidth">순번</li>
-              <li class="title middleWidth">지상권번호</li>
-              <li class="title addressInfoWidth">주소</li>
-              <li class="title middleWidth">토지유형*</li>
-              <li class="title titleBox">
-                지상권설정
-                <ul class="secondTitles">
-                  <li class="secondTitle">지목*</li>
-                  <li class="secondTitle">지적면적*</li>
-                  <li class="secondTitle">편입면적*</li>
-                  <li class="secondTitle">자산번호</li>
-                </ul>
-              </li>
-              <li class="title">관로저촉</li>
-              <li class="title">해지여부</li>
-              <li class="title">자료승계</li>
-              <li class="title middleWidth">위치보기</li>
-              <li class="title middleWidth">회계처리필요여부*</li>
-              <li class="title titleBtnWrap">추가/삭제</li>
-            </ul>
-            <ul class="contents ">
-              <li class="content numInfoWidth">
-                <input type="text" placeholder="1" readonly class="notWriteInput">
-              </li>
-              <li class="content middleWidth">
-                <input type="text" th:placeholder="${resultData.jm_jisang_no}" readonly class="notWriteInput">
-              </li>
-              <li class="content addressInfoWidth">
-                <div class="addressData">
-                  <input type="text" th:placeholder="${resultData.address}" readonly class="notWriteInput">
-                </div>
-                <button class="searchAddressBtn">검색</button>
-              </li>
-              <li class="content middleWidth selectContentArea">
-                <div class="hiddenSelectBox">
-                  <!-- name도 추가 -->
-                  <select name="divisionRegistSelectBox02" id="divisionRegistSelectBox02" hidden>
-                    <option value="선택1">선택1</option>
-                    <option value="선택2">선택2</option>
-                    <option value="선택3">선택3</option>
-                    <option value="선택4">선택4</option>
-                    <option value="선택5">선택5</option>
-                    <option value="선택6">선택6</option>
-                    <option value="선택7">선택7</option>
-                    <option value="선택8">선택8</option>
-                    <option value="선택9">선택9</option>
-                    <option value="선택10">선택10</option>
-                  </select>
-                </div>
-                <section class="customSelectBox">
-                  <button class="customSelectView">
-                    선택
-                  </button>
-
-                  <ul class="customSelectBtns">
-                    <!-- createCustomLiDivisionRegist(); -->
-                  </ul>
-                </section>
-              </li>
-              <li class="content contentBox">
-                <ul class="secondContents">
-                  <li class="secondContent"><input type="text" id="jimok_text"></li>
-                  <li class="secondContent"><input type="text" id="jijuk_area"></li>
-                  <li class="secondContent"><input type="text" id="pyeonib_area"></li>
-                  <li class="secondContent"><input type="text" id="jasan_no"></li>
-                </ul>
-              </li>
-              <li class="content">
-                <input type="checkbox" name="divisionRegisterPipeLineInterferenceNameHere01" id="divisionRegister_pipeline_interference_01">
-                <label for="divisionRegister_pipeline_interference_01"></label>
-              </li>
-              <li class="content">
-                <input type="checkbox" name="divisionRegisterTerminationStatusNameHere01" id="divisionRegister_termination_status_01">
-                <label for="divisionRegister_termination_status_01"></label>
-              </li>
-              <li class="content">
-                <input type="checkbox" name="divisionRegisterDataSuccessionNameHere01" id="divisionRegister_data_succession_01">
-                <label for="divisionRegister_data_succession_01"></label>
-              </li>
-              <li class="content middleWidth">
-                <button class="viewDetailButton">위치보기</button>
-              </li>
-              <li class="content middleWidth selectContentArea">
-                <div class="hiddenSelectBox">
-                  <!-- name도 추가 -->
-                  <select name="divisionRegistSelectBox03" id="divisionRegistSelectBox03" hidden>
-                    <option value="Y">Y</option>
-                    <option value="N">N</option>
-                  </select>
-                </div>
-                <section class="customSelectBox">
-                  <button class="customSelectView">
-                    &#160
-                  </button>
-
-                  <ul class="customSelectBtns">
-                    <!-- createCustomLiDivisionRegist(); -->
-                  </ul>
-                </section>
-              </li>
-              <li class="content titleBtnWrap btnBox">
-                <!-- 수정하지 않을 때 -->
-
-                <div class="editBefore">
-                  <div class="btnWrap">
-                    <button class="addBtn miniBtn">추가</button>
-                  </div>
-                  <div class="btnWrap">
-                    <button class="delBtn miniBtn">삭제</button>
-                  </div>
                 </div>
 
-                <!-- 수정할 때 -->
+                <div class="contBox contBoxMini02">
 
-                <div class="editAfter">
-                  <div class="newBtnWrap">
-                    <button class="registBtn miniBtn">추가</button>
-                  </div>
+                    <div class="thirdTitle">
+                        <h2>・기본 정보</h2>
+                    </div>
+
+                    <div class="contentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title01 title">지상권번호</li>
+                                <li class="title02 title">담당지사</li>
+                                <li class="title03 title">관로일치여부</li>
+                                <li class="title04 title">용도</li>
+                                <li class="title05 title">관로명(구간)</li>
+                                <li class="title06 title">단/복선</li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="content01 content">
+                                <input type="hidden" name="manage_no" id="manage_no" th:value="${resultData.jm_jisang_no}"/>
+                                <input type="hidden" name="pnu" id="pnu" th:value="${resultData.jm_pnu}"/>
+                                   [[${resultData.jm_jisang_no}]]
+                                </li>
+                                <li class="content02 content">
+                                   [[${resultData.jm_jisa}]]
+                                </li>
+                                <li class="content03 content">
+                               		[[${resultData.jm_pipe_yn}]]
+                                 
+                                </li>
+                                <li class="content04 content">
+                                    [[${resultData.jm_yongdo}]]
+                                </li>
+                                <li class="content05 content">
+                                    [[${resultData.jm_pipe_name}]]
+                                </li>
+                                <li class="content06 content">
+                                    [[${resultData.jm_sun_gubun}]]
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="depth2">
+                            <ul class="titles">
+                                <li class="title01 title">주소</li>
+                                <li class="title02 title">지적면적(m²)</li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="content01 content">
+                                    [[${resultData.address}]]
+                                </li>
+                                <li class="content02 content">
+                                    [[${resultData.jm_jijuk_area}]]
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="depth3">
+                            <ul class="titles">
+                                <li class="title01 title">지목</li>
+                                <li class="title02 title">회계처리 필요여부</li>
+                                <li class="title03 title">토지개발대상</li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="content01 content">
+                                    [[${resultData.jm_jimok_text}]]
+                                </li>
+                                <li class="content02 content">
+                                    N
+                                </li>
+                                <li class="content02 content">
+                                    <button class="viewDetailButton">상세보기</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
-              </li>
-            </ul>
-            <ul class="contents lastContents">
-              <li class="content numInfoWidth">
-                <input type="text" placeholder="2" readonly class="notWriteInput">
-              </li>
-              <li class="content middleWidth"><input type="text" placeholder="신규" readonly class="notWriteInput"></li>
-              <li class="content addressInfoWidth">
-                <div class="addressData">  <input type="text" th:placeholder="${resultData.address}" readonly class="notWriteInput"></div>
-                <button class="searchAddressBtn">검색</button>
-              </li>
-              <li class="content middleWidth selectContentArea">
-                <div class="hiddenSelectBox">
-                  <!-- name도 추가 -->
-                  <select name="divisionRegistSelectBox04" id="divisionRegistSelectBox04" hidden>
-                    <option value="선택1">선택1</option>
-                    <option value="선택2">선택2</option>
-                    <option value="선택3">선택3</option>
-                    <option value="선택4">선택4</option>
-                    <option value="선택5">선택5</option>
-                    <option value="선택6">선택6</option>
-                    <option value="선택7">선택7</option>
-                    <option value="선택8">선택8</option>
-                    <option value="선택9">선택9</option>
-                    <option value="선택10">선택10</option>
-                  </select>
-                </div>
-                <section class="customSelectBox">
-                  <button class="customSelectView">
-                    선택
-                  </button>
+                <div class="contBox contBoxMini03">
 
-                  <ul class="customSelectBtns">
-                    <!-- createCustomLiDivisionRegist(); -->
-                  </ul>
-                </section>
-              </li>
-              <li class="content contentBox">
-                <ul class="secondContents">
-                  <li class="secondContent"><input type="text"></li>
-                  <li class="secondContent"><input type="text"></li>
-                  <li class="secondContent"><input type="text"></li>
-                  <li class="secondContent"><input type="text"></li>
-                </ul>
-              </li>
-              <li class="content">
-                <input type="checkbox" name="divisionRegisterPipeLineInterferenceNameHere02" id="divisionRegister_pipeline_interference_02">
-                <label for="divisionRegister_pipeline_interference_02"></label>
-              </li>
-              <li class="content">
-                <input type="checkbox" name="divisionRegisterTerminationStatusNameHere02" id="divisionRegister_termination_status_02">
-                <label for="divisionRegister_termination_status_02"></label>
-              </li>
-              <li class="content">
-                <input type="checkbox" name="divisionRegisterDataSuccessionNameHere02" id="divisionRegister_data_succession_02">
-                <label for="divisionRegister_data_succession_02"></label>
-              </li>
-              <li class="content middleWidth">
-                <button class="viewDetailButton">위치보기</button>
-              </li>
-              <li class="content middleWidth selectContentArea">
-                <div class="hiddenSelectBox">
-                  <!-- name도 추가 -->
-                  <select name="divisionRegistSelectBox05" id="divisionRegistSelectBox05" hidden>
-                    <option value="Y1">Y1</option>
-                    <option value="Y2">Y2</option>
-                    <option value="Y3">Y3</option>
-                    <option value="Y4">Y4</option>
-                    <option value="Y5">Y5</option>
-                    <option value="Y6">Y6</option>
-                    <option value="Y7">Y7</option>
-                    <option value="Y8">Y8</option>
-                    <option value="Y9">Y9</option>
-                    <option value="Y10">Y10</option>
-                  </select>
-                </div>
-                <section class="customSelectBox">
-                  <button class="customSelectView">
-                    &#160
-                  </button>
+                    <div class="thirdTitle">
+                        <h2>・소유자 정보</h2>
+                    </div>
 
-                  <ul class="customSelectBtns">
-                    <!-- createCustomLiDivisionRegist(); -->
-                  </ul>
-                </section>
-              </li>
-              <li class="content titleBtnWrap btnBox">
-                <!-- 수정하지 않을 때 -->
+                    <div class="contentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title01 title">순번</li>
+                                <li class="title02 title">공유지분</li>
+                                <li class="title02 title">성명</li>
+                                <li class="title04 title">주소</li>
+                                <li class="title05 title">연락처 1</li>
+                                <li class="title05 title">연락처 2</li>
+                            </ul>
+                            <ul class="contents" th:each="val:${soujaList}">
+                            	
+                            
+                                <li class="content01 content">
+                                    [[${val.no}]]
+                                </li>
+                                <li class="content02 content">
+                                   [[${val.js_jibun}]]
+                                </li>
+                                <li class="content02 content">
+                                    [[${val.js_souja_name}]]
+                                </li>
+                                <li class="content04 content">
+                                    [[${val.js_address}]]
+                                </li>
+                                <li class="content05 content">
+                                    [[${val.js_home_number}]]
+                                </li>
+                                <li class="content05 content">
+                                    [[${val.js_phone_number}]]
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
 
-                <div class="editBefore">
-                  <div class="btnWrap">
-                    <button class="addBtn miniBtn">추가</button>
-                  </div>
-                  <div class="btnWrap">
-                    <button class="delBtn miniBtn">삭제</button>
-                  </div>
                 </div>
 
-                <!-- 수정할 때 -->
-
-                <div class="editAfter">
-                  <div class="newBtnWrap">
-                    <button class="registBtn miniBtn">추가</button>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- 해지정보 -->
-      <section class="terminationInfo">
-        <div class="subTitle">
-          해지정보
-        </div>
-
-        <div class="contWrap">
-          <div class="depth1">
-            <ul class="titles">
-              <li class="title addressInfoWidth">주소</li>
-              <li class="title middleWidth">토지유형</li>
-              <li class="title titleBox">
-                자산가액
-                <ul class="secondTitles">
-                  <li class="secondTitle">취득금액</li>
-                  <li class="secondTitle">감가상각충당금</li>
-                  <li class="secondTitle">잔존가액</li>
-                </ul>
-              </li>
-              <li class="title titleBox">
-                해지보상
-                <ul class="secondTitles">
-                  <li class="secondTitle">
-                    보상금액
-                  </li>
-                  <li class="secondTitle">
-                    보상손익
-                  </li>
-                </ul>
-              </li>
-              <li class="title middleWidth">회계처리필요여부</li>
-            </ul>
-
-            <ul class="contents lastContents">
-              <li class="content addressInfoWidth">
-                <div class="addressData">
-                  <input type="text" th:placeholder="${resultData.address}" readonly class="notWriteInput">
-                </div>
-              </li>
-              <li class="content middleWidth">
-                <input type="text" id="toji_type">
-              </li>
-              <li class="content contentBox">
-                <ul class="secondContents">
-                  <li class="secondContent"><input type="text" id="chuideuk_money"></li>
-                  <li class="secondContent"><input type="text" id="gammoney"></li>
-                  <li class="secondContent"><input type="text" id="remainder_money"></li>
-                </ul>
-              </li>
-              <li class="content contentBox">
-                <ul class="secondContents">
-                  <li class="secondContent"><input type="text" id="cancle_bosang_money"></li>
-                  <li class="secondContent"><input type="text" id="profit_loss"></li>
-                </ul>
-              </li>
-              <li class="content middleWidth selectContentArea">
-                <div class="hiddenSelectBox">
-                  <!-- name도 추가 -->
-                  <select name="divisionRegistSelectBox06" id="divisionRegistSelectBox06" hidden>
-                    <option value="Y1">Y1</option>
-                    <option value="Y2">Y2</option>
-                    <option value="Y3">Y3</option>
-                    <option value="Y4">Y4</option>
-                    <option value="Y5">Y5</option>
-                    <option value="Y6">Y6</option>
-                    <option value="Y7">Y7</option>
-                    <option value="Y8">Y8</option>
-                    <option value="Y9">Y9</option>
-                    <option value="Y10">Y10</option>
-                  </select>
-                </div>
-                <section class="customSelectBox">
-                  <button class="customSelectView">
-                    &#160
-                  </button>
-
-                  <ul class="customSelectBtns">
-                    <!-- createCustomLiDivisionRegist(); -->
-                  </ul>
-                </section>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- 분할사유 및 검토의견 -->
-      <section class="reasonTermination">
-        <div class="subTitle">
-          분할사유 및 검토의견*
-        </div>
-
-        <div class="contWrap">
-          <div class="depth1">
-            <ul class="rowListBox">
-              <li class="title">분할일자</li>
-              <li class="content">
-                <div class="dateInputWrap">
-                  <input type="date" data-placeholder="24/01/01" required aria-required="true">
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="depth2 lastRowList">
-            <ul class="rowListBox">
-              <li class="title">분할사유</li>
-              <li class="content inputWrap">
-                <textarea placeholder="직접입력"></textarea>
-              </li>
-            </ul>
-            <ul class="rowListBox">
-              <li class="title">검토의견</li>
-              <li class="content lastRowList">
-                <textarea placeholder="직접입력"></textarea>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-
-      </section>
-
-      <section class="attachDocuments">
-        <div class="subTitle">
-          첨부 서류*
-        </div>
-
-        <div class="contWrap">
-          <div class="depth1">
-            <ul class="titles">
-              <li class="title">파일내용</li>
-            </ul>
-
-            <div class="contentListBox">
-              <div class="essentialDocument">
-                <input type="text" placeholder="필수 증빙서류" readonly class="notWriteInput">
-              </div>
-
-              <ul class="essentialDocuList">
-                <li class="content">
-                  <input type="text" placeholder="1. 등기사항 전부 증명서" readonly class="notWriteInput">
-                </li>
-                <li class="content">
-                  <input type="text" placeholder="2. 토지대장" readonly class="notWriteInput">
-                </li>
-                <li class="content">
-                  <input type="text" placeholder="3. 지적도 (관로표기)" readonly class="notWriteInput">
-                </li>
-                <li class="content">
-                  <input type="text" placeholder="4. 현장사진" readonly class="notWriteInput">
-                </li>
-                <li class="content">
-                  <input type="text" placeholder="5. 검토의견서" readonly class="notWriteInput">
-                </li>
-                <li class="content">
-                  <input type="text" placeholder="6. 도면, 민원인 관계서류 등" readonly class="notWriteInput">
-                </li>
-                <li class="content">
-                  <input type="text" placeholder="7. 분할, 합병/토지분할 소멸 승낙서" readonly class="notWriteInput">
-                </li>
-                <li class="content">
-                  <input type="text" placeholder="8. 분할, 합병 요청공문" readonly class="notWriteInput">
-                </li>
-              </ul>
             </div>
 
-          </div>
-          <div class="depth2">
-            <ul class="titles">
-              <li class="title">파일명</li>
-              <li class="title delContWidth">삭제</li>
-              <li class="title selectFileWidth">파일선택</li>
-            </ul>
 
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="토지사용승락서.docx" readonly class="notWriteInput">
-              </li>
-              <li class="content delContWidth">
-                <button class="attachDelBtn miniBtn">삭제</button>
-              </li>
-              <li class="content selectFileWidth lightfileBtnWrap">
-                <input type="file" id="divisionRegist_myPcFiles01">
-                <label for="divisionRegist_myPcFiles01">파일보기</label>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="등기부등본2.tif" readonly class="notWriteInput">
-              </li>
-              <li class="content delContWidth">
-                <button class="attachDelBtn miniBtn">삭제</button>
-              </li>
-              <li class="content selectFileWidth lightfileBtnWrap">
-                <input type="file" id="divisionRegist_myPcFiles02">
-                <label for="divisionRegist_myPcFiles02">파일보기</label>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="지적도.tif" readonly class="notWriteInput">
-              </li>
-              <li class="content delContWidth">
-                <button class="attachDelBtn miniBtn">삭제</button>
-              </li>
-              <li class="content selectFileWidth lightfileBtnWrap">
-                <input type="file" id="divisionRegist_myPcFiles03">
-                <label for="divisionRegist_myPcFiles03">파일보기</label>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="현장사진.jpg" readonly class="notWriteInput">
-              </li>
-              <li class="content delContWidth">
-                <button class="attachDelBtn miniBtn">삭제</button>
-              </li>
-              <li class="content selectFileWidth lightfileBtnWrap">
-                <input type="file" id="divisionRegist_myPcFiles04">
-                <label for="divisionRegist_myPcFiles04">파일보기</label>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="검토의견서.tif" readonly class="notWriteInput">
-              </li>
-              <li class="content delContWidth">
-                <button class="attachDelBtn miniBtn">삭제</button>
-              </li>
-              <li class="content selectFileWidth lightfileBtnWrap">
-                <input type="file" id="divisionRegist_myPcFiles05">
-                <label for="divisionRegist_myPcFiles05">파일보기</label>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="관계서류.docx" readonly class="notWriteInput">
-              </li>
-              <li class="content delContWidth">
-                <button class="attachDelBtn miniBtn">삭제</button>
-              </li>
-              <li class="content selectFileWidth lightfileBtnWrap">
-                <input type="file" id="divisionRegist_myPcFiles06">
-                <label for="divisionRegist_myPcFiles06">파일보기</label>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="승낙서.docx" readonly class="notWriteInput">
-              </li>
-              <li class="content delContWidth">
-                <button class="attachDelBtn miniBtn">삭제</button>
-              </li>
-              <li class="content selectFileWidth lightfileBtnWrap">
-                <input type="file" id="divisionRegist_myPcFiles07">
-                <label for="divisionRegist_myPcFiles07">파일보기</label>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="요청공문서.docx" readonly class="notWriteInput">
-              </li>
-              <li class="content delContWidth">
-                <button class="attachDelBtn miniBtn">삭제</button>
-              </li>
-              <li class="content selectFileWidth lightfileBtnWrap">
-                <input type="file" id="divisionRegist_myPcFiles08">
-                <label for="divisionRegist_myPcFiles08">파일보기</label>
-              </li>
-            </ul>
-          </div>
+        </section>
+        <section class="surfaceRightInfo">
+            <div class="subTitle">
+                지상권 정보
+            </div>
+
+            <div class="contWrap">
+                <div class="contBox">
+
+                    <div class="thirdTitle">
+                        <h2>・지상권 정보</h2>
+                    </div>
+
+                    
+                    <div class="contentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title01 title">등기여부</li>
+                                <li class="title02 title">편입면적(m²)</li>
+                                <li class="title03 title">위치</li>
+                                <li class="title04 title">계약유형</li>
+                                <li class="title05 title">등기일</li>
+                                <li class="title06 title">등기번호</li>
+                                <li class="title06 title">등기소</li>
+                                <li class="title06 title">도시계획 결정여부</li>
+                                <li class="title06 title">취득일</li>
+                                <li class="title06 title">자산분류번호</li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="content01 content">
+                                   [[${resultData.jm_comple_yn}]]
+                                </li>
+                                <li class="content02 content">
+                                    [[${resultData.jm_pyeonib_area}]]
+                                </li>
+                                <li class="content03 content">
+                                    [[${resultData.jm_location}]]
+                                </li>
+                                <li class="content04 content">
+                                    기공승낙서
+                                </li>
+                                <li class="content05 content">
+                                    [[${resultData.jm_deunggi_date}]]
+                                </li>
+                                <li class="content06 content">
+                                   [[${resultData.jm_deunggi_no}]]
+                                </li>
+                                <li class="content06 content">
+                                    [[${resultData.jm_deunggiso}]]
+                                </li>
+                                <li class="content06 content">
+                                    [[${resultData.jm_dosiplan}]]
+                                </li>
+                                <li class="content06 content">
+                                    [[${resultData.jm_chuideuk_date}]]
+                                </li>
+                                <li class="content06 content">
+                                    [[${resultData.jm_jasan_no}]]
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="depth2">
+                            <ul class="titles">
+                                <li class="title01 title">특약사항</li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="content01 content">
+                                    [[${resultData.jm_special_cont}]]
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="contBox fileContbox">
+
+                    <div class="thirdTitle">
+                        <h2>・첨부파일</h2>
+                    </div>
+
+                    
+                    <div class="contentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title01 title">등록일</li>
+                                <li class="title02 title">파일명</li>
+                                <li class="title03 title">파일보기</li>
+                                <li class="title04 title">파일저장</li>
+                            </ul>
+                             <ul class="contents" th:if="${atcFileList.size()==0}">
+								<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+							 </ul>
+                            <ul class="contents" th:each="val:${atcFileList}">
+                                <li class="content01 content">
+                                    [[${val.ja_wdate}]]
+                                </li>
+                                <li class="content02 content">
+                                    [[${val.ja_file_nm}]]
+                                </li>
+                                <li class="content03 content">
+                                    <button class="viewDetailButton">보기</button>
+                                </li>
+                                <li class="content04 content btnsWrap">
+                                    <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </section>
+        <section class="usageApproval">
+            <div class="subTitle">
+                사용승락
+            </div>
+
+            <div class="contWrap">
+                <div class="contBox">
+                    <div class="contentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles" >
+                                <li class="title01 title">순번</li>
+                                <li class="title02 title">문서번호</li>
+                                <li class="title03 title">사용 목적</li>
+                                <li class="title04 title">사용 기간</li>
+                                <li class="title05 title">토지 주소</li>
+                                <li class="title06 title">소유자</li>
+                                <li class="title06 title">사용자</li>
+                                <li class="title06 title">등록상태</li>
+                                <li class="title06 title">ECHO 문서보기</li>
+                            </ul>
+                             <ul class="contents lastContents"  th:if="${jisangPermitList.size()==0}">
+								<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+							 </ul>
+                            <ul class="contents lastContents" th:each="val:${jisangPermitList}">
+                                <li class="content01 content">
+                                   1
+                                </li>
+                                <li class="content02 content">
+                                    P_000006
+                                </li>
+                                <li class="content03 content">
+                                    가설건축물(컨테이너) 설치
+                                </li>
+                                <li class="content04 content">
+                                    2017-01-09 ~ 2019-01-08
+                                </li>
+                                <li class="content05 content">
+                                    서울특별시 서초구 원지동 28
+                                </li>
+                                <li class="content06 content">
+                                    김철수
+                                </li>
+                                <li class="content06 content">
+                                    김철수
+                                </li>
+                                <li class="content06 content">
+                                    결재완료
+                                </li>
+                                <li class="content06 content">
+                                    <button class="viewDetailButton">문서보기</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </section>
+        <section class="mergedSurfaceInfo">
+            <div class="subTitle">
+                합필 지상권 정보
+            </div>
+
+            <div class="contWrap">
+                <div class="contBox">
+                    <div class="contentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title01 title">기존자산번호</li>
+                                <li class="title02 title">기존지상권번호</li>
+                                <li class="title03 title">지사</li>
+                                <li class="title04 title">주소</li>
+                                <li class="title05 title">지목</li>
+                                <li class="title06 title">지적면적</li>
+                                <li class="title06 title">편입면적</li>
+                                <li class="title06 title">설정금액</li>
+                                <li class="title06 title">위치보기</li>
+                            </ul>
+                            
+                            <ul class="contents "  th:if="${jisangMergeList.size()==0}">
+								<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+							 </ul>
+                            <ul class="contents" th:each="val:${jisangMergeList}">
+                                <li class="content01 content">
+                                    9006412
+                                </li>
+                                <li class="content02 content">
+                                    J_006387
+                                </li>
+                                <li class="content03 content">
+                                    서울지사
+                                </li>
+                                <li class="content04 content">
+                                    서울특별시 서초구 서초동 1
+                                </li>
+                                <li class="content05 content">
+                                    답
+                                </li>
+                                <li class="content06 content">
+                                    2089
+                                </li>
+                                <li class="content06 content">
+                                    154
+                                </li>
+                                <li class="content06 content">
+                                    &#160
+                                </li>
+                                <li class="content06 content">
+                                    <button class="viewDetailButton">위치보기</button>
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </section>
+        <section class="changeHistory">
+            <div class="subTitle">
+                변경이력
+            </div>
+
+            <div class="contWrap">
+                <div class="contBox">
+                    <div class="contentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title01 title">순번</li>
+                                <li class="title02 title">변경일시</li>
+                                <li class="title02 title">구분</li>
+                                <li class="title04 title">내용</li>
+                            </ul>
+                            <ul class="contents "  th:if="${jisangModifyList.size()==0}">
+								<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+							 </ul>
+                            <ul class="contents" th:each="val:${jisangModifyList}">
+                                <li class="content01 content">
+                                    1
+                                </li>
+                                <li class="content02 content">
+                                    2024-04-02 15:40:01
+                                </li>
+                                <li class="content03 content">
+                                    지상권 정보
+                                </li>
+                                <li class="content04 content">
+                                    &#160
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </section>
+        <!-- <div class="card">
+			 
+			 <div class="card-header">첨부파일</div>
+			 <div class="card-body">
+				  <div id="fileUpload" class="dragAndDropDiv">Drag & Drop Files Here or Browse Files</div>
+        			<input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
+        			<div id="status"></div>
+			 </div>
+			 <div class="card-footer">
+				 
+			 </div>
+		 </div> -->
+        <section class="parcelAttachments">
+       	 <form name="uploadForm" method="post" enctype="multipart/form-data">
+            <div class="subTitle">
+                필지 첨부파일
+                <!-- span -> button으로 수정 -->
+                <span class="myPc">내 PC</span>
+                <!-- <button class="myPc">내 PC</button> -->
+                <div class="fileBtnWrap">
+                    <!-- <input type="file" id="groundDetail_myPcFiles"> -->
+                    <input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
+                    <!-- <label for="groundDetail_myPcFiles">내 PC</label> -->
+                </div>
+            </div>
+
+            <div class="fileUploadWrap">
+             	<div id="fileUpload" class="fileUploadBox" style="">
+                <!-- <div class="fileUploadBox"> -->
+                    <img src="/assets/media/menu01/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
+                    <p>파일을 마우스로 끌어오세요.</p>
+                </div>
+               
+            </div>
+			<div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>
+			</form>
+			<br>
+            <div class="contWrap" id="pnuAtcFilesDiv">
+            
+            
+                <div class="contBox">
+                    <div class="contentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title01 title">선택</li>
+                                <li class="title02 title">등록일</li>
+                                <li class="title03 title">파일명</li>
+                                <li class="title04 title">파일보기</li>
+                            </ul>
+                            <div class="contentScr">
+                                <ul class="contents" th:each="val:${jisangPnuAtcFileList}">
+                                    <li class="content01 content">
+                                        <input type="checkbox" th:id="'checkbox_' + ${val.pa_idx}" class="file-checkbox" th:value="${val.pa_idx}">
+                                        <label th:for="'checkbox_' + ${val.pa_idx}"></label>
+                                    </li>
+                                    <li class="content02 content">
+                                        [[${val.pa_wdate}]]
+                                    </li>
+                                    <li class="content03 content">
+                                        [[${val.pa_file_nm}]]
+                                    </li>
+                                    <li class="content04 content">
+                                        <button class="viewDetailButton" th:onclick="openFilePopup([[${val.pa_file_path}]])">보기</button>
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btnWrap">
+                        <button class="fileBtn fileSaveBtn" id="fileSaveBtn">첨부파일 저장</button>
+                        <button class="fileBtn delBtn" id="deleteSelectedBtn">선택파일 삭제</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- 잠재이슈 -->
+        <section class="potentialIssues">
+            <div class="subTitle">
+                잠재이슈
+            </div>
+            <div class="contWrap">
+                <div class="contBox">
+                    <div class="contentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title01 title">등기여부</li>
+                                <li class="title02 title">계약여부</li>
+                                <li class="title03 title">이슈유형(대분류)</li>
+                                <li class="title03 title">이슈유형(중분류)</li>
+                                <li class="title03 title">이슈유형(세분류)</li>
+                                <li class="title01 title">등록사유</li>
+                                <li class="title04 title">등록일시</li>
+                                <li class="title04 title ">편집</li>
+                            </ul>
+                            <ul class="contents lastContents" th:each="val:${jisangIssueList}">
+                                <li class="content01 content">
+                                    <!-- 등기설정 -->
+                                     <!-- input 추가 -->
+                                     <input type="text" placeholder="등기설정" th:value="${val.comple_yn}" readonly class="notWriteInput">
+                                </li>
+                                <li class="content02 content">
+                                    <!-- 계약체결 -->
+                                     <!-- input 추가 -->
+                                     <input type="text" placeholder="계약체결" th:value="${val.permitted_yn}" readonly class="notWriteInput">
+                                </li>
+                                <li class="content03 content">
+                                    <!-- 이슈없음 -->
+                                     <!-- input 추가 -->
+                                    <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth1}" readonly class="notWriteInput">
+                                </li>
+                                <li class="content03 content">
+                                    <!-- 이슈없음 -->
+                                     <!-- input 추가 -->
+                                    <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth2}" readonly class="notWriteInput">
+                                </li>
+                                <li class="content03 content">
+                                    <!-- 이슈없음 -->
+                                     <!-- input 추가 -->
+                                    <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth3}" readonly class="notWriteInput">
+                                </li>
+                                <li class="content01 content">
+                                    <!-- 신규등록 -->
+                                     <!-- input 추가 -->
+                                    <input type="text" placeholder="신규등록" th:value="${val.pi_issue_comment}" readonly class="notWriteInput">
+                                </li>
+                                <li class="content04 content">
+                                    <!-- 2024-04-01 09:46:01 -->
+                                     <!-- input 추가 -->
+                                    <input type="text" placeholder="2024-04-01 09:46:01" th:value="${val.issue_date}" readonly class="notWriteInput">
+                                </li>
+                                <li class="content04 content btnBox">
+                                    <div class="btnWrap">
+                                        <button class="editBtn miniBtn groundIssueReviseBtn">수정</button>
+                                    </div>
+                                    <div class="btnWrap">
+                                        <button class="delBtn miniBtn">삭제</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 잠재이슈 변경 이력 -->
+        <section class="potentialIssuesChangeHistory">
+            <div class="subTitle">
+                잠재이슈 변경 이력
+            </div>
+
+            <div class="contWrap">
+                <div class="contBox">
+                    <div class="contentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title01 title">순번</li>
+                                <li class="title02 title">구분</li>
+                                <li class="title03 title">변경일자</li>
+                                <li class="title04 title">내용</li>
+                                <li class="title03 title">사유</li>
+                            </ul>
+                            <ul class="contents" th:each="val:${jisangIssueHistoryList}">
+                                <li class="content01 content">
+                                    [[${val.no}]]
+                                </li>
+                                <li class="content02 content">
+                                    [[${val.pih_history_type}]]
+                                </li>
+                                <li class="content03 content">
+                                    [[${val.pih_history_date}]]
+                                </li>
+                                <li class="content04 content">
+                                    [[${val.pih_content}]]
+                                </li>
+                                <li class="content03 content">
+                                    [[${val.pi_issue_comment}]]
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+        <!-- 잠재이슈 대응방안 메뉴얼 -->
+
+
+        <section class="potentialIssuesResponseManual">
+            <div class="subTitle">
+                잠재이슈 대응방안 메뉴얼
+            </div>
+
+
+            <div class="contWrap">
+                <div class="contBox">
+                    <div class="contentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title01 title">매뉴얼명</li>
+                                <li class="title02 title">버전</li>
+                                <li class="title03 title">개정일자</li>
+                                <li class="title04 title">다운로드</li>
+                            </ul>
+                            <ul class="contents" th:each="val:${jisangIssueCodeAtcFileList}">
+                                <li class="content01 content">
+                                    [[${val.icaf_manual_title}]]
+                                </li>
+                                <li class="content02 content">
+                                    [[${val.icaf_file_version}]]
+                                </li>
+                                <li class="content03 content">
+                                    [[${val.icaf_file_regdate}]]
+                                </li>
+                                <li class="content04 content btnsWrap">
+                                    <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+        <!-- 메모 -->
+
+        <section class="memoSection">
+            <div class="subTitle">
+                메모
+            </div>
+        
+        
+            <div class="contWrap">
+                <div class="contBox">
+                    <div class="contentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title01 title">작성일시</li>
+                                <li class="title02 title">작성자</li>
+                                <li class="title03 title">내용</li>
+                                <li class="title04 title">수정</li>
+                                <li class="title05 title">추가/삭제</li>
+                            </ul>
+                            <div class="contentScr" id="memoDiv" >
+                            <ul class="contents nullContents" id="nullContents" style="display:none;">
+                                    <li class="content01 content">
+                                        <!-- 2022-11-01 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" readonly placeholder="" class="notWriteInput">
+                                    </li>
+                                    <li class="content02 content editSpace">
+                                        <input type="text" readonly placeholder="" id="wname" class="editingContent">
+                                    </li>
+                                    <li class="content03 content editSpace">
+                                        <input type="text" readonly placeholder="" id="wmemo" class="editingContent">
+                                    </li>
+                                    <li class="content04 content editSpace">
+                                        <div class="btnsWrap">
+                                            <button class="editBtn miniBtn">수정</button>
+                                        </div>
+                                    </li>
+                                    <li class="content05 content btnBox">
+
+                                        <!-- 수정하지 않을 때 -->
+
+                                        <div class="editBefore">
+                                            <div class="btnWrap">
+                                                <button class="addBtn miniBtn">추가</button>
+                                            </div>
+                                            <div class="btnWrap">
+                                                <button class="delBtn miniBtn" id="deleteMemoBtn">삭제</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- 수정할 때 -->
+
+                                        <div class="editAfter">
+                                            <div class="newBtnWrap">
+                                                <button class="registBtn miniBtn">등록</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul class="contents" th:each="val:${memoList}">
+                                    <li class="content01 content">
+                                        <!-- 2022-11-01 -->
+                                         <!-- input 추가 -->
+                                         <input type="hidden" th:value="${val.mm_idx}" id="idx">
+                                        <input type="text" readonly placeholder="2022-11-01" id="wdate" th:value="${val.mm_wdate}" class="notWriteInput">
+                                    </li>
+                                    <li class="content02 content editSpace">
+                                        <input type="text" readonly placeholder="김철수" id="wname" th:value="${val.mm_user_name}" class="editingContent">
+                                    </li>
+                                    <li class="content03 content editSpace">
+                                        <input type="text" readonly placeholder="협의중" id="wmemo" th:value="${val.mm_memo}" class="editingContent">
+                                    </li>
+                                    <li class="content04 content editSpace">
+                                        <div class="btnsWrap">
+                                            <button class="editBtn miniBtn">수정</button>
+                                        </div>
+                                    </li>
+                                    <li class="content05 content btnBox">
+
+                                        <!-- 수정하지 않을 때 -->
+
+                                        <div class="editBefore">
+                                            <div class="btnWrap">
+                                                <button class="addBtn miniBtn">추가</button>
+                                            </div>
+                                            <div class="btnWrap">
+                                                <button class="delBtn miniBtn" id="deleteMemoBtn">삭제</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- 수정할 때 -->
+
+                                        <div class="editAfter">
+                                            <div class="newBtnWrap">
+                                                <button class="registBtn miniBtn">등록</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                
+                                <ul class="contents"  th:if="${memoList.size()==0}">
+                                    <li class="content01 content">
+                                        <!-- 2022-11-01 -->
+                                        <!-- input 추가 -->
+                                        <input type="text" readonly placeholder="" class="notWriteInput">
+                                    </li>
+                                    <li class="content02 content editSpace">
+                                        <input type="text" readonly placeholder="" id="wname" class="editingContent">
+                                    </li>
+                                    <li class="content03 content editSpace">
+                                        <input type="text" readonly placeholder="" id="wmemo" class="editingContent">
+                                    </li>
+                                    <li class="content04 content editSpace">
+                                        <div class="btnsWrap">
+                                            <button class="editBtn miniBtn">수정</button>
+                                        </div>
+                                    </li>
+                                    <li class="content05 content btnBox">
+
+                                        <!-- 수정하지 않을 때 -->
+
+                                        <div class="editBefore">
+                                            <div class="btnWrap">
+                                                <button class="addBtn miniBtn">추가</button>
+                                            </div>
+                                            <div class="btnWrap">
+                                                <button class="delBtn miniBtn">삭제</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- 수정할 때 -->
+
+                                        <div class="editAfter">
+                                            <div class="newBtnWrap">
+                                                <button class="registBtn miniBtn" id="deleteMemoBtn">등록</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        
+        </section>
+
+
+        <!-- 참고 -->
+
+
+        <div class="finalBtnBox btnWrap">
+            <button class="backBtn finalBtn" onclick="history.back();">이전</button>
+            <button class="printBtn finalBtn">출력</button>
+            <button class="bunhalBtn finalBtn">분할</button>
         </div>
-      </section>
-
-
-
-      <div class="finalBtnBox btnWrap">
-        <button class="backBtn grayBtn finalBtn">이전</button>
-        <button class="temporarySaveBtn vividBlueBtn finalBtn">임시저장</button>
-        <button class="lightBlueBtn approvalBtn finalBtn">상신</button>
-      </div>
 
 
 
     </main>
-
-  </div>
-  <!-- script -->
-<!--  <script src="/js/jisang/groundDetail.js"></script>-->
-  <script src="../../js/jisang/landTerminationRegistration.js"></script>
-   <script type="module" src="/js/module/surfaceMain.js"></script>
+    
+    </div>
+    <div class="groundIssueRevisePopWrappers"></div>
+    <!-- script -->
+    <script src="/js/jisang/groundDetail.js"></script>
+     <!-- <script type="module" src="/js/module/surfaceMain.js"></script> -->
 </th:block>
 </html>

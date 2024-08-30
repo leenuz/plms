@@ -211,6 +211,23 @@ button {
   /* padding: 40px 0; */
   padding: 27px 0 40px 0;
 }
+
+#divisionRegister .landDivision {
+  padding: 27px 0 40px 0;
+}
+
+#divisionRegister .terminationInfo {
+  padding: 27px 0 40px 0;
+}
+
+#divisionRegister .reasonTermination {
+  padding: 27px 0 40px 0;
+}
+
+#divisionRegister .attachDocuments {
+  padding: 27px 0 40px 0;
+}
+
 #divisionRegister .targetLand .contWrap {
   border: 1px solid #cddbf0;
   border-radius: 5px;
@@ -439,6 +456,7 @@ button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width:300px;
 }
 #divisionRegister .landDivision .contWrap .contents .numInfoWidth {
   width: 2.9%;
