@@ -4,7 +4,7 @@ var table;
 
 $(document).ready(function() {
   console.log("-----gover/menu03_2.js start-----");
-  $('#jisa').niceSelect();
+//$('#jisa').niceSelect();
 //testAjax();
 //init_Table();
   loadDataTable("");
