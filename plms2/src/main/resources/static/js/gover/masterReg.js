@@ -117,51 +117,51 @@ masterRegSelectboxClickEvent01();
 
 // customSelectBtns 리스트 click 했을 때 해당 내용으로 바뀌게하기
 
-// const MoreSelectBtn = document.querySelectorAll('.moreSelectBtn')
+ const MoreSelectBtn = document.querySelectorAll('.moreSelectBtn')
 
-// MoreSelectBtn.forEach((moreBtn) => {
-//     moreBtn.addEventListener('click', function () {
-//         var moreSelectBtnText = moreBtn.innerText;
-//         console.log(moreSelectBtnText);
-//         const parentMoreSelectBtn = moreBtn.closest('.customSelectBtns')
-//         const EditCustomViewBtn = parentMoreSelectBtn.previousElementSibling;
+ MoreSelectBtn.forEach((moreBtn) => {
+     moreBtn.addEventListener('click', function () {
+         var moreSelectBtnText = moreBtn.innerText;
+         console.log(moreSelectBtnText);
+         const parentMoreSelectBtn = moreBtn.closest('.customSelectBtns')
+         const EditCustomViewBtn = parentMoreSelectBtn.previousElementSibling;
 
-//         while (EditCustomViewBtn.firstChild) {
-//             EditCustomViewBtn.removeChild(EditCustomViewBtn.firstChild);
-//         }
+         while (EditCustomViewBtn.firstChild) {
+             EditCustomViewBtn.removeChild(EditCustomViewBtn.firstChild);
+         }
 
-//         // 새로운 텍스트 노드를 추가합니다.
-//         const textNode = document.createTextNode(moreSelectBtnText);
-//         EditCustomViewBtn.appendChild(textNode);
+         // 새로운 텍스트 노드를 추가합니다.
+         const textNode = document.createTextNode(moreSelectBtnText);
+         EditCustomViewBtn.appendChild(textNode);
 
-//         EditCustomViewBtn.classList.remove('active')
-//         parentMoreSelectBtn.classList.remove('active')
+         EditCustomViewBtn.classList.remove('active')
+         parentMoreSelectBtn.classList.remove('active')
 
 
-//         // 선택한 걸 select의 value값으로 변경하기
+         // 선택한 걸 select의 value값으로 변경하기
 
-//         const nearByContent = moreBtn.closest('.selectContentArea');
-//         const nearBySelectBox = nearByContent.querySelector('select');
-//         nearBySelectBox.value = moreBtn.textContent;
-//         console.log(`Selected value: ${nearBySelectBox.value}`);
+         const nearByContent = moreBtn.closest('.selectContentArea');
+         const nearBySelectBox = nearByContent.querySelector('select');
+         nearBySelectBox.value = moreBtn.textContent;
+         console.log(`Selected value: ${nearBySelectBox.value}`);
 
-//         // masterRegSelectBox06의 값이 변경될 때에만 스타일 변경
-//         const lineValue = document.getElementById('masterRegSelectBox06');
+         // masterRegSelectBox06의 값이 변경될 때에만 스타일 변경
+         const lineValue = document.getElementById('masterRegSelectBox06');
 
-//         if (nearBySelectBox === lineValue) {
-//             const singleLine = document.querySelector('#masterReg .lineWrap .singleLine');
-//             const doubleLine = document.querySelector('#masterReg .lineWrap .doubleLine');
+         if (nearBySelectBox === lineValue) {
+             const singleLine = document.querySelector('#masterReg .lineWrap .singleLine');
+             const doubleLine = document.querySelector('#masterReg .lineWrap .doubleLine');
 
-//             if (lineValue.value == '단선') {
-//                 doubleLine.style.display = 'none';
-//                 singleLine.style.display = 'block';
-//             } else if (lineValue.value == '복선') {
-//                 singleLine.style.display = 'none';
-//                 doubleLine.style.display = 'flex';
-//             }
-//         }
-//     })
-// })
+             if (lineValue.value == '단선') {
+                 doubleLine.style.display = 'none';
+                 singleLine.style.display = 'block';
+             } else if (lineValue.value == '복선') {
+                 singleLine.style.display = 'none';
+                 doubleLine.style.display = 'flex';
+             }
+         }
+     })
+ })
 
 const masterRegSelectboxClickEvent02 = ()=> {
     const contentContainer02 = document.querySelectorAll('#masterReg .contWrap');
