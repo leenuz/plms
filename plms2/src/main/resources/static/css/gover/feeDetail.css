@@ -1,0 +1,638 @@
+@charset "UTF-8";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body * {
+  font-family: pretendard;
+}
+
+a {
+  text-decoration: none;
+  color: #3c3c3c;
+}
+
+li {
+  list-style: none;
+}
+
+select {
+  outline: 0;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #6e7d88;
+  text-indent: 12px;
+}
+.authHistBtn {
+  width: 139px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+input {
+  border: 0;
+  outline: 0;
+}
+
+input:focus {
+  border: 0;
+}
+
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+
+button {
+  border: 0;
+}
+
+.lightBlueBtn {
+  color: #2b7de1;
+  background: rgba(204, 224, 255, 0.6);
+}
+.middleBtn {
+  width: 159px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.navyBtn {
+  background-color: #4e5871;
+  color: #fff;
+}
+
+.whiteBtn {
+  background-color: #fff;
+  border: 1px solid #4e5871;
+  color: #4e5871;
+}
+
+.searchAddressBtn {
+  width: 54px;
+  height: 27px;
+  border-radius: 20px;
+  background: #2b7de1;
+  color: #fff;
+}
+
+.moreSelectBtn {
+  font-size: 15px;
+  font-weight: 500;
+  color: #4e5871;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  text-align-last: left;
+  padding-left: 12px;
+  box-sizing: border-box;
+}
+.fileDownloadBtn {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: #4e5871;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.downloadIcon {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  background: url(/assets/media/menu03/images/download.png) no-repeat center;
+  background-size: contain;
+}
+
+/* css추가 */
+
+.feeDetailWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.feeDetailWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.feeDetailWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.feeDetailHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+/**/
+
+#feeDetail * {
+  font-family: pretendard;
+}
+
+#feeDetail {
+  width: calc(100% - 100px);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+
+#feeDetail .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+
+#feeDetail .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#feeDetail .btnBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#feeDetail .subTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #31394c;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+#feeDetail .subTitleBtnBox {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  transform: translateY(-25%);
+  right: 0;
+}
+
+#feeDetail .contents .content {
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border-right: 1px solid #cddbf0;
+}
+
+#feeDetail .contents .content:last-child {
+  border-right: 0;
+}
+#feeDetail .attachFileInfo .fileUploadWrap::-webkit-scrollbar {
+  width: 4px;
+}
+
+#feeDetail .attachFileInfo .fileUploadWrap::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#feeDetail .defaultInfo {
+  /* padding: 40px 0; */
+  padding: 27px 0 40px 0 ;
+}
+#feeDetail .defaultInfo .subTitle {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 21px;
+}
+#feeDetail .contWrap {
+  width: 100%;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+
+#feeDetail .contWrap .titles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+}
+
+#feeDetail .contWrap .depth1 .titles {
+  border-radius: 5px 5px 0 0;
+}
+
+#feeDetail .contWrap .titles li {
+  height: 100%;
+  text-align: center;
+  line-height: 45px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+
+#feeDetail .contWrap .titles li:last-child {
+  border-right: 0;
+}
+
+#feeDetail .contWrap .contents {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 47px;
+  background: #fff;
+  border-bottom: 1px solid #cddbf0;
+}
+#feeDetail .contWrap .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+#feeDetail .defaultInfo .contWrap .title {
+  width: 11.1%;
+}
+#feeDetail .defaultInfo .contWrap .depth1 {
+  border-bottom: 1px solid #cddbf0;
+}
+
+#feeDetail .defaultInfo .contWrap .content {
+  width: 11.1%;
+}
+
+#feeDetail .defaultInfo .contWrap .depth2 .largeWidth {
+  width: 53%;
+}
+#feeDetail .defaultInfo .contWrap .depth2 .middleWidth {
+  width: 17.6%;
+}
+#feeDetail .contents .content.inputArea {
+  display: flex;
+  padding: 0;
+}
+
+#feeDetail .inputWrap {
+  border-right: 1px solid #cddbf0;
+  padding: 6px 8px;
+}
+
+#feeDetail .inputWrap:last-child {
+  border-right: 0;
+}
+
+#feeDetail .contWrap .contents li input[type="text"] {
+  width: 100%;
+  height: 100%;
+  background: #edf2f9;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+#feeDetail .contWrap .contents li input[type="text"].notWriteInput {
+  background: transparent;
+}
+
+#feeDetail .contWrap .contents li input[type="text"]::placeholder {
+  color: #3c3c3c;
+}
+
+#feeDetail .contWrap .contents li input[type="text"]::placeholder {
+  text-align: center;
+  text-indent: 0;
+}
+
+#feeDetail input[type="checkbox"] {
+  display: none;
+}
+
+.checkboxWrap label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+}
+
+/* date */
+#feeDetail .dateBar {
+  width: 10px;
+  height: 2px;
+  background: #cfddf2;
+}
+
+#feeDetail .dateInputBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+}
+
+#feeDetail .dateInputWrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  position: relative;
+  background: url(/assets/media/menu03/images/calendarInputIcon.png) no-repeat
+    left 8px center;
+  background-size: 18px;
+}
+
+#feeDetail input[type="date"] {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+  color: transparent;
+  background: transparent;
+  text-align: right;
+}
+
+/* 기본 달력 투명하게, 클릭너비 넓히기 */
+#feeDetail input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#feeDetail input[type="date"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  color: #6e7d88;
+}
+
+#feeDetail input[type="date"]:focus,
+#feeDetail input[type="date"]:valid {
+  color: #6e7d88;
+}
+
+#feeDetail input[type="date"]:focus::before,
+#feeDetail input[type="date"]:valid::before {
+  content: "";
+}
+
+/* label */
+
+#feeDetail input[type="checkbox"] {
+  display: none;
+}
+
+#feeDetail input[type="checkbox"] ~ label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+  display: inline-block;
+  position: relative;
+}
+
+#feeDetail .allSelectCheck input[type="checkbox"] ~ label {
+  background: #dce7f5;
+}
+
+#feeDetail input[type="checkbox"]:checked ~ label {
+  background: #4e5871;
+}
+
+#feeDetail input[type="checkbox"]:checked ~ label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 10px;
+  background: url(/assets/media/menu03/images/checkIcon.png) no-repeat center;
+  background-size: contain;
+}
+
+/* depth2 */
+#feeDetail .defaultInfo .contWrap .depth2 .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+/* 관리기관 정보 */
+#feeDetail .agencyInfo {
+  padding-bottom: 40px;
+}
+#feeDetail .agencyInfo .title {
+  width: 10.8%;
+}
+#feeDetail .agencyInfo .content {
+  width: 10.8%;
+}
+#feeDetail .agencyInfo .middleWidth {
+  width: 18.4%;
+}
+#feeDetail .agencyInfo .largeWidth {
+  width: 42.1%;
+}
+
+/* 점용 허가 정보 */
+#feeDetail .permitInfo {
+  padding-bottom: 40px;
+}
+#feeDetail .permitInfo .title {
+  width: 19.2%;
+}
+#feeDetail .permitInfo .content {
+  width: 19.2%;
+}
+#feeDetail .permitInfo .smallWidth {
+  width: 11.5%;
+}
+
+/* 소속 토지 정보 */
+
+#feeDetail .landAdressInfo {
+  padding-bottom: 40px;
+}
+#feeDetail .landAdressInfo .contWrap .title {
+  width: 10.8%;
+}
+#feeDetail .landAdressInfo .contWrap .content {
+  width: 10.8%;
+}
+#feeDetail .landAdressInfo .contWrap .middleWidth {
+  width: 9%;
+}
+#feeDetail .landAdressInfo .contWrap .smallWidth {
+  width: 5.5%;
+}
+#feeDetail .landAdressInfo .contWrap .largeWidth {
+  width: 50.9%;
+}
+#feeDetail .landAdressInfo .contentScr {
+  height: 180px;
+}
+#feeDetail .landAdressInfo .contWrap .depth1 .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+#feeDetail .miniBtn {
+  width: 74px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+#feeDetail .addBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+
+#feeDetail .delBtn {
+  background: #9a9a9a;
+  color: #fff;
+}
+
+#feeDetail .registBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+#feeDetail .viewDetailButton {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+}
+
+/* 첨부파일 정보 */
+
+#feeDetail .attachFileInfo {
+  padding-bottom: 40px;
+}
+#feeDetail .attachFileInfo .title {
+  width: 15.8%;
+}
+#feeDetail .attachFileInfo .content {
+  width: 15.8%;
+}
+#feeDetail .attachFileInfo .fileNameWidth {
+  width: 67.9%;
+}
+
+#feeDetail .attachFileInfo .subTitle {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+}
+.fileDelBtn {
+  width: 129px;
+  height: 37px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+#feeDetail textarea {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #cddbf0;
+  background: #f7f9fc;
+  padding: 15px;
+  box-sizing: border-box;
+  height: 118px;
+  resize: none;
+}
+
+#feeDetail textarea::placeholder {
+  color: #88a2c8;
+}
+
+#feeDetail textarea::-webkit-scrollbar {
+  width: 4px;
+}
+
+#feeDetail textarea::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+/* 납부실적 */
+
+#feeDetail .paymentRec {
+  padding-bottom: 40px;
+}
+#feeDetail .paymentRec .title {
+  width: 11.9%;
+}
+#feeDetail .paymentRec .content {
+  width: 11.9%;
+}
+#feeDetail .paymentRec .smallWidth {
+  width: 8.9%;
+}
+#feeDetail .paymentRec .middleWidth {
+  width: 16.8%;
+}
+
+/* 이전, 저장 버튼 */
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+.vividBlueBtn {
+  background: #2b7de1;
+  color: #fff;
+}
+
+.grayBtn {
+  background: #919191;
+  color: #fff;
+}
+
+.lightBlueBtn {
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+}
+
+.blueBorderBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+
+/*  */

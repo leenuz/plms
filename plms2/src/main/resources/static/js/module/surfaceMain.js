@@ -2,11 +2,8 @@ import { surfaceHeaderEvet } from './surfaceHeader.js';
 import { surfaceSelectEvet , handleCheckboxes } from './surfaceSelectEvet.js';
 
 //import { surfaceInquireSelectEvet , surfaceInquireCheckboxes } from './surfaceInquireSelectEvet.js';
-
 import { surfaceInquireSelectEvet , surfaceInquireCheckboxes } from '/js/jisang/surfaceInquireSelectEvet.js';
-
 import { privateUseSelectEvet } from '/js/gover/privateUseSelecEvet.js';
-
 import { landDevelopmentManageSelectEvet } from '/js/togi/landDevelopmentSelecEvet.js';
 
 
@@ -14,7 +11,8 @@ console.log("---------------------------surfaceMain.js start--------------------
 
 window.addEventListener("load" , () => {
 
-	console.log("---------------------------surfaceMain.js start-----load-----------------");
+	  console.log("---------------------------surfaceMain.js start-----load-----------------");
+	  
       //header함수 실행
       surfaceHeaderEvet();
 
@@ -45,35 +43,37 @@ window.addEventListener("load" , () => {
                 return surfaceInquireSelectEvet("#dopcoSurfacePart .surfaceSelectsTitleBtn" ,"#dopcoSurfacePart .sufaceSelectList","#dopcosurfaceInquire .sufaceSelectList .surfaceSelectListMember" , ".surfaceInquireHiddenSelect01" , "inquireCheckCont01"),
                 surfaceInquireCheckboxes(inquireCheckCont01);
             }
-             else if(pathName === `/jisang/menu02_2`){
+            else if(pathName === `/jisang/menu02_2`){
                 const dopcosurfaceInquire02 = document.getElementsByName("dopcosurfaceInquire02");
                 return surfaceSelectEvet("#dopcosurfaceInquire02 .surfaceInquireSelectsTitleBtn" ,"#dopcosurfaceInquire02 .sufaceSelectList"),
                 handleCheckboxes(dopcosurfaceInquire02);
             }
-             else if(pathName === `/jisang/menu02_3`){
+            else if(pathName === `/jisang/menu02_3`){
                 const dopcosurfaceInquire03 = document.getElementsByName("dopcosurfaceInquire03");
                 return surfaceSelectEvet("#dopcosurfaceInquire03 .surfaceInquireSelectsTitleBtn" ,"#dopcosurfaceInquire03 .sufaceSelectList"),
                 handleCheckboxes(dopcosurfaceInquire03);
             }
-             else if(pathName === `/jisang/menu02_4`){
+            else if(pathName === `/jisang/menu02_4`){
                 const dopcosurfaceInquire04 = document.getElementsByName("dopcosurfaceInquire04");
                 return surfaceSelectEvet("#dopcosurfaceInquire04 .surfaceInquireSelectsTitleBtn" ,"#dopcosurfaceInquire04 .sufaceSelectList"),
                 handleCheckboxes(dopcosurfaceInquire04);
             }
-             else if(pathName === `/jisang/menu02_5`){
+            else if(pathName === `/jisang/menu02_5`){
                 const dopcosurfaceInquire05 = document.getElementsByName("dopcosurfaceInquire05");
                	return surfaceInquireSelectEvet("#dopcosurfaceInquire05 .surfaceInquireSelectsTitleBtn" ,"#dopcosurfaceInquire05 .sufaceSelectList"  ,"#dopcosurfaceInquire05 .sufaceSelectList .surfaceSelectListMember" , ".surfaceInquireHiddenSelect05");
                 handleCheckboxes(dopcosurfaceInquire05);
             }
+			//점용
 			else if(pathName === `/gover/menu03_1`){
-			    return privateUseSelectEvet("#dopcoPrivateUse01 .privateUseSelectsTitleBtn" ,"#dopcoPrivateUse01 .sufaceSelectList"  ,"#dopcoPrivateUse01 .sufaceSelectList .surfaceSelectListMember" , ".privateUseHiddenSelect01", "inquireCheckCont01");
-			 }
-			else if(pathName === `/gover/masterEdit`){
- 			   return privateUseSelectEvet("#masterEditWrappers .privateUseSelectsTitleBtn" ,"#masterEditWrappers .sufaceSelectList"  ,"#masterEditWrappers .sufaceSelectList .surfaceSelectListMember" , ".privateUseHiddenSelect01");
- 			}
-			else if(pathName === `/gover/masterReg`){
-			   return privateUseSelectEvet("#masterRegWrappers .privateUseSelectsTitleBtn" ,"#masterRegWrappers .sufaceSelectList"  ,"#masterRegWrappers .sufaceSelectList .surfaceSelectListMember" , ".privateUseHiddenSelect01");
+			    return privateUseSelectEvet("#dopcoPrivateUse01 .privateUseSelectsTitleBtn" ,"#dopcoPrivateUse01 .sufaceSelectList"  ,"#dopcoPrivateUse01 .sufaceSelectList .surfaceSelectListMember" , ".privateUseHiddenSelect01");
 			}
+			else if(pathName === `/gover/menu03_2`){
+                  return privateUseSelectEvet("#dopcoPrivateUse02 .privateUseSelectsTitleBtn" ,"#dopcoPrivateUse02 .sufaceSelectList"  ,"#dopcoPrivateUse02 .sufaceSelectList .surfaceSelectListMember" , ".privateUseHiddenSelect02");
+            }
+			else if(pathName === `/gover/menu03_3`){
+                  return privateUseSelectEvet("#dopcoPrivateUse03 .privateUseSelectsTitleBtn" ,"#dopcoPrivateUse03 .sufaceSelectList"  ,"#dopcoPrivateUse03 .sufaceSelectList .surfaceSelectListMember" , ".privateUseHiddenSelect03");
+            }
+			//토지개발
 			else if(pathName === `/togi/menu04_1`){
 			    return landDevelopmentManageSelectEvet("#dopcoLandDevelopmentManage .landDevelopmentManageSelectsTitleBtn" ,"#dopcoLandDevelopmentManage .sufaceSelectList"  ,"#dopcoLandDevelopmentManage .sufaceSelectList .surfaceSelectListMember" , ".landDevelopmentManageHiddenSelect");
 			}

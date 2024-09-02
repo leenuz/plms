@@ -31,7 +31,7 @@ const privateUseLinkEvet = () => {
         const otherLink = link.parentElement;
          //점용 납부/전자결재
          if(otherLink.classList.contains("privateLink02")){
-            link.setAttribute("href" , "/components/subHtml/menu03/feeDetail.html"); //점용납부전자결재에서 클릭시 상세정보로 이동
+            link.setAttribute("href" , "content/gover/feeDetail"); //점용납부전자결재에서 클릭시 상세정보로 이동
       
           //점용료 내역해지
           }else if(otherLink.classList.contains("privateLink03")){
@@ -49,7 +49,7 @@ const privateUseLinkEvet = () => {
                  //점용 납부/전자결재
                  if(otherLink.classList.contains("privateLink02")){
                   link.classList.add("mouseEvet");
-                  link.setAttribute("href" , "/components/subHtml/menu03/feeDetail.html"); //점용납부전자결재에서 클릭시 상세정보로 이동
+                  link.setAttribute("href" , "content/gover/feeDetail"); //점용납부전자결재에서 클릭시 상세정보로 이동
             
                 //점용료 내역해지
                 }else if(otherLink.classList.contains("privateLink03")){
@@ -103,7 +103,7 @@ if(dataBoxsFirstLink){
 
                          //점용 납부/전자결재
                           if(otherLink.classList.contains("privateLink02")){ 
-                              link.setAttribute("href" , "/components/subHtml/menu03/feeDetail.html");
+                              link.setAttribute("href" , "content/gover/feeDetail");
                           }
                          //점용료 내역해지
                           else if(otherLink.classList.contains("privateLink03")){

@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       
       layout:decorate="~{layout/default_layout}">
- <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
@@ -12,119 +12,17 @@
       as="style"
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
+	<link rel="stylesheet" href="/assets/css/header.css" />
+  	<link th:href="@{/css/common.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="/css/gover/menu03_2.css" />
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+	<title>점용 납부/전자결재</title>
+</head>
 
-
-
- 
-  
-   
-  
-	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	
- <link rel="stylesheet" href="/css/gover/menu03_2.css" /> 
-	  
-		<script src="/js/songyu/menu01.js"></script>	
-		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
-		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
-
-div.dt-center-in-div {
-  margin: 0 auto;
-      float: right;
-    margin-right: 30px;
-   
-}
-div.dt-center-in-div>div{
-
-display:inline;
-}
-
-div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
-}
-
-
-.dt-title{
-
-text-align:center;
-width:180px;
-float:left;
-
-}
-.dt-buttons{
-display:inline-block;
-
-width:180px;
-
-}
-.dt-length{
-display:inline-block;
-}
-.dt-button{
-
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
-
-}
-
-.dt-paging {
-text-align: center;
-}
-
-.dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-    
-    
-}
-
-.bottom{
-text-align:center;
-
-}
-.top{
-
-text-align:right;
-margin:10px;
-
-}
-
-		</style>
-		
-    <title>점용 납부/전자결재</title>
-  </head>
 <th:block layout:fragment="content">
-    <!--점용 납부/전자결재-->
+	<!--점용 납부/전자결재-->
     <div id="dopcoPrivateUse02">
       <!--header삽입-->
       <div class="privateUse_header02"></div>
@@ -132,6 +30,8 @@ margin:10px;
         <div class="privateUseTitleBoxs">
           <h5>점용 납부/전자결재</h5>
         </div>
+		
+		<form id="searchForm">
         <section class="privateUseSectionBoxs">
           <div class="privateUseSectionCont">
             <div class="privateUseSectionContDevide">
@@ -140,7 +40,7 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="privateUseSelectWrappers">
                   <select
-                    name=""
+                    name="jisa"
                     class="privateUseHiddenSelect02"
                     id="privateUseSelectBox02_1"
                     hidden>
@@ -165,7 +65,7 @@ margin:10px;
               <ul class="inputControlBoxs sectionMenuListBoxs">
                 <li class="selectTitle"><p>관리번호</p></li>
                 <div class="inputControlList">
-                  <input type="text" />
+                  <input type="text" name="gover_no" />
                 </div>
               </ul>
               <ul class="selectContent sectionMenuListBoxs">
@@ -173,7 +73,7 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="privateUseSelectWrappers">
                   <select
-                    name=""
+                    name="use_purpos"
                     class="privateUseHiddenSelect02"
                     id="privateUseSelectBox02_2"
                     hidden>
@@ -182,12 +82,8 @@ margin:10px;
                     <option value="국유지사용">국유지사용</option>
                     <option value="녹지점용">녹지점용</option>
                     <option value="국유림전용">국유림전용</option>
-                    <option value="농업수자원부지사용">
-                      농업수자원부지사용
-                    </option>
-                    <option value="농업시설목적외사용">
-                      농업시설목적외사용
-                    </option>
+                    <option value="농업수자원부지사용">농업수자원부지사용</option>
+                    <option value="농업시설목적외사용">농업시설목적외사용</option>
                     <option value="도로점용">도로점용</option>
                     <option value="고속도로점용">고속도로점용</option>
                     <option value="철도부지점용">철도부지점용</option>
@@ -210,7 +106,7 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="privateUseSelectWrappers">
                   <select
-                    name=""
+                    name="pmt_office"
                     class="privateUseHiddenSelect02"
                     id="privateUseSelectBox02_3"
                     hidden>
@@ -232,11 +128,11 @@ margin:10px;
                 </div>
               </ul>
               <ul class="selectContent sectionMenuListBoxs">
-                <li class="selectTitle"><p>관리기간</p></li>
+                <li class="selectTitle"><p>관리기관</p></li>
                 <!--수정부분 지사-->
                 <div class="privateUseSelectWrappers">
                   <select
-                    name=""
+                    name="adm_office"
                     class="privateUseHiddenSelect02"
                     id="privateUseSelectBox02_4"
                     hidden>
@@ -256,9 +152,9 @@ margin:10px;
               <ul class="inputControlBoxs sectionMenuListBoxs">
                 <li class="selectTitle"><p>납부일시</p></li>
                 <div class="inputControlList dateListBox">
-                  <input type="date" />
+                  <input type="date" name="pay_date_start"/>
                   <span>-</span>
-                  <input type="date" />
+                  <input type="date" name="pay_date_end"/>
                 </div>
               </ul>
             </div>
@@ -268,12 +164,11 @@ margin:10px;
               <div class="privateUseSectionRadioBoxs">
                 <ul class="radioBoxs">
                   <li>
-                    <input type="radio" name="privateUseRadio02" /><span
-                      >입력형</span
-                    >
+                    <input type="radio" name="privateUseRadio02" /><span>입력형</span>
                   </li>
                   <li class="addressInput">
                     <input
+					  name="addressFull"
                       type="search"
                       placeholder="주소입력"
                       class="searchInputBox02" />
@@ -281,15 +176,13 @@ margin:10px;
                 </ul>
                 <ul class="radioBoxs menuRadioEvet02">
                   <li>
-                    <input type="radio" name="privateUseRadio02" /><span
-                      >선택형</span
-                    >
+                    <input type="radio" name="privateUseRadio02" /><span>선택형</span>
                   </li>
                   <li>
                     <!--수정부분 지사-->
                     <div class="privateUseSelectWrappers">
                       <select
-                        name=""
+                        name="sido_nm"
                         class="privateUseHiddenSelect02"
                         id="privateUseSelectBox02_5"
                         hidden>
@@ -315,7 +208,7 @@ margin:10px;
                     <!--수정부분 지사-->
                     <div class="privateUseSelectWrappers">
                       <select
-                        name=""
+                        name="sgg_nm"
                         class="privateUseHiddenSelect02"
                         id="privateUseSelectBox02_6"
                         hidden>
@@ -336,7 +229,7 @@ margin:10px;
                     <!--수정부분 지사-->
                     <div class="privateUseSelectWrappers">
                       <select
-                        name=""
+                        name="emd_nm"
                         class="privateUseHiddenSelect02"
                         id="privateUseSelectBox02_7"
                         hidden>
@@ -357,7 +250,7 @@ margin:10px;
                     <!--수정부분 지사-->
                     <div class="privateUseSelectWrappers">
                       <select
-                        name=""
+                        name="ri_nm"
                         class="privateUseHiddenSelect02"
                         id="privateUseSelectBox02_8"
                         hidden>
@@ -377,6 +270,7 @@ margin:10px;
                   <li style="padding: 0px 3px">
                     <div class="inputControlList">
                       <input
+					    name="jibun"
                         type="text"
                         placeholder="지번입력"
                         class="menuAdderssInput02" />
@@ -386,12 +280,14 @@ margin:10px;
               </div>
               <!--privateUseSectionRadioBoxs-->
               <div class="privateUseSectionBtnBoxs">
-                <button class="privateUseRegisterBtn">조회하기</button>
+                <button type="submit" class="privateUseRegisterBtn">조회하기</button>
               </div>
             </div>
           </div>
           <!--privateUseSectionCont-->
         </section>
+		</form>
+		
         <main>
           <div class="privateUseMainContentWrapper">
             <div class="privateUseMainContent">
@@ -817,6 +713,7 @@ margin:10px;
     <script type="module" src="/js/module/surfaceMain.js"></script>
     <script src="/js/gover/privateUseLinkEvet.js"></script>
     <script src="/js/gover/privateUseRadioEvet.js"></script>
-   <!--  <script src="/js/gover/resultPageEvet.js"></script> -->
-  </th:block>
+    <script src="/js/menu01/resultPageEvet.js"></script>
+	<script src="/js/gover/menu03_2.js"></script>
+</th:block>
 </html>

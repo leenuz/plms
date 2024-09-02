@@ -16,7 +16,7 @@ const privateUseSelectEvet = (selectBtn, selectList , selectListText , selectHid
         for(let d = 0; d <= selectWrappers.length - 1; d++){
 
            let selectValuesInitial = selectWrappers[d].children;
-           surfaceSelectsTitleBtn[d].innerText = selectValuesInitial[0].text; //셀렉박스의 첫번째 값들이 surfaceSelectsTitleBtn값의 첫 값이 됨
+           surfaceSelectsTitleBtn[d].innerText = selectValuesInitial[0].value; //셀렉박스의 첫번째 값들이 surfaceSelectsTitleBtn값의 첫 값이 됨
            selectWrappers[d].value = surfaceSelectsTitleBtn[d].innerText; //셀렉박스의 value값을 surfaceSelectsTitleBtn값으로 설정
 
            if(surfaceSelectListMember[d].classList.contains("otherDefault01")){ 
@@ -44,7 +44,7 @@ const privateUseSelectEvet = (selectBtn, selectList , selectListText , selectHid
 
        for(let x = 0; x <= selectValues.length - 1; x++){
 
-           answer += `<li><p>${selectValues[x].text}</p></li>`;
+           answer += `<li><p>${selectValues[x].value}</p></li>`;
 
        }
 
@@ -95,8 +95,7 @@ const privateUseSelectEvet = (selectBtn, selectList , selectListText , selectHid
                    let currentSelectValue = document.getElementById(currentSelect); //현재 셀렉박스 가져오기
                    return thisBtns.innerText = event.target.innerText,
                    $(currentSelectValue).val(event.target.innerText),//셀렉박스 값에 현재 클릭된 값의 텍스트 담기 
-				   $(currentSelectValue).trigger("change");
-                   console.log(currentSelectValue.text), //셀렉박스값표시
+                   console.log(currentSelectValue.value), //셀렉박스값표시
                    surfaceSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
                    surfaceSelectList.forEach((lists) => lists.classList.remove("active"));
          }
