@@ -296,8 +296,8 @@ public class goverController {
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
-			ModelAndView mav=new ModelAndView();
 			
+			ModelAndView mav=new ModelAndView();
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);
@@ -310,8 +310,17 @@ public class goverController {
 	    public ModelAndView menu03_2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+			
 			ModelAndView mav=new ModelAndView();
+			mav.addObject("sidoList",sidolist);
+			
 			mav.setViewName("content/gover/menu03_2");
+			
 			return mav;
 		}
 		@GetMapping(path="/menu03_3") //http://localhost:8080/api/get/dbTest
@@ -509,4 +518,93 @@ public class goverController {
   			mav.setViewName("content/gover/masterEdit");
   			return mav;
 	    }
+		
+		@RequestMapping(value="/menu03_2DataTableList", method = {RequestMethod.GET, RequestMethod.POST})
+		public ResponseEntity<?> datatableList03_2(HttpServletRequest req, HttpServletResponse res) throws Exception {
+
+		    // 로그 추가: 요청이 들어왔을 때 출력
+		    log.info("Received request for /menu03_2DataTableList");
+
+		    // 클라이언트에서 전달된 파라미터들을 맵으로 변환
+		    HashMap<String, String> returnHash = new HashMap<>();
+		    Enumeration<String> paramsEnum = req.getParameterNames();
+
+		    while (paramsEnum.hasMoreElements()) {
+		        String paramName = paramsEnum.nextElement();
+		        String paramValue = req.getParameter(paramName);
+		        returnHash.put(paramName, paramValue);
+		    }
+
+		    // DataTable에서 제공하는 기본 파라미터 처리
+		    int draw = Integer.parseInt(req.getParameter("draw"));
+		    int start = Integer.parseInt(req.getParameter("start"));
+		    int length = Integer.parseInt(req.getParameter("length"));
+		    String orderColumn = req.getParameter("order[0][column]");
+		    String orderDirection = req.getParameter("order[0][dir]");
+		    String orderColumnName = req.getParameter("columns[" + orderColumn + "][data]");
+
+		    // 로그 추가: 클라이언트로부터 전달된 파라미터 출력
+		    log.info("Received Parameters - draw: {}, start: {}, length: {}", draw, start, length);
+		    log.info("Order Column: {}, Order Direction: {}", orderColumnName, orderDirection);
+
+		    // DataTable 검색 및 필터링을 위한 파라미터 처리
+		    String jisa = req.getParameter("jisa");
+		    String gover_no = req.getParameter("gover_no");
+		    String use_purpos = req.getParameter("use_purpos");
+		    String pmt_office = req.getParameter("pmt_office");
+		    String adm_office = req.getParameter("adm_office");
+		    String pay_date_start = req.getParameter("pay_date_start");
+		    String pay_date_end = req.getParameter("pay_date_end");
+		    String address = req.getParameter("saddr");
+
+		    // 로그 추가: 검색 필터 관련 파라미터 출력
+		    log.info("Search Parameters - jisa: {}, gover_no: {}, use_purpos: {}, pmt_office: {}, adm_office: {}, pay_date_start: {}, pay_date_end: {}, address: {}",
+		            jisa, gover_no, use_purpos, pmt_office, adm_office, pay_date_start, pay_date_end, address);
+
+		    // 요청 파라미터를 담을 HashMap 생성
+		    HashMap<String, Object> params = new HashMap<>();
+		    params.put("draw", draw);
+		    params.put("start", start);
+		    params.put("length", length);
+		    params.put("jisa", jisa);
+		    params.put("gover_no", gover_no);
+		    params.put("use_purpos", use_purpos);
+		    params.put("pmt_office", pmt_office);
+		    params.put("adm_office", adm_office);
+		    params.put("pay_date_start", pay_date_start);
+		    params.put("pay_date_end", pay_date_end);
+		    params.put("address", address);
+
+		    // 정렬 조건 추가
+		    if (orderColumn != null && !orderColumn.equals("null") && Integer.parseInt(orderColumn) > 0) {
+		        params.put("orderCol", orderColumnName);
+		        params.put("desc", orderDirection);
+		    } else {
+		        params.put("orderCol", "");
+		        params.put("desc", "");
+		    }
+
+		    // 로그 추가: 최종 파라미터 출력
+		    log.info("Final Parameters: {}", params);
+
+		    // 총 데이터 수 조회
+		    Object count = mainService.selectCountQuery("goverSQL.selectTotalCount", params);
+		    int total = (int) count;
+
+		    // 실제 데이터 조회
+		    ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList", params);
+		    log.info("list: " + list);
+
+		    // 결과를 DataTable 형식에 맞게 변환하여 반환
+		    HashMap<String, Object> resultmap = new HashMap<>();
+		    resultmap.put("draw", draw);
+		    resultmap.put("recordsTotal", total);
+		    resultmap.put("recordsFiltered", total); // 필터링된 데이터 수
+		    resultmap.put("data", list);
+
+		    JSONObject obj = new JSONObject(resultmap);
+		    log.info("Returning response: " + obj);
+		    return ResponseEntity.ok(obj.toString());
+		}
+
 }
