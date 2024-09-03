@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
+<link
+  rel="stylesheet"
+  as="style"
+  crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<div id="changehistoryPopup">
+  <div class="popupWrap">
+    <h2>
+      <p>변경이력</p>
+      <span class="topCloseBtn"></span>
+    </h2>
+    <div class="historywrap">
+      <ul class="historytitle">
+        <li class="historytitle_th1">변경일시</li>
+        <li class="historytitle_th2">구분</li>
+        <li class="historytitle_th3">내용</li>
+      </ul>
+      <div class="historycontent">
+        <ul>
+          <li class="historytitle_td1">2024-04-01</li>
+          <li class="historytitle_td2">기본정보</li>
+          <li class="historytitle_td3">
+            57-2, 61-1,58번지가 59-6으로 합병, 용도 변경 (“>’송유관로'), 지적
+            변경(‘성남면 대화리 58’ > ‘성남면 대화리 59-6’), 국공유지 여부
+            변경(‘ > ‘N’), 지면 면적 변경(‘3680’ > ‘4929.97)
+          </li>
+        </ul>
+        <ul>
+          <li class="historytitle_td1">2024-04-01</li>
+          <li class="historytitle_td2">기본정보</li>
+          <li class="historytitle_td3">
+            소유자 성명 변경 (‘황규배' > ‘(주)우성푸드')
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="historybtn">
+      <button class="closeBtn finalBtn">닫기</button>
+    </div>
+  </div>
+</div>
+<script>
+  //스크롤이벤트_ 목록이 6개 이상일 경우 스크롤발생
+  const scrollLength = document.querySelectorAll(".historycontent ul");
+  const historycontent = document.querySelector(".historycontent");
+  if (scrollLength.length >= 6) {
+    historycontent.classList.add("scroll");
+  } else {
+    historycontent.classList.remove("scroll");
+  }
+
+  //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+  const changehistoryPopupOpen = document.getElementById("changehistoryPopup");
+  if (changehistoryPopupOpen) {
+    changehistoryPopupOpen
+      .querySelectorAll(".topCloseBtn, .finalBtn")
+      .forEach(function (btn) {
+        btn.addEventListener("click", () => {
+          changehistoryPopupOpen.classList.remove("active");
+        });
+      });
+  }
+</script>
