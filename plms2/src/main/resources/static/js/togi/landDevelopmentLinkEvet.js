@@ -26,7 +26,7 @@ const landDevelopmentManageLinkEvet = () => {
    dataBoxsSecondLink.forEach((link, index) => {
          link.addEventListener("mouseover" , () => {
 
-                link.setAttribute("href" , "/components/subHtml/menu04/landDevInfo.html"); //점용마스터수정
+                link.setAttribute("href" , "/togi/landDevInfo"); //점용마스터수정
 
               //dataBoxsSecond의 a링크 전체에 불끄고 현재 a링크에만 불들어오게하기
               dataBoxsSecondLink.forEach((otherLink) => otherLink.classList.remove("mouseEvet"));
@@ -67,10 +67,10 @@ if(dataBoxsFirstLink){
                     if(index == otherIndex){
                         
                           dataBoxsSecondLink[index].classList.add("mouseEvet" , link.classList.contains("mouseEvet"));
-                          link.setAttribute("href" , "/components/subHtml/menu04/landDevInfo.html");
+                          link.setAttribute("href" , "/togi/landDevInfo");
 
                     }else{
-                          link.setAttribute("href" , "/components/subHtml/menu04/landDevInfo.html");
+                          link.setAttribute("href" , "/togi/landDevInfo");
                           list.classList.remove("mouseEvet")
                     }
 

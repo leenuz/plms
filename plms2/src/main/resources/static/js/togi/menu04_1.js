@@ -1,8 +1,8 @@
 //총 검색건수 a 링크 관련 이벤트 
-const companyLandLinkEvet = () => {
+const landDevelopmentManageLinkEvet = () => {
        
-   const dataBoxsSecondLink = document.querySelectorAll(".dataBoxsSecond05 .dataContent a.linkCont");
-   const dataBoxsFirstLink = document.querySelectorAll(".dataBoxsFirst05 .dataContent a.linkCont");
+   const dataBoxsSecondLink = document.querySelectorAll(".dataBoxsSecond04 .dataContent a.linkCont");
+   const dataBoxsFirstLink = document.querySelectorAll(".dataBoxsFirst04 .dataContent a.linkCont");
  
 
   if(dataBoxsSecondLink){
@@ -26,7 +26,7 @@ const companyLandLinkEvet = () => {
    dataBoxsSecondLink.forEach((link, index) => {
          link.addEventListener("mouseover" , () => {
 
-                link.setAttribute("href" , "/dopco/compLandInfo.html"); //회사토지상세정보
+                link.setAttribute("href" , "/components/subHtml/menu04/landDevInfo.html"); //점용마스터수정
 
               //dataBoxsSecond의 a링크 전체에 불끄고 현재 a링크에만 불들어오게하기
               dataBoxsSecondLink.forEach((otherLink) => otherLink.classList.remove("mouseEvet"));
@@ -67,10 +67,10 @@ if(dataBoxsFirstLink){
                     if(index == otherIndex){
                         
                           dataBoxsSecondLink[index].classList.add("mouseEvet" , link.classList.contains("mouseEvet"));
-                          link.setAttribute("href" , "/dopco/compLandInfo");
+                          link.setAttribute("href" , "/components/subHtml/menu04/landDevInfo.html");
 
                     }else{
-                          link.setAttribute("href" , "/dopco/compLandInfo");
+                          link.setAttribute("href" , "/components/subHtml/menu04/landDevInfo.html");
                           list.classList.remove("mouseEvet")
                     }
 
@@ -87,11 +87,11 @@ if(dataBoxsFirstLink){
  }
  }
 
- companyLandLinkEvet();
+landDevelopmentManageLinkEvet();
 
 
 //달력 input클릭시 컬러변경 이벤트
-const companyLandLinkEvetDateBoxsClicEvet = () => {
+const landDevelopmentDateBoxsClicEvet = () => {
 
       const dateListBox = document.querySelectorAll(".dateListBox input[type='date']");
       if(dateListBox){
@@ -109,4 +109,4 @@ const companyLandLinkEvetDateBoxsClicEvet = () => {
       }
 }
 
-companyLandLinkEvetDateBoxsClicEvet();
+landDevelopmentDateBoxsClicEvet();

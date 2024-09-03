@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>회사토지 상세정보</title>
+<!--  <link rel="stylesheet" href="/assets/css/header.css" />-->
+  <link rel="stylesheet" href="/css/dopco/compLandInfo.css" />
+  <style>
+    div.dt-top-container {
+display: grid;
+grid-template-columns: auto auto auto;
+}
+
+div.dt-center-in-div {
+margin: 0 auto;
+  float: right;
+margin-right: 30px;
+
+}
+div.dt-center-in-div>div{
+
+display:inline;
+}
+
+div.dt-filter-spacer {
+margin: 10px 0;
+border:1px solid red;
+}
+
+
+.dt-title{
+
+text-align:center;
+width:180px;
+float:left;
+
+}
+.dt-buttons{
+display:inline-block;
+
+width:180px;
+
+}
+.dt-length{
+display:inline-block;
+}
+.dt-button{
+
+color:white;
+background-color:#4e5871;
+font-size:15px;
+font-weight:600;
+border-radius:10px;
+background-image:url(/assets/media/menu01/download.png);
+background-size:11px;
+background-repeat:no-repeat;
+background-position:123px center;
+text-aline:left;
+margin-right:10px;
+width:159px;
+height:38px;
+
+}
+
+.dt-paging {
+text-align: center;
+}
+
+.dt-paging-button {
+box-sizing: border-box;
+display: inline-block;
+min-width: 1.5em;
+padding: 0.5em 1em;
+margin-left: 2px;
+text-align: center;
+text-decoration: none !important;
+cursor: pointer;
+
+border: 1px solid transparent;
+border-radius: 2px;
+background: transparent;
+color: #007bff !important;
+font-size: 15px;
+font-weight: 600;
+
+
+}
+
+.bottom{
+text-align:center;
+
+}
+.top{
+
+text-align:right;
+margin:10px;
+
+}
+
+  </style>
+</head>
+<body>
+<!-- 회사토지 상세정보 -->
+<div class="compLandInfoWrappers">
+  <div class="compLandInfoHeader"></div>
+  <main id="compLandInfo">
+    <div class="mainTitle">
+      <h1>회사토지 상세정보</h1>
+    </div>
+
+    <!-- 기본/소유자 정보 -->
+    <section class="basicOwnerInfo">
+      <div class="subTitle">기본/소유자 정보</div>
+
+      <div class="contWrap">
+        <div class="contBox">
+          <div class="thirdTitle">
+            <h2>・기본 정보</h2>
+            <div class="btnbox">
+              <button class="viewLocation">위치보기</button>
+            </div>
+          </div>
+
+          <div class="contentDetailBox">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">관리번호</li>
+                <li class="title">담당지사</li>
+                <li class="title">용도</li>
+                <li class="title">관로명(구간)</li>
+                <li class="title">단/복선</li>
+                <li class="title addressWidth">주소</li>
+                <li class="title">지적면적(m²)</li>
+                <li class="title">지목</li>
+                <li class="title">국공유지 여부</li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="L_000858"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="서울지사"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="송유관로"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="단선"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content addressWidth">
+                  <input
+                          type="text"
+                          placeholder="서울특별시 서초구 원지동 28"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="3,008"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="전"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="N"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+              </ul>
+            </div>
+            <div class="depth2">
+              <ul class="titles">
+                <li class="title">도시계획결정여부</li>
+                <li class="title middleWidth">활용현황</li>
+                <li class="title">취득일</li>
+                <li class="title middleWidth">자산분류번호</li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                          type="text"
+                          readonly
+                          class="notWriteInput"
+                          placeholder="서울저유소" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          readonly
+                          class="notWriteInput"
+                          placeholder="1995-06-30" />
+                </li>
+                <li class="content middleWidth">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+              </ul>
+              <!-- <ul class="contents">
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    readonly
+                    class="notWriteInput"
+                    placeholder="서울저유소" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    readonly
+                    class="notWriteInput"
+                    placeholder="1995-06-30" />
+                </li>
+                <li class="content middleWidth">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+              </ul> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 권리내역 -->
+    <section class="rightsDetails">
+      <div class="subTitle">권리내역</div>
+
+      <div class="contWrap">
+        <div class="contBox securedRights">
+          <div class="thirdTitle">
+            <h2>・권리확보내역</h2>
+          </div>
+
+          <div class="contentDetailBox">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title smallWidth">완결여부</li>
+                <li class="title">등기일</li>
+                <li class="title">등기번호</li>
+                <li class="title largeWidth">등기소</li>
+              </ul>
+              <ul class="contents">
+                <li class="content smallWidth">
+                  <input
+                          type="text"
+                          placeholder="Y"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="1995-06-30"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="1356-1996-052605"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content largeWidth">
+                  <input
+                          type="text"
+                          placeholder="수원지방법원 성남지원 분당등기소"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="contBox subordinateRts">
+          <div class="thirdTitle">
+            <h2>・후순위 권리</h2>
+          </div>
+
+          <div class="contentDetailBox contBoxMini07">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">권리명</li>
+                <li class="title middleWidth">설정금액</li>
+                <li class="title">설정일</li>
+                <li class="title">처분일</li>
+                <li class="title">성명</li>
+                <li class="title">연락처</li>
+                <li class="title largeWidth">주소</li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="근저당권설정"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                          type="text"
+                          placeholder="61,800,000,000"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="2005-09-14"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="한국석유공사"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+                <li class="content largeWidth">
+                  <input type="text" readonly class="notWriteInput" />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="contBox fileContbox landScanFiles">
+          <div class="thirdTitle">
+            <h2>・회사 보유 토지 스캔 파일</h2>
+          </div>
+
+          <div class="contentDetailBox">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title largeWidth">파일명</li>
+                <li class="title smallWidth">다운로드</li>
+              </ul>
+              <ul class="contents">
+                <li class="content largeWidth">
+                  <input
+                          type="text"
+                          placeholder="석운동 65-3 토지대장.tif"
+                          class="notWriteInput"
+                          readonly />
+                </li>
+                <li class="content btnsWrap smallWidth">
+                  <button class="fileDownloadBtn">
+                    다운로드 <span class="downloadIcon"></span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 변경이력 -->
+    <section class="changeHistory">
+      <div class="subTitle">변경이력</div>
+
+      <div class="contWrap">
+        <div class="contBox">
+          <div class="contentDetailBox">
+            <div class="depth1">
+              <ul class="titles titleScr">
+                <li class="title smallWidth">순번</li>
+                <li class="title">변경일자</li>
+                <li class="title">구분</li>
+                <li class="title largeWidth">내용</li>
+              </ul>
+              <div class="contentScr">
+                <ul class="contents">
+                  <li class="content smallWidth">
+                    <input
+                            type="text"
+                            placeholder="1"
+                            class="notWriteInput"
+                            readonly />
+                  </li>
+                  <li class="content">
+                    <input
+                            type="text"
+                            placeholder="2022-10-27 09:14:07.0"
+                            class="notWriteInput"
+                            readonly />
+                  </li>
+                  <li class="content">
+                    <input
+                            type="text"
+                            placeholder="지상권 정보"
+                            class="notWriteInput"
+                            readonly />
+                  </li>
+                  <li class="content largeWidth">
+                    <input
+                            type="text"
+                            class="notWriteInput"
+                            readonly
+                            placeholder="취득일 변경(‘’ > ‘1995-06-30’)" />
+                  </li>
+                </ul>
+                <ul class="contents">
+                  <li class="content smallWidth">
+                    <input
+                            type="text"
+                            placeholder="2"
+                            class="notWriteInput"
+                            readonly />
+                  </li>
+                  <li class="content">
+                    <input
+                            type="text"
+                            placeholder="2022-10-27 09:14:07.0"
+                            class="notWriteInput"
+                            readonly />
+                  </li>
+                  <li class="content">
+                    <input
+                            type="text"
+                            placeholder="소속 토지정보"
+                            class="notWriteInput"
+                            readonly />
+                  </li>
+                  <li class="content largeWidth">
+                    <input
+                            type="text"
+                            class="notWriteInput"
+                            readonly
+                            placeholder="지적 변경(‘경기도 성남시 분당구 석운동 65-3’ > ‘경기도 성남시 분당구 석운동65-3’)" />
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 메모 -->
+    <section class="memoSection onlyReadMemo">
+      <div class="subTitle">메모</div>
+
+      <div class="contWrap">
+        <div class="contBox">
+          <div class="contentDetailBox">
+            <div class="depth1">
+              <ul class="titles titleScr">
+                <li class="title">작성일시</li>
+                <li class="title">작성자</li>
+                <li class="title largeWidth">내용</li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="2022-11-01"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="김철수"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content largeWidth">
+                  <input
+                          type="text"
+                          placeholder="협의 중"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="2022-11-01"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                          type="text"
+                          placeholder="김철수"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+                <li class="content largeWidth">
+                  <input
+                          type="text"
+                          placeholder="협의 중"
+                          readonly
+                          class="notWriteInput" />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="finalBtnBox btnWrap">
+      <button class="prevBtn finalBtn">이전</button>
+      <button class="editBtn finalBtn">
+        <a href="/components/subHtml/menu05/compLandEdit.html">수정</a>
+      </button>
+      <button class="printBtn finalBtn">출력</button>
+    </div>
+  </main>
+</div>
+<script type="module" src="/components/surfaceMain.js"></script>
+
+</body>
+</html>

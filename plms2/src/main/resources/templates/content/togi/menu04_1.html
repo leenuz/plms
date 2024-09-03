@@ -140,34 +140,35 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="landDevelopmentManageSelectWrappers">
                   <select
-                    name=""
+                    name="jisa"
                     class="landDevelopmentManageHiddenSelect"
                     id="landDevelopmentManageSelectBox01"
                     hidden>
-                    <option value="전체">전체</option>
-                    <option value="서울지사">서울지사</option>
-                    <option value="경인지사">경인지사</option>
-                    <option value="대전지사">대전지사</option>
-                    <option value="부산지사">부산지사</option>
-                    <option value="충청지사">충청지사</option>
-                    <option value="충청지사">충청지사</option>
-                    <option value="충청지사">충청지사</option>
+                    <option value="">전체</option>
+<!--                    <th:block th:each="val:${jisaList}">-->
+<!--                      <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>-->
+<!--                    </th:block>-->
                   </select>
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="landDevelopmentManageSelects">
-                  <button class="landDevelopmentManageSelectsTitleBtn"></button>
+                  <button class="landDevelopmentManageSelectsTitleBtn">전체</button>
                   <div class="sufaceSelectList">
-                    <ul class="surfaceSelectListMember"></ul>
+                    <ul class="surfaceSelectListMember">
+                      <li><p>전체</p></li>
+<!--                      <th:block th:each="val:${jisaList}">-->
+<!--                        <li><p th:text="${val.jm_jisa_name}">Y</p></li>-->
+<!--                        <th:block>-->
+                    </ul>
                   </div>
                 </div>
               </ul>
               <ul class="inputControlBoxs sectionMenuListBoxs">
                 <li class="selectTitle"><p>취득기간</p></li>
                 <div class="inputControlList dateListBox">
-                  <input type="date" />
+                  <input type="date" name="start_date"/>
                   <span>-</span>
-                  <input type="date" />
+                  <input type="date" name="end_date"/>
                 </div>
               </ul>
               <ul class="selectContent sectionMenuListBoxs">
@@ -175,20 +176,24 @@ margin:10px;
                 <!--수정부분 지사-->
                 <div class="landDevelopmentManageSelectWrappers">
                   <select
-                    name=""
+                    name="comple_yn"
                     class="landDevelopmentManageHiddenSelect"
                     id="landDevelopmentManageSelectBox02"
                     hidden>
-                    <option value="전체">전체</option>
+                    <option value="">전체</option>
                     <option value="Y">Y</option>
                     <option value="N">N</option>
                   </select>
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="landDevelopmentManageSelects">
-                  <button class="landDevelopmentManageSelectsTitleBtn"></button>
+                  <button class="landDevelopmentManageSelectsTitleBtn">전체</button>
                   <div class="sufaceSelectList smallHeight">
-                    <ul class="surfaceSelectListMember"></ul>
+                    <ul class="surfaceSelectListMember">
+                      <li><p>전체</p></li>
+                      <li><p>Y</p></li>
+                      <li><p>N</p></li>
+                    </ul>
                   </div>
                 </div>
               </ul>
@@ -766,9 +771,8 @@ margin:10px;
     </div>
 
     <script type="module" src="/js/module/surfaceMain.js"></script>
-    <script src="/js/togi/landDevelopmentRadioEvet.js"></script>
+<!--    <script src="/js/togi/landDevelopmentRadioEvet.js"></script>-->
     <script src="/js/togi/landDevelopmentLinkEvet.js"></script>
-    
     <!-- <script src="/js/togi/resultPageEvet.js"></script> -->
  </th:block>
 </html>
