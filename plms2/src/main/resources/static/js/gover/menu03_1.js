@@ -3,40 +3,36 @@ var table;
      
 
 $(document).ready(function() {
-  console.log("gover/menu03_1.js start");
-  /*$('#jisa').niceSelect();*/
-//testAjax();
-//init_Table();
-loadDataTable("");
-
+	console.log("gover/menu03_1.js start");
+	loadDataTable("");
 });
 
-
-//조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
+//조회하기 클릭시 상단 정보 출력
 $(document).on("click","#searchBtn",function(){
-       console.log($("#menuHiddenSelectBox01_1").val());
-	   console.log($("#searchForm").serialize());
+	console.log($("#menuHiddenSelectBox01_1").val());
+	console.log($("#searchForm").serialize());
 	   
-	   var formSerializeArray = $('#searchForm').serializeArray();
-	   console.log(formSerializeArray)
-       // 체크박스 값들을 조합하여 문자열로 만들기
-
-	   var object = {};
-	   for (var i = 0; i < formSerializeArray.length; i++){
-	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
-	   }
+	var formSerializeArray = $('#searchForm').serializeArray();
+	console.log(formSerializeArray)
+	// 체크박스 값들을 조합하여 문자열로 만들기
+	
+	var object = {};
+	for (var i = 0; i < formSerializeArray.length; i++){
+		if (formSerializeArray[i]['value'] === '전체') {
+		    continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
+		}
+		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+	}
 	   
-	   var json = JSON.stringify(formSerializeArray);
-	  
-	  console.log("----------jsonobj------------");
-	  console.log(json);
-	  console.log("object askMenu01:"+object.askMenu01); 
-	  
-	  
-	   loadDataTable(object);
-	   console.log("-----------------------");
-	   
-     })
+	var json = JSON.stringify(formSerializeArray);
+	
+	console.log("----------jsonobj------------");
+	console.log(json);
+	console.log("object askMenu01:"+object.askMenu01);
+	 
+	loadDataTable(object);
+	console.log("-----------------------");
+})
 
 
 $(document).on("change","#sido_nm",function(){
@@ -93,7 +89,6 @@ $(document).on("change","#sido_nm",function(){
 					    }
 					  }) //end ajax
 })
-
 
 
 $(document).on("change","#sgg",function(){

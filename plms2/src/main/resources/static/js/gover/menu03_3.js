@@ -16,6 +16,9 @@ $(document).on("click","#searchBtn",function(){
 	  // 체크박스 값들을 조합하여 문자열로 만들기
 	  var object = {};
 	  for (var i = 0; i < formSerializeArray.length; i++){
+		if (formSerializeArray[i]['value'] === '전체') {
+		    continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
+		}
 	    object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
 	  }
 	   
