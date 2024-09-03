@@ -1,190 +1,222 @@
 var table;
-
+     
 $(document).ready(function() {
-    console.log("-----gover/menu03_2.js start-----");
-
-    // 초기 테이블 로딩 및 이벤트 핸들러 설정
-    function init() {
-        console.log("init function called");
-        setupFormHandler();
-        loadDataTable(""); // 초기에는 빈 파라미터로 전체 데이터를 로드
-    }
-
-    function setupFormHandler() {
-        // 폼 제출 이벤트 핸들링
-        $('#searchForm').on('submit', function(event) {
-            event.preventDefault(); // 폼 제출 기본 동작 방지
-            const params = serializeFormData($(this));
-            console.log("Submitting form with params: ", params);
-            loadDataTable(params); // 검색 조건에 맞는 데이터 로드
-        });
-
-        // 조회 버튼 클릭 핸들러 (폼 제출과 동일하게 처리)
-        $("#searchBtn").on("click", function(event) {
-            event.preventDefault();
-            $('#searchForm').submit();
-        });
-    }
-
-    function serializeFormData($form) {
-        const formData = $form.serializeArray();
-        const params = {};
-        $.each(formData, function(i, field) {
-            params[field.name] = field.value;
-        });
-        console.log("------Serialized form data------");
-        return params;
-    }
-
-    // 시도 선택 시 시군구 로드
-    $(document).on("change", "#sido_nm", function(event) {
-        event.preventDefault(); // 기본 동작 방지
-        console.log("----------start sido_nm change -------------");
-        if ($("#sido_nm").val() == null) return;
-
-        var allData = { "key": $("#sido_nm").val() };
-        console.log(allData);
-
-        $.ajax({
-            url: "/api/getSigunMaster",
-            data: JSON.stringify(allData),
-            async: true,
-            type: "POST",
-            dataType: "json",
-            contentType: 'application/json; charset=utf-8',
-            success: function(rt) {
-                console.log(rt);
-                var data = rt.resultData;
-
-                // 시군구 옵션 및 리스트 초기화
-                $("#sggUl li").remove();
-                $("#sgg option").remove();
-
-                $("#sggUl").append("<li><p>전체</p></li>");
-                $("#sgg").append("<option value=''>전체</option>");
-                for (var i = 0; i < data.length; i++) {
-                    console.log(data[i].sgg_nm);
-                    $("#sggUl").append("<li><p>" + data[i].sm_gugun + "</p></li>");
-                    $("#sgg").append("<option>" + data[i].sm_gugun + "</option>");
-                }
-
-                // 시/도 선택 설정
-                $("#sido").val($("#sido_nm").val()).attr("selected", "selected");
-            },
-            beforeSend: function() {
-                // 로딩 이미지 등 보여주기 처리 (필요 시)
-            },
-            complete: function() {
-                // 로딩 이미지 등 감추기 처리 (필요 시)
-            },
-            error: function(jqXHR) {
-                console.error("AJAX error: " + jqXHR.responseText);
-            }
-        });
-    });
-
-    // 시군구 선택 시 읍면동 로드
-    $(document).on("change", "#sgg_nm", function(event) {
-        event.preventDefault(); // 기본 동작 방지
-        console.log("----------start sgg change -------------");
-
-        var allData = {
-            "gugunKey": $("#sgg option:selected").val() || '',
-            "sidoKey": $("#sido_nm").val()
-        };
-        console.log(allData);
-
-        $.ajax({
-            url: "/api/getDongMaster",
-            data: JSON.stringify(allData),
-            async: true,
-            type: "POST",
-            dataType: "json",
-            contentType: 'application/json; charset=utf-8',
-            success: function(rt) {
-                console.log(rt);
-                var data = rt.resultData;
-
-                // 읍면동 옵션 및 리스트 초기화
-                $("#emdUl li").remove();
-                $("#emd option").remove();
-
-                $("#emdUl").append("<li><p>전체</p></li>");
-                $("#emd").append("<option value=''>전체</option>");
-                for (var i = 0; i < data.length; i++) {
-                    console.log(data[i].bm_dong);
-                    $("#emdUl").append("<li><p>" + data[i].bm_dong + "</p></li>");
-                    $("#emd").append("<option>" + data[i].bm_dong + "</option>");
-                }
-
-                // 시군구 선택 설정
-                $("#sgg").val($("#sgg").val()).attr("selected", "selected");
-            },
-            beforeSend: function() {
-                // 로딩 이미지 등 보여주기 처리 (필요 시)
-            },
-            complete: function() {
-                // 로딩 이미지 등 감추기 처리 (필요 시)
-            },
-            error: function(jqXHR) {
-                console.error("AJAX error: " + jqXHR.responseText);
-            }
-        });
-    });
-
-    // 읍면동 선택 시 리 로드
-    $(document).on("change", "#emd_nm", function(event) {
-        event.preventDefault(); // 기본 동작 방지
-        console.log("----------start emd change -------------");
-
-        var allData = {
-            "dongKey": $("#emd option:selected").val() || '',
-            "gugunKey": $("#sgg option:selected").val() || '',
-            "sidoKey": $("#sido_nm").val()
-        };
-        console.log(allData);
-
-        $.ajax({
-            url: "/api/getRiMaster",
-            data: JSON.stringify(allData),
-            async: true,
-            type: "POST",
-            dataType: "json",
-            contentType: 'application/json; charset=utf-8',
-            success: function(rt) {
-                console.log(rt);
-                var data = rt.resultData;
-
-                // 리 옵션 및 리스트 초기화
-                $("#riUl li").remove();
-                $("#ri option").remove();
-
-                $("#riUl").append("<li><p>전체</p></li>");
-                $("#ri").append("<option value=''>전체</option>");
-                for (var i = 0; i < data.length; i++) {
-                    console.log(data[i].rm_ri);
-                    $("#riUl").append("<li><p>" + data[i].rm_ri + "</p></li>");
-                    $("#ri").append("<option>" + data[i].rm_ri + "</option>");
-                }
-
-                // 읍면동 선택 설정
-                $("#emd").val($("#emd").val()).attr("selected", "selected");
-            },
-            beforeSend: function() {
-                // 로딩 이미지 등 보여주기 처리 (필요 시)
-            },
-            complete: function() {
-                // 로딩 이미지 등 감추기 처리 (필요 시)
-            },
-            error: function(jqXHR) {
-                console.error("AJAX error: " + jqXHR.responseText);
-            }
-        });
-    });
-
-    // 초기화 호출
-    init();
+  console.log("gover/menu03_2.js start");
+  loadDataTable("");
 });
+
+//조회하기 클릭시 상단 정보 출력
+$(document).on("click","#searchBtn",function(){
+	  console.log($("#menuHiddenSelectBox01_1").val());
+	  console.log($("#searchForm").serialize());
+	 
+	  var formSerializeArray = $('#searchForm').serializeArray();
+	  console.log(formSerializeArray)
+	  
+	  // 체크박스 값들을 조합하여 문자열로 만들기
+	  var object = {};
+	  for (var i = 0; i < formSerializeArray.length; i++){
+	    object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+	  }
+	   
+	  var json = JSON.stringify(formSerializeArray);
+	
+	  console.log("----------jsonobj------------");
+	  console.log(json);
+	  console.log("object askMenu01:"+object.privateUseRadio02); 
+	  
+	  loadDataTable(object);
+	  console.log("-----------------------");
+	   
+})
+
+$(document).on("change","#sido_nm",function(){
+	console.log("----------start sido_nm change -------------");
+	$("#sido_nm").val($("#sidoText").text()).attr("selected","selected");
+	if ($("#sido_nm").val()==null) return;
+	var allData={"key":$("#sido_nm").val()}
+					   console.log(allData);
+					  $.ajax({
+
+					    url: "/api/getSigunMaster",
+					    data:JSON.stringify(allData),
+					    async: true,
+					    type:"POST",
+					    dataType: "json",
+					    contentType: 'application/json; charset=utf-8',
+					    success: function(rt,jqXHR) {
+					      console.log(rt);
+						  var data=rt.resultData;
+						 
+						  $("#sggUl li").remove();
+						  $("#sgg option").remove();
+						  
+						  $("#sggUl").append("<li><p>전체</p></li>");
+						  $("#sgg").append("<option value=''>전체</option>");
+						  for(var i=0;i<data.length;i++){
+							console.log(data[i].sgg_nm);
+							$("#sggUl").append("<li><p>"+data[i].sm_gugun+"</p></li>");
+							$("#sgg").append("<option>"+data[i].sm_gugun+"</option>");
+						  }
+						  
+						  console.log("sido:"+$("#sido").val());
+						  $("#sido").val($("#sido").val()).attr("selected","selected");
+					     // downloadExcel(rt.results);
+					    },
+					    beforeSend: function() {
+					      //(이미지 보여주기 처리)
+					      //$('#load').show();
+					    },
+					    complete: function() {
+					      //(이미지 감추기 처리)
+					      //$('#load').hide();
+					
+					
+					    },
+					    error: function(jqXHR, textStatus, errorThrown,responseText) {
+					      //alert("ajax error \n" + textStatus + " : " + errorThrown);
+					
+					      console.log(jqXHR);
+					      console.log(jqXHR.readyState);
+					      console.log(jqXHR.responseText);
+					      console.log(jqXHR.responseJSON);
+					
+					    }
+					  }) //end ajax
+})
+
+
+
+$(document).on("change","#sgg",function(){
+	console.log("----------start sgg change -------------");
+
+	var allData={"gugunKey":ljsIsNull($("#sgg option:selected").val())?'':$("#sgg option:selected").val(),"sidoKey":$("#sidoText").text()}
+					   console.log(allData);
+					  $.ajax({
+
+					    url: "/api/getDongMaster",
+					    data:JSON.stringify(allData),
+					    async: true,
+					    type:"POST",
+					    dataType: "json",
+					    contentType: 'application/json; charset=utf-8',
+					    success: function(rt,jqXHR) {
+					      console.log(rt);
+						  var data=rt.resultData;
+						  $("#emdUl li").remove();
+						  $("#emd option").remove();
+						  $("#emdUl").append("<li><p>전체</p></li>");
+						  $("#emd").append("<option value=''>전체</option>");
+						  for(var i=0;i<data.length;i++){
+							console.log(data[i].bm_dong);
+							$("#emdUl").append("<li><p>"+data[i].bm_dong+"</p></li>");
+							$("#emd").append("<option>"+data[i].bm_dong+"</option>");
+						  }
+
+
+						  $("#sido").val($("#sidoText").text()).attr("selected","selected");
+						  $("#sgg").val($("#sggText").text()).attr("selected","selected");
+					     // downloadExcel(rt.results);
+					    },
+					    beforeSend: function() {
+					      //(이미지 보여주기 처리)
+					      //$('#load').show();
+					    },
+					    complete: function() {
+					      //(이미지 감추기 처리)
+					      //$('#load').hide();
+
+
+					    },
+					    error: function(jqXHR, textStatus, errorThrown,responseText) {
+					      //alert("ajax error \n" + textStatus + " : " + errorThrown);
+
+					      console.log(jqXHR);
+					      console.log(jqXHR.readyState);
+					      console.log(jqXHR.responseText);
+					      console.log(jqXHR.responseJSON);
+
+					    }
+					  }) //end ajax
+})
+
+
+$(document).on("change","#emd",function(){
+	console.log("----------start emd change -------------");
+	$("#sido").val($("#sidoText").text()).attr("selected","selected");
+	$("#sgg").val($("#sggText").text()).attr("selected","selected");
+	$("#emd").val($("#emdText").text()).attr("selected","selected");
+	var allData={"dongKey":$("#emdText").text(),"gugunKey":$("#sggText").text(),"sidoKey":$("#sidoText").text()}
+					   console.log(allData);
+					  $.ajax({
+
+					    url: "/api/getRiMaster",
+					    data:JSON.stringify(allData),
+					    async: true,
+					    type:"POST",
+					    dataType: "json",
+					    contentType: 'application/json; charset=utf-8',
+					    success: function(rt,jqXHR) {
+					      console.log(rt);
+						  var data=rt.resultData;
+						  $("#riUl li").remove();
+						  $("#ri option").remove();
+						  $("#riUl").append("<li><p>전체</p></li>");
+						  $("#ri").append("<option value=''>전체</option>");
+						  for(var i=0;i<data.length;i++){
+							console.log(data[i].bm_dong);
+							$("#riUl").append("<li><p>"+data[i].rm_ri+"</p></li>");
+							$("#ri").append("<option>"+data[i].rm_ri+"</option>");
+						  }
+
+
+						 /* $("#sido").val($("#sidoText").text()).attr("selected","selected");
+						  $("#sgg").val($("#sggText").text()).attr("selected","selected");*/
+					     // downloadExcel(rt.results);
+					    },
+					    beforeSend: function() {
+					      //(이미지 보여주기 처리)
+					      //$('#load').show();
+					    },
+					    complete: function() {
+					      //(이미지 감추기 처리)
+					      //$('#load').hide();
+
+
+					    },
+					    error: function(jqXHR, textStatus, errorThrown,responseText) {
+					      //alert("ajax error \n" + textStatus + " : " + errorThrown);
+					
+					      console.log(jqXHR);
+					      console.log(jqXHR.readyState);
+					      console.log(jqXHR.responseText);
+					      console.log(jqXHR.responseJSON);
+					
+					    }
+					  }) //end ajax 
+})	 
+	 
+	 
+	 
+
+function datatablebasic(){
+	new DataTable('#basicTable', {
+		 fixedColumns:{
+			start:3
+		 },
+    paging: true,
+    scrollCollapse: true,
+    scrollX: true,
+    scrollY: 300,
+    dom:'rtip',
+    columnDefs:[
+					{"className": "dt-head-center", "targets": "_all"},
+					{className: 'dt-center',"targets": "_all"},
+					{targets:[0],width:"100px"},
+					{targets:[1],width:"300px"},
+				]
+	});
+}
 
 function loadDataTable(params) {
     console.log("-----start loadDataTable----------");
