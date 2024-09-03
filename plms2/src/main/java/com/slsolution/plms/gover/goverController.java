@@ -474,6 +474,7 @@ public class goverController {
 			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
 			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
+			//TODO 메모 가져와야됨.
 			
 ////			ArrayList<HashMap> soujaList = mainService.selectQuery("goverSQL.selectSoyujaData",params);
 ////			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
