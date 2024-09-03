@@ -1232,14 +1232,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE 1=1
 
 <!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pnu)" >-->
-<!--			and jm2.pnu=#{pnu}-->
+			and jm2.pnu=#{pnu}
 <!--		</if>-->
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
-			and jm2.sido_nm=#{sido_nm}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
-			and regexp_replace(jm2.sgg_nm,'[\"]','','g')=#{sgg_nm}
-		</if>
+<!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >-->
+<!--			and jm2.sido_nm=#{sido_nm}-->
+<!--		</if>-->
+<!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >-->
+<!--			and regexp_replace(jm2.sgg_nm,'[\"]','','g')=#{sgg_nm}-->
+<!--		</if>-->
 <!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >-->
 <!--			and regexp_replace(jm2.emd_nm,'[\"]','','g')=#{emd_nm}-->
 <!--		</if>-->
@@ -1249,9 +1249,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >-->
 <!--			and jm2.jibun like '%${jibun}%'-->
 <!--		</if>-->
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			and regexp_replace(jm2.juso,'[\"]','','g') like '%${address}%'
-		</if>
+<!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >-->
+<!--			and regexp_replace(jm2.juso,'[\"]','','g') like '%${address}%'-->
+<!--		</if>-->
 		AND jm2.pnu IS NOT null
 		limit 10
 

@@ -137,9 +137,10 @@ border: 1px solid black;
       <div class="mainTitle">
         <h1>지상권 분할 등록</h1>
       </div>
-      <form id="searchForm" onSubmit="return false;">
+
       <!-- 대상토지 -->
       <section class="targetLand">
+        <form id="searchForm" onSubmit="return false;">
         <div class="subTitle">
           대상토지
         </div>
@@ -217,10 +218,12 @@ border: 1px solid black;
             </ul>
           </div>
         </div>
+        </form>
       </section>
 
       <!-- 토지분할 -->
       <section class="landDivision">
+        <form id="tojiBunhalForm" onSubmit="return false;">
         <div class="subTitle">
           토지분할
         </div>
@@ -265,7 +268,7 @@ border: 1px solid black;
               <li class="content middleWidth selectContentArea">
                 <div class="hiddenSelectBox">
                   <!-- name도 추가 -->
-                  <select name="divisionRegistSelectBox02" id="divisionRegistSelectBox02" hidden>
+                  <select name="divisionRegistSelectBox02" id="divisionRegistSelectBox02" class="divisionRegistSelectBox02_"hidden>
                     <option value="" hidden></option>
                     <option value="사유지">사유지</option>
                     <option value="국유지">국유지</option>
@@ -282,10 +285,10 @@ border: 1px solid black;
               </li>
               <li class="content contentBox">
                 <ul class="secondContents">
-                  <li class="secondContent"><input class="jimok_" name="jimok" type="text"></li>
-                  <li class="secondContent"><input class="jijuk_" name="jijuk" type="text"></li>
-                  <li class="secondContent"><input class="pyenip_" name="pyenip" type="text"></li>
-                  <li class="secondContent"><input class="jasan_" name="jasan" type="text"></li>
+                  <li class="secondContent"><input class="jimok_" type="text"></li>
+                  <li class="secondContent"><input class="jijuk_"  type="text"></li>
+                  <li class="secondContent"><input class="pyenip_" type="text"></li>
+                  <li class="secondContent"><input class="jasan_"  type="text"></li>
                 </ul>
               </li>
               <li class="content">
@@ -348,13 +351,13 @@ border: 1px solid black;
               </li>
               <li class="content middleWidth"><input type="text" th:placeholder="${resultData.jm_jisang_no}" readonly class="notWriteInput"></li>
               <li class="content addressInfoWidth">
-                <div class="addressData"><input type="text" th:placeholder="${resultData.address}" readonly class="bunhalAddres_0 notWriteInput"></div>
+                <div class="addressData"><input type="text" th:value="${resultData.address}" readonly name="bunhalAddres_0" class="bunhalAddres_0 notWriteInput"></div>
                 <button class="searchAddressBtn_0 searchAddressBtn" id="searchAddressBtn_0">검색</button>
               </li>
               <li class="content middleWidth selectContentArea">
                 <div class="hiddenSelectBox">
                   <!-- name도 추가 -->
-                  <select name="divisionRegistSelectBox04" id="divisionRegistSelectBox04" hidden>
+                  <select name="divisionRegistSelectBox02_0" id="divisionRegistSelectBox02_0" hidden>
                     <option value="" hidden></option>
                     <option value="사유지">사유지</option>
                     <option value="국유지">국유지</option>
@@ -371,22 +374,22 @@ border: 1px solid black;
               </li>
               <li class="content contentBox">
                 <ul class="secondContents">
-                  <li class="secondContent"><input class="jimok_0" name="jimok" type="text"></li>
-                  <li class="secondContent"><input class="jijuk_0" name="jijuk" type="text"></li>
-                  <li class="secondContent"><input class="pyenip_0" name="pyenip" type="text"></li>
-                  <li class="secondContent"><input class="jasan_0" name="jasan" type="text"></li>
+                  <li class="secondContent"><input class="jimok_0" name="jimok_0" type="text"></li>
+                  <li class="secondContent"><input class="jijuk_0" name="jijuk_0" type="text"></li>
+                  <li class="secondContent"><input class="pyenip_0" name="pyenip_0" type="text"></li>
+                  <li class="secondContent"><input class="jasan_0" name="jasan_0" type="text"></li>
                 </ul>
               </li>
               <li class="content">
-                <input type="checkbox" class="pipe_0" name="pipe" id="pipe_0">
+                <input type="checkbox" class="pipe_0" name="pipe_0" id="pipe_0">
                 <label for="pipe_0"></label>
               </li>
               <li class="content">
-                <input type="checkbox" class="terminate_0" name="terminate" id="terminate_0">
+                <input type="checkbox" class="terminate_0" name="terminate_0" id="terminate_0">
                 <label for="terminate_0"></label>
               </li>
               <li class="content">
-                <input type="checkbox" class="jaryo_0" name="jaryo" id="jaryo_0">
+                <input type="checkbox" class="jaryo_0" name="jaryo_0" id="jaryo_0">
                 <label for="jaryo_0"></label>
               </li>
               <li class="content middleWidth">
@@ -396,7 +399,7 @@ border: 1px solid black;
               <li class="content middleWidth selectContentArea">
                 <div class="hiddenSelectBox">
                   <!-- name도 추가 -->
-                  <select name="divisionRegistSelectBox05" id="divisionRegistSelectBox05" hidden>
+                  <select name="divisionRegistSelectBox03_0" id="divisionRegistSelectBox03_0" hidden>
                     <option value="Y">Y</option>
                     <option value="N">N</option>
                   </select>
@@ -435,11 +438,14 @@ border: 1px solid black;
           </div>
 
         </div>
+        </form>
       </section>
 
 
         <!-- 해지정보 -->
+      <form id="submitForm" onSubmit="return false;">
       <section class="terminationInfo">
+
         <div class="subTitle">
           해지정보
         </div>
@@ -514,6 +520,7 @@ border: 1px solid black;
             </ul>
           </div>
         </div>
+
       </section>
 
       <!-- 분할사유 및 검토의견 -->
@@ -703,7 +710,7 @@ border: 1px solid black;
           </div>
         </div>
       </section>
-
+      </form>
 
 
       <div class="finalBtnBox btnWrap">
@@ -724,7 +731,7 @@ border: 1px solid black;
 <!--        <button class="lightBlueBtn approvalBtn finalBtn">상신</button>-->
       </div>
 
-      </form>
+
 
 
     </main>
@@ -757,7 +764,7 @@ border: 1px solid black;
                 <li class="popContent03">[[${val.jibun}]]</li>
                 <li class="popContent04">
 
-                  <button class="resultSelectBtn" id="choiceBtn">선택</button>
+                  <button class="resultSelectBtn" >선택</button>
                 </li>
               </ul>
 

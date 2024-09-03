@@ -1074,3 +1074,13 @@ button {
   input[type="text"]::placeholder {
   text-align: left;
 }
+
+/*input text*/
+#divisionRegister  input[readonly] {
+   background-color: #ffffff;
+   color: black;
+}
+#divisionRegister .addressData input:not([readonly]) {
+   background-color: #EDF2F9;
+   color: #6E7D88;
+}
