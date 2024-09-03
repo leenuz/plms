@@ -601,7 +601,7 @@ public class goverController {
 			}
 			log.info("params:"+params);
 
-			Object count= mainService.selectCountQuery("goverSQL.selectTotalCount", params);
+			Object count= mainService.selectCountQuery("goverSQL.selectTotalCount03_2", params);
 			int total=(int)count;
 
 			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList03_2",params);
