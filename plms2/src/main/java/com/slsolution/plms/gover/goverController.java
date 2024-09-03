@@ -698,6 +698,98 @@ public class goverController {
   			return mav;
 	    }
 		
+		@RequestMapping(value="/menu03_3DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+		public ResponseEntity<?> datatableList03_3(HttpServletRequest req, HttpServletResponse res) throws Exception {
+			
+			//일반웹형식
+			Properties requestParams = CommonUtil.convertToProperties(req);
+
+			HashMap<String, String> returnHash = new HashMap<String, String>();
+			Enumeration<String> obj1 = req.getParameterNames();
+			int cnt=0;
+
+			while (obj1.hasMoreElements())
+			{
+				String paramName = obj1.nextElement();
+				String paramValue = req.getParameter(paramName);
+				returnHash.put(paramName, paramValue);
+			}
+
+			int draw = Integer.parseInt(req.getParameter("draw"));
+			int start = Integer.parseInt(req.getParameter("start"));
+			int length = Integer.parseInt(req.getParameter("length"));
+			String orderColumn=req.getParameter("order[0][column]");
+			String orderDirection = req.getParameter("order[0][dir]");
+			String orderColumnName=req.getParameter("columns[" + orderColumn + "][data]");
+
+			String[] order_cols=req.getParameterValues("order");
+
+			String jisa = req.getParameter("jisa");
+			String gover_no = req.getParameter("gover_no");
+			String use_purpos=req.getParameter("use_purpos");
+			String pmt_office = req.getParameter("pmt_office");
+			String adm_office = req.getParameter("adm_office");
+			String cancel_yn = req.getParameter("cancel_yn");
+			String pay_date_start=req.getParameter("pay_date_start");
+			String pay_date_end=req.getParameter("pay_date_end");
+			String address=req.getParameter("saddr");
+			String idx=req.getParameter("idx");
+
+			Map map = req.getParameterMap();
+
+			HashMap params = new HashMap();
+			params.put("draw",draw);
+			params.put("start",start);
+			params.put("length",length);
+			
+			params.put("jisa",jisa);
+			params.put("gover_no",gover_no);
+			params.put("use_purpos",use_purpos);
+			params.put("pmt_office",pmt_office);
+			params.put("adm_office",adm_office);
+			params.put("cancel_yn",cancel_yn);
+			params.put("pay_date_start",pay_date_start);
+			params.put("pay_date_end",pay_date_end);
+			params.put("address", address);
+			params.put("idx", idx);
+
+//			String[] right_arr= {};
+//			right_arr=right_type.split(",");
+//			params.put("right_type", right_arr);
+
+			params.put("manageYn","Y");
+			if (orderColumn==null || orderColumn.equals("null")) {
+				log.info("----------null--------");
+				orderColumn="0";
+			}
+			if (Integer.parseInt(orderColumn)>0  ) {
+				params.put("orderCol",orderColumnName);
+				params.put("desc",orderDirection);
+
+			}
+			else {
+				params.put("orderCol","");
+				params.put("desc","");
+			}
+			log.info("params:"+params);
+
+			Object count= mainService.selectCountQuery("goverSQL.selectTotalCount03_3", params);
+			int total=(int)count;
+
+			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList03_3",params);
+			log.info("list:"+list);
+
+			HashMap<String,Object> resultmap=new HashMap();
+			resultmap.put("draw",draw);
+			resultmap.put("recordsTotal",total);
+			resultmap.put("recordsFiltered",total);
+			resultmap.put("data",list);
+
+			JSONObject obj =new JSONObject(resultmap);
+			log.info("obj:"+obj);
+			
+			return ResponseEntity.ok(obj.toString());
+		}
 
 		//feeDetail  상세 조회
 		@GetMapping(path="/useDetail") //http://localhost:8080/api/get/dbTest

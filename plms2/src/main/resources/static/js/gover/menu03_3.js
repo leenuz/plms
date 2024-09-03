@@ -1,161 +1,34 @@
-
 var table;
      
-
 $(document).ready(function() {
-  console.log("-----gover/menu03_2.js start-----");
-  $('#jisa').niceSelect();
-//testAjax();
-//init_Table();
+  console.log("gover/menu03_3.js start");
   loadDataTable("");
-
 });
 
-
-//조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
+//조회하기 클릭시 상단 정보 출력
 $(document).on("click","#searchBtn",function(){
-       console.log($("#menuHiddenSelectBox01_1").val());
-	   console.log($("#searchForm").serialize());
-	   
-	   var formSerializeArray = $('#searchForm').serializeArray();
-	   console.log(formSerializeArray)
-       // 체크박스 값들을 조합하여 문자열로 만들기
-
-	   var object = {};
-	   for (var i = 0; i < formSerializeArray.length; i++){
-	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
-	   }
-	   
-	   var json = JSON.stringify(formSerializeArray);
+	  console.log($("#menuHiddenSelectBox01_1").val());
+	  console.log($("#searchForm").serialize());
+	 
+	  var formSerializeArray = $('#searchForm').serializeArray();
+	  console.log(formSerializeArray)
 	  
+	  // 체크박스 값들을 조합하여 문자열로 만들기
+	  var object = {};
+	  for (var i = 0; i < formSerializeArray.length; i++){
+	    object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+	  }
+	   
+	  var json = JSON.stringify(formSerializeArray);
+	
 	  console.log("----------jsonobj------------");
 	  console.log(json);
-	  console.log("object askMenu01:"+object.askMenu01); 
+	  console.log("object askMenu01:"+object.privateUseRadio02); 
 	  
-	  
-	   loadDataTable(object);
-	   console.log("-----------------------");
+	  loadDataTable(object);
+	  console.log("-----------------------");
 	   
-     })
-	 
-	 $(document).ready(function() {
-	     $('#searchForm').on('submit', function(event) {
-	         event.preventDefault(); // 폼 제출 기본 동작 방지
-
-	         const formData = $(this).serializeArray();
-	         const params = {};
-
-	         $.each(formData, function(i, field) {
-	             params[field.name] = field.value;
-	         });
-
-	         console.log("Submitting form with params: ", params);
-	         loadDataTable(params);
-	     });
-
-	     // 초기 데이터 로딩
-	     loadDataTable({});
-	 });
-
-	 function loadDataTable(params) {
-	     console.log("-----start loadDataTable----------");
-
-	     $('#userTable').DataTable({
-	         processing: true,
-	         serverSide: true,
-	         searching: false,
-	         paging: true,
-	         order: [[12, 'desc']],
-	         ajax: {
-	             url: "/gover/menu03_2DataTableList",
-	             type: "POST",
-	             data: function(d) {
-	                 $.extend(d, params);
-	             },
-	             dataSrc: function(json) {
-	                 console.log("Data received from server:", json);
-	                 return json.data;
-	             }
-	         },
-	         columns: [
-	             { data: "no", orderable: false },
-	             { data: "jisa", defaultContent: "" },
-	             { data: "address", defaultContent: "" },
-	             { data: "gover_no", defaultContent: "" },
-	             { data: "pmt_office", defaultContent: "" },
-	             { data: "adm_office", defaultContent: "" },
-	             { data: "idx", defaultContent: "" },
-	             { data: "jimok_text", defaultContent: "" },
-	             { data: "use_purpos", defaultContent: "" },
-	             { data: "period", defaultContent: "" },
-	             { data: "gover_length", defaultContent: "" },
-	             { data: "gover_area", defaultContent: "" },
-	             { data: "pay_date", defaultContent: "" },
-	             { data: "pay_money", defaultContent: "" },
-	             {
-	                 data: null,
-	                 defaultContent: "<button class='viewDetailButton'>위치보기</button>",
-	                 orderable: false,
-	                 render: function(data, type, row) {
-	                     return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
-	                 }
-	             }
-	         ],
-	         columnDefs: [
-	             { className: "dt-center", targets: "_all" },
-	             { targets: [0], width: "50px" },
-	             { targets: [1], width: "150px" },
-	             { targets: [2], width: "400px" },
-	             { targets: [4], width: "100px" }
-	         ]
-	     });
-
-	     // Event handler for '위치보기' buttons
-	     $('#userTable').on('click', '.viewDetailButton', function() {
-	         const x = $(this).data('x');
-	         const y = $(this).data('y');
-	         console.log('View detail button clicked: x =', x, ', y =', y);
-	         // Handle map viewing logic here
-	     });
-	 }
-
-
-	 
-	 document.addEventListener("DOMContentLoaded", () => {
-	     const searchForm = document.getElementById("searchForm");
-
-	     // 조회하기 버튼을 클릭했을 때만 폼 데이터를 수집하고 로그를 출력
-	     searchForm.addEventListener("submit", (event) => {
-	         event.preventDefault(); // 기본 폼 제출 동작 방지
-
-	         // 모든 선택된 값들을 수집
-	         const formData = new FormData(searchForm);
-
-	         // FormData를 JSON 형태로 변환
-	         const formDataJson = {};
-	         formData.forEach((value, key) => {
-	             formDataJson[key] = value;
-	         });
-
-	         // JSON 형태로 로그 출력
-	         console.log("---------- JSON 형태 ----------");
-	         console.log(JSON.stringify(formDataJson, null, 2));
-
-	         // FormData를 serializeArray 형태로 변환
-	         const formSerializeArray = [];
-	         formData.forEach((value, key) => {
-	             formSerializeArray.push({ name: key, value: value });
-	         });
-
-	         // serializeArray 형태로 로그 출력
-	         console.log("---------- serializeArray 형태 ----------");
-	         console.log(formSerializeArray);
-
-	         // 이후 데이터 로드 및 main 태그 업데이트 로직 추가
-	         loadDataTable(formDataJson);
-	     });
-	 });
-
+})
 
 $(document).on("change","#sido_nm",function(){
 	console.log("----------start sido_nm change -------------");
@@ -297,8 +170,8 @@ $(document).on("change","#emd",function(){
 						  }
 
 
-						  $("#sido").val($("#sidoText").text()).attr("selected","selected");
-						  $("#sgg").val($("#sggText").text()).attr("selected","selected");
+						 /* $("#sido").val($("#sidoText").text()).attr("selected","selected");
+						  $("#sgg").val($("#sggText").text()).attr("selected","selected");*/
 					     // downloadExcel(rt.results);
 					    },
 					    beforeSend: function() {
@@ -337,207 +210,142 @@ function datatablebasic(){
     scrollY: 300,
     dom:'rtip',
     columnDefs:[
-					{"className": "dt-head-center", "targets": "_all"},
-					{className: 'dt-center',"targets": "_all"},
-					{targets:[0],width:"100px"},
-					{targets:[1],width:"300px"},
-				]
+			{"className": "dt-head-center", "targets": "_all"},
+			{className: 'dt-center',"targets": "_all"},
+			{targets:[0],width:"100px"},
+			{targets:[1],width:"300px"},
+		]
 	});
 }
 
+function loadDataTable(params) {
+    console.log("-----start loadDataTable----------");
+    console.log("Params:", params); // params 객체 출력
 
-// Korean    var lang_kor = {        "decimal" : "",        "emptyTable" : "데이터가 없습니다.",        "info" : "_START_ - _END_ (총 _TOTAL_ 명)",        "infoEmpty" : "0명",        "infoFiltered" : "(전체 _MAX_ 명 중 검색결과)",        "infoPostFix" : "",        "thousands" : ",",        "lengthMenu" : "_MENU_ 개씩 보기",        "loadingRecords" : "로딩중...",        "processing" : "처리중...",        "search" : "검색 : ",        "zeroRecords" : "검색된 데이터가 없습니다.",        "paginate" : {            "first" : "첫 페이지",            "last" : "마지막 페이지",            "next" : "다음",            "previous" : "이전"        },        "aria" : {            "sortAscending" : " :  오름차순 정렬",            "sortDescending" : " :  내림차순 정렬"        }    };
-
-
-function loadDataTable(params){
-	console.log("-----start loadDataTable----------");
-	console.log("Params:", params); // params 객체 출력
-	
-	table=$('#userTable').DataTable({
-		fixedColumns:{
-			start:3,
-		},
-		scrollCollapse:true,
-		scrollX:true,
-		scrollY:600,
-		paging:true,
-		"oLanguage":{"sLengthMenu":"_MENU_"},
-		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
-		dom:'<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
-		buttons: [{extend:'excel',text:'엑셀 다운로드'}],
-		pageLength: 20,
+    table = $('#userTable').DataTable({
+        fixedColumns: { start: 3 },
+        scrollCollapse: true,
+        scrollX: true,
+        scrollY: 600,
+        paging: true,
+        "oLanguage": { "sLengthMenu": "_MENU_" },
+        dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
+        buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
+        pageLength: 20,
         bPaginate: true,
         bLengthChange: true,
-        bInfo:false,
-        lengthMenu : [ [ 10, 20, 50, -1 ], [ "10건","20건","50건", "All" ] ],
+        bInfo: false,
+        lengthMenu: [[10, 50, 100, -1], ["10건", "50건", "100건", "All"]],
         bAutoWidth: false,
         processing: true,
         ordering: true,
         bServerSide: true,
         searching: false,
-		destroy:true,
-		order:[[12,'desc']],
+        destroy: true,
+        order: [[12, 'desc']],
+        rowReorder: { dataSrc: 'b_seq' },
+        ajax: {
+            url: "/gover/menu03_3DataTableList",
+            type: "POST",
+            datatype: "json",
+            data: function(d) {
+                d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+                d.gover_no = params.gover_no;
+                d.use_purpos = params.use_purpos;
+                d.pmt_office = params.pmt_office;
+                d.adm_office = ljsIsNull(params.adm_office) ? '' : params.adm_office;
+				d.cancel_yn = params.cancel_yn;
+				d.pay_date_start = params.pay_date_start;
+				d.pay_date_end = params.pay_date_end;
+                d.idx = params.idx;
 
-        rowReorder:{
-			dataSrc:'b_seq'
-		},
-		
-        ajax : {
-            url:"/gover/menu03_2DataTableList",
-            type:"POST",
-			datatype:"json",
-			data: function(d){
-				//d=params;
-				d.jisa=ljsIsNull(params.jisa)?'':params.jisa;
-				d.gover_no=params.gover_no;
-				d.user_purpos=params.user_purpos;
-				d.pmt_office=params.pmt_office;
-				d.adm_office=ljsIsNull(params.adm_office)?'':params.adm_office;
-				d.pay_date_start=params.pay_date_start;
-				d.pay_date_end=params.pay_date_end;
-                d.idx=params.idx;
+                // 주소
+                var ask = (params.privateUseRadio03 == undefined || params.privateUseRadio03 == null) ? '0' : params.privateUseRadio03;
+                console.log("privateUseRadio03:" + ask);
 
-				//주소
-				var ask=(params.askMenu01==undefined || params.askMenu01==null)?'0':params.askMenu01;
-				console.log("askmenu:"+ask);
-
-				//입력형 주소 입력 시
-				if (ask=="0") {
-					console.log("---------3--------------");
-					d.saddr=(params.addressFull==undefined || params.addressFull==null)?'':params.addressFull;
-				}
-				//선택형 주소 입력 시
-				else{
-					console.log("----------------------------1--------------");
-					console.log(ljsIsNull(params.sgg));
-					var addrs=params.sido_nm;
-					console.log("addrs:"+addrs);
-					if (ljsIsNull(params.sgg)) addrs=addrs+"";
-					else addrs=addrs+" "+params.sgg;
-					if (ljsIsNull(params.emd)) addrs=addrs+"";
-					else addrs=addrs+" "+params.emd;
-					if (ljsIsNull(params.ri)) addrs=addrs+"";
-					else addrs=addrs+" "+params.ri;
-					//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
-					//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
-					console.log("addrs:"+addrs);
-					d.saddr=(addrs==undefined || addrs==null || addrs=="undefined")?'':addrs;
-					//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
-				}
-
-				console.log("saddr:"+d.saddr);
-				console.log(params);
-				console.log("-----------d-----------");
-				console.log(d);
-			},
-			
-			dataSrc: function(json){
-				console.log("-------------json---------------");
-				console.log(json);
-				$("#dataTableTotalCount").html(json.recordsTotal);
-				//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
-				return json.data;
-			}
-
-        },
-		initComplete:function(){
-
-			console.log(this.api().data().length );
-
-		},
-        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-		//	console.log(aData);
-			$('td:eq(0)', nRow).html(iDisplayIndexFull +1);
-			return nRow;
-		},
-
-		columns : [
-			{data: "no","orderable":false},//0
-			{data: "jisa","defaultContent":""},
-			{data: "address","defaultContent":""},
-			{data: "gover_no","defaultContent":""},
-			{data: "pmt_office","defaultContent":""}, 
-			{data: "adm_office","defaultContent":""},//5
-			{data: "idx","defaultContent":""},
-			{data: "jimok_text","defaultContent":""},
-			{data: "use_purpos","defaultContent":""},
-			{data: "period","defaultContent":""},
-			{data: "gover_length","defaultContent":""},//10
-			{data: "gover_area","defaultContent":""},
-			{data: "pay_date","defaultContent":""},
-			{data: "pay_money","defaultContent":""},
-			{data: "idx","defaultContent":""}
-		],
-  
-		columnDefs:[
-			{"className": "dt-head-center", "targets": "_all"},
-			{className: 'dt-center',"targets": "_all"},
-			{targets:[0],width:"50px"},
-			{targets:[1],width:"150px"},
-			{targets:[2],width:"400px"}, //주소
-			{targets:[3],width:"150px"},
-			{targets:[4],width:"100px"},
-			{targets:[5],width:"200px"}, //관리기관
-			{targets:[6],width:"150px"},
-			{targets:[7],width:"150px"}, //지목
-			{targets:[8],width:"200px"}, //점용구분
-			{targets:[9],width:"100px"}, //점용기간
-			{targets:[10],width:"200px"}, //연장
-			{targets:[11],width:"100px"}, //면적
-			{targets:[12],width:"100px"}, //납부일
-			{targets:[13],width:"100px"}, //납부금액
-			{targets:[14]
-				,width:"100px"
-				,render: function(data, type, row, meta) {
-					return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
-				}
-			}, //지도보기
-		]
-	});
-
-
-
-
-	table.on('click','tr',function() {
-
-		var target = $(event.target);
-
-            var isButtonCell = target.closest('td').index() === 14 ;
-
-            if (isButtonCell) {
-                return;
-            } else {
-                // 다른 열을 클릭했을 때만 상세 페이지로 이동
-                console.log("--------------tr click---------------------");
-
-                var data = table.row(this).data();
-                console.log(data);
-                console.log(data.idx);
-
-                var url = "/gover/masterEdit?idx=" + data.idx;
-                window.location = url;
+                // 입력형 주소 입력 시
+                if (ask == "0") {
+                    d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
+                }
+                // 선택형 주소 입력 시
+                else {
+                    var addrs = params.sido_nm || '';
+                    if (!ljsIsNull(params.sgg_nm)) addrs += " " + params.sgg_nm;
+                    if (!ljsIsNull(params.emd_nm)) addrs += " " + params.emd_nm;
+                    if (!ljsIsNull(params.ri_nm)) addrs += " " + params.ri_nm;
+                    d.saddr = (addrs == undefined || addrs == null || addrs == "undefined") ? '' : addrs;
+                }
+                console.log("saddr:" + d.saddr);
+            },
+            dataSrc: function(json) {
+                console.log("-------------json---------------");
+                console.log(json);
+                $("#dataTableTotalCount").html(json.recordsTotal);
+                return json.data;
             }
+        },
+        columns: [
+            { data: "no", "orderable": false },
+            { data: "jisa", "defaultContent": "" },
+            { data: "address", "defaultContent": "" },
+            { data: "gover_no", "defaultContent": "" },
+			{ data: "필지수", "defaultContent": "" },
+			{ data: "jimok_text", "defaultContent": "" },
+			{ data: "use_purpos", "defaultContent": "" },
+			{ data: "period", "defaultContent": "" },
+			{ data: "gover_length", "defaultContent": "" },
+			{ data: "gover_area", "defaultContent": "" },
+            { data: "pmt_office", "defaultContent": "" },
+            { data: "adm_office", "defaultContent": "" },
+			{ data: "pay_date", "defaultContent": "" },
+			{ data: "pay_money", "defaultContent": "" },
+			{ data: "cancel_yn", "defaultContent": "" },
+			{ data: "cancel_date", "defaultContent": "" },
+            {
+                data: "idx", "defaultContent": "",
+                render: function(data, type, row, meta) {
+                    return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
+                }
+            },
+			{ data: "echo_no", "defaultContent": "" }
+        ],
+        columnDefs: [
+            { "className": "dt-head-center", "targets": "_all" },
+            { className: 'dt-center', "targets": "_all" },
+            { targets: [0], width: "50px" },
+            { targets: [1], width: "150px" },
+            { targets: [2], width: "400px" },
+            { targets: [3], width: "150px" },
+            { targets: [4], width: "100px" },
+            { targets: [5], width: "200px" },
+            { targets: [6], width: "150px" },
+            { targets: [7], width: "150px" },
+            { targets: [8], width: "200px" },
+            { targets: [9], width: "100px" },
+            { targets: [10], width: "200px" },
+            { targets: [11], width: "100px" },
+            { targets: [12], width: "100px" },
+            { targets: [13], width: "100px" },
+            { targets: [14], width: "100px" },
+			{ targets: [15], width: "100px" },
+			{ targets: [16], width: "100px" },
+			{ targets: [17], width: "100px" },
+        ]
     });
-	
-	$("table th").resizable({
-		handles:'e',
-		stop:function(e,ui){
-			$(this).width(ui.size.width);
-			table.columns.adjust().draw();
-		}
-	});
-	table
-	    .on('order.dt search.dt', function () {
-	        let i = 1;
-	 
-	        table
-	            .cells(null, 0, { search: 'applied', order: 'applied' })
-	            .every(function (cell) {
-	                this.data(i++);
-	            });
-	    })
-	    .draw();
-	
-	      // console.log($('#userTable').DataTable().page.info().recordsTotal);
-}
 
+    table.on('click', 'tr', function(event) {
+        var target = $(event.target);
+        var isButtonCell = target.closest('td').index() === 16;
+
+        if (isButtonCell) {
+            return;
+        } else {
+            var data = table.row(this).data();
+            console.log(data);
+            console.log(data.idx);
+
+            var url = "/gover/useDetail?idx=" + data.idx;
+            window.location = url;
+        }
+    });
+}
