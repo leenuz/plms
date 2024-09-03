@@ -28,180 +28,139 @@ $(document).on("click","#searchBtn",function(){
 	
 	console.log("----------jsonobj------------");
 	console.log(json);
-	console.log("object askMenu01:"+object.askMenu01);
+	console.log("object privateUseRadio01:"+object.privateUseRadio01);
 	 
 	loadDataTable(object);
 	console.log("-----------------------");
 })
 
+// 주소 - 선택형 동작하도록 (id 값: sido_nm, sgg, emd, ri)
+$(document).on("click", "#sido_ul li", function () {
+    const selectedSido = $(this).text().trim();
+    $("#sidoText").text(selectedSido);
+    $("#sido_nm").val(selectedSido).change(); // change 이벤트 트리거
+});
 
-$(document).on("change","#sido_nm",function(){
-	console.log("----------start sido_nm change -------------");
-	$("#sido_nm").val($("#sidoText").text()).attr("selected","selected");
-	if ($("#sido_nm").val()==null) return;
-	var allData={"key":$("#sido_nm").val()}
-					   console.log(allData);
-					  $.ajax({
+$(document).on("change", "#sido_nm", function () {
+    console.log("----------start sido change -------------");
+    const selectedSido = $("#sido_nm").val();
+    if (!selectedSido) return;
 
-					    url: "/api/getSigunMaster",
-					    data:JSON.stringify(allData),
-					    async: true,
-					    type:"POST",
-					    dataType: "json",
-					    contentType: 'application/json; charset=utf-8',
-					    success: function(rt,jqXHR) {
-					      console.log(rt);
-						  var data=rt.resultData;
-						 
-						  $("#sggUl li").remove();
-						  $("#sgg option").remove();
-						  
-						  $("#sggUl").append("<li><p>전체</p></li>");
-						  $("#sgg").append("<option value=''>전체</option>");
-						  for(var i=0;i<data.length;i++){
-							console.log(data[i].sgg_nm);
-							$("#sggUl").append("<li><p>"+data[i].sm_gugun+"</p></li>");
-							$("#sgg").append("<option>"+data[i].sm_gugun+"</option>");
-						  }
-						  
-						  console.log("sido:"+$("#sido").val());
-						  $("#sido").val($("#sido").val()).attr("selected","selected");
-					     // downloadExcel(rt.results);
-					    },
-					    beforeSend: function() {
-					      //(이미지 보여주기 처리)
-					      //$('#load').show();
-					    },
-					    complete: function() {
-					      //(이미지 감추기 처리)
-					      //$('#load').hide();
-					
-					
-					    },
-					    error: function(jqXHR, textStatus, errorThrown,responseText) {
-					      //alert("ajax error \n" + textStatus + " : " + errorThrown);
-					
-					      console.log(jqXHR);
-					      console.log(jqXHR.readyState);
-					      console.log(jqXHR.responseText);
-					      console.log(jqXHR.responseJSON);
-					
-					    }
-					  }) //end ajax
-})
+    const allData = { key: selectedSido };
+    console.log(allData);
 
+    $.ajax({
+        url: "/api/getSigunMaster",
+        data: JSON.stringify(allData),
+        async: true,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (rt) {
+            console.log(rt);
+            const data = rt.resultData;
 
-$(document).on("change","#sgg",function(){
-	console.log("----------start sgg change -------------");
+            $("#sggUl li").remove();
+            $("#sgg option").remove();
 
-	var allData={"gugunKey":ljsIsNull($("#sgg option:selected").val())?'':$("#sgg option:selected").val(),"sidoKey":$("#sidoText").text()}
-					   console.log(allData);
-					  $.ajax({
+            $("#sggUl").append("<li><p>전체</p></li>");
+            $("#sgg").append("<option value=''>전체</option>");
+            for (let i = 0; i < data.length; i++) {
+                console.log(data[i].sm_gugun);
+                $("#sggUl").append("<li><p>" + data[i].sm_gugun + "</p></li>");
+                $("#sgg").append("<option>" + data[i].sm_gugun + "</option>");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error: ", textStatus, errorThrown);
+        }
+    });
+});
 
-					    url: "/api/getDongMaster",
-					    data:JSON.stringify(allData),
-					    async: true,
-					    type:"POST",
-					    dataType: "json",
-					    contentType: 'application/json; charset=utf-8',
-					    success: function(rt,jqXHR) {
-					      console.log(rt);
-						  var data=rt.resultData;
-						  $("#emdUl li").remove();
-						  $("#emd option").remove();
-						  $("#emdUl").append("<li><p>전체</p></li>");
-						  $("#emd").append("<option value=''>전체</option>");
-						  for(var i=0;i<data.length;i++){
-							console.log(data[i].bm_dong);
-							$("#emdUl").append("<li><p>"+data[i].bm_dong+"</p></li>");
-							$("#emd").append("<option>"+data[i].bm_dong+"</option>");
-						  }
+$(document).on("click", "#sggUl li", function () {
+    const selectedSgg = $(this).text().trim();
+    $("#sggText").text(selectedSgg);
+    $("#sgg").val(selectedSgg).change(); // change 이벤트 트리거
+});
 
+$(document).on("change", "#sgg", function () {
+    console.log("----------start sgg change -------------");
 
-						  $("#sido").val($("#sidoText").text()).attr("selected","selected");
-						  $("#sgg").val($("#sggText").text()).attr("selected","selected");
-					     // downloadExcel(rt.results);
-					    },
-					    beforeSend: function() {
-					      //(이미지 보여주기 처리)
-					      //$('#load').show();
-					    },
-					    complete: function() {
-					      //(이미지 감추기 처리)
-					      //$('#load').hide();
+    const allData = {
+        gugunKey: $("#sgg option:selected").val() || "",
+        sidoKey: $("#sidoText").text().trim()
+    };
+    console.log(allData);
 
+    $.ajax({
+        url: "/api/getDongMaster",
+        data: JSON.stringify(allData),
+        async: true,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (rt) {
+            console.log(rt);
+            const data = rt.resultData;
 
-					    },
-					    error: function(jqXHR, textStatus, errorThrown,responseText) {
-					      //alert("ajax error \n" + textStatus + " : " + errorThrown);
+            $("#emdUl li").remove();
+            $("#emd option").remove();
+            $("#emdUl").append("<li><p>전체</p></li>");
+            $("#emd").append("<option value=''>전체</option>");
+            for (let i = 0; i < data.length; i++) {
+                console.log(data[i].bm_dong);
+                $("#emdUl").append("<li><p>" + data[i].bm_dong + "</p></li>");
+                $("#emd").append("<option>" + data[i].bm_dong + "</option>");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error: ", textStatus, errorThrown);
+        }
+    });
+});
 
-					      console.log(jqXHR);
-					      console.log(jqXHR.readyState);
-					      console.log(jqXHR.responseText);
-					      console.log(jqXHR.responseJSON);
+$(document).on("click", "#emdUl li", function () {
+    const selectedEmd = $(this).text().trim();
+    $("#emdText").text(selectedEmd);
+    $("#emd").val(selectedEmd).change(); // change 이벤트 트리거
+});
 
-					    }
-					  }) //end ajax
-})
+$(document).on("change", "#emd", function () {
+    console.log("----------start emd change -------------");
 
+    const allData = {
+        dongKey: $("#emdText").text().trim(),
+        gugunKey: $("#sggText").text().trim(),
+        sidoKey: $("#sidoText").text().trim()
+    };
+    console.log(allData);
 
-$(document).on("change","#emd",function(){
-	console.log("----------start emd change -------------");
-	$("#sido").val($("#sidoText").text()).attr("selected","selected");
-	$("#sgg").val($("#sggText").text()).attr("selected","selected");
-	$("#emd").val($("#emdText").text()).attr("selected","selected");
-	var allData={"dongKey":$("#emdText").text(),"gugunKey":$("#sggText").text(),"sidoKey":$("#sidoText").text()}
-					   console.log(allData);
-					  $.ajax({
+    $.ajax({
+        url: "/api/getRiMaster",
+        data: JSON.stringify(allData),
+        async: true,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (rt) {
+            console.log(rt);
+            const data = rt.resultData;
 
-					    url: "/api/getRiMaster",
-					    data:JSON.stringify(allData),
-					    async: true,
-					    type:"POST",
-					    dataType: "json",
-					    contentType: 'application/json; charset=utf-8',
-					    success: function(rt,jqXHR) {
-					      console.log(rt);
-						  var data=rt.resultData;
-						  $("#riUl li").remove();
-						  $("#ri option").remove();
-						  $("#riUl").append("<li><p>전체</p></li>");
-						  $("#ri").append("<option value=''>전체</option>");
-						  for(var i=0;i<data.length;i++){
-							console.log(data[i].bm_dong);
-							$("#riUl").append("<li><p>"+data[i].rm_ri+"</p></li>");
-							$("#ri").append("<option>"+data[i].rm_ri+"</option>");
-						  }
-
-
-						 /* $("#sido").val($("#sidoText").text()).attr("selected","selected");
-						  $("#sgg").val($("#sggText").text()).attr("selected","selected");*/
-					     // downloadExcel(rt.results);
-					    },
-					    beforeSend: function() {
-					      //(이미지 보여주기 처리)
-					      //$('#load').show();
-					    },
-					    complete: function() {
-					      //(이미지 감추기 처리)
-					      //$('#load').hide();
-
-
-					    },
-					    error: function(jqXHR, textStatus, errorThrown,responseText) {
-					      //alert("ajax error \n" + textStatus + " : " + errorThrown);
-					
-					      console.log(jqXHR);
-					      console.log(jqXHR.readyState);
-					      console.log(jqXHR.responseText);
-					      console.log(jqXHR.responseJSON);
-					
-					    }
-					  }) //end ajax 
-})	 
-	 
-	 
-	 
+            $("#riUl li").remove();
+            $("#ri option").remove();
+            $("#riUl").append("<li><p>전체</p></li>");
+            $("#ri").append("<option value=''>전체</option>");
+            for (let i = 0; i < data.length; i++) {
+                console.log(data[i].rm_ri);
+                $("#riUl").append("<li><p>" + data[i].rm_ri + "</p></li>");
+                $("#ri").append("<option>" + data[i].rm_ri + "</option>");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error: ", textStatus, errorThrown);
+        }
+    });
+});
 
 function datatablebasic(){
 	new DataTable('#basicTable', {
@@ -279,8 +238,8 @@ function loadDataTable(params){
                 d.idx=params.idx;
 
 				//주소
-				var ask=(params.askMenu01==undefined || params.askMenu01==null)?'0':params.askMenu01;
-				console.log("askmenu:"+ask);
+				var ask=(params.privateUseRadio01==undefined || params.privateUseRadio01==null)?'0':params.privateUseRadio01;
+				console.log("privateUseRadio01:"+ask);
 
 				//입력형 주소 입력 시
 				if (ask=="0") {
