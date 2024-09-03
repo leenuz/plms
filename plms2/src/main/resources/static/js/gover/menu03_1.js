@@ -253,7 +253,7 @@ function loadDataTable(params){
         bPaginate: true,
         bLengthChange: true,
         bInfo:false,
-        lengthMenu : [ [ 10, 20, 50, -1 ], [ "10건","20건","50건", "All" ] ],
+        lengthMenu : [ [ 10, 50, 100, -1 ], [ "10건","50건","100건", "All" ] ],
         bAutoWidth: false,
         processing: true,
         ordering: true,
