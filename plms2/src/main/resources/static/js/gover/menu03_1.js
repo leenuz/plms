@@ -244,7 +244,7 @@ function loadDataTable(params){
 		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
 		dom:'<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
 		buttons: [{extend:'excel',text:'엑셀 다운로드'}],
-		pageLength: 20,
+		pageLength: 50,
         bPaginate: true,
         bLengthChange: true,
         bInfo:false,
