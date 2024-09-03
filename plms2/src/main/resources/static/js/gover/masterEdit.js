@@ -143,7 +143,7 @@ const masterEditChangeHistoryOpenEvet = () => {
 
     const masterEditHistoryBtn = document.querySelector("#masterEdit .masterEditHistoryBtn");
     const masterEditChangeHistoryWrapper = document.querySelector(".masterEditChangeHistoryWrapper");
-    let masterEditHistoryPath = '/components/popuphtml/occupancy_Popup/changehistoryPopup.html'; //변경이력
+    let masterEditHistoryPath = '/components/popuphtml/changehistoryPopup.html'; //변경이력
 
     if(masterEditHistoryBtn){
 
@@ -192,7 +192,7 @@ const masterEditExcelPopOpenEvet = () => {
 
     const masterEditExcelPopBtn = document.querySelector(".masterEditExcelPopBtn");
     const masterEditExcelPopWrapper = document.querySelector(".masterEditExcelPopWrapper");
-    let masterEditExcelFilePath = '/components/popuphtml/occupancy_Popup/exceluploadPopup.html'; // 엑셀업로드
+    let masterEditExcelFilePath = '/components/popuphtml/exceluploadPopup.html'; // 엑셀업로드
 
     if(masterEditExcelPopBtn){
 
