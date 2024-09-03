@@ -16,7 +16,6 @@
 	<link th:href="@{/css/common.css}" rel="stylesheet" />
 	<link rel="stylesheet" href="/css/gover/masterEdit.css" /> 
 	  
-	<!-- <script src="/js/gover/menu03_1.js"></script>	 -->
 	<!--<script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 	<style>
@@ -118,6 +117,7 @@
     <div class="masterEditWrappers">
      
       <main id="masterEdit">
+		<form id="saveForm" onSubmit="return false;">
         <div class="mainTitle">
           <h1>점용 마스터 수정</h1>
         </div>
@@ -160,7 +160,7 @@
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
 					<select
-			            name="masterEditSelectBox01"
+			            name="jisa"
 			            id="masterEditSelectBox01"
 			            hidden>
 			            <option value="전체" th:selected="${resultData.gm_jisa == '전체'}">전체</option>
@@ -199,7 +199,7 @@
 				<li class="content largeTitle selectContentArea">
 				  <div class="hiddenSelectBox">
 				    <select
-				      name="masterEditSelectBox02"
+				      name="pmt_office"
 				      id="masterEditSelectBox02"
 				      hidden>
 				      <option value="전체" th:selected="${resultData.gm_pmt_office == '전체'}">전체</option>
@@ -229,7 +229,7 @@
 				<li class="content largeTitle selectContentArea">
 				  <div class="hiddenSelectBox">
 				    <select
-				      name="masterEditSelectBox03"
+				      name="adm_office"
 				      id="masterEditSelectBox03"
 				      hidden>
 				      <option value="전체" th:selected="${resultData.gm_adm_office == '전체'}">전체</option>
@@ -249,22 +249,22 @@
 				
 				<!-- 부서 -->
 				<li class="content largeTitle">
-				  <input type="text" placeholder="공원녹지과" th:value="${resultData.gm_office_depart}" />
+				  <input type="text" placeholder="공원녹지과" th:value="${resultData.gm_office_depart}" name="office_depart"/>
 				</li>
 				<!-- 담당자 -->
                 <li class="content">
-                  <input type="text" placeholder="김지훈" th:value="${resultData.gm_office_charege}"/>
+                  <input type="text" placeholder="김지훈" th:value="${resultData.gm_office_charege}" name="office_charege"/>
                 </li>
 				<!-- 연락처 -->
                 <li class="content largeTitle">
-                  <input type="text" placeholder="032-560-4803" th:value="${resultData.gm_office_contact}" />
+                  <input type="text" placeholder="032-560-4803" th:value="${resultData.gm_office_contact}" name="office_contact"/>
                 </li>
 				
 				<!-- 용도 -->
 				<li class="content selectContentArea">
 				  <div class="hiddenSelectBox">
 				    <select
-				      name="masterEditSelectBox04"
+				      name="yongdo"
 				      id="masterEditSelectBox04"
 				      hidden>
 				      <option value="선택" th:selected="${resultData.gm_yongdo == '선택'}">선택</option>
@@ -294,7 +294,7 @@
 				<li class="content largeTitle selectContentArea">
 				  <div class="hiddenSelectBox">
 				    <select
-				      name="masterEditSelectBox05"
+				      name="pipe_name"
 				      id="masterEditSelectBox05"
 				      hidden>
 				      <option value="전체" th:selected="${resultData.gm_pipe_name == '전체'}">전체</option>
@@ -316,7 +316,7 @@
 				<li class="content selectContentArea">
 				  <div class="hiddenSelectBox">
 				    <select
-				      name="masterEditSelectBox06"
+				      name="sun_gubun"
 				      id="masterEditSelectBox06"
 				      hidden>
 				      <option value="단선" th:selected="${resultData.gm_sun_gubun == '단선'}">단선</option>
@@ -336,15 +336,15 @@
                 <li class="content inputArea lineWrap">
                   <div class="doubleLine">
                     <div class="inputWrap">
-                      <input type="text" placeholder="30" th:value="${resultData.gm_pipe_meter}"/>
+                      <input type="text" name="pipe_meter1" placeholder="30" th:value="${resultData.gm_pipe_meter}"/>
                     </div>
                     <div class="inputWrap">
-                      <input type="text" placeholder="30" th:value="${resultData.gm_pipe_meter2}"/>
+                      <input type="text" name="pipe_meter2" placeholder="30" th:value="${resultData.gm_pipe_meter2}"/>
                     </div>
                   </div>
                   <div class="singleLine">
                     <div class="inputWrap">
-                      <input type="text" />
+                      <input type="text" name="pipe_meter_single" th:value="${resultData.gm_pipe_meter}"/>
                     </div>
                   </div>
                 </li>
@@ -389,7 +389,7 @@
 				  <div class="hiddenSelectBox">
 				    <!-- name도 추가 -->
 				    <select
-				      name="masterEditSelectBox08"
+				      name="user_purpos"
 				      id="masterEditSelectBox08"
 				      hidden>
 				      <option value="전체" th:selected="${resultData.gm_use_purpos == '전체'}">전체</option>
@@ -437,6 +437,7 @@
 				  <div class="dateInputBox">
 				    <div class="dateInputWrap">
 				      <input
+					    name="gover_st_date"
 				        type="date"
 				        data-placeholder="22/01/01"
 				        required
@@ -446,6 +447,7 @@
 				    <span class="dateBar"></span>
 				    <div class="dateInputWrap">
 				      <input
+					    name="gover_ed_date"
 				        type="date"
 				        data-placeholder="22/12/31"
 				        required
@@ -457,7 +459,7 @@
 
 				<!-- 점용갱신주기 -->				
                 <li class="content">
-                  <input type="text" placeholder="1년" th:value="${resultData.gm_gover_period}"/>
+                  <input type="text" name="gover_period" placeholder="1년" th:value="${resultData.gm_gover_period}"/>
                 </li>
 
 				<!-- 신규등록사유 -->				
@@ -465,7 +467,7 @@
 				  <div class="hiddenSelectBox">
 				    <!-- name도 추가 -->
 				    <select
-				      name="masterEditSelectBox09"
+				      name="newregreason"
 				      id="masterEditSelectBox09"
 				      hidden>
 				      <option value="선택" th:selected="${resultData.gm_newregreason == '선택'}">선택</option>
@@ -488,7 +490,7 @@
 				  <div class="hiddenSelectBox">
 				    <!-- name도 추가 -->
 				    <select
-				      name="masterEditSelectBox10"
+					  name="permpossyn"
 				      id="masterEditSelectBox10"
 				      hidden>
 				      <option value="Y" th:selected="${resultData.gm_permpossyn == 'Y'}">Y</option>
@@ -509,7 +511,7 @@
 				  <div class="hiddenSelectBox">
 				    <!-- name도 추가 -->
 				    <select
-				      name="masterEditSelectBox11"
+				      name="occunonpayreason"
 				      id="masterEditSelectBox11"
 				      hidden>
 				      <option value="선택" th:selected="${resultData.gm_occunonpayreason == '선택'}">선택</option>
@@ -532,6 +534,7 @@
 				<!-- 점용료 선납 여부 -->
 				<li class="content checkboxWrap">
 				  <input 
+				    name="occuprepayyn"
 				    type="checkbox" 
 				    id="masterEditSelectBox_Checkbox01"
 				    th:checked="${resultData.gm_occuprepayyn == 'Y'}" />
@@ -542,6 +545,7 @@
 				<li class="content">
 				  <div class="dateInputWrap">
 				    <input
+					  name="occuprepaydate"
 				      type="date"
 				      data-placeholder="22/01/01"
 				      required
@@ -561,14 +565,11 @@
             <div class="subTitleText">소속 토지 정보</div>
             <div class="subTitleBtnBox">
               <!-- 지상권 등록화면으로 이동 -->
-              <a href="#"
-                ><button class="middleBtn vividBlueBtn">지상권 전환</button></a
-              >
+              <a href="#"><button class="middleBtn vividBlueBtn">지상권 전환</button></a>
               <button class="middleBtn navyBtn excelDownBtn">
                 엑셀 다운로드
               </button>
-              <button
-                class="middleBtn whiteBtn excelUpBtn masterEditExcelPopBtn">
+              <button class="middleBtn whiteBtn excelUpBtn masterEditExcelPopBtn">
                 엑셀 업로드
               </button>
             </div>
@@ -611,7 +612,7 @@
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterEditSelectBox12"
+                      name="adm_office"
                       id="masterEditSelectBox12"
                       hidden>
                       <option value="전체">전체</option>
@@ -640,7 +641,7 @@
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterEditSelectBox13"
+                      name="gover_own_yn"
                       id="masterEditSelectBox13"
                       hidden>
                       <option value="국유지">국유지</option>
@@ -654,13 +655,14 @@
                 </li>
                 <li class="content checkboxWrap">
                   <!-- 대표필지 -->
-                  <input type="checkbox" id="masterEditSelectBox_Checkbox02" />
+                  <input type="checkbox" id="masterEditSelectBox_Checkbox02" name="rep_flag"/>
                   <label for="masterEditSelectBox_Checkbox02"></label>
                 </li>
                 <li class="content addressInfoWidth">
                   <!-- 주소 -->
                   <div class="addressData">
                     <input
+					  name="주소"
                       type="text"
                       class="notWriteInput"
                       readonly
@@ -670,14 +672,14 @@
                 </li>
                 <li class="content middleWidth">
                   <!-- PNU -->
-                  <input type="text" />
+                  <input type="text" name="pnu"/>
                 </li>
                 <li class="content selectContentArea">
                   <!-- 지목 -->
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterEditSelectBox14"
+                      name="jimok_text"
                       id="masterEditSelectBox14"
                       hidden>
                       <option value="전1">전1</option>
@@ -699,18 +701,18 @@
                 </li>
                 <li class="content">
                   <!-- 점용연장 -->
-                  <input type="text" />
+                  <input type="text" name="gover_length"/>
                 </li>
                 <li class="content">
                   <!-- 점용면적 -->
-                  <input type="text" />
+                  <input type="text" name="gover_area"/>
                 </li>
                 <li class="content middleWidth selectContentArea">
                   <!-- 관로일치 여부 -->
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterEditSelectBox15"
+                      name="관로일치 여부"
                       id="masterEditSelectBox15"
                       hidden>
                       <option value="지사선택필요1">지사선택필요1</option>
@@ -1115,9 +1117,10 @@
           <button class="newIssueBtn blueBorderBtn finalBtn">
             이슈신규생성
           </button>
-          <button class="draftSaveBtn lightBlueBtn finalBtn">임시저장</button>
+          <button class="draftSaveBtn lightBlueBtn finalBtn" id="draftSaveBtn">임시저장</button>
           <button class="requestBtn vividBlueBtn finalBtn">승인요청</button>
         </div>
+		</form>
       </main>
     </div>
     <div class="masterEditChangeHistoryWrapper"></div>
