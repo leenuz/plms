@@ -1,0 +1,579 @@
+@charset "UTF-8";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body * {
+  font-family: pretendard;
+}
+
+a {
+  text-decoration: none;
+  color: #3c3c3c;
+}
+
+li {
+  list-style: none;
+}
+
+select {
+  outline: 0;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #6e7d88;
+  text-indent: 12px;
+}
+
+.authHistBtn {
+  width: 139px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+input {
+  border: 0;
+  outline: 0;
+}
+
+input:focus {
+  border: 0;
+}
+
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+
+button {
+  border: 0;
+}
+table {
+  border-collapse: collapse;
+}
+textarea {
+  resize: none;
+  border: 0;
+  color: #3c3c3c;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+textarea::placeholder {
+  color: #3c3c3c;
+  font-size: 14px;
+  font-weight: 500;
+}
+.contentScr {
+  overflow-y: scroll;
+  border-radius: 0 0 5px 5px;
+}
+.titleScr {
+  padding-right: 4px;
+}
+#useDetail .contentScr::-webkit-scrollbar {
+  width: 4px;
+}
+#useDetail .contentScr::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+#useDetail .changeHistory textarea {
+  width: 100%;
+  /* height: 100%; */
+}
+.hiddenCaption {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+}
+
+.lightBlueBtn {
+  color: #2b7de1;
+  background: rgba(204, 224, 255, 0.6);
+}
+.deepGrayBtn {
+  background: #636363;
+  color: #fff;
+}
+.middleBtn {
+  width: 159px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.navyBtn {
+  background-color: #4e5871;
+  color: #fff;
+}
+
+.whiteBtn {
+  background-color: #fff;
+  border: 1px solid #4e5871;
+  color: #4e5871;
+}
+
+.searchAddressBtn {
+  width: 54px;
+  height: 27px;
+  border-radius: 20px;
+  background: #2b7de1;
+  color: #fff;
+}
+
+.moreSelectBtn {
+  font-size: 15px;
+  font-weight: 500;
+  color: #4e5871;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  text-align-last: left;
+  padding-left: 12px;
+  box-sizing: border-box;
+}
+
+.fileDownloadBtn {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: #4e5871;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+.authHistBtn {
+  width: 139px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+/* 이전, 저장 버튼 */
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+.vividBlueBtn {
+  background: #2b7de1;
+  color: #fff;
+}
+
+.grayBtn {
+  background: #919191;
+  color: #fff;
+}
+
+.lightBlueBtn {
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+}
+
+.blueBorderBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+
+/* css추가 */
+
+.useDetailWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.useDetailWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.useDetailWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.useDetailHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+/**/
+
+/*  */
+#useDetail * {
+  font-family: pretendard;
+}
+
+#useDetail {
+  width: calc(100% - 100px);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+
+#useDetail .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+
+#useDetail .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+#useDetail .btnBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#useDetail .subTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #31394c;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+#useDetail .subTitleBtnBox {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  transform: translateY(-25%);
+  right: 0;
+}
+
+#useDetail .contents .content {
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border-right: 1px solid #cddbf0;
+}
+
+#useDetail .contents .content:last-child {
+  border-right: 0;
+}
+#useDetail .defaultInfo {
+  /* padding: 40px 0; */
+  padding: 27px 0 40px 0;
+}
+
+#useDetail .defaultInfo .subTitle {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 21px;
+}
+
+#useDetail .contWrap {
+  width: 100%;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+
+#useDetail .contWrap .titles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+}
+
+#useDetail .contWrap .depth1 .titles {
+  border-radius: 5px 5px 0 0;
+}
+
+#useDetail .contWrap .titles li {
+  height: 100%;
+  text-align: center;
+  line-height: 45px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+
+#useDetail .contWrap .titles li:last-child {
+  border-right: 0;
+}
+
+#useDetail .contWrap .contents {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #fff;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+
+#useDetail .contWrap .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+#useDetail .defaultInfo .contWrap .title {
+  width: 10.9%;
+}
+
+#useDetail .defaultInfo .contWrap .content {
+  width: 10.9%;
+}
+#useDetail .defaultInfo .contWrap .depth1 .largeWidth {
+  width: 23.6%;
+}
+
+#useDetail .defaultInfo .contWrap .depth2 .largeWidth {
+  width: 53%;
+}
+
+#useDetail .defaultInfo .contWrap .depth2 .middleWidth {
+  width: 17.6%;
+}
+#useDetail .inputWrap {
+  border-right: 1px solid #cddbf0;
+  padding: 6px 8px;
+}
+
+#useDetail .inputWrap:last-child {
+  border-right: 0;
+}
+
+#useDetail input[type="text"] {
+  width: 100%;
+  height: 100%;
+  background: #edf2f9;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+#useDetail input[type="text"].notWriteInput {
+  background: transparent;
+}
+#useDetail input[type="text"]::placeholder {
+  color: #3c3c3c;
+}
+
+/* 소속 토지 정보 */
+
+#useDetail .landAdressInfo {
+  padding-bottom: 40px;
+}
+
+#useDetail .landAdressInfo .contWrap .title {
+  width: 10.8%;
+}
+
+#useDetail .landAdressInfo .contWrap .content {
+  width: 10.8%;
+}
+
+#useDetail .landAdressInfo .contWrap .middleWidth {
+  width: 9%;
+}
+
+#useDetail .landAdressInfo .contWrap .smallWidth {
+  width: 5.5%;
+}
+
+#useDetail .landAdressInfo .contWrap .largeWidth {
+  width: 50.9%;
+}
+
+#useDetail .landAdressInfo .contentScr {
+  height: 180px;
+}
+
+#useDetail .landAdressInfo .contWrap .depth1 .contents:last-child {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+#useDetail .miniBtn {
+  width: 74px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+#useDetail .viewDetailButton {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+}
+/* 점용 허가 정보 */
+
+#useDetail .permitInfo {
+  padding-bottom: 40px;
+}
+#useDetail .permitInfo .title {
+  width: 7.2%;
+}
+#useDetail .permitInfo .content {
+  width: 7.2%;
+}
+#useDetail .permitInfo .largeWidth {
+  width: 13.5%;
+}
+#useDetail .permitInfo .middleWidth {
+  width: 9.5%;
+}
+
+/* 점용 허가 및 점용료 납부현황 */
+#useDetail .permFeeStat {
+  padding-bottom: 40px;
+}
+#useDetail .permFeeStat .contWrap {
+  border: 1px solid #cddbf0;
+}
+#useDetail .permFeeStat table {
+  width: 100%;
+  border-radius: 5px;
+  border: 0;
+}
+/* border 정리 */
+#useDetail table th,
+#useDetail table td {
+  border-right: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+  height: 45px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+#useDetail table thead tr:first-of-type th:first-of-type {
+  border-radius: 5px 0 0 0;
+}
+#useDetail table thead tr:first-of-type th:last-of-type {
+  border-radius: 0 5px 0 0;
+}
+/* 맨 오른쪽 보더 빼기 */
+#useDetail table thead tr th:last-of-type {
+  border-right: 0;
+}
+#useDetail table tbody tr td:last-of-type {
+  border-right: 0;
+}
+/* 맨 밑 보더 빼기 */
+#useDetail table tbody tr:last-of-type td {
+  border-bottom: 0;
+}
+#useDetail .permFeeStat table th {
+  width: 14.1%;
+}
+#useDetail .permFeeStat table td {
+  width: 14.1%;
+}
+/* 배경색 깔기 */
+#useDetail table tr:first-of-type th {
+  background: #f7f9fc;
+}
+#useDetail table thead tr:last-of-type th {
+  background: #ecf1f8;
+}
+#useDetail .permFeeStat table th.largeWidth {
+  width: 10.8%;
+}
+#useDetail .permFeeStat table th.middleWidth {
+  width: 8%;
+}
+#useDetail .permFeeStat table th.smallWidth {
+  width: 5%;
+}
+#useDetail .permFeeStat table td.largeWidth {
+  width: 10.8%;
+}
+#useDetail .permFeeStat table td.middleWidth {
+  width: 8%;
+}
+#useDetail .permFeeStat table td.smallWidth {
+  width: 5%;
+}
+/* 첨부파일 정보 */
+
+#useDetail .attachFileInfo {
+  padding-bottom: 40px;
+}
+#useDetail .attachFileInfo .title {
+  width: 15.8%;
+}
+#useDetail .attachFileInfo .content {
+  width: 15.8%;
+}
+#useDetail .attachFileInfo .fileNameWidth {
+  width: 67.9%;
+}
+#useDetail .attachFileInfo .contentScr {
+  /* height: 135px; */
+  height: calc(45px * 5);
+}
+/* 변경이력 */
+
+#useDetail .changeHistory {
+  padding-bottom: 40px;
+}
+#useDetail .changeHistory .title {
+  width: 15.2%;
+}
+#useDetail .changeHistory .content {
+  width: 15.2%;
+}
+#useDetail .changeHistory .smallWidth {
+  width: 6.8%;
+}
+#useDetail .changeHistory .largeWidth {
+  width: 62.1%;
+}
+#useDetail .changeHistory .depth1 .contentScr {
+  /* height: 90px; */
+  height: calc(45px * 5);
+}
+#useDetail .changeHistory .textareaWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

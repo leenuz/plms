@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
+	  
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,7 +11,8 @@
     <link rel="stylesheet" href="/assets/css/header.css" />
     <link rel="stylesheet" href="/css/gover/feeDetail.css" />
   </head>
-  <body>
+
+  <th:block layout:fragment="content">
     <!-- 점용료 납부/전자결재  상세정보 -->
     <div class="feeDetailWrappers">
       <div class="feeDetailHeader"></div>
@@ -590,5 +592,5 @@
     <div class="feeDetailCangehistoryPopWrappers"></div>
     <script type="module" src="/js/module/surfaceMain.js"></script>
     <script src="/js/gover/feeDetail.js"></script>
-  </body>
+ </th:block>
 </html>

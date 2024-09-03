@@ -83,7 +83,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 			
 	</select>
-    	
 	
 	<select id="selectGoverList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	    SELECT *,
@@ -232,7 +231,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	               gp.gp_gover_area AS gover_area,
 	               gp.gp_jimok_text AS jimok_text,
 	               gpm.gp_pay_date AS pay_date,
-	               gpm.gp_pay_money AS pay_money
+	               gpm.gp_pay_money AS pay_money,
+	               gpm.gp_echo_no AS echo_no
 	        FROM gover_master gm
 	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
 	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
@@ -274,6 +274,107 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	            )
 	        ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
 	    </if>
+	</select>
+
+
+	<select id="selectGoverList03_2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	    SELECT *,
+	           (row_number() OVER()) AS no
+	    FROM (
+	        SELECT gm.gm_idx AS index,
+	        	   gm.gm_gover_no AS idx,
+	               gm.gm_yongdo AS yongdo,
+	               0 AS gidx,
+	               gm.gm_pipe_name AS pipename,
+	               gm.gm_sun_gubun AS sun_gubun,
+	               gm.gm_pipe_meter AS pipe_meter,
+	               gm.gm_cancel_yn AS cancel_yn,
+	               gm.gm_cancel_date AS cancel_date,
+	               gm.gm_cancel_name AS cancel_name,
+	               gm.gm_cancel_empcd AS cancel_empcd,
+	               gm.gm_use_purpos AS use_purpos,
+	               gm.gm_gover_st_date AS gover_st_date,
+	               gm.gm_gover_ed_date AS gover_ed_date,
+	               CONCAT(gm.gm_gover_st_date, ' ~ ', gm.gm_gover_ed_date) AS period,
+	               gm.gm_pmt_status AS pmt_status,
+	               gm.gm_dockey AS dockey,
+	               gm.gm_pmt_office AS pmt_office,
+	               gm.gm_adm_office AS adm_office,
+	               gm.gm_office_depart AS office_depart,
+	               gm.gm_office_charege AS office_charege,
+	               gm.gm_office_contact AS office_contact,
+	               gm.gm_office_mobile AS office_mobile,
+	               gm.gm_gover_period AS gover_period,
+	               gm.gm_pipe_meter2 AS pipe_meter2,
+	               gm.gm_save_status AS save_status,
+	               gm.gm_newregreason AS newregreason,
+	               gm.gm_occunonpayreason AS occunonpayreason,
+	               gm.gm_permpossyn AS permpossyn,
+	               gm.gm_occuprepayyn AS occuprepayyn,
+	               gm.gm_occuprepaydate AS occuprepaydate,
+	               gm.gm_udate AS udate,
+	               gm.gm_jisa AS jisa,
+	               gm.gm_gover_no AS gover_no,
+	               gm.gm_wdate AS wdate,
+	               gp.gp_sido_nm AS sido_nm,
+	               gp.gp_sgg_nm AS sgg_nm,
+	               gp.gp_emd_nm AS emd_nm,
+	               gp.gp_ri_nm AS ri_nm,
+	               gp.gp_jibun AS jibun,
+	               TRIM(CONCAT(gp.gp_sido_nm, ' ', gp.gp_sgg_nm, ' ', gp.gp_ri_nm, ' ', gp.gp_jibun)) AS address,
+	               gp.gp_gover_length AS gover_length,
+	               gp.gp_gover_area AS gover_area,
+	               gp.gp_jimok_text AS jimok_text,
+	               gpm.gp_pay_date AS pay_date,
+	               gpm.gp_pay_money AS pay_money,
+	               gpm.gp_echo_no AS echo_no
+	        FROM gover_master gm
+	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
+	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
+	        WHERE 1 = 1
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+	        and gm.gm_jisa=#{jisa}
+	        </if>
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+	        ORDER BY ${orderCol} ${desc}
+	        </if>
+	    ) AS r
+	    where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
+			and r.gover_no=#{gover_no}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(user_purpos)" >
+			and r.user_purpos=#{user_purpos}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pmt_office)" >
+			and r.pmt_office=#{pmt_office}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(adm_office)" >
+			and r.adm_office=#{adm_office}
+		</if>
+<!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(save_status)" >
+			and r.save_status=#{save_status}
+		</if>-->
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and r.idx like '%${idx}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
+			and (SELECT COUNT(o.address) AS overlap
+			FROM(
+				(
+				SELECT trim(concat(gm.gm_sido_nm,' ',gm.gm_sgg_nm,' ',gm.gm_ri_nm,' ',gm.gm_jibun)) as address
+				FROM gover_master gm 
+				LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
+				where 1=1
+				)
+			) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+		</if>
+		<if test="length>0">
+			limit #{length} offset #{start}
+		</if>
 	</select>
 
 	

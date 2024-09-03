@@ -327,8 +327,17 @@ public class goverController {
 	    public ModelAndView menu03_3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+			
 			ModelAndView mav=new ModelAndView();
+			mav.addObject("sidoList",sidolist);
+			
 			mav.setViewName("content/gover/menu03_3");
+			
 			return mav;
 		}
 		@GetMapping(path="/orgAdmin") //http://localhost:8080/api/get/dbTest
@@ -519,92 +528,253 @@ public class goverController {
   			return mav;
 	    }
 		
-		@RequestMapping(value="/menu03_2DataTableList", method = {RequestMethod.GET, RequestMethod.POST})
+		@RequestMapping(value="/menu03_2DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 		public ResponseEntity<?> datatableList03_2(HttpServletRequest req, HttpServletResponse res) throws Exception {
+			
+			//일반웹형식
+			Properties requestParams = CommonUtil.convertToProperties(req);
 
-		    // 로그 추가: 요청이 들어왔을 때 출력
-		    log.info("Received request for /menu03_2DataTableList");
+			HashMap<String, String> returnHash = new HashMap<String, String>();
+			Enumeration<String> obj1 = req.getParameterNames();
+			int cnt=0;
 
-		    // 클라이언트에서 전달된 파라미터들을 맵으로 변환
-		    HashMap<String, String> returnHash = new HashMap<>();
-		    Enumeration<String> paramsEnum = req.getParameterNames();
+			while (obj1.hasMoreElements())
+			{
+				String paramName = obj1.nextElement();
+				String paramValue = req.getParameter(paramName);
+				returnHash.put(paramName, paramValue);
+			}
 
-		    while (paramsEnum.hasMoreElements()) {
-		        String paramName = paramsEnum.nextElement();
-		        String paramValue = req.getParameter(paramName);
-		        returnHash.put(paramName, paramValue);
-		    }
+			int draw = Integer.parseInt(req.getParameter("draw"));
+			int start = Integer.parseInt(req.getParameter("start"));
+			int length = Integer.parseInt(req.getParameter("length"));
+			String orderColumn=req.getParameter("order[0][column]");
+			String orderDirection = req.getParameter("order[0][dir]");
+			String orderColumnName=req.getParameter("columns[" + orderColumn + "][data]");
 
-		    // DataTable에서 제공하는 기본 파라미터 처리
-		    int draw = Integer.parseInt(req.getParameter("draw"));
-		    int start = Integer.parseInt(req.getParameter("start"));
-		    int length = Integer.parseInt(req.getParameter("length"));
-		    String orderColumn = req.getParameter("order[0][column]");
-		    String orderDirection = req.getParameter("order[0][dir]");
-		    String orderColumnName = req.getParameter("columns[" + orderColumn + "][data]");
+			String[] order_cols=req.getParameterValues("order");
 
-		    // 로그 추가: 클라이언트로부터 전달된 파라미터 출력
-		    log.info("Received Parameters - draw: {}, start: {}, length: {}", draw, start, length);
-		    log.info("Order Column: {}, Order Direction: {}", orderColumnName, orderDirection);
+			String jisa = req.getParameter("jisa");
+			String gover_no = req.getParameter("gover_no");
+			String use_purpos=req.getParameter("use_purpos");
+			String pmt_office = req.getParameter("pmt_office");
+			String adm_office = req.getParameter("adm_office");
+			String pay_date_start=req.getParameter("pay_date_start");
+			String pay_date_end=req.getParameter("pay_date_end");
+			String address=req.getParameter("saddr");
+			String idx=req.getParameter("idx");
 
-		    // DataTable 검색 및 필터링을 위한 파라미터 처리
-		    String jisa = req.getParameter("jisa");
-		    String gover_no = req.getParameter("gover_no");
-		    String use_purpos = req.getParameter("use_purpos");
-		    String pmt_office = req.getParameter("pmt_office");
-		    String adm_office = req.getParameter("adm_office");
-		    String pay_date_start = req.getParameter("pay_date_start");
-		    String pay_date_end = req.getParameter("pay_date_end");
-		    String address = req.getParameter("saddr");
+			Map map = req.getParameterMap();
 
-		    // 로그 추가: 검색 필터 관련 파라미터 출력
-		    log.info("Search Parameters - jisa: {}, gover_no: {}, use_purpos: {}, pmt_office: {}, adm_office: {}, pay_date_start: {}, pay_date_end: {}, address: {}",
-		            jisa, gover_no, use_purpos, pmt_office, adm_office, pay_date_start, pay_date_end, address);
+			HashMap params = new HashMap();
+			params.put("draw",draw);
+			params.put("start",start);
+			params.put("length",length);
+			
+			params.put("jisa",jisa);
+			params.put("gover_no",gover_no);
+			params.put("use_purpos",use_purpos);
+			params.put("pmt_office",pmt_office);
+			params.put("adm_office",adm_office);
+			params.put("pay_date_start",pay_date_start);
+			params.put("pay_date_end",pay_date_end);
+			params.put("address", address);
+			params.put("idx", idx);
 
-		    // 요청 파라미터를 담을 HashMap 생성
-		    HashMap<String, Object> params = new HashMap<>();
-		    params.put("draw", draw);
-		    params.put("start", start);
-		    params.put("length", length);
-		    params.put("jisa", jisa);
-		    params.put("gover_no", gover_no);
-		    params.put("use_purpos", use_purpos);
-		    params.put("pmt_office", pmt_office);
-		    params.put("adm_office", adm_office);
-		    params.put("pay_date_start", pay_date_start);
-		    params.put("pay_date_end", pay_date_end);
-		    params.put("address", address);
+//			String[] right_arr= {};
+//			right_arr=right_type.split(",");
+//			params.put("right_type", right_arr);
 
-		    // 정렬 조건 추가
-		    if (orderColumn != null && !orderColumn.equals("null") && Integer.parseInt(orderColumn) > 0) {
-		        params.put("orderCol", orderColumnName);
-		        params.put("desc", orderDirection);
-		    } else {
-		        params.put("orderCol", "");
-		        params.put("desc", "");
-		    }
+			params.put("manageYn","Y");
+			if (orderColumn==null || orderColumn.equals("null")) {
+				log.info("----------null--------");
+				orderColumn="0";
+			}
+			if (Integer.parseInt(orderColumn)>0  ) {
+				params.put("orderCol",orderColumnName);
+				params.put("desc",orderDirection);
 
-		    // 로그 추가: 최종 파라미터 출력
-		    log.info("Final Parameters: {}", params);
+			}
+			else {
+				params.put("orderCol","");
+				params.put("desc","");
+			}
+			log.info("params:"+params);
 
-		    // 총 데이터 수 조회
-		    Object count = mainService.selectCountQuery("goverSQL.selectTotalCount", params);
-		    int total = (int) count;
+			Object count= mainService.selectCountQuery("goverSQL.selectTotalCount", params);
+			int total=(int)count;
 
-		    // 실제 데이터 조회
-		    ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList", params);
-		    log.info("list: " + list);
+			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList03_2",params);
+			log.info("list:"+list);
 
-		    // 결과를 DataTable 형식에 맞게 변환하여 반환
-		    HashMap<String, Object> resultmap = new HashMap<>();
-		    resultmap.put("draw", draw);
-		    resultmap.put("recordsTotal", total);
-		    resultmap.put("recordsFiltered", total); // 필터링된 데이터 수
-		    resultmap.put("data", list);
+			HashMap<String,Object> resultmap=new HashMap();
+			resultmap.put("draw",draw);
+			resultmap.put("recordsTotal",total);
+			resultmap.put("recordsFiltered",total);
+			resultmap.put("data",list);
 
-		    JSONObject obj = new JSONObject(resultmap);
-		    log.info("Returning response: " + obj);
-		    return ResponseEntity.ok(obj.toString());
+			JSONObject obj =new JSONObject(resultmap);
+			log.info("obj:"+obj);
+			
+			return ResponseEntity.ok(obj.toString());
 		}
 
+		//feeDetail  상세 조회
+		@GetMapping(path="/feeDetail") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView feeDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//					response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//					response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			
+			log.info("feeDetail 컨트롤러 동작");
+//			        List<TestDTO> list = new ArrayList<TestDTO>();
+//			        list = dbService.getList();
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			
+			String idx = httpRequest.getParameter("idx");
+			String index = httpRequest.getParameter("index");
+			
+			params.put("idx",idx);
+			params.put("gover_no",idx);
+			params.put("index",index);
+			log.info("params:"+params);
+
+			// 점용 마스터 조회
+			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
+			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
+			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
+			
+////					ArrayList<HashMap> soujaList = mainService.selectQuery("goverSQL.selectSoyujaData",params);
+////					ArrayList<HashMap> jisangPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
+////					ArrayList<HashMap> jisangMergeList = mainService.selectQuery("goverSQL.selectMergeList",params);
+////					params.put("pnu", data.get(0).get("jm_pnu"));
+////					ArrayList<HashMap> jisangIssueList = mainService.selectQuery("goverSQL.selectIssueList",params);
+////					log.info("jisangIssueList size:"+jisangIssueList.size());
+////					
+////					if (jisangIssueList.size()>0) {
+////						log.info("1:"+jisangIssueList.get(0).get("pi_code_depth1"));
+////						log.info("2:"+jisangIssueList.get(0).get("pi_code_depth2"));
+////						log.info("3:"+jisangIssueList.get(0).get("pi_code_depth3"));
+////						params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
+////						params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
+////						params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
+////					}
+////					
+////					ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("goverSQL.selectPnuAtcFileList",params);
+////					ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("goverSQL.selectIssueHistoryList",params);
+////					ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("goverSQL.selectIssueCodeAtcFileList",params);
+////					ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+////					log.info("params:"+params);
+////					log.info("data:"+data.get(0));
+////					log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
+////					log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
+////					log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
+////					log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+////					log.info("jisangPermitList:"+jisangPermitList);
+////					log.info("jisangIssueList:"+jisangIssueList);
+////					log.info("souja count:"+soujaList.size());
+////					log.info("soujaList:"+soujaList);
+////					log.info("atcFileList:"+atcFileList);
+////					log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+////					log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
+////					log.info("jisangMemoList:"+jisangMemoList);
+////					log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+
+			mav.addObject("resultData",data.get(0));
+	  		mav.addObject("goverModifyList",goverModifyList);
+	  		mav.addObject("atcFileList",atcFileList);
+	  		
+//		  		mav.addObject("soujaList",soujaList);
+//		  		mav.addObject("jisangPermitList",jisangPermitList);
+//		  		mav.addObject("jisangMergeList",jisangMergeList);
+//		  		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+//		  		mav.addObject("jisangIssueList",jisangIssueList);
+//		  		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
+//		  		mav.addObject("memoList",jisangMemoList);
+//		  		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+  			
+  			mav.setViewName("content/gover/feeDetail");
+  			return mav;
+	    }
+		
+
+		//feeDetail  상세 조회
+		@GetMapping(path="/useDetail") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView useDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//					response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//					response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			
+			log.info("useDetail 컨트롤러 동작");
+//			        List<TestDTO> list = new ArrayList<TestDTO>();
+//			        list = dbService.getList();
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			
+			String idx = httpRequest.getParameter("idx");
+			String index = httpRequest.getParameter("index");
+			
+			params.put("idx",idx);
+			params.put("gover_no",idx);
+			params.put("index",index);
+			log.info("params:"+params);
+
+			// 점용 마스터 조회
+			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
+			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
+			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
+			
+////					ArrayList<HashMap> soujaList = mainService.selectQuery("goverSQL.selectSoyujaData",params);
+////					ArrayList<HashMap> jisangPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
+////					ArrayList<HashMap> jisangMergeList = mainService.selectQuery("goverSQL.selectMergeList",params);
+////					params.put("pnu", data.get(0).get("jm_pnu"));
+////					ArrayList<HashMap> jisangIssueList = mainService.selectQuery("goverSQL.selectIssueList",params);
+////					log.info("jisangIssueList size:"+jisangIssueList.size());
+////					
+////					if (jisangIssueList.size()>0) {
+////						log.info("1:"+jisangIssueList.get(0).get("pi_code_depth1"));
+////						log.info("2:"+jisangIssueList.get(0).get("pi_code_depth2"));
+////						log.info("3:"+jisangIssueList.get(0).get("pi_code_depth3"));
+////						params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
+////						params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
+////						params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
+////					}
+////					
+////					ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("goverSQL.selectPnuAtcFileList",params);
+////					ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("goverSQL.selectIssueHistoryList",params);
+////					ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("goverSQL.selectIssueCodeAtcFileList",params);
+////					ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+////					log.info("params:"+params);
+////					log.info("data:"+data.get(0));
+////					log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
+////					log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
+////					log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
+////					log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+////					log.info("jisangPermitList:"+jisangPermitList);
+////					log.info("jisangIssueList:"+jisangIssueList);
+////					log.info("souja count:"+soujaList.size());
+////					log.info("soujaList:"+soujaList);
+////					log.info("atcFileList:"+atcFileList);
+////					log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+////					log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
+////					log.info("jisangMemoList:"+jisangMemoList);
+////					log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+
+			mav.addObject("resultData",data.get(0));
+	  		mav.addObject("goverModifyList",goverModifyList);
+	  		mav.addObject("atcFileList",atcFileList);
+	  		
+//		  		mav.addObject("soujaList",soujaList);
+//		  		mav.addObject("jisangPermitList",jisangPermitList);
+//		  		mav.addObject("jisangMergeList",jisangMergeList);
+//		  		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+//		  		mav.addObject("jisangIssueList",jisangIssueList);
+//		  		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
+//		  		mav.addObject("memoList",jisangMemoList);
+//		  		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+  			
+  			mav.setViewName("content/gover/useDetail");
+  			return mav;
+	    }
 }
