@@ -727,6 +727,10 @@ public class jisangController {
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+			
+			//필수첨부파일
+			ArrayList<HashMap> reqDoc1list = mainService.selectQuery("jisangSQL.selectJisangReqDoc1",params);
+			
 
 			log.info("params:"+params);
 			log.info("sidolist:"+sidolist);
@@ -740,7 +744,12 @@ public class jisangController {
 			log.info("soujaList:"+soujaList);
 			log.info("atcFileList:"+atcFileList);
 			log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
-
+			log.info("jisangDoc1list:"+reqDoc1list);
+			
+			
+			
+			
+			
 			ModelAndView mav=new ModelAndView();
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);
@@ -753,7 +762,12 @@ public class jisangController {
 			mav.addObject("jisangModifyList",jisangModifyList);
 			mav.addObject("jisangMergeList",jisangMergeList);
 
+			
+			
 			mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+			
+			mav.addObject("reqDoc1list",reqDoc1list);
+			
 			mav.setViewName("content/jisang/landTerminationRegistration");
 			return mav;
 		}
@@ -819,6 +833,74 @@ public class jisangController {
 	         
 	        Iterator<String> itr =  multipartRequest.getFileNames();
 	        
+	        String filePath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+	        HashMap<String,Object> resultmap=new HashMap();
+	        ArrayList<HashMap> resultdataarr=new ArrayList<HashMap>();
+	        HashMap resultdata=new HashMap();
+	        String resultCode="0000";
+	        String resultMessage="success";
+	        while (itr.hasNext()) { //받은 파일들을 모두 돌린다.
+	            
+	            /* 기존 주석처리
+	            MultipartFile mpf = multipartRequest.getFile(itr.next());
+	            String originFileName = mpf.getOriginalFilename();
+	            System.out.println("FILE_INFO: "+originFileName); //받은 파일 리스트 출력'
+	            */
+	            
+	            MultipartFile mpf = multipartRequest.getFile(itr.next());
+	     
+	            String originalFilename = mpf.getOriginalFilename(); //파일명
+	     
+	            String fileFullPath = filePath+"/"+originalFilename; //파일 전체 경로
+	          
+	           
+	            try {
+	                //파일 저장
+	                mpf.transferTo(new File(fileFullPath)); //파일저장 실제로는 service에서 처리
+	                
+	                resultdata.put("fname",originalFilename);
+	                resultdata.put("fpath",fileFullPath);
+	                System.out.println("originalFilename => "+originalFilename);
+	                System.out.println("fileFullPath => "+fileFullPath);
+	               // resultdataarr.add(resultdata);
+	            } catch (Exception e) {
+	            	resultCode="4001";
+	            	resultdata.put("fname","");
+	                resultdata.put("fpath","");
+	                resultMessage="error";
+	               // resultdataarr.add(resultdata);
+	                System.out.println("postTempFile_ERROR======>"+fileFullPath);
+	                e.printStackTrace();
+	            }
+	           
+	          
+//	            System.out.println(obj);
+	           
+	          //log.info("jo:"+jo);
+//	          			response.setCharacterEncoding("UTF-8");
+//	          			response.setHeader("Access-Control-Allow-Origin", "*");
+//	          			response.setHeader("Cache-Control", "no-cache");
+//	          			response.resetBuffer();
+//	          			response.setContentType("application/json");
+//	          			//response.getOutputStream().write(jo);
+//	          			response.getWriter().print(obj);
+//	          			response.getWriter().flush();
+	                         
+	       }
+	        resultmap.put("resultCode",resultCode);
+	        resultmap.put("resultData",resultdata);
+	        resultmap.put("resultMessage",resultMessage);
+	        JSONObject obj =new JSONObject(resultmap);
+	         
+	        return resultmap;
+	    }
+		
+		@RequestMapping(value = "/fileUpload/reqDoc") //ajax에서 호출하는 부분
+	    @ResponseBody
+	    public HashMap reqDoc(HttpServletRequest httpRequest,MultipartHttpServletRequest multipartRequest) { //Multipart로 받는다.
+	         
+	        Iterator<String> itr =  multipartRequest.getFileNames();
+	        log.info("idx:"+multipartRequest.getParameter("idx"));
 	        String filePath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
 	        HashMap<String,Object> resultmap=new HashMap();
 	        ArrayList<HashMap> resultdataarr=new ArrayList<HashMap>();
@@ -1221,7 +1303,100 @@ public class jisangController {
 
 		String jisang_no = httpRequest.getParameter("jisang_no");
 		String jIdx = httpRequest.getParameter("jIdx");
-
+		
+		int docCount=0;
+		
+		
+		ArrayList<HashMap<String, String>> docArray = new ArrayList<>();
+		if (httpRequest.getParameter("req_doc_file01")!=null && httpRequest.getParameter("req_doc_file01")!="" && !httpRequest.getParameter("req_doc_file01").equals("")) {
+			HashMap<String,String> docMap = new HashMap();
+			docMap.put("jisang_no",  jisang_no);
+			docMap.put("fseq","1");
+			docMap.put("file_name",  httpRequest.getParameter("req_doc_file01"));
+			var fpath=GC.getJisangReqDoc1Dir();
+			var tmp=GC.getJisangFileTempDir();
+			docMap.put("file_path",  fpath);
+			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file01"), tmp, fpath);
+			 docArray.add(docMap);
+		}
+		if (httpRequest.getParameter("req_doc_file02")!=null && httpRequest.getParameter("req_doc_file02")!="" && !httpRequest.getParameter("req_doc_file02").equals("")) {
+			HashMap<String,String> docMap = new HashMap();
+			docMap.put("jisang_no",  jisang_no);
+			docMap.put("fseq","2");
+			docMap.put("file_name",  httpRequest.getParameter("req_doc_file02"));
+			var fpath=GC.getJisangReqDoc1Dir();
+			var tmp=GC.getJisangFileTempDir();
+			docMap.put("file_path",  fpath);
+			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file02"), tmp, fpath);
+			 docArray.add(docMap);
+		}
+		if (httpRequest.getParameter("req_doc_file03")!=null && httpRequest.getParameter("req_doc_file03")!="" && !httpRequest.getParameter("req_doc_file03").equals("")) {
+			HashMap<String,String> docMap = new HashMap();
+			docMap.put("jisang_no",  jisang_no);
+			docMap.put("fseq","3");
+			docMap.put("file_name",  httpRequest.getParameter("req_doc_file03"));
+			var fpath=GC.getJisangReqDoc1Dir();
+			var tmp=GC.getJisangFileTempDir();
+			docMap.put("file_path",  fpath);
+			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file03"), tmp, fpath);
+			 docArray.add(docMap);
+		}
+		if (httpRequest.getParameter("req_doc_file04")!=null && httpRequest.getParameter("req_doc_file04")!="" && !httpRequest.getParameter("req_doc_file04").equals("")) {
+			HashMap<String,String> docMap = new HashMap();
+			docMap.put("jisang_no",  jisang_no);
+			docMap.put("fseq","4");
+			docMap.put("file_name",  httpRequest.getParameter("req_doc_file04"));
+			var fpath=GC.getJisangReqDoc1Dir();
+			var tmp=GC.getJisangFileTempDir();
+			docMap.put("file_path",  fpath);
+			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file04"), tmp, fpath);
+			 docArray.add(docMap);
+		}
+		if (httpRequest.getParameter("req_doc_file05")!=null && httpRequest.getParameter("req_doc_file05")!="" && !httpRequest.getParameter("req_doc_file05").equals("")) {
+			HashMap<String,String> docMap = new HashMap();
+			docMap.put("jisang_no",  jisang_no);
+			docMap.put("fseq","5");
+			docMap.put("file_name",  httpRequest.getParameter("req_doc_file05"));
+			var fpath=GC.getJisangReqDoc1Dir();
+			var tmp=GC.getJisangFileTempDir();
+			docMap.put("file_path",  fpath);
+			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file05"), tmp, fpath);
+			 docArray.add(docMap);
+		}
+		if (httpRequest.getParameter("req_doc_file06")!=null && httpRequest.getParameter("req_doc_file06")!="" && !httpRequest.getParameter("req_doc_file06").equals("")) {
+			HashMap<String,String> docMap = new HashMap();
+			docMap.put("jisang_no",  jisang_no);
+			docMap.put("fseq","6");
+			docMap.put("file_name",  httpRequest.getParameter("req_doc_file06"));
+			var fpath=GC.getJisangReqDoc1Dir();
+			var tmp=GC.getJisangFileTempDir();
+			docMap.put("file_path",  fpath);
+			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file06"), tmp, fpath);
+			 docArray.add(docMap);
+		}
+		if (httpRequest.getParameter("req_doc_file07")!=null && httpRequest.getParameter("req_doc_file07")!="" && !httpRequest.getParameter("req_doc_file07").equals("")) {
+			HashMap<String,String> docMap = new HashMap();
+			docMap.put("jisang_no",  jisang_no);
+			docMap.put("fseq","7");
+			docMap.put("file_name",  httpRequest.getParameter("req_doc_file07"));
+			var fpath=GC.getJisangReqDoc1Dir();
+			var tmp=GC.getJisangFileTempDir();
+			docMap.put("file_path",  fpath);
+			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file07"), tmp, fpath);
+			 docArray.add(docMap);
+		}
+		if (httpRequest.getParameter("req_doc_file08")!=null && httpRequest.getParameter("req_doc_file08")!="" && !httpRequest.getParameter("req_doc_file08").equals("")) {
+			HashMap<String,String> docMap = new HashMap();
+			docMap.put("jisang_no",  jisang_no);
+			docMap.put("fseq","8");
+			docMap.put("file_name",  httpRequest.getParameter("req_doc_file08"));
+			var fpath=GC.getJisangReqDoc1Dir();
+			var tmp=GC.getJisangFileTempDir();
+			docMap.put("file_path",  fpath);
+			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file08"), tmp, fpath);
+			 docArray.add(docMap);
+		}
+//		
 		params.put("jisa",jisa);
 		params.put("yongdo",yongdo);
 		params.put("pipe_name",pipe_name);
@@ -1282,8 +1457,60 @@ public class jisangController {
 		params.put("idx",Integer.parseInt(jIdx));
 
 		log.info("params:"+params);
+		
+		
+		//docMap.put("jisang_no", jisang_no);
+		for(int i=0;i<docArray.size();i++) {
+			log.info("arr"+docArray.get(i));
+			HashMap<String,String> filesMap=docArray.get(i);
+			log.info("filesMap:"+filesMap);
+			 //JSONObject obbj=new JSONObject(docArray.get(i));
+			 //log.info("obbj:"+obbj);
+//			 HashMap<String,Object> filesMap=new HashMap<>();
+//			 filesMap.put("jisang_no",obj.getString("jisang_no").toString());
+//			 filesMap.put("fseq",obj.getString("fseq").toString());
+//				filesMap.put("file_name",obj.getString("file_name").toString());
+//			
+//				filesMap.put("file_path",obj.getString("file_path").toString());
+//			 log.info("filesMap:"+filesMap);
+			Object count= mainService.selectCountQuery("jisangSQL.selectJisangReqDoc1Count", filesMap);
+			log.info("count:"+count);
+			
+			if ((int)count==0) {
+				mainService.InsertQuery("jisangSQL.insertJisangReqDoc1",filesMap);
+			}
+			else mainService.InsertQuery("jisangSQL.updateJisangReqDoc1",filesMap);
+		}
+		//log.info("docMap:"+docMap);
+		
 		mainService.InsertQuery("jisangSQL.upsertJisangMasterTmp",params);
+		
+		
+		
+		
+		
 	}
+	
+	
+	@PostMapping(path="/deleteJisangTmpFile")
+	public void deleteJisangTmpFile(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		String dfile_name=httpRequest.getParameter("dfile_name");
+		
+		var fpath=GC.getJisangReqDoc1Dir();
+		var tmp=GC.getJisangFileTempDir();
+		
+		 CommonUtil.delFile(dfile_name, tmp);
+		 CommonUtil.delFile(dfile_name, fpath);
+		 
+		 
+		
+		log.info("dfile_name:"+dfile_name);
+		
+		
+	}
+	
 
 	@PostMapping(path="/commitJisangTmp")
 	public void commitJisangTmp(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
@@ -1344,7 +1571,8 @@ public class jisangController {
 		params.put("manage_no",idx);
 		params.put("index",index);
 		log.info("params:"+params);
-		
+		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
@@ -1394,6 +1622,8 @@ public class jisangController {
       			mav.addObject("jisangIssueList",jisangIssueList);
       			mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
       			mav.addObject("memoList",jisangMemoList);
+      			mav.addObject("jisaList",jisalist);
+      			mav.addObject("sidoList",sidolist);
       			mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
       			mav.setViewName("content/jisang/usePermitRegister");
       			return mav;

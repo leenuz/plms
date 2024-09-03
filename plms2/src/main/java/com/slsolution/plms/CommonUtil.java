@@ -126,5 +126,22 @@ public class CommonUtil {
 	        }
 	    }
 	
+	 
+	 
+	 public static void delFile(String fileName, String beforeFilePath) {
+	        //String path = afterFilePath+"/"+folderName;
+	       
+	        String orgFilePath=beforeFilePath+"/"+fileName;
+	        
+	        try{
+	            File file =new File(orgFilePath);
+
+	            // 옮기 고자 하는 경로로 파일 이동
+	            //file.renameTo(new File(newfilePath));
+	            file.delete();
+	        }catch(Exception e){
+	            e.printStackTrace();
+	        }
+	    }
 
 }

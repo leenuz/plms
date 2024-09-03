@@ -425,7 +425,7 @@ $(document).on("click","#basicSearchBtn",function(){
 						  	    console.log($(popupOpen).html());
 						  	   //			   		              landRightsSearchBtn.classList.add("open");
 						  	   $(popupOpen).addClass("open");
-						  	   			   		              popupOpen.classList.add("active");
+						  	   popupOpen.classList.add("active");
 						 
 				   	   	});
 				   	   

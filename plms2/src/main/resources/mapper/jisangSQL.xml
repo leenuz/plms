@@ -1037,6 +1037,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		jmt_cancel_reason = EXCLUDED.jmt_cancel_reason,
 		jmt_cancel_comment = EXCLUDED.jmt_cancel_comment;
 	</insert>
+	
+	<!-- 해지부분필수첨부파일 -->
+	<insert id="insertJisangReqDoc1" parameterType="map">
+		INSERT INTO jisang_req_doc1 (
+		jrd_manage_no,
+		jrd_fseq,
+		jrd_fname,
+		jrd_fpath,
+		jrd_wdate
+		) VALUES (
+		#{jisang_no},
+		#{fseq}::int,
+		#{file_name},
+		#{file_path},
+		Now()
+		
+		)
+		
+	</insert>
+	<update id="updateJisangReqDoc1" parameterType="map">
+		update jisang_req_doc1 set 
+		
+		jrd_fname=#{file_name},
+		jrd_fpath=#{file_path},
+		jrd_wdate=Now()
+		where jrd_manage_no=#{jisang_no} and jrd_fseq=#{fseq}::int 
+	</update>
+	<select id="selectJisangReqDoc1Count" parameterType="map" resultType="Integer">
+		select count(*) as count from jisang_req_doc1
+		where jrd_manage_no=#{jisang_no} and jrd_fseq=#{fseq}::int 
+	</select>
+	<select id="selectJisangReqDoc1" parameterType="map" resultType="java.util.HashMap">
+		select * from jisang_req_doc1
+		where jrd_manage_no=#{manage_no} 
+	</select>
+	
 
 	<update id="updateJisangMaster" parameterType="map">
 		UPDATE jisang_master
@@ -1228,7 +1264,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="bunhalAddressSearch" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *,(row_number() over()) as no,
 		COALESCE(jm2.ri_nm, '') AS ri_nm2
-		FROM jijuk_master_20223 jm2
+		FROM jijuk_2024 jm2
 		WHERE 1=1
 
 <!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pnu)" >-->

@@ -256,11 +256,44 @@ $(document).ready(function(){
         $('#landTerminationRegistration_myPcFiles').trigger('click');
     });
 
-    $('input[type=file]').on('change', function(e) {
+    $('input[name=fileupload]').on('change', function(e) {
         var files = e.originalEvent.target.files;
         handleFileUpload(files,objDragAndDrop);
     });
-
+	
+	$('input[name=landTerminationRegistration_myPcFiles01]').on('change', function(e) {
+	        var files = e.originalEvent.target.files;
+	        handleFileUpload1(files,this,"01");
+	});
+	$('input[name=landTerminationRegistration_myPcFiles02]').on('change', function(e) {
+	       var files = e.originalEvent.target.files;
+	       handleFileUpload1(files,this,"02");
+	});
+	$('input[name=landTerminationRegistration_myPcFiles03]').on('change', function(e) {
+		       var files = e.originalEvent.target.files;
+		       handleFileUpload1(files,this,"03");
+			   
+	});
+	$('input[name=landTerminationRegistration_myPcFiles04]').on('change', function(e) {
+		       var files = e.originalEvent.target.files;
+		       handleFileUpload1(files,this,"04");
+	});
+	$('input[name=landTerminationRegistration_myPcFiles05]').on('change', function(e) {
+		       var files = e.originalEvent.target.files;
+		       handleFileUpload1(files,this,"05");
+	});
+	$('input[name=landTerminationRegistration_myPcFiles06]').on('change', function(e) {
+		       var files = e.originalEvent.target.files;
+		       handleFileUpload1(files,this,"06");
+	});
+	$('input[name=landTerminationRegistration_myPcFiles07]').on('change', function(e) {
+		       var files = e.originalEvent.target.files;
+		       handleFileUpload1(files,this,"07");
+	});
+	$('input[name=landTerminationRegistration_myPcFiles08]').on('change', function(e) {
+		       var files = e.originalEvent.target.files;
+		       handleFileUpload1(files,this,"08");
+	});
     function handleFileUpload(files,obj)
     {
        for (var i = 0; i < files.length; i++)
@@ -274,6 +307,26 @@ $(document).ready(function(){
 
        }
     }
+	
+	
+	
+	function handleFileUpload1(files,obj,idx)
+	    {
+	       for (var i = 0; i < files.length; i++)
+	       {
+	            var fd = new FormData();
+	            fd.append('file', files[i]);
+
+	          //  var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
+	          //  status.setFileNameSize(files[i].name,files[i].size);
+			    console.log($(obj).parent().parent().parent().html());
+				var changeObj=$(obj).parent().parent().find("#req_doc_file"+idx).val(files[i].name);
+				console.log("--------changeObj---------------");
+				console.log(changeObj);
+	            sendFileToServer1(fd,status,idx);
+
+	       }
+	    }
 
     var rowCount=0;
     function createStatusbar(obj,name,size,no){
@@ -343,6 +396,48 @@ $(document).ready(function(){
         });
         //status.setAbort(jqXHR);
     }
+	
+	
+	function sendFileToServer1(formData,status,no)
+	    {
+			var idx=$("#hiddenJisangNo").val();
+			console.log($("#hiddenJisangNo").val());
+	        var uploadURL = "/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
+	        var extraData ={}; //Extra Data.
+	        var jqXHR=$.ajax({
+	                xhr: function() {
+	                var xhrobj = $.ajaxSettings.xhr();
+	                if (xhrobj.upload) {
+	                        xhrobj.upload.addEventListener('progress', function(event) {
+	                            var percent = 0;
+	                            var position = event.loaded || event.position;
+	                            var total = event.total;
+	                            if (event.lengthComputable) {
+	                                percent = Math.ceil(position / total * 100);
+	                            }
+	                            //Set progress
+	                          //  status.setProgress(percent);
+	                        }, false);
+	                    }
+	                return xhrobj;
+	            },
+	            url: uploadURL,
+	            type: "POST",
+	            contentType:false,
+	            processData: false,
+	            cache: false,
+	            data: formData,
+	            success: function(data){
+	               // status.setProgress(100);
+	                console.log(data);
+	                console.log(data.resultData);
+	                //$("#status1").append("File upload Done<br>");
+	                uploadFiles.push(data.resultData.fpath);
+	                //allCheckEventLandRightsRegist();
+	            }
+	        });
+	        //status.setAbort(jqXHR);
+	    }
 });
 
 //저장 버튼 클릭 시 동작 이벤트
@@ -396,9 +491,18 @@ $(document).on("click","#save_btn",function(){
         cancel_reason: $('#cancel_reason').val() || '',  // 해지사유
         cancel_comment: $('#cancel_comment').val() || '',  // 검토의견
         jisang_no: jmJisangNo || '',  // 지상번호
-        jIdx: jmIdx || ''  // 지상 인덱스
+        jIdx: jmIdx || '',  // 지상 인덱스
+		req_doc_file01:$("#req_doc_file01").val() || '',
+		req_doc_file02:$("#req_doc_file02").val() || '',
+		req_doc_file03:$("#req_doc_file03").val() || '',
+		req_doc_file04:$("#req_doc_file04").val() || '',
+		req_doc_file05:$("#req_doc_file05").val() || '',
+		req_doc_file06:$("#req_doc_file06").val() || '',
+		req_doc_file07:$("#req_doc_file07").val() || '',
+		req_doc_file08:$("#req_doc_file08").val() || ''
+		
     };
-
+	//해지의 필수 첨부파일은 jisang_req_doc1디비에 담는다
     // 필수 값 체크
     let errors = [];
 
@@ -491,3 +595,38 @@ function landTerminationSave(params){
         alert("저장이 완료 되었습니다.");
      });
 }
+
+
+
+$(document).on("click","#docFileDelBtn",function(){
+	console.log("---------------docFileDelBtn---------------");
+	var $currentElement = $(this);
+	console.log($(this).parent().parent().html());
+	var inputFseq=$(this).parent().parent().find("#fseq").val();
+	var inputValue=$(this).parent().parent().find(".notWriteInput").val();
+	console.log(inputValue);
+	if (inputValue!=null || inputValue!=""){
+		var params={"dfile_name":inputValue,"jisang_no":$("#hiddenJisangNo").val(),"fseq":inputFseq}
+		
+		console.log(params);
+		
+		return;
+		//임시파일 삭제
+		$.ajax({
+		          url: "/jisang/deleteJisangTmpFile",
+		          type: "POST",
+		          data: params,
+				  
+		})
+		.done(function (fragment) {
+		       /*loadingHide();
+		       alert("저장이 완료 되었습니다.");*/
+			   //$(this).parent().parent().find(".notWriteInput").val("");
+			   $currentElement.parent().parent().find(".notWriteInput").val("");   
+			   $currentElement.parent().parent().find(".notWriteInput").attr('placeholder','');
+		    });
+					
+	}
+	//console.log($(this).parent().parent().find(".notWriteInput").val(""));
+	
+})
