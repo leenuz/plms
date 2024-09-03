@@ -1,10 +1,30 @@
 
 $(document).ready(function() {
   console.log("gover/masterEdit.js start");
-  /*$('#jisa').niceSelect();*/
-//testAjax();
-//init_Table();
+
+  // 초기 로드 시 단/복선 값에 따라 div 표시
+  const sunGubunValue = $('#masterEditSelectBox06').val();
+  toggleLineDisplay(sunGubunValue);
+
+  // 단/복선 선택이 변경될 때마다 div 표시 변경
+  $('#masterEditSelectBox06').on('change', function() {
+    const selectedValue = $(this).val();
+    toggleLineDisplay(selectedValue);
+  });
 });
+
+function toggleLineDisplay(value) {
+  const singleLineDiv = $('.singleLine');
+  const doubleLineDiv = $('.doubleLine');
+
+  if (value === '단선') {
+    singleLineDiv.show();
+    doubleLineDiv.hide();
+  } else if (value === '복선') {
+    singleLineDiv.hide();
+    doubleLineDiv.show();
+  }
+}
 
 // '임시저장' 버튼 클릭 시, 폼 데이터를 로그로 출력
 $(document).on("click", "#draftSaveBtn", function() {
