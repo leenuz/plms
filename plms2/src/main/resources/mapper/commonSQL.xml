@@ -153,10 +153,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	from jijuk_2024
 	WHERE 1=1
-	AND TRIM(CONCAT(sido_nm, ' ', sgg_nm, ' ',emd_nm,' ',ri_nm, ' ' ,jibun)) LIKE '%${address}%'
-	LIMIT 1000
-			
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+	and sido_nm=#{sido_nm}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+	and sgg_nm=#{sgg_nm}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+	and emd_nm=#{emd_nm}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+	and ri_nm=#{ri_nm}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+	and jibun=#{jibun}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+	AND TRIM(CONCAT(sido_nm, ' ', sgg_nm, ' ',emd_nm,' ',ri_nm, ' ' ,jibun)) LIKE '%${address}%' 
+	limit 100
+	</if>
+	
+	
 	</select>
+	
+	
+	
 	
 	<select id="selectJijuk" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
