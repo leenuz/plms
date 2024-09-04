@@ -898,6 +898,61 @@
 		)
 	
 	</insert>
+	<insert id="dosi_info" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="di_idx" keyProperty="di_idx">
+		
+		INSERT INTO dosi_info 
+		(
+		
+		 di_dosi_no
+		 ,di_business_nm
+		 ,di_strdate
+		 ,di_enddate
+		 ,di_adm_office
+		 ,di_business_oper
+		 ,di_user_id
+		 ,di_complete_yn
+		 ,di_complete_date
+		 
+		 ) 
+		 VALUES (
+		  #{DOSI_NO}
+		  ,#{BUSINESS_NM}
+		  ,TO_DATE(#{STRDATE},'MM/DD/YY')
+		 ,TO_DATE(#{ENDDATE},'MM/DD/YY')
+		  ,#{ADM_OFFICE}
+		  ,#{BUSINESS_OPER}
+		  ,#{USER_ID}
+		  ,#{COMPLETE_YN}
+		  ,TO_DATE(#{COMPLETE_DATE},'MM/DD/YY')
+		  
+		  
+		   
+		)
+	
+	</insert>
+	<insert id="dosi_dept" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="dd_idx" keyProperty="dd_idx">
+		
+		INSERT INTO dosi_dept 
+		(
+		
+		 dd_dosi_no
+		 ,dd_dept_nm
+		 ,dd_manager
+		 ,dd_contact_num
+		 ,dd_dept_seq
+		 
+		 ) 
+		 VALUES (
+		  #{DOSI_NO}
+		  ,#{DEPT_NM}
+		  
+		  ,#{MANAGER}
+		  ,#{CONTACT_NUM}
+		  ,#{DEPT_SEQ}
+		  	   
+		)
+	
+	</insert>
 	
 	<insert id="jisang_atcfile" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="ja_idx" keyProperty="ja_idx">
 		

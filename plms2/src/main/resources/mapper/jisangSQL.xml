@@ -927,6 +927,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			,jb_bunhal_org_no
 		</if>
 	</select>
+	
+	
+	<select id="selectjisangBunhalList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+<!--		select *,(row_number() over()) as no,-->
+<!--		TRIM(CONCAT(jb.jb_sido_nm, ' ', jb.jb_sgg_nm, ' ', jb.jb_ri_nm, ' ' ,jb.jb_emd_nm )) AS address,-->
+<!--		jb.jb_jibun AS jibun-->
+<!--		from jisang_bunhal jb-->
+<!--		where 1 = 1-->
+<!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >-->
+<!--		and jb.jb_bunhal_org_no = #{idx}-->
+<!--		</if>-->
+
+		SELECT
+		row_number() OVER() AS no,
+		TRIM(CONCAT(jb_sido_nm, ' ', jb_sgg_nm, ' ', jb_ri_nm, ' ', jb_jibun)) AS address,
+		jb_jibun AS jibun,
+		jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancel_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_bunhal_org_no, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
+		FROM
+		jisang_bunhal
+		where 1 = 1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+		AND jb_bunhal_org_no = #{idx}
+		</if>
+		GROUP BY
+		jibun,  jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancel_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			,jb_bunhal_org_no
+		</if>
+	</select>
 
 
 	<select id="selectAllTmpData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -1303,4 +1332,84 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where jrd_manage_no=#{manage_no} and jrd_fseq=#{fseq}::int
 
 	</delete>
+	
+	<insert id="insertJIsangBunhalTmp" parameterType="java.util.HashMap">
+		INSERT INTO jisang_bunhal
+		(
+		
+		 jb_jisang_no
+		 ,jb_sido_nm
+		 ,jb_sgg_nm
+		 ,jb_emd_nm
+		 ,jb_ri_nm
+		 ,jb_jibun
+		 ,jb_jisa
+		 ,jb_jijuk_area
+		 ,jb_yongdo
+		 ,jb_pyeonib_area
+		 ,jb_jasan_no
+		 ,jb_gover_own_yn
+		 ,jb_cancel_yn
+		 ,jb_bunhal_yn
+		 ,jb_bunhal_date
+		 ,jb_bunhal_reason
+		 ,jb_bunhal_org_no
+		 ,jb_addrcode
+		 ,jb_pnu
+		 ,jb_remainder_money
+		 ,jb_jimok_text
+		 ,jb_dockey
+		 ,jb_toji_type
+		 ,jb_pipe_yn
+		 ,jb_bunhal_comment
+		 ,jb_set_money
+		 ,jb_bunhal_status
+		 ,jb_chuideuk_money
+		 ,jb_gammoney
+		 ,jb_bosang_money
+		 ,jb_profit_loss
+		 ,jb_demise
+		 ,jb_bunhal_complete
+		 ) 
+		 VALUES (
+		 #{JISANG_NO}
+		 ,#{SIDO_NM}
+		 ,#{SGG_NM}
+		 ,#{EMD_NM}
+		 ,#{RI_NM}
+		 ,#{JIBUN}
+		 ,#{JISA}
+		 ,NULLIF(cast(#{JIJUK_AREA} as varchar),'')::numeric
+		 ,#{YOUNGDO}
+		 ,NULLIF(cast(#{PYEONIB_AREA} as varchar),'')::numeric
+		 ,#{JASAN_NO}
+		 ,#{CANCLE_YN}
+		 ,#{GOVER_OWN_YN}
+		 ,#{BUNHAL_YN}
+		 ,Now()
+		 ,#{BUNHAL_REASON}
+		 ,#{BUNHAL_ORG_NO}
+		 ,#{ADDRCODE}
+		 ,#{PNU}
+		 ,NULLIF(cast(#{REMAINDER_MONEY} as varchar),'')::numeric
+		 ,#{JIMOK_TEXT}
+		 ,#{DOCKEY}
+		 ,#{TOJI_TYPE}
+		 ,#{PIPE_YN}
+		 ,#{BUNHAL_COMMENT}
+		 ,NULLIF(cast(#{SET_MONEY} as varchar),'')::numeric
+		 ,'임시저장'
+		 ,NULLIF(cast(#{CHUIDEUK_MONEY} as varchar),'')::numeric
+		 ,NULLIF(cast(#{GAMMONEY} as varchar),'')::numeric
+		 ,NULLIF(cast(#{BOSANG_MONEY} as varchar),'')::numeric
+		 ,NULLIF(cast(#{PROFIT_LOSS} as varchar),'')::numeric
+		 ,#{DEMISE}
+		 ,#{BUNHAL_COMPLETE}
+		 	  	  	   
+		)
+	</insert>
+	
+	
+	
+	
 </mapper>

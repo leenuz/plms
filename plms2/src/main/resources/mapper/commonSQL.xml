@@ -143,6 +143,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
 		and mm_manage_no=#{manage_no}
 		</if>
+		
+		
+			
+	</select>
+	
+	<select id="selectAddressFromJijuk" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as NO
+
+	from jijuk_2024
+	WHERE 1=1
+	AND TRIM(CONCAT(sido_nm, ' ', sgg_nm, ' ',emd_nm,' ',ri_nm, ' ' ,jibun)) LIKE '%${address}%'
+	LIMIT 1000
 			
 	</select>
 	

@@ -49,27 +49,27 @@ $(document).on('click', '.customSelectView', function() {
 });
 
 // .moreSelectBtn 요소에 대한 클릭 이벤트 등록
-//$(document).on('click', '.moreSelectBtn', function() {
-//    var moreSelectBtnText = $(this).text();
-//
-//    const parentMoreSelectBtn = $(this).closest('.customSelectBtns');
-//    const EditCustomViewBtn = parentMoreSelectBtn.prev('.customSelectView');
-//
+$(document).on('click', '.moreSelectBtn', function() {
+    var moreSelectBtnText = $(this).text();
+
+    const parentMoreSelectBtn = $(this).closest('.customSelectBtns');
+    const EditCustomViewBtn = parentMoreSelectBtn.prev('.customSelectView');
+
 //    // EditCustomViewBtn의 모든 자식을 제거
-//    EditCustomViewBtn.empty();
+    EditCustomViewBtn.empty();
 //
 //    // 새로운 텍스트 노드를 추가합니다.
-//    EditCustomViewBtn.text(moreSelectBtnText);
+    EditCustomViewBtn.text(moreSelectBtnText);
 //
-//    EditCustomViewBtn.removeClass('active');
-//    parentMoreSelectBtn.removeClass('active');
+    EditCustomViewBtn.removeClass('active');
+    parentMoreSelectBtn.removeClass('active');
 //
 //    // 선택한 걸 select의 value값으로 변경하기
-//    const nearByContent = $(this).closest('.selectContentArea');
-//    const nearBySelectBox = nearByContent.find('select');
-//    nearBySelectBox.val(moreSelectBtnText);
-////    console.log(`Selected value: ${nearBySelectBox.val()}`);
-//});
+    const nearByContent = $(this).closest('.selectContentArea');
+    const nearBySelectBox = nearByContent.find('select');
+    nearBySelectBox.val(moreSelectBtnText);
+    console.log(`Selected value: ${nearBySelectBox.val()}`);
+});
 
 /*임시저장 버튼 클릭시*/
 $(document).on("click","#temporarySaveBtn",function(){
@@ -139,7 +139,7 @@ $(document).on("click","#temporarySaveBtn",function(){
  console.log(object);
 //	   var json = JSON.stringify(formSerializeArray);
 
- // 필수 값 체크
+ /*// 필수 값 체크
     let errors = [];
     var jaryoChecked = 0 ;
     var errorCount = 0;
@@ -183,16 +183,52 @@ $(document).on("click","#temporarySaveBtn",function(){
         }
 
         if(jaryoChecked == 0 ){
-errors.push('자료 승계는 최소 1개 이상 선택해야 합니다.');
+				errors.push('자료 승계는 최소 1개 이상 선택해야 합니다.');
         }
 
-    if (errors.length > 0) {
-        alert(errors.join('\n')); // 에러 메시지들을 알림창으로 표시
-        return null; // 필수 값이 누락된 경우 null 반환
-    }
+	    if (errors.length > 0) {
+	        alert(errors.join('\n')); // 에러 메시지들을 알림창으로 표시
+	        return null; // 필수 값이 누락된 경우 null 반환
+   		}
+*/
 
-
-
+			url="/jisang/divisionRegisterSave"; 
+			   $.ajax({
+			   			
+			   				url:url,
+			   				type:'POST',
+			   				contentType:"application/json",
+			   				data:JSON.stringify(dataObj),
+			   				
+			   				dataType:"json",
+			   				beforeSend:function(request){
+			   					console.log("beforesend ........................");
+			   					loadingShow();
+			   				},
+			   				success:function(response){
+			   					loadingHide();
+			   					console.log(response);
+			   					if (response.success="Y"){
+			   						console.log("response.success Y");
+			   						console.log("response.resultData length:"+response.resultData.length);
+									alert("정상적으로 등록 되었습니다.");
+			   						/*$("#popup_bg").show();
+			   						$("#popup").show(500);
+			   						//$("#addrPopupLayer tbody td").remove();
+			   						for(var i=0;i<response.resultData.length;i++){
+			   							$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+			   						}*/
+			   					}
+			   					else {
+			   						console.log("response.success N");
+			   					}
+			   				},
+			   				error:function(jqXHR,textStatus,errorThrown){
+			   					alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+								return false;
+			   				}
+			   			
+			   		}); 
 
      })
 
@@ -200,9 +236,9 @@ errors.push('자료 승계는 최소 1개 이상 선택해야 합니다.');
 //   주소 검색
 $(document).on("click",".searchAddressBtn",function(){
 
-var formSerializeArray = $('#searchForm').serializeArray();
+//var formSerializeArray = $('#searchForm').serializeArray();
 //
-  var buttonId = $(this).attr("id").split("_")[1];
+  //var buttonId = $(this).attr("id").split("_")[1];
 //    formSerializeArray.push({
 //        name: 'selectedButton',
 //        value: buttonId
@@ -213,10 +249,24 @@ var formSerializeArray = $('#searchForm').serializeArray();
 
 //    $('#choiceBtn').attr('data-index', buttonId);
 				   //searchResultPopDiv 화면뿌릴 DIV
+				   var addr=$(this).parent().find("#bunhalSaddr").val();
+				   if (addr==null || addr=="" || addr==undefined) {
+					alert("주소를 입력해주세요.");
+					return;
+				   }
+				   var datas={"address":addr}
+				   console.log($(this).parent().html());
+				   console.log(datas);
+				  
+				  
+				   
+				   
+				   
+				   
 				   	   $.ajax({
-				   	   	  url: "/jisang/getJibunAddress",
+				   	   	  url: "/jisang/getBunhalJIjukSelect",
 				   	   	  type: "POST",
-				   	   	  data: formSerializeArray,
+				   	   	  data: datas,
 				   	   })
 				   	   .done(function (fragment) {
 //				  var buttonIdx = fragment.find('button#choiceBtn');
@@ -228,8 +278,8 @@ var formSerializeArray = $('#searchForm').serializeArray();
                                 console.log($(popupOpen).html());
 						  	   $(popupOpen).addClass("open");
 						  	   popupOpen.classList.add("active");
-                         $('.resultSelectBtn').attr('data-index', buttonId);
-                           $('.saveBtn').attr('data-index', buttonId);
+                         //$('.resultSelectBtn').attr('data-index', buttonId);
+                          // $('.saveBtn').attr('data-index', buttonId);
 				   	   	});
 
 });

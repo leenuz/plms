@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="togiSQL">
+
+
+	<select id="selectDosiList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *,
+		(row_number() OVER()) AS no
+		FROM (
+			SELECT 
+		dm.dm_idx AS index,
+		dm.dm_dosi_no AS idx,
+		dm.dm_dosi_no AS dosi_no,
+		dm.dm_sido_nm as sido_nm,
+		dm.dm_sgg_nm as sgg_nm,
+		dm.dm_emd_nm as emd_nm,
+		dm.dm_ri_nm as ri_nm,
+		dm.dm_jibun as jibun,
+		dm.dm_jisa AS jisa,
+		COALESCE(dm.dm_jijuk_area, NULL) AS jijuk_area,
+		dm.dm_dosiplan AS dosiplan,
+		dm.dm_addrcode as addrcode,
+		dm.dm_pnu as pnu,
+		dm.dm_jimok_text as jimok_text,
+		dm.dm_toji_type AS toji_type,
+		COALESCE(dm.dm_pipe_yn, 'N') AS pipe_yn,
+		dm.dm_length as length,
+		dm.dm_soyouja as souja,
+		dm.dm_master_yn as master_yn,
+		dm_dosi_seq as dosi_seq,
+		di.di_business_nm AS business_nm,
+		di.di_strdate AS strdate,
+		di.di_enddate AS enddate,
+		di.di_adm_office AS adm_office,
+		di.di_business_oper AS business_oper,
+		di.di_complete_date AS complete_date,
+		di.di_complete_yn AS complete_yn,
+		j.dd_dept_nm AS dept_nm,
+		j.dd_manager AS manager,
+		j.dd_contact_num AS contact_num,
+		TRIM(CONCAT(dm.dm_sido_nm, ' ', dm.dm_sgg_nm, ' ', dm.dm_ri_nm, ' ', dm.dm_jibun)) AS address
+		
+		
+		FROM dosi_master dm
+		LEFT JOIN dosi_info di ON di.di_dosi_no=dm.dm_dosi_no
+		left JOIN (
+		
+				SELECT dd.dd_dosi_no,dd.dd_dept_nm,dd.dd_manager,dd.dd_contact_num,dd.dd_dept_seq,(row_number() over()) as NO FROM dosi_dept dd
+			
+		
+		) j ON dm.dm_dosi_no=j.dd_dosi_no AND j.no=1
+	
+		WHERE 1 = 1
+		
+		
+		) AS r
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and r.jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(complete_yn)" >
+			and r.complete_yn=#{complete_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date)">
+			and r.strdate::date = #{start_date}::date 
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+			and r.enddate::date=#{end_date}::date
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '%${address}%'
+		</if>
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+			ORDER BY ${orderCol} ${desc}
+		</if>
+				
+		<if test="length>0">
+			limit #{length} offset #{start}
+		</if>
+
+
+	</select>
+	<select id="selectDosiListCount" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT count(*)
+		
+		FROM (
+			SELECT 
+		dm.dm_idx AS index,
+		dm.dm_dosi_no AS idx,
+		dm.dm_dosi_no AS dosi_no,
+		dm.dm_sido_nm as sido_nm,
+		dm.dm_sgg_nm as sgg_nm,
+		dm.dm_emd_nm as emd_nm,
+		dm.dm_ri_nm as ri_nm,
+		dm.dm_jibun as jibun,
+		dm.dm_jisa AS jisa,
+		COALESCE(dm.dm_jijuk_area, NULL) AS jijuk_area,
+		dm.dm_dosiplan AS dosiplan,
+		dm.dm_addrcode as addrcode,
+		dm.dm_pnu as pnu,
+		dm.dm_jimok_text as jimok_text,
+		dm.dm_toji_type AS toji_type,
+		COALESCE(dm.dm_pipe_yn, 'N') AS pipe_yn,
+		dm.dm_length as length,
+		dm.dm_soyouja as souja,
+		dm.dm_master_yn as master_yn,
+		dm_dosi_seq as dosi_seq,
+		di.di_business_nm AS business_nm,
+		di.di_strdate AS strdate,
+		di.di_enddate AS enddate,
+		di.di_adm_office AS adm_office,
+		di.di_business_oper AS business_oper,
+		di.di_complete_date AS complete_date,
+		di.di_complete_yn AS complete_yn,
+		j.dd_dept_nm AS dept_nm,
+		j.dd_manager AS manager,
+		j.dd_contact_num AS contact_num,
+		TRIM(CONCAT(dm.dm_sido_nm, ' ', dm.dm_sgg_nm, ' ', dm.dm_ri_nm, ' ', dm.dm_jibun)) AS address
+		
+		
+		FROM dosi_master dm
+		LEFT JOIN dosi_info di ON di.di_dosi_no=dm.dm_dosi_no
+		left JOIN (
+		
+				SELECT dd.dd_dosi_no,dd.dd_dept_nm,dd.dd_manager,dd.dd_contact_num,dd.dd_dept_seq,(row_number() over()) as NO FROM dosi_dept dd
+			
+		
+		) j ON dm.dm_dosi_no=j.dd_dosi_no AND j.no=1
+	
+		WHERE 1 = 1
+		
+		
+		) AS r
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and r.jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(complete_yn)" >
+			and r.complete_yn=#{complete_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date)">
+			and r.strdate::date = #{start_date}::date 
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+			and r.enddate::date=#{end_date}::date
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '%${address}%'
+		</if>
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+			ORDER BY ${orderCol} ${desc}
+		</if>
+				
+
+
+	</select>
+
+</mapper>

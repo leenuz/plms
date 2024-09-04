@@ -84,7 +84,7 @@ button {
 }
 
 #divisionRegister {
-  width: calc(100% - 100px);
+  width: calc(100%);
   padding: 0 20px;
   box-sizing: border-box;
   float: left;
@@ -352,6 +352,7 @@ button {
 }
 #divisionRegister .contWrap .depth1 .contents li.content {
   border-right: 1px solid #cddbf0;
+  text-align:center;
 }
 #divisionRegister .contWrap .depth1 .contents li:last-child {
   border-right: 0;
@@ -1064,6 +1065,7 @@ button {
 #divisionRegister input[type="text"].notWriteInput {
   background: transparent;
   text-indent: 0;
+  text-align:center;
 }
 #divisionRegister input[type="text"].notWriteInput::placeholder {
   text-indent: 0;

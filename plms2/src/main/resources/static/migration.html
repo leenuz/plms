@@ -419,6 +419,41 @@ $(document).on("change","#my_file_input",function(e){
 					} */
 					
 				} //end for
+            }else if ($("#dbname").val()=="dosi_info"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					
+					
+					var complete_date=EXCEL_JSON[j].COMPLETE_DATE;
+					var enddate=EXCEL_JSON[j].ENDDATE;
+					var strdate=EXCEL_JSON[j].STRDATE;
+					
+					
+					
+					var complete_date_arr=complete_date.split("/");
+					var enddate_arr=enddate.split("/");
+					var strdate_arr=strdate.split("/");
+					
+					if (complete_date_arr[0]>12 ) EXCEL_JSON[j].COMPLETE_DATE=complete_date_arr[1]+"/"+complete_date_arr[2]+"/"+complete_date_arr[0];
+					if (enddate_arr[0]>12) EXCEL_JSON[j].ENDDATE=enddate_arr[1]+"/"+enddate_arr[2]+"/"+enddate_arr[0];
+					if (strdate_arr[0]>12) EXCEL_JSON[j].STRDATE=strdate_arr[1]+"/"+strdate_arr[2]+"/"+strdate_arr[0];
+					
+					/* if (j>130 && j<140){
+						
+						console.log(EXCEL_JSON[j].PMT_FIRST_DATE);
+						
+					} */
+					/* if (j>70 && j<80){
+						
+						console.log(EXCEL_JSON[j]);
+						console.log(arr);
+						if (isDate(txt)) {
+							
+							console.log(j+":"+"true"+":"+txt);
+						}
+						else console.log(j+":"+"false"+":"+txt);
+					} */
+					
+				} //end for
             }
            	
            
