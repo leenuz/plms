@@ -258,6 +258,8 @@ function loadDataTable(params){
 					else addrs=addrs+" "+params.emd;
 					if (ljsIsNull(params.ri)) addrs=addrs+"";
 					else addrs=addrs+" "+params.ri;
+					if (ljsIsNull(params.jibun)) addrs=addrs+"";
+					else addrs=addrs+" "+params.jibun;
 					//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
 					//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
 					console.log("addrs:"+addrs);

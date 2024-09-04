@@ -299,14 +299,14 @@
 					
                     <!--보여지는 셀렉박스-->
                     <div class="privateUseSelects">
-                      <button class="privateUseSelectsTitleBtn"  id="sidoText"></button>
+                      <button class="privateUseSelectsTitleBtn" id="sidoText"></button>
                       <div class="sufaceSelectList smallHeight">
                         <ul class="surfaceSelectListMember" id="sido_ul">
-							<li>
-								<p>전체</p>
-							</li>
+							<li><p>전체</p></li>
 							<th:block th:each="val:${sidoList}">
-								<li><p th:text="${val.sm_name}">Y</p></li>
+								<li>
+									<p th:text="${val.sm_name}">Y</p>
+								</li>
 							<th:block>
 						</ul>
                       </div>
@@ -322,7 +322,7 @@
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="privateUseSelects">
-                      <button class="privateUseSelectsTitleBtn"  id="sggText">전체</button>
+                      <button class="privateUseSelectsTitleBtn" id="sggText">전체</button>
                       <div class="sufaceSelectList smallHeight">
                         <ul class="surfaceSelectListMember" id="sggUl">
 							<li><p>전체</p></li>
