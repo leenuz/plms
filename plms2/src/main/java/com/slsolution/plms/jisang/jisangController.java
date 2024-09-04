@@ -429,6 +429,27 @@ public class jisangController {
 		log.info("params:"+params);
 		
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+		HashMap jijuk = new HashMap<>();
+		jijuk.put("x", 0);
+		jijuk.put("y", 0);
+		if (data.size() > 0) {
+			HashMap jijukParam = new HashMap<>();
+			jijukParam.put("sido_nm", data.get(0).get("jm_sido_nm"));
+			jijukParam.put("sgg_nm", data.get(0).get("jm_sgg_nm"));
+			jijukParam.put("emd_nm", data.get(0).get("jm_emd_nm"));
+			jijukParam.put("ri_nm", data.get(0).get("jm_ri_nm"));
+			jijukParam.put("jibun", data.get(0).get("jm_jibun"));
+
+			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			if (jijukList.size() > 0) {
+				jijuk = jijukList.get(0);
+			}
+			else {
+				jijuk = new HashMap<>();
+				jijuk.put("x", 0);
+				jijuk.put("y", 0);
+			}
+		}
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 		
@@ -467,6 +488,7 @@ public class jisangController {
 		log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
 		
       			mav.addObject("resultData",data.get(0));
+				mav.addObject("jijuk", jijuk);
       			mav.addObject("soujaList",soujaList);
       			mav.addObject("jisangPermitList",jisangPermitList);
       			mav.addObject("atcFileList",atcFileList);

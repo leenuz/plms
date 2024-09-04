@@ -236,6 +236,9 @@ public class goverController {
 			ArrayList<HashMap> permitList = mainService.selectQuery("goverSQL.selectPermitList",params);
 			ArrayList<HashMap> pnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
+			HashMap jijuk = new HashMap<>();
+			jijuk.put("x", 0);
+			jijuk.put("y", 0);
 
 			HashMap targetParam = new HashMap();
 			targetParam.put("idx",Integer.parseInt(gidx));
@@ -244,6 +247,18 @@ public class goverController {
 				pnuTargetList = mainService.selectQuery("goverSQL.selectPnuTargetList",targetParam);
 				params.put("pnu", pnuTargetList.get(0).get("gp_pnu"));
 
+				if (pnuTargetList.size() > 0) {
+					HashMap jijukParam = new HashMap<>();
+					jijukParam.put("sido_nm", pnuTargetList.get(0).get("gp_sido_nm"));
+					jijukParam.put("sgg_nm", pnuTargetList.get(0).get("gp_sgg_nm"));
+					jijukParam.put("emd_nm", pnuTargetList.get(0).get("gp_emd_nm"));
+					jijukParam.put("ri_nm", pnuTargetList.get(0).get("gp_ri_nm"));
+					jijukParam.put("jibun", pnuTargetList.get(0).get("gp_jibun"));
+					ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+					if (jijukList.size() > 0) {
+						jijuk = jijukList.get(0);
+					}
+				}
 			}
 
 
@@ -276,6 +291,7 @@ public class goverController {
 			mav.addObject("pnuList",pnuList);
 			mav.addObject("atcFileList",atcFileList);
 			mav.addObject("pnuTargetList",pnuTargetList);
+			mav.addObject("jijuk", jijuk);
 
 			mav.addObject("goverPnuAtcFileList",goverPnuAtcFileList);
 			mav.addObject("memoList",goverMemoList);
