@@ -71,7 +71,7 @@ public class togiController {
 	
 	
 	
-	
+	//토지조회리스트
 	@RequestMapping(value="/menu04_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> datatableList04_1(HttpServletRequest req, HttpServletResponse res) throws Exception {
 

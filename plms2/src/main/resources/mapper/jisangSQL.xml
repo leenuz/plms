@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *
-		,concat(jm_sido_nm,' ',jm_sgg_nm,' ',jm_ri_nm,' ',jm_jibun) as address
+		,concat(jm_sido_nm,' ',jm_sgg_nm,' ',jm_emd_nm,' ',jm_ri_nm,' ',jm_jibun) as address
 		from jisang_master 
 		where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >

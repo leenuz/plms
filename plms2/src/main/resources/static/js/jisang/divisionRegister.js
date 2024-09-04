@@ -237,7 +237,7 @@ $(document).on("click","#temporarySaveBtn",function(){
 $(document).on("click",".searchAddressBtn",function(){
 
 //var formSerializeArray = $('#searchForm').serializeArray();
-//
+
   //var buttonId = $(this).attr("id").split("_")[1];
 //    formSerializeArray.push({
 //        name: 'selectedButton',
@@ -248,17 +248,33 @@ $(document).on("click",".searchAddressBtn",function(){
 //    const data_index = $(this).attr("data-index");
 
 //    $('#choiceBtn').attr('data-index', buttonId);
+console.log($(this).parent().parent().html());
+		var idObj=$(this).parent().parent().find(".addressData input");
+		var id=$(this).parent().parent().find("#bunhalIndex").val();
+		var sido_nm=$(this).parent().parent().find("#togisido_nm").val();
+		var sgg_nm=$(this).parent().parent().find("#togisgg_nm").val();
+		var emd_nm=$(this).parent().parent().find("#togiemd_nm").val();
+		var ri_nm=$(this).parent().parent().find("#togiri_nm").val();
+		var jibun=$(this).parent().parent().find("#togijibun").val();
+		
+		console.log(idObj.val()); 
+    	console.log(id);
+	
+		var addr=idObj.val();
+		var datas={"address":addr,"sido_nm":sido_nm,"sgg_nm":sgg_nm,"emd_nm":emd_nm,"ri_nm":ri_nm,"jibun":jibun}
+					   console.log($(this).parent().html());
+					   console.log(datas);
+					   
+				  
 				   //searchResultPopDiv 화면뿌릴 DIV
-				   var addr=$(this).parent().find("#bunhalSaddr").val();
+				   
 				   if (addr==null || addr=="" || addr==undefined) {
 					alert("주소를 입력해주세요.");
 					return;
 				   }
-				   var datas={"address":addr}
-				   console.log($(this).parent().html());
-				   console.log(datas);
+				 
 				  
-				  
+				
 				   
 				   
 				   
@@ -278,8 +294,8 @@ $(document).on("click",".searchAddressBtn",function(){
                                 console.log($(popupOpen).html());
 						  	   $(popupOpen).addClass("open");
 						  	   popupOpen.classList.add("active");
-                         //$('.resultSelectBtn').attr('data-index', buttonId);
-                          // $('.saveBtn').attr('data-index', buttonId);
+                        	 $('.resultSelectBtn').attr('data-index', id);
+                           	$('.saveBtn').attr('data-index', id);
 				   	   	});
 
 });
@@ -288,7 +304,7 @@ $(document).on("click",".searchAddressBtn",function(){
 $(document).on("click",".resultSelectBtn",function(){
 var id =  $('.resultSelectBtn').data('index');
 
-//console.log("***클릭된 id*** : " + id);
+console.log("***클릭된 id*** : " + id);
 console.log($(this).parent().parent().html());
 	var juso=$(this).parent().parent().find(".popContent02").html();
 	var jibun=$(this).parent().parent().find(".popContent03").html();
@@ -334,18 +350,23 @@ $(document).on("click",".topCloseBtn",function(){
 });
 var index = 1;
 $(document).on("click",".addBtn",function(){
+	console.log("----------------addBtn-------------------------");
 
 
 		var thisUl=$(this).parent().parent().parent().parent();
+		console.log(thisUl);
 		var addUl=$("#tojiHiddenUl").html();
-        var findButton=$()
+		//console.log(addUl);
+        //var findButton=$()
 //		var input=$(thisUl).find("input");
 
 		var addDiv = $('<ul class="contents" id="tojiUl">'+addUl+'</ul>');
-
-		var address = addDiv.find('input.bunhalAddres_');
-		    address.attr({'class':'notWriteInput bunhalAddres_'+index,
-		    'name':'bunhalAddres_'+index});
+		addDiv.find("#bunhalIndex").val(index);
+		console.log($(addDiv).html());
+		 
+		
+		
+		/*
         var jusoButton = addDiv.find('button.searchAddressBtn_');
             jusoButton.attr({'class': 'searchAddressBtn searchAddressBtn_' + index,
             'id': 'searchAddressBtn_' + index
@@ -401,7 +422,7 @@ $(document).on("click",".addBtn",function(){
             'name' : 'divisionRegistSelectBox03_'+index,
              "class":'divisionRegistSelectBox03_'+index
             });
-
+*/
 
             index++; // i 값을 증가시켜 다음 버튼에 적용
 
