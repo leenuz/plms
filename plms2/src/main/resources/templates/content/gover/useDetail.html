@@ -787,149 +787,48 @@
           </div>
         </section>
 
-        <!-- 첨부파일 -->
-        <section class="attachFileInfo">
-          <div class="subTitle">
-            <div class="subTitleText">첨부파일</div>
-          </div>
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="titles titleScr">
-                <li class="title">날짜</li>
-                <li class="title fileNameWidth">파일명</li>
-                <li class="title">파일보기</li>
-              </ul>
-              <div class="contentScr">
-                <ul class="contents">
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2022-06-30"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="경과보고 4. hwp"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content btnBox">
-                    <button class="viewDetailButton lightBlueBtn">
-                      상세보기 <span class="downloadIcon"></span>
-                    </button>
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2022-06-21"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="지적측량 결과 - 평택시 월곡동 산32-6번지.pdf"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content btnBox">
-                    <button class="viewDetailButton lightBlueBtn">
-                      상세보기 <span class="downloadIcon"></span>
-                    </button>
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2022-06-21"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="송유관 측량 표시.hwp"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content btnBox">
-                    <button class="viewDetailButton lightBlueBtn">
-                      상세보기 <span class="downloadIcon"></span>
-                    </button>
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2022-06-21"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="송유관 측량 표시.hwp"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content btnBox">
-                    <button class="viewDetailButton lightBlueBtn">
-                      상세보기 <span class="downloadIcon"></span>
-                    </button>
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2022-06-21"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="송유관 측량 표시.hwp"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content btnBox">
-                    <button class="viewDetailButton lightBlueBtn">
-                      상세보기 <span class="downloadIcon"></span>
-                    </button>
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2022-06-21"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content fileNameWidth">
-                    <input
-                      type="text"
-                      placeholder="송유관 측량 표시.hwp"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content btnBox">
-                    <button class="viewDetailButton lightBlueBtn">
-                      상세보기 <span class="downloadIcon"></span>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+		<!-- 첨부파일 -->
+		<section class="attachFileInfo">
+		  <div class="subTitle">
+		    <div class="subTitleText">첨부파일</div>
+		  </div>
+		  <div class="contWrap">
+		    <div class="depth1">
+		      <ul class="titles titleScr">
+		        <li class="title">등록일</li>
+		        <li class="title fileNameWidth">파일명</li>
+		        <li class="title">파일보기</li>
+		      </ul>
+		      <div class="contentScr">
+		        <!-- 첨부파일 목록 반복문 -->
+		        <ul class="contents" th:each="file : ${atcFileList}">
+		          <!-- 등록일 -->
+		          <li class="content">
+		            <input
+		              type="text"
+		              th:value="${#dates.format(file.ga_wdate, 'yyyy-MM-dd')}"
+		              readonly
+		              class="notWriteInput" />
+		          </li>
+		          <!-- 파일명 -->
+		          <li class="content fileNameWidth">
+		            <input
+		              type="text"
+		              th:value="${file.ga_file_nm}"
+		              readonly
+		              class="notWriteInput" />
+		          </li>
+		          <!-- 파일보기 -->
+		          <li class="content btnBox">
+		            <button class="viewDetailButton lightBlueBtn" th:data-filepath="${file.ga_file_path}">
+		              상세보기
+		            </button>
+		          </li>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		</section>
 
         <!-- 변경이력 -->
 
