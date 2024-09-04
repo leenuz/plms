@@ -25,21 +25,26 @@ span {
   margin: 0;
   font-family: Pretendard;
 }
+
 ul li {
   list-style: none;
 }
+
 a {
   text-decoration: none;
   font-family: Pretendard;
 }
+
 button {
   border: none;
   background: transparent;
   text-align: center;
 }
+
 button:hover {
   cursor: pointer;
 }
+
 input {
   border: none;
 }
@@ -47,6 +52,7 @@ input {
 input:focus {
   outline: none;
 }
+
 select:focus {
   outline: none;
 }
@@ -63,13 +69,13 @@ select:focus {
 
 /* 지도 버튼 css*/
 .viewDetailButton {
-    width: 116px;
-    height: 27px;
-    border-radius: 20px;
-    background: rgba(204, 224, 255, 0.6);
-    color: #2B7DE1;
-    font-size: 13px;
-    font-weight: 600;
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: rgba(204, 224, 255, 0.6);
+  color: #2B7DE1;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 /* 스크롤바 */
@@ -115,10 +121,7 @@ select:focus {
   margin: 0 auto;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont {
   width: 100%;
   height: 253px;
   padding: 10px 0px;
@@ -128,11 +131,7 @@ select:focus {
   background-color: #f7f9fc;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide {
   /* width: 100%; */
   height: 50%;
   width: 97%;
@@ -142,52 +141,27 @@ select:focus {
   justify-content: flex-start;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide:last-child {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide:last-child {
   margin-top: 3px;
   justify-content: space-between;
   align-items: start;
 }
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide:first-child {
+
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide:first-child {
   border-bottom: 1px solid #cddbf099;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .sectionMenuListBoxs {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .sectionMenuListBoxs {
   width: 13.5%;
   height: 100%;
   background-color: transparent;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .sectionMenuListBoxs
-  .selectTitle {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .sectionMenuListBoxs .selectTitle {
   padding: 10px 0px;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .sectionMenuListBoxs
-  .selectTitle
-  p {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .sectionMenuListBoxs .selectTitle p {
   font-size: 15px;
   font-weight: 600;
   color: #4e5871;
@@ -262,19 +236,14 @@ select:focus {
   transition: height 500ms;
 }
 
-#dopcoPrivateUse03
-  .privateUseSelects
-  .sufaceSelectList.extrasmallHeight.active {
+#dopcoPrivateUse03 .privateUseSelects .sufaceSelectList.extrasmallHeight.active {
   opacity: 1;
   display: block;
   height: 100px;
   transition: height 500ms;
 }
 
-#dopcoPrivateUse03
-  .privateUseSelects
-  .sufaceSelectList
-  .surfaceSelectListMember {
+#dopcoPrivateUse03 .privateUseSelects .sufaceSelectList .surfaceSelectListMember {
   position: absolute;
   top: 0px;
   left: 0;
@@ -288,36 +257,21 @@ select:focus {
 
 /* 셀릭박스 스크롤바 */
 
-#dopcoPrivateUse03
-  .privateUseSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar {
+#dopcoPrivateUse03 .privateUseSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar {
   width: 4px;
 }
 
-#dopcoPrivateUse03
-  .privateUseSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+#dopcoPrivateUse03 .privateUseSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-#dopcoPrivateUse03
-  .privateUseSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar-track {
-}
+#dopcoPrivateUse03 .privateUseSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar-track {}
 
 /* 셀렉박스내 체크박스 */
 
-#dopcoPrivateUse03
-  .privateUseSelects
-  .sufaceSelectList
-  .surfaceSelectListMember.checkBoxsContent
-  li
-  label {
+#dopcoPrivateUse03 .privateUseSelects .sufaceSelectList .surfaceSelectListMember.checkBoxsContent li label {
   width: 25px;
   height: 20px;
   margin-right: 8px;
@@ -325,22 +279,11 @@ select:focus {
   background-color: #e0e8f2;
 }
 
-#dopcoPrivateUse03
-  .privateUseSelects
-  .sufaceSelectList
-  .surfaceSelectListMember.checkBoxsContent
-  li
-  input[type="checkbox"] {
+#dopcoPrivateUse03 .privateUseSelects .sufaceSelectList .surfaceSelectListMember.checkBoxsContent li input[type="checkbox"] {
   display: none;
 }
 
-#dopcoPrivateUse03
-  .privateUseSelects
-  .sufaceSelectList
-  .surfaceSelectListMember.checkBoxsContent
-  li
-  input[type="checkbox"]:checked
-  + label {
+#dopcoPrivateUse03 .privateUseSelects .sufaceSelectList .surfaceSelectListMember.checkBoxsContent li input[type="checkbox"]:checked+label {
   background-color: #4e5871;
   background-image: url(/assets/media/menu01/checkFill.png);
   background-repeat: no-repeat;
@@ -348,11 +291,7 @@ select:focus {
   background-position: center center;
 }
 
-#dopcoPrivateUse03
-  .privateUseSelects
-  .sufaceSelectList
-  .surfaceSelectListMember
-  li {
+#dopcoPrivateUse03 .privateUseSelects .sufaceSelectList .surfaceSelectListMember li {
   padding: 0px 10px;
   height: 41px;
   display: flex;
@@ -362,20 +301,11 @@ select:focus {
   margin: 6px 5px;
 }
 
-#dopcoPrivateUse03
-  .privateUseSelects
-  .sufaceSelectList
-  .surfaceSelectListMember
-  li:hover {
+#dopcoPrivateUse03 .privateUseSelects .sufaceSelectList .surfaceSelectListMember li:hover {
   background-color: #edf2f9;
 }
 
-#dopcoPrivateUse03
-  .privateUseSelects
-  .sufaceSelectList
-  .surfaceSelectListMember
-  li
-  p {
+#dopcoPrivateUse03 .privateUseSelects .sufaceSelectList .surfaceSelectListMember li p {
   color: #4e5871;
   font-size: 15px;
   font-weight: 500;
@@ -386,14 +316,7 @@ select:focus {
   justify-content: flex-start;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .inputControlBoxs
-  .inputControlList
-  input[type="text"] {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .inputControlBoxs .inputControlList input[type="text"] {
   width: 173px;
   height: 44px;
   padding: 0px 15px;
@@ -403,13 +326,7 @@ select:focus {
   font-size: 15px;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .inputControlBoxs
-  .dateListBox {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .inputControlBoxs .dateListBox {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -425,27 +342,14 @@ select:focus {
   background-repeat: no-repeat;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .inputControlBoxs
-  .dateListBox.active {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .inputControlBoxs .dateListBox.active {
   filter: grayscale(0);
   color: #2b7de1;
   border: 1px solid #2b7de1;
   background-image: url(/assets/media/menu02/calendarColor.png);
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .inputControlBoxs
-  .dateListBox
-  input[type="date"] {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .inputControlBoxs .dateListBox input[type="date"] {
   width: 42%;
   height: 100%;
   font-size: 13px;
@@ -459,25 +363,11 @@ select:focus {
   font-family: Pretendard;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .inputControlBoxs
-  .dateListBox
-  span {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .inputControlBoxs .dateListBox span {
   font-size: 10px;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .inputControlBoxs
-  .dateListBox
-  input[type="date"]::-webkit-calendar-picker-indicator {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .inputControlBoxs .dateListBox input[type="date"]::-webkit-calendar-picker-indicator {
   background: transparent;
   z-index: 1;
   position: absolute;
@@ -487,47 +377,25 @@ select:focus {
   height: 100%;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .inputControlBoxs
-  .dateListBox
-  input[type="date"]::-webkit-inner-spin-button {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .inputControlBoxs .dateListBox input[type="date"]::-webkit-inner-spin-button {
   /* display: none; */
   appearance: none;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .devideSecondTitles {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .devideSecondTitles {
   padding: 20px 20px 0px 0px;
   font-size: 15px;
   font-weight: 600;
   color: #4e5871;
   white-space: nowrap;
 }
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionRadioBoxs {
+
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionRadioBoxs {
   width: 86.1%;
   height: 100%;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionRadioBoxs
-  .radioBoxs {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionRadioBoxs .radioBoxs {
   width: 100%;
   height: 50%;
   display: flex;
@@ -535,60 +403,24 @@ select:focus {
   justify-content: flex-start;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionRadioBoxs
-  .radioBoxs
-  li {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionRadioBoxs .radioBoxs li {
   padding: 0px 3px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionRadioBoxs
-  .radioBoxs:nth-child(2)
-  li:first-child {
+
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionRadioBoxs .radioBoxs:nth-child(2) li:first-child {
   padding: 0px 3px;
 }
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionRadioBoxs
-  .radioBoxs:nth-child(2)
-  li {
+
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionRadioBoxs .radioBoxs:nth-child(2) li {
   padding: 0px 8.5px 0px 3px;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionRadioBoxs
-  .radioBoxs
-  li
-  input[type="radio"] {
-}
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionRadioBoxs .radioBoxs li input[type="radio"] {}
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionRadioBoxs
-  .radioBoxs
-  li
-  span {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionRadioBoxs .radioBoxs li span {
   font-size: 15px;
   color: #31394c;
   padding: 0px 30px 0px 5px;
@@ -596,15 +428,7 @@ select:focus {
   font-weight: 600;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionRadioBoxs
-  .radioBoxs
-  li.addressInput
-  input[type="search"] {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionRadioBoxs .radioBoxs li.addressInput input[type="search"] {
   background-color: #edf2f9;
   width: 868px;
   padding: 0px 10px;
@@ -615,60 +439,23 @@ select:focus {
 
 /* 주소란 셀렉박스 width값 */
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionRadioBoxs
-  .radioBoxs
-  li
-  .privateUseSelects {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionRadioBoxs .radioBoxs li .privateUseSelects {
   min-width: 164px;
 }
 
 /* 셀렉박스 스크롤바 */
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionRadioBoxs
-  .radioBoxs
-  li
-  .privateUseSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionRadioBoxs .radioBoxs li .privateUseSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar {
   width: 4px;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionRadioBoxs
-  .radioBoxs
-  li
-  .privateUseSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionRadioBoxs .radioBoxs li .privateUseSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionRadioBoxs
-  .radioBoxs
-  li
-  .inputControlList
-  input[type="text"] {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionRadioBoxs .radioBoxs li .inputControlList input[type="text"] {
   width: 136px;
   height: 44px;
   padding: 0px 15px;
@@ -678,25 +465,14 @@ select:focus {
   font-size: 15px;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionBtnBoxs {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionBtnBoxs {
   display: flex;
   align-items: end;
   justify-content: center;
   height: 100%;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionBtnBoxs
-  button {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionBtnBoxs button {
   height: 44px;
   border-radius: 10px;
   display: block;
@@ -705,13 +481,7 @@ select:focus {
   font-weight: 600;
 }
 
-#dopcoPrivateUse03
-  .privateUseWrappers03
-  .privateUseSectionBoxs
-  .privateUseSectionCont
-  .privateUseSectionContDevide
-  .privateUseSectionBtnBoxs
-  .privateUseRegisterBtn {
+#dopcoPrivateUse03 .privateUseWrappers03 .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionBtnBoxs .privateUseRegisterBtn {
   padding: 0px 40px;
   background-color: #2b7de1;
   color: #fff;
@@ -731,38 +501,22 @@ select:focus {
   height: 100%;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataTitles {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataTitles {
   padding: 10px 20px;
   position: relative;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataTitles
-  h5 {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataTitles h5 {
   font-size: 16px;
   font-weight: 700;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataTitles
-  h5
-  span {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataTitles h5 span {
   color: #2b7de1;
   padding: 0px 8px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataTitles
-  .privateUseMainContentDownloadBoxs {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataTitles .privateUseMainContentDownloadBoxs {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -771,12 +525,7 @@ select:focus {
   top: 0px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataTitles
-  .privateUseMainContentDownloadBoxs
-  .privateUseExcelDownload {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataTitles .privateUseMainContentDownloadBoxs .privateUseExcelDownload {
   width: 159px;
   padding: 0px 30px;
   height: 38px;
@@ -796,30 +545,16 @@ select:focus {
 
 /* 총 검색건수의 셀렉박스 */
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataTitles
-  .privateUseMainContentDownloadBoxs
-  .privateUseSelects {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataTitles .privateUseMainContentDownloadBoxs .privateUseSelects {
   width: 137px;
   height: 38px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataTitles
-  .privateUseMainContentDownloadBoxs
-  .privateUseSelects
-  .sufaceSelectList {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataTitles .privateUseMainContentDownloadBoxs .privateUseSelects .sufaceSelectList {
   top: 40px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers {
   border: 1px solid #cddbf0;
   border-radius: 5px;
   height: 527px;
@@ -833,42 +568,25 @@ select:focus {
   left: 0;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers.scroll {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers.scroll {
   overflow-y: scroll;
 }
 
 /* 스크롤바 */
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers::-webkit-scrollbar {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers::-webkit-scrollbar {
   width: 4px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers::-webkit-scrollbar-thumb {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers::-webkit-scrollbar-track {
-}
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers::-webkit-scrollbar-track {}
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont {
   width: 30%;
   height: 100%;
   float: left;
@@ -876,11 +594,7 @@ select:focus {
   top: 0;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond03 {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxsSecond03 {
   width: 70%;
   height: auto;
   overflow-x: scroll;
@@ -889,181 +603,86 @@ select:focus {
   border-left: 1px solid #cddbf0;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond03
-  .scrollContentBoxies {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxsSecond03 .scrollContentBoxies {
   width: 238%;
   height: 100%;
 }
 
 /* 스크롤바 */
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond03::-webkit-scrollbar {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxsSecond03::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond03::-webkit-scrollbar-thumb {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxsSecond03::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond03::-webkit-scrollbar-track {
-}
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxsSecond03::-webkit-scrollbar-track {}
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul {
   width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle {
+
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle {
   height: 71px;
   background-color: #f7f9fc;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont:last-child
-  .dataTitle
-  ul
-  li {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont:last-child .dataTitle ul li {
   width: 400px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li {
   width: 30%;
   height: 100%;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li {
   border-right: 1px solid #cddbf0;
   border-bottom: 1px solid #cddbf0;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li:last-child {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li:last-child {
   border-right: none;
 }
 
 /* 타이틀 li 사이즈별 퍼센트 목록 */
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li.extraSmallWidth {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li.extraSmallWidth {
   width: 15%;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li.smallWidth {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li.smallWidth {
   width: 20%;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li.mediumWidth {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li.mediumWidth {
   width: 50%;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li.largeWidth {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li.largeWidth {
   width: 70%;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul
-  li {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul li {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li
-  p {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li p {
   font-size: 14px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  a {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1072,36 +691,17 @@ select:focus {
   font-size: 14px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent.privateLink03
-  a {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent.privateLink03 a {
   width: 281%;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent.privateLink03
-  a
-  li:last-child {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent.privateLink03 a li:last-child {
   border-right: 1px solid #cddbf0;
 }
 
 /* 위치보기, 상세보기 버튼 */
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  .dataContBtnBox {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent .dataContBtnBox {
   width: 90%;
   display: flex;
   align-items: center;
@@ -1110,14 +710,7 @@ select:focus {
 
 /* 해지버튼 */
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  .dataContBtnBox
-  .privateBtnHiddenBoxs {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent .dataContBtnBox .privateBtnHiddenBoxs {
   position: relative;
   left: 0;
   width: 100%;
@@ -1127,14 +720,7 @@ select:focus {
   justify-content: center;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  .privateBtnHiddenBoxs
-  .privateRemoveBtn {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent .privateBtnHiddenBoxs .privateRemoveBtn {
   position: absolute;
   cursor: default;
   z-index: 999;
@@ -1143,15 +729,7 @@ select:focus {
   border-radius: 20px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  .privateBtnHiddenBoxs
-  .privateRemoveBtn
-  a {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent .privateBtnHiddenBoxs .privateRemoveBtn a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1167,115 +745,52 @@ select:focus {
 
 /* 해지일 */
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent.privateLink03
-  .dataContBtnBox
-  .removeDate {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent.privateLink03 .dataContBtnBox .removeDate {
   color: #3c3c3c;
   font-size: 14px;
   display: none;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent.privateLink03
-  .dataContBtnBox
-  li {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent.privateLink03 .dataContBtnBox li {
   flex: 1;
 }
 
 /**/
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  a.mouseEvet {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent a.mouseEvet {
   color: #2b7de1;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li {
   width: 30%;
   height: 44px;
   border-right: 1px solid #cddbf0;
   border-bottom: 1px solid #cddbf0;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li:last-child {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li:last-child {
   border-right: none;
 }
 
 /* 컨텐츠 li 사이즈별 목록 */
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li.extraSmallWidth {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li.extraSmallWidth {
   width: 15%;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li.smallWidth {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li.smallWidth {
   width: 20%;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li.mediumWidth {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li.mediumWidth {
   width: 50%;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li.largeWidth {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li.largeWidth {
   width: 70%;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  button.btnDesign {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li button.btnDesign {
   width: 116px;
   height: 27px;
   border-radius: 20px;
@@ -1291,14 +806,7 @@ select:focus {
   z-index: 999;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs {
   position: relative;
   left: 0;
   width: 100%;
@@ -1308,15 +816,7 @@ select:focus {
   justify-content: center;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs
-  button {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs button {
   position: absolute;
   cursor: default;
   z-index: 999;
@@ -1324,145 +824,66 @@ select:focus {
 
 /* 상세정보버튼 a링크 */
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs
-  .detailBtn
-  a {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs .detailBtn a {
   color: #2b7de1;
   font-size: 13px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs
-  .detailBtn
-  a:visited {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs .detailBtn a:visited {
   color: #2b7de1;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs
-  button.regisRemoveBtn {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs button.regisRemoveBtn {
   background-color: #fff;
   border: 1px solid #2b7de1;
   display: none;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  p {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li p {
   text-align: center;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .boardPageBoxs {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .boardPageBoxs {
   padding: 30px 0px;
   margin: 0 auto;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .boardPageBoxs
-  ul {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .boardPageBoxs ul {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .boardPageBoxs
-  ul
-  li {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .boardPageBoxs ul li {
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .boardPageBoxs
-  ul
-  li
-  button {
+
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .boardPageBoxs ul li button {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .boardPageBoxs
-  ul
-  li
-  button
-  img {
+
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .boardPageBoxs ul li button img {
   height: 20px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .boardPageBoxs
-  ul
-  li.arrowLeftWrapper
-  button {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .boardPageBoxs ul li.arrowLeftWrapper button {
   margin-right: 10px;
 }
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .boardPageBoxs
-  ul
-  li.arrowRightWrapper
-  button {
+
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .boardPageBoxs ul li.arrowRightWrapper button {
   margin-left: 10px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .boardPageBoxs
-  ul
-  li.arrowLeftWrapper
-  img {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .boardPageBoxs ul li.arrowLeftWrapper img {
   transform: rotate(180deg);
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .boardPageBoxs
-  ul
-  li.pageCountBoxs
-  p {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .boardPageBoxs ul li.pageCountBoxs p {
   font-size: 14px;
   width: 29px;
   height: 29px;
@@ -1476,23 +897,82 @@ select:focus {
   font-weight: 700;
   cursor: pointer;
 }
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .boardPageBoxs
-  ul
-  li.pageCountBoxs
-  p:last-child {
+
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .boardPageBoxs ul li.pageCountBoxs p:last-child {
   margin-right: 0px;
 }
 
-#dopcoPrivateUse03
-  .privateUseMainContentWrapper
-  .privateUseMainContent
-  .boardPageBoxs
-  ul
-  li.pageCountBoxs
-  p.active {
+#dopcoPrivateUse03 .privateUseMainContentWrapper .privateUseMainContent .boardPageBoxs ul li.pageCountBoxs p.active {
   background-color: #edf2f9;
   color: #2b7de1;
+}
+
+div.dt-top-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+div.dt-center-in-div {
+  margin: 0 auto;
+  float: right;
+  margin-right: 30px;
+}
+div.dt-center-in-div>div {
+  display: inline;
+}
+div.dt-filter-spacer {
+  margin: 10px 0;
+  border: 1px solid red;
+}
+.dt-title {
+  text-align: center;
+  width: 180px;
+  float: left;
+}
+.dt-buttons {
+  display: inline-block;
+  width: 180px;
+}
+.dt-length {
+  display: inline-block;
+}
+.dt-button {
+  color: white;
+  background-color: #4e5871;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  background-image: url(/assets/media/menu01/download.png);
+  background-size: 11px;
+  background-repeat: no-repeat;
+  background-position: 123px center;
+  text-align: left;
+  margin-right: 10px;
+  width: 159px;
+  height: 38px;
+}
+.dt-paging {
+  text-align: center;
+}
+.dt-paging-button {
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: #007bff !important;
+  font-size: 15px;
+  font-weight: 600;
+}
+.bottom {
+  text-align: center;
+}
+.top {
+  text-align: right;
+  margin: 10px;
 }

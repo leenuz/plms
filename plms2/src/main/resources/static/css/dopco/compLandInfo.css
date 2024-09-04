@@ -40,6 +40,7 @@ button {
   color: #2b7de1;
   background: rgba(204, 224, 255, 0.6);
 }
+
 .middleBtn {
   width: 159px;
   height: 38px;
@@ -66,6 +67,7 @@ button {
   background: #2b7de1;
   color: #fff;
 }
+
 .fileDownloadBtn {
   width: 116px;
   height: 27px;
@@ -141,6 +143,7 @@ button {
   margin-bottom: 24px;
   position: relative;
 }
+
 #compLandInfo .thirdTitle {
   display: flex;
   justify-content: flex-start;
@@ -148,11 +151,13 @@ button {
   gap: 8px;
   margin-bottom: 10px;
 }
+
 #compLandInfo .thirdTitle h2 {
   font-size: 16px;
   font-weight: 600;
   color: #2b7de1;
 }
+
 #compLandInfo .viewLocation {
   width: 81px;
   height: 27px;
@@ -160,6 +165,7 @@ button {
   background: #2b7de1;
   color: #fff;
 }
+
 #compLandInfo .titles,
 #compLandInfo .contents {
   display: flex;
@@ -168,9 +174,11 @@ button {
   height: 45px;
   border-bottom: 1px solid #cddbf0;
 }
+
 #compLandInfo .titles {
   background: #f7f9fc;
 }
+
 #compLandInfo .title,
 #compLandInfo .content {
   height: 100%;
@@ -181,10 +189,12 @@ button {
   justify-content: center;
   align-items: center;
 }
+
 #compLandInfo .title:last-child,
 #compLandInfo .content:last-child {
   border-right: 0;
 }
+
 #compLandInfo input {
   width: 100%;
   height: 100%;
@@ -193,17 +203,21 @@ button {
   font-weight: 500;
   border-radius: 10px;
 }
+
 #compLandInfo input[type="text"].notWriteInput::placeholder {
   color: #3c3c3c;
 }
+
 #compLandInfo .contentDetailBox {
   border: 1px solid #cddbf0;
   border-radius: 5px;
 }
+
 #compLandInfo .contentDetailBox .titles:first-child {
   border-radius: 5px 5px 0 0;
 }
-#compLandInfo .contentDetailBox > div:last-child .contents:last-child {
+
+#compLandInfo .contentDetailBox>div:last-child .contents:last-child {
   border-bottom: 0;
   border-radius: 0 0 5px 5px;
 }
@@ -212,47 +226,61 @@ button {
 #compLandInfo .basicOwnerInfo {
   padding: 27px 0 40px 0;
 }
+
 #compLandInfo .basicOwnerInfo .contentDetailBox .depth1 .title {
   width: 8.95%;
 }
+
 #compLandInfo .basicOwnerInfo .contentDetailBox .depth1 .content {
   width: 8.95%;
 }
+
 #compLandInfo .basicOwnerInfo .contentDetailBox .depth1 .addressWidth {
   width: 28.2%;
 }
+
 #compLandInfo .basicOwnerInfo .contentDetailBox .depth2 .title {
   width: 18%;
 }
+
 #compLandInfo .basicOwnerInfo .contentDetailBox .depth2 .content {
   width: 18%;
 }
+
 #compLandInfo .basicOwnerInfo .contentDetailBox .depth2 .middleWidth {
   width: 34.8%;
 }
+
 /* 권리내역 */
 #compLandInfo .rightsDetails {
   padding-bottom: 40px;
 }
+
 #compLandInfo .rightsDetails .contBox {
   margin-bottom: 23px;
 }
+
 #compLandInfo .rightsDetails .contBox:last-child {
   margin-bottom: 0;
 }
+
 /* 권리확보내역 */
 #compLandInfo .rightsDetails .securedRights .contentDetailBox .title {
   width: 22.4%;
 }
+
 #compLandInfo .rightsDetails .securedRights .contentDetailBox .content {
   width: 22.4%;
 }
+
 #compLandInfo .rightsDetails .securedRights .contentDetailBox .smallWidth {
   width: 15.3%;
 }
+
 #compLandInfo .rightsDetails .securedRights .contentDetailBox .largeWidth {
   width: 39.6%;
 }
+
 /* 후순위 권리 */
 #compLandInfo .rightsDetails .subordinateRts .contentDetailBox .title {
   width: 11.9%;
@@ -269,42 +297,54 @@ button {
 #compLandInfo .rightsDetails .subordinateRts .contentDetailBox .largeWidth {
   width: 24.9%;
 }
+
 /* 회사 보유 토지 스캔 파일 */
 #compLandInfo .rightsDetails .landScanFiles .contentDetailBox .smallWidth {
   width: 16.4%;
 }
+
 #compLandInfo .rightsDetails .landScanFiles .contentDetailBox .largeWidth {
   width: calc(100% - 16.4%);
 }
+
 /* 변경이력 */
 #compLandInfo .changeHistory {
   padding-bottom: 40px;
 }
+
 #compLandInfo .changeHistory .title {
   width: 18.1%;
 }
+
 #compLandInfo .changeHistory .content {
   width: 18.1%;
 }
+
 #compLandInfo .changeHistory .smallWidth {
   width: 8.5%;
 }
+
 #compLandInfo .changeHistory .largeWidth {
   width: 56.1%;
 }
+
 /* 메모 */
 #compLandInfo .memoSection {
   padding-bottom: 40px;
 }
+
 #compLandInfo .memoSection .title {
   width: 10.5%;
 }
+
 #compLandInfo .memoSection .content {
   width: 10.5%;
 }
+
 #compLandInfo .memoSection .largeWidth {
   width: calc(100% - 10.5%);
 }
+
 /* 버튼 */
 .finalBtnBox {
   padding-bottom: 40px;
@@ -312,6 +352,7 @@ button {
   justify-content: flex-end;
   gap: 10px;
 }
+
 .finalBtn {
   width: 116px;
   height: 44px;
@@ -319,14 +360,17 @@ button {
   font-weight: 600;
   border-radius: 10px;
 }
+
 #compLandInfo .finalBtnBox .editBtn {
   background: rgba(204, 224, 255, 0.6);
   color: #2b7de1;
 }
+
 #compLandInfo .finalBtnBox .printBtn {
   background: #2b7de1;
   color: #fff;
 }
+
 #compLandInfo .finalBtnBox .prevBtn {
   background: #bfbfbf;
   color: #fff;
@@ -345,4 +389,74 @@ button {
 #compLandInfo .finalBtnBox .editBtn a:visited {
   color: #2b7de1;
 }
+
 /**/
+div.dt-top-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+div.dt-center-in-div {
+  margin: 0 auto;
+  float: right;
+  margin-right: 30px;
+}
+div.dt-center-in-div>div {
+  display: inline;
+}
+div.dt-filter-spacer {
+  margin: 10px 0;
+  border: 1px solid red;
+}
+.dt-title {
+  text-align: center;
+  width: 180px;
+  float: left;
+}
+.dt-buttons {
+  display: inline-block;
+  width: 180px;
+}
+.dt-length {
+  display: inline-block;
+}
+.dt-button {
+  color: white;
+  background-color: #4e5871;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  background-image: url(/assets/media/menu01/download.png);
+  background-size: 11px;
+  background-repeat: no-repeat;
+  background-position: 123px center;
+  text-align: left;
+  margin-right: 10px;
+  width: 159px;
+  height: 38px;
+}
+.dt-paging {
+  text-align: center;
+}
+.dt-paging-button {
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: #007bff !important;
+  font-size: 15px;
+  font-weight: 600;
+}
+.bottom {
+  text-align: center;
+}
+.top {
+  text-align: right;
+  margin: 10px;
+}

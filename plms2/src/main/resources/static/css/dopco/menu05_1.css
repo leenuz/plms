@@ -25,21 +25,26 @@ span {
   margin: 0;
   font-family: Pretendard;
 }
+
 ul li {
   list-style: none;
 }
+
 a {
   text-decoration: none;
   font-family: Pretendard;
 }
+
 button {
   border: none;
   background: transparent;
   text-align: center;
 }
+
 button:hover {
   cursor: pointer;
 }
+
 input {
   border: none;
 }
@@ -47,6 +52,7 @@ input {
 input:focus {
   outline: none;
 }
+
 select:focus {
   outline: none;
 }
@@ -104,10 +110,7 @@ select:focus {
   margin: 0 auto;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont {
   width: 100%;
   height: 253px;
   padding: 10px 0px;
@@ -117,11 +120,7 @@ select:focus {
   background-color: #f7f9fc;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide {
   /* width: 100%; */
   height: 50%;
   width: 97%;
@@ -131,52 +130,27 @@ select:focus {
   justify-content: flex-start;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide:last-child {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide:last-child {
   margin-top: 3px;
   justify-content: space-between;
   align-items: start;
 }
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide:first-child {
+
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide:first-child {
   border-bottom: 1px solid #cddbf099;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .sectionMenuListBoxs {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .sectionMenuListBoxs {
   width: 13.5%;
   height: 100%;
   background-color: transparent;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .sectionMenuListBoxs
-  .selectTitle {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .sectionMenuListBoxs .selectTitle {
   padding: 10px 0px;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .sectionMenuListBoxs
-  .selectTitle
-  p {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .sectionMenuListBoxs .selectTitle p {
   font-size: 15px;
   font-weight: 600;
   color: #4e5871;
@@ -251,19 +225,14 @@ select:focus {
   transition: height 500ms;
 }
 
-#dopcoCompanyLand01
-  .companyLandSelects
-  .sufaceSelectList.extrasmallHeight.active {
+#dopcoCompanyLand01 .companyLandSelects .sufaceSelectList.extrasmallHeight.active {
   opacity: 1;
   display: block;
   height: 100px;
   transition: height 500ms;
 }
 
-#dopcoCompanyLand01
-  .companyLandSelects
-  .sufaceSelectList
-  .surfaceSelectListMember {
+#dopcoCompanyLand01 .companyLandSelects .sufaceSelectList .surfaceSelectListMember {
   position: absolute;
   top: 0px;
   left: 0;
@@ -277,36 +246,21 @@ select:focus {
 
 /* 셀릭박스 스크롤바 */
 
-#dopcoCompanyLand01
-  .companyLandSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar {
+#dopcoCompanyLand01 .companyLandSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar {
   width: 4px;
 }
 
-#dopcoCompanyLand01
-  .companyLandSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+#dopcoCompanyLand01 .companyLandSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-#dopcoCompanyLand01
-  .companyLandSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar-track {
-}
+#dopcoCompanyLand01 .companyLandSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar-track {}
 
 /* 셀렉박스내 체크박스 */
 
-#dopcoCompanyLand01
-  .companyLandSelects
-  .sufaceSelectList
-  .surfaceSelectListMember.checkBoxsContent
-  li
-  label {
+#dopcoCompanyLand01 .companyLandSelects .sufaceSelectList .surfaceSelectListMember.checkBoxsContent li label {
   width: 25px;
   height: 20px;
   margin-right: 8px;
@@ -314,22 +268,11 @@ select:focus {
   background-color: #e0e8f2;
 }
 
-#dopcoCompanyLand01
-  .companyLandSelects
-  .sufaceSelectList
-  .surfaceSelectListMember.checkBoxsContent
-  li
-  input[type="checkbox"] {
+#dopcoCompanyLand01 .companyLandSelects .sufaceSelectList .surfaceSelectListMember.checkBoxsContent li input[type="checkbox"] {
   display: none;
 }
 
-#dopcoCompanyLand01
-  .companyLandSelects
-  .sufaceSelectList
-  .surfaceSelectListMember.checkBoxsContent
-  li
-  input[type="checkbox"]:checked
-  + label {
+#dopcoCompanyLand01 .companyLandSelects .sufaceSelectList .surfaceSelectListMember.checkBoxsContent li input[type="checkbox"]:checked+label {
   background-color: #4e5871;
   background-image: url(/assets/media/menu01/checkFill.png);
   background-repeat: no-repeat;
@@ -337,11 +280,7 @@ select:focus {
   background-position: center center;
 }
 
-#dopcoCompanyLand01
-  .companyLandSelects
-  .sufaceSelectList
-  .surfaceSelectListMember
-  li {
+#dopcoCompanyLand01 .companyLandSelects .sufaceSelectList .surfaceSelectListMember li {
   padding: 0px 10px;
   height: 41px;
   display: flex;
@@ -351,20 +290,11 @@ select:focus {
   margin: 6px 5px;
 }
 
-#dopcoCompanyLand01
-  .companyLandSelects
-  .sufaceSelectList
-  .surfaceSelectListMember
-  li:hover {
+#dopcoCompanyLand01 .companyLandSelects .sufaceSelectList .surfaceSelectListMember li:hover {
   background-color: #edf2f9;
 }
 
-#dopcoCompanyLand01
-  .companyLandSelects
-  .sufaceSelectList
-  .surfaceSelectListMember
-  li
-  p {
+#dopcoCompanyLand01 .companyLandSelects .sufaceSelectList .surfaceSelectListMember li p {
   color: #4e5871;
   font-size: 15px;
   font-weight: 500;
@@ -375,14 +305,7 @@ select:focus {
   justify-content: flex-start;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .inputControlBoxs
-  .inputControlList
-  input[type="text"] {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .inputControlBoxs .inputControlList input[type="text"] {
   width: 173px;
   height: 44px;
   padding: 0px 15px;
@@ -392,13 +315,7 @@ select:focus {
   font-size: 15px;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .inputControlBoxs
-  .dateListBox {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .inputControlBoxs .dateListBox {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -414,27 +331,14 @@ select:focus {
   background-repeat: no-repeat;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .inputControlBoxs
-  .dateListBox.active {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .inputControlBoxs .dateListBox.active {
   filter: grayscale(0);
   color: #2b7de1;
   border: 1px solid #2b7de1;
   background-image: url(/assets/media/menu02/calendarColor.png);
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .inputControlBoxs
-  .dateListBox
-  input[type="date"] {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .inputControlBoxs .dateListBox input[type="date"] {
   width: 42%;
   height: 100%;
   font-size: 13px;
@@ -447,25 +351,11 @@ select:focus {
   font-family: Pretendard;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .inputControlBoxs
-  .dateListBox
-  span {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .inputControlBoxs .dateListBox span {
   font-size: 10px;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .inputControlBoxs
-  .dateListBox
-  input[type="date"]::-webkit-calendar-picker-indicator {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .inputControlBoxs .dateListBox input[type="date"]::-webkit-calendar-picker-indicator {
   background: transparent;
   z-index: 1;
   position: absolute;
@@ -475,47 +365,25 @@ select:focus {
   height: 100%;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .inputControlBoxs
-  .dateListBox
-  input[type="date"]::-webkit-inner-spin-button {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .inputControlBoxs .dateListBox input[type="date"]::-webkit-inner-spin-button {
   /* display: none; */
   appearance: none;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .devideSecondTitles {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .devideSecondTitles {
   padding: 20px 20px 0px 0px;
   font-size: 15px;
   font-weight: 600;
   color: #4e5871;
   white-space: nowrap;
 }
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionRadioBoxs {
+
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionRadioBoxs {
   width: 86.1%;
   height: 100%;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionRadioBoxs
-  .radioBoxs {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionRadioBoxs .radioBoxs {
   width: 100%;
   height: 50%;
   display: flex;
@@ -523,60 +391,24 @@ select:focus {
   justify-content: flex-start;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionRadioBoxs
-  .radioBoxs
-  li {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionRadioBoxs .radioBoxs li {
   padding: 0px 3px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionRadioBoxs
-  .radioBoxs:nth-child(2)
-  li:first-child {
+
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionRadioBoxs .radioBoxs:nth-child(2) li:first-child {
   padding: 0px 3px;
 }
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionRadioBoxs
-  .radioBoxs:nth-child(2)
-  li {
+
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionRadioBoxs .radioBoxs:nth-child(2) li {
   padding: 0px 8.5px 0px 3px;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionRadioBoxs
-  .radioBoxs
-  li
-  input[type="radio"] {
-}
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionRadioBoxs .radioBoxs li input[type="radio"] {}
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionRadioBoxs
-  .radioBoxs
-  li
-  span {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionRadioBoxs .radioBoxs li span {
   font-size: 15px;
   color: #31394c;
   padding: 0px 30px 0px 5px;
@@ -584,15 +416,7 @@ select:focus {
   font-weight: 600;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionRadioBoxs
-  .radioBoxs
-  li.addressInput
-  input[type="search"] {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionRadioBoxs .radioBoxs li.addressInput input[type="search"] {
   background-color: #edf2f9;
   width: 868px;
   padding: 0px 10px;
@@ -603,60 +427,23 @@ select:focus {
 
 /* 주소란 셀렉박스 width값 */
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionRadioBoxs
-  .radioBoxs
-  li
-  .companyLandSelects {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionRadioBoxs .radioBoxs li .companyLandSelects {
   min-width: 164px;
 }
 
 /* 셀렉박스 스크롤바 */
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionRadioBoxs
-  .radioBoxs
-  li
-  .companyLandSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionRadioBoxs .radioBoxs li .companyLandSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar {
   width: 4px;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionRadioBoxs
-  .radioBoxs
-  li
-  .companyLandSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionRadioBoxs .radioBoxs li .companyLandSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionRadioBoxs
-  .radioBoxs
-  li
-  .inputControlList
-  input[type="text"] {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionRadioBoxs .radioBoxs li .inputControlList input[type="text"] {
   width: 136px;
   height: 44px;
   padding: 0px 15px;
@@ -666,25 +453,14 @@ select:focus {
   font-size: 15px;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionBtnBoxs {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionBtnBoxs {
   display: flex;
   align-items: end;
   justify-content: center;
   height: 100%;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionBtnBoxs
-  button {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionBtnBoxs button {
   height: 44px;
   border-radius: 10px;
   display: block;
@@ -693,13 +469,7 @@ select:focus {
   font-weight: 600;
 }
 
-#dopcoCompanyLand01
-  .companyLandWrappers01
-  .companyLandSectionBoxs
-  .companyLandSectionCont
-  .companyLandSectionContDevide
-  .companyLandSectionBtnBoxs
-  .companyLandRegisterBtn {
+#dopcoCompanyLand01 .companyLandWrappers01 .companyLandSectionBoxs .companyLandSectionCont .companyLandSectionContDevide .companyLandSectionBtnBoxs .companyLandRegisterBtn {
   padding: 0px 40px;
   background-color: #2b7de1;
   color: #fff;
@@ -719,38 +489,22 @@ select:focus {
   height: 100%;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataTitles {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataTitles {
   padding: 10px 20px;
   position: relative;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataTitles
-  h5 {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataTitles h5 {
   font-size: 16px;
   font-weight: 700;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataTitles
-  h5
-  span {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataTitles h5 span {
   color: #2b7de1;
   padding: 0px 8px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataTitles
-  .companyLandMainContentDownloadBoxs {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataTitles .companyLandMainContentDownloadBoxs {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -759,12 +513,7 @@ select:focus {
   top: 0px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataTitles
-  .companyLandMainContentDownloadBoxs
-  .companyLandExcelDownload {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataTitles .companyLandMainContentDownloadBoxs .companyLandExcelDownload {
   width: 159px;
   padding: 0px 30px;
   height: 38px;
@@ -784,30 +533,16 @@ select:focus {
 
 /* 총 검색건수의 셀렉박스 */
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataTitles
-  .companyLandMainContentDownloadBoxs
-  .companyLandSelects {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataTitles .companyLandMainContentDownloadBoxs .companyLandSelects {
   width: 137px;
   height: 38px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataTitles
-  .companyLandMainContentDownloadBoxs
-  .companyLandSelects
-  .sufaceSelectList {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataTitles .companyLandMainContentDownloadBoxs .companyLandSelects .sufaceSelectList {
   top: 40px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers {
   border: 1px solid #cddbf0;
   border-radius: 5px;
   height: 527px;
@@ -821,42 +556,25 @@ select:focus {
   left: 0;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers.scroll {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers.scroll {
   overflow-y: scroll;
 }
 
 /* 스크롤바 */
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers::-webkit-scrollbar {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers::-webkit-scrollbar {
   width: 4px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers::-webkit-scrollbar-thumb {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers::-webkit-scrollbar-track {
-}
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers::-webkit-scrollbar-track {}
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont {
   width: 30%;
   height: 100%;
   float: left;
@@ -864,11 +582,7 @@ select:focus {
   top: 0;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond05 {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxsSecond05 {
   width: 70%;
   height: auto;
   overflow-x: scroll;
@@ -877,181 +591,86 @@ select:focus {
   border-left: 1px solid #cddbf0;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond05
-  .scrollContentBoxies {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxsSecond05 .scrollContentBoxies {
   width: 100%;
   height: 100%;
 }
 
 /* 스크롤바 */
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond05::-webkit-scrollbar {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxsSecond05::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond05::-webkit-scrollbar-thumb {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxsSecond05::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond05::-webkit-scrollbar-track {
-}
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxsSecond05::-webkit-scrollbar-track {}
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul {
   width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle {
+
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle {
   height: 71px;
   background-color: #f7f9fc;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont:last-child
-  .dataTitle
-  ul
-  li {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont:last-child .dataTitle ul li {
   width: 400px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li {
   width: 30%;
   height: 100%;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li {
   border-right: 1px solid #cddbf0;
   border-bottom: 1px solid #cddbf0;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li:last-child {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li:last-child {
   border-right: none;
 }
 
 /* 타이틀 li 사이즈별 퍼센트 목록 */
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li.extraSmallWidth {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li.extraSmallWidth {
   width: 15%;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li.smallWidth {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li.smallWidth {
   width: 20%;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li.mediumWidth {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li.mediumWidth {
   width: 50%;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li.largeWidth {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li.largeWidth {
   width: 70%;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul
-  li {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul li {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li
-  p {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li p {
   font-size: 14px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  a {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1060,138 +679,63 @@ select:focus {
   font-size: 14px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent.companyLandLink01
-  a {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent.companyLandLink01 a {
   width: 150%;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent.companyLandLink01
-  a
-  li:last-child {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent.companyLandLink01 a li:last-child {
   border-right: 1px solid #cddbf0;
 }
 
 /* 위치보기, 문서보기 버튼박스 */
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  .dataContBtnBox {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent .dataContBtnBox {
   width: 29.8%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent.companyLandLink01
-  .dataContBtnBox
-  li {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent.companyLandLink01 .dataContBtnBox li {
   flex: 1;
 }
 
 /**/
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  a.mouseEvet {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent a.mouseEvet {
   color: #2b7de1;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li {
   width: 30%;
   height: 44px;
   border-right: 1px solid #cddbf0;
   border-bottom: 1px solid #cddbf0;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li:last-child {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li:last-child {
   border-right: none;
 }
 
 /* 컨텐츠 li 사이즈별 목록 */
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li.extraSmallWidth {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li.extraSmallWidth {
   width: 15%;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li.smallWidth {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li.smallWidth {
   width: 20%;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li.mediumWidth {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li.mediumWidth {
   width: 50%;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li.largeWidth {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li.largeWidth {
   width: 70%;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  button.btnDesign {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li button.btnDesign {
   width: 116px;
   height: 27px;
   border-radius: 20px;
@@ -1207,14 +751,7 @@ select:focus {
   z-index: 999;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs {
   position: relative;
   left: 0;
   width: 100%;
@@ -1224,15 +761,7 @@ select:focus {
   justify-content: center;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs
-  button {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs button {
   position: absolute;
   cursor: default;
   z-index: 999;
@@ -1240,145 +769,66 @@ select:focus {
 
 /* 상세정보버튼 a링크 */
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs
-  .detailBtn
-  a {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs .detailBtn a {
   color: #2b7de1;
   font-size: 13px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs
-  .detailBtn
-  a:visited {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs .detailBtn a:visited {
   color: #2b7de1;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs
-  button.regisRemoveBtn {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs button.regisRemoveBtn {
   background-color: #fff;
   border: 1px solid #2b7de1;
   display: none;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  p {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li p {
   text-align: center;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .boardPageBoxs {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .boardPageBoxs {
   padding: 30px 0px;
   margin: 0 auto;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .boardPageBoxs
-  ul {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .boardPageBoxs ul {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .boardPageBoxs
-  ul
-  li {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .boardPageBoxs ul li {
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .boardPageBoxs
-  ul
-  li
-  button {
+
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .boardPageBoxs ul li button {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .boardPageBoxs
-  ul
-  li
-  button
-  img {
+
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .boardPageBoxs ul li button img {
   height: 20px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .boardPageBoxs
-  ul
-  li.arrowLeftWrapper
-  button {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .boardPageBoxs ul li.arrowLeftWrapper button {
   margin-right: 10px;
 }
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .boardPageBoxs
-  ul
-  li.arrowRightWrapper
-  button {
+
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .boardPageBoxs ul li.arrowRightWrapper button {
   margin-left: 10px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .boardPageBoxs
-  ul
-  li.arrowLeftWrapper
-  img {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .boardPageBoxs ul li.arrowLeftWrapper img {
   transform: rotate(180deg);
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .boardPageBoxs
-  ul
-  li.pageCountBoxs
-  p {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .boardPageBoxs ul li.pageCountBoxs p {
   font-size: 14px;
   width: 29px;
   height: 29px;
@@ -1392,23 +842,82 @@ select:focus {
   font-weight: 700;
   cursor: pointer;
 }
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .boardPageBoxs
-  ul
-  li.pageCountBoxs
-  p:last-child {
+
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .boardPageBoxs ul li.pageCountBoxs p:last-child {
   margin-right: 0px;
 }
 
-#dopcoCompanyLand01
-  .companyLandMainContentWrapper
-  .companyLandMainContent
-  .boardPageBoxs
-  ul
-  li.pageCountBoxs
-  p.active {
+#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .boardPageBoxs ul li.pageCountBoxs p.active {
   background-color: #edf2f9;
   color: #2b7de1;
+}
+
+div.dt-top-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+div.dt-center-in-div {
+  margin: 0 auto;
+  float: right;
+  margin-right: 30px;
+}
+div.dt-center-in-div>div {
+  display: inline;
+}
+div.dt-filter-spacer {
+  margin: 10px 0;
+  border: 1px solid red;
+}
+.dt-title {
+  text-align: center;
+  width: 180px;
+  float: left;
+}
+.dt-buttons {
+  display: inline-block;
+  width: 180px;
+}
+.dt-length {
+  display: inline-block;
+}
+.dt-button {
+  color: white;
+  background-color: #4e5871;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  background-image: url(/assets/media/menu01/download.png);
+  background-size: 11px;
+  background-repeat: no-repeat;
+  background-position: 123px center;
+  text-align: left;
+  margin-right: 10px;
+  width: 159px;
+  height: 38px;
+}
+.dt-paging {
+  text-align: center;
+}
+.dt-paging-button {
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: #007bff !important;
+  font-size: 15px;
+  font-weight: 600;
+}
+.bottom {
+  text-align: center;
+}
+.top {
+  text-align: right;
+  margin: 10px;
 }

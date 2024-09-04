@@ -25,21 +25,26 @@ span {
   margin: 0;
   font-family: Pretendard;
 }
+
 ul li {
   list-style: none;
 }
+
 a {
   text-decoration: none;
   font-family: Pretendard;
 }
+
 button {
   border: none;
   background: transparent;
   text-align: center;
 }
+
 button:hover {
   cursor: pointer;
 }
+
 input {
   border: none;
 }
@@ -47,6 +52,7 @@ input {
 input:focus {
   outline: none;
 }
+
 select:focus {
   outline: none;
 }
@@ -104,10 +110,7 @@ select:focus {
   margin: 0 auto;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont {
   width: 100%;
   height: 253px;
   padding: 10px 0px;
@@ -117,11 +120,7 @@ select:focus {
   background-color: #f7f9fc;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide {
   /* width: 100%; */
   height: 50%;
   width: 97%;
@@ -131,52 +130,27 @@ select:focus {
   justify-content: flex-start;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide:last-child {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide:last-child {
   margin-top: 3px;
   justify-content: space-between;
   align-items: start;
 }
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide:first-child {
+
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide:first-child {
   border-bottom: 1px solid #cddbf099;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .sectionMenuListBoxs {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .sectionMenuListBoxs {
   width: 13.5%;
   height: 100%;
   background-color: transparent;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .sectionMenuListBoxs
-  .selectTitle {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .sectionMenuListBoxs .selectTitle {
   padding: 10px 0px;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .sectionMenuListBoxs
-  .selectTitle
-  p {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .sectionMenuListBoxs .selectTitle p {
   font-size: 15px;
   font-weight: 600;
   color: #4e5871;
@@ -184,23 +158,12 @@ select:focus {
 
 /* 이슈유형 셀렉박스 totalContent */
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .sectionMenuListBoxs
-  .issueManageSelectTotalContent {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .sectionMenuListBoxs .issueManageSelectTotalContent {
   display: flex;
   width: 100%;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .sectionMenuListBoxs.addSelectWidth {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .sectionMenuListBoxs.addSelectWidth {
   width: 38%;
 }
 
@@ -218,10 +181,11 @@ select:focus {
 
 /* 이슈유형 셀렉박스 */
 
-#dopcoIssueManage .issueManageSelectTotalContent > .issueManageSelects {
+#dopcoIssueManage .issueManageSelectTotalContent>.issueManageSelects {
   width: 203px;
   margin-right: 8px;
 }
+
 /**/
 
 #dopcoIssueManage .issueManageSelects .issueManageSelectsTitleBtn {
@@ -283,19 +247,14 @@ select:focus {
   transition: height 500ms;
 }
 
-#dopcoIssueManage
-  .issueManageSelects
-  .sufaceSelectList.extrasmallHeight.active {
+#dopcoIssueManage .issueManageSelects .sufaceSelectList.extrasmallHeight.active {
   opacity: 1;
   display: block;
   height: 100px;
   transition: height 500ms;
 }
 
-#dopcoIssueManage
-  .issueManageSelects
-  .sufaceSelectList
-  .surfaceSelectListMember {
+#dopcoIssueManage .issueManageSelects .sufaceSelectList .surfaceSelectListMember {
   position: absolute;
   top: 0px;
   left: 0;
@@ -309,36 +268,21 @@ select:focus {
 
 /* 셀릭박스 스크롤바 */
 
-#dopcoIssueManage
-  .issueManageSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar {
+#dopcoIssueManage .issueManageSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar {
   width: 4px;
 }
 
-#dopcoIssueManage
-  .issueManageSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+#dopcoIssueManage .issueManageSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-#dopcoIssueManage
-  .issueManageSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar-track {
-}
+#dopcoIssueManage .issueManageSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar-track {}
 
 /* 셀렉박스내 체크박스 */
 
-#dopcoIssueManage
-  .issueManageSelects
-  .sufaceSelectList
-  .surfaceSelectListMember.checkBoxsContent
-  li
-  label {
+#dopcoIssueManage .issueManageSelects .sufaceSelectList .surfaceSelectListMember.checkBoxsContent li label {
   width: 25px;
   height: 20px;
   margin-right: 8px;
@@ -346,22 +290,11 @@ select:focus {
   background-color: #e0e8f2;
 }
 
-#dopcoIssueManage
-  .issueManageSelects
-  .sufaceSelectList
-  .surfaceSelectListMember.checkBoxsContent
-  li
-  input[type="checkbox"] {
+#dopcoIssueManage .issueManageSelects .sufaceSelectList .surfaceSelectListMember.checkBoxsContent li input[type="checkbox"] {
   display: none;
 }
 
-#dopcoIssueManage
-  .issueManageSelects
-  .sufaceSelectList
-  .surfaceSelectListMember.checkBoxsContent
-  li
-  input[type="checkbox"]:checked
-  + label {
+#dopcoIssueManage .issueManageSelects .sufaceSelectList .surfaceSelectListMember.checkBoxsContent li input[type="checkbox"]:checked+label {
   background-color: #4e5871;
   background-image: url(/assets/media/menu01/checkFill.png);
   background-repeat: no-repeat;
@@ -369,11 +302,7 @@ select:focus {
   background-position: center center;
 }
 
-#dopcoIssueManage
-  .issueManageSelects
-  .sufaceSelectList
-  .surfaceSelectListMember
-  li {
+#dopcoIssueManage .issueManageSelects .sufaceSelectList .surfaceSelectListMember li {
   padding: 0px 10px;
   height: 41px;
   display: flex;
@@ -383,20 +312,11 @@ select:focus {
   margin: 6px 5px;
 }
 
-#dopcoIssueManage
-  .issueManageSelects
-  .sufaceSelectList
-  .surfaceSelectListMember
-  li:hover {
+#dopcoIssueManage .issueManageSelects .sufaceSelectList .surfaceSelectListMember li:hover {
   background-color: #edf2f9;
 }
 
-#dopcoIssueManage
-  .issueManageSelects
-  .sufaceSelectList
-  .surfaceSelectListMember
-  li
-  p {
+#dopcoIssueManage .issueManageSelects .sufaceSelectList .surfaceSelectListMember li p {
   color: #4e5871;
   font-size: 15px;
   font-weight: 500;
@@ -407,14 +327,7 @@ select:focus {
   justify-content: flex-start;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .inputControlBoxs
-  .inputControlList
-  input[type="text"] {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .inputControlBoxs .inputControlList input[type="text"] {
   width: 173px;
   height: 44px;
   padding: 0px 15px;
@@ -424,13 +337,7 @@ select:focus {
   font-size: 15px;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .inputControlBoxs
-  .dateListBox {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .inputControlBoxs .dateListBox {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -446,27 +353,14 @@ select:focus {
   background-repeat: no-repeat;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .inputControlBoxs
-  .dateListBox.active {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .inputControlBoxs .dateListBox.active {
   filter: grayscale(0);
   color: #2b7de1;
   border: 1px solid #2b7de1;
   background-image: url(/assets/media/menu02/calendarColor.png);
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .inputControlBoxs
-  .dateListBox
-  input[type="date"] {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .inputControlBoxs .dateListBox input[type="date"] {
   width: 42%;
   height: 100%;
   font-size: 13px;
@@ -479,25 +373,11 @@ select:focus {
   font-family: Pretendard;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .inputControlBoxs
-  .dateListBox
-  span {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .inputControlBoxs .dateListBox span {
   font-size: 10px;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .inputControlBoxs
-  .dateListBox
-  input[type="date"]::-webkit-calendar-picker-indicator {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .inputControlBoxs .dateListBox input[type="date"]::-webkit-calendar-picker-indicator {
   background: transparent;
   z-index: 1;
   position: absolute;
@@ -507,47 +387,25 @@ select:focus {
   height: 100%;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .inputControlBoxs
-  .dateListBox
-  input[type="date"]::-webkit-inner-spin-button {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .inputControlBoxs .dateListBox input[type="date"]::-webkit-inner-spin-button {
   /* display: none; */
   appearance: none;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .devideSecondTitles {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .devideSecondTitles {
   padding: 20px 20px 0px 0px;
   font-size: 15px;
   font-weight: 600;
   color: #4e5871;
   white-space: nowrap;
 }
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionRadioBoxs {
+
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionRadioBoxs {
   width: 70.5%;
   height: 100%;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionRadioBoxs
-  .radioBoxs {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionRadioBoxs .radioBoxs {
   width: 100%;
   height: 50%;
   display: flex;
@@ -555,60 +413,24 @@ select:focus {
   justify-content: flex-start;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionRadioBoxs
-  .radioBoxs
-  li {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionRadioBoxs .radioBoxs li {
   padding: 0px 3px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionRadioBoxs
-  .radioBoxs:nth-child(2)
-  li:first-child {
+
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionRadioBoxs .radioBoxs:nth-child(2) li:first-child {
   padding: 0px 3px;
 }
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionRadioBoxs
-  .radioBoxs:nth-child(2)
-  li {
+
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionRadioBoxs .radioBoxs:nth-child(2) li {
   padding: 0px 8.5px 0px 3px;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionRadioBoxs
-  .radioBoxs
-  li
-  input[type="radio"] {
-}
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionRadioBoxs .radioBoxs li input[type="radio"] {}
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionRadioBoxs
-  .radioBoxs
-  li
-  span {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionRadioBoxs .radioBoxs li span {
   font-size: 15px;
   color: #31394c;
   padding: 0px 30px 0px 5px;
@@ -616,15 +438,7 @@ select:focus {
   font-weight: 600;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionRadioBoxs
-  .radioBoxs
-  li.addressInput
-  input[type="search"] {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionRadioBoxs .radioBoxs li.addressInput input[type="search"] {
   background-color: #edf2f9;
   width: 868px;
   padding: 0px 10px;
@@ -635,60 +449,23 @@ select:focus {
 
 /* 주소란 셀렉박스 width값 */
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionRadioBoxs
-  .radioBoxs
-  li
-  .issueManageSelects {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionRadioBoxs .radioBoxs li .issueManageSelects {
   min-width: 164px;
 }
 
 /* 셀렉박스 스크롤바 */
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionRadioBoxs
-  .radioBoxs
-  li
-  .issueManageSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionRadioBoxs .radioBoxs li .issueManageSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar {
   width: 4px;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionRadioBoxs
-  .radioBoxs
-  li
-  .issueManageSelects
-  .sufaceSelectList
-  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionRadioBoxs .radioBoxs li .issueManageSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionRadioBoxs
-  .radioBoxs
-  li
-  .inputControlList
-  input[type="text"] {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionRadioBoxs .radioBoxs li .inputControlList input[type="text"] {
   width: 136px;
   height: 44px;
   padding: 0px 15px;
@@ -698,25 +475,14 @@ select:focus {
   font-size: 15px;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionBtnBoxs {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionBtnBoxs {
   display: flex;
   align-items: end;
   justify-content: center;
   height: 100%;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionBtnBoxs
-  button {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionBtnBoxs button {
   height: 44px;
   border-radius: 10px;
   display: block;
@@ -725,26 +491,14 @@ select:focus {
   font-weight: 600;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionBtnBoxs
-  .issueManageRegisterBtn {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionBtnBoxs .issueManageRegisterBtn {
   padding: 0px 40px;
   background-color: #2b7de1;
   color: #fff;
   white-space: nowrap;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionBtnBoxs
-  .issueManageTotalBtn {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionBtnBoxs .issueManageTotalBtn {
   padding: 0px 36px;
   background-color: #e5efff;
   color: #2b7de1;
@@ -752,13 +506,7 @@ select:focus {
   white-space: nowrap;
 }
 
-#dopcoIssueManage
-  .issueManageWrappers01
-  .issueManageSectionBoxs
-  .issueManageSectionCont
-  .issueManageSectionContDevide
-  .issueManageSectionBtnBoxs
-  .newIssueBtn {
+#dopcoIssueManage .issueManageWrappers01 .issueManageSectionBoxs .issueManageSectionCont .issueManageSectionContDevide .issueManageSectionBtnBoxs .newIssueBtn {
   padding: 0px 36px;
   background-color: #fff;
   color: #2b7de1;
@@ -779,10 +527,7 @@ select:focus {
   height: 100%;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers {
   border: 1px solid #cddbf0;
   border-radius: 5px;
   height: 527px;
@@ -796,42 +541,25 @@ select:focus {
   left: 0;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers.scroll {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers.scroll {
   overflow-y: scroll;
 }
 
 /* 스크롤바 */
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers::-webkit-scrollbar {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers::-webkit-scrollbar {
   width: 4px;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers::-webkit-scrollbar-thumb {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers::-webkit-scrollbar-track {
-}
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers::-webkit-scrollbar-track {}
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont {
   width: 60%;
   height: 100%;
   float: left;
@@ -839,11 +567,7 @@ select:focus {
   top: 0;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond06 {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxsSecond06 {
   width: 40%;
   height: auto;
   overflow-x: scroll;
@@ -852,181 +576,86 @@ select:focus {
   border-left: 1px solid #cddbf0;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond06
-  .scrollContentBoxies {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxsSecond06 .scrollContentBoxies {
   width: 100%;
   height: 100%;
 }
 
 /* 스크롤바 */
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond06::-webkit-scrollbar {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxsSecond06::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond06::-webkit-scrollbar-thumb {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxsSecond06::-webkit-scrollbar-thumb {
   height: 30%;
   border-radius: 10px;
   background: #d2d2d2;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxsSecond06::-webkit-scrollbar-track {
-}
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxsSecond06::-webkit-scrollbar-track {}
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul {
   width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle {
+
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle {
   height: 71px;
   background-color: #f7f9fc;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont:last-child
-  .dataTitle
-  ul
-  li {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont:last-child .dataTitle ul li {
   width: 400px;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li {
   width: 30%;
   height: 100%;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li {
   border-right: 1px solid #cddbf0;
   border-bottom: 1px solid #cddbf0;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li:last-child {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li:last-child {
   border-right: none;
 }
 
 /* 타이틀 li 사이즈별 퍼센트 목록 */
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li.extraSmallWidth {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li.extraSmallWidth {
   width: 15%;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li.smallWidth {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li.smallWidth {
   width: 20%;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li.mediumWidth {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li.mediumWidth {
   width: 50%;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li.largeWidth {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li.largeWidth {
   width: 70%;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul
-  li {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul li {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataTitle
-  li
-  p {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataTitle li p {
   font-size: 14px;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  a {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1035,159 +664,72 @@ select:focus {
   font-size: 14px;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent.issueManageLink
-  a {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent.issueManageLink a {
   width: 60%;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent.issueManageLink
-  a
-  li {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent.issueManageLink a li {
   flex: 1;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent.issueManageLink
-  a.linkCont02 {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent.issueManageLink a.linkCont02 {
   width: 30.15%;
 }
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent.issueManageLink
-  a.linkCont02
-  li {
+
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent.issueManageLink a.linkCont02 li {
   border-right: 1px solid #cddbf0;
 }
 
 /* 위치보기, 문서보기 버튼박스 */
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  .dataContBtnBox {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent .dataContBtnBox {
   width: 30%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent.issueManageLink
-  .dataContBtnBox
-  li {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent.issueManageLink .dataContBtnBox li {
   flex: 1;
   border-right: 1px solid #cddbf0;
 }
 
 /**/
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  a.mouseEvet {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent a.mouseEvet {
   color: #2b7de1;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li {
   width: 30%;
   height: 44px;
   border-right: 1px solid #cddbf0;
   border-bottom: 1px solid #cddbf0;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li:last-child {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li:last-child {
   border-right: none;
 }
 
 /* 컨텐츠 li 사이즈별 목록 */
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li.extraSmallWidth {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li.extraSmallWidth {
   width: 15%;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li.smallWidth {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li.smallWidth {
   width: 20%;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li.mediumWidth {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li.mediumWidth {
   width: 50%;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li.largeWidth {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li.largeWidth {
   width: 70%;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  button.btnDesign {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li button.btnDesign {
   width: 116px;
   height: 27px;
   border-radius: 20px;
@@ -1202,14 +744,7 @@ select:focus {
   position: absolute;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs {
   position: relative;
   left: 0;
   width: 100%;
@@ -1219,15 +754,7 @@ select:focus {
   justify-content: center;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs
-  button {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs button {
   position: absolute;
   cursor: default;
   z-index: 999;
@@ -1235,145 +762,66 @@ select:focus {
 
 /* 상세정보버튼 a링크 */
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs
-  .detailBtn
-  a {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs .detailBtn a {
   color: #2b7de1;
   font-size: 13px;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs
-  .detailBtn
-  a:visited {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs .detailBtn a:visited {
   color: #2b7de1;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  .regisBtnHiddenBoxs
-  button.regisRemoveBtn {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li .regisBtnHiddenBoxs button.regisRemoveBtn {
   background-color: #fff;
   border: 1px solid #2b7de1;
   display: none;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .dataBoxswrappers
-  .dataBoxCont
-  ul.dataContent
-  li
-  p {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li p {
   text-align: center;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .boardPageBoxs {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .boardPageBoxs {
   padding: 30px 0px;
   margin: 0 auto;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .boardPageBoxs
-  ul {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .boardPageBoxs ul {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .boardPageBoxs
-  ul
-  li {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .boardPageBoxs ul li {
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .boardPageBoxs
-  ul
-  li
-  button {
+
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .boardPageBoxs ul li button {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .boardPageBoxs
-  ul
-  li
-  button
-  img {
+
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .boardPageBoxs ul li button img {
   height: 20px;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .boardPageBoxs
-  ul
-  li.arrowLeftWrapper
-  button {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .boardPageBoxs ul li.arrowLeftWrapper button {
   margin-right: 10px;
 }
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .boardPageBoxs
-  ul
-  li.arrowRightWrapper
-  button {
+
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .boardPageBoxs ul li.arrowRightWrapper button {
   margin-left: 10px;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .boardPageBoxs
-  ul
-  li.arrowLeftWrapper
-  img {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .boardPageBoxs ul li.arrowLeftWrapper img {
   transform: rotate(180deg);
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .boardPageBoxs
-  ul
-  li.pageCountBoxs
-  p {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .boardPageBoxs ul li.pageCountBoxs p {
   font-size: 14px;
   width: 29px;
   height: 29px;
@@ -1387,23 +835,83 @@ select:focus {
   font-weight: 700;
   cursor: pointer;
 }
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .boardPageBoxs
-  ul
-  li.pageCountBoxs
-  p:last-child {
+
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .boardPageBoxs ul li.pageCountBoxs p:last-child {
   margin-right: 0px;
 }
 
-#dopcoIssueManage
-  .issueManageMainContentWrapper
-  .issueManageMainContent
-  .boardPageBoxs
-  ul
-  li.pageCountBoxs
-  p.active {
+#dopcoIssueManage .issueManageMainContentWrapper .issueManageMainContent .boardPageBoxs ul li.pageCountBoxs p.active {
   background-color: #edf2f9;
   color: #2b7de1;
+}
+
+
+div.dt-top-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+div.dt-center-in-div {
+  margin: 0 auto;
+  float: right;
+  margin-right: 30px;
+}
+div.dt-center-in-div>div {
+  display: inline;
+}
+div.dt-filter-spacer {
+  margin: 10px 0;
+  border: 1px solid red;
+}
+.dt-title {
+  text-align: center;
+  width: 180px;
+  float: left;
+}
+.dt-buttons {
+  display: inline-block;
+  width: 180px;
+}
+.dt-length {
+  display: inline-block;
+}
+.dt-button {
+  color: white;
+  background-color: #4e5871;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  background-image: url(/assets/media/menu01/download.png);
+  background-size: 11px;
+  background-repeat: no-repeat;
+  background-position: 123px center;
+  text-align: left;
+  margin-right: 10px;
+  width: 159px;
+  height: 38px;
+}
+.dt-paging {
+  text-align: center;
+}
+.dt-paging-button {
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: #007bff !important;
+  font-size: 15px;
+  font-weight: 600;
+}
+.bottom {
+  text-align: center;
+}
+.top {
+  text-align: right;
+  margin: 10px;
 }
