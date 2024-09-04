@@ -216,7 +216,14 @@ function loadDataTable(params) {
                 d.use_purpos = params.use_purpos;
                 d.pmt_office = params.pmt_office;
                 d.adm_office = ljsIsNull(params.adm_office) ? '' : params.adm_office;
-				d.cancel_yn = params.cancel_yn;
+				// 해지 여부 조건 추가
+				if (params.cancel_yn === "해지") {
+				    d.cancel_yn = "Y";
+				} else if (params.cancel_yn === "미해지") {
+				    d.cancel_yn = "N";
+				} else {
+				    d.cancel_yn = ""; // 해지 여부가 없을 때 기본값 처리
+				}
 				d.pay_date_start = params.pay_date_start;
 				d.pay_date_end = params.pay_date_end;
                 d.idx = params.idx;

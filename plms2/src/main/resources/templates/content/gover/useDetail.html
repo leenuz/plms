@@ -1,17 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      
+      layout:decorate="~{layout/default_layout}">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <link
+       rel="stylesheet"
+       as="style"
+       crossorigin
+       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+   
+  <link th:href="@{/css/common.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/gover/feeDetail.css" />
     <title>점용 내역 상세정보</title>
-    <link rel="stylesheet" href="/assets/css/header.css" />
     <link rel="stylesheet" href="/css/gover/useDetail.css" />
   </head>
 
   <th:block layout:fragment="content">
     <!-- 점용 내역 상세정보 -->
     <div class="useDetailWrappers">
-      <div class="useDetailHeader"></div>
       <main id="useDetail">
         <div class="mainTitle">
           <h1>점용 내역 상세정보</h1>

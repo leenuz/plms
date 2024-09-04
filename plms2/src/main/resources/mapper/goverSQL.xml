@@ -553,6 +553,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and r.address like '%${address}%'
 		</if>
+	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
+	        and r.cancel_yn = #{cancel_yn}
+	    </if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
 			and (SELECT COUNT(o.address) AS overlap
 			FROM(
@@ -648,6 +651,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    </if>
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 	        and r.address like '%${address}%'
+	    </if>
+	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
+	        and r.cancel_yn = #{cancel_yn}
 	    </if>
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
 	        and (SELECT COUNT(o.address) AS overlap
