@@ -171,7 +171,7 @@ margin:10px;
                     class="privateUseHiddenSelect02"
                     id="privateUseSelectBox02_2"
                     hidden>
-                    <option value="">전체</option>
+                    <option value="전체">전체</option>
                     <option value="공원부지점용">공원부지점용</option>
                     <option value="국유지사용">국유지사용</option>
                     <option value="녹지점용">녹지점용</option>
@@ -204,7 +204,7 @@ margin:10px;
                     class="privateUseHiddenSelect02"
                     id="privateUseSelectBox02_3"
                     hidden>
-                    <option value="">전체</option>
+                    <option value="전체">전체</option>
                     <option value="경기고속도로(주)">경기고속도로(주)</option>
                     <option value="과천시">과천시</option>
                     <option value="서울특별시">서울특별시</option>
@@ -230,7 +230,7 @@ margin:10px;
                     class="privateUseHiddenSelect02"
                     id="privateUseSelectBox02_4"
                     hidden>
-                    <option value="">전체</option>
+                    <option value="전체">전체</option>
                     <option value="하천팀">하천팀</option>
                     <option value="공원농림과">공원농림과</option>
                   </select>
@@ -258,7 +258,8 @@ margin:10px;
               <div class="privateUseSectionRadioBoxs">
                 <ul class="radioBoxs">
                   <li>
-                    <input type="radio" name="privateUseRadio02" value="0" /><span>입력형</span>
+                    <input type="radio" name="privateUseRadio02" value="0" />
+					<span>입력형</span>
                   </li>
                   <li class="addressInput">
                     <input
@@ -270,7 +271,8 @@ margin:10px;
                 </ul>
                 <ul class="radioBoxs menuRadioEvet02">
                   <li>
-                    <input type="radio" name="privateUseRadio02" value="1" /><span>선택형</span>
+                    <input type="radio" name="privateUseRadio02" value="1" />
+					<span>선택형</span>
                   </li>
 				  
 				  <li>
@@ -278,22 +280,28 @@ margin:10px;
 				    <div class="privateUseSelectWrappers">
 				      <select
 				        name="sido_nm"
-				        class="privateUseHiddenSelect01"
+				        class="privateUseHiddenSelect02"
 				        id="sido_nm"
-				        hidden
-				    >
-				  	<option value="전체">전체</option>
-				  	<th:block th:each="val:${sidoList}">
-				  	  <option th:text="${val.sm_name}" th:value="${val.sm_name}"></option>
-				  	</th:block>
+				        hidden>
+					  	<option value="전체">전체</option>
+					  	<th:block th:each="val:${sidoList}">
+					  	  <option th:text="${val.sm_name}" th:value="${val.sm_name}"></option>
+					  	</th:block>
 				      </select>
 				    </div>
 
 				    <!--보여지는 셀렉박스-->
 				    <div class="privateUseSelects">
 				      <button class="privateUseSelectsTitleBtn"  id="sidoText"></button>
-				      <div class="sufaceSelectList smallHeight" id="sido_nm_ul_div">
-				        <ul class="surfaceSelectListMember" id="sido_ul"></ul>
+				      <div class="sufaceSelectList smallHeight">
+				        <ul class="surfaceSelectListMember" id="sido_ul">
+							<li><p>전체</p></li>
+							<th:block th:each="val:${sidoList}">
+								<li>
+									<p th:text="${val.sm_name}">Y</p>
+								</li>
+							<th:block>
+						</ul>
 				      </div>
 				    </div>
 				  </li>
@@ -301,71 +309,60 @@ margin:10px;
                   <li>
                     <!--수정부분 지사-->
                     <div class="privateUseSelectWrappers">
-                      <select
-                        name="sgg_nm"
-                        class="privateUseHiddenSelect02"
-                        id="sgg_nm"
-                        hidden>
+                      <select name="sgg" id="sgg" hidden>
                         <option value="">전체</option>
-                        <option value="Y">Y</option>
-                        <option value="N">N</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="privateUseSelects">
-                      <button class="privateUseSelectsTitleBtn"></button>
+                      <button class="privateUseSelectsTitleBtn" id="sggText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember" id="sggUl">
+							<li><p>전체</p></li>
+						</ul>
                       </div>
                     </div>
                   </li>
+				  
                   <li>
                     <!--수정부분 지사-->
                     <div class="privateUseSelectWrappers">
-                      <select
-                        name="emd_nm"
-                        class="privateUseHiddenSelect02"
-                        id="emd_nm"
-                        hidden>
-                        <option value="">전체1</option>
-                        <option value="Y2">Y2</option>
-                        <option value="N3">N3</option>
+                      <select name="emd" id="emd" hidden>
+                        <option value="">전체</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="privateUseSelects">
-                      <button class="privateUseSelectsTitleBtn"></button>
+                      <button class="privateUseSelectsTitleBtn" id="emdText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember" id="emdUl">
+							<li><p>전체</p></li>
+						</ul>
                       </div>
                     </div>
                   </li>
+				  
                   <li>
                     <!--수정부분 지사-->
                     <div class="privateUseSelectWrappers">
-                      <select
-                        name="ri_nm"
-                        class="privateUseHiddenSelect02"
-                        id="ri_nm"
-                        hidden>
-                        <option value="">전체11</option>
-                        <option value="Y22">Y22</option>
-                        <option value="N33">N33</option>
+                      <select name="ri" id="ri" hidden>
+                        <option value="">전체</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="privateUseSelects">
-                      <button class="privateUseSelectsTitleBtn"></button>
+                      <button class="privateUseSelectsTitleBtn" id="riText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember" id="riUl">
+							<li><p>전체</p></li>
+						</ul>
                       </div>
                     </div>
                   </li>
 				  
                   <li style="padding: 0px 3px">
                     <div class="inputControlList">
-                      <input
-					    name="jibun"
+                      <input name="jibun" id="jibun"
                         type="text"
                         placeholder="지번입력"
                         class="menuAdderssInput02" />
@@ -373,6 +370,7 @@ margin:10px;
                   </li>
                 </ul>
               </div>
+			  
               <!--privateUseSectionRadioBoxs-->
               <div class="privateUseSectionBtnBoxs">
                 <button class="privateUseRegisterBtn" id="searchBtn">조회하기</button>

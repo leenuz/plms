@@ -317,6 +317,8 @@ public class goverController {
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			
 			ModelAndView mav=new ModelAndView();
+			mav.addObject("jisaList",jisalist);
+			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);
 			
 			mav.setViewName("content/gover/menu03_2");
@@ -334,6 +336,8 @@ public class goverController {
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			
 			ModelAndView mav=new ModelAndView();
+			mav.addObject("jisaList",jisalist);
+			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);
 			
 			mav.setViewName("content/gover/menu03_3");
