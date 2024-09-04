@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="notiSQL">
+
+
+	<select id="selectNotiTotalCount" parameterType="java.util.HashMap" resultType="Integer">
+       SELECT count(*) FROM (
+					SELECT *,TRIM(CONCAT(sido_nm, ' ',sgg_nm, ' ',emd_nm,' ',ri_nm, ' ',jibun)) AS address 
+       FROM
+        (
+					select a.*
+					,b.id AS id
+					,b.wbs_no AS wbs_no
+					,b.desc1 AS desc1
+					,b.desc2 AS desc2
+					,b.desc3 AS desc3
+					,b.desc3_cd AS desc1_cd
+					,b.zone_no AS zone_no
+					,b.zone_name AS zone_name
+					,b.dwg_name AS dwg_name
+					,b.dwg_sub_name AS dwg_sub_name
+					,b.pipe_section AS pipe_section
+					,NULL AS pipe_num
+					,0.0 AS x
+					,0.0 AS y
+					,0.0 AS z
+					,0 AS len_ili
+					,b.length AS length
+					,b.insert_date AS insert_date
+					,b.wbs_chk AS wbs_chk
+					,b.wbs_chk_date AS wbs_chk_date
+					,b.geom AS geomm
+					,'N' AS stype
+					
+					from 
+					   jijuk_2024 a, 
+					   (select
+					      (select mv_date from pl_mv_master where wbs_no= t1.wbs_no) as mv_date, 
+					      *  
+					   from 
+					      pl_mv_line t1
+					   where wbs_no='D_40') b 
+					where 
+					   1=1
+					   and st_intersects(a.geom,b.geom)
+					   and (a.jisang_status ='N'  or a.jisang_status is null)
+				
+					   
+					   UNION ALL 
+					   
+					   select distinct a.* 
+					   
+					   ,c.id AS id
+					   ,c.wbs_no AS wbs_no
+						,c.desc1 AS desc1
+						,c.desc2 AS desc2
+						,c.desc3 AS desc3
+						,NULL AS desc1_cd
+						,NULL AS zone_no
+						,NULL AS zone_name
+						,NULL AS dwg_name
+						,NULL AS dwg_sub_name
+						,c.pipe_section AS pipe_section
+						,c.pipe_num AS pipe_num
+						,c.x AS x
+						,c.y AS y
+						,c.z AS z
+						,c.len_ili AS len_ili
+						,0 AS length
+						,c.insert_date AS insert_date
+						,c.wbs_chk AS wbs_chk
+						,c.wbs_chk_date AS wbs_chk_date
+						,c.geom AS geomm
+						,'C' AS stype
+					
+					from 
+					   jijuk_2024 a, 
+					   (select * from pl_mv_line where wbs_no='D_40') b, 
+					   (select 
+					      (select mv_date from pl_mv_master where wbs_no= t1.wbs_no) as mv_date, 
+					      *  
+					    from pl_mv_removal_line t1 where wbs_no='D_40') c 
+					where 
+					   1=1
+					   
+					    and st_intersects(a.geom,b.geom) = 'false'
+				   and st_intersects(a.geom,c.geom)
+				   and (a.jisang_status &lt;&gt; 'N'  and  a.jisang_status is not null)
+				
+					   
+				   
+				   
+				)r
+				
+				WHERE 1=1
+				<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(stype)">
+				 AND r.stype=#{stype}
+				 </if>
+				 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+				and r.wbs_chk_date::date between #{start_date}::date and #{end_date}::date
+				</if>
+				<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+					and r.isa=#{jisa}
+				</if>
+				<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+				and r.address like '%${address}%'
+				</if>
+				
+				) rr
+    </select>
+
+
+    <select id="selectNotiAllList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+       SELECT *,TRIM(CONCAT(sido_nm, ' ',sgg_nm, ' ',emd_nm,' ',ri_nm, ' ',jibun)) AS address 
+       FROM
+        (
+					select a.*
+					,b.id AS id
+					,b.wbs_no AS wbs_no
+					,b.desc1 AS desc1
+					,b.desc2 AS desc2
+					,b.desc3 AS desc3
+					,b.desc3_cd AS desc1_cd
+					,b.zone_no AS zone_no
+					,b.zone_name AS zone_name
+					,b.dwg_name AS dwg_name
+					,b.dwg_sub_name AS dwg_sub_name
+					,b.pipe_section AS pipe_section
+					,NULL AS pipe_num
+					,0.0 AS x
+					,0.0 AS y
+					,0.0 AS z
+					,0 AS len_ili
+					,b.length AS length
+					,b.insert_date AS insert_date
+					,b.wbs_chk AS wbs_chk
+					,b.wbs_chk_date AS wbs_chk_date
+					,b.geom AS geomm
+					,'N' AS stype
+					
+					from 
+					   jijuk_2024 a, 
+					   (select
+					      (select mv_date from pl_mv_master where wbs_no= t1.wbs_no) as mv_date, 
+					      *  
+					   from 
+					      pl_mv_line t1
+					   where wbs_no='D_40') b 
+					where 
+					   1=1
+					   and st_intersects(a.geom,b.geom)
+					   and (a.jisang_status ='N'  or a.jisang_status is null)
+				
+					   
+					   UNION ALL 
+					   
+					   select distinct a.* 
+					   
+					   ,c.id AS id
+					   ,c.wbs_no AS wbs_no
+						,c.desc1 AS desc1
+						,c.desc2 AS desc2
+						,c.desc3 AS desc3
+						,NULL AS desc1_cd
+						,NULL AS zone_no
+						,NULL AS zone_name
+						,NULL AS dwg_name
+						,NULL AS dwg_sub_name
+						,c.pipe_section AS pipe_section
+						,c.pipe_num AS pipe_num
+						,c.x AS x
+						,c.y AS y
+						,c.z AS z
+						,c.len_ili AS len_ili
+						,0 AS length
+						,c.insert_date AS insert_date
+						,c.wbs_chk AS wbs_chk
+						,c.wbs_chk_date AS wbs_chk_date
+						,c.geom AS geomm
+						,'C' AS stype
+					
+					from 
+					   jijuk_2024 a, 
+					   (select * from pl_mv_line where wbs_no='D_40') b, 
+					   (select 
+					      (select mv_date from pl_mv_master where wbs_no= t1.wbs_no) as mv_date, 
+					      *  
+					    from pl_mv_removal_line t1 where wbs_no='D_40') c 
+					where 
+					   1=1
+					   
+					    and st_intersects(a.geom,b.geom) = 'false'
+				   and st_intersects(a.geom,c.geom)
+				   and (a.jisang_status &lt;&gt; 'N'  and  a.jisang_status is not null)
+				
+					   
+				   
+				   
+				)r
+				
+				WHERE 1=1
+				<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(stype)">
+				 AND r.stype=#{stype}
+				 </if>
+				 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+				and r.wbs_chk_date::date between #{start_date}::date and #{end_date}::date
+				</if>
+				<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+					and r.isa=#{jisa}
+				</if>
+				<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+				and r.address like '%${address}%'
+				</if>
+    </select>
+
+</mapper>

@@ -610,7 +610,7 @@ $(document).on("click","#docFileDelBtn",function(){
 		
 		console.log(params);
 		
-		return;
+		
 		//임시파일 삭제
 		$.ajax({
 		          url: "/jisang/deleteJisangTmpFile",

@@ -1497,16 +1497,22 @@ public class jisangController {
 		ModelAndView mav=new ModelAndView();
 		HashMap params = new HashMap();
 		String dfile_name=httpRequest.getParameter("dfile_name");
+		String manage_no=httpRequest.getParameter("jisang_no");
+		String fseq=httpRequest.getParameter("fseq");
+		
+		HashMap param=new HashMap();
+		
+		param.put("fname",dfile_name);
+		param.put("manage_no", manage_no);
+		param.put("fseq", fseq);
 		
 		var fpath=GC.getJisangReqDoc1Dir();
 		var tmp=GC.getJisangFileTempDir();
-		
+		 mainService.DeleteQuery("jisangSQL.jisangReqDoc1Delete", param);
 		 CommonUtil.delFile(dfile_name, tmp);
 		 CommonUtil.delFile(dfile_name, fpath);
-		 
-		 
 		
-		log.info("dfile_name:"+dfile_name);
+		 log.info("dfile_name:"+dfile_name);
 		
 		
 	}

@@ -1294,4 +1294,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	</select>
+	
+	
+	
+	<delete id="jisangReqDoc1Delete" parameterType="java.util.HashMap">
+
+		delete from jisang_req_doc1
+		where jrd_manage_no=#{manage_no} and jrd_fseq=#{fseq}::int
+
+	</delete>
 </mapper>
