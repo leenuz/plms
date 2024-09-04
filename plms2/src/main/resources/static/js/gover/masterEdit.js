@@ -182,54 +182,6 @@ const allCheckEventMasterEdit = () => {
 //allCheckEventMasterEdit();
 
 
-/* 변경이력불러오기 */
-
-const masterEditChangeHistoryOpenEvet = () => {
-
-    const masterEditHistoryBtn = document.querySelector("#masterEdit .masterEditHistoryBtn");
-    const masterEditChangeHistoryWrapper = document.querySelector(".masterEditChangeHistoryWrapper");
-    let masterEditHistoryPath = '/components/popuphtml/changehistoryPopup.html'; //변경이력
-
-    if(masterEditHistoryBtn){
-
-       let xhr = new XMLHttpRequest();
-       xhr.open('GET', masterEditHistoryPath, true);
-       xhr.onreadystatechange = function() {
-           if (xhr.readyState == 4 && xhr.status == 200) {
-               masterEditChangeHistoryWrapper.innerHTML = xhr.responseText;
-               runScriptsInElement(masterEditChangeHistoryWrapper); // 삽입된 html내 스크립트 실행 함수 호출
-           }
-       };
-       xhr.send();
-       console.log('masterEditChangeHistoryWrapper 작동');
-       masterEditHistoryBtn.addEventListener("click" , () => {
-       
-           const popupOpen = document.getElementById("changehistoryPopup");
-           if(popupOpen){
-
-               popupOpen.classList.add("active");
-           }
-
-       })
-
-   // 삽입된 html내 스크립트 실행 함수
-   const runScriptsInElement = (element) => {
-       const scripts = element.getElementsByTagName('script');
-       for (let i = 0; i < scripts.length; i++) {
-           const script = document.createElement('script');
-           script.textContent = scripts[i].textContent;
-           document.body.appendChild(script).parentNode.removeChild(script);
-       }
-   }
-
-
-    }
-}
-
-masterEditChangeHistoryOpenEvet();
-
-
-
 /* 엑셀팝업불러오기 */
 
 
