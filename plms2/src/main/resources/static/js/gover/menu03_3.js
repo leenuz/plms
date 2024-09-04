@@ -262,15 +262,45 @@ function loadDataTable(params) {
             { data: "adm_office", "defaultContent": "" },
 			{ data: "pay_date", "defaultContent": "" },
 			{ data: "pay_money", "defaultContent": "" },
-			{ data: "cancel_yn", "defaultContent": "" },
-			{ data: "cancel_date", "defaultContent": "" },
+			{
+			    data: "cancel_yn",
+			    "defaultContent": "",
+			    render: function(data, type, row, meta) {
+			        var cancelYnTrimmed = (data && data.trim()) || "";  // 공백 제거 후 null 체크
+			        if (cancelYnTrimmed === "Y") {
+			            return '해지'; // 해지일 경우 "해지" 표기
+			        } else {
+			            return '미해지'; // null 또는 미해지일 경우 "미해지" 표기
+			        }
+			    }
+			},
+			{
+	        data: "cancel_date",
+	        "defaultContent": "",
+		        render: function(data, type, row, meta) {
+		            var cancelYnTrimmed = (row.cancel_yn && row.cancel_yn.trim()) || "";  // 공백 제거 후 null 체크
+		            if (cancelYnTrimmed === "Y") {
+		                return data ? data : ''; // 해지일 경우 일자 표기
+		            } else {
+		                // 미해지 또는 null일 경우 해지 버튼 추가
+		                return `<button class="privateRemoveBtn" id='cancelBtn'>해지</a></button>`;
+		            }
+		        }
+		    },
             {
                 data: "idx", "defaultContent": "",
                 render: function(data, type, row, meta) {
                     return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
                 }
             },
-			{ data: "echo_no", "defaultContent": "" }
+			// ECHO 문서보기 버튼 추가
+			//{ data: "echo_no", "defaultContent": "" }
+			{
+                data: "idx", "defaultContent": "",
+                render: function(data, type, row, meta) {
+                    return `<button class="viewDetailButton" id='echoFile'>상세보기</button> `;
+                }
+            }
         ],
         columnDefs: [
             { "className": "dt-head-center", "targets": "_all" },
@@ -298,7 +328,7 @@ function loadDataTable(params) {
 
     table.on('click', 'tr', function(event) {
         var target = $(event.target);
-        var isButtonCell = target.closest('td').index() === 16;
+		var isButtonCell = [15, 16, 17].includes(target.closest('td').index());
 
         if (isButtonCell) {
             return;
@@ -313,7 +343,21 @@ function loadDataTable(params) {
     });
 }
 
+// '해지' 버튼에 대한 클릭 이벤트 처리
+$(document).on('click', '#cancelBtn', function(event) {
+    event.stopPropagation();  // 다른 이벤트 전파 방지
 
+    // 현재 클릭한 row의 데이터를 가져옴
+    var row = $(this).closest('tr');
+    var data = table.row(row).data();
+    console.log(data);
+
+    // 해당 idx를 이용해 페이지로 이동
+    var url = "/gover/occupancyEndReg?idx=" + data.idx;
+    window.location = url;
+});
+
+// 지도 '위치보기' 버튼에 대한 클릭 이벤트 처리
 $(document).on("click","#moveMap",function(){
 	//openMapWindow();
 //	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');

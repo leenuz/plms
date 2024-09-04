@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      
+      layout:decorate="~{layout/default_layout}">
+ <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  
+	<link th:href="@{/css/common.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="/css/gover/occupancyEndReg.css" /> 
+	<style>
+		div.dt-top-container {
+		  display: grid;
+		  grid-template-columns: auto auto auto;
+		}
+		
+		div.dt-center-in-div {
+		  margin: 0 auto;
+		      float: right;
+		    margin-right: 30px;
+		   
+		}
+		div.dt-center-in-div>div{
+		
+		display:inline;
+		}
+		
+		div.dt-filter-spacer {
+		  margin: 10px 0;
+		  border:1px solid red;
+		}
+		
+		
+		.dt-title{
+		
+		text-align:center;
+		width:180px;
+		float:left;
+		
+		}
+		.dt-buttons{
+		display:inline-block;
+		
+		width:180px;
+		
+		}
+		.dt-length{
+		display:inline-block;
+		}
+		.dt-button{
+		
+		color:white;
+		background-color:#4e5871;
+		font-size:15px;
+		font-weight:600;
+		border-radius:10px;
+		background-image:url(/assets/media/menu01/download.png);
+		background-size:11px;
+		background-repeat:no-repeat;
+		background-position:123px center;
+		text-aline:left;
+		margin-right:10px;
+		width:159px;
+		height:38px;
+		
+		}
+		
+		.dt-paging {
+		text-align: center;
+		}
+		
+		.dt-paging-button {
+		  box-sizing: border-box;
+		  display: inline-block;
+		  min-width: 1.5em;
+		  padding: 0.5em 1em;
+		  margin-left: 2px;
+		  text-align: center;
+		  text-decoration: none !important;
+		  cursor: pointer;
+		  
+		  border: 1px solid transparent;
+		  border-radius: 2px;
+		  background: transparent;
+		  color: #007bff !important;
+		    font-size: 15px;
+		    font-weight: 600;
+		    
+		    
+		}
+		
+		.bottom{
+		text-align:center;
+		
+		}
+		.top{
+		
+		text-align:right;
+		margin:10px;
+		
+		}
+
+	</style>
+    <title>점용 해지등록</title>
+  </head>
+  
+  <th:block layout:fragment="content">
+    <!-- 점용 해지등록 -->
+    <div class="occupancyEndRegWrappers">
+      <div class="occupancyEndRegHeader"></div>
+      <main id="occupancyEndReg">
+        <div class="mainTitle">
+          <h1>점용 해지등록</h1>
+        </div>
+
+        <!-- 기본 정보 -->
+        <section class="defaultInfo">
+          <div class="subTitle">
+            <div class="subTitleText">기본 정보</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">관리번호</li>
+                <li class="title">담당지사</li>
+                <li class="title">용도</li>
+                <li class="title">관로명(구간)</li>
+                <li class="title">관경</li>
+                <li class="title">단/복선</li>
+                <li class="title">점용목적</li>
+                <li class="title largeWidth">점용기간</li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="G_000115"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="경인지사"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="송유관로"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="경인구간"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="660"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="단선"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="항만사용허가"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content largeWidth">
+                  <input
+                    type="text"
+                    placeholder="2018-01-01 ~2027-12-31"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 소속 토지 정보 -->
+        <section class="landAdressInfo">
+          <div class="subTitle">
+            <div class="subTitleText">소속 토지 정보</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title smallWidth">순번</li>
+                <li class="title largeWidth">주소</li>
+                <li class="title">전체면적</li>
+                <li class="title">연장</li>
+                <li class="title">면적</li>
+                <li class="title">지도</li>
+              </ul>
+              <ul class="contents">
+                <li class="content smallWidth">
+                  <!-- 순번 -->
+                  <input
+                    type="text"
+                    class="notWriteInput"
+                    readonly
+                    placeholder="1" />
+                </li>
+                <li class="content largeWidth">
+                  <!-- 주소 -->
+                  <input
+                    type="text"
+                    class="notWriteInput"
+                    readonly
+                    placeholder="경기도 고양시 덕양구 강매동 3-1" />
+                </li>
+                <li class="content">
+                  <!-- 전체면적 -->
+                  <input
+                    type="text"
+                    class="notWriteInput"
+                    readonly
+                    placeholder="이슈 삭제" />
+                </li>
+                <li class="content">
+                  <!-- 연장 -->
+                  <input
+                    type="text"
+                    class="notWriteInput"
+                    readonly
+                    placeholder="0" />
+                </li>
+                <li class="content">
+                  <!-- 면적 -->
+                  <input
+                    type="text"
+                    class="notWriteInput"
+                    readonly
+                    placeholder="1,276" />
+                </li>
+                <li class="content btnBox">
+                  <!-- 지도 -->
+                  <button class="lightBlueBtn viewDetailButton">
+                    위치보기
+                  </button>
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content smallWidth">
+                  <!-- 순번 -->
+                  <input
+                    type="text"
+                    class="notWriteInput"
+                    readonly
+                    placeholder="2" />
+                </li>
+                <li class="content largeWidth">
+                  <!-- 주소 -->
+                  <input
+                    type="text"
+                    class="notWriteInput"
+                    readonly
+                    placeholder="경기도 고양시 덕양구 도내동 723-2" />
+                </li>
+                <li class="content">
+                  <!-- 전체면적 -->
+                  <input
+                    type="text"
+                    class="notWriteInput"
+                    readonly
+                    placeholder="이슈 수정" />
+                </li>
+                <li class="content">
+                  <!-- 연장 -->
+                  <input
+                    type="text"
+                    class="notWriteInput"
+                    readonly
+                    placeholder="0" />
+                </li>
+                <li class="content">
+                  <!-- 면적 -->
+                  <input
+                    type="text"
+                    class="notWriteInput"
+                    readonly
+                    placeholder="208" />
+                </li>
+                <li class="content btnBox">
+                  <!-- 지도 -->
+                  <button class="lightBlueBtn viewDetailButton">
+                    위치보기
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 점용 허가 정보 -->
+        <section class="permitInfo">
+          <div class="subTitle">
+            <div class="subTitleText">점용 허가 정보</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">순번</li>
+                <li class="title largeWidth">허가번호</li>
+                <li class="title largeWidth">허가명</li>
+                <li class="title middleWidth">시설명칭</li>
+                <li class="title largeWidth">허가관청</li>
+                <li class="title middleWidth">관리청</li>
+                <li class="title">연장</li>
+                <li class="title">면적</li>
+                <li class="title middleWidth">도시계획 결정여부</li>
+                <li class="title middleWidth">결재문서 조회</li>
+              </ul>
+
+              <ul class="contents">
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="1"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content largeWidth">
+                  <input
+                    type="text"
+                    placeholder="제녹 2022-8호"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content largeWidth">
+                  <input
+                    type="text"
+                    placeholder="녹지점용허가"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    placeholder="송유관로"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content largeWidth">
+                  <input
+                    type="text"
+                    placeholder="인천지방해양수산청"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    placeholder="해양수산환경과"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="29.04"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="319.5"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    placeholder="Y"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content middleWidth btnBox">
+                  <button class="lightBlueBtn viewDetailButton">
+                    상세보기
+                  </button>
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="2"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content largeWidth">
+                  <input
+                    type="text"
+                    placeholder="제녹 2022-8호"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content largeWidth">
+                  <input
+                    type="text"
+                    placeholder="항만사용허가"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    placeholder="송유관로"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content largeWidth">
+                  <input
+                    type="text"
+                    placeholder="인천지방해양수산청"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    placeholder="해양수산환경과"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="29.04"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="319.5"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content middleWidth">
+                  <input
+                    type="text"
+                    placeholder="Y"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+                <li class="content middleWidth btnBox">
+                  <button class="lightBlueBtn viewDetailButton">
+                    상세보기
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- 점용 허가 및 점용료 납부현황 -->
+        <section class="permFeeStat">
+          <div class="subTitle">
+            <div class="subTitleText">점용 허가 및 점용료 납부현황</div>
+          </div>
+
+          <div class="contWrap">
+            <table>
+              <caption class="hiddenCaption">
+                점용 허가 및 점용료 납부현황
+              </caption>
+              <thead>
+                <tr>
+                  <th rowspan="2" class="smallWidth">순번</th>
+                  <th colspan="3">점용허가 유효기간</th>
+                  <th colspan="2">허가기관 담당 부서</th>
+                  <th colspan="3">점용료 납부현황</th>
+                </tr>
+                <tr>
+                  <th>시작일</th>
+                  <th>종료일</th>
+                  <th class="largeWidth">부서</th>
+                  <th class="middleWidth">담당자</th>
+                  <th class="largeWidth">연락처</th>
+                  <th>납부방법</th>
+                  <th>납부연월일</th>
+                  <th>금액</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="smallWidth">
+                    <input
+                      type="text"
+                      placeholder="1"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="2022-01-01"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td class="largeWidth">
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td class="middleWidth">
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td class="largeWidth">
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="가상계좌"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="2022-05-26"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="943,800"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                </tr>
+                <!-- 2번째 줄 -->
+                <tr>
+                  <td class="smallWidth">
+                    <input
+                      type="text"
+                      placeholder="2"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="2022-01-01"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td class="largeWidth">
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td class="middleWidth">
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td class="largeWidth">
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="가상계좌"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="2021-01-12"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="15,566,040"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                </tr>
+                <!-- 3번째 줄 -->
+                <tr>
+                  <td class="smallWidth">
+                    <input
+                      type="text"
+                      placeholder="3"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="2022-01-01"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td class="largeWidth">
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td class="middleWidth">
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td class="largeWidth">
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="지로납부"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="2018-03-27"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="15,566,040"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                </tr>
+                <!-- 4번째 줄 -->
+                <tr>
+                  <td class="smallWidth">
+                    <input
+                      type="text"
+                      placeholder="4"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="2022-01-01"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td class="largeWidth">
+                    <input
+                      type="text"
+                      class="notWriteInput"
+                      readonly
+                      placeholder="항만물류과" />
+                  </td>
+                  <td class="middleWidth">
+                    <input
+                      type="text"
+                      class="notWriteInput"
+                      readonly
+                      placeholder="박현우" />
+                  </td>
+                  <td class="largeWidth">
+                    <input
+                      type="text"
+                      class="notWriteInput"
+                      readonly
+                      placeholder="062-960-8681" />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="지로납부"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="2018-03-27"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="15,566,040"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                </tr>
+                <!-- 5번째 줄 -->
+                <tr>
+                  <td class="smallWidth">
+                    <input
+                      type="text"
+                      placeholder="5"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="2022-01-01"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input type="text" class="notWriteInput" readonly />
+                  </td>
+                  <td class="largeWidth">
+                    <input
+                      type="text"
+                      class="notWriteInput"
+                      readonly
+                      placeholder="항만물류과" />
+                  </td>
+                  <td class="middleWidth">
+                    <input
+                      type="text"
+                      class="notWriteInput"
+                      readonly
+                      placeholder="박현우" />
+                  </td>
+                  <td class="largeWidth">
+                    <input
+                      type="text"
+                      class="notWriteInput"
+                      readonly
+                      placeholder="062-960-8681" />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="지로납부"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="2018-03-27"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="15,566,040"
+                      class="notWriteInput"
+                      readonly />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <!-- 점용 해지 정보 -->
+        <section class="occupancyEndInfo">
+          <div class="subTitle">
+            <div class="subTitleText">점용 해지 정보</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="rowListBox">
+                <li class="title">해지일</li>
+                <li class="content">
+                  <div class="dateInputWrap">
+                    <input
+                      type="date"
+                      data-placeholder="24/01/01"
+                      required
+                      aria-required="true" />
+                  </div>
+                </li>
+              </ul>
+              <ul class="rowListBox">
+                <li class="title">담당자</li>
+                <li class="content lastRowList">
+                  <input
+                    type="text"
+                    placeholder="박영환"
+                    class="notWriteInput"
+                    readonly />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <div class="finalBtnBox btnWrap">
+          <button class="backBtn grayBtn finalBtn">이전</button>
+          <button class="vividBlueBtn finalBtn">등록</button>
+        </div>
+      </main>
+    </div>
+    <!-- script -->
+    <script type="module" src="/js/module/surfaceMain.js"></script>
+  </th:block>
+</html>

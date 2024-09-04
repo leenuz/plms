@@ -69,21 +69,21 @@
                     class="notWriteInput" />
                 </li>
 				<!-- 국/사유지 Y이면 국유지, N이면 사유지-->
-                <li class="content">
-                  <input
-                    type="text"
-					th:value="${#strings.equals(goverPnuList.gp_gover_own_yn, 'Y') ? '국유지' : '사유지'}"
-                    readonly
-                    class="notWriteInput" />
-                </li>
+				<li class="content">
+				  <input
+				    type="text"
+				    th:value="${goverPnuList != null && goverPnuList.gp_gover_own_yn != null ? (#strings.equals(goverPnuList.gp_gover_own_yn, 'Y') ? '국유지' : '사유지') : ''}"
+				    readonly
+				    class="notWriteInput" />
+				</li>
 				<!-- 관로저촉여부 -->
-                <li class="content">
-                  <input
-                    type="text"
-					th:value="${goverPnuList.gp_pipe_overlap_yn}"
-                    readonly
-                    class="notWriteInput" />
-                </li>
+				<li class="content">
+				  <input
+				    type="text"
+				    th:value="${goverPnuList != null && goverPnuList.gp_pipe_overlap_yn != null ? goverPnuList.gp_pipe_overlap_yn : ''}"
+				    readonly
+				    class="notWriteInput" />
+				</li>
 				<!-- 용도 -->
                 <li class="content">
                   <input
