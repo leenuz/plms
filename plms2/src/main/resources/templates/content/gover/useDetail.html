@@ -51,16 +51,18 @@
                 <li class="title largeWidth">점용기간</li>
               </ul>
               <ul class="contents">
+				<!-- 관리번호 -->
                 <li class="content">
                   <input
                     type="text"
-                    placeholder="G_000115"
+					th:value="${resultData.gm_gover_no}"
                     readonly
                     class="notWriteInput" />
                 </li>
                 <li class="content">
                   <input
                     type="text"
+					th:value="${resultData.gm_jisa}"
                     placeholder="경인지사"
                     readonly
                     class="notWriteInput" />
@@ -68,6 +70,7 @@
                 <li class="content">
                   <input
                     type="text"
+					th:value="${resultData.gm_yongdo}"
                     placeholder="송유관로"
                     readonly
                     class="notWriteInput" />
@@ -75,6 +78,7 @@
                 <li class="content">
                   <input
                     type="text"
+					th:value="${resultData.gm_pipe_name}"
                     placeholder="경인구간"
                     readonly
                     class="notWriteInput" />
@@ -82,6 +86,7 @@
                 <li class="content">
                   <input
                     type="text"
+					th:value="${#strings.equals(resultData.gm_sun_gubun, '단선') ? resultData.gm_pipe_meter : resultData.gm_pipe_meter + '/' + resultData.gm_pipe_meter2}"
                     placeholder="660"
                     readonly
                     class="notWriteInput" />
@@ -89,6 +94,7 @@
                 <li class="content">
                   <input
                     type="text"
+					th:value="${resultData.gm_sun_gubun}"
                     placeholder="단선"
                     readonly
                     class="notWriteInput" />
@@ -96,6 +102,7 @@
                 <li class="content">
                   <input
                     type="text"
+					th:value="${resultData.gm_use_purpos}"
                     placeholder="항만사용허가"
                     readonly
                     class="notWriteInput" />
@@ -103,6 +110,7 @@
                 <li class="content largeWidth">
                   <input
                     type="text"
+					th:value="${resultData.gm_gover_st_date + ' ~ ' + resultData.gm_gover_ed_date}"
                     placeholder="2018-01-01 ~2027-12-31"
                     readonly
                     class="notWriteInput" />
