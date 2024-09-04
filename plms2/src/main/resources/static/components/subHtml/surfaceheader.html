@@ -15,7 +15,7 @@
 
 	
 	 window.addEventListener('message', function(event) {
-	console.log("Received message from map window:", event.data);
+<!--	console.log("Received message from map window:", event.data);-->
 	}, false); 
 
 
@@ -291,6 +291,15 @@ console.log("------------survaceMenuWrapOpen--start--------------");
           <span><img src="/assets/media/nav/total.png" alt="totalIcon" /></span
           >통계
         </button>
+        <div class="hiddenMenuBoxs">
+          <div class="hiddenMenuList">
+            <a href="/stats/rightCloseMng">권리확보현황 마감관리</a>
+            <a href="/stats/rightStatus">권리확보현황 통계</a>
+            <a href="/stats/issueStatus">이슈 및 민원현황 통계</a>
+            <a href="/stats/rightChangeStat">권리별 증감현황</a>
+            <a href="/stats/parcelChangeStat">관리필지 증감현황</a>
+          </div>
+        </div>
       </li>
     </ul>
     <ul class="login">

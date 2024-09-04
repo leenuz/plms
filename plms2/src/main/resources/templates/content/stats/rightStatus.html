@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/stats/rightStatus.css">
+    <title>권리확보현황 통계</title>
+</head>
+<body>
+<div class="rightStatusWrappers">
+    <div class="rightStatusHeader"></div>
+    <main id="rightStatus">
+        <div class="mainTitle">
+            <h1>권리확보현황 통계</h1>
+        </div>
+
+        <div class="contentWrap">
+            <!-- 상단부분 -->
+            <section class="privateUseSectionBoxs">
+                <div class="privateUseSectionCont">
+                    <div class="selectSection">
+                        <!-- select -->
+                        <div class="selectLargeWrap">
+                            <div class="selectWrap">
+                                <p class="selectTitle">
+                                    지사
+                                </p>
+                                <div class="selectContentArea">
+                                    <div class="hiddenSelectBox">
+                                        <select id="rightStatusSelectBox01" hidden>
+                                            <option value="전체">전체</option>
+                                            <option value="서울지사">서울지사</option>
+                                            <option value="경인지사">경인지사</option>
+                                            <option value="충청지사">충청지사</option>
+                                            <option value="대전지사">대전지사</option>
+                                            <option value="영남지사">영남지사</option>
+                                            <option value="전남지사">전남지사</option>
+                                            <option value="전북지사">전북지사</option>
+                                            <option value="경남지사">경남지사</option>
+                                            <option value="강원지사">강원지사</option>
+                                        </select>
+                                    </div>
+                                    <!--보여지는 셀렉박스-->
+                                    <div class="customSelectBox">
+                                        <button class="customSelectView">전체</button>
+                                        <ul class="customSelectBtns"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="privateUseSectionBtnBoxs">
+                        <button class="searchBtn">조회하기</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 내역들 -->
+
+            <div class="dataArea">
+                <!-- 사유지 -->
+                <section class="dataWrap privateLand">
+                    <!-- 상단 제목 -->
+                    <div class="dataTitlebox">
+                        <h5 class="dataTitle">사유지</h5>
+                        <button class="excelDownBtn">
+                            엑셀 다운로드
+                        </button>
+                    </div>
+
+                    <!-- 데이터 들어가는 영역 -->
+                    <div class="dataContWrap">
+                        <!-- 왼쪽 -->
+                        <div class="dataContentBox">
+                            <!-- 타이틀 카테고리 2개 이상시 -->
+                            <div class="dataListbox depthBox">
+                                <div class="firstTitle"><p>자산 등록</p></div>
+                                <div class="secondWrap">
+                                    <!-- 등기 -->
+                                    <ul class="secondCate">
+                                        <li class="secondTitle">
+                                            <p class="dataText">등기</p>
+                                        </li>
+                                        <li class="secondContent">
+                                            <p class="dataText">6,803 건</p>
+                                        </li>
+                                    </ul>
+                                    <!-- 미등기 -->
+                                    <ul class="secondCate">
+                                        <li class="secondTitle">
+                                            <p class="dataText">미등기</p>
+                                        </li>
+                                        <li class="secondContent">
+                                            <p class="dataText">710 건</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- 자산미등록 -->
+                            <div class="dataListbox">
+                                <ul class="firstCate">
+                                    <li class="title"><p class="dataText">자산 미등록</p></li>
+                                    <li class="content"><p class="dataText">2,008 건</p></li>
+                                </ul>
+                            </div>
+                            <!-- 계 -->
+                            <div class="dataListbox lastDataListBox">
+                                <ul class="firstCate">
+                                    <li class="title"><p class="dataText">계</p></li>
+                                    <li class="content"><p class="dataText">9,521 건</p></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- 오른쪽 -->
+                        <div class="dataContentGraph">
+                            <button class="hamBtn"></button>
+                            <figure class="graphHere">
+                            </figure>
+                            <ul class="graphNav">
+                                <li class="graphContent">
+                                    <span class="cirColor cir01"></span>
+                                    <p class="graphContentText">자산등록&#40;등기&#41;</p>
+                                </li>
+                                <li class="graphContent">
+                                    <span class="cirColor cir02"></span>
+                                    <p class="graphContentText">자산등록&#40;미등기&#41;</p>
+                                </li>
+                                <li class="graphContent">
+                                    <span class="cirColor cir03"></span>
+                                    <p class="graphContentText">자산 미등록</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 하단 데이터 영역 -->
+
+                    <div class="dataRowCont">
+                        <ul class="dataRowBox">
+                            <li class="title">
+                                <p>잠재이슈 관리필지</p>
+                            </li>
+                            <li class="content">
+                                <p>2,721</p>
+                            </li>
+                        </ul>
+                        <ul class="dataRowBox">
+                            <li class="title">
+                                <p>민원 발생필지</p>
+                            </li>
+                            <li class="content">
+                                <p>31</p>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 국유지 -->
+
+                <section class="dataWrap publicLand">
+                    <!-- 상단 제목 -->
+                    <div class="dataTitlebox">
+                        <h5 class="dataTitle">국유지</h5>
+                        <button class="excelDownBtn">
+                            엑셀 다운로드
+                        </button>
+                    </div>
+
+                    <!-- 데이터 들어가는 영역 -->
+                    <div class="dataContWrap">
+                        <!-- 왼쪽 -->
+                        <div class="dataContentBox">
+                            <!-- 지상권 -->
+                            <div class="dataListbox">
+                                <ul class="firstCate">
+                                    <li class="title">
+                                        <p class="dataText">지상권</p>
+                                    </li>
+                                    <li class="content">
+                                        <p class="dataText">2,008 건</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- 점용 -->
+                            <div class="dataListbox">
+                                <ul class="firstCate">
+                                    <li class="title"><p class="dataText">점용</p></li>
+                                    <li class="content"><p class="dataText">19,364 건</p></li>
+                                </ul>
+                            </div>
+                            <!-- 미점용 -->
+                            <div class="dataListbox">
+                                <ul class="firstCate">
+                                    <li class="title"><p class="dataText">미점용</p></li>
+                                    <li class="content"><p class="dataText">9 건</p></li>
+                                </ul>
+                            </div>
+                            <!-- 계 -->
+                            <div class="dataListbox lastDataListBox">
+                                <ul class="firstCate">
+                                    <li class="title"><p class="dataText">계</p></li>
+                                    <li class="content"><p class="dataText">20,073 건</p></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- 오른쪽 -->
+                        <div class="dataContentGraph">
+                            <button class="hamBtn"></button>
+                            <button class="permitExcelBtn"></button>
+                            <figure class="graphHere">
+
+                            </figure>
+                            <ul class="graphNav">
+                                <li class="graphContent">
+                                    <span class="cirColor cir01"></span>
+                                    <p class="graphContentText">점용</p>
+                                </li>
+                                <li class="graphContent">
+                                    <span class="cirColor cir02"></span>
+                                    <p class="graphContentText">지상권</p>
+                                </li>
+                                <li class="graphContent">
+                                    <span class="cirColor cir03"></span>
+                                    <p class="graphContentText">미점용</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 하단 데이터 영역 -->
+
+                    <div class="dataRowCont">
+                        <ul class="dataRowBox">
+                            <li class="title">
+                                <p>잠재이슈 관리필지</p>
+                            </li>
+                            <li class="content">
+                                <p>1,648</p>
+                            </li>
+                        </ul>
+                        <ul class="dataRowBox">
+                            <li class="title">
+                                <p>민원 발생필지</p>
+                            </li>
+                            <li class="content">
+                                <p>0</p>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- script -->
+
+<script type="module" src="/js/module/surfaceMain.js"></script>
+<script src="../../js/stats/rightStatus.js"></script>
+</body>
+</html>

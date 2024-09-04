@@ -1,0 +1,480 @@
+@charset "UTF-8";
+
+/* reset */
+
+* {margin: 0;padding: 0;}
+body * {font-family: pretendard;}
+a {text-decoration: none; color: #3c3c3c;}
+li {list-style: none;}
+button {border: 0; outline: none;cursor: pointer;}
+
+/* css추가 */
+
+.rightStatusWrappersWrappers {
+    overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.rightStatusWrappersWrappers::-webkit-scrollbar {
+    width: 3px;
+}
+
+.rightStatusWrappersWrappers::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+
+.rightStatusHeader {
+    width: 100px;
+    height: 100vh;
+    float: left;
+}
+
+#rightStatus {
+    width: calc(100% - 100px);
+    padding: 0 20px;
+    box-sizing: border-box;
+    float: left;
+}
+
+/*  */
+#rightStatus .mainTitle {
+    padding: 30px 0;
+}
+#rightStatus .mainTitle h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #31394C;
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+#rightStatus .privateUseSectionBoxs {
+    margin: 0 auto 30px 0;
+}
+#rightStatus .privateUseSectionBoxs .privateUseSectionCont {
+    width: 100%;
+    height: 121px;
+    padding: 25px 32px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    border-radius: 20px;
+    border: 1px solid #cddbf0;
+    background-color: #f7f9fc;
+    position: relative;
+    z-index: 20;
+    display: flex;
+    gap: 20px;
+}
+#rightStatus .privateUseSectionBoxs .privateUseSectionCont .selectSection {
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 276px);
+}
+
+#rightStatus .privateUseSectionBoxs .privateUseSectionCont .selectLargeWrap {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
+    height: 100%;
+}
+/* selectbox 스크롤 */
+#rightStatus .customSelectBox .customSelectBtns::-webkit-scrollbar {
+    width: 4px;
+}
+#rightStatus .customSelectBox .customSelectBtns::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+/* custom select */
+#rightStatus .selectWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 203px;
+}
+#rightStatus .selectContentArea {
+    width: 100%;
+    height: 44px;
+    border-radius: 10px;
+}
+#rightStatus .customSelectBox {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+#rightStatus .customSelectBox .customSelectView {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #cfddf2;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6e7d88;
+    text-align-last: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 12px;
+    box-sizing: border-box;
+    background: url(/assets/media/menu07/images/arrowDown.png) no-repeat right 8px center;
+    background-size: 18px;
+    background-color: #fff;
+}
+#rightStatus .customSelectBox .customSelectView.active {
+    background: url(/assets/media/menu07/images/arrowDownBlue.png) no-repeat right 8px center;
+    background-size: 18px;
+    border: 1px solid #2b7de1;
+    color: #2b7de1;
+    background-color: #fff;
+}
+#rightStatus .customSelectBox .customSelectBtns {
+    position: absolute;
+    width: 100%;
+    top: calc(100% + 4px);
+    box-sizing: border-box;
+    max-height: 0;
+    overflow-y: hidden;
+    z-index: 10;
+    transition: 500ms;
+    opacity: 0;
+    border: 1px solid #acbdd7;
+    border-radius: 10px;
+    /* padding: 6px; */
+}
+#rightStatus .customSelectBox .customSelectBtns.active {
+    background: #fff;
+    max-height: 233px;
+    overflow-y: scroll;
+    transition: 500ms;
+    opacity: 1;
+    box-sizing: border-box;
+}
+#rightStatus .customSelectBox .customSelectBtns li {
+    height: 41px;
+    box-sizing: border-box;
+    background: #fff;
+    width: calc(100% - 12px);
+    margin: 6px auto;
+    border-radius: 5px;
+}
+#rightStatus .customSelectBox .customSelectBtns li:hover {
+    background: #EDF2F9;
+}
+
+#rightStatus .moreSelectBtn {
+    font-size: 14px;
+    font-weight: 500;
+    color: #4e5871;
+    width: 100%;
+    height: 100%;
+    /* background: #fff; */
+    background: transparent;
+    text-align-last: left;
+    padding-left: 12px;
+    box-sizing: border-box;
+}
+
+#rightStatus .moreSelectBtn:hover {
+    /* background: #EDF2F9; */
+}
+
+#rightStatus .privateUseSectionBoxs .privateUseSectionCont .selectWrap .selectTitle {
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4E5871;
+}
+/* privateUseSectionRadioBoxs 버튼들 */
+#rightStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionBtnBoxs {
+    display: flex;
+    align-items: end;
+    justify-content: flex-end;
+    height: 100%;
+    gap: 12px;
+    flex-grow: 1;
+}
+
+#rightStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionBtnBoxs .searchBtn {
+    width: 132px;
+    height: 44px;
+    border-radius: 10px;
+    background: #2B7DE1;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+}
+#rightStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionBtnBoxs .offBtn {
+    width: 132px;
+    height: 44px;
+    border-radius: 10px;
+    background: #E5EFFF;
+    color: #2B7DE1;
+    font-size: 15px;
+    font-weight: 600;
+}
+/* dataArea */
+#rightStatus .dataArea {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+#rightStatus .dataArea .dataWrap {
+    width: 50%;
+}
+#rightStatus .dataArea .dataWrap .dataTitlebox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+#rightStatus .dataArea .dataWrap .dataTitle {
+    color: #31394C;
+    font-size: 18px;
+    font-weight: 700;
+}
+#rightStatus .excelDownBtn {
+    width: 159px;
+    height: 38px;
+    border-radius: 10px;
+    background: url(/assets/media/menu07/images/download.png) no-repeat right 28px center;
+    background-color: #4E5871;
+    background-size: 12px;
+    color: #fff;
+    text-align: left;
+    padding-left: 26px;
+    box-sizing: border-box;
+    font-size: 15px;
+    font-weight: 600;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap {
+    border: 1px solid #CDDBF0;
+    border-radius: 5px;
+    display: flex;
+    margin-bottom: 23px;
+}
+/* 왼쪽 리스트 부분 */
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox {
+    display: grid;
+    border-bottom: 1px solid #CDDBF0;
+    box-sizing: border-box;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .depthBox {
+    grid-template-columns: 1fr 3fr;
+}
+/* 마지막 borderbottom 지우기 */
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox:last-of-type {
+    border-bottom: 0;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox:last-of-type .title {
+    border-radius: 0 0 0 5px;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentBox {
+    width: calc(100% - 52%);
+    border-right: 1px solid #CDDBF0;
+    box-sizing: border-box;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox .firstTitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+    background: #ECF1F8;
+    width: 100%;
+    border-right: 1px solid #CDDBF0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 5px 0 0 0;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox .secondCate {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 129px;
+    border-bottom: 1px solid #CDDBF0;
+    box-sizing: border-box;
+    width: 100%;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox .secondCate:last-of-type {
+    border-bottom: 0;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox .secondCate .secondTitle {
+    background: #F7F9FC;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #CDDBF0;
+    box-sizing: border-box;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox .secondCate .secondContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox .firstCate {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows:  129px;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox .title , 
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox .dataText {
+    color: #3C3C3C;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* 계 */
+#rightStatus .dataArea .dataWrap .dataContWrap .dataListbox .title {
+    background: #F7F9FC;
+    border-right: 1px solid #CDDBF0;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .lastDataListBox .dataText {
+    font-weight: 700;
+}
+/* 오른쪽 그래프 부분 */
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph {
+    position: relative;
+    width: 64%;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .graphHere {
+    position: absolute;
+}
+#rightStatus .dataArea .privateLand .dataContWrap .dataContentGraph .graphHere {
+    width: 402px;
+    top: 68px;
+    left: 33px;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .graphHere img {
+    width: 100%;
+}
+/* 그래프 버튼 */
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .hamBtn {
+    width: 28px;
+    height: 23px;
+    background: url(/assets/media/menu07/images/hamIcon.png) no-repeat center;
+    background-size: contain;
+    position: absolute;
+    top: 24.3px;
+    right: 24px;
+}
+/* 엑셀 다운로드 버튼 */
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .permitExcelBtn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: url(/assets/media/menu07/images/download.png) no-repeat center;
+    background-size: 12px;
+    background-color: #2B7DE1;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .graphNav {
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: #4F5871;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; 
+    position: absolute;
+    bottom: 19px;
+    min-width: max-content;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .graphContent {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .graphContentText {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .cirColor {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .cir01 {
+    background: #ACC4FF;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .cir02 {
+    background: #2B7DE1;
+}
+#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .cir03 {
+    background: #31394C;
+}
+/* 잠재이슈 관리필지, 민원 발생필지 */
+#rightStatus .dataArea .dataWrap .dataRowCont {
+    width: 100%;
+    height: 55px;
+    border: 1px solid #CDDBF0;
+    border-radius: 5px;
+    display: flex;
+}
+#rightStatus .dataArea .dataWrap .dataRowCont .dataRowBox {
+    width: 50%;
+    display: grid;
+    grid-template-columns: 186fr 251fr;
+}
+#rightStatus .dataArea .dataWrap .dataRowCont .dataRowBox:first-of-type .title {
+    border-radius: 5px 0 0 5px;
+    border-left: 0;
+}
+#rightStatus .dataArea .dataWrap .dataRowCont .dataRowBox .title {
+    background: #F7F9FC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #CDDBF0;
+    border-left: 1px solid #CDDBF0;
+}
+#rightStatus .dataArea .dataWrap .dataRowCont .dataRowBox .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#rightStatus .dataArea .dataWrap .dataRowCont .dataRowBox p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+/* 국유지 부분 */
+#rightStatus .dataArea .publicLand .dataContWrap .dataListbox:first-of-type .title {
+    border-radius: 5px 0 0 0;
+}
+#rightStatus .dataArea .publicLand .dataContWrap .dataContentGraph .graphHere {
+    width: 340px;
+    top: 48px;
+    left: 99px;
+}
+#rightStatus .dataArea .publicLand .dataContWrap .dataContentGraph .cir01 {
+    background: #AFC2D9;
+}
+#rightStatus .dataArea .publicLand .dataContWrap .dataContentGraph .cir02 {
+    background: #43C8A0;
+}
+#rightStatus .dataArea .publicLand .dataContWrap .dataContentGraph .cir03 {
+    background: #FF6943;
+}

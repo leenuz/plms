@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리필지 증감현황</title>
+
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/stats/parcelChangeStat.css">
+</head>
+<body>
+<!-- 관리필지 증감현황 -->
+<div class="parcelChangeStatWrappers">
+    <div class="parcelChangeStatHeader"></div>
+    <main id="parcelChangeStat">
+        <div class="mainTitle">
+            <h1>관리필지 증감현황</h1>
+        </div>
+        <!-- 상단부분 -->
+        <section class="privateUseSectionBoxs">
+            <div class="privateUseSectionCont">
+                <div class="selectSection">
+                    <!-- select -->
+                    <div class="selectLargeWrap">
+                        <!-- select -->
+                        <div class="selectPlace">
+                            <p class="selectTitle miniTitle">기준년월</p>
+
+                            <div class="selectLargeWrap">
+                                <div class="selectWrap">
+                                    <div class="selectContentArea">
+                                        <div class="hiddenSelectBox">
+                                            <select id="parcelChangeStat01_1" hidden required class="getYearSelectBox">
+                                            </select>
+                                        </div>
+                                        <!--보여지는 셀렉박스-->
+                                        <div class="customSelectBox">
+                                            <button class="customSelectView">연도 선택</button>
+                                            <ul class="customSelectBtns"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="selectWrap">
+                                    <div class="selectContentArea">
+                                        <div class="hiddenSelectBox">
+                                            <select id="parcelChangeStat01_2" hidden required class="getMonthSelectBox">
+                                            </select>
+                                        </div>
+                                        <!--보여지는 셀렉박스-->
+                                        <div class="customSelectBox">
+                                            <button class="customSelectView">월 선택</button>
+                                            <ul class="customSelectBtns"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- select -->
+                        <div class="selectPlace">
+                            <p class="selectTitle miniTitle">비교년월</p>
+
+                            <div class="selectLargeWrap">
+                                <div class="selectWrap">
+                                    <div class="selectContentArea">
+                                        <div class="hiddenSelectBox">
+                                            <select id="parcelChangeStat02_1" hidden required class="getYearSelectBox">
+                                            </select>
+                                        </div>
+                                        <!--보여지는 셀렉박스-->
+                                        <div class="customSelectBox">
+                                            <button class="customSelectView">연도 선택</button>
+                                            <ul class="customSelectBtns"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="selectWrap">
+                                    <div class="selectContentArea">
+                                        <div class="hiddenSelectBox">
+                                            <select id="parcelChangeStat02_2" hidden required class="getMonthSelectBox">
+                                            </select>
+                                        </div>
+                                        <!--보여지는 셀렉박스-->
+                                        <div class="customSelectBox">
+                                            <button class="customSelectView">월 선택</button>
+                                            <ul class="customSelectBtns"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!--privateUseSectionBtns-->
+                <div class="privateUseSectionBtnBoxs">
+                    <button class="viewBtn parcelChangeStatBtn">조회하기</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 엑셀 다운로드 버튼, 현황 상세정보 버튼 -->
+
+        <div class="dataBtnWrap">
+            <button class="nowDetailBtn">현황 상세정보</button>
+            <button class="excelDownBtn">엑셀 다운로드</button>
+        </div>
+
+        <!-- table부분 -->
+        <div class="tableArea">
+            <div class="contWrap contentScr">
+                <div class="depth1">
+                    <table>
+                        <caption class="hiddenCaption">관리필지 증감현황</caption>
+
+                        <thead>
+                        <tr>
+                            <th class="middleWidth" rowspan="3">
+                                <p>지사구분</p>
+                            </th>
+                            <th colspan="5" class="divideSubject">
+                                <p>23년 12월</p>
+                            </th>
+                            <th colspan="5" class="divideSubject">
+                                <p>24년 3월</p>
+                            </th>
+                            <th colspan="5" class="divideSubject">
+                                <p>증감</p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">
+                                <p>등기</p>
+                            </th>
+                            <th colspan="3">
+                                <p>미등기</p>
+                            </th>
+                            <th rowspan="2">
+                                <p>전체</p>
+                            </th>
+                            <th rowspan="2">
+                                <p>등기</p>
+                            </th>
+                            <th colspan="3">
+                                <p>미등기</p>
+                            </th>
+                            <th rowspan="2">
+                                <p>전체</p>
+                            </th>
+                            <th rowspan="2">
+                                <p>등기</p>
+                            </th>
+                            <th colspan="3">
+                                <p>미등기</p>
+                            </th>
+                            <th rowspan="2">
+                                <p>전체</p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <p>계약</p>
+                            </th>
+                            <th>
+                                <p>미계약</p>
+                            </th>
+                            <th>
+                                <p>소계</p>
+                            </th>
+                            <th>
+                                <p>계약</p>
+                            </th>
+                            <th>
+                                <p>미계약</p>
+                            </th>
+                            <th>
+                                <p>소계</p>
+                            </th>
+                            <th>
+                                <p>계약</p>
+                            </th>
+                            <th>
+                                <p>미계약</p>
+                            </th>
+                            <th>
+                                <p>소계</p>
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <!-- 서울지사 -->
+                        <tr>
+                            <td>
+                                <p>서울지사</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <!-- 증감 -->
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                        </tr>
+                        <!-- 경인지사 -->
+                        <tr>
+                            <td>
+                                <p>경인지사</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <!-- 증감 -->
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                        </tr>
+                        <!-- 충청지사 -->
+                        <tr>
+                            <td>
+                                <p>충청지사</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <!-- 증감 -->
+                            <td class="parcelNumArea"><p class="textunderline">1</p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td class="parcelNumArea"><p class="textunderline">1</p></td>
+                        </tr>
+                        <!-- 대전지사 -->
+                        <tr>
+                            <td>
+                                <p>대전지사</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <!-- 증감 -->
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td class="parcelNumArea"><p class="textunderline">1</p></td>
+                        </tr>
+                        <!-- 전북지사 -->
+                        <tr>
+                            <td>
+                                <p>전북지사</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">7,675</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">7,675</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">7,675</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">7,675</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">7,675</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">7,675</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">7,675</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">7,675</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">7,675</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">7,675</p>
+                            </td>
+                            <!-- 증감 -->
+                            <td class="parcelNumArea"><p class="textunderline">1</p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                        </tr>
+                        <!-- 전남지사 -->
+                        <tr>
+                            <td>
+                                <p>전남지사</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">2,021</p>
+                            </td>
+                            <!-- 증감 -->
+                            <td class="parcelNumArea"><p class="textunderline">1</p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td class="parcelNumArea"><p class="textunderline">1</p></td>
+                        </tr>
+                        <!-- 영남지사 -->
+                        <tr>
+                            <td>
+                                <p>영남지사</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">5,548</p>
+                            </td>
+                            <!-- 증감 -->
+                            <td class="parcelNumArea"><p class="textunderline">1</p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td class="parcelNumArea"><p class="textunderline">1</p></td>
+                        </tr>
+                        <!-- 강원지사 -->
+                        <tr>
+                            <td>
+                                <p>강원지사</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">102</p>
+                            </td>
+                            <!-- 증감 -->
+                            <td class="parcelNumArea"><p class="textunderline">1</p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td class="parcelNumArea"><p class="textunderline">1</p></td>
+                        </tr>
+                        <!-- 경남지사 -->
+                        <tr>
+                            <td>
+                                <p>경남지사</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <td class="parcelNumArea">
+                                <p class="textunderline">4</p>
+                            </td>
+                            <!-- 증감 -->
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td><p class="textunderline"></p></td>
+                            <td class="parcelNumArea"><p class="textunderline">1</p></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</div>
+
+<div class="parcelChangeParcelDetailPopWrapper"></div>
+<div class="parcelCurrentDetailPopupWrapper"></div>
+<!-- script -->
+<script type="module" src="/components/surfaceMain.js"></script>
+<script src="../../js/stats/parcelChangeStat.js"></script>
+</body>
+</html>

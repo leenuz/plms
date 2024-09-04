@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/stats/rightCloseMng.css">
+    <title>권리확보현황 마감관리</title>
+</head>
+<body>
+<!-- 권리확보현황 마감관리 -->
+<div class="rightCloseMngWrappers">
+    <div class="rightCloseMngHeader"></div>
+    <main id="rightCloseMng">
+        <div class="mainTitle">
+            <h1>권리확보현황 마감관리</h1>
+        </div>
+
+        <div class="contentWrap">
+            <!-- 상단부분 -->
+            <section class="privateUseSectionBoxs">
+                <div class="privateUseSectionCont">
+                    <div class="selectSection">
+                        <!-- select -->
+                        <div class="selectLargeWrap">
+                            <div class="selectWrap">
+                                <p class="selectTitle">
+                                    조회 기준 년도
+                                </p>
+                                <div class="selectContentArea">
+                                    <div class="hiddenSelectBox">
+                                        <select id="rightCloseMngSelectBox01_1" hidden>
+
+                                        </select>
+                                    </div>
+                                    <!--보여지는 셀렉박스-->
+                                    <div class="customSelectBox">
+                                        <button class="customSelectView">전체</button>
+                                        <ul class="customSelectBtns"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="selectWrap">
+                                <p class="selectTitle">
+                                    조회 기준 월
+                                </p>
+                                <div class="selectContentArea">
+                                    <div class="hiddenSelectBox">
+                                        <select id="rightCloseMngSelectBox01_2" hidden>
+
+                                        </select>
+                                    </div>
+                                    <!--보여지는 셀렉박스-->
+                                    <div class="customSelectBox">
+                                        <button class="customSelectView">전체</button>
+                                        <ul class="customSelectBtns"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="privateUseSectionBtnBoxs">
+                        <button class="offBtn">마감</button>
+                        <button class="searchBtn">조회하기</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 내역들 -->
+
+            <div class="dataArea">
+                <div class="dataTitles">
+                    <h5>총 검색 건 수<span>31</span>건</h5>
+                </div>
+
+
+                <div class="dataContWrap">
+                    <ul class="titles">
+                        <li class="title verti3">기준년도</li>
+                        <li class="title verti3">기준월</li>
+                        <li class="title verti3">마감처리일자</li>
+                        <li class="title hori4">사유지</li>
+                        <li class="title hori4">국유지</li>
+                        <li class="title verti3 removeBorder">엑셀 다운로드</li>
+                        <li class="title hori2">지상권 설정</li>
+                        <li class="title verti2">지상권 미설정</li>
+                        <li class="title verti2">계</li>
+                        <li class="title verti2">지상권</li>
+                        <li class="title verti2">점용</li>
+                        <li class="title verti2">미점용</li>
+                        <li class="title verti2">계</li>
+                        <li class="title">등기</li>
+                        <li class="title">미등기</li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>4</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>4</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <p>2024</p>
+                        </li>
+                        <li class="content">
+                            <p>5</p>
+                        </li>
+                        <li class="content">
+                            <p>2024-05-31</p>
+                        </li>
+                        <li class="content">
+                            <p>6,801</p>
+                        </li>
+                        <li class="content">
+                            <p>710</p>
+                        </li>
+                        <li class="content">
+                            <p>2,008</p>
+                        </li>
+                        <li class="content">
+                            <p>9,519</p>
+                        </li>
+                        <li class="content">
+                            <p>700</p>
+                        </li>
+                        <li class="content">
+                            <p>19,371</p>
+                        </li>
+                        <li class="content">
+                            <p>8</p>
+                        </li>
+                        <li class="content">
+                            <p>20,079</p>
+                        </li>
+                        <li class="content">
+                            <button class="downloadBtn">다운로드</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<div class="rightCloseMngOffPopWrapper"></div>
+
+<!-- script -->
+<script type="module" src="/components/surfaceMain.js"></script>
+<script src="../../js/stats/rightCloseMng.js"></script>
+</body>
+</html>

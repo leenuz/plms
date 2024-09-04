@@ -1,0 +1,325 @@
+@charset "UTF-8";
+
+/* reset */
+
+* {margin: 0;padding: 0;}
+body * {font-family: pretendard;}
+a {text-decoration: none; color: #3c3c3c;}
+li {list-style: none;}
+button {border: 0; outline: none;cursor: pointer;}
+
+
+/* css추가 */
+
+.rightCloseMngWrappers {
+    overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.rightCloseMngWrappers::-webkit-scrollbar {
+    width: 3px;
+}
+
+.rightCloseMngWrappers::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+
+.rightCloseMngHeader {
+    width: 100px;
+    height: 100vh;
+    float: left;
+}
+
+#rightCloseMng {
+    width: calc(100% - 100px);
+    padding: 0 20px;
+    box-sizing: border-box;
+    float: left;
+}
+
+/*  */
+#rightCloseMng .mainTitle {
+    padding: 30px 0;
+}
+#rightCloseMng .mainTitle h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #31394C;
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+#rightCloseMng .privateUseSectionBoxs {
+    margin: 0 auto 30px 0;
+}
+#rightCloseMng .privateUseSectionBoxs .privateUseSectionCont {
+    width: 100%;
+    height: 121px;
+    padding: 25px 32px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    border-radius: 20px;
+    border: 1px solid #cddbf0;
+    background-color: #f7f9fc;
+    position: relative;
+    z-index: 20;
+    display: flex;
+    gap: 20px;
+}
+#rightCloseMng .privateUseSectionBoxs .privateUseSectionCont .selectSection {
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 276px);
+}
+
+#rightCloseMng .privateUseSectionBoxs .privateUseSectionCont .selectLargeWrap {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
+    height: 100%;
+}
+/* selectbox 스크롤 */
+#rightCloseMng .customSelectBox .customSelectBtns::-webkit-scrollbar {
+    width: 4px;
+}
+#rightCloseMng .customSelectBox .customSelectBtns::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+/* custom select */
+#rightCloseMng .selectWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 203px;
+}
+#rightCloseMng .selectContentArea {
+    width: 100%;
+    height: 44px;
+    border-radius: 10px;
+}
+#rightCloseMng .customSelectBox {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+#rightCloseMng .customSelectBox .customSelectView {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #cfddf2;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6e7d88;
+    text-align-last: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 12px;
+    box-sizing: border-box;
+    background: url(/assets/media/menu07/images/arrowDown.png) no-repeat right 8px center;
+    background-size: 18px;
+    background-color: #fff;
+}
+#rightCloseMng .customSelectBox .customSelectView.active {
+    background: url(/assets/media/menu07/images/arrowDownBlue.png) no-repeat right 8px center;
+    background-size: 18px;
+    border: 1px solid #2b7de1;
+    color: #2b7de1;
+    background-color: #fff;
+}
+#rightCloseMng .customSelectBox .customSelectBtns {
+    position: absolute;
+    width: 100%;
+    top: calc(100% + 4px);
+    box-sizing: border-box;
+    max-height: 0;
+    overflow-y: hidden;
+    z-index: 10;
+    transition: 500ms;
+    opacity: 0;
+    border: 1px solid #acbdd7;
+    border-radius: 10px;
+    /* padding: 6px; */
+}
+
+#rightCloseMng .customSelectBox .customSelectBtns.active {
+    background: #fff;
+    max-height: 233px;
+    overflow-y: scroll;
+    transition: 500ms;
+    opacity: 1;
+    box-sizing: border-box;
+}
+
+#rightCloseMng .customSelectBox .customSelectBtns li {
+    height: 41px;
+    width: calc(100% - 12px);
+    background: #fff;
+    border-radius: 5px;
+    margin: 6px auto;
+}
+#rightCloseMng .customSelectBox .customSelectBtns li:hover {
+    background: #EDF2F9;
+}
+
+#rightCloseMng .moreSelectBtn {
+    font-size: 14px;
+    font-weight: 500;
+    color: #4e5871;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    text-align-last: left;
+    padding-left: 12px;
+    box-sizing: border-box;
+}
+
+#rightCloseMng .privateUseSectionBoxs .privateUseSectionCont .selectWrap .selectTitle {
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4E5871;
+}
+/* privateUseSectionRadioBoxs 버튼들 */
+#rightCloseMng .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionBtnBoxs {
+    display: flex;
+    align-items: end;
+    justify-content: flex-end;
+    height: 100%;
+    gap: 12px;
+    flex-grow: 1;
+}
+
+#rightCloseMng .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionBtnBoxs .searchBtn {
+    width: 132px;
+    height: 44px;
+    border-radius: 10px;
+    background: #2B7DE1;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+}
+#rightCloseMng .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionBtnBoxs .offBtn {
+    width: 132px;
+    height: 44px;
+    border-radius: 10px;
+    background: #E5EFFF;
+    color: #2B7DE1;
+    font-size: 15px;
+    font-weight: 600;
+}
+/* dataArea */
+/* dataTitles */
+#rightCloseMng .dataArea .dataTitles {
+    padding-left: 20px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 38px;
+}
+#rightCloseMng .dataArea .dataTitles h5 {
+    font-size: 16px;
+    font-weight: 700;
+}
+#rightCloseMng .dataTitles h5 span {
+    color: #2b7de1;
+    padding: 0px 8px;
+}
+/* dataContWrap */
+#rightCloseMng .dataArea .dataContWrap {
+    border: 1px solid #CDDBF0 ;
+    border-radius: 5px;
+    max-height: 769px;
+    overflow-y: scroll;
+}
+#rightCloseMng .dataArea .dataContWrap::-webkit-scrollbar {
+    width: 4px;
+}
+#rightCloseMng .dataArea .dataContWrap::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+#rightCloseMng .dataArea .dataContWrap .titles {
+    display: grid;
+    grid-template-columns: 144fr 144fr 173fr 144fr 144fr 144fr 144fr 144fr 144fr 144fr 144fr 139fr;
+    grid-template-rows: 34px 37px 37px;
+    background: #F7F9FC;
+    border-radius: 5px 5px 0 0;
+}
+#rightCloseMng .dataArea .dataContWrap .title {
+    color: #000;
+    border-right: 1px solid #CDDBF0;
+    border-bottom: 1px solid #CDDBF0;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#rightCloseMng .dataArea .dataContWrap .contents {
+    display: grid;
+    grid-template-columns: 144fr 144fr 173fr 144fr 144fr 144fr 144fr 144fr 144fr 144fr 144fr 139fr;
+    grid-template-rows: 44px;
+    border-bottom: 1px solid #CDDBF0;
+    box-sizing: border-box;
+}
+#rightCloseMng .dataArea .dataContWrap .contents:last-of-type {
+    border-bottom: 0;
+}
+#rightCloseMng .dataArea .dataContWrap .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #CDDBF0;
+    box-sizing: border-box;
+}
+#rightCloseMng .dataArea .dataContWrap .content:last-of-type {
+    border-right: 0;
+}
+#rightCloseMng .dataArea .dataContWrap .content p {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #3C3C3C;
+    font-size: 14px;
+    font-weight: 500;
+}
+#rightCloseMng .dataArea .dataContWrap .verti2 {
+    grid-row: span 2;
+}
+#rightCloseMng .dataArea .dataContWrap .verti3 {
+    grid-row: span 3;
+}
+#rightCloseMng .dataArea .dataContWrap .hori4 {
+    grid-column: span 4;
+}
+#rightCloseMng .dataArea .dataContWrap .hori2 {
+    grid-column: span 2;
+}
+#rightCloseMng .dataArea .dataContWrap .removeBorder {
+    border-right: 0;
+}
+#rightCloseMng .downloadBtn {
+    width: 116px;
+    height: 27px;
+    border-radius: 20px;
+    background: url(/assets/media/menu07/images/download.png) no-repeat right 26px center;
+    background-color: #4E5871;
+    background-size: 12px;
+    color: #fff;
+    text-align: left;
+    padding-left: 26px;
+    box-sizing: border-box;
+    font-size: 13px;
+    font-weight: 600;
+}

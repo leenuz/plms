@@ -1,0 +1,476 @@
+@charset "UTF-8";
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body * {
+    font-family: pretendard;
+}
+
+a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+li {
+    list-style: none;
+}
+
+input {
+    border: 0;
+    outline: 0;
+}
+
+input:focus {
+    border: 0;
+}
+
+textarea:focus {
+    border: 0;
+    outline: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+button {
+    border: 0;
+}
+.hiddenCaption {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+}
+/* css추가 */
+
+.issueStatusWrappers {
+    overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.issueStatusWrappers::-webkit-scrollbar {
+    width: 3px;
+}
+
+.issueStatusWrappers::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+
+.issueStatusHeader {
+    width: 100px;
+    height: 100vh;
+    float: left;
+}
+
+#issueStatus {
+    width: calc(100% - 100px);
+    padding: 0 20px;
+    box-sizing: border-box;
+    float: left;
+}
+#issueStatus .mainTitle {
+    padding: 30px 0;
+}
+
+#issueStatus .mainTitle h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #31394C;
+    padding-left: 20px;
+    box-sizing: border-box;
+
+}
+/* section */
+
+#issueStatus .privateUseSectionBoxs {
+    margin: 0 auto;
+}
+
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont {
+    width: 100%;
+    height: 253px;
+    padding: 10px 0px;
+    margin: 0 auto;
+    border-radius: 20px;
+    border: 1px solid #cddbf099;
+    background-color: #f7f9fc;
+    /* 추가 */
+    position: relative;
+    z-index: 20;
+}
+
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide {
+    /* width: 100%; */
+    height: 50%;
+    width: 97%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .selectSection {
+    display: flex;
+    justify-content: space-between;
+}
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .selectLargeWrap {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
+    height: 100%;
+}
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide:last-child {
+    margin-top: 3px;
+    justify-content: flex-start;
+    align-items: start;
+}
+
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide:first-child {
+    border-bottom: 1px solid #cddbf099;
+}
+/* input date */
+#issueStatus .inputWrap {
+    width: 203px;
+}
+#issueStatus .inputWrap .inputDateWrap {
+    width: 100%;
+    height: 44px;
+}
+#issueStatus .dateBar {
+    width: 5px;
+    height: 2px;
+    background: #cfddf2;
+}
+#issueStatus .dateInputBox {
+    width: 100%;
+    height: 44px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background: url(/assets/media/menu07/images/calendarInputIcon.png) no-repeat left 8px center;
+    background-size: 15px;
+    border: 1px solid #CFDDF2;
+    border-radius: 10px;
+    background-color: #fff;
+}
+#issueStatus .dateInputWrap {
+    width: 42%;
+    height: 100%;
+    position: relative;
+    margin: 0 1px;
+}
+#issueStatus input[type="date"] {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    position: relative;
+    color: transparent;
+    background: transparent;
+    text-align: center;
+    box-sizing: border-box;
+    border: 0;
+    font-size: 13px;
+    font-weight: 500;
+    word-spacing: -3px ;
+}
+/* 기본 달력 투명하게, 클릭너비 넓히기 */
+#issueStatus input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+#issueStatus input[type="date"]::before {
+    content: attr(data-placeholder);
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    transform: translateY(-50%);
+    color: #6e7d88;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+#issueStatus input[type="date"]:focus,
+#issueStatus input[type="date"]:valid {
+    color: #6e7d88; 
+}
+
+#issueStatus input[type="date"]:focus::before,
+#issueStatus input[type="date"]:valid::before {
+    content: "";
+}
+
+/* 제목들 */
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .miniTitle {
+    font-size: 15px;
+    font-weight: 600;
+    color: #4E5871;
+    margin-bottom: 12px;
+}
+/* selectbox 스크롤 */
+#issueStatus .customSelectBox .customSelectBtns::-webkit-scrollbar {
+    width: 4px;
+}
+#issueStatus .customSelectBox .customSelectBtns::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+/* custom select */
+
+#issueStatus .selectPlace {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .selectPlace .selectLargeWrap {
+    height: auto;
+    gap: 9px;
+}
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .selectSection.selectSectionBetween {
+    justify-content: space-between;
+}
+#issueStatus .selectPlace .selectWrap {
+    height: auto;
+}
+#issueStatus .selectWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+#issueStatus .selectContentArea {
+    width: 203px;
+    height: 44px;
+    border-radius: 10px;
+}
+#issueStatus .customSelectBox {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+#issueStatus .customSelectBox .customSelectView {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #cfddf2;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6e7d88;
+    text-align-last: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 12px;
+    box-sizing: border-box;
+    background: url(/assets/media/menu07/images/arrowDown.png) no-repeat right 8px center;
+    background-size: 18px;
+    background-color: #fff;
+}
+#issueStatus .customSelectBox .customSelectView.active {
+    background: url(/assets/media/menu07/images/arrowDownBlue.png) no-repeat right 8px center;
+    background-size: 18px;
+    border: 1px solid #2b7de1;
+    color: #2b7de1;
+    background-color: #fff;
+}
+#issueStatus .customSelectBox .customSelectBtns {
+    position: absolute;
+    width: 100%;
+    top: calc(100% + 4px);
+    box-sizing: border-box;
+    max-height: 0;
+    overflow-y: hidden;
+    z-index: 10;
+    transition: 500ms;
+    opacity: 0;
+    border: 1px solid #acbdd7;
+    border-radius: 10px;
+}
+#issueStatus .customSelectBox .customSelectBtns.active {
+    padding: 6px 0;
+    background: #fff;
+    max-height: 233px;
+    overflow-y: scroll;
+    transition: 500ms;
+    opacity: 1;
+}
+#issueStatus .customSelectBox .customSelectBtns li {
+    padding: 0;
+    width: calc(100% - 12px);
+    margin: 0 auto;
+    height: 41px;
+    background: #fff;
+    border-radius: 5px ;
+}
+#issueStatus .customSelectBox .customSelectBtns li:hover {
+    background: #EDF2F9;
+}
+#issueStatus .moreSelectBtn {
+    font-size: 14px;
+    font-weight: 500;
+    color: #4e5871;
+    width: 100%;
+    height: 100%;
+    text-align-last: left;
+    padding-left: 12px;
+    box-sizing: border-box;
+    background: transparent;
+}
+/* 버튼들 */
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionBtnBoxs {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    height: 100%;
+}
+
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionBtnBoxs button,
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionBtnBoxs a {
+    height: 44px;
+    border-radius: 10px;
+    display: block;
+    margin: 5px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionBtnBoxs a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionBtnBoxs .issueStatusBtn {
+    width: 132px;
+    height: 44px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionBtnBoxs .manageCodeBtn {
+    background: #E5EFFF;
+    color: #2B7DE1;
+}
+#issueStatus .privateUseSectionBoxs .privateUseSectionCont .privateUseSectionContDevide .privateUseSectionBtnBoxs .viewBtn {
+    background: #2B7DE1;
+    color: #fff;
+}
+/* table 부분 */
+#issueStatus .tableArea {
+    width: 100%;
+    margin-top: 30px;
+}
+#issueStatus .tableArea .contWrap {
+    border: 1px solid #CDDBF0;
+    border-radius: 5px;
+    height: 660px;
+    overflow-y: scroll;
+}
+#issueStatus .tableArea table {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 5px;
+    table-layout: fixed;
+    position: relative;
+}
+
+#issueStatus .tableArea table tbody {
+    width: 100%;
+    height: 100%;
+}
+#issueStatus table tr {
+    width: 100%;
+    border-bottom: 1px solid #CDDBF0;
+}
+
+.titleScr {
+    padding-right: 4px;
+    box-sizing: border-box;
+}
+
+#issueStatus .contentScr::-webkit-scrollbar {
+    width: 4px;
+}
+
+#issueStatus .contentScr::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+/* border 정리 */
+#issueStatus table th,
+#issueStatus table td {
+    border-right: 1px solid #CDDBF0;
+    height: 45px;
+    box-sizing: border-box;
+   
+}
+#issueStatus table th p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    text-align: center;
+}
+#issueStatus table th .smallSpan {
+    font-size: 12px;
+    font-weight: 500;
+}
+#issueStatus table td p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+#issueStatus .depth1 table thead tr:first-of-type {
+    border-radius: 5px 5px 0 0;
+}
+/* 맨 오른쪽 보더 빼기 */
+#issueStatus table thead tr:first-of-type th:last-of-type {
+    border-right: 0;
+}
+
+#issueStatus table tbody tr td:last-of-type {
+    border-right: 0;
+}
+
+/* 맨 밑 보더 빼기 */
+#issueStatus .contWrap > div:last-child table tbody tr:last-of-type {
+    border-bottom: 0;
+}
+
+#issueStatus .tableArea table th {
+    color: #000;
+}
+
+#issueStatus .tableArea table td {
+    color: #3C3C3C;
+}
+
+#issueStatus .tableArea table td .textunderline {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* 배경색 깔기 */
+#issueStatus table tr th {
+    background: #F7F9FC;
+}
