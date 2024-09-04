@@ -456,13 +456,9 @@ public class goverController {
 		//masterEdit  상세 조회
 		@GetMapping(path="/masterEdit") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView masterEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			ModelAndView mav=new ModelAndView();
 			
-			log.info("마스터 수정 컨트롤러 동작");
-//	        List<TestDTO> list = new ArrayList<TestDTO>();
-//	        list = dbService.getList();
+			log.info("점용 마스터 수정 컨트롤러 동작");
 			HashMap params = new HashMap();
 			ArrayList<HashMap>  list=new ArrayList<HashMap>();
 			
@@ -474,60 +470,20 @@ public class goverController {
 			params.put("index",index);
 			log.info("params:"+params);
 
-			// 점용 마스터 조회
 			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
 			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
-			//TODO 메모 가져와야됨.
+			ArrayList<HashMap> goverMemoList = mainService.selectQuery("goverSQL.selectMemoList",params);
 			
-////			ArrayList<HashMap> soujaList = mainService.selectQuery("goverSQL.selectSoyujaData",params);
-////			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
-////			ArrayList<HashMap> jisangMergeList = mainService.selectQuery("goverSQL.selectMergeList",params);
-////			params.put("pnu", data.get(0).get("jm_pnu"));
-////			ArrayList<HashMap> jisangIssueList = mainService.selectQuery("goverSQL.selectIssueList",params);
-////			log.info("jisangIssueList size:"+jisangIssueList.size());
-////			
-////			if (jisangIssueList.size()>0) {
-////				log.info("1:"+jisangIssueList.get(0).get("pi_code_depth1"));
-////				log.info("2:"+jisangIssueList.get(0).get("pi_code_depth2"));
-////				log.info("3:"+jisangIssueList.get(0).get("pi_code_depth3"));
-////				params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
-////				params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
-////				params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
-////			}
-////			
-////			ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("goverSQL.selectPnuAtcFileList",params);
-////			ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("goverSQL.selectIssueHistoryList",params);
-////			ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("goverSQL.selectIssueCodeAtcFileList",params);
-////			ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
-////			log.info("params:"+params);
-////			log.info("data:"+data.get(0));
-////			log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
-////			log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
-////			log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
-////			log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
-////			log.info("jisangPermitList:"+jisangPermitList);
-////			log.info("jisangIssueList:"+jisangIssueList);
-////			log.info("souja count:"+soujaList.size());
-////			log.info("soujaList:"+soujaList);
-////			log.info("atcFileList:"+atcFileList);
-////			log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
-////			log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
-////			log.info("jisangMemoList:"+jisangMemoList);
-////			log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+			log.info("data:"+data.get(0));
+			log.info("atcFileList:"+atcFileList);
+			log.info("goverMemoList:"+goverMemoList);
+//			log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
 
 			mav.addObject("resultData",data.get(0));
 	  		mav.addObject("goverModifyList",goverModifyList);
 	  		mav.addObject("atcFileList",atcFileList);
-	  		
-//  		mav.addObject("soujaList",soujaList);
-//  		mav.addObject("jisangPermitList",jisangPermitList);
-//  		mav.addObject("jisangMergeList",jisangMergeList);
-//  		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
-//  		mav.addObject("jisangIssueList",jisangIssueList);
-//  		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
-//  		mav.addObject("memoList",jisangMemoList);
-//  		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+	  		mav.addObject("memoList",goverMemoList);
   			
   			mav.setViewName("content/gover/masterEdit");
   			return mav;

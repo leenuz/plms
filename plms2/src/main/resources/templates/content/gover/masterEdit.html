@@ -1038,71 +1038,42 @@
 
         <!-- 메모 -->
 		
-        <section class="memoSection onlyReadMemo">
-          <div class="subTitle">
-            <div class="subTitleText">메모</div>
-          </div>
+		<section class="memoSection onlyReadMemo">
+		  <div class="subTitle">
+		    <div class="subTitleText">메모</div>
+		  </div>
 
-          <div class="contWrap">
-            <div class="contBox">
-              <div class="contentDetailBox">
-                <div class="depth1">
-                  <ul class="titles">
-                    <li class="title">작성일시</li>
-                    <li class="title">작성자</li>
-                    <li class="title largeWidth">내용</li>
-                  </ul>
-                  <ul class="contents">
-                    <li class="content">
-                      <input
-                        type="text"
-                        placeholder="2022-11-01"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="content">
-                      <input
-                        type="text"
-                        placeholder="김철수"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="content largeWidth">
-                      <input
-                        type="text"
-                        placeholder="협의 중"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                  </ul>
-                  <ul class="contents lastContents">
-                    <li class="content">
-                      <input
-                        type="text"
-                        placeholder="2022-11-01"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="content">
-                      <input
-                        type="text"
-                        placeholder="김철수"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="content largeWidth">
-                      <input
-                        type="text"
-                        placeholder="협의 중"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+		  <div class="contWrap">
+		    <div class="contBox">
+		      <div class="contentDetailBox">
+		        <div class="depth1">
+		          <ul class="titles">
+		            <li class="title">작성일시</li>
+		            <li class="title">작성자</li>
+		            <li class="title largeWidth">내용</li>
+		          </ul>
+		          <div class="contentScr">
+		            <!-- 가져온 메모 데이터를 반복문으로 출력 -->
+		            <ul class="contents" th:each="memo : ${memoList}">
+					  <li class="content">
+						<!-- 작성일시 -->
+						<input type="text" th:value="${#dates.format(memo.mm_wdate, 'yyyy-MM-dd')}" readonly class="notWriteInput" />
+					  </li>
+		              <li class="content">
+		                <!-- 작성자 -->
+		                <input type="text" th:value="${memo.mm_user_name}" readonly class="notWriteInput" />
+		              </li>
+		              <li class="content largeWidth">
+		                <!-- 내용 -->
+		                <input type="text" th:value="${memo.mm_memo}" readonly class="notWriteInput" />
+		              </li>
+		            </ul>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</section>
 
         <div class="finalBtnBox btnWrap">
           <button class="backBtn grayBtn finalBtn">이전</button>
