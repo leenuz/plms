@@ -3,7 +3,7 @@ const feeDetailPayPopEvet = () => {
     
     const feeDetailPayBtn = document.querySelector("#feeDetail .payBtn");
     const feeDetailPayPopWrappers = document.querySelector(".feeDetailPayPopWrappers");
-    let htmlFilePath = '/components/popuphtml/occupancy_Popup/occupancyfeePopup.html'; // 삽입할 html 파일 경로
+    let htmlFilePath = '/components/popuphtml/occupancyfeePopup.html'; // 삽입할 html 파일 경로
 
     if(feeDetailPayBtn){
 
@@ -49,7 +49,7 @@ const feeDetailCangehistoryPopEvet = () => {
     
    const historyBtn = document.querySelector("#feeDetail .historyBtn");
    const feeDetailCangehistoryPopWrappers = document.querySelector(".feeDetailCangehistoryPopWrappers");
-   let htmlFilePath = '/components/popuphtml/occupancy_Popup/changehistoryPopup.html'; // 삽입할 html 파일 경로
+   let htmlFilePath = '/components/popuphtml/changehistoryPopup.html'; // 삽입할 html 파일 경로
 
    if(feeDetailCangehistoryPopWrappers){
 
