@@ -135,7 +135,7 @@ MoreSelectBtn.forEach((moreBtn) => {
         nearBySelectBox.value = moreBtn.textContent;
         console.log(`Selected value: ${nearBySelectBox.value}`);
 
-        // masterRegSelectBox06의 값이 변경될 때에만 스타일 변경
+        // masterRegSelectBox06의 값이 변경될 때에만 스타일 변경(단/복선 선택에 따른 관경 변경)
         const lineValue = document.getElementById('masterRegSelectBox06');
 
         if (nearBySelectBox === lineValue) {
@@ -153,6 +153,130 @@ MoreSelectBtn.forEach((moreBtn) => {
     })
 })
 
+// **파일 첨부 기능 추가**
+const masterRegFileEvent = () => {
+    // 파일 입력 요소를 가져옴
+    const masterReg_myPcFiles = document.getElementById('masterReg_myPcFiles');
+    
+    // masterReg_myPcFiles 요소가 존재하지 않으면 함수를 종료
+    if (!masterReg_myPcFiles) {
+        console.error("파일 첨부 요소를 찾을 수 없습니다.");
+        return;
+    }
+
+    // 나머지 코드 - 요소가 존재할 경우만 실행
+    const attachFileInfo = masterReg_myPcFiles.closest('.attachFileInfo');
+    const fileUploadAfter = attachFileInfo.querySelector('.fileUploadAfter');
+    const fileSaveBtn = attachFileInfo.querySelector('.fileSaveBtn');
+    let fileInfoName = '';
+    let fileInfoSize = '';
+    let fileInfoType = '';
+
+    masterReg_myPcFiles.addEventListener('change', function () {
+        const existContents = fileUploadAfter.querySelectorAll('.contents');
+        existContents.forEach((list) => list.remove());
+
+        if (masterReg_myPcFiles.files.length > 0) {
+            for (let i = 0; i <= masterReg_myPcFiles.files.length - 1; i++) {
+                const file = masterReg_myPcFiles.files[i];
+                fileInfoName = file.name;
+                fileInfoSize = byteTransform(file.size);
+                fileInfoType = file.type;
+
+                const listBox = `
+                <li class="btnbox"><button class="fileDeleteBtn"></button></li>
+                <li class="content filenameBox">
+                  <figure class="typeIcon"></figure><p class="fileNameText">${fileInfoName}</p>
+                </li>
+                <li class="content"><p>-</p></li>
+                <li class="content"><p class="fileSizeText">${fileInfoSize}</p></li>
+                `;
+                
+                const contentsUl = document.createElement('ul');
+                contentsUl.classList.add('contents');
+                contentsUl.innerHTML = listBox;
+                fileUploadAfter.appendChild(contentsUl);
+            }
+
+            defaultFileUploadWrap.forEach((wrap) => wrap.classList.remove('active'));
+            defaultFileUploadWrap[1].classList.add('active');
+            fileSaveBtn.classList.add('active');
+        } else {
+            resetFileInput();
+        }
+    });
+
+    // 파일 삭제 처리 함수
+    const removeFile = (fileNameToRemove) => {
+        const filesArray = Array.from(masterReg_myPcFiles.files);
+        const newDataTransfer = new DataTransfer();
+        filesArray.forEach(file => {
+            if (file.name !== fileNameToRemove) newDataTransfer.items.add(file);
+        });
+        masterReg_myPcFiles.files = newDataTransfer.files;
+    };
+
+    fileUploadAfter.addEventListener('click', (event) => {
+        if (event.target.classList.contains('fileDeleteBtn')) {
+            const nearbyContents = event.target.closest('.contents');
+            const fileNameToRemove = nearbyContents.querySelector('.fileNameText').textContent;
+            removeFile(fileNameToRemove);
+            nearbyContents.remove();
+            if (masterReg_myPcFiles.files.length === 0) resetFileInput();
+        }
+    });
+
+    function resetFileInput() {
+        masterReg_myPcFiles.value = '';
+        defaultFileUploadWrap.forEach((wrap) => wrap.classList.remove('active'));
+        defaultFileUploadWrap[0].classList.add('active');
+        fileSaveBtn.classList.remove('active');
+    }
+
+    function byteTransform(bytes) {
+        const dataSize = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        const d = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+        return `${(bytes / (1024 ** d)).toFixed(1)} ${dataSize[d]}`;
+    }
+}
+masterRegFileEvent();
+
+// **검색 팝업 기능 추가**
+const masterRegOpenPopUp = () => {
+    const masterRegSearchBtn = document.querySelectorAll("#masterReg .searchAddressBtn");
+    const masterRegSearchPop = document.querySelector(".masterRegSearchPopWrapper");
+    const masterRegResultFilePath = '/components/popuphtml/searchResultsPopup.html';
+
+    if (masterRegSearchBtn) {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', masterRegResultFilePath, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                masterRegSearchPop.innerHTML = xhr.responseText;
+                runScriptsInElement(masterRegSearchPop);
+            }
+        };
+        xhr.send();
+        console.log('masterRegResultPop 작동');
+
+        masterRegSearchBtn.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+                popupOpen.classList.add("active");
+            });
+        });
+    }
+
+    const runScriptsInElement = (element) => {
+        const scripts = element.getElementsByTagName('script');
+        for (let i = 0; i < scripts.length; i++) {
+            const script = document.createElement('script');
+            script.textContent = scripts[i].textContent;
+            document.body.appendChild(script).parentNode.removeChild(script);
+        }
+    };
+}
+masterRegOpenPopUp();
 
 
 /* 엑셀팝업불러오기 */
