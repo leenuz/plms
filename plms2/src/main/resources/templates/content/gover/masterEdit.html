@@ -1004,28 +1004,25 @@
 		              <li class="content">
 		                <!-- 변경일시 -->
 		                <input
-						  name="modify_date"
 		                  type="text"
 		                  class="notWriteInput"
-		                  th:value="${history.modify_date}"
+		                  th:value="${history['gm_modify_date']}"
 		                  readonly />
 		              </li>
 		              <li class="content">
 		                <!-- 구분 -->
 		                <input
-						  name="gubun"
 		                  type="text"
 		                  class="notWriteInput"
-		                  th:value="${history.gubun}"
+		                  th:value="${history['gm_gubun']}"
 		                  readonly />
 		              </li>
 		              <li class="content largeWidth">
 		                <!-- 내용 -->
 		                <input
-						  name="cont"
 		                  type="text"
 		                  class="notWriteInput"
-		                  th:value="${history.cont}"
+		                  th:value="${history['gm_cont']}"
 		                  readonly />
 		              </li>
 		            </ul>

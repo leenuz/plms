@@ -476,6 +476,7 @@ public class goverController {
 			ArrayList<HashMap> goverMemoList = mainService.selectQuery("goverSQL.selectMemoList",params);
 			
 			log.info("data:"+data.get(0));
+			log.info("goverModifyList:"+goverModifyList);
 			log.info("atcFileList:"+atcFileList);
 			log.info("goverMemoList:"+goverMemoList);
 //			log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
