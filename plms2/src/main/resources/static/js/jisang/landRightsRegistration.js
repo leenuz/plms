@@ -193,56 +193,68 @@ const registBtn = document.querySelectorAll('#landRightsRegistration .registBtn'
 
 $(document).on("click",".addBtn",function(){
 	console.log("---------addBtn click-----------");
+
 	var thisEditContent = this.closest('.contents');
 	        console.log(thisEditContent);
-			thisEditContent.classList.add('editing');
+//			thisEditContent.classList.add('editing');
 			const inputs = thisEditContent.querySelectorAll('input');
 
 			        if (thisEditContent.classList.contains('editing')) {
 			            inputs.forEach(input => {
-			                input.removeAttribute('readonly');
+			              input.setAttribute('readonly', 'readonly');
+
+
 			            });
 			        } else {
 			            inputs.forEach(input => {
-			                input.setAttribute('readonly', 'readonly');
+			            thisEditContent.classList.add('editing');
+			            input.removeAttribute('readonly');
 			            });
 			        }
 });
 $(document).on("click","#completeSoujaBtn",function(){
 		console.log("------------completeSoujaBtn click---------");
+        const soujaDiv = document.getElementById('soujaDiv');
+        const editingElements = soujaDiv.querySelectorAll('.editing');
+        const editingCount = editingElements.length;
+
 		var thisUl=$(this).parent().parent().parent().parent();
-		console.log($(thisUl).html());
+		console.log("editingCount" + editingCount);
 		var addUl=$("#soujaHiddenUl").html();
-		
+
 		var input=$(thisUl).find("input");
 		console.log(input);
 		console.log(input.length);
 		console.log("0:"+$(input).eq(0).val());
-		
+
 		if ($(input).eq(0).val()=="" || $(input).eq(1).val()=="" || $(input).eq(2).val()=="" ||  $(input).eq(3).val()==""){
 			alert("입력사항을 체크하세요! 공유지분,성명,주소는 필수 입력입니다.");
 			return;
 		}
-		
-		
+
+
 		if ($(input).eq(0).val()!="" && $(input).eq(1).val()!="" && $(input).eq(2).val()!="" && $(input).eq(3).val()!="") {
 		//	alert("소유자 정보를 정확하게 입력해주세요!");
 			$(thisUl).removeClass("editing");
-			$("#soujaDiv").append('<ul class="contents" id="soujaUl">'+addUl+'</ul>');
+            $(thisUl).find('li input').attr('readonly', true);
+			if(editingCount < 3){
+			    $("#soujaDiv").append('<ul class="contents editing" id="soujaUl">'+addUl+'</ul>');
+			}
+
 			//return;
 		}
 		//if ($(input).eq(0).html()=="" || )
-		
-		$(thisUl).removeClass("editing");
+
+//		$(thisUl).removeClass("editing");
 		/*for(var i=0;i<input.length;i++) {
 			console.log($(input).eq(i).parent().html());
 		}*/
-					        
+
 					            /*$(input).forEach(input => {
 					                input.setAttribute('readonly', 'readonly');
 					            });*/
-					        
-		
+
+
 });
 
 
@@ -254,7 +266,7 @@ $(document).on("click","#deleteSoujaBtn",function(){
 	console.log($(thisContents).length);
 	if ($(thisContents).length<=2) return;
 	$(thisUl).remove();
-	
+
 });
 
 /*ownerInfoAddBtn.forEach((btn) => {
@@ -361,7 +373,7 @@ const allCheckEventLandRightsRegist = () => {
         }
     }
 
-    // 전체선택 클릭시 
+    // 전체선택 클릭시
     function clickedSelectAllLandRightsRegist(clickedAllinput) {
         const attachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
 
@@ -388,29 +400,29 @@ $(document).on("click","#deleteFileBtn",function(){
 		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
 		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
 		$(delEle).remove();
-		
-		
+
+
 	}
-	
+
 })
 
 
 
 $(document).on("click","#basicSearchBtn",function(){
-	
+
 	console.log("-----basicSearchBtn click------------");
-	
-	
-		   
-		  
+
+
+
+
 		   console.log('landRightSearchResultPop 작동');
 		   console.log("-------검색버튼 클릭-----------");
 		   		console.log($("#saveForm").serialize());
 		   		var formSerializeArray = $('#saveForm').serializeArray();
 		   			   console.log(formSerializeArray);
 					  /* console.log($("#searchResultPopDiv").html());*/
-		              
-		   		   
+
+
 				   //searchResultPopDiv 화면뿌릴 DIV
 				   	   $.ajax({
 				   	   	  url: "/jisang/getBasicSearchData",
@@ -426,39 +438,39 @@ $(document).on("click","#basicSearchBtn",function(){
 						  	   //			   		              landRightsSearchBtn.classList.add("open");
 						  	   $(popupOpen).addClass("open");
 						  	   popupOpen.classList.add("active");
-						 
+
 				   	   	});
-				   	   
+
 });
 
 //저장버튼
 $(document).on("click","#finalBtn",function(){
 	console.log("---------finalBtn class click------------");
 	console.log($("#saveForm").serialize());
-	
+
 	//데이터를 가공해서 넘김다
-	
-	
+
+
 	var formSerializeArray = $('#saveForm').serializeArray();
 				   console.log(formSerializeArray);
-				   
+
 				   len = formSerializeArray.length;
 				   var dataObj = {}; 
 				   for (i=0; i<len; i++) {  
 					dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
 				   }
-				   
+
 				   console.log("------dataObj--------");
 				   console.log(dataObj);
-				      
-				   
-				   
-				   
-				   
+
+
+
+
+
 				   const soujaUls = document.querySelectorAll('#soujaUl');
 				   const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
 				   console.log(attachFileUls);
-				   
+
 				//   console.log(soujaUls);
 				   var soujaArr=new Array();
 				   for(var i=0;i<soujaUls.length;i++){
@@ -469,7 +481,7 @@ $(document).on("click","#finalBtn",function(){
 						var soujaAddress=$(soujaUls[i]).find("#soujaAddress").val();
 						var soujaContact1=$(soujaUls[i]).find("#soujaContact1").val();
 						var soujaContact2=$(soujaUls[i]).find("#soujaContact2").val();
-						
+
 						soujaJibun=(soujaJibun=="undefined" || soujaJibun=="" || soujaJibun==null)?"":soujaJibun;
 						soujaName=(soujaName=="undefined" || soujaName=="" || soujaName==null)?"":soujaName;
 						soujaAddress=(soujaAddress=="undefined" || soujaAddress=="" || soujaAddress==null)?"":soujaAddress;
@@ -485,15 +497,15 @@ $(document).on("click","#finalBtn",function(){
 						console.log(fname);
 						files.push(fname);
 					}
-				   
+
 					console.log("--------files---------");
 					console.log(files);
-					
+
 				   console.log("--------soujaArr------");
 				   console.log(soujaArr);
 				   dataObj.soujaInfo=soujaArr;
 				   dataObj.uploadFiles=files;
-				   
+
 				   //필수정보체크
 				   console.log("jisa:"+dataObj.jisa);
 				   if (!checkData(dataObj.jisa,"s","담당지사를 입력해주세요!")) return;
@@ -513,24 +525,24 @@ $(document).on("click","#finalBtn",function(){
 				   else if (!checkData(dataObj.mcomple_yn,"s","등기여부블 입력해주세요!")) return;
 				   else if (!checkData(dataObj.mpyeonib_area,"s","편입면적을 입력해주세요!")) return;
 				   else if (!checkData(dataObj.mpermit_yn,"s","계약유형을 입력해주세요!")) return;
-				   
-				   
-				   
-				   
-				   
+
+
+
+
+
 				   console.log("------dataObj--------");
 				   			   console.log(dataObj);
-				   
-				   
-				  
-				   url="/jisang/api/Save"; 
+
+
+
+				   url="/jisang/api/Save";
 				   $.ajax({
-				   			
+
 				   				url:url,
 				   				type:'POST',
 				   				contentType:"application/json",
 				   				data:JSON.stringify(dataObj),
-				   				
+
 				   				dataType:"json",
 				   				beforeSend:function(request){
 				   					console.log("beforesend ........................");
@@ -558,9 +570,9 @@ $(document).on("click","#finalBtn",function(){
 				   					alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
 									return false;
 				   				}
-				   			
-				   		}); 
-	
+
+				   		});
+
 });
 
 
@@ -583,23 +595,30 @@ $(document).on("click","#popupCloseBtn",function(){
 
 	    PopupFinalBtns.forEach((button) => {
 	        button.addEventListener('click',function(){
-	           
+
 	        })
 	    })
 
 	// x 버튼 click시 팝업 사라지게
 
-	const topCloseBtn = document.querySelectorAll('.popupWrap .topCloseBtn');
-	    if(topCloseBtn){
+//	const topCloseBtn = document.querySelectorAll('.popupWrap .topCloseBtn');
+//	    if(topCloseBtn){
+//
+//	        topCloseBtn.forEach((topClosebutton) => {
+//
+//	            topClosebutton.addEventListener('click',function(){
+//	                const PopupWrap = topClosebutton.closest('.popupWrap');
+//	                PopupWrap.classList.remove("active");
+//	            })
+//	        })
+//	    }
 
-	        topCloseBtn.forEach((topClosebutton) => {
+$(document).on("click",".topCloseBtn",function(){
 
-	            topClosebutton.addEventListener('click',function(){
-	                const PopupWrap = topClosebutton.closest('.popupWrap');
-	                PopupWrap.classList.remove("active");
-	            })
-	        })
-	    }
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+//	$(".popupWrap").toggleClass("active");
+});
 
 $(document).on("click",".resultSelectBtn",function(){
 	console.log("----------resultSelectBtn-click--------");
@@ -622,8 +641,9 @@ $(document).on("click",".resultSelectBtn",function(){
 	$("#sgg_nm").val(sgg_nm);
 	$("#emd_nm").val(emd_nm);
 	$("#ri_nm").val(ri_nm);
-	
-	
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+    	$(".popupWrap").removeClass("active");
 	
 	
 })
