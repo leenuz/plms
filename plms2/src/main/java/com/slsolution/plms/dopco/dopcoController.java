@@ -52,4 +52,13 @@ public class dopcoController {
 		mav.setViewName("content/dopco/menu05_2");
 		return mav;
 	}
+
+	@GetMapping(path="/compLandInfo") //http://localhost:8080/api/get/dbTest
+	public ModelAndView compLandInfo(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/dopco/compLandInfo");
+		return mav;
+	}
 }
