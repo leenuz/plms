@@ -1013,7 +1013,7 @@
 		                <input
 		                  type="text"
 		                  class="notWriteInput"
-		                  th:value="${history['gm_modify_date']}"
+		                  th:value="${#dates.format(history['gm_modify_date'], 'yyyy-MM-dd HH:mm')}"
 		                  readonly />
 		              </li>
 		              <li class="content">
