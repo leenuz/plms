@@ -961,7 +961,11 @@
 			           <label th:for="'masterEdit_attachFile' + ${iterStat.index + 1}"></label>
 			        </li>
 			        <li class="content registDateWidth">
-			           <input type="text" th:value="${file.ga_wdate}" readonly class="notWriteInput" />
+			           <input 
+					   type="text" 
+					   th:value="${#dates.format(file.ga_wdate, 'yyyy-MM-dd HH:mm')}"
+					   readonly 
+					   class="notWriteInput" />
 			        </li>
 			        <li class="content fileNameWidth">
 			           <input type="text" th:value="${file.ga_file_nm}" readonly class="notWriteInput" />
