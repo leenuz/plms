@@ -43,6 +43,22 @@ $(document).on("click", "#draftSaveBtn", function() {
     console.log(json); // JSON 문자열 출력
 });
 
+// 체크박스 상태 변경 시 점용료 선납 여부 처리
+function updateOccuprepayynValue(checkbox) {
+    const form = checkbox.form;
+    
+    if (checkbox.checked) {
+        checkbox.value = "1";  // 체크된 경우 value는 1
+    } else {
+        // 체크 해제된 경우 체크박스 value="0"으로 설정
+        var hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = checkbox.name;
+        hiddenInput.value = '0';
+        form.appendChild(hiddenInput);
+    }
+}
+
 // 커스텀 selectbox
 
 const createCustomLiMasterEdit = () => {
