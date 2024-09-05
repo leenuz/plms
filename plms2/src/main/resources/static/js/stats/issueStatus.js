@@ -167,6 +167,24 @@ MoreSelectBtn.forEach((moreBtn) => {
 //
 //issueStatusComplaintPopEvet();
 
+  /* 페이지네이션 */
+const pageCountEvetForPotentialIssue = () => {
+    const potentialPageCountBtn = document.querySelectorAll(
+      ".pilji_info_Popup_boardPageBoxs .pageCountBoxs p"
+    );
+    potentialPageCountBtn.forEach((btn) => {
+      potentialPageCountBtn[0].classList.add("active");
+      btn.addEventListener("click", () => {
+        potentialPageCountBtn.forEach((otherBtn) => {
+          otherBtn.classList.remove("active");
+        });
+        btn.classList.toggle("active");
+      });
+    });
+  };
+  pageCountEvetForPotentialIssue();
+
+
 $(document).on("click",".parcelPopupOpen",function(){
 
 						  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
@@ -174,6 +192,14 @@ $(document).on("click",".parcelPopupOpen",function(){
 						  	   popupOpen.classList.add("active");
 
 				   	   	});
+
+$(document).on("click",".complaintPopupOpen",function(){
+
+      const popupOpen = document.querySelector("#searchResultsPopup1 .popupWrap");
+           $(popupOpen).addClass("open");
+           popupOpen.classList.add("active");
+
+    });
 
 $(document).on("click",".topCloseBtn",function(){
 

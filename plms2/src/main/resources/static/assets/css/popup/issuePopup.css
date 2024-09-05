@@ -553,3 +553,45 @@ textarea:focus {
 .potential_sec1 .potential_total_num .num_blue {
   color: #2b7de1;
 }
+
+/*민원발생 필지 조회*/
+.popupCont .popTitles> li > p,
+.popContentBox .popContents > li > p,
+.popContentBox .popContents > li > .occurred_td_td > li > p {
+  color: #000000;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.popContentBox .occurred_td .occurred_td_td {
+  display: grid;
+  grid-template-columns: 330px 105px 105px 105px;
+  min-height: 55px;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+.popContentBox .occurred_td .occurred_td_td:last-child {
+  border-bottom: none;
+}
+
+.popContentBox .occurred_td .occurred_td_td > li {
+  border-right: 1px solid #cddbf0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.popContentBox .occurred_td .occurred_td_td > li:last-child {
+  border-right: none;
+}
+.popContentBox .popContents > li {
+  padding: 10px;
+  box-sizing: border-box;
+}
+.popContentBox .popContents > .occurred_td_td_wrap {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
