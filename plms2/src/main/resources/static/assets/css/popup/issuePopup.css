@@ -290,6 +290,15 @@ textarea:focus {
 .popupWrap .popupCont .popTitles .popTitle04 {
     width: 132px;
 }
+.popupWrap .popupCont .popTitles .popTitle05 {
+    width: 60px;
+}
+.popupWrap .popupCont .popTitles .popTitle06 {
+    width: 327px;
+}
+.popupWrap .popupCont .popTitles .popTitle07 {
+    width: 109px;
+}
 .popupWrap .popupCont .popContents {
     width: 100%;
     height: 34px;
@@ -322,6 +331,15 @@ textarea:focus {
 .popupWrap .popupCont .popContents .popContent04 {
     width: 132px;
 }
+.popupWrap .popupCont .popContents .popContent05 {
+    width: 60px;
+}
+.popupWrap .popupCont .popContents .popContent06 {
+    width: 327px;
+}
+.popupWrap .popupCont .popContents .popContent07 {
+    width: 109px;
+}
 .resultSelectBtn {
     width: 61px;
     height: 25px;
@@ -347,4 +365,191 @@ textarea:focus {
 
 .popupWrap .popupCont .popContentBox .popContents {
     border-bottom: 1px solid rgba(205, 219, 240, 0.6);
+}
+
+
+/*  페이지네이션 */
+.pilji_info_Popup_boardPageBoxs {
+  padding: 31px 0px 33px 0;
+  margin: 0 auto;
+}
+
+.pilji_info_Popup_boardPageBoxs ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pilji_info_Popup_boardPageBoxs ul li {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pilji_info_Popup_boardPageBoxs ul li button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pilji_info_Popup_boardPageBoxs ul li button img {
+  height: 20px;
+  background : #ffffff;
+}
+
+.pilji_info_Popup_boardPageBoxs ul li.arrowLeftWrapper button {
+  margin-right: 10px;
+}
+
+.pilji_info_Popup_boardPageBoxs ul li.arrowRightWrapper button {
+  margin-left: 10px;
+}
+
+.pilji_info_Popup_boardPageBoxs ul li.arrowLeftWrapper img {
+  transform: rotate(180deg);
+}
+
+.pilji_info_Popup_boardPageBoxs ul li.pageCountBoxs p {
+  font-size: 14px;
+  width: 29px;
+  height: 29px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+  margin-right: 12px;
+  color: #b1bad0;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pilji_info_Popup_boardPageBoxs ul li.pageCountBoxs p:last-child {
+  margin-right: 0px;
+}
+
+.pilji_info_Popup_boardPageBoxs ul li.pageCountBoxs p.active {
+  background-color: #edf2f9;
+  color: #2b7de1;
+}
+
+/*권리별 증감현황*/
+.rightChangeStatParcelPopWrapper .popupWrap .pilji_total {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+.rightChangeStatParcelPopWrapper .popupWrap .pilji_total > p {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+  padding: 0 20px;
+  display: flex;
+  gap: 8px;
+  align-items: end;
+}
+.rightChangeStatParcelPopWrapper .popupWrap .pilji_total p .total_blue {
+  color: #2b7de1;
+}
+.rightChangeStatParcelPopWrapper .popupWrap .pilji_total > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 160px;
+  height: 40px;
+  background-color: #4e5871;
+  border-radius: 10px;
+}
+.rightChangeStatParcelPopWrapper .popupWrap .pilji_total > button > p {
+  font-weight: 600;
+  font-size: 15px;
+  color: #ffffff;
+  padding: 0;
+}
+.rightChangeStatParcelPopWrapper .popupWrap .pilji_total > button > figure {
+  width: 12px;
+  height: 12px;
+}
+.rightChangeStatParcelPopWrapper .popupWrap .pilji_total > button > figure img {
+  width: 100%;
+}
+
+/*이슈 및 민원현황*/
+.potential_issue_Popup .popupWrap {
+  width: 1412px !important;
+}
+.potential_issue_Popup .popupWrap .potential_issue_classification {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.potential_issue_Popup .popupWrap .potential_issue_classification > p > span {
+  color: #4f5871;
+  font-weight: 600;
+  font-size: 14px;
+}
+.potential_issue_Popup .popupWrap .potential_issue_classification > p {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+  padding: 0 17px;
+}
+.potential_issue_Popup
+  .popupWrap
+  .potential_issue_classification
+  .double_arrow {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  background: url(/assets/media/popup/images/double_arrow_brackets.png) no-repeat center;
+  background-size: 17px;
+}
+.potential_issue_Popup .popupWrap .potential_issue_classification > button {
+  width: 160px;
+  height: 40px;
+  background-color: #4e5871;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+.potential_issue_Popup .popupWrap .potential_issue_classification > button > p {
+  font-weight: 600;
+  font-size: 15px;
+  color: #ffffff;
+}
+.potential_issue_Popup
+  .popupWrap
+  .potential_issue_classification
+  > button
+  > figure {
+  width: 12px;
+  height: 12px;
+}
+.potential_issue_Popup
+  .popupWrap
+  .potential_issue_classification
+  > button
+  > figure
+  img {
+  width: 100%;
+}
+
+.potential_sec1 {
+  width: 100%;
+  margin-top: 10px;
+}
+.potential_sec1 .potential_total_num {
+  padding: 0 17px;
+}
+.potential_sec1 .potential_total_num span {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+}
+.potential_sec1 .potential_total_num .num_blue {
+  color: #2b7de1;
 }

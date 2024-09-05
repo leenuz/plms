@@ -152,7 +152,7 @@ const divisionSelectboxClickEvent02 = () => {
                 const nearByContent = moreBtn.closest('.selectContentArea');
                 const nearBySelectBox = nearByContent.querySelector('select');
                 nearBySelectBox.value = moreBtn.textContent;
-                console.log(`Selected value: ${nearBySelectBox.value}`);
+//                console.log(`Selected value: ${nearBySelectBox.value}`);
 
             };
         });

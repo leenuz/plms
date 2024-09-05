@@ -1083,6 +1083,13 @@ button {
    color: black;
 }
 #divisionRegister .addressData input:not([readonly]) {
-   background-color: #EDF2F9;
-   color: #6E7D88;
+      border-radius: 10px;
+        background: #edf2f9;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #6e7d88;
 }
+

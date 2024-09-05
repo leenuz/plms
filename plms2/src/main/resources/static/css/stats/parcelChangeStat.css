@@ -148,7 +148,7 @@ button {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    background: url(/assets/media/menu07/images/calendarInputIcon.png) no-repeat left 8px center;
+    background: url(/assets/media/popup/images/calendarInputIcon.png) no-repeat left 8px center;
     background-size: 15px;
     border: 1px solid #CFDDF2;
     border-radius: 10px;
@@ -269,12 +269,12 @@ button {
     align-items: center;
     padding: 9px 12px;
     box-sizing: border-box;
-    background: url(/assets/media/menu07/images/arrowDown.png) no-repeat right 8px center;
+    background: url(/assets/media/popup/images/arrowDown.png) no-repeat right 8px center;
     background-size: 18px;
     background-color: #fff;
 }
 #parcelChangeStat .customSelectBox .customSelectView.active {
-    background: url(/assets/media/menu07/images/arrowDownBlue.png) no-repeat right 8px center;
+    background: url(/assets/media/popup/images/arrowDownBlue.png) no-repeat right 8px center;
     background-size: 18px;
     border: 1px solid #2b7de1;
     color: #2b7de1;
@@ -349,7 +349,7 @@ button {
     gap: 10px;
 }
 #parcelChangeStat .excelDownBtn {
-    background: url(/assets/media/menu07/images/download.png) no-repeat right 28px center;
+    background: url(/assets/media/popup/images/download.png) no-repeat right 28px center;
     background-size: 12px;
     background-color: #4E5871;
     width: 159px;

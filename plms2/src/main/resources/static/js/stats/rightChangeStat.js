@@ -149,49 +149,72 @@ const findMonthForRightChangeStat = () => {
 findMonthForRightChangeStat();
 
 // 필지정보 팝업
-const rightChangeStatPopEvet = () => {
+//const rightChangeStatPopEvet = () => {
+//
+//    const parcelPopupOpen = document.querySelectorAll("#rightChangeStat .parcelNumArea");
+//    const rightChangeStatParcelPopWrapper = document.querySelector(".rightChangeStatParcelPopWrapper");
+//    let approvalFilePath = '/components/popuphtml/superficies_statistics_Popup/pilji_info_Popup.html'; // 잠재이슈 등록 필지 조회
+//
+//    if (parcelPopupOpen) {
+//
+//        let xhr = new XMLHttpRequest();
+//        xhr.open('GET', approvalFilePath, true);
+//        xhr.onreadystatechange = function () {
+//            if (xhr.readyState == 4 && xhr.status == 200) {
+//                rightChangeStatParcelPopWrapper.innerHTML = xhr.responseText;
+//                runScriptsInElement(rightChangeStatParcelPopWrapper); // 삽입된 html내 스크립트 실행 함수 호출
+//            }
+//        };
+//        xhr.send();
+//        console.log('rightChangeStatParcelPopWrapper 작동');
+//
+//        parcelPopupOpen.forEach((parcelpopOpen) => {
+//            parcelpopOpen.addEventListener('click', function () {
+//
+//                const popupOpen = document.getElementById("pilji_info_Popup");
+//                if (popupOpen) {
+//
+//                    popupOpen.classList.add("active");
+//                }
+//            })
+//        });
+//
+//        // 삽입된 html내 스크립트 실행 함수
+//        const runScriptsInElement = (element) => {
+//            const scripts = element.getElementsByTagName('script');
+//            for (let i = 0; i < scripts.length; i++) {
+//                const script = document.createElement('script');
+//                script.textContent = scripts[i].textContent;
+//                document.body.appendChild(script).parentNode.removeChild(script);
+//            }
+//        }
+//
+//
+//    }
+//
+//}
+//
+//rightChangeStatPopEvet();
 
-    const parcelPopupOpen = document.querySelectorAll("#rightChangeStat .parcelNumArea");
-    const rightChangeStatParcelPopWrapper = document.querySelector(".rightChangeStatParcelPopWrapper");
-    let approvalFilePath = '/components/popuphtml/superficies_statistics_Popup/pilji_info_Popup.html'; // 잠재이슈 등록 필지 조회
 
-    if (parcelPopupOpen) {
+$(document).on("click",".parcelNumArea",function(){
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', approvalFilePath, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                rightChangeStatParcelPopWrapper.innerHTML = xhr.responseText;
-                runScriptsInElement(rightChangeStatParcelPopWrapper); // 삽입된 html내 스크립트 실행 함수 호출
-            }
-        };
-        xhr.send();
-        console.log('rightChangeStatParcelPopWrapper 작동');
+						  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+						  	   $(popupOpen).addClass("open");
+						  	   popupOpen.classList.add("active");
 
-        parcelPopupOpen.forEach((parcelpopOpen) => {
-            parcelpopOpen.addEventListener('click', function () {
+				   	   	});
 
-                const popupOpen = document.getElementById("pilji_info_Popup");
-                if (popupOpen) {
+$(document).on("click",".topCloseBtn",function(){
 
-                    popupOpen.classList.add("active");
-                }
-            })
-        });
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+//	$(".popupWrap").toggleClass("active");
+});
 
-        // 삽입된 html내 스크립트 실행 함수
-        const runScriptsInElement = (element) => {
-            const scripts = element.getElementsByTagName('script');
-            for (let i = 0; i < scripts.length; i++) {
-                const script = document.createElement('script');
-                script.textContent = scripts[i].textContent;
-                document.body.appendChild(script).parentNode.removeChild(script);
-            }
-        }
+$(document).on("click","#popupCloseBtn",function(){
 
-
-    }
-
-}
-
-rightChangeStatPopEvet();
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+//	$(".popupWrap").toggleClass("active");
+});

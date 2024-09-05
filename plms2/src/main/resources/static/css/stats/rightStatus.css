@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 /* reset */
 
 * {margin: 0;padding: 0;}
@@ -122,12 +120,12 @@ button {border: 0; outline: none;cursor: pointer;}
     align-items: center;
     padding: 9px 12px;
     box-sizing: border-box;
-    background: url(/assets/media/menu07/images/arrowDown.png) no-repeat right 8px center;
+    background: url(/assets/media/popup/images/arrowDown.png) no-repeat right 8px center;
     background-size: 18px;
     background-color: #fff;
 }
 #rightStatus .customSelectBox .customSelectView.active {
-    background: url(/assets/media/menu07/images/arrowDownBlue.png) no-repeat right 8px center;
+    background: url(/assets/media/popup/images/arrowDownBlue.png) no-repeat right 8px center;
     background-size: 18px;
     border: 1px solid #2b7de1;
     color: #2b7de1;
@@ -242,7 +240,7 @@ button {border: 0; outline: none;cursor: pointer;}
     width: 159px;
     height: 38px;
     border-radius: 10px;
-    background: url(/assets/media/menu07/images/download.png) no-repeat right 28px center;
+    background: url(/assets/media/popup/images/download.png) no-repeat right 28px center;
     background-color: #4E5871;
     background-size: 12px;
     color: #fff;
@@ -364,7 +362,7 @@ button {border: 0; outline: none;cursor: pointer;}
 #rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .hamBtn {
     width: 28px;
     height: 23px;
-    background: url(/assets/media/menu07/images/hamIcon.png) no-repeat center;
+    background: url(/assets/media/popup/images/hamIcon.png) no-repeat center;
     background-size: contain;
     position: absolute;
     top: 24.3px;
@@ -375,7 +373,7 @@ button {border: 0; outline: none;cursor: pointer;}
     width: 38px;
     height: 38px;
     border-radius: 10px;
-    background: url(/assets/media/menu07/images/download.png) no-repeat center;
+    background: url(/assets/media/popup/images/download.png) no-repeat center;
     background-size: 12px;
     background-color: #2B7DE1;
     position: absolute;

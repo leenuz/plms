@@ -25,6 +25,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 @Slf4j
 @EnableAsync
 @RequiredArgsConstructor
@@ -37,9 +40,15 @@ public class togiController {
 	
 	@GetMapping(path="/menu04_1") //http://localhost:8080/api/get/dbTest
     public ModelAndView menu04_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		HashMap params = new HashMap();
+		ArrayList<HashMap> list=new ArrayList<HashMap>();
+		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+
 		ModelAndView mav=new ModelAndView();
+		mav.addObject("jisaList",jisalist);
+		mav.addObject("sidoList",sidolist);
+
 		mav.setViewName("content/togi/menu04_1");
 		return mav;
 	}

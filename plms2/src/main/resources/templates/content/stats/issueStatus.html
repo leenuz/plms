@@ -6,6 +6,8 @@
     <title>이슈 및 민원현황 통계</title>
     <link th:href="@{/css/common.css}" rel="stylesheet" />
     <link rel="stylesheet" href="/css/stats/issueStatus.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
 </head>
 <body>
 <!-- 이슈 및 민원현황 통계 -->
@@ -781,7 +783,428 @@
         </div>
     </main>
 </div>
-<div class="issueStatusParcelPopupWrapper"></div>
+
+<!--잠재이슈 등록 필지 조회 팝업-->
+<div id="issueStatusParcelPopupWrapper" class="potential_issue_Popup">
+    <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+    <div id="searchResultsPopup">
+        <div class="popupWrap" id="popupWrap" >
+        <h2>
+            <p>잠재이슈 등록 필지 조회</p>
+            <span class="topCloseBtn"></span>
+        </h2>
+        <div class="potential_issue_classification">
+            <p>
+                <span>토지소유자가 아닌자와 계약</span>
+                <span class="double_arrow"></span>
+                <span>중분류 없음</span>
+                <span class="double_arrow"></span>
+                <span>계약일로 부터 20년이내</span>
+            </p>
+            <button>
+                <p>엑셀 다운로드</p>
+                <figure>
+                    <img src="/assets/media/popup/images/download.png" alt="download" />
+                </figure>
+            </button>
+        </div>
+        <section class="potential_sec1">
+            <p class="potential_total_num">
+                <span>총 검색 건 수</span>
+                <span class="num_blue">1</span>
+                <span>건</span>
+            </p>
+            <!-- 잠재이슈 테이블 -->
+            <section>
+                <div class="popupCont">
+                    <ul class="popTitles">
+                        <li  class="popTitle05">순번 </li>
+                        <li  class="popTitle07">발생지사</li>
+                        <li class="popTitle06">주소 </li>
+                        <li class="popTitle07">토지유형</li>
+                        <li class="popTitle07">권리확보 </li>
+                        <li class="popTitle07">자산번호</li>
+                        <li class="popTitle07">관리번호</li>
+                        <li class="popTitle07">취득일 </li>
+                        <li class="popTitle01">점용기간 </li>
+                        <li class="popTitle07">점용료 납부일</li>
+                    </ul>
+
+
+                <!-- 잠재이슈 테이블 내용 추가되는 부분 -->
+                <div class="popContentBox">
+                    <ul class="popContents">
+                        <li  class="popContent05">
+                            <p>1</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>대전지사</p>
+                        </li>
+                        <li  class="popContent06">
+                            <p>충청북도 옥천군 이원면 용방리 988</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>사유지</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>지상권</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>9002150</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>J_002151</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                        <li class="popContent01">
+                            <p></p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                    </ul>
+                    <ul class="popContents">
+                        <li  class="popContent05">
+                            <p>1</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>대전지사</p>
+                        </li>
+                        <li  class="popContent06">
+                            <p>충청북도 옥천군 이원면 용방리 988</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>사유지</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>지상권</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>9002150</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>J_002151</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                        <li class="popContent01">
+                            <p></p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                    </ul>
+                    <ul class="popContents">
+                        <li  class="popContent05">
+                            <p>1</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>대전지사</p>
+                        </li>
+                        <li  class="popContent06">
+                            <p>충청북도 옥천군 이원면 용방리 988</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>사유지</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>지상권</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>9002150</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>J_002151</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                        <li class="popContent01">
+                            <p></p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                    </ul>
+                    <ul class="popContents">
+                        <li  class="popContent05">
+                            <p>1</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>대전지사</p>
+                        </li>
+                        <li  class="popContent06">
+                            <p>충청북도 옥천군 이원면 용방리 988</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>사유지</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>지상권</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>9002150</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>J_002151</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                        <li class="popContent01">
+                            <p></p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                    </ul>
+                    <ul class="popContents">
+                        <li  class="popContent05">
+                            <p>1</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>대전지사</p>
+                        </li>
+                        <li  class="popContent06">
+                            <p>충청북도 옥천군 이원면 용방리 988</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>사유지</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>지상권</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>9002150</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>J_002151</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                        <li class="popContent01">
+                            <p></p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                    </ul>
+                    <ul class="popContents">
+                        <li  class="popContent05">
+                            <p>1</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>대전지사</p>
+                        </li>
+                        <li  class="popContent06">
+                            <p>충청북도 옥천군 이원면 용방리 988</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>사유지</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>지상권</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>9002150</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>J_002151</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                        <li class="popContent01">
+                            <p></p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                    </ul>
+                    <ul class="popContents">
+                        <li  class="popContent05">
+                            <p>1</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>대전지사</p>
+                        </li>
+                        <li  class="popContent06">
+                            <p>충청북도 옥천군 이원면 용방리 988</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>사유지</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>지상권</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>9002150</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>J_002151</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                        <li class="popContent01">
+                            <p></p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                    </ul>
+                    <ul class="popContents">
+                        <li  class="popContent05">
+                            <p>1</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>대전지사</p>
+                        </li>
+                        <li  class="popContent06">
+                            <p>충청북도 옥천군 이원면 용방리 988</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>사유지</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>지상권</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>9002150</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>J_002151</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                        <li class="popContent01">
+                            <p></p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                    </ul>
+                    <ul class="popContents">
+                        <li  class="popContent05">
+                            <p>1</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>대전지사</p>
+                        </li>
+                        <li  class="popContent06">
+                            <p>충청북도 옥천군 이원면 용방리 988</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>사유지</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>지상권</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>9002150</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>J_002151</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                        <li class="popContent01">
+                            <p></p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                    </ul>
+                    <ul class="popContents">
+                        <li  class="popContent05">
+                            <p>1</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>대전지사</p>
+                        </li>
+                        <li  class="popContent06">
+                            <p>충청북도 옥천군 이원면 용방리 988</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>사유지</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>지상권</p>
+                        </li>
+                        <li  class="popContent07">
+                            <p>9002150</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>J_002151</p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                        <li class="popContent01">
+                            <p></p>
+                        </li>
+                        <li class="popContent07">
+                            <p>1992-05-19</p>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+        </section>
+        <section>
+            <div class="pilji_info_Popup_boardPageBoxs">
+                <ul>
+                    <li class="arrowLeftWrapper">
+                        <button>
+                            <img
+                                    src="/assets/media/popup/images/arrowRightLine02.png"
+                                    alt="preBtnImg"
+                            />
+                        </button>
+                        <button>
+                            <img
+                                    src="/assets/media/popup/images/arrowRightLine01.png"
+                                    alt="preBtnImg"
+                            />
+                        </button>
+                    </li>
+                    <li class="pageCountBoxs">
+                        <p>1</p>
+                        <p>2</p>
+                        <p>3</p>
+                        <p>4</p>
+                        <p>5</p>
+                    </li>
+                    <li class="arrowRightWrapper">
+                        <button>
+                            <img
+                                    src="/assets/media/popup/images/arrowRightLine01.png"
+                                    alt="nextBtnImg"
+                            />
+                        </button>
+                        <button>
+                            <img
+                                    src="/assets/media/popup/images/arrowRightLine02.png"
+                                    alt="nextBtnImg"
+                            />
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="lastBtnBox btnWrap">
+            <button class="backbtn finalBtn" id="popupCloseBtn">닫기</button>
+        </div>
+    </div>
+</div>
+
+
 <div class="issueStatusComplaintPopupWrapper"></div>
 
 

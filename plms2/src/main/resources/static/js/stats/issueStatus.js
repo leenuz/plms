@@ -71,98 +71,120 @@ MoreSelectBtn.forEach((moreBtn) => {
 })
 
 // 잠재이슈 등록 필지 조회 팝업
-const issueStatusParcelPopEvet = () => {
-
-    const parcelPopupOpen = document.querySelectorAll("#issueStatus .parcelPopupOpen");
-    const issueStatusParcelPopupWrapper = document.querySelector(".issueStatusParcelPopupWrapper");
-    let approvalFilePath = '/components/popuphtml/superficies_statistics_Popup/potential_issue_Popup.html'; // 잠재이슈 등록 필지 조회
-
-    if (parcelPopupOpen) {
-
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', approvalFilePath, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                issueStatusParcelPopupWrapper.innerHTML = xhr.responseText;
-                runScriptsInElement(issueStatusParcelPopupWrapper); // 삽입된 html내 스크립트 실행 함수 호출
-            }
-        };
-        xhr.send();
-        console.log('issueStatusParcelPopupWrapper 작동');
-
-        parcelPopupOpen.forEach((parcel) => {
-            parcel.addEventListener('click', function(){
-
-                const popupOpen = document.getElementById("potential_issue_Popup");
-                if (popupOpen) {
-
-                    popupOpen.classList.add("active");
-                }
-            })
-        });
-
-        // 삽입된 html내 스크립트 실행 함수
-        const runScriptsInElement = (element) => {
-            const scripts = element.getElementsByTagName('script');
-            for (let i = 0; i < scripts.length; i++) {
-                const script = document.createElement('script');
-                script.textContent = scripts[i].textContent;
-                document.body.appendChild(script).parentNode.removeChild(script);
-            }
-        }
-
-
-    }
-
-}
-
-issueStatusParcelPopEvet();
+//const issueStatusParcelPopEvet = () => {
+//
+//    const parcelPopupOpen = document.querySelectorAll("#issueStatus .parcelPopupOpen");
+//    const issueStatusParcelPopupWrapper = document.querySelector(".issueStatusParcelPopupWrapper");
+//    let approvalFilePath = '/popupHtml/potential_issue_Popup.html'; // 잠재이슈 등록 필지 조회
+//
+//    if (parcelPopupOpen) {
+//
+//        let xhr = new XMLHttpRequest();
+//        xhr.open('GET', approvalFilePath, true);
+//        xhr.onreadystatechange = function () {
+//            if (xhr.readyState == 4 && xhr.status == 200) {
+//                issueStatusParcelPopupWrapper.innerHTML = xhr.responseText;
+//                runScriptsInElement(issueStatusParcelPopupWrapper); // 삽입된 html내 스크립트 실행 함수 호출
+//            }
+//        };
+//        xhr.send();
+//        console.log('issueStatusParcelPopupWrapper 작동');
+//
+//        parcelPopupOpen.forEach((parcel) => {
+//            parcel.addEventListener('click', function(){
+//
+//                const popupOpen = document.getElementById("potential_issue_Popup");
+//                if (popupOpen) {
+//
+//                    popupOpen.classList.add("active");
+//                }
+//            })
+//        });
+//
+//        // 삽입된 html내 스크립트 실행 함수
+//        const runScriptsInElement = (element) => {
+//            const scripts = element.getElementsByTagName('script');
+//            for (let i = 0; i < scripts.length; i++) {
+//                const script = document.createElement('script');
+//                script.textContent = scripts[i].textContent;
+//                document.body.appendChild(script).parentNode.removeChild(script);
+//            }
+//        }
+//
+//
+//    }
+//
+//}
+//
+//issueStatusParcelPopEvet();
 
 
 // 민원발생 필지조회 팝업
-const issueStatusComplaintPopEvet = () => {
+//const issueStatusComplaintPopEvet = () => {
+//
+//    const complaintPopupOpen = document.querySelectorAll("#issueStatus .complaintPopupOpen");
+//    const issueStatusComplaintPopupWrapper = document.querySelector(".issueStatusComplaintPopupWrapper");
+//    let approvalFilePath = '/popupHtml/superficies_statistics_Popup/complaints_occurred_Popup.html'; // 잠재이슈 등록 필지 조회
+//
+//    if (complaintPopupOpen) {
+//
+//        let xhr = new XMLHttpRequest();
+//        xhr.open('GET', approvalFilePath, true);
+//        xhr.onreadystatechange = function () {
+//            if (xhr.readyState == 4 && xhr.status == 200) {
+//                issueStatusComplaintPopupWrapper.innerHTML = xhr.responseText;
+//                runScriptsInElement(issueStatusComplaintPopupWrapper); // 삽입된 html내 스크립트 실행 함수 호출
+//            }
+//        };
+//        xhr.send();
+//        console.log('issueStatusComplaintPopupWrapper 작동');
+//
+//        complaintPopupOpen.forEach((complaint) => {
+//            complaint.addEventListener('click', function(){
+//
+//                const popupOpen = document.getElementById("complaints_occured_Popup");
+//                if (popupOpen) {
+//
+//                    popupOpen.classList.add("active");
+//                }
+//            })
+//        });
+//
+//        // 삽입된 html내 스크립트 실행 함수
+//        const runScriptsInElement = (element) => {
+//            const scripts = element.getElementsByTagName('script');
+//            for (let i = 0; i < scripts.length; i++) {
+//                const script = document.createElement('script');
+//                script.textContent = scripts[i].textContent;
+//                document.body.appendChild(script).parentNode.removeChild(script);
+//            }
+//        }
+//
+//
+//    }
+//
+//}
+//
+//issueStatusComplaintPopEvet();
 
-    const complaintPopupOpen = document.querySelectorAll("#issueStatus .complaintPopupOpen");
-    const issueStatusComplaintPopupWrapper = document.querySelector(".issueStatusComplaintPopupWrapper");
-    let approvalFilePath = '/components/popuphtml/superficies_statistics_Popup/complaints_occurred_Popup.html'; // 잠재이슈 등록 필지 조회
+$(document).on("click",".parcelPopupOpen",function(){
 
-    if (complaintPopupOpen) {
+						  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+						  	   $(popupOpen).addClass("open");
+						  	   popupOpen.classList.add("active");
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', approvalFilePath, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                issueStatusComplaintPopupWrapper.innerHTML = xhr.responseText;
-                runScriptsInElement(issueStatusComplaintPopupWrapper); // 삽입된 html내 스크립트 실행 함수 호출
-            }
-        };
-        xhr.send();
-        console.log('issueStatusComplaintPopupWrapper 작동');
+				   	   	});
 
-        complaintPopupOpen.forEach((complaint) => {
-            complaint.addEventListener('click', function(){
+$(document).on("click",".topCloseBtn",function(){
 
-                const popupOpen = document.getElementById("complaints_occured_Popup");
-                if (popupOpen) {
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+//	$(".popupWrap").toggleClass("active");
+});
 
-                    popupOpen.classList.add("active");
-                }
-            })
-        });
+$(document).on("click","#popupCloseBtn",function(){
 
-        // 삽입된 html내 스크립트 실행 함수
-        const runScriptsInElement = (element) => {
-            const scripts = element.getElementsByTagName('script');
-            for (let i = 0; i < scripts.length; i++) {
-                const script = document.createElement('script');
-                script.textContent = scripts[i].textContent;
-                document.body.appendChild(script).parentNode.removeChild(script);
-            }
-        }
-
-
-    }
-
-}
-
-issueStatusComplaintPopEvet();
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+//	$(".popupWrap").toggleClass("active");
+});
