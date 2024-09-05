@@ -77,8 +77,13 @@ window.addEventListener("load" , () => {
 			else if(pathName === `/togi/menu04_1`){
 			    return landDevelopmentManageSelectEvet("#dopcoLandDevelopmentManage .landDevelopmentManageSelectsTitleBtn" ,"#dopcoLandDevelopmentManage .sufaceSelectList"  ,"#dopcoLandDevelopmentManage .sufaceSelectList .surfaceSelectListMember" , ".landDevelopmentManageHiddenSelect");
 			}
-
-      }
+			//이설공사 확인 필지
+          else if(pathName === `/relocation/relocationCheckPilji`){
+                        const relocationCheckPiljiDiv = document.getElementsByName("relocationCheckPiljiDiv");
+                        return surfaceSelectEvet("#relocationCheckPiljiDiv .surfaceInquireSelectsTitleBtn" ,"#relocationCheckPiljiDiv .sufaceSelectList"),
+                        handleCheckboxes(relocationCheckPiljiDiv);
+                    }
+              }
 
       selecBoxsEvetWrappers();
 
