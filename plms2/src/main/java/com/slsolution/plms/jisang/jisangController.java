@@ -1752,6 +1752,8 @@ public class jisangController {
 		String dfile_name=httpRequest.getParameter("dfile_name");
 		String manage_no=httpRequest.getParameter("jisang_no");
 		String fseq=httpRequest.getParameter("fseq");
+		String docNo=(httpRequest.getParameter("docNo")==null)? "1" :httpRequest.getParameter("docNo");
+		
 		
 		HashMap param=new HashMap();
 		
@@ -1759,9 +1761,12 @@ public class jisangController {
 		param.put("manage_no", manage_no);
 		param.put("fseq", fseq);
 		
+		log.info("param:"+param);
+		log.info("docNo:"+docNo);
 		var fpath=GC.getJisangReqDoc1Dir();
 		var tmp=GC.getJisangFileTempDir();
-		 mainService.DeleteQuery("jisangSQL.jisangReqDoc1Delete", param);
+		if (docNo=="1") mainService.DeleteQuery("jisangSQL.jisangReqDoc1Delete", param);
+		else if (docNo=="2") mainService.DeleteQuery("jisangSQL.jisangReqDoc2Delete", param);
 		 CommonUtil.delFile(dfile_name, tmp);
 		 CommonUtil.delFile(dfile_name, fpath);
 		
@@ -1854,6 +1859,8 @@ public class jisangController {
 		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
 		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+		
+		ArrayList<HashMap> reqDoc2list = mainService.selectQuery("jisangSQL.selectJisangReqDoc2",params);
 		log.info("params:"+params);
 		log.info("data:"+data.get(0));
 		log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
@@ -1869,6 +1876,7 @@ public class jisangController {
 		log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
 		log.info("jisangMemoList:"+jisangMemoList);
 		log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+		log.info("reqDoc2list:"+reqDoc2list);
 		
       			mav.addObject("resultData",data.get(0));
       			mav.addObject("soujaList",soujaList);
@@ -1884,6 +1892,7 @@ public class jisangController {
       			mav.addObject("jisaList",jisalist);
       			mav.addObject("sidoList",sidolist);
       			mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+      			mav.addObject("reqDoc2list",reqDoc2list);
       			mav.setViewName("content/jisang/usePermitRegister");
       			return mav;
     }
@@ -1979,9 +1988,11 @@ public class jisangController {
 		log.info("params:"+params);
 		
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
+		//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
 		
-		
+		log.info("data:"+data);
       			mav.addObject("resultData",data.get(0));
+      			
       			
       			mav.setViewName("content/jisang/usePermitDetail");
       			return mav;

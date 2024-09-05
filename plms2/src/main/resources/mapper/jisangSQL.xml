@@ -1101,6 +1101,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from jisang_req_doc1
 		where jrd_manage_no=#{manage_no} 
 	</select>
+	<delete id="jisangReqDoc1Delete" parameterType="java.util.HashMap">
+
+		delete from jisang_req_doc1
+		where jrd_manage_no=#{manage_no} and jrd_fseq=#{fseq}::int
+
+	</delete>
+	
+	
+	<!--  지상권 사용 승락 필수 첨부파일 -->
+	<insert id="insertJisangReqDoc2" parameterType="map">
+		INSERT INTO jisang_req_doc2 (
+		jrd_manage_no,
+		jrd_fseq,
+		jrd_fname,
+		jrd_fpath,
+		jrd_wdate
+		) VALUES (
+		#{jisang_no},
+		#{fseq}::int,
+		#{file_name},
+		#{file_path},
+		Now()
+		
+		)
+		
+	</insert>
+	<update id="updateJisangReqDoc2" parameterType="map">
+		update jisang_req_doc2 set 
+		
+		jrd_fname=#{file_name},
+		jrd_fpath=#{file_path},
+		jrd_wdate=Now()
+		where jrd_manage_no=#{jisang_no} and jrd_fseq=#{fseq}::int 
+	</update>
+	<select id="selectJisangReqDoc2Count" parameterType="map" resultType="Integer">
+		select count(*) as count from jisang_req_doc2
+		where jrd_manage_no=#{jisang_no} and jrd_fseq=#{fseq}::int 
+	</select>
+	<select id="selectJisangReqDoc2" parameterType="map" resultType="java.util.HashMap">
+		select * from jisang_req_doc2
+		where jrd_manage_no=#{manage_no} 
+	</select>
+	<delete id="jisangReqDoc2Delete" parameterType="java.util.HashMap">
+
+		delete from jisang_req_doc1
+		where jrd_manage_no=#{manage_no} and jrd_fseq=#{fseq}::int
+
+	</delete>
+	
 	
 
 	<update id="updateJisangMaster" parameterType="map">
@@ -1326,12 +1375,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
-	<delete id="jisangReqDoc1Delete" parameterType="java.util.HashMap">
-
-		delete from jisang_req_doc1
-		where jrd_manage_no=#{manage_no} and jrd_fseq=#{fseq}::int
-
-	</delete>
+	
 	
 	<insert id="insertJIsangBunhalTmp" parameterType="java.util.HashMap">
 		INSERT INTO jisang_bunhal
