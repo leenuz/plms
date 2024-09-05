@@ -96,28 +96,29 @@
             <div class="mainTitle">
                 <h1>점용 상세정보</h1>
             </div>
-
             <section class="landInfoEdit">
                 <div class="subTitle">
                     토지 정보수정
                 </div>
-
                 <div class="contWrap">
-
                     <div class="contBox contBoxMini01">
-
                         <div class="thirdTitle">
-                            <h2>・참고 지적도</h2>
+                            <div style="display:inline-block;">
+                                <h2>・참고 지적도</h2>
+                            </div>
+                            <div style="display:inline-block;float:right;"><button class="viewDetailButton" id="moveMap">이동</button></div>
+                            <div style="display:inline-block;float:right;"><button class="viewDetailButton" id="jijukNewWindowBtn">크게보기</button></div>
                         </div>
                         <iframe id="mapFrame" class="contentDetailBox mapFigure"></iframe>
                         <!--<div class="contentDetailBox mapFigure"></div>-->
                         <script>
                             // src="http://211.196.153.235:7070/geoserver/dopcogis/wms?service=WMS&version=1.1.1&request=GetMap&layers=dopcogis%3Adxf_test&bbox=128.48537837663474,35.926544471907825,128.48578475095366,35.927040257710196&width=660&height=214&srs=EPSG%3A4326&styles=&format=application/openlayers"
-                            var url = 'http://10.168.0.247:8080/mapJijuk?lon=[[${jijuk.x}]]&lat=[[${jijuk.y}]]&lv=17';
-                            document.getElementById('mapFrame').src = url;
+                            var mapCoordLng = '[[${jijuk.x}]]';
+                            var mapCoordLat = '[[${jijuk.y}]]';
+                            var mapUrl = 'http://10.168.0.247:8080/mapJijuk?lon=' + mapCoordLng + '&lat=' + mapCoordLat + '&lv=17';
+                            document.getElementById('mapFrame').src = mapUrl;
                         </script>
                     </div>
-
                     <div class="contBox contBoxMini02">
 
                         <div class="thirdTitle">

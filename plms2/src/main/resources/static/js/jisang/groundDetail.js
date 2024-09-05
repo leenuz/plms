@@ -615,12 +615,13 @@ $(document).on("click","#deleteSelectedBtn",function(){
 	        }
 });
 
-
-$(document).on("click","#jijukNewWindowBtn",function(){
-	//window.open('http://202.68.225.158:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'jijukWindow', 'width=1024,height=768');
-	window.open('http://202.68.225.158:8080/mapJijuk?lon=128.4923014&lat=35.908302&lv=17', 'jijukWindow', 'width=1024,height=768');
-	//http://10.168.0.247:8080/sample/map/2pms.html
+$(function() {
+	$('#jijukNewWindowBtn').click(function() {
+		//window.open('http://202.68.225.158:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'jijukWindow', 'width=1024,height=768');
+		// window.open('http://202.68.225.158:8080/mapJijuk?lon=128.4923014&lat=35.908302&lv=17', 'jijukWindow', 'width=1024,height=768');
+		window.open(mapUrl, 'jijukWindow', 'width=1024,height=768,left=100,top=100');
+		//http://10.168.0.247:8080/sample/map/2pms.html
+	});
 });
-
 
 
