@@ -149,8 +149,8 @@ margin:10px;
         <section class="targetLand">
           <div class="subTitle">대상토지</div>
 
-          <div class="contWrap" style="">
-            <div class="depth1">
+          <div class="contWrap" style="" >
+            <div class="depth1" id="togiDiv">
               <ul class="titles">
                 <li class="title addressInfoWidth">주소</li>
                 <li class="title titleBox">
@@ -167,7 +167,7 @@ margin:10px;
                 <li class="title">사용자</li>
                 <li class="title titleBtnWrap">추가/삭제</li>
               </ul>
-              <ul class="contents">
+              <ul class="contents" >
                 <li class="content addressInfoWidth addressInfoBox">
                   <div class="addressData">
                     <input
@@ -234,7 +234,79 @@ margin:10px;
                   </div>
                 </li>
               </ul>
-              <ul class="contents lastContents">
+              <ul class="contents" id="togiHiddenUl" style="display:none">
+                <li class="content addressInfoWidth addressInfoBox">
+                  <div class="addressData">
+                    <input
+                      type="text"
+                      placeholder="경기도 평택시 진위면 동천리 606-132"
+                      readonly
+                      class="notWriteInput" />
+                  </div>
+                   <button class="searchAddressBtn landPopBtn" id="addrSearchBtn">검색</button>
+                </li>
+                <li class="content contentBox">
+                  <ul class="secondContents">
+                    <li class="secondContent">
+                      <input
+                        type="text"
+                        placeholder="답"
+                        readonly
+                        class="notWriteInput" />
+                    </li>
+                    <li class="secondContent">
+                      <input
+                        type="text"
+                        placeholder="182"
+                        readonly
+                        class="notWriteInput" />
+                    </li>
+                    <li class="secondContent">
+                      <input
+                        type="text"
+                        placeholder="181"
+                        readonly
+                        class="notWriteInput" />
+                    </li>
+                    <li class="secondContent largeSecondTitle">
+                      <input type="text" />
+                    </li>
+                    <li class="secondContent">
+                      <input
+                        type="text"
+                        placeholder="9010237"
+                        readonly
+                        class="notWriteInput" />
+                    </li>
+                  </ul>
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="홍길동"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="김순애"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content titleBtnWrap btnBox">
+                  <!-- 맨 윗줄 기본값 -->
+                  <div class="editBefore">
+                    <div class="btnWrap">
+                      <button class="addBtn miniBtn landPopBtn" id="jisangTogiAddBtn">추가</button>
+                    </div>
+                    <div class="btnWrap">
+                      <button class="delBtn miniBtn">삭제</button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <ul class="contents lastContents" id="togiHiddenUl">
                 <li class="content addressInfoWidth addressInfoBox">
                   <div class="addressData">
                     <input
@@ -380,10 +452,10 @@ margin:10px;
         </section>
 
         <section class="attachDocuments">
-          <div class="subTitle">첨부 서류</div>
+          <div class="subTitle">첨부 서류*</div>
 
           <div class="contWrap">
-            <div class="depth1">
+            <div class="depth1" >
               <ul class="titles">
                 <li class="title">파일내용</li>
               </ul>
@@ -471,171 +543,260 @@ margin:10px;
                 </ul>
               </div>
             </div>
-            <div class="depth2">
+            <div class="depth2" id="req_Doc_Div">
               <ul class="titles">
-                <li class="title"><p>파일명</p></li>
+                <li class="title">파일명</li>
                 <li class="title delContWidth">삭제</li>
                 <li class="title selectFileWidth">파일선택</li>
               </ul>
 
               <ul class="contents">
                 <li class="content">
-                  <input
+                <input type="hidden" id="fseq" value="1">
+                  <input name="req_doc_file01" id="req_doc_file01"
                     type="text"
-                    placeholder="토지사용승락서.docx"
+                    th:if="${#lists.size(reqDoc2list)>=1}" th:value="${reqDoc2list[0].jrd_fname}"
                     readonly
-                    class="notWriteInput" />
+                    class="notWriteInput" style="text-align:center"/>
+                    <input name="req_doc_file01" id="req_doc_file01"
+                    type="text"
+                    th:if="${#lists.size(reqDoc2list)<1}" placeholder=""
+                    readonly
+                    class="notWriteInput" style="text-align:center"/>
                 </li>
                 <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
+                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitRegister_myPcFiles01" />
-                  <label for="usePermitRegister_myPcFiles01">파일보기</label>
+                  <!-- 파일보기 -> 파일선택으로 text 변경 -->
+                  <input type="file" name="landTerminationRegistration_myPcFiles01"
+                    id="landTerminationRegistration_myPcFiles01" />
+                  <label for="landTerminationRegistration_myPcFiles01">파일선택</label>
                 </li>
               </ul>
               <ul class="contents">
                 <li class="content">
-                  <input
+                <input type="hidden" id="fseq" value="2">
+                  <input  name="req_doc_file02" id="req_doc_file02"
                     type="text"
-                    placeholder="등기부등본2.tif"
+                    th:if="${#lists.size(reqDoc2list)>=2}" th:value="${reqDoc2list[1].jrd_fname!=null?reqDoc2list[1].jrd_fname:''}"
                     readonly
-                    class="notWriteInput" />
+                    class="notWriteInput" style="text-align:center"/>
+                    <input  name="req_doc_file02" id="req_doc_file02"
+                    type="text"
+                    th:if="${#lists.size(reqDoc2list)<2}" placeholder=""
+                    readonly
+                    class="notWriteInput" style="text-align:center"/>
                 </li>
                 <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
+                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitRegister_myPcFiles02" />
-                  <label for="usePermitRegister_myPcFiles02">파일보기</label>
+                 <!-- 파일보기 -> 파일선택으로 text 변경 -->
+                  <input type="file" name="landTerminationRegistration_myPcFiles02"
+                    id="landTerminationRegistration_myPcFiles02" />
+                  <label for="landTerminationRegistration_myPcFiles02">파일선택</label>
+                </li>
+              </ul>
+              <ul class="contents">
+                <li class="content"  >
+                <input type="hidden" id="fseq" value="3">
+                  <input  name="req_doc_file03" id="req_doc_file03"
+                    type="text"
+                    th:if="${#lists.size(reqDoc2list)>=3}" th:value="${reqDoc2list[2].jrd_fname!=null?reqDoc2list[2].jrd_fname:''}"
+                    readonly
+                    class="notWriteInput" style="text-align:center"/>
+                    <input  name="req_doc_file03" id="req_doc_file03"
+                    type="text"
+                    th:if="${#lists.size(reqDoc2list)<3}" placeholder=""
+                    readonly
+                    class="notWriteInput" style="text-align:center"/>
+                </li>
+                <li class="content delContWidth">
+                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+                </li>
+                <li class="content selectFileWidth lightfileBtnWrap">
+                  <!-- 파일보기 -> 파일선택으로 text 변경 -->
+                  <input type="file" name="landTerminationRegistration_myPcFiles03"
+                    id="landTerminationRegistration_myPcFiles03" />
+                  <label for="landTerminationRegistration_myPcFiles03">파일선택</label>
                 </li>
               </ul>
               <ul class="contents">
                 <li class="content">
-                  <input
-                    type="text"
-                    placeholder="지적도.tif"
-                    readonly
-                    class="notWriteInput" />
+                <input type="hidden" id="fseq" value="4">
+                  <input type="text"  name="req_doc_file04" id="req_doc_file04"
+                    th:if="${#lists.size(reqDoc2list)>=4}" th:value="${reqDoc2list[3].jrd_fname!=null?reqDoc2list[3].jrd_fname:''}"
+                    readonly class="notWriteInput" style="text-align:center"/>
+                    <input type="text"  name="req_doc_file04" id="req_doc_file04"
+                    th:if="${#lists.size(reqDoc2list)<4}" placeholder=""
+                    readonly class="notWriteInput" style="text-align:center"/>
                 </li>
                 <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
+                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitRegister_myPcFiles03" />
-                  <label for="usePermitRegister_myPcFiles03">파일보기</label>
+                  <!-- 파일보기 -> 파일선택으로 text 변경 -->
+                  <input type="file" name="landTerminationRegistration_myPcFiles04"
+                    id="landTerminationRegistration_myPcFiles04" />
+                  <label for="landTerminationRegistration_myPcFiles04">파일선택</label>
                 </li>
               </ul>
               <ul class="contents">
                 <li class="content">
+                <input type="hidden" id="fseq" value="5">
                   <input
-                    type="text"
-                    placeholder="현장사진.jpg"
+                    type="text"  name="req_doc_file05" id="req_doc_file05"
+                    th:if="${#lists.size(reqDoc2list)>=5}" th:value="${reqDoc2list[4].jrd_fname!=null?reqDoc2list[4].jrd_fname:''}"
                     readonly
-                    class="notWriteInput" />
+                    class="notWriteInput" style="text-align:center"/>
+                    <input
+                    type="text"  name="req_doc_file05" id="req_doc_file05"
+                    th:if="${#lists.size(reqDoc2list)<5}" placeholder=""
+                    readonly
+                    class="notWriteInput" style="text-align:center"/>
                 </li>
                 <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
+                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitRegister_myPcFiles04" />
-                  <label for="usePermitRegister_myPcFiles04">파일보기</label>
+                 <!-- 파일보기 -> 파일선택으로 text 변경 -->
+                  <input type="file" name="landTerminationRegistration_myPcFiles05"
+                    id="landTerminationRegistration_myPcFiles05" />
+                  <label for="landTerminationRegistration_myPcFiles05">파일선택</label>
                 </li>
               </ul>
               <ul class="contents">
                 <li class="content">
+                <input type="hidden" id="fseq" value="6">
                   <input
-                    type="text"
-                    placeholder="검토의견서.tif"
+                    type="text"  name="req_doc_file06" id="req_doc_file06"
+                    th:if="${#lists.size(reqDoc2list)>=6}" th:value="${reqDoc2list[5].jrd_fname!=null?reqDoc2list[5].jrd_fname:''}"
                     readonly
-                    class="notWriteInput" />
+                    class="notWriteInput" style="text-align:center"/>
+                    <input
+                    type="text"  name="req_doc_file06" id="req_doc_file06"
+                    th:if="${#lists.size(reqDoc2list)<6}" placeholder=""
+                    readonly
+                    class="notWriteInput" style="text-align:center"/>
                 </li>
                 <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
+                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitRegister_myPcFiles05" />
-                  <label for="usePermitRegister_myPcFiles05">파일보기</label>
+                 <!-- 파일보기 -> 파일선택으로 text 변경 -->
+                  <input type="file" name="landTerminationRegistration_myPcFiles06"
+                    id="landTerminationRegistration_myPcFiles06" />
+                  <label for="landTerminationRegistration_myPcFiles06">파일선택</label>
                 </li>
               </ul>
               <ul class="contents">
                 <li class="content">
+                <input type="hidden" id="fseq" value="7">
                   <input
-                    type="text"
-                    placeholder="토지대장.docx"
+                    type="text"  name="req_doc_file07" id="req_doc_file07"
+                    th:if="${#lists.size(reqDoc2list)>=7}" th:value="${reqDoc2list[6].jrd_fname!=null?reqDoc2list[6].jrd_fname:''}"
                     readonly
-                    class="notWriteInput" />
+                    class="notWriteInput" style="text-align:center"/>
+                    <input
+                    type="text"  name="req_doc_file07" id="req_doc_file07"
+                    th:if="${#lists.size(reqDoc2list)<7}" placeholder=""
+                    readonly
+                    class="notWriteInput" style="text-align:center"/>
                 </li>
                 <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
+                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitRegister_myPcFiles06" />
-                  <label for="usePermitRegister_myPcFiles06">파일보기</label>
+                 <!-- 파일보기 -> 파일선택으로 text 변경 -->
+                 <!-- 파일보기 -> 파일선택으로 text 변경 -->
+                  <input
+                    type="file" name="landTerminationRegistration_myPcFiles07"
+                    id="landTerminationRegistration_myPcFiles07" />
+                  <label for="landTerminationRegistration_myPcFiles07"
+                    >파일선택</label
+                  >
                 </li>
               </ul>
               <ul class="contents">
                 <li class="content">
+                  <input type="hidden" id="fseq" value="8">
                   <input
-                    type="text"
-                    placeholder="지적도.jpg"
+                    type="text"  name="req_doc_file08" id="req_doc_file08"
+                    th:if="${#lists.size(reqDoc2list)>=8}" th:value="${reqDoc2list[7].jrd_fname!=null?reqDoc2list[7].jrd_fname:''}"
                     readonly
-                    class="notWriteInput" />
+                    class="notWriteInput" style="text-align:center"/>
+                    <input
+                    type="text"  name="req_doc_file08" id="req_doc_file08"
+                    th:if="${#lists.size(reqDoc2list)<8}" placeholder=""
+                    readonly
+                    class="notWriteInput" style="text-align:center"/>
                 </li>
                 <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
+                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitRegister_myPcFiles07" />
-                  <label for="usePermitRegister_myPcFiles07">파일보기</label>
+                  <!-- 파일보기 -> 파일선택으로 text 변경 -->
+                  <input
+                    type="file" name="landTerminationRegistration_myPcFiles08"
+                    id="landTerminationRegistration_myPcFiles08" />
+                  <label for="landTerminationRegistration_myPcFiles08"
+                    >파일선택</label
+                  >
                 </li>
               </ul>
               <ul class="contents">
                 <li class="content">
+                  <input type="hidden" id="fseq" value="9">
                   <input
-                    type="text"
-                    placeholder="현장사진.jpg"
+                    type="text"  name="req_doc_file09" id="req_doc_file09"
+                    th:if="${#lists.size(reqDoc2list)>=9}" th:value="${reqDoc2list[8].jrd_fname!=null?reqDoc2list[8].jrd_fname:''}"
                     readonly
-                    class="notWriteInput" />
+                    class="notWriteInput" style="text-align:center"/>
+                    <input
+                    type="text"  name="req_doc_file09" id="req_doc_file09"
+                    th:if="${#lists.size(reqDoc2list)<9}" placeholder=""
+                    readonly
+                    class="notWriteInput" style="text-align:center"/>
                 </li>
                 <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
+                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitRegister_myPcFiles08" />
-                  <label for="usePermitRegister_myPcFiles08">파일보기</label>
+                  <!-- 파일보기 -> 파일선택으로 text 변경 -->
+                  <input
+                    type="file" name="landTerminationRegistration_myPcFiles09"
+                    id="landTerminationRegistration_myPcFiles09" />
+                  <label for="landTerminationRegistration_myPcFiles09"
+                    >파일선택</label
+                  >
                 </li>
               </ul>
               <ul class="contents">
                 <li class="content">
+                  <input type="hidden" id="fseq" value="10">
                   <input
-                    type="text"
-                    placeholder="현장사진.jpg"
+                    type="text"  name="req_doc_file10" id="req_doc_file10"
+                    th:if="${#lists.size(reqDoc2list)>=10}" th:value="${reqDoc2list[9].jrd_fname!=null?reqDoc2list[9].jrd_fname:''}"
                     readonly
-                    class="notWriteInput" />
+                    class="notWriteInput" style="text-align:center"/>
+                    <input
+                    type="text"  name="req_doc_file10" id="req_doc_file10"
+                    th:if="${#lists.size(reqDoc2list)<10}" placeholder=""
+                    readonly
+                    class="notWriteInput" style="text-align:center"/>
                 </li>
                 <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
+                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                 </li>
                 <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitRegister_myPcFiles09" />
-                  <label for="usePermitRegister_myPcFiles09">파일보기</label>
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content">
+                  <!-- 파일보기 -> 파일선택으로 text 변경 -->
                   <input
-                    type="text"
-                    placeholder="관계서류.docx"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <input type="file" id="usePermitRegister_myPcFiles10" />
-                  <label for="usePermitRegister_myPcFiles10">파일보기</label>
+                    type="file" name="landTerminationRegistration_myPcFiles10"
+                    id="landTerminationRegistration_myPcFiles10" />
+                  <label for="landTerminationRegistration_myPcFiles10"
+                    >파일선택</label
+                  >
                 </li>
               </ul>
             </div>

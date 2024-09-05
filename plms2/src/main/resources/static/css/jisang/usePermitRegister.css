@@ -89,7 +89,7 @@ label {
 }
 
 #usePermitRegister {
-  width: calc(100% - 100px);
+  width: calc(100%);
   padding: 0 20px;
   box-sizing: border-box;
   float: left;
