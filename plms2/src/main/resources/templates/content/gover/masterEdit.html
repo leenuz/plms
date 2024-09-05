@@ -562,27 +562,24 @@
 		
         <section class="landAdressInfo">
 			
-			<div class="subTitle">
-	            <div class="subTitleText">첨부파일</div>
-	            <div class="fileBtnWrap">
-	              <input type="file" id="masterEdit_myPcFiles" />
-	              <label for="masterEdit_myPcFiles">내 PC</label>
-	            </div>
-	          </div>
-			
-          <div class="subTitle">
-            <div class="subTitleText">소속 토지 정보*</div>			
-            <div class="subTitleBtnBox">
-              <!-- 지상권 등록화면으로 이동 -->
-              <!--<a href="#"><button class="middleBtn vividBlueBtn">지상권 전환</button></a>-->
-              <button class="middleBtn navyBtn excelDownBtn">
-                엑셀 다운로드
-              </button>
-              <button class="middleBtn whiteBtn excelUpBtn masterEditExcelPopBtn">
-                엑셀 업로드
-              </button>
-            </div>
-          </div>
+		  <div class="subTitle">
+		      <div class="subTitleText">
+		          소속 토지 정보*
+		          <!-- 내 PC 파일 첨부 버튼을 소속 토지 정보 옆에 추가 -->
+		          <div class="fileBtnWrap" style="display: inline-block; margin-left: 10px;">
+		              <input type="file" id="landInfo_myPcFiles" />
+		              <label for="landInfo_myPcFiles" style="cursor: pointer;">내 PC</label>
+		          </div>
+		      </div>			
+		      <div class="subTitleBtnBox">
+		          <button class="middleBtn navyBtn excelDownBtn">
+		              엑셀 다운로드
+		          </button>
+		          <button class="middleBtn whiteBtn excelUpBtn masterEditExcelPopBtn">
+		              엑셀 업로드
+		          </button>
+		      </div>
+		  </div>
 
           <div class="contWrap">
             <div class="depth1">
