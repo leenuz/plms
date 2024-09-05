@@ -536,7 +536,7 @@
 				    name="occuprepayyn"
 				    type="checkbox" 
 				    id="masterEditSelectBox_Checkbox01"
-				    th:checked="${resultData.gm_occuprepayyn == 'Y'}" />
+				    th:checked="${resultData.gm_occuprepayyn != null and (resultData.gm_occuprepayyn == 1 or resultData.gm_occuprepayyn == '1')}" />
 				  <label for="masterEditSelectBox_Checkbox01"></label>
 				</li>
 
