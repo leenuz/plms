@@ -261,6 +261,21 @@ public class goverController {
 				}
 			}
 
+			// 소속 토지정보 각각의 좌표 가져오기
+			for (int i = 0; i < pnuList.size(); i++) {
+				HashMap jijukParam = new HashMap<>();
+				jijukParam.put("sido_nm", pnuList.get(i).get("gp_sido_nm"));
+				jijukParam.put("sgg_nm", pnuList.get(i).get("gp_sgg_nm"));
+				jijukParam.put("emd_nm", pnuList.get(i).get("gp_emd_nm"));
+				jijukParam.put("ri_nm", pnuList.get(i).get("gp_ri_nm"));
+				jijukParam.put("jibun", pnuList.get(i).get("gp_jibun"));
+				ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+				if (jijukList.size() > 0) {
+					pnuList.get(i).put("lng", jijukList.get(0).get("x"));
+					pnuList.get(i).put("lat", jijukList.get(0).get("y"));
+				}
+			}
+
 
 //			ArrayList<HashMap> goverPnuAtcFileList = mainService.selectQuery("goverSQL.selectPnuAtcFileList",params);
 			ArrayList<HashMap> goverPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
