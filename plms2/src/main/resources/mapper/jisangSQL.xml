@@ -628,6 +628,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select> 
 	
 	
+	<select id="selectJisangJijukList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		
+		SELECT *,(row_number() OVER()) AS no from jisang_master jm 
+		LEFT JOIN jijuk_2024 j2 ON j2.pnu=jm.jm_pnu
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+		and jm.jm_jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+		and jm.jm_sido_nm=#{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+		and jm.jm_sgg_nm=#{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+		and jm.jm_emd_nm=#{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+		and jm.jm_sgg_nm=#{sgg_nm}
+		</if>
+		
+		
+		
+		
+		
+
+	</select> 
+	
+	
+	
 	<select id="selectPermitData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *,
 		(row_number() OVER()) AS no

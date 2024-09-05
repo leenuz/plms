@@ -364,6 +364,7 @@
 		 ,jm_bunhal_date
 		 </if>
 		 ,jm_udate
+		 ,jm_pnu
 		 
 		 ) 
 		 VALUES (
@@ -395,6 +396,7 @@
 		  ,TO_DATE(#{BUNHAL_DATE},'MM/DD/YY')
 		  </if>
 		  ,Now()
+		  ,#{PNU}
 		 
 		   )
 	

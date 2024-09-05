@@ -51,6 +51,7 @@ const landAddSearchResultOpenPopUp = () => {
 
 
 const landcreatePopCustomLiResult = () => {
+	console.log("--------------------landcreatePopCustomLiResult------------------------");
         // hiddenSelectBox와 PopupCustomSelectBox를 묶는 큰 wrap
         const popSelectWrapItems = document.querySelectorAll(
           "#land_searchResultsPopup .popSelectWrap"
@@ -70,7 +71,7 @@ const landcreatePopCustomLiResult = () => {
           );
 
           for (let i = 0; i < nowIssueSelectBox.length; i++) {
-            const optionValue = nowIssueSelectBox.options[i].value;
+            const optionValue = nowIssueSelectBox.options[i].text;
             const li = document.createElement("li");
             const button = document.createElement("button");
             button.classList.add("PopupMoreSelectBtn");
@@ -82,7 +83,7 @@ const landcreatePopCustomLiResult = () => {
         });
       };
 
-      landcreatePopCustomLiResult();
+     landcreatePopCustomLiResult();
 
       // 팝업 select click 시 .PopupCustomSelectBtns 나오게
 
@@ -183,6 +184,7 @@ function loadCustomLiLandRegist(ele) {
 $(document).on("click",".PopupMoreSelectBtn",function(){
 	console.log("---------------moreselectBtn--click----");
 	var moreSelectBtnText = this.innerText;
+	console.log($(this).html());
 	console.log("moreSelectBtnText:"+this.innerText);
 	const parentMoreSelectBtn = this.closest('.PopupCustomSelectBtns')
 	       const EditCustomViewBtn = parentMoreSelectBtn.previousElementSibling;
@@ -199,7 +201,7 @@ $(document).on("click",".PopupMoreSelectBtn",function(){
 	       parentMoreSelectBtn.classList.remove('active')
 
 	       // 선택한 걸 select의 value값으로 변경하기
-
+			console.log($(this).parent().parent().html());
 	       const nearByContent = this.closest('.selectContentArea');
 		   console.log(nearByContent);
 	       const nearBySelectBox = nearByContent.querySelector('select');
@@ -211,7 +213,35 @@ $(document).on("click",".PopupMoreSelectBtn",function(){
 	
 });
 
-
+$(document).on("click","#addParentBtn",function(){
+	console.log("-----------addParentBtn------------");
+	var targetEle=$("#searchResultPopDiv");
+	console.log(targetEle.html());
+	var inputEles=targetEle.find("input");
+	var popupEle=$("#land_searchResultsPopup");
+	var openerIndex=popupEle.find("#openerIndex").val();
+	console.log("openerIndex:"+openerIndex);
+	
+	for(var i=0;i<inputEles.length;i++){
+		if (inputEles[i].checked){
+			//0번째 꺼는 opener에 값을 넣는다 그 이후에는 추가하면서 넣는다
+			if (i==0){ 
+				console.log(inputEles[i]);	
+				console.log($(inputEles[i]).parent().parent().html());
+			}
+			else {
+				
+			}
+			
+		}
+		
+	}
+	//console.log(inputEles);
+	//console.log($(this).parent().)
+	
+	/*const PopupWrap = landPopupFinalBtns.closest(".popupWrap");
+	         PopupWrap.classList.remove("active");*/
+})
 
       // 저장, 닫기 버튼 click시 팝업 사라지게
 
@@ -220,6 +250,7 @@ $(document).on("click",".PopupMoreSelectBtn",function(){
       );
 
       landPopupFinalBtns.addEventListener("click", function () {
+		console.log("------------landPopupFinalBtns-------------------");
           const PopupWrap = landPopupFinalBtns.closest(".popupWrap");
           PopupWrap.classList.remove("active");
         });
@@ -466,7 +497,15 @@ $(document).ready(function(){
 
 $(document).on("click","#jisangTogiAddBtn",function(){
 	console.log("----------jisangTogiAddBtn--------------");
-	
+	var orgEle=$("#togiHiddenUl");
+	console.log(orgEle.html());
+	console.log($("#togiDiv").find("#togiUl"));
+	var cnt=$("#togiDiv").find("#togiUl").length;
+	console.log("cnt:"+cnt);
+	var index=cnt+1;
+	orgEle.find($("#permitIndex").val(index));
+    var newEle='<ul class="contents" id="togiHiddenUl" >'+orgEle.html()+'</ul>';
+	$("#togiDiv").append(newEle);	
 	
 	
 })
@@ -474,12 +513,14 @@ $(document).on("click","#jisangTogiAddBtn",function(){
 
 $(document).on("change","#landRightsRegistSelectBox09",function(){
 	console.log("----------landRightsRegistSelectBox09--------------");
+	 console.log($("#landRightsRegistSelectBox09 option:selected").val());
 		getSigunMaster($("#landRightsRegistSelectBox09 option:selected").val());
 	})
 	
 	
 
 	$(document).on("change","#landRightsRegistSelectBox10",function(){
+		console.log("----------landRightsRegistSelectBox10--------------");
 		getDongMaster($("#landRightsRegistSelectBox09 option:selected").val(),$("#landRightsRegistSelectBox10 option:selected").val());
 	})
 	
@@ -487,7 +528,14 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 			getRiMaster($("#landRightsRegistSelectBox09 option:selected").val(),$("#landRightsRegistSelectBox10 option:selected").val(),$("#landRightsRegistSelectBox11 option:selected").val());
 		})
 
-
+		/*$(document).on("click","input[name=chk]",function(){
+			console.log("----------PopupLandCheckBoxResult01--------------");
+			console.log($(this).parent().parent().html());
+			 //console.log($("#landRightsRegistSelectBox09 option:selected").val());
+				//getSigunMaster($("#landRightsRegistSelectBox09 option:selected").val());
+			})*/
+			
+			
 
 
 		function getSigunMaster(key){
@@ -591,7 +639,7 @@ function getRiMaster(sidoKey,gugunKey,dongKey){
 							$("#landRightsRegistSelectBox12 option").remove();
 							$("#landRightsRegistSelectBox12").append('<option value="">전체</option>');
 							for(var i=0;i<response.resultData.length;i++){
-								$("#landRightsRegistSelectBox12").append('<option value="'+response.resultData[i].bm_dong+'">'+response.resultData[i].bm_dong+'</option>');
+								$("#landRightsRegistSelectBox12").append('<option value="'+response.resultData[i].rm_ri+'">'+response.resultData[i].rm_ri+'</option>');
 							}
 							loadCustomLiLandRegist($("#ri_ul"));
 						}
@@ -611,14 +659,87 @@ $(document).on("change","#sigunmaster",function(){
 	getDongMaster($("#sigunmaster option:selected").val());
 })
 
+
+/*$(document).on("click",".searchAddressBtn",function(){
+
+//var formSerializeArray = $('#searchForm').serializeArray();
+
+  //var buttonId = $(this).attr("id").split("_")[1];
+//    formSerializeArray.push({
+//        name: 'selectedButton',
+//        value: buttonId
+//    });
+    // 가져온 id 값을 콘솔에 출력
+//
+//    const data_index = $(this).attr("data-index");
+
+//    $('#choiceBtn').attr('data-index', buttonId);
+console.log($(this).parent().parent().html());
+		var idObj=$(this).parent().parent().find(".addressData input");
+		var id=$(this).parent().parent().find("#bunhalIndex").val();
+		var sido_nm=$(this).parent().parent().find("#togisido_nm").val();
+		var sgg_nm=$(this).parent().parent().find("#togisgg_nm").val();
+		var emd_nm=$(this).parent().parent().find("#togiemd_nm").val();
+		var ri_nm=$(this).parent().parent().find("#togiri_nm").val();
+		var jibun=$(this).parent().parent().find("#togijibun").val();
+		
+		console.log(idObj.val()); 
+    	console.log(id);
+	
+		var addr=idObj.val();
+		var datas={"address":addr,"sido_nm":sido_nm,"sgg_nm":sgg_nm,"emd_nm":emd_nm,"ri_nm":ri_nm,"jibun":jibun}
+					   console.log($(this).parent().html());
+					   console.log(datas);
+					   
+				  
+				   //searchResultPopDiv 화면뿌릴 DIV
+				   
+				   if (addr==null || addr=="" || addr==undefined) {
+					alert("주소를 입력해주세요.");
+					return;
+				   }
+				 
+				  
+				
+				   
+				   
+				   
+				   
+				   	   $.ajax({
+				   	   	  url: "/jisang/getBunhalJIjukSelect",
+				   	   	  type: "POST",
+				   	   	  data: datas,
+				   	   })
+				   	   .done(function (fragment) {
+//				  var buttonIdx = fragment.find('button#choiceBtn');
+//				  buttonIdx.attr('data-index', buttonId);
+ console.log("***fragment***");
+ console.log(fragment);
+				   	      $('#searchResultPopDiv').replaceWith(fragment);
+						  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+                                console.log($(popupOpen).html());
+						  	   $(popupOpen).addClass("open");
+						  	   popupOpen.classList.add("active");
+                        	 $('.resultSelectBtn').attr('data-index', id);
+                           	$('.saveBtn').attr('data-index', id);
+				   	   	});
+
+});*/
+
+//   주소 검색
 $(document).on("click","#addrSearchBtn",function(){
 	console.log("----------addrSearchBtn start-----------");
+	var parentIndex=$(this).parent().parent().find("#permitIndex").val();
+	console.log("parentIndex:"+parentIndex);
+	
+	
 		//$("land_searchResultsPopup").addClass("open");
 		 const popupOpen = document.querySelector("#land_searchResultsPopup .popupWrap");
-								  	    console.log($(popupOpen).html());
-								  	   //			   		              landRightsSearchBtn.classList.add("open");
-								  	   $(popupOpen).addClass("open");
-									   $(popupOpen).addClass("active");
+		  	    //console.log($(popupOpen).html());
+		  	   //			   		              landRightsSearchBtn.classList.add("open");
+		 $(popupOpen).find("#openerIndex").val(parentIndex);
+		 $(popupOpen).addClass("open");
+		 $(popupOpen).addClass("active");
 								  	  // popupOpen.classList.add("active");
 })
 
@@ -626,7 +747,29 @@ $(document).on("click","#addrSearchBtn",function(){
 $(document).on("click","#popupSearchBtn",function(){
 	
 	console.log("------------------popupSearchBtn---------------------------");
+	var formSerializeArray = $('#searchForm').serializeArray();
 	
+	console.log(formSerializeArray);
+	
+	 $.ajax({
+					   	   	  url: "/jisang/getPermitJisangSelect",
+					   	   	  type: "POST",
+					   	   	  data: formSerializeArray,
+							  
+					   	   })
+					   	   .done(function (fragment) {
+	//				  var buttonIdx = fragment.find('button#choiceBtn');
+	//				  buttonIdx.attr('data-index', buttonId);
+							 console.log("***fragment***");
+							 console.log(fragment);
+					   	      $('#searchResultPopDiv').replaceWith(fragment);
+							  const popupOpen = document.querySelector("#land_searchResultsPopup .popupWrap");
+							  							  	    console.log($(popupOpen).html());
+							  							  	   //			   		              landRightsSearchBtn.classList.add("open");
+							  							  	   $(popupOpen).addClass("open");
+							  								   $(popupOpen).addClass("active");
+							
+					   	   	});
 })
 
 

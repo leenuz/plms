@@ -167,12 +167,86 @@ margin:10px;
                 <li class="title">사용자</li>
                 <li class="title titleBtnWrap">추가/삭제</li>
               </ul>
-              <ul class="contents" >
+              <ul class="contents" id="togiHiddenUl" style="display:none;">
                 <li class="content addressInfoWidth addressInfoBox">
+                <input type="hidden" id="permitIndex" value="">
                   <div class="addressData">
                     <input
                       type="text"
                       placeholder="경기도 평택시 진위면 동천리 606-132"
+                      readonly
+                      class="notWriteInput" />
+                  </div>
+                   <button class="searchAddressBtn landPopBtn" id="addrSearchBtn">검색</button>
+                </li>
+                <li class="content contentBox">
+                  <ul class="secondContents">
+                    <li class="secondContent">
+                      <input
+                        type="text"
+                        placeholder="답"
+                        readonly
+                        class="notWriteInput" />
+                    </li>
+                    <li class="secondContent">
+                      <input
+                        type="text"
+                        placeholder="182"
+                        readonly
+                        class="notWriteInput" />
+                    </li>
+                    <li class="secondContent">
+                      <input
+                        type="text"
+                        placeholder="181"
+                        readonly
+                        class="notWriteInput" />
+                    </li>
+                    <li class="secondContent largeSecondTitle">
+                      <input type="text" />
+                    </li>
+                    <li class="secondContent">
+                      <input
+                        type="text"
+                        placeholder="9010237"
+                        readonly
+                        class="notWriteInput" />
+                    </li>
+                  </ul>
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="홍길동"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content">
+                  <input
+                    type="text"
+                    placeholder="김순애"
+                    readonly
+                    class="notWriteInput" />
+                </li>
+                <li class="content titleBtnWrap btnBox">
+                  <!-- 맨 윗줄 기본값 -->
+                  <div class="editBefore">
+                    <div class="btnWrap">
+                      <button class="addBtn miniBtn landPopBtn" id="jisangTogiAddBtn">추가</button>
+                    </div>
+                    <div class="btnWrap">
+                      <button class="delBtn miniBtn">삭제</button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <ul class="contents" id="togiUl">
+                <li class="content addressInfoWidth addressInfoBox">
+                <input type="hidden" id="permitIndex" value="1">
+                  <div class="addressData">
+                    <input
+                      type="text"
+                      placeholder=""
                       readonly
                       class="notWriteInput" />
                   </div>
@@ -234,150 +308,8 @@ margin:10px;
                   </div>
                 </li>
               </ul>
-              <ul class="contents" id="togiHiddenUl" style="display:none">
-                <li class="content addressInfoWidth addressInfoBox">
-                  <div class="addressData">
-                    <input
-                      type="text"
-                      placeholder="경기도 평택시 진위면 동천리 606-132"
-                      readonly
-                      class="notWriteInput" />
-                  </div>
-                   <button class="searchAddressBtn landPopBtn" id="addrSearchBtn">검색</button>
-                </li>
-                <li class="content contentBox">
-                  <ul class="secondContents">
-                    <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="답"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="182"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="181"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="secondContent largeSecondTitle">
-                      <input type="text" />
-                    </li>
-                    <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="9010237"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                  </ul>
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder="홍길동"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder="김순애"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content titleBtnWrap btnBox">
-                  <!-- 맨 윗줄 기본값 -->
-                  <div class="editBefore">
-                    <div class="btnWrap">
-                      <button class="addBtn miniBtn landPopBtn" id="jisangTogiAddBtn">추가</button>
-                    </div>
-                    <div class="btnWrap">
-                      <button class="delBtn miniBtn">삭제</button>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-              <ul class="contents lastContents" id="togiHiddenUl">
-                <li class="content addressInfoWidth addressInfoBox">
-                  <div class="addressData">
-                    <input
-                      type="text"
-                      placeholder="경기도 평택시 진위면 동천리 606-132"
-                      readonly
-                      class="notWriteInput" />
-                  </div>
-                </li>
-                <li class="content contentBox">
-                  <ul class="secondContents">
-                    <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="전"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="1544"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="20"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="secondContent largeSecondTitle">
-                      <input type="text" />
-                    </li>
-                    <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="9010238"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                  </ul>
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder="김순자"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder="이미자"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content titleBtnWrap btnBox">
-                  <!-- 수정하지 않을 때 -->
-
-                  <div class="editBefore">
-                    <div class="btnWrap">
-                      <button class="addBtn miniBtn landPopBtn" id="jisangTogiAddBtn">추가</button>
-                    </div>
-                    <div class="btnWrap">
-                      <button class="delBtn miniBtn">삭제</button>
-                    </div>
-                  </div>
-                </li>
-              </ul>
+              
+              
             </div>
           </div>
         </section>
@@ -810,7 +742,7 @@ margin:10px;
         </div>
       </main>
     </div>
-    <div class="usePermitRegistLandSearchWrapper open" id="searchResultPopDiv" >
+    <div class="usePermitRegistLandSearchWrapper open"  >
     
  <link
       rel="stylesheet"
@@ -831,8 +763,9 @@ margin:10px;
                   <li class="title">지사</li>
                 </ul>
                 <ul class="contents">
-                  <li class="content popSelectWrap">
+                  <li class="content popSelectWrap selectContentArea">
                     <div class="hiddenSelectBox">
+                    <input type="hidden" id="openerIndex">
                       <!-- name도 추가 -->
                       <select
                         name="jisa"
@@ -840,12 +773,13 @@ margin:10px;
                         hidden>
                           <option value="" selected>전체</option>
 				                     <th:block th:each="val:${jisaList}">
+				                     	
 					                    <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
 					                    </th:block>
                       </select>
                     </div>
                     <section class="PopupCustomSelectBox">
-                      <button class="PopupCustomSelectView">충청지사</button>
+                      <button class="PopupCustomSelectView">전체</button>
 
                       <ul class="PopupCustomSelectBtns">
                         <!-- <li><button class="PopupMoreSelectBtn">충청지사1</button></li>
@@ -910,7 +844,7 @@ margin:10px;
                   <li class="content popSelectWrap selectContentArea">
                     <div class="hiddenSelectBox">
                       <!-- name도 추가 -->
-                      <select name="landRightsRegistSelectBox11" id="landRightsRegistSelectBox11" hidden>
+                      <select name="dong" id="landRightsRegistSelectBox11" hidden>
                                                 <option value="">전체</option>
                                               
                                             </select>
@@ -928,7 +862,7 @@ margin:10px;
                   <li class="content popSelectWrap selectContentArea">
                     <div class="hiddenSelectBox">
                       <!-- name도 추가 -->
-                       <select name="landRightsRegistSelectBox12" id="landRightsRegistSelectBox12" hidden>
+                       <select name="ri" id="landRightsRegistSelectBox12" hidden>
                                                 <option value="">전제</option>
                                                 
                                             </select>
@@ -964,7 +898,7 @@ margin:10px;
           <button class="searchBtn finalBtn vividBlueBtn" id="popupSearchBtn">조회하기</button>
         </div>
 </form>
-        <div class="popupCont">
+        <div class="popupCont" id="searchResultPopDiv">
           <ul class="popTitles">
             <li class="selectLabel">선택</li>
             <li class="popTitle_num">지상권 번호</li>
@@ -972,155 +906,32 @@ margin:10px;
             <li class="popTitle_num">지번</li>
           </ul>
           <div class="popContentBox">
-            <ul class="popContents">
+            <ul class="popContents" th:each="val:${jisangList}">
               <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult01" />
-                <label for="PopupLandCheckBoxResult01"></label>
+                <input type="checkbox" name="chk" th:attr="id='input-' + ${val.no}"/>
+                <label th:attr="for='input-' + ${val.no}"></label>
               </li>
-              <li class="popContent popTitle_num">J_014097</li>
+              <li class="popContent popTitle_num">[[${val.jm_jisang_no}]]</li>
               <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
+                [[${val.juso}]]
               </li>
-              <li class="popContent popTitle_num">62-14</li>
+              <li class="popContent popTitle_num">[[${val.jm_jibun}]]</li>
             </ul>
-            <ul class="popContents">
-              <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult02" />
-                <label for="PopupLandCheckBoxResult02"></label>
+            <ul class="popContents" th:if="${#lists.isEmpty(jisangList)}">
+             
+             
+              <li style="text-align:center;width:100%;">
+                검색 결과가 없습니다.
               </li>
-              <li class="popContent popTitle_num">J_014097</li>
-              <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
-              </li>
-              <li class="popContent popTitle_num">62-14</li>
+             
             </ul>
-            <ul class="popContents">
-              <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult03" />
-                <label for="PopupLandCheckBoxResult03"></label>
-              </li>
-              <li class="popContent popTitle_num">J_014097</li>
-              <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
-              </li>
-              <li class="popContent popTitle_num">62-14</li>
-            </ul>
-            <ul class="popContents">
-              <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult04" />
-                <label for="PopupLandCheckBoxResult04"></label>
-              </li>
-              <li class="popContent popTitle_num">J_014097</li>
-              <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
-              </li>
-              <li class="popContent popTitle_num">62-14</li>
-            </ul>
-            <ul class="popContents">
-              <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult05" />
-                <label for="PopupLandCheckBoxResult05"></label>
-              </li>
-              <li class="popContent popTitle_num">J_014097</li>
-              <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
-              </li>
-              <li class="popContent popTitle_num">62-14</li>
-            </ul>
-            <ul class="popContents">
-              <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult06" />
-                <label for="PopupLandCheckBoxResult06"></label>
-              </li>
-              <li class="popContent popTitle_num">J_014097</li>
-              <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
-              </li>
-              <li class="popContent popTitle_num">1-14</li>
-            </ul>
-            <ul class="popContents">
-              <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult07" />
-                <label for="PopupLandCheckBoxResult07"></label>
-              </li>
-              <li class="popContent popTitle_num">J_014097</li>
-              <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
-              </li>
-              <li class="popContent popTitle_num">62-14</li>
-            </ul>
-            <ul class="popContents">
-              <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult08" />
-                <label for="PopupLandCheckBoxResult08"></label>
-              </li>
-              <li class="popContent popTitle_num">J_014097</li>
-              <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
-              </li>
-              <li class="popContent popTitle_num">1-1</li>
-            </ul>
-            <ul class="popContents">
-              <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult09" />
-                <label for="PopupLandCheckBoxResult09"></label>
-              </li>
-              <li class="popContent popTitle_num">J_014097</li>
-              <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
-              </li>
-              <li class="popContent popTitle_num">62-14</li>
-            </ul>
-            <ul class="popContents">
-              <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult10" />
-                <label for="PopupLandCheckBoxResult10"></label>
-              </li>
-              <li class="popContent popTitle_num">J_014097</li>
-              <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
-              </li>
-              <li class="popContent popTitle_num">62-14</li>
-            </ul>
-            <ul class="popContents">
-              <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult11" />
-                <label for="PopupLandCheckBoxResult11"></label>
-              </li>
-              <li class="popContent popTitle_num">J_014097</li>
-              <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
-              </li>
-              <li class="popContent popTitle_num">62-14</li>
-            </ul>
-            <ul class="popContents">
-              <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult12" />
-                <label for="PopupLandCheckBoxResult12"></label>
-              </li>
-              <li class="popContent popTitle_num">J_014097</li>
-              <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
-              </li>
-              <li class="popContent popTitle_num">62-14</li>
-            </ul>
-            <ul class="popContents">
-              <li class="popContent selectLabel">
-                <input type="checkbox" id="PopupLandCheckBoxResult13" />
-                <label for="PopupLandCheckBoxResult13"></label>
-              </li>
-              <li class="popContent popTitle_num">J_014097</li>
-              <li class="popContent popTitle_address">
-                충청북도 청주시 홍덕구 수의동 62-14
-              </li>
-              <li class="popContent popTitle_num">62-14</li>
-            </ul>
+            
           </div>
         </div>
 
         <div class="lastBtnBox btnWrap">
           <button class="backBtn grayBtn finalBtn">닫기</button>
-          <button class="vividBlueBtn finalBtn">선택등록</button>
+          <button class="vividBlueBtn finalBtn" id="addParentBtn">선택등록</button>
         </div>
       </div>
     </div>
