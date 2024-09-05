@@ -15,7 +15,6 @@
   
 	<link th:href="@{/css/common.css}" rel="stylesheet" />
 	<link rel="stylesheet" href="/css/gover/masterEdit.css" /> 
-	  
 	<!--<script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 	<style>
@@ -353,15 +352,15 @@
 				<li class="content selectContentArea">
 				  <div class="hiddenSelectBox">
 				    <select
-				      name="masterEditSelectBox07"
+				      name="exemptionyn"
 				      id="masterEditSelectBox07"
 				      hidden>
-				      <option value="Y" th:selected="${resultData.gm_permpossyn == 'Y'}">Y</option>
-				      <option value="N" th:selected="${resultData.gm_permpossyn == 'N'}">N</option>
+				      <option value="Y" th:selected="${resultData.gm_exemptionyn == 'Y'}">Y</option>
+				      <option value="N" th:selected="${resultData.gm_exemptionyn == 'N'}">N</option>
 				    </select>
 				  </div>
 				  <section class="customSelectBox">
-				    <button class="customSelectView">[[${resultData.gm_permpossyn}]]</button>
+				    <button class="customSelectView">[[${resultData.gm_exemptionyn}]]</button>
 				    <ul class="customSelectBtns">
 				      <li><button type="button" class="moreSelectBtn">Y</button></li>
 				      <li><button type="button" class="moreSelectBtn">N</button></li>
