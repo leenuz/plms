@@ -16,6 +16,7 @@ public class GlobalConfig {
 	private static String jisangFileTempDir;
 	private static String jisangFileDataDir;
 	private static String jisangReqDoc1Dir;
+	private static String jisangReqDoc2Dir;
 	
 	@Value("${plms.pnuAtcFileDir}")
 	public void setPnuAtcFileDir(String str) {
@@ -47,6 +48,14 @@ public class GlobalConfig {
 	}
 	public static String getJisangReqDoc1Dir() {
 		return jisangReqDoc1Dir;
+	}
+	
+	@Value("${plms.jisangReqDoc2Dir}")
+	public void setJisangReqDoc2Dir(String str) {
+		jisangReqDoc2Dir=str;
+	}
+	public static String getJisangReqDoc2Dir() {
+		return jisangReqDoc2Dir;
 	}
 	
 
