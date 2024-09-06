@@ -595,3 +595,45 @@ textarea:focus {
   flex-direction: column;
   box-sizing: border-box;
 }
+
+/*관리필지 증감현황*/
+.parcelChangeParcelDetailPopWrapper .popupWrap .pilji_total {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+.parcelChangeParcelDetailPopWrapper .popupWrap .pilji_total > p {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+  padding: 0 20px;
+  display: flex;
+  gap: 8px;
+  align-items: end;
+}
+.parcelChangeParcelDetailPopWrapper .popupWrap .pilji_total p .total_blue {
+  color: #2b7de1;
+}
+.parcelChangeParcelDetailPopWrapper .popupWrap .pilji_total > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 160px;
+  height: 40px;
+  background-color: #4e5871;
+  border-radius: 10px;
+}
+.parcelChangeParcelDetailPopWrapper .popupWrap .pilji_total > button > p {
+  font-weight: 600;
+  font-size: 15px;
+  color: #ffffff;
+  padding: 0;
+}
+.parcelChangeParcelDetailPopWrapper .popupWrap .pilji_total > button > figure {
+  width: 12px;
+  height: 12px;
+}
+.parcelChangeParcelDetailPopWrapper .popupWrap .pilji_total > button > figure img {
+  width: 100%;
+}
