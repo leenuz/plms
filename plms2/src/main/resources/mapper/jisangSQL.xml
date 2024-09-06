@@ -526,6 +526,91 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 	
+	
+	<!-- 지상권 사용승락 기본정보 seq 가져오기 -->
+	<select id="selectJisangPermitNextval" parameterType="java.util.HashMap" resultType="Integer">
+		SELECT jpm_idx+1 FROM jisang_permit_master ORDER BY jpm_idx DESC LIMIT 1;
+	</select>
+	<!-- 지상권 사용승락 기본정보 저장 -->
+	<insert id="insertJisangPermitMaster" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jpm_idx" keyProperty="jpm_idx">
+
+		INSERT INTO jisang_permit_master
+		(
+		 jpm_pmt_no
+		 ,jpm_use_purpos
+		 ,jpm_use_st_date
+		 ,jpm_use_ed_date
+		 ,jpm_spot_result
+		 ,jpm_review
+		 ,jpm_contract
+		 ,jpm_pmt_status
+		 ,jpm_wdate
+		 
+
+		 )
+		 VALUES (
+		  #{seq}
+		  ,NULLIF(cast(#{purpose} as varchar),'')
+		  ,COALESCE(NULLIF(NULLIF('', '')::date, NULL), NULL)
+    	  ,COALESCE(NULLIF(NULLIF('', '')::date, NULL), NULL)
+		  ,#{spot_result}
+		  ,#{review}
+		  ,#{contract}
+		  
+		  ,#{pmt_status}
+		  ,Now()
+
+		   )
+
+	<!-- 지상기본정보 --></insert>
+	<!-- 지상권 사용승락 기본정보 저장 -->
+	<insert id="insertJisangPermitTogi" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jpt_idx" keyProperty="jpt_idx">
+
+		INSERT INTO jisang_permit_togi 
+		(
+		 jpt_pmt_no
+		 ,jpt_jisang_no
+		 ,jpt_addrcode
+		 ,jpt_soyuja
+		 ,jpt_pmt_user
+		 ,jpt_jimok
+		 ,jpt_all_area
+		 ,jpt_set_area
+		 ,jpt_set_money
+		 ,jpt_sido_nm
+		 ,jpt_sgg_nm
+		 ,jpt_emd_nm
+		 ,jpt_ri_nm
+		 ,jpt_jibun
+		 ,jpt_addr
+		 ,jpt_jasan_no
+		 
+		 ) 
+		 VALUES (
+		 
+		 #{seq}
+		 ,#{jisang_no}
+		 ,#{addrcode}
+		 ,#{souja}
+		 ,#{pmt_user}
+		 ,#{jimok}
+		 ,NULLIF(cast(#{all_area} as varchar),'')::numeric
+		 ,NULLIF(cast(#{set_area} as varchar),'')::numeric
+		 ,#{set_money}
+		 ,#{sido_nm}
+		 ,#{sgg_nm}
+		 ,#{emd_nm}
+		 ,#{ri_nm}
+		 ,#{jibun}
+		 ,#{addr}
+		 ,#{jasan_no}
+		)
+	
+
+		   
+
+	<!-- 지상기본정보 --></insert>
+	
 	<select id="selectJisangPermitTotalCount" parameterType="java.util.HashMap" resultType="Integer">
 		SELECT count(*) as count FROM (
 		SELECT jpm.jpm_idx AS index,
@@ -631,6 +716,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectJisangJijukList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		
 		SELECT *,(row_number() OVER()) AS no from jisang_master jm 
+			LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
 		LEFT JOIN jijuk_2024 j2 ON j2.pnu=jm.jm_pnu
 		where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -645,9 +731,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
 		and jm.jm_emd_nm=#{emd_nm}
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
-		and jm.jm_sgg_nm=#{sgg_nm}
-		</if>
+		
 		
 		
 		

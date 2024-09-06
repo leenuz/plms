@@ -221,40 +221,172 @@ $(document).on("click","#addParentBtn",function(){
 	var popupEle=$("#land_searchResultsPopup");
 	var openerIndex=popupEle.find("#openerIndex").val();
 	console.log("openerIndex:"+openerIndex);
+	var openerEle=$("#togiDiv");
+	console.log("inputEles.length:"+inputEles.length);
+	var j=0;
+	
+	var checkedCnt=0;
+	for(var i=0;i<inputEles.length;i++){
+		if (inputEles[i].checked){
+			checkedCnt++;
+		}
+	}
+	//실제 내용이 들어 있는 셀은 몇개?
+	
+	var inputValues = $('#togiManageNo').map(function() {
+	    var value = $(this).val().trim();
+	    return value !== "" ? this : null; // 값이 있을 경우에만 요소를 반환
+	}).get(); // 배열로 반환
+	
+	//실제값이 있는 UL 찾기
+		var validMangeNoCnt=0;
+		var ckUls=$("#togiDiv").find(".togiUl");
+		console.log(ckUls.length);
+		for(var i=0;i<ckUls.length;i++){
+			console.log(ckUls[i]);
+			
+			var value = $(ckUls[i]).find("#togiManageNo").val().trim();
+			console.log("value:"+value);
+			if (value!="" && value!=undefined && value!=null){
+				console.log("####");
+				validMangeNoCnt++;
+			} 
+		}
 	
 	for(var i=0;i<inputEles.length;i++){
 		if (inputEles[i].checked){
+			var cnt=$("#togiDiv").find(".togiUl").length;
+			var index=cnt+1;
+			console.log("index:"+index);
+			console.log("###################################");
+			console.log(inputEles[i]);	
+			console.log($(inputEles[i]).parent().parent().html());
+			var address=$(inputEles[i]).parent().parent().find(".popTitle_address").text();
+			var manageno=$(inputEles[i]).parent().parent().find("#popupManageNo").val();
+			var jimok=$(inputEles[i]).parent().parent().find("#popupJimokText").val();
+			var jijukarea=$(inputEles[i]).parent().parent().find("#popupJijukArea").val();
+			var pyeonibarea=$(inputEles[i]).parent().parent().find("#popupPyeonibArea").val();
+			var jasanno=$(inputEles[i]).parent().parent().find("#popupJasanNo").val();
+			var souja=$(inputEles[i]).parent().parent().find("#popupSouja").val();
+							console.log("address:"+address);
+							console.log("jimok:"+jimok);
+							console.log("jijukarea:"+jijukarea);
+							console.log("pyeonibarea:"+pyeonibarea);
+							console.log("jasanno:"+jasanno);
+							console.log("souja:"+souja);
+							console.log("manageno:"+manageno);
+			
 			//0번째 꺼는 opener에 값을 넣는다 그 이후에는 추가하면서 넣는다
-			if (i==0){ 
-				console.log(inputEles[i]);	
-				console.log($(inputEles[i]).parent().parent().html());
+			if (checkedCnt==1){ 
+				
+				var openerTargetEle=openerEle.find('input[id="permitIndex"][value="'+openerIndex+'"]');
+				console.log(openerTargetEle.parent().parent().html());
+				console.log(openerTargetEle.parent().parent().find("#togiaddress").val());
+				//오퍼너에 세팅
+				openerTargetEle.parent().parent().find("#togiManageNo").val(manageno);
+				openerTargetEle.parent().parent().find("#togiaddress").val(address);
+				openerTargetEle.parent().parent().find("#togiJimokText").val(jimok);
+				openerTargetEle.parent().parent().find("#togiJijukArea").val(jijukarea);
+				openerTargetEle.parent().parent().find("#togiPyeonibArea").val(pyeonibarea);
+				openerTargetEle.parent().parent().find("#togiJasanNo").val(jasanno);
+				openerTargetEle.parent().parent().find("#togiSouja").val(souja);
 			}
 			else {
+				console.log("validMangeNoCnt:"+validMangeNoCnt);
+				console.log("cnt:"+cnt);
+				if (validMangeNoCnt==0 && j==0){
+					var openerTargetEle=openerEle.find('input[id="permitIndex"][value="'+openerIndex+'"]');
+									console.log(openerTargetEle.parent().parent().html());
+									console.log(openerTargetEle.parent().parent().find("#togiaddress").val());
+									//오퍼너에 세팅
+									openerTargetEle.parent().parent().find("#togiManageNo").val(manageno);
+									openerTargetEle.parent().parent().find("#togiaddress").val(address);
+									openerTargetEle.parent().parent().find("#togiJimokText").val(jimok);
+									openerTargetEle.parent().parent().find("#togiJijukArea").val(jijukarea);
+									openerTargetEle.parent().parent().find("#togiPyeonibArea").val(pyeonibarea);
+									openerTargetEle.parent().parent().find("#togiJasanNo").val(jasanno);
+									openerTargetEle.parent().parent().find("#togiSouja").val(souja);
+				}
+				else {
+					var orgEle=$("#togiHiddenUl");
+										console.log(orgEle.html());
+										var togiDiv=$("#togiDiv");
+										console.log($("#togiDiv").html());
+										console.log($(togiDiv).find(".togiUl"));
+										
+										var togiUls=$("#togiDiv").find(".togiUl");
+										console.log(togiUls);
+										
+										console.log("cnt:"+cnt);
+										console.log("index:"+index)
+										console.log("address:"+address);
+										var index=cnt+1;
+											orgEle.find($("#permitIndex").val(index));
+										var newEle='<ul class="contents togiUl" id="togiUl" >'+orgEle.html()+'</ul>';
+										$("#togiDiv").append(newEle);	
+										var openerTargetEle=openerEle.find('input[id="permitIndex"][value="'+index+'"]');
+										openerTargetEle.parent().parent().find("#togiManageNo").val(manageno);
+										openerTargetEle.parent().parent().find("#togiaddress").val(address);
+										openerTargetEle.parent().parent().find("#togiJimokText").val(jimok);
+										openerTargetEle.parent().parent().find("#togiJijukArea").val(jijukarea);
+										openerTargetEle.parent().parent().find("#togiPyeonibArea").val(pyeonibarea);
+										openerTargetEle.parent().parent().find("#togiJasanNo").val(jasanno);
+										openerTargetEle.parent().parent().find("#togiSouja").val(souja);
+				}
 				
 			}
+			j++;
 			
 		}
+		console.log
 		
 	}
-	//console.log(inputEles);
-	//console.log($(this).parent().)
 	
-	/*const PopupWrap = landPopupFinalBtns.closest(".popupWrap");
-	         PopupWrap.classList.remove("active");*/
+	
+	
+	
+	//창닫기
+	const landPopupFinalBtns = document.querySelector(
+		        "#land_searchResultsPopup .popupWrap .lastBtnBox .finalBtn"
+		      );
+			  const PopupWrap = landPopupFinalBtns.closest(".popupWrap");
+			           PopupWrap.classList.remove("active");
+			 
+			 
+			 //#전체 셀렉트 박스와 버튼을 초기화 시작
+			 var ele=$(".selectInfo");
+			 var customSelectBtns = ele.find('.PopupCustomSelectView');
+			 var selectEles = ele.find('.hiddenSelectBox select');
+			 //버튼
+			 for(var i=0;i<customSelectBtns.length;i++){
+			 	customSelectBtns.text("전체");
+			 }
+			 //셀렉트박스
+			 for(var i=0;i<selectEles.length;i++){
+			 	selectEles.val("");
+			 }
+			 //#전체 셀렉트 박스와 버튼을 초기화 끝
 })
 
       // 저장, 닫기 버튼 click시 팝업 사라지게
+$(document).on("click","#popupCloseBtn",function(){
+	console.log("------------popupCloseBtn-------------------");
+	const landPopupFinalBtns = document.querySelector(
+	        "#land_searchResultsPopup .popupWrap .lastBtnBox .finalBtn"
+	      );
+		  const PopupWrap = landPopupFinalBtns.closest(".popupWrap");
+		           PopupWrap.classList.remove("active");
+});
+    
+	  
+	 
 
-      const landPopupFinalBtns = document.querySelector(
-        "#land_searchResultsPopup .popupWrap .lastBtnBox .finalBtn"
-      );
-
-      landPopupFinalBtns.addEventListener("click", function () {
+     /* landPopupFinalBtns.addEventListener("click", function () {
 		console.log("------------landPopupFinalBtns-------------------");
           const PopupWrap = landPopupFinalBtns.closest(".popupWrap");
           PopupWrap.classList.remove("active");
         });
-
+*/
 
       // x 버튼 click시 팝업 사라지게
       const landtopCloseBtn = document.querySelector(
@@ -495,17 +627,51 @@ $(document).ready(function(){
 			    }
 }); //end ready
 
+
+$(document).on("click","#jisangTogiClearBtn",function(){
+	console.log("----------jisangTogiClearBtn--------------");
+	console.log($(this).parent().parent().parent().html());
+	var clearEle=$(this).parent().parent().parent();
+	clearEle.find("#togiaddress").val("");
+	clearEle.find("#togiJimokText").val("");
+	clearEle.find("#togiJijukArea").val("");
+	clearEle.find("#togiPyeonibArea").val("");
+	clearEle.find("#togiSetMoney").val("");
+	clearEle.find("#togiJasanNo").val("");
+	clearEle.find("#togiSouja").val("");
+	clearEle.find("#togiUseName").val("");
+	
+})
+
+
 $(document).on("click","#jisangTogiAddBtn",function(){
 	console.log("----------jisangTogiAddBtn--------------");
 	var orgEle=$("#togiHiddenUl");
 	console.log(orgEle.html());
-	console.log($("#togiDiv").find("#togiUl"));
-	var cnt=$("#togiDiv").find("#togiUl").length;
+	var togiDiv=$("#togiDiv");
+	console.log($("#togiDiv").html());
+	console.log($(togiDiv).find(".togiUl"));
+	/*const togiDiv1=document.querySelector('#togiDiv');
+	var togiUls=togiDiv1.querySelector('.togiUl');
+	console.log(togiUls);*/
+	var cnt=$("#togiDiv").find(".togiUl").length;
 	console.log("cnt:"+cnt);
 	var index=cnt+1;
 	orgEle.find($("#permitIndex").val(index));
-    var newEle='<ul class="contents" id="togiHiddenUl" >'+orgEle.html()+'</ul>';
+    var newEle='<ul class="contents togiUl" id="togiUl" >'+orgEle.html()+'</ul>';
 	$("#togiDiv").append(newEle);	
+	
+	
+})
+
+$(document).on("click","#togiDelBtn",function(){
+	console.log("----------togiDelBtn--------------");
+	
+	
+	var delUlEle=$(this).parent().parent().parent().parent();
+	console.log(delUlEle.html());
+	delUlEle.remove();
+	
 	
 	
 })
@@ -761,8 +927,16 @@ $(document).on("click","#popupSearchBtn",function(){
 	//				  var buttonIdx = fragment.find('button#choiceBtn');
 	//				  buttonIdx.attr('data-index', buttonId);
 							 console.log("***fragment***");
-							 console.log(fragment);
+							 //console.log(fragment);
 					   	      $('#searchResultPopDiv').replaceWith(fragment);
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
 							  const popupOpen = document.querySelector("#land_searchResultsPopup .popupWrap");
 							  							  	    console.log($(popupOpen).html());
 							  							  	   //			   		              landRightsSearchBtn.classList.add("open");
@@ -806,4 +980,105 @@ $(document).on("click","#docFileDelBtn",function(){
 	//console.log($(this).parent().parent().find(".notWriteInput").val(""));
 	
 })
+
+
+
+$(document).on("click","#mainSaveBtn",function(){
+	console.log("------------------mainSaveBtn----------------------------");
+	var formSerializeArray = $('#saveForm').serializeArray();
+	console.log("전체양식 array");
+	console.log(formSerializeArray);
+	var dataObj = {}; 
+	for (i=0; i<formSerializeArray.length; i++) { 
+		if (formSerializeArray[i].name=="togiManageNo") continue;
+		else if (formSerializeArray[i].name=="togiaddress") continue;
+		else if (formSerializeArray[i].name=="togiJimokText") continue;
+		else if (formSerializeArray[i].name=="togiJijukArea") continue;
+		else if (formSerializeArray[i].name=="togiPyeonibArea") continue;
+		else if (formSerializeArray[i].name=="togiSetMoney") continue;
+		else if (formSerializeArray[i].name=="togiJasanNo") continue;
+		else if (formSerializeArray[i].name=="togiSouja") continue;
+		else if (formSerializeArray[i].name=="togiUseName") continue;
+		dataObj[formSerializeArray[i].name]=formSerializeArray[i].value;
+	}
+	console.log("------dataObj--------");
+	console.log(dataObj);
+	
+	console.log("대상토지 정보");
+	var togiDatas=[];
+	var togiUls=$("#togiDiv .togiUl");
+	console.log(togiUls);
+	for(var i=0;i<togiUls.length;i++){
+		var togiManageNo=$(togiUls[i]).find("#togiManageNo").val();
+		var togiaddress=$(togiUls[i]).find("#togiaddress").val();
+		var togiJimokText=$(togiUls[i]).find("#togiJimokText").val();
+		var togiJijukArea=$(togiUls[i]).find("#togiJijukArea").val();
+		var togiPyeonibArea=$(togiUls[i]).find("#togiPyeonibArea").val();
+		var togiSetMoney=$(togiUls[i]).find("#togiSetMoney").val();
+		var togiJasanNo=$(togiUls[i]).find("#togiJasanNo").val();
+		var togiSouja=$(togiUls[i]).find("#togiSouja").val();
+		var togiUseName=$(togiUls[i]).find("#togiUseName").val();
+		
+		
+		//console.log("togiManageNo:"+togiManageNo);
+		var togiObj={"togiManageNo":togiManageNo
+			,"togiaddress":togiaddress.trim()
+			,"togiJimokText":togiJimokText
+			,"togiJijukArea":togiJijukArea
+			,"togiPyeonibArea":togiPyeonibArea
+			,"togiSetMoney":togiSetMoney
+			,"togiJasanNo":togiJasanNo
+			,"togiSouja":togiSouja
+			,"togiUseName":togiUseName
+			
+		}
+		//console.log(togiObj);
+		togiDatas.push(togiObj);
+	}
+	
+	dataObj.desangTogis=togiDatas;
+	console.log(dataObj);
+	
+	
+	url="/jisang/usePermitRegisterSave";
+   	$.ajax({
+
+		url:url,
+		type:'POST',
+		contentType:"application/json",
+		data:JSON.stringify(dataObj),
+
+		dataType:"json",
+		beforeSend:function(request){
+			console.log("beforesend ........................");
+			loadingShow();
+		},
+		success:function(response){
+			loadingHide();
+			console.log(response);
+			if (response.success="Y"){
+				console.log("response.success Y");
+				console.log("response.resultData length:"+response.resultData.length);
+				alert("정상적으로 등록 되었습니다.");
+				/*$("#popup_bg").show();
+				$("#popup").show(500);
+				//$("#addrPopupLayer tbody td").remove();
+				for(var i=0;i<response.resultData.length;i++){
+					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+				}*/
+			}
+			else {
+				console.log("response.success N");
+			}
+		},
+		error:function(jqXHR,textStatus,errorThrown){
+			alert("mainSaveBtn ajax error\n"+textStatus+":"+errorThrown);
+			return false;
+		}
+
+   	});
+	
+	
+	
+});
 

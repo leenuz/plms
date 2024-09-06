@@ -247,7 +247,272 @@ public class jisangController {
       			response.getWriter().flush();
        // return new ModelAndView("dbTest", "list", list);
     }
-	
+	@Transactional
+	@RequestMapping(value="/usePermitRegisterSave", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+    public void usePermitRegisterSave(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+        
+		//일반웹형식
+//		Properties requestParams = CommonUtil.convertToProperties(httpRequest);
+//        log.info("requestParams:"+requestParams);
+        
+//        //json으로 넘어올때
+        String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
+        log.info("requestParams:"+requestParams);
+        JSONObject requestJsonObj=new JSONObject(requestParams);
+        
+        HashMap<String,Object> requestMap= new HashMap<>();
+        
+        Object seq= mainService.selectCountQuery("jisangSQL.selectJisangPermitNextval",requestMap);
+		int nseq=(int)seq;
+		log.info("##seq###:"+seq);
+        
+        //json으로 넘어온 정보를 파싱한다 
+        //다른거는 그데로 map 에 넣고 
+        //파일일 경우 는 이름이 같음으로 배열에 넣어서 배열을 map에 추가 한다.
+        //결과 
+//         requestMap:{
+//		        	special_cont=, landRightsRegistration_attachFile=on, mchuideuk_date=, mjasan_no=, mjibun=
+//		        	, mdosi_plan=, mpyeonib_area=, mdeunggi_no=, mpnu=, mdeunggi_date=, mcomple_yn=, mloacation=
+//		        	, mpermit_yn=
+//		        	, attachFiles=[
+//        					{attachFile=01_DOPCO_D001_지상권관리시스템_UIUX 화면설계서_20240816_이설반영.pptx}
+//        					,{attachFile=GlobalSign_META_Upload_Guide.pdf}
+//        			]
+//		        	, mdeunggiso=
+//		 }
+       // JSONArray requestJsonArray=new JSONArray(requestParams);
+      //  log.info("requestJsonArray:"+requestJsonArray);
+        
+		
+		//기본등록정보 가공
+		requestMap.put("idx",seq);
+		
+	requestMap.put("seq","P_"+String.format("%06d",seq));
+	requestMap.put("purpose", requestJsonObj.get("purpose"));
+	requestMap.put("spot_result", requestJsonObj.get("spot_result"));
+	requestMap.put("review", requestJsonObj.get("review"));
+	requestMap.put("contract", requestJsonObj.get("contract"));
+	requestMap.put("useEndDate", requestJsonObj.get("useEndDate"));
+	requestMap.put("useStartDate", requestJsonObj.get("useStartDate"));
+	requestMap.put("pmt_status","임시저장");
+		//기본등록정보 저장
+		mainService.InsertQuery("jisangSQL.insertJisangPermitMaster", requestMap);
+		
+        
+        //지상권 사용승락 대상토지 등록
+        
+        JSONArray desangTogis=requestJsonObj.getJSONArray("desangTogis");
+        for(int i=0;i<desangTogis.length();i++) {
+        	JSONObject obj=new JSONObject(desangTogis.get(i).toString());
+        	log.info("obj:"+obj);
+        	HashMap<String,Object> jMap= new HashMap<>();
+        	jMap.put("idx", obj.get("togiManageNo"));
+        	ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",jMap);
+        	log.info(data.get(0).toString());
+        	
+        	
+        	//jisang_no로 쿼리를 날려서 가져온다 정보 그리고 토지 정보를 등록한다.
+        	HashMap<String,Object> togiMap= new HashMap<>();
+        	togiMap.put("seq", "P_"+String.format("%06d",seq)); //pmt_no
+        	togiMap.put("jisang_no",obj.get("togiManageNo"));
+        	togiMap.put("addrcode",data.get(0).get("jm_addrcode"));
+        	togiMap.put("souja",obj.get("togiSouja"));
+        	togiMap.put("pmt_user",obj.get("togiUseName"));
+        	togiMap.put("jimok",obj.get("togiJimokText"));
+        	togiMap.put("all_area",obj.get("togiJijukArea"));
+        	togiMap.put("set_area",obj.get("togiPyeonibArea"));
+        	togiMap.put("set_money",obj.get("togiSetMoney"));
+        	togiMap.put("sido_nm",data.get(0).get("jm_sido_nm"));
+        	togiMap.put("sgg_nm",data.get(0).get("jm_sgg_nm"));
+        	togiMap.put("emd_nm",data.get(0).get("jm_emd_nm"));
+        	togiMap.put("ri_nm",data.get(0).get("jm_ri_nm"));
+        	togiMap.put("jibun",data.get(0).get("jm_jibun"));
+        	togiMap.put("addr",obj.get("togiaddress"));
+        	togiMap.put("jasan_no",obj.get("togiJasanNo"));
+        	mainService.InsertQuery("jisangSQL.insertJisangPermitTogi", togiMap);
+        	
+        }
+        
+        //사용승락 첨부서류 등록
+        for(int i=1;i<11;i++) {
+        	String key=String.format("%02d",i);
+        	if (requestJsonObj.get("req_doc_file"+key)!=null) {
+        		HashMap<String, Object> filesMap= new HashMap<>();
+//        		filesMap.put("jisangNo","J_"+String.format("%06d",seq));
+//    			filesMap.put("seq",String.format("%06d",seq));
+//    			filesMap.put("fseq",i);
+//    			filesMap.put("fname",fname);
+        	}
+        }
+        
+        
+        
+        
+       //ArrayList attachArr=new ArrayList();
+//        ArrayList soujaJibunArr=new ArrayList(); //소유자지분정보
+//        ArrayList soujaNameArr=new ArrayList(); //소유자명
+//        ArrayList soujaAddrArr=new ArrayList(); //소유자주소
+//        ArrayList soujaCont1Arr=new ArrayList(); //소유자연락처1
+//        ArrayList soujaCont2Arr=new ArrayList(); //소유자연락처2
+//        for(int i=0;i<requestJsonArray.length();i++) {
+//        	JSONObject obj=new JSONObject(requestJsonArray.get(i).toString());
+//        	log.info("name:"+obj.getString("name")+",value:"+obj.getString("value"));
+//        	if (obj.getString("name").equals("attachFile")) {
+//        		HashMap<String,String> ufile= new HashMap<>();
+//        		ufile.put(obj.getString("name"), obj.getString("value"));
+//        		attachArr.add(ufile);
+//        	}
+//        	else if (obj.getString("name").equals("soujaJibun") && !obj.getString("value").equals("")) {
+//        		HashMap<String,String> tmap= new HashMap<>();
+//        		tmap.put(obj.getString("name"), obj.getString("value"));
+//        		soujaJibunArr.add(tmap);
+//        	}
+//        	else if (obj.getString("name").equals("soujaName") && !obj.getString("value").equals("")) {
+//        		HashMap<String,String> tmap= new HashMap<>();
+//        		tmap.put(obj.getString("name"), obj.getString("value"));
+//        		soujaNameArr.add(tmap);
+//        	}
+//        	else if (obj.getString("name").equals("soujaAddress") ) {
+//        		HashMap<String,String> tmap= new HashMap<>();
+//        		tmap.put(obj.getString("name"), obj.getString("value"));
+//        		soujaAddrArr.add(tmap);
+//        	}
+//        	else if (obj.getString("name").equals("soujaContact1") && !obj.getString("value").equals("")) {
+//        		HashMap<String,String> tmap= new HashMap<>();
+//        		tmap.put(obj.getString("name"), obj.getString("value"));
+//        		soujaCont1Arr.add(tmap);
+//        	}
+//        	else if (obj.getString("name").equals("soujaContact2") && !obj.getString("value").equals("")) {
+//        		HashMap<String,String> tmap= new HashMap<>();
+//        		tmap.put(obj.getString("name"), obj.getString("value"));
+//        		soujaCont2Arr.add(tmap);
+//        	}
+//        	else requestMap.put(obj.getString("name"), obj.getString("value"));
+//        	
+//        	
+//        	
+//        	
+//        	
+//        	
+//        	
+//        	 
+//        	
+//        }
+        	//requestMap.put("uploadFiles",requestJsonObj.getJSONArray("uploadFiles"));
+        	//requestMap.put("soujaInfo",requestJsonObj.getJSONArray("soujaInfo"));
+//        requestMap.put("soujaNames",soujaNameArr);
+//        requestMap.put("soujaAddrs",soujaAddrArr);
+//        requestMap.put("soujaCont1s",soujaCont2Arr);
+//        requestMap.put("soujaCont2s",soujaCont2Arr);
+//        
+//        log.info("soujaJibuns:"+soujaJibunArr);
+//        log.info("soujaAddrs:"+soujaAddrArr);
+//        log.info("requestMap:"+requestMap);
+//        
+//        
+//        log.info("soujaJibuns count:"+soujaJibunArr.size());
+//        	Object seq= mainService.selectCountQuery("jisangSQL.selectJisangMasterNextval", requestMap);
+//    		int nseq=(int)seq;
+//    		log.info("##seq###:"+seq);
+//    		requestMap.put("idx",seq);
+////    		requestMap.put("seq","J_"+String.format("%06d",seq));
+//    		requestMap.put("sido_nm", requestJsonObj.get("sido_nm"));
+//    		requestMap.put("sgg_nm", requestJsonObj.get("sgg_nm"));
+//    		requestMap.put("emd_nm", requestJsonObj.get("emd_nm"));
+//    		requestMap.put("ri_nm", requestJsonObj.get("ri_nm"));
+//    		requestMap.put("jibun", requestJsonObj.get("mjibun"));
+//    		requestMap.put("jisa", requestJsonObj.get("jisa"));
+//    		requestMap.put("chuideuk_date", requestJsonObj.get("mchuideuk_date"));
+//    		requestMap.put("jijuk_area", requestJsonObj.get("jijuk_area"));
+//    		requestMap.put("pipe_name", requestJsonObj.get("pipe_name"));
+//    		requestMap.put("sun_gubun", requestJsonObj.get("sun_gubun"));
+//    		requestMap.put("yongdo", requestJsonObj.get("youngdo"));
+//    		requestMap.put("dosiplan", requestJsonObj.get("mdosi_plan"));
+//    		requestMap.put("comple_yn", requestJsonObj.get("mcomple_yn"));
+//    		requestMap.put("pyeonib_area", requestJsonObj.get("mpyeonib_area"));
+//    		requestMap.put("deunggi_date", requestJsonObj.get("mdeunggi_date"));
+//    		requestMap.put("deunggi_no", requestJsonObj.get("mdeunggi_no"));
+//    		requestMap.put("deunggiso", requestJsonObj.get("mdeunggiso"));
+//    		requestMap.put("jasan_no", requestJsonObj.get("mjasan_no"));
+//    		requestMap.put("gover_own_yn", requestJsonObj.get("gover_own_yn"));
+//    		requestMap.put("pnu", requestJsonObj.get("mpnu"));
+//    		
+//    		
+//    		log.info("requestMap:"+requestMap);
+//    		mainService.InsertQuery("jisangSQL.insertJisangData", requestMap);
+//    		
+//    		
+//    		//소유자정보등록
+//    		JSONArray soujaJsonArray=requestJsonObj.getJSONArray("soujaInfo");
+//    		log.info("soujaJsonArray:"+soujaJsonArray);
+//    		for(int i=0;i<soujaJsonArray.length();i++) {
+//    			JSONObject obj=new JSONObject(soujaJsonArray.get(i).toString());
+//    			 HashMap<String, Object> soujaMap= new HashMap<>();
+//    			log.info("obj:"+obj);
+//    			soujaMap=CommonUtil.JsonArraytoMap(obj);
+//    			
+//    			soujaMap.put("seq","J_"+String.format("%06d",seq));
+//    			log.info("soujaMap:"+soujaMap);
+//    			mainService.InsertQuery("jisangSQL.insertJisangSoujaData", soujaMap);
+//    		}
+//    		
+//    		//첨부파일 등록
+//
+//    		JSONArray uploadJsonArray=requestJsonObj.getJSONArray("uploadFiles");
+//    		log.info("uploadJsonArray:"+uploadJsonArray);
+//    		for(int i=0;i<uploadJsonArray.length();i++) {
+//    			//JSONObject obj=new JSONObject(uploadJsonArray.get(i).toString());
+//    			String fname=uploadJsonArray.get(i).toString();
+//    			log.info("fname:"+fname);
+//
+//
+//    			 HashMap<String, Object> filesMap= new HashMap<>();
+////
+////    			filesMap=CommonUtil.JsonArraytoMap(obj);
+////
+//    			filesMap.put("jisangNo","J_"+String.format("%06d",seq));
+//    			filesMap.put("seq",String.format("%06d",seq));
+//    			filesMap.put("fseq",i);
+//    			filesMap.put("fname",fname);
+//
+//    			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+//    			 String dataPath = GC.getJisangFileDataDir(); //설정파일로 뺀다.
+//    			 filesMap.put("fpath",dataPath+"/"+fname);
+//    			 CommonUtil.moveFile(fname, tempPath, dataPath);
+////    			log.info("filesMap:"+filesMap);
+//    			mainService.InsertQuery("jisangSQL.insertJisangUploadData", filesMap);
+//    		}
+//        
+//       
+//        
+//    		
+//    		HashMap<String,Object> resultParam= new HashMap<>();
+//    		
+//    		resultParam.put("nseq",nseq);
+    		
+        // log.info("attachFile:"+httpRequest.getParameter("attachFile"));
+//        List<TestDTO> list = new ArrayList<TestDTO>();
+//        list = dbService.getList();
+		
+        HashMap<String,Object> resultmap=new HashMap();
+        resultmap.put("resultCode","0000");
+        resultmap.put("params", requestJsonObj);
+        resultmap.put("resultData","");
+        resultmap.put("resultMessage","success");
+        JSONObject obj =new JSONObject(resultmap);
+//        System.out.println(obj);
+       
+      //log.info("jo:"+jo);
+      			response.setCharacterEncoding("UTF-8");
+      			response.setHeader("Access-Control-Allow-Origin", "*");
+      			response.setHeader("Cache-Control", "no-cache");
+      			response.resetBuffer();
+      			response.setContentType("application/json");
+      			//response.getOutputStream().write(jo);
+      			response.getWriter().print(obj);
+      			response.getWriter().flush();
+       // return new ModelAndView("dbTest", "list", list);
+    }
 	
 	
 	@GetMapping(path="/api/list") //http://localhost:8080/api/get/dbTest
