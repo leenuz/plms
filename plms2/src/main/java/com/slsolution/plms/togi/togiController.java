@@ -63,17 +63,25 @@ public class togiController {
 	}
 	@GetMapping(path="/landDevInfo") //http://localhost:8080/api/get/dbTest
     public ModelAndView landDevInfo(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+
 		ModelAndView mav=new ModelAndView();
+
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+
+		String idx = httpRequest.getParameter("idx");
+
+		params.put("idx",idx);
+
 		mav.setViewName("content/togi/landDevInfo");
 		return mav;
 	}
 	@GetMapping(path="/landEdit") //http://localhost:8080/api/get/dbTest
     public ModelAndView landEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+
+
 		ModelAndView mav=new ModelAndView();
+
 		mav.setViewName("content/togi/landEdit");
 		return mav;
 	}
@@ -157,10 +165,10 @@ public class togiController {
 		}
 		log.info("params:"+params);
 
-		Object count= mainService.selectCountQuery("jisangSQL.selectDosiListCount", params);
+		Object count= mainService.selectCountQuery("togiSQL.selectDosiListCount", params);
 		int total=(int)count;
 
-		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectDosiList",params);
+		ArrayList<HashMap> list = mainService.selectQuery("togiSQL.selectDosiList",params);
 		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
 		log.info("list:"+list);
 
