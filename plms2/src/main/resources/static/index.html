@@ -32,10 +32,53 @@ index page
 	  end_date:
 	  
 	  complete_yn:
-	  address:
+	  address: //풀주소로 합쳐서 보낸다
 	</pre>  
 	  
 	</p>
+	<p><a href="#" >회사토지조회 데이터(datatables) 호출 </a>: /dopco/menu05_1DataTableList <br>
+	
+	<pre>
+	parameter : (검색조건)
+	  jisa:
+	  
+	  start_date: //취득기간시작
+	  end_date: //취득기간 끝
+	  
+	  
+	  address: //풀주소로 합쳐서 보낸다
+	</pre>  
+	  
+	</p>
+	
+	<p><a href="#" >회사토지조회 상세조회 화면 호출 </a>: /dopco/compLandInfo?idx=000000 <br>
+	
+	<pre>
+	parameter : (검색조건)
+	  idx: 관리번호 (dopco_no)
+	  
+	 
+	</pre>  
+	  
+	</p>
+	<p><a href="#" >회사토지처분조회 데이터(datatables) 호출 </a>: /dopco/menu05_2DataTableList <br>
+	
+	<pre>
+	parameter : (검색조건)
+	  jisa:
+	  
+	  start_date: //취득기간시작
+	  end_date: //취득기간 끝
+	  
+	  
+	  address: //풀주소로 합쳐서 보낸다
+	  cancel_yn: //처분여부 default=Y
+	</pre>  
+	  
+	</p>
+	
+	
+	
 
 <p><a href="#" id="test">TMS호출</a></a></p>
 <p><a href="#" id="test2">TMS호출2</a></a></p>

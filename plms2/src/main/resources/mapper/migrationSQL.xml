@@ -183,26 +183,26 @@
 		 VALUES (
 			  #{DOPCO_NO},#{SIDO_NM},#{SGG_NM},#{EMD_NM},#{RI_NM},#{JIBUN},#{ADDRCODE}
 			  ,#{JISA},#{DOPCO_STATUS},#{YONGDO},#{PIPE_NAME},#{SUN_GUBUN}
-			  ,#{JIJUK_AREA}
+			  ,#{JIJUK_AREA}::numeric
 			  ,#{GOVER_OWN_YN}
 			  ,#{DOSIPLAN}
 			  ,#{JASAN_NO}
 			  ,#{COMPLE_YN}
 			  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DEUNGGI_DATE)">
-			  ,date '1899-12-30'+#{DEUNGGI_DATE}::int
+			  ,TO_DATE(#{DEUNGGI_DATE},'MM/DD/YY')
 			  </if>
 			  ,#{DEUNGGI_NO}
 			  ,#{DEUNGGISO}
 			  ,#{PNU}
 			  ,#{CANCLE_YN}
 			  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCLE_DATE)">
-			  ,date '1899-12-30'+#{CANCLE_DATE}::int
+			  ,TO_DATE(#{CANCLE_DATE},'MM/DD/YY')
 			  </if>
 			  ,#{CANCLE_NAME}
 			  ,#{CANCLE_EMPCD}
 			  ,#{JIMOK_TEXT}
 			  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CHUIDEUK_DATE)">
-			  ,date '1899-12-30'+#{CHUIDEUK_DATE}::int
+			  ,TO_DATE(#{CHUIDEUK_DATE},'MM/DD/YY')
 			  </if>
 			  ,NULLIF(cast(#{JASAN_MONEY} as varchar),'')::numeric
 			  ,#{SOUJA_NAME}

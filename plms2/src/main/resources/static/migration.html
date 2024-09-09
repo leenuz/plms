@@ -318,7 +318,47 @@ $(document).on("change","#my_file_input",function(e){
 									} */
 									
 				}
-			}
+			}else if ($("#dbname").val()=="dopco_master"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					
+					var txt=EXCEL_JSON[j].JIBUN;
+					var chuideuk_date=EXCEL_JSON[j].CHUIDEUK_DATE;
+					var deunggi_date=EXCEL_JSON[j].DEUNGGI_DATE;
+					var cancle_date=EXCEL_JSON[j].CANCLE_DATE;
+					
+					
+					
+					
+					var arr=txt.split("/");
+					var chuideuk_date_arr=chuideuk_date.split("/");
+					var deunggi_date_arr=deunggi_date.split("/");
+					var cancle_date_arr=cancle_date.split("/");
+					
+					
+					
+					if (arr.length>1){
+						//console.log(j+":"+"true"+":"+txt);
+						EXCEL_JSON[j].JIBUN=arr[0]+"-"+arr[1];
+						//console.log(EXCEL_JSON[j]);
+					}
+					
+					if (chuideuk_date_arr[0]>12) EXCEL_JSON[j].CHUIDEUK_DATE=chuideuk_date_arr[1]+"/"+chuideuk_date_arr[2]+"/"+chuideuk_date_arr[0];
+					if (deunggi_date_arr[0]>12) EXCEL_JSON[j].DEUNGGI_DATE=deunggi_date_arr[1]+"/"+deunggi_date_arr[2]+"/"+deunggi_date_arr[0];
+					if (cancle_date_arr[0]>12) EXCEL_JSON[j].CANCLE_DATE=cancle_date_arr[1]+"/"+cancle_date_arr[2]+"/"+cancle_date_arr[0];
+					
+					/* if (j>70 && j<80){
+						
+						console.log(EXCEL_JSON[j]);
+						console.log(arr);
+						if (isDate(txt)) {
+							
+							console.log(j+":"+"true"+":"+txt);
+						}
+						else console.log(j+":"+"false"+":"+txt);
+					} */
+					
+				}//end for
+            }
             else if ($("#dbname").val()=="gover_master"){
 				for(j=0;j<EXCEL_JSON.length;j++){
 					
