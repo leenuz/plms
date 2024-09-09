@@ -211,6 +211,164 @@
 
 	
 	</insert>
+	
+	
+<insert id="minwonMaster" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="mm_idx" keyProperty="mm_idx">
+		
+		INSERT INTO minwon_master 
+		(
+		  mm_mw_seq
+		  ,mm_mw_title
+		  ,mm_mw_code1
+		  ,mm_mw_code2
+		  ,mm_mw_code3
+		  ,mm_contents
+		  ,mm_occur_date
+		  ,mm_dockey
+		  ,mm_comple_yn
+		  ,mm_comple_date
+		  ,mm_reg_date
+		  ,mm_reg_id
+		  ,mm_jisa
+		  ,mm_status
+		  ,mm_del_flag
+		  ,mm_del_date
+		  ,mm_sangsin_yn
+		  ,mm_comple_dockey
+			 
+		 ) 
+		 VALUES (
+		 	#{MW_SEQ}::numeric
+		 	,#{MW_TITLE}
+		 	,#{MW_CODE1}
+		 	,#{MW_CODE2}
+		 	,#{MW_CODE3}
+		 	,#{MW_CONTENTS}
+		 	,TO_DATE(#{MW_OCCUR_DATE},'MM/DD/YY')
+		 	,#{DOCKEY}
+		 	,#{COMEPLE_YN}
+		 	,TO_DATE(#{COMPLE_DATE},'MM/DD/YY')
+		 	,TO_DATE(#{REG_DATE},'MM/DD/YY')
+		 	,#{REG_ID}
+		 	,#{JISA}
+		 	,#{STATUS}
+		 	,#{DEL_FLAG}
+		 	,TO_DATE(#{DEL_DATE},'MM/DD/YY')
+		 	,#{SANGSIN_YN}
+		 	,#{COMPLE_DOCKEY}
+		 			  
+		  )
+
+	
+	</insert>
+	<insert id="minwonPnu" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="mp_idx" keyProperty="mp_idx">
+		
+		INSERT INTO minwon_pnu 
+		(
+		  mp_minwon_seq
+		  ,mp_pnu
+		  ,mp_addrcode
+		  ,mp_sido_nm
+		  ,mp_sgg_nm
+		  ,mp_emd_nm
+		  ,mp_ri_nm
+		  ,mp_jibun
+		  ,mp_jibun_full
+		  ,mp_rep_yn
+		  ,mp_registed_yn
+		  ,mp_permitted_yn
+		  ,mp_toji_type
+		  ,mp_reg_date
+		  ,mp_reg_id
+		  ,mp_comp_date
+		   
+		 ) 
+		 VALUES (
+		 	#{MINWON_SEQ}::numeric
+		 	,#{PNU}
+		 	,#{ADDRCODE}
+		 	,#{SIDO_NM}
+		 	,#{SGG_NM}
+		 	,#{EMD_NM}
+		 	,#{RI_NM}
+		 	,#{JIBUN}
+		 	,#{JIBUN_FULL}
+		 	,#{REP_YN}
+		 	,#{REGISTED_YN}
+		 	,#{PERMITTED_YN}
+		 	,#{TOJI_TYPE}
+		 	,TO_DATE(#{REG_DATE},'MM/DD/YY')
+		 	,#{REG_ID}
+		 	,TO_DATE(#{COMP_DATE},'MM/DD/YY')
+		 	
+		 			  
+		  )
+
+	
+	</insert>
+	<insert id="minwonAgreement" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="ma_idx" keyProperty="ma_idx">
+		
+		INSERT INTO minwon_agreement 
+		(
+		  ma_mw_seq
+		  ,ma_agree_seq
+		  ,ma_agree_title
+		  ,ma_agree_contents
+		  ,ma_agree_date
+		  ,ma_reg_date
+		  ,ma_reg_id
+		  ,ma_status
+		  ,ma_dockey
+		  ,ma_del_flag
+		  ,ma_del_date
+		  
+		   
+		 ) 
+		 VALUES (
+		 	#{MW_SEQ}::numeric
+		 	,#{AGREE_SEQ}::numeric
+		 	,#{AGREE_TITLE}
+		 	,#{AGREE_CONTENTS}
+		 	,TO_DATE(#{AGREE_DATE},'MM/DD/YY')
+		 	,TO_DATE(#{REG_DATE},'MM/DD/YY')
+		 	,#{REG_ID}
+		 	,#{STATUS}
+		 	,#{DOCKEY}
+		 	,#{DEL_FLAG}
+		 	,TO_DATE(#{DEL_DATE},'MM/DD/YY')
+		 	
+		 			  
+		  )
+
+	
+	</insert>
+	<insert id="minwonHandlingTmp" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="mht_idx" keyProperty="mht_idx">
+		
+		INSERT INTO minwon_handling_tmp 
+		(
+		  mht_mw_seq
+		  ,mht_mw_code1
+		  ,mht_mw_code2
+		  ,mht_mw_code3
+		  ,mht_complete_yn
+		  ,mht_reg_date
+		  ,mht_dockey
+		    
+		 ) 
+		 VALUES (
+		 	#{MW_SEQ}::numeric
+		 	,#{MW_CODE1}
+		 	,#{MW_CODE2}
+		 	,#{MW_CODE3}
+		 	,#{COMPLETE_YN}
+		 	,TO_DATE(#{REG_DATE},'MM/DD/YY')
+		 	,#{DOCKEY}
+		 			 			  
+		  )
+
+	
+	</insert>
+	
 
 
 <insert id="goverMaster" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="gm_idx" keyProperty="gm_idx">
@@ -976,6 +1134,57 @@
 		  ,#{FILE_NM}
 		  ,#{FILE_SEQ}
 		 
+		   
+		)
+	
+	</insert>
+	
+	<insert id="minwon_atcfile" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="ma_idx" keyProperty="ma_idx">
+		
+		INSERT INTO minwon_atcfile 
+		(
+		
+		 ma_mw_seq
+		 ,ma_file_nm
+		 ,ma_file_path
+		 ,ma_file_seq
+		 ,ma_seq
+		 ,ma_file_regdate
+		 
+		 ) 
+		 VALUES (
+		  NULLIF(cast(#{SEQ} as varchar),'0')::integer
+		  ,#{FILE_NM}
+		  ,#{FILE_PATH}
+		  ,NULLIF(cast(#{FILE_SEQ} as varchar),'')::integer
+		,NULLIF(cast(#{SEQ} as varchar),'')::integer
+		  ,TO_DATE(#{FILE_REGDATE},'MM/DD/YY')
+		   
+		)
+	
+	</insert>
+	<insert id="minwon_agree_atcfile" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="maa_idx" keyProperty="maa_idx">
+		
+		INSERT INTO minwon_agree_atcfile 
+		(
+		
+		 maa_mw_seq
+		 ,maa_agree_seq
+		 ,maa_file_nm
+		 ,maa_file_path
+		 ,maa_seq
+		 ,maa_file_seq
+		 ,maa_file_regdate
+		 
+		 ) 
+		 VALUES (
+		  NULLIF(cast(#{SEQ} as varchar),'0')::integer
+		  ,#{AGREE_SEQ}::integer
+		  ,#{FILE_NM}
+		  ,#{FILE_PATH}
+		,NULLIF(cast(#{SEQ} as varchar),'')::integer
+		,NULLIF(cast(#{FILE_SEQ} as varchar),'')::integer
+		  ,TO_DATE(#{FILE_REGDATE},'MM/DD/YY')
 		   
 		)
 	

@@ -318,7 +318,8 @@ $(document).on("change","#my_file_input",function(e){
 									} */
 									
 				}
-			}else if ($("#dbname").val()=="dopco_master"){
+			}
+            else if ($("#dbname").val()=="dopco_master"){
 				for(j=0;j<EXCEL_JSON.length;j++){
 					
 					var txt=EXCEL_JSON[j].JIBUN;
@@ -345,6 +346,226 @@ $(document).on("change","#my_file_input",function(e){
 					if (chuideuk_date_arr[0]>12) EXCEL_JSON[j].CHUIDEUK_DATE=chuideuk_date_arr[1]+"/"+chuideuk_date_arr[2]+"/"+chuideuk_date_arr[0];
 					if (deunggi_date_arr[0]>12) EXCEL_JSON[j].DEUNGGI_DATE=deunggi_date_arr[1]+"/"+deunggi_date_arr[2]+"/"+deunggi_date_arr[0];
 					if (cancle_date_arr[0]>12) EXCEL_JSON[j].CANCLE_DATE=cancle_date_arr[1]+"/"+cancle_date_arr[2]+"/"+cancle_date_arr[0];
+					
+					/* if (j>70 && j<80){
+						
+						console.log(EXCEL_JSON[j]);
+						console.log(arr);
+						if (isDate(txt)) {
+							
+							console.log(j+":"+"true"+":"+txt);
+						}
+						else console.log(j+":"+"false"+":"+txt);
+					} */
+					
+				}//end for
+            }
+            else if ($("#dbname").val()=="minwon_pnu"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					
+					var txt=EXCEL_JSON[j].JIBUN;
+					var reg_date=EXCEL_JSON[j].REG_DATE;
+					var comp_date=EXCEL_JSON[j].COMP_DATE;
+					
+					
+					
+					
+					
+					var arr=txt.split("/");
+					var reg_date_arr=reg_date.split("/");
+					var comp_date_arr=comp_date.split("/");
+					
+					
+					
+					
+					if (arr.length>1){
+						//console.log(j+":"+"true"+":"+txt);
+						EXCEL_JSON[j].JIBUN=arr[0]+"-"+arr[1];
+						//console.log(EXCEL_JSON[j]);
+					}
+					
+					if (reg_date_arr[0]>12) EXCEL_JSON[j].REG_DATE=reg_date_arr[1]+"/"+reg_date_arr[2]+"/"+reg_date_arr[0];
+					if (comp_date_arr[0]>12) EXCEL_JSON[j].COMP_DATE=comp_date_arr[1]+"/"+comp_date_arr[2]+"/"+comp_date_arr[0];
+					
+					
+					/* if (j>70 && j<80){
+						
+						console.log(EXCEL_JSON[j]);
+						console.log(arr);
+						if (isDate(txt)) {
+							
+							console.log(j+":"+"true"+":"+txt);
+						}
+						else console.log(j+":"+"false"+":"+txt);
+					} */
+					
+				}//end for
+            }
+            else if ($("#dbname").val()=="minwon_agreement"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					
+					
+					var agree_date=EXCEL_JSON[j].AGREE_DATE;
+					var reg_date=EXCEL_JSON[j].REG_DATE;
+					var del_date=EXCEL_JSON[j].DEL_DATE;
+					
+					
+					
+					
+					
+					
+					var agree_date_arr=agree_date.split("/");
+					var reg_date_arr=reg_date.split("/");
+					var del_date_arr=del_date.split("/");
+					
+					
+					if (agree_date_arr[0]>12) EXCEL_JSON[j].AGREE_DATE=agree_date_arr[1]+"/"+agree_date_arr[2]+"/"+agree_date_arr[0];
+					if (reg_date_arr[0]>12) EXCEL_JSON[j].REG_DATE=reg_date_arr[1]+"/"+reg_date_arr[2]+"/"+reg_date_arr[0];
+					if (del_date_arr[0]>12) EXCEL_JSON[j].DEL_DATE=del_date_arr[1]+"/"+del_date_arr[2]+"/"+del_date_arr[0];
+					
+					
+					/* if (j>70 && j<80){
+						
+						console.log(EXCEL_JSON[j]);
+						console.log(arr);
+						if (isDate(txt)) {
+							
+							console.log(j+":"+"true"+":"+txt);
+						}
+						else console.log(j+":"+"false"+":"+txt);
+					} */
+					
+				}//end for
+            }
+            else if ($("#dbname").val()=="minwon_handling_tmp"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					
+					
+					
+					var reg_date=EXCEL_JSON[j].REG_DATE;
+					
+					
+					
+					
+					
+					
+					
+					
+					var reg_date_arr=reg_date.split("/");
+					
+					
+					
+					
+					if (reg_date_arr[0]>12) EXCEL_JSON[j].REG_DATE=reg_date_arr[1]+"/"+reg_date_arr[2]+"/"+reg_date_arr[0];
+					
+					
+					
+					/* if (j>70 && j<80){
+						
+						console.log(EXCEL_JSON[j]);
+						console.log(arr);
+						if (isDate(txt)) {
+							
+							console.log(j+":"+"true"+":"+txt);
+						}
+						else console.log(j+":"+"false"+":"+txt);
+					} */
+					
+				}//end for
+            }
+            else if ($("#dbname").val()=="minwon_master"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					
+					
+					var mw_occur_date=EXCEL_JSON[j].MW_OCCUR_DATE;
+					var comple_date=EXCEL_JSON[j].COMPLE_DATE;
+					var reg_date=EXCEL_JSON[j].REG_DATE;
+					var del_date=EXCEL_JSON[j].DEL_DATE;
+					
+					
+					
+					
+					
+					var mw_occur_date_arr=mw_occur_date.split("/");
+					var comple_date_arr=comple_date.split("/");
+					var reg_date_arr=reg_date.split("/");
+					var del_date_arr=del_date.split("/");
+					
+					
+					
+					
+					
+					if (mw_occur_date_arr[0]>12) EXCEL_JSON[j].MW_OCCUR_DATE=mw_occur_date_arr[1]+"/"+mw_occur_date_arr[2]+"/"+mw_occur_date_arr[0];
+					if (comple_date_arr[0]>12) EXCEL_JSON[j].COMPLE_DATE=comple_date_arr[1]+"/"+comple_date_arr[2]+"/"+comple_date_arr[0];
+					if (reg_date_arr[0]>12) EXCEL_JSON[j].REG_DATE=reg_date_arr[1]+"/"+reg_date_arr[2]+"/"+reg_date_arr[0];
+					if (del_date_arr[0]>12) EXCEL_JSON[j].DEL_DATE=del_date_arr[1]+"/"+del_date_arr[2]+"/"+del_date_arr[0];
+					
+					/* if (j>70 && j<80){
+						
+						console.log(EXCEL_JSON[j]);
+						console.log(arr);
+						if (isDate(txt)) {
+							
+							console.log(j+":"+"true"+":"+txt);
+						}
+						else console.log(j+":"+"false"+":"+txt);
+					} */
+					
+				}//end for
+            }else if ($("#dbname").val()=="minwon_atcfile"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					
+					
+					var ma_file_regdate=EXCEL_JSON[j].FILE_REGDATE;
+					
+					
+					
+					
+					
+					
+					var ma_file_regdate_arr=ma_file_regdate.split("/");
+					
+					
+					
+					
+					
+					
+					if (ma_file_regdate_arr[0]>12) EXCEL_JSON[j].FILE_REGDATE=ma_file_regdate_arr[1]+"/"+ma_file_regdate_arr[2]+"/"+ma_file_regdate_arr[0];
+					
+					
+					/* if (j>70 && j<80){
+						
+						console.log(EXCEL_JSON[j]);
+						console.log(arr);
+						if (isDate(txt)) {
+							
+							console.log(j+":"+"true"+":"+txt);
+						}
+						else console.log(j+":"+"false"+":"+txt);
+					} */
+					
+				}//end for
+            }
+            else if ($("#dbname").val()=="minwon_agree_atcfile"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					
+					
+					var ma_file_regdate=EXCEL_JSON[j].FILE_REGDATE;
+					var maa_agree_seq=EXCEL_JSON[j].AGREE_SEQ;
+					
+					
+					
+					
+					
+					var ma_file_regdate_arr=ma_file_regdate.split("/");
+					
+					if (maa_agree_seq=="") EXCEL_JSON[j].AGREE_SEQ=0;
+					
+					
+					
+					
+					if (ma_file_regdate_arr[0]>12) EXCEL_JSON[j].FILE_REGDATE=ma_file_regdate_arr[1]+"/"+ma_file_regdate_arr[2]+"/"+ma_file_regdate_arr[0];
+					
 					
 					/* if (j>70 && j<80){
 						

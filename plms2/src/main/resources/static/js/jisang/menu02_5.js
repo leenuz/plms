@@ -11,9 +11,10 @@ $(document).ready(function() {
 //testAjax();
 //init_Table();
 loadDataTable("");
-
+//MergeGridCells();
+//SummerizeTable('#userTable');
+//MergeGridCells1('userTable',[1]);
 });
-
 
 
 
@@ -244,8 +245,114 @@ function loadDataTable(params){
 	console.log(params);
 
 	//var json=JSON.stringify(params);
-
-	table=$('#userTable').DataTable({
+	var table = $('#userTable').DataTable({
+	        fixedColumns: {
+	            start: 3,
+	        },
+	        scrollCollapse: true,
+	        scrollX: true,
+	        scrollY: 600,
+	        paging: true,
+	        oLanguage: { sLengthMenu: "_MENU_" },
+	        dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
+	        buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
+	        pageLength: 20,
+	        bPaginate: true,
+	        bLengthChange: true,
+	        bInfo: false,
+	        lengthMenu: [[10, 20, 50, -1], ["10건", "20건", "50건", "All"]],
+	        bAutoWidth: false,
+	        processing: true,
+	        ordering: true,
+	        serverSide: true,
+	        searching: false,
+	        destroy: false,
+	        ajax: {
+	            url: "/jisang/menu02_5DataTableList",
+	            type: "POST",
+	            datatype: "json",
+	            data: function (d) {
+	                d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+	                d.status = ljsIsNull(params.status) ? '' : params.status;
+	                d.jibun = ljsIsNull(params.jibun) ? '' : params.jibun;
+	                // Add more params as needed
+	            },
+	            dataSrc: function (json) {
+	                $("#dataTableTotalCount").html(json.recordsTotal);
+	                return json.data;
+	            }
+	        },
+	        columns: [
+	            { data: "no", "orderable": false },
+	            { data: "jisa", "defaultContent": "", name: "jisa" },
+	            { data: "addr", "defaultContent": "" },
+	            { data: "jasan_no", "defaultContent": "" },
+	            { data: "jimok", "defaultContent": "" },
+	            { data: "soyuja", "defaultContent": "" },
+	            { data: "pmt_user", "defaultContent": "" },
+	            { data: "use_purpos", "defaultContent": "" },
+	            { data: "idx", "defaultContent": "" },
+	            {
+	                data: "idx",
+	                render: function (data, type, row) {
+	                    return row.use_st_date + "~" + row.use_ed_date;
+	                }
+	            },
+	            {
+	                data: "idx",
+	                render: function () {
+	                    return "<button class='btnDesign'>위치보기</button>";
+	                }
+	            },
+	            {
+	                data: "idx",
+	                render: function () {
+	                    return "<button class='btnDesign'>문서보기</button>";
+	                }
+	            }
+	        ],
+	        columnDefs: [
+	            { className: "dt-head-center", targets: "_all" },
+	            { className: 'dt-center', targets: "_all" },
+	            { targets: [0], width: "50px" },
+	            { targets: [1], width: "150px" },
+	            { targets: [2], width: "400px" }, // 주소
+	            { targets: [3], width: "150px" },
+	            { targets: [4], width: "100px" },
+	            { targets: [5], width: "200px" }, // 소유자
+	            { targets: [6], width: "150px" },
+	            { targets: [7], width: "150px" },
+	            {
+	                targets: [8],
+	                width: "200px",
+	                render: function (data, type, row) {
+	                    return row.use_st_date + "~" + row.use_ed_date;
+	                }
+	            },
+	            { targets: [9], width: "100px" }, // 등기여부
+	            { targets: [10], width: "200px" }, // 등기일
+	            { targets: [11], width: "150px" },
+	            {
+	                targets: [12],
+	                width: "100px",
+	                render: function () {
+	                    return "<button class='btnDesign'>위치보기</button>";
+	                }
+	            },
+	            {
+	                targets: [13],
+	                width: "100px",
+	                render: function () {
+	                    return "<button class='btnDesign'>문서보기</button>";
+	                }
+	            }
+	        ],
+	        drawCallback: function (settings) {
+	            console.log("--------------테이블 다시 그려짐----------------");
+	            // MergeGridCells1("userTable", [0,1,2,3,4,5,6,7]);  // 테이블 병합 함수 호출
+	        }
+	    });
+	/*table=$('#userTable').DataTable({
 		
 		fixedColumns:{
 			start:3,
@@ -270,11 +377,13 @@ function loadDataTable(params){
                 bAutoWidth: false,
                 processing: true,
                 ordering: true,
-                bServerSide: true,
+                //bServerSide: true,
+				"serverSide":true,
                 searching: false,
-				destroy:true,
-				order:[[12,'desc']],
-
+				destroy:false,
+				//"aaSorting": [[0, 'asc']],  
+				//order:[[0,'desc']],
+				//rowsGroup: [9],
                 rowReorder:{
 					dataSrc:'b_seq'
 				},
@@ -330,6 +439,7 @@ function loadDataTable(params){
 						console.log(json);
 						$("#dataTableTotalCount").html(json.recordsTotal);
 						//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
+						//table.rowsgroup.update();
 						return json.data;
 					}
 
@@ -343,15 +453,23 @@ function loadDataTable(params){
 					console.log(this.api().data().length );
 
 				},
-                /*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+				drwaCallback:function(settings){
+					console.log("--------------데이터가 로드되고 테이블이 다시 그려졌습니다.----------------");
+				
+					        MergeGridCells1("userTable",rCols);
+				
+				},
+                "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 				//	console.log(aData);
+				//table.rowsgroup.update();
         			$('td:eq(0)', nRow).html(iDisplayIndexFull +1);
 					return nRow;
-    			},*/
-
+    			},
+				
                    columns : [
+								  
                                   {data: "no","orderable":false},//0
-                                  {data: "jisa","defaultContent":""},
+                                  {data: "jisa","defaultContent":"",name:"jisa"},
                                   {data:"addr","defaultContent":""},
                                   {data:"jasan_no","defaultContent":""},
                                   {data: "jimok","defaultContent":""}, 
@@ -361,6 +479,7 @@ function loadDataTable(params){
                                   {data: "idx","defaultContent":""},
                                   {data: "idx","defaultContent":""},
                                   {data: "idx","defaultContent":""},//10
+								  {data: "idx",},//0
                                   {data: "idx","defaultContent":""},
                                   {data: "idx"}
                               ],
@@ -368,7 +487,7 @@ function loadDataTable(params){
 
               					{"className": "dt-head-center", "targets": "_all"},
               					{className: 'dt-center',"targets": "_all"},
-              					{targets:[0],width:"50px"},
+								{targets:[0],width:"50px"},
               					{targets:[1],width:"150px"},
               					{targets:[2],width:"400px"}, //주소
               					{targets:[3],width:"150px"},
@@ -385,12 +504,13 @@ function loadDataTable(params){
 								},
                                   {targets:[9],width:"100px"}, //등기여부
                                   {targets:[10],width:"200px"}, //등기일
-                                  {targets:[11],width:"100px"
+								  {targets:[11],width:"150px"},
+                                  {targets:[12],width:"100px"
 									,render:function(data,type,row,meta){
 										return "<button class='btnDesign'>위치보기</button> ";
 									}
 								  },
-                                  {targets:[12]
+                                  {targets:[13]
 									,width:"100px"
 									,render: function(data, type, row, meta) {
 										
@@ -402,9 +522,8 @@ function loadDataTable(params){
 				]
 
             });
-
-
-
+*/
+			
 
 			table.on('click','tr',function() {
 
@@ -450,3 +569,108 @@ function loadDataTable(params){
 			      // console.log($('#userTable').DataTable().page.info().recordsTotal);
 }
 
+
+//JQuery DataTables 같은 데이터 합친다 -안먹힘
+function MergeGridCells() {
+    var dimension_cells = new Array();
+    var dimension_col = null;
+    var columnCount = $("#userTable tr:first th").length;
+    for (dimension_col = 0; dimension_col < columnCount; dimension_col++) {
+        // first_instance holds the first instance of identical td
+        var first_instance = null;
+        var rowspan = 1;
+        // iterate through rows
+        $("#userTable").find('tr').each(function () {
+
+            // find the td of the correct column (determined by the dimension_col set above)
+            var dimension_td = $(this).find('td:nth-child(' + dimension_col + ')');
+
+            if (first_instance == null) {
+                // must be the first row
+                first_instance = dimension_td;
+            } else if (dimension_td.text() == first_instance.text()) {
+                // the current td is identical to the previous
+                // remove the current td
+                dimension_td.remove();
+                ++rowspan;
+                // increment the rowspan attribute of the first instance
+                first_instance.attr('rowspan', rowspan);
+            } else {
+                // this cell is different from the last
+                first_instance = dimension_td;
+                rowspan = 1;
+            }
+        });
+    }
+}
+
+
+function MergeGridCells1(TableID,rCols) {
+	console.log("###############MergeGridCells1#########################");
+  var dimension_cells = new Array();
+  var dimension_col = null;
+  for(Col in rCols) {
+    dimension_col=rCols[Col];
+    // first_instance holds the first instance of identical td
+    var first_Hash="";
+    var first_instance = null;
+    var rowspan = 1;
+    // iterate through rows
+    $("#"+TableID+"> tbody > tr").children("td").attr('hidden', false);
+    $("#"+TableID+"> tbody > tr").children("td").attr('rowspan', 1);
+    $("#"+TableID).find('tr').each(function () {
+      // find the td of the correct column (determined by the dimension_col set above)
+      var dimension_td = $(this).find('td:nth-child(' + dimension_col + ')');
+      var dim_Hash="";
+      for(x=1;x<dimension_col;x++){
+        dim_Hash+=$(this).find('td:nth-child(' + x + ')').text();
+      }
+      if (first_instance === null) {
+          // must be the first row
+          first_instance = dimension_td;
+      } else if (dimension_td.text() === first_instance.text() && first_Hash === dim_Hash) {
+          // the current td is identical to the previous AND the Hashes are as well
+          // remove the current td
+          // dimension_td.remove();
+          dimension_td.attr('hidden', true);
+          ++rowspan;
+          // increment the rowspan attribute of the first instance
+          first_instance.attr('rowspan', rowspan);
+      } else {
+          // this cell is different from the last
+          first_instance = dimension_td;
+          first_Hash = dim_Hash;
+          rowspan = 1;
+      }
+    });
+  }
+}  
+
+function SummerizeTable(table) {
+  $(table).each(function() {
+    $(table).find('td').each(function() {
+      var $this = $(this);
+      var col = $this.index();
+      var html = $this.html();
+      var row = $(this).parent()[0].rowIndex; 
+      var span = 1;
+      var cell_above = $($this.parent().prev().children()[col]);
+
+      // look for cells one above another with the same text
+      while (cell_above.html() === html) { // if the text is the same
+        span += 1; // increase the span
+        cell_above_old = cell_above; // store this cell
+        cell_above = $(cell_above.parent().prev().children()[col]); // and go to the next cell above
+      }
+
+      // if there are at least two columns with the same value, 
+      // set a new span to the first and hide the other
+      if (span > 1) {
+        // console.log(span);
+        $(cell_above_old).attr('rowspan', span);
+        $this.hide();
+      }
+      
+    });
+  });
+}

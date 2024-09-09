@@ -172,6 +172,12 @@ public class DataMigrationController {
           	else if (mapperName.equals("notset_souja")) mainService.InsertQuery("migrationSQL.notset_souja", param);
           	else if (mapperName.equals("gover_master")) mainService.InsertQuery("migrationSQL.goverMaster", param);
           	else if (mapperName.equals("dopco_master")) mainService.InsertQuery("migrationSQL.dopcoMaster", param);
+          	else if (mapperName.equals("minwon_master")) mainService.InsertQuery("migrationSQL.minwonMaster", param);
+          	else if (mapperName.equals("minwon_pnu")) mainService.InsertQuery("migrationSQL.minwonPnu", param);
+          	else if (mapperName.equals("minwon_agreement")) mainService.InsertQuery("migrationSQL.minwonAgreement", param);
+          	else if (mapperName.equals("minwon_handling_tmp")) mainService.InsertQuery("migrationSQL.minwonHandlingTmp", param);
+          	else if (mapperName.equals("minwon_atcfile")) mainService.InsertQuery("migrationSQL.minwon_atcfile", param);
+          	else if (mapperName.equals("minwon_agree_atcfile")) mainService.InsertQuery("migrationSQL.minwon_agree_atcfile", param);
           	else if (mapperName.equals("notset_master")) mainService.InsertQuery("migrationSQL.notsetMaster", param);
           	else if (mapperName.equals("gover_pnu")) mainService.InsertQuery("migrationSQL.goverPnu", param);
           	else if (mapperName.equals("gover_permit")) mainService.InsertQuery("migrationSQL.gover_permit", param);

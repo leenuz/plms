@@ -1,0 +1,565 @@
+<html>
+<head>
+	
+     <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+    <!-- Page level plugins -->
+    <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+
+  
+
+    <!-- custom ljs datatables -->
+    	<script src="/vendor/LjsDataTables/datatables.js"></script> 
+ 
+    
+   
+    <!-- Page level custom scripts -->
+    <!--    <script th:src="@{/js/demo/chart-area-demo.js}"></script>-->
+    <!--    <script th:src="@{/js/demo/chart-pie-demo.js}"></script>-->
+    
+    <!-- datePicker-->
+     <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"> -->
+     <link rel="stylesheet" href="/vendor/bootstrap-datepicker/css/bootstrap-datepicker.css">
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    
+<script src="/vendor/cdn.datatables.net/dataTables.js"></script>
+<script th:src="@{/vendor/cdn.datatables.net/fixedcolumns/5.0.1/js/dataTables.fixedColumns.js}"></script>
+<script th:src="@{/vendor/cdn.datatables.net/fixedcolumns/5.0.1/js/fixedColumns.bootstrap4.js}"></script>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/vendor/cdn.datatables.net/fixedColumns.bootstrap4.css}">
+
+
+  
+    
+    
+  <!--  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap.min.css"> -->
+  
+    
+    <script src="https://cdn.datatables.net/buttons/3.1.0/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.colVis.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.print.min.js"></script>
+	<link href="/vendor/LjsDataTables/datatables.css" rel="stylesheet" />
+	
+	
+	<script src="/vendor/datatables/rowsGroup.js"></script>
+</head>
+<body>
+	<button id="update_btn">Manual remerge cells</button>
+	<table id="example" class="display"></table>
+<script>
+$(function(){
+/* var data1=[
+	
+	[
+	    {
+
+	        "use_ed_date": "1963-10-31",
+	        "no": 41,
+	        "use_purpos": "컨테이너설치",
+	        "contract": "* 약정 사항 - 토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부",
+	        "dockey": "plms08075",
+	        "index": 2839,
+	        "echo_no": "",
+	        "spot_result": "ㅇ 송유관로 천안방향 우측 약 5m 이상 떨어져 3*6컨테이너 설치 농업용으로 사용 예정",
+	        "jimok": "전",
+	        "use_st_date": "2023-10-23",
+	        "pmt_status": "결재완료",
+	        "review": "ㅇ 당사 지상권 부지인 대상 토지에 사용자인 토지소유자)가 3*6 컨테이너을 설치를 위해 당사에 토지사용 승낙을 구하는 건 이며 사용자가 컨테이너 설치을 하고자 하는 지점은 송유관으로부터 5m 이상 떨어지므로 당사가 토지사용을  승낙하여도 송유관 안전관리에 위해가 증대되지 않는 것으로 판단됨.\r\n",
+	        "jasan_no": "9005374",
+	        "jisang_no": "J_005356",
+	        "jibun": "431",
+	        "idx": "P_000567",
+	        "addr": "충청북도 청주시 서원구 현도면 중척리 431",
+	        "jisa": "대전지사",
+	        "pmt_user": "김종택",
+	        "soyuja": "김종택"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 42,
+	        "use_purpos": "관정 설치",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부 ",
+	        "dockey": "plms02020",
+	        "index": 2516,
+	        "echo_no": "",
+	        "spot_result": "당사 지상권 설정부지에 관정을 설치코져 하는 곳은 현장확인 결과 당사 송유관로 중심으로부터 약 6-7m이상 이격되어 송유관에 영향이 없는 것으로 판단됨 ",
+	        "jimok": "전",
+	        "use_st_date": "2019-09-03",
+	        "pmt_status": "결재완료",
+	        "review": "관정 설치시 송유관으로 부터 약 6-7m이상 이격되어 토지사용을 승낙하여도 송유관 안전관리에 위해가 증대되지 아니하는 것으로 판단됨 ",
+	        "jasan_no": "9001842",
+	        "jisang_no": "J_001843",
+	        "jibun": "46",
+	        "idx": "P_000283",
+	        "addr": "충청북도 옥천군 동이면 세산리 46",
+	        "jisa": "대전지사",
+	        "pmt_user": "유인근",
+	        "soyuja": "주영진"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 43,
+	        "use_purpos": "제2종근린생활시설(제조업소) 신축",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부 \r\n",
+	        "dockey": "plms01550",
+	        "index": 2490,
+	        "echo_no": "",
+	        "spot_result": "당사 지상권 설정부지에 근.생시설(제조업소) 신축코져 하는 곳은 현장확인 결과 당사 송유관로 중심으로부터 약 5m이상 이격되어 송유관에 영향이 없는 것으로 판단됨 ",
+	        "jimok": "전",
+	        "use_st_date": "2018-12-06",
+	        "pmt_status": "결재완료",
+	        "review": "근생시설(제조업소) 신축시 송유관으로 부터 약 5m이상 이격되어 토지사용을 승낙하여도 송유관 안전관리에 위해가 증대되지 아니하는 것으로 판단됨 ",
+	        "jasan_no": "9001842",
+	        "jisang_no": "J_001843",
+	        "jibun": "46",
+	        "idx": "P_000217",
+	        "addr": "충청북도 옥천군 동이면 세산리 46",
+	        "jisa": "대전지사",
+	        "pmt_user": "유인근",
+	        "soyuja": "주영진"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 44,
+	        "use_purpos": "축사 개축",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부 ",
+	        "dockey": "plms05018",
+	        "index": 2736,
+	        "echo_no": "",
+	        "spot_result": "기존 축사를 재해 등으로 개축 필요하여 토지사용 승낙을 요청한 사안으로 기존 축사는 당사 송유관 매설지점으로 부터 18m이상 떨어진 곳에 위치하고 있으며, 본 토지사용 승낙으로 송유관 안전관리에 위해가 증대되지 아니함. ",
+	        "jimok": "대",
+	        "use_st_date": "2021-07-09",
+	        "pmt_status": "결재완료",
+	        "review": "지상권 설정부지(611-7)에서 분할된 611-14일부에 축사를 사용하여온 바 재해 등으로 축사를 개축하여도 송유관과\r\n상당한 이격거리 유지로 토지사용을 승낙하여도 송유관 안전관리에 위해가 증대되지 아니하는 것으로 판단됨. ",
+	        "jasan_no": "9009224",
+	        "jisang_no": "J_009567",
+	        "jibun": "611-14",
+	        "idx": "P_000409",
+	        "addr": "충청남도 공주시 계룡면 내흥리 611-14",
+	        "jisa": "대전지사",
+	        "pmt_user": "서장길",
+	        "soyuja": "서장길"
+	    },
+	    {
+	        "use_ed_date": "1999-05-31",
+	        "no": 45,
+	        "use_purpos": "지하수 설치",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부 ",
+	        "dockey": "plms01942",
+	        "index": 2511,
+	        "echo_no": "",
+	        "spot_result": "당사 지상권 설정부지에 지하수(심정) 설치 하는 곳은 현장확인 결과 당사 송유관로 중심으로 부터 약 20.0m이상 이격되어 송유관에 영향이 없는 것으로 판단됨 ",
+	        "jimok": "대",
+	        "use_st_date": "2019-05-22",
+	        "pmt_status": "결재완료",
+	        "review": "지하수 설치장소는 송유관으로 부터 약 20.0m이상 이격되어 토지사용을 승낙하여도 송유관 안전관리에 위해가 증대되지 아니하는 것으로 판단됨 ",
+	        "jasan_no": "9001453",
+	        "jisang_no": "J_001454",
+	        "jibun": "36982.000601851854",
+	        "idx": "P_000260",
+	        "addr": "세종특별자치시 세종시 금남면 황용리 4-1",
+	        "jisa": "대전지사",
+	        "pmt_user": "김영주",
+	        "soyuja": "김영주"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 46,
+	        "use_purpos": "태양광 발전설비 설치",
+	        "contract": "ㅇ토지사용 기본조건 및 각서 : 토지사용 승낙에 첨부 ",
+	        "dockey": "plms01948",
+	        "index": 2529,
+	        "echo_no": "",
+	        "spot_result": "ㅇ태양광 발전설비는 송유관로 매설지점으로 부터 약 4.0m이상 이격되어 설치할 예정으로 \r\n   현장확인 결과 송유관에 영향이 없는 것으로 판단됨. ",
+	        "jimok": "답",
+	        "use_st_date": "2019-05-29",
+	        "pmt_status": "결재완료",
+	        "review": "ㅇ기존 토지에 설치할 태양광 발전설비는 당사 송유관 매설 기준으로 부터 \r\n   최소 4.0m이상 이격된 곳에 위치할 예정으로, 본 토지사용 승낙으로 송유관 안전관리에 \r\n   위해가 증대되지 아니함. ",
+	        "jasan_no": "9001822",
+	        "jisang_no": "J_001823",
+	        "jibun": "128",
+	        "idx": "P_000261",
+	        "addr": "충청북도 옥천군 동이면 세산리 128",
+	        "jisa": "대전지사",
+	        "pmt_user": "박창현",
+	        "soyuja": "임선재"
+	    },
+	    {
+	        "use_ed_date": "1999-04-30",
+	        "no": 47,
+	        "use_purpos": "견사 무허가 양성화(개축) 허가",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부",
+	        "dockey": "plms01309",
+	        "index": 2482,
+	        "echo_no": "",
+	        "spot_result": "민원인(허윤무)이 위 지상권 설정부지에 무허가 견사를 사용해 온바, 이를 양성화(개축)하기 위해 토지사용 승낙을 \r\n요청해 온 사안임. 설정부지(세산리 1071-1, 2 필지)에 견사를 개축하고자 하는곳은 송유관 중심으로 부터 약 3m이상\r\n이격되어 송유관에 영향이 없는 것으로 판단됨  ",
+	        "jimok": "답",
+	        "use_st_date": "2018-04-26",
+	        "pmt_status": "결재완료",
+	        "review": "견사 개축시 송유관으로 부터 약 3m이상 이격되어 토지사용을 승낙하여도 송유관 안전관리에 위해가 증대되지 아니하는 것으로 판단됨",
+	        "jasan_no": "9001797",
+	        "jisang_no": "J_001798",
+	        "jibun": "1071-2",
+	        "idx": "P_000161",
+	        "addr": "충청북도 옥천군 동이면 세산리 1071-2",
+	        "jisa": "대전지사",
+	        "pmt_user": "허윤무",
+	        "soyuja": "허춘길"
+	    },
+	    {
+	        "use_ed_date": "1999-04-30",
+	        "no": 48,
+	        "use_purpos": "견사 무허가 양성화(개축) 허가",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부",
+	        "dockey": "plms01309",
+	        "index": 2482,
+	        "echo_no": "",
+	        "spot_result": "민원인(허윤무)이 위 지상권 설정부지에 무허가 견사를 사용해 온바, 이를 양성화(개축)하기 위해 토지사용 승낙을 \r\n요청해 온 사안임. 설정부지(세산리 1071-1, 2 필지)에 견사를 개축하고자 하는곳은 송유관 중심으로 부터 약 3m이상\r\n이격되어 송유관에 영향이 없는 것으로 판단됨  ",
+	        "jimok": "답",
+	        "use_st_date": "2018-04-26",
+	        "pmt_status": "결재완료",
+	        "review": "견사 개축시 송유관으로 부터 약 3m이상 이격되어 토지사용을 승낙하여도 송유관 안전관리에 위해가 증대되지 아니하는 것으로 판단됨",
+	        "jasan_no": "9001796",
+	        "jisang_no": "J_001797",
+	        "jibun": "1071-1",
+	        "idx": "P_000161",
+	        "addr": "충청북도 옥천군 동이면 세산리 1071-1",
+	        "jisa": "대전지사",
+	        "pmt_user": "허윤무",
+	        "soyuja": "허춘길"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 49,
+	        "use_purpos": "건축(제조업소) 인허가관련 등에 따른 동의 ",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부",
+	        "dockey": "plms01956",
+	        "index": 2605,
+	        "echo_no": "",
+	        "spot_result": "당사 지상권 설정부지에 건축(제소업소) 증축 및 신축하고자 사용하고자 하는 곳은 \r\n송유관 중심으로 부터 약 3.0m이상 이격되어 송유관에 영향이 없는 것으로 판단됨. ",
+	        "jimok": "창",
+	        "use_st_date": "2019-06-12",
+	        "pmt_status": "결재완료",
+	        "review": "2007.10.15 지상권 설정부지에 증약리738-3에서 738-3,13으로 분할 및 지상권 전사로 분할 후 \r\n738-3/ 13 2필지에 송유관이 통과하고 있으며, 건축(제조업소) 증축 및 신축 부지는 \r\n송유관으로 부터 약3.0m이상 이격되어 토지사용을 승낙하여도 송유관 안전관리에 위해가 \r\n증대되지 아니하는 것으로 판단됨.",
+	        "jasan_no": "9001786",
+	        "jisang_no": "J_001787",
+	        "jibun": "738-3",
+	        "idx": "P_000262",
+	        "addr": "충청북도 옥천군 군북면 증약리 738-3",
+	        "jisa": "대전지사",
+	        "pmt_user": "우명수",
+	        "soyuja": "강호권"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 50,
+	        "use_purpos": "태양광 구조물 설치 허가",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부",
+	        "dockey": "plms01459",
+	        "index": 2599,
+	        "echo_no": "",
+	        "spot_result": "태양광 구조물은 송유관로 매설지점으로 부터 약 3.5~11.0m이상 이격되어 \r\n설치할 예정으로 현장확인 결과 송유관에 영향이 없는 것으로 판단됨.",
+	        "jimok": "장",
+	        "use_st_date": "2018-10-01",
+	        "pmt_status": "결재완료",
+	        "review": "기존 공장건물 지붕에 설치할 태양광 구조물은 당사 송유관 매설 기준으로 부터\r\n최소 3.5~11.0m이상 이격된 곳에 위치하고 있으며, 본 토지사용 승낙으로 \r\n송유관 안전관리에 위해가 증대되지 아니함.",
+	        "jasan_no": "9001782",
+	        "jisang_no": "J_001783",
+	        "jibun": "737-4",
+	        "idx": "P_000197",
+	        "addr": "충청북도 옥천군 군북면 증약리 737-4",
+	        "jisa": "대전지사",
+	        "pmt_user": "홍새별",
+	        "soyuja": "최광호"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 51,
+	        "use_purpos": "태양광 구조물 설치 허가",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙에 첨부",
+	        "dockey": "plms01460",
+	        "index": 2467,
+	        "echo_no": "",
+	        "spot_result": "태양광 구조물은 송유관로 매설지점으로 부터 약 17.0m이상 이격되어\r\n설치할 예정으로 현장확인 결과 송유관에 영향이 없는 것으로 판단됨.",
+	        "jimok": "장",
+	        "use_st_date": "2018-10-01",
+	        "pmt_status": "결재완료",
+	        "review": "기존 공장건물 지붕에 설치할 태양광 구조물은 당사 송유관 매설 기준으로 부터\r\n최소17.0m이상 이격된 곳에 위치하고 있으며, 본 토지사용 승낙으로\r\n송유관 안전관리에 위해가 증대되지 아니함.",
+	        "jasan_no": "9001780",
+	        "jisang_no": "J_001781",
+	        "jibun": "737-12",
+	        "idx": "P_000198",
+	        "addr": "충청북도 옥천군 군북면 증약리 737-12",
+	        "jisa": "대전지사",
+	        "pmt_user": "신혜숙",
+	        "soyuja": "최광호"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 52,
+	        "use_purpos": "주택 신축",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부 \r\n",
+	        "dockey": "plms03353",
+	        "index": 2630,
+	        "echo_no": "",
+	        "spot_result": "당사 지상권 설정부지에 주택 신축코져 하는 곳은 현장확인 결과 당사 송유관로 중심으로부터 약 4.5m이상 이격되어 송유관에 영향이 없는 것으로 판단됨 ",
+	        "jimok": "전",
+	        "use_st_date": "2020-07-06",
+	        "pmt_status": "결재완료",
+	        "review": "주택 신축시 송유관으로 부터 약 4.5m이상 이격되어 토지사용을 승낙하여도 송유관 안전관리에 위해가 증대되지 \r\n아니하는 것으로 판단됨 ",
+	        "jasan_no": "9001758",
+	        "jisang_no": "J_001759",
+	        "jibun": "553-2",
+	        "idx": "P_000325",
+	        "addr": "충청북도 영동군 심천면 초강리 553-2",
+	        "jisa": "대전지사",
+	        "pmt_user": "김경미",
+	        "soyuja": "박희봉"
+	    },
+	    {
+	        "use_ed_date": "1950-05-31",
+	        "no": 53,
+	        "use_purpos": "농업용 창고 신축",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부",
+	        "dockey": "plms06320",
+	        "index": 2765,
+	        "echo_no": "",
+	        "spot_result": "\r\n- 송유관과 농업용 창고(신축) 위치와 3.3m 이격되어 설계 (STA.No 231-35+358)",
+	        "jimok": "전",
+	        "use_st_date": "2022-05-13",
+	        "pmt_status": "결재완료",
+	        "review": "- 당사 지상권 부지로 토지소유자가 대상토지에 농업용 창고를 신축 하고자 허가 신청을 위한 토지사용승낙을 구하는건임\r\n- 사용자가 신축하고자 하는곳으로부터 3.3m 떨어져 송유관 안전관리에 이상이 없다고 판단됨.",
+	        "jasan_no": "9001745",
+	        "jisang_no": "J_001746",
+	        "jibun": "403-1",
+	        "idx": "P_000466",
+	        "addr": "충청북도 영동군 심천면 초강리 403-1",
+	        "jisa": "대전지사",
+	        "pmt_user": "김동연",
+	        "soyuja": "김동연"
+	    },
+	    {
+	        "use_ed_date": "1952-09-30",
+	        "no": 54,
+	        "use_purpos": "2종 근생 제조업소 신축",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부",
+	        "dockey": "plms06791",
+	        "index": 2745,
+	        "echo_no": "",
+	        "spot_result": " 송유관으로부터 5.8~10m 이상 이격 설계 \r\n  (STA.No 222-18+970~19+077)",
+	        "jimok": "답",
+	        "use_st_date": "2022-09-13",
+	        "pmt_status": "결재완료",
+	        "review": " 당사 지상권 부지로 토지 사용자가 대상 토지에 제조업소 건물을 신축 하고자 허가 신청을 위한 토지사용 승낙을 구하는 건임\r\n - 사용자가 신축하고자 하는곳으로부터 5.8~ 10m 이상 떨어져 송유관 안전관리에 이상이 없다고 판단됨. ",
+	        "jasan_no": "9005109",
+	        "jisang_no": "J_005096",
+	        "jibun": "31107.00060185185",
+	        "idx": "P_000482",
+	        "addr": "충청북도 청주시 서원구 남이면 구암리 85-3",
+	        "jisa": "대전지사",
+	        "pmt_user": "(주)곰돌이",
+	        "soyuja": "이종구"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 55,
+	        "use_purpos": "태양광 구조물 설치",
+	        "contract": "ㅇ토지사용 기본조건 및 각서 : 토지사용 승낙에 첨부 ",
+	        "dockey": "plms01602",
+	        "index": 2473,
+	        "echo_no": "",
+	        "spot_result": "ㅇ태양광 발전설비는 송유관로 매설지점으로 부터 약 10.0m이상 이격되어 설치할 예정으로 현장확인 결과 송유관에 영향이 없는 것으로 판단됨. ",
+	        "jimok": "전",
+	        "use_st_date": "2019-01-18",
+	        "pmt_status": "결재완료",
+	        "review": "ㅇ기존 원두막 제작소건물 지붕에 설치할 태양광 발전설비는 당사 송유관 매설 기준으로 부터 최소 10.0m이상 이격된 곳에 위치할 예정으로, 본 토지사용 승낙으로 송유관 안전관리에 위해가 증대되지 아니함. ",
+	        "jasan_no": "9001665",
+	        "jisang_no": "J_001666",
+	        "jibun": "510-3",
+	        "idx": "P_000223",
+	        "addr": "충청북도 영동군 황간면 서송원리 510-3",
+	        "jisa": "대전지사",
+	        "pmt_user": "김성영",
+	        "soyuja": "김성영"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 56,
+	        "use_purpos": "건물(카센타) 신축",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부 \r\n",
+	        "dockey": "plms01638",
+	        "index": 2494,
+	        "echo_no": "",
+	        "spot_result": "당사 지상권 설정부지에 건물(카센타)을 신축하는 곳은 현장확인 결과 당사 송유관로 중심으로 부터 약 3.0m이상 이격되어 송유관에 영향이 없는 것으로 판단됨 ",
+	        "jimok": "철",
+	        "use_st_date": "2019-02-27",
+	        "pmt_status": "결재완료",
+	        "review": "건물 신축시 송유관으로 부터 약 3.0m이상 이격되어 토지사용을 승낙하여도 송유관 안전관리에 위해가 증대되지 아니하는 것으로 판단됨 ",
+	        "jasan_no": "9001647",
+	        "jisang_no": "J_001648",
+	        "jibun": "304-1",
+	        "idx": "P_000234",
+	        "addr": "충청북도 영동군 황간면 마산리 304-1",
+	        "jisa": "대전지사",
+	        "pmt_user": "정명일",
+	        "soyuja": "임원섭"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 57,
+	        "use_purpos": "제2종근생(기계제조업) 신축",
+	        "contract": "토지사용 기본조건 및 각서 : 토지사용 승낙서에 첨부 \r\n",
+	        "dockey": "plms04077",
+	        "index": 2617,
+	        "echo_no": "",
+	        "spot_result": "당사 지권권 설정부지에 제2종근생(기계제조업) 2개소를 신축코져 하는 곳은 현장확인 결과 당사 송유관로 중심으로부터 약 26~29m이상 이격되어 송유관에 영향이 없는 것으로 판단됨 ",
+	        "jimok": "전",
+	        "use_st_date": "2021-02-16",
+	        "pmt_status": "결재완료",
+	        "review": "제2종근생(기계제조업) 신축시 송유관으로 부터 약 26~29m이상 이격되어 토지사용을 승낙하여도 송유관 안전관리에 위해가 증대되지 아니하는 것으로 판단됨 ",
+	        "jasan_no": "9001583",
+	        "jisang_no": "J_001584",
+	        "jibun": "37135.000601851854",
+	        "idx": "P_000357",
+	        "addr": "충청북도 영동군 영동읍 주곡리 9-1",
+	        "jisa": "대전지사",
+	        "pmt_user": "정명이",
+	        "soyuja": "한광석"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 58,
+	        "use_purpos": "지하수 개발, 이용(관정 설치)",
+	        "contract": "ㅇ 송유관 직상부 및 관로주변 굴착금지 각서징구 \r\n \r\n",
+	        "dockey": "plms01644",
+	        "index": 2582,
+	        "echo_no": "",
+	        "spot_result": "ㅇ 송유관은 경기도 평택시 진위면 동천리 606-26(답)에 매설되어있음\r\nㅇ 설치하고자 하는 동천리 606-26번지 지하수 관정 경계에서 송유관 매설위치와는 최소 20m이상 이격되어 있습니다.\r\nㅇ 송유관 중심으로부터 좌, 우 3.5m 총 7.0m 절,성토가 없습니다.\r\nㅇ 송유관 안전에 지장이 없으므로 토지사용 승낙서 발급 \r\n",
+	        "jimok": "답",
+	        "use_st_date": "2019-03-13",
+	        "pmt_status": "결재완료",
+	        "review": "ㅇ 송유관은 경기도 평택시 진위면 동천리 606-26(답)에 매설되어있음\r\nㅇ 설치하고자 하는 동천리 606-26번지 지하수 관정 경계에서 송유관 매설위치와는 최소 20m이상 이격되어 있습니다.\r\nㅇ 송유관 중심으로부터 좌, 우 3.5m 총 7.0m 절,성토가 없습니다.\r\nㅇ 송유관 안전에 지장이 없으므로 토지사용 승낙서 발급 \r\n",
+	        "jasan_no": "9000635",
+	        "jisang_no": "J_000636",
+	        "jibun": "606-26",
+	        "idx": "P_000239",
+	        "addr": "경기도 평택시 진위면 동천리 606-26",
+	        "jisa": "서울지사",
+	        "pmt_user": "전민형",
+	        "soyuja": "전민형"
+	    },
+	    {
+	        "use_ed_date": "1999-12-31",
+	        "no": 59,
+	        "use_purpos": "건축허가(통식물관련시설) 및 가설건축물 축조",
+	        "contract": "송유관 직상부 및 관로주변 굴착금지 각서징구",
+	        "dockey": "plms01391",
+	        "index": 2578,
+	        "echo_no": "",
+	        "spot_result": "건축물과 송유관과의 이격거리가 5m이상 확보되어, 송유관 안전에 지장이 없으므로 토지사용 승낙서 발급",
+	        "jimok": "목",
+	        "use_st_date": "2018-06-19",
+	        "pmt_status": "결재완료",
+	        "review": "건축물과 송유관과의 이격거리가 5m이상 확보되어 송유관 안전관리에 이상 없음\r\n무허가 건축물(축사, 창고 등)을 안성시에서 양성화시키고자 사후 건축허가 신청을 받아 행정처리하는 건으로, 건축물을 신축하지 않음",
+	        "jasan_no": "9000093",
+	        "jisang_no": "J_009393",
+	        "jibun": "712-7",
+	        "idx": "P_000177",
+	        "addr": "경기도 안성시 공도읍 승두리 712-7",
+	        "jisa": "서울지사",
+	        "pmt_user": "정명선",
+	        "soyuja": "정명선"
+	    },
+	    {
+	        "use_ed_date": "1930-03-01",
+	        "no": 60,
+	        "use_purpos": "오산 더본 물류창고 이설공사 관련 토지사용 승낙 ",
+	        "contract": "ㅇ 송유관이설에 따른 지상권 변동에 대한 변경등기는 원인자부담원칙 조건으로 토지사용승낙서 발급  ",
+	        "dockey": "plms00332",
+	        "index": 2381,
+	        "echo_no": "",
+	        "spot_result": "ㅇ 오산 더본 물류창고 증축공사관련 송유관 이설공사 협약서 체결\r\n     - 송유관 이설공사 협약서 체결 : 2017. 02.07 ",
+	        "jimok": "임",
+	        "use_st_date": "2017-03-13",
+	        "pmt_status": "결재완료",
+	        "review": "ㅇ 오산 더본 물류창고 증축 공사관련 송유관 이설공사 시행\r\n     - 관련근거 : 공사팀2017-330(2017. 02. 07) \"오산더본 물류창고 증축구간 송유관 이설공사 협약서 날인본 송부\" ",
+	        "jasan_no": "9000319",
+	        "jisang_no": "J_000320",
+	        "jibun": "29099.00060185185",
+	        "idx": "P_000020",
+	        "addr": "경기도 오산시 원동 79-9",
+	        "jisa": "서울지사",
+	        "pmt_user": "더본로직스틱스",
+	        "soyuja": "최홍"
+	    }
+	]
+	
+] */
+	var data = [
+		['subgroupN', 'Group1', 'sub-subgroupN', 'ElementN', '2Element N'],
+		['subgroup1', 'Group2', 'sub-subgroup1', 'Element1', '2Element 1'],
+		['subgroup2', 'Group2', 'sub-subgroup1', 'Element1', '2Element 1'],
+		['subgroup2', 'Group2', 'sub-subgroup1', 'Element2', '2Element 2'],
+		['subgroup2', 'Group2', 'sub-subgroup2', 'Element3', '2Element 2'],
+		['subgroup2', 'Group2', 'sub-subgroup2', 'Element4', '2Element 4'],
+		['subgroup2', 'Group2', 'sub-subgroup2', 'Element2', '2Element 2'],
+		['subgroup3', 'Group1', 'sub-subgroup1', 'Element1', '2Element 1'],
+		['subgroup3', 'Group1', 'sub-subgroup1', 'Element1', '2Element 1'],
+		['subgroup2', 'Group2', 'sub-subgroup2', 'Element1', '2Element 1'],
+		['subgroup4', 'Group2', 'sub-subgroup2', 'Element1', '2Element 1'],
+		['subgroup4', 'Group2', 'sub-subgroup3', 'Element10', '2Element 17'],
+		['subgroup4', 'Group2', 'sub-subgroup3', 'Element231', '2Element 211'],
+		
+	]
+	var table = $('#example').DataTable({
+		columns: [
+			{
+				title: 'First group',
+			},
+			{
+				name: 'second',
+				title: 'Second group [order first]',
+			},
+			{
+				title: 'Third group',
+			},
+			{
+				title: 'Forth ungrouped',
+			},
+			{
+				title: 'Fifth ungrouped',
+			}
+		],
+		data: data,
+		lengthChange: false,
+		searching: true,
+		paging: false,
+		order: [],
+		rowsGroup: [// Always the array (!) of the column-selectors in specified order to which rows groupping is applied
+					// (column-selector could be any of specified in https://datatables.net/reference/type/column-selector)
+			0,1,2
+		],
+	})
+	/* table.draw(false);
+	$('#update_btn').click(function(){
+		table.rowsgroup.update();
+	}) */
+});
+
+</script>
+</body>
+</html>
