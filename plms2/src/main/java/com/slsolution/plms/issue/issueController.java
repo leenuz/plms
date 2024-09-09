@@ -83,9 +83,13 @@ public class issueController {
 		String address=req.getParameter("saddr");
 
 		
-		String jasan_no = req.getParameter("jasan_no");
+		
 
-				
+		String mw_title="";
+		String code1="";
+		String code2="";
+		String code3="";
+		String status="";
 		String start_date=req.getParameter("start_date"); //취득기간
 		String end_date=req.getParameter("end_date");
 
@@ -95,16 +99,21 @@ public class issueController {
 		params.put("draw",draw);
 		params.put("start",start);
 		
-		params.put("jisa",jisa);
+		params.put("jisa",jisa); //발생지사
+		params.put("mw_title",mw_title); //민원명
+		params.put("code1",mw_title); //이슈유형1
+		params.put("code2",mw_title); //이슈유형
+		params.put("code3",mw_title); //이슈유형
+		params.put("status",mw_title); //진행현황
 		
 		params.put("address",address);
 
 		
-		params.put("jasan_no",jasan_no);
+		
 
 		
-		params.put("start_date", start_date);
-		params.put("end_date", end_date);
+		params.put("start_date", start_date); //발생일자
+		params.put("end_date", end_date); //발생일자
 
 //		String[] right_arr= {};
 //		right_arr=right_type.split(",");
@@ -126,10 +135,10 @@ public class issueController {
 		}
 		log.info("params:"+params);
 
-		Object count= mainService.selectCountQuery("dopcoSQL.selectTotalCount", params);
+		Object count= mainService.selectCountQuery("issueSQL.selectMinwonTotalCount", params);
 		int total=(int)count;
 
-		ArrayList<HashMap> list = mainService.selectQuery("dopcoSQL.selectDopcoList",params);
+		ArrayList<HashMap> list = mainService.selectQuery("issueSQL.selectMinwonList",params);
 		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
 		log.info("list:"+list);
 

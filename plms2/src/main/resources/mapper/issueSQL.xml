@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="issueSQL">
+<select id="selectMinwonTotalCount" parameterType="java.util.HashMap" resultType="Integer">
+		select count(*) from (
+		SELECT *,
+		TRIM(CONCAT(mp.mp_sido_nm, ' ', mp.mp_sgg_nm, ' ',mp.mp_emd_nm,' ',mp.mp_ri_nm, ' ', mp.mp_jibun)) AS address
+		FROM minwon_master mm
+		LEFT JOIN minwon_pnu mp ON mp.mp_minwon_seq=mm.mm_mw_seq
+		
+		WHERE 1 = 1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and mm.mm_jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(status)" >
+			and mm.mm_status=#{status}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(mw_title)" >
+			and mm.mm_mw_title=#{mw_title}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(code1)" >
+			and mm.mm_mw_code1=#{code1}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(code2)" >
+			and mm.mm_mw_code2=#{code2}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(code3)" >
+			and mm.mm_mw_code3=#{code3}
+		</if>
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+			and mm.mm_occur_date::date between #{start_date}::date and #{end_date}::date
+		</if>
+		) r
+		where 1=1
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '%${address}%'
+		</if>
+		
+		
+	</select>
+	<select id="selectMinwonList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		
+		select * from (
+		SELECT *,
+		TRIM(CONCAT(mp.mp_sido_nm, ' ', mp.mp_sgg_nm, ' ',mp.mp_emd_nm,' ',mp.mp_ri_nm, ' ', mp.mp_jibun)) AS address
+		FROM minwon_master mm
+		LEFT JOIN minwon_pnu mp ON mp.mp_minwon_seq=mm.mm_mw_seq
+		
+		WHERE 1 = 1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and mm.mm_jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(status)" >
+			and mm.mm_status=#{status}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(mw_title)" >
+			and mm.mm_mw_title=#{mw_title}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(code1)" >
+			and mm.mm_mw_code1=#{code1}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(code2)" >
+			and mm.mm_mw_code2=#{code2}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(code3)" >
+			and mm.mm_mw_code3=#{code3}
+		</if>
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+			and mm.mm_occur_date::date between #{start_date}::date and #{end_date}::date
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+			ORDER BY ${orderCol} ${desc}
+		</if>
+		) r
+		where 1=1
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '%${address}%'
+		</if>
+		<if test="length>0">
+			limit #{length} offset #{start}
+		</if>
+		
+		
+		
+
+	</select>
+	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *
+		,concat(dom_sido_nm,' ',dom_sgg_nm,' ',dom_emd_nm,' ',dom_ri_nm,' ',dom_jibun) as address
+		from dopco_master 
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+		and dom_dopco_no=#{idx}
+		</if>
+		
+	</select>
+	
+	
+	<select id="selectcancelTotalCount" parameterType="java.util.HashMap" resultType="Integer">
+		select count(*) from (
+		SELECT *,
+		TRIM(CONCAT(dom.dom_sido_nm, ' ', dom.dom_sgg_nm, ' ',dom.dom_emd_nm,' ',dom.dom_ri_nm, ' ', dom.dom_jibun)) AS address,
+		FROM dopco_master dom
+		
+		WHERE 1 = 1
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and dom.dom_jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
+			and dom.dom_jasan_no like '%${jasan_no}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)" >
+			and dom.dom_cancel_yn =#{cancel_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+			and dom.dom_chuideuk_date::date between #{start_date}::date and #{end_date}::date
+		</if>
+		) r
+		where 1=1
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '%${address}%'
+		</if>
+		
+		
+	</select>
+	<select id="selectDopcoCancelList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		
+		select * from (
+		SELECT *,
+		TRIM(CONCAT(dom.dom_sido_nm, ' ', dom.dom_sgg_nm, ' ',dom.dom_emd_nm,' ',dom.dom_ri_nm, ' ', dom.dom_jibun)) AS address,
+		FROM dopco_master dom
+		
+		WHERE 1 = 1
+		dom_cancel_date IS NOT null
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and dom.dom_jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
+			and dom.dom_jasan_no like '%${jasan_no}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+			and dom.dom_chuideuk_date::date between #{start_date}::date and #{end_date}::date
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+			ORDER BY ${orderCol} ${desc}
+		</if>
+		) r
+		where 1=1
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '%${address}%'
+		</if>
+		<if test="length>0">
+			limit #{length} offset #{start}
+		</if>
+		
+		
+		
+
+	</select>
+	
+</mapper>
