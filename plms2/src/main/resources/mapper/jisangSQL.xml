@@ -1265,6 +1265,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	
+	
+	<!--  지상권 분할 필수 첨부파일 -->
+	<insert id="insertJisangBunhalAtcfile" parameterType="map">
+		INSERT INTO jisang_bunhal_atcfile (
+		,jba_seq
+		,jba_bunhal_idx
+		,jba_file_path
+		,jba_file_nm
+		,jba_file_gubun
+		,jba_wdate
+		) VALUES (
+		#{jisang_no},
+		#{fseq}::int,
+		#{file_name},
+		#{file_path},
+		Now()
+		
+		)
+		
+	</insert>
+	<update id="updateJisangBunhalAtcfile" parameterType="map">
+		update jisang_req_doc2 set 
+		
+		jrd_fname=#{file_name},
+		jrd_fpath=#{file_path},
+		jrd_wdate=Now()
+		where jrd_manage_no=#{jisang_no} and jrd_fseq=#{fseq}::int 
+	</update>
+	<select id="selectJisangBunhalAtcfileCount" parameterType="map" resultType="Integer">
+		select count(*) as count from jisang_req_doc2
+		where jrd_manage_no=#{jisang_no} and jrd_fseq=#{fseq}::int 
+	</select>
+	<select id="selectJisangBunhalAtcfile" parameterType="map" resultType="java.util.HashMap">
+		select * from jisang_bunhal_atcfile
+		where 1=1
+		
+		and jba_bunhal_idx=#{bunhal_idx} 
+	</select>
+	<delete id="jisangBunhalAtcfileDelete" parameterType="java.util.HashMap">
+
+		delete from jisang_req_doc1
+		where jrd_manage_no=#{manage_no} and jrd_fseq=#{fseq}::int
+
+	</delete>
+	
 
 	<update id="updateJisangMaster" parameterType="map">
 		UPDATE jisang_master

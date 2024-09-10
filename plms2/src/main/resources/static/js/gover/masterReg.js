@@ -239,7 +239,7 @@ const masterRegFileEvent = () => {
         return `${(bytes / (1024 ** d)).toFixed(1)} ${dataSize[d]}`;
     }
 }
-masterRegFileEvent();
+//masterRegFileEvent();
 
 // **검색 팝업 기능 추가**
 const masterRegOpenPopUp = () => {
