@@ -71,10 +71,277 @@ $(document).on('click', '.moreSelectBtn', function() {
     console.log(`Selected value: ${nearBySelectBox.val()}`);
 });
 
-/*임시저장 버튼 클릭시*/
-$(document).on("click","#temporarySaveBtn",function(){
 
-	   var formSerializeArray = $('#searchForm').serializeArray();
+
+$(document).on("click","#docFileDelBtn",function(){
+	console.log("---------------docFileDelBtn---------------");
+	var $currentElement = $(this);
+	console.log($(this).parent().parent().html());
+	var inputFseq=$(this).parent().parent().find("#fseq").val();
+	var inputValue=$(this).parent().parent().find(".notWriteInput").val();
+	console.log(inputValue);
+	if (inputValue!=null || inputValue!=""){
+		var params={"dfile_name":inputValue,"jisang_no":$("#hiddenJisangNo").val(),"fseq":inputFseq,"docNo":"2"}
+		
+		console.log(params);
+		
+		
+		//임시파일 삭제
+		$.ajax({
+		          url: "/jisang/deleteJisangTmpFile",
+		          type: "POST",
+		          data: params,
+				  
+		})
+		.done(function (fragment) {
+		       /*loadingHide();
+		       alert("저장이 완료 되었습니다.");*/
+			   //$(this).parent().parent().find(".notWriteInput").val("");
+			   $currentElement.parent().parent().find(".notWriteInput").val("");   
+			   $currentElement.parent().parent().find(".notWriteInput").attr('placeholder','');
+		    });
+					
+	}
+	//console.log($(this).parent().parent().find(".notWriteInput").val(""));
+	
+})
+
+
+
+
+		//파일 업로드 핸들러
+		var uploadFiles=new Array();
+
+$(document).ready(function(){
+			var objDragAndDrop = $(".fileUploadBox");
+		        $(document).on("dragenter",".fileUploadBox",function(e){
+		        e.stopPropagation();
+		        e.preventDefault();
+		        $(this).css('border', '2px solid #0B85A1');
+		    });
+		    $(document).on("dragover",".fileUploadBox",function(e){
+		        e.stopPropagation();
+		        e.preventDefault();
+		    });
+		    $(document).on("drop",".fileUploadBox",function(e){
+
+		        $(this).css('border', '2px dotted #0B85A1');
+		        e.preventDefault();
+		        var files = e.originalEvent.dataTransfer.files;
+
+		        handleFileUpload(files,objDragAndDrop);
+		    });
+
+		    $(document).on('dragenter', function (e){
+		        e.stopPropagation();
+		        e.preventDefault();
+		    });
+		    $(document).on('dragover', function (e){
+		      e.stopPropagation();
+		      e.preventDefault();
+		      objDragAndDrop.css('border', '2px dotted #0B85A1');
+		    });
+		    $(document).on('drop', function (e){
+		        e.stopPropagation();
+		        e.preventDefault();
+		    });
+		    //drag 영역 클릭시 파일 선택창
+		    objDragAndDrop.on('click',function (e){
+		        $('#landTerminationRegistration_myPcFiles').trigger('click');
+		    });
+
+		    $('input[name=fileupload]').on('change', function(e) {
+		        var files = e.originalEvent.target.files;
+		        handleFileUpload(files,objDragAndDrop);
+		    });
+			
+			$('input[name=landTerminationRegistration_myPcFiles01]').on('change', function(e) {
+			        var files = e.originalEvent.target.files;
+			        handleFileUpload1(files,this,"01");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles02]').on('change', function(e) {
+			       var files = e.originalEvent.target.files;
+			       handleFileUpload1(files,this,"02");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles03]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"03");
+					   
+			});
+			$('input[name=landTerminationRegistration_myPcFiles04]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"04");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles05]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"05");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles06]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"06");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles07]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"07");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles08]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"08");
+			});
+		    function handleFileUpload(files,obj)
+		    {
+		       for (var i = 0; i < files.length; i++)
+		       {
+		            var fd = new FormData();
+		            fd.append('file', files[i]);
+
+		            var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
+		          //  status.setFileNameSize(files[i].name,files[i].size);
+		            sendFileToServer(fd,status);
+
+		       }
+		    }
+			
+			
+			
+			function handleFileUpload1(files,obj,idx)
+			    {
+			       for (var i = 0; i < files.length; i++)
+			       {
+			            var fd = new FormData();
+			            fd.append('file', files[i]);
+
+			          //  var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
+			          //  status.setFileNameSize(files[i].name,files[i].size);
+					    console.log($(obj).parent().parent().parent().html());
+						var changeObj=$(obj).parent().parent().find("#req_doc_file"+idx).val(files[i].name);
+						console.log("--------changeObj---------------");
+						console.log(changeObj);
+			            sendFileToServer1(fd,status,idx);
+
+			       }
+			    }
+
+		    var rowCount=0;
+		    function createStatusbar(obj,name,size,no){
+		        console.log("----------start createStatusBar------------");
+		            console.log(obj.html());
+
+		        var sizeStr="";
+		                                var sizeKB = size/1024;
+		                                if(parseInt(sizeKB) > 1024){
+		                                    var sizeMB = sizeKB/1024;
+		                                    sizeStr = sizeMB.toFixed(2)+" MB";
+		                                }else{
+		                                    sizeStr = sizeKB.toFixed(2)+" KB";
+		                                }
+
+		        var row='<ul class="contents" id="fileListUl">';
+		        row+='<li class="selectWidth content checkboxWrap">';
+		        row+='<input type="checkbox" id="landRightsRegistration_attachFile'+no+'" name="landRightsRegistration_attachFile" >';
+		        row+='<label for="landRightsRegistration_attachFile'+no+'"></label>';
+		        row+='</li>';
+		        row+='<li class="content registDateWidth"><input type="text" id="filename" th:placeholder="'+'[[${val.pa_file_path}]]'+'" class="notWriteInput" readonly></li>';
+		        row+='<li class="content fileNameWidth"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li>';
+		        row+='<li class="content"><button class="viewDetailButton" th:onclick="openFilePopup([[${val.pa_file_path}]])">보기</button></li></ul>';
+		        obj.after(row);
+
+		        var radio=$(row).find('input');
+		        console.log("---------------radio checkbox----------");
+		        $(radio).find('input').attr("disabled",false);
+		        console.log($(radio).parent().html());
+		    }
+
+		    function sendFileToServer(formData,status)
+		    {
+		        var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+		        var extraData ={}; //Extra Data.
+		        var jqXHR=$.ajax({
+		                xhr: function() {
+		                var xhrobj = $.ajaxSettings.xhr();
+		                if (xhrobj.upload) {
+		                        xhrobj.upload.addEventListener('progress', function(event) {
+		                            var percent = 0;
+		                            var position = event.loaded || event.position;
+		                            var total = event.total;
+		                            if (event.lengthComputable) {
+		                                percent = Math.ceil(position / total * 100);
+		                            }
+		                            //Set progress
+		                          //  status.setProgress(percent);
+		                        }, false);
+		                    }
+		                return xhrobj;
+		            },
+		            url: uploadURL,
+		            type: "POST",
+		            contentType:false,
+		            processData: false,
+		            cache: false,
+		            data: formData,
+		            success: function(data){
+		               // status.setProgress(100);
+		                console.log(data);
+		                console.log(data.resultData);
+		                //$("#status1").append("File upload Done<br>");
+		                uploadFiles.push(data.resultData.fpath);
+		                //allCheckEventLandRightsRegist();
+		            }
+		        });
+		        //status.setAbort(jqXHR);
+		    }
+			
+			
+			function sendFileToServer1(formData,status,no)
+			    {
+					var idx=$("#hiddenJisangNo").val();
+					console.log($("#hiddenJisangNo").val());
+			        var uploadURL = "/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
+			        var extraData ={}; //Extra Data.
+			        var jqXHR=$.ajax({
+			                xhr: function() {
+			                var xhrobj = $.ajaxSettings.xhr();
+			                if (xhrobj.upload) {
+			                        xhrobj.upload.addEventListener('progress', function(event) {
+			                            var percent = 0;
+			                            var position = event.loaded || event.position;
+			                            var total = event.total;
+			                            if (event.lengthComputable) {
+			                                percent = Math.ceil(position / total * 100);
+			                            }
+			                            //Set progress
+			                          //  status.setProgress(percent);
+			                        }, false);
+			                    }
+			                return xhrobj;
+			            },
+			            url: uploadURL,
+			            type: "POST",
+			            contentType:false,
+			            processData: false,
+			            cache: false,
+			            data: formData,
+			            success: function(data){
+			               // status.setProgress(100);
+			                console.log(data);
+			                console.log(data.resultData);
+			                //$("#status1").append("File upload Done<br>");
+			                uploadFiles.push(data.resultData.fpath);
+			                //allCheckEventLandRightsRegist();
+			            }
+			        });
+			        //status.setAbort(jqXHR);
+			    }
+}); //end ready
+
+
+
+
+
+/*임시저장 버튼 클릭시*/
+$(document).on("click",".temporarySaveBtn",function(){
+
+	   var formSerializeArray = $('#saveForm').serializeArray();
 	   var tojiBunhalArray = $('#tojiBunhalForm').serializeArray();
 	   var submitArray = $('#submitForm').serializeArray();
 
@@ -82,15 +349,56 @@ $(document).on("click","#temporarySaveBtn",function(){
 	   for (var i = 0; i < formSerializeArray.length; i++){
 	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
 	   }
+	   
+	   
+	   console.log("대상토지 정보");
+	   	var togiDatas=[];
+	   	var togiUls=$("#tojiDiv #tojiUl");
+	   	console.log(togiUls);
+	   	for(var i=0;i<togiUls.length;i++){
+	   		var togiManageNo=$(togiUls[i]).find("input[name='togiBunhalJisangNo']").val();
+	   		var togiaddress=$(togiUls[i]).find("input[name='togiBunhalAddr'").val();
+			var togiTogiType=$(togiUls[i]).find("select[name='togiBunhalTogiType']").val();
+	   		var togiJimokText=$(togiUls[i]).find("input[name='togiBunhalJimokText']").val();
+	   		var togiJijukArea=$(togiUls[i]).find("input[name='togiBunhalJiJukArea']").val();
+	   		var togiPyeonibArea=$(togiUls[i]).find("input[name='togiBunhalPyeonibArea']").val();
+	   		var togiJasanNo=$(togiUls[i]).find("input[name='togiBunhalJasanNo']").val();
+			var togiPipeYn=$(togiUls[i]).find("radio[name='togiBunhalPipeYn']").val();
+			var togiCancelYn=$(togiUls[i]).find("input[name='togiBunhalCancelYn']").val();
+			var togiDemise=$(togiUls[i]).find("input[name='togiBunhalDemise']").val();
+			var togiAccountYn=$(togiUls[i]).find("select[name='togiBunhalAccountYn']").val();
+			
+	   		
+	   		
+	   		//console.log("togiManageNo:"+togiManageNo);
+	   		var togiObj={"togiManageNo":togiManageNo
+	   			,"togiaddress":togiaddress.trim()
+				,"togiTogiType":togiTogiType
+	   			,"togiJimokText":togiJimokText
+	   			,"togiJijukArea":togiJijukArea
+	   			,"togiPyeonibArea":togiPyeonibArea
+	   			,"togiJasanNo":togiJasanNo
+				,"togiPipeYn":togiPipeYn
+	   			,"togiCancelYn":togiCancelYn
+	   			,"togiDemise":togiDemise
+				,"togiAccountYn":togiAccountYn
+	   			
+	   		}
+	   		console.log(togiObj);
+	   		togiDatas.push(togiObj);
+	   	}
+	   
+	     console.log("----------togiDatas-------------");
+		 console.log(togiDatas);
 
-  for (var i = 0; i < submitArray.length; i++){
+  /*for (var i = 0; i < submitArray.length; i++){
 	       object[submitArray[i]['name']] = submitArray[i]['value'];
-	   }
+	   }*/
 //	 var groupedData = {};
      var allCheckboxes = {};
 
      // 모든 체크박스를 추적하기 위한 객체를 생성합니다
-     $('#tojiBunhalForm input[type="checkbox"]').each(function() {
+    /* $('#tojiBunhalForm input[type="checkbox"]').each(function() {
          var name = $(this).attr('name');
          var value = $(this).is(':checked') ? $(this).val() : ''; // 체크된 경우 값, 그렇지 않으면 빈 문자열
          var match = name.match(/_(\d+)$/); // 끝자리 숫자 추출
@@ -101,10 +409,10 @@ $(document).on("click","#temporarySaveBtn",function(){
              }
              allCheckboxes[index][name] = value; // 체크박스의 데이터를 추가
          }
-     });
+     });*/
 
      // 폼 데이터를 순회하며 그룹화
-     tojiBunhalArray.forEach(function(item) {
+     /*tojiBunhalArray.forEach(function(item) {
          var match = item.name.match(/_(\d+)$/); // 끝자리 숫자 추출
          if (match) {
              var index = match[1];
@@ -113,10 +421,10 @@ $(document).on("click","#temporarySaveBtn",function(){
              }
              object[index][item.name] = item.value; // 그룹에 데이터 추가
          }
-     });
+     });*/
 
      // 체크박스의 값을 그룹화된 데이터에 추가
-     for (var index in allCheckboxes) {
+    /* for (var index in allCheckboxes) {
          if (!object[index]) {
              object[index] = {}; // 해당 인덱스가 없으면 초기화
          }
@@ -124,7 +432,7 @@ $(document).on("click","#temporarySaveBtn",function(){
          for (var name in allCheckboxes[index]) {
              object[index][name] = allCheckboxes[index][name];
          }
-     }
+     }*/
 
 //     // 필드 이름 목록을 정의
 //     var fieldNames = ['bunhalAddres','divisionRegistSelectBox02','jimok', 'jijuk', 'pyenip','pipe','terminate','jaryo','divisionRegistSelectBox03']; // 예시 필드명
@@ -191,14 +499,14 @@ $(document).on("click","#temporarySaveBtn",function(){
 	        return null; // 필수 값이 누락된 경우 null 반환
    		}
 */
-
+return;
 			url="/jisang/divisionRegisterSave"; 
 			   $.ajax({
 			   			
 			   				url:url,
 			   				type:'POST',
 			   				contentType:"application/json",
-			   				data:JSON.stringify(dataObj),
+			   				data:JSON.stringify(object),
 			   				
 			   				dataType:"json",
 			   				beforeSend:function(request){
@@ -312,9 +620,18 @@ console.log($(this).parent().parent().html());
 	var sgg_nm=$(this).parent().parent().find(".popContent0202").html();
 	var emd_nm=$(this).parent().parent().find(".popContent0203").html();
 	var ri_nm=$(this).parent().parent().find(".popContent0204").html();
-
+	
+	var openerEle=$("#tojiDiv");
+//	console.log($(openerEle).html());
+	var openerTargetEle=openerEle.find('input[id="bunhalIndex"][value="'+id+'"]');
+	//console.log(openerTargetEle.parent().parent().html());
+	openerTargetEle.parent().parent().find("#bunhalAddres").val(sido_nm+" "+sgg_nm + " " + emd_nm +" " +ri_nm  + " " + jibun);
+	
 $(".bunhalAddres_" + id).attr("readonly", true);
 $(".bunhalAddres_"+id).val(sido_nm+" "+sgg_nm + " " + emd_nm +" " +ri_nm  + " " + jibun);
+
+
+
 //		$("#sido_nm").val(sido_nm);
 //        $("#sgg_nm").val(sgg_nm);
 //        $("#emd_nm").val(emd_nm);
@@ -349,14 +666,14 @@ $(document).on("click",".topCloseBtn",function(){
 //	$(".popupWrap").toggleClass("active");
 });
 var index = 1;
-$(document).on("click",".addBtn",function(){
-	console.log("----------------addBtn-------------------------");
+$(document).on("click","#addBtn",function(){
+	console.log("----------------editTojiBtn-------------------------");
 
 
 		var thisUl=$(this).parent().parent().parent().parent();
 		console.log(thisUl);
 		var addUl=$("#tojiHiddenUl").html();
-		//console.log(addUl);
+		console.log(addUl);
         //var findButton=$()
 //		var input=$(thisUl).find("input");
 
@@ -427,7 +744,7 @@ $(document).on("click",".addBtn",function(){
             index++; // i 값을 증가시켜 다음 버튼에 적용
 
          $("#tojiDiv").append(addDiv);
-//        $("#tojiDiv").html(addDiv);
+
 });
 
 

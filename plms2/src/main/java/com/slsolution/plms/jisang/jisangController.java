@@ -1543,12 +1543,14 @@ public class jisangController {
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> bunhalList = mainService.selectQuery("jisangSQL.selectjisangBunhalList",params);
+		ArrayList<HashMap> atcfilelist = mainService.selectQuery("jisangSQL.selectJisangBunhalAtcfile",params);
 
 		ModelAndView mav=new ModelAndView();
 
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("soujaList",soujaList);
 		mav.addObject("bunhalList",bunhalList);
+		mav.addObject("atcfileList",atcfilelist);
 		log.info("resultData:"+ data.get(0));
 		log.info("soujaList:"+soujaList);
 		log.info("bunhalList:"+bunhalList);
@@ -1746,7 +1748,7 @@ public class jisangController {
 		params.put("cancel_comment",cancel_comment);
 
 		params.put("jisang_no",jisang_no);
-		params.put("idx",Integer.parseInt(jIdx));
+		//params.put("idx",Integer.parseInt(jIdx));
 
 		log.info("params:"+params);
 		

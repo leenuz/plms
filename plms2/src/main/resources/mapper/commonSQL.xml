@@ -169,8 +169,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	and jibun=#{jibun}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	AND TRIM(CONCAT(sido_nm, ' ', sgg_nm, ' ',emd_nm,' ',ri_nm, ' ' ,jibun)) LIKE '%${address}%' 
+	AND juso LIKE '%${address}%' 
 	limit 100
+	
 	</if>
 	
 	
