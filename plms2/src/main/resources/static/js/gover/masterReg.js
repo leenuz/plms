@@ -1,17 +1,70 @@
 
+// 초기화 시 모든 줄에 대해 함수 실행
 $(document).ready(function() {
-  console.log("gover/masterReg.js start");
+    console.log("gover/masterReg.js start");
 
-  // 초기 로드 시 단/복선 값에 따라 관경 설정
-  const sunGubunValue = $('#masterRegSelectBox06').val() || '단선'; // 값이 없으면 '단선'으로 설정
-  toggleLineDisplay(sunGubunValue);
+    // 단/복선 초기화 및 관경 설정
+    const sunGubunValue = $('#masterRegSelectBox06').val() || '단선'; // 값이 없으면 '단선'으로 설정
+    toggleLineDisplay(sunGubunValue);
 
-  // 단/복선 선택이 변경될 때마다 관경 설정
-  $('#masterRegSelectBox06').on('change', function() {
-    const selectedValue = $(this).val();
-    toggleLineDisplay(selectedValue);
-  });
+    // 단/복선 선택이 변경될 때마다 관경 설정
+    $('#masterRegSelectBox06').on('change', function() {
+        const selectedValue = $(this).val();
+        toggleLineDisplay(selectedValue);
+    });
+
+    // 모든 셀렉트 박스에 대해 커스텀 셀렉트 박스 초기화 실행
+    createCustomLimasterReg();  // 페이지가 로드될 때 초기화
 });
+
+
+$(document).on("click","input[type=checkbox]",function(){
+	console.log("---------checkbox-------------");
+	var targetDiv=$(this).parent().parent().parent().parent();
+	console.log(targetDiv.find("ul"));
+	
+	
+})
+
+
+// 행 추가 함수
+function addRow() {
+  const template = document.getElementById('row-template');
+  const clone = template.cloneNode(true);
+  clone.style.display = '';
+
+  // 고정된 첫 번째 줄을 제외한 새로 추가되는 줄만 대상으로 순번 계산
+  const allRows = document.querySelectorAll('.landAdressInfo .depth1 .contents:not([style*="display: none;"])');
+  const newRowNumber = allRows.length + 1;  // 고정된 첫 번째 줄을 제외하고 순번 계산
+  clone.querySelector('input[readonly]').setAttribute('placeholder', newRowNumber);
+
+  // 라디오 버튼의 name 속성을 유지하여 그룹화
+  const newRadio = clone.querySelector('input[type="radio"]');
+  if (newRadio) {
+    newRadio.setAttribute('name', 'rep_flag');
+  }
+
+  // 제일 아래에 행 추가
+  document.querySelector('.landAdressInfo .depth1').appendChild(clone);
+
+  // 새로 추가된 행의 셀렉트 박스를 초기화하고 이벤트를 다시 바인딩
+  createCustomLimasterReg(clone);
+}
+
+// 행 삭제 함수
+function deleteRow(button) {
+  const row = button.closest('.contents');
+  row.remove();
+
+  // 삭제 후 남아 있는 모든 행들의 순번을 재할당
+  const allRows = document.querySelectorAll('.landAdressInfo .depth1 .contents:not([style*="display: none;"])');
+  allRows.forEach((row, index) => {
+    const seqInput = row.querySelector('input[readonly]');
+    if (seqInput) {
+      seqInput.setAttribute('placeholder', index + 1);  // 새로운 순번 할당
+    }
+  });
+}
 
 // 관경 표시 설정 함수
 function toggleLineDisplay(value) {
@@ -63,9 +116,9 @@ $(document).on("click", "#requestBtn", function() {
 
 // 커스텀 selectbox
 
-
-const createCustomLimasterReg = () => {
-    const contentItems = document.querySelectorAll('.selectContentArea');
+// 커스텀 selectbox 생성 및 이벤트 바인딩
+const createCustomLimasterReg = (parentElement = document) => {
+    const contentItems = parentElement.querySelectorAll('.selectContentArea');
 
     contentItems.forEach(contentItem => {
         const notsetAddSelectBox = contentItem.querySelector('select');
@@ -74,6 +127,9 @@ const createCustomLimasterReg = () => {
 
         const customSelectBox = contentItem.querySelector('.customSelectBox');
         const customSelectBtns = customSelectBox.querySelector('.customSelectBtns');
+
+        // 기존 버튼들 제거 후 다시 생성
+        customSelectBtns.innerHTML = '';
 
         for (let i = 0; i < notsetAddSelectBox.length; i++) {
             const optionValue = notsetAddSelectBox.options[i].value;
@@ -85,8 +141,31 @@ const createCustomLimasterReg = () => {
             li.appendChild(button);
             customSelectBtns.appendChild(li);
         }
+
+        // 셀렉트 박스 보기 버튼 이벤트 바인딩
+        customSelectBox.querySelector('.customSelectView').addEventListener('click', function() {
+            this.classList.toggle('active');
+            customSelectBtns.classList.toggle('active');
+        });
+
+        // 리스트 클릭 시 선택한 값으로 변경하는 이벤트 바인딩
+        customSelectBtns.querySelectorAll('.moreSelectBtn').forEach((moreBtn) => {
+            moreBtn.addEventListener('click', function() {
+                const selectedValue = moreBtn.textContent;
+                const parentSelectBox = customSelectBox.querySelector('.customSelectView');
+                
+                // 선택한 값으로 셀렉트 박스의 텍스트 변경
+                parentSelectBox.textContent = selectedValue;
+                notsetAddSelectBox.value = selectedValue;
+
+                // 선택한 후 셀렉트 박스 비활성화
+                customSelectBox.querySelector('.customSelectBtns').classList.remove('active');
+                parentSelectBox.classList.remove('active');
+            });
+        });
     });
-}
+};
+
 createCustomLimasterReg();
 
 
