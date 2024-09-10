@@ -1,17 +1,113 @@
 
+// 초기화 시 모든 줄에 대해 함수 실행
 $(document).ready(function() {
-  console.log("gover/masterReg.js start");
+    console.log("gover/masterReg.js start");
 
-  // 초기 로드 시 단/복선 값에 따라 관경 설정
-  const sunGubunValue = $('#masterRegSelectBox06').val() || '단선'; // 값이 없으면 '단선'으로 설정
-  toggleLineDisplay(sunGubunValue);
+    // 단/복선 초기화 및 관경 설정
+    const sunGubunValue = $('#masterRegSelectBox06').val() || '단선'; // 값이 없으면 '단선'으로 설정
+    toggleLineDisplay(sunGubunValue);
 
-  // 단/복선 선택이 변경될 때마다 관경 설정
-  $('#masterRegSelectBox06').on('change', function() {
-    const selectedValue = $(this).val();
-    toggleLineDisplay(selectedValue);
-  });
+    // 단/복선 선택이 변경될 때마다 관경 설정
+    $('#masterRegSelectBox06').on('change', function() {
+        const selectedValue = $(this).val();
+        toggleLineDisplay(selectedValue);
+    });
+
+    // 모든 셀렉트 박스에 대해 커스텀 셀렉트 박스 초기화 실행
+    createCustomLimasterReg();  // 페이지가 로드될 때 초기화
 });
+
+// 체크박스 클릭 시 다른 체크박스들 비활성화
+$(document).on("click", "input[type=checkbox]", function() {
+    console.log("---------checkbox 클릭됨-------------");
+    const currentCheckbox = $(this);
+    const isChecked = currentCheckbox.is(":checked");
+
+    // 다른 체크박스들을 비활성화
+    if (isChecked) {
+        $("input[type=checkbox]").not(this).prop("checked", false);
+    }
+
+    console.log(`선택된 체크박스: ${currentCheckbox.attr("id")}`);
+});
+
+// 행 추가 함수
+function addRow() {
+	
+	
+	var thisUl=$(this).parent().parent().parent().parent();
+			console.log(thisUl);
+			var addUl=$("#row-template").html();
+			console.log(addUl);
+	        //var findButton=$()
+	//		var input=$(thisUl).find("input");
+
+			var addDiv = $('<ul class="contents" id="goverUl">'+addUl+'</ul>');
+			//addDiv.find("#bunhalIndex").val(index);
+			console.log($(addDiv).html());
+			 
+
+	         $("#goverUlDiv").append(addDiv);
+
+	/*
+	
+    const templateContent = document.querySelector('#row-template').innerHTML;
+
+    // 새로 추가할 행을 위한 ul 생성
+    const newRow = document.createElement('ul');
+    newRow.classList.add('contents');
+    newRow.innerHTML = templateContent;
+
+    // 새로운 순번 할당
+    const allRows = document.querySelectorAll('.landAdressInfo .depth1 .contents:not([style*="display: none;"])');
+    const newRowNumber = allRows.length + 1;
+    newRow.querySelector('input[readonly]').setAttribute('placeholder', newRowNumber);
+
+    // 고유한 id와 name을 생성하여 각 요소에 추가 (옵션)
+    updateIdsAndNames(newRow, newRowNumber);
+
+    // 행 추가
+    document.querySelector('#goverUl').appendChild(newRow);
+
+    // 셀렉트 박스 및 기타 기능 초기화
+    createCustomLimasterReg(newRow);*/
+}
+
+// 행 삭제 함수
+function deleteRow(button) {
+  const row = button.closest('.contents');
+  row.remove();
+
+  // 삭제 후 남아 있는 모든 행들의 순번을 재할당
+  const allRows = document.querySelectorAll('.landAdressInfo .depth1 .contents:not([style*="display: none;"])');
+  allRows.forEach((row, index) => {
+    const seqInput = row.querySelector('input[readonly]');
+    if (seqInput) {
+      seqInput.setAttribute('placeholder', index + 1);  // 새로운 순번 할당
+    }
+  });
+}
+
+// ID와 Name 업데이트 함수
+function updateIdsAndNames(row, index) {
+    row.querySelectorAll("input, select, label").forEach((element) => {
+        const originalId = element.getAttribute("id");
+        const originalName = element.getAttribute("name");
+
+        if (originalId) {
+            element.setAttribute("id", originalId + "_" + index);
+        }
+        if (originalName) {
+            element.setAttribute("name", originalName + "_" + index);
+        }
+
+        const forAttribute = element.getAttribute("for");
+        if (forAttribute) {
+            element.setAttribute("for", forAttribute + "_" + index);
+        }
+    });
+}
+
 
 // 관경 표시 설정 함수
 function toggleLineDisplay(value) {
@@ -63,9 +159,9 @@ $(document).on("click", "#requestBtn", function() {
 
 // 커스텀 selectbox
 
-
-const createCustomLimasterReg = () => {
-    const contentItems = document.querySelectorAll('.selectContentArea');
+// 커스텀 selectbox 생성 및 이벤트 바인딩
+const createCustomLimasterReg = (parentElement = document) => {
+    const contentItems = parentElement.querySelectorAll('.selectContentArea');
 
     contentItems.forEach(contentItem => {
         const notsetAddSelectBox = contentItem.querySelector('select');
@@ -74,6 +170,9 @@ const createCustomLimasterReg = () => {
 
         const customSelectBox = contentItem.querySelector('.customSelectBox');
         const customSelectBtns = customSelectBox.querySelector('.customSelectBtns');
+
+        // 기존 버튼들 제거 후 다시 생성
+        customSelectBtns.innerHTML = '';
 
         for (let i = 0; i < notsetAddSelectBox.length; i++) {
             const optionValue = notsetAddSelectBox.options[i].value;
@@ -85,10 +184,66 @@ const createCustomLimasterReg = () => {
             li.appendChild(button);
             customSelectBtns.appendChild(li);
         }
-    });
-}
-createCustomLimasterReg();
 
+        // 셀렉트 박스 보기 버튼 이벤트 바인딩
+        customSelectBox.querySelector('.customSelectView').addEventListener('click', function() {
+            this.classList.toggle('active');
+            customSelectBtns.classList.toggle('active');
+        });
+
+        // 리스트 클릭 시 선택한 값으로 변경하는 이벤트 바인딩
+        customSelectBtns.querySelectorAll('.moreSelectBtn').forEach((moreBtn) => {
+            moreBtn.addEventListener('click', function() {
+                const selectedValue = moreBtn.textContent;
+                const parentSelectBox = customSelectBox.querySelector('.customSelectView');
+                
+                // 선택한 값으로 셀렉트 박스의 텍스트 변경
+                parentSelectBox.textContent = selectedValue;
+                notsetAddSelectBox.value = selectedValue;
+
+                // 선택한 후 셀렉트 박스 비활성화
+                customSelectBox.querySelector('.customSelectBtns').classList.remove('active');
+                parentSelectBox.classList.remove('active');
+            });
+        });
+    });
+};
+
+//createCustomLimasterReg();
+
+// 동적으로 추가된 요소에 이벤트를 바인딩하는 방법
+$(document).on('click', '.customSelectView', function() {
+    // 버튼 클릭 시 실행할 코드
+    $(this).toggleClass('active');
+
+    if ($(this).next()) {
+        $(this).next().toggleClass('active');
+
+    }
+});
+
+// .moreSelectBtn 요소에 대한 클릭 이벤트 등록
+$(document).on('click', '.moreSelectBtn', function() {
+    var moreSelectBtnText = $(this).text();
+
+    const parentMoreSelectBtn = $(this).closest('.customSelectBtns');
+    const EditCustomViewBtn = parentMoreSelectBtn.prev('.customSelectView');
+
+//    // EditCustomViewBtn의 모든 자식을 제거
+    EditCustomViewBtn.empty();
+//
+//    // 새로운 텍스트 노드를 추가합니다.
+    EditCustomViewBtn.text(moreSelectBtnText);
+//
+    EditCustomViewBtn.removeClass('active');
+    parentMoreSelectBtn.removeClass('active');
+//
+//    // 선택한 걸 select의 value값으로 변경하기
+    const nearByContent = $(this).closest('.selectContentArea');
+    const nearBySelectBox = nearByContent.find('select');
+    nearBySelectBox.val(moreSelectBtnText);
+    console.log(`Selected value: ${nearBySelectBox.val()}`);
+});
 
 
 const customSelectView = document.querySelectorAll('.customSelectView')
