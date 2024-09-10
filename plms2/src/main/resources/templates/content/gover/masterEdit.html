@@ -1062,7 +1062,7 @@
 		          </ul>
 		          <div class="contentScr">
 		            <!-- 가져온 메모 데이터를 반복문으로 출력 -->
-		            <ul class="contents" th:each="memo : ${memoList}">
+		            <ul class="contents" th:if="${#lists.size(memoList)>0}" th:each="memo : ${memoList}">
 					  <li class="content">
 						<!-- 작성일시 -->
 						<input type="text" th:value="${#dates.format(memo.mm_wdate, 'yyyy-MM-dd')}" readonly class="notWriteInput" />

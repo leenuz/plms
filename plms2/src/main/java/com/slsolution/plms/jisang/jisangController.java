@@ -1182,6 +1182,8 @@ public class jisangController {
 	        return resultmap;
 	    }
 		
+		
+		//해지부분 필수 첨부서류 등록
 		@RequestMapping(value = "/fileUpload/reqDoc") //ajax에서 호출하는 부분
 	    @ResponseBody
 	    public HashMap reqDoc(HttpServletRequest httpRequest,MultipartHttpServletRequest multipartRequest) { //Multipart로 받는다.

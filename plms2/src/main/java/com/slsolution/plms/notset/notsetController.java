@@ -1,14 +1,20 @@
 package com.slsolution.plms.notset;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.MainService;
+import com.slsolution.plms.config.GlobalConfig;
+import com.slsolution.plms.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,6 +32,8 @@ public class notsetController {
 	@Autowired
 	private MainService mainService;
 	
+	 @Autowired
+	 private GlobalConfig GC;
 	
 	//unsetOccupationDetails
 		@GetMapping(path="/unsetOccupationDetails") //http://localhost:8080/api/get/dbTest
@@ -86,6 +94,74 @@ public class notsetController {
 	      			mav.setViewName("content/notset/unsetOccupationDetails");
 	      			return mav;
 	    }
-
+		
+		
+		@RequestMapping(value = "/fileUpload/post") //ajax에서 호출하는 부분
+	    @ResponseBody
+	    public HashMap upload(MultipartHttpServletRequest multipartRequest) { //Multipart로 받는다.
+	         
+	        Iterator<String> itr =  multipartRequest.getFileNames();
+	        
+	        String filePath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+	        HashMap<String,Object> resultmap=new HashMap();
+	        ArrayList<HashMap> resultdataarr=new ArrayList<HashMap>();
+	        HashMap resultdata=new HashMap();
+	        String resultCode="0000";
+	        String resultMessage="success";
+	        while (itr.hasNext()) { //받은 파일들을 모두 돌린다.
+	            
+	            /* 기존 주석처리
+	            MultipartFile mpf = multipartRequest.getFile(itr.next());
+	            String originFileName = mpf.getOriginalFilename();
+	            System.out.println("FILE_INFO: "+originFileName); //받은 파일 리스트 출력'
+	            */
+	            
+	            MultipartFile mpf = multipartRequest.getFile(itr.next());
+	     
+	            String originalFilename = mpf.getOriginalFilename(); //파일명
+	     
+	            String fileFullPath = filePath+"/"+originalFilename; //파일 전체 경로
+	          
+	           
+	            try {
+	                //파일 저장
+	                mpf.transferTo(new File(fileFullPath)); //파일저장 실제로는 service에서 처리
+	                
+	                resultdata.put("fname",originalFilename);
+	                resultdata.put("fpath",fileFullPath);
+	                System.out.println("originalFilename => "+originalFilename);
+	                System.out.println("fileFullPath => "+fileFullPath);
+	               // resultdataarr.add(resultdata);
+	            } catch (Exception e) {
+	            	resultCode="4001";
+	            	resultdata.put("fname","");
+	                resultdata.put("fpath","");
+	                resultMessage="error";
+	               // resultdataarr.add(resultdata);
+	                System.out.println("postTempFile_ERROR======>"+fileFullPath);
+	                e.printStackTrace();
+	            }
+	           
+	          
+//	            System.out.println(obj);
+	           
+	          //log.info("jo:"+jo);
+//	          			response.setCharacterEncoding("UTF-8");
+//	          			response.setHeader("Access-Control-Allow-Origin", "*");
+//	          			response.setHeader("Cache-Control", "no-cache");
+//	          			response.resetBuffer();
+//	          			response.setContentType("application/json");
+//	          			//response.getOutputStream().write(jo);
+//	          			response.getWriter().print(obj);
+//	          			response.getWriter().flush();
+	                         
+	       }
+	        resultmap.put("resultCode",resultCode);
+	        resultmap.put("resultData",resultdata);
+	        resultmap.put("resultMessage",resultMessage);
+	        JSONObject obj =new JSONObject(resultmap);
+	         
+	        return resultmap;
+	    }
 
 }

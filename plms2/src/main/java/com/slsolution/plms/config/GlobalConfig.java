@@ -15,6 +15,8 @@ public class GlobalConfig {
 	private static String pnuAtcFileDir;
 	private static String jisangFileTempDir;
 	private static String jisangFileDataDir;
+	private static String notsetFileTempDir;
+	private static String notsetFileDataDir;
 	private static String jisangReqDoc1Dir;
 	private static String jisangReqDoc2Dir;
 	
@@ -41,6 +43,25 @@ public class GlobalConfig {
 	public static String getJisangFileDataDir() {
 		return jisangFileDataDir;
 	}
+	
+	//미설정파일관리
+	@Value("${plms.notsetFileTempDir}")
+	public void setNotsetFileTempDir(String str) {
+		notsetFileTempDir=str;
+	}
+	public static String getNotsetFileTempDir() {
+		return notsetFileTempDir;
+	}
+	
+	@Value("${plms.notsetFileDataDir}")
+	public void setNotsetFileDataDir(String str) {
+		notsetFileDataDir=str;
+	}
+	public static String getNotsetFileDataDir() {
+		return notsetFileDataDir;
+	}
+	
+	
 	
 	@Value("${plms.jisangReqDoc1Dir}")
 	public void setJisangReqDoc1Dir(String str) {

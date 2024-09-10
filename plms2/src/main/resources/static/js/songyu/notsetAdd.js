@@ -233,7 +233,7 @@ const notsetAddPopEvet = () => {
 };
 
 
-notsetAddPopEvet();
+//notsetAddPopEvet();
 
 
 $(document).ready(function() {

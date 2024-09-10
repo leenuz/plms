@@ -158,5 +158,17 @@
 
 
 	</select>
+	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+			SELECT * 
+			,concat(dm_sido_nm,' ',dm_sgg_nm,' ',dm_emd_nm,' ',dm_ri_nm,' ',dm_jibun) as address
+			FROM dosi_master dm
+			LEFT JOIN dosi_info di ON dm.dm_dosi_no=di.di_dosi_no
+			where 1=1
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and dm_dosi_no=#{idx}
+			</if>
+			
+		
+	</select>
 
 </mapper>

@@ -9,6 +9,31 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
 index page
+
+
+
+
+
+<p><a href="#" >모든 필수증빙서류 첨부파일 임시등록 저장 </a>: /jisang/fileUpload/reqDoc?idx=1.......n
+	<pre>
+		지상에서 쓰이는 피수증빙서류 첨부파일 임시 저장
+		idx=정해진 갯수에 따른 번호
+	</pre>
+
+ </p>
+
+
+
+
+<p><a href="#" >권리확보현황 미설정미점용등록 첨부파일 임시등록 </a>: /songyu/fileUpload/post
+	<pre>
+		파일을 첨부하면 임시폴더에 즉시 저장된다.
+		그후 저장버튼을 누르면 임시폴더에서 실제 폴더로 옮기게 된다.
+	</pre>
+
+ </p>
+
+
 <p><a href="#" >이설공사확인필지 리스트 화면호출 </a>: /noti/list (tmplates/content/noti/list.html 생성하면됨)</p>
 <p><a href="#" >이설공사확인필지 데이터조회 호출 </a>: /noti/DataTableList <br>
 	(주소는 address변수로 어떤걸 선택하더라도 전체텍스트로 넘김다 그외 획인구분 전체=A 신규=N 해제=C 조건)<br>
@@ -23,6 +48,12 @@ index page
 	  
 	</p>
 	<p><a href="#" >토지개발조회 리스트 화면호출 </a>: /togi/menu04_1 (tmplates/content/noti/menu04_1.html 생성하면됨)</p>
+	<p><a href="#" >토지개발상세조회 화면호출 및 데이터 </a>: /togi/landDevInfo?idx=000000
+	 <pre>
+	parameter : (검색조건)
+	  idx: 관리번호 (dosi_no)
+	 
+	</pre>  
 	<p><a href="#" >토지리스트 데이터조회 호출 </a>: /togi/menu04_1DataTableList <br>
 	
 	<pre>
@@ -36,6 +67,20 @@ index page
 	</pre>  
 	  
 	</p>
+	<p><a href="#" >토지개발상세조회 데이터 호출 </a>: /dopco/compLandInfo?idx=000000 <br>
+	
+	<pre>
+	parameter : (검색조건)
+	  idx: 관리번호 (dopco_no)
+	  
+	 
+	</pre>  
+	<hr>
+	
+	
+	
+	
+	
 	<p><a href="#" >회사토지조회 데이터(datatables) 호출 </a>: /dopco/menu05_1DataTableList <br>
 	
 	<pre>

@@ -68,10 +68,12 @@ public class togiController {
 
 		HashMap params = new HashMap();
 		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		ArrayList<HashMap> data = mainService.selectQuery("togiSQL.selectAllData",params);
 
 		String idx = httpRequest.getParameter("idx");
 
 		params.put("idx",idx);
+		mav.addObject("resultData",data.get(0));
 
 		mav.setViewName("content/togi/landDevInfo");
 		return mav;
