@@ -347,6 +347,18 @@ $(document).on("click",".temporarySaveBtn",function(){
 
 	   var object = {};
 	   for (var i = 0; i < formSerializeArray.length; i++){
+		if (formSerializeArray[i].name=="togiBunhalJisangNo") continue;
+				else if (formSerializeArray[i].name=="togiBunhalAddr") continue;
+				else if (formSerializeArray[i].name=="togiBunhalTogiType") continue;
+				else if (formSerializeArray[i].name=="togiBunhalJimokText") continue;
+				else if (formSerializeArray[i].name=="togiBunhalJiJukArea") continue;
+				else if (formSerializeArray[i].name=="togiBunhalPyeonibArea") continue;
+				else if (formSerializeArray[i].name=="togiBunhalJasanNo") continue;
+				else if (formSerializeArray[i].name=="togiBunhalPipeYn") continue;
+				else if (formSerializeArray[i].name=="togiBunhalCancelYn") continue;
+				else if (formSerializeArray[i].name=="togiBunhalDemise") continue;
+				else if (formSerializeArray[i].name=="togiBunhalAccountYn") continue;
+				
 	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
 	   }
 	   
@@ -363,7 +375,7 @@ $(document).on("click",".temporarySaveBtn",function(){
 	   		var togiJijukArea=$(togiUls[i]).find("input[name='togiBunhalJiJukArea']").val();
 	   		var togiPyeonibArea=$(togiUls[i]).find("input[name='togiBunhalPyeonibArea']").val();
 	   		var togiJasanNo=$(togiUls[i]).find("input[name='togiBunhalJasanNo']").val();
-			var togiPipeYn=$(togiUls[i]).find("radio[name='togiBunhalPipeYn']").val();
+			var togiPipeYn=$(togiUls[i]).find("input[name='togiBunhalPipeYn']").val();
 			var togiCancelYn=$(togiUls[i]).find("input[name='togiBunhalCancelYn']").val();
 			var togiDemise=$(togiUls[i]).find("input[name='togiBunhalDemise']").val();
 			var togiAccountYn=$(togiUls[i]).find("select[name='togiBunhalAccountYn']").val();
@@ -390,6 +402,8 @@ $(document).on("click",".temporarySaveBtn",function(){
 	   
 	     console.log("----------togiDatas-------------");
 		 console.log(togiDatas);
+		 
+		 object.togiDatas=togiDatas;
 
   /*for (var i = 0; i < submitArray.length; i++){
 	       object[submitArray[i]['name']] = submitArray[i]['value'];

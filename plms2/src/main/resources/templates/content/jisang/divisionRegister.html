@@ -722,29 +722,29 @@ border: 1px solid black;
                     <ul class="contents lastContents" id="cancelInfoHiddenUl" style="display:none">
                         <li class="content addressInfoWidth">
                             <div class="addressData">
-                                <input type="text" placeholder="경기도 평택시 동천리 606-132" th:value="${resultData.address}" readonly class="notWriteInput">
+                                <input type="text" name="cancelAddress" placeholder="경기도 평택시 동천리 606-132" th:value="${resultData.address}" readonly class="notWriteInput">
                             </div>
                         </li>
                         <li class="content middleWidth">
-                            <input type="text" th:value="${resultData.jm_toji_type}">
+                            <input type="text" name="cancelTojiType" th:value="${resultData.jm_toji_type}">
                         </li>
                         <li class="content contentBox">
                             <ul class="secondContents">
-                                <li class="secondContent"><input type="text" th:value="${resultData.jm_chuideuk_money}"></li>
-                                <li class="secondContent"><input type="text" th:value="${resultData.jm_gammoney}"></li>
-                                <li class="secondContent"><input type="text" th:value="${resultData.jm_remainder_money}"></li>
+                                <li class="secondContent"><input type="text" name="cancelChuideukMoney" th:value="${resultData.jm_chuideuk_money}"></li>
+                                <li class="secondContent"><input type="text" name="cancelGammoney" th:value="${resultData.jm_gammoney}"></li>
+                                <li class="secondContent"><input type="text" name="cancelRemainderMoney" th:value="${resultData.jm_remainder_money}"></li>
                             </ul>
                         </li>
                         <li class="content contentBox">
                             <ul class="secondContents">
-                                <li class="secondContent"><input type="text" ></li>
-                                <li class="secondContent"><input type="text" ></li>
+                                <li class="secondContent"><input type="text" name="cancelBosangMoney"></li>
+                                <li class="secondContent"><input type="text" name="cancelProfitLoss"></li>
                             </ul>
                         </li>
                         <li class="content middleWidth selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="divisionRegistSelectBox06" id="divisionRegistSelectBox06" hidden>
+                                <select name="cancelAccountYn" id="divisionRegistSelectBox06" hidden>
                                     <option value="">선택</option>
                                     <option value="Y">Y</option>
                                     <option value="N">N</option>
@@ -765,29 +765,29 @@ border: 1px solid black;
                     <ul class="contents lastContents" id="cancelInfoUl">
                         <li class="content addressInfoWidth">
                             <div class="addressData">
-                                <input type="text" placeholder="경기도 평택시 동천리 606-132" th:value="${resultData.address}" readonly class="notWriteInput">
+                                <input type="text" name="cancelAddress" placeholder="경기도 평택시 동천리 606-132" th:value="${resultData.address}" readonly class="notWriteInput">
                             </div>
                         </li>
                         <li class="content middleWidth">
-                            <input type="text" th:value="${resultData.jm_toji_type}">
+                            <input type="text" name="cancelTojiType" th:value="${resultData.jm_toji_type}">
                         </li>
                         <li class="content contentBox">
                             <ul class="secondContents">
-                                <li class="secondContent"><input type="text" th:value="${resultData.jm_chuideuk_money}"></li>
-                                <li class="secondContent"><input type="text" th:value="${resultData.jm_gammoney}"></li>
-                                <li class="secondContent"><input type="text" th:value="${resultData.jm_remainder_money}"></li>
+                                <li class="secondContent"><input type="text" name="cancelChuideukMoney" th:value="${resultData.jm_chuideuk_money}"></li>
+                                <li class="secondContent"><input type="text" name="cancelGammoney" th:value="${resultData.jm_gammoney}"></li>
+                                <li class="secondContent"><input type="text" name="cancelRemainderMoney" th:value="${resultData.jm_remainder_money}"></li>
                             </ul>
                         </li>
                         <li class="content contentBox">
                             <ul class="secondContents">
-                                <li class="secondContent"><input type="text" ></li>
-                                <li class="secondContent"><input type="text" ></li>
+                                <li class="secondContent"><input type="text" name="cancelBosangMoney"></li>
+                                <li class="secondContent"><input type="text" name="cancelProfitLoss"></li>
                             </ul>
                         </li>
                         <li class="content middleWidth selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
-                                <select name="divisionRegistSelectBox06" id="divisionRegistSelectBox06" hidden>
+                                <select name="cancelAccountYn" id="divisionRegistSelectBox06" hidden>
                                     <option value="">선택</option>
                                     <option value="Y">Y</option>
                                     <option value="N">N</option>
@@ -821,7 +821,7 @@ border: 1px solid black;
                         <li class="title">분할일자</li>
                         <li class="content">
                             <div class="dateInputWrap">
-                                <input type="date" data-placeholder="24/01/01"  aria-required="true">
+                                <input type="date" name="bunhalDate" data-placeholder="24/01/01"  aria-required="true">
                             </div>
                         </li>
                     </ul>
@@ -830,13 +830,13 @@ border: 1px solid black;
                     <ul class="rowListBox">
                         <li class="title">분할사유</li>
                         <li class="content inputWrap">
-                            <textarea placeholder="직접입력"></textarea>
+                            <textarea placeholder="직접입력" name="bunhal_reason"></textarea>
                         </li>
                     </ul>
                     <ul class="rowListBox">
                         <li class="title">검토의견</li>
                         <li class="content lastRowList">
-                            <textarea placeholder="직접입력"></textarea>
+                            <textarea placeholder="직접입력" name="bunhal_comment"></textarea>
                         </li>
                     </ul>
                 </div>
