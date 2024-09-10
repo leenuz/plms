@@ -98,7 +98,16 @@ button {
   text-align: left;
   text-indent: 34px;
 }
-
+/* 지도 버튼 css*/
+.viewDetailButton {
+    width: 116px;
+    height: 27px;
+    border-radius: 20px;
+    background: rgba(204, 224, 255, 0.6);
+    color: #2B7DE1;
+    font-size: 13px;
+    font-weight: 600;
+}
 /* 체크박스 */
 
 #landReg .checkboxWrap {
@@ -620,6 +629,8 @@ button {
   justify-content: center;
   align-items: center;
 }
+
+
 /* 이전, 저장 버튼 */
 .finalBtnBox {
   padding-bottom: 40px;
@@ -641,4 +652,178 @@ button {
 #landReg .finalBtnBox .prevBtn {
   background: #bfbfbf;
   color: #fff;
+}
+
+/*파일 업로드*/
+.fileBtn {
+    width: 129px;
+    height: 37px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+.fileSaveBtn {
+    background: #2B7DE1;
+    color: #fff;
+}
+
+.contentScr {
+  overflow-y: scroll;
+  border-radius: 0 0 5px 5px;
+}
+.titleScr {
+  padding-right: 4px;
+}
+
+#landReg .attachFileInfo .contWrap .depth1 .contents:last-child {
+  border-bottom: 0;
+}
+#landReg .attachFileInfo .contWrap .depth1 .titles .title01 {
+  width: 154px;
+}
+
+#landReg .attachFileInfo {
+  padding-bottom: 40px;
+}
+#landReg .attachFileInfo .subTitle {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+}
+#landReg .attachFileInfo .fileUploadWrap {
+  width: 100%;
+  margin-bottom: 18px;
+  height: 130px;
+  overflow-y: scroll;
+  border: 1px dashed #cddbf0;
+  border-radius: 5px;
+}
+#landReg .attachFileInfo .fileUploadBox {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #f7f9fc;
+}
+#landReg .attachFileInfo .fileUploadBox p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #88a2c8;
+}
+#landReg .attachFileInfo .contWrap .depth1 .contents:last-child {
+  border-bottom: 0;
+}
+#landReg .attachFileInfo .contWrap .title {
+  width: 16%;
+}
+#landReg .attachFileInfo .contWrap .content {
+  width: 16%;
+}
+#landReg .attachFileInfo .contWrap .selectWidth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 8.6%;
+}
+#landReg .attachFileInfo .contWrap .fileNameWidth {
+  width: 59%;
+}
+#landReg .attachFileInfo .contWrap .depth1 .contents .content02 .fileName {
+  text-align: center;
+  color: #3c3c3c;
+  font-size: 14px;
+  font-weight: 500;
+}
+#landReg .attachFileInfo .btnWrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+  /* 추가 */
+  gap: 10px;
+}
+#landReg .attachFileInfo .contentScr {
+  /* height: 90px; */
+  height: calc(45px * 5);
+}
+
+#landReg .allSelectCheck input[type="checkbox"] ~ label {
+  background: #dce7f5;
+}
+
+#landReg
+  .attachFileInfo
+  .contWrap
+  .depth1
+  .titles
+  .title01.allSelectCheck {
+  line-height: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#landReg .attachFileInfo .btnWrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+#landReg
+  .attachFileInfo
+  .fileUploadWrap::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#landReg
+  .attachFileInfo
+  .contWrap
+  .depth1
+  .titles
+  .title01.allSelectCheck {
+  line-height: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#landReg .attachFileInfo .contWrap .depth1 .titles .title02 {
+  width: auto;
+  flex-grow: 1;
+}
+#landReg .attachFileInfo .contWrap .depth1 .contents .content01 {
+  width: 154px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#landReg .attachFileInfo .contWrap .depth1 .contents .content02 {
+  width: auto;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#landReg
+  .attachFileInfo
+  .contWrap
+  .depth1
+  .contents
+  .content02
+  .fileName {
+  text-align: center;
+  color: #3c3c3c;
+  font-size: 14px;
+  font-weight: 500;
+}
+#landReg .attachFileInfo .btnWrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
 }

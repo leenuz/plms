@@ -2,42 +2,42 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      
+
       layout:decorate="~{layout/default_layout}">
- <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+          rel="stylesheet"
+          as="style"
+          crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
 
 
- 
-  
-   
-  
-	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	
- <link rel="stylesheet" href="/css/togi/landReg.css" /> 
-	  
-	<!-- 	<script src="/js/songyu/menu01.js"></script>	 -->
-		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
-		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
+
+
+
+
+
+  <link th:href="@{/css/common.css}" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/togi/landReg.css" />
+  <link rel="stylesheet" href="/css/jisang/write.css">
+  <!-- 	<script src="/js/songyu/menu01.js"></script>	 -->
+  <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
+  <style>
+    div.dt-top-container {
+display: grid;
+grid-template-columns: auto auto auto;
 }
 
 div.dt-center-in-div {
-  margin: 0 auto;
-      float: right;
-    margin-right: 30px;
-   
+margin: 0 auto;
+  float: right;
+margin-right: 30px;
+
 }
 div.dt-center-in-div>div{
 
@@ -45,8 +45,8 @@ display:inline;
 }
 
 div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
+margin: 10px 0;
+border:1px solid red;
 }
 
 
@@ -89,23 +89,23 @@ text-align: center;
 }
 
 .dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-    
-    
+box-sizing: border-box;
+display: inline-block;
+min-width: 1.5em;
+padding: 0.5em 1em;
+margin-left: 2px;
+text-align: center;
+text-decoration: none !important;
+cursor: pointer;
+
+border: 1px solid transparent;
+border-radius: 2px;
+background: transparent;
+color: #007bff !important;
+font-size: 15px;
+font-weight: 600;
+
+
 }
 
 .bottom{
@@ -119,23 +119,24 @@ margin:10px;
 
 }
 
-		</style>
-		
-    <title>토지개발 등록</title>
-  </head>
-<th:block layout:fragment="content">
-    <!-- 토지개발 등록 -->
-    <div class="landRegWrappers">
-     
-      <main id="landReg">
-        <div class="mainTitle">
-          <h1>토지개발 등록</h1>
-        </div>
+  </style>
 
+  <title>토지개발 등록</title>
+</head>
+<th:block layout:fragment="content">
+  <!-- 토지개발 등록 -->
+  <div class="landRegWrappers">
+
+    <main id="landReg">
+      <div class="mainTitle">
+        <h1>토지개발 등록</h1>
+      </div>
+
+      <form id="searchForm" onSubmit="return false;">
         <!-- 기본 정보 -->
         <section class="defaultInfo">
           <div class="subTitle">
-            <div class="subTitleText">기본정보</div>
+            <div class="subTitleText">기본정보*</div>
           </div>
 
           <div class="contWrap">
@@ -146,109 +147,93 @@ margin:10px;
                 </caption>
 
                 <thead>
-                  <tr>
-                    <th rowspan="2">사업명</th>
-                    <th colspan="2">사업기간</th>
-                    <th rowspan="2">시행자(발주자)</th>
-                    <th rowspan="2">사업자</th>
-                  </tr>
-                  <tr>
-                    <th>시작일</th>
-                    <th>종료일</th>
-                  </tr>
+                <tr>
+                  <th rowspan="2">사업명</th>
+                  <th colspan="2">사업기간</th>
+                  <th rowspan="2">시행자(발주자)</th>
+                  <th rowspan="2">사업자</th>
+                </tr>
+                <tr>
+                  <th>시작일</th>
+                  <th>종료일</th>
+                </tr>
                 </thead>
 
                 <tbody>
-                  <tr>
-                    <td>
-                      <input type="text" />
-                    </td>
-                    <td>
-                      <div class="dateInputWrap">
-                        <input
-                          type="date"
-                          data-placeholder="24/01/01"
-                          required
-                          aria-required="true" />
-                      </div>
-                    </td>
-                    <td>
-                      <div class="dateInputWrap">
-                        <input
-                          type="date"
-                          data-placeholder="24/01/01"
-                          required
-                          aria-required="true" />
-                      </div>
-                    </td>
-                    <td>
-                      <input type="text" />
-                    </td>
-                    <td>
-                      <input type="text" />
-                    </td>
-                  </tr>
+                <tr>
+                  <td>
+                    <input type="text" name="business_nm"/>
+                  </td>
+                  <td>
+                    <div class="dateInputWrap">
+                      <input
+                              type="date" name="startDate"
+                              data-placeholder="2024- 01- 01"
+                              required
+                              aria-required="true" />
+                    </div>
+                  </td>
+                  <td>
+                    <div class="dateInputWrap">
+                      <input
+                              type="date" name="endDate"
+                              data-placeholder="2024- 01- 01"
+                              required
+                              aria-required="true" />
+                    </div>
+                  </td>
+                  <td>
+                    <input type="text" name="adm_office"/>
+                  </td>
+                  <td>
+                    <input type="text" name="business_oper"/>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </section>
         <!-- 시행자 관할 부서 -->
-        <section class="adminDept">
+        <section class="adminDept" >
           <div class="subTitle">
-            <div class="subTitleText">시행자 관할 부서</div>
+            <div class="subTitleText">시행자 관할 부서*</div>
           </div>
 
           <div class="contWrap">
-            <div class="depth1">
+            <div class="depth1" id="deptDiv">
               <ul class="titles">
                 <li class="title">부서명</li>
                 <li class="title">담당자</li>
                 <li class="title">연락처</li>
                 <li class="title smallWidth">추가/삭제</li>
               </ul>
-              <ul class="contents">
+
+              <div class="contentsBox">
+              <ul class="contents" id="deptUl">
                 <li class="content">
-                  <input type="text" />
+                  <input type="text" name="dept_nm" />
                 </li>
                 <li class="content">
-                  <input type="text" />
+                  <input type="text" name="manager"/>
                 </li>
                 <li class="content">
-                  <input type="text" />
+                  <input type="text" name="contact_num"/>
                 </li>
                 <li class="content btnBox smallWidth">
                   <div class="newBtnWrap">
-                    <button class="registBtn miniBtn">추가</button>
+                    <button class="addBtn addDeptBtn miniBtn">추가</button>
                   </div>
                 </li>
               </ul>
-              <ul class="contents">
-                <li class="content">
-                  <input type="text" />
-                </li>
-                <li class="content">
-                  <input type="text" />
-                </li>
-                <li class="content">
-                  <input type="text" />
-                </li>
-                <li class="content btnBox smallWidth">
-                  <div class="btnWrap">
-                    <button class="addBtn miniBtn">추가</button>
-                  </div>
-                  <div class="btnWrap">
-                    <button class="delBtn miniBtn">삭제</button>
-                  </div>
-                </li>
-              </ul>
+              </div>
             </div>
           </div>
         </section>
         <!-- 토지 정보 -->
         <section class="landInfo">
           <div class="subTitle">
-            <div class="subTitleText">토지 정보</div>
+            <div class="subTitleText">토지 정보*</div>
             <div class="subTitleBtnBox">
               <button class="middleBtn whiteBtn excelUpBtn landRegExcelPopBtn">
                 엑셀 업로드
@@ -256,7 +241,7 @@ margin:10px;
             </div>
           </div>
           <div class="contWrap">
-            <div class="depth1">
+            <div class="depth1" id="togiInfoDiv">
               <ul class="titles">
                 <li class="title smallWidth">선택</li>
                 <li class="title smallWidth">순번</li>
@@ -272,41 +257,38 @@ margin:10px;
                 <li class="title middleWidth">보기</li>
                 <li class="title middleWidth">추가/삭제</li>
               </ul>
-              <ul class="contents">
+              <div class="contentsBox">
+              <ul class="contents"  id="togiUl">
                 <li class="content checkboxWrap smallWidth">
                   <!-- 선택 -->
-                  <input type="checkbox" id="landReg_Checkbox01" />
+                  <input type="checkbox" id="landReg_Checkbox01" name="togiSelect" />
                   <label for="landReg_Checkbox01"></label>
                 </li>
                 <li class="content smallWidth">
                   <!-- 순번 -->
-                  <input
-                    type="text"
-                    placeholder="1"
-                    readonly
-                    class="notWriteInput" />
+                  <input type="text" placeholder="1" readonly  class="notWriteInput contentsNum"/>
                 </li>
                 <li class="content">
                   <!-- 권리확보 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text"  name="hakbo" />
                 </li>
                 <li class="content checkboxWrap smallWidth">
                   <!-- 대표필지 -->
-                  <input type="checkbox" id="landRegMainParcelChk_Checkbox01" />
-                  <label for="landRegMainParcelChk_Checkbox01"></label>
+                  <input type="checkbox" id="landRegMainParcelChk_Checkbox01"  />
+                  <label for="landRegMainParcelChk_Checkbox01" name="daepyoPilji" ></label>
                 </li>
                 <li class="content middleWidth">
                   <!-- 관로저촉 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" name="jeochok" />
                 </li>
                 <li class="content middleWidth">
                   <!-- 담당지사 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text"  name="jisa"/>
                 </li>
                 <li class="content addressWidth">
                   <!-- 주소 -->
                   <div class="addressData">
-                    <input type="text" class="notWriteInput" readonly />
+                    <input type="text" id="address" name="address" readonly class="notWriteInput"/>
                   </div>
                   <button class="searchAddressBtn landRegSearchBtn">
                     검색
@@ -314,110 +296,40 @@ margin:10px;
                 </li>
                 <li class="content">
                   <!-- 지목 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" name="jimok" />
                 </li>
                 <li class="content">
                   <!-- 연장 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text"  name="yeonjang"/>
                 </li>
                 <li class="content">
                   <!-- 면적 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text"  name="myeonjuk"/>
                 </li>
                 <li class="content middleWidth">
                   <!-- 소유자 -->
-                  <input type="text" class="notWriteInput" readonly />
+                  <input type="text" name="souja"/>
                 </li>
                 <li class="content middleWidth btnBox">
                   <!-- 보기 -->
-                  <button class="viewDetailButton lightBlueBtn">
+                  <button class="viewDetailButton" id="moveMap">
                     위치보기
                   </button>
                 </li>
                 <li class="content middleWidth btnBox">
                   <div class="newBtnWrap">
-                    <button class="registBtn miniBtn">추가</button>
+                    <button class="addBtn addTogiBtn miniBtn">추가</button>
                   </div>
                 </li>
               </ul>
-              <ul class="contents">
-                <li class="content checkboxWrap smallWidth">
-                  <!-- 선택 -->
-                  <input type="checkbox" id="landReg_Checkbox02" />
-                  <label for="landReg_Checkbox02"></label>
-                </li>
-                <li class="content smallWidth">
-                  <!-- 순번 -->
-                  <input
-                    type="text"
-                    placeholder="2"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <!-- 권리확보 -->
-                  <input type="text" class="notWriteInput" readonly />
-                </li>
-                <li class="content checkboxWrap smallWidth">
-                  <!-- 대표필지 -->
-                  <input type="checkbox" id="landRegMainParcelChk_Checkbox02" />
-                  <label for="landRegMainParcelChk_Checkbox02"></label>
-                </li>
-                <li class="content middleWidth">
-                  <!-- 관로저촉 -->
-                  <input type="text" class="notWriteInput" readonly />
-                </li>
-                <li class="content middleWidth">
-                  <!-- 담당지사 -->
-                  <input type="text" class="notWriteInput" readonly />
-                </li>
-                <li class="content addressWidth">
-                  <!-- 주소 -->
-                  <div class="addressData">
-                    <input type="text" class="notWriteInput" readonly />
-                  </div>
-                  <button class="searchAddressBtn landRegSearchBtn">
-                    검색
-                  </button>
-                </li>
-                <li class="content">
-                  <!-- 지목 -->
-                  <input type="text" class="notWriteInput" readonly />
-                </li>
-                <li class="content">
-                  <!-- 연장 -->
-                  <input type="text" class="notWriteInput" readonly />
-                </li>
-                <li class="content">
-                  <!-- 면적 -->
-                  <input type="text" class="notWriteInput" readonly />
-                </li>
-                <li class="content middleWidth">
-                  <!-- 소유자 -->
-                  <input type="text" class="notWriteInput" readonly />
-                </li>
-                <li class="content middleWidth btnBox">
-                  <!-- 보기 -->
-                  <button class="viewDetailButton lightBlueBtn">
-                    위치보기
-                  </button>
-                </li>
-                <li class="content middleWidth btnBox">
-                  <div class="btnWrap">
-                    <button class="addBtn miniBtn">추가</button>
-                  </div>
-                  <div class="btnWrap">
-                    <button class="delBtn miniBtn">삭제</button>
-                  </div>
-                </li>
-              </ul>
+              </div>
             </div>
           </div>
         </section>
         <!-- 대표토지 정보 -->
         <section class="mainLandInfo">
           <div class="subTitle">
-            <div class="subTitleText">대표토지 정보</div>
+            <div class="subTitleText">대표토지 정보*</div>
           </div>
 
           <div class="contWrap">
@@ -435,29 +347,29 @@ margin:10px;
               </ul>
               <ul class="contents">
                 <li class="content middleWidth">
-                  <input type="text" readonly class="notWriteInput" />
+                  <input type="text" name="daepyoHakbo"/>
                 </li>
                 <li class="content middleWidth">
-                  <input type="text" readonly class="notWriteInput" />
+                  <input type="text"  name="daepyoJeochok"/>
                 </li>
 
                 <li class="content addressWidth">
-                  <input type="text" readonly class="notWriteInput" />
+                  <input type="text"  name="daepyoAddress" />
                 </li>
                 <li class="content">
-                  <input type="text" readonly class="notWriteInput" />
+                  <input type="text"  name="daepyoJimok" />
                 </li>
                 <li class="content">
-                  <input type="text" readonly class="notWriteInput" />
+                  <input type="text"  name="daepyoYeonjang"/>
                 </li>
                 <li class="content">
-                  <input type="text" readonly class="notWriteInput" />
+                  <input type="text"  name="daepyoMyeonjuk"/>
                 </li>
                 <li class="content largeWidth">
-                  <input type="text" readonly class="notWriteInput" />
+                  <input type="text"  name="daepyoSouja"/>
                 </li>
                 <li class="content middleWidth btnBox">
-                  <button class="viewDetailButton lightBlueBtn">
+                  <button class="viewDetailButton lightBlueBtn" id="moveMap">
                     위치보기
                   </button>
                 </li>
@@ -465,35 +377,108 @@ margin:10px;
             </div>
           </div>
         </section>
+      </form>
         <!-- 첨부파일 -->
-        <section class="attachFileInfo">
-          <div class="subTitle">
-            <div class="subTitleText">필지 첨부파일</div>
-            <div class="fileBtnWrap">
-              <input type="file" id="landReg_myPcFiles" />
-              <label for="landReg_myPcFiles">내 PC</label>
-            </div>
+      <section class="attachFileInfo">
+        <!--  <form name="uploadForm" method="post" enctype="multipart/form-data"> -->
+        <div class="subTitle">
+          첨부파일
+          <div class="fileBtnWrap">
+            <input type="file" name="fileUpload" id="easementModification_myPcFiles">
+            <label for="easementModification_myPcFiles">내 PC</label>
           </div>
-
-          <div class="fileUploadWrap">
-            <div class="fileUploadBox">
-              <img
-                src="/assets/media/menu04/images/file-upload.png"
-                alt="파일 업로드 아이콘"
-                class="fileUploadIcon" />
-              <p>파일을 마우스로 끌어오세요.</p>
-            </div>
-          </div>
-        </section>
-        <div class="finalBtnBox btnWrap">
-          <button class="finalBtn prevBtn">이전</button>
-          <button class="finalBtn registBtn">등록</button>
         </div>
-      </main>
+
+        <div class="fileUploadWrap">
+          <div class="fileUploadBox">
+            <img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
+            <p>파일을 마우스로 끌어오세요.</p>
+          </div>
+        </div>
+        <!-- <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div> -->
+        <!-- </form> -->
+        <div class="contWrap">
+          <div class="depth1" id="fileListDiv">
+            <ul class="titles" id="fileTitleUl">
+              <li class="title01 allSelectCheck">
+                <!-- 선택 -->
+
+                <input type="checkbox" id="landRightsRegistration_file_select_all" name="landRightsRegistration_file_select_all">
+                <label for="landRightsRegistration_file_select_all"></label>
+              </li>
+              <li class="title02">파일명</li>
+            </ul>
+
+
+
+          </div>
+        </div>
+
+        <div class="btnWrap">
+          <button class="fileBtn fileDelBtn delBtn" id="deleteSelectedBtn">선택파일 삭제</button>
+        </div>
+
+
+      </section>
+
+
+      <div class="finalBtnBox btnWrap">
+        <button class="finalBtn prevBtn" onclick="history.back();">이전</button>
+        <button class="finalBtn registBtn "  id="finalBtn">등록</button>
+      </div>
+    </main>
+  </div>
+
+  <div class="landRegPopWrapper" id="searchResultPopDiv">
+
+    <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+    <div id="searchResultsPopup">
+      <div class="popupWrap" id="popupWrap">
+        <h2>
+          <p>검색결과</p>
+          <span class="topCloseBtn"></span>
+        </h2>
+
+        <div class="popupCont">
+          <ul class="popTitles">
+            <li class="popTitle01">PNU</li>
+            <li class="popTitle02">주소</li>
+            <li class="popTitle03">지번</li>
+            <li class="popTitle04">선택</li>
+            <li class="popTitle05"></li>
+          </ul>
+          <div class="popContentBox" >
+            <ul class="popContents">
+
+              <li class="popContent01"> 115001100010010001</li>
+              <li class="popContent02"> 서울특별시 강서구 개화동</li>
+              <li class="popContent03"> 1-1</li>
+              <li class="popContent04">
+                <button class="resultSelectBtn">선택</button>
+              </li>
+              <li class="popContent05">
+                <input type="checkbox" id="chkResultPop_Checkbox01">
+                <label for="chkResultPop_Checkbox01"></label>
+              </li>
+            </ul>
+
+
+          </div>
+        </div>
+
+        <div class="lastBtnBox btnWrap">
+          <button class="saveBtn finalBtn" id="selectBtn">선택 등록</button>
+          <button class="saveBtn finalBtn" id="notPNUBtn">PNU 없이 선택</button>
+          <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+        </div>
+      </div>
     </div>
-    <div class="landRegExcelPopWrapper"></div>
-    <div class="landRegSearchPopWrapper"></div>
-    <script type="module" src="/js/module/surfaceMain.js"></script>
-    <script src="/js/togi/landReg.js"></script>
- </th:block>
+
+  </div>
+  <div class="landRegExcelPopWrapper"></div>
+  <div class="landRegSearchPopWrapper"></div>
+  <script type="module" src="/js/module/surfaceMain.js"></script>
+  <script src="/js/togi/landReg.js"></script>
+<!--  <script src="/js/common/upload.js"></script>-->
+</th:block>
 </html>
