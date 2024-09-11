@@ -126,17 +126,17 @@
           <div class="contWrap">
             <div class="depth1">
               <ul class="titles">
-                <li class="title">담당지사</li>
-                <li class="title largeTitle">허가관청</li>
-                <li class="title largeTitle">관리기관</li>
-                <li class="title largeTitle">부서</li>
-                <li class="title">담당자</li>
-                <li class="title largeTitle">연락처</li>
-                <li class="title">용도</li>
-                <li class="title largeTitle">관로명(구간)</li>
-                <li class="title">단/복선</li>
-                <li class="title">관경</li>
-                <li class="title">감면여부</li>
+                <li class="title">담당지사*</li>
+                <li class="title largeTitle">허가관청*</li>
+                <li class="title largeTitle">관리기관*</li>
+                <li class="title largeTitle">부서*</li>
+                <li class="title">담당자*</li>
+                <li class="title largeTitle">연락처*</li>
+                <li class="title">용도*</li>
+                <li class="title largeTitle">관로명(구간)*</li>
+                <li class="title">단/복선*</li>
+                <li class="title">관경*</li>
+                <li class="title">감면여부*</li>
               </ul>
               <ul class="contents">
 				
@@ -196,7 +196,7 @@
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="masterRegSelectBox03"
+                      name="adm_office"
                       id="masterRegSelectBox03"
                       hidden>
                       <option value="전체">전체</option>
@@ -299,7 +299,7 @@
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select
-                      name="감면여부"
+                      name="exemptionyn"
                       id="masterRegSelectBox07"
                       hidden>
                       <option value="Y">Y</option>
@@ -316,11 +316,11 @@
             </div>
             <div class="depth2">
               <ul class="titles">
-                <li class="title">점용 구분</li>
-                <li class="title dateLargeTitle">점용 기간</li>
+                <li class="title">점용 구분*</li>
+                <li class="title dateLargeTitle">점용 기간*</li>
                 <li class="title">점용갱신주기</li>
-                <li class="title">신규등록사유</li>
-                <li class="title">허가증보유여부</li>
+                <li class="title">신규등록사유*</li>
+                <li class="title">허가증보유여부*</li>
                 <li class="title">점용료미납부사유</li>
                 <li class="title">점용료 선납 여부</li>
                 <li class="title">선납기한</li>
@@ -365,16 +365,12 @@
                     <div class="dateInputWrap">
                       <input name="gover_st_date"
                         type="date"
-                        data-placeholder="24/01/01"
-                        
                         aria-required="true" />
                     </div>
                     <span class="dateBar"></span>
                     <div class="dateInputWrap">
                       <input name="gover_ed_date"
                         type="date"
-                        data-placeholder="24/01/01"
-                        
                         aria-required="true" />
                     </div>
                   </div>
@@ -452,8 +448,6 @@
                   <div class="dateInputWrap">
                     <input name="occuprepaydate"
                       type="date"
-                      data-placeholder="24/01/01"
-                      
                       aria-required="true" />
                   </div>
                 </li>
@@ -466,7 +460,7 @@
 		
 		<section class="landAdressInfo">
 		  <div class="subTitle">
-		    <div class="subTitleText">소속 토지 정보</div>
+		    <div class="subTitleText">소속 토지 정보*</div>
 		    <div class="subTitleBtnBox">
 		      <button class="middleBtn navyBtn excelDownBtn">엑셀 다운로드</button>
 		      <button class="middleBtn whiteBtn excelUpBtn ExcelPopBtn">엑셀 업로드</button>
@@ -537,9 +531,10 @@
 		        </li>
 		        <!-- 주소 -->
 		        <li class="content addressInfoWidth">
-		          <div class="addressData">
-		            <input type="text" name="주소" class="notWriteInput" placeholder="서울특별시 서초구 서초동 1" />
-		          </div>
+		          <!--<div class="addressData">-->
+					<!-- text 창 높이를 위해 주석처리 -->
+		            <input type="text" name="주소" />
+		          <!--</div>-->
 		          <button class="searchAddressBtn">검색</button>
 		        </li>
 		        <!-- PNU -->
@@ -650,14 +645,14 @@
 		        </li>
 		        <!-- 대표필지 -->
 		        <li class="content checkboxWrap">
-		          <input type="checkbox" id="masterRegSelectBox_Checkbox03" />
-		          <label for="masterRegSelectBox_Checkbox03"></label>
+		          <input type="checkbox" id="masterRegSelectBox_" />
+		          <label for="masterRegSelectBox_"></label>
 		        </li>
 		        <!-- 주소 -->
 		        <li class="content addressInfoWidth">
-		          <div class="addressData">
-		            <input type="text" class="notWriteInput" placeholder="서울특별시 서초구 서초동 1" />
-		          </div>
+		          <!--<div class="addressData">-->
+		            <input type="text" />
+		          <!--</div>-->
 		          <button class="searchAddressBtn">검색</button>
 		        </li>
 		        <!-- PNU -->
@@ -733,25 +728,46 @@
 
 		<!-- 첨부파일 -->
 		
-        <section class="attachFileInfo">
-          <div class="subTitle">
-            <div class="subTitleText">첨부파일</div>
-            <div class="fileBtnWrap">
-              <input type="file" id="masterReg_myPcFiles" />
-              <label for="masterReg_myPcFiles">내 PC</label>
-            </div>
-          </div>
+		<section class="attachFileInfo">
+		                    <!--  <form name="uploadForm" method="post" enctype="multipart/form-data"> -->
+		                    <div class="subTitle">
+		                        첨부파일
+		                        <div class="fileBtnWrap">
+		                            <input type="file" name="fileUpload" id="easementModification_myPcFiles">
+		                            <label for="easementModification_myPcFiles">내 PC</label>
+		                        </div>
+		                    </div>
 
-          <div class="fileUploadWrap">
-            <div class="fileUploadBox">
-              <img
-                src="/assets/media/menu03/images/file-upload.png"
-                alt="파일 업로드 아이콘"
-                class="fileUploadIcon" />
-              <p>파일을 마우스로 끌어오세요.</p>
-            </div>
-          </div>
-        </section>
+		                    <div class="fileUploadWrap">
+		                        <div class="fileUploadBox">
+		                            <img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
+		                            <p>파일을 마우스로 끌어오세요.</p>
+		                        </div>
+		                    </div>
+		                 
+		                    <div class="contWrap">
+		                        <div class="depth1" id="fileListDiv">
+		                            <ul class="titles" id="fileTitleUl">
+		                                <li class="title01 allSelectCheck">
+		                                    <!-- 선택 -->
+
+		                                    <input type="checkbox" id="landRightsRegistration_file_select_all" name="landRightsRegistration_file_select_all">
+		                                    <label for="landRightsRegistration_file_select_all"></label>
+		                                </li>
+		                                <li class="title02">파일명</li>
+		                            </ul>
+
+
+
+		                        </div>
+		                    </div>
+
+		                    <div class="btnWrap">
+		                        <button class="fileDelBtn delBtn" id="deleteFileBtn">선택파일 삭제</button>
+		                    </div>
+
+
+		                </section>
 
         <section class="memoSection">
           <div class="subTitle">

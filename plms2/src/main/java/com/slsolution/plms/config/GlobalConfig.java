@@ -14,6 +14,7 @@ public class GlobalConfig {
 	
 	private static String pnuAtcFileDir;
 	private static String jisangFileTempDir;
+	private static String goverFileTempDir;
 	private static String jisangFileDataDir;
 	private static String jisangBunhalDataDir;
 	private static String notsetFileTempDir;
@@ -36,6 +37,16 @@ public class GlobalConfig {
 	public static String getJisangFileTempDir() {
 		return jisangFileTempDir;
 	}
+	
+	//점용 임시저장 디렉토리
+	@Value("${plms.goverFileTempDir}")
+	public void setGoverFileTempDir(String str) {
+		goverFileTempDir=str;
+	}
+	public static String getGoverFileTempDir() {
+		return goverFileTempDir;
+	}
+	
 	
 	@Value("${plms.jisangFileDataDir}")
 	public void setJisangFileDataDir(String str) {

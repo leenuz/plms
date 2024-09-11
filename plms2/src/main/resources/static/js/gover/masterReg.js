@@ -1,4 +1,4 @@
-
+var uploadFiles=new Array();
 // 초기화 시 모든 줄에 대해 함수 실행
 $(document).ready(function() {
     console.log("gover/masterReg.js start");
@@ -15,6 +15,138 @@ $(document).ready(function() {
 
     // 모든 셀렉트 박스에 대해 커스텀 셀렉트 박스 초기화 실행
     createCustomLimasterReg();  // 페이지가 로드될 때 초기화
+	
+
+
+	var objDragAndDrop = $(".fileUploadBox");
+	console.log("--------objDragAndDrop------------------------");
+	console.log(objDragAndDrop.parent().parent().html());
+	               
+   $(document).on("dragenter",".fileUploadBox",function(e){
+       e.stopPropagation();
+       e.preventDefault();
+       $(this).css('border', '2px solid #0B85A1');
+   });
+   $(document).on("dragover",".fileUploadBox",function(e){
+       e.stopPropagation();
+       e.preventDefault();
+   });
+   $(document).on("drop",".fileUploadBox",function(e){
+       
+       $(this).css('border', '2px dotted #0B85A1');
+       e.preventDefault();
+       var files = e.originalEvent.dataTransfer.files;
+   console.log(objDragAndDrop);
+       handleFileUpload(files,objDragAndDrop);
+   });
+   
+   $(document).on('dragenter', function (e){
+       e.stopPropagation();
+       e.preventDefault();
+   });
+   $(document).on('dragover', function (e){
+     e.stopPropagation();
+     e.preventDefault();
+     objDragAndDrop.css('border', '2px dotted #0B85A1');
+   });
+   $(document).on('drop', function (e){
+       e.stopPropagation();
+       e.preventDefault();
+   });
+   //drag 영역 클릭시 파일 선택창
+   objDragAndDrop.on('click',function (e){
+       $('input[type=file]').trigger('click');
+   });
+
+   $('input[type=file]').on('change', function(e) {
+       var files = e.originalEvent.target.files;
+       handleFileUpload(files,objDragAndDrop);
+   });
+   
+   function handleFileUpload(files,obj)
+   {
+      for (var i = 0; i < files.length; i++) 
+      {
+           var fd = new FormData();
+           fd.append('file', files[i]);
+    		console.log("-----------handleFileUpload------------");
+			console.log(obj.parent().parent().find("#fileListDiv").html());
+         //  var status = new createStatusbar(obj.parent().parent().find("#fileListDiv ")); //Using this we can set progress.
+		   var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
+           //status.setFileNameSize(files[i].name,files[i].size);
+           sendFileToServer(fd,status);
+    
+      }
+   }
+   
+   var rowCount=0;
+   function createStatusbar(obj,name,size,no){
+          console.log("----------start createStatusBar------------");
+              console.log(obj.html());
+
+          var sizeStr="";
+                                  var sizeKB = size/1024;
+                                  if(parseInt(sizeKB) > 1024){
+                                      var sizeMB = sizeKB/1024;
+                                      sizeStr = sizeMB.toFixed(2)+" MB";
+                                  }else{
+                                      sizeStr = sizeKB.toFixed(2)+" KB";
+                                  }
+
+          var row='<ul class="contents" id="fileListUl">';
+          row+='<li class="selectWidth content checkboxWrap">';
+          row+='<input type="checkbox" id="landRightsRegistration_attachFile'+no+'" name="landRightsRegistration_attachFile" >';
+          row+='<label for="landRightsRegistration_attachFile'+no+'"></label>';
+          row+='</li>';
+          row+='<li class="content registDateWidth"><input type="text" id="filename" th:placeholder="'+'[[${val.pa_file_path}]]'+'" class="notWriteInput" readonly></li>';
+          row+='<li class="content fileNameWidth"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li>';
+          row+='<li class="content"><button class="viewDetailButton" th:onclick="openFilePopup([[${val.pa_file_path}]])">보기</button></li></ul>';
+          obj.after(row);
+
+          var radio=$(row).find('input');
+          console.log("---------------radio checkbox----------");
+          $(radio).find('input').attr("disabled",false);
+          console.log($(radio).parent().html());
+      }
+   
+   function sendFileToServer(formData,status)
+   {
+       var uploadURL = "/gover/fileUpload/post"; //Upload URL
+       var extraData ={}; //Extra Data.
+       var jqXHR=$.ajax({
+               xhr: function() {
+               var xhrobj = $.ajaxSettings.xhr();
+               if (xhrobj.upload) {
+                       xhrobj.upload.addEventListener('progress', function(event) {
+                           var percent = 0;
+                           var position = event.loaded || event.position;
+                           var total = event.total;
+                           if (event.lengthComputable) {
+                               percent = Math.ceil(position / total * 100);
+                           }
+                           //Set progress
+                           status.setProgress(percent);
+                       }, false);
+                   }
+               return xhrobj;
+           },
+           url: uploadURL,
+           type: "POST",
+           contentType:false,
+           processData: false,
+           cache: false,
+           data: formData,
+           success: function(data){
+               status.setProgress(100);
+    			console.log(data);
+    			console.log(data.resultData);
+               //$("#status1").append("File upload Done<br>");    
+			uploadFiles.push(data.resultData.fpath);       
+           }
+       }); 
+    
+       status.setAbort(jqXHR);
+   }
 });
 
 // 체크박스 클릭 시 다른 체크박스들 비활성화
@@ -32,45 +164,31 @@ $(document).on("click", "input[type=checkbox]", function() {
 });
 
 // 행 추가 함수
+var index = 1;
 function addRow() {
 	
-	
 	var thisUl=$(this).parent().parent().parent().parent();
-			console.log(thisUl);
-			var addUl=$("#row-template").html();
-			console.log(addUl);
-	        //var findButton=$()
-	//		var input=$(thisUl).find("input");
+	console.log(thisUl);
+	var addUl=$("#row-template").html();
+	console.log(addUl);
 
-			var addDiv = $('<ul class="contents" id="goverUl">'+addUl+'</ul>');
-			//addDiv.find("#bunhalIndex").val(index);
-			console.log($(addDiv).html());
-			 
-
-	         $("#goverUlDiv").append(addDiv);
-
-	/*
+	var addDiv = $('<ul class="contents" id="goverUl">'+addUl+'</ul>');
+	console.log($(addDiv).html());
 	
-    const templateContent = document.querySelector('#row-template').innerHTML;
+	//멀티체크박스 클릭을 위한 조치
+	var pipe = addDiv.find('#masterRegSelectBox_');
+	pipe.attr({'class':'masterRegSelectBox_'+index,'name' : 'masterRegSelectBox_'+index,'id': 'masterRegSelectBox_'+index});
+	var label1 = pipe.closest('li').find('label').first();
+	label1.attr({'for': 'masterRegSelectBox_'+index,'name' : 'masterRegSelectBox_'+index});
 
-    // 새로 추가할 행을 위한 ul 생성
-    const newRow = document.createElement('ul');
-    newRow.classList.add('contents');
-    newRow.innerHTML = templateContent;
+	// 순번 적용
+	addDiv.find('input[readonly]').attr('placeholder', index); // 순번 적용
+	index++; // index 값을 증가시켜 다음 버튼에 적용
 
-    // 새로운 순번 할당
-    const allRows = document.querySelectorAll('.landAdressInfo .depth1 .contents:not([style*="display: none;"])');
-    const newRowNumber = allRows.length + 1;
-    newRow.querySelector('input[readonly]').setAttribute('placeholder', newRowNumber);
+	$("#goverUlDiv").append(addDiv);
 
-    // 고유한 id와 name을 생성하여 각 요소에 추가 (옵션)
-    updateIdsAndNames(newRow, newRowNumber);
-
-    // 행 추가
-    document.querySelector('#goverUl').appendChild(newRow);
-
-    // 셀렉트 박스 및 기타 기능 초기화
-    createCustomLimasterReg(newRow);*/
+	// 추가된 모든 행에 대해 순번 재할당
+	updateRowNumbers();
 }
 
 // 행 삭제 함수
@@ -79,13 +197,18 @@ function deleteRow(button) {
   row.remove();
 
   // 삭제 후 남아 있는 모든 행들의 순번을 재할당
-  const allRows = document.querySelectorAll('.landAdressInfo .depth1 .contents:not([style*="display: none;"])');
-  allRows.forEach((row, index) => {
-    const seqInput = row.querySelector('input[readonly]');
-    if (seqInput) {
-      seqInput.setAttribute('placeholder', index + 1);  // 새로운 순번 할당
-    }
-  });
+  updateRowNumbers(); // 순번 재할당 함수 호출
+}
+
+// 모든 행에 대해 순번 업데이트 함수
+function updateRowNumbers() {
+    const allRows = document.querySelectorAll('.landAdressInfo .depth1 .contents:not([style*="display: none;"])');
+    allRows.forEach((row, index) => {
+        const seqInput = row.querySelector('input[readonly]');
+        if (seqInput) {
+            seqInput.setAttribute('placeholder', index + 1);  // 새로운 순번 할당
+        }
+    });
 }
 
 // ID와 Name 업데이트 함수
@@ -114,6 +237,8 @@ function toggleLineDisplay(value) {
   const singleLineDiv = $('.singleLine');
   const doubleLineDiv = $('.doubleLine');
 
+  console.log('toggleLineDisplay 함수 호출, value:', value); // 디버깅용 콘솔 로그 추가
+
   if (value === '단선') {
     singleLineDiv.show();
     doubleLineDiv.hide();
@@ -130,10 +255,13 @@ $(document).on("click", "#draftSaveBtn", function() {
     var formSerializeArray = $('#saveForm').serializeArray(); // 폼 데이터를 직렬화하여 배열로 저장
     console.log(formSerializeArray); // 배열 형태로 폼 데이터 출력
     
-    var object = {}; // 빈 객체 생성
-    for (var i = 0; i < formSerializeArray.length; i++) { 
-        object[formSerializeArray[i]['name']] = formSerializeArray[i]['value']; // 배열의 각 항목을 객체로 변환
-    }
+	var object = {};
+	for (var i = 0; i < formSerializeArray.length; i++){
+		if (formSerializeArray[i]['value'] === '전체') {
+		    continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
+		}
+		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+	}
     
     var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
     console.log("----------jsonobj------------");
@@ -165,8 +293,7 @@ const createCustomLimasterReg = (parentElement = document) => {
 
     contentItems.forEach(contentItem => {
         const notsetAddSelectBox = contentItem.querySelector('select');
-        // select가 없으면 return
-        if (!notsetAddSelectBox) return;
+        if (!notsetAddSelectBox) return; // select가 없으면 return
 
         const customSelectBox = contentItem.querySelector('.customSelectBox');
         const customSelectBtns = customSelectBox.querySelector('.customSelectBtns');
@@ -204,6 +331,11 @@ const createCustomLimasterReg = (parentElement = document) => {
                 // 선택한 후 셀렉트 박스 비활성화
                 customSelectBox.querySelector('.customSelectBtns').classList.remove('active');
                 parentSelectBox.classList.remove('active');
+
+                // 만약 단/복선 선택 박스(masterRegSelectBox06)일 경우 toggleLineDisplay 호출
+                if (notsetAddSelectBox.id === 'masterRegSelectBox06') {
+                    toggleLineDisplay(selectedValue);
+                }
             });
         });
     });
@@ -431,7 +563,7 @@ const masterRegOpenPopUp = () => {
         }
     };
 }
-masterRegOpenPopUp();
+//masterRegOpenPopUp();
 
 
 /* 엑셀팝업불러오기 */
@@ -440,7 +572,7 @@ const ExcelPopOpenEvet = () => {
 
      const ExcelPopBtn = document.querySelector(".ExcelPopBtn");
      const masterRegExcelPopWrapper = document.querySelector(".masterRegExcelPopWrapper");
-     let htmlFilePath = '/components/popuphtml/occupancy_Popup/exceluploadPopup.html'; // 엑셀업로드
+     let htmlFilePath = '/components/popuphtml/exceluploadPopup.html'; // 엑셀업로드
 
      if(ExcelPopBtn){
 
