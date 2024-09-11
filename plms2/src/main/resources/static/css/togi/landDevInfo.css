@@ -193,16 +193,6 @@ button {
 #landDevInfo .contents .content:last-child {
   border-right: 0;
 }
-#landDevInfo .defaultInfo {
-  padding: 27px 0 40px 0;
-}
-
-#landDevInfo .defaultInfo .subTitle {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 21px;
-}
 
 #landDevInfo .contWrap {
   width: 100%;
@@ -253,6 +243,24 @@ button {
   border-bottom: 0;
   border-radius: 0 0 5px 5px;
 }
+#landDevInfo .defaultInfo {
+  padding: 27px 0 40px 0;
+}
+
+/* 배경색 깔기 */
+#landDevInfo table thead tr:first-of-type {
+  background: #f7f9fc;
+}
+#landDevInfo table thead tr:last-of-type {
+  background: #ecf1f8;
+}
+
+#landDevInfo .defaultInfo .subTitle {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 21px;
+}
 
 #landDevInfo .defaultInfo .contWrap .title {
   width: 11.1%;
@@ -265,40 +273,7 @@ button {
   border-radius: 5px;
   bottom: 0;
 }
-/* 배경색 깔기 */
-#landDevInfo table thead tr:first-of-type {
-  background: #f7f9fc;
-}
-#landDevInfo table thead tr:last-of-type {
-  background: #ecf1f8;
-}
-#landDevInfo .defaultInfo table tr {
-  height: 45px;
-  border-bottom: 1px solid #cddbf0;
-  font-size: 14px;
-  font-weight: 500;
-}
-#landDevInfo .defaultInfo table tr th,
-#landDevInfo .defaultInfo table tr td {
-  border-right: 1px solid #cddbf0;
-  box-sizing: border-box;
-  height: 45px;
-}
-#landDevInfo .defaultInfo table tr:first-of-type th:last-of-type {
-  border-right: 0;
-}
-#landDevInfo .defaultInfo table tr td:last-of-type {
-  border-right: 0;
-}
-#landDevInfo .defaultInfo table tbody tr:last-of-type {
-  border-bottom: 0;
-}
-#landDevInfo table thead tr:first-of-type th:first-of-type {
-  border-radius: 5px 0 0 0;
-}
-#landDevInfo table thead tr:first-of-type th:last-of-type {
-  border-radius: 0 5px 0 0;
-}
+
 /* 시행자 관할 부서 */
 #landDevInfo .adminDept {
   padding-bottom: 40px;
@@ -328,6 +303,7 @@ button {
 #landDevInfo .mainLandInfo .addressWidth {
   width: 28.3%;
 }
+
 /* 소속토지 정보 */
 #landDevInfo .subLandInfo {
   padding-bottom: 40px;
@@ -486,4 +462,88 @@ button {
 
 #landDevInfo .finalBtnBox .editBtn a:visited {
   color: #2b7de1;
+}
+
+/* 기본정보 테이블 css 추가*/
+
+#landDevInfo .defaultInfo .contWrap {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+#landDevInfo .defaultInfo .contWrap .titles {
+  height: 90px;
+}
+#landDevInfo .defaultInfo .contWrap .title {
+  width: 9.5%;
+}
+#landDevInfo .defaultInfo .titles .title.middleWidth2 {
+line-height: 90px;
+  width: 21%;
+}
+#landDevInfo .defaultInfo .titles .title.titleBox {
+  width: 36.4%;
+  display: flex;
+  flex-direction: column;
+}
+#landDevInfo .titles .title.titleBox .secondTitles {
+  width: 100%;
+  display: flex;
+  border-top: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+  background: #ecf1f8;
+  box-sizing: border-box;
+  height: 90px;
+}
+#landDevInfo .titles .title.titleBox .secondTitles .secondTitle {
+  width: 50%;
+  height: 44px;
+}
+#landDevInfo .defaultInfo .contWrap .content {
+  width: 9.5%;
+}
+#landDevInfo .defaultInfo .contents .content.middleWidth2 {
+ line-height: 90px;
+   width: 21%;
+ }
+
+#landDevInfo .defaultInfo .contents .content.contentBox {
+  width: 21%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  height: 100%;
+}
+
+#landDevInfo .defaultInfo .contents .content.contentBox2 {
+  width: 36.4%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  height: 100%;
+}
+
+#landDevInfo .defaultInfo .contents .content.contentBox2 .secondContents {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 0;
+}
+
+#landDevInfo
+  .defaultInfo
+  .contents
+  .content.contentBox2
+  .secondContents
+  .secondContent {
+   width: 50%;
+  /*width: 357px;*/
+  border-right: 1px solid #cddbf0;
+}
+#landDevInfo
+  .defaultInfo
+  .contents
+  .content.contentBox2
+  .secondContents
+  .secondContent:last-child {
+  border-right: 0;
 }
