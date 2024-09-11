@@ -513,7 +513,7 @@ $(document).on("click",".temporarySaveBtn",function(){
 	        return null; // 필수 값이 누락된 경우 null 반환
    		}
 */
-return;
+
 			url="/jisang/divisionRegisterSave"; 
 			   $.ajax({
 			   			
