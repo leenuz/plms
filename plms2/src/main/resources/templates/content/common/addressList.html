@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+<div id="searchResultsPopup">
+  <div class="popupWrap" id="popupWrap">
+    <h2>
+      <p>검색결과</p>
+      <span class="topCloseBtn"></span>
+    </h2>
+    <div class="popupCont">
+      <ul class="popTitles">
+        <li class="popTitle01">PNU</li>
+        <li class="popTitle02">주소</li>
+        <li class="popTitle03">지번</li>
+        <li class="popTitle04">선택</li>
+      </ul>
+      <div class="popContentBox">
+        <ul class="popContents" th:each="val:${jisangBasicSearchList}">
+          <li class="popContent01"> [[${val.pnu}]]</li>
+          <li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.ri_nm}]]</li>
+          <ii class="popContent0201" hidden>[[${val.sido_nm}]]</ii>
+          <ii class="popContent0202" hidden>[[${val.sgg_nm}]]</ii>
+          <ii class="popContent0203" hidden>[[${val.emd_nm}]]</ii>
+          <ii class="popContent0204" hidden>[[${val.ri_nm}]]</ii>
+          <li class="popContent03">[[${val.jibun}]]</li>
+          <li class="popContent04">
+            <button class="addressResultSelectBtn">선택</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="lastBtnBox btnWrap">
+      <button class="backBtn finalBtn" id="addressPopupCloseBtn">닫기</button>
+      <button class="saveBtn finalBtn">PNU 없이 선택</button>
+    </div>
+  </div>
+</div>

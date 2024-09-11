@@ -1,254 +1,349 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/default_layout}">
-      
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>미설정/미점용 내역 등록</title>
-    <link rel="stylesheet" href="../../../assets/css/menu01/notsetAdd.css" />
-    <link rel="stylesheet" href="../../../assets/css/header.css" />
-    <title>지상권</title>
-  </head>
-  <th:block layout:fragment="content">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>미설정/미점용 내역 등록</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link th:href="@{/css/common.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/songyu/notsetAdd.css" />
+  <style>
+    div.dt-top-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+    }
+
+    div.dt-center-in-div {
+      margin: 0 auto;
+      float: right;
+      margin-right: 30px;
+    }
+
+    div.dt-center-in-div>div {
+      display: inline;
+    }
+
+    div.dt-filter-spacer {
+      margin: 10px 0;
+      border: 1px solid red;
+    }
+
+    .dt-title {
+      text-align: center;
+      width: 180px;
+      float: left;
+    }
+
+    .dt-buttons {
+      display: inline-block;
+      width: 180px;
+    }
+
+    .dt-length {
+      display: inline-block;
+    }
+
+    .dt-button {
+      color: white;
+      background-color: #4e5871;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 10px;
+      background-image: url(/assets/media/menu01/download.png);
+      background-size: 11px;
+      background-repeat: no-repeat;
+      background-position: 123px center;
+      text-aline: left;
+      margin-right: 10px;
+      width: 159px;
+      height: 38px;
+    }
+
+    .dt-paging {
+      text-align: center;
+    }
+
+    .dt-paging-button {
+      box-sizing: border-box;
+      display: inline-block;
+      min-width: 1.5em;
+      padding: 0.5em 1em;
+      margin-left: 2px;
+      text-align: center;
+      text-decoration: none !important;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      background: transparent;
+      color: #007bff !important;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .bottom {
+      text-align: center;
+    }
+
+    .top {
+      text-align: right;
+      margin: 10px;
+    }
+  </style>
+  <title>지상권</title>
+</head>
+<th:block layout:fragment="content">
+
   <body>
-    <div class="notsetAddWrappers">
+    <div class="mainContentWrappers">
       <!--header삽입-->
-      <div class="surfaceHeader notsetAddHeader"></div>
-      <main id="notsetAdd">
+      <div class="surfaceHeader mainContentHeader"></div>
+      <main id="mainContent">
         <div class="mainTitle">
           <h1>미설정/미점용 내역 등록</h1>
         </div>
-        <form name="netsetAddForm" id="netsetAddForm" onSubmit="return false;">
-        <section class="defaultInfo">
-          <div class="subTitle">기본 정보</div>
-
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="titles">
-                <li class="title01">담당지사</li>
-                <li class="title02">관로일치여부</li>
-                <li class="title03">관로명(구간)</li>
-                <li class="title04">단/복선</li>
-                <li class="title05">관경1</li>
-                <li class="title06">관경2</li>
-                <li class="title07">국공유지여부</li>
-                <li class="title08">지적면적(㎡)</li>
-                <li class="title09">지목</li>
-                <li class="title10">관리제외필지</li>
-              </ul>
-              <ul class="contents">
-                <li class="content01 content">
-                 
-                  <section class="customSelectBox">
-                  <select
-                    name="jisa"
-                    class="menuHiddenSelect"
-                    id="jisa"
-                    hidden>
-                    <option value="">전체</option>
-                    <th:block th:each="val:${jisaList}">
-	                    <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
-	                    </th:block>
-                 
-                  </select>
-                    <button class="customSelectView" id="jisaBtn">
-                      충청지사
-                      <figure></figure>
-                    </button>
-
-                    <ul class="customSelectBtns">
-                     <li><button class="moreSelectBtn">전체<button class="moreSelectBtn"></li>
-                      <th:block th:each="val:${jisaList}">
+        <form name="saveForm" id="saveForm" onSubmit="return false;">
+          <section class="defaultInfo">
+            <div class="subTitle">기본 정보</div>
+            <div class="contWrap">
+              <div class="depth1">
+                <ul class="titles">
+                  <li class="title01">담당지사</li>
+                  <li class="title02">관로일치여부</li>
+                  <li class="title03">관로명(구간)</li>
+                  <li class="title04">단/복선</li>
+                  <li class="title05">관경1</li>
+                  <li class="title06">관경2</li>
+                  <li class="title07">국공유지여부</li>
+                  <li class="title08">지적면적(㎡)</li>
+                  <li class="title09">지목</li>
+                  <li class="title10">관리제외필지</li>
+                </ul>
+                <ul class="contents">
+                  <!-- 담당지사 선택 -->
+                  <li class="content01 content">
+                    <section class="customSelectBox">
+                      <select name="jisa" class="menuHiddenSelect" id="jisa" hidden>
+                        <option value="">전체</option>
+                        <th:block th:each="val:${jisaList}">
+                          <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+                        </th:block>
+                      </select>
+                      <button class="customSelectView" id="jisaBtn">
+                        전체
+                        <figure></figure>
+                      </button>
+                      <ul class="customSelectBtns">
+                        <li><button class="moreSelectBtn">전체<button class="moreSelectBtn"></li>
+                        <th:block th:each="val:${jisaList}">
                           <li><button class="moreSelectBtn" th:text="${val.jm_jisa_name}"></button></li>
                           <th:block>
-                      
-                    </ul>
-                  </section>
-                </li>
-                <li class="content02 content">
-                  <section class="customSelectBox">
-                    <button class="customSelectView">
-                      N
-                      <figure></figure>
-                    </button>
-
-                    <ul class="customSelectBtns">
-                      <li><button class="moreSelectBtn">N</button></li>
-                      <li><button class="moreSelectBtn">N</button></li>
-                      <li><button class="moreSelectBtn">N</button></li>
-                      <li><button class="moreSelectBtn">N</button></li>
-                    </ul>
-                  </section>
-                </li>
-                <li class="content03 content">
-                  <section class="customSelectBox">
-                    <button class="customSelectView">
-                      경인구간
-                      <figure></figure>
-                    </button>
-
-                    <ul class="customSelectBtns">
-                      <li><button class="moreSelectBtn">경인구간</button></li>
-                      <li><button class="moreSelectBtn">경인구간</button></li>
-                      <li><button class="moreSelectBtn">경인구간</button></li>
-                    </ul>
-                  </section>
-                </li>
-                <li class="content04 content">
-                  <section class="customSelectBox">
-                    <button class="customSelectView">
-                      복선
-                      <figure></figure>
-                    </button>
-
-                    <ul class="customSelectBtns">
-                      <li><button class="moreSelectBtn">복선</button></li>
-                      <li><button class="moreSelectBtn">복선</button></li>
-                      <li><button class="moreSelectBtn">복선</button></li>
-                    </ul>
-                  </section>
-                </li>
-                <li class="content05 content">
-                  <input type="text" />
-                </li>
-                <li class="content06 content">
-                  <input type="text" />
-                </li>
-                <li class="content07 content">
-                  <section class="customSelectBox">
-                    <button class="customSelectView">
-                      Y
-                      <figure></figure>
-                    </button>
-
-                    <ul class="customSelectBtns">
-                      <li><button class="moreSelectBtn">Y</button></li>
-                      <li><button class="moreSelectBtn">Y</button></li>
-                      <li><button class="moreSelectBtn">Y</button></li>
-                    </ul>
-                  </section>
-                </li>
-                <li class="content08 content">
-                  <input type="text" />
-                </li>
-                <li class="content09 content">
-                  <section class="customSelectBox">
-                    <button class="customSelectView">
-                      하천
-                      <figure></figure>
-                    </button>
-
-                    <ul class="customSelectBtns">
-                      <li><button class="moreSelectBtn">하천</button></li>
-                      <li><button class="moreSelectBtn">하천</button></li>
-                      <li><button class="moreSelectBtn">하천</button></li>
-                    </ul>
-                  </section>
-                </li>
-                <li class="content10 content checkboxWrap">
-                  <input type="checkbox" id="notsetAddCheckbox01" />
-                  <label
-                    for="notsetAddCheckbox01"
-                    class="customCheckBoxLabel01"></label>
-                </li>
-              </ul>
-            </div>
-            <div class="depth2">
-              <ul class="titles">
-                <li class="title01">주소</li>
-                <li class="title02">주소 검색</li>
-              </ul>
-              <ul class="contents">
-                <li class="content01">경기도 고양시 덕양구 강매동 1</li>
-                <li class="content02">
-                  <ul class="radioBox">
-                    <li class="inputArea inputArea01">
-                      <div class="inputWrap">
-                        <input
-                          type="radio"
-                          id="writeInput"
-                          name="addressInput" />
-                        <label for="writeInput">입력형</label>
-                      </div>
-
-                      <input
-                        type="text"
-                        placeholder="주소 입력"
-                        class="addressInputBox01" />
-                      <button class="SearchAddressBtn notsetAddPopBtn" id="searchBtn">
-                        검색
+                      </ul>
+                    </section>
+                  </li>
+                  <!-- 관로 일치 여부 선택 -->
+                  <li class="content02 content selectContentArea">
+                    <div class="hiddenSelectBox">
+                      <!-- name도 추가 -->
+                      <select name="overlap_yn" id="overlapYnSelectBox" hidden>
+                        <option value="" selected>선택</option>
+                        <option value="Y">Y</option>
+                        <option value="N">N</option>
+                      </select>
+                    </div>
+                    <section class="customSelectBox">
+                      <button class="customSelectView">
+                        선택
                       </button>
-                    </li>
-                    <li class="inputArea inputArea02 selectRadioEvet01">
-                      <div class="inputWrap">
-                        <input
-                          type="radio"
-                          id="selectInput"
-                          name="addressInput" />
-                        <label for="selectInput">선택형</label>
-                      </div>
-                      <section class="customSelectBox">
-                        <button class="customSelectView">
-                          전체
-                          <figure></figure>
+                      <ul class="customSelectBtns">
+                      </ul>
+                    </section>
+                  </li>
+                  <!-- 관로명(구간) 선택 -->
+                  <li class="content03 content selectContentArea">
+                    <div class="hiddenSelectBox">
+                      <!-- name도 추가 -->
+                      <select name="pipe_name" id="pipeNameSelectBox" hidden>
+                        <option value="" selected>선택</option>
+                        <option value="SNP구간">SNP구간</option>
+                        <option value="과천지선">과천지선</option>
+                      </select>
+                    </div>
+                    <section class="customSelectBox">
+                      <button class="customSelectView">
+                        선택
+                      </button>
+                      <ul class="customSelectBtns" id="pipe_name_ul">
+                      </ul>
+                    </section>
+                  </li>
+                  <!-- 단선 복선 선택 -->
+                  <li class="content04 content selectContentArea">
+                    <div class="hiddenSelectBox">
+                      <!-- name도 추가 -->
+                      <select name="sun_gubun" id="sunGubunSelectBox" hidden>
+                        <option value="" selected>선택</option>
+                        <option value="단선">단선</option>
+                        <option value="복선">복선</option>
+                      </select>
+                    </div>
+                    <section class="customSelectBox">
+                      <button class="customSelectView">
+                        선택
+                      </button>
+                      <ul class="customSelectBtns">
+                      </ul>
+                    </section>
+                  </li>
+                  <!-- 관경1 입력 -->
+                  <li class="content05 content"> <input type="text" />
+                  </li>
+                  <!-- 관경2 입력 -->
+                  <li class="content06 content">
+                    <input type="text" />
+                  </li>
+                  <!-- 국공유지 여부 선택 -->
+                  <li class="content07 content selectContentArea">
+                    <div class="hiddenSelectBox">
+                      <!-- name도 추가 -->
+                      <select name="gover_own_yn" id="goverOwnYnSelectBox" hidden>
+                        <option value="" selected>선택</option>
+                        <option value="Y">Y</option>
+                        <option value="N">N</option>
+                      </select>
+                    </div>
+                    <section class="customSelectBox">
+                      <button class="customSelectView">
+                        선택
+                      </button>
+                      <ul class="customSelectBtns">
+                      </ul>
+                    </section>
+                  </li>
+                  <!-- 지적면적 입력 -->
+                  <li class="content08 content">
+                    <input type="text" />
+                  </li>
+                  <!-- 지목 선택 -->
+                  <li class="content09 content selectContentArea">
+                    <div class="hiddenSelectBox">
+                      <!-- name도 추가 -->
+                      <select name="jimok_text" id="jimokSelectBox" hidden>
+                        <option value="">선택</option>
+                        <option th:each="val:${resultJimokList}" th:value="${val?.jm_name}" th:utext="${val?.jm_name}">지목</option>
+                      </select>
+                    </div>
+                    <section class="customSelectBox">
+                      <button class="customSelectView">
+                        선택
+                      </button>
+                      <ul class="customSelectBtns">
+                      </ul>
+                    </section>
+                  </li>
+                  <!-- 관리제외필지 체크 -->
+                  <li class="content10 content checkboxWrap">
+                    <input type="checkbox" id="notsetAddCheckbox01" />
+                    <label for="notsetAddCheckbox01" class="customCheckBoxLabel01"></label>
+                  </li>
+                </ul>
+              </div>
+              <!-- 주소입력 -->
+              <div class="depth2">
+                <ul class="titles">
+                  <li class="title01">주소</li>
+                  <li class="title02">주소 검색</li>
+                </ul>
+                <ul class="contents">
+                  <li class="content01"></li>
+                  <li class="content02">
+                    <ul class="radioBox">
+                      <!-- 입력형 -->
+                      <li class="inputArea inputArea01">
+                        <div class="inputWrap">
+                          <input type="radio" id="writeInput" name="addressInput" value="0" checked />
+                          <label for="writeInput">입력형</label>
+                        </div>
+                        <input type="text" name="address" placeholder="주소 입력" class="addressInputBox01" />
+                        <button class="SearchAddressBtn AddPopBtn" id="addressSearchBtn">
+                          검색
                         </button>
-
-                        <ul class="customSelectBtns">
-                          <li><button class="moreSelectBtn">전체</button></li>
-                          <li><button class="moreSelectBtn">전체</button></li>
-                          <li><button class="moreSelectBtn">전체</button></li>
-                        </ul>
-                      </section>
-                      <section class="customSelectBox">
-                        <button class="customSelectView">
-                          전체
-                          <figure></figure>
-                        </button>
-
-                        <ul class="customSelectBtns">
-                          <li><button class="moreSelectBtn">전체</button></li>
-                          <li><button class="moreSelectBtn">전체</button></li>
-                          <li><button class="moreSelectBtn">전체</button></li>
-                        </ul>
-                      </section>
-                      <section class="customSelectBox">
-                        <button class="customSelectView">
-                          전체
-                          <figure></figure>
-                        </button>
-
-                        <ul class="customSelectBtns">
-                          <li><button class="moreSelectBtn">전체</button></li>
-                          <li><button class="moreSelectBtn">전체</button></li>
-                          <li><button class="moreSelectBtn">전체</button></li>
-                        </ul>
-                      </section>
-                      <section class="customSelectBox">
-                        <button class="customSelectView">
-                          전체
-                          <figure></figure>
-                        </button>
-
-                        <ul class="customSelectBtns">
-                          <li><button class="moreSelectBtn">전체</button></li>
-                          <li><button class="moreSelectBtn">전체</button></li>
-                          <li><button class="moreSelectBtn">전체</button></li>
-                        </ul>
-                      </section>
-                      <input
-                        type="text"
-                        placeholder="지번 입력"
-                        class="addressInputBox02" />
-                    </li>
-                  </ul>
-                </li>
-              </ul>
+                      </li>
+                      <!-- 선택형 -->
+                      <li class="inputArea inputArea02 selectRadioEvet01">
+                        <div class="inputWrap">
+                          <input type="radio" id="selectInput" name="addressInput" value="1" />
+                          <label for="selectInput">선택형</label>
+                        </div>
+                        <!-- 주소 선택 콤보박스(시도) -->
+                        <div class="selectContentArea">
+                          <div class="hiddenSelectBox">
+                            <select name="sido" id="sidoSelectBox" hidden>
+                              <option value="">전체</option>
+                              <option th:each="val:${sidoList}" th:value="${val?.sm_name}" th:utext="${val?.sm_name}">지목</option>
+                            </select>
+                          </div>
+                          <section class="customSelectBox">
+                            <button class="customSelectView">
+                              전체
+                            </button>
+                            <ul class="customSelectBtns" id="sido_ul">
+                            </ul>
+                          </section>
+                        </div>
+                        <!-- 주소 선택 콤보박스(구군) -->
+                        <div class="selectContentArea">
+                          <div class="hiddenSelectBox">
+                            <select name="gugun" id="gugunSelectBox" hidden>
+                              <option value="">전체</option>
+                            </select>
+                          </div>
+                          <section class="customSelectBox">
+                            <button class="customSelectView">
+                              전체
+                            </button>
+                            <ul class="customSelectBtns" id="gugun_ul">
+                            </ul>
+                          </section>
+                        </div>
+                        <!-- 주소 선택 콤보박스(읍면동) -->
+                        <div class="selectContentArea">
+                          <div class="hiddenSelectBox">
+                            <select name="dong" id="dongSelectBox" hidden>
+                              <option value="">전체</option>
+                            </select>
+                          </div>
+                          <section class="customSelectBox">
+                            <button class="customSelectView">
+                              전체
+                            </button>
+                            <ul class="customSelectBtns" id="dong_ul">
+                            </ul>
+                          </section>
+                        </div>
+                        <!-- 주소 선택 콤보박스(리) -->
+                        <div class="selectContentArea">
+                          <div class="hiddenSelectBox">
+                            <select name="ri" id="riSelectBox" hidden>
+                              <option value="">전제</option>
+                            </select>
+                          </div>
+                          <section class="customSelectBox">
+                            <button class="customSelectView">
+                              전체
+                            </button>
+                            <ul class="customSelectBtns" id="ri_ul">
+                            </ul>
+                          </section>
+                        </div>
+                        <input type="text" name="mjibun" placeholder="지번 입력">
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
         </form>
         <section class="ownerInfo">
           <div class="subTitle">소유자 정보</div>
@@ -324,9 +419,7 @@
 
           <div class="fileUploadWrap">
             <div class="fileUploadBox">
-              <img
-                src="/assets/media/menu01/images/file-upload.png"
-                alt="파일 업로드 아이콘" />
+              <img src="/assets/media/menu01/images/file-upload.png" alt="파일 업로드 아이콘" />
               <p>파일을 마우스로 끌어오세요.</p>
             </div>
           </div>
@@ -340,9 +433,7 @@
               <ul class="contents">
                 <li class="content01 content checkboxWrap">
                   <input type="checkbox" id="notsetAddCheckbox02" />
-                  <label
-                    for="notsetAddCheckbox02"
-                    class="customCheckBoxLabel02"></label>
+                  <label for="notsetAddCheckbox02" class="customCheckBoxLabel02"></label>
                 </li>
                 <li class="content02 content">
                   <p class="fileName">파일명.pdf</p>
@@ -358,11 +449,7 @@
         <section class="memoSection">
           <div class="subTitle">메모</div>
 
-          <textarea
-            name=""
-            id=""
-            placeholder="내용을 입력해주세요. (200자 이내)"
-            maxlength="200"></textarea>
+          <textarea name="" id="" placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200"></textarea>
         </section>
 
         <div class="finalBtnBox btnWrap">
@@ -372,10 +459,13 @@
       </main>
     </div>
     <div class="notsetAddResultPop"></div>
+    <!-- 주소검색 결과 팝업 -->
+    <div class="landRightSearchResultPopWrapper" id="searchResultPopDiv">
+    </div>
     <!-- script -->
-    
-    <script src="/js/songyu/notsetAdd.js"></script>	
-    <script type="module" src="/js/module/surfaceMain.js"></script>
+    <script src="/js/common/addressSelect.js"></script>
+    <script src="/js/songyu/notsetAdd.js"></script>
   </body>
-  </th:block>
+</th:block>
+
 </html>
