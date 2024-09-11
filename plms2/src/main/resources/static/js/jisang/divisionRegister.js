@@ -695,65 +695,24 @@ $(document).on("click","#addBtn",function(){
 		addDiv.find("#bunhalIndex").val(index);
 		console.log($(addDiv).html());
 		 
+		//멀티체크박스 클릭을 위한 조치
+		var pipe = addDiv.find('input.pipe_');
+		pipe.attr({'class':'pipe_'+index,'name' : 'pipe_'+index,'id': 'pipe_'+index});
+		var label1 = pipe.closest('li').find('label').first();
+		label1.attr({'for': 'pipe_'+index,'name' : 'pipe_'+index});
+					 
+					 
+		var terminate = addDiv.find('input.terminate_');
+		terminate.attr({'class':'terminate_'+index,'id': 'terminate_'+index,'name' : 'terminate_'+index});
+		var label2 = terminate.closest('li').find('label').first();
+		label2.attr({'for': 'terminate_'+index,'name' : 'terminate_'+index});
 		
 		
-		/*
-        var jusoButton = addDiv.find('button.searchAddressBtn_');
-            jusoButton.attr({'class': 'searchAddressBtn searchAddressBtn_' + index,
-            'id': 'searchAddressBtn_' + index
-            });
-        var toji = addDiv.find('select.divisionRegistSelectBox02_');
-                toji.attr({'id':'divisionRegistSelectBox02_'+index,
-                "name":'divisionRegistSelectBox02_'+index,
-                "class":'divisionRegistSelectBox02_'+index
-            });
-        var jimok = addDiv.find('.jimok_');
-            jimok.attr({'class':'jimok_'+index,
-             "name":'jimok_'+index});
-         var jijuk = addDiv.find('input.jijuk_');
-             jijuk.attr({'class':'jijuk_'+index,
-             'name': 'jijuk_'+index});
-         var pyenip = addDiv.find('input.pyenip_');
-             pyenip.attr({'class':'pyenip_'+index,
-             'name' : 'pyenip_'+index
-             });
-        var jasan= addDiv.find('input.jasan_');
-            jasan.attr({'class':'jasan_'+index,
-            'name' : 'jasan_'+index
-            });
-         var pipe = addDiv.find('input.pipe_');
-             pipe.attr({'class':'pipe_'+index,
-             'name' : 'pipe_'+index,
-             'id': 'pipe_'+index
-             });
-          var label1 = pipe.closest('li').find('label').first();
-              label1.attr({'for': 'pipe_'+index,
-              'name' : 'pipe_'+index
-              });
-        var terminate = addDiv.find('input.terminate_');
-             terminate.attr({'class':'terminate_'+index,
-             'id': 'terminate_'+index,
-             'name' : 'terminate_'+index
-             });
-      var label2 = terminate.closest('li').find('label').first();
-              label2.attr({'for': 'terminate_'+index,
-              'name' : 'terminate_'+index
-              });
-     var jaryo = addDiv.find('input.jaryo_');
-             jaryo.attr({'class':'jaryo_'+index,
-             'name' : 'jaryo_'+index,
-             'id': 'jaryo_'+index
-             });
-      var label3 = jaryo.closest('li').find('label').first();
-              label3.attr({'for': 'jaryo_'+index,
-              'name' : 'jaryo_'+index
-              });
-  var account = addDiv.find('select#divisionRegistSelectBox03');
-            account.attr({'id':'divisionRegistSelectBox03_'+index,
-            'name' : 'divisionRegistSelectBox03_'+index,
-             "class":'divisionRegistSelectBox03_'+index
-            });
-*/
+		var jaryo = addDiv.find('input.jaryo_');
+		jaryo.attr({'class':'jaryo_'+index,'name' : 'jaryo_'+index,'id': 'jaryo_'+index});
+		var label3 = jaryo.closest('li').find('label').first();
+		label3.attr({'for': 'jaryo_'+index,'name' : 'jaryo_'+index});
+		
 
             index++; // i 값을 증가시켜 다음 버튼에 적용
 
