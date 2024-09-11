@@ -16,8 +16,7 @@ $(document).ready(function() {
     // 모든 셀렉트 박스에 대해 커스텀 셀렉트 박스 초기화 실행
     createCustomLimasterReg();  // 페이지가 로드될 때 초기화
 	
-
-
+	// 파일 첨부 관련
 	var objDragAndDrop = $(".fileUploadBox");
 	                
     $(document).on("dragenter",".fileUploadBox",function(e){

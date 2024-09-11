@@ -530,6 +530,39 @@ public class goverController {
   			return mav;
 	    }
 		
+		// 소속 토지 정보를 제공하는 API
+		@GetMapping("/getGoverPnuList")
+		public ResponseEntity<?> getGoverPnuList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		        // 요청된 idx에 맞는 소속 토지 정보를 조회
+		        String idx = request.getParameter("idx");
+
+		        log.info("-----------getGoverPnuList 동작-------------");
+		        if (idx == null || idx.isEmpty()) {
+		            return ResponseEntity.badRequest().body("idx 없음");
+		        }
+
+		        HashMap<String, Object> params = new HashMap<>();
+		        params.put("idx", idx);
+
+		        // 소속 토지 정보 조회 (SQL 매퍼 또는 서비스 호출)
+		        ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList", params);
+
+		        log.info("goverPnuList: " + goverPnuList);
+		        // 조회 결과가 없을 경우 빈 리스트 반환
+		        if (goverPnuList == null || goverPnuList.isEmpty()) {
+		            return ResponseEntity.noContent().build();
+		        }
+
+		        // 결과를 JSON으로 반환
+		        HashMap<String, Object> resultMap = new HashMap<>();
+		        resultMap.put("data", goverPnuList);
+
+		        // 성공적으로 조회된 데이터를 JSON으로 반환
+		        JSONObject jsonResponse = new JSONObject(resultMap);
+		        return ResponseEntity.ok(jsonResponse.toString());
+		}
+
+		
 		@RequestMapping(value="/menu03_2DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 		public ResponseEntity<?> datatableList03_2(HttpServletRequest req, HttpServletResponse res) throws Exception {
 			
