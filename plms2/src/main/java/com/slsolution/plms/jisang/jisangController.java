@@ -1554,206 +1554,173 @@ public class jisangController {
 		log.info("resultData:"+ data.get(0));
 		log.info("soujaList:"+soujaList);
 		log.info("bunhalList:"+bunhalList);
+		log.info("atcfileList:"+atcfilelist);
 		mav.setViewName("content/jisang/divisionRegister");
 		return mav;
 	}
 	
 	//분할 임시저장
+	@Transactional
 	@PostMapping(path="/divisionRegisterSave")
 	public void divisionRegisterSave(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-		ModelAndView mav=new ModelAndView();
-		HashMap params = new HashMap();
-		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		 String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
+	        
+	        JSONObject requestJsonObj=new JSONObject(requestParams);
+	        log.info("requestJsonObj:"+requestJsonObj);
+	        
+	        HashMap<String,Object> requestMap= new HashMap<>();
+	        Object seq= mainService.selectCountQuery("jisangSQL.selectJisangMasterNextval",requestMap);
+			int nseq=(int)seq;
+			log.info("##seq###:"+seq);
+	        String jisang_no="J_"+String.format("%06d",nseq);
+	        //대상토지 입력
+	        JSONArray desangTogis=requestJsonObj.getJSONArray("togiDatas");
+	        for(int i=0;i<desangTogis.length();i++) {
+	        	
+	        	
+	        }
+	        
+	        
+	        
+//		ModelAndView mav=new ModelAndView();
+//		HashMap params = new HashMap();
+//		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		//String httpRequest.getParameter("togiDatas");	//담당지사
+//		JSONArray togiDatas=new JSONArray(httpRequest.getParameter("togiDatas").toString());
+//		log.info("togiDatas:"+togiDatas);
 
-		String jisa = httpRequest.getParameter("jisa");	//담당지사
-		String yongdo = httpRequest.getParameter("yongdo");	//용도
-		String pipe_name = httpRequest.getParameter("pipe_name");	//관로명(구간)
-		String sun_gubun = httpRequest.getParameter("sun_gubun");	//단/복선
-		String sido_nm = httpRequest.getParameter("sido_nm");	//주소
-		String sgg_nm = httpRequest.getParameter("sgg_nm");	//주소
-		String ri_nm = httpRequest.getParameter("ri_nm");	//주소
-		String jibun = httpRequest.getParameter("jibun");	//주소
-		String jijuk_area = httpRequest.getParameter("jijuk_area");	//지적면적(m²)
-		String gover_own_yn = httpRequest.getParameter("gover_own_yn");	//국공유지여부
-
-		String jasan_no = httpRequest.getParameter("jasan_no");	//자산분류번호
-		String chuideuk_date = httpRequest.getParameter("chuideuk_date");	//취득일자
-		String pyeonib_area = httpRequest.getParameter("pyeonib_area");	//편입면적(m2)
-		String use_state = httpRequest.getParameter("use_state");	//사용현황
-		String deunggi_date = httpRequest.getParameter("deunggi_date");	 //등기일
-		String deunggi_no = httpRequest.getParameter("deunggi_no");	//등기번호
-		String deunggiso = httpRequest.getParameter("deunggiso");	//등기소
-		String dosiplan = httpRequest.getParameter("dosiplan");	//도시계획 결정여부
-
-		String account_yn = httpRequest.getParameter("account_yn");
-		String cancel_date = httpRequest.getParameter("cancel_date");
-		String chuideuk_money = httpRequest.getParameter("chuideuk_money");
-		String gammoney = httpRequest.getParameter("gammoney");
-		String remainder_money = httpRequest.getParameter("remainder_money");
-		String cancel_bosang_yn = httpRequest.getParameter("cancel_bosang_yn");
-		String cancel_bosang_money = httpRequest.getParameter("cancel_bosang_money");
-		String cancel_reason = httpRequest.getParameter("cancel_reason");
-		String cancel_comment = httpRequest.getParameter("cancel_comment");
-
-		String jisang_no = httpRequest.getParameter("jisang_no");
-		String jIdx = httpRequest.getParameter("jIdx");
-		
-		int docCount=0;
-		
-		
+//		String jisa = httpRequest.getParameter("jisa");	//담당지사
+//		String yongdo = httpRequest.getParameter("yongdo");	//용도
+//		String pipe_name = httpRequest.getParameter("pipe_name");	//관로명(구간)
+//		String sun_gubun = httpRequest.getParameter("sun_gubun");	//단/복선
+//		String sido_nm = httpRequest.getParameter("sido_nm");	//주소
+//		String sgg_nm = httpRequest.getParameter("sgg_nm");	//주소
+//		String ri_nm = httpRequest.getParameter("ri_nm");	//주소
+//		String jibun = httpRequest.getParameter("jibun");	//주소
+//		String jijuk_area = httpRequest.getParameter("jijuk_area");	//지적면적(m²)
+//		String gover_own_yn = httpRequest.getParameter("gover_own_yn");	//국공유지여부
+//
+//		String jasan_no = httpRequest.getParameter("jasan_no");	//자산분류번호
+//		String chuideuk_date = httpRequest.getParameter("chuideuk_date");	//취득일자
+//		String pyeonib_area = httpRequest.getParameter("pyeonib_area");	//편입면적(m2)
+//		String use_state = httpRequest.getParameter("use_state");	//사용현황
+//		String deunggi_date = httpRequest.getParameter("deunggi_date");	 //등기일
+//		String deunggi_no = httpRequest.getParameter("deunggi_no");	//등기번호
+//		String deunggiso = httpRequest.getParameter("deunggiso");	//등기소
+//		String dosiplan = httpRequest.getParameter("dosiplan");	//도시계획 결정여부
+//
+//		String account_yn = httpRequest.getParameter("account_yn");
+//		String cancel_date = httpRequest.getParameter("cancel_date");
+//		String chuideuk_money = httpRequest.getParameter("chuideuk_money");
+//		String gammoney = httpRequest.getParameter("gammoney");
+//		String remainder_money = httpRequest.getParameter("remainder_money");
+//		String cancel_bosang_yn = httpRequest.getParameter("cancel_bosang_yn");
+//		String cancel_bosang_money = httpRequest.getParameter("cancel_bosang_money");
+//		String cancel_reason = httpRequest.getParameter("cancel_reason");
+//		String cancel_comment = httpRequest.getParameter("cancel_comment");
+//
+//		String jisang_no = httpRequest.getParameter("jisang_no");
+//		String jIdx = httpRequest.getParameter("jIdx");
+//		
+//		int docCount=0;
+//		
+//		
 		ArrayList<HashMap<String, String>> docArray = new ArrayList<>();
-		if (httpRequest.getParameter("req_doc_file01")!=null && httpRequest.getParameter("req_doc_file01")!="" && !httpRequest.getParameter("req_doc_file01").equals("")) {
+		log.info("req_doc_file01:"+requestJsonObj.getString("req_doc_file01"));
+		if (requestJsonObj.getString("req_doc_file01")!=null && requestJsonObj.getString("req_doc_file01")!="" && !requestJsonObj.getString("req_doc_file01").equals("")) {
 			HashMap<String,String> docMap = new HashMap();
 			docMap.put("jisang_no",  jisang_no);
 			docMap.put("fseq","1");
 			docMap.put("file_name",  httpRequest.getParameter("req_doc_file01"));
-			var fpath=GC.getJisangReqDoc1Dir();
+			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 			var tmp=GC.getJisangFileTempDir();
+			log.info("fpath:"+fpath);
 			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file01"), tmp, fpath);
+			try {
+			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file01"), tmp, fpath);
+			}catch(Exception e) {
+				
+			}
 			 docArray.add(docMap);
 		}
-		if (httpRequest.getParameter("req_doc_file02")!=null && httpRequest.getParameter("req_doc_file02")!="" && !httpRequest.getParameter("req_doc_file02").equals("")) {
+		if (requestJsonObj.getString("req_doc_file02")!=null && requestJsonObj.getString("req_doc_file02")!="" && !requestJsonObj.getString("req_doc_file02").equals("")) {
 			HashMap<String,String> docMap = new HashMap();
 			docMap.put("jisang_no",  jisang_no);
 			docMap.put("fseq","2");
-			docMap.put("file_name",  httpRequest.getParameter("req_doc_file02"));
-			var fpath=GC.getJisangReqDoc1Dir();
+			docMap.put("file_name",  requestJsonObj.getString("req_doc_file02"));
+			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 			var tmp=GC.getJisangFileTempDir();
 			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file02"), tmp, fpath);
+			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file02"), tmp, fpath);
 			 docArray.add(docMap);
 		}
-		if (httpRequest.getParameter("req_doc_file03")!=null && httpRequest.getParameter("req_doc_file03")!="" && !httpRequest.getParameter("req_doc_file03").equals("")) {
+		if (requestJsonObj.getString("req_doc_file03")!=null && requestJsonObj.getString("req_doc_file03")!="" && !requestJsonObj.getString("req_doc_file03").equals("")) {
 			HashMap<String,String> docMap = new HashMap();
 			docMap.put("jisang_no",  jisang_no);
 			docMap.put("fseq","3");
-			docMap.put("file_name",  httpRequest.getParameter("req_doc_file03"));
-			var fpath=GC.getJisangReqDoc1Dir();
+			docMap.put("file_name",  requestJsonObj.getString("req_doc_file03"));
+			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 			var tmp=GC.getJisangFileTempDir();
 			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file03"), tmp, fpath);
+			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file03"), tmp, fpath);
 			 docArray.add(docMap);
 		}
-		if (httpRequest.getParameter("req_doc_file04")!=null && httpRequest.getParameter("req_doc_file04")!="" && !httpRequest.getParameter("req_doc_file04").equals("")) {
+		if (requestJsonObj.getString("req_doc_file04")!=null && requestJsonObj.getString("req_doc_file04")!="" && !requestJsonObj.getString("req_doc_file04").equals("")) {
 			HashMap<String,String> docMap = new HashMap();
 			docMap.put("jisang_no",  jisang_no);
 			docMap.put("fseq","4");
-			docMap.put("file_name",  httpRequest.getParameter("req_doc_file04"));
-			var fpath=GC.getJisangReqDoc1Dir();
+			docMap.put("file_name",  requestJsonObj.getString("req_doc_file04"));
+			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 			var tmp=GC.getJisangFileTempDir();
 			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file04"), tmp, fpath);
+			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file04"), tmp, fpath);
 			 docArray.add(docMap);
 		}
-		if (httpRequest.getParameter("req_doc_file05")!=null && httpRequest.getParameter("req_doc_file05")!="" && !httpRequest.getParameter("req_doc_file05").equals("")) {
+		if (requestJsonObj.getString("req_doc_file05")!=null && requestJsonObj.getString("req_doc_file05")!="" && !requestJsonObj.getString("req_doc_file05").equals("")) {
 			HashMap<String,String> docMap = new HashMap();
 			docMap.put("jisang_no",  jisang_no);
 			docMap.put("fseq","5");
-			docMap.put("file_name",  httpRequest.getParameter("req_doc_file05"));
-			var fpath=GC.getJisangReqDoc1Dir();
+			docMap.put("file_name",  requestJsonObj.getString("req_doc_file05"));
+			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 			var tmp=GC.getJisangFileTempDir();
 			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file05"), tmp, fpath);
+			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file05"), tmp, fpath);
 			 docArray.add(docMap);
 		}
-		if (httpRequest.getParameter("req_doc_file06")!=null && httpRequest.getParameter("req_doc_file06")!="" && !httpRequest.getParameter("req_doc_file06").equals("")) {
+		if (requestJsonObj.getString("req_doc_file06")!=null && requestJsonObj.getString("req_doc_file06")!="" && !requestJsonObj.getString("req_doc_file06").equals("")) {
 			HashMap<String,String> docMap = new HashMap();
 			docMap.put("jisang_no",  jisang_no);
 			docMap.put("fseq","6");
-			docMap.put("file_name",  httpRequest.getParameter("req_doc_file06"));
-			var fpath=GC.getJisangReqDoc1Dir();
+			docMap.put("file_name",  requestJsonObj.getString("req_doc_file06"));
+			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 			var tmp=GC.getJisangFileTempDir();
 			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file06"), tmp, fpath);
+			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file06"), tmp, fpath);
 			 docArray.add(docMap);
 		}
-		if (httpRequest.getParameter("req_doc_file07")!=null && httpRequest.getParameter("req_doc_file07")!="" && !httpRequest.getParameter("req_doc_file07").equals("")) {
+		if (requestJsonObj.getString("req_doc_file07")!=null && requestJsonObj.getString("req_doc_file07")!="" && !requestJsonObj.getString("req_doc_file07").equals("")) {
 			HashMap<String,String> docMap = new HashMap();
 			docMap.put("jisang_no",  jisang_no);
 			docMap.put("fseq","7");
-			docMap.put("file_name",  httpRequest.getParameter("req_doc_file07"));
-			var fpath=GC.getJisangReqDoc1Dir();
+			docMap.put("file_name",  requestJsonObj.getString("req_doc_file07"));
+			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 			var tmp=GC.getJisangFileTempDir();
 			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file07"), tmp, fpath);
+			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file07"), tmp, fpath);
 			 docArray.add(docMap);
 		}
-		if (httpRequest.getParameter("req_doc_file08")!=null && httpRequest.getParameter("req_doc_file08")!="" && !httpRequest.getParameter("req_doc_file08").equals("")) {
+		if (requestJsonObj.getString("req_doc_file08")!=null && requestJsonObj.getString("req_doc_file08")!="" && !requestJsonObj.getString("req_doc_file08").equals("")) {
 			HashMap<String,String> docMap = new HashMap();
 			docMap.put("jisang_no",  jisang_no);
 			docMap.put("fseq","8");
-			docMap.put("file_name",  httpRequest.getParameter("req_doc_file08"));
-			var fpath=GC.getJisangReqDoc1Dir();
+			docMap.put("file_name",  requestJsonObj.getString("req_doc_file08"));
+			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 			var tmp=GC.getJisangFileTempDir();
 			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file08"), tmp, fpath);
+			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file08"), tmp, fpath);
 			 docArray.add(docMap);
 		}
-//		
-		params.put("jisa",jisa);
-		params.put("yongdo",yongdo);
-		params.put("pipe_name",pipe_name);
-		params.put("sun_gubun",sun_gubun);
-		params.put("sido_nm",sido_nm);
-		params.put("sgg_nm",sgg_nm);
-		params.put("ri_nm",ri_nm);
-		params.put("jibun",jibun);
-		if (jijuk_area != null && !jijuk_area.trim().isEmpty()) {
-			params.put("jijuk_area",Integer.parseInt(jijuk_area));
-		} else {
-			params.put("jijuk_area", null);
-		}
-		params.put("gover_own_yn",gover_own_yn);
-
-		params.put("jasan_no",jasan_no);
-		params.put("chuideuk_date",chuideuk_date);
-		if (pyeonib_area != null && !pyeonib_area.trim().isEmpty()) {
-			params.put("pyeonib_area",Integer.parseInt(pyeonib_area));
-		} else {
-			params.put("pyeonib_area", null);
-		}
-		params.put("use_state",use_state);
-		params.put("deunggi_date",deunggi_date);
-		params.put("deunggi_no",deunggi_no);
-		params.put("deunggiso",deunggiso);
-		params.put("dosiplan",dosiplan);
-
-		params.put("account_yn",account_yn);
-		params.put("cancel_date",cancel_date);
-		if (chuideuk_money != null && !chuideuk_money.trim().isEmpty()) {
-			params.put("chuideuk_money", Integer.parseInt(chuideuk_money));
-		} else {
-			params.put("chuideuk_money", null);
-		}
-		if (gammoney != null && !gammoney.trim().isEmpty()) {
-			params.put("gammoney",Integer.parseInt(gammoney));
-		} else {
-			params.put("gammoney", null);
-		}
-		if (remainder_money != null && !remainder_money.trim().isEmpty()) {
-			params.put("remainder_money",Integer.parseInt(remainder_money));
-		} else {
-			params.put("remainder_money", null);
-		}
-
-		params.put("cancel_bosang_yn",cancel_bosang_yn);
-
-		if (cancel_bosang_money != null && !cancel_bosang_money.trim().isEmpty()) {
-			params.put("cancel_bosang_money",Integer.parseInt(cancel_bosang_money));
-		} else {
-			params.put("cancel_bosang_money", null);
-		}
-		params.put("cancel_reason",cancel_reason);
-		params.put("cancel_comment",cancel_comment);
-
-		params.put("jisang_no",jisang_no);
-		//params.put("idx",Integer.parseInt(jIdx));
-
-		log.info("params:"+params);
 		
-		
-		//docMap.put("jisang_no", jisang_no);
 		for(int i=0;i<docArray.size();i++) {
 			log.info("arr"+docArray.get(i));
 			HashMap<String,String> filesMap=docArray.get(i);
@@ -1767,20 +1734,124 @@ public class jisangController {
 //			
 //				filesMap.put("file_path",obj.getString("file_path").toString());
 //			 log.info("filesMap:"+filesMap);
-			Object count= mainService.selectCountQuery("jisangSQL.selectJisangReqDoc1Count", filesMap);
+			Object count= mainService.selectCountQuery("jisangSQL.selectJisangBunhalAtcFileCount", filesMap);
 			log.info("count:"+count);
 			
 			if ((int)count==0) {
-				mainService.InsertQuery("jisangSQL.insertJisangReqDoc1",filesMap);
+				mainService.InsertQuery("jisangSQL.insertJisangBunhalAtcFile",filesMap);
 			}
-			else mainService.InsertQuery("jisangSQL.updateJisangReqDoc1",filesMap);
+			else mainService.InsertQuery("jisangSQL.updateJisangBunhalAtcFile",filesMap);
 		}
-		//log.info("docMap:"+docMap);
-		
-		mainService.InsertQuery("jisangSQL.upsertJisangMasterTmp",params);
 		
 		
 		
+////		
+//		params.put("jisa",jisa);
+//		params.put("yongdo",yongdo);
+//		params.put("pipe_name",pipe_name);
+//		params.put("sun_gubun",sun_gubun);
+//		params.put("sido_nm",sido_nm);
+//		params.put("sgg_nm",sgg_nm);
+//		params.put("ri_nm",ri_nm);
+//		params.put("jibun",jibun);
+//		if (jijuk_area != null && !jijuk_area.trim().isEmpty()) {
+//			params.put("jijuk_area",Integer.parseInt(jijuk_area));
+//		} else {
+//			params.put("jijuk_area", null);
+//		}
+//		params.put("gover_own_yn",gover_own_yn);
+//
+//		params.put("jasan_no",jasan_no);
+//		params.put("chuideuk_date",chuideuk_date);
+//		if (pyeonib_area != null && !pyeonib_area.trim().isEmpty()) {
+//			params.put("pyeonib_area",Integer.parseInt(pyeonib_area));
+//		} else {
+//			params.put("pyeonib_area", null);
+//		}
+//		params.put("use_state",use_state);
+//		params.put("deunggi_date",deunggi_date);
+//		params.put("deunggi_no",deunggi_no);
+//		params.put("deunggiso",deunggiso);
+//		params.put("dosiplan",dosiplan);
+//
+//		params.put("account_yn",account_yn);
+//		params.put("cancel_date",cancel_date);
+//		if (chuideuk_money != null && !chuideuk_money.trim().isEmpty()) {
+//			params.put("chuideuk_money", Integer.parseInt(chuideuk_money));
+//		} else {
+//			params.put("chuideuk_money", null);
+//		}
+//		if (gammoney != null && !gammoney.trim().isEmpty()) {
+//			params.put("gammoney",Integer.parseInt(gammoney));
+//		} else {
+//			params.put("gammoney", null);
+//		}
+//		if (remainder_money != null && !remainder_money.trim().isEmpty()) {
+//			params.put("remainder_money",Integer.parseInt(remainder_money));
+//		} else {
+//			params.put("remainder_money", null);
+//		}
+//
+//		params.put("cancel_bosang_yn",cancel_bosang_yn);
+//
+//		if (cancel_bosang_money != null && !cancel_bosang_money.trim().isEmpty()) {
+//			params.put("cancel_bosang_money",Integer.parseInt(cancel_bosang_money));
+//		} else {
+//			params.put("cancel_bosang_money", null);
+//		}
+//		params.put("cancel_reason",cancel_reason);
+//		params.put("cancel_comment",cancel_comment);
+//
+//		params.put("jisang_no",jisang_no);
+//		//params.put("idx",Integer.parseInt(jIdx));
+//
+//		log.info("params:"+params);
+//		
+//		
+//		//docMap.put("jisang_no", jisang_no);
+//		for(int i=0;i<docArray.size();i++) {
+//			log.info("arr"+docArray.get(i));
+//			HashMap<String,String> filesMap=docArray.get(i);
+//			log.info("filesMap:"+filesMap);
+//			 //JSONObject obbj=new JSONObject(docArray.get(i));
+//			 //log.info("obbj:"+obbj);
+////			 HashMap<String,Object> filesMap=new HashMap<>();
+////			 filesMap.put("jisang_no",obj.getString("jisang_no").toString());
+////			 filesMap.put("fseq",obj.getString("fseq").toString());
+////				filesMap.put("file_name",obj.getString("file_name").toString());
+////			
+////				filesMap.put("file_path",obj.getString("file_path").toString());
+////			 log.info("filesMap:"+filesMap);
+//			Object count= mainService.selectCountQuery("jisangSQL.selectJisangReqDoc1Count", filesMap);
+//			log.info("count:"+count);
+//			
+//			if ((int)count==0) {
+//				mainService.InsertQuery("jisangSQL.insertJisangReqDoc1",filesMap);
+//			}
+//			else mainService.InsertQuery("jisangSQL.updateJisangReqDoc1",filesMap);
+//		}
+//		//log.info("docMap:"+docMap);
+//		
+//		mainService.InsertQuery("jisangSQL.upsertJisangMasterTmp",params);
+//		
+//		
+	        HashMap<String,Object> resultmap=new HashMap();
+	        resultmap.put("resultCode","0000");
+	        resultmap.put("params", requestJsonObj);
+	        resultmap.put("resultData","");
+	        resultmap.put("resultMessage","success");
+	        JSONObject obj =new JSONObject(resultmap);
+//	        System.out.println(obj);
+	       
+	      //log.info("jo:"+jo);
+	      			response.setCharacterEncoding("UTF-8");
+	      			response.setHeader("Access-Control-Allow-Origin", "*");
+	      			response.setHeader("Cache-Control", "no-cache");
+	      			response.resetBuffer();
+	      			response.setContentType("application/json");
+	      			//response.getOutputStream().write(jo);
+	      			response.getWriter().print(obj);
+	      			response.getWriter().flush();
 		
 		
 	}

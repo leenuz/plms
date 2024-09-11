@@ -16,6 +16,7 @@ public class GlobalConfig {
 	private static String jisangFileTempDir;
 	private static String goverFileTempDir;
 	private static String jisangFileDataDir;
+	private static String jisangBunhalDataDir;
 	private static String notsetFileTempDir;
 	private static String notsetFileDataDir;
 	private static String jisangReqDoc1Dir;
@@ -53,6 +54,14 @@ public class GlobalConfig {
 	}
 	public static String getJisangFileDataDir() {
 		return jisangFileDataDir;
+	}
+	//지상권분할첨부서류
+	@Value("${plms.jisangBunhalDataDir}")
+	public void setJisangBunhalDataDir(String str) {
+		jisangBunhalDataDir=str;
+	}
+	public static String getJisangBunhalDataDir() {
+		return jisangBunhalDataDir;
 	}
 	
 	//미설정파일관리

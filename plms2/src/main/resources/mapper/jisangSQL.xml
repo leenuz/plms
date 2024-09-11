@@ -1070,7 +1070,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			,jb_bunhal_org_no
 		</if>
 	</select>
-
+	<!--  지상 분할 첨부파일 카운터 -->
+<select id="selectJisangBunhalAtcFileCount" parameterType="map" resultType="Integer">
+		select count(*) as count from jisang_bunhal_atcfile
+		where jba_manage_no=#{jisang_no} and jba_fseq=#{fseq}::int 
+	</select>
+	<!-- 분할 필수첨부파일 -->
+	<insert id="insertJisangBunhalAtcFile" parameterType="map">
+		INSERT INTO jisang_bunhal_atcfile (
+		jba_manage_no,
+		jba_fseq,
+		jba_file_nm,
+		jba_file_path,
+		jba_wdate
+		) VALUES (
+		#{jisang_no},
+		#{fseq}::int,
+		#{file_name},
+		#{file_path},
+		Now()
+		
+		)
+		
+	</insert>
+	<!-- 분할 필수첨부파일 업데이트 -->
+	<update id="updateJisangBunhalAtcFile" parameterType="map">
+		update jisang_bunhal_atcfile set 
+		
+		jba_file_nm=#{file_name},
+		jba_file_path=#{file_path},
+		jba_wdate=Now()
+		where jba_manage_no=#{jisang_no} and jba_fseq=#{fseq}::int 
+	</update>
 
 	<select id="selectAllTmpData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *
