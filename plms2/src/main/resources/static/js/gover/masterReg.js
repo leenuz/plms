@@ -32,45 +32,31 @@ $(document).on("click", "input[type=checkbox]", function() {
 });
 
 // 행 추가 함수
+var index = 1;
 function addRow() {
 	
-	
 	var thisUl=$(this).parent().parent().parent().parent();
-			console.log(thisUl);
-			var addUl=$("#row-template").html();
-			console.log(addUl);
-	        //var findButton=$()
-	//		var input=$(thisUl).find("input");
+	console.log(thisUl);
+	var addUl=$("#row-template").html();
+	console.log(addUl);
 
-			var addDiv = $('<ul class="contents" id="goverUl">'+addUl+'</ul>');
-			//addDiv.find("#bunhalIndex").val(index);
-			console.log($(addDiv).html());
-			 
-
-	         $("#goverUlDiv").append(addDiv);
-
-	/*
+	var addDiv = $('<ul class="contents" id="goverUl">'+addUl+'</ul>');
+	console.log($(addDiv).html());
 	
-    const templateContent = document.querySelector('#row-template').innerHTML;
+	//멀티체크박스 클릭을 위한 조치
+	var pipe = addDiv.find('#masterRegSelectBox_');
+	pipe.attr({'class':'masterRegSelectBox_'+index,'name' : 'masterRegSelectBox_'+index,'id': 'masterRegSelectBox_'+index});
+	var label1 = pipe.closest('li').find('label').first();
+	label1.attr({'for': 'masterRegSelectBox_'+index,'name' : 'masterRegSelectBox_'+index});
 
-    // 새로 추가할 행을 위한 ul 생성
-    const newRow = document.createElement('ul');
-    newRow.classList.add('contents');
-    newRow.innerHTML = templateContent;
+	// 순번 적용
+	addDiv.find('input[readonly]').attr('placeholder', index); // 순번 적용
+	index++; // index 값을 증가시켜 다음 버튼에 적용
 
-    // 새로운 순번 할당
-    const allRows = document.querySelectorAll('.landAdressInfo .depth1 .contents:not([style*="display: none;"])');
-    const newRowNumber = allRows.length + 1;
-    newRow.querySelector('input[readonly]').setAttribute('placeholder', newRowNumber);
+	$("#goverUlDiv").append(addDiv);
 
-    // 고유한 id와 name을 생성하여 각 요소에 추가 (옵션)
-    updateIdsAndNames(newRow, newRowNumber);
-
-    // 행 추가
-    document.querySelector('#goverUl').appendChild(newRow);
-
-    // 셀렉트 박스 및 기타 기능 초기화
-    createCustomLimasterReg(newRow);*/
+	// 추가된 모든 행에 대해 순번 재할당
+	updateRowNumbers();
 }
 
 // 행 삭제 함수
@@ -79,13 +65,18 @@ function deleteRow(button) {
   row.remove();
 
   // 삭제 후 남아 있는 모든 행들의 순번을 재할당
-  const allRows = document.querySelectorAll('.landAdressInfo .depth1 .contents:not([style*="display: none;"])');
-  allRows.forEach((row, index) => {
-    const seqInput = row.querySelector('input[readonly]');
-    if (seqInput) {
-      seqInput.setAttribute('placeholder', index + 1);  // 새로운 순번 할당
-    }
-  });
+  updateRowNumbers(); // 순번 재할당 함수 호출
+}
+
+// 모든 행에 대해 순번 업데이트 함수
+function updateRowNumbers() {
+    const allRows = document.querySelectorAll('.landAdressInfo .depth1 .contents:not([style*="display: none;"])');
+    allRows.forEach((row, index) => {
+        const seqInput = row.querySelector('input[readonly]');
+        if (seqInput) {
+            seqInput.setAttribute('placeholder', index + 1);  // 새로운 순번 할당
+        }
+    });
 }
 
 // ID와 Name 업데이트 함수
@@ -440,7 +431,7 @@ const ExcelPopOpenEvet = () => {
 
      const ExcelPopBtn = document.querySelector(".ExcelPopBtn");
      const masterRegExcelPopWrapper = document.querySelector(".masterRegExcelPopWrapper");
-     let htmlFilePath = '/components/popuphtml/occupancy_Popup/exceluploadPopup.html'; // 엑셀업로드
+     let htmlFilePath = '/components/popuphtml/exceluploadPopup.html'; // 엑셀업로드
 
      if(ExcelPopBtn){
 
