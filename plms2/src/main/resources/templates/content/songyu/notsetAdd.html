@@ -255,7 +255,7 @@
                   <li class="title02">주소 검색</li>
                 </ul>
                 <ul class="contents">
-                  <li class="content01"></li>
+                  <li class="content01" id="addressSearchResult"></li>
                   <li class="content02">
                     <ul class="radioBox">
                       <!-- 입력형 -->
@@ -284,7 +284,7 @@
                             </select>
                           </div>
                           <section class="customSelectBox">
-                            <button class="customSelectView">
+                            <button class="customSelectView" id="sidoBtn">
                               전체
                             </button>
                             <ul class="customSelectBtns" id="sido_ul">
@@ -299,7 +299,7 @@
                             </select>
                           </div>
                           <section class="customSelectBox">
-                            <button class="customSelectView">
+                            <button class="customSelectView" id="gugunBtn">
                               전체
                             </button>
                             <ul class="customSelectBtns" id="gugun_ul">
@@ -314,7 +314,7 @@
                             </select>
                           </div>
                           <section class="customSelectBox">
-                            <button class="customSelectView">
+                            <button class="customSelectView" id="dongBtn">
                               전체
                             </button>
                             <ul class="customSelectBtns" id="dong_ul">
@@ -329,7 +329,7 @@
                             </select>
                           </div>
                           <section class="customSelectBox">
-                            <button class="customSelectView">
+                            <button class="customSelectView" id="riBtn">
                               전체
                             </button>
                             <ul class="customSelectBtns" id="ri_ul">
@@ -461,6 +461,41 @@
     <div class="notsetAddResultPop"></div>
     <!-- 주소검색 결과 팝업 -->
     <div class="landRightSearchResultPopWrapper" id="searchResultPopDiv">
+      <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+      <div id="searchResultsPopup">
+        <div class="popupWrap" id="popupWrap">
+          <h2>
+            <p>검색결과</p>
+            <span class="topCloseBtn"></span>
+          </h2>
+          <div class="popupCont">
+            <ul class="popTitles">
+              <li class="popTitle01">PNU</li>
+              <li class="popTitle02">주소</li>
+              <li class="popTitle03">지번</li>
+              <li class="popTitle04">선택</li>
+            </ul>
+            <div class="popContentBox">
+              <ul class="popContents" th:each="val:${jisangBasicSearchList}">
+                <li class="popContent01"> [[${val.pnu}]]</li>
+                <li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.ri_nm}]]</li>
+                <ii class="popContent0201" hidden>[[${val.sido_nm}]]</ii>
+                <ii class="popContent0202" hidden>[[${val.sgg_nm}]]</ii>
+                <ii class="popContent0203" hidden>[[${val.emd_nm}]]</ii>
+                <ii class="popContent0204" hidden>[[${val.ri_nm}]]</ii>
+                <li class="popContent03">[[${val.jibun}]]</li>
+                <li class="popContent04">
+                  <button class="resultSelectBtn addressResultSelectBtn">선택</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="lastBtnBox btnWrap">
+            <button class="backBtn finalBtn" id="addressPopupCloseBtn">닫기</button>
+            <button class="saveBtn finalBtn">PNU 없이 선택</button>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- script -->
     <script src="/js/common/addressSelect.js"></script>

@@ -16,12 +16,24 @@ function getSidoMaster() {
                 console.log("response.success Y");
                 console.log("response.resultData length:" + response.resultData.length);
                 console.log(response.resultData);
+                $("#riSelectBox option").remove();
+                $("#riSelectBox").append('<option value="">전체</option>');
+                loadCustomLiLandRegist($("#ri_ul"));
+                $('#riBtn').html('전체');
+                $("#dongSelectBox option").remove();
+                $("#dongSelectBox").append('<option value="">전체</option>');
+                loadCustomLiLandRegist($("#dong_ul"));
+                $('#dongBtn').html('전체');
+                $("#gugunSelectBox option").remove();
+                $("#gugunSelectBox").append('<option value="">전체</option>');
+                loadCustomLiLandRegist($("#gugun_ul"));
+                $('#gugunBtn').html('전체');
                 $("#sidoSelectBox option").remove();
                 $("#sidoSelectBox").append('<option value="">전체</option>');
                 for (var i = 0; i < response.resultData.length; i++) {
                     $("#sidoSelectBox").append('<option value=' + response.resultData[i].sm_name + '>' + response.resultData[i].sm_name + '</option>');
                 }
-                resetComboBox($("#sido_ul"));
+                loadCustomLiLandRegist($("#sido_ul"));
             }
             else {
                 console.log("response.success N");
@@ -36,15 +48,51 @@ function getSidoMaster() {
 
 $(document).on("change", "#sidoSelectBox", function () {
     console.log("----------sidoSelectBox--------------");
-    getGugunMaster($("#sidoSelectBox option:selected").val());
+    if ($("#sidoSelectBox option:selected").val()) {
+        getGugunMaster($("#sidoSelectBox option:selected").val());
+    }
+    else {
+        $("#riSelectBox option").remove();
+        $("#riSelectBox").append('<option value="">전체</option>');
+        loadCustomLiLandRegist($("#ri_ul"));
+        $('#riBtn').html('전체');
+        $("#dongSelectBox option").remove();
+        $("#dongSelectBox").append('<option value="">전체</option>');
+        loadCustomLiLandRegist($("#dong_ul"));
+        $('#dongBtn').html('전체');
+        $("#gugunSelectBox option").remove();
+        $("#gugunSelectBox").append('<option value="">전체</option>');
+        loadCustomLiLandRegist($("#gugun_ul"));
+        $('#gugunBtn').html('전체');
+    }
 })
 
 $(document).on("change", "#gugunSelectBox", function () {
-    getDongMaster($("#sidoSelectBox option:selected").val(), $("#gugunSelectBox option:selected").val());
+    if ($("#gugunSelectBox option:selected").val()) {
+        getDongMaster($("#sidoSelectBox option:selected").val(), $("#gugunSelectBox option:selected").val());
+    }
+    else {
+        $("#riSelectBox option").remove();
+        $("#riSelectBox").append('<option value="">전체</option>');
+        loadCustomLiLandRegist($("#ri_ul"));
+        $('#riBtn').html('전체');
+        $("#dongSelectBox option").remove();
+        $("#dongSelectBox").append('<option value="">전체</option>');
+        loadCustomLiLandRegist($("#dong_ul"));
+        $('#dongBtn').html('전체');
+    }
 })
 
 $(document).on("change", "#dongSelectBox", function () {
-    getRiMaster($("#sidoSelectBox option:selected").val(), $("#gugunSelectBox option:selected").val(), $("#dongSelectBox option:selected").val());
+    if ($("#dongSelectBox option:selected").val()) {
+        getRiMaster($("#sidoSelectBox option:selected").val(), $("#gugunSelectBox option:selected").val(), $("#dongSelectBox option:selected").val());
+    }
+    else {
+        $("#riSelectBox option").remove();
+        $("#riSelectBox").append('<option value="">전체</option>');
+        loadCustomLiLandRegist($("#ri_ul"));
+        $('#riBtn').html('전체');
+    }
 })
 
 function getGugunMaster(key) {
@@ -65,13 +113,22 @@ function getGugunMaster(key) {
                 console.log("response.success Y");
                 console.log("response.resultData length:" + response.resultData.length);
                 console.log(response.resultData);
+                $("#riSelectBox option").remove();
+                $("#riSelectBox").append('<option value="">전체</option>');
+                loadCustomLiLandRegist($("#ri_ul"));
+                $('#riBtn').html('전체');
+                $("#dongSelectBox option").remove();
+                $("#dongSelectBox").append('<option value="">전체</option>');
+                loadCustomLiLandRegist($("#dong_ul"));
+                $('#dongBtn').html('전체');
                 $("#gugunSelectBox option").remove();
                 $("#gugunSelectBox").append('<option value="">전체</option>');
                 for (var i = 0; i < response.resultData.length; i++) {
                     console.log("<option value='" + response.resultData[i].sm_gugun + "'>" + response.resultData[i].sm_gugun + "</option>");
                     $("#gugunSelectBox").append('<option value="' + response.resultData[i].sm_gugun + '">' + response.resultData[i].sm_gugun + '</option>');
                 }
-                resetComboBox($("#gugun_ul"));
+                loadCustomLiLandRegist($("#gugun_ul"));
+                $('#gugunBtn').html('전체');
             }
             else {
                 console.log("response.success N");
@@ -102,12 +159,17 @@ function getDongMaster(sidoKey, gugunKey) {
                 console.log("response.success Y");
                 console.log("response.resultData length:" + response.resultData.length);
                 console.log(response.resultData);
+                $("#riSelectBox option").remove();
+                $("#riSelectBox").append('<option value="">전체</option>');
+                loadCustomLiLandRegist($("#ri_ul"));
+                $('#riBtn').html('전체');
                 $("#dongSelectBox option").remove();
                 $("#dongSelectBox").append('<option value="">전체</option>');
                 for (var i = 0; i < response.resultData.length; i++) {
                     $("#dongSelectBox").append('<option value="' + response.resultData[i].bm_dong + '">' + response.resultData[i].bm_dong + '</option>');
                 }
-                resetComboBox($("#dong_ul"));
+                loadCustomLiLandRegist($("#dong_ul"));
+                $('#dongBtn').html('전체');
             }
             else {
                 console.log("response.success N");
@@ -142,7 +204,8 @@ function getRiMaster(sidoKey, gugunKey, dongKey) {
                 for (var i = 0; i < response.resultData.length; i++) {
                     $("#riSelectBox").append('<option value="' + response.resultData[i].rm_ri + '">' + response.resultData[i].rm_ri + '</option>');
                 }
-                resetComboBox($("#ri_ul"));
+                loadCustomLiLandRegist($("#ri_ul"));
+                $('#riBtn').html('전체');
             }
             else {
                 console.log("response.success N");
@@ -159,7 +222,7 @@ $(document).on("change", "#sigunmaster", function () {
     getDongMaster($("#sigunmaster option:selected").val());
 })
 
-function resetComboBox(ele) {
+function loadCustomLiLandRegist(ele) {
     console.log("---------ele---------------");
     console.log($(ele).html());
 
@@ -214,9 +277,10 @@ $(document).on("click", "#addressSearchBtn", function () {
     }).done(function (fragment) {
         //runScriptsInElement(landRightSearchResultPop); // 삽입된 html내 스크립트 실행 함수 호출
         //console.log($("#searchResultPopDiv").html());
-        $('#searchResultPopDiv').replaceWith(fragment);
+        // console.log(fragment);
+        $('#searchResultPopDiv').html(fragment);
         const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
-        console.log($(popupOpen).html());
+        // console.log($(popupOpen).html());
         //			   		              landRightsSearchBtn.classList.add("open");
         $(popupOpen).addClass("open");
         popupOpen.classList.add("active");
@@ -246,6 +310,7 @@ $(document).on("click", ".addressResultSelectBtn", function () {
     $("#emd_nm").val(emd_nm);
     $("#ri_nm").val(ri_nm);
 
+    $('#addressSearchResult').html(address + ' ' + jibun);
     var targetDiv = $("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
     $(".popupWrap").removeClass("active");
 })
@@ -257,3 +322,7 @@ $(document).on("click", "#addressPopupCloseBtn", function () {
     $("#popupWrap").toggleClass("active");
 });
 
+$(document).on("click",".topCloseBtn",function(){
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+});
