@@ -154,4 +154,11 @@ public class issueController {
 		return ResponseEntity.ok(obj.toString());
 
 	}
+
+	@GetMapping(path="/approval") //http://localhost:8080/api/get/dbTest
+    public ModelAndView approval(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/issue/approval");
+		return mav;
+	}
 }
