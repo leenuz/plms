@@ -759,7 +759,7 @@ if(topCloseBtn){
     })
 }
 
-//pnu없이 선택/
+// pnu없이 선택
 $(document).on("click",".saveBtn",function(){
     var id =  $('.saveBtn').data('index');
     $(".bunhalAddres_" + id).val("");

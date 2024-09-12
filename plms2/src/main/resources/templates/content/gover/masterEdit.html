@@ -651,22 +651,13 @@
   		        </li>
   		        <!-- PNU -->
   		        <li class="content middleWidth">
-  		          <input type="text" name="pnu" />
+  		          <input type="text" name="pnu" th:value="${pnuList[0].gp_pnu}"/>
   		        </li>
   		        <!-- 지목 -->
   		        <li class="content selectContentArea">
   		          <div class="hiddenSelectBox">
   		            <select name="jimok_text" id="masterRegSelectBox14" hidden>
-  		              <option value="전1">전1</option>
-  		              <option value="전2">전2</option>
-  		              <option value="전3">전3</option>
-  		              <option value="전4">전4</option>
-  		              <option value="전5">전5</option>
-  		              <option value="전6">전6</option>
-  		              <option value="전7">전7</option>
-  		              <option value="전8">전8</option>
-  		              <option value="전9">전9</option>
-  		              <option value="전10">전10</option>
+  		              <option th:each="jimok : ${jimoklist}" th:value="${jimok['jm_name']}" th:text="${jimok['jm_name']}"></option>
   		            </select>
   		          </div>
   		          <section class="customSelectBox">
@@ -676,30 +667,22 @@
   		        </li>
   		        <!-- 점용연장 -->
   		        <li class="content">
-  		          <input type="text" name="gover_length" />
+  		          <input type="text" name="gover_length" th:value="${pnuList[0].gp_gover_length}"/>
   		        </li>
   		        <!-- 점용면적 -->
   		        <li class="content">
-  		          <input type="text" name="gover_area" />
+  		          <input type="text" name="gover_area" th:value="${pnuList[0].gp_gover_area}"/>
   		        </li>
   		        <!-- 관로일치 여부 -->
   		        <li class="content middleWidth selectContentArea">
   		          <div class="hiddenSelectBox">
   		            <select name="관로일치 여부" id="masterRegSelectBox15" hidden>
-  		              <option value="지사선택필요1">지사선택필요1</option>
-  		              <option value="지사선택필요2">지사선택필요2</option>
-  		              <option value="지사선택필요3">지사선택필요3</option>
-  		              <option value="지사선택필요4">지사선택필요4</option>
-  		              <option value="지사선택필요5">지사선택필요5</option>
-  		              <option value="지사선택필요6">지사선택필요6</option>
-  		              <option value="지사선택필요7">지사선택필요7</option>
-  		              <option value="지사선택필요8">지사선택필요8</option>
-  		              <option value="지사선택필요9">지사선택필요9</option>
-  		              <option value="지사선택필요10">지사선택필요10</option>
+						<option value="Y">Y</option>
+						<option value="N">N</option>
   		            </select>
   		          </div>
   		          <section class="customSelectBox">
-  		            <button class="customSelectView">지사선택필요</button>
+  		            <button class="customSelectView">선택</button>
   		            <ul class="customSelectBtns"></ul>
   		          </section>
   		        </li>
@@ -716,13 +699,13 @@
   		      </ul>
 			  
 			  <!-- 두번째ul: pnuList 가 2개 이상일 때 반복문 -->
-			  <ul class="contents" th:if="${pnuListSize > 1}" th:each="pnu, iterStat : ${pnuList}" >
-			      <li th:if="${iterStat.index > 0}">
-			        <!-- 선택 -->
-			        <li class="content smallWidth checkboxWrap">
-			          <input type="checkbox" th:id="'masterEditContentSelectBox_' + ${pnu.no}" />
-			          <label th:for="'masterEditContentSelectBox_' + ${pnu.no}"></label>
-			        </li>
+			  <ul class="contents" th:each="pnu, iterStat : ${pnuList}" th:if="${iterStat.index > 0}">
+		      
+		        <!-- 선택 -->
+		        <li class="content smallWidth checkboxWrap">
+		          <input type="checkbox" th:id="'masterEditContentSelectBox_' + ${pnu.no}" />
+		          <label th:for="'masterEditContentSelectBox_' + ${pnu.no}"></label>
+		        </li>
 	        	<li class="content smallWidth">
   		          <!-- 순번 -->
   		          <input type="text" class="notWriteInput" readonly th:placeholder="${pnu.no}" />
@@ -775,22 +758,13 @@
   		        </li>
   		        <!-- PNU -->
   		        <li class="content middleWidth">
-  		          <input type="text" />
+  		          <input type="text" th:value="${pnu.gp_pnu}" />
   		        </li>
   		        <!-- 지목 -->
   		        <li class="content selectContentArea">
   		          <div class="hiddenSelectBox">
   		            <select name="masterRegSelectBox18" id="masterRegSelectBox18" hidden>
-  		              <option value="전1">전1</option>
-  		              <option value="전2">전2</option>
-  		              <option value="전3">전3</option>
-  		              <option value="전4">전4</option>
-  		              <option value="전5">전5</option>
-  		              <option value="전6">전6</option>
-  		              <option value="전7">전7</option>
-  		              <option value="전8">전8</option>
-  		              <option value="전9">전9</option>
-  		              <option value="전10">전10</option>
+  		              <option th:each="jimok : ${jimoklist}" th:value="${jimok['jm_name']}" th:text="${jimok['jm_name']}"></option>
   		            </select>
   		          </div>
   		          <section class="customSelectBox">
@@ -800,30 +774,22 @@
   		        </li>
   		        <!-- 점용연장 -->
   		        <li class="content">
-  		          <input type="text" />
+  		          <input type="text" name="gover_length" th:value="${pnuList[0].gp_gover_length}"/>
   		        </li>
   		        <!-- 점용면적 -->
   		        <li class="content">
-  		          <input type="text" />
+  		          <input type="text" name="gover_area" th:value="${pnuList[0].gp_gover_area}"/>
   		        </li>
   		        <!-- 관로일치 여부 -->
   		        <li class="content middleWidth selectContentArea">
   		          <div class="hiddenSelectBox">
   		            <select name="masterRegSelectBox19" id="masterRegSelectBox19" hidden>
-  		              <option value="지사선택필요1">지사선택필요1</option>
-  		              <option value="지사선택필요2">지사선택필요2</option>
-  		              <option value="지사선택필요3">지사선택필요3</option>
-  		              <option value="지사선택필요4">지사선택필요4</option>
-  		              <option value="지사선택필요5">지사선택필요5</option>
-  		              <option value="지사선택필요6">지사선택필요6</option>
-  		              <option value="지사선택필요7">지사선택필요7</option>
-  		              <option value="지사선택필요8">지사선택필요8</option>
-  		              <option value="지사선택필요9">지사선택필요9</option>
-  		              <option value="지사선택필요10">지사선택필요10</option>
+						<option value="Y">Y</option>
+						<option value="N">N</option>
   		            </select>
   		          </div>
   		          <section class="customSelectBox">
-  		            <button class="customSelectView">지사선택필요</button>
+  		            <button class="customSelectView">선택</button>
   		            <ul class="customSelectBtns"></ul>
   		          </section>
   		        </li>
@@ -839,7 +805,6 @@
   		            <button class="delBtn miniBtn" onclick="deleteRow(this)">삭제</button>
   		          </div>
   		        </li>
-				</li>
 		      </ul>
 
   		      <!-- 숨겨진 템플릿 줄 -->
@@ -909,16 +874,7 @@
   		        <li class="content selectContentArea">
   		          <div class="hiddenSelectBox">
   		            <select name="masterRegSelectBox18" id="masterRegSelectBox18" hidden>
-  		              <option value="전1">전1</option>
-  		              <option value="전2">전2</option>
-  		              <option value="전3">전3</option>
-  		              <option value="전4">전4</option>
-  		              <option value="전5">전5</option>
-  		              <option value="전6">전6</option>
-  		              <option value="전7">전7</option>
-  		              <option value="전8">전8</option>
-  		              <option value="전9">전9</option>
-  		              <option value="전10">전10</option>
+  		              <option th:each="jimok : ${jimoklist}" th:value="${jimok['jm_name']}" th:text="${jimok['jm_name']}"></option>
   		            </select>
   		          </div>
   		          <section class="customSelectBox">
@@ -938,20 +894,12 @@
   		        <li class="content middleWidth selectContentArea">
   		          <div class="hiddenSelectBox">
   		            <select name="masterRegSelectBox19" id="masterRegSelectBox19" hidden>
-  		              <option value="지사선택필요1">지사선택필요1</option>
-  		              <option value="지사선택필요2">지사선택필요2</option>
-  		              <option value="지사선택필요3">지사선택필요3</option>
-  		              <option value="지사선택필요4">지사선택필요4</option>
-  		              <option value="지사선택필요5">지사선택필요5</option>
-  		              <option value="지사선택필요6">지사선택필요6</option>
-  		              <option value="지사선택필요7">지사선택필요7</option>
-  		              <option value="지사선택필요8">지사선택필요8</option>
-  		              <option value="지사선택필요9">지사선택필요9</option>
-  		              <option value="지사선택필요10">지사선택필요10</option>
+  		              <option value="Y">Y</option>
+  		              <option value="N">N</option>
   		            </select>
   		          </div>
   		          <section class="customSelectBox">
-  		            <button class="customSelectView">지사선택필요</button>
+  		            <button class="customSelectView">선택</button>
   		            <ul class="customSelectBtns"></ul>
   		          </section>
   		        </li>
