@@ -161,4 +161,11 @@ public class issueController {
 		mav.setViewName("content/issue/approval");
 		return mav;
 	}
+	
+	@GetMapping(path="/approval2") //http://localhost:8080/api/get/dbTest
+    public ModelAndView approval2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/issue/approval2");
+		return mav;
+	}
 }
