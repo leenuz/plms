@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>민원관리</title>
+</head>
+
+<body>
+    <div id="approvalDiv">
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+
+            body * {
+                font-family: pretendard;
+            }
+
+            a {
+                text-decoration: none;
+                color: #3c3c3c;
+            }
+
+            li {
+                list-style: none;
+            }
+
+            input {
+                border: 0;
+                outline: 0;
+            }
+
+            input:focus {
+                border: 0;
+            }
+
+            textarea:focus {
+                border: 0;
+                outline: 0;
+            }
+
+            table {
+                border-collapse: collapse;
+            }
+
+            textarea {
+                resize: none;
+                border: 0;
+                outline: 0;
+            }
+
+            textarea:focus {
+                border: 0;
+                outline: 0;
+            }
+
+            textarea.notWriteInput {
+                background: transparent;
+            }
+
+            button {
+                border: 0;
+            }
+
+            .hiddenCaption {
+                position: absolute;
+                clip: rect(0 0 0 0);
+                width: 1px;
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+            }
+
+            /* css추가 */
+
+            .complaintManageWrappers {
+                overflow-y: scroll;
+            }
+
+            /* 스크롤바 */
+
+            .complaintManageWrappers::-webkit-scrollbar {
+                width: 3px;
+            }
+
+            .complaintManageWrappers::-webkit-scrollbar-thumb {
+                height: 30%;
+                border-radius: 10px;
+                background: #d2d2d2;
+            }
+
+            .complaintManageHeader {
+                width: 100px;
+                height: 100vh;
+                float: left;
+            }
+
+            /**/
+
+            .mainTitle {
+                padding: 30px 0;
+                border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+                margin-bottom: 30px;
+            }
+
+            .mainTitle h1 {
+                font-size: 22px;
+                font-weight: 700;
+                color: #31394c;
+                padding-left: 20px;
+                box-sizing: border-box;
+            }
+
+            .subTitle {
+                margin-bottom: 24px;
+            }
+
+            .subTitle .subTitleText {
+                font-weight: 700;
+                font-size: 18px;
+                color: #31394c;
+            }
+
+            .toolPlace {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                gap: 10px;
+                top: 20px;
+                right: 20px;
+                height: 38px;
+            }
+
+            .toolPlace .toolBtn {
+                width: 108px;
+                height: 100%;
+                border-radius: 10px;
+                color: #fff;
+                font-size: 15px;
+                font-weight: 600;
+            }
+
+            .toolPlace .viewBtn {
+                background: #4e5871;
+            }
+
+            .toolPlace .completeBtn {
+                background: #2b7de1;
+            }
+
+            .btnsWrap {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .contentScr {
+                /* height: 863px; */
+                height: calc(100vh - 200px);
+                overflow-y: scroll;
+            }
+
+            .contentScr::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .contentScr::-webkit-scrollbar-thumb {
+                height: 30%;
+                border-radius: 10px;
+                background: #d2d2d2;
+            }
+
+            /* select */
+            /* selectbox 스크롤 */
+            .customSelectBox .customSelectBtns::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .customSelectBox .customSelectBtns::-webkit-scrollbar-thumb {
+                height: 30%;
+                border-radius: 10px;
+                background: #d2d2d2;
+            }
+
+            /* custom select */
+            .selectWrap {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                height: 100%;
+            }
+
+            .selectContentArea {
+                width: 137px;
+                height: 38px;
+                border-radius: 10px;
+            }
+
+            .customSelectBox {
+                width: 100%;
+                height: 100%;
+                position: relative;
+            }
+
+            .customSelectBox .customSelectView {
+                width: 100%;
+                height: 100%;
+                border: 1px solid #4e5871;
+                border-radius: 10px;
+                font-size: 14px;
+                font-weight: 500;
+                color: #4e5871;
+                text-align-last: left;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 9px 12px;
+                box-sizing: border-box;
+                background: url(/assets/media/menu05/images/arrowDown.png) no-repeat right 8px center;
+                background-size: 18px;
+                background-color: #fff;
+            }
+
+            .customSelectBox .customSelectView.active {
+                background: url(/assets/media/menu05/images/arrowDownBlue.png) no-repeat right 8px center;
+                background-size: 18px;
+                border: 1px solid #2b7de1;
+                color: #2b7de1;
+            }
+
+            .customSelectBox .customSelectBtns {
+                position: absolute;
+                width: 100%;
+                top: calc(100% + 4px);
+                box-sizing: border-box;
+                max-height: 0;
+                overflow-y: hidden;
+                z-index: 10;
+                transition: 500ms;
+                opacity: 0;
+                border: 1px solid #acbdd7;
+            }
+
+            .customSelectBox .customSelectBtns.active {
+                padding: 6px 0;
+                border-radius: 10px;
+                background: #fff;
+                max-height: 233px;
+                overflow-y: scroll;
+                transition: 500ms;
+                opacity: 1;
+            }
+
+            .customSelectBox .customSelectBtns li {
+                padding: 0;
+                height: 41px;
+            }
+
+            .moreSelectBtn {
+                font-size: 14px;
+                font-weight: 500;
+                color: #4e5871;
+                width: 100%;
+                height: 100%;
+                background: #fff;
+                text-align-last: left;
+                padding-left: 12px;
+                box-sizing: border-box;
+            }
+
+            .codeManagement {
+                padding-bottom: 40px;
+            }
+
+            .contWrap {
+                border: 1px solid #cddbf0;
+                border-radius: 5px;
+            }
+
+            .contWrap .rowListBox {
+                display: flex;
+                align-items: center;
+                height: 45px;
+                border-bottom: 1px solid #cddbf0;
+            }
+
+            .contWrap .rowListBox:last-of-type {
+                border-bottom: 0;
+            }
+
+            .codeManagement .contWrap .rowListBox:last-of-type {
+                border-bottom: 1px solid #cddbf0;
+            }
+
+            .contWrap .title {
+                font-size: 14px;
+                font-weight: 500;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-sizing: border-box;
+                border-right: 1px solid #cddbf0;
+            }
+
+            .contWrap .content {
+                border-right: 1px solid #cddbf0;
+                box-sizing: border-box;
+                text-align: center;
+                line-height: 44px;
+            }
+
+            .contWrap .content:last-of-type {
+                border-right: 0;
+            }
+
+            .contWrap .title:last-of-type {
+                border-right: 0;
+            }
+
+            .contWrap .rowListBox .title {
+                border-radius: 5px 0 0 0;
+                width: 12.7%;
+                height: 100%;
+                background: #f7f9fc;
+            }
+
+            .contWrap .rowListBox .content {
+                width: calc(100% - 12.7%);
+                height: 100%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+            .contWrap .rowListBox .radioBox {
+                display: flex;
+                gap: 23px;
+                padding-left: 18px;
+            }
+
+            .contWrap .rowListBox .radioText {
+                font-size: 15px;
+                font-weight: 600;
+                color: #31394c;
+            }
+
+            .sectionBox {
+                width: 100%;
+                border-radius: 10px;
+                border: 1px solid rgba(205, 219, 240, 0.6);
+                padding: 20px;
+                box-sizing: border-box;
+                position: relative;
+            }
+
+            .selectBtn {
+                width: 54px;
+                height: 27px;
+                color: #fff;
+                border-radius: 20px;
+                font-size: 13px;
+                font-weight: 600;
+                background: #2b7de1;
+            }
+
+            .contWrap .rowListBox .selectPlace {
+                gap: 10px;
+            }
+
+            /*  */
+            .contWrap .titles {
+                height: 45px;
+                display: flex;
+                background: #f7f9fc;
+                border-bottom: 1px solid #cddbf0;
+                box-sizing: border-box;
+            }
+
+            .contWrap .titles:first-child {
+                border-radius: 5px 5px 0 0;
+            }
+
+            .contWrap .contents {
+                width: 100%;
+                height: 45px;
+                display: flex;
+                border-bottom: 1px solid #cddbf0;
+                box-sizing: border-box;
+            }
+
+            .contWrap .contents:last-child {
+                border-bottom: 0;
+            }
+
+            /* input */
+            input[type="text"] {
+                width: 100%;
+                height: 100%;
+                background: #edf2f9;
+                border-radius: 10px;
+                text-align: center;
+                font-size: 14px;
+                font-weight: 500;
+                padding: 5px;
+                box-sizing: border-box;
+            }
+
+            input[type="text"].notWriteInput {
+                background: transparent;
+            }
+
+            input[type="text"].notWriteInput::placeholder {
+                color: #000;
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            input[type="text"]::placeholder {
+                color: #6e7d88;
+                text-align: center;
+                text-indent: 0;
+            }
+
+            .contWrap .rowListBox input[type="text"] {
+                text-align: left;
+                padding-left: 15px;
+                box-sizing: border-box;
+            }
+
+            .contWrap .rowListBox input[type="text"]::placeholder {
+                text-align: left;
+            }
+
+            .btnWrap {
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                padding-top: 25px;
+            }
+
+            .finalBtnBox {
+                padding-right: 10px;
+                box-sizing: border-box;
+            }
+
+            .finalBtnBox .backBtn {
+                width: 116px;
+                height: 44px;
+                border-radius: 10px;
+                background: #e5efff;
+                color: #2b7de1;
+                font-size: 15px;
+                font-weight: 600;
+            }
+
+            .finalBtnBox .addBtn {
+                width: 116px;
+                height: 44px;
+                border-radius: 10px;
+                background: #2b7de1;
+                color: #fff;
+                font-size: 15px;
+                font-weight: 600;
+            }
+
+            /* depth2 */
+            .codeManagement .contWrap .depth2 .titleBox {
+                width: 100%;
+                display: flex;
+            }
+
+            .codeManagement .contWrap .depth2 .contentsWrap {
+                display: flex;
+                border-bottom: 1px solid #cddbf0;
+            }
+
+            .codeManagement .contWrap .depth2 .contentsBox {
+                width: calc(100% - 12.7%);
+                display: flex;
+                flex-direction: column;
+            }
+
+            .codeManagement .contWrap .depth2 .contentsBox .titles {
+                width: 12.7%;
+            }
+
+            .codeManagement .contWrap .depth2 .content {
+                border-right: 1px solid #cddbf0;
+            }
+
+            .codeManagement .contWrap .depth2 .contentsBox .title {
+                width: 100%;
+                border-right: 1px solid #cddbf0;
+            }
+
+            .codeManagement .contWrap .depth2 .titleBox .titles {
+                display: flex;
+                width: 100%;
+                height: 100%;
+            }
+
+            .codeManagement .contWrap .depth2 .title {
+                width: 11.9%;
+                height: 45px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .codeManagement .contWrap .depth2 .smallWidth {
+                width: 9.2%;
+            }
+
+            .codeManagement .contWrap .depth2 .largeWidth {
+                width: 28.8%;
+            }
+
+            .codeManagement .contWrap .depth2 .divisionWidth {
+                width: 100%;
+                border-right: 1px solid #cddbf0;
+            }
+
+            .codeManagement .contWrap .depth2 .contentsWrap .titles {
+                width: 12.7%;
+                height: auto;
+            }
+
+            .codeManagement .contWrap .depth2 .contentsWrap .leftTitle {
+                width: 100%;
+                height: 100%;
+                border-right: 1px solid #cddbf0;
+            }
+
+            .codeManagement .contWrap .depth2 .contentsWrap .titles {
+                border-bottom: 0;
+            }
+
+            .codeManagement .contWrap .depth2 .contentsWrap .contentsBox .content {
+                width: 11.9%;
+            }
+
+            .codeManagement .contWrap .depth2 .contentsWrap .contentsBox .content:last-child {
+                border-right: 0;
+            }
+
+            .codeManagement .contWrap .depth2 .contentsWrap .contentsBox .smallWidth {
+                width: 9.2%;
+            }
+
+            .codeManagement .contWrap .depth2 .contentsWrap .contentsBox .largeWidth {
+                width: 28.8%;
+            }
+
+            .codeManagement .contWrap .depth2 .titleBox .leftTitle {
+                width: 12.7%;
+            }
+
+            .codeManagement .contWrap .depth2 .titleBox .rightTitle {
+                width: calc(100% - 12.7%);
+            }
+
+            /* depth3 */
+            .codeManagement textarea {
+                width: 100%;
+                border-radius: 10px;
+                padding: 15px 19px;
+                box-sizing: border-box;
+                height: 100%;
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            .codeManagement textarea::placeholder {
+                color: #3c3c3c;
+            }
+
+            .codeManagement textarea::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .codeManagement textarea::-webkit-scrollbar-thumb {
+                height: 30%;
+                border-radius: 10px;
+                background: #d2d2d2;
+            }
+
+            .codeManagement .contWrap .depth3 .rowListBox {
+                height: 88px;
+            }
+
+            .codeManagement .contWrap .depth3 .rowListBox:last-of-type {
+                border-bottom: 0;
+            }
+
+            .codeManagement .contWrap>div:last-of-type .rowListBox:last-of-type .title {
+                border-radius: 0 0 0 5px;
+            }
+
+            /* 민원토지 */
+            .complaintLand {
+                padding-bottom: 40px;
+            }
+
+            .complaintLand .title {
+                width: calc((100% - 37%) / 3);
+            }
+
+            .complaintLand .content {
+                width: calc((100% - 37%) / 3);
+            }
+
+            .complaintLand .largeWidth {
+                width: 37%;
+            }
+
+            /* 첨부파일 */
+            .attachFileInfo {
+                padding-bottom: 40px;
+            }
+
+            .attachFileInfo .title {
+                width: calc((100% - 58%) / 2);
+            }
+
+            .attachFileInfo .content {
+                width: calc((100% - 58%) / 2);
+            }
+
+            .attachFileInfo .fileNameWidth {
+                width: 58%;
+            }
+
+            .fileDownloadBtn {
+                width: 116px;
+                height: 27px;
+                border-radius: 20px;
+                background: #4e5871;
+                color: #fff;
+                font-size: 13px;
+                font-weight: 600;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .downloadIcon {
+                width: 12px;
+                height: 12px;
+                display: inline-block;
+                background: url(/assets/media/menu05/images/download.png) no-repeat center;
+                background-size: contain;
+            }
+
+            /* 협의내용 */
+
+            .consultDetails {
+                padding-bottom: 40px;
+            }
+
+            .consultDetails .title {
+                width: calc((100% - 58%) / 2);
+            }
+
+            .consultDetails .content {
+                width: calc((100% - 58%) / 2);
+            }
+
+            .consultDetails .smallWidth {
+                width: 13.9%;
+            }
+
+            .consultDetails .fileNameWidth {
+                width: calc(58% - 13.9%);
+            }
+
+            .viewDetailButton {
+                width: 116px;
+                height: 27px;
+                border-radius: 20px;
+                background: rgba(204, 224, 255, 0.6);
+                color: #2b7de1;
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+            /* 신규 민원 등록 민원내용 */
+
+            .complaint_contents_wrap {
+                width: 100%;
+                border: 1px solid #cddbf0;
+                border-radius: 5px;
+                font-size: 14px;
+                font-weight: 500;
+                overflow: hidden;
+            }
+
+            .complaint_contents_title {
+                display: grid;
+                grid-template-columns: 210px 100px 100px 120px 200px 170px 140px 180px;
+                height: 44px;
+                text-align: center;
+                background-color: #f7f9fc;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                border-bottom: 1px solid #cddbf0;
+            }
+
+            .complaint_contents_title li {
+                border-right: 1px solid #cddbf0;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .complaint_contents_title .com_content_btn {
+                border: none;
+            }
+
+            .complaint_contents_content1 {
+                display: grid;
+                grid-template-columns: 210px 1010px;
+                min-height: 44px;
+            }
+
+            .landowner_wrap {
+                height: 100%;
+                width: 100%;
+            }
+
+            .landowner_wrap>li {
+                height: 100%;
+            }
+
+            .complaint_contents_content1 .com_content_contents_1 .landowner_wrap .landowner_btns_default {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-right: none;
+            }
+
+            .landowner_btns_default button {
+                width: 74px;
+                height: 23px;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+
+            .complaint_contents_content1 .com_content_contents_1 .landowner_wrap {
+                display: grid;
+                grid-template-columns: 100px 100px 120px 200px 170px 140px 100%;
+                border-bottom: 1px solid #cddbf0;
+                ;
+            }
+
+            .complaint_contents_content1 .com_content_contents_1 .landowner_wrap .landowner_btns {
+                padding: 0;
+            }
+
+            .complaint_contents_content1 .com_content_contents_1 .landowner_wrap .landowner_btns>div {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                width: 100%;
+            }
+
+            .complaint_contents_content1 .com_content_contents_1 .landowner_wrap .landowner_btns button {
+                width: 74px;
+                height: 23px;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+
+            .complaint_contents_content1 .com_content_contents_1 .landowner_wrap .landowner_btns>div .complaint_addition {
+                background-color: #ffffff;
+                color: #2B7DE1;
+                border: 1px solid #2B7DE1;
+            }
+
+            .complaint_contents_content1 .com_content_contents_1 .landowner_wrap .landowner_btns>div .complaint_delete {
+                background-color: #9A9A9A;
+                color: #ffffff;
+            }
+
+            .landinfo_content_8>div .complaint_delete {
+                background-color: #9A9A9A;
+                color: #ffffff;
+            }
+
+            .complaint_contents_content2,
+            .complaint_contents_content3 {
+                display: grid;
+                grid-template-columns: 210px 1010px;
+            }
+
+            .complaint_contents_content2 {
+                grid-template-rows: 66fr;
+            }
+
+            /* 추가 */
+            .complaint_contents_content3 .com_content_title3 {
+                border-radius: 0 0 0 5px;
+            }
+
+            .complaint_contents_content2,
+            .complaint_contents_content3 {
+                border-top: 1px solid #cddbf0;
+            }
+
+            .com_content_title1,
+            .complaint_contents_content2 .com_content_title2,
+            .complaint_contents_content3 .com_content_title3 {
+                background-color: #f7f9fc;
+                border-right: 1px solid #cddbf0;
+                box-sizing: border-box;
+            }
+
+            .complaint_contents_content1 .com_content_contents_1 {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .complaint_contents_content1>.com_content_contents_1>ul:last-child {
+                border: none;
+            }
+
+            .complaint_contents_content1>li {
+                box-sizing: border-box;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .landowner_wrap>li {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-right: 1px solid #cddbf0;
+                box-sizing: border-box;
+                /* height: 33px; */
+                padding: 0 9px;
+            }
+
+            .landowner_wrap>li>input[type="text"] {
+                width: 100%;
+                text-align: center;
+                font-size: 14px;
+                background-color: #edf2f9;
+                border-radius: 8px;
+                padding: 3px 10px 3px 10px;
+            }
+
+            .landowner_wrap .popSelectWrap {
+                padding: 5px;
+            }
+
+            .landowner_wrap .popSelectWrap .Popup_Custom_SelectView {
+                border-radius: 8px;
+            }
+
+            .landowner_wrap>.landowner_btns {
+                border-right: none;
+                display: flex;
+                justify-content: space-between;
+                padding: 0 8px;
+            }
+
+            .complaint_contents_content2 .com_content_title2,
+            .complaint_contents_content3 .com_content_title3 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 66px;
+            }
+
+            .complaint_contents_content2 .com_content_title4 {
+                padding: 5px;
+                width: 1010px;
+                box-sizing: border-box;
+                display: flex;
+                align-items: center;
+            }
+
+            .com_content_title4 textarea {
+                width: 100%;
+                min-height: 58px;
+                text-align: left;
+                font-family: Pretendard;
+                font-weight: 500;
+                font-size: 14px;
+                color: #3C3C3C;
+                background-color: #edf2f9;
+                border-radius: 8px;
+                padding: 10px;
+                border: none;
+                resize: none;
+            }
+
+            .complaint_contents_content3>.com_content_title5 {
+                width: 1010px;
+                box-sizing: border-box;
+            }
+
+            .complaint_contents_content3_wrap {
+                width: 100%;
+                height: 100%;
+                font-size: 15px;
+                gap: 16px;
+                box-sizing: border-box;
+            }
+
+            .complaint_contents_content3_file {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .complaint_contents_content3_imgwrap {
+                width: 28px;
+                height: 28px;
+            }
+
+            .complaint_contents_content3_imgwrap>img {
+                width: 100%;
+            }
+
+            .complaintinfo_btns {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-top: 27px;
+                gap: 10px;
+            }
+
+            .complaintinfo_btns button {
+                width: 116px;
+                height: 44px;
+                font-size: 15px;
+                font-weight: 600;
+            }
+
+            .complaint_contents_Details input[type="text"] {
+                padding: 0 10px;
+            }
+        </style>
+
+        <!-- 민원 내용 -->
+        <section class="complaintLand">
+            <div class="subTitle">
+                <div class="subTitleText">민원 내용</div>
+            </div>
+            <div class="complaint_contents_wrap">
+                <ul class="complaint_contents_title">
+                    <li>구분</li>
+                    <li>순번</li>
+                    <li>성명</li>
+                    <li>생년월일</li>
+                    <li>토지주와의 관계</li>
+                    <li>연락처</li>
+                    <li>현장입회</li>
+                    <li class="com_content_btn">추가/삭제</li>
+                </ul>
+
+                <!-- 민원인 토지주-->
+                <ul class="complaint_contents_content1">
+                    <li class="com_content_title1">민원인/토지주</li>
+                    <!-- 민원인 토지주 여러내용 들어가는 곳-->
+                    <li class="com_content_contents_1">
+                        <ul class="landowner_wrap">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- 민원내용(토지이력 요구사항 내용 첨부파일)-->
+                <ul class="complaint_contents_content2">
+                    <li class="com_content_title2">토지이력</li>
+                    <li class="com_content_title4">
+                    </li>
+                </ul>
+                <ul class="complaint_contents_content2">
+                    <li class="com_content_title2">요구사항</li>
+                    <li class="com_content_title4">
+                    </li>
+                </ul>
+                <ul class="complaint_contents_content2">
+                    <li class="com_content_title2">내용</li>
+                    <li class="com_content_title4">
+                    </li>
+                </ul>
+                <ul class="complaint_contents_content3">
+                    <li class="com_content_title3">첨부파일</li>
+                    <li class="com_content_title5">
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+
+        <!-- 민원토지 -->
+        <section class="complaintLand">
+            <div class="subTitle">
+                <div class="subTitleText">민원 토지</div>
+            </div>
+
+            <div class="contWrap">
+                <div class="depth1">
+                    <ul class="titles">
+                        <li class="title" style="width: 50%;">주소</li>
+                        <li class="title" style="width: 15%;">등기 여부</li>
+                        <li class="title" style="width: 15%;">계약 여부</li>
+                        <li class="title" style="width: 20%;">토지수정일자</li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content" style="width: 50%;">
+                            경기도 평택시 월곡동 140-7
+                        </li>
+                        <li class="content" style="width: 15%;">
+                            N
+                        </li>
+                        <li class="content" style="width: 15%;">
+                            N
+                        </li>
+                        <li class="content" style="width: 20%;">
+                            2024-01-01
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 민원 협의 -->
+        <section class="complaintLand">
+            <div class="subTitle">
+                <div class="subTitleText">민원 협의</div>
+            </div>
+
+            <div class="contWrap">
+                <div class="depth1">
+                    <ul class="titles">
+                        <li class="title" style="width: 15%;">협의 일자</li>
+                        <li class="title" style="width: 15%;">진행 현황</li>
+                        <li class="title" style="width: 30%;">협의 제목</li>
+                        <li class="title" style="width: 40%;">협의 내용</li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content" style="width: 15%;">
+                        </li>
+                        <li class="content" style="width: 15%;">
+                        </li>
+                        <li class="content" style="width: 30%;">
+                        </li>
+                        <li class="content" style="width: 40%;">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>
