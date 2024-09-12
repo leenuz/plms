@@ -155,17 +155,31 @@ public class issueController {
 
 	}
 
-	@GetMapping(path="/approval") //http://localhost:8080/api/get/dbTest
+	@GetMapping(path="/approval") // 민뭔관리-민원등록
     public ModelAndView approval(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("content/issue/approval");
 		return mav;
 	}
 	
-	@GetMapping(path="/approval2") //http://localhost:8080/api/get/dbTest
+	@GetMapping(path="/approval2") // 민원관리-대응방안수립보고
     public ModelAndView approval2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("content/issue/approval2");
+		return mav;
+	}
+
+	@GetMapping(path="/approval3") // 민원관리-민원협의보고
+    public ModelAndView approval3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/issue/approval3");
+		return mav;
+	}
+
+	@GetMapping(path="/approval4") // 민원관리-민원완료보고
+    public ModelAndView approval4(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/issue/approval4");
 		return mav;
 	}
 }
