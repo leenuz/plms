@@ -591,14 +591,260 @@
                 <li class="title middleWidth">추가/삭제</li>
               </ul>
 			  
-			  <!-- 기존 데이터가 있는 경우 서버에서 가져온 데이터를 채우는 줄 -->
-		      <!--<ul class="contents" id="goverUl">
-		         이 부분은 서버에서 데이터를 가져와서 행을 추가할 때 채워 넣음 
-		      </ul>-->
+			  <!-- 첫 번째 고정된 줄 -->
+  		      <ul class="contents" id="goverUl">
+				<!-- 선택 -->
+			    <li class="content smallWidth checkboxWrap">
+			      <input type="checkbox" th:id="'masterEditContentSelectBox_' + ${pnuList[0].no}" />
+			      <label th:for="'masterEditContentSelectBox_' + ${pnuList[0].no}"></label>
+			    </li>
+  		        <!-- 순번 -->
+  		        <li class="content smallWidth">
+  		          <input type="text" class="notWriteInput" readonly placeholder="1" />
+  		        </li>
+  		        <!-- 관리기관 -->
+  		        <li class="content largeWidth selectContentArea">
+  		          <div class="hiddenSelectBox">
+  		            <select name="adm_office" id="masterRegSelectBox12" hidden>
+  		              <option value="전체">전체</option>
+  		              <option value="강서구-건설과">강서구-건설과</option>
+  		              <option value="한강사업본부-운영총괄과">한강사업본부-운영총괄과</option>
+  		              <option value="안전건설과">안전건설과</option>
+  		              <option value="덕양구-안전건설과">덕양구-안전건설과</option>
+  		              <option value="전체6">전체6</option>
+  		              <option value="전체7">전체7</option>
+  		              <option value="전체8">전체8</option>
+  		              <option value="전체9">전체9</option>
+  		              <option value="전체10">전체10</option>
+  		            </select>
+  		          </div>
+  		          <section class="customSelectBox">
+  		            <button class="customSelectView">전체</button>
+  		            <ul class="customSelectBtns"></ul>
+  		          </section>
+  		        </li>
+  		        <!-- 국공유지 여부 -->
+  		        <li class="content middleWidth selectContentArea">
+  		          <div class="hiddenSelectBox">
+  		            <select name="gover_own_yn" id="masterRegSelectBox13" hidden>
+  		              <option value="국유지">국유지</option>
+  		              <option value="사유지">사유지</option>
+  		            </select>
+  		          </div>
+  		          <section class="customSelectBox">
+  		            <button class="customSelectView">선택</button>
+  		            <ul class="customSelectBtns"></ul>
+  		          </section>
+  		        </li>
+  		        <!-- 대표필지 -->
+  		        <li class="content checkboxWrap">
+  		          <input type="checkbox" id="masterRegSelectBox_Checkbox02" name="rep_flag" />
+  		          <label for="masterRegSelectBox_Checkbox02"></label>
+  		        </li>
+  		        <!-- 주소 -->
+  		        <li class="content addressInfoWidth">
+  		          <!--<div class="addressData">-->
+  					<!-- text 창 높이를 위해 주석처리 -->
+  		            <input type="text" name="주소" />
+  		          <!--</div>-->
+  		          <button class="searchAddressBtn">검색</button>
+  		        </li>
+  		        <!-- PNU -->
+  		        <li class="content middleWidth">
+  		          <input type="text" name="pnu" />
+  		        </li>
+  		        <!-- 지목 -->
+  		        <li class="content selectContentArea">
+  		          <div class="hiddenSelectBox">
+  		            <select name="jimok_text" id="masterRegSelectBox14" hidden>
+  		              <option value="전1">전1</option>
+  		              <option value="전2">전2</option>
+  		              <option value="전3">전3</option>
+  		              <option value="전4">전4</option>
+  		              <option value="전5">전5</option>
+  		              <option value="전6">전6</option>
+  		              <option value="전7">전7</option>
+  		              <option value="전8">전8</option>
+  		              <option value="전9">전9</option>
+  		              <option value="전10">전10</option>
+  		            </select>
+  		          </div>
+  		          <section class="customSelectBox">
+  		            <button class="customSelectView">전</button>
+  		            <ul class="customSelectBtns"></ul>
+  		          </section>
+  		        </li>
+  		        <!-- 점용연장 -->
+  		        <li class="content">
+  		          <input type="text" name="gover_length" />
+  		        </li>
+  		        <!-- 점용면적 -->
+  		        <li class="content">
+  		          <input type="text" name="gover_area" />
+  		        </li>
+  		        <!-- 관로일치 여부 -->
+  		        <li class="content middleWidth selectContentArea">
+  		          <div class="hiddenSelectBox">
+  		            <select name="관로일치 여부" id="masterRegSelectBox15" hidden>
+  		              <option value="지사선택필요1">지사선택필요1</option>
+  		              <option value="지사선택필요2">지사선택필요2</option>
+  		              <option value="지사선택필요3">지사선택필요3</option>
+  		              <option value="지사선택필요4">지사선택필요4</option>
+  		              <option value="지사선택필요5">지사선택필요5</option>
+  		              <option value="지사선택필요6">지사선택필요6</option>
+  		              <option value="지사선택필요7">지사선택필요7</option>
+  		              <option value="지사선택필요8">지사선택필요8</option>
+  		              <option value="지사선택필요9">지사선택필요9</option>
+  		              <option value="지사선택필요10">지사선택필요10</option>
+  		            </select>
+  		          </div>
+  		          <section class="customSelectBox">
+  		            <button class="customSelectView">지사선택필요</button>
+  		            <ul class="customSelectBtns"></ul>
+  		          </section>
+  		        </li>
+  		        <!-- 보기 -->
+  		        <li class="content btnBox">
+  		          <button class="miniBtn lightBlueBtn viewDetailButton">위치보기</button>
+  		        </li>
+  		        <!-- 추가 버튼 -->
+  		        <li class="middleWidth content btnBox">
+  		          <div class="newBtnWrap">
+  		            <button class="addBtn miniBtn" onclick="addRow()">추가</button>
+  		          </div>
+  		        </li>
+  		      </ul>
 			  
-			  <!-- 숨겨진 템플릿 줄 -->
+			  <!-- 두번째ul: pnuList 가 2개 이상일 때 반복문 -->
+			  <ul class="contents" th:if="${pnuListSize > 1}" th:each="pnu, iterStat : ${pnuList}" >
+			      <li th:if="${iterStat.index > 0}">
+			        <!-- 선택 -->
+			        <li class="content smallWidth checkboxWrap">
+			          <input type="checkbox" th:id="'masterEditContentSelectBox_' + ${pnu.no}" />
+			          <label th:for="'masterEditContentSelectBox_' + ${pnu.no}"></label>
+			        </li>
+	        	<li class="content smallWidth">
+  		          <!-- 순번 -->
+  		          <input type="text" class="notWriteInput" readonly th:placeholder="${pnu.no}" />
+  		        </li>
+  		        <li class="content largeWidth selectContentArea">
+  		          <!-- 관리기관 -->
+  		          <div class="hiddenSelectBox">
+  		            <select name="masterRegSelectBox16" id="masterRegSelectBox16" hidden>
+  		              <option value="전체">전체</option>
+  		              <option value="강서구-건설과">강서구-건설과</option>
+  		              <option value="한강사업본부-운영총괄과">한강사업본부-운영총괄과</option>
+  		              <option value="안전건설과">안전건설과</option>
+  		              <option value="덕양구-안전건설과">덕양구-안전건설과</option>
+  		              <option value="전체6">전체6</option>
+  		              <option value="전체7">전체7</option>
+  		              <option value="전체8">전체8</option>
+  		              <option value="전체9">전체9</option>
+  		              <option value="전체10">전체10</option>
+  		            </select>
+  		          </div>
+  		          <section class="customSelectBox">
+  		            <button class="customSelectView">전체</button>
+  		            <ul class="customSelectBtns"></ul>
+  		          </section>
+  		        </li>
+  		        <!-- 국공유지 여부 -->
+  		        <li class="content middleWidth selectContentArea">
+  		          <div class="hiddenSelectBox">
+  		            <select name="masterRegSelectBox17" id="masterRegSelectBox17" hidden>
+  		              <option value="국유지">국유지</option>
+  		              <option value="사유지">사유지</option>
+  		            </select>
+  		          </div>
+  		          <section class="customSelectBox">
+  		            <button class="customSelectView">선택</button>
+  		            <ul class="customSelectBtns"></ul>
+  		          </section>
+  		        </li>
+  		        <!-- 대표필지 -->
+  		        <li class="content checkboxWrap">
+  		          <input type="checkbox" id="masterRegSelectBox_" />
+  		          <label for="masterRegSelectBox_"></label>
+  		        </li>
+  		        <!-- 주소 -->
+  		        <li class="content addressInfoWidth">
+  		          <!--<div class="addressData">-->
+  		            <input type="text" />
+  		          <!--</div>-->
+  		          <button class="searchAddressBtn">검색</button>
+  		        </li>
+  		        <!-- PNU -->
+  		        <li class="content middleWidth">
+  		          <input type="text" />
+  		        </li>
+  		        <!-- 지목 -->
+  		        <li class="content selectContentArea">
+  		          <div class="hiddenSelectBox">
+  		            <select name="masterRegSelectBox18" id="masterRegSelectBox18" hidden>
+  		              <option value="전1">전1</option>
+  		              <option value="전2">전2</option>
+  		              <option value="전3">전3</option>
+  		              <option value="전4">전4</option>
+  		              <option value="전5">전5</option>
+  		              <option value="전6">전6</option>
+  		              <option value="전7">전7</option>
+  		              <option value="전8">전8</option>
+  		              <option value="전9">전9</option>
+  		              <option value="전10">전10</option>
+  		            </select>
+  		          </div>
+  		          <section class="customSelectBox">
+  		            <button class="customSelectView">전</button>
+  		            <ul class="customSelectBtns"></ul>
+  		          </section>
+  		        </li>
+  		        <!-- 점용연장 -->
+  		        <li class="content">
+  		          <input type="text" />
+  		        </li>
+  		        <!-- 점용면적 -->
+  		        <li class="content">
+  		          <input type="text" />
+  		        </li>
+  		        <!-- 관로일치 여부 -->
+  		        <li class="content middleWidth selectContentArea">
+  		          <div class="hiddenSelectBox">
+  		            <select name="masterRegSelectBox19" id="masterRegSelectBox19" hidden>
+  		              <option value="지사선택필요1">지사선택필요1</option>
+  		              <option value="지사선택필요2">지사선택필요2</option>
+  		              <option value="지사선택필요3">지사선택필요3</option>
+  		              <option value="지사선택필요4">지사선택필요4</option>
+  		              <option value="지사선택필요5">지사선택필요5</option>
+  		              <option value="지사선택필요6">지사선택필요6</option>
+  		              <option value="지사선택필요7">지사선택필요7</option>
+  		              <option value="지사선택필요8">지사선택필요8</option>
+  		              <option value="지사선택필요9">지사선택필요9</option>
+  		              <option value="지사선택필요10">지사선택필요10</option>
+  		            </select>
+  		          </div>
+  		          <section class="customSelectBox">
+  		            <button class="customSelectView">지사선택필요</button>
+  		            <ul class="customSelectBtns"></ul>
+  		          </section>
+  		        </li>
+  		        <!-- 보기 -->
+  		        <li class="content btnBox">
+  		          <button class="miniBtn lightBlueBtn viewDetailButton">위치보기</button>
+  		        </li>
+  		        <li class="middleWidth content btnBox">
+  		          <div class="btnWrap">
+  		            <button class="addBtn miniBtn" onclick="addRow()">추가</button>
+  		          </div>
+  		          <div class="btnWrap">
+  		            <button class="delBtn miniBtn" onclick="deleteRow(this)">삭제</button>
+  		          </div>
+  		        </li>
+				</li>
+		      </ul>
+
+  		      <!-- 숨겨진 템플릿 줄 -->
   		      <ul class="contents" id="row-template" style="display: none;">
-				<!-- 선택 체크 박스 -->
+				<!-- 선택 -->
 				<li class="content smallWidth checkboxWrap">
                   <input
                     type="checkbox"
@@ -612,7 +858,7 @@
   		        <li class="content largeWidth selectContentArea">
   		          <!-- 관리기관 -->
   		          <div class="hiddenSelectBox">
-  		            <select name="adm_office" id="masterRegSelectBox16" hidden>
+  		            <select name="masterRegSelectBox16" id="masterRegSelectBox16" hidden>
   		              <option value="전체">전체</option>
   		              <option value="강서구-건설과">강서구-건설과</option>
   		              <option value="한강사업본부-운영총괄과">한강사업본부-운영총괄과</option>
@@ -722,9 +968,9 @@
   		          </div>
   		        </li>
   		      </ul>
-            </div>
-          </div>
-        </section>
+  		    </div>
+  		  </div>
+  		</section>
 
 		<!-- 첨부파일 -->
 		

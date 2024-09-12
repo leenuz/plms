@@ -493,7 +493,7 @@ public class goverController {
 
 		}
 		
-		//masterEdit  상세 조회
+		// masterEdit 상세 조회
 		@GetMapping(path="/masterEdit") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView masterEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 			ModelAndView mav=new ModelAndView();
@@ -514,17 +514,25 @@ public class goverController {
 			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
 			ArrayList<HashMap> goverMemoList = mainService.selectQuery("goverSQL.selectMemoList",params);
+			ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
+			
+		    // goverPnuList 크기 구하기
+		    int goverPnuListSize = goverPnuList.size();
 			
 			log.info("data:"+data.get(0));
 			log.info("goverModifyList:"+goverModifyList);
 			log.info("atcFileList:"+atcFileList);
 			log.info("goverMemoList:"+goverMemoList);
+			log.info("goverPnuList:"+goverPnuList);
+			log.info("goverPnuListSize:" + goverPnuListSize);
 //			log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
 
 			mav.addObject("resultData",data.get(0));
 	  		mav.addObject("goverModifyList",goverModifyList);
 	  		mav.addObject("atcFileList",atcFileList);
 	  		mav.addObject("memoList",goverMemoList);
+	  		mav.addObject("pnuList",goverPnuList);
+	  		mav.addObject("pnuListSize", goverPnuListSize);
   			
   			mav.setViewName("content/gover/masterEdit");
   			return mav;
