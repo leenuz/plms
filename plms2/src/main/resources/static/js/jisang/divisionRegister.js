@@ -368,6 +368,7 @@ $(document).on("click",".temporarySaveBtn",function(){
 	   	var togiUls=$("#tojiDiv #tojiUl");
 	   	console.log(togiUls);
 	   	for(var i=0;i<togiUls.length;i++){
+			var togiJisa=$("#jisa").val();
 	   		var togiManageNo=$(togiUls[i]).find("input[name='togiBunhalJisangNo']").val();
 	   		var togiaddress=$(togiUls[i]).find("input[name='togiBunhalAddr'").val();
 			var togiTogiType=$(togiUls[i]).find("select[name='togiBunhalTogiType']").val();
@@ -375,25 +376,57 @@ $(document).on("click",".temporarySaveBtn",function(){
 	   		var togiJijukArea=$(togiUls[i]).find("input[name='togiBunhalJiJukArea']").val();
 	   		var togiPyeonibArea=$(togiUls[i]).find("input[name='togiBunhalPyeonibArea']").val();
 	   		var togiJasanNo=$(togiUls[i]).find("input[name='togiBunhalJasanNo']").val();
-			var togiPipeYn=$(togiUls[i]).find("input[name='togiBunhalPipeYn']").val();
-			var togiCancelYn=$(togiUls[i]).find("input[name='togiBunhalCancelYn']").val();
-			var togiDemise=$(togiUls[i]).find("input[name='togiBunhalDemise']").val();
+			var togiPipeYn="N";
+			if ($(togiUls[i]).find("input:checkbox[name='togiBunhalPipeYn']").is(":checked")==true){
+				togiPipeYn="Y";
+			};
+			var togiCancelYn="N";
+			if ($(togiUls[i]).find("input:checkbox[name='togiBunhalCancelYn']").is(":checked")==true){
+				console.log("############");	
+				togiCancelYn="Y";
+			}
+			 
+			//var togiCancelYn=ljsIsNull($(togiUls[i]).find("input[name='togiBunhalCancelYn']").val())?'off':'on';
+			var togiDemise="N";
+			if ($(togiUls[i]).find("input:checkbox[name='togiBunhalDemise']").is(":checked")==true){
+				togiDemise="Y";
+			}
+			var gover_own_yn="";
+			if (togiTogiType=="국유지") gover_own_yn='Y';
+			else gover_own_yn='N';
 			var togiAccountYn=$(togiUls[i]).find("select[name='togiBunhalAccountYn']").val();
+			var togiBunhalStatus="임시저장";
+	   		var togiSidoNm=$(togiUls[i]).find("#togisido_nm").val();
+			var togiSggNm=$(togiUls[i]).find("#togisgg_nm").val();
+			var togiEmdNm=$(togiUls[i]).find("#togiemd_nm").val();
+			var togiRiNm=$(togiUls[i]).find("#togiri_nm").val();
 			
-	   		
+			var togiJibun=$(togiUls[i]).find("#togijibun").val();
+			var togiPnu=$(togiUls[i]).find("#togipnu").val();
 	   		
 	   		//console.log("togiManageNo:"+togiManageNo);
-	   		var togiObj={"togiManageNo":togiManageNo
+	   		var togiObj={
+				"togiSidoNm":ljsIsNull(togiSidoNm)?'':togiSidoNm
+				,"togiSggNm":togiSggNm
+				,"togiEmdNm":togiEmdNm
+				,"togiRiNm":togiRiNm
+				,"togiJibun":togiJibun
+				,"togiPnu":togiPnu
+				,"togiManageNo":togiManageNo
 	   			,"togiaddress":togiaddress.trim()
 				,"togiTogiType":togiTogiType
 	   			,"togiJimokText":togiJimokText
-	   			,"togiJijukArea":togiJijukArea
+	   			,"togiJijukArea":ljsIsNull(togiJijukArea)?'':togiJijukArea
 	   			,"togiPyeonibArea":togiPyeonibArea
 	   			,"togiJasanNo":togiJasanNo
 				,"togiPipeYn":togiPipeYn
 	   			,"togiCancelYn":togiCancelYn
 	   			,"togiDemise":togiDemise
 				,"togiAccountYn":togiAccountYn
+				,"togiBunhalStatus":togiBunhalStatus
+				,"togiGoverOwnYn":gover_own_yn
+				,"togiJisa":togiJisa
+				
 	   			
 	   		}
 	   		console.log(togiObj);
@@ -628,6 +661,7 @@ var id =  $('.resultSelectBtn').data('index');
 
 console.log("***클릭된 id*** : " + id);
 console.log($(this).parent().parent().html());
+var pnu=$(this).parent().parent().find(".popContent01").html();
 	var juso=$(this).parent().parent().find(".popContent02").html();
 	var jibun=$(this).parent().parent().find(".popContent03").html();
     var sido_nm=$(this).parent().parent().find(".popContent0201").html();
@@ -640,7 +674,12 @@ console.log($(this).parent().parent().html());
 	var openerTargetEle=openerEle.find('input[id="bunhalIndex"][value="'+id+'"]');
 	//console.log(openerTargetEle.parent().parent().html());
 	openerTargetEle.parent().parent().find("#bunhalAddres").val(sido_nm+" "+sgg_nm + " " + emd_nm +" " +ri_nm  + " " + jibun);
-	
+	openerTargetEle.parent().parent().find("#togisido_nm").val(sido_nm);
+	openerTargetEle.parent().parent().find("#togisgg_nm").val(sgg_nm);
+	openerTargetEle.parent().parent().find("#togiemd_nm").val(emd_nm);
+	openerTargetEle.parent().parent().find("#togiri_nm").val(ri_nm);
+	openerTargetEle.parent().parent().find("#togijibun").val(jibun);
+	openerTargetEle.parent().parent().find("#togipnu").val(pnu);
 $(".bunhalAddres_" + id).attr("readonly", true);
 $(".bunhalAddres_"+id).val(sido_nm+" "+sgg_nm + " " + emd_nm +" " +ri_nm  + " " + jibun);
 
@@ -731,3 +770,16 @@ $(document).on("click",".delBtn",function(){
 	$(thisUl).remove();
 
 });
+
+
+$(document).on("click","#sangsinBtn",function(){
+	
+	var url="/jisang/divisionRegisterSangsin?idx="+$("#idx").val()+"&index="+$("#index").val();
+	var newWindow = window.open(url, "sangsin", "width=1500,height=800");
+	
+
+	               
+	                
+	                // 새 창의 문서 닫기 (렌더링을 완료)
+	                newWindow.document.close();
+})

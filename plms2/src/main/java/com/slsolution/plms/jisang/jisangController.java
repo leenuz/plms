@@ -1546,6 +1546,44 @@ public class jisangController {
 		ArrayList<HashMap> atcfilelist = mainService.selectQuery("jisangSQL.selectJisangBunhalAtcfile",params);
 
 		ModelAndView mav=new ModelAndView();
+		mav.addObject("idx",idx);
+		mav.addObject("index",index);
+		mav.addObject("resultData",data.get(0));
+		mav.addObject("soujaList",soujaList);
+		mav.addObject("bunhalList",bunhalList);
+		mav.addObject("atcfileList",atcfilelist);
+		
+		log.info("resultData:"+ data.get(0));
+		log.info("soujaList:"+soujaList);
+		log.info("bunhalList:"+bunhalList);
+		log.info("atcfileList:"+atcfilelist);
+		mav.setViewName("content/jisang/divisionRegister");
+		return mav;
+	}
+	
+	
+	@GetMapping(path="/divisionRegisterSangsin") //http://localhost:8080/api/get/dbTest
+	public ModelAndView divisionRegisterSangsin(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+
+		String idx = httpRequest.getParameter("idx");
+		String index = httpRequest.getParameter("index");
+		String js_idx = httpRequest.getParameter("js_idx") != null ? httpRequest.getParameter("js_idx") : "0";
+
+		params.put("idx",idx);
+		params.put("manage_no",idx);
+		params.put("index",index);
+		params.put("js_idx",js_idx);
+
+		log.info("**params**" + params);
+
+		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+		ArrayList<HashMap> bunhalList = mainService.selectQuery("jisangSQL.selectjisangBunhalList",params);
+		ArrayList<HashMap> atcfilelist = mainService.selectQuery("jisangSQL.selectJisangBunhalAtcfile",params);
+
+		ModelAndView mav=new ModelAndView();
 
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("soujaList",soujaList);
@@ -1555,11 +1593,12 @@ public class jisangController {
 		log.info("soujaList:"+soujaList);
 		log.info("bunhalList:"+bunhalList);
 		log.info("atcfileList:"+atcfilelist);
-		mav.setViewName("content/jisang/divisionRegister");
+		mav.setViewName("content/jisang/divisionRegisterSangsin");
 		return mav;
 	}
 	
-	//분할 임시저장
+	
+	//분할 저장
 	@Transactional
 	@PostMapping(path="/divisionRegisterSave")
 	public void divisionRegisterSave(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
@@ -1569,14 +1608,194 @@ public class jisangController {
 	        log.info("requestJsonObj:"+requestJsonObj);
 	        
 	        HashMap<String,Object> requestMap= new HashMap<>();
-	        Object seq= mainService.selectCountQuery("jisangSQL.selectJisangMasterNextval",requestMap);
-			int nseq=(int)seq;
-			log.info("##seq###:"+seq);
-	        String jisang_no="J_"+String.format("%06d",nseq);
+	        
+	       
 	        //대상토지 입력
 	        JSONArray desangTogis=requestJsonObj.getJSONArray("togiDatas");
 	        for(int i=0;i<desangTogis.length();i++) {
+	        	HashMap<String,Object> sqlParams= new HashMap<>();
+	        	JSONObject obj=new JSONObject(desangTogis.get(i).toString());
+	        	log.info("obj:"+obj);
 	        	
+//	        	if(obj.getBoolean("togiCancelYn"))
+//	        		log.info("#########################:"+obj.getString("togiCancelYn"));
+	        	
+	        	 String jisang_no="";
+	        			 //"J_"+String.format("%06d",nseq);
+	        	if (obj.getString("togiManageNo")==null || obj.getString("togiManageNo").toString().equals("") || obj.getString("togiManageNo")==null) {
+	        		Object seq= mainService.selectCountQuery("jisangSQL.selectJisangMasterNextval",requestMap);
+	    			int nseq=(int)seq;
+	    			log.info("##seq###:"+seq);
+	    			jisang_no="J_"+String.format("%06d",nseq);
+	        	}
+	        	else {
+	        		jisang_no=obj.getString("togiManageNo");
+	        	}
+	        	
+	        	
+	        	
+	        	sqlParams.put("jisang_no",jisang_no);
+	        	//지상권번호로 존재여부 판단
+	        	Object bunhalCount= mainService.selectCountQuery("jisangSQL.selectJisangBunhalChkCount", sqlParams);
+    			log.info("bunhalCount:"+bunhalCount);
+    			if((int)bunhalCount>0) continue;
+	        	
+	        	
+	        	sqlParams.put("togiCancelYn",obj.getString("togiCancelYn"));
+	        	sqlParams.put("togiAccountYn",obj.getString("togiAccountYn"));
+	        	sqlParams.put("togiDemise",obj.getString("togiDemise"));
+	        	sqlParams.put("togiJasanNo",obj.getString("togiJasanNo"));
+	        	sqlParams.put("togiJijukArea",obj.getString("togiJijukArea"));
+	        	sqlParams.put("togiJimokText",obj.getString("togiJimokText"));
+	        	sqlParams.put("togiPipeYn",obj.getString("togiPipeYn"));
+	        	sqlParams.put("togiPyeonibArea",obj.getString("togiPyeonibArea"));
+	        	sqlParams.put("togiTogiType",obj.getString("togiTogiType"));
+	        	sqlParams.put("togiaddress",obj.getString("togiaddress"));
+	        	sqlParams.put("togiBunhalStatus",obj.getString("togiBunhalStatus"));
+	        	sqlParams.put("togiSidoNm",obj.getString("togiSidoNm"));
+	        	sqlParams.put("togiSggNm",obj.getString("togiSggNm"));
+	        	sqlParams.put("togiEmdNm",obj.getString("togiEmdNm"));
+	        	sqlParams.put("togiRiNm",obj.getString("togiRiNm"));
+	        	sqlParams.put("togiPnu",obj.getString("togiPnu"));
+	        	sqlParams.put("togiJibun",obj.getString("togiJibun"));
+	        	sqlParams.put("togiGoverOwnYn",obj.getString("togiGoverOwnYn"));
+	        	
+	        	
+	        	sqlParams.put("bunhalDate",requestJsonObj.getString("bunhalDate"));
+	        	sqlParams.put("bunhal_comment",requestJsonObj.getString("bunhal_comment"));
+	        	sqlParams.put("bunhal_reason",requestJsonObj.getString("bunhal_reason"));
+	        	sqlParams.put("bunhal_org_no",requestJsonObj.getString("bunhal_org_no"));
+	        	sqlParams.put("bunhal_yn","Y");
+	        	sqlParams.put("bunhal_jisa",requestJsonObj.getString("jisa"));
+	        	
+	        	
+	        	sqlParams.put("cancelChuideukMoney",requestJsonObj.getString("cancelChuideukMoney"));
+	        	sqlParams.put("cancelGammoney",requestJsonObj.getString("cancelGammoney"));
+	        	sqlParams.put("cancelProfitLoss",requestJsonObj.getString("cancelProfitLoss"));
+	        	sqlParams.put("cancelRemainderMoney",requestJsonObj.getString("cancelRemainderMoney"));
+	        	
+	        	
+	        	
+	        	mainService.InsertQuery("jisangSQL.insertJisangBunhalMaster", sqlParams);
+	        	
+	        	//파일등록
+	        	ArrayList<HashMap<String, String>> docArray = new ArrayList<>();
+	    		log.info("req_doc_file01:"+requestJsonObj.getString("req_doc_file01"));
+	    		if (requestJsonObj.getString("req_doc_file01")!=null && requestJsonObj.getString("req_doc_file01")!="" && !requestJsonObj.getString("req_doc_file01").equals("")) {
+	    			HashMap<String,String> docMap = new HashMap();
+	    			docMap.put("jisang_no",  jisang_no);
+	    			docMap.put("fseq","1");
+	    			docMap.put("file_name",  httpRequest.getParameter("req_doc_file01"));
+	    			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
+	    			var tmp=GC.getJisangFileTempDir();
+	    			log.info("fpath:"+fpath);
+	    			docMap.put("file_path",  fpath);
+	    			try {
+	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file01"), tmp, fpath);
+	    			}catch(Exception e) {
+	    				
+	    			}
+	    			 docArray.add(docMap);
+	    		}
+	    		if (requestJsonObj.getString("req_doc_file02")!=null && requestJsonObj.getString("req_doc_file02")!="" && !requestJsonObj.getString("req_doc_file02").equals("")) {
+	    			HashMap<String,String> docMap = new HashMap();
+	    			docMap.put("jisang_no",  jisang_no);
+	    			docMap.put("fseq","2");
+	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file02"));
+	    			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
+	    			var tmp=GC.getJisangFileTempDir();
+	    			docMap.put("file_path",  fpath);
+	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file02"), tmp, fpath);
+	    			 docArray.add(docMap);
+	    		}
+	    		if (requestJsonObj.getString("req_doc_file03")!=null && requestJsonObj.getString("req_doc_file03")!="" && !requestJsonObj.getString("req_doc_file03").equals("")) {
+	    			HashMap<String,String> docMap = new HashMap();
+	    			docMap.put("jisang_no",  jisang_no);
+	    			docMap.put("fseq","3");
+	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file03"));
+	    			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
+	    			var tmp=GC.getJisangFileTempDir();
+	    			docMap.put("file_path",  fpath);
+	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file03"), tmp, fpath);
+	    			 docArray.add(docMap);
+	    		}
+	    		if (requestJsonObj.getString("req_doc_file04")!=null && requestJsonObj.getString("req_doc_file04")!="" && !requestJsonObj.getString("req_doc_file04").equals("")) {
+	    			HashMap<String,String> docMap = new HashMap();
+	    			docMap.put("jisang_no",  jisang_no);
+	    			docMap.put("fseq","4");
+	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file04"));
+	    			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
+	    			var tmp=GC.getJisangFileTempDir();
+	    			docMap.put("file_path",  fpath);
+	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file04"), tmp, fpath);
+	    			 docArray.add(docMap);
+	    		}
+	    		if (requestJsonObj.getString("req_doc_file05")!=null && requestJsonObj.getString("req_doc_file05")!="" && !requestJsonObj.getString("req_doc_file05").equals("")) {
+	    			HashMap<String,String> docMap = new HashMap();
+	    			docMap.put("jisang_no",  jisang_no);
+	    			docMap.put("fseq","5");
+	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file05"));
+	    			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
+	    			var tmp=GC.getJisangFileTempDir();
+	    			docMap.put("file_path",  fpath);
+	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file05"), tmp, fpath);
+	    			 docArray.add(docMap);
+	    		}
+	    		if (requestJsonObj.getString("req_doc_file06")!=null && requestJsonObj.getString("req_doc_file06")!="" && !requestJsonObj.getString("req_doc_file06").equals("")) {
+	    			HashMap<String,String> docMap = new HashMap();
+	    			docMap.put("jisang_no",  jisang_no);
+	    			docMap.put("fseq","6");
+	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file06"));
+	    			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
+	    			var tmp=GC.getJisangFileTempDir();
+	    			docMap.put("file_path",  fpath);
+	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file06"), tmp, fpath);
+	    			 docArray.add(docMap);
+	    		}
+	    		if (requestJsonObj.getString("req_doc_file07")!=null && requestJsonObj.getString("req_doc_file07")!="" && !requestJsonObj.getString("req_doc_file07").equals("")) {
+	    			HashMap<String,String> docMap = new HashMap();
+	    			docMap.put("jisang_no",  jisang_no);
+	    			docMap.put("fseq","7");
+	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file07"));
+	    			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
+	    			var tmp=GC.getJisangFileTempDir();
+	    			docMap.put("file_path",  fpath);
+	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file07"), tmp, fpath);
+	    			 docArray.add(docMap);
+	    		}
+	    		if (requestJsonObj.getString("req_doc_file08")!=null && requestJsonObj.getString("req_doc_file08")!="" && !requestJsonObj.getString("req_doc_file08").equals("")) {
+	    			HashMap<String,String> docMap = new HashMap();
+	    			docMap.put("jisang_no",  jisang_no);
+	    			docMap.put("fseq","8");
+	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file08"));
+	    			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
+	    			var tmp=GC.getJisangFileTempDir();
+	    			docMap.put("file_path",  fpath);
+	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file08"), tmp, fpath);
+	    			 docArray.add(docMap);
+	    		}
+	    		
+	    		for(int j=0;j<docArray.size();j++) {
+	    			log.info("arr"+docArray.get(j));
+	    			HashMap<String,String> filesMap=docArray.get(j);
+	    			log.info("filesMap:"+filesMap);
+	    			 //JSONObject obbj=new JSONObject(docArray.get(i));
+	    			 //log.info("obbj:"+obbj);
+//	    			 HashMap<String,Object> filesMap=new HashMap<>();
+//	    			 filesMap.put("jisang_no",obj.getString("jisang_no").toString());
+//	    			 filesMap.put("fseq",obj.getString("fseq").toString());
+//	    				filesMap.put("file_name",obj.getString("file_name").toString());
+//	    			
+//	    				filesMap.put("file_path",obj.getString("file_path").toString());
+//	    			 log.info("filesMap:"+filesMap);
+	    			Object count= mainService.selectCountQuery("jisangSQL.selectJisangBunhalAtcFileCount", filesMap);
+	    			log.info("count:"+count);
+	    			
+	    			if ((int)count==0) {
+	    				mainService.InsertQuery("jisangSQL.insertJisangBunhalAtcFile",filesMap);
+	    			}
+	    			else mainService.InsertQuery("jisangSQL.updateJisangBunhalAtcFile",filesMap);
+	    		}
 	        	
 	        }
 	        
@@ -1625,123 +1844,7 @@ public class jisangController {
 //		int docCount=0;
 //		
 //		
-		ArrayList<HashMap<String, String>> docArray = new ArrayList<>();
-		log.info("req_doc_file01:"+requestJsonObj.getString("req_doc_file01"));
-		if (requestJsonObj.getString("req_doc_file01")!=null && requestJsonObj.getString("req_doc_file01")!="" && !requestJsonObj.getString("req_doc_file01").equals("")) {
-			HashMap<String,String> docMap = new HashMap();
-			docMap.put("jisang_no",  jisang_no);
-			docMap.put("fseq","1");
-			docMap.put("file_name",  httpRequest.getParameter("req_doc_file01"));
-			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
-			var tmp=GC.getJisangFileTempDir();
-			log.info("fpath:"+fpath);
-			docMap.put("file_path",  fpath);
-			try {
-			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file01"), tmp, fpath);
-			}catch(Exception e) {
-				
-			}
-			 docArray.add(docMap);
-		}
-		if (requestJsonObj.getString("req_doc_file02")!=null && requestJsonObj.getString("req_doc_file02")!="" && !requestJsonObj.getString("req_doc_file02").equals("")) {
-			HashMap<String,String> docMap = new HashMap();
-			docMap.put("jisang_no",  jisang_no);
-			docMap.put("fseq","2");
-			docMap.put("file_name",  requestJsonObj.getString("req_doc_file02"));
-			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
-			var tmp=GC.getJisangFileTempDir();
-			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file02"), tmp, fpath);
-			 docArray.add(docMap);
-		}
-		if (requestJsonObj.getString("req_doc_file03")!=null && requestJsonObj.getString("req_doc_file03")!="" && !requestJsonObj.getString("req_doc_file03").equals("")) {
-			HashMap<String,String> docMap = new HashMap();
-			docMap.put("jisang_no",  jisang_no);
-			docMap.put("fseq","3");
-			docMap.put("file_name",  requestJsonObj.getString("req_doc_file03"));
-			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
-			var tmp=GC.getJisangFileTempDir();
-			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file03"), tmp, fpath);
-			 docArray.add(docMap);
-		}
-		if (requestJsonObj.getString("req_doc_file04")!=null && requestJsonObj.getString("req_doc_file04")!="" && !requestJsonObj.getString("req_doc_file04").equals("")) {
-			HashMap<String,String> docMap = new HashMap();
-			docMap.put("jisang_no",  jisang_no);
-			docMap.put("fseq","4");
-			docMap.put("file_name",  requestJsonObj.getString("req_doc_file04"));
-			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
-			var tmp=GC.getJisangFileTempDir();
-			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file04"), tmp, fpath);
-			 docArray.add(docMap);
-		}
-		if (requestJsonObj.getString("req_doc_file05")!=null && requestJsonObj.getString("req_doc_file05")!="" && !requestJsonObj.getString("req_doc_file05").equals("")) {
-			HashMap<String,String> docMap = new HashMap();
-			docMap.put("jisang_no",  jisang_no);
-			docMap.put("fseq","5");
-			docMap.put("file_name",  requestJsonObj.getString("req_doc_file05"));
-			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
-			var tmp=GC.getJisangFileTempDir();
-			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file05"), tmp, fpath);
-			 docArray.add(docMap);
-		}
-		if (requestJsonObj.getString("req_doc_file06")!=null && requestJsonObj.getString("req_doc_file06")!="" && !requestJsonObj.getString("req_doc_file06").equals("")) {
-			HashMap<String,String> docMap = new HashMap();
-			docMap.put("jisang_no",  jisang_no);
-			docMap.put("fseq","6");
-			docMap.put("file_name",  requestJsonObj.getString("req_doc_file06"));
-			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
-			var tmp=GC.getJisangFileTempDir();
-			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file06"), tmp, fpath);
-			 docArray.add(docMap);
-		}
-		if (requestJsonObj.getString("req_doc_file07")!=null && requestJsonObj.getString("req_doc_file07")!="" && !requestJsonObj.getString("req_doc_file07").equals("")) {
-			HashMap<String,String> docMap = new HashMap();
-			docMap.put("jisang_no",  jisang_no);
-			docMap.put("fseq","7");
-			docMap.put("file_name",  requestJsonObj.getString("req_doc_file07"));
-			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
-			var tmp=GC.getJisangFileTempDir();
-			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file07"), tmp, fpath);
-			 docArray.add(docMap);
-		}
-		if (requestJsonObj.getString("req_doc_file08")!=null && requestJsonObj.getString("req_doc_file08")!="" && !requestJsonObj.getString("req_doc_file08").equals("")) {
-			HashMap<String,String> docMap = new HashMap();
-			docMap.put("jisang_no",  jisang_no);
-			docMap.put("fseq","8");
-			docMap.put("file_name",  requestJsonObj.getString("req_doc_file08"));
-			var fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
-			var tmp=GC.getJisangFileTempDir();
-			docMap.put("file_path",  fpath);
-			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file08"), tmp, fpath);
-			 docArray.add(docMap);
-		}
 		
-		for(int i=0;i<docArray.size();i++) {
-			log.info("arr"+docArray.get(i));
-			HashMap<String,String> filesMap=docArray.get(i);
-			log.info("filesMap:"+filesMap);
-			 //JSONObject obbj=new JSONObject(docArray.get(i));
-			 //log.info("obbj:"+obbj);
-//			 HashMap<String,Object> filesMap=new HashMap<>();
-//			 filesMap.put("jisang_no",obj.getString("jisang_no").toString());
-//			 filesMap.put("fseq",obj.getString("fseq").toString());
-//				filesMap.put("file_name",obj.getString("file_name").toString());
-//			
-//				filesMap.put("file_path",obj.getString("file_path").toString());
-//			 log.info("filesMap:"+filesMap);
-			Object count= mainService.selectCountQuery("jisangSQL.selectJisangBunhalAtcFileCount", filesMap);
-			log.info("count:"+count);
-			
-			if ((int)count==0) {
-				mainService.InsertQuery("jisangSQL.insertJisangBunhalAtcFile",filesMap);
-			}
-			else mainService.InsertQuery("jisangSQL.updateJisangBunhalAtcFile",filesMap);
-		}
 		
 		
 		

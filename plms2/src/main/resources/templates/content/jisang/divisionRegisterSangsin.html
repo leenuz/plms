@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 
-      layout:decorate="~{layout/default_layout}">
+     >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -138,11 +138,9 @@ border: 1px solid black;
         <form name="saveForm"  id="saveForm" onSubmit="return false;">
         <div id="sangsinDiv">
         <div class="mainTitle">
-            <h1>지상권 분할 등록</h1>
+            <h1>지상권 분할 등록 상신</h1>
         </div>
 		<input type="hidden" name="jisa" th:value="${resultData.jm_jisa}">
-		<input type="hidden" name="idx" id="idx" th:value="${idx}">
-		<input type="hidden" name="index" id="index" th:value="${index}">
         <!-- 대상토지 -->
         <section class="targetLand">
             <div class="subTitle">

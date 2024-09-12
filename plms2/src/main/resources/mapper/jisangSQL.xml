@@ -783,6 +783,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 		
 	</select>
+	
+	
+	
+	
+	
 
 	<select id="selectJisangBunhalList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *,
@@ -904,6 +909,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</select>
 
+
+
+
+
 	<select id="selectJisangBunhalCount" parameterType="java.util.HashMap" resultType="Integer">
 		SELECT count(*) as count FROM (
 		SELECT jm.jm_idx AS index,
@@ -1013,6 +1022,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 
 	</select>
+	
+	<select id="selectJisangBunhalChkCount" parameterType="java.util.HashMap" resultType="Integer">
+		SELECT count(*) as count FROM jisang_bunhal jb where 1=1 and jb.jb_jisang_no=#{jisang_no}
+
+	</select>
+	
+	
 
 	<select id="selectJibunList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 <!--		select *,(row_number() over()) as no,-->
@@ -1055,7 +1071,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 		SELECT
 		row_number() OVER() AS no,
-		TRIM(CONCAT(jb_sido_nm, ' ', jb_sgg_nm, ' ', jb_ri_nm, ' ', jb_jibun)) AS address,
+		TRIM(CONCAT(jb_sido_nm, ' ', jb_sgg_nm, ' ',jb_emd_nm,' ', jb_ri_nm, ' ', jb_jibun)) AS address,
 		jb_jibun AS jibun,
 		jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancel_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_bunhal_org_no, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
 		FROM
@@ -1297,6 +1313,113 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
+	<!-- 지상권분할정보 저장 -->
+	<insert id="insertJisangBunhalMaster" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jb_idx" keyProperty="jb_idx">
+
+		INSERT INTO jisang_bunhal
+		(
+		 
+		 jb_jisang_no
+		  ,jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm
+		 ,jb_jibun
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(bunhal_jisa)" >
+		 , jb_jisa
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(togiJijukArea)" >
+		 ,jb_jijuk_area
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(yongdo)" >
+		 ,jb_yongdo
+		 </if>
+		 ,jb_pyeonib_area
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(togiJasanNo)" >
+		 ,jb_jasan_no
+		 </if>
+		 ,jb_gover_own_yn
+		 ,jb_cancel_yn
+		 ,jb_bunhal_yn
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(bunhalDate)" >
+		 ,jb_bunhal_date
+		 </if>
+		 ,jb_bunhal_reason
+		 ,jb_bunhal_org_no
+		 ,jb_addrcode
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(togiPnu)" >
+		 ,jb_pnu
+		 </if>
+		 ,jb_remainder_money
+		 ,jb_jimok_text
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dockey)" >
+		 ,jb_dockey
+		 </if>
+		 ,jb_toji_type
+		 ,jb_pipe_yn
+		 ,jb_bunhal_comment
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelChuideukMoney)" >
+		 ,jb_chuideuk_money
+		 </if>
+		 ,jb_gammoney
+		 ,jb_bosang_money
+		 ,jb_profit_loss
+		 ,jb_demise
+		 ,jb_bunhal_complete
+		 ,jb_bunhal_status
+		)
+		 VALUES (
+		 
+		  #{jisang_no}
+		  ,#{togiSidoNm}, #{togiSggNm}, #{togiEmdNm}, #{togiRiNm}
+		  ,#{togiJibun}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(bunhal_jisa)" >
+		  , #{bunhal_jisa}
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(togiJijukArea)" >
+		  ,nullif(cast(#{togiJijukArea} as varchar),''):: integer
+		  </if>
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(yongdo)" >
+		  , #{yongdo}
+		  </if>
+		  ,nullif(cast(#{togiPyeonibArea} as varchar),''):: numeric
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(togiJasanNo)" >
+		  ,#{togiJasanNo}
+		  </if>
+		  ,#{togiGoverOwnYn}
+		  ,#{togiCancelYn}
+		  ,#{bunhal_yn}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(bunhalDate)" >
+		  ,#{bunhalDate}::date
+		  </if>
+		  ,#{bunhal_reason}
+		  ,#{bunhal_org_no}
+		  ,#{addrcode}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(togiPnu)" >
+		  ,#{togiPnu}
+		  </if>
+		  ,nullif(#{cancelRemainderMoney},'')::numeric
+		  ,#{togiJimokText}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dockey)" >
+		  ,#{dockey}
+		  </if>
+		  ,#{togiTogiType}
+		  ,#{togiPipeYn}
+		  ,#{bunhal_comment}
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelChuideukMoney)" >
+		  ,NULLIF(cast(#{cancelChuideukMoney} as varchar),'')::numeric
+		  </if>
+		  ,nullif(#{cancelGammoney},'')::numeric
+		  
+		  ,#{bosang_money}
+		  ,nullif(#{cancelProfitLoss},'')::numeric
+		  
+		  ,#{togiDemise}
+		  ,#{bunhal_complete}
+		  ,#{togiBunhalStatus}
+		   )
+
+	</insert>
+	
+	
+	
 	<!--  지상권 분할 필수 첨부파일 -->
 	<insert id="insertJisangBunhalAtcfile" parameterType="map">
 		INSERT INTO jisang_bunhal_atcfile (
@@ -1477,6 +1600,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   )
 
 	<!-- 지상기본정보 --></insert>
+
+
 
 
 
