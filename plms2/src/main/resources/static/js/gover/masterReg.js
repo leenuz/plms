@@ -188,15 +188,16 @@ $(document).ready(function() {
     }
 });
 
-// 체크박스 클릭 시 다른 체크박스들 비활성화
-$(document).on("click", "input[type=checkbox]", function() {
-    console.log("---------checkbox 클릭됨-------------");
+// '소속 토지 정보' 내의 체크박스 클릭 시 다른 체크박스 비활성화
+$(document).on("click", ".landAdressInfo input[type=checkbox]", function() {
+    console.log("---------소속 토지 정보의 체크박스 클릭됨-------------");
+    
     const currentCheckbox = $(this);
     const isChecked = currentCheckbox.is(":checked");
 
-    // 다른 체크박스들을 비활성화
+    // '소속 토지 정보' 섹션 내에서만 다른 체크박스들을 비활성화
     if (isChecked) {
-        $("input[type=checkbox]").not(this).prop("checked", false);
+        $(".landAdressInfo input[type=checkbox]").not(this).prop("checked", false);
     }
 
     console.log(`선택된 체크박스: ${currentCheckbox.attr("id")}`);
