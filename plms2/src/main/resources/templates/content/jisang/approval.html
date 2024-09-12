@@ -1,1 +1,1976 @@
-1
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>지상권 상세정보</title>
+</head>
+
+<body>
+    <div id="approvalDiv">
+        <style>
+            @charset "UTF-8";
+
+            * {
+                padding: 0;
+                margin: 0;
+            }
+
+            body * {
+                font-family: pretendard;
+            }
+
+            li {
+                list-style: none;
+            }
+
+            select {
+                outline: 0;
+                border: 1px solid #cfddf2;
+                border-radius: 10px;
+                font-size: 15px;
+                font-weight: 500;
+                color: #6e7d88;
+                text-indent: 12px;
+            }
+
+            textarea {
+                border: 0;
+                outline: 0;
+            }
+
+            .viewDetailButton {
+                width: 116px;
+                height: 27px;
+                border-radius: 20px;
+                background: rgba(204, 224, 255, 0.6);
+                color: #2b7de1;
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+            input {
+                border: 0;
+                outline: 0;
+            }
+
+            input:focus {
+                border: 0;
+            }
+
+            textarea:focus {
+                border: 0;
+                outline: 0;
+            }
+
+            button {
+                border: 0;
+            }
+
+            /**/
+
+            * {
+                font-family: pretendard;
+            }
+
+            .miniBtn {
+                width: 68px;
+                height: 27px;
+                border-radius: 20px;
+            }
+
+            input[type="text"]::placeholder {
+                color: #6e7d88;
+                text-align: center;
+            }
+
+            .disabled {
+                pointer-events: none;
+            }
+
+            .fileUploadIcon {
+                width: 35px;
+                height: 35px;
+            }
+
+            .thirdTitle h2 {
+                font-size: 16px;
+                font-weight: 600;
+                color: #2b7de1;
+                margin-bottom: 15px;
+            }
+
+            #landTerminationRegistration>section {
+                padding-bottom: 40px;
+            }
+
+            .contents .content {
+                border-right: 1px solid #cddbf0;
+                height: 100%;
+                text-align: center;
+                font-size: 14px;
+                font-weight: 500;
+                color: #3c3c3c;
+                box-sizing: border-box;
+            }
+
+            .contents .content:last-child {
+                border-right: 0;
+            }
+
+            .attachFileInfo .fileUploadWrap::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .attachFileInfo .fileUploadWrap::-webkit-scrollbar-thumb {
+                height: 30%;
+                border-radius: 10px;
+                background: #d2d2d2;
+            }
+
+            .titles.titleScr {
+                padding-right: 4px;
+                box-sizing: border-box;
+            }
+
+            .contentScr {
+                overflow-y: scroll;
+            }
+
+            .contentScr::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .contentScr::-webkit-scrollbar-thumb {
+                height: 30%;
+                border-radius: 10px;
+                background: #d2d2d2;
+            }
+
+            .attachFileInfo .contentScr {
+                height: 90px;
+            }
+
+            .SearchAddressBtn {
+                display: inline-block;
+                width: 86px;
+                height: 44px;
+                border-radius: 100px;
+                background: #cdd2dd;
+                color: #949aac;
+                font-size: 15px;
+                font-weight: 600;
+            }
+
+            .SearchAddressBtn.active {
+                display: inline-block;
+                width: 86px;
+                height: 44px;
+                border-radius: 100px;
+                background: #4e5871;
+                color: #fff;
+                font-size: 15px;
+                font-weight: 600;
+            }
+
+            .moreSelectBtn {
+                /* font-size: 15px; */
+                font-size: 14px;
+                font-weight: 500;
+                color: #4e5871;
+                width: 100%;
+                height: 100%;
+                background: #fff;
+                text-align-last: left;
+                padding-left: 12px;
+                box-sizing: border-box;
+            }
+
+            .basicOwnerInfo {
+                padding: 27px 0 40px 0;
+            }
+
+            .mainTitle {
+                padding: 30px 0;
+                border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+            }
+
+            .mainTitle h1 {
+                font-size: 22px;
+                font-weight: 700;
+                color: #31394c;
+                padding-left: 20px;
+                box-sizing: border-box;
+            }
+
+            .subTitle {
+                font-size: 18px;
+                font-weight: 700;
+                color: #31394c;
+                margin-bottom: 24px;
+            }
+
+            .contWrap {
+                width: 100%;
+            }
+
+            .basicOwnerInfo .contWrap {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .basicOwnerInfo .contWrap .contBox {
+                width: 100%;
+            }
+
+            .contentDetailBox {
+                border: 1px solid #cddbf0;
+                border-radius: 5px;
+            }
+
+            /* 기본, 소유자 정보 */
+            .basicContentDetailBox .titles {}
+
+            .basicContentDetailBox .titles .title {
+                width: 9.1%;
+            }
+
+            .basicContentDetailBox .titles .title.addressInfoWidth {
+                width: 36.9%;
+            }
+
+            .basicContentDetailBox .contents .content {
+                width: 9.1%;
+            }
+
+            .basicContentDetailBox .contents .content.addressInfoWidth {
+                width: 36.9%;
+            }
+
+            .contWrap .titles {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                height: 45px;
+                background: #f7f9fc;
+                border-bottom: 1px solid #cddbf0;
+            }
+
+            .contWrap .depth1 .titles {
+                border-radius: 5px 5px 0 0;
+            }
+
+            .contWrap .titles li {
+                height: 100%;
+                text-align: center;
+                line-height: 45px;
+                font-size: 14px;
+                font-weight: 500;
+                color: #000;
+                border-right: 1px solid #cddbf0;
+                box-sizing: border-box;
+                /* flex-grow: 1; */
+            }
+
+            .contWrap .titles li:last-child {
+                border-right: 0;
+            }
+
+            .contWrap .depth1 .contents {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                height: 47px;
+                /* background: #fff; */
+                border-bottom: 1px solid #cddbf0;
+            }
+
+            .contWrap .depth1 .contents li {
+                height: 100%;
+                padding: 6px 8px;
+                box-sizing: border-box;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .contWrap .depth1 .contents:last-child {
+                border-radius: 0 0 5px 5px;
+            }
+
+            .contWrap .depth1 .contents li.content {
+                border-right: 1px solid #cddbf0;
+            }
+
+            .contWrap .depth1 .contents li:last-child {
+                border-right: 0;
+            }
+
+            .contWrap .contents.lastContents {
+                border-bottom: 0;
+            }
+
+            .contWrap .contents li .customSelectBox {
+                width: 100%;
+                height: 100%;
+                position: relative;
+            }
+
+            .contWrap .contents li .customSelectBox .customSelectView {
+                width: 100%;
+                height: 100%;
+                border: 1px solid #cfddf2;
+                border-radius: 10px;
+                /* font-size: 15px; */
+                font-size: 14px;
+                font-weight: 500;
+                color: #6e7d88;
+                background: #fff;
+                text-align-last: left;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 9px 12px;
+                box-sizing: border-box;
+                background: url(/assets/media/menu02/images/arrowDown.png) no-repeat right 8px center;
+                background-size: 21px;
+            }
+
+            .contWrap .contents li .customSelectBox .customSelectView.active {
+                background: url(/assets/media/menu02/images/arrowDownBlue.png) no-repeat right 8px center;
+                background-size: 21px;
+            }
+
+            .contWrap .contents li .customSelectBox .customSelectView.active {
+                border: 1px solid #2b7de1;
+                color: #2b7de1;
+            }
+
+            .contWrap .contents li .customSelectBox .customSelectBtns {
+                position: absolute;
+                width: 100%;
+                top: calc(100% + 4px);
+                box-sizing: border-box;
+                max-height: 0;
+                overflow-y: hidden;
+                z-index: 10;
+                transition: 500ms;
+                opacity: 0;
+                border: 1px solid #acbdd7;
+            }
+
+            .contWrap .contents li .customSelectBox .customSelectBtns::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .contWrap .contents li .customSelectBox .customSelectBtns::-webkit-scrollbar-thumb {
+                height: 30%;
+                border-radius: 10px;
+                background: #d2d2d2;
+            }
+
+            .contWrap .contents li .customSelectBox .customSelectBtns.active {
+                padding: 6px 0;
+                border-radius: 10px;
+                background: #fff;
+                max-height: 233px;
+                overflow-y: scroll;
+                transition: 500ms;
+                opacity: 1;
+            }
+
+            .contWrap .contents li .customSelectBox .customSelectBtns li {
+                padding: 0;
+                height: 41px;
+            }
+
+            /* 소유자 정보 */
+
+            .contWrap .ownerContentDetailBox {}
+
+            .contWrap .ownerContentDetailBox .title {
+                width: 10.1%;
+            }
+
+            .contWrap .ownerContentDetailBox .content {
+                width: 10.1%;
+            }
+
+            .contWrap .ownerContentDetailBox .numInfoWidth {
+                width: 6.7%;
+            }
+
+            .contWrap .ownerContentDetailBox .addressInfoWidth {
+                width: 38.2%;
+            }
+
+            .contWrap .ownerContentDetailBox .contactInfoWidth {
+                width: 17.6%;
+            }
+
+            .contWrap .depth1 .contents li input[type="text"] {
+                width: 100%;
+                height: 100%;
+                background: #edf2f9;
+                border-radius: 10px;
+                text-indent: 19px;
+            }
+
+            .contWrap .depth1 .contents li input[type="text"].notWriteInput {
+                background: transparent;
+            }
+
+            .contWrap .depth1 .contents li input[type="text"]::placeholder {
+                text-align: center;
+                text-indent: 0;
+            }
+
+            input[type="checkbox"] {
+                display: none;
+            }
+
+            .checkboxWrap label {
+                width: 21px;
+                height: 21px;
+                border-radius: 5px;
+                background: #eff6ff;
+            }
+
+            /* date */
+            .dateInputWrap {
+                width: 100%;
+                height: 100%;
+                border-radius: 10px;
+                border: 1px solid #cfddf2;
+                position: relative;
+                background: url(/assets/media/menu02/images/calendarInputIcon.png) no-repeat left 8px center;
+                background-size: 18px;
+            }
+
+            input[type="date"] {
+                width: 100%;
+                height: 100%;
+                border-radius: 10px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: transparent;
+                background: transparent;
+                text-align: right;
+                /* 추가 */
+                padding: 0 10px;
+                box-sizing: border-box;
+            }
+
+            input[type="date"]::-webkit-calendar-picker-indicator {
+                background: transparent;
+                z-index: 1;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            input[type="date"]::before {
+                content: attr(data-placeholder);
+                position: absolute;
+                top: 50%;
+                /* 수정 */
+                right: 10px;
+                transform: translateY(-50%);
+                color: #6e7d88;
+            }
+
+            input[type="date"]:focus,
+            input[type="date"]:valid {
+                color: #6e7d88;
+            }
+
+            input[type="date"]:focus::before,
+            input[type="date"]:valid::before {
+                content: "";
+            }
+
+            /* label */
+
+            input[type="checkbox"] {
+                display: none;
+            }
+
+            input[type="checkbox"]~label {
+                width: 21px;
+                height: 21px;
+                border-radius: 5px;
+                background: #eff6ff;
+                display: inline-block;
+                position: relative;
+            }
+
+            .allSelectCheck input[type="checkbox"]~label {
+                background: #dce7f5;
+            }
+
+            input[type="checkbox"]:checked~label {
+                background: #4e5871;
+            }
+
+            input[type="checkbox"]:checked~label::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 14px;
+                height: 10px;
+                background: url(/assets/media/menu02/images/checkIcon.png) no-repeat center;
+                background-size: contain;
+            }
+
+            .ownerInfo .contents .content.btnBox .editBefore,
+            .ownerInfo .contents .content.btnBox .editAfter {
+                width: 100%;
+            }
+
+            .ownerInfo .contents .content.btnBox .editBefore {
+                display: flex;
+                justify-content: center;
+            }
+
+            .ownerInfo .contents.editing .content.btnBox .editBefore {
+                display: none;
+            }
+
+            .ownerInfo .contents .content.btnBox .editAfter {
+                display: none;
+            }
+
+            .ownerInfo .contents.editing .content.btnBox .editAfter {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .ownerInfo .contents .content.btnBox .btnWrap {
+                width: 50%;
+                justify-content: center;
+            }
+
+            .ownerInfo .contents .content.btnBox .btnWrap:first-child {
+                border-right: 1px solid #cddbf0;
+            }
+
+            .ownerInfo .contentScr {
+                height: 180px;
+            }
+
+            /* 수정 전일 때 */
+
+            .ownerInfo .contWrap .depth1 .contents .content.editSpace input[type="text"].editingContent {
+                color: #3c3c3c;
+                font-size: 14px;
+                font-weight: 500;
+                text-align: center;
+                width: 100%;
+                text-indent: 0;
+                background: transparent;
+            }
+
+            .ownerInfo .contents .editSpace input[type="text"]::placeholder {
+                color: #3c3c3c;
+            }
+
+            /* 수정중일때 */
+
+            .ownerInfo .contents.editing .editSpace {
+                padding: 6px;
+                box-sizing: border-box;
+                line-height: normal;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .ownerInfo .contWrap .depth1 .contents.editing .content.editSpace input[type="text"].editingContent {
+                border-radius: 10px;
+                background: #edf2f9;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #6e7d88;
+            }
+
+            .ownerInfo .contents.editing .editSpace .editingHideContent {
+                display: none;
+            }
+
+            .ownerInfo .contents.editing .editSpace .editBtn {
+                background: rgba(180, 180, 180, 0.6);
+                color: #707070;
+            }
+
+            .ownerInfo .contents.editing .editSpace input[type="text"] {
+                color: #6e7d88;
+                font-size: 14px;
+                font-weight: 500;
+                text-align: center;
+                width: 100%;
+            }
+
+            .ownerInfo .contents.editing .editSpace input[type="text"]::placeholder {
+                color: #6e7d88;
+            }
+
+            .ownerInfo {
+                padding-bottom: 40px;
+            }
+
+            .ownerInfo .contWrap .depth1 .contents:last-child {
+                border-bottom: 0;
+            }
+
+            .ownerInfo .contWrap .depth1 .titles .title01 {
+                /* width: 173px; */
+                width: 9.72%;
+            }
+
+            .ownerInfo .contWrap .depth1 .titles .title02 {
+                /* width: 287px; */
+                width: 16.13%;
+            }
+
+            .ownerInfo .contWrap .depth1 .titles .title03 {
+                /* width: 496px; */
+                width: 27.88%;
+            }
+
+            .ownerInfo .contWrap .depth1 .titles .title04 {
+                /* width: 309px; */
+                width: 17.37%;
+            }
+
+            .ownerInfo .contWrap .depth1 .titles .title05 {
+                /* width: 309px; */
+                width: 17.37%;
+            }
+
+            .ownerInfo .contWrap .depth1 .titles .title06 {
+                /* width: 205px; */
+                width: 11.52%;
+            }
+
+            .ownerInfo .contWrap .depth1 .contents .content01 {
+                /* width: 173px; */
+                width: 9.72%;
+            }
+
+            .ownerInfo .contWrap .depth1 .contents .content02 {
+                /* width: 287px; */
+                width: 16.13%;
+            }
+
+            .ownerInfo .contWrap .depth1 .contents .content03 {
+                /* width: 496px; */
+                width: 27.88%;
+            }
+
+            .ownerInfo .contWrap .depth1 .contents .content04 {
+                /* width: 309px; */
+                width: 17.37%;
+            }
+
+            .ownerInfo .contWrap .depth1 .contents .content05 {
+                /* width: 309px; */
+                width: 17.37%;
+            }
+
+            .ownerInfo .contWrap .depth1 .contents .content06 {
+                /* width: 205px; */
+                width: 11.52%;
+                display: flex;
+                padding: 0;
+            }
+
+            .ownerInfo .contWrap .depth1 .contents .content06 .btnWrap {
+                width: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-right: 1px solid #cddbf0;
+            }
+
+            .ownerInfo .contWrap .depth1 .contents .content06 .btnWrap:last-child {
+                border-right: 0;
+            }
+
+            .miniBtn {
+                width: 74px;
+                height: 27px;
+                border-radius: 20px;
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+            .addBtn {
+                background: #fff;
+                border: 1px solid #2b7de1;
+                color: #2b7de1;
+            }
+
+            .delBtn {
+                background: #9a9a9a;
+                color: #fff;
+            }
+
+            .registBtn {
+                background: #fff;
+                border: 1px solid #2b7de1;
+                color: #2b7de1;
+                /* background: #4E5871;
+    color: #fff; */
+            }
+
+            /* 지상권 정보 */
+
+            .surfaceRightInfo {
+                padding-bottom: 40px;
+            }
+
+            .surfaceRightInfo .contWrap {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .surfaceRightInfo .contBoxMini07 .depth1 .titles .title {
+                width: 11.1%;
+            }
+
+            .surfaceRightInfo .contBoxMini07 .depth1 .contents {
+                border-radius: 0;
+            }
+
+            .surfaceRightInfo .contBoxMini07 .depth1 .contents .content {
+                width: 11.1%;
+            }
+
+            .surfaceRightInfo .contBoxMini07 .depth2 {
+                display: flex;
+                border-radius: 0 0 5px 5px;
+            }
+
+            /*css 추가*/
+
+            .surfaceRightInfo .contBoxMini07 .depth2 input[type="text"] {
+                text-align: center;
+            }
+
+            .compensationInfo .contWrap .depth1 input[type="text"] {
+                text-align: center;
+            }
+
+            /**/
+
+            .surfaceRightInfo .contBoxMini07 .depth2 .rowListBox {
+                width: 33.3%;
+                display: flex;
+                align-items: center;
+                height: 45px;
+            }
+
+            .surfaceRightInfo .contBoxMini07 .depth2 .rowListBox li {
+                border-right: 1px solid #cddbf0;
+            }
+
+            .surfaceRightInfo .contBoxMini07 .depth2 .rowListBox li.lastRowList {
+                border-right: 0;
+            }
+
+            .surfaceRightInfo .contBoxMini07 .depth2 .rowListBox:first-child .title {
+                border-radius: 0px 0px 0px 5px;
+            }
+
+            .surfaceRightInfo .contBoxMini07 .depth2 .rowListBox:last-child .content {
+                border-radius: 0px 0px 5px 0px;
+            }
+
+            .surfaceRightInfo .contBoxMini07 .depth2 .rowListBox .title {
+                width: 50%;
+                background: #f7f9fc;
+            }
+
+            .title {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 14px;
+                font-weight: 500;
+                height: 100%;
+            }
+
+            .surfaceRightInfo .contBoxMini07 .depth2 .rowListBox .content {
+                width: 50%;
+            }
+
+            .content {
+                height: 100%;
+                padding: 6px 8px;
+                box-sizing: border-box;
+            }
+
+            .contWrap li input[type="text"] {
+                width: 100%;
+                height: 100%;
+                background: #edf2f9;
+                border-radius: 10px;
+            }
+
+            .contWrap li input[type="text"]::placeholder {
+                color: #6e7d88;
+            }
+
+            .surfaceRightInfo .depth1 .contents .content {
+                width: 16.6%;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .surfaceRightInfo .depth2 .titles .title {
+                width: 100%;
+                text-align: center;
+            }
+
+            .surfaceRightInfo .depth2 .contents {
+                height: 45px;
+            }
+
+            .surfaceRightInfo .depth2 .contents .content {
+                width: 100%;
+                height: 100%;
+                text-align: center;
+            }
+
+            .surfaceRightInfo .depth2 .contents .content.content01 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .surfaceRightInfo .contWrap .contents li .customSelectBox .customSelectBtns::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .surfaceRightInfo .contWrap .contents li .customSelectBox .customSelectBtns::-webkit-scrollbar-thumb {
+                height: 30%;
+                border-radius: 10px;
+                background: #d2d2d2;
+            }
+
+            .surfaceRightInfo .contWrap .contents li .customSelectBox {
+                width: 100%;
+                height: 100%;
+                position: relative;
+            }
+
+            .surfaceRightInfo .contWrap .contents li .customSelectBox .customSelectView {
+                width: 100%;
+                height: 100%;
+                border: 1px solid #cfddf2;
+                border-radius: 10px;
+                font-size: 15px;
+                font-weight: 500;
+                color: #6e7d88;
+                background: #fff;
+                text-align-last: left;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 9px 12px;
+                box-sizing: border-box;
+            }
+
+            /* 
+#landTerminationRegistration
+  .surfaceRightInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectView
+  figure {
+  width: 21px;
+  height: 21px;
+  background: url(/assets/media/menu02/images/arrowDown.png) no-repeat center;
+}
+
+#landTerminationRegistration
+  .surfaceRightInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectView.active
+  figure {
+  width: 21px;
+  height: 21px;
+  background: url(/assets/media/menu02/images/arrowDownBlue.png) no-repeat
+    center;
+} */
+
+            .surfaceRightInfo .contWrap .contents li .customSelectBox .customSelectView.active {
+                border: 1px solid #2b7de1;
+                color: #2b7de1;
+            }
+
+            .surfaceRightInfo .contWrap .contents li .customSelectBox .customSelectBtns {
+                position: absolute;
+                width: 100%;
+                top: calc(100% + 4px);
+                box-sizing: border-box;
+                max-height: 0;
+                overflow-y: hidden;
+                z-index: 10;
+                transition: 500ms;
+                opacity: 0;
+                border: 1px solid #acbdd7;
+            }
+
+            .surfaceRightInfo .contWrap .contents li .customSelectBox .customSelectBtns.active {
+                padding: 6px 0;
+                border-radius: 10px;
+                background: #fff;
+                max-height: 233px;
+                overflow-y: scroll;
+                transition: 500ms;
+                opacity: 1;
+            }
+
+            .surfaceRightInfo .contWrap .contents li .customSelectBox .customSelectBtns li {
+                padding: 0;
+                height: 41px;
+            }
+
+            /* 지상권 해지관련 보상정보 */
+            .compensationInfo .contWrap {
+                border: 1px solid #cddbf0;
+                border-radius: 5px;
+            }
+
+            .compensationInfo .contWrap .depth1 {
+                display: flex;
+            }
+
+            .compensationInfo .contWrap .depth1 .rowListBox {
+                width: 50%;
+                display: flex;
+                align-items: center;
+                height: 45px;
+            }
+
+            .compensationInfo .contWrap .depth1 .rowListBox li {
+                border-right: 1px solid #cddbf0;
+            }
+
+            .compensationInfo .contWrap .depth1 .rowListBox li.lastRowList {
+                border-right: 0;
+            }
+
+            .compensationInfo .contWrap .depth1 .rowListBox .title {
+                width: 31.9%;
+                background: #f7f9fc;
+            }
+
+            .compensationInfo .contWrap .depth1 .rowListBox:first-of-type .title:first-child {
+                border-radius: 5px 0 0 5px;
+            }
+
+            .compensationInfo .contWrap .depth1 .rowListBox .content {
+                width: 69.1%;
+            }
+
+            .compensationInfo .contWrap .depth1 .rowListBox .inputWrap {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+            }
+
+            .compensationInfo .contWrap .depth1 .rowListBox .inputWrap .inputBox {
+                font-size: 15px;
+                font-weight: 600;
+                color: #31394c;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 6px;
+            }
+
+            /* 첨부파일 정보 */
+            input[type="file"] {
+                display: none;
+            }
+
+            .fileBtnWrap label {
+                width: 81px;
+                height: 27px;
+                background: #2b7de1;
+                color: #fff;
+                border-radius: 20px;
+                font-size: 13px;
+                font-weight: 600;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+            }
+
+            .lightfileBtnWrap label {
+                width: 116px;
+                height: 27px;
+                border-radius: 20px;
+                background: rgba(204, 224, 255, 0.6);
+                color: #2b7de1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+            .myPc {
+                width: 81px;
+                height: 27px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #2b7de1;
+                color: #fff;
+                border-radius: 20px;
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+            .attachFileInfo {
+                padding-bottom: 40px;
+            }
+
+            .attachFileInfo .subTitle {
+                display: flex;
+                align-items: center;
+                gap: 21px;
+            }
+
+            .attachFileInfo .fileUploadWrap {
+                width: 100%;
+                margin-bottom: 18px;
+                height: 130px;
+                overflow-y: scroll;
+                border: 1px dashed #cddbf0;
+                border-radius: 5px;
+            }
+
+            .attachFileInfo .fileUploadBox {
+                width: 100%;
+                height: 150px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 12px;
+                background: #f7f9fc;
+            }
+
+            .attachFileInfo .fileUploadBox p {
+                font-size: 14px;
+                font-weight: 600;
+                color: #88a2c8;
+            }
+
+            .attachFileInfo .contWrap {
+                border: 1px solid #cddbf0;
+                border-radius: 5px;
+            }
+
+            .attachFileInfo .contWrap .depth1 .contents:last-child {
+                border-bottom: 0;
+            }
+
+            .attachFileInfo .contWrap .depth1 .title {
+                width: 15%;
+            }
+
+            .attachFileInfo .contWrap .depth1 .content {
+                width: 15%;
+            }
+
+            .attachFileInfo .contWrap .depth1 .selectWidth {
+                width: 8.5%;
+            }
+
+            .attachFileInfo .contWrap .depth1 .fileNameWidth {
+                width: 59.6%;
+                flex-grow: 1;
+            }
+
+            .attachFileInfo .contWrap .depth1 .contents .content01 {
+                width: 154px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .attachFileInfo .contWrap .depth1 .contents .content02 {
+                width: auto;
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .attachFileInfo .contWrap .depth1 .contents .content02 .fileName {
+                text-align: center;
+                color: #3c3c3c;
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            .attachFileInfo .btnWrap {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 15px;
+            }
+
+            .fileDelBtn {
+                width: 129px;
+                height: 37px;
+                border-radius: 10px;
+                font-size: 15px;
+                font-weight: 600;
+            }
+
+            .attachFileInfo .contWrap .depth1 .titles .allSelectCheck {
+                line-height: normal;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            /* 해지사유 및 검토의견 */
+
+            .reasonTermination .contWrap {
+                border: 1px solid #cddbf0;
+                border-radius: 5px;
+            }
+
+            .reasonTermination .contWrap .depth1 {
+                height: 45px;
+                border-bottom: 1px solid #cddbf0;
+            }
+
+            .reasonTermination .contWrap .depth2 {
+                height: 200px;
+            }
+
+            .reasonTermination .contWrap .rowListBox {
+                display: flex;
+                height: 100%;
+            }
+
+            .reasonTermination .contWrap .rowListBox input {
+                text-align-last: left;
+                text-indent: 19px;
+            }
+
+            .reasonTermination .contWrap .rowListBox .title {
+                width: 8.5%;
+                height: 100%;
+                border-right: 1px solid #cddbf0;
+                background: #f7f9fc;
+            }
+
+            .reasonTermination .contWrap .rowListBox:first-child .title:first-child {
+                border-radius: 5px 0 0 5px;
+            }
+
+            .reasonTermination .contWrap .rowListBox .content {
+                width: 91.5%;
+            }
+
+            textarea {
+                width: 100%;
+                border-radius: 10px;
+                background: #edf2f9;
+                padding: 15px 19px;
+                box-sizing: border-box;
+                height: 100%;
+                resize: none;
+            }
+
+            textarea::placeholder {
+                color: #6e7d88;
+            }
+
+            textarea::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            textarea::-webkit-scrollbar-thumb {
+                height: 30%;
+                border-radius: 10px;
+                background: #d2d2d2;
+            }
+
+            /* 첨부서류 */
+
+            .attachDocuments {}
+
+            .attachDocuments .contWrap {
+                display: flex;
+                border: 1px solid #cddbf0;
+                border-radius: 5px;
+                overflow: hidden;
+            }
+
+            .attachDocuments .contWrap .depth1 {
+                width: 39.8%;
+                border-right: 1px solid #cddbf0;
+            }
+
+            .attachDocuments .contWrap .depth2 {
+                width: calc(100% - 39.8%);
+            }
+
+            .attachDocuments .contWrap .depth1 .titles .title {
+                width: 100%;
+            }
+
+            .attachDocuments .contWrap .titles {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                height: 45px;
+            }
+
+            .attachDocuments .contWrap .titles .title {
+                height: 100%;
+            }
+
+            .attachDocuments .contWrap .titles .delContWidth {
+                width: 9.7%;
+            }
+
+            .attachDocuments .contWrap .titles .selectFileWidth {
+                width: 10.39%;
+            }
+
+            .attachDocuments .contWrap .contentListBox {
+                width: 100%;
+                box-sizing: border-box;
+                /* height: 360px; */
+                display: flex;
+            }
+
+            .attachDocuments .contWrap .contentListBox .essentialDocument {
+                width: 21.5%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-right: 1px solid #cddbf0;
+            }
+
+            .attachDocuments .contWrap .contentListBox .essentialDocument p {
+                font-size: 14px;
+                font-weight: 500;
+                color: #3c3c3c;
+            }
+
+            .attachDocuments .contWrap .contentListBox .essentialDocuList {
+                width: calc(100% - 21.5%);
+            }
+
+            .attachDocuments .contWrap .contentListBox .essentialDocuList li {
+                width: 100%;
+                height: 45px;
+                border-bottom: 1px solid #cddbf0;
+                display: flex;
+                align-items: center;
+                padding-left: 12px;
+                box-sizing: border-box;
+                font-size: 14px;
+                font-weight: 500;
+                color: #3c3c3c;
+            }
+
+            .attachDocuments .contWrap .contentListBox .essentialDocuList li:last-child {
+                border-bottom: 0;
+            }
+
+            .attachDocuments .contWrap .depth2 .titles .title {
+                width: 66%;
+            }
+
+            .attachDocuments .contWrap .depth2 .titles .title.selectFileWidth {
+                width: 34%;
+            }
+
+            .attachDocuments .contWrap .depth2 .contents {
+                display: flex;
+                height: 45px;
+                border-bottom: 1px solid #cddbf0;
+                box-sizing: border-box;
+            }
+
+            .attachDocuments .contWrap .depth2 .contents:last-child {
+                border-bottom: 0;
+            }
+
+            .attachDocuments .contWrap .depth2 .contents .content {
+                width: 66%;
+                line-height: 45px;
+                padding: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .attachDocuments .contWrap .depth2 .contents .content.selectFileWidth {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 34%;
+            }
+
+            .attachDelBtn {
+                background: #636363;
+                color: #fff;
+            }
+
+            /* 이전, 저장 버튼 */
+            .finalBtnBox {
+                padding-bottom: 40px;
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+            }
+
+            .finalBtn {
+                width: 116px;
+                height: 44px;
+                font-size: 15px;
+                font-weight: 600;
+                color: #fff;
+                border-radius: 10px;
+            }
+
+            .finalBtn.vividBlueBtn {
+                background: #2b7de1;
+            }
+
+            .finalBtn.grayBtn {
+                background: #919191;
+            }
+
+            .finalBtn.lightBlueBtn {
+                background: rgba(204, 224, 255, 0.6);
+                color: #2b7de1;
+            }
+
+            .contWrap input[type="text"].notWriteInput {
+                background: transparent;
+            }
+
+            .contWrap input[type="text"].notWriteInput::placeholder {
+                color: #3c3c3c;
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            .contWrap .essentialDocuList input[type="text"] {
+                text-align-last: left;
+            }
+
+            .contWrap .essentialDocuList input[type="text"]::placeholder {
+                text-indent: 0;
+            }
+
+            /* 추가 */
+            .fileBtnWrap .myboxBtn {
+                width: 81px;
+                height: 27px;
+                color: #fff;
+                background: #2B7DE1;
+                font-size: 13px;
+                font-weight: 600;
+                border-radius: 20px;
+            }
+
+            .fileLargeWrap {
+                width: 100%;
+                position: relative;
+                height: 130px;
+            }
+
+            .fileBtnWrap {
+                display: flex;
+                gap: 6px;
+                align-items: center;
+            }
+
+            .attachFileInfo .fileUploadDisplay {
+                display: none;
+            }
+
+            .attachFileInfo .fileUploadDisplay.active {
+                display: block;
+            }
+
+            .fileSaveBtn {
+                width: 129px;
+                height: 37px;
+                background: #2B7DE1;
+                color: #fff;
+                border-radius: 10px;
+                font-size: 15px;
+                font-weight: 600;
+                display: none;
+            }
+
+            .fileSaveBtn.active {
+                display: block;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap {
+                width: 100%;
+                margin-bottom: 18px;
+                height: 130px;
+                overflow-y: scroll;
+                border: 1px solid #cddbf0;
+                border-radius: 5px;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            /* 파일이 업로드 된 모습 */
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter {
+                display: inline-block;
+                width: 100%;
+                background: #fff;
+                min-height: 150px;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .titles {
+                height: 45px;
+                background: #F7F9FC;
+                border-radius: 5px 5px 0 0;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 6px;
+                box-sizing: border-box;
+                border-bottom: 1px solid #CDDBF0;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .contents {
+                height: 45px;
+                background: transparent;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 6px;
+                box-sizing: border-box;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .title {
+                width: 11.3%;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .title p {
+                font-size: 14px;
+                font-weight: 500;
+                color: #000;
+                text-align: center;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .content {
+                width: 11.3%;
+                height: auto;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .content p {
+                font-size: 14px;
+                font-weight: 500;
+                color: #3C3C3C;
+                text-align: center;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .btnbox {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .filenameBox {
+                padding-left: 40px;
+                box-sizing: border-box;
+                width: 76.1%;
+                position: relative;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .filenameBox p {
+                text-align: left;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .filenameBox .typeIcon {
+                width: 17px;
+                height: 17px;
+                /* background: url(../../media/menu01/images/hwpfileIcon.png) no-repeat center; */
+                background: url(../../media/menu01/images/fileExtensionIcon.png) no-repeat center;
+                background-size: 17px;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                left: 15px;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .allDeleteFileBtn,
+            .attachFileInfo .fileUploadAfterWrap .fileUploadAfter .fileDeleteBtn {
+                width: 32px;
+                height: 32px;
+                background: url(../../media/menu01/images/fileDeleteBtnIcon.png) no-repeat center;
+                background-size: 32px;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .attachFileInfo .fileUploadAfterWrap::-webkit-scrollbar-thumb {
+                height: 30%;
+                border-radius: 10px;
+                background: #d2d2d2;
+            }
+
+            .attachFileInfo .contents .content {
+                border-right: 0;
+            }
+
+            /* 첨부파일 */
+            .attachFileInfo {
+                padding-bottom: 40px;
+            }
+
+            .attachFileInfo .title {
+                width: calc((100% - 58%) / 2);
+            }
+
+            .attachFileInfo .content {
+                width: calc((100% - 58%) / 2);
+            }
+
+            .attachFileInfo .fileNameWidth {
+                width: 58%;
+            }
+
+            .fileDownloadBtn {
+                width: 116px;
+                height: 27px;
+                border-radius: 20px;
+                background: #4e5871;
+                color: #fff;
+                font-size: 13px;
+                font-weight: 600;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+            }
+        </style>
+
+        <!-- 기본/소유자 정보 -->
+        <section class="basicOwnerInfo">
+            <div class="subTitle">기본/소유자 정보</div>
+
+            <div class="contWrap">
+                <!-- 기본 정보 -->
+                <div class="contBox">
+                    <div class="thirdTitle">
+                        <h2>・기본 정보</h2>
+                    </div>
+
+                    <div class="contentDetailBox basicContentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title">담당지사</li>
+                                <li class="title">용도</li>
+                                <li class="title">관로명(구간)</li>
+                                <li class="title">단/복선</li>
+                                <li class="addressInfoWidth title">주소</li>
+                                <li class="title">지적면적(m²)</li>
+                                <li class="title">국공유지여부</li>
+                                <li class="title">회계처리 필요여부</li>
+                            </ul>
+                            <ul class="contents lastContents">
+                                <li class="content">
+                                    서울지사
+                                </li>
+                                <li class="content">
+                                    송유관로
+                                </li>
+                                <li class="content">
+
+                                </li>
+                                <li class="content">
+                                    단선
+                                </li>
+                                <li class="addressInfoWidth content">
+                                    서울특별시 서초구 원지동 28
+                                </li>
+                                <li class="content">
+                                    3,008
+                                </li>
+                                <li class="content">
+                                    N
+                                </li>
+                                <li class="content">
+                                    Y
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- 소유자 정보 -->
+                <div class="contBox contBoxMini03">
+                    <div class="thirdTitle">
+                        <h2>・소유자 정보</h2>
+                    </div>
+
+                    <div class="contentDetailBox ownerContentDetailBox">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="numInfoWidth title">순번</li>
+                                <li class="title">공유지분</li>
+                                <li class="title">성명</li>
+                                <li class="addressInfoWidth title">주소</li>
+                                <li class="contactInfoWidth title">연락처 1</li>
+                                <li class="contactInfoWidth title">연락처 2</li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="numInfoWidth content">
+                                    1
+                                </li>
+                                <li class="content">
+                                    1/2
+                                </li>
+                                <li class="content">
+                                    홍길동
+                                </li>
+                                <li class="addressInfoWidth content">
+                                    서울특별시 서초구 서초동 1
+                                </li>
+                                <li class="contactInfoWidth content">
+                                    02-654-5548
+                                </li>
+                                <li class="contactInfoWidth content">
+                                    010-1234-1234
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 지상권 정보 -->
+        <section class="surfaceRightInfo">
+            <div class="subTitle">지상권 정보</div>
+
+            <div class="contWrap">
+                <div class="contentDetailBox contBoxMini07">
+                    <div class="depth1">
+                        <ul class="titles">
+                            <li class="title">자산분류번호</li>
+                            <li class="title">취득일자</li>
+                            <li class="title">편입면적(m2)</li>
+                            <li class="title">사용현황</li>
+                            <li class="title">등기일</li>
+                            <li class="title">등기번호</li>
+                            <li class="title">등기소</li>
+                            <li class="title">도시계획 결정여부</li>
+                            <li class="title">해지일자</li>
+                        </ul>
+                        <ul class="contents">
+                            <li class="content">
+                                90000857
+                            </li>
+                            <li class="content">
+                                1996-05-20
+                            </li>
+                            <li class="content">
+                                75
+                            </li>
+                            <li class="content">
+
+                            </li>
+                            <li class="content">
+                                1996-10-25
+                            </li>
+                            <li class="content">
+                                50000
+                            </li>
+                            <li class="content">
+                                서울지방법원 등기국
+                            </li>
+                            <li class="content">
+
+                            </li>
+                            <li class="content">
+                                1996-10-25
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="depth2">
+                        <ul class="rowListBox">
+                            <li class="title">취득금액</li>
+                            <li class="content">
+
+                            </li>
+                        </ul>
+                        <ul class="rowListBox">
+                            <li class="title">감가삼각충당금</li>
+                            <li class="content">
+
+                            </li>
+                        </ul>
+                        <ul class="rowListBox">
+                            <li class="title">잔존가액</li>
+                            <li class="content lastRowList">
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 지상권 해지관련 보상정보 -->
+        <section class="compensationInfo">
+            <div class="subTitle">지상권 해지관련 보상정보</div>
+
+            <div class="contWrap">
+                <div class="depth1">
+                    <ul class="rowListBox">
+                        <li class="title">해지보상유무</li>
+                        <li class="content inputWrap">
+                        </li>
+                    </ul>
+                    <ul class="rowListBox">
+                        <li class="title">보상금액</li>
+                        <li class="content lastRowList">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 첨부파일 -->
+        <br/>
+        <section class="attachFileInfo">
+            <div class="subTitle">
+                <div class="subTitleText">첨부파일</div>
+            </div>
+
+            <div class="contWrap">
+                <div class="depth1">
+                    <ul class="titles titleScr">
+                        <li class="title">날짜</li>
+                        <li class="title fileNameWidth">파일명</li>
+                        <li class="title">다운로드</li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            2022-06-30
+                        </li>
+                        <li class="content fileNameWidth">
+                            지상권 해지 경과보고 4.hwp
+                        </li>
+                        <li class="content btnsWrap">
+                            <button class="fileDownloadBtn">
+                                다운로드
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 해지사유 및 검토의견 -->
+        <section class="reasonTermination">
+            <div class="subTitle">해지사유 및 검토의견</div>
+
+            <div class="contWrap">
+                <div class="depth1">
+                    <ul class="rowListBox">
+                        <li class="title">해지사유</li>
+                        <li class="content inputWrap">
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="depth2">
+                    <ul class="rowListBox">
+                        <li class="title">검토의견</li>
+                        <li class="content lastRowList">
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 첨부서류 -->
+        <br/>
+        <section class="attachDocuments">
+            <div class="subTitle">첨부 서류</div>
+
+            <div class="contWrap">
+                <div class="depth1">
+                    <ul class="titles">
+                        <li class="title">파일내용</li>
+                    </ul>
+
+                    <div class="contentListBox">
+                        <div class="essentialDocument">
+                            <p>필수 증빙서류</p>
+                        </div>
+
+                        <ul class="essentialDocuList">
+                            <li class="content">
+                                <input type="text" placeholder="1. 등기사항 전부 증명서" readonly class="notWriteInput" />
+                            </li>
+                            <li class="content">
+                                <input type="text" placeholder="2. 토지대장" readonly class="notWriteInput" />
+                            </li>
+                            <li class="content">
+                                <input type="text" placeholder="3. 지적도 (관로표기)" readonly class="notWriteInput" />
+                            </li>
+                            <li class="content">
+                                <input type="text" placeholder="4. 현장사진" readonly class="notWriteInput" />
+                            </li>
+                            <li class="content">
+                                <input type="text" placeholder="5. 검토의견서" readonly class="notWriteInput" />
+                            </li>
+                            <li class="content">
+                                <input type="text" placeholder="6. 도면, 민원인 관계서류 등" readonly class="notWriteInput" />
+                            </li>
+                            <li class="content">
+                                <input type="text" placeholder="7. 지상권해지 승낙서/위임장" readonly class="notWriteInput" />
+                            </li>
+                            <li class="content">
+                                <input type="text" placeholder="8. 지상권 해지요청 공문서(신청서)" readonly class="notWriteInput" />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="depth2">
+                    <ul class="titles">
+                        <li class="title">파일명</li>
+                        <li class="title selectFileWidth">파일선택</li>
+                    </ul>
+
+                    <ul class="contents">
+                        <li class="content">
+                            <input type="text" placeholder="토지사용승락서.docx" readonly class="notWriteInput" />
+                        </li>
+                        <li class="content selectFileWidth lightfileBtnWrap">
+                            <button class="fileDownloadBtn">
+                                다운로드
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <input type="text" placeholder="등기부등본2.tif" readonly class="notWriteInput" />
+                        </li>
+                        <li class="content selectFileWidth lightfileBtnWrap">
+                            <button class="fileDownloadBtn">
+                                다운로드
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <input type="text" placeholder="지적도.tif" readonly class="notWriteInput" />
+                        </li>
+                        <li class="content selectFileWidth lightfileBtnWrap">
+                            <button class="fileDownloadBtn">
+                                다운로드
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <input type="text" placeholder="현장사진.jpg" readonly class="notWriteInput" />
+                        </li>
+                        <li class="content selectFileWidth lightfileBtnWrap">
+                            <button class="fileDownloadBtn">
+                                다운로드
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <input type="text" placeholder="검토의견서.tif" readonly class="notWriteInput" />
+                        </li>
+                        <li class="content selectFileWidth lightfileBtnWrap">
+                            <button class="fileDownloadBtn">
+                                다운로드
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <input type="text" placeholder="관계서류.docx" readonly class="notWriteInput" />
+                        </li>
+                        <li class="content selectFileWidth lightfileBtnWrap">
+                            <button class="fileDownloadBtn">
+                                다운로드
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <input type="text" placeholder="해지승낙서.docx" readonly class="notWriteInput" />
+                        </li>
+                        <li class="content selectFileWidth lightfileBtnWrap">
+                            <button class="fileDownloadBtn">
+                                다운로드
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="contents">
+                        <li class="content">
+                            <input type="text" placeholder="해지요청공문서.docx" readonly class="notWriteInput" />
+                        </li>
+                        <li class="content selectFileWidth lightfileBtnWrap">
+                            <button class="fileDownloadBtn">
+                                다운로드
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>
