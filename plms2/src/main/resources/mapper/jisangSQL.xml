@@ -1418,6 +1418,91 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</insert>
 	
+	<update id="updateJisangBunhalMaster" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jb_idx" keyProperty="jb_idx">
+
+		update  jisang_bunhal set
+		 
+		  jb_sido_nm=#{togiSidoNm}, jb_sgg_nm=#{togiSggNm}, jb_emd_nm=#{togiEmdNm}, jb_ri_nm=#{togiRiNm}
+		 ,jb_jibun=#{togiJibun}
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(bunhal_jisa)" >
+		 , jb_jisa=#{bunhal_jisa}
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(togiJijukArea)" >
+		 ,jb_jijuk_area=nullif(cast(#{togiJijukArea} as varchar),''):: integer
+		 </if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(yongdo)" >
+		 ,jb_yongdo=#{yongdo}
+		 </if>
+		 ,jb_pyeonib_area=nullif(cast(#{togiPyeonibArea} as varchar),''):: numeric
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(togiJasanNo)" >
+		 ,jb_jasan_no=#{togiJasanNo}
+		 </if>
+		 ,jb_gover_own_yn=#{togiGoverOwnYn}
+		 ,jb_cancel_yn=#{togiCancelYn}
+		 ,jb_bunhal_yn=#{bunhal_yn}
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(bunhalDate)" >
+		 ,jb_bunhal_date=#{bunhalDate}::date
+		 </if>
+		 ,jb_bunhal_reason=#{bunhal_reason}
+		 
+		 ,jb_addrcode=#{addrcode}
+		
+		 ,jb_remainder_money=nullif(#{cancelRemainderMoney},'')::numeric
+		 ,jb_jimok_text=#{togiJimokText}
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dockey)" >
+		 ,jb_dockey=#{dockey}
+		 </if>
+		 ,jb_toji_type=#{togiTogiType}
+		 ,jb_pipe_yn=#{togiPipeYn}
+		 ,jb_bunhal_comment=#{bunhal_comment}
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelChuideukMoney)" >
+		 ,jb_chuideuk_money=NULLIF(cast(#{cancelChuideukMoney} as varchar),'')::numeric
+		 </if>
+		 ,jb_gammoney=nullif(#{cancelGammoney},'')::numeric
+		 ,jb_bosang_money=#{bosang_money}
+		 ,jb_profit_loss=nullif(#{cancelProfitLoss},'')::numeric
+		 ,jb_demise=#{togiDemise}
+		 ,jb_bunhal_complete=#{bunhal_complete}
+		 ,jb_bunhal_status=#{togiBunhalStatus}
+		 where jb_jisang_no=#{jisang_no}
+
+	</update>
+	<!--  부할후 지상에 해지 분할 정보 업데이트 -->
+	<update id="updateJisangCancelData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jm_idx" keyProperty="jm_idx">
+
+		update  jisang_master set
+		 
+		 jm_cancel_yn=#{togiCancelYn}
+		 ,jm_bunhal_yn=#{bunhal_yn}
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(bunhalDate)" >
+		 ,jm_bunhal_date=#{bunhalDate}::date
+		 </if>
+		 ,jm_bunhal_reason=#{bunhal_reason}
+		 
+		 ,jm_addrcode=#{addrcode}
+		
+		 ,jm_remainder_money=nullif(#{cancelRemainderMoney},'')::numeric
+		 ,jm_jimok_text=#{togiJimokText}
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dockey)" >
+		 ,jm_dockey=#{dockey}
+		 </if>
+		 ,jm_toji_type=#{togiTogiType}
+		 ,jm_pipe_yn=#{togiPipeYn}
+		 ,jm_bunhal_comment=#{bunhal_comment}
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelChuideukMoney)" >
+		 ,jm_chuideuk_money=NULLIF(cast(#{cancelChuideukMoney} as varchar),'')::numeric
+		 </if>
+		 ,jm_gammoney=nullif(#{cancelGammoney},'')::numeric
+		 ,jm_bosang_money=#{bosang_money}
+		 ,jm_profit_loss=nullif(#{cancelProfitLoss},'')::numeric
+		 ,jm_demise=#{togiDemise}
+		 ,jm_bunhal_complete=#{bunhal_complete}
+		 ,jm_bunhal_status=#{togiBunhalStatus}
+		 ,jm_bunhal_org_no=#{bunahl_org_no}
+		 where jm_jisang_no=#{jisang_no}
+
+	</update>
+	
 	
 	
 	<!--  지상권 분할 필수 첨부파일 -->

@@ -1606,7 +1606,7 @@ public class jisangController {
 	        
 	        JSONObject requestJsonObj=new JSONObject(requestParams);
 	        log.info("requestJsonObj:"+requestJsonObj);
-	        
+	        String idx=requestJsonObj.getString("idx");
 	        HashMap<String,Object> requestMap= new HashMap<>();
 	        
 	       
@@ -1635,10 +1635,7 @@ public class jisangController {
 	        	
 	        	
 	        	sqlParams.put("jisang_no",jisang_no);
-	        	//지상권번호로 존재여부 판단
-	        	Object bunhalCount= mainService.selectCountQuery("jisangSQL.selectJisangBunhalChkCount", sqlParams);
-    			log.info("bunhalCount:"+bunhalCount);
-    			if((int)bunhalCount>0) continue;
+	        	
 	        	
 	        	
 	        	sqlParams.put("togiCancelYn",obj.getString("togiCancelYn"));
@@ -1675,8 +1672,6 @@ public class jisangController {
 	        	sqlParams.put("cancelRemainderMoney",requestJsonObj.getString("cancelRemainderMoney"));
 	        	
 	        	
-	        	
-	        	mainService.InsertQuery("jisangSQL.insertJisangBunhalMaster", sqlParams);
 	        	
 	        	//파일등록
 	        	ArrayList<HashMap<String, String>> docArray = new ArrayList<>();
@@ -1796,6 +1791,23 @@ public class jisangController {
 	    			}
 	    			else mainService.InsertQuery("jisangSQL.updateJisangBunhalAtcFile",filesMap);
 	    		}
+	    		
+	    		//지상권번호로 존재여부 판단
+	        	Object bunhalCount= mainService.selectCountQuery("jisangSQL.selectJisangBunhalChkCount", sqlParams);
+    			log.info("bunhalCount:"+bunhalCount);
+    			if((int)bunhalCount>0) {
+    				//continue;
+    				if (idx.equals(jisang_no)) {
+    					//넘어온 idx 와 지상 번호가 같다면 지상마스터에도 업데이트를 한다
+    					mainService.InsertQuery("jisangSQL.updateJisangBunhalMaster", sqlParams);
+    					//임시저장일때는 하지 않는다
+    					//mainService.InsertQuery("jisangSQL.updateJisangCancelData", sqlParams);
+    				}
+    				else {
+    					mainService.InsertQuery("jisangSQL.updateJisangBunhalMaster", sqlParams);
+    				}
+    			}
+    			else mainService.InsertQuery("jisangSQL.insertJisangBunhalMaster", sqlParams);
 	        	
 	        }
 	        
