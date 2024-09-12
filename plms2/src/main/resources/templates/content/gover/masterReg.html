@@ -148,16 +148,8 @@
                       name="jisa"
                       id="masterRegSelectBox01"
                       hidden>
-                      <option value="전체">전체</option>
-                      <option value="서울지사">서울지사</option>
-                      <option value="경인지사">경인지사</option>
-                      <option value="대전지사">대전지사</option>
-                      <option value="충청지사">충청지사</option>
-                      <option value="영남지사">영남지사</option>
-                      <option value="전남지사">전남지사</option>
-                      <option value="전북지사">전북지사</option>
-                      <option value="경남지사">경남지사</option>
-                      <option value="강원지사">강원지사</option>
+					  <option value="선택">선택</option>
+                      <option th:each="jisalist : ${jisalist}" th:value="${jisalist['jm_jisa_name']}" th:text="${jisalist['jm_jisa_name']}"></option>
                     </select>
                   </div>
                   <section class="customSelectBox">

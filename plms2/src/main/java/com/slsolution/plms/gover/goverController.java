@@ -401,10 +401,13 @@ public class goverController {
 			ModelAndView mav = new ModelAndView();
 			HashMap params = new HashMap();
 			
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
 			
+			log.info("jisalist:"+jisalist);
 			log.info("jimokList:"+jimokList);
 			
+			mav.addObject("jisalist",jisalist);
 			mav.addObject("jimokList",jimokList);
 			
 			mav.setViewName("content/gover/masterReg");
