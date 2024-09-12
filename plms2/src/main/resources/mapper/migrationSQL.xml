@@ -1583,5 +1583,52 @@
 		 )
 	
 	</insert>
+	<insert id="plms_approval" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="pa_idx" keyProperty="pa_idx">
+		
+		INSERT INTO plms_approval 
+		(
+		 pa_gubun
+		 ,pa_lang
+		 ,pa_sdate
+		 ,pa_stime
+		 ,pa_usercd
+		 ,pa_searchkey1
+		 ,pa_dockey
+		 ,pa_wdid
+		 ,pa_url
+		 ,pa_status
+		 ,pa_seq
+		 ,pa_out_flag
+		 ,pa_out_url
+		 ,pa_usernm
+		 ,pa_deptcd
+		 ,pa_deptnm
+		 ,pa_befdeptcd
+		 ,pa_updeptcd
+		 
+		 ) 
+		 VALUES (
+		 #{GUBUN}
+		 ,#{LANG}
+		 ,#{SDATE}
+		 ,#{STIME}
+		 ,#{USERCD}
+		 ,#{SEARCHKEY1}
+		
+		 ,#{DOCKEY}
+		 ,#{WDID}
+		 ,#{URL}
+		 ,#{STATUS}
+		 ,nullif(#{SEQ},'')::numeric
+		 ,#{OUT_FLAG}
+		 ,#{OUT_URL}
+		 ,#{USERNM}
+		 ,#{DEPTCD}
+		 ,#{DEPTNM}
+		 ,#{BEFDEPTCD}
+		 ,#{UPDEPTCD}
+		 )
+	
+	</insert>
 	
 </mapper>

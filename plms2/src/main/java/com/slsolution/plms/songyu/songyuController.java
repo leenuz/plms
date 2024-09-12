@@ -316,9 +316,9 @@ public class songyuController {
 		        }
 		        
 		        
-		        int draw = Integer.parseInt(req.getParameter("draw"));
-				int start = Integer.parseInt(req.getParameter("start"));
-				int length = Integer.parseInt(req.getParameter("length"));
+		        int draw = Integer.parseInt((req.getParameter("draw")==null)?"0":req.getParameter("draw"));
+				int start = Integer.parseInt((req.getParameter("start")==null)?"0":req.getParameter("start"));
+				int length = Integer.parseInt((req.getParameter("length")==null)?"0":req.getParameter("length"));
 				String orderColumn=req.getParameter("order[0][column]");
 				String orderDirection = req.getParameter("order[0][dir]");
 				String orderColumnName=req.getParameter("columns[" + orderColumn + "][data]");
