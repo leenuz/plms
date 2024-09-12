@@ -2579,5 +2579,33 @@ public class jisangController {
 		mav.setViewName("content/jisang/landRightMerge");
 		return mav;
 	}
+
+	@GetMapping(path="/approval") // 전자결재-지상권해지등록
+    public ModelAndView approval(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/jisang/approval");
+		return mav;
+	}
 	
+	@GetMapping(path="/approval2") // 전자결재-지상권분할등록
+    public ModelAndView approval2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/jisang/approval2");
+		return mav;
+	}
+
+	@GetMapping(path="/approval3") // 전자결재-지상권합필등록
+    public ModelAndView approval3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/jisang/approval3");
+		return mav;
+	}
+
+	@GetMapping(path="/approval4") // 전자결재-지상권사용승낙등록
+    public ModelAndView approval4(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/jisang/approval4");
+		return mav;
+	}
+
 }
