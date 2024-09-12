@@ -444,7 +444,7 @@ public class goverController {
 
 			String jisa = req.getParameter("jisa");
 			String gover_no = req.getParameter("gover_no");
-			String user_purpos=req.getParameter("user_purpos");
+			String use_purpos=req.getParameter("use_purpos");
 			String pmt_office = req.getParameter("pmt_office");
 			String adm_office = req.getParameter("adm_office");
 			String save_status=req.getParameter("save_status");
@@ -460,7 +460,7 @@ public class goverController {
 			
 			params.put("jisa",jisa);
 			params.put("gover_no",gover_no);
-			params.put("user_purpos",user_purpos);
+			params.put("use_purpos",use_purpos);
 			params.put("pmt_office",pmt_office);
 			params.put("adm_office",adm_office);
 			params.put("save_status",save_status);

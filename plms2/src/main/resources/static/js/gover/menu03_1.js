@@ -230,7 +230,7 @@ function loadDataTable(params){
 				//d=params;
 				d.jisa=ljsIsNull(params.jisa)?'':params.jisa;
 				d.gover_no=params.gover_no;
-				d.user_purpos=params.user_purpos;
+				d.use_purpos=params.use_purpos;
 				d.pmt_office=params.pmt_office;
 				d.adm_office=ljsIsNull(params.adm_office)?'':params.adm_office;
 				d.save_status=params.save_status;
