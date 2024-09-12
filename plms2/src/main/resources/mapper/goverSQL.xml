@@ -348,8 +348,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
 			and r.gover_no=#{gover_no}
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(user_purpos)" >
-			and r.user_purpos=#{user_purpos}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(use_purpos)" >
+			and r.use_purpos=#{use_purpos}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pmt_office)" >
 			and r.pmt_office=#{pmt_office}
@@ -539,8 +539,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
 			and r.gover_no=#{gover_no}
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(user_purpos)" >
-			and r.user_purpos=#{user_purpos}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(use_purpos)" >
+			and r.use_purpos=#{use_purpos}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pmt_office)" >
 			and r.pmt_office=#{pmt_office}
