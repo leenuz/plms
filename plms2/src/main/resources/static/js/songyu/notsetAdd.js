@@ -16,7 +16,6 @@ function createCustomLiNotsetAdd() {
 
         for (let i = 0; i < notsetAddSelectBox.length; i++) {
             const optionValue = notsetAddSelectBox.options[i].value;
-
             const li = document.createElement('li');
 
             const button = document.createElement('button');
@@ -67,7 +66,6 @@ function loadCustomLiNotsetAdd(ele) {
         li.appendChild(button);
         //console.log($(li).html());
         $(customSelectBtns).append(li);
-
     }
 }
 
@@ -77,9 +75,7 @@ customSelectView.forEach((btn) => {
     btn.addEventListener('click', function () {
         btn.classList.toggle('active')
         if (btn.nextElementSibling) {
-            btn.nextElementSibling.classList.toggle('active')
-
-
+            btn.nextElementSibling.classList.toggle('active');
         }
     })
 })
@@ -103,7 +99,6 @@ $(document).on("click", ".moreSelectBtn", function () {
     parentMoreSelectBtn.classList.remove('active')
 
     // 선택한 걸 select의 value값으로 변경하기
-
     const nearByContent = this.closest('.selectContentArea');
     const nearBySelectBox = nearByContent.querySelector('select');
     console.log(nearBySelectBox);
@@ -111,14 +106,10 @@ $(document).on("click", ".moreSelectBtn", function () {
     $(nearBySelectBox).trigger("change");
     nearBySelectBox.value = this.textContent;
     console.log(`Selected value: ${nearBySelectBox.value}`);
-
 });
 
-
 /* 라디오버튼 클릭시 각 영역 사용여부  */
-
 const notsetAddRadioEvet = () => {
-
     const addressInputNames = document.getElementsByName("addressInput");
     const addressInputNames02 = document.getElementsByName("addressInput02");
     const addressInputBox01 = document.querySelector(".addressInputBox01");
@@ -131,7 +122,6 @@ const notsetAddRadioEvet = () => {
     console.log(selectRadioEvet01);
     console.log(selectRadioEvet02);
 
-
     if (addressInputNames) {
         addressInputNames.forEach((radioBtns, index) => {
             radioBtns.addEventListener("change", () => {
@@ -140,14 +130,12 @@ const notsetAddRadioEvet = () => {
                         return addressInputBox01.readOnly = false,
                             addressInputBox02.readOnly = true,
                             selectRadioEvet01.forEach((btns) => btns.disabled = true);
-
                     } else if (index === 1) {
                         return addressInputBox01.readOnly = true,
                             addressInputBox02.readOnly = false,
                             selectRadioEvet01.forEach((btns) => btns.disabled = false);
                     } else {
                     }
-
                 }
             })
         })
@@ -161,29 +149,22 @@ const notsetAddRadioEvet = () => {
                         return addressInputBox03.readOnly = false,
                             addressInputBox04.readOnly = true,
                             selectRadioEvet02.forEach((btns) => btns.disabled = true);
-
                     } else if (index === 1) {
                         return addressInputBox03.readOnly = true,
                             addressInputBox04.readOnly = false,
                             selectRadioEvet02.forEach((btns) => btns.disabled = false);
                     } else {
                     }
-
                 }
             })
         })
     }
-
 }
 
 notsetAddRadioEvet();
 
-
-
 /* 체크박스이벤트 */
-
 const notsetAddCheckBoxsEvet = () => {
-
     const customCheckboxInput01 = document.getElementById("notsetAddCheckbox01");
     const customCheckBoxLabel01 = document.querySelector(".customCheckBoxLabel01");
     const customCheckboxInput02 = document.getElementById("notsetAddCheckbox02");
@@ -233,13 +214,8 @@ const notsetAddCheckBoxsEvet = () => {
 
 notsetAddCheckBoxsEvet();
 
-
-
-
 /* 미설정/미점용 내역 수정 input_readonly */
-
 const addReviseInputEvet = () => {
-
     const addDisabledInputBoxsInput = document.querySelectorAll(".addDisabledInputBoxs .contWrap .depth1 .contents li input");
     console.log(addDisabledInputBoxsInput);
     addDisabledInputBoxsInput.forEach((list) => list.setAttribute("readonly", "true"));
@@ -247,10 +223,7 @@ const addReviseInputEvet = () => {
 
 addReviseInputEvet();
 
-
 /* 검색버튼 클릭시 */
-
-
 const notsetAddPopEvet = () => {
     console.log("##########################");
     const notsetAddPopBtn = document.querySelector(".notsetAddPopBtn");
@@ -293,20 +266,15 @@ const notsetAddPopEvet = () => {
     }
 };
 
-
 //notsetAddPopEvet();
-
 
 $(document).ready(function () {
     console.log("songyu/netsetadd.js start");
 
 });
 
-
-
 //조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
 $(document).on("click", "#searchBtn", function () {
-
     console.log($("#netsetAddForm").serialize());
 
     var formSerializeArray = $('#netsetAddForm').serializeArray();
@@ -320,7 +288,6 @@ $(document).on("click", "#searchBtn", function () {
 
     console.log("----------jsonobj------------");
     console.log(json);
-
 
     //var w=window.open("about:blank","_blank");
 
@@ -383,11 +350,7 @@ $(document).on("click", "#searchBtn", function () {
                   popupOpen.classList.add("active");
           });
       }*/
-
-
-
 })
-
 
 /* // 삽입된 html내 스크립트 실행 함수
     const runScriptsInElement = (element) => {
@@ -399,3 +362,304 @@ $(document).on("click", "#searchBtn", function () {
         }
     }
 */
+
+/* 소유자 정보 입력 버튼 */
+$(document).on("click", ".addBtn", function () {
+    console.log("---------addBtn click-----------");
+
+    var thisEditContent = this.closest('.contents');
+    console.log(thisEditContent);
+    //			thisEditContent.classList.add('editing');
+    const inputs = thisEditContent.querySelectorAll('input');
+
+    if (thisEditContent.classList.contains('editing')) {
+        inputs.forEach(input => {
+            input.setAttribute('readonly', 'readonly');
+        });
+    } else {
+        inputs.forEach(input => {
+            thisEditContent.classList.add('editing');
+            input.removeAttribute('readonly');
+        });
+    }
+});
+$(document).on("click", "#completeSoujaBtn", function () {
+    console.log("------------completeSoujaBtn click---------");
+    const soujaDiv = document.getElementById('soujaDiv');
+    const editingElements = soujaDiv.querySelectorAll('.editing');
+    const editingCount = editingElements.length;
+
+    var thisUl = $(this).parent().parent().parent().parent();
+    console.log("editingCount" + editingCount);
+    var addUl = $("#soujaHiddenUl").html();
+
+    var input = $(thisUl).find("input");
+    console.log(input);
+    console.log(input.length);
+    console.log("0:" + $(input).eq(0).val());
+
+    if ($(input).eq(0).val() == "" || $(input).eq(1).val() == "" || $(input).eq(2).val() == "" || $(input).eq(3).val() == "") {
+        alert("입력사항을 체크하세요! 공유지분,성명,주소는 필수 입력입니다.");
+        return;
+    }
+
+    if ($(input).eq(0).val() != "" && $(input).eq(1).val() != "" && $(input).eq(2).val() != "" && $(input).eq(3).val() != "") {
+        //	alert("소유자 정보를 정확하게 입력해주세요!");
+        $(thisUl).removeClass("editing");
+        $(thisUl).find('li input').attr('readonly', true);
+        if (editingCount < 3) {
+            $("#soujaDiv").append('<ul class="contents editing" id="soujaUl">' + addUl + '</ul>');
+        }
+        //return;
+    }
+    //if ($(input).eq(0).html()=="" || )
+
+    //		$(thisUl).removeClass("editing");
+    /*for(var i=0;i<input.length;i++) {
+        console.log($(input).eq(i).parent().html());
+    }*/
+
+    /*$(input).forEach(input => {
+        input.setAttribute('readonly', 'readonly');
+    });*/
+});
+
+$(document).on("click", "#deleteSoujaBtn", function () {
+    console.log("------------deleteSoujaBtn click---------");
+    var thisUl = $(this).parent().parent().parent().parent();
+    var thisContents = $(this).parent().parent().parent().parent().parent().find(".contents");
+    console.log($(thisContents).html());
+    console.log($(thisContents).length);
+    if ($(thisContents).length <= 2) return;
+    $(thisUl).remove();
+});
+
+/* 첨부파일 */
+// 첨부파일 전체 선택 체크박스
+const allCheckEventLandRightsRegist = () => {
+    // 첨부파일 리스트들
+    const attachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
+    // checked가 된 첨부파일 리스트
+    const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+    // 전체선택 input
+    const clickedAllinput = document.querySelector('input[name="landRightsRegistration_file_select_all"]');
+
+    // 전체선택되게 하기
+    clickedAllinput.addEventListener('click', function () {
+        clickedSelectAllLandRightsRegist(clickedAllinput);
+    })
+    // 개당 선택시 전체 선택되게하기
+    attachFiles.forEach((checkList) => {
+        checkList.addEventListener('click', function () {
+            clickCheckBoxEventLandRightsRegist(checkList);
+        })
+    })
+
+    // 개별 리스트 클릭시 전체로 변하기
+    function clickCheckBoxEventLandRightsRegist() {
+        // 최신으로 업데이트 해주기
+        const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+
+        if (attachFiles.length === clickedAttachFiles.length) {
+            clickedAllinput.checked = true;
+        } else {
+            clickedAllinput.checked = false;
+        }
+    }
+
+    // 전체선택 클릭시
+    function clickedSelectAllLandRightsRegist(clickedAllinput) {
+        const attachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
+
+        attachFiles.forEach((checkbox) => {
+            checkbox.checked = clickedAllinput.checked;
+        })
+    }
+}
+
+allCheckEventLandRightsRegist();
+
+$(document).on("click", "#deleteFileBtn", function () {
+    //const attachFiles = document.querySelectorAll('input:checkbox[name="landRightsRegistration_attachFile"]:checked');
+    /*$('input:checkbox[name=landRightsRegistration_attachFile]').each(function (index) {
+        if($(this).is(":checked")==true){
+            console.log($(this).val());
+        }
+    })*/
+    const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+    console.log(clickedAttachFiles);
+    console.log(uploadFiles);
+    for (var i = 0; i < clickedAttachFiles.length; i++) {
+        var delEle = $(clickedAttachFiles[i]).closest("#fileListUl");
+        console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
+        $(delEle).remove();
+    }
+})
+
+var uploadFiles = new Array();
+$(document).ready(function () {
+    var objDragAndDrop = $(".fileUploadBox");
+
+    $(document).on("dragenter", ".fileUploadBox", function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).css('border', '2px solid #0B85A1');
+    });
+    $(document).on("dragover", ".fileUploadBox", function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    $(document).on("drop", ".fileUploadBox", function (e) {
+        $(this).css('border', '2px dotted #0B85A1');
+        e.preventDefault();
+        var files = e.originalEvent.dataTransfer.files;
+
+        handleFileUpload(files, objDragAndDrop);
+    });
+    $(document).on('dragenter', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    $(document).on('dragover', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        objDragAndDrop.css('border', '2px dotted #0B85A1');
+    });
+    $(document).on('drop', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    //drag 영역 클릭시 파일 선택창
+    objDragAndDrop.on('click', function (e) {
+        $('input[type=file]').trigger('click');
+    });
+    $('input[type=file]').on('change', function (e) {
+        var files = e.originalEvent.target.files;
+        handleFileUpload(files, objDragAndDrop);
+    });
+
+    function handleFileUpload(files, obj) {
+        console.log("-------------handleFileUpload---------------");
+        console.log(files);
+        for (var i = 0; i < files.length; i++) {
+            var fd = new FormData();
+            fd.append('file', files[i]);
+
+            var status = new createStatusbar($("#fileTitleUl"), files[i].name, files[i].size, i); //Using this we can set progress.
+            //  status.setFileNameSize(files[i].name,files[i].size);
+            sendFileToServer(fd, status);
+
+        }
+    }
+
+    var rowCount = 0;
+    function createStatusbar(obj, name, size, no) {
+        console.log("----------start createStatusBar------------");
+        console.log(obj.html());
+        /*var uobj=obj.parent().parent().find("#status");	
+        rowCount++;
+        var row="";
+        //if(rowCount %2 ==0) row ="even";
+        this.statusbar = $('<ul class="contents" id="fileListUl">');
+        this.filename = $('<div class='filename'></div>').appendTo(this.statusbar);
+        this.size = $("<div class='filesize'></div>").appendTo(this.statusbar);
+       // this.progressBar = $("<div class='progressBar'><div></div></div>").appendTo(this.statusbar);
+        this.abort = $("<div class='abort'>중지</div>").appendTo(this.statusbar);*/
+
+        var sizeStr = "";
+        var sizeKB = size / 1024;
+        if (parseInt(sizeKB) > 1024) {
+            var sizeMB = sizeKB / 1024;
+            sizeStr = sizeMB.toFixed(2) + " MB";
+        } else {
+            sizeStr = sizeKB.toFixed(2) + " KB";
+        }
+
+        var row = '<ul class="contents" id="fileListUl">';
+        row += '<li class="content01 content checkboxWrap">';
+        row += '<input type="checkbox" id="landRightsRegistration_attachFile' + no + '" name="landRightsRegistration_attachFile" >';
+        row += '<label for="landRightsRegistration_attachFile' + no + '"></label>';
+        row += '</li>';
+        row += '<li class="content02 content"><input type="text" id="filename" placeholder="' + name + '" class="notWriteInput" readonly></li></ul>';
+        obj.after(row);
+
+        var radio = $(row).find('input');
+        console.log("---------------radio checkbox----------");
+        $(radio).find('input').attr("disabled", false);
+        console.log($(radio).parent().html());
+
+        /* this.setFileNameSize = function(name,size){
+             var sizeStr="";
+             var sizeKB = size/1024;
+             if(parseInt(sizeKB) > 1024){
+                 var sizeMB = sizeKB/1024;
+                 sizeStr = sizeMB.toFixed(2)+" MB";
+             }else{
+                 sizeStr = sizeKB.toFixed(2)+" KB";
+             }
+      
+             $(#)
+             this.size.html(sizeStr);
+         }*/
+
+        /*this.setProgress = function(progress){       
+            var progressBarWidth =progress*this.progressBar.width()/ 100;  
+            this.progressBar.find('div').animate({ width: progressBarWidth }, 10).html(progress + "% ");
+            if(parseInt(progress) >= 100)
+            {
+                this.abort.hide();
+            }
+        }
+        
+        this.setAbort = function(jqxhr){
+            var sb = this.statusbar;
+            this.abort.click(function()
+            {
+                jqxhr.abort();
+                sb.hide();
+            });
+        }*/
+    }
+
+    function sendFileToServer(formData, status) {
+        var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+        var extraData = {}; //Extra Data.
+        var jqXHR = $.ajax({
+            xhr: function () {
+                var xhrobj = $.ajaxSettings.xhr();
+                if (xhrobj.upload) {
+                    xhrobj.upload.addEventListener('progress', function (event) {
+                        var percent = 0;
+                        var position = event.loaded || event.position;
+                        var total = event.total;
+                        if (event.lengthComputable) {
+                            percent = Math.ceil(position / total * 100);
+                        }
+                        //Set progress
+                        //  status.setProgress(percent);
+                    }, false);
+                }
+                return xhrobj;
+            },
+            url: uploadURL,
+            type: "POST",
+            contentType: false,
+            processData: false,
+            cache: false,
+            data: formData,
+            success: function (data) {
+                // status.setProgress(100);
+                console.log(data);
+                console.log(data.resultData);
+                //console.log("-------------sendFileToServer-----------------------");
+                //console.log($(this).parent().parent().parent().parent());
+                //$("#status1").append("File upload Done<br>");    
+                //uploadFiles.push(data.resultData.fpath);    
+                //allCheckEventLandRightsRegist();   
+            }
+        });
+
+        //status.setAbort(jqXHR);
+    }
+
+});
