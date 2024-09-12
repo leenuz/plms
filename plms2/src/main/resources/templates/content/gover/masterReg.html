@@ -488,6 +488,7 @@
 		      <ul class="contents" id="goverUl">
 		        <!-- 순번 -->
 		        <li class="content smallWidth">
+				  <input type="hidden" id="goverIndex" value="0">
 		          <input type="text" class="notWriteInput" readonly placeholder="1" />
 		        </li>
 		        <!-- 관리기관 -->
@@ -533,32 +534,25 @@
 		        <li class="content addressInfoWidth">
 		          <!--<div class="addressData">-->
 					<!-- text 창 높이를 위해 주석처리 -->
-		            <input type="text" name="주소" />
+		            <input type="text" name="addr" id="addr"/>
 		          <!--</div>-->
 		          <button class="searchAddressBtn">검색</button>
 		        </li>
 		        <!-- PNU -->
 		        <li class="content middleWidth">
-		          <input type="text" name="pnu" />
+		          <input type="text" name="pnu" id="pnu"/>
 		        </li>
 		        <!-- 지목 -->
 		        <li class="content selectContentArea">
 		          <div class="hiddenSelectBox">
-		            <select name="jimok_text" id="masterRegSelectBox14" hidden>
-		              <option value="전1">전1</option>
-		              <option value="전2">전2</option>
-		              <option value="전3">전3</option>
-		              <option value="전4">전4</option>
-		              <option value="전5">전5</option>
-		              <option value="전6">전6</option>
-		              <option value="전7">전7</option>
-		              <option value="전8">전8</option>
-		              <option value="전9">전9</option>
-		              <option value="전10">전10</option>
-		            </select>
+					<!-- 지목 -->
+					<select name="jimok_text" id="masterRegSelectBox14" hidden>
+					    <!-- Thymeleaf 반복문을 사용하여 jimoklist에서 데이터를 출력 -->
+					    <option th:each="jimok : ${jimokList}" th:value="${jimok['jm_name']}" th:text="${jimok['jm_name']}"></option>
+					</select>
 		          </div>
 		          <section class="customSelectBox">
-		            <button class="customSelectView">전</button>
+		            <button class="customSelectView" id="jimok">전</button>
 		            <ul class="customSelectBtns"></ul>
 		          </section>
 		        </li>
@@ -573,21 +567,13 @@
 		        <!-- 관로일치 여부 -->
 		        <li class="content middleWidth selectContentArea">
 		          <div class="hiddenSelectBox">
-		            <select name="관로일치 여부" id="masterRegSelectBox15" hidden>
-		              <option value="지사선택필요1">지사선택필요1</option>
-		              <option value="지사선택필요2">지사선택필요2</option>
-		              <option value="지사선택필요3">지사선택필요3</option>
-		              <option value="지사선택필요4">지사선택필요4</option>
-		              <option value="지사선택필요5">지사선택필요5</option>
-		              <option value="지사선택필요6">지사선택필요6</option>
-		              <option value="지사선택필요7">지사선택필요7</option>
-		              <option value="지사선택필요8">지사선택필요8</option>
-		              <option value="지사선택필요9">지사선택필요9</option>
-		              <option value="지사선택필요10">지사선택필요10</option>
+		            <select name="pipe_overlap_yn" id="masterRegSelectBox15" hidden>
+		              <option value="Y">Y</option>
+		              <option value="N">N</option>
 		            </select>
 		          </div>
 		          <section class="customSelectBox">
-		            <button class="customSelectView">지사선택필요</button>
+		            <button class="customSelectView">선택</button>
 		            <ul class="customSelectBtns"></ul>
 		          </section>
 		        </li>
@@ -605,12 +591,13 @@
 
 		      <!-- 숨겨진 템플릿 줄 -->
 		      <ul class="contents" id="row-template" style="display: none;">
+				<!-- 순번 -->
 		        <li class="content smallWidth">
-		          <!-- 순번 -->
+				  <input type="hidden" id="goverIndex" value="">
 		          <input type="text" class="notWriteInput" readonly placeholder="1" />
 		        </li>
+				<!-- 관리기관 -->
 		        <li class="content largeWidth selectContentArea">
-		          <!-- 관리기관 -->
 		          <div class="hiddenSelectBox">
 		            <select name="masterRegSelectBox16" id="masterRegSelectBox16" hidden>
 		              <option value="전체">전체</option>
@@ -651,32 +638,24 @@
 		        <!-- 주소 -->
 		        <li class="content addressInfoWidth">
 		          <!--<div class="addressData">-->
-		            <input type="text" />
+		            <input type="text" id="addr"/>
 		          <!--</div>-->
 		          <button class="searchAddressBtn">검색</button>
 		        </li>
 		        <!-- PNU -->
 		        <li class="content middleWidth">
-		          <input type="text" />
+		          <input type="text" id="pnu"/>
 		        </li>
 		        <!-- 지목 -->
 		        <li class="content selectContentArea">
 		          <div class="hiddenSelectBox">
-		            <select name="masterRegSelectBox18" id="masterRegSelectBox18" hidden>
-		              <option value="전1">전1</option>
-		              <option value="전2">전2</option>
-		              <option value="전3">전3</option>
-		              <option value="전4">전4</option>
-		              <option value="전5">전5</option>
-		              <option value="전6">전6</option>
-		              <option value="전7">전7</option>
-		              <option value="전8">전8</option>
-		              <option value="전9">전9</option>
-		              <option value="전10">전10</option>
-		            </select>
+					<select name="jimok_text" id="masterRegSelectBox14" hidden>
+					    <!-- Thymeleaf 반복문을 사용하여 jimoklist에서 데이터를 출력 -->
+					    <option th:each="jimok : ${jimokList}" th:value="${jimok['jm_name']}" th:text="${jimok['jm_name']}"></option>
+					</select>
 		          </div>
 		          <section class="customSelectBox">
-		            <button class="customSelectView">전</button>
+		            <button class="customSelectView" id="jimok">전</button>
 		            <ul class="customSelectBtns"></ul>
 		          </section>
 		        </li>
@@ -691,21 +670,13 @@
 		        <!-- 관로일치 여부 -->
 		        <li class="content middleWidth selectContentArea">
 		          <div class="hiddenSelectBox">
-		            <select name="masterRegSelectBox19" id="masterRegSelectBox19" hidden>
-		              <option value="지사선택필요1">지사선택필요1</option>
-		              <option value="지사선택필요2">지사선택필요2</option>
-		              <option value="지사선택필요3">지사선택필요3</option>
-		              <option value="지사선택필요4">지사선택필요4</option>
-		              <option value="지사선택필요5">지사선택필요5</option>
-		              <option value="지사선택필요6">지사선택필요6</option>
-		              <option value="지사선택필요7">지사선택필요7</option>
-		              <option value="지사선택필요8">지사선택필요8</option>
-		              <option value="지사선택필요9">지사선택필요9</option>
-		              <option value="지사선택필요10">지사선택필요10</option>
+		            <select name="pipe_overlap_yn" id="masterRegSelectBox19" hidden>
+		              <option value="Y">Y</option>
+		              <option value="N">N</option>
 		            </select>
 		          </div>
 		          <section class="customSelectBox">
-		            <button class="customSelectView">지사선택필요</button>
+		            <button class="customSelectView">선택</button>
 		            <ul class="customSelectBtns"></ul>
 		          </section>
 		        </li>
@@ -772,6 +743,7 @@
           </div>
 
           <textarea
+		    name="memo"
             placeholder="내용을 입력해주세요. (200자 이내)"
             maxlength="200"></textarea>
         </section>
@@ -787,7 +759,57 @@
 		</form>
       </main>
     </div>
-    <div class="masterRegExcelPopWrapper"></div>
+	
+	<!-- 주소 검색 팝업 -->
+	
+    <div class="masterRegExcelPopWrapper" id="searchResultPopDiv">
+		<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+		    <div id="searchResultsPopup">
+		        <div class="popupWrap">
+		            <h2>
+		                <p>검색결과</p>
+		                <span class="topCloseBtn"></span>
+		            </h2>
+
+					<!-- 검색 결과 grid 헤더 -->
+		            <div class="popupCont">
+		                <ul class="popTitles">
+		                    <li class="popTitle01">PNU</li>
+		                    <li class="popTitle02">주소</li>
+		                    <li class="popTitle03">지번</li>
+		                    <li class="popTitle04">선택</li>
+		                </ul>
+		                <div class="popContentBox" >
+		                    <ul class="popContents" th:each="val:${jisangBasicSearchList}">
+		                        <li class="popContent01">115001100010010001</li>
+		                        <li class="popContent02">서울특별시 강서구 개화동</li>
+		                        <li class="popContent03">1-1</li>
+		                        <li class="popContent04">
+		                            <button class="resultSelectBtn">선택</button>
+		                        </li>
+		                    </ul>
+		                    <ul class="popContents">
+		                        <li class="popContent01">115001100010010001</li>
+		                        <li class="popContent02">서울특별시 강서구 개화동</li>
+		                        <li class="popContent03">1-1</li>
+		                        <li class="popContent04">
+		                            <button class="resultSelectBtn">선택</button>
+		                        </li>
+		                    </ul>
+		                </div>
+		            </div>
+
+		            <div class="lastBtnBox btnWrap">
+		                <button class="backBtn finalBtn">닫기</button>
+		                <button class="saveBtn finalBtn">PNU 없이 선택</button>
+		            </div>
+		        </div>
+		    </div>
+		<script>
+		// 저장, 닫기 버튼 click시 팝업 사라지게
+		</script>
+	</div>
+	
     <!-- script -->
     <script type="module" src="/js/module/surfaceMain.js"></script>
     <script src="/js/gover/masterReg.js"></script>

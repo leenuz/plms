@@ -212,6 +212,7 @@ function addRow() {
 	console.log(addUl);
 
 	var addDiv = $('<ul class="contents" id="goverUl">'+addUl+'</ul>');
+	addDiv.find("#goverIndex").val(index);
 	console.log($(addDiv).html());
 	
 	//멀티체크박스 클릭을 위한 조치
@@ -650,3 +651,129 @@ const ExcelPopOpenEvet = () => {
 }
 
 ExcelPopOpenEvet();
+
+// 주소 검색 버튼 클릭 시
+$(document).on("click",".searchAddressBtn",function(){
+	
+	console.log($(this).parent().parent().html());
+	var idObj=$(this).parent().parent().find("#addr");
+	var id=$(this).parent().parent().find("#goverIndex").val();
+		
+	console.log(idObj.val()); 
+	console.log(id);
+	
+	var addr=idObj.val();
+	var datas={"address":addr}
+	console.log($(this).parent().html());
+	console.log(datas);
+  
+	//searchResultPopDiv 화면뿌릴 DIV
+	if (addr==null || addr=="" || addr==undefined) {
+	  alert("주소를 입력해주세요.");
+	  return;
+	}
+				 
+	$.ajax({
+	  url: "/jisang/getBunhalJIjukSelect",
+   	  type: "POST",
+   	  data: datas,
+	})
+	.done(function (fragment) {
+	// var buttonIdx = fragment.find('button#choiceBtn');
+	// buttonIdx.attr('data-index', buttonId);
+	 console.log("***fragment***");
+	 console.log(fragment);
+      $('#searchResultPopDiv').replaceWith(fragment);
+	  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+            console.log($(popupOpen).html());
+	  	   $(popupOpen).addClass("open");
+	  	   popupOpen.classList.add("active");
+    	 $('.resultSelectBtn').attr('data-index', id);
+       	$('.saveBtn').attr('data-index', id);
+   	});
+
+});
+
+// 주소 선택 클릭
+$(document).on("click",".resultSelectBtn",function(){
+	var id =  $('.resultSelectBtn').data('index');
+	
+	console.log("***클릭된 id*** : " + id);
+	console.log($(this).parent().parent().html());
+	
+	var pnu=$(this).parent().parent().find(".popContent01").html();
+	var juso=$(this).parent().parent().find(".popContent02").html();	
+/*	var jibun=$(this).parent().parent().find(".popContent03").html();
+    var sido_nm=$(this).parent().parent().find(".popContent0201").html();
+	var sgg_nm=$(this).parent().parent().find(".popContent0202").html();
+	var emd_nm=$(this).parent().parent().find(".popContent0203").html();
+	var ri_nm=$(this).parent().parent().find(".popContent0204").html();*/
+	var jimok=$(this).parent().parent().find(".popContent05").html();
+	
+	console.log("pnu: " + pnu);
+	console.log("juso: " + juso);
+	console.log("jimok: " + jimok);
+	
+	var openerEle=$("#goverUlDiv");
+	//	console.log($(openerEle).html());
+	var openerTargetEle=openerEle.find('input[id="goverIndex"][value="'+id+'"]');
+	//console.log(openerTargetEle.parent().parent().html());
+	
+	openerTargetEle.parent().parent().find("#pnu").val(pnu);
+	openerTargetEle.parent().parent().find("#addr").val(juso);
+	// 지목 값 select 박스에 반영
+	var jimokSelectBox = openerTargetEle.parent().parent().find("#jimok");
+	jimokSelectBox.val(jimok); // 지목 값을 select 박스에 설정
+
+	// customSelectBox 버튼에도 선택된 값 반영
+	var customSelectView = openerTargetEle.parent().parent().find("#jimok");
+	customSelectView.text(jimok); // 선택된 지목 값을 customSelectView에 표시
+	
+/*	$(".bunhalAddres_" + id).attr("readonly", true);
+	$(".bunhalAddres_"+id).val(sido_nm+" "+sgg_nm + " " + emd_nm +" " +ri_nm  + " " + jibun);*/
+	
+	// 팝업 닫기
+	$(".popupWrap").removeClass("active");
+})
+
+const PopupFinalBtns =  document.querySelectorAll('.popupWrap .lastBtnBox .finalBtn');
+
+PopupFinalBtns.forEach((button) => {
+    button.addEventListener('click',function(){
+        const PopupWrap = button.closest('.popupWrap');
+        button.classList.toggle("active");
+        PopupWrap.classList.toggle('active');
+    })
+})
+
+// x 버튼 click시 팝업 사라지게
+
+const topCloseBtn = document.querySelectorAll('.popupWrap .topCloseBtn');
+if(topCloseBtn){
+    topCloseBtn.forEach((topClosebutton) => {
+        topClosebutton.addEventListener('click',function(){
+            const PopupWrap = topClosebutton.closest('.popupWrap');
+            PopupWrap.classList.remove("active");
+        })
+    })
+}
+
+//pnu없이 선택/
+$(document).on("click",".saveBtn",function(){
+    var id =  $('.saveBtn').data('index');
+    $(".bunhalAddres_" + id).val("");
+	$(".bunhalAddres_" + id).removeAttr("readonly");
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+    console.log(id);
+
+});
+
+// x 버튼 클릭 시 팝업 닫기
+$(document).on("click",".topCloseBtn",function(){
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+//	$(".popupWrap").toggleClass("active");
+});
