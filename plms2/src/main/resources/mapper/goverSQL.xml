@@ -93,7 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectGoverList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	    SELECT *,
 	           (row_number() OVER()) AS no,
-	           (SELECT COUNT(*) FROM gover_pnu gp_count WHERE gp_count.gp_gover_no = r.gover_no) AS pnu_count  <!-- 필지수 추가 -->
+	           r.pnu_count
 	    FROM (
 	        SELECT gm.gm_idx AS index,
 	        	   gm.gm_gover_no AS idx,
@@ -140,7 +140,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	               gp.gp_gover_area AS gover_area,
 	               gp.gp_jimok_text AS jimok_text,
 	               gpm.gp_pay_date AS pay_date,
-	               gpm.gp_pay_money AS pay_money
+	               gpm.gp_pay_money AS pay_money,
+	               (SELECT COUNT(*) FROM gover_pnu WHERE gover_pnu.gp_gover_no = gm.gm_gover_no) AS pnu_count  <!-- 필지수 계산 -->
 	        FROM gover_master gm
 	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
 	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
@@ -239,7 +240,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	               gp.gp_jimok_text AS jimok_text,
 	               gpm.gp_pay_date AS pay_date,
 	               gpm.gp_pay_money AS pay_money,
-	               gpm.gp_echo_no AS echo_no
+	               gpm.gp_echo_no AS echo_no,
+	               (SELECT COUNT(*) FROM gover_pnu WHERE gover_pnu.gp_gover_no = gm.gm_gover_no) AS pnu_count  <!-- 필지수 계산 -->
 	        FROM gover_master gm
 	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
 	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
@@ -286,7 +288,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectGoverList03_2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	    SELECT *,
 	           (row_number() OVER()) AS no,
-	           (SELECT COUNT(*) FROM gover_pnu gp_count WHERE gp_count.gp_gover_no = r.gover_no) AS pnu_count  <!-- 필지수 추가 -->
+	           r.pnu_count
 	    FROM (
 	        SELECT gm.gm_idx AS index,
 	        	   gm.gm_gover_no AS idx,
@@ -334,7 +336,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	               gp.gp_jimok_text AS jimok_text,
 	               gpm.gp_pay_date AS pay_date,
 	               gpm.gp_pay_money AS pay_money,
-	               gpm.gp_echo_no AS echo_no
+	               gpm.gp_echo_no AS echo_no,
+	               (SELECT COUNT(*) FROM gover_pnu WHERE gover_pnu.gp_gover_no = gm.gm_gover_no) AS pnu_count  <!-- 필지수 계산 -->
 	        FROM gover_master gm
 	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
 	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
@@ -430,7 +433,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	               gp.gp_jimok_text AS jimok_text,
 	               gpm.gp_pay_date AS pay_date,
 	               gpm.gp_pay_money AS pay_money,
-	               gpm.gp_echo_no AS echo_no
+	               gpm.gp_echo_no AS echo_no,
+	               (SELECT COUNT(*) FROM gover_pnu WHERE gover_pnu.gp_gover_no = gm.gm_gover_no) AS pnu_count  <!-- 필지수 계산 -->
 	        FROM gover_master gm
 	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
 	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
@@ -478,7 +482,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectGoverList03_3" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	    SELECT *,
 	           (row_number() OVER()) AS no,
-	           (SELECT COUNT(*) FROM gover_pnu gp_count WHERE gp_count.gp_gover_no = r.gover_no) AS pnu_count  <!-- 필지수 추가 -->
+	           r.pnu_count
 	    FROM (
 	        SELECT gm.gm_idx AS index,
 	        	   gm.gm_gover_no AS idx,
@@ -526,7 +530,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	               gp.gp_jimok_text AS jimok_text,
 	               gpm.gp_pay_date AS pay_date,
 	               gpm.gp_pay_money AS pay_money,
-	               gpm.gp_echo_no AS echo_no
+	               gpm.gp_echo_no AS echo_no,
+	               (SELECT COUNT(*) FROM gover_pnu WHERE gover_pnu.gp_gover_no = gm.gm_gover_no) AS pnu_count  <!-- 필지수 계산 -->
 	        FROM gover_master gm
 	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
 	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
@@ -625,7 +630,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	               gp.gp_jimok_text AS jimok_text,
 	               gpm.gp_pay_date AS pay_date,
 	               gpm.gp_pay_money AS pay_money,
-	               gpm.gp_echo_no AS echo_no
+	               gpm.gp_echo_no AS echo_no,
+	               (SELECT COUNT(*) FROM gover_pnu WHERE gover_pnu.gp_gover_no = gm.gm_gover_no) AS pnu_count  <!-- 필지수 계산 -->
 	        FROM gover_master gm
 	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
 	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
