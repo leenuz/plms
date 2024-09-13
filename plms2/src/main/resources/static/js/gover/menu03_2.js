@@ -247,17 +247,17 @@ function loadDataTable(params) {
             }
         },
         columns: [
-            { data: "no", "orderable": false },
+            { data: "no", "orderable": false }, // 0
             { data: "jisa", "defaultContent": "" },
             { data: "address", "defaultContent": "" },
             { data: "gover_no", "defaultContent": "" },
-			{ data: "필지수", "defaultContent": "" },
-			{ data: "jimok_text", "defaultContent": "" },
+			{ data: "pnu_count", "defaultContent": "" },
+			{ data: "jimok_text", "defaultContent": "" }, //5
 			{ data: "use_purpos", "defaultContent": "" },
 			{ data: "period", "defaultContent": "" },
 			{ data: "gover_length", "defaultContent": "" },
 			{ data: "gover_area", "defaultContent": "" },
-            { data: "pmt_office", "defaultContent": "" },
+            { data: "pmt_office", "defaultContent": "" }, //10
             { data: "adm_office", "defaultContent": "" },
 			{ data: "pay_date", "defaultContent": "" },
 			{ data: "pay_money", "defaultContent": "" },
@@ -267,7 +267,7 @@ function loadDataTable(params) {
                     return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
                 }
             },
-			{ data: "echo_no", "defaultContent": "" }
+			{ data: "echo_no", "defaultContent": "" } // 15
         ],
         columnDefs: [
             { "className": "dt-head-center", "targets": "_all" },

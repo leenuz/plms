@@ -92,7 +92,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectGoverList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	    SELECT *,
-	           (row_number() OVER()) AS no
+	           (row_number() OVER()) AS no,
+	           (SELECT COUNT(*) FROM gover_pnu gp_count WHERE gp_count.gp_gover_no = r.gover_no) AS pnu_count  <!-- 필지수 추가 -->
 	    FROM (
 	        SELECT gm.gm_idx AS index,
 	        	   gm.gm_gover_no AS idx,
@@ -284,7 +285,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectGoverList03_2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	    SELECT *,
-	           (row_number() OVER()) AS no
+	           (row_number() OVER()) AS no,
+	           (SELECT COUNT(*) FROM gover_pnu gp_count WHERE gp_count.gp_gover_no = r.gover_no) AS pnu_count  <!-- 필지수 추가 -->
 	    FROM (
 	        SELECT gm.gm_idx AS index,
 	        	   gm.gm_gover_no AS idx,
@@ -475,7 +477,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectGoverList03_3" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	    SELECT *,
-	           (row_number() OVER()) AS no
+	           (row_number() OVER()) AS no,
+	           (SELECT COUNT(*) FROM gover_pnu gp_count WHERE gp_count.gp_gover_no = r.gover_no) AS pnu_count  <!-- 필지수 추가 -->
 	    FROM (
 	        SELECT gm.gm_idx AS index,
 	        	   gm.gm_gover_no AS idx,

@@ -614,13 +614,13 @@ public class goverController {
 
 			String jisa = req.getParameter("jisa");
 			String gover_no = req.getParameter("gover_no");
-			String use_purpos=req.getParameter("use_purpos");
+			String use_purpos = req.getParameter("use_purpos");
 			String pmt_office = req.getParameter("pmt_office");
 			String adm_office = req.getParameter("adm_office");
 			String pay_date_start=req.getParameter("pay_date_start");
-			String pay_date_end=req.getParameter("pay_date_end");
-			String address=req.getParameter("saddr");
-			String idx=req.getParameter("idx");
+			String pay_date_end = req.getParameter("pay_date_end");
+			String address = req.getParameter("saddr");
+			String idx = req.getParameter("idx");
 
 			Map map = req.getParameterMap();
 
@@ -774,14 +774,14 @@ public class goverController {
 
 			String jisa = req.getParameter("jisa");
 			String gover_no = req.getParameter("gover_no");
-			String use_purpos=req.getParameter("use_purpos");
+			String use_purpos = req.getParameter("use_purpos");
 			String pmt_office = req.getParameter("pmt_office");
 			String adm_office = req.getParameter("adm_office");
 			String cancel_yn = req.getParameter("cancel_yn");
-			String pay_date_start=req.getParameter("pay_date_start");
-			String pay_date_end=req.getParameter("pay_date_end");
-			String address=req.getParameter("saddr");
-			String idx=req.getParameter("idx");
+			String pay_date_start = req.getParameter("pay_date_start");
+			String pay_date_end = req.getParameter("pay_date_end");
+			String address = req.getParameter("saddr");
+			String idx = req.getParameter("idx");
 
 			Map map = req.getParameterMap();
 

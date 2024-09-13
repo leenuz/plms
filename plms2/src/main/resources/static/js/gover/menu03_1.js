@@ -300,7 +300,7 @@ function loadDataTable(params){
 			{data: "gover_no","defaultContent":""},
 			{data: "pmt_office","defaultContent":""}, 
 			{data: "adm_office","defaultContent":""},//5
-			{data: "idx","defaultContent":""},
+			{data: "pnu_count","defaultContent":""},
 			{data: "jimok_text","defaultContent":""},
 			{data: "use_purpos","defaultContent":""},
 			{data: "period","defaultContent":""},

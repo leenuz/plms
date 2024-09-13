@@ -259,7 +259,7 @@ function loadDataTable(params) {
             { data: "jisa", "defaultContent": "" },
             { data: "address", "defaultContent": "" },
             { data: "gover_no", "defaultContent": "" },
-			{ data: "필지수", "defaultContent": "" },
+			{ data: "pnu_count", "defaultContent": "" },
 			{ data: "jimok_text", "defaultContent": "" },
 			{ data: "use_purpos", "defaultContent": "" },
 			{ data: "period", "defaultContent": "" },
