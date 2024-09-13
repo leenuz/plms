@@ -198,4 +198,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 			and jibun=#{jibun}
 	</select>
+	
+	
+	<select id="selectGetPLMSCompforeXML" parameterType="java.util.HashMap" resultType="Integer">
+		select count(*) from plms_approval where pa_dockey=#{dockey} and (pa_status is null or pa_status not in ('X'))
+	</select>
+	
+	<update id="updateEchoOut" parameterType="java.util.HashMap" >
+		update plms_approval set pa_out_flag=#{outflag},pa_out_url=#{outurl} where pa_dockey=#{dockey}
+	</update>
+	
+	<insert id="insertEchoOut" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="pa_idx" keyProperty="pa_idx">
+		insert into plms_approval (pa_seq,pa_dockey,pa_out_url,pa_usernm,pa_deptcd,pa_deptnm,pa_updeptcd)
+		values
+		(#{seq},#{dockey},#{outflag},#{outurl},#{usernm},#{deptcd},#{deptnm},#{updeptcd})
+	</insert>
+	
 </mapper>

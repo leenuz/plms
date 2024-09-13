@@ -195,6 +195,8 @@ public class DataMigrationController {
           	else if (mapperName.equals("jisang_merge")) mainService.InsertQuery("migrationSQL.jisang_merge", param);
           	else if (mapperName.equals("permit_togi")) mainService.InsertQuery("migrationSQL.permit_togi", param);
           	else if (mapperName.equals("plms_approval")) mainService.InsertQuery("migrationSQL.plms_approval", param);
+          	else if (mapperName.equals("sys_officemng")) mainService.InsertQuery("migrationSQL.sys_officemng", param);
+          	else if (mapperName.equals("sys_code")) mainService.InsertQuery("migrationSQL.sys_code", param);
           	else if (mapperName.equals("jisang_potential_issue")) {
           		param.put("MANAGE_NO","");
           		mainService.InsertQuery("migrationSQL.potential_issue", param);

@@ -143,5 +143,13 @@ public class CommonUtil {
 	            e.printStackTrace();
 	        }
 	    }
+	 
+	 public static String evl(String val,String defaultVal) {
+		 if (null==val || "null".equals(val) || "".equals(val) || " ".equals(val)) {
+			 return defaultVal;
+			 
+		 }
+		 return val;
+	 }
 
 }

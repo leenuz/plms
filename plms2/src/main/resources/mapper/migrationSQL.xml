@@ -1631,4 +1631,46 @@
 	
 	</insert>
 	
+	
+	<insert id="sys_officemng" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="so_idx" keyProperty="so_idx">
+		
+		INSERT INTO sys_officemng 
+		(
+		 so_adm_seq
+		 ,so_jisa
+		 ,so_pmt_office
+		 ,so_adm_office
+		 ,so_sort_order
+		 ) 
+		 VALUES (
+		 #{ADM_SEQ}::int
+		 ,#{JISA}
+		 ,#{PMT_OFFICE}
+		 ,#{ADM_OFFICE}
+		 ,#{SORT_ORDER}::int
+		 
+		 )
+	
+	</insert>
+	<insert id="sys_code" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="sc_idx" keyProperty="sc_idx">
+		
+		INSERT INTO sys_code 
+		(
+		 sc_code
+		 ,sc_group_code
+		 ,sc_code_name
+		 ,sc_sort_order
+		 ,sc_use_yn
+		 ) 
+		 VALUES (
+		 #{CODE}
+		 ,#{GROUP_CODE}
+		 ,#{CODE_NAME}
+		 ,#{SORT_ORDER}::int
+		 ,#{USE_YN}
+		 
+		 )
+	
+	</insert>
+	
 </mapper>
