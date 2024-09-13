@@ -438,6 +438,7 @@ function loadDataTable(params){
                     } else {
 
                         url = "/jisang/groundDetail?idx=" + data.idx;
+						console.log(url);
                         window.location = url;
                     }
 

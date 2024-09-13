@@ -2530,64 +2530,64 @@ public class jisangController {
 		params.put("index",index);
 		log.info("params:"+params);
 
-		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
-		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
-		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
-
-		//임시 저장 된 테이블 조회 시 있으면, 해당 테이블 뿌리기.
-		ArrayList<HashMap> dataTmp = mainService.selectQuery("jisangSQL.selectAllTmpData",params);
-		if(dataTmp.size() > 0) {
-			// dataTmp의 데이터를 하나씩 처리
-			HashMap<String, Object> tmpMap = dataTmp.get(0);
-			HashMap<String, Object> newMap = new HashMap<>();
-
-			// tmpMap의 모든 키를 순회하면서 "jmt_"를 "jm_"으로 바꾼 후 newMap에 넣음
-			for (Map.Entry<String, Object> entry : tmpMap.entrySet()) {
-				String newKey = entry.getKey().replace("jmt_", "jm_");
-				newMap.put(newKey, entry.getValue());
-			}
-			data.remove(0);
-			data.add(newMap);
-		}
-
-		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
-		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
-		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
-
-		params.put("pnu", data.get(0).get("jm_pnu"));
-
-		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
-
-		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
-		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
-		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
-
-		log.info("params:"+params);
-		log.info("sidolist:"+sidolist);
-		log.info("data:"+data.get(0));
-		log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
-		log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
-		log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
-		log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
-		log.info("jisangPermitList:"+jisangPermitList);
-		log.info("souja count:"+soujaList.size());
-		log.info("soujaList:"+soujaList);
-		log.info("atcFileList:"+atcFileList);
-		log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+		//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+//		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+//		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+//
+//		//임시 저장 된 테이블 조회 시 있으면, 해당 테이블 뿌리기.
+//		ArrayList<HashMap> dataTmp = mainService.selectQuery("jisangSQL.selectAllTmpData",params);
+//		if(dataTmp.size() > 0) {
+//			// dataTmp의 데이터를 하나씩 처리
+//			HashMap<String, Object> tmpMap = dataTmp.get(0);
+//			HashMap<String, Object> newMap = new HashMap<>();
+//
+//			// tmpMap의 모든 키를 순회하면서 "jmt_"를 "jm_"으로 바꾼 후 newMap에 넣음
+//			for (Map.Entry<String, Object> entry : tmpMap.entrySet()) {
+//				String newKey = entry.getKey().replace("jmt_", "jm_");
+//				newMap.put(newKey, entry.getValue());
+//			}
+//			data.remove(0);
+//			data.add(newMap);
+//		}
+//
+//		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+//		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
+//		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
+//
+//		params.put("pnu", data.get(0).get("jm_pnu"));
+//
+//		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+//
+//		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+//		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+//		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+//
+//		log.info("params:"+params);
+//		log.info("sidolist:"+sidolist);
+//		log.info("data:"+data.get(0));
+//		log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
+//		log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
+//		log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
+//		log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+//		log.info("jisangPermitList:"+jisangPermitList);
+//		log.info("souja count:"+soujaList.size());
+//		log.info("soujaList:"+soujaList);
+//		log.info("atcFileList:"+atcFileList);
+//		log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
 
 		ModelAndView mav=new ModelAndView();
-		mav.addObject("jisaList",jisalist);
-		mav.addObject("resultJimokList",jimoklist);
-		mav.addObject("sidoList",sidolist);
-
-		mav.addObject("resultData",data.get(0));
-		mav.addObject("soujaList",soujaList);
-		mav.addObject("jisangPermitList",jisangPermitList);
-		mav.addObject("atcFileList",atcFileList);
-		mav.addObject("jisangModifyList",jisangModifyList);
-		mav.addObject("jisangMergeList",jisangMergeList);
-
-		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+//		mav.addObject("jisaList",jisalist);
+//		mav.addObject("resultJimokList",jimoklist);
+//		mav.addObject("sidoList",sidolist);
+//
+//		mav.addObject("resultData",data.get(0));
+//		mav.addObject("soujaList",soujaList);
+//		mav.addObject("jisangPermitList",jisangPermitList);
+//		mav.addObject("atcFileList",atcFileList);
+//		mav.addObject("jisangModifyList",jisangModifyList);
+//		mav.addObject("jisangMergeList",jisangMergeList);
+//
+//		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
 		mav.setViewName("content/jisang/landRightMerge");
 		return mav;
 	}
