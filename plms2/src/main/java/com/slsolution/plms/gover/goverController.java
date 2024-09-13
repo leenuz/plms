@@ -526,7 +526,7 @@ public class goverController {
 			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
 			ArrayList<HashMap> goverMemoList = mainService.selectQuery("goverSQL.selectMemoList",params);
-			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
 			
 		    // goverPnuList 크기 구하기
@@ -536,7 +536,7 @@ public class goverController {
 			log.info("goverModifyList:"+goverModifyList);
 			log.info("atcFileList:"+atcFileList);
 			log.info("goverMemoList:"+goverMemoList);
-			log.info("jimoklist:"+jimoklist);
+			log.info("jimokList:"+jimokList);
 			log.info("goverPnuList:"+goverPnuList);
 			log.info("goverPnuListSize:" + goverPnuListSize);
 //			log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
@@ -545,7 +545,7 @@ public class goverController {
 	  		mav.addObject("goverModifyList",goverModifyList);
 	  		mav.addObject("atcFileList",atcFileList);
 	  		mav.addObject("memoList",goverMemoList);
-	  		mav.addObject("jimoklist",jimoklist);
+	  		mav.addObject("jimokList",jimokList);
 	  		mav.addObject("pnuList",goverPnuList);
 	  		mav.addObject("pnuListSize", goverPnuListSize);
   			
