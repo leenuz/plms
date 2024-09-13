@@ -16,88 +16,68 @@ $(document).ready(function() {
     // 모든 셀렉트 박스에 대해 커스텀 셀렉트 박스 초기화 실행
     createCustomLimasterReg();  // 페이지가 로드될 때 초기화
 	
-	// 파일 첨부 관련
+	// 드래그 앤 드롭 영역 파일 첨부 관련 코드 시작
 	var objDragAndDrop = $(".fileUploadBox");
-	                
-    $(document).on("dragenter",".fileUploadBox",function(e){
-        e.stopPropagation();
-        e.preventDefault();
-        $(this).css('border', '2px solid #0B85A1');
-    });
-    $(document).on("dragover",".fileUploadBox",function(e){
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    $(document).on("drop",".fileUploadBox",function(e){
-        
-        $(this).css('border', '2px dotted #0B85A1');
-        e.preventDefault();
-        var files = e.originalEvent.dataTransfer.files;
-    
-        handleFileUpload(files,objDragAndDrop);
-    });
-    
-    $(document).on('dragenter', function (e){
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    $(document).on('dragover', function (e){
-      e.stopPropagation();
-      e.preventDefault();
-      objDragAndDrop.css('border', '2px dotted #0B85A1');
-    });
-    $(document).on('drop', function (e){
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    //drag 영역 클릭시 파일 선택창
-    objDragAndDrop.on('click',function (e){
-        $('input[type=file]').trigger('click');
-    });
+	
+	// 드래그 앤 드롭 영역에 파일이 들어왔을 때
+	$(".fileUploadBox").on("dragenter", function(e) {
+	    e.stopPropagation();
+	    e.preventDefault();
+	    $(this).css('border', '2px solid #0B85A1');
+	});
+
+	// 드래그 앤 드롭 영역에서 파일을 드래그할 때
+	$(".fileUploadBox").on("dragover", function(e) {
+	    e.stopPropagation();
+	    e.preventDefault();
+	});
+
+	// 파일을 드롭할 때
+	$(".fileUploadBox").on("drop", function(e) {
+	    e.preventDefault();
+	    $(this).css('border', '2px dotted #0B85A1');
+	    var files = e.originalEvent.dataTransfer.files; // 드래그한 파일 객체를 가져옴
+	    handleFileUpload(files, $(this));  // 파일 처리 함수 호출
+	});
+
+	// 드래그 앤 드롭 영역을 클릭하면 파일 선택창을 띄움
+	objDragAndDrop.on('click', function(e) {
+		console.log("---------------- 파일 클릭 트리거 ---------------");
+	    if (!e.isTrigger) {  // 이 조건문은 이 이벤트가 수동 트리거된 경우를 방지합니다.
+	        $('input[type=file]').trigger('click'); // 파일 선택 창을 띄우는 트리거
+	    }
+	});
 	 
-    $('input[type=file]').on('change', function(e) {
-        var files = e.originalEvent.target.files;
-        handleFileUpload(files,objDragAndDrop);
-    });
+	$('input[type=file]').on('change', function(e) {
+	    var files = e.originalEvent.target.files; // 파일 선택창에서 선택된 파일들
+	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
+	});
     
-    function handleFileUpload(files,obj)
-    {
+    function handleFileUpload(files,obj) {
 		console.log("-------------handleFileUpload---------------");
 		console.log(files);
-       for (var i = 0; i < files.length; i++) 
-       {
-            var fd = new FormData();
-            fd.append('file', files[i]);
+       for (var i = 0; i < files.length; i++) { // 선택된 파일들을 하나씩 처리
+            var fd = new FormData(); // FormData 객체 생성 (파일 업로드를 위한 객체)
+            fd.append('file', files[i]); // 파일 객체를 FormData에 추가
      		
-            var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
-          //  status.setFileNameSize(files[i].name,files[i].size);
-            sendFileToServer(fd,status);
-     
+            var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); // 파일 업로드 상태바 생성
+            sendFileToServer(fd,status); // 서버로 파일 전송 함수 호출
        }
     }
 	                
     var rowCount=0;
     function createStatusbar(obj,name,size,no){
 		console.log("----------start createStatusBar------------");
-            console.log(obj.html());
-		/*var uobj=obj.parent().parent().find("#status");	
-        rowCount++;
-        var row="";
-        //if(rowCount %2 ==0) row ="even";
-        this.statusbar = $('<ul class="contents" id="fileListUl">');
-        this.filename = $('<div class='filename'></div>').appendTo(this.statusbar);
-        this.size = $("<div class='filesize'></div>").appendTo(this.statusbar);
-       // this.progressBar = $("<div class='progressBar'><div></div></div>").appendTo(this.statusbar);
-        this.abort = $("<div class='abort'>중지</div>").appendTo(this.statusbar);*/
+        console.log(obj.html());
 		
 		var sizeStr="";
-		                        var sizeKB = size/1024;
-		                        if(parseInt(sizeKB) > 1024){
-		                            var sizeMB = sizeKB/1024;
-		                            sizeStr = sizeMB.toFixed(2)+" MB";
-		                        }else{
-		                            sizeStr = sizeKB.toFixed(2)+" KB";
-		                        }
+        var sizeKB = size/1024; // 파일 크기를 문자열로 표시하기 위한 변수
+        if(parseInt(sizeKB) > 1024){
+            var sizeMB = sizeKB/1024;
+            sizeStr = sizeMB.toFixed(2)+" MB"; // MB로 변환
+        }else{
+            sizeStr = sizeKB.toFixed(2)+" KB"; // KB로 표시
+        }
 		
         var row='<ul class="contents" id="fileListUl">';
 		row+='<li class="content01 content checkboxWrap">';
@@ -105,67 +85,34 @@ $(document).ready(function() {
 		row+='<label for="landRightsRegistration_attachFile'+no+'"></label>';
 		row+='</li>';
 		row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
-        obj.after(row);
+        obj.after(row); // 파일 목록이 있는 DOM 요소 뒤에 파일 정보를 추가
 		
-		var radio=$(row).find('input');
+		var radio=$(row).find('input'); // row에서 input 요소를 찾음
 		console.log("---------------radio checkbox----------");
-		$(radio).find('input').attr("disabled",false);
+		$(radio).find('input').attr("disabled",false); // 체크박스가 비활성화되지 않도록 설정
      	console.log($(radio).parent().html());
-		
-       /* this.setFileNameSize = function(name,size){
-            var sizeStr="";
-            var sizeKB = size/1024;
-            if(parseInt(sizeKB) > 1024){
-                var sizeMB = sizeKB/1024;
-                sizeStr = sizeMB.toFixed(2)+" MB";
-            }else{
-                sizeStr = sizeKB.toFixed(2)+" KB";
-            }
-     
-            $(#)
-            this.size.html(sizeStr);
-        }*/
-        
-        /*this.setProgress = function(progress){       
-            var progressBarWidth =progress*this.progressBar.width()/ 100;  
-            this.progressBar.find('div').animate({ width: progressBarWidth }, 10).html(progress + "% ");
-            if(parseInt(progress) >= 100)
-            {
-                this.abort.hide();
-            }
-        }
-        
-        this.setAbort = function(jqxhr){
-            var sb = this.statusbar;
-            this.abort.click(function()
-            {
-                jqxhr.abort();
-                sb.hide();
-            });
-        }*/
     }
 	                
     function sendFileToServer(formData,status)
     {
-        var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+        var uploadURL = "/gover/fileUpload/post"; //Upload URL
         var extraData ={}; //Extra Data.
-        var jqXHR=$.ajax({
-                xhr: function() {
-                var xhrobj = $.ajaxSettings.xhr();
-                if (xhrobj.upload) {
-                        xhrobj.upload.addEventListener('progress', function(event) {
-                            var percent = 0;
-                            var position = event.loaded || event.position;
-                            var total = event.total;
-                            if (event.lengthComputable) {
-                                percent = Math.ceil(position / total * 100);
-                            }
-                            //Set progress
-                          //  status.setProgress(percent);
-                        }, false);
-                    }
-                return xhrobj;
-            },
+        var jqXHR = $.ajax({
+			xhr: function() {
+			    var xhrobj = $.ajaxSettings.xhr(); // 기본 XMLHttpRequest 객체 생성
+			    if (xhrobj.upload) {
+			        xhrobj.upload.addEventListener('progress', function(event) {
+			            var percent = 0;
+			            var position = event.loaded || event.position;
+			            var total = event.total;
+			            if (event.lengthComputable) {
+			                percent = Math.ceil(position / total * 100); // 파일 업로드의 진행 상황을 계산
+			            }
+			            // status.setProgress(percent);  // 업로드 진행 상황을 status에 반영 (현재 주석 처리됨)
+			        }, false);
+			    }
+			    return xhrobj;
+			},
             url: uploadURL,
             type: "POST",
             contentType:false,
@@ -187,6 +134,73 @@ $(document).ready(function() {
         //status.setAbort(jqXHR);
     }
 });
+
+
+// 첨부파일 전체 선택 체크박스
+const allCheckEventLandRightsRegist = () => {
+
+    // 첨부파일 리스트들
+    const attachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
+    // checked가 된 첨부파일 리스트
+    const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+    // 전체선택 input
+    const clickedAllinput = document.querySelector('input[name="landRightsRegistration_file_select_all"]');
+
+    // 전체선택되게 하기
+    clickedAllinput.addEventListener('click', function () {
+        clickedSelectAllLandRightsRegist(clickedAllinput);
+    })
+    // 개당 선택시 전체 선택되게하기
+    attachFiles.forEach((checkList) => {
+        checkList.addEventListener('click', function () {
+
+            clickCheckBoxEventLandRightsRegist(checkList);
+        })
+    })
+
+    // 개별 리스트 클릭시 전체로 변하기
+    function clickCheckBoxEventLandRightsRegist() {
+        // 최신으로 업데이트 해주기
+        const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+
+        if (attachFiles.length === clickedAttachFiles.length) {
+            clickedAllinput.checked = true;
+        } else {
+            clickedAllinput.checked = false;
+        }
+    }
+
+    // 전체선택 클릭시
+    function clickedSelectAllLandRightsRegist(clickedAllinput) {
+        const attachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
+
+        attachFiles.forEach((checkbox) => {
+            checkbox.checked = clickedAllinput.checked;
+        })
+    }
+}
+allCheckEventLandRightsRegist();
+
+
+$(document).on("click","#deleteFileBtn",function(){
+	//const attachFiles = document.querySelectorAll('input:checkbox[name="landRightsRegistration_attachFile"]:checked');
+	/*$('input:checkbox[name=landRightsRegistration_attachFile]').each(function (index) {
+		if($(this).is(":checked")==true){
+	    	console.log($(this).val());
+	    }
+	})*/
+	const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+	console.log(clickedAttachFiles);
+	console.log(uploadFiles);
+	for(var i=0;i<clickedAttachFiles.length;i++){
+		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
+		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
+		$(delEle).remove();
+
+
+	}
+
+})
 
 // '소속 토지 정보' 내의 체크박스 클릭 시 다른 체크박스 비활성화
 $(document).on("click", ".landAdressInfo input[type=checkbox]", function() {
@@ -326,8 +340,6 @@ $(document).on("click", "#requestBtn", function() {
     console.log(json); // JSON 문자열 출력
 });
 
-// 커스텀 selectbox
-
 // 커스텀 selectbox 생성 및 이벤트 바인딩
 const createCustomLimasterReg = (parentElement = document) => {
     const contentItems = parentElement.querySelectorAll('.selectContentArea');
@@ -402,16 +414,16 @@ $(document).on('click', '.moreSelectBtn', function() {
     const parentMoreSelectBtn = $(this).closest('.customSelectBtns');
     const EditCustomViewBtn = parentMoreSelectBtn.prev('.customSelectView');
 
-//    // EditCustomViewBtn의 모든 자식을 제거
+    // EditCustomViewBtn의 모든 자식을 제거
     EditCustomViewBtn.empty();
-//
-//    // 새로운 텍스트 노드를 추가합니다.
+
+    // 새로운 텍스트 노드를 추가합니다.
     EditCustomViewBtn.text(moreSelectBtnText);
-//
+
     EditCustomViewBtn.removeClass('active');
     parentMoreSelectBtn.removeClass('active');
-//
-//    // 선택한 걸 select의 value값으로 변경하기
+
+    // 선택한 걸 select의 value값으로 변경하기
     const nearByContent = $(this).closest('.selectContentArea');
     const nearBySelectBox = nearByContent.find('select');
     nearBySelectBox.val(moreSelectBtnText);
@@ -482,7 +494,7 @@ MoreSelectBtn.forEach((moreBtn) => {
 })
 
 // **파일 첨부 기능 추가**
-const masterRegFileEvent = () => {
+/*const masterRegFileEvent = () => {
     // 파일 입력 요소를 가져옴
     const masterReg_myPcFiles = document.getElementById('masterReg_myPcFiles');
     
@@ -566,7 +578,7 @@ const masterRegFileEvent = () => {
         const d = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
         return `${(bytes / (1024 ** d)).toFixed(1)} ${dataSize[d]}`;
     }
-}
+}*/
 //masterRegFileEvent();
 
 // **검색 팝업 기능 추가**
@@ -675,6 +687,7 @@ $(document).on("click",".searchAddressBtn",function(){
 	}
 				 
 	$.ajax({
+		// jisang API 기능 동일하여 사용
 	  url: "/jisang/getBunhalJIjukSelect",
    	  type: "POST",
    	  data: datas,
