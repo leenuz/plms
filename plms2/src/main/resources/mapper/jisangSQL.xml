@@ -16,13 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *
 		,concat(jm_sido_nm,' ',jm_sgg_nm,' ',jm_emd_nm,' ',jm_ri_nm,' ',jm_jibun) as address
-		from jisang_master 
+		from jisang_master jm left join jisang_bunhal jb on jb.jb_jisang_no=jm.jm_jisang_no
 		where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-		and jm_jisang_no=#{idx}
+		and jm.jm_jisang_no=#{idx}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(index)" >
-		and jm_idx=cast(#{index} as integer)
+		and jm.jm_idx=cast(#{index} as integer)
 		</if>
 		
 	</select>
@@ -1853,7 +1853,91 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
+	<select id="selectJisangDetailList" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT * FROM jisang_master jm 
+LEFT JOIN jisang_toja_order jto ON jto.jto_jisang_no=jm.jm_jisang_no
+LEFT JOIN plms_approval ja ON ja.pa_dockey=jm.jm_dockey
+LEFT JOIN jijuk_2024 j2 ON j2.pnu=jm.jm_pnu
+WHERE 1=1
+		<!-- AND (JM.BUNHAL_YN IS NULL OR JM.BUNHAL_YN != 'Y' OR JM.BUNHAL_ORG_NO IS NOT NULL) -->
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)" >
+			AND jm.jm_jisang_no =#{JISANGNO}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUNHAL_ORG_NO)" >
+		
+			AND jm.jm_bunhal_org_no =#{BUNHAL_ORG_NO
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MERGE_NO)" >
+		
+			AND jm.jm_merge_no = #{MERGE_NO}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MERGE_CHECK)" >
+		
+			AND jm.jm_pnu = #{PNU}
+		</if>
+		
+		ORDER BY jm.jm_jisang_no DESC
+	</select>
 	
+	<select id="selectJisangBunHalDocInfo" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT * FROM plms_approval where dockey in (select dockey from jisang_bunhal where jb_jisang_no = #{JISANGNO}) and (status is null or status not in ('X'))
+	</select>
+	
+	<select id="selectJisangBunhalTmpList" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT
+		JB.jb_JISANG_NO,
+		JB.jb_SIDO_NM,
+		JB.jb_SGG_NM,
+		JB.jb_EMD_NM,
+		JB.jb_RI_NM,
+		JB.jb_JIBUN,
+		JB.jb_JISA,
+		JB.jb_JIJUK_AREA,
+		JB.jb_YONGDO,
+		JB.jb_PYEONIB_AREA,
+		JB.jb_JASAN_NO,
+		
+		JB.jb_CANCEL_YN,
+		JB.jb_GOVER_OWN_YN,
+		JB.jb_BUNHAL_YN,
+		TO_CHAR(JB.jb_BUNHAL_DATE, 'YYYY-MM-DD') as BUNHAL_DATE,
+		JB.jb_BUNHAL_REASON,
+		JB.jb_BUNHAL_ORG_NO,
+		JB.jb_ADDRCODE,
+		JB.jb_PNU,
+		JB.jb_REMAINDER_MONEY,
+		JB.jb_JIMOK_TEXT,
+		JB.jb_DOCKEY,
+		JB.jb_TOJI_TYPE,
+		JB.jb_PIPE_YN,
+		JB.jb_BUNHAL_COMMENT,
+		JB.jb_SET_MONEY,
+		JB.jb_BUNHAL_STATUS,
+		JB.jb_CHUIDEUK_MONEY,
+		JB.jb_GAMMONEY,
+		JB.jb_BOSANG_MONEY,
+		JB.jb_PROFIT_LOSS,
+		JB.jb_DEMISE,
+		PA.pa_STATUS
+		FROM
+		JISANG_BUNHAL JB
+		LEFT JOIN PLMS_APPROVAL PA ON JB.jb_dockey=PA.pa_dockey
+		WHERE
+		JB.jb_BUNHAL_ORG_NO =#{JISANGNO}
+		
+		ORDER BY JB.jb_jisang_no
+	</select>
+	
+	<select id="selectJisangDetailSoyu" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT JS_JISANG_NO, JS_JIBUN, JS_SOUJA_NAME, JS_ADDRESS, JS_PHONE_NUMBER, JS_HOME_NUMBER
+		FROM JISANG_SOUJA
+		WHERE 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MERGE_CHECK)" >
+			AND JS_JISANG_NO = #{JISANGNO}
+		</if>
+		ORDER BY JS_SOUJA_NAME
+
+	</select>
 	
 	
 </mapper>

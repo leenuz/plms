@@ -60,7 +60,7 @@ public class ApprovalUtil  {
 		}
 //		String url="https://apv.dopco.co.kr/Service/PLMSWebService.asmx";
 //		String url="http://echo.depco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx?,op="+GUBUN; //개발
-		String url="/common/dopcoApprovalTest"; //로컬 테스트
+		String url="http://localhost:8080/api/dopcoApprovalTest"; //로컬 테스트
 //		String url="http://echo.depco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //운영
 		
 		String xmlString="";
@@ -105,7 +105,7 @@ public class ApprovalUtil  {
 				rtnXmlStr=rtnXmlStr.concat(strLine);
 			}
 			
-			//System.out.println("@@@ RtnXml:"+rtnXmlStr);
+			System.out.println("@@@ RtnXml:"+rtnXmlStr);
 			Document rtnXmlDoc=null;
 			
 			try {

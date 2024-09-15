@@ -214,4 +214,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(#{seq},#{dockey},#{outflag},#{outurl},#{usernm},#{deptcd},#{deptnm},#{updeptcd})
 	</insert>
 	
+	<select id="selectNextAppovalNo" parameterType="java.util.HashMap" resultType="Integer">
+
+		SELECT nextval('approval_seq')
+	</select>
+	
 </mapper>

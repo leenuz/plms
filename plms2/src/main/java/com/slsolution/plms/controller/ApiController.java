@@ -105,6 +105,27 @@ public class ApiController {
         return ResponseEntity.ok(sb.toString());
     }
 
+    @RequestMapping(value = "/dopcoApprovalTest", method = { RequestMethod.GET, RequestMethod.POST }) // http://localhost:8080/api/get/dbTest
+    public void dopcoApprovalTest(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+    	
+    	HashMap<String, Object> resultmap = new HashMap();
+        resultmap.put("resultCode", "0000");
+        resultmap.put("resultData", httpRequest);
+        resultmap.put("resultMessage", "success");
+        JSONObject obj = new JSONObject(resultmap);
+    	 // log.info("jo:"+jo);
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Cache-Control", "no-cache");
+        response.resetBuffer();
+        response.setContentType("application/json");
+        // response.getOutputStream().write(jo);
+        response.getWriter().print(obj);
+        response.getWriter().flush();
+    
+    }
+    
+    
     //
     @GetMapping(path = "/Test") // http://localhost:8080/api/get/dbTest
     public void dbTest(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
