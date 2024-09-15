@@ -336,11 +336,13 @@ public class goverController {
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
 			ModelAndView mav=new ModelAndView();
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);
+			mav.addObject("usePurposlist",usePurposlist);
 			
 			mav.setViewName("content/gover/menu03_1");
 			return mav;
@@ -355,11 +357,13 @@ public class goverController {
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
 			ModelAndView mav=new ModelAndView();
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);
+			mav.addObject("usePurposlist",usePurposlist);
 			
 			mav.setViewName("content/gover/menu03_2");
 			
@@ -374,11 +378,13 @@ public class goverController {
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
 			ModelAndView mav=new ModelAndView();
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);
+			mav.addObject("usePurposlist",usePurposlist);
 			
 			mav.setViewName("content/gover/menu03_3");
 			
@@ -403,12 +409,14 @@ public class goverController {
 			
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
+			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
 			log.info("jisalist:"+jisalist);
 			log.info("jimokList:"+jimokList);
 			
 			mav.addObject("jisalist",jisalist);
 			mav.addObject("jimokList",jimokList);
+			mav.addObject("usePurposlist",usePurposlist);
 			
 			mav.setViewName("content/gover/masterReg");
 			return mav;
@@ -528,6 +536,7 @@ public class goverController {
 			ArrayList<HashMap> goverMemoList = mainService.selectQuery("goverSQL.selectMemoList",params);
 			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
+			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
 		    // goverPnuList 크기 구하기
 		    int goverPnuListSize = goverPnuList.size();
@@ -539,6 +548,7 @@ public class goverController {
 			log.info("jimokList:"+jimokList);
 			log.info("goverPnuList:"+goverPnuList);
 			log.info("goverPnuListSize:" + goverPnuListSize);
+			log.info("usePurposlist:" + usePurposlist);
 //			log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
 
 			mav.addObject("resultData",data.get(0));
@@ -548,6 +558,7 @@ public class goverController {
 	  		mav.addObject("jimokList",jimokList);
 	  		mav.addObject("pnuList",goverPnuList);
 	  		mav.addObject("pnuListSize", goverPnuListSize);
+	  		mav.addObject("usePurposlist",usePurposlist);
   			
   			mav.setViewName("content/gover/masterEdit");
   			return mav;

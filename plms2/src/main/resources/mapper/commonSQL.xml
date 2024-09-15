@@ -219,4 +219,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT nextval('approval_seq')
 	</select>
 	
+	<select id="selectUsePurposList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	    <![CDATA[
+	    SELECT * 
+	    FROM sys_code
+	    WHERE sc_group_code = 'GVR000'
+	      AND sc_use_yn = 'Y'
+	      AND sc_code != 'GVR000'
+	    ORDER BY sc_sort_order ASC
+	    ]]>
+	</select>
+
 </mapper>
