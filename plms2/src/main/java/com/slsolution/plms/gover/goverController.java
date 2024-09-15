@@ -333,13 +333,13 @@ public class goverController {
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			HashMap params = new HashMap();
 			ArrayList<HashMap>  list=new ArrayList<HashMap>();
-			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
 			ModelAndView mav=new ModelAndView();
-			mav.addObject("jisaList",jisalist);
+			mav.addObject("jisaList",jisaList);
 			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);
 			mav.addObject("usePurposlist",usePurposlist);
@@ -354,13 +354,13 @@ public class goverController {
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			HashMap params = new HashMap();
 			ArrayList<HashMap>  list=new ArrayList<HashMap>();
-			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
 			ModelAndView mav=new ModelAndView();
-			mav.addObject("jisaList",jisalist);
+			mav.addObject("jisaList",jisaList);
 			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);
 			mav.addObject("usePurposlist",usePurposlist);
@@ -375,13 +375,13 @@ public class goverController {
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			HashMap params = new HashMap();
 			ArrayList<HashMap>  list=new ArrayList<HashMap>();
-			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
 			ModelAndView mav=new ModelAndView();
-			mav.addObject("jisaList",jisalist);
+			mav.addObject("jisaList",jisaList);
 			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);
 			mav.addObject("usePurposlist",usePurposlist);
@@ -407,14 +407,14 @@ public class goverController {
 			ModelAndView mav = new ModelAndView();
 			HashMap params = new HashMap();
 			
-			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
 			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
-			log.info("jisalist:"+jisalist);
+			log.info("jisaList:"+jisaList);
 			log.info("jimokList:"+jimokList);
 			
-			mav.addObject("jisalist",jisalist);
+			mav.addObject("jisaList",jisaList);
 			mav.addObject("jimokList",jimokList);
 			mav.addObject("usePurposlist",usePurposlist);
 			
@@ -530,6 +530,7 @@ public class goverController {
 			params.put("index",index);
 			log.info("params:"+params);
 
+			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
 			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
 			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
@@ -542,6 +543,7 @@ public class goverController {
 		    int goverPnuListSize = goverPnuList.size();
 			
 			log.info("data:"+data.get(0));
+			log.info("jisaList:"+jisaList);
 			log.info("goverModifyList:"+goverModifyList);
 			log.info("atcFileList:"+atcFileList);
 			log.info("goverMemoList:"+goverMemoList);
@@ -552,6 +554,7 @@ public class goverController {
 //			log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
 
 			mav.addObject("resultData",data.get(0));
+			mav.addObject("jisaList",jisaList);
 	  		mav.addObject("goverModifyList",goverModifyList);
 	  		mav.addObject("atcFileList",atcFileList);
 	  		mav.addObject("memoList",goverMemoList);

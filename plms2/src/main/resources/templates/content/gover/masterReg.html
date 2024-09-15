@@ -148,8 +148,8 @@
                       name="jisa"
                       id="masterRegSelectBox01"
                       hidden>
-					  <option value="선택">선택</option>
-                      <option th:each="jisalist : ${jisalist}" th:value="${jisalist['jm_jisa_name']}" th:text="${jisalist['jm_jisa_name']}"></option>
+					  <option value="전체">전체</option>
+					  <option th:each="jisa : ${jisaList}" th:value="${jisa['sc_code_name']}" th:text="${jisa['sc_code_name']}"></option>
                     </select>
                   </div>
                   <section class="customSelectBox">

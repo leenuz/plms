@@ -138,14 +138,8 @@
                     class="privateUseHiddenSelect03"
                     id="privateUseSelectBox03_1"
                     hidden>
-                    <option value="전체">전체</option>
-                    <option value="서울지사">서울지사</option>
-                    <option value="경인지사">경인지사</option>
-                    <option value="대전지사">대전지사</option>
-                    <option value="부산지사">부산지사</option>
-                    <option value="충청지사">충청지사</option>
-                    <option value="충청지사">충청지사</option>
-                    <option value="충청지사">충청지사</option>
+					<option value="전체">전체</option>
+					<option th:each="jisa : ${jisaList}" th:value="${jisa['sc_code_name']}" th:text="${jisa['sc_code_name']}"></option>
                   </select>
                 </div>
                 <!--보여지는 셀렉박스-->

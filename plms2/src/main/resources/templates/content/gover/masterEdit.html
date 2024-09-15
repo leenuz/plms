@@ -162,16 +162,12 @@
 			            name="jisa"
 			            id="masterEditSelectBox01"
 			            hidden>
-			            <option value="전체" th:selected="${resultData.gm_jisa == '전체'}">전체</option>
-			            <option value="서울지사" th:selected="${resultData.gm_jisa == '서울지사'}">서울지사</option>
-			            <option value="경인지사" th:selected="${resultData.gm_jisa == '경인지사'}">경인지사</option>
-			            <option value="대전지사" th:selected="${resultData.gm_jisa == '대전지사'}">대전지사</option>
-			            <option value="충청지사" th:selected="${resultData.gm_jisa == '충청지사'}">충청지사</option>
-			            <option value="영남지사" th:selected="${resultData.gm_jisa == '영남지사'}">영남지사</option>
-			            <option value="전남지사" th:selected="${resultData.gm_jisa == '전남지사'}">전남지사</option>
-			            <option value="전북지사" th:selected="${resultData.gm_jisa == '전북지사'}">전북지사</option>
-			            <option value="경남지사" th:selected="${resultData.gm_jisa == '경남지사'}">경남지사</option>
-			            <option value="강원지사" th:selected="${resultData.gm_jisa == '강원지사'}">강원지사</option>
+						<option value="전체" th:selected="${resultData.gm_jisa == '전체'}">전체</option>
+						<option th:each="jisa : ${jisaList}"
+						        th:value="${jisa['sc_code_name']}"
+						        th:text="${jisa['sc_code_name']}"
+						        th:selected="${resultData.gm_jisa == jisa['sc_code_name']}">
+						</option>
 			        </select>
                   </div>
 				  <section class="customSelectBox">

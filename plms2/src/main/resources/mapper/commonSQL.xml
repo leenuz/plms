@@ -229,5 +229,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    ORDER BY sc_sort_order ASC
 	    ]]>
 	</select>
+	
+	<select id="selectJisaList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	    <![CDATA[
+	    SELECT * 
+	    FROM sys_code
+	    WHERE sc_group_code = 'JSA000'
+	      AND sc_use_yn = 'Y'
+	      AND sc_code != 'JSA000'
+	      AND sc_code != 'JSA999'
+	    ORDER BY sc_sort_order ASC
+	    ]]>
+	</select>
 
 </mapper>

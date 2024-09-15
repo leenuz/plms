@@ -136,9 +136,7 @@
                     id="privateUseSelectBox01_1"
                     hidden>
 					<option value="전체">전체</option>
-                    <th:block th:each="val:${jisaList}">
-                    <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
-                    </th:block>
+                    <option th:each="jisa : ${jisaList}" th:value="${jisa['sc_code_name']}" th:text="${jisa['sc_code_name']}"></option>
                   </select>
                 </div>
                 <!--보여지는 셀렉박스-->
