@@ -678,4 +678,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    </if>
 	</select>
 	
+	<!-- 지사에 따른 허가관청 목록 조회 -->
+	<select id="selectPmtOfficesByJisa" parameterType="String" resultType="java.util.HashMap">
+	    SELECT DISTINCT so_pmt_office, so_sort_order
+	    FROM sys_officemng
+	    WHERE so_jisa = #{jisa}
+	    ORDER BY so_sort_order ASC
+	</select>
+	
+	<!-- 지사와 허가관청에 따른 관리기관 목록 조회 -->
+	<select id="selectAdmOfficesByJisaAndPmtOffice" parameterType="java.util.Map" resultType="java.util.HashMap">
+	    SELECT DISTINCT so_adm_office, so_sort_order
+	    FROM sys_officemng
+	    WHERE so_jisa = #{jisa}
+	    AND so_pmt_office = #{pmt_office}
+	    ORDER BY so_sort_order ASC
+	</select>
+
 </mapper>

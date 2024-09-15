@@ -9,10 +9,13 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,12 +43,11 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin(origins="*",allowedHeaders="*")
 public class goverController {
 	
-	
 	@Autowired
 	private MainService mainService;
 	
-	 @Autowired
-	 private GlobalConfig GC;
+	@Autowired
+	private GlobalConfig GC;
 	
 	@GetMapping(path="/api/list") //http://localhost:8080/api/get/dbTest
     public void apiList(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
@@ -78,8 +80,7 @@ public class goverController {
       			response.getWriter().print(obj);
       			response.getWriter().flush();
        // return new ModelAndView("dbTest", "list", list);
-    }
-	
+    }	
 	
 	@GetMapping(path="/view/list") //http://localhost:8080/api/get/dbTest
     public ModelAndView viewList(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
@@ -325,6 +326,47 @@ public class goverController {
 
 			mav.setViewName("content/gover/occupationDetails");
 			return mav;
+	    }
+		
+	    // 지사 선택에 따라 허가관청 목록을 반환하는 API
+	    @PostMapping("/getPmtOffice")
+	    public ResponseEntity<Map<String, Object>> getPmtOffice(@RequestBody Map<String, String> requestData) throws Exception {
+	    	log.info("getPmtOffice 컨트롤러 동작");
+	        String selectedJisa = requestData.get("jisa");
+
+	        // 직접 SQL 쿼리를 호출하여 데이터를 가져옴
+	        HashMap<String, Object> params = new HashMap<>();
+	        params.put("jisa", selectedJisa);
+
+	        // SQL 호출하여 데이터 가져오기
+	        ArrayList<HashMap> pmtOfficeList = mainService.selectQuery("goverSQL.selectPmtOfficesByJisa", params);
+
+	        // 결과를 담은 Map 객체 생성
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("resultData", pmtOfficeList);
+
+	        return new ResponseEntity<>(response, HttpStatus.OK);
+	    }
+
+	    // 허가관청 선택에 따라 관리기관 목록을 반환하는 API
+	    @PostMapping("/getAdmOffice")
+	    public ResponseEntity<Map<String, Object>> getAdmOffice(@RequestBody Map<String, String> requestData) throws Exception{
+	        String selectedJisa = requestData.get("jisa");
+	        String selectedPmtOffice = requestData.get("pmt_office");
+
+	        // SQL 호출을 위한 파라미터 설정
+	        HashMap<String, Object> params = new HashMap<>();
+	        params.put("jisa", selectedJisa);
+	        params.put("pmt_office", selectedPmtOffice);
+
+	        // SQL 호출하여 데이터 가져오기
+	        ArrayList<HashMap> admOfficeList = mainService.selectQuery("goverSQL.selectAdmOfficesByJisaAndPmtOffice", params);
+
+	        // 결과를 담은 Map 객체 생성
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("resultData", admOfficeList);
+
+	        return new ResponseEntity<>(response, HttpStatus.OK);
 	    }
 		
 		@GetMapping(path="/menu03_1") //http://localhost:8080/api/get/dbTest
