@@ -144,62 +144,49 @@
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
-                    <select
-                      name="jisa"
-                      id="masterRegSelectBox01"
-                      hidden>
+                    <select name="jisa" id="masterRegSelectBox01" hidden>
 					  <option value="전체">전체</option>
 					  <option th:each="jisa : ${jisaList}" th:value="${jisa['sc_code_name']}" th:text="${jisa['sc_code_name']}"></option>
                     </select>
                   </div>
                   <section class="customSelectBox">
-                    <button class="customSelectView">선택</button>
-
-                    <ul class="customSelectBtns"></ul>
+                    <button class="customSelectView" id="jisaText">선택</button>
+                    <ul class="customSelectBtns" id="jisaUl">
+						<li><p>전체</p></li>
+		                <th:block th:each="jisa : ${jisaList}">
+		                    <li><p th:text="${jisa['sc_code_name']}"></p></li>
+		                </th:block>
+					</ul>
                   </section>
                 </li>
 				
 				<!-- 허가관청 -->
                 <li class="content largeTitle selectContentArea">
                   <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="pmt_office"
-                      id="masterRegSelectBox02"
-                      hidden>
+                    <select name="pmt_office" id="masterRegSelectBox02" hidden>
                       <option value="전체">전체</option>
-                      <option value="경기고속도로(주)">경기고속도로(주)</option>
-                      <option value="과천시">과천시</option>
-                      <option value="서울특별시">서울특별시</option>
-                      <option value="성남시">성남시</option>
-                      <option value="수원시">수원시</option>
-                      <option value="안성시">안성시</option>
                     </select>
                   </div>
                   <section class="customSelectBox">
-                    <button class="customSelectView">선택</button>
-
-                    <ul class="customSelectBtns"></ul>
+                    <button class="customSelectView" id="pmtOfficeText">선택</button>
+                    <ul class="customSelectBtns" id="pmtOfficeUl">
+						<li><p>전체</p></li>
+					</ul>
                   </section>
                 </li>
 				
 				<!-- 관리기관 -->
                 <li class="content largeTitle selectContentArea">
                   <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="adm_office"
-                      id="masterRegSelectBox03"
-                      hidden>
+                    <select name="adm_office" id="masterRegSelectBox03" hidden>
                       <option value="전체">전체</option>
-                      <option value="하천팀">하천팀</option>
-                      <option value="공원농림과">공원농림과</option>
                     </select>
                   </div>
                   <section class="customSelectBox">
-                    <button class="customSelectView">선택</button>
-
-                    <ul class="customSelectBtns"></ul>
+                    <button class="customSelectView" id="admOfficeText">선택</button>
+                    <ul class="customSelectBtns" id="admOfficeUl">
+						<li><p>전체</p></li>
+					</ul>
                   </section>
                 </li>
 				
@@ -470,22 +457,16 @@
 		        <!-- 관리기관 -->
 		        <li class="content largeWidth selectContentArea">
 		          <div class="hiddenSelectBox">
-		            <select name="adm_office" id="masterRegSelectBox12" hidden>
+		            <select name="adm_office" id="goverRegSelectBox03" hidden>
 		              <option value="전체">전체</option>
-		              <option value="강서구-건설과">강서구-건설과</option>
-		              <option value="한강사업본부-운영총괄과">한강사업본부-운영총괄과</option>
-		              <option value="안전건설과">안전건설과</option>
-		              <option value="덕양구-안전건설과">덕양구-안전건설과</option>
-		              <option value="전체6">전체6</option>
-		              <option value="전체7">전체7</option>
-		              <option value="전체8">전체8</option>
-		              <option value="전체9">전체9</option>
-		              <option value="전체10">전체10</option>
 		            </select>
 		          </div>
+				  
 		          <section class="customSelectBox">
-		            <button class="customSelectView">전체</button>
-		            <ul class="customSelectBtns"></ul>
+					<button class="customSelectView" id="admOfficeText01">선택</button>
+                    <ul class="customSelectBtns" id="admOfficeUl01">
+<!--		            <button class="customSelectView">전체</button>
+		            <ul class="customSelectBtns"></ul>-->
 		          </section>
 		        </li>
 		        <!-- 국공유지 여부 -->
@@ -577,15 +558,6 @@
 		          <div class="hiddenSelectBox">
 		            <select name="masterRegSelectBox16" id="masterRegSelectBox16" hidden>
 		              <option value="전체">전체</option>
-		              <option value="강서구-건설과">강서구-건설과</option>
-		              <option value="한강사업본부-운영총괄과">한강사업본부-운영총괄과</option>
-		              <option value="안전건설과">안전건설과</option>
-		              <option value="덕양구-안전건설과">덕양구-안전건설과</option>
-		              <option value="전체6">전체6</option>
-		              <option value="전체7">전체7</option>
-		              <option value="전체8">전체8</option>
-		              <option value="전체9">전체9</option>
-		              <option value="전체10">전체10</option>
 		            </select>
 		          </div>
 		          <section class="customSelectBox">
@@ -631,7 +603,7 @@
 					</select>
 		          </div>
 		          <section class="customSelectBox">
-		            <button class="customSelectView" id="jimok">전</button>
+		            <button class="customSelectView" id="jimok">선택</button>
 		            <ul class="customSelectBtns"></ul>
 		          </section>
 		        </li>

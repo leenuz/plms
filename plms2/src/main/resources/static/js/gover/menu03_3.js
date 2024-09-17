@@ -437,3 +437,97 @@ function moveToCityHall(x,y) {
 		mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송 */
 	}
 }
+
+
+// 지사 선택 시 허가관청 목록 업데이트
+$(document).on("click", "#jisaUl li", function () {
+    const selectedJisa = $(this).text().trim();
+    $("#jisaText").text(selectedJisa);
+    $("#privateUseSelectBox03_1").val(selectedJisa).change(); // change 이벤트 트리거
+});
+
+$(document).on("change", "#privateUseSelectBox03_1", function () {
+    const selectedJisa = $("#privateUseSelectBox03_1").val();
+    console.log("지사 선택에 따라 허가관청 목록 업데이트");
+    if (!selectedJisa) return;
+
+    const allData = { jisa: selectedJisa };
+
+    $.ajax({
+        url: "/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
+        data: JSON.stringify(allData),
+        async: true,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (rt) {
+            const data = rt.resultData;
+
+            // 허가관청 리스트 초기화 및 업데이트
+            $("#pmtOfficeUl li").remove();
+            $("#privateUseSelectBox03_3 option").remove();
+            $("#pmtOfficeUl").append("<li><p>전체</p></li>");
+            $("#privateUseSelectBox03_3").append("<option value=''>전체</option>");
+            for (let i = 0; i < data.length; i++) {
+                $("#pmtOfficeUl").append("<li><p>" + data[i].so_pmt_office + "</p></li>");
+                $("#privateUseSelectBox03_3").append("<option>" + data[i].so_pmt_office + "</option>");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error: ", textStatus, errorThrown);
+        }
+    });
+});
+
+// 허가관청 선택 시 관리기관 목록 업데이트
+$(document).on("click", "#pmtOfficeUl li", function () {
+    const selectedPmtOffice = $(this).text().trim();
+    $("#pmtOfficeText").text(selectedPmtOffice);
+    $("#privateUseSelectBox03_3").val(selectedPmtOffice).change(); // change 이벤트 트리거
+});
+
+$(document).on("change", "#privateUseSelectBox03_3", function () {
+    const selectedPmtOffice = $("#privateUseSelectBox03_3").val();
+    const selectedJisa = $("#privateUseSelectBox03_1").val(); // 지사 선택된 값
+
+    console.log("허가관청 선택에 따라 관리기관 목록 업데이트");
+    if (!selectedPmtOffice || !selectedJisa) return;
+
+    const allData = { 
+        pmt_office: selectedPmtOffice,
+        jisa: selectedJisa 
+    };
+
+    $.ajax({
+        url: "/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
+        data: JSON.stringify(allData),
+        async: true,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (rt) {
+            const data = rt.resultData;
+
+            // 관리기관 리스트 초기화 및 업데이트
+            $("#admOfficeUl li").remove();
+            $("#privateUseSelectBox03_4 option").remove();
+            $("#admOfficeUl").append("<li><p>전체</p></li>");
+            $("#privateUseSelectBox03_4").append("<option value=''>전체</option>");
+            for (let i = 0; i < data.length; i++) {
+                $("#admOfficeUl").append("<li><p>" + data[i].so_adm_office + "</p></li>");
+                $("#privateUseSelectBox023_4").append("<option>" + data[i].so_adm_office + "</option>");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error: ", textStatus, errorThrown);
+        }
+    });
+});
+
+// 관리기관 선택 (선택 후 추가적인 동작이 필요하다면 이곳에 추가)
+$(document).on("click", "#admOfficeUl li", function () {
+    const selectedAdmOffice = $(this).text().trim();
+    $("#admOfficeText").text(selectedAdmOffice);
+    $("#privateUseSelectBox03_4").val(selectedAdmOffice).change(); // change 이벤트 트리거
+});
+

@@ -129,24 +129,25 @@ margin:10px;
         <section class="privateUseSectionBoxs">
           <div class="privateUseSectionCont">
             <div class="privateUseSectionContDevide">
+			  <!-- 지사 -->
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle"><p>지사</p></li>
-                <!--수정부분 지사-->
                 <div class="privateUseSelectWrappers">
-                  <select
-                    name="jisa"
-                    class="privateUseHiddenSelect02"
-                    id="privateUseSelectBox02_1"
-                    hidden>
+                  <select name="jisa" class="privateUseHiddenSelect02" id="privateUseSelectBox02_1" hidden>
 					<option value="전체">전체</option>
 					<option th:each="jisa : ${jisaList}" th:value="${jisa['sc_code_name']}" th:text="${jisa['sc_code_name']}"></option>
                   </select>
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="privateUseSelects">
-                  <button class="privateUseSelectsTitleBtn"></button>
+                  <button class="privateUseSelectsTitleBtn" id="jisaText"></button>
                   <div class="sufaceSelectList">
-                    <ul class="surfaceSelectListMember"></ul>
+                    <ul class="surfaceSelectListMember" id="jisaUl">
+						<li><p>전체</p></li>
+						<th:block th:each="jisa : ${jisaList}">
+						    <li><p th:text="${jisa['sc_code_name']}"></p></li>
+						</th:block>
+					</ul>
                   </div>
                 </div>
               </ul>
@@ -158,7 +159,7 @@ margin:10px;
               </ul>
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle"><p>점용구분</p></li>
-                <!--수정부분 지사-->
+                <!-- 수정부분 -->
                 <div class="privateUseSelectWrappers">
                   <select
                     name="use_purpos"
@@ -177,51 +178,40 @@ margin:10px;
                   </div>
                 </div>
               </ul>
+			  
+			  <!-- 허가관청 -->
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle"><p>허가관청</p></li>
-                <!--수정부분 지사-->
                 <div class="privateUseSelectWrappers">
-                  <select
-                    name="pmt_office"
-                    class="privateUseHiddenSelect02"
-                    id="privateUseSelectBox02_3"
-                    hidden>
+                  <select name="pmt_office" class="privateUseHiddenSelect02" id="privateUseSelectBox02_3" hidden>
                     <option value="전체">전체</option>
-                    <option value="경기고속도로(주)">경기고속도로(주)</option>
-                    <option value="과천시">과천시</option>
-                    <option value="서울특별시">서울특별시</option>
-                    <option value="성남시">성남시</option>
-                    <option value="수원시">수원시</option>
-                    <option value="안산시">안산시</option>
                   </select>
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="privateUseSelects">
-                  <button class="privateUseSelectsTitleBtn"></button>
+                  <button class="privateUseSelectsTitleBtn" id="pmtOfficeText"></button>
                   <div class="sufaceSelectList">
-                    <ul class="surfaceSelectListMember otherDefault01"></ul>
+                    <ul class="surfaceSelectListMember otherDefault01" id="pmtOfficeUl">
+						<li><p>전체</p></li>
+					</ul>
                   </div>
                 </div>
               </ul>
+			  <!-- 관리기관 -->
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle"><p>관리기관</p></li>
-                <!--수정부분 지사-->
                 <div class="privateUseSelectWrappers">
-                  <select
-                    name="adm_office"
-                    class="privateUseHiddenSelect02"
-                    id="privateUseSelectBox02_4"
-                    hidden>
+                  <select name="adm_office" class="privateUseHiddenSelect02" id="privateUseSelectBox02_4" hidden>
                     <option value="전체">전체</option>
-                    <option value="하천팀">하천팀</option>
-                    <option value="공원농림과">공원농림과</option>
                   </select>
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="privateUseSelects">
-                  <button class="privateUseSelectsTitleBtn"></button>
+                  <button class="privateUseSelectsTitleBtn" id="admOfficeText">선택</button>
                   <div class="sufaceSelectList smallHeight">
-                    <ul class="surfaceSelectListMember otherDefault02"></ul>
+                    <ul class="surfaceSelectListMember otherDefault02" id="admOfficeUl">
+						<li><p>전체</p></li>
+					</ul>
                   </div>
                 </div>
               </ul>
@@ -258,7 +248,7 @@ margin:10px;
                   </li>
 				  
 				  <li>
-				    <!--수정부분 지사-->
+				    <!-- 수정부분 -->
 				    <div class="privateUseSelectWrappers">
 				      <select
 				        name="sido_nm"
@@ -289,7 +279,7 @@ margin:10px;
 				  </li>
 				  
                   <li>
-                    <!--수정부분 지사-->
+                    <!-- 수정부분 -->
                     <div class="privateUseSelectWrappers">
                       <select name="sgg" id="sgg" hidden>
                         <option value="">전체</option>
@@ -307,7 +297,7 @@ margin:10px;
                   </li>
 				  
                   <li>
-                    <!--수정부분 지사-->
+                    <!-- 수정부분 -->
                     <div class="privateUseSelectWrappers">
                       <select name="emd" id="emd" hidden>
                         <option value="">전체</option>
@@ -325,7 +315,7 @@ margin:10px;
                   </li>
 				  
                   <li>
-                    <!--수정부분 지사-->
+                    <!-- 수정부분 -->
                     <div class="privateUseSelectWrappers">
                       <select name="ri" id="ri" hidden>
                         <option value="">전체</option>
