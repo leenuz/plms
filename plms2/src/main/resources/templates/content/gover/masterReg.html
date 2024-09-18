@@ -145,14 +145,12 @@
                   <div class="hiddenSelectBox">
                     <!-- name도 추가 -->
                     <select name="jisa" id="masterRegSelectBox01" hidden>
-					  <option value="전체">전체</option>
 					  <option th:each="jisa : ${jisaList}" th:value="${jisa['sc_code_name']}" th:text="${jisa['sc_code_name']}"></option>
                     </select>
                   </div>
                   <section class="customSelectBox">
                     <button class="customSelectView" id="jisaText">선택</button>
                     <ul class="customSelectBtns" id="jisaUl">
-						<li><p>전체</p></li>
 		                <th:block th:each="jisa : ${jisaList}">
 		                    <li><p th:text="${jisa['sc_code_name']}"></p></li>
 		                </th:block>
@@ -163,14 +161,11 @@
 				<!-- 허가관청 -->
                 <li class="content largeTitle selectContentArea">
                   <div class="hiddenSelectBox">
-                    <select name="pmt_office" id="masterRegSelectBox02" hidden>
-                      <option value="전체">전체</option>
-                    </select>
+                    <select name="pmt_office" id="masterRegSelectBox02" hidden></select>
                   </div>
                   <section class="customSelectBox">
                     <button class="customSelectView" id="pmtOfficeText">선택</button>
                     <ul class="customSelectBtns" id="pmtOfficeUl">
-						<li><p>전체</p></li>
 					</ul>
                   </section>
                 </li>
@@ -465,8 +460,6 @@
 		          <section class="customSelectBox">
 					<button class="customSelectView" id="admOfficeText01">선택</button>
                     <ul class="customSelectBtns" id="admOfficeUl01">
-<!--		            <button class="customSelectView">전체</button>
-		            <ul class="customSelectBtns"></ul>-->
 		          </section>
 		        </li>
 		        <!-- 국공유지 여부 -->
@@ -562,7 +555,7 @@
 		          </div>
 		          <section class="customSelectBox">
 		            <button class="customSelectView">전체</button>
-		            <ul class="customSelectBtns"></ul>
+		            <ul class="customSelectBtns" id="admOfficeUl01"></ul>
 		          </section>
 		        </li>
 		        <!-- 국공유지 여부 -->
