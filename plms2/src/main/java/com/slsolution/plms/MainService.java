@@ -16,6 +16,10 @@ public interface MainService {
      */
 
     public Object InsertQuery(String string, HashMap hashMap) throws Exception;
+    
+    
+    
+    
 
     /**
      * 정보를 조회한다
@@ -27,6 +31,11 @@ public interface MainService {
      */
 	
 	public ArrayList<HashMap> selectQuery(String string, HashMap hashMap) throws Exception;
+	public HashMap selectHashmapQuery(String string, HashMap hashMap) throws Exception;
+	
+	
+	
+	
 	
 	/**
      * 정보의 카운트를 조회한다

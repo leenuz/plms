@@ -50,7 +50,7 @@ const IssuePopupOpenEvet = () => {
     
 }
 
-IssuePopupOpenEvet();
+//IssuePopupOpenEvet();
 
 
 
@@ -125,7 +125,7 @@ const newIssueRegisterOpenEvet = () => {
    
 }
 
-newIssueRegisterOpenEvet()
+//
 
 
 /* 현황통계 팝업 오픈 */
@@ -176,6 +176,26 @@ const issueTotalPopOpenEvet = () => {
  }
  
 
-issueTotalPopOpenEvet()
+//issueTotalPopOpenEvet()
+
+
+
+//신규민원 팝업
+$(document).on("click",".newIssueBtn",function(){
+	console.log("newIssueBtn clidk");
+	//newIssueRegisterOpenEvet();
+	 const popupOpen = document.getElementById("newcomplaint_Popup");
+        if(popupOpen){
+            popupOpen.classList.add("active");
+            
+            }
+	/* const popupOpen = document.querySelector("#newIssuePopup");
+                                console.log($(popupOpen).html());
+						  	   $(popupOpen).addClass("open");
+						  	   popupOpen.classList.add("active");
+                        	 //$('.resultSelectBtn').attr('data-index', id);
+                           	//$('.saveBtn').attr('data-index', id);*/
+				   	   
+});
 
 

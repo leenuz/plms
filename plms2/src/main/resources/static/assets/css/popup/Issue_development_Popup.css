@@ -1,0 +1,1587 @@
+@charset "UTF-8";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body * {
+  font-family: pretendard;
+}
+li {
+  list-style: none;
+}
+input {
+  border: 0;
+  outline: 0;
+}
+button {
+  border: 0;
+}
+
+input:focus {
+  border: 0;
+}
+
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+.popupWrap {
+  background: #fff;
+  box-shadow: 0 1px 20px rgba(181, 187, 194, 0.8);
+  border-radius: 20px;
+  padding: 12px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+}
+
+.popupWrap h2 {
+  height: 44px;
+  background: rgba(247, 249, 252, 1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+.popupWrap h2 p {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4f5871;
+}
+.popupWrap h2 .topCloseBtn {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url(/assets/media/popup/images/back_icon.png) no-repeat center;
+  background-size: 20px;
+  cursor: pointer;
+}
+.popupWrap input[type="text"] {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+}
+.popupWrap input[type="text"]::placeholder {
+  color: #3c3c3c;
+}
+/* 체크박스 */
+.approve_checkbox {
+  display: none;
+}
+.approve_checkbox_label {
+  width: 21px;
+  height: 21px;
+  background: #eff6ff;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+.approve_checkbox:checked ~ label {
+  background: #4e5871;
+}
+.approve_checkbox:checked ~ label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 10px;
+  background: url(/assets/media/popup/images/Vector.png) no-repeat center;
+  background-size: contain;
+}
+/* 공용 셀렉트 시작 */
+.Popup_Custom_SelectBox {
+  box-sizing: border-box;
+  position: relative;
+  flex-grow: 1;
+  width: 100%;
+}
+.Popup_Custom_SelectView {
+  width: 100%;
+  height: 25px;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+  color: #6e7d88;
+  background-size: 18px !important;
+  background: url(/assets/media/popup/images/arrow-down-s-line_gray.png)
+    no-repeat right 8px center;
+  font-size: 13px;
+  font-weight: 500;
+  background-color: #ffffff;
+}
+.Popup_Custom_SelectView.active {
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+  /* background: url(/assets/media/popup/images/arrow-down-s-line_blue.png) */
+  background: url(/assets/media/popup/images/arrowDownBlue.png)
+    no-repeat right 8px center;
+  background-color: #ffffff;
+}
+.Popup_Custom_SelectBtns {
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 4px);
+  box-sizing: border-box;
+  max-height: 0;
+  overflow-y: hidden;
+  z-index: 10;
+  transition: 500ms;
+  opacity: 0;
+  border: 1px solid #acbdd7;
+  padding-left: 4px !important;
+}
+.Popup_Custom_SelectBtns::-webkit-scrollbar {
+  width: 4px !important;
+}
+.Popup_Custom_SelectBtns::-webkit-scrollbar-thumb {
+  height: 30% !important;
+  border-radius: 10px !important;
+  background: #d2d2d2 !important;
+}
+.Popup_Custom_SelectBtns > li {
+  width: calc(100% -10px);
+  height: 34px;
+  display: flex;
+  padding: 0 5px;
+  color: #4e5871;
+}
+.Popup_Custom_SelectBtns > li:hover {
+  background-color: #edf2f9;
+  border-radius: 5px;
+}
+.Popup_Custom_SelectBtns > li > button {
+  all: unset;
+  font-size: 13px;
+  width: 100%;
+  font-weight: 500;
+}
+.Popup_Custom_SelectBtns.active {
+  padding: 6px 0;
+  border-radius: 10px;
+  background: #ffffff;
+  max-height: 233px;
+  overflow-y: scroll;
+  transition: 500ms;
+  opacity: 1;
+}
+/* 공용 셀렉트 끝 */
+/* 공용 버튼 시작 */
+.closeBtn {
+  width: 120px;
+  height: 35px;
+  font-size: 13px;
+  background-color: #919191;
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.document_add_btnWrap {
+  margin-top: 13px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.document_add_btnWrap button {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+}
+.document_add_btnWrap .saveBtn {
+  color: #ffffff;
+  background-color: #2b7de1;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.approveBtn {
+  width: 116px;
+  height: 44px;
+  color: #ffffff;
+  background-color: #2b7de1;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.sangsinBtn {
+  background-color: #e0edff;
+  color: #2b7de1;
+  border-radius: 10px;
+  cursor: pointer;
+}
+/* 공용 버튼 끝 */
+/* 이슈보기 팝업 시작 */
+
+/* css 추가 */
+
+#issuePopup {
+  display: none;
+}
+#issuePopup.active {
+  display: block;
+}
+#issuePopup .popupWrap {
+  display: block;
+}
+
+/**/
+.issuePopup .popupWrap {
+  width: 827px;
+}
+.issue_wrap {
+  margin-top: 13px;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  overflow: hidden;
+  font-weight: 500;
+}
+.issue_wrap ul:last-child {
+  border-bottom: none;
+}
+.issue_wrap ul {
+  width: 802px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #cddbf0;
+}
+.issue_wrap ul li {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.issue_wrap ul .issue_title {
+  width: 189px;
+  height: 100%;
+  justify-content: center;
+  border-right: 1px solid #cddbf0;
+  background-color: #f7f9fc;
+  /* 추가 */
+  font-size: 14px;
+  font-weight: 500;
+}
+.issue_wrap ul .issue_content {
+  width: 593px;
+  height: 100%;
+  padding: 10px;
+  /* 추가 */
+  color: #3c3c3c;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 이슈보기 팝업 끝 */
+/* 신규 민원 등록 팝업 시작 */
+
+/* css추가*/
+#newcomplaint_Popup{
+  display: none;
+}
+#newcomplaint_Popup.active {
+  display: block;
+}
+#newcomplaint_Popup .popupWrap {
+   display:block;
+}
+
+.newcomplaint_Popup .popupWrap {
+  width: 1264px;
+}
+
+/* 신규 민원 등록 스크롤 */
+
+.newcomplaint_Popup_box{
+  width: 1240px;
+  /* height: 837px; */
+  height: 828px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  /* padding-left: 5px; */
+  /* border: 1px solid red; */
+}
+
+.newcomplaint_Popup_box::-webkit-scrollbar {
+  width: 10px;
+}
+
+.newcomplaint_Popup_box::-webkit-scrollbar-thumb {
+  border-radius: 10px !important;
+  background: #d9d9d9 !important;
+  width: 5px !important;
+  border: 3px solid #ffffff;
+}
+
+.newcomplaint_Popup_box::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+.newcomplaint_Popup_box > section{
+  width: 1220px;
+}
+/**/
+
+/* 신규 민원 등록 민원정보 */
+.newcomplaint_Popup 
+.popupWrap{
+  width: 1264px;
+  height: 979px;
+}
+.landinfo_wrap, .daepyo_pilji_wrap, .complaint_contents_Details{
+  margin-top: 15px;
+}
+.newcomplaint_Popup .popupWrap h3,
+.complainant_contents_box h3 {
+  font-weight: 600;
+  font-size: 16px;
+  padding: 20px 9px 19px 0;
+}
+.complaintinfo_wrap .complaintinfo {
+  display: grid;
+  grid-template-columns: 100fr 620fr 120fr 140fr 120fr 140fr;
+  align-items: center;
+  border: 1px solid #cddbf0;
+  height: 37px;
+  border-radius: 5px;
+}
+.complaintinfo_wrap .complaintinfo > li {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid #cddbf0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.complaintinfo_wrap .complaintinfo > li:last-child {
+  border-right: none;
+}
+.complaintinfo_name {
+  background-color: #f7f9fc;
+  justify-content: center;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.complaintinfo_input_name {
+  padding: 0 9px;
+}
+.complaintinfo_input_name input[type="text"] {
+  text-align: left;
+  font-size: 14px;
+  background-color: #edf2f9;
+  border-radius: 8px;
+  padding: 0px 10px 0px 10px;
+  height:29px;
+}
+.complaintinfo_input_name2 {
+  background-color: #f7f9fc;
+  justify-content: center;
+}
+.complaintinfo_input_name3 {
+  justify-content: center !important;
+  height: 25px !important;
+  padding: 5px 4px !important;
+}
+.complaintinfo .popSelectWrap {
+  height: 23px !important;
+  padding: 5px !important;
+}
+/* 달력 버튼*/
+.complaint_calender_wrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cddbf0;
+  position: relative;
+  background: url(/assets/media/popup/images/calendar.png) no-repeat left 8px
+    center;
+  background-size: 18px;
+}
+.newcomplaint_Popup input[type="date"],
+.complaint_register_Popup input[type="date"] {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+  color: transparent;
+  background: transparent;
+  /* 추가 */
+  /* text-align: right; */
+  text-align: left;
+  text-indent: 16px;
+}
+.newcomplaint_Popup input[type="date"]::-webkit-calendar-picker-indicator,
+.complaint_register_Popup
+  input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.newcomplaint_Popup input[type="date"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  color: #6e7d88;
+  pointer-events: none;
+}
+.complaint_register_Popup input[type="date"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 50%;
+  /* 추가 */
+  left: 16px;
+  /* left: 33px; */
+  transform: translateY(-50%);
+  color: #6e7d88;
+  pointer-events: none;
+}
+.newcomplaint_Popup input[type="date"]:focus,
+.newcomplaint_Popup input[type="date"]:valid,
+.complaint_register_Popup input[type="date"]:focus,
+.complaint_register_Popup input[type="date"]:valid {
+  color: #6e7d88;
+}
+.newcomplaint_Popup input[type="date"]:focus::before,
+.newcomplaint_Popup input[type="date"]:valid::before,
+.complaint_register_Popup input[type="date"]:focus::before,
+.complaint_register_Popup input[type="date"]:valid::before {
+  content: "";
+}
+.complainant_contents_box .complaints_contents_wrap .complaint_calender_wrap {
+  width: 220px;
+}
+/* 달력 버튼 끝 */
+.complaintinfo_input_name4 {
+  width: 120px;
+  justify-content: center;
+  background-color: #f7f9fc;
+}
+.complaintinfo .popSelectWrap {
+  width: 140px;
+  border: none ;
+  padding: 0 5px;
+}
+/* 신규 민원 등록 토지 정보 */
+.landinfo{
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.landinfo_title_box{
+  height: 37px;
+}
+.landinfo_wrap
+.landinfo
+.landinfo_title_box
+.landinfo_title{
+  border-bottom: 1px solid #cddbf0;
+  transform: translateZ(0);
+  height: 100%;
+}
+.landinfo> div > ul {
+  height: 37px;
+  border-bottom: 1px solid #cddbf0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.landinfo ul:last-child {
+  border-bottom: none;
+}
+
+.landinfo_wrap
+.landinfo
+.landinfo_title {
+  display: grid;
+  grid-template-columns: 80fr 120fr 400fr 120fr 120fr 140fr 180fr;
+  background-color: #f7f9fc;
+  border-top-left-radius: 5px;
+}
+.landinfo_wrap 
+.landinfo 
+.landinfo_content{
+  display: grid;
+  grid-template-columns:  80fr 120fr 400fr 120fr 120fr 140fr 180fr;
+}
+.landinfo_title>li{
+  font-size: 14px;
+}
+.landinfo_title>li,
+.landinfo_content>li {
+  border-right: 1px solid #cddbf0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+.landinfo_title>li:last-child,
+.landinfo_content>li:last-child{
+  border-right: none;
+}
+
+.landinfo_content input[type="text"] {
+  padding: 0 10px;
+}
+
+.landinfo input[type="text"] {
+  text-align: center !important;
+}
+.landinfo_wrap
+.landinfo
+.landinfo_content
+.landinfo_content_4{
+  display: flex;
+  gap: 5px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+.landinfo_content_4 input[type="text"] {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  background-color: #edf2f9;
+  border-radius: 8px;
+  padding: 0px 10px 0px 10px;
+  height: 29px;
+}
+
+.landinfo_content .landinfo_content_4 button {
+  width: 47px;
+  height: 23px;
+  border-radius: 20px;
+  background-color: #2b7de1;
+  color: #ffffff;
+  cursor: pointer;
+}
+.landinfo_wrap 
+.landinfo 
+.landinfo_content
+.landinfo_content_5{
+  box-sizing: border-box;
+  padding: 0 10px;
+}
+.landinfo_wrap .landinfo .landinfo_content .landinfo_content_5 input[type="text"]
+ {
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  background-color: #edf2f9;
+  border-radius: 8px;
+  padding: 0px 10px 0px 10px;
+  height: 29px;
+}
+.landinfocontent_btn_wrap1{
+  border-right: 1px solid #CDDBF0;
+}
+.landinfo_content_8>div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+.landinfo_content_8 button{
+  width: 74px;
+  height: 23px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.complaint_addition{
+  background-color: #ffffff;
+  color: #2B7DE1;
+  border: 1px solid #2B7DE1;
+}
+.landinfo_content_8>div 
+.complaint_delete {
+  background-color: #9A9A9A;
+  color: #ffffff;
+}
+.landinfo_content_8 > div > button
+.landinfocontent_btn_wrap1 {
+  border-right: 1px solid #cddbf0;
+  padding-right: 6.5px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.daepyo_pilji {
+  font-size: 14px;
+  font-weight: 500;
+}
+.daepyo_pilji input[type="text"] {
+  text-align: center !important;
+}
+
+
+.daepyo_pilji > ul {
+  border-bottom: 1px solid #cddbf0;
+  height: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 신규 민원 등록 대표 필지정보 */
+.daepyo_pilji {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+.daepyo_pilji input[type="text"] {
+  padding: 0 10px;
+}
+.daepyo_pilji .daepyo_pilji_1 {
+  border-top-left-radius: 5px;
+  background-color: #f7f9fc;
+}
+.daepyo_pilji ul:last-child {
+  border-bottom: none;
+}
+.daepyo_pilji ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #cddbf0;
+  height: 100%;
+}
+
+.daepyo_pilji ul .daepyo_pilji_list_1 {
+  width: 900px;
+  padding: 0 9px;
+}
+.daepyo_pilji ul .daepyo_pilji_list_2 {
+  width: 170px;
+  padding: 0 9px;
+}
+.daepyo_pilji ul .daepyo_pilji_list_3 {
+  width: 170px;
+  padding: 0 9px;
+  border: none;
+}
+.daepyo_pilji_list_1 input[type="text"],
+.daepyo_pilji_list_2 input[type="text"],
+.daepyo_pilji_list_3 input[type="text"] {
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  background-color: #edf2f9;
+  border-radius: 8px;
+  padding: 3px 10px 3px 10px;
+}
+
+/* 신규 민원 등록 민원내용 */
+
+.complaint_contents_wrap {
+  width: 100%;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+}
+
+.complaint_contents_title {
+  display: grid;
+  grid-template-columns: 210px 100px 100px 120px 200px 170px 140px 180px;
+  height: 33px;
+  text-align: center;
+  background-color: #f7f9fc;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: 1px solid #cddbf0;
+}
+.complaint_contents_title li {
+  border-right: 1px solid #cddbf0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.complaint_contents_title .com_content_btn {
+  border: none;
+}
+
+.complaint_contents_content1{
+  display: grid;
+  grid-template-columns: 210px 1010px;
+  /* min-height: 66px; */
+}
+.landowner_wrap{
+  height: 100%;
+ 
+}
+.landowner_wrap > li{
+  height: 100%;
+}
+.complaint_contents_content1
+.com_content_contents_1
+.landowner_wrap
+.landowner_btns_default{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: none;
+}
+.landowner_btns_default button{
+  width: 74px;
+  height: 23px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.complaint_contents_content1
+.com_content_contents_1
+.landowner_wrap{
+  display: grid;
+  grid-template-columns: 100px 100px 120px 200px 170px 140px 180px;
+  border-bottom: 1px solid #cddbf0;;
+}
+.complaint_contents_content1 
+.com_content_contents_1 
+.landowner_wrap
+.landowner_btns{
+  padding: 0;
+}
+.complaint_contents_content1 
+.com_content_contents_1 
+.landowner_wrap 
+.landowner_btns > div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+.complaint_contents_content1 
+.com_content_contents_1 
+.landowner_wrap 
+.landowner_btns button{
+  width: 74px;
+  height: 23px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.complaint_contents_content1 
+.com_content_contents_1
+.landowner_wrap 
+.landowner_btns>div
+.complaint_addition {
+  background-color: #ffffff;
+  color: #2B7DE1;
+  border: 1px solid #2B7DE1;
+}
+.complaint_contents_content1 
+.com_content_contents_1 
+.landowner_wrap 
+.landowner_btns>div 
+.complaint_delete{
+  background-color: #9A9A9A;
+  color: #ffffff;
+}
+
+.landinfo_content_8>div .complaint_delete {
+  background-color: #9A9A9A;
+  color: #ffffff;
+}
+.complaint_contents_content2,
+.complaint_contents_content3{
+  display: grid;
+  grid-template-columns: 210px 1010px;
+}
+.complaint_contents_content2 {
+  grid-template-rows: 66fr;
+}
+/* 추가 */
+.complaint_contents_content3 .com_content_title3 {
+  border-radius: 0 0 0 5px;
+}
+
+.complaint_contents_content2,
+.complaint_contents_content3 {
+  border-top: 1px solid #cddbf0;
+}
+.com_content_title1,
+.complaint_contents_content2 .com_content_title2,
+.complaint_contents_content3 .com_content_title3 {
+  background-color: #f7f9fc;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+.complaint_contents_content1 .com_content_contents_1 {
+  display: flex;
+  flex-direction: column;
+}
+.complaint_contents_content1 > .com_content_contents_1 > ul:last-child {
+  border: none;
+}
+.complaint_contents_content1 > li {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landowner_wrap > li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+  /* height: 33px; */
+  padding: 0 9px;
+}
+.landowner_wrap > li > input[type="text"] {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  background-color: #edf2f9;
+  border-radius: 8px;
+  padding: 3px 10px 3px 10px;
+}
+.landowner_wrap .popSelectWrap {
+  padding: 5px;
+}
+.landowner_wrap .popSelectWrap .Popup_Custom_SelectView {
+  border-radius: 8px;
+}
+.landowner_wrap > .landowner_btns {
+  border-right: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+.complaint_contents_content2 .com_content_title2,
+.complaint_contents_content3 .com_content_title3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 66px;
+}
+.complaint_contents_content2 .com_content_title4 {
+  padding: 5px;
+  width: 1010px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+.com_content_title4 textarea {
+  width: 100%;
+  min-height: 58px;
+  text-align: left;
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 14px;
+  color: #3C3C3C;
+  background-color: #edf2f9;
+  border-radius: 8px;
+  padding: 10px;
+  border: none;
+  resize: none;
+}
+.complaint_contents_content3 > .com_content_title5 {
+  width: 1010px;
+  box-sizing: border-box;
+}
+.complaint_contents_content3_wrap {
+  width: 100%;
+  height: 100%;
+  font-size: 15px;
+  gap: 16px;
+  box-sizing: border-box;
+}
+.complaint_contents_content3_file{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.complaint_contents_content3_imgwrap {
+  width: 28px;
+  height: 28px;
+}
+.complaint_contents_content3_imgwrap > img {
+  width: 100%;
+}
+.complaintinfo_btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 27px;
+  gap: 10px;
+}
+.complaintinfo_btns button {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.complaint_contents_Details input[type="text"] {
+  padding: 0 10px;
+}
+
+/* 신규 민원 등록 첨부파일 */
+.complaint_contents_contents3_file_img_wrap {
+  width: 24px;
+  height: 27px;
+}
+
+.complaint_contents_contents3_file_img_wrap img {
+  height: 100%;
+}
+
+.complaints_contents_fileBox {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.complaint_contents_contents3_Popup_file_wrap {
+  width: 100%;
+  height: 99px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.complaint_contents_contents3_Popup_file_wrap 
+.complaint_contents_contents3_file_default {
+  width: 100%;
+  height: 100%;
+  background-color: #f7f9fc;
+  box-sizing: border-box;
+  display: none;
+}
+.file_background_wrap{
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  border-radius: 5px;
+  margin: 5px;
+  background-color: #f7f9fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  color: #88a2c8;
+  font-size: 15px;
+  font-family: 600;
+  border: 1px dashed #cddbf0;
+  box-sizing: border-box;
+}
+
+.complaint_contents_contents3_Popup_file_wrap 
+.complaint_contents_contents3_file_default.active {
+  display: flex;
+}
+
+.complaint_contents_contents3_Popup_file_wrap 
+.complaint_contents_contents3_file_add_contents {
+  width: 100%;
+  height: 99px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: none;
+}
+
+.complaint_contents_contents3_Popup_file_wrap 
+.complaint_contents_contents3_file_add_contents.active {
+  display: block;
+}
+
+.complaint_contents_contents3_file_add_contents::-webkit-scrollbar {
+  width: 4px;
+}
+
+.complaint_contents_contents3_file_add_contents::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2
+}
+
+.complaint_contents_contents3_file_add_contents::-webkit-scrollbar-track {
+  background: #ffffff;
+  margin: 10px 0;
+}
+
+.complaint_contents_contents3_file_add_contents>ul {
+  display: grid;
+  grid-template-columns: 1fr 15fr 3fr 3fr;
+  height: 33px;
+}
+
+.complaint_contents_contents3_file_add_contents>.complaint_contents_contents3_file_add_contents_th {
+  background-color: #F7F9FC ;
+}
+
+.complaint_contents_contents3_file_add_contents>ul>li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.complaint_contents_contents3_file_add_contents>ul>li>p {
+  color: #000000;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.complaint_contents_contents3_file_add_contents>ul>.file_add_name {
+  justify-content: start;
+  padding: 0 10px;
+}
+
+.complaint_contents_contents3_file_add_contents ul>li>figure {
+  width: 10px;
+  height: 10px;
+}
+
+.complaint_contents_contents3_file_add_contents ul>li>figure img {
+  width: 100%;
+}
+
+.complaint_contents_contents3_file_add_contents ul>li>button {
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.complaint_contents_contents3_file_add_contents ul>li>button img {
+  width: 100%;
+}
+
+/* 신규 민원 등록 팝업 끝 */
+/* 민원 완료 팝업 시작 */
+
+/*css추가*/
+
+#complaint_completed{display:none;}
+#complaint_completed.active{display:block;}
+#complaint_completed .popupWrap{ display:block; }
+
+/**/
+.complaint_completed .popupWrap {
+  width: 1264px;
+  font-weight: 500;
+  font-size: 14px;
+}
+.complaint_completed .popupWrap h3 {
+  padding: 24px 0 15px 9px;
+  font-weight: 600;
+  font-size: 16px;
+}
+.complaint_completed_detail_wrap {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  overflow: hidden;
+  font-weight: 500;
+}
+.complaint_completed_detail_wrap > ul {
+  display: grid;
+  grid-template-columns: 220px 1020px;
+  border-bottom: 1px solid #cddbf0;
+}
+.complaint_completed_detail_wrap > ul:last-child {
+  border: none;
+}
+.complaint_completed_detail_wrap > ul > li {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  color: #3c3c3c;
+}
+.complaints_title {
+  background-color: #f7f9fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 46px;
+  border-right: 1px solid #cddbf0;
+  color: #000000 !important;
+}
+.complaint_completed_detail_title > li {
+  color: #000000 !important;
+}
+.complaint_completed_detail_title {
+  display: grid !important;
+  grid-template-columns: 220px 100px 100px 162px 278px 207px 173px !important;
+}
+.complaint_completed_detail_title > li {
+  background-color: #f7f9fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #cddbf0;
+}
+.complaint_completed_detail_title > li:last-child {
+  border: none;
+}
+.complainant_info_list {
+  display: flex;
+  flex-direction: column;
+}
+.complainant_info_list > ul:last-child {
+  border: none;
+}
+.complainant_info {
+  display: grid;
+  grid-template-columns: 100px 100px 162px 278px 207px 173px;
+  min-height: 46px;
+  border-bottom: 1px solid #cddbf0;
+}
+.complainant_info > li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #cddbf0;
+  height: 100%;
+}
+.complaint_completed_detail_wrap > .complaint_completed_detail_box7,
+.complaint_completed_detail_wrap > .complaint_completed_detail_box8,
+.complaint_completed_detail_wrap > .complaint_completed_detail_box9,
+.complaint_completed_detail_wrap > .complaint_completed_detail_box10 {
+  min-height: 65px;
+}
+.complaint_completed_detail_wrap
+  > .complaint_completed_detail_box8
+  > .complaints_content_box,
+.complaint_completed_detail_wrap
+  > .complaint_completed_detail_box9
+  > .complaints_content_box,
+.complaint_completed_detail_wrap
+  > .complaint_completed_detail_box10
+  > .complaints_content_box {
+  padding: 10px;
+}
+.complaintinfo_update {
+  margin-top: 24px;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.complaintinfo_update ul {
+  min-height: 45px;
+  font-size: 14px;
+  display: grid;
+  grid-template-columns: 637px 306px 295px;
+}
+.complaintinfo_update ul button {
+  width: 116px;
+  height: 27px;
+  background-color: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.complaintinfo_update .complaintinfo_update_th {
+  background-color: #f7f9fc;
+  border-bottom: 1px solid #CDDBF0;
+}
+.complaintinfo_update ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #cddbf0;
+}
+.complaintinfo_update ul .complaintinfo_update_btn {
+  border: none;
+}
+/* 민원 완료 팝업 끝 */
+/* 민원협의 내용 등록/수정 시작 */
+
+/* css추가 */ 
+
+#complaint_register_Popup { display:none; }
+#complaint_register_Popup.active{ display:block; }
+#complaint_register_Popup .popupWrap {display:block;}
+
+/**/
+
+.complaint_register_Popup .popupWrap {
+  width: 1264px;
+}
+.complaints_contents_wrap {
+  width: 100%;
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+.complaints_contents_wrap .Popup_Custom_SelectView {
+  width: 220px;
+  height: 36px;
+}
+.complaints_contents_wrap .Popup_Custom_SelectBtns {
+  width: 220px;
+}
+.complaints_contents_wrap > ul {
+  display: grid;
+  grid-template-columns: 220px 1020px;
+  font-size: 14px;
+  font-weight: 500;
+  min-height: 45px;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+.complaints_contents_wrap > ul:last-child {
+  border: none;
+}
+.complaints_contents_wrap > ul > li {
+  display: flex;
+  align-items: center;
+}
+.complaints_contents_wrap > ul > .complaints_contents_titles {
+  justify-content: center;
+  background-color: #f7f9fc;
+  border-right: 1px solid #cddbf0;
+}
+.complaints_calender_box,
+.popSelectWrap {
+  padding: 5px;
+}
+.complaints_contents_wrap .complaints_contents_inputs {
+  display: flex;
+  justify-content: center;
+  padding: 0 5px;
+}
+.complaints_contents_wrap .complaints_contents_inputs input[type="text"] {
+  width: 100%;
+  min-height: 36px;
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 14px;
+  color: #3C3C3C;
+  background-color: #edf2f9;
+  border-radius: 10px;
+  text-align: left;
+  padding:0px 20px;
+}
+.complaints_contents_minHeight1 {
+  min-height: 203px !important;
+}
+.complaints_contents_minHeight1
+.complaints_contents_inputs{
+  padding: 5px;
+}
+.complaints_contents_wrap .complaints_contents_inputs textarea {
+  width: 100%;
+  height: 100%;
+  background-color: #edf2f9;
+  border-radius: 10px;
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 14px;
+  color: #3C3C3C;
+  border: none;
+  padding: 20px;
+  resize: none; 
+  box-sizing: border-box;
+}
+.register_file_img_wrap{
+  width: 24px;
+  height: 27px;
+}
+.register_file_img_wrap img{
+  height: 100%;
+}
+.complaints_contents_minHeight2 {
+  min-height: 81px !important;
+}
+.complaints_contents_fileBox{
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+.complaint_register_Popup_file_wrap{
+  width: 100%;
+  height: 99px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.complaint_register_Popup_file_wrap .file_default {
+  width: 100%;
+  height: 100%;
+  background-color: #f7f9fc;
+  box-sizing: border-box;
+  display: none;
+}
+.complaint_register_Popup_file_wrap 
+.file_default
+.file_background_wrap {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  border-radius: 5px;
+  margin: 5px;
+  background-color: #f7f9fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  color: #88a2c8;
+  font-size: 15px;
+  font-family: 600;
+  border: 1px dashed #cddbf0;
+  box-sizing: border-box;
+}
+
+.complaint_register_Popup_file_wrap 
+.file_default.active{
+  display: flex;
+}
+.complaint_register_Popup_file_wrap
+.file_add_contents {
+  width: 100%;
+  height: 99px;
+  overflow-x: hidden;
+  overflow-y: auto;
+ display: none;
+}
+.complaint_register_Popup_file_wrap
+.file_add_contents.active{
+  display: block;
+}
+.file_add_contents::-webkit-scrollbar {
+  width: 4px ;
+}
+
+.file_add_contents::-webkit-scrollbar-thumb {
+  height: 30% ;
+  border-radius: 10px ;
+  background: #d2d2d2 
+}
+
+.file_add_contents::-webkit-scrollbar-track {
+  background: #ffffff;
+  margin: 10px 0;
+}
+.file_add_contents > ul {
+  display: grid;
+  grid-template-columns: 1fr 15fr 3fr 3fr;
+  height: 33px;  
+}
+.file_add_contents > .file_add_contents_th{
+  background-color: #F7F9FC;
+}
+.file_add_contents> ul > li{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.file_add_contents>ul>li>p{
+  color: #000000;
+  font-size: 13px;
+  font-weight: 500;
+}
+.file_add_contents> ul > .file_add_name{
+  justify-content: start;
+  padding: 0 10px;
+}
+.file_add_contents ul>li>figure {
+  width: 10px;
+  height: 10px;
+}
+
+.file_add_contents ul>li>figure img {
+  width: 100%;
+}
+.file_add_contents ul > li > button{
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.file_add_contents ul>li>button img{
+  width: 100%;
+}
+
+
+/* 추가 */
+.complaint_register_Popup .popfileLargeWrap,
+.newcomplaint_Popup .popfileLargeWrap
+ {
+  width: 100%;
+  position: relative;
+  height: 128px;
+}
+.complaint_register_Popup .popfileLargeWrap .popfileUploadWrap ,
+.newcomplaint_Popup .popfileLargeWrap .popfileUploadWrap {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  background: #f7f9fc;
+}
+.complaint_register_Popup .popfileLargeWrap .popfileUploadDisplay,
+.newcomplaint_Popup .popfileLargeWrap .popfileUploadDisplay
+ {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.complaint_register_Popup .popfileLargeWrap .popfileUploadDisplay.active,
+.newcomplaint_Popup .popfileLargeWrap .popfileUploadDisplay.active
+ {
+  display: block;
+}
+.complaint_register_Popup .popfileUploadBox, 
+.newcomplaint_Popup .popfileUploadBox 
+{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  border: 1px dashed #cddbf0;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+.complaint_register_Popup .popfileUploadBox .fileUploadIcon, 
+.newcomplaint_Popup .popfileUploadBox .fileUploadIcon 
+{
+  width: 35px;
+  height: 35px;
+}
+.complaint_register_Popup .popfileUploadBox p ,
+.newcomplaint_Popup .popfileUploadBox p
+{
+  font-size: 14px;
+  font-weight: 600;
+  color: #88a2c8;
+}
+.complaint_register_Popup .popfileUploadAfter, 
+.newcomplaint_Popup .popfileUploadAfter 
+{
+  /* border: 1px solid #CDDBF0; */
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  overflow-y: hidden;
+  background: #fff;
+}
+
+.complaint_register_Popup .popfileUploadAfter.scroll, 
+.newcomplaint_Popup .popfileUploadAfter.scroll 
+{
+  overflow-y: scroll;
+}
+.complaint_register_Popup .popfileUploadAfter::-webkit-scrollbar, 
+.newcomplaint_Popup .popfileUploadAfter::-webkit-scrollbar 
+{
+  width: 4px;
+}
+.complaint_register_Popup .popfileUploadAfter::-webkit-scrollbar-thumb,
+.newcomplaint_Popup .popfileUploadAfter::-webkit-scrollbar-thumb
+ {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+.complaint_register_Popup .popfileUploadAfter .poptitles, 
+.newcomplaint_Popup .popfileUploadAfter .poptitles 
+{
+  display: grid;
+  grid-template-columns: 32fr 1324fr 200fr 200fr ;
+  grid-template-rows: 33px;
+  background: #F7F9FC;
+  border-bottom: 1px solid #CDDBF0;
+}
+.complaint_register_Popup .popfileUploadAfter .poptitle, 
+.newcomplaint_Popup .popfileUploadAfter .poptitle 
+{
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.complaint_register_Popup .popfileUploadAfter .popfilenameBox ,
+.newcomplaint_Popup .popfileUploadAfter .popfilenameBox 
+{
+  padding-left: 25px;
+  box-sizing: border-box;
+  position: relative;
+}
+.complaint_register_Popup .popfileUploadAfter p, 
+.newcomplaint_Popup .popfileUploadAfter p 
+{
+  font-size: 14px;
+  font-weight: 500;
+  color: #3C3C3C;
+}
+.complaint_register_Popup .popfileUploadAfter .popfilenameBox p ,
+.newcomplaint_Popup .popfileUploadAfter .popfilenameBox p 
+{
+  width: 100%;
+  text-align: left;
+}
+.complaint_register_Popup .popfileUploadAfter .popfilenameBox .poptypeIcon ,
+.newcomplaint_Popup .popfileUploadAfter .popfilenameBox .poptypeIcon 
+{
+  width: 15px;
+  height: 15px;
+  background: url(/assets/media/popup/images/fileextensionIcon.png) no-repeat center;
+  background-size: 15px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5px;
+}
+.complaint_register_Popup .popfileUploadAfter .poptitle .popBtnbox ,
+.newcomplaint_Popup .popfileUploadAfter .poptitle .popBtnbox 
+{
+  height: 100%;
+}
+/* 민원등록수정 */
+.complaint_register_Popup .popfileUploadAfter .popAllDeleteFileBtn,
+.complaint_register_Popup .popfileUploadAfter .popfileDeleteBtn ,
+/* 신규민원등록 */
+.newcomplaint_Popup .popfileUploadAfter .popAllDeleteFileBtn,
+.newcomplaint_Popup .popfileUploadAfter .popfileDeleteBtn 
+{
+  width: 33px;
+  height: 33px;
+  background: url(/assets/media/popup/images/back_icon.png) no-repeat center;
+  background-size: 15px;
+}
+.complaint_register_Popup .popfileUploadAfter .popcontents ,
+.newcomplaint_Popup .popfileUploadAfter .popcontents {
+  display: grid;
+  grid-template-columns: 32fr 1324fr 200fr 200fr;
+  grid-template-rows: 33px;
+}
+.complaint_register_Popup .popfileUploadAfter .popcontent, 
+.newcomplaint_Popup .popfileUploadAfter .popcontent 
+{
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 민원협의 내용 등록/수정 끝 */

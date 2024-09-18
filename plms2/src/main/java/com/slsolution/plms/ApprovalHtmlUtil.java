@@ -9,7 +9,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +23,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 
+import org.apache.tika.metadata.Database;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -874,779 +876,793 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 
 	}
 
-//	public String getGover_pay_HTML(String TYPE, String GOVER_NO, String NextSeq, String FileSeq, String PmtNo, HttpServletRequest request, HttpServletResponse response) {
-//
-//		/** 조회 시작 **/
-//		ArrayList list = new ArrayList();
-//		ArrayList pnu_list = new ArrayList();
-//		ArrayList pmt_list = new ArrayList();
-//		ArrayList pay_List = new ArrayList();
-//		ArrayList modify_list = new ArrayList();
-//		ArrayList<HashMap> file_list = new ArrayList<HashMap>();
-//
-//		HashMap kibon_map = new HashMap();
-//		HashMap togi_map = new HashMap();
-//		HashMap pmt_map = new HashMap();
-//		HashMap pay_map = new HashMap();
-//		HashMap file_map = new HashMap();
-//
-//		CommonUtil cu = new CommonUtil();
-//
-//		String goverNo = GOVER_NO;
-//		String str_result = "Y";
-//
-//		try {
-//			Map params = new HashMap();
-//			ParameterParser parser = new ParameterParser(request);
-//			// 선택 첨부파일
-//			String FILE_SIZE = parser.getString("fileSize", "0"); // 선택한 파일 수
-//
-//			params.put("GOVERNO", goverNo);
-//			params.put("GOVER_NO", goverNo);
-//			params.put("FILENO", goverNo);
-//			params.put("SEQ", NextSeq);
-//			params.put("PMTNO", PmtNo);
-//
+	public String getGover_pay_HTML(String TYPE, String GOVER_NO, String NextSeq, String FileSeq, String PmtNo, HttpServletRequest request, HttpServletResponse response) {
+
+		MainService mainService = context.getBean(MainService.class);
+		/** 조회 시작 **/
+		ArrayList list = new ArrayList();
+		ArrayList pnu_list = new ArrayList();
+		ArrayList pmt_list = new ArrayList();
+		ArrayList pay_List = new ArrayList();
+		ArrayList modify_list = new ArrayList();
+		ArrayList<HashMap> file_list = new ArrayList<HashMap>();
+
+		HashMap kibon_map = new HashMap();
+		HashMap togi_map = new HashMap();
+		HashMap pmt_map = new HashMap();
+		HashMap pay_map = new HashMap();
+		HashMap file_map = new HashMap();
+
+		CommonUtil cu = new CommonUtil();
+
+		String goverNo = GOVER_NO;
+		String str_result = "Y";
+
+		try {
+			HashMap params = new HashMap();
+			ParameterParser parser = new ParameterParser(request);
+			// 선택 첨부파일
+			String FILE_SIZE = parser.getString("fileSize", "0"); // 선택한 파일 수
+
+			params.put("GOVERNO", goverNo);
+			params.put("GOVER_NO", goverNo);
+			params.put("FILENO", goverNo);
+			params.put("SEQ", NextSeq);
+			params.put("PMTNO", PmtNo);
+
 //			list = (ArrayList) Database.getInstance().queryForList("Json.selectGoverList", params); // 기본정보
 //			pnu_list = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPnuList", params); // 소속토지정보
 //			pmt_list = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPmtLastForApproval", params); // 허가 정보
 //			pay_List = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPayList", params); // 납부실적목록
-//
-//			params.put("SEQ", FileSeq);
-//
-//			for (int i = 0; i < Integer.parseInt(FILE_SIZE); i++) {
-//				params.put("FILE_SEQ", parser.getString("gv_fileSeq" + i, "0"));
-//				file_list.add((HashMap) Database.getInstance().queryForObject("Json.selectGoverRowDetail_FilesObject", params)); // 첨부파일
-//			}
-//
-////			System.out.println("$$$ params=" + params);
-//			if (list.size() > 0) {
-//				// 기본정보
-//				kibon_map.put("GOVER_NO", cu.evl((String) ((HashMap) list.get(0)).get("GOVER_NO"), ""));
-//				kibon_map.put("JISA", cu.evl((String) ((HashMap) list.get(0)).get("JISA"), ""));
-//				kibon_map.put("GOVER_OWN_YN", cu.evl((String) ((HashMap) list.get(0)).get("GOVER_OWN_YN"), ""));
-//				kibon_map.put("YONGDO", cu.evl((String) ((HashMap) list.get(0)).get("YONGDO"), ""));
-//				kibon_map.put("PIPE_NAME", cu.evl((String) ((HashMap) list.get(0)).get("PIPE_NAME"), ""));
-//				kibon_map.put("PIPE_METER", cu.evl(String.valueOf(((HashMap) list.get(0)).get("PIPE_METER")), ""));
-//				kibon_map.put("PIPE_METER2", cu.evl(String.valueOf(((HashMap) list.get(0)).get("PIPE_METER2")), ""));
-//				kibon_map.put("SUN_GUBUN", cu.evl((String) ((HashMap) list.get(0)).get("SUN_GUBUN"), ""));
-//				kibon_map.put("USE_PURPOS", cu.evl((String) ((HashMap) list.get(0)).get("USE_PURPOS"), ""));
-//				kibon_map.put("ADDRESS", cu.evl((String) ((HashMap) list.get(0)).get("SIDO_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("SGG_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("EMD_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("RI_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("JIBUN"), ""));
-//				kibon_map.put("JIMOK_TEXT", cu.evl((String) ((HashMap) list.get(0)).get("JIMOK_TEXT"), ""));
-//				kibon_map.put("JIJUK_AREA", cu.evl((String) ((HashMap) list.get(0)).get("JIJUK_AREA"), ""));
-//				kibon_map.put("DOSIPLAN", cu.evl((String) ((HashMap) list.get(0)).get("DOSIPLAN"), ""));
-//				kibon_map.put("GOVER_ST_DATE", cu.evl((String) ((HashMap) list.get(0)).get("GOVER_ST_DATE"), ""));
-//				kibon_map.put("GOVER_ED_DATE", cu.evl((String) ((HashMap) list.get(0)).get("GOVER_ED_DATE"), ""));
-//
-//				// 관리기관정보
-//				kibon_map.put("PMT_OFFICE", cu.evl((String) ((HashMap) list.get(0)).get("PMT_OFFICE"), ""));
-//				kibon_map.put("ADM_OFFICE", cu.evl((String) ((HashMap) list.get(0)).get("ADM_OFFICE"), ""));
-//				kibon_map.put("OFFICE_DEPART", cu.evl((String) ((HashMap) list.get(0)).get("OFFICE_DEPART"), ""));
-//				kibon_map.put("OFFICE_CHARGE", cu.evl((String) ((HashMap) list.get(0)).get("OFFICE_CHARGE"), ""));
-//				kibon_map.put("OFFICE_CONTACT", cu.evl((String) ((HashMap) list.get(0)).get("OFFICE_CONTACT"), ""));
-//				kibon_map.put("OFFICE_MOBILE", cu.evl((String) ((HashMap) list.get(0)).get("OFFICE_MOBILE"), ""));
-//			}
-////			System.out.println("kibon_map=" + kibon_map);
-//			// 점용허가정보
-//			if (pmt_list.size() > 0) {
-//				pmt_map.put("PMT_NO", cu.evl((String) ((HashMap) pmt_list.get(0)).get("PMT_NO"), ""));
-//				pmt_map.put("PAY_DATE", cu.evl((String) ((HashMap) pmt_list.get(0)).get("PAY_DATE"), ""));
-//				pmt_map.put("PMT_ST_DATE", cu.evl((String) ((HashMap) pmt_list.get(0)).get("PMT_ST_DATE"), ""));
-//				pmt_map.put("PMT_ED_DATE", cu.evl((String) ((HashMap) pmt_list.get(0)).get("PMT_ED_DATE"), ""));
-//
-//				pmt_map.put("PAY_MONEY", cu.evl((String) ((HashMap) pmt_list.get(0)).get("PAY_MONEY"), ""));
-//				pmt_map.put("PAY_VAT", cu.evl((String) (((HashMap) pmt_list.get(0)).get("PAY_VAT")), ""));
-//				pmt_map.put("PAY_WAY", cu.evl((String) ((HashMap) pmt_list.get(0)).get("PAY_WAY"), ""));
-//			}
-////			System.out.println("pmt_map=" + pmt_map);
-//			// 납부실적
-//			if (pay_List.size() > 0) {
-//				for (int i = 0; i < pay_List.size(); i++) {
-//					pay_map.put("PAY_YR" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("PAY_YR"), ""));
-//					pay_map.put("SEQ" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("SEQ"), ""));
-//					pay_map.put("PAY_DATE" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("PAY_DATE"), ""));
-//					pay_map.put("PAY_MONEY" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("PAY_MONEY"), ""));
-//					pay_map.put("PMT_ST_DATE" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("PMT_ST_DATE"), ""));
-//					pay_map.put("PMT_ED_DATE" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("PMT_ED_DATE"), ""));
-//					pay_map.put("ECHO_NO" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("ECHO_NO"), ""));
-//				}
-//			}
-////			System.out.println("pay_map=" + pay_map);
-//
-//			if (pnu_list.size() > 0) {
-//				for (int i = 0; i < pnu_list.size(); i++) {
-//					String SIDO = cu.evl((String) ((HashMap) pnu_list.get(i)).get("SIDO_NM"), "");
-//					String SGG = cu.evl((String) ((HashMap) pnu_list.get(i)).get("SGG_NM"), "");
-//					String EMD = cu.evl((String) ((HashMap) pnu_list.get(i)).get("EMD_NM"), "");
-//					String RI = cu.evl((String) ((HashMap) pnu_list.get(i)).get("RI_NM"), "");
-//					String JIBUN = cu.evl((String) ((HashMap) pnu_list.get(i)).get("JIBUN"), "");
-//					String ADDR = "";
-//
-//					if (!SIDO.equals(""))
-//						ADDR += SIDO + " ";
-//					if (!SGG.equals(""))
-//						ADDR += SGG + " ";
-//					if (!EMD.equals(""))
-//						ADDR += EMD + " ";
-//					if (!RI.equals(""))
-//						ADDR += RI + " ";
-//					if (!JIBUN.equals(""))
-//						ADDR += JIBUN + " ";
-//
-//					togi_map.put("ADDR" + i, ADDR);
-//					togi_map.put("SIDO" + i, SIDO);
-//					togi_map.put("SGG" + i, SGG);
-//					togi_map.put("EMD" + i, EMD);
-//					togi_map.put("RI" + i, RI);
-//					togi_map.put("JIBUN" + i, JIBUN);
-//					togi_map.put("GOVER_OWN_YN" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("GOVER_OWN_YN"), ""));
-//					togi_map.put("JIJUK_AREA" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("JIJUK_AREA"), ""));
-//					togi_map.put("GOVER_LENGTH" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("GOVER_LENGTH"), ""));
-//					togi_map.put("GOVER_AREA" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("GOVER_AREA"), ""));
-//				}
-//			}
-////			System.out.println(togi_map);
-//			if (file_list.size() > 0) {
-//				for (int i = 0; i < file_list.size(); i++) {
-//					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("FILE_PATH"), ""));
-//					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("FILE_NM"), ""));
-//
-//				}
-//			}
-//
-////			System.out.println("file_list=" + file_list);
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		/* 조회 끝 */
-//		StringBuffer sbHtml = new StringBuffer();
-//
-//		sbHtml.append(
-//				" <!DOCTYPE html>																																																																																																																																																																																																																																																													\n");
-//		sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\"> \n");
-//		sbHtml.append("                 \n");
-//		sbHtml.append(sHeader);
-//		sbHtml.append("                 \n");
-//		sbHtml.append(" <body>          \n");
-//
-//		sbHtml.append("           <form id='file_download_form' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >                   \n");
-//		sbHtml.append("            <input type='hidden' name='file_no' />                  \n");
-//		sbHtml.append("            <input type='hidden' name='file_seq' />                   \n");
-//		sbHtml.append("            <input type='hidden' name='file_gubun' value='gover' />                  \n");
-//		sbHtml.append("            </form>                 \n");
-//
-//		if (file_list.size() > 0) {
-//			for (int i = 0; i < file_list.size(); i++) {
-//				String str_GOVER_NO = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("GOVER_NO")), "");
-//				String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("FILE_SEQ")), "");
-////				System.out.println("str_GOVER_NO=" + str_GOVER_NO + " , str_FILE_SEQ=" + str_FILE_SEQ);
-//				sbHtml.append("           <form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >                   \n");
-//				sbHtml.append("            <input type='hidden' name='file_no' value='" + str_GOVER_NO + "'/>                  \n");
-//				sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />                   \n");
-//				sbHtml.append("            <input type='hidden' name='file_gubun' value='gover' />                  \n");
-//				sbHtml.append("            </form>                 \n");
-//			}
-//		}
-//		sbHtml.append("     <!-- wrap -->                    \n");
-//		sbHtml.append("     <div id=\"wrap\">                \n");
-//		sbHtml.append("         <!-- 컨테이너 -->            \n");
-//		sbHtml.append("         <div id=\"container\">       \n");
-//		sbHtml.append("			 <div class=\"title\">		");
-//		sbHtml.append("			 	<h2>점용료 납부 / 전자결재 상세보기</h2>		");
-//		sbHtml.append("			 </div>		");
-//		sbHtml.append("			 <div class=\"article\">		");
-//		sbHtml.append("			 <!-- *기본 정보 -->		");
-//		sbHtml.append("			 <h4>기본 정보</h4>		");
-//		sbHtml.append("			 <table class=\"base4\">		");
-//		sbHtml.append("			 <colgroup>		");
-//		sbHtml.append("			 	<col style=\"width: 10%\" />	");
-//		sbHtml.append("			 	<col style=\"width: 23%\" />	");
-//		sbHtml.append("			 	<col style=\"width: 10%\" />	");
-//		sbHtml.append("			 	<col style=\"width: 23%\" />	");
-//		sbHtml.append("			 	<col style=\"width: 10%\" />	");
-//		sbHtml.append("			 	<col style=\"width: 24%\" />	");
-//		sbHtml.append("			 </colgroup>		");
-//		sbHtml.append("			 <tbody>		");
-//		sbHtml.append("			 	<tr>		");
-//		sbHtml.append("			 		<th scope=\"row\">관로<br />관리번호</th>	");
-//		sbHtml.append("			 		<td colspan=\"5\">	");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("GOVER_NO") + "</span>	");
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 	</tr>	");
-//		sbHtml.append("			 	<tr>		");
-//		sbHtml.append("			 		<th scope=\"row\">담당지사</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JISA") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">국/사유지</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("GOVER_OWN_YN") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">관로저촉여부</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + /* kibon_map.get("관로저촉여부") + */"</span>	"); // TODO: 관로저촉여부 값 입력내용 확인후 수정.=> 추후 관로관리 개발후 정보적용
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 	</tr>");
-//		sbHtml.append("			 	<tr>");
-//		sbHtml.append("			 		<th scope=\"row\">용도</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("YONGDO") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">관로명</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("PIPE_NAME") + "</span>");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">단/복선 및 관경</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("SUN_GUBUN") + " / " + kibon_map.get("PIPE_METER") + " / " + kibon_map.get("PIPE_METER2") + "</span>	");
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 	</tr>");
-//		sbHtml.append("			 	<tr>");
-//		sbHtml.append("			 		<th scope=\"row\">주소</th>	");
-//		sbHtml.append("			 		<td colspan=\"5\">	");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("ADDRESS") + "</span>	");
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 	</tr>");
-//		sbHtml.append("			 	<tr>");
-//		sbHtml.append("			 		<th scope=\"row\">지목</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JIMOK_TEXT") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">지적면적</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JIJUK_AREA") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">토지이용계획</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("DOSIPLAN") + "</span>	");
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 	</tr>");
-//		sbHtml.append("			 </tbody>		");
-//		sbHtml.append("			 </table>		");
-//		sbHtml.append("			 <br>		");
-//		sbHtml.append("			 <!-- *관리기관 정보 -->");
-//		sbHtml.append("			 <h4>관리기관 정보</h4>");
-//		sbHtml.append("			 <table class=\'base4\'>");
-//		sbHtml.append("			 	<colgroup>");
-//		sbHtml.append("			 		<col style=\"width: 10%\" />	");
-//		sbHtml.append("			 		<col style=\"width: 23%\" />	");
-//		sbHtml.append("			 		<col style=\"width: 10%\" />	");
-//		sbHtml.append("			 		<col style=\"width: 23%\" />	");
-//		sbHtml.append("			 		<col style=\"width: 10%\" />	");
-//		sbHtml.append("			 		<col style=\"width: 24%\" />	");
-//		sbHtml.append("			 	</colgroup>");
-//		sbHtml.append("			 	<tbody>");
-//		sbHtml.append("			 	<tr>");
-//		sbHtml.append("			 		<th scope=\"row\">허가관청</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("PMT_OFFICE") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">관리기관</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("ADM_OFFICE") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">부서</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("OFFICE_DEPART") + "</span>	");
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 	</tr>");
-//		sbHtml.append("			 	<tr>");
-//		sbHtml.append("			 		<th scope=\"row\">담당자</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("OFFICE_CHARGE") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">연락처</th>	");
-//		sbHtml.append("			 		<td colspan=\"3\">");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("OFFICE_CONTACT") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 	</tr>");
-//		sbHtml.append("			 	</tbody>");
-//		sbHtml.append("			 </table>");
-//		sbHtml.append("			 <br>		");
-//		sbHtml.append("			 <!-- *납부 정보 -->");
-//		sbHtml.append("			 <h4>납부 정보</h4>");
-//		sbHtml.append("			 <table class=\"base4\">");
-//		sbHtml.append("			 	<colgroup>");
-//		sbHtml.append("			 		<col style=\"width: 10%\" />	");
-//		sbHtml.append("			 		<col style=\"width: 23%\" />	");
-//		sbHtml.append("			 		<col style=\"width: 10%\" />	");
-//		sbHtml.append("			 		<col style=\"width: 23%\" />	");
-//		sbHtml.append("			 		<col style=\"width: 10%\" />	");
-//		sbHtml.append("			 		<col style=\"width: 24%\" />	");
-//		sbHtml.append("			 	</colgroup>");
-//		sbHtml.append("			 	<tbody>");
-//		sbHtml.append("			 	<tr>");
-//		sbHtml.append("			 		<th scope=\"row\">허가번호</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PMT_NO") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">납부일</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PAY_DATE") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">유효기간</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PMT_ST_DATE") + " ~ " + pmt_map.get("PMT_ED_DATE") + "</span>	");
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 	</tr>");
-//		sbHtml.append("			 	<tr>");
-//		sbHtml.append("			 		<th scope=\"row\">금액</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PAY_MONEY") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">VAT.</th>	");
-//		sbHtml.append("			 		<td>");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PAY_VAT") + "</span>	");
-//		sbHtml.append("			 		</td>");
-//		sbHtml.append("			 		<th scope=\"row\">합계</th>	");
-//		sbHtml.append("			 		<td>");
-//		Long sumValue = Long.parseLong((cu.evl((String) pmt_map.get("PAY_MONEY"), "0")).replaceAll(",", ""));
-//		sumValue += Long.parseLong((cu.evl((String) pmt_map.get("PAY_VAT"), "0")).replaceAll(",", ""));
-//		DecimalFormat df = new DecimalFormat("###,###.##");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + df.format(sumValue) + "</span>	");
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 	</tr>");
-//		sbHtml.append("			 	<tr>");
-//		sbHtml.append("			 		<th scope=\"row\">납부방법</th>	");
-//		sbHtml.append("			 		<td colspan=\"5\">");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PAY_WAY") + "</span>	");
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 	</tr>");
-//		sbHtml.append("			 	</tbody>");
-//		sbHtml.append("			 </table>");
-//		sbHtml.append("			 <br>		");
-//		sbHtml.append("	<h4>소속 토지 정보</h4>");
-//		sbHtml.append("	<table class=\"base4\">");
-//		sbHtml.append("		<colgroup>");
-//		sbHtml.append("			<col style=\"width: 10%\" />");
-//		sbHtml.append("			<col style=\"width: 10%\" />");
-//		sbHtml.append("			<col style=\"width: 10%\" />");
-//		sbHtml.append("			<col style=\"width: 10%\" />");
-//		sbHtml.append("			<col style=\"width: 10%\" />");
-//		sbHtml.append("			<col style=\"width: 10%\" />");
-//		sbHtml.append("			<col style=\"width: 10%\" />");
-//		sbHtml.append("			<col style=\"width: 10%\" />");
-//		sbHtml.append("			<col style=\"width: 10%\" />");
-//		sbHtml.append("		</colgroup>");
-//		sbHtml.append("		<thead>");
-//		sbHtml.append("			<tr>");
-//		sbHtml.append("				<th scope=\"col\">순번</th>");
-//		sbHtml.append("				<th scope=\"col\">시도</th>");
-//		sbHtml.append("				<th scope=\"col\">시군구</th>");
-//		sbHtml.append("				<th scope=\"col\">읍면동</th>");
-//		sbHtml.append("				<th scope=\"col\">리</th>");
-//		sbHtml.append("				<th scope=\"col\">지번</th>");
-//		sbHtml.append("				<th scope=\"col\">전체 면적</th>");
-//		sbHtml.append("				<th scope=\"col\">연장(m)</th>");
-//		sbHtml.append("				<th scope=\"col\">면적(㎥)</th>");
-//		sbHtml.append("			</tr>");
-//		sbHtml.append("		</thead>");
-//		sbHtml.append("		<thead>");
-//		if (pnu_list.size() > 0) {
-//			for (int i = 0; i < pnu_list.size(); i++) {
-//				sbHtml.append("			<tr>");
-//				sbHtml.append("				<td style=\"text-align: center;\">" + (i + 1) + "</td>");
-//				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("SIDO" + i) + "</span></td>");
-//				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("SGG" + i) + "</span></td>");
-//				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("EMD" + i) + "</span></td>");
-//				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("RI" + i) + "</span></td>");
-//				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("JIBUN" + i) + "</span></td>");
-//				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("JIJUK_AREA" + i) + "</span></td>");
-//				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("GOVER_LENGTH" + i) + "</span></td>");
-//				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("GOVER_AREA" + i) + "</span></td>");
-//				sbHtml.append("			</tr>");
-//			}
-//		} else {
-//			sbHtml.append("			 		<tr>");
-//			sbHtml.append("			 			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>");
-//			sbHtml.append("				 	</tr>");
-//		}
-//		sbHtml.append("		</thead>");
-//		sbHtml.append("	</table>");
-//		sbHtml.append("			 <br>		");
-//		sbHtml.append("			 <!-- *첨부 파일 -->");
-//		sbHtml.append("			 <h4>첨부 파일</h4>");
-//		sbHtml.append("			 <table class=\"base5\">");
-//		sbHtml.append("			 	<colgroup>");
-//		sbHtml.append("			 		<col style=\'width:80%\' />");
-//		sbHtml.append("			 		<col style=\'width:20%\' />");
-//		sbHtml.append("			 	</colgroup>");
-//		sbHtml.append("			 	<thead>");
-//		sbHtml.append("			 		<tr>");
-//		sbHtml.append("			 			<th scope=\"col\">파일명</th>");
-//		sbHtml.append("			 			<th scope=\"col\">파일보기</th>");
-//		sbHtml.append("				 	</tr>");
-//		sbHtml.append("				</thead>");
-//		sbHtml.append("			 	<tbody>");
-//		if (file_list.size() > 0) {
-//			for (int i = 0; i < file_list.size(); i++) {
-//				sbHtml.append("			 		<tr>");
-//				sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>");
-//				String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
-//				sbHtml.append("            <td>                \n");
-//				sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
-//
-//				// 파일다운로드 수정 2017.01.16*/
-//				String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM" + i)), ""); // 파일네임
-//				String type = "";
-//
-//				if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
-//					String pathSplit[] = str_FILE_NM.split("\\.");
-//					type = pathSplit[1].toLowerCase();
-//				}
-//				// System.out.println("type="+type);
-//				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
-//					sbHtml.append("            <script>               \n");
-//					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
-//					sbHtml.append("            </script>               \n");
-//				} else {
-//					sbHtml.append("            <script>               \n");
-//					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
-//					sbHtml.append("            </script>               \n");
-//				}
-//				////
-//
-//				sbHtml.append("            </td>               \n");
-//				sbHtml.append("				 	</tr>");
-//			}
-//		} else {
-//			sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr> 							");
-//		}
-//		sbHtml.append("			 	</tbody>																		");
-//		sbHtml.append("			 </table>																			");
-//		sbHtml.append("         </div>  \n");
-//		sbHtml.append("     </div>      \n");
-//		sbHtml.append(" </body>         \n");
-//		sbHtml.append("                 \n");
-//		sbHtml.append(" </html>         \n");
-//
-//		return sbHtml.toString();
-//
-//	}
 
-//	public String getJisang_termination_HTML(String TYPE, String JISANG_NO, String NextSeq, String FileSeq, String PmtNo, HttpServletRequest request, HttpServletResponse response) {
-//
-//		/** 조회 시작 **/
-//		ArrayList list = new ArrayList();
-//		ArrayList heji_list = new ArrayList();
-//		ArrayList soyu_list = new ArrayList();
-//		ArrayList file_list = new ArrayList();
-//
-//		HashMap kibon_map = new HashMap();
-//		HashMap soyu_map = new HashMap();
-//		HashMap file_map = new HashMap();
-//
-//		CommonUtil cu = new CommonUtil();
-//
-//		String jisangNo = JISANG_NO;
-//		String str_result = "Y";
-//
-//		try {
-//			Map params = new HashMap();
-//			params.put("JISANGNO", jisangNo);
-//			params.put("JISANG_NO", jisangNo);
-//			params.put("FILENO", jisangNo);
-//			params.put("SEQ", NextSeq);
-//			params.put("PMTNO", PmtNo);
-//
-//			// 정보조회
-//			// 기본정보
-//			// 해지정보
-//			// 해지사유 검토의견 등
-//			list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_KibonInfo", params); // 기본정보
-//			heji_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangDetailList", params); // 기본정보
-//			soyu_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_SoujaInfo", params); // 소유자정보
-//			// 첨부파일
-//			params.put("SEQ", FileSeq);
-//			file_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_Files", params); // 첨부파일
-////			System.out.println("$$$ params=" + params);
-//
-//			if (list.size() > 0) {
-//				// 기본정보
-//				kibon_map.put("JISANG_NO", cu.evl((String) ((HashMap) list.get(0)).get("JISANG_NO"), ""));
-//				kibon_map.put("JISA", cu.evl((String) ((HashMap) list.get(0)).get("JISA"), ""));
-//				kibon_map.put("ADDRESS", cu.evl((String) ((HashMap) list.get(0)).get("SIDO_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("SGG_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("EMD_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("RI_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("JIBUN"), ""));
-//				kibon_map.put("SIDO_NM", cu.evl((String) ((HashMap) list.get(0)).get("SIDO_NM"), ""));
-//				kibon_map.put("SGG_NM", cu.evl((String) ((HashMap) list.get(0)).get("SGG_NM"), ""));
-//				kibon_map.put("EMD_NM", cu.evl((String) ((HashMap) list.get(0)).get("EMD_NM"), ""));
-//				kibon_map.put("RI_NM", cu.evl((String) ((HashMap) list.get(0)).get("RI_NM"), ""));
-//				kibon_map.put("JIBUN", cu.evl((String) ((HashMap) list.get(0)).get("JIBUN"), ""));
-//				kibon_map.put("YONGDO", cu.evl((String) ((HashMap) list.get(0)).get("YONGDO"), ""));
-//				kibon_map.put("PIPE_NAME", cu.evl((String) ((HashMap) list.get(0)).get("PIPE_NAME"), ""));
-//				kibon_map.put("PIPE_OVERLAP_YN", cu.evl((String) ((HashMap) list.get(0)).get("PIPE_OVERLAP_YN"), ""));
-//				kibon_map.put("SUN_GUBUN", cu.evl((String) ((HashMap) list.get(0)).get("SUN_GUBUN"), ""));
-//				kibon_map.put("JIJUK_AREA", cu.evl(String.valueOf(((HashMap) list.get(0)).get("JIJUK_AREA")), ""));
-//				kibon_map.put("JIMOK_TEXT", cu.evl((String) ((HashMap) list.get(0)).get("JIMOK_TEXT"), ""));
-//
-//			}
-//			if (heji_list.size() > 0) {
-//				kibon_map.put("CANCLE_DATE", cu.evl((String) ((HashMap) heji_list.get(0)).get("CANCLE_DATE"), ""));
-//				kibon_map.put("CHUIDEUK_MONEY", cu.evl((String) ((HashMap) heji_list.get(0)).get("CHUIDEUK_MONEY"), "0"));
-//				kibon_map.put("GAMMONEY", cu.evl(String.valueOf(((HashMap) heji_list.get(0)).get("GAMMONEY")), "0"));
-//				kibon_map.put("REMAINDER_MONEY", cu.evl(String.valueOf(((HashMap) heji_list.get(0)).get("REMAINDER_MONEY")), "0"));
-//				kibon_map.put("CANCLE_BOSANG_MONEY", cu.evl((String) ((HashMap) heji_list.get(0)).get("CANCLE_BOSANG_MONEY"), "0"));
-//
-//				kibon_map.put("CANCLE_REASON", cu.evl((String) ((HashMap) heji_list.get(0)).get("CANCLE_REASON"), ""));
-//				kibon_map.put("CANCLE_COMMENT", cu.evl((String) ((HashMap) heji_list.get(0)).get("CANCLE_COMMENT"), ""));
-//			}
-////			System.out.println("kibon_map=" + kibon_map);
-//
-//			if (file_list.size() > 0) {
-//				for (int i = 0; i < file_list.size(); i++) {
-//					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("FILE_PATH"), ""));
-//					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("FILE_NM"), ""));
-//
-//				}
-//			}
-//
-////			System.out.println("file_list=" + file_list);
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		/* 조회 끝 */
-//		StringBuffer sbHtml = new StringBuffer();
-//
-//		sbHtml.append(
-//				" <!DOCTYPE html>																																																																																																																																																																																																																																																													\n");
-//		sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\"> \n");
-//		sbHtml.append(sHeader);
-//		sbHtml.append(" <body>          \n");
-//
-//		sbHtml.append("           <form id='file_download_form' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >                   \n");
-//		sbHtml.append("            <input type='hidden' name='file_no' />                  \n");
-//		sbHtml.append("            <input type='hidden' name='file_seq' />                   \n");
-//		sbHtml.append("            <input type='hidden' name='file_gubun' value='jisang' />                  \n");
-//		sbHtml.append("            </form>                 \n");
-//
-//		if (file_list.size() > 0) {
-//			for (int i = 0; i < file_list.size(); i++) {
-//				String str_JISANG_NO = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("JISANG_NO")), "");
-//				String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("FILE_SEQ")), "");
-////				System.out.println("str_JISANG_NO=" + str_JISANG_NO + " , str_FILE_SEQ=" + str_FILE_SEQ);
-//				sbHtml.append("           <form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >                   \n");
-//				sbHtml.append("            <input type='hidden' name='file_no' value='" + str_JISANG_NO + "'/>                  \n");
-//				sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />                   \n");
-//				sbHtml.append("            <input type='hidden' name='file_gubun' value='jisang' />                  \n");
-//				sbHtml.append("            </form>                 \n");
-//			}
-//		}
-//		sbHtml.append("     <!-- wrap -->                    \n");
-//		sbHtml.append("     <div id=\"wrap\">                \n");
-//		sbHtml.append("         <!-- 컨테이너 -->            \n");
-//		sbHtml.append("         <div id=\"container\">       \n");
-//		sbHtml.append("			 <div class=\"title\">		\n");
-//		sbHtml.append("			 	<h2>지상권 해지</h2>		\n");
-//		sbHtml.append("			 </div>		\n");
-//		sbHtml.append("			 <div class=\"article\">		\n");
-//		sbHtml.append("			 <!-- *기본 정보 -->		\n");
-//		sbHtml.append("			 <h4>기본 정보</h4>		\n");
-//
-//		sbHtml.append("<table class=\"base4\">\n");
-//		sbHtml.append("    <colgroup>\n");
-//		sbHtml.append("        <col style=\"width:12%\" />\n");
-//		sbHtml.append("        <col style=\"width:18%\" />\n");
-//		sbHtml.append("        <col style=\"width:12%\" />\n");
-//		sbHtml.append("        <col style=\"width:18%\" />\n");
-//		sbHtml.append("        <col style=\"width:12%\" />\n");
-//		sbHtml.append("        <col style=\"width:18%\" />\n");
-//		sbHtml.append("    </colgroup>\n");
-//		sbHtml.append("    <tbody>\n");
-//		sbHtml.append("        <tr>\n");
-//		sbHtml.append("            <th scope=\"row\">지상권 번호</th>\n");
-//		sbHtml.append("            <td colspan=\"5\" ><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JISANG_NO") + "</span></td>\n");
-//		sbHtml.append("        </tr>\n");
-//		sbHtml.append("        <tr>\n");
-//		sbHtml.append("            <th scope=\"row\">담당지사</th>\n");
-//		sbHtml.append("            <td colspan=\"3\"><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JISA") + "</span></td>\n");
-//		sbHtml.append("            <th scope=\"row\">관로일치여부</th>\n");
-//		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("PIPE_OVERLAP_YN") + "</span></td>\n");
-//		sbHtml.append("        </tr>\n");
-//		sbHtml.append("        <tr>\n");
-//		sbHtml.append("            <th scope=\"row\">용도</th>\n");
-//		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("YONGDO") + "</span></td>\n");
-//		sbHtml.append("            <th scope=\"row\">관로명(구간)</th>\n");
-//		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("PIPE_NAME") + "</span></td>\n");
-//		sbHtml.append("            <th scope=\"row\">단/복선</th>\n");
-//		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("SUN_GUBUN") + "</span></td>\n");
-//		sbHtml.append("        </tr>\n");
-//		sbHtml.append("        <tr>\n");
-//		sbHtml.append("            <th scope=\"row\">시도</th>\n");
-//		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("SIDO_NM") + "</span></td>\n");
-//		sbHtml.append("            <th scope=\"row\">시군구</th>\n");
-//		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("SGG_NM") + "</span></td>\n");
-//		sbHtml.append("            <th scope=\"row\">읍면동</th>\n");
-//		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("EMD_NM") + "</span></td>\n");
-//		sbHtml.append("        </tr>\n");
-//		sbHtml.append("        <tr>\n");
-//		sbHtml.append("            <th scope=\"row\">동리</th>\n");
-//		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("RI_NM") + "</span></td>\n");
-//		sbHtml.append("            <th scope=\"row\">지번</th>\n");
-//		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JIBUN") + "</span></td>\n");
-//		sbHtml.append("            <th scope=\"row\">지적 면적(㎡) / 지목</th>\n");
-//		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JIJUK_AREA") + " / " + kibon_map.get("JIMOK_TEXT") + "</span></td>\n");
-//		sbHtml.append("        </tr>\n");
-//		sbHtml.append("    </tbody>\n");
-//		sbHtml.append("</table>\n");
-//		sbHtml.append("<br>\n");
-//		sbHtml.append("<h4>소유자 정보</h4>\n");
-//		sbHtml.append("        <table class=\"base4\">\n");
-//		sbHtml.append("            <colgroup>\n");
-//		sbHtml.append("                <col style=\"width:10%\" />\n");
-//		sbHtml.append("                <col style=\"width:16%\" />\n");
-//		sbHtml.append("                <col style=\"width:16%\" />\n");
-//		sbHtml.append("                <col style=\"width:26%\" />\n");
-//		sbHtml.append("                <col style=\"width:16%\" />\n");
-//		sbHtml.append("                <col style=\"width:16%\" />\n");
-//		sbHtml.append("            </colgroup>\n");
-//		sbHtml.append("            <thead>\n");
-//		sbHtml.append("            <tr>\n");
-//		sbHtml.append("                <th scope=\"col\">순번</th>\n");
-//		sbHtml.append("                <th scope=\"col\">공유지분</th>\n");
-//		sbHtml.append("                <th scope=\"col\">성명</th>\n");
-//		sbHtml.append("                <th scope=\"col\">주소</th>\n");
-//		sbHtml.append("                <th scope=\"col\">연락처(집)</th>\n");
-//		sbHtml.append("                <th scope=\"col\">연락처(모바일)</th>\n");
-//		sbHtml.append("            </tr>\n");
-//		sbHtml.append("            </thead>\n");
-//		sbHtml.append("            <tbody>\n");
-//
-//		if (soyu_list.size() > 0) {
-//			int count = 1;
-//			for (Object map : soyu_list) {
-//				soyu_map = (HashMap) map;
-//				sbHtml.append("            <tr>\n");
-//				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + count + "</span></td>\n");
-//				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("JIBUN"), "") + "</span></td>\n");
-//				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("SOUJA_NAME"), "") + "</span></td>\n");
-//				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("ADDRESS"), "") + "</span></td>\n");
-//				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("HOME_NUMBER"), "") + "</span></td>\n");
-//				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("PONE_NUMBER"), "") + "</span></td>\n");
-//				sbHtml.append("            </tr>\n");
-//				count++;
-//			}
-//		}
-//		sbHtml.append("            </tbody>\n");
-//		sbHtml.append("        </table>\n");
-//		sbHtml.append("<br>\n");
-//		sbHtml.append("			 <!-- *해지정보 -->\n");
-//		sbHtml.append("			 <h4>해지정보</h4>\n");
-//		sbHtml.append("			 <table class=\'base4\'>\n");
-//		sbHtml.append("			 	<colgroup>\n");
-//		sbHtml.append("			 		<col style=\"width: 20%\" />	\n");
-//		sbHtml.append("			 		<col style=\"width: 16%\" />	\n");
-//		sbHtml.append("			 		<col style=\"width: 16%\" />	\n");
-//		sbHtml.append("			 		<col style=\"width: 16%\" />	\n");
-//		sbHtml.append("			 		<col style=\"width: 16%\" />	\n");
-//		sbHtml.append("			 		<col style=\"width: 16%\" />	\n");
-//		sbHtml.append("			 	</colgroup>\n");
-//		sbHtml.append("            <thead>\n");
-//		sbHtml.append("            <tr>\n");
-//		sbHtml.append("                <th scope=\"col\" rowspan=\"2\">해지일자</th>\n");
-//		sbHtml.append("                <th scope=\"col\" colspan=\"3\">자산 가액</th>\n");
-//		sbHtml.append("                <th scope=\"col\" colspan=\"2\">해지 보상</th>\n");
-//		sbHtml.append("            </tr>\n");
-//		sbHtml.append("            <tr>\n");
-//		sbHtml.append("                <th scope=\"col\">취득 금액</th>\n");
-//		sbHtml.append("                <th scope=\"col\">감가상각충당금</th>\n");
-//		sbHtml.append("                <th scope=\"col\">잔존가액</th>\n");
-//		sbHtml.append("                <th scope=\"col\">보상금액</th>\n");
-//		sbHtml.append("                <th scope=\"col\">보상손익</th>\n");
-//		sbHtml.append("            </tr>\n");
-//		sbHtml.append("            </thead>\n");
-//		sbHtml.append("			 	<tbody>\n");
-//		sbHtml.append("			 	<tr>\n");
-//		sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("CANCLE_DATE") + "</span></td>\n");
-//		sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("CHUIDEUK_MONEY") + "</span></td>\n");
-//		sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("GAMMONEY") + "</span></td>\n");
-//		sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("REMAINDER_MONEY") + "</span></td>\n");
-//		sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("CANCLE_BOSANG_MONEY") + "</span></td>\n");
-//		sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + NumberFormat.getInstance().format((Integer.parseInt(kibon_map.get("CANCLE_BOSANG_MONEY").toString().replace(",", "")) - Integer.parseInt(kibon_map.get("REMAINDER_MONEY").toString().replace(",", "")))) + "</span></td>\n");
-//		sbHtml.append("			 	</tr>\n");
-//		sbHtml.append("			 	</tbody>\n");
-//		sbHtml.append("			 </table>\n");
-//
-//		sbHtml.append("			 <br>		\n");
-//		sbHtml.append("			 <table class=\'base4\'>\n");
-//		sbHtml.append("			 	<colgroup>\n");
-//		sbHtml.append("			 		<col style=\"width: 20%\" />	\n");
-//		sbHtml.append("			 		<col style=\"width: 80%\" />	\n");
-//		sbHtml.append("			 	</colgroup>\n");
-//		sbHtml.append("            <tr>\n");
-//		sbHtml.append("                <th scope=\"col\">해지사유</th>\n");
-//		sbHtml.append("                <td scope=\"col\"><span style=\"width:100%; display:inline-block; text-align:left;\">" + kibon_map.get("CANCLE_REASON") + "</span></td>\n");
-//		sbHtml.append("            </tr>\n");
-//		sbHtml.append("            <tr>\n");
-//		sbHtml.append("                <th scope=\"col\">검토의견</th>\n");
-//		sbHtml.append("                <td scope=\"col\"><span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + CommonUtil.nvl((String) kibon_map.get("CANCLE_COMMENT")).replaceAll("\n", "<br />") + "</span></td>\n");
-//		sbHtml.append("            </tr>\n");
-//		sbHtml.append("			 </table>\n");
-//
-//		sbHtml.append("			 <br>		\n");
-//		sbHtml.append("			 <!-- *첨부 파일 -->\n");
-//		sbHtml.append("			 <h4>첨부 파일</h4>\n");
-//		sbHtml.append("			 <table class=\"base5\">\n");
-//		sbHtml.append("			 	<colgroup>\n");
-//		sbHtml.append("			 		<col style=\'width:80%\' />\n");
-//		sbHtml.append("			 		<col style=\'width:20%\' />\n");
-//		sbHtml.append("			 	</colgroup>\n");
-//		sbHtml.append("			 	<thead>\n");
-//		sbHtml.append("			 		<tr>\n");
-//		sbHtml.append("			 			<th scope=\"col\">파일명</th>\n");
-//		sbHtml.append("			 			<th scope=\"col\">파일보기</th>\n");
-//		sbHtml.append("				 	</tr>\n");
-//		sbHtml.append("				</thead>\n");
-//		sbHtml.append("			 	<tbody>\n");
-//		if (file_list.size() > 0) {
-//			for (int i = 0; i < file_list.size(); i++) {
-//				sbHtml.append("			 		<tr>\n");
-//				sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>\n");
-//				String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
-//				sbHtml.append("            <td>                \n");
-//				sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
-//
-//				// 파일다운로드 수정 2017.01.16*/
-//				String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM" + i)), ""); // 파일네임
-//				String type = "";
-//
-//				if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
-//					String pathSplit[] = str_FILE_NM.split("\\.");
-//					type = pathSplit[1].toLowerCase();
-//				}
-////				 System.out.println("type="+type);
-//				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
-//					sbHtml.append("            <script>               \n");
-//					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
-//					sbHtml.append("            </script>               \n");
-//				} else {
-//					sbHtml.append("            <script>               \n");
-//					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
-//					sbHtml.append("            </script>               \n");
-//				}
-//				////
-//
-//				sbHtml.append("            </td>               \n");
-//				sbHtml.append("	</tr>\n");
-//			}
-//		} else {
-//			sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr> 							");
-//		}
-//		sbHtml.append("			 	</tbody>																		");
-//		sbHtml.append("			 </table>																			");
-//		sbHtml.append("         </div>  \n");
-//		sbHtml.append("     </div>      \n");
-//		sbHtml.append(" </body>         \n");
-//		sbHtml.append("                 \n");
-//		sbHtml.append(" </html>         \n");
-//
-////		System.out.println(sbHtml.toString());
-//
-//		return sbHtml.toString();
-//
-//	}
+			
+			list = (ArrayList) mainService.selectQuery("goverSQL.selectGoverList", params); // 기본정보
+			pnu_list = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPnuList", params); // 소속토지정보
+			pmt_list = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPmtLastForApproval", params); // 허가 정보
+			pay_List = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPayList", params); // 납부실적목록
+			params.put("SEQ", FileSeq);
+
+			for (int i = 0; i < Integer.parseInt(FILE_SIZE); i++) {
+				params.put("FILE_SEQ", parser.getString("gv_fileSeq" + i, "0"));
+			//	file_list.add((HashMap) Database.getInstance().queryForObject("Json.selectGoverRowDetail_FilesObject", params)); // 첨부파일
+				file_list.add((HashMap) mainService.selectHashmapQuery("goverSQL.selectGoverRowDetail_FilesObject", params)); // 첨부파일
+			}
+
+//			System.out.println("$$$ params=" + params);
+			log.info("list:"+list.get(0));
+			if (list.size() > 0) {
+				// 기본정보
+				kibon_map.put("GOVER_NO", cu.evl((String) ((HashMap) list.get(0)).get("gover_no"), ""));
+				kibon_map.put("JISA", cu.evl((String) ((HashMap) list.get(0)).get("jisa"), ""));
+				kibon_map.put("GOVER_OWN_YN", cu.evl((String) ((HashMap) list.get(0)).get("gover_own_yn"), ""));
+				kibon_map.put("YONGDO", cu.evl((String) ((HashMap) list.get(0)).get("yongdo"), ""));
+				kibon_map.put("PIPE_NAME", cu.evl((String) ((HashMap) list.get(0)).get("pipe_name"), ""));
+				kibon_map.put("PIPE_METER", cu.evl(String.valueOf(((HashMap) list.get(0)).get("pipe_meter")), ""));
+				kibon_map.put("PIPE_METER2", cu.evl(String.valueOf(((HashMap) list.get(0)).get("pipe_meter2")), ""));
+				kibon_map.put("SUN_GUBUN", cu.evl((String) ((HashMap) list.get(0)).get("sun_gubun"), ""));
+				kibon_map.put("USE_PURPOS", cu.evl((String) ((HashMap) list.get(0)).get("use_purpos"), ""));
+				kibon_map.put("ADDRESS", cu.evl((String) ((HashMap) list.get(0)).get("sido_nm"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("sgg_nm"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("emd_nm"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("ri_nm"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("jibun"), ""));
+				kibon_map.put("JIMOK_TEXT", cu.evl((String) ((HashMap) list.get(0)).get("jimok_text"), ""));
+				kibon_map.put("JIJUK_AREA", cu.evl((String) ((HashMap) list.get(0)).get("jijuk_area"), ""));
+				kibon_map.put("DOSIPLAN", cu.evl((String) ((HashMap) list.get(0)).get("dosiplan"), ""));
+				kibon_map.put("GOVER_ST_DATE", cu.evl((String) ((HashMap) list.get(0)).get("gover_st_date"), ""));
+				kibon_map.put("GOVER_ED_DATE", cu.evl((String) ((HashMap) list.get(0)).get("gover_ed_date"), ""));
+
+				// 관리기관정보
+				kibon_map.put("PMT_OFFICE", cu.evl((String) ((HashMap) list.get(0)).get("pmt_office"), ""));
+				kibon_map.put("ADM_OFFICE", cu.evl((String) ((HashMap) list.get(0)).get("adm_office"), ""));
+				kibon_map.put("OFFICE_DEPART", cu.evl((String) ((HashMap) list.get(0)).get("office_depart"), ""));
+				kibon_map.put("OFFICE_CHARGE", cu.evl((String) ((HashMap) list.get(0)).get("office_charge"), ""));
+				kibon_map.put("OFFICE_CONTACT", cu.evl((String) ((HashMap) list.get(0)).get("office_contact"), ""));
+				kibon_map.put("OFFICE_MOBILE", cu.evl((String) ((HashMap) list.get(0)).get("office_mobile"), ""));
+			}
+			System.out.println("kibon_map=" + kibon_map);
+			// 점용허가정보
+			if (pmt_list.size() > 0) {
+				pmt_map.put("PMT_NO", cu.evl((String) ((HashMap) pmt_list.get(0)).get("pmt_no"), ""));
+				pmt_map.put("PAY_DATE", cu.evl((String) ((HashMap) pmt_list.get(0)).get("pay_date"), ""));
+				pmt_map.put("PMT_ST_DATE", cu.evl((String) ((HashMap) pmt_list.get(0)).get("pmt_st_date"), ""));
+				pmt_map.put("PMT_ED_DATE", cu.evl((String) ((HashMap) pmt_list.get(0)).get("pmt_ed_date"), ""));
+
+				pmt_map.put("PAY_MONEY", cu.evl((String) ((HashMap) pmt_list.get(0)).get("pay_money"), ""));
+				pmt_map.put("PAY_VAT", cu.evl((String) (((HashMap) pmt_list.get(0)).get("pay_vat")), ""));
+				pmt_map.put("PAY_WAY", cu.evl((String) ((HashMap) pmt_list.get(0)).get("pay_way"), ""));
+			}
+//			System.out.println("pmt_map=" + pmt_map);
+			// 납부실적
+			if (pay_List.size() > 0) {
+				for (int i = 0; i < pay_List.size(); i++) {
+					pay_map.put("PAY_YR" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("pay_yr"), ""));
+					pay_map.put("SEQ" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("seq"), ""));
+					pay_map.put("PAY_DATE" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("pay_date"), ""));
+					pay_map.put("PAY_MONEY" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("pay_money"), ""));
+					pay_map.put("PMT_ST_DATE" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("pmt_st_date"), ""));
+					pay_map.put("PMT_ED_DATE" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("pmt_ed_date"), ""));
+					pay_map.put("ECHO_NO" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("echo_no"), ""));
+				}
+			}
+//			System.out.println("pay_map=" + pay_map);
+
+			if (pnu_list.size() > 0) {
+				for (int i = 0; i < pnu_list.size(); i++) {
+					String SIDO = cu.evl((String) ((HashMap) pnu_list.get(i)).get("sido_nm"), "");
+					String SGG = cu.evl((String) ((HashMap) pnu_list.get(i)).get("sgg_nm"), "");
+					String EMD = cu.evl((String) ((HashMap) pnu_list.get(i)).get("emd_nm"), "");
+					String RI = cu.evl((String) ((HashMap) pnu_list.get(i)).get("ri_nm"), "");
+					String JIBUN = cu.evl((String) ((HashMap) pnu_list.get(i)).get("jibun"), "");
+					String ADDR = "";
+
+					if (!SIDO.equals(""))
+						ADDR += SIDO + " ";
+					if (!SGG.equals(""))
+						ADDR += SGG + " ";
+					if (!EMD.equals(""))
+						ADDR += EMD + " ";
+					if (!RI.equals(""))
+						ADDR += RI + " ";
+					if (!JIBUN.equals(""))
+						ADDR += JIBUN + " ";
+
+					togi_map.put("ADDR" + i, ADDR);
+					togi_map.put("SIDO" + i, SIDO);
+					togi_map.put("SGG" + i, SGG);
+					togi_map.put("EMD" + i, EMD);
+					togi_map.put("RI" + i, RI);
+					togi_map.put("JIBUN" + i, JIBUN);
+					togi_map.put("GOVER_OWN_YN" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("gover_own_yn"), ""));
+					togi_map.put("JIJUK_AREA" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("jijuk_area"), ""));
+					togi_map.put("GOVER_LENGTH" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("gover_length"), ""));
+					togi_map.put("GOVER_AREA" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("gover_area"), ""));
+				}
+			}
+//			System.out.println(togi_map);
+			if (file_list.size() > 0) {
+				for (int i = 0; i < file_list.size(); i++) {
+					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), ""));
+					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), ""));
+
+				}
+			}
+
+//			System.out.println("file_list=" + file_list);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		/* 조회 끝 */
+		StringBuffer sbHtml = new StringBuffer();
+
+		sbHtml.append(
+				" <!DOCTYPE html>																																																																																																																																																																																																																																																													\n");
+		sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\"> \n");
+		sbHtml.append("                 \n");
+		sbHtml.append(sHeader);
+		sbHtml.append("                 \n");
+		sbHtml.append(" <body>          \n");
+
+		sbHtml.append("           <form id='file_download_form' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >                   \n");
+		sbHtml.append("            <input type='hidden' name='file_no' />                  \n");
+		sbHtml.append("            <input type='hidden' name='file_seq' />                   \n");
+		sbHtml.append("            <input type='hidden' name='file_gubun' value='gover' />                  \n");
+		sbHtml.append("            </form>                 \n");
+
+		if (file_list.size() > 0) {
+			for (int i = 0; i < file_list.size(); i++) {
+				String str_GOVER_NO = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("GOVER_NO")), "");
+				String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("FILE_SEQ")), "");
+//				System.out.println("str_GOVER_NO=" + str_GOVER_NO + " , str_FILE_SEQ=" + str_FILE_SEQ);
+				sbHtml.append("           <form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >                   \n");
+				sbHtml.append("            <input type='hidden' name='file_no' value='" + str_GOVER_NO + "'/>                  \n");
+				sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />                   \n");
+				sbHtml.append("            <input type='hidden' name='file_gubun' value='gover' />                  \n");
+				sbHtml.append("            </form>                 \n");
+			}
+		}
+		sbHtml.append("     <!-- wrap -->                    \n");
+		sbHtml.append("     <div id=\"wrap\">                \n");
+		sbHtml.append("         <!-- 컨테이너 -->            \n");
+		sbHtml.append("         <div id=\"container\">       \n");
+		sbHtml.append("			 <div class=\"title\">		");
+		sbHtml.append("			 	<h2>점용료 납부 / 전자결재 상세보기</h2>		");
+		sbHtml.append("			 </div>		");
+		sbHtml.append("			 <div class=\"article\">		");
+		sbHtml.append("			 <!-- *기본 정보 -->		");
+		sbHtml.append("			 <h4>기본 정보</h4>		");
+		sbHtml.append("			 <table class=\"base4\">		");
+		sbHtml.append("			 <colgroup>		");
+		sbHtml.append("			 	<col style=\"width: 10%\" />	");
+		sbHtml.append("			 	<col style=\"width: 23%\" />	");
+		sbHtml.append("			 	<col style=\"width: 10%\" />	");
+		sbHtml.append("			 	<col style=\"width: 23%\" />	");
+		sbHtml.append("			 	<col style=\"width: 10%\" />	");
+		sbHtml.append("			 	<col style=\"width: 24%\" />	");
+		sbHtml.append("			 </colgroup>		");
+		sbHtml.append("			 <tbody>		");
+		sbHtml.append("			 	<tr>		");
+		sbHtml.append("			 		<th scope=\"row\">관로<br />관리번호</th>	");
+		sbHtml.append("			 		<td colspan=\"5\">	");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("GOVER_NO") + "</span>	");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>	");
+		sbHtml.append("			 	<tr>		");
+		sbHtml.append("			 		<th scope=\"row\">담당지사</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JISA") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">국/사유지</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("GOVER_OWN_YN") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">관로저촉여부</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + /* kibon_map.get("관로저촉여부") + */"</span>	"); // TODO: 관로저촉여부 값 입력내용 확인후 수정.=> 추후 관로관리 개발후 정보적용
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>");
+		sbHtml.append("			 	<tr>");
+		sbHtml.append("			 		<th scope=\"row\">용도</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("YONGDO") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">관로명</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("PIPE_NAME") + "</span>");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">단/복선 및 관경</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("SUN_GUBUN") + " / " + kibon_map.get("PIPE_METER") + " / " + kibon_map.get("PIPE_METER2") + "</span>	");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>");
+		sbHtml.append("			 	<tr>");
+		sbHtml.append("			 		<th scope=\"row\">주소</th>	");
+		sbHtml.append("			 		<td colspan=\"5\">	");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("ADDRESS") + "</span>	");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>");
+		sbHtml.append("			 	<tr>");
+		sbHtml.append("			 		<th scope=\"row\">지목</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JIMOK_TEXT") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">지적면적</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JIJUK_AREA") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">토지이용계획</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("DOSIPLAN") + "</span>	");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>");
+		sbHtml.append("			 </tbody>		");
+		sbHtml.append("			 </table>		");
+		sbHtml.append("			 <br>		");
+		sbHtml.append("			 <!-- *관리기관 정보 -->");
+		sbHtml.append("			 <h4>관리기관 정보</h4>");
+		sbHtml.append("			 <table class=\'base4\'>");
+		sbHtml.append("			 	<colgroup>");
+		sbHtml.append("			 		<col style=\"width: 10%\" />	");
+		sbHtml.append("			 		<col style=\"width: 23%\" />	");
+		sbHtml.append("			 		<col style=\"width: 10%\" />	");
+		sbHtml.append("			 		<col style=\"width: 23%\" />	");
+		sbHtml.append("			 		<col style=\"width: 10%\" />	");
+		sbHtml.append("			 		<col style=\"width: 24%\" />	");
+		sbHtml.append("			 	</colgroup>");
+		sbHtml.append("			 	<tbody>");
+		sbHtml.append("			 	<tr>");
+		sbHtml.append("			 		<th scope=\"row\">허가관청</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("PMT_OFFICE") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">관리기관</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("ADM_OFFICE") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">부서</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("OFFICE_DEPART") + "</span>	");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>");
+		sbHtml.append("			 	<tr>");
+		sbHtml.append("			 		<th scope=\"row\">담당자</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("OFFICE_CHARGE") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">연락처</th>	");
+		sbHtml.append("			 		<td colspan=\"3\">");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("OFFICE_CONTACT") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 	</tr>");
+		sbHtml.append("			 	</tbody>");
+		sbHtml.append("			 </table>");
+		sbHtml.append("			 <br>		");
+		sbHtml.append("			 <!-- *납부 정보 -->");
+		sbHtml.append("			 <h4>납부 정보</h4>");
+		sbHtml.append("			 <table class=\"base4\">");
+		sbHtml.append("			 	<colgroup>");
+		sbHtml.append("			 		<col style=\"width: 10%\" />	");
+		sbHtml.append("			 		<col style=\"width: 23%\" />	");
+		sbHtml.append("			 		<col style=\"width: 10%\" />	");
+		sbHtml.append("			 		<col style=\"width: 23%\" />	");
+		sbHtml.append("			 		<col style=\"width: 10%\" />	");
+		sbHtml.append("			 		<col style=\"width: 24%\" />	");
+		sbHtml.append("			 	</colgroup>");
+		sbHtml.append("			 	<tbody>");
+		sbHtml.append("			 	<tr>");
+		sbHtml.append("			 		<th scope=\"row\">허가번호</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PMT_NO") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">납부일</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PAY_DATE") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">유효기간</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PMT_ST_DATE") + " ~ " + pmt_map.get("PMT_ED_DATE") + "</span>	");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>");
+		sbHtml.append("			 	<tr>");
+		sbHtml.append("			 		<th scope=\"row\">금액</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PAY_MONEY") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">VAT.</th>	");
+		sbHtml.append("			 		<td>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PAY_VAT") + "</span>	");
+		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		<th scope=\"row\">합계</th>	");
+		sbHtml.append("			 		<td>");
+		Long sumValue = Long.parseLong((cu.evl((String) pmt_map.get("PAY_MONEY"), "0")).replaceAll(",", ""));
+		sumValue += Long.parseLong((cu.evl((String) pmt_map.get("PAY_VAT"), "0")).replaceAll(",", ""));
+		DecimalFormat df = new DecimalFormat("###,###.##");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + df.format(sumValue) + "</span>	");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>");
+		sbHtml.append("			 	<tr>");
+		sbHtml.append("			 		<th scope=\"row\">납부방법</th>	");
+		sbHtml.append("			 		<td colspan=\"5\">");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PAY_WAY") + "</span>	");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>");
+		sbHtml.append("			 	</tbody>");
+		sbHtml.append("			 </table>");
+		sbHtml.append("			 <br>		");
+		sbHtml.append("	<h4>소속 토지 정보</h4>");
+		sbHtml.append("	<table class=\"base4\">");
+		sbHtml.append("		<colgroup>");
+		sbHtml.append("			<col style=\"width: 10%\" />");
+		sbHtml.append("			<col style=\"width: 10%\" />");
+		sbHtml.append("			<col style=\"width: 10%\" />");
+		sbHtml.append("			<col style=\"width: 10%\" />");
+		sbHtml.append("			<col style=\"width: 10%\" />");
+		sbHtml.append("			<col style=\"width: 10%\" />");
+		sbHtml.append("			<col style=\"width: 10%\" />");
+		sbHtml.append("			<col style=\"width: 10%\" />");
+		sbHtml.append("			<col style=\"width: 10%\" />");
+		sbHtml.append("		</colgroup>");
+		sbHtml.append("		<thead>");
+		sbHtml.append("			<tr>");
+		sbHtml.append("				<th scope=\"col\">순번</th>");
+		sbHtml.append("				<th scope=\"col\">시도</th>");
+		sbHtml.append("				<th scope=\"col\">시군구</th>");
+		sbHtml.append("				<th scope=\"col\">읍면동</th>");
+		sbHtml.append("				<th scope=\"col\">리</th>");
+		sbHtml.append("				<th scope=\"col\">지번</th>");
+		sbHtml.append("				<th scope=\"col\">전체 면적</th>");
+		sbHtml.append("				<th scope=\"col\">연장(m)</th>");
+		sbHtml.append("				<th scope=\"col\">면적(㎥)</th>");
+		sbHtml.append("			</tr>");
+		sbHtml.append("		</thead>");
+		sbHtml.append("		<thead>");
+		if (pnu_list.size() > 0) {
+			for (int i = 0; i < pnu_list.size(); i++) {
+				sbHtml.append("			<tr>");
+				sbHtml.append("				<td style=\"text-align: center;\">" + (i + 1) + "</td>");
+				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("SIDO" + i) + "</span></td>");
+				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("SGG" + i) + "</span></td>");
+				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("EMD" + i) + "</span></td>");
+				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("RI" + i) + "</span></td>");
+				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("JIBUN" + i) + "</span></td>");
+				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("JIJUK_AREA" + i) + "</span></td>");
+				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("GOVER_LENGTH" + i) + "</span></td>");
+				sbHtml.append("				<td><span style=\"width:100%; display:inline-block; text-align:center;\">" + togi_map.get("GOVER_AREA" + i) + "</span></td>");
+				sbHtml.append("			</tr>");
+			}
+		} else {
+			sbHtml.append("			 		<tr>");
+			sbHtml.append("			 			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>");
+			sbHtml.append("				 	</tr>");
+		}
+		sbHtml.append("		</thead>");
+		sbHtml.append("	</table>");
+		sbHtml.append("			 <br>		");
+		sbHtml.append("			 <!-- *첨부 파일 -->");
+		sbHtml.append("			 <h4>첨부 파일</h4>");
+		sbHtml.append("			 <table class=\"base5\">");
+		sbHtml.append("			 	<colgroup>");
+		sbHtml.append("			 		<col style=\'width:80%\' />");
+		sbHtml.append("			 		<col style=\'width:20%\' />");
+		sbHtml.append("			 	</colgroup>");
+		sbHtml.append("			 	<thead>");
+		sbHtml.append("			 		<tr>");
+		sbHtml.append("			 			<th scope=\"col\">파일명</th>");
+		sbHtml.append("			 			<th scope=\"col\">파일보기</th>");
+		sbHtml.append("				 	</tr>");
+		sbHtml.append("				</thead>");
+		sbHtml.append("			 	<tbody>");
+		if (file_list.size() > 0) {
+			for (int i = 0; i < file_list.size(); i++) {
+				sbHtml.append("			 		<tr>");
+				sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>");
+				String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
+				sbHtml.append("            <td>                \n");
+				sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+
+				// 파일다운로드 수정 2017.01.16*/
+				String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM" + i)), ""); // 파일네임
+				String type = "";
+
+				if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+					String pathSplit[] = str_FILE_NM.split("\\.");
+					type = pathSplit[1].toLowerCase();
+				}
+				// System.out.println("type="+type);
+				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+					sbHtml.append("            <script>               \n");
+					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+					sbHtml.append("            </script>               \n");
+				} else {
+					sbHtml.append("            <script>               \n");
+					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+					sbHtml.append("            </script>               \n");
+				}
+				////
+
+				sbHtml.append("            </td>               \n");
+				sbHtml.append("				 	</tr>");
+			}
+		} else {
+			sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr> 							");
+		}
+		sbHtml.append("			 	</tbody>																		");
+		sbHtml.append("			 </table>																			");
+		sbHtml.append("         </div>  \n");
+		sbHtml.append("     </div>      \n");
+		sbHtml.append(" </body>         \n");
+		sbHtml.append("                 \n");
+		sbHtml.append(" </html>         \n");
+		System.out.println(sbHtml.toString());
+		return sbHtml.toString();
+
+	}
+
+	public String getJisang_termination_HTML(String TYPE, String JISANG_NO, String NextSeq, String FileSeq, String PmtNo, HttpServletRequest request, HttpServletResponse response) {
+
+		MainService mainService = context.getBean(MainService.class);
+		/** 조회 시작 **/
+		ArrayList list = new ArrayList();
+		ArrayList heji_list = new ArrayList();
+		ArrayList soyu_list = new ArrayList();
+		ArrayList file_list = new ArrayList();
+
+		HashMap kibon_map = new HashMap();
+		HashMap soyu_map = new HashMap();
+		HashMap file_map = new HashMap();
+
+		CommonUtil cu = new CommonUtil();
+
+		String jisangNo = JISANG_NO;
+		String str_result = "Y";
+
+		try {
+			HashMap params = new HashMap();
+			params.put("JISANGNO", jisangNo);
+			params.put("JISANG_NO", jisangNo);
+			params.put("FILENO", jisangNo);
+			params.put("SEQ", NextSeq);
+			params.put("PMTNO", PmtNo);
+
+			// 정보조회
+			// 기본정보
+			// 해지정보
+			// 해지사유 검토의견 등
+			list=(ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_KibonInfo", params);
+			//list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_KibonInfo", params); // 기본정보
+			heji_list=(ArrayList) mainService.selectQuery("jisangSQL.selectJisangDetailList", params);
+			//heji_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangDetailList", params); // 기본정보
+			soyu_list=(ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_SoujaInfo", params);
+			//soyu_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_SoujaInfo", params); // 소유자정보
+			// 첨부파일
+			params.put("SEQ", FileSeq);
+			file_list=(ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Files", params);
+			
+			//file_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_Files", params); // 첨부파일
+//			System.out.println("$$$ params=" + params);
+
+			if (list.size() > 0) {
+				// 기본정보
+				kibon_map.put("JISANG_NO", cu.evl((String) ((HashMap) list.get(0)).get("JISANG_NO"), ""));
+				kibon_map.put("JISA", cu.evl((String) ((HashMap) list.get(0)).get("JISA"), ""));
+				kibon_map.put("ADDRESS", cu.evl((String) ((HashMap) list.get(0)).get("SIDO_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("SGG_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("EMD_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("RI_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("JIBUN"), ""));
+				kibon_map.put("SIDO_NM", cu.evl((String) ((HashMap) list.get(0)).get("SIDO_NM"), ""));
+				kibon_map.put("SGG_NM", cu.evl((String) ((HashMap) list.get(0)).get("SGG_NM"), ""));
+				kibon_map.put("EMD_NM", cu.evl((String) ((HashMap) list.get(0)).get("EMD_NM"), ""));
+				kibon_map.put("RI_NM", cu.evl((String) ((HashMap) list.get(0)).get("RI_NM"), ""));
+				kibon_map.put("JIBUN", cu.evl((String) ((HashMap) list.get(0)).get("JIBUN"), ""));
+				kibon_map.put("YONGDO", cu.evl((String) ((HashMap) list.get(0)).get("YONGDO"), ""));
+				kibon_map.put("PIPE_NAME", cu.evl((String) ((HashMap) list.get(0)).get("PIPE_NAME"), ""));
+				kibon_map.put("PIPE_OVERLAP_YN", cu.evl((String) ((HashMap) list.get(0)).get("PIPE_OVERLAP_YN"), ""));
+				kibon_map.put("SUN_GUBUN", cu.evl((String) ((HashMap) list.get(0)).get("SUN_GUBUN"), ""));
+				kibon_map.put("JIJUK_AREA", cu.evl(String.valueOf(((HashMap) list.get(0)).get("JIJUK_AREA")), ""));
+				kibon_map.put("JIMOK_TEXT", cu.evl((String) ((HashMap) list.get(0)).get("JIMOK_TEXT"), ""));
+
+			}
+			if (heji_list.size() > 0) {
+				kibon_map.put("CANCLE_DATE", cu.evl((String) ((HashMap) heji_list.get(0)).get("CANCLE_DATE"), ""));
+				kibon_map.put("CHUIDEUK_MONEY", cu.evl((String) ((HashMap) heji_list.get(0)).get("CHUIDEUK_MONEY"), "0"));
+				kibon_map.put("GAMMONEY", cu.evl(String.valueOf(((HashMap) heji_list.get(0)).get("GAMMONEY")), "0"));
+				kibon_map.put("REMAINDER_MONEY", cu.evl(String.valueOf(((HashMap) heji_list.get(0)).get("REMAINDER_MONEY")), "0"));
+				kibon_map.put("CANCLE_BOSANG_MONEY", cu.evl((String) ((HashMap) heji_list.get(0)).get("CANCLE_BOSANG_MONEY"), "0"));
+
+				kibon_map.put("CANCLE_REASON", cu.evl((String) ((HashMap) heji_list.get(0)).get("CANCLE_REASON"), ""));
+				kibon_map.put("CANCLE_COMMENT", cu.evl((String) ((HashMap) heji_list.get(0)).get("CANCLE_COMMENT"), ""));
+			}
+//			System.out.println("kibon_map=" + kibon_map);
+
+			if (file_list.size() > 0) {
+				for (int i = 0; i < file_list.size(); i++) {
+					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ja_file_path"), ""));
+					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ja_file_nm"), ""));
+
+				}
+			}
+
+//			System.out.println("file_list=" + file_list);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		/* 조회 끝 */
+		StringBuffer sbHtml = new StringBuffer();
+
+		sbHtml.append(
+				" <!DOCTYPE html>																																																																																																																																																																																																																																																													\n");
+		sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\"> \n");
+		sbHtml.append(sHeader);
+		sbHtml.append(" <body>          \n");
+
+		sbHtml.append("           <form id='file_download_form' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >                   \n");
+		sbHtml.append("            <input type='hidden' name='file_no' />                  \n");
+		sbHtml.append("            <input type='hidden' name='file_seq' />                   \n");
+		sbHtml.append("            <input type='hidden' name='file_gubun' value='jisang' />                  \n");
+		sbHtml.append("            </form>                 \n");
+
+		if (file_list.size() > 0) {
+			for (int i = 0; i < file_list.size(); i++) {
+				String str_JISANG_NO = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("JISANG_NO")), "");
+				String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("FILE_SEQ")), "");
+//				System.out.println("str_JISANG_NO=" + str_JISANG_NO + " , str_FILE_SEQ=" + str_FILE_SEQ);
+				sbHtml.append("           <form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >                   \n");
+				sbHtml.append("            <input type='hidden' name='file_no' value='" + str_JISANG_NO + "'/>                  \n");
+				sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />                   \n");
+				sbHtml.append("            <input type='hidden' name='file_gubun' value='jisang' />                  \n");
+				sbHtml.append("            </form>                 \n");
+			}
+		}
+		sbHtml.append("     <!-- wrap -->                    \n");
+		sbHtml.append("     <div id=\"wrap\">                \n");
+		sbHtml.append("         <!-- 컨테이너 -->            \n");
+		sbHtml.append("         <div id=\"container\">       \n");
+		sbHtml.append("			 <div class=\"title\">		\n");
+		sbHtml.append("			 	<h2>지상권 해지</h2>		\n");
+		sbHtml.append("			 </div>		\n");
+		sbHtml.append("			 <div class=\"article\">		\n");
+		sbHtml.append("			 <!-- *기본 정보 -->		\n");
+		sbHtml.append("			 <h4>기본 정보</h4>		\n");
+
+		sbHtml.append("<table class=\"base4\">\n");
+		sbHtml.append("    <colgroup>\n");
+		sbHtml.append("        <col style=\"width:12%\" />\n");
+		sbHtml.append("        <col style=\"width:18%\" />\n");
+		sbHtml.append("        <col style=\"width:12%\" />\n");
+		sbHtml.append("        <col style=\"width:18%\" />\n");
+		sbHtml.append("        <col style=\"width:12%\" />\n");
+		sbHtml.append("        <col style=\"width:18%\" />\n");
+		sbHtml.append("    </colgroup>\n");
+		sbHtml.append("    <tbody>\n");
+		sbHtml.append("        <tr>\n");
+		sbHtml.append("            <th scope=\"row\">지상권 번호</th>\n");
+		sbHtml.append("            <td colspan=\"5\" ><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JISANG_NO") + "</span></td>\n");
+		sbHtml.append("        </tr>\n");
+		sbHtml.append("        <tr>\n");
+		sbHtml.append("            <th scope=\"row\">담당지사</th>\n");
+		sbHtml.append("            <td colspan=\"3\"><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JISA") + "</span></td>\n");
+		sbHtml.append("            <th scope=\"row\">관로일치여부</th>\n");
+		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("PIPE_OVERLAP_YN") + "</span></td>\n");
+		sbHtml.append("        </tr>\n");
+		sbHtml.append("        <tr>\n");
+		sbHtml.append("            <th scope=\"row\">용도</th>\n");
+		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("YONGDO") + "</span></td>\n");
+		sbHtml.append("            <th scope=\"row\">관로명(구간)</th>\n");
+		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("PIPE_NAME") + "</span></td>\n");
+		sbHtml.append("            <th scope=\"row\">단/복선</th>\n");
+		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("SUN_GUBUN") + "</span></td>\n");
+		sbHtml.append("        </tr>\n");
+		sbHtml.append("        <tr>\n");
+		sbHtml.append("            <th scope=\"row\">시도</th>\n");
+		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("SIDO_NM") + "</span></td>\n");
+		sbHtml.append("            <th scope=\"row\">시군구</th>\n");
+		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("SGG_NM") + "</span></td>\n");
+		sbHtml.append("            <th scope=\"row\">읍면동</th>\n");
+		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("EMD_NM") + "</span></td>\n");
+		sbHtml.append("        </tr>\n");
+		sbHtml.append("        <tr>\n");
+		sbHtml.append("            <th scope=\"row\">동리</th>\n");
+		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("RI_NM") + "</span></td>\n");
+		sbHtml.append("            <th scope=\"row\">지번</th>\n");
+		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JIBUN") + "</span></td>\n");
+		sbHtml.append("            <th scope=\"row\">지적 면적(㎡) / 지목</th>\n");
+		sbHtml.append("            <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JIJUK_AREA") + " / " + kibon_map.get("JIMOK_TEXT") + "</span></td>\n");
+		sbHtml.append("        </tr>\n");
+		sbHtml.append("    </tbody>\n");
+		sbHtml.append("</table>\n");
+		sbHtml.append("<br>\n");
+		sbHtml.append("<h4>소유자 정보</h4>\n");
+		sbHtml.append("        <table class=\"base4\">\n");
+		sbHtml.append("            <colgroup>\n");
+		sbHtml.append("                <col style=\"width:10%\" />\n");
+		sbHtml.append("                <col style=\"width:16%\" />\n");
+		sbHtml.append("                <col style=\"width:16%\" />\n");
+		sbHtml.append("                <col style=\"width:26%\" />\n");
+		sbHtml.append("                <col style=\"width:16%\" />\n");
+		sbHtml.append("                <col style=\"width:16%\" />\n");
+		sbHtml.append("            </colgroup>\n");
+		sbHtml.append("            <thead>\n");
+		sbHtml.append("            <tr>\n");
+		sbHtml.append("                <th scope=\"col\">순번</th>\n");
+		sbHtml.append("                <th scope=\"col\">공유지분</th>\n");
+		sbHtml.append("                <th scope=\"col\">성명</th>\n");
+		sbHtml.append("                <th scope=\"col\">주소</th>\n");
+		sbHtml.append("                <th scope=\"col\">연락처(집)</th>\n");
+		sbHtml.append("                <th scope=\"col\">연락처(모바일)</th>\n");
+		sbHtml.append("            </tr>\n");
+		sbHtml.append("            </thead>\n");
+		sbHtml.append("            <tbody>\n");
+
+		if (soyu_list.size() > 0) {
+			int count = 1;
+			for (Object map : soyu_list) {
+				soyu_map = (HashMap) map;
+				sbHtml.append("            <tr>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + count + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("JIBUN"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("SOUJA_NAME"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("ADDRESS"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("HOME_NUMBER"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("PONE_NUMBER"), "") + "</span></td>\n");
+				sbHtml.append("            </tr>\n");
+				count++;
+			}
+		}
+		sbHtml.append("            </tbody>\n");
+		sbHtml.append("        </table>\n");
+		sbHtml.append("<br>\n");
+		sbHtml.append("			 <!-- *해지정보 -->\n");
+		sbHtml.append("			 <h4>해지정보</h4>\n");
+		sbHtml.append("			 <table class=\'base4\'>\n");
+		sbHtml.append("			 	<colgroup>\n");
+		sbHtml.append("			 		<col style=\"width: 20%\" />	\n");
+		sbHtml.append("			 		<col style=\"width: 16%\" />	\n");
+		sbHtml.append("			 		<col style=\"width: 16%\" />	\n");
+		sbHtml.append("			 		<col style=\"width: 16%\" />	\n");
+		sbHtml.append("			 		<col style=\"width: 16%\" />	\n");
+		sbHtml.append("			 		<col style=\"width: 16%\" />	\n");
+		sbHtml.append("			 	</colgroup>\n");
+		sbHtml.append("            <thead>\n");
+		sbHtml.append("            <tr>\n");
+		sbHtml.append("                <th scope=\"col\" rowspan=\"2\">해지일자</th>\n");
+		sbHtml.append("                <th scope=\"col\" colspan=\"3\">자산 가액</th>\n");
+		sbHtml.append("                <th scope=\"col\" colspan=\"2\">해지 보상</th>\n");
+		sbHtml.append("            </tr>\n");
+		sbHtml.append("            <tr>\n");
+		sbHtml.append("                <th scope=\"col\">취득 금액</th>\n");
+		sbHtml.append("                <th scope=\"col\">감가상각충당금</th>\n");
+		sbHtml.append("                <th scope=\"col\">잔존가액</th>\n");
+		sbHtml.append("                <th scope=\"col\">보상금액</th>\n");
+		sbHtml.append("                <th scope=\"col\">보상손익</th>\n");
+		sbHtml.append("            </tr>\n");
+		sbHtml.append("            </thead>\n");
+		sbHtml.append("			 	<tbody>\n");
+		sbHtml.append("			 	<tr>\n");
+		sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("CANCLE_DATE") + "</span></td>\n");
+		sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("CHUIDEUK_MONEY") + "</span></td>\n");
+		sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("GAMMONEY") + "</span></td>\n");
+		sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("REMAINDER_MONEY") + "</span></td>\n");
+		sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("CANCLE_BOSANG_MONEY") + "</span></td>\n");
+		sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + NumberFormat.getInstance().format((Integer.parseInt(kibon_map.get("CANCLE_BOSANG_MONEY").toString().replace(",", "")) - Integer.parseInt(kibon_map.get("REMAINDER_MONEY").toString().replace(",", "")))) + "</span></td>\n");
+		sbHtml.append("			 	</tr>\n");
+		sbHtml.append("			 	</tbody>\n");
+		sbHtml.append("			 </table>\n");
+
+		sbHtml.append("			 <br>		\n");
+		sbHtml.append("			 <table class=\'base4\'>\n");
+		sbHtml.append("			 	<colgroup>\n");
+		sbHtml.append("			 		<col style=\"width: 20%\" />	\n");
+		sbHtml.append("			 		<col style=\"width: 80%\" />	\n");
+		sbHtml.append("			 	</colgroup>\n");
+		sbHtml.append("            <tr>\n");
+		sbHtml.append("                <th scope=\"col\">해지사유</th>\n");
+		sbHtml.append("                <td scope=\"col\"><span style=\"width:100%; display:inline-block; text-align:left;\">" + kibon_map.get("CANCLE_REASON") + "</span></td>\n");
+		sbHtml.append("            </tr>\n");
+		sbHtml.append("            <tr>\n");
+		sbHtml.append("                <th scope=\"col\">검토의견</th>\n");
+		sbHtml.append("                <td scope=\"col\"><span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + CommonUtil.nvl((String) kibon_map.get("CANCLE_COMMENT")).replaceAll("\n", "<br />") + "</span></td>\n");
+		sbHtml.append("            </tr>\n");
+		sbHtml.append("			 </table>\n");
+
+		sbHtml.append("			 <br>		\n");
+		sbHtml.append("			 <!-- *첨부 파일 -->\n");
+		sbHtml.append("			 <h4>첨부 파일</h4>\n");
+		sbHtml.append("			 <table class=\"base5\">\n");
+		sbHtml.append("			 	<colgroup>\n");
+		sbHtml.append("			 		<col style=\'width:80%\' />\n");
+		sbHtml.append("			 		<col style=\'width:20%\' />\n");
+		sbHtml.append("			 	</colgroup>\n");
+		sbHtml.append("			 	<thead>\n");
+		sbHtml.append("			 		<tr>\n");
+		sbHtml.append("			 			<th scope=\"col\">파일명</th>\n");
+		sbHtml.append("			 			<th scope=\"col\">파일보기</th>\n");
+		sbHtml.append("				 	</tr>\n");
+		sbHtml.append("				</thead>\n");
+		sbHtml.append("			 	<tbody>\n");
+		if (file_list.size() > 0) {
+			for (int i = 0; i < file_list.size(); i++) {
+				sbHtml.append("			 		<tr>\n");
+				sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>\n");
+				String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
+				sbHtml.append("            <td>                \n");
+				sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+
+				// 파일다운로드 수정 2017.01.16*/
+				String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM" + i)), ""); // 파일네임
+				String type = "";
+
+				if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+					String pathSplit[] = str_FILE_NM.split("\\.");
+					type = pathSplit[1].toLowerCase();
+				}
+//				 System.out.println("type="+type);
+				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+					sbHtml.append("            <script>               \n");
+					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+					sbHtml.append("            </script>               \n");
+				} else {
+					sbHtml.append("            <script>               \n");
+					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+					sbHtml.append("            </script>               \n");
+				}
+				////
+
+				sbHtml.append("            </td>               \n");
+				sbHtml.append("	</tr>\n");
+			}
+		} else {
+			sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr> 							");
+		}
+		sbHtml.append("			 	</tbody>																		");
+		sbHtml.append("			 </table>																			");
+		sbHtml.append("         </div>  \n");
+		sbHtml.append("     </div>      \n");
+		sbHtml.append(" </body>         \n");
+		sbHtml.append("                 \n");
+		sbHtml.append(" </html>         \n");
+
+		System.out.println(sbHtml.toString());
+
+		return sbHtml.toString();
+
+	}
 
 	/**
 	 * 지상권 분할 상신 HTML 제작
@@ -1901,184 +1917,186 @@ log.info("ori_list:"+ori_list);
 	}
 
 //	// 지상권 합필 전자결재 HTML
-//	public String getJisang_merge_HTML(String JISANG_NO, HttpServletRequest request, HttpServletResponse response) throws SQLException {
-//
-//		StringBuffer sbHtml = new StringBuffer();
-//		HashMap param = new HashMap();
-//		HashMap<String, String> mainData = new HashMap<String, String>();
-//
-//		param.put("REP_JISANG_NO", JISANG_NO);
-//		ArrayList<HashMap<String, String>> jisangMergeList = (ArrayList<HashMap<String, String>>) Database.getInstance().queryForList("Json.selectJisangMergeSaveList", param);
-//
-//		for (int i = 0; i < jisangMergeList.size(); i++) {
-//			param.put("JISANGNO", jisangMergeList.get(i).get("JISANG_NO"));
+	public String getJisang_merge_HTML(String JISANG_NO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		MainService mainService = context.getBean(MainService.class);
+		StringBuffer sbHtml = new StringBuffer();
+		HashMap param = new HashMap();
+		HashMap<String, String> mainData = new HashMap<String, String>();
+
+		param.put("REP_JISANG_NO", JISANG_NO);
+		//ArrayList<HashMap<String, String>> jisangMergeList = (ArrayList<HashMap<String, String>>) Database.getInstance().queryForList("Json.selectJisangMergeSaveList", param);
+		ArrayList<HashMap> jisangMergeList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectJisangMergeSaveList", param);
+
+		for (int i = 0; i < jisangMergeList.size(); i++) {
+			param.put("JISANGNO", jisangMergeList.get(i).get("jisang_no"));
 //			List<HashMap<String, String>> soyuList = Database.getInstance().queryForList("Json.selectJisangDetailSoyu", param);
-//			jisangMergeList.get(i).put("SOUJA_NAME", (soyuList.size() > 0 ? soyuList.get(0).get("SOUJA_NAME") : ""));
-//			if ("Y".equals(jisangMergeList.get(i).get("MAIN_FLAG"))) {
-//				mainData = jisangMergeList.get(i);
-//			}
-//
-//		}
-//
-//		// 합계정보 처리
-//		double sumJijuk = 0.0;
-//		double sumPyeonib = 0.0;
-//		int sumSetMoney = 0;
-//		for (HashMap<String, String> datas : jisangMergeList) {
-//			sumJijuk += Double.parseDouble(CommonUtil.evl(String.valueOf(datas.get("JIJUK_AREA")), "0"));
-//			sumPyeonib += Double.parseDouble(CommonUtil.evl(String.valueOf(datas.get("PYEONIB_AREA")), "0"));
-//			sumSetMoney += Integer.parseInt(CommonUtil.evl(String.valueOf(datas.get("SET_MONEY")), "0"));
-//		}
-////		sumJijuk += Double.parseDouble(CommonUtil.evl(String.valueOf(mainData.get("JIJUK_AREA")), "0"));
-////		sumPyeonib += Double.parseDouble(CommonUtil.evl(String.valueOf(mainData.get("PYEONIB_AREA")), "0"));
-////		sumSetMoney += Integer.parseInt(CommonUtil.evl(String.valueOf(mainData.get("SET_MONEY")), "0"));
-//
-//		sbHtml.append(
-//				" <!DOCTYPE html>               																																																																																																																																																																																																																			\n");
-//		sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\">                \n");
-//		sbHtml.append("           \n");
-//		sbHtml.append(sHeader);
-//		sbHtml.append("           \n");
-//		sbHtml.append(" <body>    \n");
-//		sbHtml.append("     <!-- wrap -->              \n");
-//		sbHtml.append("     <div id=\"wrap\">          \n");
-//		sbHtml.append("         <!-- 컨테이너 -->      \n");
-//		sbHtml.append("         <div id=\"container\"> \n");
-//		sbHtml.append("			 	<div class=\"title\">		");
-//		sbHtml.append("			 		<h2>지상권 합필 상신</h2>		");
-//		sbHtml.append("			 	</div>		");
-//		sbHtml.append("<div class=\"article\">\n");
-//		sbHtml.append("		<!-- * 대상토지 -->\n");
-//		sbHtml.append("		<h4>대상토지</h4>\n");
-//		sbHtml.append("			<table class=\"base4\" style=\"table-layout: fixed;\">\n");
-//		sbHtml.append("				<colgroup>\n");
-//		sbHtml.append("					<col style=\"width: 10%\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%\" />\n");
-//		sbHtml.append("					<col style=\"width: 20%\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%\" />\n");
-//		sbHtml.append("				</colgroup>\n");
-//		sbHtml.append("						<thead>\n");
-//		sbHtml.append("							<tr>\n");
-//		sbHtml.append("								<th scope=\"col\" rowspan=\"2\">지상권 번호</th>\n");
-//		sbHtml.append("								<th scope=\"col\" rowspan=\"2\">대표<br />지상권</th>\n");
-//		sbHtml.append("								<th scope=\"col\" rowspan=\"2\">주소</th>\n");
-//		sbHtml.append("								<th scope=\"col\" colspan=\"5\">지상권 설정</th>\n");
-//		sbHtml.append("								<th scope=\"col\" rowspan=\"2\">소유자</th>\n");
+			ArrayList<HashMap> soyuList = mainService.selectQuery("jisangSQL.selectJisangDetailSoyu", param);
+			jisangMergeList.get(i).put("SOUJA_NAME", (soyuList.size() > 0 ? soyuList.get(0).get("souja_name") : ""));
+			if ("Y".equals(jisangMergeList.get(i).get("main_flag"))) {
+				mainData = jisangMergeList.get(i);
+			}
+
+		}
+
+		// 합계정보 처리
+		double sumJijuk = 0.0;
+		double sumPyeonib = 0.0;
+		int sumSetMoney = 0;
+		for (HashMap<String, String> datas : jisangMergeList) {
+			sumJijuk += Double.parseDouble(CommonUtil.evl(String.valueOf(datas.get("jijuk_area")), "0"));
+			sumPyeonib += Double.parseDouble(CommonUtil.evl(String.valueOf(datas.get("pyeonib_area")), "0"));
+			sumSetMoney += Integer.parseInt(CommonUtil.evl(String.valueOf(datas.get("set_money")), "0"));
+		}
+//		sumJijuk += Double.parseDouble(CommonUtil.evl(String.valueOf(mainData.get("JIJUK_AREA")), "0"));
+//		sumPyeonib += Double.parseDouble(CommonUtil.evl(String.valueOf(mainData.get("PYEONIB_AREA")), "0"));
+//		sumSetMoney += Integer.parseInt(CommonUtil.evl(String.valueOf(mainData.get("SET_MONEY")), "0"));
+
+		sbHtml.append(
+				" <!DOCTYPE html>               																																																																																																																																																																																																																			\n");
+		sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\">                \n");
+		sbHtml.append("           \n");
+		sbHtml.append(sHeader);
+		sbHtml.append("           \n");
+		sbHtml.append(" <body>    \n");
+		sbHtml.append("     <!-- wrap -->              \n");
+		sbHtml.append("     <div id=\"wrap\">          \n");
+		sbHtml.append("         <!-- 컨테이너 -->      \n");
+		sbHtml.append("         <div id=\"container\"> \n");
+		sbHtml.append("			 	<div class=\"title\">		");
+		sbHtml.append("			 		<h2>지상권 합필 상신</h2>		");
+		sbHtml.append("			 	</div>		");
+		sbHtml.append("<div class=\"article\">\n");
+		sbHtml.append("		<!-- * 대상토지 -->\n");
+		sbHtml.append("		<h4>대상토지</h4>\n");
+		sbHtml.append("			<table class=\"base4\" style=\"table-layout: fixed;\">\n");
+		sbHtml.append("				<colgroup>\n");
+		sbHtml.append("					<col style=\"width: 10%\" />\n");
+		sbHtml.append("					<col style=\"width: 10%\" />\n");
+		sbHtml.append("					<col style=\"width: 20%\" />\n");
+		sbHtml.append("					<col style=\"width: 10%\" />\n");
+		sbHtml.append("					<col style=\"width: 10%\" />\n");
+		sbHtml.append("					<col style=\"width: 10%\" />\n");
+		sbHtml.append("					<col style=\"width: 10%\" />\n");
+		sbHtml.append("					<col style=\"width: 10%\" />\n");
+		sbHtml.append("					<col style=\"width: 10%\" />\n");
+		sbHtml.append("				</colgroup>\n");
+		sbHtml.append("						<thead>\n");
+		sbHtml.append("							<tr>\n");
+		sbHtml.append("								<th scope=\"col\" rowspan=\"2\">지상권 번호</th>\n");
+		sbHtml.append("								<th scope=\"col\" rowspan=\"2\">대표<br />지상권</th>\n");
+		sbHtml.append("								<th scope=\"col\" rowspan=\"2\">주소</th>\n");
+		sbHtml.append("								<th scope=\"col\" colspan=\"5\">지상권 설정</th>\n");
+		sbHtml.append("								<th scope=\"col\" rowspan=\"2\">소유자</th>\n");
+		sbHtml.append("							</tr>\n");
+		sbHtml.append("							<tr>\n");
+		sbHtml.append("								<th scope=\"col\">지목</th>\n");
+		sbHtml.append("								<th scope=\"col\">지적면적(㎡)</th>\n");
+		sbHtml.append("								<th scope=\"col\">편입면적(㎡)</th>\n");
+		sbHtml.append("								<th scope=\"col\">설정금액</th>\n");
+		sbHtml.append("								<th scope=\"col\">자산번호</th>\n");
+		sbHtml.append("							</tr>\n");
+		sbHtml.append("						</thead>\n");
+		sbHtml.append("						<tbody id=\"merge_insert_togiBody\">\n");
+//		sbHtml.append("						<tr>\n");
+//		sbHtml.append("								<td>"+CommonUtil.nvl((String)mainData.get("JISANG_NO"))+"</td>\n");
+//		sbHtml.append("								<td class=\"inner_tag\">\n");
+//		sbHtml.append("									<input type=\"checkbox\" checked=\"checked\""+ "/>\n");
+//		sbHtml.append("								</td>\n");
+//		sbHtml.append("								<td>\n");
+//		sbHtml.append(CommonUtil.nvl((String)mainData.get("SIDO_NM")) + " "+CommonUtil.nvl((String)mainData.get("SGG_NM")) + " "+CommonUtil.nvl((String)mainData.get("EMD_NM")) + " "+CommonUtil.nvl((String)mainData.get("RI_NM")) + " "+CommonUtil.nvl((String)mainData.get("JIBUN")));
+//		sbHtml.append("								</td>\n");
+//		sbHtml.append("								<td>"+CommonUtil.nvl((String)mainData.get("JIMOK_TEXT"))+"</td>\n");
+//		sbHtml.append("								<td>"+CommonUtil.nvl(String.valueOf(mainData.get("JIJUK_AREA")))+"</td>\n");
+//		sbHtml.append("								<td>"+CommonUtil.nvl(String.valueOf(mainData.get("PYEONIB_AREA")))+"</td>\n");
+//		sbHtml.append("								<td>"+CommonUtil.nvl(String.valueOf(mainData.get("SET_MONEY")))+"</td>\n");
+//		sbHtml.append("								<td>"+CommonUtil.nvl((String)mainData.get("JASAN_NO"))+"</td>\n");
+//		sbHtml.append("								<td></td>\n");
 //		sbHtml.append("							</tr>\n");
-//		sbHtml.append("							<tr>\n");
-//		sbHtml.append("								<th scope=\"col\">지목</th>\n");
-//		sbHtml.append("								<th scope=\"col\">지적면적(㎡)</th>\n");
-//		sbHtml.append("								<th scope=\"col\">편입면적(㎡)</th>\n");
-//		sbHtml.append("								<th scope=\"col\">설정금액</th>\n");
-//		sbHtml.append("								<th scope=\"col\">자산번호</th>\n");
-//		sbHtml.append("							</tr>\n");
-//		sbHtml.append("						</thead>\n");
-//		sbHtml.append("						<tbody id=\"merge_insert_togiBody\">\n");
-////		sbHtml.append("						<tr>\n");
-////		sbHtml.append("								<td>"+CommonUtil.nvl((String)mainData.get("JISANG_NO"))+"</td>\n");
-////		sbHtml.append("								<td class=\"inner_tag\">\n");
-////		sbHtml.append("									<input type=\"checkbox\" checked=\"checked\""+ "/>\n");
-////		sbHtml.append("								</td>\n");
-////		sbHtml.append("								<td>\n");
-////		sbHtml.append(CommonUtil.nvl((String)mainData.get("SIDO_NM")) + " "+CommonUtil.nvl((String)mainData.get("SGG_NM")) + " "+CommonUtil.nvl((String)mainData.get("EMD_NM")) + " "+CommonUtil.nvl((String)mainData.get("RI_NM")) + " "+CommonUtil.nvl((String)mainData.get("JIBUN")));
-////		sbHtml.append("								</td>\n");
-////		sbHtml.append("								<td>"+CommonUtil.nvl((String)mainData.get("JIMOK_TEXT"))+"</td>\n");
-////		sbHtml.append("								<td>"+CommonUtil.nvl(String.valueOf(mainData.get("JIJUK_AREA")))+"</td>\n");
-////		sbHtml.append("								<td>"+CommonUtil.nvl(String.valueOf(mainData.get("PYEONIB_AREA")))+"</td>\n");
-////		sbHtml.append("								<td>"+CommonUtil.nvl(String.valueOf(mainData.get("SET_MONEY")))+"</td>\n");
-////		sbHtml.append("								<td>"+CommonUtil.nvl((String)mainData.get("JASAN_NO"))+"</td>\n");
-////		sbHtml.append("								<td></td>\n");
-////		sbHtml.append("							</tr>\n");
-//		for (HashMap<String, String> datas : jisangMergeList) {
-//			sbHtml.append("						<tr>\n");
-//			sbHtml.append("							<td>" + CommonUtil.nvl((String) datas.get("JISANG_NO")) + "</td>\n");
-//			sbHtml.append("							<td class=\"inner_tag\">\n");
-//			sbHtml.append("								" + ("Y".equals(datas.get("MAIN_FLAG")) ? "Y" : "N") + "\n");
-//			sbHtml.append("							</td>\n");
-//			sbHtml.append("							<td>\n");
-//			sbHtml.append(CommonUtil.nvl((String) datas.get("SIDO_NM")) + " " + CommonUtil.nvl((String) datas.get("SGG_NM")) + " " + CommonUtil.nvl((String) datas.get("EMD_NM")) + " " + CommonUtil.nvl((String) datas.get("RI_NM")) + " " + CommonUtil.nvl((String) datas.get("JIBUN")));
-//			sbHtml.append("							</td>\n");
-//			sbHtml.append("							<td>" + CommonUtil.nvl((String) datas.get("JIMOK_TEXT")) + "</td>\n");
-//			sbHtml.append("							<td>" + CommonUtil.nvl(String.valueOf(datas.get("JIJUK_AREA"))) + "</td>\n");
-//			sbHtml.append("							<td>" + CommonUtil.nvl(String.valueOf(datas.get("PYEONIB_AREA"))) + "</td>\n");
-//			sbHtml.append("							<td>" + CommonUtil.nvl(String.valueOf(datas.get("SET_MONEY"))) + "</td>\n");
-//			sbHtml.append("							<td>" + CommonUtil.nvl((String) datas.get("JASAN_NO")) + "</td>\n");
-//			sbHtml.append("							<td>" + CommonUtil.nvl((String) datas.get("SOUJA_NAME")) + "</td>\n");
-//			sbHtml.append("						</tr>\n");
-//		}
-//		sbHtml.append("						</tbody>\n");
-//		sbHtml.append("			</table>\n");
-//		sbHtml.append("			<br>\n");
-//		sbHtml.append("			<h4>합병 토지</h4>\n");
-//		sbHtml.append("			<table class=\"base4\">\n");
-//		sbHtml.append("				<colgroup>\n");
-//		sbHtml.append("					<col style=\"width: 10%;\" />\n");
-//		sbHtml.append("					<col style=\"width: 30%;\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%;\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%;\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%;\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%;\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%;\" />\n");
-//		sbHtml.append("					<col style=\"width: 10%;\" />\n");
-//		sbHtml.append("				</colgroup>\n");
-//		sbHtml.append("				<thead>\n");
-//		sbHtml.append("					<tr>\n");
-//		sbHtml.append("						<th rowspan=\"2\">지상권번호</th>\n");
-//		sbHtml.append("						<th rowspan=\"2\">주소</th>\n");
-//		sbHtml.append("						<th colspan=\"5\">지상권설정</th>\n");
-//		sbHtml.append("						<th rowspan=\"2\">소유자</th>\n");
-//		sbHtml.append("					</tr>\n");
-//		sbHtml.append("					<tr>\n");
-//		sbHtml.append("						<th>지목</th>\n");
-//		sbHtml.append("						<th>지적 면적</th>\n");
-//		sbHtml.append("						<th>편입 면적</th>\n");
-//		sbHtml.append("						<th>설정 금액</th>\n");
-//		sbHtml.append("						<th>자산번호</th>\n");
-//		sbHtml.append("					</tr>\n");
-//		sbHtml.append("				</thead>\n");
-//		sbHtml.append("				<tbody>\n");
-//		sbHtml.append("					<tr>\n");
-//		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) mainData.get("JISANG_NO")) + "</td>\n");
-//		String juso = CommonUtil.nvl((String) mainData.get("SIDO_NM")) + " " + CommonUtil.nvl((String) mainData.get("SGG_NM")) + " " + CommonUtil.nvl((String) mainData.get("EMD_NM")) + " " + CommonUtil.nvl((String) mainData.get("RI_NM")) + " " + CommonUtil.nvl((String) mainData.get("JIBUN"));
-//		sbHtml.append("						<td style=\"text-align:center;\">" + juso + "</td>\n");
-//		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) mainData.get("JIMOK_TEXT")) + "</td>\n");
-//		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) String.valueOf(sumJijuk)) + "</td>\n");
-//		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) String.valueOf(sumPyeonib)) + "</td>\n");
-//		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) String.valueOf(sumSetMoney)) + "</td>\n");
-//		sbHtml.append("						<td style=\"text-align:center;\">" + mainData.get("JASAN_NO") + "</td>\n");
-//		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) mainData.get("SOUJA_NAME")) + "</td>\n");
-//		sbHtml.append("					</tr>\n");
-//		sbHtml.append("				</tbody>\n");
-//		sbHtml.append("			</table>\n");
-//		sbHtml.append("			<br>\n");
-//		sbHtml.append("			<h4>합병사유 및 검토의견</h4>\n");
-//		sbHtml.append("			<table class=\"base4\">\n");
-//		sbHtml.append("				<colgroup>\n");
-//		sbHtml.append("					<col style=\"width: 20%\" />\n");
-//		sbHtml.append("					<col style=\"width: 80%\" />\n");
-//		sbHtml.append("				</colgroup>\n");
-//		sbHtml.append("				<tr>\n");
-//		sbHtml.append("					<th>합병사유</th>\n");
-//		sbHtml.append("					<td class=\"inner_tag\">" + CommonUtil.nvl((String) mainData.get("MERGE_REASON")) + "</td>\n");
-//		sbHtml.append("				</tr>\n");
-//		sbHtml.append("				<tr>\n");
-//		sbHtml.append("					<th>검토의견</th>\n");
-//		sbHtml.append("					<td class=\"inner_tag\">" + CommonUtil.nvl((String) mainData.get("MERGE_COMMENT")).replaceAll("\n", "<br />") + "</td>\n");
-//		sbHtml.append("				</tr>\n");
-//		sbHtml.append("			</table>\n");
-//		sbHtml.append("	</div>\n");
-//		sbHtml.append("	</div>\n");
-//		sbHtml.append("	</div>\n");
-//		sbHtml.append("</body>         \n");
-//		sbHtml.append("</html>         \n");
-//
-//		return sbHtml.toString();
-//	}
+		for (HashMap<String, String> datas : jisangMergeList) {
+			sbHtml.append("						<tr>\n");
+			sbHtml.append("							<td>" + CommonUtil.nvl((String) datas.get("jisang_no")) + "</td>\n");
+			sbHtml.append("							<td class=\"inner_tag\">\n");
+			sbHtml.append("								" + ("Y".equals(datas.get("main_flag")) ? "Y" : "N") + "\n");
+			sbHtml.append("							</td>\n");
+			sbHtml.append("							<td>\n");
+			sbHtml.append(CommonUtil.nvl((String) datas.get("sido_nm")) + " " + CommonUtil.nvl((String) datas.get("sgg_nm")) + " " + CommonUtil.nvl((String) datas.get("emd_nm")) + " " + CommonUtil.nvl((String) datas.get("ri_nm")) + " " + CommonUtil.nvl((String) datas.get("jibun")));
+			sbHtml.append("							</td>\n");
+			sbHtml.append("							<td>" + CommonUtil.nvl((String) datas.get("jimok_text")) + "</td>\n");
+			sbHtml.append("							<td>" + CommonUtil.nvl(String.valueOf(datas.get("jijuk_area"))) + "</td>\n");
+			sbHtml.append("							<td>" + CommonUtil.nvl(String.valueOf(datas.get("pyeonib_area"))) + "</td>\n");
+			sbHtml.append("							<td>" + CommonUtil.nvl(String.valueOf(datas.get("set_money"))) + "</td>\n");
+			sbHtml.append("							<td>" + CommonUtil.nvl((String) datas.get("jasan_no")) + "</td>\n");
+			sbHtml.append("							<td>" + CommonUtil.nvl((String) datas.get("souja_name")) + "</td>\n");
+			sbHtml.append("						</tr>\n");
+		}
+		sbHtml.append("						</tbody>\n");
+		sbHtml.append("			</table>\n");
+		sbHtml.append("			<br>\n");
+		sbHtml.append("			<h4>합병 토지</h4>\n");
+		sbHtml.append("			<table class=\"base4\">\n");
+		sbHtml.append("				<colgroup>\n");
+		sbHtml.append("					<col style=\"width: 10%;\" />\n");
+		sbHtml.append("					<col style=\"width: 30%;\" />\n");
+		sbHtml.append("					<col style=\"width: 10%;\" />\n");
+		sbHtml.append("					<col style=\"width: 10%;\" />\n");
+		sbHtml.append("					<col style=\"width: 10%;\" />\n");
+		sbHtml.append("					<col style=\"width: 10%;\" />\n");
+		sbHtml.append("					<col style=\"width: 10%;\" />\n");
+		sbHtml.append("					<col style=\"width: 10%;\" />\n");
+		sbHtml.append("				</colgroup>\n");
+		sbHtml.append("				<thead>\n");
+		sbHtml.append("					<tr>\n");
+		sbHtml.append("						<th rowspan=\"2\">지상권번호</th>\n");
+		sbHtml.append("						<th rowspan=\"2\">주소</th>\n");
+		sbHtml.append("						<th colspan=\"5\">지상권설정</th>\n");
+		sbHtml.append("						<th rowspan=\"2\">소유자</th>\n");
+		sbHtml.append("					</tr>\n");
+		sbHtml.append("					<tr>\n");
+		sbHtml.append("						<th>지목</th>\n");
+		sbHtml.append("						<th>지적 면적</th>\n");
+		sbHtml.append("						<th>편입 면적</th>\n");
+		sbHtml.append("						<th>설정 금액</th>\n");
+		sbHtml.append("						<th>자산번호</th>\n");
+		sbHtml.append("					</tr>\n");
+		sbHtml.append("				</thead>\n");
+		sbHtml.append("				<tbody>\n");
+		sbHtml.append("					<tr>\n");
+		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) mainData.get("jisang_no")) + "</td>\n");
+		String juso = CommonUtil.nvl((String) mainData.get("sido_nm")) + " " + CommonUtil.nvl((String) mainData.get("sgg_nm")) + " " + CommonUtil.nvl((String) mainData.get("emd_nm")) + " " + CommonUtil.nvl((String) mainData.get("ri_nm")) + " " + CommonUtil.nvl((String) mainData.get("jibun"));
+		sbHtml.append("						<td style=\"text-align:center;\">" + juso + "</td>\n");
+		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) mainData.get("jimok_text")) + "</td>\n");
+		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) String.valueOf(sumJijuk)) + "</td>\n");
+		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) String.valueOf(sumPyeonib)) + "</td>\n");
+		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) String.valueOf(sumSetMoney)) + "</td>\n");
+		sbHtml.append("						<td style=\"text-align:center;\">" + mainData.get("jasan_no") + "</td>\n");
+		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) mainData.get("souja_name")) + "</td>\n");
+		sbHtml.append("					</tr>\n");
+		sbHtml.append("				</tbody>\n");
+		sbHtml.append("			</table>\n");
+		sbHtml.append("			<br>\n");
+		sbHtml.append("			<h4>합병사유 및 검토의견</h4>\n");
+		sbHtml.append("			<table class=\"base4\">\n");
+		sbHtml.append("				<colgroup>\n");
+		sbHtml.append("					<col style=\"width: 20%\" />\n");
+		sbHtml.append("					<col style=\"width: 80%\" />\n");
+		sbHtml.append("				</colgroup>\n");
+		sbHtml.append("				<tr>\n");
+		sbHtml.append("					<th>합병사유</th>\n");
+		sbHtml.append("					<td class=\"inner_tag\">" + CommonUtil.nvl((String) mainData.get("merge_reason")) + "</td>\n");
+		sbHtml.append("				</tr>\n");
+		sbHtml.append("				<tr>\n");
+		sbHtml.append("					<th>검토의견</th>\n");
+		sbHtml.append("					<td class=\"inner_tag\">" + CommonUtil.nvl((String) mainData.get("merge_comment")).replaceAll("\n", "<br />") + "</td>\n");
+		sbHtml.append("				</tr>\n");
+		sbHtml.append("			</table>\n");
+		sbHtml.append("	</div>\n");
+		sbHtml.append("	</div>\n");
+		sbHtml.append("	</div>\n");
+		sbHtml.append("</body>         \n");
+		sbHtml.append("</html>         \n");
+
+		return sbHtml.toString();
+	}
 
 //	public String getJisang_sangsin_HTML(String JISANG_NO, String gubun) throws SQLException {
 //		Map params = new HashMap();
@@ -2336,243 +2354,251 @@ log.info("ori_list:"+ori_list);
 	 * @param response
 	 * @return
 	 */
-//	public String getMinwonGenerateHTML(String MW_SEQ, String NextSeq, HttpServletRequest request, HttpServletResponse response) {
-//
-//		/** 조회 시작 **/
-//		ArrayList list = new ArrayList();
-//		ArrayList pnu_list = new ArrayList();
-//		ArrayList file_list = new ArrayList();
-//
-//		HashMap detailMap = new HashMap();
-//		HashMap pmt_map = new HashMap();
-//		HashMap file_map = new HashMap();
-//
-//		CommonUtil cu = new CommonUtil();
-//
-//		String str_result = "Y";
-//
-//		try {
-//			Map params = new HashMap();
-//			params.put("MW_SEQ", MW_SEQ);
-//
+	public String getMinwonGenerateHTML(String MW_SEQ, String NextSeq, HttpServletRequest request, HttpServletResponse response) {
+		MainService mainService = context.getBean(MainService.class);
+		/** 조회 시작 **/
+		ArrayList list = new ArrayList();
+		ArrayList pnu_list = new ArrayList();
+		ArrayList file_list = new ArrayList();
+		ArrayList map_list = new ArrayList();
+
+		HashMap detailMap = new HashMap();
+		
+		HashMap pmt_map = new HashMap();
+		HashMap file_map = new HashMap();
+
+		CommonUtil cu = new CommonUtil();
+
+		String str_result = "Y";
+
+		try {
+			HashMap params = new HashMap();
+			params.put("MW_SEQ", MW_SEQ);
+
 //			detailMap = (HashMap) Database.getInstance().queryForObject("Json.selectMinwonDetail", params);// 기본정보
 //			pnu_list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDetailToji", params); // 소속토지정보
 //			file_list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDetailFile", params); // 첨부파일
-//
-////			System.out.println("$$$ params=" + params);
-//
-//			if (pnu_list.size() > 0) {
-//				for (int i = 0; i < pnu_list.size(); i++) {
-//					HashMap pnuMap = (HashMap) pnu_list.get(i);
-//					String SIDO = cu.evl((String) ((HashMap) pnu_list.get(i)).get("SIDO_NM"), "");
-//					String SGG = cu.evl((String) ((HashMap) pnu_list.get(i)).get("SGG_NM"), "");
-//					String EMD = cu.evl((String) ((HashMap) pnu_list.get(i)).get("EMD_NM"), "");
-//					String RI = cu.evl((String) ((HashMap) pnu_list.get(i)).get("RI_NM"), "");
-//					String JIBUN = cu.evl((String) ((HashMap) pnu_list.get(i)).get("JIBUN"), "");
-//					String ADDR = "";
-//
-//					if (!SIDO.equals(""))
-//						ADDR += SIDO + " ";
-//					if (!SGG.equals(""))
-//						ADDR += SGG + " ";
-//					if (!EMD.equals(""))
-//						ADDR += EMD + " ";
-//					if (!RI.equals(""))
-//						ADDR += RI + " ";
-//					if (!JIBUN.equals(""))
-//						ADDR += JIBUN + " ";
-//
-//					pnuMap.put("ADDR", ADDR);
-//				}
-//			}
-//			if (file_list.size() > 0) {
-//				for (int i = 0; i < file_list.size(); i++) {
-//					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("FILE_PATH"), ""));
-//					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("FILE_NM"), ""));
-//
-//				}
-//			}
-//
-////			System.out.println("file_list=" + file_list);
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		/* 조회 끝 */
-//		StringBuffer sbHtml = new StringBuffer();
-//
-//		String contents = (String) detailMap.get("MW_CONTENTS");
-//		System.out.println("#####" + contents);
-//		contents = contents.replaceAll("\n", "<br />");
-//		contents = contents.replaceAll("\r\n", "<br />");
-//		contents = contents.replaceAll("\\r\\n", "<br />");
-//		contents = contents.replaceAll("\\\\r\\\\n", "<br />");
-//		System.out.println("#####" + contents);
-//
-//		sbHtml.append(" <!DOCTYPE html>\n");
-//		sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\"> \n");
-//		sbHtml.append(sHeader);
-//		sbHtml.append(" <body>\n");
-//		sbHtml.append("<form id='file_download_form' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >\n");
-//		sbHtml.append("            <input type='hidden' name='file_no' /> \n");
-//		sbHtml.append("            <input type='hidden' name='file_seq' /> \n");
-//		sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' /> \n");
-//		sbHtml.append("</form>\n");
-//
-//		if (file_list.size() > 0) {
-//			for (int i = 0; i < file_list.size(); i++) {
-//				String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("FILE_SEQ")), "");
-//				String str_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("SEQ")), "");
-//				sbHtml.append("<form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
-//				sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
-//				sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
-//				sbHtml.append("            <input type='hidden' name='seq' value='" + str_SEQ + "' />\n");
-//				sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' />\n");
-//				sbHtml.append("</form> \n");
-//			}
-//		}
-//		sbHtml.append("     <!-- wrap -->\n");
-//		sbHtml.append("     <div id=\"wrap\">\n");
-//		sbHtml.append("         <!-- 컨테이너 -->\n");
-//		sbHtml.append("         <div id=\"container\">\n");
-////		sbHtml.append("			 <div class=\"title\">");
-////		sbHtml.append("			 	<h2>지상권 민원발생 보고</h2>		");
-////		sbHtml.append("			 </div>		");
-//		sbHtml.append("			 <div class=\"article\" style=\"display:; width: 1040px;\">		");
-//		sbHtml.append("			 <!-- *민원 정보 -->		");
-//		sbHtml.append("			 <h4>민원 정보</h4>		");
-//		sbHtml.append("			 <table class=\"base4\">		");
-//		sbHtml.append("			 <colgroup>		");
-//		sbHtml.append("			 	<col style=\"width:15%\" />	");
-//		sbHtml.append("			 	<col style=\"width:35%\" />	");
-//		sbHtml.append("			 	<col style=\"width:15%\" />	");
-//		sbHtml.append("			 	<col style=\"width:35%\" />	");
-//		sbHtml.append("			 </colgroup>");
-//		sbHtml.append("			 <tbody>");
-//		sbHtml.append("			 	<tr>");
-//		sbHtml.append("			 		<th scope=\"row\">민원 명</th>	");
-//		sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("MW_TITLE") + "</span>	");
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 	</tr>	");
-//		sbHtml.append("			 	<tr>		");
-//		sbHtml.append("			 		<th scope=\"row\">발생일자</th>	");
-//		sbHtml.append("			 		<td class=\"inner_tag\">	");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("MW_OCCUR_DATE") + "</span>	");
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 		<th scope=\"row\">발생지사</th>	");
-//		sbHtml.append("			 		<td class=\"inner_tag\">	");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("JISA") + "</span>	");
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 	</tr>	");
-//		sbHtml.append("			 	<tr>");
-//		sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
-//		sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-//		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + contents + "</span>");
-//		sbHtml.append("			 		</td>	");
-//		sbHtml.append("			 	</tr>	");
-//		sbHtml.append("			 </tbody>		");
-//		sbHtml.append("			 </table>		");
-//		sbHtml.append("			 <br>		");
-//		sbHtml.append("			 <!-- *민원 토지 -->");
-//		sbHtml.append("			 <h4>민원 토지</h4>");
-//		sbHtml.append("			 <table class=\'base4\'>");
-//		sbHtml.append("			 	<colgroup>");
-//		sbHtml.append("			 		<col style=\'width:60%\' />");
-//		sbHtml.append("			 		<col style=\'width:20%\' />");
-//		sbHtml.append("			 		<col style=\'width:20%\' />");
-//		sbHtml.append("			 	</colgroup>");
-//		sbHtml.append("			 	<tbody>");
-//		sbHtml.append("			 		<tr>");
-//		sbHtml.append("			 			<th scope=\'row\'>주소</th>");
-//		sbHtml.append("			 			<th scope=\'row\'>등기여부</th>");
-//		sbHtml.append("			 			<th scope=\'row\'>계약여부</th>");
-//		sbHtml.append("			 		</tr>");
-//		if (pnu_list.size() > 0) {
-//			for (int i = 0; i < pnu_list.size(); i++) {
-//				sbHtml.append("			 		<tr>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("ADDR") + "</span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("REGISTED_YN") + "</span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("PERMITTED_YN") + "</span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 		</tr>");
-//			}
-//		} else {
-//			sbHtml.append("			 		<tr>");
-//			sbHtml.append("			 			<td class=\'inner_tag\'>");
-//			sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//			sbHtml.append("			 			</td>");
-//			sbHtml.append("			 			<td class=\'inner_tag\'>");
-//			sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//			sbHtml.append("			 			</td>");
-//			sbHtml.append("			 			<td class=\'inner_tag\'>");
-//			sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//			sbHtml.append("			 			</td>");
-//			sbHtml.append("			 		</tr>");
-//		}
-//		sbHtml.append("			 	</tbody>");
-//		sbHtml.append("			 </table>");
-//		sbHtml.append("			 <br />		");
-//		sbHtml.append("			 <!-- *첨부 파일 -->");
-//		sbHtml.append("			 <h4>첨부 파일</h4>");
-//		sbHtml.append("			 <table class=\"base5\">");
-//		sbHtml.append("			 	<colgroup>");
-//		sbHtml.append("			 		<col style=\'width:80%\' />");
-//		sbHtml.append("			 		<col style=\'width:20%\' />");
-//		sbHtml.append("			 	</colgroup>");
-//		sbHtml.append("			 	<thead>");
-//		sbHtml.append("			 		<tr>");
-//		sbHtml.append("			 			<th scope=\"col\">파일명</th>");
-//		sbHtml.append("			 			<th scope=\"col\">파일보기</th>");
-//		sbHtml.append("				 	</tr>");
-//		sbHtml.append("				</thead>");
-//		sbHtml.append("			 	<tbody>");
-//		if (file_list.size() > 0) {
-//			for (int i = 0; i < file_list.size(); i++) {
-//				sbHtml.append("			 		<tr>");
-//				sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>");
-//				String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
-//				sbHtml.append("            <td>                \n");
-//				sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />\n");
-//				String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM" + i)), ""); // 파일네임
-//				String type = "";
-//
-//				if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
-//					String pathSplit[] = str_FILE_NM.split("\\.");
-//					type = pathSplit[1].toLowerCase();
-//				}
-//				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
-//					sbHtml.append("            <script>               \n");
-//					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
-//					sbHtml.append("            </script>               \n");
-//				} else {
-//					sbHtml.append("            <script>               \n");
-//					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
-//					sbHtml.append("            </script>               \n");
-//				}
-//
-//				sbHtml.append("            </td>               \n");
-//				sbHtml.append("				 	</tr>");
-//			}
-//		} else {
-//			sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr> 							");
-//		}
-//		sbHtml.append("			 	</tbody>																		");
-//		sbHtml.append("			 </table>																			");
-//		sbHtml.append("         </div>  \n");
-//		sbHtml.append("     </div>      \n");
-//		sbHtml.append(" </body>         \n");
-//		sbHtml.append("                 \n");
-//		sbHtml.append(" </html>         \n");
-//
-//		return sbHtml.toString();
-//	}
+			map_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetail", params);// 기본정보
+			//detailMap = (HashMap) mainService.selectHashmapQuery("issueSQL.selectMinwonDetail", params);// 기본정보
+			pnu_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailToji", params); // 소속토지정보
+			detailMap=(HashMap) map_list.get(0);
+			file_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailFile", params); // 첨부파일
+			//log.info("mapList:"+map_list.get(0));
+			//detailMap=map_list.get(0);
+//			System.out.println("$$$ params=" + params);
+
+			if (pnu_list.size() > 0) {
+				for (int i = 0; i < pnu_list.size(); i++) {
+					HashMap pnuMap = (HashMap) pnu_list.get(i);
+					String SIDO = cu.evl((String) ((HashMap) pnu_list.get(i)).get("sido_nm"), "");
+					String SGG = cu.evl((String) ((HashMap) pnu_list.get(i)).get("sgg_nm"), "");
+					String EMD = cu.evl((String) ((HashMap) pnu_list.get(i)).get("emd_nm"), "");
+					String RI = cu.evl((String) ((HashMap) pnu_list.get(i)).get("ri_nm"), "");
+					String JIBUN = cu.evl((String) ((HashMap) pnu_list.get(i)).get("jibun"), "");
+					String ADDR = "";
+
+					if (!SIDO.equals(""))
+						ADDR += SIDO + " ";
+					if (!SGG.equals(""))
+						ADDR += SGG + " ";
+					if (!EMD.equals(""))
+						ADDR += EMD + " ";
+					if (!RI.equals(""))
+						ADDR += RI + " ";
+					if (!JIBUN.equals(""))
+						ADDR += JIBUN + " ";
+
+					pnuMap.put("ADDR", ADDR);
+				}
+			}
+			if (file_list.size() > 0) {
+				for (int i = 0; i < file_list.size(); i++) {
+					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), ""));
+					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), ""));
+
+				}
+			}
+
+//			System.out.println("file_list=" + file_list);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		/* 조회 끝 */
+		StringBuffer sbHtml = new StringBuffer();
+log.info("dataMap:"+detailMap);
+		String contents = (String) detailMap.get("mw_contents");
+		System.out.println("#####" + contents);
+		contents = contents.replaceAll("\n", "<br />");
+		contents = contents.replaceAll("\r\n", "<br />");
+		contents = contents.replaceAll("\\r\\n", "<br />");
+		contents = contents.replaceAll("\\\\r\\\\n", "<br />");
+		System.out.println("#####" + contents);
+
+		sbHtml.append(" <!DOCTYPE html>\n");
+		sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\"> \n");
+		sbHtml.append(sHeader);
+		sbHtml.append(" <body>\n");
+		sbHtml.append("<form id='file_download_form' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >\n");
+		sbHtml.append("            <input type='hidden' name='file_no' /> \n");
+		sbHtml.append("            <input type='hidden' name='file_seq' /> \n");
+		sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' /> \n");
+		sbHtml.append("</form>\n");
+
+		if (file_list.size() > 0) {
+			for (int i = 0; i < file_list.size(); i++) {
+				String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("FILE_SEQ")), "");
+				String str_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("SEQ")), "");
+				sbHtml.append("<form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
+				sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
+				sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
+				sbHtml.append("            <input type='hidden' name='seq' value='" + str_SEQ + "' />\n");
+				sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' />\n");
+				sbHtml.append("</form> \n");
+			}
+		}
+		sbHtml.append("     <!-- wrap -->\n");
+		sbHtml.append("     <div id=\"wrap\">\n");
+		sbHtml.append("         <!-- 컨테이너 -->\n");
+		sbHtml.append("         <div id=\"container\">\n");
+//		sbHtml.append("			 <div class=\"title\">");
+//		sbHtml.append("			 	<h2>지상권 민원발생 보고</h2>		");
+//		sbHtml.append("			 </div>		");
+		sbHtml.append("			 <div class=\"article\" style=\"display:; width: 1040px;\">		");
+		sbHtml.append("			 <!-- *민원 정보 -->		");
+		sbHtml.append("			 <h4>민원 정보</h4>		");
+		sbHtml.append("			 <table class=\"base4\">		");
+		sbHtml.append("			 <colgroup>		");
+		sbHtml.append("			 	<col style=\"width:15%\" />	");
+		sbHtml.append("			 	<col style=\"width:35%\" />	");
+		sbHtml.append("			 	<col style=\"width:15%\" />	");
+		sbHtml.append("			 	<col style=\"width:35%\" />	");
+		sbHtml.append("			 </colgroup>");
+		sbHtml.append("			 <tbody>");
+		sbHtml.append("			 	<tr>");
+		sbHtml.append("			 		<th scope=\"row\">민원 명</th>	");
+		sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("mw_title") + "</span>	");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>	");
+		sbHtml.append("			 	<tr>		");
+		sbHtml.append("			 		<th scope=\"row\">발생일자</th>	");
+		sbHtml.append("			 		<td class=\"inner_tag\">	");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("mw_occur_date") + "</span>	");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 		<th scope=\"row\">발생지사</th>	");
+		sbHtml.append("			 		<td class=\"inner_tag\">	");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("jisa") + "</span>	");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>	");
+		sbHtml.append("			 	<tr>");
+		sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
+		sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + contents + "</span>");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>	");
+		sbHtml.append("			 </tbody>		");
+		sbHtml.append("			 </table>		");
+		sbHtml.append("			 <br>		");
+		sbHtml.append("			 <!-- *민원 토지 -->");
+		sbHtml.append("			 <h4>민원 토지</h4>");
+		sbHtml.append("			 <table class=\'base4\'>");
+		sbHtml.append("			 	<colgroup>");
+		sbHtml.append("			 		<col style=\'width:60%\' />");
+		sbHtml.append("			 		<col style=\'width:20%\' />");
+		sbHtml.append("			 		<col style=\'width:20%\' />");
+		sbHtml.append("			 	</colgroup>");
+		sbHtml.append("			 	<tbody>");
+		sbHtml.append("			 		<tr>");
+		sbHtml.append("			 			<th scope=\'row\'>주소</th>");
+		sbHtml.append("			 			<th scope=\'row\'>등기여부</th>");
+		sbHtml.append("			 			<th scope=\'row\'>계약여부</th>");
+		sbHtml.append("			 		</tr>");
+		if (pnu_list.size() > 0) {
+			for (int i = 0; i < pnu_list.size(); i++) {
+				sbHtml.append("			 		<tr>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("addr") + "</span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("registed_yn") + "</span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("permitted_yn") + "</span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 		</tr>");
+			}
+		} else {
+			sbHtml.append("			 		<tr>");
+			sbHtml.append("			 			<td class=\'inner_tag\'>");
+			sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+			sbHtml.append("			 			</td>");
+			sbHtml.append("			 			<td class=\'inner_tag\'>");
+			sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+			sbHtml.append("			 			</td>");
+			sbHtml.append("			 			<td class=\'inner_tag\'>");
+			sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+			sbHtml.append("			 			</td>");
+			sbHtml.append("			 		</tr>");
+		}
+		sbHtml.append("			 	</tbody>");
+		sbHtml.append("			 </table>");
+		sbHtml.append("			 <br />		");
+		sbHtml.append("			 <!-- *첨부 파일 -->");
+		sbHtml.append("			 <h4>첨부 파일</h4>");
+		sbHtml.append("			 <table class=\"base5\">");
+		sbHtml.append("			 	<colgroup>");
+		sbHtml.append("			 		<col style=\'width:80%\' />");
+		sbHtml.append("			 		<col style=\'width:20%\' />");
+		sbHtml.append("			 	</colgroup>");
+		sbHtml.append("			 	<thead>");
+		sbHtml.append("			 		<tr>");
+		sbHtml.append("			 			<th scope=\"col\">파일명</th>");
+		sbHtml.append("			 			<th scope=\"col\">파일보기</th>");
+		sbHtml.append("				 	</tr>");
+		sbHtml.append("				</thead>");
+		sbHtml.append("			 	<tbody>");
+		if (file_list.size() > 0) {
+			for (int i = 0; i < file_list.size(); i++) {
+				sbHtml.append("			 		<tr>");
+				sbHtml.append("			 			<td>" + file_map.get("file_nm" + i) + "</td>");
+				String str_FILE_PATH = str_FILE_URL + file_map.get("file_path" + i);
+				sbHtml.append("            <td>                \n");
+				sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />\n");
+				String str_FILE_NM = cu.evl(String.valueOf(file_map.get("file_nm" + i)), ""); // 파일네임
+				String type = "";
+
+				if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+					String pathSplit[] = str_FILE_NM.split("\\.");
+					type = pathSplit[1].toLowerCase();
+				}
+				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+					sbHtml.append("            <script>               \n");
+					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+					sbHtml.append("            </script>               \n");
+				} else {
+					sbHtml.append("            <script>               \n");
+					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+					sbHtml.append("            </script>               \n");
+				}
+
+				sbHtml.append("            </td>               \n");
+				sbHtml.append("				 	</tr>");
+			}
+		} else {
+			sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr> 							");
+		}
+		sbHtml.append("			 	</tbody>																		");
+		sbHtml.append("			 </table>																			");
+		sbHtml.append("         </div>  \n");
+		sbHtml.append("     </div>      \n");
+		sbHtml.append(" </body>         \n");
+		sbHtml.append("                 \n");
+		sbHtml.append(" </html>         \n");
+		System.out.println(sbHtml.toString());
+		return sbHtml.toString();
+	}
 
 	/**
 	 * 민원 대응방안 수립 보고
@@ -2583,258 +2609,263 @@ log.info("ori_list:"+ori_list);
 	 * @param response
 	 * @return
 	 */
-//	public String getMinwonResponseHTML(String MW_SEQ, HttpServletRequest request, HttpServletResponse response) {
-//
-//		/** 조회 시작 **/
-//		ArrayList list = new ArrayList();
-//		ArrayList pnu_list = new ArrayList();
-//		ArrayList file_list = new ArrayList();
-//
-//		HashMap detailMap = new HashMap();
-//		HashMap pmt_map = new HashMap();
-//		HashMap file_map = new HashMap();
-//
-//		CommonUtil cu = new CommonUtil();
-//
-//		String str_result = "Y";
-//		StringBuffer sbHtml = new StringBuffer();
-//
-//		try {
-//			Map params = new HashMap();
-//			params.put("MW_SEQ", MW_SEQ);
-//
+	public String getMinwonResponseHTML(String MW_SEQ, HttpServletRequest request, HttpServletResponse response) {
+		MainService mainService = context.getBean(MainService.class);
+		/** 조회 시작 **/
+		ArrayList list = new ArrayList();
+		ArrayList pnu_list = new ArrayList();
+		ArrayList file_list = new ArrayList();
+		ArrayList tmp_list = new ArrayList();
+
+		HashMap detailMap = new HashMap();
+		HashMap pmt_map = new HashMap();
+		HashMap file_map = new HashMap();
+
+		CommonUtil cu = new CommonUtil();
+
+		String str_result = "Y";
+		StringBuffer sbHtml = new StringBuffer();
+
+		try {
+			HashMap params = new HashMap();
+			params.put("MW_SEQ", MW_SEQ);
+
 //			detailMap = (HashMap) Database.getInstance().queryForObject("Json.selectMinwonDetail", params);// 기본정보
 //			pnu_list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDetailToji", params); // 소속토지정보
 //			file_list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDetailFile", params); // 첨부파일
-//
-////			System.out.println("$$$ params=" + params);
-//			if (pnu_list.size() > 0) {
-//				for (int i = 0; i < pnu_list.size(); i++) {
-//					HashMap pnuMap = (HashMap) pnu_list.get(i);
-//					String SIDO = cu.evl((String) ((HashMap) pnu_list.get(i)).get("SIDO_NM"), "");
-//					String SGG = cu.evl((String) ((HashMap) pnu_list.get(i)).get("SGG_NM"), "");
-//					String EMD = cu.evl((String) ((HashMap) pnu_list.get(i)).get("EMD_NM"), "");
-//					String RI = cu.evl((String) ((HashMap) pnu_list.get(i)).get("RI_NM"), "");
-//					String JIBUN = cu.evl((String) ((HashMap) pnu_list.get(i)).get("JIBUN"), "");
-//					String ADDR = "";
-//
-//					if (!SIDO.equals(""))
-//						ADDR += SIDO + " ";
-//					if (!SGG.equals(""))
-//						ADDR += SGG + " ";
-//					if (!EMD.equals(""))
-//						ADDR += EMD + " ";
-//					if (!RI.equals(""))
-//						ADDR += RI + " ";
-//					if (!JIBUN.equals(""))
-//						ADDR += JIBUN + " ";
-//
-//					pnuMap.put("ADDR", ADDR);
-//				}
-//			}
-//			if (file_list.size() > 0) {
-//				for (int i = 0; i < file_list.size(); i++) {
-//					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("FILE_PATH"), ""));
-//					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("FILE_NM"), ""));
-//
-//				}
-//			}
-//
-////			System.out.println("file_list=" + file_list);
-//
-//			/* 조회 끝 */
-//			String contents = (String) detailMap.get("MW_CONTENTS");
-//			contents = contents.replaceAll("\n", "<br />");
-//			contents = contents.replaceAll("\r\n", "<br />");
-//			contents = contents.replaceAll("\\r\\n", "<br />");
-//			contents = contents.replaceAll("\\\\r\\\\n", "<br />");
-//
-//			sbHtml.append(" <!DOCTYPE html>\n");
-//			sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\"> \n");
-//			sbHtml.append(sHeader);
-//			sbHtml.append(" <body>\n");
-//
-//			sbHtml.append("<form id='file_download_form' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >\n");
-//			sbHtml.append("            <input type='hidden' name='file_no' /> \n");
-//			sbHtml.append("            <input type='hidden' name='file_seq' /> \n");
-//			sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' /> \n");
-//			sbHtml.append("</form>\n");
-//
-//			if (file_list.size() > 0) {
-//				for (int i = 0; i < file_list.size(); i++) {
-//					String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("FILE_SEQ")), "");
-//					sbHtml.append("<form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
-//					sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
-//					sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
-//					sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' />\n");
-//					sbHtml.append("</form> \n");
-//				}
-//			}
-//			sbHtml.append("     <!-- wrap -->\n");
-//			sbHtml.append("     <div id=\"wrap\">\n");
-//			sbHtml.append("         <!-- 컨테이너 -->\n");
-//			sbHtml.append("         <div id=\"container\">\n");
-////			sbHtml.append("			 <div class=\"title\">");
-////			sbHtml.append("			 	<h2>지상권 민원 대응방안 수립보고</h2>		");
-////			sbHtml.append("			 </div>		");
-//			sbHtml.append("			 <div class=\"article\">		");
-//			sbHtml.append("			 <!-- *민원 정보 -->		");
-//			sbHtml.append("			 <h4>민원 정보</h4>		");
-//			sbHtml.append("			 <table class=\"base4\">		");
-//			sbHtml.append("			 <colgroup>		");
-//			sbHtml.append("			 	<col style=\"width:15%\" />	");
-//			sbHtml.append("			 	<col style=\"width:35%\" />	");
-//			sbHtml.append("			 	<col style=\"width:15%\" />	");
-//			sbHtml.append("			 	<col style=\"width:35%\" />	");
-//			sbHtml.append("			 </colgroup>");
-//			sbHtml.append("			 <tbody>");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">민원 명</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("MW_TITLE") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 	<tr>		");
-//			sbHtml.append("			 		<th scope=\"row\">발생일자</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("MW_OCCUR_DATE") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 		<th scope=\"row\">발생지사</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("JISA") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + contents + "</span>");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 </tbody>		");
-//			sbHtml.append("			 </table>		");
-//			sbHtml.append("			 <br>		");
-//
-//			sbHtml.append("			 <!-- *민원 정보 -->		");
-//			sbHtml.append("			 <h4>민원 대응방안</h4>		");
-//			sbHtml.append("			 <table class=\"base4\">		");
-//			sbHtml.append("			 <colgroup>		");
-//			sbHtml.append("			 	<col style=\"width:15%\" />	");
-//			sbHtml.append("			 	<col style=\"width:35%\" />	");
-//			sbHtml.append("			 	<col style=\"width:15%\" />	");
-//			sbHtml.append("			 	<col style=\"width:35%\" />	");
-//			sbHtml.append("			 </colgroup>");
-//			sbHtml.append("			 <tbody>");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">이슈유형</th>");
-//			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + detailMap.get("CODE_STR1_TMP") + " &gt; " + detailMap.get("CODE_STR2_TMP") + " &gt; " + detailMap.get("CODE_STR3_TMP") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 </tbody>		");
-//			sbHtml.append("			 </table>		");
-//			sbHtml.append("			 <br>		");
-//
-//			sbHtml.append("			 <!-- *민원 토지 -->");
-//			sbHtml.append("			 <h4>민원 토지</h4>");
-//			sbHtml.append("			 <table class=\'base4\'>");
-//			sbHtml.append("			 	<colgroup>");
-//			sbHtml.append("			 		<col style=\'width:60%\' />");
-//			sbHtml.append("			 		<col style=\'width:20%\' />");
-//			sbHtml.append("			 		<col style=\'width:20%\' />");
-//			sbHtml.append("			 	</colgroup>");
-//			sbHtml.append("			 	<tbody>");
-//			sbHtml.append("			 		<tr>");
-//			sbHtml.append("			 			<th scope=\'row\'>주소</th>");
-//			sbHtml.append("			 			<th scope=\'row\'>등기여부</th>");
-//			sbHtml.append("			 			<th scope=\'row\'>계약여부</th>");
-//			sbHtml.append("			 		</tr>");
-//			if (pnu_list.size() > 0) {
-//				for (int i = 0; i < pnu_list.size(); i++) {
-//					sbHtml.append("			 		<tr>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("ADDR") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("REGISTED_YN") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("PERMITTED_YN") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 		</tr>");
-//				}
-//			} else {
-//				sbHtml.append("			 		<tr>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 		</tr>");
-//			}
-//			sbHtml.append("			 	</tbody>");
-//			sbHtml.append("			 </table>");
-//			sbHtml.append("			 <br />		");
-//			sbHtml.append("			 <!-- *첨부 파일 -->");
-//			sbHtml.append("			 <h4>첨부 파일</h4>");
-//			sbHtml.append("			 <table class=\"base5\">");
-//			sbHtml.append("			 	<colgroup>");
-//			sbHtml.append("			 		<col style=\'width:80%\' />");
-//			sbHtml.append("			 		<col style=\'width:20%\' />");
-//			sbHtml.append("			 	</colgroup>");
-//			sbHtml.append("			 	<thead>");
-//			sbHtml.append("			 		<tr>");
-//			sbHtml.append("			 			<th scope=\"col\">파일명</th>");
-//			sbHtml.append("			 			<th scope=\"col\">파일보기</th>");
-//			sbHtml.append("				 	</tr>");
-//			sbHtml.append("				</thead>");
-//			sbHtml.append("			 	<tbody>");
-//			if (file_list.size() > 0) {
-//				for (int i = 0; i < file_list.size(); i++) {
-//					sbHtml.append("			 		<tr>");
-//					sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>");
-//					String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
-//					sbHtml.append("            <td>                \n");
-//					sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />\n");
-//					String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM" + i)), ""); // 파일네임
-//					String type = "";
-//
-//					if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
-//						String pathSplit[] = str_FILE_NM.split("\\.");
-//						type = pathSplit[1].toLowerCase();
-//					}
-//					if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
-//						sbHtml.append("            <script>               \n");
-//						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
-//						sbHtml.append("            </script>               \n");
-//					} else {
-//						sbHtml.append("            <script>               \n");
-//						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
-//						sbHtml.append("            </script>               \n");
-//					}
-//
-//					sbHtml.append("            </td>               \n");
-//					sbHtml.append("				 	</tr>");
-//				}
-//			} else {
-//				sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr>");
-//			}
-//			sbHtml.append("			 	</tbody>");
-//			sbHtml.append("			 </table>");
-//			sbHtml.append("         </div>  \n");
-//			sbHtml.append("     </div>      \n");
-//			sbHtml.append(" </body>         \n");
-//			sbHtml.append("                 \n");
-//			sbHtml.append(" </html>         \n");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		return sbHtml.toString();
-//	}
+			tmp_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetail", params);// 기본정보
+			detailMap=(HashMap)tmp_list.get(0);
+			pnu_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailToji", params); // 소속토지정보
+			file_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailFile", params); // 첨부파일
+
+//			System.out.println("$$$ params=" + params);
+			if (pnu_list.size() > 0) {
+				for (int i = 0; i < pnu_list.size(); i++) {
+					HashMap pnuMap = (HashMap) pnu_list.get(i);
+					String SIDO = cu.evl((String) ((HashMap) pnu_list.get(i)).get("sido_nm"), "");
+					String SGG = cu.evl((String) ((HashMap) pnu_list.get(i)).get("sgg_nm"), "");
+					String EMD = cu.evl((String) ((HashMap) pnu_list.get(i)).get("emd_nm"), "");
+					String RI = cu.evl((String) ((HashMap) pnu_list.get(i)).get("ri_nm"), "");
+					String JIBUN = cu.evl((String) ((HashMap) pnu_list.get(i)).get("jibun"), "");
+					String ADDR = "";
+
+					if (!SIDO.equals(""))
+						ADDR += SIDO + " ";
+					if (!SGG.equals(""))
+						ADDR += SGG + " ";
+					if (!EMD.equals(""))
+						ADDR += EMD + " ";
+					if (!RI.equals(""))
+						ADDR += RI + " ";
+					if (!JIBUN.equals(""))
+						ADDR += JIBUN + " ";
+
+					pnuMap.put("ADDR", ADDR);
+				}
+			}
+			if (file_list.size() > 0) {
+				for (int i = 0; i < file_list.size(); i++) {
+					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), ""));
+					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), ""));
+
+				}
+			}
+
+//			System.out.println("file_list=" + file_list);
+
+			/* 조회 끝 */
+			String contents = (String) detailMap.get("mw_contents");
+			contents = contents.replaceAll("\n", "<br />");
+			contents = contents.replaceAll("\r\n", "<br />");
+			contents = contents.replaceAll("\\r\\n", "<br />");
+			contents = contents.replaceAll("\\\\r\\\\n", "<br />");
+
+			sbHtml.append(" <!DOCTYPE html>\n");
+			sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\"> \n");
+			sbHtml.append(sHeader);
+			sbHtml.append(" <body>\n");
+
+			sbHtml.append("<form id='file_download_form' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >\n");
+			sbHtml.append("            <input type='hidden' name='file_no' /> \n");
+			sbHtml.append("            <input type='hidden' name='file_seq' /> \n");
+			sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' /> \n");
+			sbHtml.append("</form>\n");
+
+			if (file_list.size() > 0) {
+				for (int i = 0; i < file_list.size(); i++) {
+					String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("file_seq")), "");
+					sbHtml.append("<form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
+					sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
+					sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
+					sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' />\n");
+					sbHtml.append("</form> \n");
+				}
+			}
+			sbHtml.append("     <!-- wrap -->\n");
+			sbHtml.append("     <div id=\"wrap\">\n");
+			sbHtml.append("         <!-- 컨테이너 -->\n");
+			sbHtml.append("         <div id=\"container\">\n");
+//			sbHtml.append("			 <div class=\"title\">");
+//			sbHtml.append("			 	<h2>지상권 민원 대응방안 수립보고</h2>		");
+//			sbHtml.append("			 </div>		");
+			sbHtml.append("			 <div class=\"article\">		");
+			sbHtml.append("			 <!-- *민원 정보 -->		");
+			sbHtml.append("			 <h4>민원 정보</h4>		");
+			sbHtml.append("			 <table class=\"base4\">		");
+			sbHtml.append("			 <colgroup>		");
+			sbHtml.append("			 	<col style=\"width:15%\" />	");
+			sbHtml.append("			 	<col style=\"width:35%\" />	");
+			sbHtml.append("			 	<col style=\"width:15%\" />	");
+			sbHtml.append("			 	<col style=\"width:35%\" />	");
+			sbHtml.append("			 </colgroup>");
+			sbHtml.append("			 <tbody>");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">민원 명</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("MW_TITLE") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>		");
+			sbHtml.append("			 		<th scope=\"row\">발생일자</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("MW_OCCUR_DATE") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 		<th scope=\"row\">발생지사</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("JISA") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + contents + "</span>");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 </tbody>		");
+			sbHtml.append("			 </table>		");
+			sbHtml.append("			 <br>		");
+
+			sbHtml.append("			 <!-- *민원 정보 -->		");
+			sbHtml.append("			 <h4>민원 대응방안</h4>		");
+			sbHtml.append("			 <table class=\"base4\">		");
+			sbHtml.append("			 <colgroup>		");
+			sbHtml.append("			 	<col style=\"width:15%\" />	");
+			sbHtml.append("			 	<col style=\"width:35%\" />	");
+			sbHtml.append("			 	<col style=\"width:15%\" />	");
+			sbHtml.append("			 	<col style=\"width:35%\" />	");
+			sbHtml.append("			 </colgroup>");
+			sbHtml.append("			 <tbody>");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">이슈유형</th>");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + detailMap.get("CODE_STR1_TMP") + " &gt; " + detailMap.get("CODE_STR2_TMP") + " &gt; " + detailMap.get("CODE_STR3_TMP") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 </tbody>		");
+			sbHtml.append("			 </table>		");
+			sbHtml.append("			 <br>		");
+
+			sbHtml.append("			 <!-- *민원 토지 -->");
+			sbHtml.append("			 <h4>민원 토지</h4>");
+			sbHtml.append("			 <table class=\'base4\'>");
+			sbHtml.append("			 	<colgroup>");
+			sbHtml.append("			 		<col style=\'width:60%\' />");
+			sbHtml.append("			 		<col style=\'width:20%\' />");
+			sbHtml.append("			 		<col style=\'width:20%\' />");
+			sbHtml.append("			 	</colgroup>");
+			sbHtml.append("			 	<tbody>");
+			sbHtml.append("			 		<tr>");
+			sbHtml.append("			 			<th scope=\'row\'>주소</th>");
+			sbHtml.append("			 			<th scope=\'row\'>등기여부</th>");
+			sbHtml.append("			 			<th scope=\'row\'>계약여부</th>");
+			sbHtml.append("			 		</tr>");
+			if (pnu_list.size() > 0) {
+				for (int i = 0; i < pnu_list.size(); i++) {
+					sbHtml.append("			 		<tr>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("ADDR") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("REGISTED_YN") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("PERMITTED_YN") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 		</tr>");
+				}
+			} else {
+				sbHtml.append("			 		<tr>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 		</tr>");
+			}
+			sbHtml.append("			 	</tbody>");
+			sbHtml.append("			 </table>");
+			sbHtml.append("			 <br />		");
+			sbHtml.append("			 <!-- *첨부 파일 -->");
+			sbHtml.append("			 <h4>첨부 파일</h4>");
+			sbHtml.append("			 <table class=\"base5\">");
+			sbHtml.append("			 	<colgroup>");
+			sbHtml.append("			 		<col style=\'width:80%\' />");
+			sbHtml.append("			 		<col style=\'width:20%\' />");
+			sbHtml.append("			 	</colgroup>");
+			sbHtml.append("			 	<thead>");
+			sbHtml.append("			 		<tr>");
+			sbHtml.append("			 			<th scope=\"col\">파일명</th>");
+			sbHtml.append("			 			<th scope=\"col\">파일보기</th>");
+			sbHtml.append("				 	</tr>");
+			sbHtml.append("				</thead>");
+			sbHtml.append("			 	<tbody>");
+			if (file_list.size() > 0) {
+				for (int i = 0; i < file_list.size(); i++) {
+					sbHtml.append("			 		<tr>");
+					sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>");
+					String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
+					sbHtml.append("            <td>                \n");
+					sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />\n");
+					String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM" + i)), ""); // 파일네임
+					String type = "";
+
+					if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+						String pathSplit[] = str_FILE_NM.split("\\.");
+						type = pathSplit[1].toLowerCase();
+					}
+					if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+						sbHtml.append("            <script>               \n");
+						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+						sbHtml.append("            </script>               \n");
+					} else {
+						sbHtml.append("            <script>               \n");
+						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+						sbHtml.append("            </script>               \n");
+					}
+
+					sbHtml.append("            </td>               \n");
+					sbHtml.append("				 	</tr>");
+				}
+			} else {
+				sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr>");
+			}
+			sbHtml.append("			 	</tbody>");
+			sbHtml.append("			 </table>");
+			sbHtml.append("         </div>  \n");
+			sbHtml.append("     </div>      \n");
+			sbHtml.append(" </body>         \n");
+			sbHtml.append("                 \n");
+			sbHtml.append(" </html>         \n");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return sbHtml.toString();
+	}
 
 	/**
 	 * 민원 협의 보고
@@ -2845,347 +2876,352 @@ log.info("ori_list:"+ori_list);
 	 * @param response
 	 * @return
 	 */
-//	public String getMinwonAgreeHTML(String MW_SEQ, String agreeSeq, String NextSeq, HttpServletRequest request, HttpServletResponse response) {
-//
-//		/** 조회 시작 **/
-//		ArrayList list = new ArrayList();
-//		ArrayList pnu_list = new ArrayList();
-//		ArrayList file_list = new ArrayList();
-//		ArrayList agree_file_list = new ArrayList();
-//
-//		HashMap detailMap = new HashMap();
-//		HashMap pmt_map = new HashMap();
-//		HashMap file_map = new HashMap();
-//		HashMap agreeMap = new HashMap();
-//
-//		CommonUtil cu = new CommonUtil();
-//
-//		String str_result = "Y";
-//		StringBuffer sbHtml = new StringBuffer();
-//
-//		try {
-//			Map params = new HashMap();
-//			params.put("MW_SEQ", MW_SEQ);
-//			params.put("AGREE_SEQ", agreeSeq);
-//
+	public String getMinwonAgreeHTML(String MW_SEQ, String agreeSeq, String NextSeq, HttpServletRequest request, HttpServletResponse response) {
+		MainService mainService = context.getBean(MainService.class);
+		/** 조회 시작 **/
+		ArrayList list = new ArrayList();
+		ArrayList pnu_list = new ArrayList();
+		ArrayList file_list = new ArrayList();
+		ArrayList agree_file_list = new ArrayList();
+		ArrayList tmp_list = new ArrayList();
+		HashMap detailMap = new HashMap();
+		HashMap pmt_map = new HashMap();
+		HashMap file_map = new HashMap();
+		HashMap agreeMap = new HashMap();
+		
+		CommonUtil cu = new CommonUtil();
+
+		String str_result = "Y";
+		StringBuffer sbHtml = new StringBuffer();
+
+		try {
+			HashMap params = new HashMap();
+			params.put("MW_SEQ", MW_SEQ);
+			params.put("AGREE_SEQ", agreeSeq);
+
 //			detailMap = (HashMap) Database.getInstance().queryForObject("Json.selectMinwonDetail", params);// 기본정보
+			tmp_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetail", params);// 기본정보
+			detailMap=(HashMap)tmp_list.get(0);
 //			pnu_list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDetailToji", params); // 소속토지정보
-//			file_list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDetailFile", params); // 첨부파일
-//
+			pnu_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailToji", params); // 소속토지정보
+			file_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailFile", params); // 첨부파일
+
 //			agreeMap = (HashMap) Database.getInstance().queryForObject("Json.selectMinwonAgreeData", params); // 민원협의
-//			agree_file_list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonAgreeDetailFile", params); // 첨부파일
-//
-//			System.out.println("$$$ params=" + params);
-//			if (pnu_list.size() > 0) {
-//				for (int i = 0; i < pnu_list.size(); i++) {
-//					HashMap pnuMap = (HashMap) pnu_list.get(i);
-//					String SIDO = cu.evl((String) ((HashMap) pnu_list.get(i)).get("SIDO_NM"), "");
-//					String SGG = cu.evl((String) ((HashMap) pnu_list.get(i)).get("SGG_NM"), "");
-//					String EMD = cu.evl((String) ((HashMap) pnu_list.get(i)).get("EMD_NM"), "");
-//					String RI = cu.evl((String) ((HashMap) pnu_list.get(i)).get("RI_NM"), "");
-//					String JIBUN = cu.evl((String) ((HashMap) pnu_list.get(i)).get("JIBUN"), "");
-//					String ADDR = "";
-//
-//					if (!SIDO.equals(""))
-//						ADDR += SIDO + " ";
-//					if (!SGG.equals(""))
-//						ADDR += SGG + " ";
-//					if (!EMD.equals(""))
-//						ADDR += EMD + " ";
-//					if (!RI.equals(""))
-//						ADDR += RI + " ";
-//					if (!JIBUN.equals(""))
-//						ADDR += JIBUN + " ";
-//
-//					pnuMap.put("ADDR", ADDR);
-//				}
-//			}
-//			if (file_list.size() > 0) {
-//				for (int i = 0; i < file_list.size(); i++) {
-//					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("FILE_PATH"), ""));
-//					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("FILE_NM"), ""));
-//
-//				}
-//			}
-//
-////			System.out.println("file_list=" + file_list);
-//
-//			String contents = (String) detailMap.get("MW_CONTENTS");
-//			contents = contents.replaceAll("\n", "<br />");
-//			contents = contents.replaceAll("\r\n", "<br />");
-//			contents = contents.replaceAll("\\r\\n", "<br />");
-//			contents = contents.replaceAll("\\\\r\\\\n", "<br />");
-//
-//			sbHtml.append(" <!DOCTYPE html>\n");
-//			sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\"> \n");
-//			sbHtml.append(sHeader);
-//			sbHtml.append(" <body>\n");
-//
-//			sbHtml.append("<form id='file_download_form' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >\n");
-//			sbHtml.append("            <input type='hidden' name='file_no' /> \n");
-//			sbHtml.append("            <input type='hidden' name='file_seq' /> \n");
-//			sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' /> \n");
-//			sbHtml.append("</form>\n");
-//
-//			if (file_list.size() > 0) {
-//				for (int i = 0; i < file_list.size(); i++) {
-//					String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("FILE_SEQ")), "");
-//					sbHtml.append("<form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
-//					sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
-//					sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
-//					sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' />\n");
-//					sbHtml.append("</form> \n");
-//				}
-//			}
-//
-//			if (agree_file_list.size() > 0) {
-//				for (int i = 0; i < agree_file_list.size(); i++) {
-//					String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) agree_file_list.get(i)).get("FILE_SEQ")), "");
-//					sbHtml.append("<form id='agree_file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
-//					sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
-//					sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
-//					sbHtml.append("            <input type='hidden' name='file_gubun' value='minwonAgree' />\n");
-//					sbHtml.append("</form> \n");
-//				}
-//			}
-//			sbHtml.append("     <!-- wrap -->\n");
-//			sbHtml.append("     <div id=\"wrap\">\n");
-//			sbHtml.append("         <!-- 컨테이너 -->\n");
-//			sbHtml.append("         <div id=\"container\">\n");
-////			sbHtml.append("			 <div class=\"title\">");
-////			sbHtml.append("			 	<h2>지상권 민원협의 보고</h2>		");
-////			sbHtml.append("			 </div>		");
-//			sbHtml.append("			 <div class=\"article\">		");
-//			sbHtml.append("			 <!-- *민원 정보 -->		");
-//			sbHtml.append("			 <h4>민원 정보</h4>		");
-//			sbHtml.append("			 <table class=\"base4\">		");
-//			sbHtml.append("			 <colgroup>		");
-//			sbHtml.append("			 	<col style=\"width:15%\" />	");
-//			sbHtml.append("			 	<col style=\"width:35%\" />	");
-//			sbHtml.append("			 	<col style=\"width:15%\" />	");
-//			sbHtml.append("			 	<col style=\"width:35%\" />	");
-//			sbHtml.append("			 </colgroup>");
-//			sbHtml.append("			 <tbody>");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">민원 명</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("MW_TITLE") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">이슈유형</th>");
-//			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("CODE_STR1_TMP") + " &gt; " + detailMap.get("CODE_STR2_TMP") + " &gt; " + detailMap.get("CODE_STR3_TMP") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 	<tr>		");
-//			sbHtml.append("			 		<th scope=\"row\">발생일자</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("MW_OCCUR_DATE") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 		<th scope=\"row\">발생지사</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("JISA") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + contents + "</span>");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 </tbody>		");
-//			sbHtml.append("			 </table>		");
-//			sbHtml.append("			 <br>		");
-//			sbHtml.append("			 <!-- *민원 토지 -->");
-//			sbHtml.append("			 <h4>민원 토지</h4>");
-//			sbHtml.append("			 <table class=\'base4\'>");
-//			sbHtml.append("			 	<colgroup>");
-//			sbHtml.append("			 		<col style=\'width:60%\' />");
-//			sbHtml.append("			 		<col style=\'width:20%\' />");
-//			sbHtml.append("			 		<col style=\'width:20%\' />");
-//			sbHtml.append("			 	</colgroup>");
-//			sbHtml.append("			 	<tbody>");
-//			sbHtml.append("			 		<tr>");
-//			sbHtml.append("			 			<th scope=\'row\'>주소</th>");
-//			sbHtml.append("			 			<th scope=\'row\'>등기여부</th>");
-//			sbHtml.append("			 			<th scope=\'row\'>계약여부</th>");
-//			sbHtml.append("			 		</tr>");
-//			if (pnu_list.size() > 0) {
-//				for (int i = 0; i < pnu_list.size(); i++) {
-//					sbHtml.append("			 		<tr>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("ADDR") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("REGISTED_YN") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("PERMITTED_YN") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 		</tr>");
-//				}
-//			} else {
-//				sbHtml.append("			 		<tr>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 		</tr>");
-//			}
-//			sbHtml.append("			 	</tbody>");
-//			sbHtml.append("			 </table>");
-//			sbHtml.append("			 <br />		");
-//			sbHtml.append("			 <!-- *협의 내용 -->		");
-//			sbHtml.append("			 <h4>민원 협의</h4>		");
-//			sbHtml.append("			 <table class=\"base4\">		");
-//			sbHtml.append("			 <colgroup>		");
-//			sbHtml.append("			 	<col style=\"width:15%\" />	");
-//			sbHtml.append("			 	<col style=\"width:35%\" />	");
-//			sbHtml.append("			 	<col style=\"width:15%\" />	");
-//			sbHtml.append("			 	<col style=\"width:35%\" />	");
-//			sbHtml.append("			 </colgroup>");
-//			sbHtml.append("			 <tbody>");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">협의 제목</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + agreeMap.get("AGREE_TITLE") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">협의 날짜</th>");
-//			sbHtml.append("			 		<td class=\"inner_tag\">");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + agreeMap.get("AGREE_DATE") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 		<th scope=\"row\">진행상태</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + agreeMap.get("STATUS_STR") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 	<tr>		");
-//			sbHtml.append("			 		<th scope=\"row\">협의 내용</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px; \">" + agreeMap.get("AGREE_CONTENTS") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">첨부파일</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-//			sbHtml.append("			 <table class=\"base4\">");
-//			sbHtml.append("			 	<colgroup>");
-//			sbHtml.append("			 		<col style=\'width:80%\' />");
-//			sbHtml.append("			 		<col style=\'width:20%\' />");
-//			sbHtml.append("			 	</colgroup>");
-//			sbHtml.append("			 	<thead>");
-//			sbHtml.append("			 		<tr>");
-//			sbHtml.append("			 			<th scope=\"col\">파일명</th>");
-//			sbHtml.append("			 			<th scope=\"col\">파일보기</th>");
-//			sbHtml.append("				 	</tr>");
-//			sbHtml.append("				</thead>");
-//			sbHtml.append("			 	<tbody>");
-//			System.out.println(agree_file_list.size());
-//			if (agree_file_list.size() > 0) {
-//				for (int i = 0; i < agree_file_list.size(); i++) {
-//					file_map = (HashMap) agree_file_list.get(i);
-//					String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM")), ""); // 파일네임
-//					sbHtml.append("			 		<tr>");
-//					sbHtml.append("			 			<td>" + str_FILE_NM + "</td>");
-//					String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH");
-//					sbHtml.append("            <td>                \n");
-//					sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />\n");
-//					String type = "";
-//
-//					if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
-//						String pathSplit[] = str_FILE_NM.split("\\.");
-//						type = pathSplit[1].toLowerCase();
-//					}
-//					if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
-//						sbHtml.append("            <script>               \n");
-//						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
-//						sbHtml.append("            </script>               \n");
-//					} else {
-//						sbHtml.append("            <script>               \n");
-//						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('agree_file_download_form" + i + "').submit();	  });    \n");
-//						sbHtml.append("            </script>               \n");
-//					}
-//
-//					sbHtml.append("            </td>               \n");
-//					sbHtml.append("				 	</tr>");
-//				}
-//			} else {
-//				sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr>");
-//			}
-//			sbHtml.append("			 	</tbody>");
-//			sbHtml.append("			 </table>");
-//
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 </tbody>		");
-//			sbHtml.append("			 </table>		");
-//			sbHtml.append("			 <br />		");
-//			sbHtml.append("			 <!-- *첨부 파일 -->");
-//			sbHtml.append("			 <h4>첨부 파일</h4>");
-//			sbHtml.append("			 <table class=\"base5\">");
-//			sbHtml.append("			 	<colgroup>");
-//			sbHtml.append("			 		<col style=\'width:80%\' />");
-//			sbHtml.append("			 		<col style=\'width:20%\' />");
-//			sbHtml.append("			 	</colgroup>");
-//			sbHtml.append("			 	<thead>");
-//			sbHtml.append("			 		<tr>");
-//			sbHtml.append("			 			<th scope=\"col\">파일명</th>");
-//			sbHtml.append("			 			<th scope=\"col\">파일보기</th>");
-//			sbHtml.append("				 	</tr>");
-//			sbHtml.append("				</thead>");
-//			sbHtml.append("			 	<tbody>");
-//			if (file_list.size() > 0) {
-//				for (int i = 0; i < file_list.size(); i++) {
-//					sbHtml.append("			 		<tr>");
-//					sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>");
-//					String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
-//					sbHtml.append("            <td>                \n");
-//					sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />\n");
-//					String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM" + i)), ""); // 파일네임
-//					String type = "";
-//
-//					if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
-//						String pathSplit[] = str_FILE_NM.split("\\.");
-//						type = pathSplit[1].toLowerCase();
-//					}
-//					if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
-//						sbHtml.append("            <script>               \n");
-//						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
-//						sbHtml.append("            </script>               \n");
-//					} else {
-//						sbHtml.append("            <script>               \n");
-//						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
-//						sbHtml.append("            </script>               \n");
-//					}
-//
-//					sbHtml.append("            </td>               \n");
-//					sbHtml.append("				 	</tr>");
-//				}
-//			} else {
-//				sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr>");
-//			}
-//			sbHtml.append("			 	</tbody>");
-//			sbHtml.append("			 </table>");
-//			sbHtml.append("         </div>  \n");
-//			sbHtml.append("     </div>      \n");
-//			sbHtml.append(" </body>         \n");
-//			sbHtml.append("                 \n");
-//			sbHtml.append(" </html>         \n");
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		return sbHtml.toString();
-//	}
+			tmp_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonAgreeData", params); // 민원협의
+			agreeMap=(HashMap)tmp_list.get(0);
+			agree_file_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonAgreeDetailFile", params); // 첨부파일
+
+			System.out.println("$$$ params=" + params);
+			if (pnu_list.size() > 0) {
+				for (int i = 0; i < pnu_list.size(); i++) {
+					HashMap pnuMap = (HashMap) pnu_list.get(i);
+					String SIDO = cu.evl((String) ((HashMap) pnu_list.get(i)).get("sido_nm"), "");
+					String SGG = cu.evl((String) ((HashMap) pnu_list.get(i)).get("sgg_nm"), "");
+					String EMD = cu.evl((String) ((HashMap) pnu_list.get(i)).get("emd_nm"), "");
+					String RI = cu.evl((String) ((HashMap) pnu_list.get(i)).get("ri_nm"), "");
+					String JIBUN = cu.evl((String) ((HashMap) pnu_list.get(i)).get("jibun"), "");
+					String ADDR = "";
+
+					if (!SIDO.equals(""))
+						ADDR += SIDO + " ";
+					if (!SGG.equals(""))
+						ADDR += SGG + " ";
+					if (!EMD.equals(""))
+						ADDR += EMD + " ";
+					if (!RI.equals(""))
+						ADDR += RI + " ";
+					if (!JIBUN.equals(""))
+						ADDR += JIBUN + " ";
+
+					pnuMap.put("ADDR", ADDR);
+				}
+			}
+			if (file_list.size() > 0) {
+				for (int i = 0; i < file_list.size(); i++) {
+					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), ""));
+					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), ""));
+
+				}
+			}
+
+//			System.out.println("file_list=" + file_list);
+
+			String contents = (String) detailMap.get("mw_contents");
+			contents = contents.replaceAll("\n", "<br />");
+			contents = contents.replaceAll("\r\n", "<br />");
+			contents = contents.replaceAll("\\r\\n", "<br />");
+			contents = contents.replaceAll("\\\\r\\\\n", "<br />");
+
+			sbHtml.append(" <!DOCTYPE html>\n");
+			sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\"> \n");
+			sbHtml.append(sHeader);
+			sbHtml.append(" <body>\n");
+
+			sbHtml.append("<form id='file_download_form' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >\n");
+			sbHtml.append("            <input type='hidden' name='file_no' /> \n");
+			sbHtml.append("            <input type='hidden' name='file_seq' /> \n");
+			sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' /> \n");
+			sbHtml.append("</form>\n");
+
+			if (file_list.size() > 0) {
+				for (int i = 0; i < file_list.size(); i++) {
+					String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("file_seq")), "");
+					sbHtml.append("<form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
+					sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
+					sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
+					sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' />\n");
+					sbHtml.append("</form> \n");
+				}
+			}
+
+			if (agree_file_list.size() > 0) {
+				for (int i = 0; i < agree_file_list.size(); i++) {
+					String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) agree_file_list.get(i)).get("file_seq")), "");
+					sbHtml.append("<form id='agree_file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
+					sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
+					sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
+					sbHtml.append("            <input type='hidden' name='file_gubun' value='minwonAgree' />\n");
+					sbHtml.append("</form> \n");
+				}
+			}
+			sbHtml.append("     <!-- wrap -->\n");
+			sbHtml.append("     <div id=\"wrap\">\n");
+			sbHtml.append("         <!-- 컨테이너 -->\n");
+			sbHtml.append("         <div id=\"container\">\n");
+//			sbHtml.append("			 <div class=\"title\">");
+//			sbHtml.append("			 	<h2>지상권 민원협의 보고</h2>		");
+//			sbHtml.append("			 </div>		");
+			sbHtml.append("			 <div class=\"article\">		");
+			sbHtml.append("			 <!-- *민원 정보 -->		");
+			sbHtml.append("			 <h4>민원 정보</h4>		");
+			sbHtml.append("			 <table class=\"base4\">		");
+			sbHtml.append("			 <colgroup>		");
+			sbHtml.append("			 	<col style=\"width:15%\" />	");
+			sbHtml.append("			 	<col style=\"width:35%\" />	");
+			sbHtml.append("			 	<col style=\"width:15%\" />	");
+			sbHtml.append("			 	<col style=\"width:35%\" />	");
+			sbHtml.append("			 </colgroup>");
+			sbHtml.append("			 <tbody>");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">민원 명</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("mw_title") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">이슈유형</th>");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("code_str1_tmp") + " &gt; " + detailMap.get("code_str2_tmp") + " &gt; " + detailMap.get("code_str3_tmp") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>		");
+			sbHtml.append("			 		<th scope=\"row\">발생일자</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("mw_occur_date") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 		<th scope=\"row\">발생지사</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("jisa") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + contents + "</span>");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 </tbody>		");
+			sbHtml.append("			 </table>		");
+			sbHtml.append("			 <br>		");
+			sbHtml.append("			 <!-- *민원 토지 -->");
+			sbHtml.append("			 <h4>민원 토지</h4>");
+			sbHtml.append("			 <table class=\'base4\'>");
+			sbHtml.append("			 	<colgroup>");
+			sbHtml.append("			 		<col style=\'width:60%\' />");
+			sbHtml.append("			 		<col style=\'width:20%\' />");
+			sbHtml.append("			 		<col style=\'width:20%\' />");
+			sbHtml.append("			 	</colgroup>");
+			sbHtml.append("			 	<tbody>");
+			sbHtml.append("			 		<tr>");
+			sbHtml.append("			 			<th scope=\'row\'>주소</th>");
+			sbHtml.append("			 			<th scope=\'row\'>등기여부</th>");
+			sbHtml.append("			 			<th scope=\'row\'>계약여부</th>");
+			sbHtml.append("			 		</tr>");
+			if (pnu_list.size() > 0) {
+				for (int i = 0; i < pnu_list.size(); i++) {
+					sbHtml.append("			 		<tr>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("addr") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("registed_yn") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("permitted_yn") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 		</tr>");
+				}
+			} else {
+				sbHtml.append("			 		<tr>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 		</tr>");
+			}
+			sbHtml.append("			 	</tbody>");
+			sbHtml.append("			 </table>");
+			sbHtml.append("			 <br />		");
+			sbHtml.append("			 <!-- *협의 내용 -->		");
+			sbHtml.append("			 <h4>민원 협의</h4>		");
+			sbHtml.append("			 <table class=\"base4\">		");
+			sbHtml.append("			 <colgroup>		");
+			sbHtml.append("			 	<col style=\"width:15%\" />	");
+			sbHtml.append("			 	<col style=\"width:35%\" />	");
+			sbHtml.append("			 	<col style=\"width:15%\" />	");
+			sbHtml.append("			 	<col style=\"width:35%\" />	");
+			sbHtml.append("			 </colgroup>");
+			sbHtml.append("			 <tbody>");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">협의 제목</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + agreeMap.get("agree_title") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">협의 날짜</th>");
+			sbHtml.append("			 		<td class=\"inner_tag\">");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + agreeMap.get("agree_date") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 		<th scope=\"row\">진행상태</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + agreeMap.get("status_str") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>		");
+			sbHtml.append("			 		<th scope=\"row\">협의 내용</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px; \">" + agreeMap.get("agree_contents") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">첨부파일</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 <table class=\"base4\">");
+			sbHtml.append("			 	<colgroup>");
+			sbHtml.append("			 		<col style=\'width:80%\' />");
+			sbHtml.append("			 		<col style=\'width:20%\' />");
+			sbHtml.append("			 	</colgroup>");
+			sbHtml.append("			 	<thead>");
+			sbHtml.append("			 		<tr>");
+			sbHtml.append("			 			<th scope=\"col\">파일명</th>");
+			sbHtml.append("			 			<th scope=\"col\">파일보기</th>");
+			sbHtml.append("				 	</tr>");
+			sbHtml.append("				</thead>");
+			sbHtml.append("			 	<tbody>");
+			System.out.println(agree_file_list.size());
+			if (agree_file_list.size() > 0) {
+				for (int i = 0; i < agree_file_list.size(); i++) {
+					file_map = (HashMap) agree_file_list.get(i);
+					String str_FILE_NM = cu.evl(String.valueOf(file_map.get("file_nm")), ""); // 파일네임
+					sbHtml.append("			 		<tr>");
+					sbHtml.append("			 			<td>" + str_FILE_NM + "</td>");
+					String str_FILE_PATH = str_FILE_URL + file_map.get("file_path");
+					sbHtml.append("            <td>                \n");
+					sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />\n");
+					String type = "";
+
+					if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+						String pathSplit[] = str_FILE_NM.split("\\.");
+						type = pathSplit[1].toLowerCase();
+					}
+					if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+						sbHtml.append("            <script>               \n");
+						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+						sbHtml.append("            </script>               \n");
+					} else {
+						sbHtml.append("            <script>               \n");
+						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('agree_file_download_form" + i + "').submit();	  });    \n");
+						sbHtml.append("            </script>               \n");
+					}
+
+					sbHtml.append("            </td>               \n");
+					sbHtml.append("				 	</tr>");
+				}
+			} else {
+				sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr>");
+			}
+			sbHtml.append("			 	</tbody>");
+			sbHtml.append("			 </table>");
+
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 </tbody>		");
+			sbHtml.append("			 </table>		");
+			sbHtml.append("			 <br />		");
+			sbHtml.append("			 <!-- *첨부 파일 -->");
+			sbHtml.append("			 <h4>첨부 파일</h4>");
+			sbHtml.append("			 <table class=\"base5\">");
+			sbHtml.append("			 	<colgroup>");
+			sbHtml.append("			 		<col style=\'width:80%\' />");
+			sbHtml.append("			 		<col style=\'width:20%\' />");
+			sbHtml.append("			 	</colgroup>");
+			sbHtml.append("			 	<thead>");
+			sbHtml.append("			 		<tr>");
+			sbHtml.append("			 			<th scope=\"col\">파일명</th>");
+			sbHtml.append("			 			<th scope=\"col\">파일보기</th>");
+			sbHtml.append("				 	</tr>");
+			sbHtml.append("				</thead>");
+			sbHtml.append("			 	<tbody>");
+			if (file_list.size() > 0) {
+				for (int i = 0; i < file_list.size(); i++) {
+					sbHtml.append("			 		<tr>");
+					sbHtml.append("			 			<td>" + file_map.get("file_nm" + i) + "</td>");
+					String str_FILE_PATH = str_FILE_URL + file_map.get("file_path" + i);
+					sbHtml.append("            <td>                \n");
+					sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />\n");
+					String str_FILE_NM = cu.evl(String.valueOf(file_map.get("file_nm" + i)), ""); // 파일네임
+					String type = "";
+
+					if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+						String pathSplit[] = str_FILE_NM.split("\\.");
+						type = pathSplit[1].toLowerCase();
+					}
+					if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+						sbHtml.append("            <script>               \n");
+						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+						sbHtml.append("            </script>               \n");
+					} else {
+						sbHtml.append("            <script>               \n");
+						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+						sbHtml.append("            </script>               \n");
+					}
+
+					sbHtml.append("            </td>               \n");
+					sbHtml.append("				 	</tr>");
+				}
+			} else {
+				sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr>");
+			}
+			sbHtml.append("			 	</tbody>");
+			sbHtml.append("			 </table>");
+			sbHtml.append("         </div>  \n");
+			sbHtml.append("     </div>      \n");
+			sbHtml.append(" </body>         \n");
+			sbHtml.append("                 \n");
+			sbHtml.append(" </html>         \n");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return sbHtml.toString();
+	}
 
 	/**
 	 * 민원 완료 보고
@@ -3196,306 +3232,313 @@ log.info("ori_list:"+ori_list);
 	 * @param response
 	 * @return
 	 */
-//	public String getMinwonCompleteHTML(String MW_SEQ, HttpServletRequest request, HttpServletResponse response) {
-//
-//		/** 조회 시작 **/
-//		ArrayList list = new ArrayList();
-//		ArrayList pnu_list = new ArrayList();
-//		ArrayList file_list = new ArrayList();
-//		ArrayList agree_list = new ArrayList();
-//
-//		HashMap detailMap = new HashMap();
-//		HashMap pmt_map = new HashMap();
-//		HashMap file_map = new HashMap();
-//
-//		CommonUtil cu = new CommonUtil();
-//
-//		String str_result = "Y";
-//		StringBuffer sbHtml = new StringBuffer();
-//		try {
-//			Map params = new HashMap();
-//			params.put("MW_SEQ", MW_SEQ);
-//
+	public String getMinwonCompleteHTML(String MW_SEQ, HttpServletRequest request, HttpServletResponse response) {
+		MainService mainService = context.getBean(MainService.class);
+		/** 조회 시작 **/
+		ArrayList list = new ArrayList();
+		ArrayList pnu_list = new ArrayList();
+		ArrayList file_list = new ArrayList();
+		ArrayList agree_list = new ArrayList();
+		ArrayList tmp_list = new ArrayList();
+		HashMap detailMap = new HashMap();
+		HashMap pmt_map = new HashMap();
+		HashMap file_map = new HashMap();
+
+		CommonUtil cu = new CommonUtil();
+
+		String str_result = "Y";
+		StringBuffer sbHtml = new StringBuffer();
+		try {
+			HashMap params = new HashMap();
+			params.put("MW_SEQ", MW_SEQ);
+
 //			detailMap = (HashMap) Database.getInstance().queryForObject("Json.selectMinwonDetail", params);// 기본정보
 //			pnu_list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDetailToji", params); // 소속토지정보
 //			file_list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDetailFile", params); // 첨부파일
 //			agree_list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDetailAgree", params); // 민원협의목록
-//
-////			System.out.println("$$$ params=" + params);
-//			if (pnu_list.size() > 0) {
-//				for (int i = 0; i < pnu_list.size(); i++) {
-//					HashMap pnuMap = (HashMap) pnu_list.get(i);
-//					String SIDO = cu.evl((String) ((HashMap) pnu_list.get(i)).get("SIDO_NM"), "");
-//					String SGG = cu.evl((String) ((HashMap) pnu_list.get(i)).get("SGG_NM"), "");
-//					String EMD = cu.evl((String) ((HashMap) pnu_list.get(i)).get("EMD_NM"), "");
-//					String RI = cu.evl((String) ((HashMap) pnu_list.get(i)).get("RI_NM"), "");
-//					String JIBUN = cu.evl((String) ((HashMap) pnu_list.get(i)).get("JIBUN"), "");
-//					String ADDR = "";
-//
-//					if (!SIDO.equals(""))
-//						ADDR += SIDO + " ";
-//					if (!SGG.equals(""))
-//						ADDR += SGG + " ";
-//					if (!EMD.equals(""))
-//						ADDR += EMD + " ";
-//					if (!RI.equals(""))
-//						ADDR += RI + " ";
-//					if (!JIBUN.equals(""))
-//						ADDR += JIBUN + " ";
-//
-//					pnuMap.put("ADDR", ADDR);
-//				}
-//			}
-//			if (file_list.size() > 0) {
-//				for (int i = 0; i < file_list.size(); i++) {
-//					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("FILE_PATH"), ""));
-//					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("FILE_NM"), ""));
-//
-//				}
-//			}
-//
-////			System.out.println("file_list=" + file_list);
-//
-//			String contents = (String) detailMap.get("MW_CONTENTS");
-//			System.out.println("#####" + contents);
-//			contents = contents.replaceAll("\n", "<br />");
-//			contents = contents.replaceAll("\r\n", "<br />");
-//			contents = contents.replaceAll("\\r\\n", "<br />");
-//			contents = contents.replaceAll("\\\\r\\\\n", "<br />");
-//			System.out.println("#####" + contents);
-//
-//			sbHtml.append(" <!DOCTYPE html>\n");
-//			sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\"> \n");
-//			sbHtml.append(sHeader);
-//			sbHtml.append(" <body>\n");
-//
-//			sbHtml.append("<form id='file_download_form' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >\n");
-//			sbHtml.append("            <input type='hidden' name='file_no' /> \n");
-//			sbHtml.append("            <input type='hidden' name='file_seq' /> \n");
-//			sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' /> \n");
-//			sbHtml.append("</form>\n");
-//
-//			if (file_list.size() > 0) {
-//				for (int i = 0; i < file_list.size(); i++) {
-//					String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("FILE_SEQ")), "");
-//					sbHtml.append("<form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
-//					sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
-//					sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
-//					sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' />\n");
-//					sbHtml.append("</form> \n");
-//				}
-//			}
-//			sbHtml.append("     <!-- wrap -->\n");
-//			sbHtml.append("     <div id=\"wrap\">\n");
-//			sbHtml.append("         <!-- 컨테이너 -->\n");
-//			sbHtml.append("         <div id=\"container\">\n");
-////			sbHtml.append("			 <div class=\"title\">");
-////			sbHtml.append("			 	<h2>지상권 민원완료 보고</h2>");
-////			sbHtml.append("			 </div>		");
-//			sbHtml.append("			 <div class=\"article\">		");
-//			sbHtml.append("			 <!-- *민원 정보 -->		");
-//			sbHtml.append("			 <h4>민원 정보</h4>		");
-//			sbHtml.append("			 <table class=\"base4\">		");
-//			sbHtml.append("			 <colgroup>		");
-//			sbHtml.append("			 	<col style=\"width:15%\" />	");
-//			sbHtml.append("			 	<col style=\"width:35%\" />	");
-//			sbHtml.append("			 	<col style=\"width:15%\" />	");
-//			sbHtml.append("			 	<col style=\"width:35%\" />	");
-//			sbHtml.append("			 </colgroup>");
-//			sbHtml.append("			 <tbody>");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">민원 명</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("MW_TITLE") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">이슈유형</th>");
-//			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("CODE_STR1_TMP") + " &gt; " + detailMap.get("CODE_STR2_TMP") + " &gt; " + detailMap.get("CODE_STR3_TMP") + "</span>	");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">발생일자</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("MW_OCCUR_DATE") + "</span>	");
-//			sbHtml.append("			 		</td>");
-//			sbHtml.append("			 		<th scope=\"row\">발생지사</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("JISA") + "</span>");
-//			sbHtml.append("			 		</td>");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 	<tr>");
-//			sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
-//			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + contents + "</span>");
-//			sbHtml.append("			 		</td>	");
-//			sbHtml.append("			 	</tr>	");
-//			sbHtml.append("			 </tbody>		");
-//			sbHtml.append("			 </table>		");
-//			sbHtml.append("			 <br>		");
-//			sbHtml.append("			 <!-- *민원 토지 -->");
-//			sbHtml.append("			 <h4>민원 토지</h4>");
-//			sbHtml.append("			 <table class=\'base4\'>");
-//			sbHtml.append("			 	<colgroup>");
-//			sbHtml.append("			 		<col style=\'width:55%\' />");
-//			sbHtml.append("			 		<col style=\'width:15%\' />");
-//			sbHtml.append("			 		<col style=\'width:15%\' />");
-//			sbHtml.append("			 		<col style=\'width:15%\' />");
-//			sbHtml.append("			 	</colgroup>");
-//			sbHtml.append("			 	<tbody>");
-//			sbHtml.append("			 		<tr>");
-//			sbHtml.append("			 			<th scope=\'row\'>주소</th>");
-//			sbHtml.append("			 			<th scope=\'row\'>등기여부</th>");
-//			sbHtml.append("			 			<th scope=\'row\'>계약여부</th>");
-//			sbHtml.append("			 			<th scope=\'row\'>토지수정일자</th>");
-//			sbHtml.append("			 		</tr>");
-//			if (pnu_list.size() > 0) {
-//				for (int i = 0; i < pnu_list.size(); i++) {
-//					sbHtml.append("			 		<tr>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("ADDR") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("REGISTED_YN") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("PERMITTED_YN") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("COMP_DATE") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 		</tr>");
-//				}
-//			} else {
-//				sbHtml.append("			 		<tr>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 		</tr>");
-//			}
-//			sbHtml.append("			 	</tbody>");
-//			sbHtml.append("			 </table>");
-//			sbHtml.append("			 <br />		");
-//			sbHtml.append("			 <!-- *민원 협의 -->");
-//			sbHtml.append("			 <h4>민원 협의</h4>");
-//			sbHtml.append("			 <table class=\'base4\'>");
-//			sbHtml.append("			 	<colgroup>");
-//			sbHtml.append("			 		<col style=\'width:10%\' />");
-//			sbHtml.append("			 		<col style=\'width:10%\' />");
-//			sbHtml.append("			 		<col style=\'width:30%\' />");
-//			sbHtml.append("			 		<col style=\'width:50%\' />");
-//			sbHtml.append("			 	</colgroup>");
-//			sbHtml.append("			 	<tbody>");
-//			sbHtml.append("			 		<tr>");
-//			sbHtml.append("			 			<th scope=\'row\'>협의일자</th>");
-//			sbHtml.append("			 			<th scope=\'row\'>진행 현황</th>");
-//			sbHtml.append("			 			<th scope=\'row\'>협의 제목</th>");
-//			sbHtml.append("			 			<th scope=\'row\'>협의 내용</th>");
-//			sbHtml.append("			 		</tr>");
-//			if (agree_list.size() > 0) {
-//				for (int i = 0; i < agree_list.size(); i++) {
-//					sbHtml.append("			 		<tr>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) agree_list.get(i)).get("AGREE_DATE") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) agree_list.get(i)).get("STATUS_STR") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) agree_list.get(i)).get("AGREE_TITLE") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 			<td class=\'inner_tag\'>");
-//					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) agree_list.get(i)).get("AGREE_CONTENTS") + "</span>");
-//					sbHtml.append("			 			</td>");
-//					sbHtml.append("			 		</tr>");
-//				}
-//			} else {
-//				sbHtml.append("			 		<tr>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 			<td class=\'inner_tag\'>");
-//				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-//				sbHtml.append("			 			</td>");
-//				sbHtml.append("			 		</tr>");
-//			}
-//			sbHtml.append("			 	</tbody>");
-//			sbHtml.append("			 </table>");
-//			sbHtml.append("			 <br />		");
-//			sbHtml.append("			 <!-- *첨부 파일 -->");
-//			sbHtml.append("			 <h4>첨부 파일</h4>");
-//			sbHtml.append("			 <table class=\"base5\">");
-//			sbHtml.append("			 	<colgroup>");
-//			sbHtml.append("			 		<col style=\'width:80%\' />");
-//			sbHtml.append("			 		<col style=\'width:20%\' />");
-//			sbHtml.append("			 	</colgroup>");
-//			sbHtml.append("			 	<thead>");
-//			sbHtml.append("			 		<tr>");
-//			sbHtml.append("			 			<th scope=\"col\">파일명</th>");
-//			sbHtml.append("			 			<th scope=\"col\">파일보기</th>");
-//			sbHtml.append("				 	</tr>");
-//			sbHtml.append("				</thead>");
-//			sbHtml.append("			 	<tbody>");
-//			if (file_list.size() > 0) {
-//				for (int i = 0; i < file_list.size(); i++) {
-//					sbHtml.append("			 		<tr>");
-//					sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>");
-//					String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
-//					sbHtml.append("            <td>                \n");
-//					sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />\n");
-//					String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM" + i)), ""); // 파일네임
-//					String type = "";
-//
-//					if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
-//						String pathSplit[] = str_FILE_NM.split("\\.");
-//						type = pathSplit[1].toLowerCase();
-//					}
-//					if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
-//						sbHtml.append("            <script>               \n");
-//						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
-//						sbHtml.append("            </script>               \n");
-//					} else {
-//						sbHtml.append("            <script>               \n");
-//						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
-//						sbHtml.append("            </script>               \n");
-//					}
-//
-//					sbHtml.append("            </td>               \n");
-//					sbHtml.append("				 	</tr>");
-//				}
-//			} else {
-//				sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr>");
-//			}
-//			sbHtml.append("			 	</tbody>");
-//			sbHtml.append("			 </table>");
-//			sbHtml.append("			 <br />		");
-//			sbHtml.append("         </div>  \n");
-//			sbHtml.append("     </div>      \n");
-//			sbHtml.append(" </body>         \n");
-//			sbHtml.append("                 \n");
-//			sbHtml.append(" </html>         \n");
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return sbHtml.toString();
-//	}
+
+			tmp_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetail", params);// 기본정보
+			detailMap=(HashMap)tmp_list.get(0);
+			pnu_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailToji", params); // 소속토지정보
+			file_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailFile", params); // 첨부파일
+			agree_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailAgree", params); // 민원협의목록
+
+			System.out.println("$$$ params=" + params);
+			if (pnu_list.size() > 0) {
+				for (int i = 0; i < pnu_list.size(); i++) {
+					HashMap pnuMap = (HashMap) pnu_list.get(i);
+					String SIDO = cu.evl((String) ((HashMap) pnu_list.get(i)).get("sido_nm"), "");
+					String SGG = cu.evl((String) ((HashMap) pnu_list.get(i)).get("sgg_nm"), "");
+					String EMD = cu.evl((String) ((HashMap) pnu_list.get(i)).get("emd_nm"), "");
+					String RI = cu.evl((String) ((HashMap) pnu_list.get(i)).get("ri_nm"), "");
+					String JIBUN = cu.evl((String) ((HashMap) pnu_list.get(i)).get("jibun"), "");
+					String ADDR = "";
+
+					if (!SIDO.equals(""))
+						ADDR += SIDO + " ";
+					if (!SGG.equals(""))
+						ADDR += SGG + " ";
+					if (!EMD.equals(""))
+						ADDR += EMD + " ";
+					if (!RI.equals(""))
+						ADDR += RI + " ";
+					if (!JIBUN.equals(""))
+						ADDR += JIBUN + " ";
+
+					pnuMap.put("ADDR", ADDR);
+				}
+			}
+			if (file_list.size() > 0) {
+				for (int i = 0; i < file_list.size(); i++) {
+					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), ""));
+					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), ""));
+
+				}
+			}
+
+//			System.out.println("file_list=" + file_list);
+
+			String contents = (String) detailMap.get("mw_contents");
+			System.out.println("#####" + contents);
+			contents = contents.replaceAll("\n", "<br />");
+			contents = contents.replaceAll("\r\n", "<br />");
+			contents = contents.replaceAll("\\r\\n", "<br />");
+			contents = contents.replaceAll("\\\\r\\\\n", "<br />");
+			System.out.println("#####" + contents);
+
+			sbHtml.append(" <!DOCTYPE html>\n");
+			sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\"> \n");
+			sbHtml.append(sHeader);
+			sbHtml.append(" <body>\n");
+
+			sbHtml.append("<form id='file_download_form' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >\n");
+			sbHtml.append("            <input type='hidden' name='file_no' /> \n");
+			sbHtml.append("            <input type='hidden' name='file_seq' /> \n");
+			sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' /> \n");
+			sbHtml.append("</form>\n");
+
+			if (file_list.size() > 0) {
+				for (int i = 0; i < file_list.size(); i++) {
+					String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("file_seq")), "");
+					sbHtml.append("<form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
+					sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
+					sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
+					sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' />\n");
+					sbHtml.append("</form> \n");
+				}
+			}
+			sbHtml.append("     <!-- wrap -->\n");
+			sbHtml.append("     <div id=\"wrap\">\n");
+			sbHtml.append("         <!-- 컨테이너 -->\n");
+			sbHtml.append("         <div id=\"container\">\n");
+//			sbHtml.append("			 <div class=\"title\">");
+//			sbHtml.append("			 	<h2>지상권 민원완료 보고</h2>");
+//			sbHtml.append("			 </div>		");
+			sbHtml.append("			 <div class=\"article\">		");
+			sbHtml.append("			 <!-- *민원 정보 -->		");
+			sbHtml.append("			 <h4>민원 정보</h4>		");
+			sbHtml.append("			 <table class=\"base4\">		");
+			sbHtml.append("			 <colgroup>		");
+			sbHtml.append("			 	<col style=\"width:15%\" />	");
+			sbHtml.append("			 	<col style=\"width:35%\" />	");
+			sbHtml.append("			 	<col style=\"width:15%\" />	");
+			sbHtml.append("			 	<col style=\"width:35%\" />	");
+			sbHtml.append("			 </colgroup>");
+			sbHtml.append("			 <tbody>");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">민원 명</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("mw_title") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">이슈유형</th>");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("code_str1_tmp") + " &gt; " + detailMap.get("code_str2_tmp") + " &gt; " + detailMap.get("code_str3_tmp") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">발생일자</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("mw_occur_date") + "</span>	");
+			sbHtml.append("			 		</td>");
+			sbHtml.append("			 		<th scope=\"row\">발생지사</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("jisa") + "</span>");
+			sbHtml.append("			 		</td>");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + contents + "</span>");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 </tbody>		");
+			sbHtml.append("			 </table>		");
+			sbHtml.append("			 <br>		");
+			sbHtml.append("			 <!-- *민원 토지 -->");
+			sbHtml.append("			 <h4>민원 토지</h4>");
+			sbHtml.append("			 <table class=\'base4\'>");
+			sbHtml.append("			 	<colgroup>");
+			sbHtml.append("			 		<col style=\'width:55%\' />");
+			sbHtml.append("			 		<col style=\'width:15%\' />");
+			sbHtml.append("			 		<col style=\'width:15%\' />");
+			sbHtml.append("			 		<col style=\'width:15%\' />");
+			sbHtml.append("			 	</colgroup>");
+			sbHtml.append("			 	<tbody>");
+			sbHtml.append("			 		<tr>");
+			sbHtml.append("			 			<th scope=\'row\'>주소</th>");
+			sbHtml.append("			 			<th scope=\'row\'>등기여부</th>");
+			sbHtml.append("			 			<th scope=\'row\'>계약여부</th>");
+			sbHtml.append("			 			<th scope=\'row\'>토지수정일자</th>");
+			sbHtml.append("			 		</tr>");
+			if (pnu_list.size() > 0) {
+				for (int i = 0; i < pnu_list.size(); i++) {
+					sbHtml.append("			 		<tr>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("addr") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("registed_yn") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("permitted_yn") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("comp_date") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 		</tr>");
+				}
+			} else {
+				sbHtml.append("			 		<tr>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 		</tr>");
+			}
+			sbHtml.append("			 	</tbody>");
+			sbHtml.append("			 </table>");
+			sbHtml.append("			 <br />		");
+			sbHtml.append("			 <!-- *민원 협의 -->");
+			sbHtml.append("			 <h4>민원 협의</h4>");
+			sbHtml.append("			 <table class=\'base4\'>");
+			sbHtml.append("			 	<colgroup>");
+			sbHtml.append("			 		<col style=\'width:10%\' />");
+			sbHtml.append("			 		<col style=\'width:10%\' />");
+			sbHtml.append("			 		<col style=\'width:30%\' />");
+			sbHtml.append("			 		<col style=\'width:50%\' />");
+			sbHtml.append("			 	</colgroup>");
+			sbHtml.append("			 	<tbody>");
+			sbHtml.append("			 		<tr>");
+			sbHtml.append("			 			<th scope=\'row\'>협의일자</th>");
+			sbHtml.append("			 			<th scope=\'row\'>진행 현황</th>");
+			sbHtml.append("			 			<th scope=\'row\'>협의 제목</th>");
+			sbHtml.append("			 			<th scope=\'row\'>협의 내용</th>");
+			sbHtml.append("			 		</tr>");
+			if (agree_list.size() > 0) {
+				for (int i = 0; i < agree_list.size(); i++) {
+					sbHtml.append("			 		<tr>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) agree_list.get(i)).get("agree_date") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) agree_list.get(i)).get("status_str") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) agree_list.get(i)).get("agree_title") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 			<td class=\'inner_tag\'>");
+					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) agree_list.get(i)).get("agree_contents") + "</span>");
+					sbHtml.append("			 			</td>");
+					sbHtml.append("			 		</tr>");
+				}
+			} else {
+				sbHtml.append("			 		<tr>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 			<td class=\'inner_tag\'>");
+				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
+				sbHtml.append("			 			</td>");
+				sbHtml.append("			 		</tr>");
+			}
+			sbHtml.append("			 	</tbody>");
+			sbHtml.append("			 </table>");
+			sbHtml.append("			 <br />		");
+			sbHtml.append("			 <!-- *첨부 파일 -->");
+			sbHtml.append("			 <h4>첨부 파일</h4>");
+			sbHtml.append("			 <table class=\"base5\">");
+			sbHtml.append("			 	<colgroup>");
+			sbHtml.append("			 		<col style=\'width:80%\' />");
+			sbHtml.append("			 		<col style=\'width:20%\' />");
+			sbHtml.append("			 	</colgroup>");
+			sbHtml.append("			 	<thead>");
+			sbHtml.append("			 		<tr>");
+			sbHtml.append("			 			<th scope=\"col\">파일명</th>");
+			sbHtml.append("			 			<th scope=\"col\">파일보기</th>");
+			sbHtml.append("				 	</tr>");
+			sbHtml.append("				</thead>");
+			sbHtml.append("			 	<tbody>");
+			if (file_list.size() > 0) {
+				for (int i = 0; i < file_list.size(); i++) {
+					sbHtml.append("			 		<tr>");
+					sbHtml.append("			 			<td>" + file_map.get("file_nm" + i) + "</td>");
+					String str_FILE_PATH = str_FILE_URL + file_map.get("file_path" + i);
+					sbHtml.append("            <td>                \n");
+					sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />\n");
+					String str_FILE_NM = cu.evl(String.valueOf(file_map.get("file_nm" + i)), ""); // 파일네임
+					String type = "";
+
+					if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+						String pathSplit[] = str_FILE_NM.split("\\.");
+						type = pathSplit[1].toLowerCase();
+					}
+					if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+						sbHtml.append("            <script>               \n");
+						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+						sbHtml.append("            </script>               \n");
+					} else {
+						sbHtml.append("            <script>               \n");
+						sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+						sbHtml.append("            </script>               \n");
+					}
+
+					sbHtml.append("            </td>               \n");
+					sbHtml.append("				 	</tr>");
+				}
+			} else {
+				sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr>");
+			}
+			sbHtml.append("			 	</tbody>");
+			sbHtml.append("			 </table>");
+			sbHtml.append("			 <br />		");
+			sbHtml.append("         </div>  \n");
+			sbHtml.append("     </div>      \n");
+			sbHtml.append(" </body>         \n");
+			sbHtml.append("                 \n");
+			sbHtml.append(" </html>         \n");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(sbHtml.toString());
+		return sbHtml.toString();
+	}
 
 	
 				

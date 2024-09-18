@@ -1939,5 +1939,277 @@ WHERE 1=1
 
 	</select>
 	
+	<select id="selectJisangPmtDetail_MASTER"  parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT jpm_PMT_NO AS PMT_NO
+, jpm_USE_PURPOS AS USE_PURPOS
+, jpm_ECHO_NO AS ECHO_NO
+, TO_CHAR(jpm_USE_ST_DATE , 'YYYY-MM-DD') AS USE_ST_DATE
+, TO_CHAR(jpm_USE_ED_DATE, 'YYYY-MM-DD') AS USE_ED_DATE
+, jpm_SPOT_RESULT AS SPOT_RESULT
+, jpm_review AS RIVEW
+, jpm_CONTRACT AS CONTRACT
+, jpm_PMT_STATUS AS PMT_STATUS
+, jpm_DOCKEY AS DOCKEY
+FROM jisang_permit_master
+		WHERE jpm_pmt_no = #{PMT_NO}
+	</select>
+	<select id="selectJisangPmtDetail_TOGI"  parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT jpt_PMT_NO as PMT_NO
+		,jpt_jisang_no as JISANG_NO
+		,jpt_addrcode as ADDRCODE
+		,jpt_soyuja as SOYUJA
+		,jpt_pmt_user as  PMT_USER
+		,jpt_jimok as  JIMOK
+		,jpt_ALL_AREA AS ALL_AREA
+		, jpt_SET_AREA AS SET_AREA
+		, jpt_set_money as SET_MONEY
+		, jpt_sido_nm as SIDO_NM
+		, jpt_sgg_nm as SGG_NM
+		, jpt_emd_nm as EMD_NM
+		, jpt_ri_nm as RI_NM
+		, jpt_jibun as JIBUN
+		, jpt_addr as ADDR
+		, jpt_jasan_no as JASAN_NO
+		FROM jisang_permit_togi
+		WHERE jpt_pmt_no = #{PMT_NO}
+		ORDER BY JISANG_NO
+	</select>
 	
+	
+		<select id="selectJisangPmtDetail_FILE" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT jrd_manage_no as PMT_NO, jrd_fseq AS SEQ, jrd_fpath as FILE_PATH,jrd_fname AS FILE_NM,jrd_fseq as FILE_GUBUN
+		FROM jisang_req_doc1
+		WHERE jrd_manage_no = #{PMT_NO}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+			AND jrd_fseq = #{SEQ}
+		</if>
+		
+		ORDER BY jrd_fseq
+	</select>
+	
+	
+	<update id="updateJisangBunhalEchoNo" parameterType="HashMap" >
+		UPDATE JISANG_BUNHAL SET
+		jb_dockey = #{DOCKEY},
+		jb_bunhal_status = '상신'
+		WHERE jb_bunhal_org_no = #{JISANGNO}
+	</update>
+	<update id="updateJisangPmtDetailEchoNo"  parameterType="HashMap" >
+		UPDATE jisang_permit_master SET
+		jpm_dockey = #{DOCKEY}
+		WHERE jpm_pmt_no = #{PMT_NO}
+	</update>
+	<select id="selectDocInfo" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT *
+			,pa_out_flag AS OUT_FLAG
+		,pa_out_url AS OUT_URL
+		 FROM plms_approval where pa_dockey in (select jpm_dockey from jisang_permit_master where jpm_pmt_no = #{PMT_NO}) and (pa_status is null or pa_status not in ('X'))
+	</select>
+	
+	
+	<update id="insertJisangTerminationAdd" parameterType="HashMap">
+		UPDATE jisang_master SET
+		jm_cancle_bosang_money = #{CANCLE_BOSANG_MONEY}
+		,jm_cancle_bosang_yn = #{CANCLE_YES}
+		,jm_cancle_date = TO_DATE(#{STARTDAY},'YYYYMMDDHH24MISS')
+		,jm_chuideuk_money = #{CHUIDEUKMONEY}
+		,jm_gammoney = #{GAMMONEY}
+		,jm_remainder_money = #{REMAINDERMONEY}
+		,jm_cancle_empcd = #{EMPCD}
+		,jm_cancle_name = #{NAME}
+		,jm_cancle_reason = #{CANCLE_REASON}
+		,jm_cancle_comment = #{CANCLE_COMMENT}
+		WHERE jm_jisang_no = #{JISANGNO}
+	</update>
+	
+	<update id="mergeJisangTermination" parameterType="HashMap">
+		INSERT INTO jisang_termination (
+    jisang_no,
+    cancle_date,
+    cancle_reason,
+    cancle_comment,
+    cancle_bosang_yn,
+    cancle_bosang_money,
+    cancle_name,
+    cancle_empcd,
+    chuideuk_money,
+    gammoney,
+    remainder_money,
+    cancle_status
+)
+VALUES (
+    #{JISANGNO},
+    #{STARTDAY}::date,
+    #{CANCLE_REASON},
+    #{CANCLE_COMMENT},
+    #{CANCLE_YES},
+    #{CANCLE_BOSANG_MONEY}::numeric,
+    #{NAME},
+    #{EMPCD},
+    #{CHUIDEUKMONEY}::numeric,
+    #{GAMMONEY}::numeric,
+    #{REMAINDERMONEY}::numeric,
+    #{CANCLE_STATUS}
+)
+ON CONFLICT (jisang_no)
+DO UPDATE
+SET 
+    cancle_date = #{STARTDAY}::date,
+    cancle_reason = #{CANCLE_REASON},
+    cancle_comment = #{CANCLE_COMMENT},
+    cancle_bosang_yn = #{CANCLE_YES},
+    cancle_bosang_money = #{CANCLE_BOSANG_MONEY}::numeric,
+    cancle_name = #{NAME},
+    cancle_empcd = #{EMPCD},
+    chuideuk_money = #{CHUIDEUKMONEY}::numeric,
+    gammoney = #{GAMMONEY}::numeric,
+    remainder_money = #{REMAINDERMONEY}::numeric,
+    cancle_status = #{CANCLE_STATUS};
+	</update>
+	
+	
+	<select id="selectJisangDocInfo" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT * FROM plms_approval where pa_dockey in (select jm_dockey from jisang_master where jm_jisang_no = #{JISANGNO}) 
+		and (pa_status is null or pa_status not in ('X'))
+	</select>
+	
+	<select id="selectJisangRowDetail_KibonInfo" parameterType="HashMap" resultType="java.util.HashMap">
+SELECT 
+    JM.jm_JISANG_NO AS JISANG_NO,
+    JM.jm_jisa as JISA,
+    JM.jm_yongdo as YONGDO,
+    JM.jm_pipe_name as PIPE_NAME,
+    JM.jm_sun_gubun as SUN_GUBUN,
+    JM.jm_sido_nm as SIDO_NM,
+    JM.jm_sgg_nm as SGG_NM,
+    JM.jm_emd_nm as EMD_NM,
+    JM.jm_addrcode as ADDRCODE,
+    JM.jm_ri_nm as RI_NM,
+    JM.jm_jibun as JIBUN,
+    JM.jm_jijuk_area  + COALESCE(
+        (SELECT SUM(COALESCE(S.jm_JIJUK_AREA, 0))
+         FROM jisang_merge S
+         WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0
+    ) AS JIJUK_AREA,
+    JM.jm_jimok_text as JIMOK_TEXT,
+    JM.jm_pnu as PNU,
+    JM.jm_save_status as SAVE_STATUS,
+    CASE
+        
+        WHEN JM.jm_PIPE_YN IS NOT NULL THEN JM.jm_PIPE_YN
+        ELSE 'N'
+    END AS PIPE_OVERLAP_YN
+FROM 
+    jisang_master JM
+LEFT JOIN 
+    JIJUK_2024 JKM ON JM.jm_PNU = JKM.PNU
+WHERE 
+    JM.jm_JISANG_NO = #{JISANG_NO}
+
+</select>
+<select id="selectJisangRowDetail_SoujaInfo"  parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM jisang_souja
+		WHERE js_jisang_no =#{JISANG_NO}
+		ORDER BY js_souja_name ASC
+	</select>
+		<select id="selectJisangRowDetail_Files" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM jisang_atcfile
+		WHERE ja_jisang_no =#{FILENO}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+		
+			AND ja_seq =#{SEQ}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(FILE_SEQ)" >
+		
+			AND ja_file_seq =#{FILE_SEQ}
+		</if>
+		ORDER BY ja_seq DESC
+	</select>
+	
+	<!--  지상정보 조회  -->
+	<select id="getSaveJisangMergeData"  parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM jisang_master
+		WHERE jm_jisang_no =#{jisangNo}
+		
+	</select>
+	
+	<select id="selectJisangMergeSaveList" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT
+    JM.jm_jisang_no as JISANG_NO,
+    JM.jm_sido_nm as SIDO_NM,
+    JM.jm_sgg_nm as SGG_NM,
+    JM.jm_emd_nm as EMD_NM,
+    JM.jm_ri_nm as RI_NM,
+    JM.jm_jibun as JIBUN,
+    JM.jm_jisa as JISA,
+    JM.jm_addrcode as ADDRCODE,
+    JM.jm_pnu as PNU,
+    JM.jm_jimok_text as JIMOK_TEXT,
+    JM.jm_jijuk_area as JIJUK_AREA,
+    JMT.jmt_pyeonib_area as PYEONIB_AREA,
+    JMT.jmt_set_money as SET_MONEY,
+    JMT.jmt_jasan_no as JASAN_NO,
+    JMT.jmt_dockey as DOCKEY,
+    JMT.jmt_MERGE_REASON,
+    JMT.jmt_merge_comment as MERGE_COMMENT,
+    JMT.jmt_rep_jisang_no as REP_JISANG_NO,
+    JMT.jmt_merge_status as MERGE_STATUS,
+    CASE
+        WHEN JM.jm_jisang_no = JMT.jmt_rep_jisang_no THEN 'Y'
+        ELSE 'N'
+    END AS MAIN_FLAG,
+    PA.pa_status as STATUS
+FROM
+    jisang_master JM
+JOIN
+    jisang_merge_tmp  JMT ON JM.jm_jisang_no = JMT.jmt_jisang_no
+LEFT JOIN
+    plms_approval  PA ON JMT.jmt_dockey = PA.pa_dockey
+WHERE
+    1 = 1
+    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(REP_JISANG_NO)" >
+		
+			AND JMT.jmt_rep_jisang_no = #{REP_JISANG_NO}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANG_NO)" >
+		
+			AND JMT.jmt_jisang_no = #{JISANG_NO}
+		</if>
+	</select>
+	
+	<update id="updateJisangMergeEchoNo" parameterType="HashMap">
+		UPDATE jisang_merge_tmp SET
+		jmt_dockey = #{DOCKEY}
+		WHERE jmt_rep_jisang_no = #{JISANGNO}
+	</update>
+	<select id="selectJisangMergeInfo"  parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT * FROM plms_approval where pa_dockey in (select jmt_dockey from jisang_merge_tmp where jmt_jisang_no = #{JISANGNO}) and (pa_status is null or pa_status not in ('X'))
+	</select>
+	
+	<insert id="insertJisangMergeTmp" parameterType="HashMap">
+		INSERT INTO jisang_merge_tmp (
+		jmt_jisang_no,
+		jmt_pyeonib_area,
+		jmt_set_money,
+		jmt_jasan_no,
+		jmt_rep_jisang_no,
+		jmt_merge_reason,
+		jmt_merge_comment,
+		jmt_merge_status,
+		jmt_dockey
+		) VALUES (
+		#{JISANG_NO},
+		#{PYEONIB_AREA}::numeric,
+		#{SET_MONEY}::numeric,
+		#{JASAN_NO},
+		#{REP_JISANG_NO},
+		#{MERGE_REASON},
+		#{MERGE_COMMENT},
+		#{MERGE_STATUS},
+		#{DOCKEY}
+		)
+	</insert>
 </mapper>

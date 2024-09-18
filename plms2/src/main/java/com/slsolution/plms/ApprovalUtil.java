@@ -19,6 +19,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 
 
@@ -30,7 +31,7 @@ public class ApprovalUtil  {
 	@Autowired
 	private MainService mainService;
 	
-	
+	@Transactional
 	public boolean GetPLMSDataforXML(String DOCKEY,String HTML,String USERCD,String SDATE,String STIME
 			,String GUBUN,String USERNAME,String USERDEPTCD,String USERDEPTNM,String USERUPDEPTCD) throws MalformedURLException, IOException
 	{
@@ -127,7 +128,9 @@ public class ApprovalUtil  {
 		}
 		
 		if (out_url==null || out_url.equals("") || out_url.equals("URL Failed")) {
+			
 			System.out.println("파싱 테이터가 없습니다.");
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@XML SERVLET END~~~!!! ############");
 			return false;
 		}
 		else {

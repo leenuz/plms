@@ -17,6 +17,8 @@ import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -28,14 +30,15 @@ import com.slsolution.plms.json.JSONObject;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
+@Component
 @Slf4j
-public class CommonUtil {
+public class CommonUtil implements ApplicationContextAware{
 
 	
 	 private static ApplicationContext context;
 
 	    // ApplicationContext 주입
-	    
+	 @Override
 	    public void setApplicationContext(ApplicationContext applicationContext) {
 	        context = applicationContext;
 	    }

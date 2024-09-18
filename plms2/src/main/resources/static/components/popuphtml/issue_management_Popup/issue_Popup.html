@@ -1,0 +1,39 @@
+<link
+  rel="stylesheet"
+  as="style"
+  crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="/assets/css/popup/Issue_development_Popup.css" />
+<div id="issuePopup" class="issuePopup">
+  <div class="popupWrap">
+    <h2>
+      <p>이슈보기</p>
+      <span class="topCloseBtn"></span>
+    </h2>
+    <div class="issue_wrap">
+      <ul>
+        <li class="issue_title">이슈유형</li>
+        <li class="issue_content">
+          지소유자와 계약 > 권리상실 > 해지업무 착오로 인한 지상권 소실
+        </li>
+      </ul>
+    </div>
+    <div class="document_add_btnWrap">
+      <button class="closeBtn finalBtn">닫기</button>
+    </div>
+  </div>
+</div>
+<script>
+  //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+  const issuePopupOpen = document.getElementById("issuePopup");
+
+  if (issuePopupOpen) {
+    issuePopupOpen
+      .querySelectorAll(".topCloseBtn, .finalBtn")
+      .forEach(function (btn) {
+        btn.addEventListener("click", () => {
+          issuePopupOpen.classList.remove("active");
+        });
+      });
+  }
+</script>

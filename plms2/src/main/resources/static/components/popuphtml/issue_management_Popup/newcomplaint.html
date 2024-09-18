@@ -1,0 +1,807 @@
+<link
+  rel="stylesheet"
+  as="style"
+  crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+/>
+<link rel="stylesheet" href="/assets/css/popup/Issue_development_Popup.css" />
+<div id="newcomplaint_Popup" class="newcomplaint_Popup">
+  <div class="popupWrap">
+    <h2>
+      <p>신규 민원 등록</p>
+      <span class="topCloseBtn"></span>
+    </h2>
+
+    <!-- 스크롤 박스-->
+    <div class="newcomplaint_Popup_box">
+      <!-- 민원 정보 -->
+      <section class="complaintinfo_wrap">
+        <h3>민원 정보</h3>
+        <ul class="complaintinfo">
+          <li class="complaintinfo_name">민원 명</li>
+          <li class="complaintinfo_input_name">
+            <input type="text" placeholder="민원 명" />
+          </li>
+          <li class="complaintinfo_input_name2">발생일자</li>
+          <li class="complaintinfo_input_name3">
+            <div class="complaint_calender_wrap">
+              <input
+                type="date"
+                data-placeholder="민원발생일자"
+                required
+                aria-required="true"
+              />
+            </div>
+          </li>
+          <li class="complaintinfo_input_name4">발생지사</li>
+          <li class="popSelectWrap">
+            <div class="hidden_SelectBox">
+              <select
+                name="newcomplaint_Selectbox01"
+                id="newcomplaint_Selectbox01"
+                hidden
+              >
+                <option value="전체">전체</option>
+                <option value="전체1">전체1</option>
+                <option value="전체2">전체2</option>
+                <option value="전체3">전체3</option>
+                <option value="전체4">전체4</option>
+              </select>
+            </div>
+            <div class="Popup_Custom_SelectBox">
+              <button class="Popup_Custom_SelectView">전체</button>
+              <ul class="Popup_Custom_SelectBtns"></ul>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <!-- 토지 정보 -->
+      <section class="landinfo_wrap">
+        <h3>토지 정보</h3>
+        <div class="landinfo">
+          <div class="landinfo_title_box">
+            <ul class="landinfo_title">
+              <li class="landinfo_title_2">
+                <p>순번</p>
+              </li>
+              <li class="landinfo_title_3">
+                <p>대표필지</p>
+              </li>
+              <li class="landinfo_title_4">
+                <p>주소</p>
+              </li>
+              <li class="landinfo_title_5">
+                <p>등기여부</p>
+              </li>
+              <li class="landinfo_title_6">
+                <p>계약여부</p>
+              </li>
+              <li class="landinfo_title_7">
+                <p>실저촉면적</p>
+              </li>
+              <li class="landinfo_title_8">
+                <p>추가/삭제</p>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 토지정보 기본값 + 추가로 나오는 부분-->
+          <div class="landinfo_box">
+            <ul class="landinfo_content">
+              <li class="landinfo_content_2">1</li>
+              <li class="landinfo_content_3">
+                <input
+                  type="checkbox"
+                  id="newcomplaint_checkbox1"
+                  class="approve_checkbox"
+                />
+                <label
+                  for="newcomplaint_checkbox1"
+                  class="approve_checkbox_label"
+                ></label>
+              </li>
+              <li class="landinfo_content_4">
+                <input type="text" />
+                <!-- button class 추가 -->
+                <button class="landStatusPopOpenBtn">검색</button>
+              </li>
+              <li class="landinfo_content_5"><input type="text" /></li>
+              <li class="landinfo_content_5"><input type="text" /></li>
+              <li class="landinfo_content_5"><input type="text" /></li>
+              <li class="landinfo_content_8">
+                <button class="complaint_addition">추가</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <!-- 대표 필지정보 -->
+      <section class="daepyo_pilji_wrap">
+        <h3>대표 필지정보</h3>
+        <div class="daepyo_pilji">
+          <ul class="daepyo_pilji_1">
+            <li class="daepyo_pilji_list_1">주소</li>
+            <li class="daepyo_pilji_list_2">등기여부</li>
+            <li class="daepyo_pilji_list_3">계약여부</li>
+          </ul>
+          <ul>
+            <li class="daepyo_pilji_list_1">
+              <input
+                type="text"
+                placeholder="강원특별자치도 강릉시 강문동 1-1"
+              />
+            </li>
+            <li class="daepyo_pilji_list_2">
+              <input type="text" placeholder="N" />
+            </li>
+            <li class="daepyo_pilji_list_3">
+              <input type="text" placeholder="N" />
+            </li>
+          </ul>
+        </div>
+      </section>
+      <!-- 민원 내용 -->
+      <section class="complaint_contents_Details">
+        <h3>민원 내용</h3>
+        <div class="complaint_contents_wrap">
+          <ul class="complaint_contents_title">
+            <li>구분</li>
+            <li>순번</li>
+            <li>성명</li>
+            <li>생년월일</li>
+            <li>토지주와의 관계</li>
+            <li>연락처</li>
+            <li>현장입회</li>
+            <li class="com_content_btn">추가/삭제</li>
+          </ul>
+
+          <!-- 민원인 토지주-->
+          <ul class="complaint_contents_content1">
+            <li class="com_content_title1">민원인/토지주</li>
+
+            <!-- 민원인 토지주 여러내용 들어가는 곳-->
+            <li class="com_content_contents_1">
+              <ul class="landowner_wrap">
+                <li class="landowner_num">
+                  <input type="text" value="1" readonly />
+                </li>
+                <li><input type="text" /></li>
+                <li><input type="text" /></li>
+                <li><input type="text" /></li>
+                <li><input type="text" /></li>
+                <li class="popSelectWrap">
+                  <div class="hidden_SelectBox">
+                    <select hidden>
+                      <option value="Y">Y</option>
+                      <option value="N">N</option>
+                    </select>
+                  </div>
+                  <div class="Popup_Custom_SelectBox">
+                    <button class="Popup_Custom_SelectView">Y/N</button>
+                    <ul class="Popup_Custom_SelectBtns"></ul>
+                  </div>
+                </li>
+                <li class="landowner_btns_default">
+                  <button class="complaint_addition">추가</button>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <!-- 민원내용(토지이력 요구사항 내용 첨부파일)-->
+          <ul class="complaint_contents_content2">
+            <li class="com_content_title2">토지이력</li>
+            <li class="com_content_title4">
+              <textarea class="auto_textarea"></textarea>
+            </li>
+          </ul>
+          <ul class="complaint_contents_content2">
+            <li class="com_content_title2">요구사항</li>
+            <li class="com_content_title4">
+              <textarea class="auto_textarea"></textarea>
+            </li>
+          </ul>
+          <ul class="complaint_contents_content2">
+            <li class="com_content_title2">내용</li>
+            <li class="com_content_title4">
+              <textarea class="auto_textarea"></textarea>
+            </li>
+          </ul>
+          <ul class="complaint_contents_content3">
+            <li class="com_content_title3">첨부파일</li>
+            <li class="com_content_title5">
+              <ul class="complaint_contents_content3_wrap">
+                <li class="complaint_contents_content3_file">
+                  <!-- multiple 추가 -->
+                  <input
+                    type="file"
+                    id="complaint_contents_contents3_Popup_file"
+                    multiple
+                    hidden
+                  />
+                  <!-- <label for="complaint_contents_contents3_Popup_file" class="complaint_contents_contents3_Popup_file_wrap">
+                    첨부파일 기본값 
+                    <div class="complaint_contents_contents3_file_default active">
+                      <div class="file_background_wrap">
+                        <figure class="complaint_contents_contents3_file_img_wrap"><img src="/assets/media/popup/images/file-upload.png"
+                            alt="upload"></figure>
+                        <p>파일을 마우스로 끌어오세요.</p>
+                      </div>
+                    </div>
+                    파일 추가시 나오는 곳 
+                    <div class="complaint_contents_contents3_file_add_contents">
+                      <ul class="complaint_contents_contents3_file_add_contents_th">
+                        <li>
+                          <figure><img src="/assets/media/popup/images/back_icon.png" alt="xbtn"></figure>
+                        </li>
+                        <li class="complaint_contents_contents3_file_add_name">
+                          <p>파일명</p>
+                        </li>
+                        <li>
+                          <p>업로드 상태</p>
+                        </li>
+                        <li>
+                          <p>용량</p>
+                        </li>
+                      </ul>
+                    </div>
+                  </label>-->
+
+                  <!-- 추가 -->
+
+                  <div class="popfileLargeWrap">
+                    <!-- 파일이 첨부되지 않았을 때 모습 -->
+                    <div class="popfileUploadWrap popfileUploadDisplay">
+                      <label
+                        for="complaint_contents_contents3_Popup_file"
+                        class="popfileUploadBox"
+                      >
+                        <img
+                          src="../../../assets/media/popup/images/file-upload.png"
+                          alt="파일 업로드 아이콘"
+                          class="fileUploadIcon"
+                        />
+                        <p>파일을 마우스로 끌어오세요.</p>
+                      </label>
+                    </div>
+                    <div class="popfileUploadAfterWrap popfileUploadDisplay">
+                      <!-- 추가, 업로드시 나오는 거 -->
+                      <div class="popfileUploadAfter">
+                        <ul class="poptitles">
+                          <li class="popBtnbox">
+                            <button class="popAllDeleteFileBtn"></button>
+                          </li>
+                          <li class="poptitle popfilenameBox">
+                            <p>파일명</p>
+                          </li>
+                          <li class="poptitle">
+                            <p>업로드 상태</p>
+                          </li>
+                          <li class="poptitle">
+                            <p>용량</p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- 버튼 -->
+
+    <div class="complaintinfo_btns">
+      <button class="approveBtn finalBtn">저장</button>
+      <button class="sangsinBtn finalBtn">상신</button>
+      <button class="closeBtn finalBtn">닫기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 추가, 검색결과 (토지상태) -->
+<div class="issueManageLandStatusPopWrapper"></div>
+<script>
+  //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+  const newcomplaintPopupOpen = document.getElementById("newcomplaint_Popup");
+
+  if (newcomplaintPopupOpen) {
+    newcomplaintPopupOpen
+      .querySelectorAll(".topCloseBtn, .finalBtn")
+      .forEach(function (btn) {
+        btn.addEventListener("click", () => {
+          newcomplaintPopupOpen.classList.remove("active");
+        });
+      });
+  }
+
+  // 토지 정보
+  // 버튼 눌렀을시 ul 추가 삭제 이벤트
+
+  function infoadd() {
+    // ul이 들어갈 공간 지정
+    const landinfoList = document.querySelector(".landinfo_box");
+    // 체크박스 시작 id번호
+    let checkboxCounter = 2;
+
+    landinfoList.addEventListener("click", function (event) {
+      if (
+        event.target &&
+        event.target.classList.contains("complaint_addition")
+      ) {
+        addLandInfo();
+      }
+      if (event.target && event.target.classList.contains("complaint_delete")) {
+        deleteLandInfo(event.target);
+      }
+    });
+
+    function addLandInfo() {
+      // ul 추가
+      const newListItem = document.createElement("ul");
+      // 추가 되는 ul에 "landinfo_content" class 이름 붙힘
+      newListItem.classList.add("landinfo_content");
+
+      // ul 추가 될때마다 체크박스 id에 +1씩 더해서 나오게
+      const checkboxId = `newcomplaint_checkbox${checkboxCounter++}`;
+
+      // 추가 버튼 누를시 추가되는 내용
+      newListItem.innerHTML = `
+              <li class="landinfo_content_2">${
+                document.querySelectorAll(".landinfo_content").length + 1
+              }</li>
+              <li class="landinfo_content_3">
+                <input type="checkbox" id="${checkboxId}" class="approve_checkbox" />
+                <label for="${checkboxId}" class="approve_checkbox_label"></label>
+              </li>
+              <li class="landinfo_content_4">
+                <input type="text" />
+                <button class="landStatusPopOpenBtn">검색</button>
+              </li>
+              <li class="landinfo_content_5"><input type="text" /></li>
+              <li class="landinfo_content_5"><input type="text" /></li>
+              <li class="landinfo_content_5"><input type="text" /></li>
+              <li class="landinfo_content_8">
+                <div class="landinfocontent_btn_wrap1">
+                  <button class="complaint_addition">추가</button>
+                </div>
+                <div class="landinfocontent_btn_wrap2">
+                  <button class="complaint_delete">삭제</button>
+                </div>
+              </li>
+                `;
+
+                // 검색 버튼에 class명 추가
+      // ul들어갈 공간 div의 자식 요소로 ul지정
+      landinfoList.appendChild(newListItem);
+    }
+
+    // 행 삭제
+    function deleteLandInfo(button) {
+      // 누른 삭제 버튼이 위치한 행
+      const listItem = button.closest(".landinfo_content");
+      // 누른 삭제 버튼이 있는 행 제거
+      if (listItem) {
+        landinfoList.removeChild(listItem);
+      }
+      // 순번 업데이트
+      updateOrderNumbers();
+    }
+
+    // 순번 업데이트
+    function updateOrderNumbers() {
+      // 모든 .landinfo_content 요소를 선택
+      document.querySelectorAll(".landinfo_content").forEach((item, index) => {
+        // 모든 .landinfo_content의 순번을 업데이트
+        item.querySelector(".landinfo_content_2").textContent = index + 1;
+      });
+    }
+  }
+
+  infoadd();
+  /* 민원 내용 민원인/토지주 추가 + 셀렉트 */
+
+  function complaintsselect() {
+    function initializeCustomSelect(contentitem) {
+      const nowIssueSelectBox03 = contentitem.querySelector("select");
+
+      if (!nowIssueSelectBox03) return;
+
+      const popCustomSelectBox03 = contentitem.querySelector(
+        ".Popup_Custom_SelectBox"
+      );
+      const popCustomSelectBtns03 = popCustomSelectBox03.querySelector(
+        ".Popup_Custom_SelectBtns"
+      );
+
+      // 중복을 피하기 위해 초기화
+      popCustomSelectBtns03.innerHTML = "";
+
+      nowIssueSelectBox03.querySelectorAll("option").forEach((option) => {
+        const optionValue03 = option.value;
+        const li03 = document.createElement("li");
+        const button03 = document.createElement("button");
+        button03.classList.add("PopupMoreSelectBtn");
+        button03.type = "button";
+        button03.textContent = optionValue03;
+        li03.appendChild(button03);
+        popCustomSelectBtns03.appendChild(li03);
+      });
+
+      const selectViewButton = popCustomSelectBox03.querySelector(
+        ".Popup_Custom_SelectView"
+      );
+      selectViewButton.addEventListener("click", function () {
+        selectViewButton.classList.toggle("active");
+        popCustomSelectBtns03.classList.toggle("active");
+      });
+
+      // 버튼 클릭시 옵션 선택 처리
+      popCustomSelectBtns03
+        .querySelectorAll(".PopupMoreSelectBtn")
+        .forEach((moreBtn) => {
+          moreBtn.addEventListener("click", function () {
+            const moreBtnText = moreBtn.innerText;
+            const editViewBtn = popCustomSelectBox03.querySelector(
+              ".Popup_Custom_SelectView"
+            );
+            editViewBtn.textContent = moreBtnText;
+            editViewBtn.classList.remove("active");
+            popCustomSelectBtns03.classList.remove("active");
+            nowIssueSelectBox03.value = moreBtn.textContent;
+
+            console.log(`Selected value: ${nowIssueSelectBox03.value}`);
+          });
+        });
+    }
+
+    function newcomplaintSelect03() {
+      const newcomplaintSelectWrapitems = document.querySelectorAll(
+        "#newcomplaint_Popup .popSelectWrap"
+      );
+      newcomplaintSelectWrapitems.forEach((contentitem) => {
+        initializeCustomSelect(contentitem);
+      });
+    }
+
+    // 페이지로드시 기존의 select 요소 초기화
+    newcomplaintSelect03();
+
+    const landinfoList = document.querySelector(".com_content_contents_1");
+
+    landinfoList.addEventListener("click", function (event) {
+      if (
+        event.target &&
+        event.target.classList.contains("complaint_addition")
+      ) {
+        addLandInfo();
+      }
+      if (event.target && event.target.classList.contains("complaint_delete")) {
+        deleteLandInfo(event.target);
+      }
+    });
+
+    function addLandInfo() {
+      const newListItem = document.createElement("ul");
+      newListItem.classList.add("landowner_wrap");
+
+      newListItem.innerHTML = `
+            <li class="landowner_num"><input type="text" value="${
+              document.querySelectorAll(".landowner_wrap").length + 1
+            }" readonly /></li>
+            <li><input type="text" /></li>
+            <li><input type="text" /></li>
+            <li><input type="text" /></li>
+            <li><input type="text" /></li>
+            <li class="popSelectWrap">
+                <div class="hidden_SelectBox">
+                    <select hidden>
+                        <option value="Y">Y</option>
+                        <option value="N">N</option>
+                    </select>
+                </div>
+                <div class="Popup_Custom_SelectBox">
+                    <button class="Popup_Custom_SelectView">Y/N</button>
+                    <ul class="Popup_Custom_SelectBtns"></ul>
+                </div>
+            </li>
+            <li class="landowner_btns">
+                <div class="landinfocontent_btn_wrap1">
+                    <button class="complaint_addition">추가</button>
+                </div>
+                <div class="landinfocontent_btn_wrap2">
+                    <button class="complaint_delete">삭제</button>
+                </div>
+            </li>
+        `;
+
+      landinfoList.appendChild(newListItem);
+
+      // 추가된 커스텀 셀렉트 요소 초기화
+      initializeCustomSelect(newListItem.querySelector(".popSelectWrap"));
+    }
+
+    // 행 삭제
+    function deleteLandInfo(button) {
+      const listItem = button.closest(".landowner_wrap");
+      if (listItem) {
+        landinfoList.removeChild(listItem);
+      }
+      updateOrderNumbers();
+    }
+
+    // 순번 업데이트
+    function updateOrderNumbers() {
+      document.querySelectorAll(".landowner_wrap").forEach((item, index) => {
+        item.querySelector(".landowner_num input").value = index + 1;
+      });
+    }
+  }
+  complaintsselect();
+
+  // textarea 자동 높이 조절
+
+  const textareas = document.querySelectorAll(".auto_textarea");
+
+  // 각 textarea에 대해 input 이벤트 리스너를 추가
+  textareas.forEach((textarea) => {
+    textarea.addEventListener("input", function () {
+      // 텍스트 영역의 높이를 자동으로 설정하여 초기화
+      this.style.height = "auto";
+      // 내용의 높이에 따라 텍스트 영역의 높이를 설정
+      this.style.height = this.scrollHeight + "px";
+    });
+  });
+</script>
+
+<script>
+  // 파일첨부 추가 스크립트
+  // 파일 첨부 기본 모습
+
+  const defaultNewComplaintRegiFileUploadWrap = document.querySelectorAll(
+    ".popfileUploadDisplay"
+  );
+
+  defaultNewComplaintRegiFileUploadWrap[0].classList.add("active");
+
+  // 파일 첨부시 모습 변경, x버튼 클릭시 비우기
+
+  const newcomplaintRegiFileEvent = () => {
+    if (document.getElementById("complaint_contents_contents3_Popup_file")) {
+      const newComplaintRegiPopup_myPcFiles = document.getElementById(
+        "complaint_contents_contents3_Popup_file"
+      );
+      const newComplaintRegiFiles = newComplaintRegiPopup_myPcFiles.files;
+      // input[type file]을 가진 제일 큰 부모
+      const newComplaintRegiFileInfo = newComplaintRegiPopup_myPcFiles.closest(
+        ".complaint_contents_content3_file"
+      );
+      // 업로드시 보이는 영역
+      const popfileUploadAfterWrap = newComplaintRegiFileInfo.querySelector(
+        ".popfileUploadAfter"
+      );
+      const allPopupNewComplaintRegiContents =
+        popfileUploadAfterWrap.querySelectorAll(".popcontents");
+
+      var newComplaintRegipopfileInfoName = "";
+      var newComplaintRegipopfileInfoSize = "";
+      var newComplaintRegipopfileInfoType = "";
+
+      newComplaintRegiPopup_myPcFiles.addEventListener("change", function () {
+        // 기존의 ul 초기화
+        const popExistContents =
+          popfileUploadAfterWrap.querySelectorAll(".popcontents");
+
+        popExistContents.forEach((list) => {
+          list.remove();
+        });
+
+        // 삭제 잘 되었는지 확인
+        const newPopExistContents =
+          popfileUploadAfterWrap.querySelectorAll(".popcontents");
+        console.log(newPopExistContents.length);
+
+        if (newComplaintRegiPopup_myPcFiles.files.length > 0) {
+          for (
+            let i = 0;
+            i <= newComplaintRegiPopup_myPcFiles.files.length - 1;
+            i++
+          ) {
+            const thiscomplaintRegiPopFileName =
+              newComplaintRegiPopup_myPcFiles.files[i].name;
+            const thiscomplaintRegiPopFileSize =
+              newComplaintRegiPopup_myPcFiles.files[i].size;
+            const thiscomplaintRegiPopFileType =
+              newComplaintRegiPopup_myPcFiles.files[i].type;
+
+            // 사이즈를 바꾸자
+            const complaintRegiformattedSize =
+              byteTransformForPop_New_complaintRegi(
+                thiscomplaintRegiPopFileSize
+              );
+
+            // 문자열에 변수를 담자
+            newComplaintRegipopfileInfoName = thiscomplaintRegiPopFileName;
+            newComplaintRegipopfileInfoSize = complaintRegiformattedSize;
+            newComplaintRegipopfileInfoType = thiscomplaintRegiPopFileType;
+
+            // 파일 지우는 버튼용 li
+
+            const popdeleteLi =
+              '<li class="popbtnbox"><button class="popfileDeleteBtn"></button></li>';
+
+            // 파일 아이콘, 파일명 들어가는 li
+            const popfilenameBoxLi = `<li class="popcontent popfilenameBox"><figure class="poptypeIcon"></figure><p class="popfileNameText">${newComplaintRegipopfileInfoName}</p></li >`;
+
+            // 업로드 상태
+            const popuploadStatusLi = '<li class="popcontent"><p>-</p></li>';
+
+            // 파일 크기 들어가는 li
+            const popfileSizeLi = `<li class="popcontent">
+                  <p class="popfileSizeText"> ${newComplaintRegipopfileInfoSize} </p>
+              </li>`;
+
+            const listBox =
+              popdeleteLi +
+              popfilenameBoxLi +
+              popuploadStatusLi +
+              popfileSizeLi;
+
+            // ul.contents 만들기
+            const popContentsUl = document.createElement("ul");
+            popContentsUl.classList.add("popcontents");
+
+            popContentsUl.innerHTML = listBox;
+
+            popfileUploadAfterWrap.appendChild(popContentsUl);
+
+            // 값 잘 담겼는지 확인
+
+            console.log("담긴 파일 이름:" + thiscomplaintRegiPopFileName);
+
+            // 다음 걸 받기 위해 비워주기
+
+            newComplaintRegipopfileInfoName = "";
+            newComplaintRegipopfileInfoSize = "";
+            newComplaintRegipopfileInfoType = "";
+          }
+
+          defaultNewComplaintRegiFileUploadWrap.forEach((wrap) => {
+            wrap.classList.remove("active");
+          });
+          defaultNewComplaintRegiFileUploadWrap[1].classList.add("active");
+
+          if (newComplaintRegiPopup_myPcFiles.files.length > 2) {
+            popfileUploadAfterWrap.classList.add("scroll");
+          } else {
+            popfileUploadAfterWrap.classList.remove("scroll");
+          }
+        } else {
+          newComplaintRegiPopup_myPcFiles.value = "";
+          defaultNewComplaintRegiFileUploadWrap.forEach((wrap) => {
+            wrap.classList.remove("active");
+          });
+          defaultNewComplaintRegiFileUploadWrap[0].classList.add("active");
+        }
+      });
+
+      // 개별 delbtn 누르면 생기는 이벤트
+      popfileUploadAfterWrap.addEventListener("click", function (event) {
+        if (event.target.classList.contains("popfileDeleteBtn")) {
+          const popfileDeleteBtns =
+            popfileUploadAfterWrap.querySelectorAll(".popfileDeleteBtn");
+          const popfileDelBtn = event.target;
+          const popnearbyContents = event.target.closest(".popcontents");
+          const popfileNameToRemove =
+            popnearbyContents.querySelector(".popfileNameText").textContent;
+
+          // 파일명이랑 틀린 것만 저장하는 함수
+          removeFileforPop_new_complaintRegi(popfileNameToRemove);
+          popnearbyContents.remove();
+
+          for (
+            let b = 0;
+            b < newComplaintRegiPopup_myPcFiles.files.length;
+            b++
+          ) {
+            console.log(
+              "현재 input[type=file]의 files name: " +
+                newComplaintRegiPopup_myPcFiles.files[b].name
+            );
+          }
+
+          console.log(
+            "남은 파일의 개수:" + newComplaintRegiPopup_myPcFiles.files.length
+          );
+
+          if (newComplaintRegiPopup_myPcFiles.files.length < 3) {
+            popfileUploadAfterWrap.classList.remove("scroll");
+          }
+
+          // 현재 선택된 파일이 없으면 input 값 비우기
+          if (newComplaintRegiPopup_myPcFiles.files.length === 0) {
+            newComplaintRegiPopup_myPcFiles.value = "";
+            defaultNewComplaintRegiFileUploadWrap.forEach((wrap) => {
+              wrap.classList.remove("active");
+            });
+            defaultNewComplaintRegiFileUploadWrap[0].classList.add("active");
+          }
+        }
+      });
+
+      // 전체 삭제 버튼
+      const popallDeleteFileBtn = popfileUploadAfterWrap.querySelector(
+        ".popAllDeleteFileBtn"
+      );
+
+      popallDeleteFileBtn.addEventListener("click", function () {
+        const nowAllContents =
+          popfileUploadAfterWrap.querySelectorAll(".popcontents");
+        nowAllContents.forEach((contents) => {
+          contents.remove();
+        });
+
+        newComplaintRegiPopup_myPcFiles.value = "";
+
+        // 값 잘 사라졌는지 확인
+        console.log(newComplaintRegiPopup_myPcFiles.value);
+
+        if (newComplaintRegiPopup_myPcFiles.files.length == 0) {
+          newComplaintRegiPopup_myPcFiles.value = "";
+          defaultNewComplaintRegiFileUploadWrap.forEach((wrap) => {
+            wrap.classList.remove("active");
+          });
+          defaultNewComplaintRegiFileUploadWrap[0].classList.add("active");
+          popfileUploadAfterWrap.classList.remove("scroll");
+        }
+      });
+
+      // 용량 크기 변환하는 함수
+      function byteTransformForPop_New_complaintRegi(bytes) {
+        const dataSizeforPop = ["Bytes", "KB", "MB", "GB", "TB"];
+
+        if (bytes === 0) return "not available";
+
+        const d = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+        if (d === 0) return `${bytes} ${dataSizeforPop[d]}`;
+        return `${(bytes / 1024 ** d).toFixed(1)} ${dataSizeforPop[d]}`;
+      }
+
+      // 파일 삭제처리 하는 함수
+      const removeFileforPop_new_complaintRegi = (popfileNameToRemove) => {
+        const filesArrayforPop = Array.from(
+          newComplaintRegiPopup_myPcFiles.files
+        );
+        const popNewDataTransfer = new DataTransfer();
+        filesArrayforPop.forEach((file) => {
+          if (file.name !== popfileNameToRemove) {
+            popNewDataTransfer.items.add(file);
+          }
+        });
+        newComplaintRegiPopup_myPcFiles.files = popNewDataTransfer.files; // 새로운 files 설정
+      };
+    }
+  };
+
+  newcomplaintRegiFileEvent();
+
+  // 토지상태 항목 검색결과 추가
+
+  const landStatusPopLoadEvet = () => {
+
+    const newcomplaintLandInfoBox = document.querySelector('#newcomplaint_Popup .landinfo_box');
+
+    newcomplaintLandInfoBox.addEventListener('click',function (event){
+      if (event.target.classList.contains('landStatusPopOpenBtn')) {
+        const landStatusPopup = document.getElementById('landStatusPopup');
+        landStatusPopup.classList.add('active');
+      }
+    })
+  }
+  landStatusPopLoadEvet()
+
+
+</script>

@@ -166,5 +166,499 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 
 	</select>
+	<select id="selectMinwonDetail_Files" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM MINWON_ATCFILE
+		WHERE MW_SEQ = #{MW_SEQ}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+			AND SEQ = #{SEQ}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(FILE_SEQ)" >
+			AND FILE_SEQ =#{FILE_SEQ}
+		</if>
+		ORDER BY SEQ DESC
+	</select>
+	<!-- 민원관리 상세조회 -->
+	<select id="selectMinwonDetail" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+   
+		SELECT A.mm_mw_seq as MW_SEQ,
+		       A.mm_mw_title as MW_TITLE,
+		       A.mm_mw_code1 as MW_CODE1,
+		       A.mm_mw_code2 as MW_CODE2,
+		       A.mm_mw_code3 as MW_CODE3,
+		       (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE A.mm_MW_CODE1 = S.CODE) AS CODE_STR1,
+		       (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE A.mm_MW_CODE2 = S.CODE) AS CODE_STR2,
+		       (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE A.mm_MW_CODE3 = S.CODE) AS CODE_STR3,
+		       B.mht_MW_CODE1 AS MW_CODE1_TMP,
+		       B.mht_MW_CODE2 AS MW_CODE2_TMP,
+		       B.mht_MW_CODE3 AS MW_CODE3_TMP,
+		       (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE B.mht_MW_CODE1 = S.CODE) AS CODE_STR1_TMP,
+		       (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE B.mht_MW_CODE2 = S.CODE) AS CODE_STR2_TMP,
+		       (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE B.mht_MW_CODE3 = S.CODE) AS CODE_STR3_TMP,
+		       B.mht_complete_yn AS CODE_APPLY_YN,
+		       A.mm_contents as MW_CONTENTS,
+		       TO_CHAR(A.mm_OCCUR_DATE, 'YYYY-MM-DD') AS MW_OCCUR_DATE,
+		       A.mm_dockey as DOCKEY,
+		       PA.pa_STATUS AS APPROVAL_STATUS, 
+		       A.mm_comple_yn as COMPLE_YN,
+		       A.mm_comple_date as COMPLE_DATE,
+		       A.mm_reg_date as REG_DATE,
+		       A.mm_reg_id as REG_ID,
+		       A.mm_jisa as JISA,
+		       A.mm_status as STATUS,
+		       CASE A.mm_STATUS
+		         WHEN '1' THEN '임시저장'
+		         WHEN '2' THEN '민원 발생'
+		         WHEN '3' THEN '대응방안수립'
+		         WHEN '4' THEN '협의 중'
+		         WHEN '5' THEN '민원완료'
+		         ELSE 'Unknown Status'
+		       END AS STATUS_STR,
+		       A.mm_comple_dockey as COMPLE_DOCKEY, 
+		       D.pa_STATUS AS COMPLE_STATUS,
+		       C.pa_STATUS AS HANDLING_STATUS,
+		       C.pa_DOCKEY AS HANDLING_DOCKEY,
+		       PA.pa_URL AS ECHO_URL,
+		       C.pa_URL AS HANDLE_URL,
+		       D.pa_URL AS COMPLE_URL
+		FROM MINWON_MASTER A
+		LEFT JOIN MINWON_HANDLING_TMP B ON A.mm_mw_seq = B.mht_MW_SEQ
+		LEFT JOIN PLMS_APPROVAL PA ON A.mm_DOCKEY = PA.pa_DOCKEY
+		LEFT JOIN PLMS_APPROVAL C ON B.mht_DOCKEY = C.pa_DOCKEY
+		LEFT JOIN PLMS_APPROVAL D ON A.mm_COMPLE_DOCKEY = D.pa_DOCKEY
+		WHERE A.mm_MW_SEQ = ${MW_SEQ}
+
 	
+	</select>
+	
+	<select id="selectMinwonDetailToji" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+  
+		SELECT A.mp_minwon_seq as MINWON_SEQ,
+		       A.mp_pnu as PNU,
+		       A.mp_addrcode as ADDRCODE,
+		       A.mp_sido_nm as SIDO_NM,
+		       A.mp_sgg_nm as SGG_NM,
+		       A.mp_emd_nm as EMD_NM,
+		       A.mp_ri_nm as RI_NM,
+		       A.mp_jibun as JIBUN,
+		       A.mp_jibun_full as JIBUN_FULL,
+		       A.mp_rep_yn as REP_YN,
+		       A.mp_registed_yn as REGISTED_YN,
+		       A.mp_permitted_yn as PERMITTED_YN,
+		       A.mp_toji_type as TOJI_TYPE,
+		       A.mp_reg_date as REG_DATE,
+		       A.mp_reg_id as REG_ID,
+		       TO_CHAR(A.mp_COMP_DATE, 'YYYY-MM-DD') AS COMP_DATE,
+		       B.JISANG_STATUS,
+		       B.JISANG_NO
+		FROM MINWON_PNU A
+		LEFT JOIN JIJUK_2024 B ON A.mp_PNU = B.PNU
+		WHERE A.mp_MINWON_SEQ = ${MW_SEQ}
+		ORDER BY CASE A.mp_REP_YN
+		           WHEN 'Y' THEN 0
+		           WHEN 'N' THEN 1
+		         END ASC
+
+	
+	</select>
+	
+	<select id="selectMinwonDetailAgree" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+   
+				SELECT A.ma_mw_seq as MW_SEQ,
+		       A.ma_agree_seq as AGREE_SEQ,
+		       CASE 
+		           WHEN A.ma_STATUS = '1' THEN '협의 중'
+		           WHEN A.ma_STATUS = '2' THEN '소송 중'
+		           WHEN A.ma_STATUS = '3' THEN '협의 중단'
+		           ELSE 'Unknown'
+		       END AS STATUS_STR,
+		       A.ma_status as STATUS,
+		       A.ma_agree_title as AGREE_TITLE,
+		       A.ma_agree_contents as AGREE_CONTENTS,
+		       TO_CHAR(A.ma_AGREE_DATE, 'YYYY-MM-DD') AS AGREE_DATE,
+		       A.ma_reg_date as REG_DATE,
+		       A.ma_reg_id as REG_ID,
+		       A.ma_dockey as DOCKEY,
+		       B.pa_url as URL,
+		       B.pa_status AS APPROVAL_STATUS
+		FROM MINWON_AGREEMENT A
+		LEFT JOIN PLMS_APPROVAL B ON A.ma_DOCKEY = B.pa_DOCKEY
+		WHERE A.ma_MW_SEQ = ${MW_SEQ}
+		  AND A.ma_DEL_FLAG != 'Y'
+		ORDER BY A.ma_AGREE_SEQ DESC
+	
+	</select>
+	
+	<select id="selectMinwonDetailFile" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+  
+		SELECT A.ma_mw_seq as MW_SEQ,
+		       A.ma_file_nm as FILE_NM,
+		       A.ma_file_path as FILE_PATH,
+		       A.ma_file_seq as FILE_SEQ,
+		       A.ma_seq as SEQ,
+		       TO_CHAR(A.ma_FILE_REGDATE, 'yyyy-MM-dd') AS FILE_REGDATE
+		  FROM MINWON_ATCFILE A
+		 WHERE A.ma_MW_SEQ = ${MW_SEQ}
+		 ORDER BY A.ma_FILE_REGDATE DESC
+	
+	</select>
+	<!-- 민원관리 토지검색용 PNU검색 -->
+	<select id="selectMinwonPNUList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    
+SELECT A.PNU,
+       A.JIBUN,
+       A.SIDO_NM,
+       A.SGG_NM,
+       A.EMD_NM,
+       A.RI_NM,
+       A.GOVER_OWN_YN,
+       A.JISANG_STATUS,
+       A.JIJUK_AREA,
+       A.JIBUN_FULL,
+       A.JIMOK_TEXT,
+       A.DOSIPLAN,
+       A.PIPE_OVERLAP_YN,
+       B.jm_permitted_yn as PERMITTED_YN,
+       B.jm_comple_yn as COMPLE_YN
+--       , COUNT(B.JISANG_NO) AS COMPLE_YN  -- 주석 처리된 부분은 유지
+FROM JIJUK_2024 A
+LEFT JOIN JISANG_MASTER B ON A.PNU = B.jm_PNU
+WHERE 1=1
+A.PNU LIKE '$ADDRCODE%'  -- TO_CHAR 제거
+  AND A.JIBUN LIKE '$JIBUN%'   -- TO_CHAR 제거
+--  AND A.JISANG_STATUS IN ('JISANG', 'NOTSET')  -- 주석 처리된 부분은 유지
+GROUP BY A.PNU,
+         A.JIBUN,
+         A.SIDO_NM,
+         A.SGG_NM,
+         A.EMD_NM,
+         A.RI_NM,
+         A.GOVER_OWN_YN,
+         A.JISANG_STATUS,
+         A.JIJUK_AREA,
+         A.JIBUN_FULL,
+         A.JIMOK_TEXT,
+         A.DOSIPLAN,
+         A.PIPE_OVERLAP_YN,
+         B.jm_PERMITTED_YN,
+         B.jm_COMPLE_YN
+ORDER BY A.PNU ASC
+	
+	</select>
+	
+	<!-- 민원관리 토지검색용 PNU검색 전자결재 테스트용 -->
+	<select id="selectMinwonPNUList1" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    
+SELECT A.PNU,
+       A.JIBUN,
+       A.SIDO_NM,
+       A.SGG_NM,
+       A.EMD_NM,
+       A.RI_NM,
+       A.GOVER_OWN_YN,
+       A.JISANG_STATUS,
+       A.JIJUK_AREA,
+       A.JIBUN_FULL,
+       A.JIMOK_TEXT,
+       A.DOSIPLAN,
+       A.PIPE_OVERLAP_YN,
+       B.jm_permitted_yn as PERMITTED_YN,
+       B.jm_comple_yn as COMPLE_YN,
+       B.jm_addrcode as addrcode
+--       , COUNT(B.JISANG_NO) AS COMPLE_YN  -- 주석 처리된 부분은 유지
+FROM JIJUK_2024 A
+LEFT JOIN JISANG_MASTER B ON A.PNU = B.jm_PNU
+WHERE 1=1
+
+--  AND A.JISANG_STATUS IN ('JISANG', 'NOTSET')  -- 주석 처리된 부분은 유지
+GROUP BY A.PNU,
+         A.JIBUN,
+         A.SIDO_NM,
+         A.SGG_NM,
+         A.EMD_NM,
+         A.RI_NM,
+         A.GOVER_OWN_YN,
+         A.JISANG_STATUS,
+         A.JIJUK_AREA,
+         A.JIBUN_FULL,
+         A.JIMOK_TEXT,
+         A.DOSIPLAN,
+         A.PIPE_OVERLAP_YN,
+         B.jm_PERMITTED_YN,
+         B.jm_COMPLE_YN,
+         B.jm_addrcode
+ORDER BY A.PNU ASC LIMIT 1
+	
+	</select>
+	<select id="makeMinwonMasterKey" resultType="Integer" parameterType="HashMap">
+   
+		SELECT coalesce(MAX(S.mm_MW_SEQ), 0) + 1 AS MW_KEY FROM MINWON_MASTER S 
+	
+	</select>
+	<insert id="insertMinwonMaster" parameterType="HashMap">
+		  
+		INSERT INTO MINWON_MASTER (
+		        mm_MW_SEQ,
+		        mm_MW_TITLE,
+		        mm_CONTENTS,
+		        mm_OCCUR_DATE,
+		        mm_JISA,
+		        mm_REG_DATE,
+		        mm_REG_ID,
+		        mm_STATUS
+		) VALUES (
+		        #{MW_SEQ},
+		        #{MW_TITLE},
+		        #{MW_CONTENTS},
+		        TO_DATE(#{MW_OCCUR_DATE}, 'yyyy-MM-dd'),
+		        #{JISA},
+		        CURRENT_TIMESTAMP,
+		        #{REG_ID},
+		        #{STATUS}
+		        )
+
+	</insert>
+	<update id="updateMinwonMaster" parameterType="HashMap">
+UPDATE MINWON_MASTER
+   SET mm_MW_TITLE = #{MW_TITLE}
+     , mm_OCCUR_DATE = TO_DATE(#{MW_OCCUR_DATE}, 'yyyy-MM-dd')
+     , mm_MW_CONTENTS = #{MW_CONTENTS}
+     , mm_JISA = #{JISA}
+ WHERE mm_MW_SEQ = #{MW_SEQ}
+	</update>
+	
+		<delete id="deleteMinwonFile" parameterType="HashMap"> 
+DELETE FROM MINWON_ATCFILE
+ WHERE ma_MW_SEQ = #{MW_SEQ}
+   AND ma_SEQ = #{SEQ}
+</delete>
+<delete id="deleteMinwonPnu" parameterType="HashMap"> 
+DELETE FROM MINWON_PNU
+ WHERE mp_MINWON_SEQ = #{MW_SEQ}
+</delete>
+
+<insert id="insertMinwonPnu" parameterType="HashMap">
+  
+INSERT INTO MINWON_PNU (
+        mp_MINWON_SEQ,
+        mp_PNU,
+        mp_ADDRCODE,
+        mp_SIDO_NM,
+        mp_SGG_NM,
+        mp_EMD_NM,
+        mp_RI_NM,
+        mp_JIBUN,
+        mp_JIBUN_FULL,
+        mp_REP_YN,
+        mp_REGISTED_YN,
+        mp_PERMITTED_YN,
+        mp_TOJI_TYPE,
+        mp_REG_DATE,
+        mp_REG_ID
+) VALUES (
+        #{MINWON_SEQ},
+        #{PNU},
+        #{ADDRCODE},
+        #{SIDO_NM},
+        #{SGG_NM},
+        #{EMD_NM},
+        #{RI_NM},
+        #{JIBUN},
+        #{JIBUN_FULL},
+        #{REP_YN},
+        #{REGISTED_YN},
+        #{PERMITTED_YN},
+        #{TOJI_TYPE},
+        CURRENT_TIMESTAMP,
+        #{REG_ID}
+)
+
+	</insert>
+	
+	<update id="updateNinwonEchoNo" parameterType="HashMap">
+UPDATE MINWON_MASTER
+   SET mm_DOCKEY = #{DOCKEY}
+     , mm_SANGSIN_YN = 'Y'
+ WHERE mm_MW_SEQ = $MW_SEQ
+</update>
+
+<select id="selectMinwonDocInfo" resultType="HashMap" parameterType="HashMap">
+		SELECT * FROM PLMS_APPROVAL WHERE pa_DOCKEY IN (SELECT DOCKEY FROM MINWON_MASTER WHERE mm_MW_SEQ = $MW_SEQ) AND (pa_STATUS IS NULL OR pa_STATUS NOT IN ('X'))
+	</select>
+<select id="selectMinwonHandlingTmp" resultType="HashMap" parameterType="HashMap">
+SELECT mht_mw_seq as MW_SEQ,
+       mht_mw_code1 as MW_CODE1,
+       mht_mw_code2 as MW_CODE2,
+       mht_mw_code3 as MW_CODE3,
+       mht_complete_yn as COMPLETE_YN,
+       mht_dockey as DOCKEY
+  FROM MINWON_HANDLING_TMP
+ WHERE mht_MW_SEQ = ${MW_SEQ}
+</select>
+		<update id="updateMinwonHandlingTmp" parameterType="HashMap">
+UPDATE MINWON_HANDLING_TMP
+   SET
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MW_CODE1)" >
+       mht_MW_CODE1 = #{MW_CODE1},
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MW_CODE2)" >
+       mht_MW_CODE2 = #{MW_CODE2},
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MW_CODE3)" >
+       mht_MW_CODE3 = #{MW_CODE3},
+		</if>
+       mht_complete_yn = #{COMPLETE_YN}
+ WHERE mht_MW_SEQ = ${MW_SEQ}
+	</update>
+	
+		<!-- 민원관리 대응방안 임시저장 -->
+	<insert id="insertMinwonHandling" parameterType="HashMap">
+INSERT INTO MINWON_HANDLING_TMP (
+        mht_MW_SEQ,
+        mht_MW_CODE1,
+        mht_MW_CODE2,
+        mht_MW_CODE3,
+        mht_complete_yn
+) VALUES (
+        ${MW_SEQ},
+        #{MW_CODE1},
+        #{MW_CODE2},
+        #{MW_CODE3},
+        #{COMPLETE_YN}
+)
+	</insert>
+	<update id="updateMinwonHandlingTmpEchoNo" parameterType="HashMap">
+UPDATE MINWON_HANDLING_TMP
+   SET mht_DOCKEY = #{DOCKEY}
+ WHERE mht_MW_SEQ = $MW_SEQ
+	></update>
+		<select id="selectMinwonHandlingDocInfo" resultType="HashMap" parameterType="HashMap">
+		SELECT * FROM PLMS_APPROVAL WHERE pa_DOCKEY IN (SELECT mht_DOCKEY FROM MINWON_HANDLING_TMP WHERE mht_MW_SEQ = ${MW_SEQ}) AND (pa_STATUS IS NULL OR pa_STATUS NOT IN ('X'))
+	</select>
+	
+		<!-- 민원협의 관련 -->
+	<select id="makeMinwonAgreeKey" resultType="integer" parameterType="HashMap">
+   
+SELECT COALESCE(MAX(ma_AGREE_SEQ), 0) + 1 AS AGREE_SEQ
+  FROM MINWON_AGREEMENT
+ WHERE ma_MW_SEQ = ${MW_SEQ}
+
+	</select>
+		
+	<insert id="insertMinwonAgree" parameterType="HashMap"> 
+INSERT INTO MINWON_AGREEMENT (
+        ma_MW_SEQ,
+        ma_AGREE_SEQ,
+        ma_AGREE_TITLE,
+        ma_AGREE_CONTENTS,
+        ma_AGREE_DATE,
+        ma_REG_DATE,
+        ma_REG_ID,
+        ma_STATUS,
+        ma_DOCKEY,
+        ma_DEL_FLAG
+) VALUES (
+        ${MW_SEQ},
+        ${AGREE_SEQ},
+        #{AGREE_TITLE},
+        #{AGREE_CONTENTS},
+        TO_DATE(#{AGREE_DATE}, 'yyyy-MM-dd'),
+        CURRENT_TIMESTAMP,
+        #{REG_ID},
+        #{STATUS},
+        #{DOCKEY},
+        'N'
+)
+	</insert>
+	
+	<update id="updateMinwonAgree" parameterType="HashMap"> 
+UPDATE MINWON_AGREEMENT
+   SET ma_AGREE_TITLE = #{AGREE_TITLE},
+       ma_AGREE_CONTENTS = #{AGREE_CONTENTS},
+       ma_AGREE_DATE = TO_DATE(#{AGREE_DATE}, 'yyyy-MM-dd'),
+       ma_STATUS = #{STATUS}
+ WHERE ma_MW_SEQ = ${MW_SEQ}
+   AND ma_AGREE_SEQ = ${AGREE_SEQ}
+</update>
+<update id="updateMinwonMasterStatus" parameterType="HashMap">
+UPDATE MINWON_MASTER
+   SET mm_STATUS = ${STATUS}
+ WHERE mm_MW_SEQ = ${MW_SEQ}
+	</update>
+	
+	<update id="updateMinwonAgreeFileKey" parameterType="HashMap">
+   
+UPDATE MINWON_AGREE_ATCFILE
+   SET maa_MW_SEQ = ${MW_SEQ}
+     , maa_AGREE_SEQ = ${AGREE_SEQ}
+ WHERE maa_SEQ =${FILESEQ}
+	
+	</update>
+	<select id="selectMinwonAgreeData" resultType="HashMap" parameterType="HashMap">
+SELECT MA.ma_mw_seq as MW_SEQ,
+       MA.ma_agree_seq as AGREE_SEQ,
+       MA.ma_agree_title as AGREE_TITLE,
+       MA.ma_agree_contents as AGREE_CONTENTS,
+       TO_CHAR(MA.ma_AGREE_DATE, 'yyyy-MM-dd') AS AGREE_DATE,
+       TO_CHAR(MA.ma_REG_DATE, 'yyyy-MM-dd') AS REG_DATE,
+       MA.ma_reg_id as REG_ID,
+       MA.ma_status as STATUS,
+       CASE 
+           WHEN MA.ma_STATUS = '1' THEN '협의 중'
+           WHEN MA.ma_STATUS = '2' THEN '소송 중'
+           WHEN MA.ma_STATUS = '3' THEN '협의 중단'
+           ELSE '알 수 없음'
+       END AS STATUS_STR,
+       MA.ma_dockey as DOCKEY,
+       PA.pa_STATUS AS APPROVAL_STATUS,
+       PA.pa_url as URL
+  FROM MINWON_AGREEMENT MA
+  LEFT JOIN PLMS_APPROVAL PA ON MA.ma_DOCKEY = PA.pa_DOCKEY
+ WHERE MA.ma_MW_SEQ = ${MW_SEQ}  
+   AND MA.ma_AGREE_SEQ = ${AGREE_SEQ}
+   AND MA.ma_DEL_FLAG != 'Y'
+</select>
+	<select id="selectMinwonAgreeDetailFile" resultType="HashMap" parameterType="HashMap">
+SELECT maa_mw_seq as MW_SEQ,
+       maa_agree_seq as AGREE_SEQ,
+       maa_file_nm as FILE_NM,
+       maa_file_path as FILE_PATH,
+       maa_seq as SEQ,
+       maa_file_seq as FILE_SEQ,
+       TO_CHAR(maa_FILE_REGDATE, 'yyyy-MM-dd') AS FILE_REGDATE
+  FROM MINWON_AGREE_ATCFILE
+ WHERE maa_MW_SEQ = ${MW_SEQ}
+   AND maa_AGREE_SEQ = ${AGREE_SEQ}
+</select>
+	
+	
+	
+<update id="updateMinwonAgreeEchoNo" parameterType="HashMap"> 
+UPDATE MINWON_AGREEMENT
+   SET ma_DOCKEY = ${DOCKEY}
+ WHERE ma_MW_SEQ = ${MW_SEQ}
+   AND ma_AGREE_SEQ = ${AGREE_SEQ}
+</update>	
+	<select id="selectMinwonAgreeDocInfo" resultType="HashMap" parameterType="HashMap">
+		SELECT * FROM PLMS_APPROVAL WHERE pa_DOCKEY IN (SELECT ma_DOCKEY FROM MINWON_AGREEMENT WHERE ma_MW_SEQ = ${MW_SEQ} AND ma_AGREE_SEQ = ${AGREE_SEQ} ) AND (pa_STATUS IS NULL OR pa_STATUS NOT IN ('X'))
+	</select>
+	
+	
+		<!-- 민원 완료처리 전 협의내용 상태 체크 -->
+	<select id="selectMinwonCompleteBeforeCheck" resultType="integer" parameterType="HashMap">
+SELECT COUNT(*) AS TOTALCNT
+  FROM MINWON_AGREEMENT A
+ WHERE A.ma_MW_SEQ = ${MW_SEQ}
+   AND A.ma_DEL_FLAG !='Y'
+   AND A.ma_DOCKEY IS NULL
+	</select>
+		<!-- 민원 완료 전자결재 정보키 업데이트 -->
+	<update id="updateMinwonMasterCompleteEchoNo" parameterType="HashMap">
+UPDATE MINWON_MASTER
+   SET mm_comple_dockey = #{DOCKEY}
+ WHERE mm_MW_SEQ = ${MW_SEQ}
+</update>
+	<select id="selectMinwonCompleteDocInfo" resultType="HashMap" parameterType="HashMap">
+		SELECT * FROM PLMS_APPROVAL WHERE pa_DOCKEY IN (SELECT mm_COMPLE_DOCKEY FROM MINWON_MASTER WHERE mm_MW_SEQ = ${MW_SEQ}  ) AND (pa_STATUS IS NULL OR pa_STATUS NOT IN ('X'))
+	</select>
 </mapper>

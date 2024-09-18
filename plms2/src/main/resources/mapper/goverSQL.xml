@@ -142,6 +142,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	               gpm.gp_pay_date AS pay_date,
 	               gpm.gp_pay_money AS pay_money,
 	               (SELECT COUNT(*) FROM gover_pnu WHERE gover_pnu.gp_gover_no = gm.gm_gover_no) AS pnu_count  <!-- 필지수 계산 -->
+	               ,gpm.gp_pmt_no AS pmt_no 
+	               ,gpm.gp_pay_vat as pay_vat
+	               ,gpm.gp_pmt_st_date as pmt_st_date
+	               ,gpm.gp_pmt_ed_date as pmt_ed_date
+	               ,gpm.gp_pay_way as pay_way
+	               
 	        FROM gover_master gm
 	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
 	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
@@ -678,6 +684,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    </if>
 	</select>
 	
+<<<<<<< Updated upstream
 	<!-- 지사에 따른 허가관청 목록 조회 -->
 	<select id="selectPmtOfficesByJisa" parameterType="String" resultType="java.util.HashMap">
 	    SELECT so_pmt_office, so_sort_order
@@ -699,4 +706,221 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    ORDER BY so_sort_order ASC
 	</select>
 
+=======
+	<select id="selectGoverPnuList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT GP.gp_SEQ AS "SEQ"
+, GP.gp_addrcode AS "ADDRCODE"
+, GP.gp_dosiplan AS "DOSIPLAN"
+, GP.gp_echo_no AS "ECHO_NO"
+, GP.gp_emd_nm AS "EMD_NM"
+, GP.gp_gover_no AS "GOVER_NO"
+, GP.gp_gover_own_yn AS "GOVER_OWN_YN"
+, GP.gp_jibun AS "JIBUN"
+, GP.gp_jibun_full AS "JIBUN_FULL"
+, GP.gp_jijuk_area AS "JIJUK_AREA"
+, GP.gp_jimok_text AS "JIMOK_TEXT"
+, GP.gp_pnu AS "PNU"
+, GP.gp_ri_nm AS "RI_NM"
+, GP.gp_sgg_nm AS "SGG_NM"
+, GP.gp_sido_nm AS "SIDO_NM"
+, GP.gp_gover_length AS "GOVER_LENGTH"
+,GP.gp_gover_area AS "GOVER_AREA"
+, GP.gp_adm_office AS "ADM_OFFICE"
+, GP.gp_use_purpos AS "USE_PURPOS"
+, GP.gp_rep_flag AS "REP_FLAG"
+		, COALESCE(JKM.pipe_overlap_yn, GP.gp_pipe_overlap_yn) AS "PIPE_OVERLAP_YN"
+		, JKM.jisang_status AS "JISANG_STATUS"
+		, JKM.jisa AS "JISA"
+		FROM GOVER_PNU GP
+                LEFT JOIN JIJUK_2024 JKM ON GP.gp_pnu = JKM.PNU
+		WHERE 1=1
+		and GP.gp_gover_no =#{GOVER_NO}
+		ORDER BY GP.gp_rep_flag DESC, GP.gp_seq ASC
+	</select>
+	<select id="selectNextGoverNo" resultType="Integer" parameterType="HashMap">
+		
+		SELECT NEXTVAL('gover_permit_seq')
+	</select>
+	
+	<insert id="insertGoverPmt" parameterType="HashMap">
+		Insert into GOVER_PERMIT
+		( gp_GOVER_NO, gp_PMT_NO, gp_PMT_NAME, gp_SISEOLNAME, gp_PMT_OFFICE, gp_ADM_OFFICE, gp_PMT_ST_DATE, gp_PMT_ED_DATE
+		, gp_NEXT_DATE, gp_BUSEO, gp_NM, gp_PHONE_NUMBER, gp_PAY_WAY, gp_PAY_DATE, gp_PAY_MONEY, gp_UPDATE_DATE
+		, gp_SEQ, gp_PMT_FIRST_DATE, gp_DOSIPLAN, gp_GOVER_LENGTH, gp_GOVER_AREA, gp_PAY_VAT )
+		Values
+		( #{GOVER_NO}, #{PMT_NO}, #{PMT_NAME}, #{SISEOLNAME}, #{PMT_OFFICE}, #{ADM_OFFICE}, to_date(#{PMT_ST_DATE}, 'yyyy-mm-dd'), to_date(#{PMT_ED_DATE},'yyyy-mm-dd'), to_date(#{NEXT_DATE}, 'yyyy-mm-dd')
+		, #{BUSEO}, #{NM}, #{PHONE_NUMBER}, #{PAY_WAY}, TO_DATE(#{PAY_DATE}, 'yyyy-mm-dd'), #{PAY_MONEY}, CURRENT_TIMESTAMP, #{NEXTSEQ}, TO_DATE(#{PMT_FIRST_DATE}, 'yyyy-mm-dd'), #{DOSIPLAN}
+		,nullif(#{PMT_GOVER_LENGTH},'')::numeric
+		,nullif(#{PMT_GOVER_AREA},'')::numeric, #{PAY_VAT} )
+	</insert>
+	<select id="selectGoverPnuLogSeq" parameterType="HashMap" resultType="String">
+		SELECT COALESCE(MAX(LOG_SEQ), 0) + 1 AS LOG_SEQ
+FROM GOVER_PNU_LOG
+WHERE GOVER_NO = #{GOVER_NO}
+  AND PMT_SEQ = #{PMT_SEQ};
+
+	</select>
+	
+	
+	<insert id="insertGoverPnuLog" parameterType="HashMap">
+		INSERT INTO GOVER_PNU_LOG (
+		GOVER_NO
+		, PMT_SEQ
+		, LOG_SEQ
+		, PAY_YR
+		, PNU
+		, ADDRCODE
+		, ECHO_NO
+		, SIDO_NM
+		, SGG_NM
+		, EMD_NM
+		, RI_NM
+		, JIBUN
+		, JIBUN_FULL
+		, JIJUK_AREA
+		, JIMOK_TEXT
+		, DOSIPLAN
+		, GOVER_OWN_YN
+		, GOVER_LENGTH
+		, GOVER_AREA
+		, ADM_OFFICE
+		, USE_PURPOS
+		) VALUES (
+		#{GOVER_NO}
+		, #{PMT_SEQ}
+		, #{LOG_SEQ}::numeric
+		, #{PAY_YR}
+		, #{PNU}
+		, #{ADDRCODE}
+		, #{ECHO_NO}
+		, #{SIDO_NM}
+		, #{SGG_NM}
+		, #{EMD_NM}
+		, #{RI_NM}
+		, #{JIBUN}
+		, #{JIBUN_FULL}
+		, #{JIJUK_AREA}
+		, #{JIMOK_TEXT}
+		, #{DOSIPLAN}
+		, #{GOVER_OWN_YN}
+		, #{GOVER_LENGTH}
+		, #{GOVER_AREA}
+		, #{ADM_OFFICE}
+		, #{USE_PURPOS}
+		)
+	</insert>
+	
+	
+	
+	<select id="selectGoverPmtLastForApproval" resultType="Integer" parameterType="HashMap">
+		SELECT GP.gp_buseo as BUSEO
+		, GP.gp_dosiplan as DOSIPLAN
+		, GP.gp_echo_no as ECHO_NO
+		, GP.gp_GOVER_AREA AS GOVER_AREA
+		, GP.gp_GOVER_LENGTH AS GOVER_LENGTH
+		, GP.gp_gover_no as GOVER_NO
+		, TO_CHAR(GP.gp_NEXT_DATE, 'YYYY-MM-DD') AS NEXT_DATE
+		, GP.gp_nm as NM
+		, TO_CHAR(GP.gp_PAY_DATE, 'YYYY-MM-DD') AS PAY_DATE
+		, GP.gp_pay_money as PAY_MONEY
+		, GP.gp_pay_way as PAY_WAY
+		, GP.gp_phone_number as PHONE_NUMBER
+		, TO_CHAR(GP.gp_PMT_ED_DATE, 'YYYY-MM-DD') AS PMT_ED_DATE
+		, TO_CHAR(GP.gp_PMT_FIRST_DATE, 'YYYY-MM-DD') AS PMT_FIRST_DATE
+		, GP.gp_pmt_name as PMT_NAME
+		, GP.gp_pmt_no as PMT_NO
+		, GP.gp_pmt_office as PMT_OFFICE
+		, GP.gp_adm_office as ADM_OFFICE
+		, TO_CHAR(GP.gp_PMT_ST_DATE, 'YYYY-MM-DD') AS PMT_ST_DATE
+		, GP.gp_SEQ AS SEQ
+		, GP.gp_SISEOLNAME AS SISEOLNAME
+		, TO_CHAR(GP.gp_UPDATE_DATE, 'YYYY-MM-DD') AS UPDATE_DATE
+		, PA.pa_STATUS
+		, PA.pa_OUT_FLAG
+		, PA.pa_OUT_URL
+		, GP.gp_DOCKEY
+		, ( SELECT S.gm_GOVER_PERIOD
+		FROM gover_master S
+		WHERE S.gm_GOVER_NO = GP.gp_GOVER_NO) AS GOVER_PERIOD
+		, GP.gp_PAY_VAT
+		FROM GOVER_PERMIT GP
+		LEFT JOIN PLMS_APPROVAL PA ON GP.gp_DOCKEY = PA.pa_DOCKEY
+		WHERE GP.gp_GOVER_NO = #{GOVERNO}
+		AND GP.gp_SEQ = (SELECT MAX(S.gp_SEQ) FROM GOVER_PERMIT S WHERE S.gp_GOVER_NO =#{GOVERNO} )
+		ORDER BY GP.gp_SEQ DESC
+	</select>
+	<select id="selectGoverRowDetail_FilesObject" resultType="HashMap" parameterType="HashMap">
+		SELECT *
+		FROM GOVER_ATCFILE
+		WHERE ga_GOVER_NO = #{FILENO}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(FILE_SEQ)" >
+		
+			AND ga_FILE_SEQ = #{FILE_SEQ}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMTNO)" >
+		
+			AND ga_PMT_NO = #{PMTNO}
+		</if>
+		ORDER BY ga_SEQ DESC
+                , ga_FILE_PATH DESC
+	</select>
+	
+	<update id="updateGoverEchoNo" parameterType="HashMap">
+		UPDATE gover_permit SET
+		gp_DOCKEY = #{DOCKEY}
+		WHERE gp_GOVER_NO = #{GOVER_NO}
+	</update>
+	
+	
+	<select id="selectGoverPayList" resultType="HashMap" parameterType="HashMap">
+SELECT 
+    TO_CHAR(GP.gp_PAY_DATE, 'YYYY') AS PAY_YR,
+    GP.gp_seq AS SEQ,  -- SEQ는 숫자라서 TO_CHAR 생략 가능
+    TO_CHAR(GP.gp_PAY_DATE, 'YYYY-MM-DD') AS PAY_DATE,
+    GP.gp_pay_money as PAY_MONEY,
+    TO_CHAR(GP.gp_PMT_ST_DATE, 'YYYY-MM-DD') AS PMT_ST_DATE,
+    TO_CHAR(GP.gp_PMT_ED_DATE, 'YYYY-MM-DD') AS PMT_ED_DATE,
+    GP.gp_pmt_no as PMT_NO,
+    PA.pa_status as STATUS,
+    PA.pa_out_flag as OUT_FLAG,
+    PA.pa_deptcd as DEPTCD,
+    PA.pa_updeptcd as UPDEPTCD,
+    PA.pa_out_url as OUT_URL,
+    GP.gp_dockey as DOCKEY,
+    GP.gp_buseo as BUSEO,
+    GP.gp_dosiplan as DOSIPLAN,
+    GP.gp_echo_no as ECHO_NO,
+    TO_CHAR(GP.gp_GOVER_AREA, 'FM999999999.00') AS GOVER_AREA,  -- 숫자 포맷 처리
+    TO_CHAR(GP.gp_GOVER_LENGTH, 'FM999999999.00') AS GOVER_LENGTH,  -- 숫자 포맷 처리
+    GP.gp_gover_no as GOVER_NO,
+    TO_CHAR(GP.gp_NEXT_DATE, 'YYYY-MM-DD') AS NEXT_DATE,
+    GP.gp_nm as NM,
+    GP.gp_pay_way as PAY_WAY,
+    GP.gp_phone_number as PHONE_NUMBER,
+    TO_CHAR(GP.gp_PMT_FIRST_DATE, 'YYYY-MM-DD') AS PMT_FIRST_DATE,
+    GP.gp_pmt_name as PMT_NAME,
+    GP.gp_pmt_office as PMT_OFFICE,
+    GP.gp_adm_office as ADM_OFFICE,
+    GP.gp_siseolname as SISEOLNAME,
+    TO_CHAR(GP.gp_UPDATE_DATE, 'YYYY-MM-DD') AS UPDATE_DATE
+FROM 
+    GOVER_PERMIT GP
+LEFT JOIN 
+    PLMS_APPROVAL PA ON GP.gp_DOCKEY = PA.pa_DOCKEY
+WHERE 
+    GP.gp_gover_no = #{GOVER_NO}
+    AND GP.gp_PAY_DATE IS NOT NULL
+    AND (PA.pa_STATUS IS NOT NULL AND PA.pa_STATUS NOT IN ('X'))
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+		
+			AND GP.gp_SEQ = #{SEQ}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMTNO)" >
+		
+			AND GP.gp_SEQ = #{PMTNO}
+		</if>
+		ORDER BY GP.gp_GOVER_NO ASC
+		, GP.gp_SEQ DESC
+	</select>
+>>>>>>> Stashed changes
 </mapper>

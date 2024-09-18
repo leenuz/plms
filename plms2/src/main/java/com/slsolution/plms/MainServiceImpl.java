@@ -9,6 +9,7 @@ import jakarta.annotation.Resource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 
@@ -42,10 +43,13 @@ public class MainServiceImpl implements  com.slsolution.plms.MainService {
      * @return Object
      * @throws Exception
      */
-    @Transactional (readOnly=true, propagation=Propagation.REQUIRED)
+    @Transactional (readOnly=false, propagation=Propagation.REQUIRED)
     public ArrayList<HashMap> selectQuery(String string, HashMap hashMap) throws Exception {
     	return (ArrayList<HashMap>)mainDAO.selectList(string, hashMap);
     }
+    
+   
+    
     
     /**
      * 정보의 카운트를 조회한다
@@ -59,7 +63,18 @@ public class MainServiceImpl implements  com.slsolution.plms.MainService {
     public Object selectCountQuery(String string, HashMap hashMap) throws Exception {
     	return mainDAO.selectOne(string, hashMap);
     }
+    
+    @Transactional (readOnly=false, propagation=Propagation.REQUIRED)
+    public Object selectHashMapQuery(String string, HashMap hashMap) throws Exception {
+    	return mainDAO.selectOne1(string, hashMap);
+    }
 
+    
+//    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+//    public HashMap<String, Object> selectHashMapQuery(String queryId, HashMap<String, Object> params) throws Exception {
+//        // DAO에서 HashMap으로 결과 조회
+//        return (HashMap<String, Object>) mainDAO.selectOne(queryId, params);
+//    }
     /**
      * 정보를 수정한다
      *
@@ -85,4 +100,10 @@ public class MainServiceImpl implements  com.slsolution.plms.MainService {
     public Object DeleteQuery(String string, HashMap hashMap) throws Exception {
     	return mainDAO.delete(string, hashMap);
     }
+
+	@Override
+	public HashMap<String, Object> selectHashmapQuery(String string, HashMap hashMap) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

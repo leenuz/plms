@@ -1,0 +1,111 @@
+<link
+  rel="stylesheet"
+  as="style"
+  crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+/>
+<link rel="stylesheet" href="/assets/css/popup/Issue_development_Popup.css" />
+<div id="complaint_completed" class="complaint_completed">
+  <div class="popupWrap">
+    <h2>
+      <p>민원 완료</p>
+      <span class="topCloseBtn"></span>
+    </h2>
+    <section>
+      <h3>민원 현황 상세</h3>
+      <div class="complaint_completed_detail_wrap">
+        <ul>
+          <li class="complaints_title">민원 명</li>
+          <li>오류로 인한 지상권 해지</li>
+        </ul>
+        <ul>
+          <li class="complaints_title">발생일자</li>
+          <li>2022-06-22</li>
+        </ul>
+        <ul>
+          <li class="complaints_title">발생지사</li>
+          <li>서울지사</li>
+        </ul>
+        <ul>
+          <li class="complaints_title">이슈 유형</li>
+          <li>지소유자와 계약 > 권리상실 > 해지업무 착오로 인한 지상권 소실</li>
+        </ul>
+        <ul>
+          <li class="complaints_title">진행현황</li>
+          <li>협의중</li>
+        </ul>
+        <ul class="complaint_completed_detail_title">
+          <li class="complaints_title">구분</li>
+          <li>순번</li>
+          <li>성명</li>
+          <li>생년월일</li>
+          <li>토지주와의 관계</li>
+          <li>연락처</li>
+          <li>현장입회</li>
+        </ul>
+        <ul class="complaint_completed_detail_box7">
+          <li class="complaints_title">민원인/토지주</li>
+          <li class="complainant_info_list">
+            <ul class="complainant_info">
+              <li>1</li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li>Y</li>
+            </ul>
+            <ul class="complainant_info">
+              <li>1</li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li>Y</li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="complaint_completed_detail_box8">
+          <li class="complaints_title">토지이력</li>
+          <li class="complaints_content_box"></li>
+        </ul>
+        <ul class="complaint_completed_detail_box9">
+          <li class="complaints_title">요구사항</li>
+          <li class="complaints_content_box"></li>
+        </ul>
+        <ul class="complaint_completed_detail_box10">
+          <li class="complaints_title">내용</li>
+          <li class="complaints_content_box"></li>
+        </ul>
+      </div>
+    </section>
+    <section class="complaintinfo_update">
+      <ul class="complaintinfo_update_th">
+        <li>주소</li>
+        <li>업데이트 여부</li>
+        <li class="complaintinfo_update_btn">상세</li>
+      </ul>
+      <ul>
+        <li>경기도 평택시 월곡동 140-7</li>
+        <li>N</li>
+        <li class="complaintinfo_update_btn"><button>상세보기</button></li>
+      </ul>
+    </section>
+    <div class="complaintinfo_btns">
+      <button class="closeBtn finalBtn">닫기</button>
+    </div>
+  </div>
+</div>
+<script>
+//x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+const complaintCompletedPopupOpen = document.getElementById("complaint_completed");
+
+if (complaintCompletedPopupOpen) {
+  complaintCompletedPopupOpen.querySelectorAll(".topCloseBtn, .finalBtn")
+    .forEach(function (btn) {
+      btn.addEventListener("click", () => {
+        complaintCompletedPopupOpen.classList.remove("active");
+      });
+    });
+}
+
+</script>

@@ -12,10 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+<<<<<<< Updated upstream
 import org.springframework.web.bind.annotation.RequestBody;
+=======
+>>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,8 +28,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.slsolution.plms.ApprovalHtmlUtil;
+import com.slsolution.plms.ApprovalUtil;
 import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.MainService;
+import com.slsolution.plms.ParameterUtil;
 import com.slsolution.plms.config.GlobalConfig;
 import com.slsolution.plms.jisang.jisangController;
 import com.slsolution.plms.json.JSONObject;
@@ -1121,5 +1128,299 @@ public class goverController {
 	         
 	        return resultmap;
 	    }
+		
+		
+		@PostMapping(path="/selectGoverList") //http://localhost:8080/api/get/dbTest
+	    public void selectGoverList(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			String goverNo =requestParamsObj.getString("GOVERNO");
+			log.info("goverNo:"+goverNo);
+			
+			HashMap params=new HashMap();
+			params.put("gover_no",goverNo);
+					//parser.getString("goverNo", "");
+			ArrayList<HashMap<String, Object>> goverList = new ArrayList<HashMap<String, Object>>();
+			goverList = (ArrayList)mainService.selectQuery("goverSQL.selectGoverList", params); //기본정보
+			
+			 HashMap jo=new HashMap();
+		        jo.put("data",goverList);
+		        
+		        JSONObject obj = new JSONObject(jo);
+		    	 // log.info("jo:"+jo);
+		        response.setCharacterEncoding("UTF-8");
+		        response.setHeader("Access-Control-Allow-Origin", "*");
+		        response.setHeader("Cache-Control", "no-cache");
+		        response.resetBuffer();
+		        response.setContentType("application/json");
+		        // response.getOutputStream().write(jo);
+		        response.getWriter().print(obj);
+		        response.getWriter().flush();
+		        
+		}
+		@PostMapping(path="/selectGoverPnuList") //http://localhost:8080/api/get/dbTest
+	    public void selectGoverPnuList(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			String goverNo =requestParamsObj.getString("GOVERNO");
+			log.info("goverNo:"+goverNo);
+			
+			HashMap params=new HashMap();
+			params.put("gover_no",goverNo);
+					//parser.getString("goverNo", "");
+			ArrayList<HashMap<String, Object>> goverList = new ArrayList<HashMap<String, Object>>();
+			goverList = (ArrayList)mainService.selectQuery("goverSQL.selectGoverPnuList", params); //기본정보
+			
+			 HashMap jo=new HashMap();
+		        jo.put("data",goverList);
+		        
+		        JSONObject obj = new JSONObject(jo);
+		    	 // log.info("jo:"+jo);
+		        response.setCharacterEncoding("UTF-8");
+		        response.setHeader("Access-Control-Allow-Origin", "*");
+		        response.setHeader("Cache-Control", "no-cache");
+		        response.resetBuffer();
+		        response.setContentType("application/json");
+		        // response.getOutputStream().write(jo);
+		        response.getWriter().print(obj);
+		        response.getWriter().flush();
+		        
+		}
+		
+		// 점용료 납부 / 전자결제 상신시
+		@Transactional
+		@PostMapping(path="/insertGoverPaySangsin")
+		public void insertGoverPaySangsin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			ArrayList list = new ArrayList();
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			
+			
+			String PAGETYPE = requestParamsObj.getString("PAGETYPE"); // 수정화면에서 상신을 눌렀는지
+			String GOVER_NO = requestParamsObj.getString("GOVER_NO"); // 관리번호
+			String JISA = requestParamsObj.getString("JISA");
+			String PMT_OFFICE = requestParamsObj.getString("PMT_OFFICE");
+			String ADM_OFFICE = requestParamsObj.getString("ADM_OFFICE");
+			String OFFICE_DEPART = requestParamsObj.getString("OFFICE_DEPART");
+			String OFFICE_CHARGE = requestParamsObj.getString("OFFICE_CHARGE");
+			String OFFICE_CONTACT = requestParamsObj.getString("OFFICE_CONTACT");
+			String OFFICE_MOBILE = requestParamsObj.getString("OFFICE_MOBILE");
+			String PMT_NO = requestParamsObj.getString("PMT_NO");
+			String PAY_DATE = requestParamsObj.getString("PAY_DATE");
+			String PAY_MONEY = requestParamsObj.getString("PAY_MONEY");
+			String PAY_VAT = requestParamsObj.getString("PAY_VAT");
+			String PMT_ST_DATE = requestParamsObj.getString("PMT_ST_DATE");
+			String PMT_ED_DATE = requestParamsObj.getString("PMT_ED_DATE");
+			String PAY_WAY = requestParamsObj.getString("PAY_WAY");
+			String USE_PURPOS = requestParamsObj.getString("USE_PURPOS")==null?"":requestParamsObj.getString("USE_PURPOS");
+			String PMT_GOVER_LENGTH = requestParamsObj.getString("PMT_GOVER_LENGTH");
+			String PMT_GOVER_AREA = requestParamsObj.getString("PMT_GOVER_AREA");
+			//String PNU_CNT = requestParamsObj.getString("pnuCnt", "0"); // 소속토지 수
+			
+			String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
+			String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
+			
+			String str_GUBUN = "";
+			String str_GOVERNO = GOVER_NO;
+			
+			String str_result = "Y";
+//			
+			// 확인
+//			String GOVER_NO = parser.getString("GOVER_NO", ""); // 관리번호
+//			String JISA = parser.getString("JISA", "");
+//			String PMT_OFFICE = parser.getString("PMT_OFFICE", "");
+//			String ADM_OFFICE = parser.getString("ADM_OFFICE", "");
+//			String OFFICE_DEPART = parser.getString("OFFICE_DEPART", "");
+//			String OFFICE_CHARGE = parser.getString("OFFICE_CHARGE", "");
+//			String OFFICE_CONTACT = parser.getString("OFFICE_CONTACT", "");
+//			String OFFICE_MOBILE = parser.getString("OFFICE_MOBILE", "");
+//			String PMT_NO = parser.getString("PMT_NO", "");
+//			String PAY_DATE = parser.getString("PAY_DATE", "");
+//			String PAY_MONEY = parser.getString("PAY_MONEY", "");
+//			String PAY_VAT = parser.getString("PAY_VAT", "");
+//			String PMT_ST_DATE = parser.getString("PMT_ST_DATE", "");
+//			String PMT_ED_DATE = parser.getString("PMT_ED_DATE", "");
+//			String PAY_WAY = parser.getString("PAY_WAY", "");
+//			String USE_PURPOS = parser.getString("USE_PURPOS", "");
+//			String PMT_GOVER_LENGTH = parser.getString("PMT_GOVER_LENGTH", "");
+//			String PMT_GOVER_AREA = parser.getString("PMT_GOVER_AREA", "");
+//			String PNU_CNT = parser.getString("pnuCnt", "0"); // 소속토지 수
+//			
+//			String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
+//			String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
+//			
+//			String str_GUBUN = "";
+//			String str_GOVERNO = GOVER_NO;
+//			
+//			String str_result = "Y";
+//			
+			
+			HashMap map = new HashMap();
+			
+			try {
+				HashMap params = new HashMap();
+				params.put("GOVER_NO", GOVER_NO);
+				params.put("JISA", JISA);
+				params.put("PMT_OFFICE", PMT_OFFICE);
+				params.put("ADM_OFFICE", ADM_OFFICE);
+				params.put("OFFICE_DEPART", OFFICE_DEPART);
+				params.put("OFFICE_CHARGE", OFFICE_CHARGE);
+				params.put("OFFICE_CONTACT", OFFICE_CONTACT);
+				params.put("OFFICE_MOBILE", OFFICE_MOBILE);
+				params.put("PMT_NO", PMT_NO==null?"":PMT_NO);
+				params.put("PAY_DATE", PAY_DATE==null?"":PAY_DATE);
+				params.put("PAY_MONEY", PAY_MONEY);
+				params.put("PAY_VAT", PAY_VAT);
+				params.put("PMT_ST_DATE", PMT_ST_DATE==null?"":PMT_ST_DATE);
+				params.put("PMT_ED_DATE", PMT_ED_DATE==null?"":PMT_ED_DATE);
+				params.put("PAY_WAY", PAY_WAY);
+				params.put("PMT_NAME", (USE_PURPOS==null)?"":USE_PURPOS);
+				params.put("PMT_GOVER_LENGTH", (PMT_GOVER_LENGTH==null)?null:PMT_GOVER_LENGTH);
+				params.put("PMT_GOVER_AREA", PMT_GOVER_AREA==null?null:PMT_GOVER_AREA);
+
+				params.put("USER_ID", USER_ID);
+				params.put("USER_NAME", USER_NAME);
+
+				/**********************
+				 * 다음 지상권 번호 조회 시작
+				 **********************/
+				int nNextSeq = 0;
+//				nNextSeq = (Integer) Database.getInstance().queryForObject("Json.selectNextGoverNo", params);
+				nNextSeq = (Integer) mainService.selectCountQuery("goverSQL.selectNextGoverNo", params);
+				params.put("NEXTSEQ", nNextSeq);
+
+				System.out.println("납부정보 params = " + params);
+				mainService.InsertQuery("goverSQL.insertGoverPmt", params);
+//				Database.getInstance().insert("Json.insertGoverPmt", params); // 납부정보 신규등록
+				// 납부관련 전자결재 상신 시점의 소속 토지정보를 로그테이블에 저장한다. >> 해당 내용은 납부실적 토지목록 보기
+				// 목록에서 확인할 수 있다.
+				// 소속 토지정보 검색
+				ArrayList pnuList = mainService.selectQuery("goverSQL.selectGoverPnuList", params);
+				if (!pnuList.isEmpty()) {
+					HashMap logParams = new HashMap(); // 맵 객체 선언
+
+					for (int i = 0; i < pnuList.size(); i++) {
+						logParams = new HashMap(); // 맵 객체 초기화
+
+						logParams.put("GOVER_NO", GOVER_NO);
+						logParams.put("PMT_SEQ", nNextSeq);
+
+						// 소속 토지정보 로깅용 seq 조회(생성)
+						//String logSeq = (String) Database.getInstance().queryForObject("Json.selectGoverPnuLogSeq", logParams);
+						ArrayList logSeqList=(ArrayList) mainService.selectQuery("goverSQL.selectGoverPnuLogSeq", logParams);
+						log.info("logSeqList:"+logSeqList.get(0));
+						
+//						String logSeq = (ArrayList) mainService.selectQuery("Json.selectGoverPnuLogSeq", logParams);
+//						logLisg.info
+						String logSeq=logSeqList.get(0).toString();
+						System.out.println("logSeq = " + logSeq);
+						logParams.put("LOG_SEQ", logSeq);
+						logParams.put("PNU", ((HashMap) pnuList.get(i)).get("PNU"));
+						logParams.put("ADDRCODE", ((HashMap) pnuList.get(i)).get("PNU"));
+						logParams.put("ECHO_NO", ((HashMap) pnuList.get(i)).get("ECHO_NO"));
+						logParams.put("SIDO_NM", ((HashMap) pnuList.get(i)).get("SIDO_NM"));
+						logParams.put("SGG_NM", ((HashMap) pnuList.get(i)).get("SGG_NM"));
+						logParams.put("EMD_NM", ((HashMap) pnuList.get(i)).get("EMD_NM"));
+						logParams.put("RI_NM", ((HashMap) pnuList.get(i)).get("RI_NM"));
+						logParams.put("JIBUN", ((HashMap) pnuList.get(i)).get("JIBUN"));
+						logParams.put("JIBUN_FULL", ((HashMap) pnuList.get(i)).get("JIBUN_FULL"));
+						logParams.put("JIJUK_AREA", ((HashMap) pnuList.get(i)).get("JIJUK_AREA"));
+						logParams.put("JIMOK_TEXT", ((HashMap) pnuList.get(i)).get("JIMOK_TEXT"));
+						logParams.put("DOSIPLAN", ((HashMap) pnuList.get(i)).get("DOSIPLAN"));
+						logParams.put("GOVER_OWN_YN", ((HashMap) pnuList.get(i)).get("GOVER_OWN_YN"));
+						logParams.put("GOVER_LENGTH", ((HashMap) pnuList.get(i)).get("GOVER_LENGTH"));
+						logParams.put("GOVER_AREA", ((HashMap) pnuList.get(i)).get("GOVER_AREA"));
+						logParams.put("ADM_OFFICE", ((HashMap) pnuList.get(i)).get("ADM_OFFICE"));
+						logParams.put("USE_PURPOS", ((HashMap) pnuList.get(i)).get("USE_PURPOS"));
+//
+//						// 소속 토지정보 저장처리
+						System.out.println("소속 토지정보 params = " + logParams);
+//						Database.getInstance().insert("Json.insertGoverPnuLog", logParams);
+						mainService.InsertQuery("goverSQL.insertGoverPnuLog", logParams);
+					}
+				}
+				
+				if ("update".equals(PAGETYPE)) {
+					ApprovalHtmlUtil eph=new ApprovalHtmlUtil();
+					ApprovalUtil epc= new ApprovalUtil();
+					
+					CommonUtil cu = new CommonUtil();
+
+					String str_appNo = cu.getNextAppovalSeq();
+					boolean res_Echo = false;
+
+					if ("".equals(str_appNo)) {
+						map.put("message", "N");
+					} else {
+//						String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
+//						String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
+//						String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
+//						String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
+//						String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+						String str_UserId = "105681";
+						String str_userName = "박영환";
+						String str_userDeptcd = "D250500";
+						String str_userDeptnm = "IT전략.지원팀";
+						String str_userUPDeptcd = "S250100";
+						res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getGover_pay_HTML("", str_GOVERNO, "", "", "", request, response), str_UserId, "", "", "GetHoldUsageDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
+					}
+					if (res_Echo) {
+
+						// 문서번호 업데이트
+						map.put("DOCKEY", str_appNo);
+						map.put("message", "Y");
+						map.put("GOVER_NO", str_GOVERNO);
+						map.put("SEQ", nNextSeq);
+//						Database.getInstance().update("Json.updateGoverEchoNo", map);
+						mainService.InsertQuery("goverSQL.updateGoverEchoNo", map);
+
+						System.out.println("%%%%%%%%%%%%map=" + map);
+						// 문서 URL조회
+						//ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectGoverDocInfo", map);
+						ArrayList echolist = (ArrayList) mainService.selectQuery("goverSQL.selectGoverDocInfo", map);
+						if (null != echolist && echolist.size() > 0) {
+							String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+							System.out.println("str_EchoNo=====" + str_EchoNo);
+							map.put("OUT_URL", str_EchoNo);
+						}
+
+					} else {
+						map.put("message", "N");
+					}
+				}
+
+				if (list != null)
+					map.put("count", list.size());
+				else
+					map.put("count", 0);
+			}catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			
+			// 상신처리
+
+			map.put("message", str_result);
+			map.put("GOVERNO", str_GOVERNO);
+			map.put("result", list);
+			
+			 HashMap jo=new HashMap();
+		        jo.put("data","");
+		        
+		        JSONObject obj = new JSONObject(map);
+		    	 // log.info("jo:"+jo);
+		        response.setCharacterEncoding("UTF-8");
+		        response.setHeader("Access-Control-Allow-Origin", "*");
+		        response.setHeader("Cache-Control", "no-cache");
+		        response.resetBuffer();
+		        response.setContentType("application/json");
+		        // response.getOutputStream().write(jo);
+		        response.getWriter().print(obj);
+		        response.getWriter().flush();
+		}
 		
 }
