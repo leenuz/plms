@@ -664,6 +664,7 @@ const ExcelPopOpenEvet = () => {
 }
 
 ExcelPopOpenEvet();
+// 활성화 시 첨부파일 드래그 구역 클릭 시 파일 선택 창 두 번 열리는 오류 발생
 // ExcelPopOpenEvet();
 
 // 주소 검색 버튼 클릭 시
