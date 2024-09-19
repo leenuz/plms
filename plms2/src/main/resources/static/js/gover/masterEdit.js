@@ -32,8 +32,8 @@ $(document).ready(function() {
 	 $(document).on("change", "#masterEditSelectBox01", function () {
 	     const selectedJisa = $("#masterEditSelectBox01").val();
 	     if (selectedJisa) {
-	         updatePmtOfficeList(selectedJisa); // 이미 정의된 함수 호출
-	         updatePipeNameList(selectedJisa);  // 이미 정의된 함수 호출
+	         updatePmtOfficeList(selectedJisa); // 허가관청 목록 업데이트
+	         updatePipeNameList(selectedJisa);  // 관로명 목록 업데이트
 	     }
 	 });
 	 
@@ -42,7 +42,7 @@ $(document).ready(function() {
 	     const selectedPmtOffice = $("#masterEditSelectBox02").val();
 	     const selectedJisa = $("#masterEditSelectBox01").val();
 	     if (selectedPmtOffice && selectedJisa) {
-	         updateAdmOfficeList(selectedJisa, selectedPmtOffice); // 이미 정의된 함수 호출
+	         updateAdmOfficeList(selectedJisa, selectedPmtOffice); // 관리기관 목록 업데이트
 	     }
 	 });
 	 
@@ -251,8 +251,6 @@ function updatePmtOfficeList(jisaValue) {
             // 허가관청 셀렉 박스 초기화 및 업데이트
             $("#pmtOfficeUl li").remove();
             $("#masterEditSelectBox02 option").remove();
-            $("#pmtOfficeUl").append("<li><p>전체</p></li>");
-            $("#masterEditSelectBox02").append("<option value=''>전체</option>");
             for (let i = 0; i < data.length; i++) {
                 $("#pmtOfficeUl").append("<li><p>" + data[i].so_pmt_office + "</p></li>");
                 $("#masterEditSelectBox02").append("<option>" + data[i].so_pmt_office + "</option>");
@@ -284,8 +282,6 @@ function updatePipeNameList(jisaValue) {
             // 관로명 셀렉 박스 초기화 및 업데이트
             $("#pipeNameUl li").remove();  // 기존 목록 초기화
             $("#masterEditSelectBox05 option").remove();  // 셀렉 박스 옵션 초기화
-            $("#pipeNameUl").append("<li><p>전체</p></li>");  // '전체' 항목 추가
-            $("#masterEditSelectBox05").append("<option value=''>전체</option>");
 
             // 받은 데이터로 관로명 목록 업데이트
             for (let i = 0; i < data.length; i++) {
@@ -319,8 +315,6 @@ function updateAdmOfficeList(jisaValue, pmtOfficeValue) {
             // 관리기관 셀렉 박스 초기화 및 업데이트
             $("#admOfficeUl li").remove();
             $("#masterEditSelectBox03 option").remove();
-            $("#admOfficeUl").append("<li><p>전체</p></li>");
-            $("#masterEditSelectBox03").append("<option value=''>전체</option>");
             for (let i = 0; i < data.length; i++) {
                 $("#admOfficeUl").append("<li><p>" + data[i].so_adm_office + "</p></li>");
                 $("#masterEditSelectBox03").append("<option>" + data[i].so_adm_office + "</option>");
@@ -342,7 +336,6 @@ function updateAdmOfficeList(jisaValue, pmtOfficeValue) {
  function updateGoverAdmOffice(data) {
 	console.log("updateGoverAdmOffice 함수 실행 ");
      $("#goverEditSelectBox03 option").remove();
-     $("#goverEditSelectBox03").append("<option value=''>전체</option>");
      for (let i = 0; i < data.length; i++) {
          $("#goverEditSelectBox03").append("<option>" + data[i].so_adm_office + "</option>");
      }
@@ -350,7 +343,6 @@ function updateAdmOfficeList(jisaValue, pmtOfficeValue) {
      // 커스텀 셀렉트 박스의 버튼들 업데이트(첫 줄)
      const customSelectBtns = $("#goverUl #admOfficeUl01");
      customSelectBtns.empty();
-     customSelectBtns.append("<li><p>전체</p></li>");
      for (let i = 0; i < data.length; i++) {
          customSelectBtns.append("<li><p>" + data[i].so_adm_office + "</p></li>");
      }
@@ -358,7 +350,6 @@ function updateAdmOfficeList(jisaValue, pmtOfficeValue) {
 	 // 커스텀 셀렉트 박스의 버튼들 업데이트(2개 이상 줄)
       const customSelectBtns02 = $("#goverUl02 #admOfficeUl01");
       customSelectBtns02.empty();
-      customSelectBtns02.append("<li><p>전체</p></li>");
       for (let i = 0; i < data.length; i++) {
           customSelectBtns02.append("<li><p>" + data[i].so_adm_office + "</p></li>");
       }

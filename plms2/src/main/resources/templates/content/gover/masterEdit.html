@@ -223,7 +223,6 @@
 				      name="yongdo"
 				      id="masterEditSelectBox04"
 				      hidden>
-				      <option value="선택" th:selected="${resultData.gm_yongdo == '선택'}">선택</option>
 				      <option value="송유관로" th:selected="${resultData.gm_yongdo == '송유관로'}">송유관로</option>
 				      <option value="밸브박스" th:selected="${resultData.gm_yongdo == '밸브박스'}">밸브박스</option>
 				      <option value="가압소" th:selected="${resultData.gm_yongdo == '가압소'}">가압소</option>
@@ -234,15 +233,7 @@
 				  </div>
 				  <section class="customSelectBox">
 				    <button class="customSelectView">[[${resultData.gm_yongdo}]]</button>
-				    <ul class="customSelectBtns">
-				      <li><button type="button" class="moreSelectBtn">선택</button></li>
-				      <li><button type="button" class="moreSelectBtn">송유관로</button></li>
-				      <li><button type="button" class="moreSelectBtn">밸브박스</button></li>
-				      <li><button type="button" class="moreSelectBtn">가압소</button></li>
-				      <li><button type="button" class="moreSelectBtn">저유소</button></li>
-				      <li><button type="button" class="moreSelectBtn">펌프장</button></li>
-				      <li><button type="button" class="moreSelectBtn">시설물</button></li>
-				    </ul>
+				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
 				
@@ -329,7 +320,6 @@
 				<li class="content selectContentArea">
 				  <div class="hiddenSelectBox">
 				    <select name="use_purpos" id="masterEditSelectBox08" hidden>
-					  <option value="전체" th:selected="${resultData.gm_use_purpos == '전체'}">전체</option>
 					  <option th:each="usePurpos : ${usePurposlist}"
 					          th:value="${usePurpos['sc_code_name']}"
 					          th:text="${usePurpos['sc_code_name']}"
@@ -338,7 +328,6 @@
 				    </select>
 				  </div>
 				  <section class="customSelectBox">
-				    <!-- 버튼에 초기값 표시 -->
 				    <button class="customSelectView">[[${resultData.gm_use_purpos}]]</button>
 				    <ul class="customSelectBtns"></ul>
 				  </section>
@@ -374,22 +363,14 @@
 				<li class="content selectContentArea">
 				  <div class="hiddenSelectBox">
 				    <!-- name도 추가 -->
-				    <select
-				      name="newregreason"
-				      id="masterEditSelectBox09"
-				      hidden>
-				      <option value="선택" th:selected="${resultData.gm_newregreason == '선택'}">선택</option>
+				    <select name="newregreason" id="masterEditSelectBox09" hidden>
 				      <option value="사유지의 국유지 편입" th:selected="${resultData.gm_newregreason == '사유지의 국유지 편입'}">사유지의 국유지 편입</option>
 				      <option value="ILI결과 발견지번" th:selected="${resultData.gm_newregreason == 'ILI결과 발견지번'}">ILI결과 발견지번</option>
 				    </select>
 				  </div>
 				  <section class="customSelectBox">
 				    <button class="customSelectView">[[${resultData.gm_newregreason}]]</button>
-				    <ul class="customSelectBtns">
-				      <li><button type="button" class="moreSelectBtn">선택</button></li>
-				      <li><button type="button" class="moreSelectBtn">사유지의 국유지 편입</button></li>
-				      <li><button type="button" class="moreSelectBtn">ILI결과 발견지번</button></li>
-				    </ul>
+				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
 
@@ -744,9 +725,7 @@
 				<!-- 관리기관 -->
   		        <li class="content largeWidth selectContentArea">
   		          <div class="hiddenSelectBox">
-  		            <select name="adm_office" id="goverEditSelectBox03" hidden>
-  		              <option value="전체">전체</option>
-  		            </select>
+  		            <select name="adm_office" id="goverEditSelectBox03" hidden></select>
   		          </div>
   		          <section class="customSelectBox">
 					<button class="customSelectView" id="admOfficeText01">[[${resultData.gm_adm_office}]]</button>
