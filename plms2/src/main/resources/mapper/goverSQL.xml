@@ -684,7 +684,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    </if>
 	</select>
 	
-
 	<!-- 지사에 따른 허가관청 목록 조회 -->
 	<select id="selectPmtOfficesByJisa" parameterType="String" resultType="java.util.HashMap">
 	    SELECT so_pmt_office, so_sort_order
@@ -705,7 +704,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    AND so_pmt_office = #{pmt_office}
 	    ORDER BY so_sort_order ASC
 	</select>
-
+	
+	<!-- 지사에 따른 관로명 목록 조회 -->
+	<select id="selectPipeNameByJisa" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	    SELECT jzn_zone_name
+	    FROM jisa_zone_name
+	    WHERE jzn_jisa = #{jisa}
+	    ORDER BY jzn_idx ASC
+	</select>
 
 	<select id="selectGoverPnuList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT GP.gp_SEQ AS "SEQ"

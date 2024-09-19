@@ -334,7 +334,7 @@ public class goverController {
 			return mav;
 	    }
 		
-	    // 지사 선택에 따라 허가관청 목록을 반환하는 API
+		// 지사 선택에 따라 허가관청 목록을 반환하는 API
 	    @PostMapping("/getPmtOffice")
 	    public ResponseEntity<Map<String, Object>> getPmtOffice(@RequestBody Map<String, String> requestData) throws Exception {
 	    	log.info("getPmtOffice 컨트롤러 동작");
@@ -371,6 +371,29 @@ public class goverController {
 	        // 결과를 담은 Map 객체 생성
 	        Map<String, Object> response = new HashMap<>();
 	        response.put("resultData", admOfficeList);
+
+	        return new ResponseEntity<>(response, HttpStatus.OK);
+	    }
+	    
+
+	    // 지사 선택에 따라 관로명 목록을 반환하는 API
+	    @PostMapping("/getPipeName")
+	    public ResponseEntity<Map<String, Object>> getPipeName(@RequestBody Map<String, String> requestData) throws Exception {
+	    	log.info("getPipeName 컨트롤러 동작");
+	        String selectedJisa = requestData.get("jisa");
+
+	        // 직접 SQL 쿼리를 호출하여 데이터를 가져옴
+	        HashMap<String, Object> params = new HashMap<>();
+	        params.put("jisa", selectedJisa);
+
+	        // SQL 호출하여 데이터 가져오기
+	        ArrayList<HashMap> pipeNameList = mainService.selectQuery("goverSQL.selectPipeNameByJisa", params);
+
+	        log.info("pipeNameList: "+ pipeNameList);
+	        
+	        // 결과를 담은 Map 객체 생성
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("resultData", pipeNameList);
 
 	        return new ResponseEntity<>(response, HttpStatus.OK);
 	    }
