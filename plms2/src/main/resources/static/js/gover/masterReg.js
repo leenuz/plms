@@ -19,7 +19,7 @@ $(document).ready(function() {
 	// 소속 토지 정보의 행 추가 버튼 비활성화 초기화
 	$(".addBtn").prop("disabled", true);
 	
-	// 지사 선택 시 허가관청 목록 업데이트
+	// 지사 선택 시 허가관청, 관로명 목록 업데이트를 위한 change 트리거
 	 $(document).on("click", "#jisaUl li", function () {
 	     const selectedJisa = $(this).text().trim();
 	     $("#jisaText").text(selectedJisa);
@@ -42,8 +42,6 @@ $(document).ready(function() {
              contentType: "application/json; charset=utf-8",
              success: function (rt) {
                  const data = rt.resultData;
-				 
-				 console.log("----관로명 목록: -----" + data);
 
                  // 허가관청 리스트 초기화 및 업데이트
                  $("#pipeNameUl li").remove();
@@ -77,8 +75,6 @@ $(document).ready(function() {
               contentType: "application/json; charset=utf-8",
               success: function (rt) {
                   const data = rt.resultData;
-
-				  console.log("----허가관청 목록: -----" + data);
 				  
                   // 허가관청 리스트 초기화 및 업데이트
                   $("#pmtOfficeUl li").remove();
@@ -366,7 +362,7 @@ const allCheckEventLandRightsRegist = () => {
 }
 allCheckEventLandRightsRegist();
 
-
+// 첨부파일 선택파일 삭제 기능
 $(document).on("click","#deleteFileBtn",function(){
 	//const attachFiles = document.querySelectorAll('input:checkbox[name="landRightsRegistration_attachFile"]:checked');
 	/*$('input:checkbox[name=landRightsRegistration_attachFile]').each(function (index) {
@@ -382,9 +378,7 @@ $(document).on("click","#deleteFileBtn",function(){
 		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
 		$(delEle).remove();
 
-
 	}
-
 })
 
 // '소속 토지 정보' 내의 체크박스 클릭 시 다른 체크박스 비활성화
@@ -677,9 +671,7 @@ customSelectView.forEach((btn) => {
     })
 })
 
-
 // customSelectBtns 리스트 click 했을 때 해당 내용으로 바뀌게하기
-
 const MoreSelectBtn = document.querySelectorAll('.moreSelectBtn')
 
 MoreSelectBtn.forEach((moreBtn) => {
@@ -699,7 +691,6 @@ MoreSelectBtn.forEach((moreBtn) => {
 
         EditCustomViewBtn.classList.remove('active')
         parentMoreSelectBtn.classList.remove('active')
-
 
         // 선택한 걸 select의 value값으로 변경하기
 
@@ -851,7 +842,6 @@ const masterRegOpenPopUp = () => {
 }
 //masterRegOpenPopUp();
 
-
 /* 엑셀팝업불러오기 */
 
 const ExcelPopOpenEvet = () => {
@@ -995,7 +985,6 @@ PopupFinalBtns.forEach((button) => {
 })
 
 // x 버튼 click시 팝업 사라지게
-
 const topCloseBtn = document.querySelectorAll('.popupWrap .topCloseBtn');
 if(topCloseBtn){
     topCloseBtn.forEach((topClosebutton) => {
