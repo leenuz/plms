@@ -1,4 +1,5 @@
-
+var uploadFiles=new Array();
+// 초기화 시 모든 줄에 대해 함수 실행
 $(document).ready(function() {
   console.log("gover/masterEdit.js start");
 
@@ -6,14 +7,347 @@ $(document).ready(function() {
   const sunGubunValue = $('#masterEditSelectBox06').val();
   toggleLineDisplay(sunGubunValue);
 
-  // 단/복선 선택이 변경될 때마다 div 표시 변경
-  $('#masterEditSelectBox06').on('change', function() {
-    const selectedValue = $(this).val();
-    toggleLineDisplay(selectedValue);
-  });
-  
-  // 모든 셀렉트 박스에 대해 커스텀 셀렉트 박스 초기화 실행
-  createCustomLimasterReg();  // 페이지가 로드될 때 초기화
+    // 단/복선 선택이 변경될 때마다 관경 설정
+    $('#masterEditSelectBox06').on('change', function() {
+        const selectedValue = $(this).val();
+        toggleLineDisplay(selectedValue);
+    });
+
+    // 모든 셀렉트 박스에 대해 커스텀 셀렉트 박스 초기화 실행
+    createCustomLimasterReg();  // 페이지가 로드될 때 초기화
+	
+	// 소속 토지 정보의 행 추가 버튼 비활성화 초기화
+	$(".addBtn").prop("disabled", true);
+	
+	// 지사 선택 시 허가관청, 관로명 목록 업데이트를 위한 change 트리거
+	 $(document).on("click", "#jisaUl li", function () {
+	     const selectedJisa = $(this).text().trim();
+	     $("#jisaText").text(selectedJisa);
+	     $("#masterEditSelectBox01").val(selectedJisa).change(); // change 이벤트 트리거
+	 });
+	 
+	 // 지사 선택에 따른 관로명 목록 업데이트
+     $(document).on("change", "#masterEditSelectBox01", function () {
+		console.log("지사 선택");
+         const selectedJisa = $("#masterEditSelectBox01").val();
+         if (!selectedJisa) return;
+
+         const allData = { jisa: selectedJisa };
+		 
+		 console.log("allData"+allData);
+
+         $.ajax({
+             url: "/gover/getPipeName", // 허가관청 목록을 가져오는 API
+             data: JSON.stringify(allData),
+             async: true,
+             type: "POST",
+             dataType: "json",
+             contentType: "application/json; charset=utf-8",
+             success: function (rt) {
+                 const data = rt.resultData;
+
+                 // 허가관청 리스트 초기화 및 업데이트
+                 $("#pipeNameUl li").remove();
+                 $("#masterEditSelectBox05 option").remove();
+                 $("#pipeNameUl").append("<li><p>전체</p></li>");
+                 $("#masterEditSelectBox05").append("<option value=''>전체</option>");
+                 for (let i = 0; i < data.length; i++) {
+                     $("#pipeNameUl").append("<li><p>" + data[i].jzn_zone_name + "</p></li>");
+                     $("#masterEditSelectBox05").append("<option>" + data[i].jzn_zone_name + "</option>");
+                 }
+             },
+             error: function (jqXHR, textStatus, errorThrown) {
+                 console.error("Error: ", textStatus, errorThrown);
+             }
+         });
+     });
+	 
+	 // 관리기관 선택 (선택 후 추가적인 동작이 필요하다면 이곳에 추가)
+ 	 $(document).on("click", "#pipeNameUl li", function () {
+ 	     const selectedAdmOffice = $(this).text().trim();
+ 	     $("#pipeNameText").text(selectedAdmOffice);
+ 	 });
+	 
+	 // 지사 선택에 따른 허가관청 목록 업데이트
+      $(document).on("change", "#masterEditSelectBox01", function () {
+          const selectedJisa = $("#masterEditSelectBox01").val();
+          if (!selectedJisa) return;
+
+          const allData = { jisa: selectedJisa };
+
+          $.ajax({
+              url: "/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
+              data: JSON.stringify(allData),
+              async: true,
+              type: "POST",
+              dataType: "json",
+              contentType: "application/json; charset=utf-8",
+              success: function (rt) {
+                  const data = rt.resultData;
+				  
+				  console.log("data:" +  data);
+				  
+                  // 허가관청 리스트 초기화 및 업데이트
+                  $("#pmtOfficeUl li").remove();
+                  $("#masterEditSelectBox02 option").remove();
+                  $("#pmtOfficeUl").append("<li><p>전체</p></li>");
+                  $("#masterEditSelectBox02").append("<option value=''>전체</option>");
+                  for (let i = 0; i < data.length; i++) {
+                      $("#pmtOfficeUl").append("<li><p>" + data[i].so_pmt_office + "</p></li>");
+                      $("#masterEditSelectBox02").append("<option>" + data[i].so_pmt_office + "</option>");
+                  }
+
+                  // 허가관청과 관리기관 선택을 활성화
+                  checkEnableAddBtn();
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                  console.error("Error: ", textStatus, errorThrown);
+              }
+          });
+      });
+	 
+	 // 허가관청 선택 시 관리기관 목록 업데이트
+	 $(document).on("click", "#pmtOfficeUl li", function () {
+	     const selectedPmtOffice = $(this).text().trim();
+	     $("#pmtOfficeText").text(selectedPmtOffice);
+	     $("#masterEditSelectBox02").val(selectedPmtOffice).change(); // change 이벤트 트리거
+	 });
+	 
+	 // 허가관청 선택 시 관리기관 목록 업데이트
+     $(document).on("change", "#masterEditSelectBox02", function () {
+         const selectedPmtOffice = $("#masterEditSelectBox02").val();
+         const selectedJisa = $("#masterEditSelectBox01").val(); // 지사 선택된 값
+
+         if (!selectedPmtOffice || !selectedJisa) return;
+
+         const allData = {
+             pmt_office: selectedPmtOffice,
+             jisa: selectedJisa
+         };
+
+         $.ajax({
+             url: "/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
+             data: JSON.stringify(allData),
+             async: true,
+             type: "POST",
+             dataType: "json",
+             contentType: "application/json; charset=utf-8",
+             success: function (rt) {
+                 const data = rt.resultData;
+
+                 // 관리기관 리스트 초기화 및 업데이트 (기본 정보)
+                 $("#admOfficeUl li").remove();
+                 $("#masterEditSelectBox03 option").remove();
+                 $("#admOfficeUl").append("<li><p>전체</p></li>");
+                 $("#masterEditSelectBox03").append("<option value=''>전체</option>");
+                 for (let i = 0; i < data.length; i++) {
+                     $("#admOfficeUl").append("<li><p>" + data[i].so_adm_office + "</p></li>");
+                     $("#masterEditSelectBox03").append("<option>" + data[i].so_adm_office + "</option>");
+                 }
+
+                 // 관리기관 리스트 소속 토지 정보에도 업데이트
+                 updateGoverAdmOffice(data);
+
+                 // 허가관청과 관리기관 선택을 활성화
+                 checkEnableAddBtn();
+             },
+             error: function (jqXHR, textStatus, errorThrown) {
+                 console.error("Error: ", textStatus, errorThrown);
+             }
+         });
+     });
+
+     // 행 추가 시 관리기관 셀렉트 박스 동기화
+     function updateGoverAdmOffice(data) {
+		console.log("updateGoverAdmOffice 함수 실행 ");
+         $("#goverEditSelectBox03 option").remove();
+         $("#goverEditSelectBox03").append("<option value=''>전체</option>");
+         for (let i = 0; i < data.length; i++) {
+             $("#goverEditSelectBox03").append("<option>" + data[i].so_adm_office + "</option>");
+         }
+
+         // 커스텀 셀렉트 박스의 버튼들 업데이트(첫 줄)
+         const customSelectBtns = $("#goverUl #admOfficeUl01");
+         customSelectBtns.empty();
+         customSelectBtns.append("<li><p>전체</p></li>");
+         for (let i = 0; i < data.length; i++) {
+             customSelectBtns.append("<li><p>" + data[i].so_adm_office + "</p></li>");
+         }
+		 
+		 // 커스텀 셀렉트 박스의 버튼들 업데이트(2개 이상 줄)
+          const customSelectBtns02 = $("#goverUl02 #admOfficeUl01");
+          customSelectBtns02.empty();
+          customSelectBtns02.append("<li><p>전체</p></li>");
+          for (let i = 0; i < data.length; i++) {
+              customSelectBtns02.append("<li><p>" + data[i].so_adm_office + "</p></li>");
+          }
+     }
+	 
+	 // 관리기관 선택 (선택 후 추가적인 동작이 필요하다면 이곳에 추가)
+	 $(document).on("click", "#admOfficeUl li", function () {
+	     const selectedAdmOffice = $(this).text().trim();
+	     $("#admOfficeText").text(selectedAdmOffice);
+	     $("#masterEditSelectBox03").val(selectedAdmOffice).change(); // change 이벤트 트리거
+	 });
+	 
+	 // 소속 토지 정보의 관리기관 선택 (동적으로 추가된 요소에도 적용)
+	 $(document).on("click", "#goverUl .customSelectBtns li", function () {
+	     const selectedAdmOffice = $(this).text().trim();
+	     const parentUl = $(this).closest("ul");
+	     const targetSelectBox = parentUl.siblings(".hiddenSelectBox").find("select");
+
+	     // 선택한 관리기관 값을 반영
+	     parentUl.siblings(".customSelectView").text(selectedAdmOffice);
+	     targetSelectBox.val(selectedAdmOffice).change();  // change 이벤트 트리거
+	 });
+	 
+	 // 소속 토지 정보의 관리기관 선택 (동적으로 추가된 요소에도 적용)
+ 	 $(document).on("click", "#goverUl02 .customSelectBtns li", function () {
+ 	     const selectedAdmOffice = $(this).text().trim();
+ 	     const parentUl = $(this).closest("ul");
+ 	     const targetSelectBox = parentUl.siblings(".hiddenSelectBox").find("select");
+
+ 	     // 선택한 관리기관 값을 반영
+ 	     parentUl.siblings(".customSelectView").text(selectedAdmOffice);
+ 	     targetSelectBox.val(selectedAdmOffice).change();  // change 이벤트 트리거
+ 	 });
+
+     // 지사와 허가관청 선택 후 추가 버튼 활성화
+     function checkEnableAddBtn() {
+         const selectedJisa = $("#masterEditSelectBox01").val();
+         const selectedPmtOffice = $("#masterEditSelectBox02").val();
+
+         // 지사와 허가관청이 모두 선택되었을 때만 추가 버튼 활성화
+         if (selectedJisa && selectedPmtOffice) {
+             $(".addBtn").prop("disabled", false);
+         } else {
+             $(".addBtn").prop("disabled", true);
+         }
+     }
+	 
+	// 드래그 앤 드롭 영역 파일 첨부 관련 코드 시작
+	var objDragAndDrop = $(".fileUploadBox");
+	
+	// 드래그 앤 드롭 영역에 파일이 들어왔을 때
+	$(".fileUploadBox").on("dragenter", function(e) {
+	    e.stopPropagation();
+	    e.preventDefault();
+	    $(this).css('border', '2px solid #0B85A1');
+	});
+
+	// 드래그 앤 드롭 영역에서 파일을 드래그할 때
+	$(".fileUploadBox").on("dragover", function(e) {
+	    e.stopPropagation();
+	    e.preventDefault();
+	});
+
+	// 파일을 드롭할 때
+	$(".fileUploadBox").on("drop", function(e) {
+	    e.preventDefault();
+	    $(this).css('border', '2px dotted #0B85A1');
+	    var files = e.originalEvent.dataTransfer.files; // 드래그한 파일 객체를 가져옴
+	    handleFileUpload(files, $(this));  // 파일 처리 함수 호출
+	});
+
+	// 드래그 앤 드롭 영역을 클릭하면 파일 선택창을 띄움
+	objDragAndDrop.on('click', function(e) {
+		console.log("---------------- 파일 클릭 트리거 ---------------");
+	    if (!e.isTrigger) {  // 이 조건문은 이 이벤트가 수동 트리거된 경우를 방지합니다.
+	        $('input[type=file]').trigger('click'); // 파일 선택 창을 띄우는 트리거
+	    }
+	});
+	 
+	$('input[type=file]').on('change', function(e) {
+	    var files = e.originalEvent.target.files; // 파일 선택창에서 선택된 파일들
+	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
+	});
+    
+	var rowCount=0;
+    function handleFileUpload(files,obj) {
+		console.log("-------------handleFileUpload---------------");
+		console.log(files);
+       for (var i = 0; i < files.length; i++) { // 선택된 파일들을 하나씩 처리
+            var fd = new FormData(); // FormData 객체 생성 (파일 업로드를 위한 객체)
+            fd.append('file', files[i]); // 파일 객체를 FormData에 추가
+     		
+            var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
+            sendFileToServer(fd,status); // 서버로 파일 전송 함수 호출
+			
+			rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
+       }
+    }
+
+	// Status bar 생성 함수
+    function createStatusbar(obj,name,size,no){
+		console.log("----------start createStatusBar------------");
+        console.log(obj.html());
+		
+		var sizeStr="";
+        var sizeKB = size/1024; // 파일 크기를 문자열로 표시하기 위한 변수
+        if(parseInt(sizeKB) > 1024){
+            var sizeMB = sizeKB/1024;
+            sizeStr = sizeMB.toFixed(2)+" MB"; // MB로 변환
+        }else{
+            sizeStr = sizeKB.toFixed(2)+" KB"; // KB로 표시
+        }
+		
+        var row='<ul class="contents" id="fileListUl">';
+		row+='<li class="content01 content checkboxWrap">';
+		row+='<input type="checkbox" id="landRightsRegistration_attachFile'+no+'" name="landRightsRegistration_attachFile" >';
+		row+='<label for="landRightsRegistration_attachFile'+no+'"></label>';
+		row+='</li>';
+		row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
+        obj.after(row); // 파일 목록이 있는 DOM 요소 뒤에 파일 정보를 추가
+		
+		var radio=$(row).find('input'); // row에서 input 요소를 찾음
+		console.log("---------------radio checkbox----------");
+		$(radio).find('input').attr("disabled",false); // 체크박스가 비활성화되지 않도록 설정
+     	console.log($(radio).parent().html());
+    }
+	                
+    function sendFileToServer(formData,status)
+    {
+        var uploadURL = "/gover/fileUpload/post"; //Upload URL
+        var extraData ={}; //Extra Data.
+        var jqXHR = $.ajax({
+			xhr: function() {
+			    var xhrobj = $.ajaxSettings.xhr(); // 기본 XMLHttpRequest 객체 생성
+			    if (xhrobj.upload) {
+			        xhrobj.upload.addEventListener('progress', function(event) {
+			            var percent = 0;
+			            var position = event.loaded || event.position;
+			            var total = event.total;
+			            if (event.lengthComputable) {
+			                percent = Math.ceil(position / total * 100); // 파일 업로드의 진행 상황을 계산
+			            }
+			            // status.setProgress(percent);  // 업로드 진행 상황을 status에 반영 (현재 주석 처리됨)
+			        }, false);
+			    }
+			    return xhrobj;
+			},
+            url: uploadURL,
+            type: "POST",
+            contentType:false,
+            processData: false,
+            cache: false,
+            data: formData,
+            success: function(data){
+               // status.setProgress(100);
+     			console.log(data);
+     			console.log(data.resultData);
+				//console.log("-------------sendFileToServer-----------------------");
+				//console.log($(this).parent().parent().parent().parent());
+                //$("#status1").append("File upload Done<br>");    
+				//uploadFiles.push(data.resultData.fpath);    
+				//allCheckEventLandRightsRegist();   
+            }
+        }); 
+     
+        //status.setAbort(jqXHR);
+    }
+	
+	// 소속 토지 정보의 행 추가 버튼 비활성화 초기화
+	$(".addBtn").prop("disabled", true);
 });
 
 // '소속 토지 정보' 내의 체크박스 클릭 시 다른 체크박스 비활성화
@@ -57,6 +391,56 @@ function addRow() {
 
 	// 추가된 모든 행에 대해 순번 재할당
 	updateRowNumbers();
+	
+	// 추가된 행에도 관리기관 목록을 동기화
+	const selectedPmtOffice = $("#masterEditSelectBox02").val();  // 현재 허가관청의 값
+	console.log("selectedPmtOffice: "+selectedPmtOffice);
+	if (selectedPmtOffice) {
+	    updateGoverAdmOfficeForRow(addDiv, selectedPmtOffice);  // 추가된 행에도 관리기관 목록을 적용
+	}
+}
+
+// 특정 행에 대해 관리기관 목록 동기화 함수
+function updateGoverAdmOfficeForRow(row, selectedPmtOffice) {
+    const selectedJisa = $("#masterEditSelectBox01").val();  // 지사 선택된 값
+	console.log("selectedJisa: "+selectedJisa);
+
+    if (!selectedPmtOffice || !selectedJisa) return;
+
+    const allData = {
+        pmt_office: selectedPmtOffice,
+        jisa: selectedJisa
+    };
+
+    $.ajax({
+        url: "/gover/getAdmOffice",  // 관리기관 목록을 가져오는 API
+        data: JSON.stringify(allData),
+        async: true,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (rt) {
+            const data = rt.resultData;
+
+            // 소속 토지 정보의 관리기관 리스트 초기화 및 업데이트
+            const selectBox = row.find("#goverEditSelectBox03");
+            selectBox.empty().append("<option value=''>전체</option>");
+            for (let i = 0; i < data.length; i++) {
+                selectBox.append("<option>" + data[i].so_adm_office + "</option>");
+            }
+
+            // 커스텀 셀렉트 박스의 버튼들 업데이트
+            const customSelectBtns = row.find("#admOfficeUl01");
+            customSelectBtns.empty();
+            customSelectBtns.append("<li><p>전체</p></li>");
+            for (let i = 0; i < data.length; i++) {
+                customSelectBtns.append("<li><p>" + data[i].so_adm_office + "</p></li>");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error: ", textStatus, errorThrown);
+        }
+    });
 }
 
 // 행 삭제 함수
@@ -323,6 +707,26 @@ const allCheckEventMasterEdit = () => {
 }
 
 allCheckEventMasterEdit();
+
+
+// 첨부파일 선택파일 삭제 기능
+$(document).on("click","#deleteFileBtn",function(){
+	//const attachFiles = document.querySelectorAll('input:checkbox[name="landRightsRegistration_attachFile"]:checked');
+	/*$('input:checkbox[name=landRightsRegistration_attachFile]').each(function (index) {
+		if($(this).is(":checked")==true){
+	    	console.log($(this).val());
+	    }
+	})*/
+	const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+	console.log(clickedAttachFiles);
+	console.log(uploadFiles);
+	for(var i=0;i<clickedAttachFiles.length;i++){
+		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
+		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
+		$(delEle).remove();
+
+	}
+})
 
 /* 변경이력불러오기 */
 
