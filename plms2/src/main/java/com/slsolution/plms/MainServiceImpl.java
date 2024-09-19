@@ -68,6 +68,10 @@ public class MainServiceImpl implements  com.slsolution.plms.MainService {
     public Object selectHashMapQuery(String string, HashMap hashMap) throws Exception {
     	return mainDAO.selectOne1(string, hashMap);
     }
+    @Transactional (readOnly=false, propagation=Propagation.REQUIRED)
+    public String selectStringQuery(String string, HashMap hashMap) throws Exception {
+    	return mainDAO.selectOne2(string, hashMap);
+    }
 
     
 //    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)

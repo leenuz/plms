@@ -57,6 +57,10 @@ public class MainDAO {
         printQueryId(queryId);
         return sqlSession.selectOne(queryId, params);
     }
+    public String selectOne2(String queryId, Object params){
+        printQueryId(queryId);
+        return sqlSession.selectOne(queryId, params);
+    }
     
 //    public HashMap<String, Object> selectOne(String queryId, HashMap<String, Object> params) {
 //        printQueryId(queryId); // 쿼리 ID를 출력하는 메서드

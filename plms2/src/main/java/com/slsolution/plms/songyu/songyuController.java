@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.MainService;
+import com.slsolution.plms.ParameterParser;
 import com.slsolution.plms.ParameterUtil;
 import com.slsolution.plms.config.GlobalConfig;
 import com.slsolution.plms.json.JSONObject;
@@ -789,5 +791,344 @@ public class songyuController {
         return resultmap;
     }
 	
+	
+	// 미설정/미점용 등록
+	@PostMapping(path="/insertSonguList")
+		public void insertSonguList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+			ArrayList list = new ArrayList();
+			CommonUtil comm = new CommonUtil();
+
+			ParameterParser parser = new ParameterParser(request);
+
+			String notsetNo = (parser.getString("notsetNo", "")); // 수정할 미설정/미점용 번호
+
+			String sinm = (parser.getString("sidoNm", "")).replaceAll("전체", ""); // 시
+			// 네임
+			String gungunm = (parser.getString("gugunNm", "")).replaceAll("전체", ""); // 시군구
+			// 네임
+			String dongnm = (parser.getString("dongNm", "")).replaceAll("전체", ""); // 동
+			// 네임
+			String rinm = (parser.getString("riNm", "")).replaceAll("전체", ""); // 리
+			// 네임
+			String jisanm = parser.getString("jisaNm", "").replaceAll("전체", ""); // 지사
+			// 네임
+			String jibun = parser.getString("jibun", ""); // 지번
+			String addrcode = parser.getString("addrcode", ""); // 주소코드
+			String jisa = parser.getString("jisa", ""); // 담당지사
+			String goverownyn = parser.getString("goverYN", "N"); // 국공유지여부
+			String zone = parser.getString("zone", ""); // 관로명(구간)
+			String sun_gubun = parser.getString("sunGubun", ""); // 단/복선
+			String pipeMeter = parser.getString("pipeMeter", ""); // 관경
+			String pipeMeter2 = parser.getString("pipeMeter2", ""); // 관경2
+			String pnu = parser.getString("pnu", ""); // 검색결과 PNU
+			String jijuk_area = parser.getString("jijukArea", ""); // 지면 면적(㎡)
+			String jimok_text = parser.getString("jimokText", ""); // 지면 면적(㎡)
+
+			String tojiType = parser.getString("tojiType", ""); // 관로일치여부
+			String pipeYn = parser.getString("pipeYn", ""); // 관로일치여부
+
+			String soyunumber = parser.getString("soyunumber", ""); // 소유자 수
+			System.out.println(parser.getString("soyunumber"));
+			String filenumber = parser.getString("filenumber", ""); // 파일 수
+
+			String gubun = parser.getString("gubun", ""); // 구분( modify : 수정, insert
+			// : 등록 )
+			String fileseq = parser.getString("fileSeq", ""); // 파일 seq
+			// int FILE_CNT = Integer.parseInt(parser.getString("flieCnt", "0")); //
+			// 파일수
+
+			String modifyReason1 = parser.getString("modifyReason1", ""); // 변경이력-기본정보
+			String modifyReason2 = parser.getString("modifyReason2", ""); // 변경이력-소유자정보
+
+			String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
+			String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
+
+			String CONVERT_FLAG = parser.getString("CONVERT_FLAG", "N");
+			String CONVERT_BEFORE_KEY = parser.getString("CONVERT_BEFORE_KEY", "");
+
+			String str_result = "Y";
+
+			String minwon = parser.getString("minwon", ""); // 민원관리에서 넘어왔을 경우 플래그.
+			String minwonSeq = parser.getString("minwonSeq", ""); // 민원관리에서 넘어왔을 경우 플래그.
+
+			try {
+
+//				ArrayList NotsetList = (ArrayList) Database.getInstance().queryForList("Json.selectNotsetNextNo", null);
+				ArrayList NotsetList = (ArrayList) mainService.selectQuery("songyuSQL.selectNotsetNextNo", null);
+				HashMap params = new HashMap();
+
+				params.put("FILESEQ", fileseq);
+				params.put("SIDO_NM", sinm);
+				params.put("SGG_NM", gungunm);
+				params.put("EMD_NM", dongnm);
+				params.put("RI_NM", rinm);
+				params.put("JISA", jisanm);
+				params.put("JIBUN", jibun);
+				params.put("ADDRCODE", addrcode);
+				params.put("GOVER_OWN_YN", goverownyn);
+				params.put("PIPE_NAME", zone);
+				params.put("SUN_GUBUN", sun_gubun);
+				params.put("PNU", pnu);
+				params.put("JIJUK_AREA", jijuk_area);
+				params.put("JIMOK_TEXT", jimok_text);
+				params.put("TOJI_TYPE", tojiType);
+				params.put("PIPE_YN", pipeYn);
+				params.put("PIPE_METER", pipeMeter);
+				params.put("PIPE_METER2", pipeMeter2);
+				params.put("FILE_SEQ", fileseq);
+				params.put("USER_ID", USER_ID);
+				params.put("USER_NAME", USER_NAME);
+				params.put("MINWON_SEQ", minwonSeq);
+				
+
+
+				// 로깅처리를 위하여 기존 지적도 데이터 조회
+				ArrayList tmpList=new ArrayList();
+				tmpList=(ArrayList) mainService.selectQuery("songyusQL.selectJijukBeforePNU", params);
+				
+//				Map logParam = (HashMap) Database.getInstance().queryForObject("Json.selectJijukBeforePNU", params);
+				HashMap logParam=(HashMap)tmpList.get(0);
+
+				if (gubun.equals("modify")) {
+					params.put("NOTSET_NO", notsetNo);
+					notsetNo = (String) params.get("NOTSET_NO");
+
+				} else {
+					String Next_notsetNo = String.valueOf(Integer.parseInt((String) ((HashMap) NotsetList.get(0)).get("NOW_NOTSETNO")) + 1);
+					int n_Next_notsetNo = Next_notsetNo.length();
+
+					String add_Zero = "";
+					for (int i = 0; i < (6 - n_Next_notsetNo); i++) {
+						add_Zero += "0";
+					}
+					Next_notsetNo = "N_" + add_Zero + Next_notsetNo;
+
+					params.put("NOTSET_NO", Next_notsetNo);
+					notsetNo = (String) params.get("NOTSET_NO");
+				}
+
+				if (gubun.equals("insert")) {
+//					Database.getInstance().insert("Json.insertNotsetMaster", params);
+					mainService.InsertQuery("songyuSQL.insertNotsetMaster", params);
+					params.put("STATUS", "NOTSET");
+					params.put("GOVEROWNYN", goverownyn);
+					params.put("JISANGNO", params.get("NOTSET_NO"));
+					params.put("JISA", jisanm);
+					params.put("PIPEYN", pipeYn);
+//					Database.getInstance().update("Json.updateTogiJisang_Status", params);
+					mainService.UpdateQuery("songyuSQL.updateTogiJisang_Status", params);
+				} else if (gubun.equals("modify")) {
+
+					/***********************
+					 * 행정구역이 변경이 되면, 기존의 행정구역은 미설정으로 바꾸고, 변경된 행정구역을 미설정으로 변경함.
+					 ************************/
+					ArrayList notsetlist = (ArrayList) mainService.selectQuery("songyuSQL.selectNotsetRowDetail_KibonInfo", params);
+					String str_BeforePNU = "";
+
+					if (null != notsetlist && notsetlist.size() > 0) {
+
+						HashMap hm = new HashMap();
+						for (int i = 0; i < list.size(); i++) {
+							str_BeforePNU = (String) ((HashMap) notsetlist.get(i)).get("PNU");
+						}
+					}
+
+					// 행정구역이 같지않다면
+					if (!str_BeforePNU.equals(pnu) && !str_BeforePNU.equals("NULL")) {
+
+						// ** JIJUK_MASTER 테이블 미설정 해제**//
+						params.put("JISANGNO", params.get("NOTSET_NO"));
+						mainService.UpdateQuery("songyuSQL.updateNotsetMasterStatus", params);
+
+					}
+
+					mainService.UpdateQuery("songyuSQL.updateNotsetMaster", params); // 기본정보
+
+					// 변경이력 등록
+					if (!modifyReason1.equals("")) {
+						params.put("GUBUN", "기본정보");
+						params.put("CONT", modifyReason1);
+						mainService.InsertQuery("songyuSQL.insertNotsetModifyHistory", params);
+					}
+					if (!modifyReason2.equals("")) {
+						params.put("GUBUN", "소유자 정보");
+						params.put("CONT", modifyReason2);
+						mainService.InsertQuery("songyuSQL.insertNotsetModifyHistory", params);
+					}
+
+					params.put("STATUS", "NOTSET");
+					params.put("GOVEROWNYN", goverownyn);
+					params.put("JISANGNO", params.get("NOTSET_NO"));
+					params.put("JISA", jisanm);
+					params.put("PIPEYN", pipeYn);
+					mainService.UpdateQuery("songyuSQL.updateTogiJisang_Status", params);
+				}
+
+				// 소유자
+				for (int i = 0; i < Integer.parseInt(soyunumber); i++) {
+					String JIBUN = parser.getString("jibun" + String.valueOf(i), "");
+					String NAME = parser.getString("name" + String.valueOf(i), "");
+					String ADDR = parser.getString("addr" + String.valueOf(i), "");
+					String TEL = parser.getString("tel" + String.valueOf(i), "");
+
+					params.put("JIBUN", JIBUN); // 공유지분
+					params.put("NAME", NAME); // 성명
+					params.put("ADDR", ADDR); // 주소
+					params.put("TEL", TEL); // 연락처(집)
+
+					if (gubun.equals("modify")) {
+						if (i == 0) {
+							mainService.UpdateQuery("songyuSQL.deleteNotsetSoyu", params); // 기존
+																							// 소유자
+																							// 삭제
+						}
+					}
+
+					// if(!JIBUN.equals("") || !NAME.equals("") ||
+					// !ADDR.equals("")|| !TEL.equals("")|| !HP.equals(""))
+					mainService.InsertQuery("songyuSQL.insertNotsetSoyu", params); // 소유자
+																					// 저장
+				}
+
+				if (gubun.equals("modify")) {
+					for (int i = 0; i < Integer.parseInt(filenumber); i++) {
+						String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
+						String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
+
+						if (IS_DEL.equals("Y")) {
+							// System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
+
+							// 조회용 parma셋팅
+							params.put("SEQ", "");
+							params.put("FILENO", String.valueOf((params.get("NOTSET_NO"))));
+							params.put("FILE_SEQ", DEL_SEQ);
+							ArrayList File_list = (ArrayList) mainService.selectQuery("songyuSQL.selectNotsetRowDetail_Files", params); // 첨부
+																																				// 파일
+
+							params.put("SEQ", DEL_SEQ);
+							mainService.UpdateQuery("songyuSQL.notsetDeleteFile", params);
+
+							// 변경이력 등록
+							if (null != File_list && File_list.size() > 0) {
+								String str_FileName = String.valueOf(((HashMap) File_list.get(0)).get("FILE_NM"));
+								params.put("GUBUN", "파일정보");
+								params.put("CONT", "파일삭제(" + str_FileName + ")");
+								mainService.InsertQuery("songyuSQL.insertNotsetModifyHistory", params);
+							}
+						}
+					}
+				}
+
+				// 추가된 파일이 있으면 변경이력에 등록
+				ArrayList seq_fileList = (ArrayList) mainService.selectQuery("songyuSQL.selectNotset_ATCFILE_NoCheck", params); // 첨부
+																																		// 파일
+				if (null != seq_fileList && seq_fileList.size() > 0) {
+					for (int i = 0; i < seq_fileList.size(); i++) {
+						HashMap fileList = (HashMap) seq_fileList.get(i);
+						String str_JNo = comm.evl(String.valueOf(fileList.get("NOTSET_NO")), "");
+						if ("".equals(str_JNo)) {
+							String str_FilNM = comm.evl(String.valueOf(fileList.get("FILE_NM")), "");
+
+							params.put("GUBUN", "파일정보");
+							params.put("CONT", "파일등록(" + str_FilNM + ")");
+							mainService.InsertQuery("songyuSQL.insertNotsetModifyHistory", params);
+						}
+					}
+				}
+
+				mainService.UpdateQuery("songyuSQL.updateNotsetSeqFile", params);
+				
+				// 신규등록일때만. 수정모드가 아닐때만 신규등록처리.
+				if (!"modify".equals(gubun)) {
+				
+					/**********************
+					 * 잠재이슈 기본값 등록처리
+					 * 지상권 미설정, 계약 미체결, 기공승낙서 미존재, 토지소유자없이 매설, 오류/무단매설
+					 **********************/
+		
+					int result = 0;
+					if ("99999".equals(pnu) || "null".equals(pnu) || "".equals(pnu)) {
+						// 2023.03.09 :: pnu가 null인 경우가 있음. 
+						params.put("PNU", null);
+					} else {
+						params.put("PNU", pnu);
+					}
+		
+					params.put("ADDRCODE", addrcode);
+					params.put("JIBUN", jibun);
+					params.put("CODE_DEPTH1", "DN040000");	// 이슈없음
+					params.put("CODE_DEPTH2", "DN040100");	// 이슈없음
+					params.put("CODE_DEPTH3", "DN040101");	// 이슈없음
+					params.put("ISSUE_COMMENT", "미설정 신규등록");
+					params.put("HISTORY_TYPE", "신규 등록");
+					params.put("HISTORY_CONTENT", "신규 등록: [기공승낙서 미존재 &gt; 토지소유자없이 매설 &gt; 오류/무단매설], 사유: [신규등록]");
+					params.put("REGISTED_YN", "DN");
+					params.put("PERMITTED_YN", "N");
+					System.out.println("params="+params.toString());
+					String SEQ = (String) mainService.selectStringQuery("songyuSQL.makePnuIssueSeq", params);
+					params.put("SEQ", SEQ);
+					result =(int)mainService.UpdateQuery("songyuSQL.insertPnuIssue", params);
+		
+					if (result > 0) {
+						mainService.UpdateQuery("songyuSQL.insertPnuIssueHistory", params);
+					}
+					
+					/**********************
+					 * 잠재이슈 기본값 등록처리
+					 * 지상권 설정, 계약 체결, 이슈없음, 이슈없음, 이슈없음
+					 **********************/
+				}
+
+				if ("MINWON".equals(minwon)) {
+					// System.out.println(params.toString());
+					mainService.UpdateQuery("songyuSQL.updateMinwonPnuComplete", params);
+				}
+				
+
+				
+
+				// 로깅처리를 위하여 기존 지적도 데이터 조회
+//				Map logParam = (HashMap) Database.getInstance().queryForObject("Json.selectJijukBefore", params);
+				// 해지처리미설정 정보 처리
+				logParam.put("JISANG_NO", notsetNo);
+				logParam.put("JISANG_STATUS","NOTSET");
+				logParam.put("GOVER_OWN_YN", goverownyn);
+				logParam.put("PIPE_OVERLAP_YN", pipeYn);
+				logParam.put("JISA", jisa);
+				logParam.put("LOG_USER", String.valueOf(request.getSession().getAttribute("userId")));
+				logParam.put("LOG_TYPE", "U");
+				mainService.InsertQuery("songyuSQL.insertJijukLog", logParam);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", list);
+			map.put("gubun", gubun);
+			map.put("notsetNo", notsetNo);
+			map.put("jibun", jibun);
+			map.put("addrcode", addrcode);
+			map.put("pnu", pnu);
+			
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		}
 	
 }
