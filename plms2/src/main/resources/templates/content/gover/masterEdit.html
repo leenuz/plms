@@ -489,7 +489,7 @@
           <div class="contWrap">
             <div class="depth1" id="goverUlDiv">
               <ul class="titles">
-                <li class="title smallWidth">선택</li>
+                <!--<li class="title smallWidth">선택</li>-->
                 <li class="title smallWidth">순번</li>
                 <li class="title largeWidth">관리기관</li>
                 <li class="title middleWidth">국공유지 여부</li>
@@ -507,10 +507,10 @@
 			  <!-- 소속 토지 정보가 없을 때(=pnuList 가 없을 때)-->
 			  <ul class="contents" id="goverUl" th:if="${pnuList.size() == 0}">
 				<!-- 선택 -->
-				<li class="content smallWidth checkboxWrap">
+				<!--<li class="content smallWidth checkboxWrap">
 				  <input type="checkbox" th:id="masterEditContentSelectBox_0" />
 				  <label th:for="masterEditContentSelectBox_0"></label>
-				</li>
+				</li>-->
 			    <!-- 순번 -->
 			    <li class="content smallWidth">
 			    <input type="hidden" id="goverIndex" value="0">
@@ -608,10 +608,10 @@
 			  <!-- 첫 번째 고정된 줄 -->
   		      <ul class="contents" id="goverUl" th:if="${pnuList.size() > 0}">
 				<!-- 선택 -->
-			    <li class="content smallWidth checkboxWrap">
+			    <!--<li class="content smallWidth checkboxWrap">
 			      <input type="checkbox" th:id="'masterEditContentSelectBox_' + ${pnuList[0].no}" />
 			      <label th:for="'masterEditContentSelectBox_' + ${pnuList[0].no}"></label>
-			    </li>
+			    </li>-->
   		        <!-- 순번 -->
   		        <li class="content smallWidth">
   		          <input type="text" class="notWriteInput" readonly placeholder="1" />
@@ -712,10 +712,10 @@
 			  <!-- 두번째ul: pnuList 가 2개 이상일 때 반복문 -->
 			  <ul class="contents" id="goverUl02" th:each="pnu, iterStat : ${pnuList}" th:if="${iterStat.index > 0}">
 		        <!-- 선택 -->
-		        <li class="content smallWidth checkboxWrap">
+		        <!--<li class="content smallWidth checkboxWrap">
 		          <input type="checkbox" th:id="'masterEditContentSelectBox_' + ${pnu.no}" />
 		          <label th:for="'masterEditContentSelectBox_' + ${pnu.no}"></label>
-		        </li>
+		        </li>-->
 				
 				<!-- 순번 -->
 	        	<li class="content smallWidth">
@@ -820,18 +820,20 @@
   		      <!-- 숨겨진 템플릿 줄 -->
   		      <ul class="contents" id="row-template" style="display: none;">
 				<!-- 선택 -->
-				<li class="content smallWidth checkboxWrap">
+				<!--<li class="content smallWidth checkboxWrap">
                   <input
                     type="checkbox"
                     id="masterEditContentSelectBox_Checkbox01" />
                   <label for="masterEditContentSelectBox_Checkbox01"></label>
-                </li>
+                </li>-->
+				
+				<!-- 순번 -->
   		        <li class="content smallWidth">
-  		          <!-- 순번 -->
   		          <input type="text" class="notWriteInput" readonly placeholder="1" />
   		        </li>
+				
+				<!-- 관리기관 -->
   		        <li class="content largeWidth selectContentArea">
-  		          <!-- 관리기관 -->
   		          <div class="hiddenSelectBox">
   		            <select name="masterRegSelectBox16" id="goverRegSelectBox03" hidden>
   		              <option value="전체">전체</option>
@@ -842,6 +844,7 @@
 					<ul class="customSelectBtns" id="admOfficeUl01">
   		          </section>
   		        </li>
+				
   		        <!-- 국공유지 여부 -->
   		        <li class="content middleWidth selectContentArea">
   		          <div class="hiddenSelectBox">
@@ -855,11 +858,13 @@
   		            <ul class="customSelectBtns"></ul>
   		          </section>
   		        </li>
+				
   		        <!-- 대표필지 -->
   		        <li class="content checkboxWrap">
   		          <input type="checkbox" id="masterRegSelectBox_" />
   		          <label for="masterRegSelectBox_"></label>
   		        </li>
+				
   		        <!-- 주소 -->
   		        <li class="content addressInfoWidth">
   		          <!--<div class="addressData">-->
@@ -867,6 +872,7 @@
   		          <!--</div>-->
   		          <button class="searchAddressBtn">검색</button>
   		        </li>
+				
   		        <!-- PNU -->
   		        <li class="content middleWidth">
   		          <input type="text" />
@@ -1105,5 +1111,9 @@
     <!-- script -->
     <script src="/js/gover/masterEdit.js"></script>
     <script type="module" src="/js/module/surfaceMain.js"></script>
+	<script th:inline="javascript">
+	    var resultData = /*[[${resultData}]]*/ {};
+	</script>
+
  </th:block>
 </html>
