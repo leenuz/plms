@@ -108,38 +108,40 @@
             <div class="contWrap">
               <div class="depth1">
                 <ul class="titles">
-                  <li class="title01">담당지사</li>
-                  <li class="title02">관로일치여부</li>
-                  <li class="title03">관로명(구간)</li>
-                  <li class="title04">단/복선</li>
+                  <li class="title01">담당지사*</li>
+                  <li class="title02">관로일치여부*</li>
+                  <li class="title03">관로명(구간)*</li>
+                  <li class="title04">단/복선*</li>
                   <li class="title05">관경1</li>
                   <li class="title06">관경2</li>
-                  <li class="title07">국공유지여부</li>
-                  <li class="title08">지적면적(㎡)</li>
-                  <li class="title09">지목</li>
+                  <li class="title07">국공유지여부*</li>
+                  <li class="title08">지적면적(㎡)*</li>
+                  <li class="title09">지목*</li>
                   <li class="title10">관리제외필지</li>
                 </ul>
                 <ul class="contents">
                   <!-- 담당지사 선택 -->
                   <li class="content01 content">
-                    <section class="customSelectBox">
-                      <select name="jisa" class="menuHiddenSelect" id="jisa" hidden>
-                        <option value="">전체</option>
-                        <th:block th:each="val:${jisaList}">
-                          <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
-                        </th:block>
-                      </select>
-                      <button class="customSelectView" id="jisaBtn">
-                        전체
-                        <figure></figure>
-                      </button>
-                      <ul class="customSelectBtns">
-                        <li><button class="moreSelectBtn">전체<button class="moreSelectBtn"></li>
-                        <th:block th:each="val:${jisaList}">
-                          <li><button class="moreSelectBtn" th:text="${val.jm_jisa_name}"></button></li>
-                          <th:block>
-                      </ul>
-                    </section>
+                    <div class="selectContentArea">
+                      <div class="hiddenSelectBox">
+                        <select name="jisa" class="menuHiddenSelect" id="jisa" hidden>
+                          <option value="">전체</option>
+                          <option th:each="val:${jisaList}" th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+                        </select>
+                        </div>
+                        <section class="customSelectBox">
+                          <button class="customSelectView" id="jisaBtn">
+                            전체
+                            <figure></figure>
+                          </button>
+                          <ul class="customSelectBtns">
+                            <li><button class="moreSelectBtn">전체<button class="moreSelectBtn"></li>
+                            <th:block th:each="val:${jisaList}">
+                              <li><button class="moreSelectBtn" th:text="${val.jm_jisa_name}"></button></li>
+                              <th:block>
+                          </ul>
+                        </section>
+                    </div>
                   </li>
                   <!-- 관로 일치 여부 선택 -->
                   <li class="content02 content selectContentArea">
@@ -196,11 +198,11 @@
                     </section>
                   </li>
                   <!-- 관경1 입력 -->
-                  <li class="content05 content"> <input type="text" />
+                  <li class="content05 content"> <input type="text" id="pipe_diameter1" name="pipe_diameter1" />
                   </li>
                   <!-- 관경2 입력 -->
                   <li class="content06 content">
-                    <input type="text" />
+                    <input type="text" id="pipe_diameter2" name="pipe_diameter2" hidden/>
                   </li>
                   <!-- 국공유지 여부 선택 -->
                   <li class="content07 content selectContentArea">
@@ -222,7 +224,7 @@
                   </li>
                   <!-- 지적면적 입력 -->
                   <li class="content08 content">
-                    <input type="text" />
+                    <input type="text" name="jijuk_area" />
                   </li>
                   <!-- 지목 선택 -->
                   <li class="content09 content selectContentArea">
@@ -249,9 +251,10 @@
                 </ul>
               </div>
               <!-- 주소입력 -->
+              <input type="hidden" name="maddress" id="maddress"/>
               <div class="depth2">
                 <ul class="titles">
-                  <li class="title01">주소</li>
+                  <li class="title01">주소*</li>
                   <li class="title02">주소 검색</li>
                 </ul>
                 <ul class="contents">
@@ -480,12 +483,12 @@
         <section class="memoSection">
           <div class="subTitle">메모</div>
 
-          <textarea name="" id="" placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200"></textarea>
+          <textarea name="memo" id="memo" placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200"></textarea>
         </section>
 
         <div class="finalBtnBox btnWrap">
-          <button class="backBtn finalBtn">이전</button>
-          <button class="saveBtn finalBtn">저장</button>
+          <button class="backBtn finalBtn" id="backBtn">이전</button>
+          <button class="saveBtn finalBtn" id="finalBtn">저장</button>
         </div>
       </main>
     </div>

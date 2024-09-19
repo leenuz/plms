@@ -110,6 +110,7 @@ button {
     top: 0;
     width: 100%;
     height: 100%;
+    min-width: 1700px;
 }
 
 #mainContent * {
@@ -340,11 +341,45 @@ button {
     /* text-indent: 19px; */
     text-align: center;
 }
+#mainContent .contWrap .contents li input[type="text"].notWriteInput {
+    background: transparent;
+}
 
 #mainContent input[type="checkbox"] {
     display: none;
 }
+#mainContent input[type="checkbox"] {
+    display: none;
+}
 
+#mainContent input[type="checkbox"]~label {
+    width: 21px;
+    height: 21px;
+    border-radius: 5px;
+    background: #eff6ff;
+    display: inline-block;
+    position: relative;
+}
+
+#mainContent .allSelectCheck input[type="checkbox"]~label {
+    background: #dce7f5;
+}
+
+#mainContent input[type="checkbox"]:checked~label {
+    background: #4e5871;
+}
+
+#mainContent input[type="checkbox"]:checked~label::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 10px;
+    background: url(/assets/media/menu02/images/checkIcon.png) no-repeat center;
+    background-size: contain;
+}
 .checkboxWrap label {
     width: 21px;
     height: 21px;
@@ -728,6 +763,26 @@ button {
 
 
 /* 첨부파일 정보 */
+.fileUploadIcon {
+    width: 35px;
+    height: 35px;
+}
+.fileBtnWrap label {
+    width: 81px;
+    height: 27px;
+    background: #2b7de1;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#mainContent input[type="file"] {
+    display: none;
+}
 #mainContent .myPc {
     width: 81px;
     height: 27px;
@@ -768,6 +823,7 @@ button {
     justify-content: center;
     align-items: center;
     gap: 12px;
+    background: #f7f9fc;
 }
 
 #mainContent .attachFileInfo .fileUploadBox p {
@@ -810,7 +866,12 @@ button {
     font-size: 14px;
     font-weight: 500;
 }
-
+#mainContent .attachFileInfo .contWrap .depth1 .titles .title01.allSelectCheck {
+    line-height: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 #mainContent .attachFileInfo .btnWrap {
     width: 100%;
     display: flex;
