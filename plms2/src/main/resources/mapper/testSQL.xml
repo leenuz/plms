@@ -5,22 +5,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="testSQL">
 
-	<!-- TMS엔진 사용 APP_KEY 조회 -->
-	<select id="selectNHrequestList" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[
-/* TMS엔진 사용 APP_KEY 조회 */
-SELECT *
-  FROM TMS3_00_OMS_REQUEST
-  order by SEQ desc
-	]]></select>
-
-	<select id="selectAllList" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[
-		select * from test 
-	]]></select>
-	
-	<insert id="testInsert" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="idx" keyProperty="idx">
-		<![CDATA[
-		insert into test (name) values ('aaa')
-		]]>
+<select id="selectGetPLMSCompforXML" parameterType="java.util.HashMap" resultType="Integer">
+		SELECT count(*) FROM PLMS_APPROVAL where pa_DOCKEY = #{DOCKEY} and (pa_status is null or pa_status not in ('X'))
+	</select>
+	<update id="updateGetPLMSCompforXML" parameterType="HashMap">
+		UPDATE PLMS_APPROVAL SET
+		pa_GUBUN = #{GUBUN}
+		, pa_LANG = #{LANG}
+		, pa_SDATE = #{SDATE}
+		, pa_STIME = #{STIME}
+		, pa_USERCD = #{USERCD}
+		, pa_SEARCHKEY1 = #{SEARCHKEY1}
+		, pa_WDID = #{WDID}
+		, pa_URL = #{URL}
+		, pa_STATUS = #{STATUS}
+		, pa_DISPOSE = #{DISPOSE}
+		WHERE DOCKEY = #{DOCKEY}
+	</update>
+	<insert id="insertGetPLMSCompforXML" parameterType="HashMap">
+           
+			insert into PLMS_APPROVAL
+				( pa_SEQ, pa_GUBUN, pa_LANG, pa_SDATE, pa_STIME, pa_USERCD, pa_SEARCHKEY1, pa_DOCKEY, pa_WDID, pa_URL, pa_STATUS )
+			values
+				( nextval('APPROVAL_CNT_SEQ'),	#{GUBUN}, #{LANG}, #{SDATE}, #{STIME}, #{USERCD}#, #{SEARCHKEY1}, #{DOCKEY}, #{WDID}, #{URL}, #{STATUS})
+			
 	</insert>
-	
 </mapper>

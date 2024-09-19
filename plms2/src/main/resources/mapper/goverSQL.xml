@@ -928,5 +928,138 @@ WHERE
 		ORDER BY GP.gp_GOVER_NO ASC
 		, GP.gp_SEQ DESC
 	</select>
+	
+		<update id="updateJijukMasterStatus_Gover" parameterType="HashMap">
+		UPDATE JIJUK_2024 SET
+		JISANG_STATUS = 'N'
+		, ERP_NO = ''
+		, JISANG_NO = ''
+		, DOSIPLAN = ''
+		, GOVER_OWN_YN = 'N'
+		, JISA = ''
+		WHERE PNU = TO_CHAR(#{STR_PNU})
+	</update>
+	
+		<select id="selectNotsetNextNo"  resultType="HashMap" parameterType="HashMap">
+		SELECT COALESCE(MAX(CAST(SUBSTRING(nm_NOTSET_NO, 3) AS NUMERIC)), 0) AS NOW_NOTSETNO 
+FROM NOTSET_MASTER
+
+	</select>
+	<update id="insertGoverTerminationAdd" parameterType="HashMap">
+		UPDATE GOVER_MASTER
+		SET
+		gm_CANCLE_YN = 'Y'
+		,gm_CANCLE_DATE = TO_DATE(#{CANCLEDATE},'yyyy-mm-dd')
+		,gm_CANCLE_NAME = TO_CHAR(#{USERNAME})
+		,gm_CANCLE_EMPCD = TO_CHAR(#{EMPCD})
+		WHERE gm_GOVER_NO = TO_CHAR(#{GOVERNO})
+
+	</update>
+	
+	<insert id="insertGoverModifyHistory" parameterType="HashMap">
+		Insert into GOVER_MODIFY
+		( gm_GOVER_NO, gm_MODIFY_DATE, gm_GUBUN, gm_CONT, gm_USER_NAME, gm_USER_ID)
+		Values
+		(#{GOVER_NO}, CURRENT_TIMESTAMP, #{GUBUN}, #{CONT}, #{USER_NAME}, #{USER_ID})
+	</insert>
+	
+	<insert id="insertGoverMaster" parameterType="HashMap">
+		Insert into GOVER_MASTER
+		( 
+		gm_GOVER_NO
+		, gm_JISA
+		, gm_YONGDO
+		, gm_PIPE_NAME
+		, gm_SUN_GUBUN
+		, gm_PIPE_METER
+		, gm_GOVER_ST_DATE
+		, gm_GOVER_ED_DATE
+		, gm_PMT_STATUS
+		, gm_OFFICE_DEPART
+		, gm_OFFICE_CHARGE
+		, gm_OFFICE_CONTACT
+		, gm_OFFICE_MOBILE
+		, gm_GOVER_PERIOD
+		, gm_PMT_OFFICE
+		, gm_ADM_OFFICE
+		, gm_SAVE_STATUS
+		, gm_PIPE_METER2 
+		)
+		Values
+		( 
+		#{GOVER_NO}
+		, #{JISA}
+		, #{YONGDO}
+		, #{PIPE_NAME}
+		, #{SUN_GUBUN}
+		, to_number(#{PIPE_METER})
+		, to_date(#{GOVER_ST_DATE}, 'yyyy-mm-dd')
+		, to_date(#{GOVER_ED_DATE}, 'yyyy-mm-dd')
+		, #{PMT_STATUS}
+		, #{OFFICE_DEPART}
+		, #{OFFICE_CHARGE}
+		, #{OFFICE_CONTACT}
+		, #{OFFICE_MOBILE}
+		, #{GOVER_PERIOD}
+		, #{PMT_OFFICE}
+		, #{ADM_OFFICE}
+		, #{SAVE_STATUS}
+		, #{PIPE_METER2}
+		 )
+	</insert>
+	<update id="updateGoverMaster" parameterType="HashMap">
+		UPDATE GOVER_MASTER
+		SET
+		gm_JISA = #{JISA}
+		, gm_YONGDO = #{YONGDO}
+		, gm_pipe_name = #{PIPE_NAME}
+		, gm_SUN_GUBUN = #{SUN_GUBUN}
+		, gm_PIPE_METER = #PIPE_METER#
+		, gm_PIPE_METER2 = #PIPE_METER2#
+		, gm_GOVER_ST_DATE = to_date(#GOVER_ST_DATE#, 'yyyy-mm-dd')
+		, gm_GOVER_ED_DATE = to_date(#GOVER_ED_DATE#, 'yyyy-mm-dd')
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_OFFICE)" >
+			, gm_PMT_OFFICE = #{PMT_OFFICE}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADM_OFFICE)" >
+			, gm_ADM_OFFICE = #{ADM_OFFICE}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(OFFICE_DEPART)" >
+			, gm_OFFICE_DEPART = #{OFFICE_DEPART}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(OFFICE_CHARGE)" >
+			, gm_OFFICE_CHARGE = #{OFFICE_CHARGE}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(OFFICE_CONTACT)" >
+			, gm_OFFICE_CONTACT = #{OFFICE_CONTACT}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(OFFICE_MOBILE)" >
+			, gm_OFFICE_MOBILE = #{OFFICE_MOBILE}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVER_PERIOD)" >
+			, gm_GOVER_PERIOD = #{GOVER_PERIOD}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(NEWREGREASON)" >
+			, gm_NEWREGREASON = #{NEWREGREASON}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(OCCUNONPAYREASON)" >
+			, gm_OCCUNONPAYREASON = #{OCCUNONPAYREASON}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PERMPOSSYN)" >
+			, gm_PERMPOSSYN = #{PERMPOSSYN}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(OCCUPREPAYYN)" >
+			, gm_OCCUPREPAYYN = #{OCCUPREPAYYN}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(OCCUPREPAYDATE)" >
+			, gm_OCCUPREPAYDATE = #{OCCUPREPAYDATE}
+		</if>
+		, gm_SAVE_STATUS = #{SAVE_STATUS}
+		
+		
+		
+		WHERE gm_GOVER_NO = TO_CHAR(#{GOVER_NO})
+
+	</update>
 
 </mapper>
