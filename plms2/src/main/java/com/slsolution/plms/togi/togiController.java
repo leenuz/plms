@@ -411,5 +411,32 @@ public class togiController {
 
 		}
 
-	
+	@PostMapping(path="/DosiDelete")
+	public void DosiDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		 log.info("requestParams:"+requestParams);
+		 JSONObject requestParamObj=new JSONObject(requestParams);
+		ParameterParser parser = new ParameterParser(request);
+		String dosiNo = parser.getString("dosiNo");
+		HashMap params = new HashMap();
+		params.put("DOSI_NO", dosiNo);
+
+		mainService.UpdateQuery("togiSQL.deleteDosiMaster", params);
+		mainService.UpdateQuery("togiSQL.deleteDosiInfo", params);
+		mainService.UpdateQuery("togiSQL.deleteDosiDept", params);
+		mainService.UpdateQuery("togiSQL.dosiDeleteFile", params);
+
+		HashMap map = new HashMap();
+		map.put("dosiNo", dosiNo);
+
+		JSONObject jo = new JSONObject(map);
+
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+
+	}
 }

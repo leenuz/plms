@@ -106,6 +106,14 @@ $(document).on("click", ".moreSelectBtn", function () {
     $(nearBySelectBox).trigger("change");
     nearBySelectBox.value = this.textContent;
     console.log(`Selected value: ${nearBySelectBox.value}`);
+
+    if (nearBySelectBox.id == 'sunGubunSelectBox') {
+        if (nearBySelectBox.value == '복선') {
+            $('#pipe_diameter2').show();
+        } else {
+            $('#pipe_diameter2').hide();
+        }
+    }
 });
 
 /* 라디오버튼 클릭시 각 영역 사용여부  */
@@ -438,9 +446,9 @@ $(document).on("click", "#deleteSoujaBtn", function () {
 // 첨부파일 전체 선택 체크박스
 const allCheckEventLandRightsRegist = () => {
     // 첨부파일 리스트들
-    const attachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
+    const attachFiles = document.querySelectorAll('input[name="attachFile"]');
     // checked가 된 첨부파일 리스트
-    const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+    const clickedAttachFiles = document.querySelectorAll('input[name="attachFile"]:checked');
     // 전체선택 input
     const clickedAllinput = document.querySelector('input[name="landRightsRegistration_file_select_all"]');
 
@@ -458,7 +466,7 @@ const allCheckEventLandRightsRegist = () => {
     // 개별 리스트 클릭시 전체로 변하기
     function clickCheckBoxEventLandRightsRegist() {
         // 최신으로 업데이트 해주기
-        const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+        const clickedAttachFiles = document.querySelectorAll('input[name="attachFile"]:checked');
 
         if (attachFiles.length === clickedAttachFiles.length) {
             clickedAllinput.checked = true;
@@ -469,7 +477,7 @@ const allCheckEventLandRightsRegist = () => {
 
     // 전체선택 클릭시
     function clickedSelectAllLandRightsRegist(clickedAllinput) {
-        const attachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
+        const attachFiles = document.querySelectorAll('input[name="attachFile"]');
 
         attachFiles.forEach((checkbox) => {
             checkbox.checked = clickedAllinput.checked;
@@ -480,13 +488,13 @@ const allCheckEventLandRightsRegist = () => {
 allCheckEventLandRightsRegist();
 
 $(document).on("click", "#deleteFileBtn", function () {
-    //const attachFiles = document.querySelectorAll('input:checkbox[name="landRightsRegistration_attachFile"]:checked');
-    /*$('input:checkbox[name=landRightsRegistration_attachFile]').each(function (index) {
+    //const attachFiles = document.querySelectorAll('input:checkbox[name="attachFile"]:checked');
+    /*$('input:checkbox[name=attachFile]').each(function (index) {
         if($(this).is(":checked")==true){
             console.log($(this).val());
         }
     })*/
-    const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+    const clickedAttachFiles = document.querySelectorAll('input[name="attachFile"]:checked');
     console.log(clickedAttachFiles);
     console.log(uploadFiles);
     for (var i = 0; i < clickedAttachFiles.length; i++) {
@@ -577,8 +585,8 @@ $(document).ready(function () {
 
         var row = '<ul class="contents" id="fileListUl">';
         row += '<li class="content01 content checkboxWrap">';
-        row += '<input type="checkbox" id="landRightsRegistration_attachFile' + no + '" name="landRightsRegistration_attachFile" >';
-        row += '<label for="landRightsRegistration_attachFile' + no + '"></label>';
+        row += '<input type="checkbox" id="attachFile' + no + '" name="attachFile" >';
+        row += '<label for="attachFile' + no + '"></label>';
         row += '</li>';
         row += '<li class="content02 content"><input type="text" id="filename" placeholder="' + name + '" class="notWriteInput" readonly></li></ul>';
         obj.after(row);
@@ -661,5 +669,122 @@ $(document).ready(function () {
 
         //status.setAbort(jqXHR);
     }
+
+    //저장버튼
+    $(document).on("click", "#finalBtn", function () {
+        console.log("---------finalBtn class click------------");
+        console.log($("#saveForm").serialize());
+
+        //데이터를 가공해서 넘김다
+        var formSerializeArray = $('#saveForm').serializeArray();
+        console.log(formSerializeArray);
+
+        len = formSerializeArray.length;
+        var dataObj = {};
+        for (i = 0; i < len; i++) {
+            dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
+        }
+        dataObj['memo'] = $('#memo').val();
+
+        console.log("------dataObj--------");
+        console.log(dataObj);
+
+        const soujaUls = document.querySelectorAll('#soujaUl');
+        const attachFileUls = document.querySelectorAll('input[name="attachFile"]:checked');
+        console.log(attachFileUls);
+
+        //   console.log(soujaUls);
+        var soujaArr = new Array();
+        for (var i = 0; i < soujaUls.length; i++) {
+            console.log(soujaUls[i]);
+            console.log($(soujaUls[i]).find("#soujaJibun").val());
+            var soujaJibun = $(soujaUls[i]).find("#soujaJibun").val();
+            var soujaName = $(soujaUls[i]).find("#soujaName").val();
+            var soujaAddress = $(soujaUls[i]).find("#soujaAddress").val();
+            var soujaContact1 = $(soujaUls[i]).find("#soujaContact1").val();
+            var soujaContact2 = $(soujaUls[i]).find("#soujaContact2").val();
+
+            soujaJibun = (soujaJibun == "undefined" || soujaJibun == "" || soujaJibun == null) ? "" : soujaJibun;
+            soujaName = (soujaName == "undefined" || soujaName == "" || soujaName == null) ? "" : soujaName;
+            soujaAddress = (soujaAddress == "undefined" || soujaAddress == "" || soujaAddress == null) ? "" : soujaAddress;
+            soujaContact1 = (soujaContact1 == "undefined" || soujaContact1 == "" || soujaContact1 == null) ? "" : soujaContact1;
+            soujaContact2 = (soujaContact2 == "undefined" || soujaContact2 == "" || soujaContact2 == null) ? "" : soujaContact2;
+            var soujaInfo = { "jibun": soujaJibun, "soujaName": soujaName, "soujaAddress": soujaAddress, "soujaContact1": soujaContact1, "soujaContact2": soujaContact2 };
+            if (soujaJibun != "" && soujaName != "" && soujaAddress != "" && soujaContact1 != "") soujaArr.push(soujaInfo);
+        }
+        var files = new Array();
+        for (var i = 0; i < attachFileUls.length; i++) {
+            console.log($(attachFileUls[i]).parent().parent().html());
+            var fname = $(attachFileUls[i]).parent().parent().find("#filename").attr('placeholder');
+            console.log(fname);
+            files.push(fname);
+        }
+
+        console.log("--------files---------");
+        console.log(files);
+
+        console.log("--------soujaArr------");
+        console.log(soujaArr);
+        dataObj.soujaInfo = soujaArr;
+        dataObj.uploadFiles = files;
+
+        //필수정보체크
+        console.log("jisa:" + dataObj.jisa);
+        if (!checkData(dataObj.jisa, "s", "담당지사를 입력해주세요!")) return;
+        else if (!checkData(dataObj.overlap_yn, "s", "관로일치여부블 입력해주세요!")) return;
+        else if (!checkData(dataObj.pipe_name, "s", "관로명(구간)을 입력해주세요!")) return;
+        else if (!checkData(dataObj.sun_gubun, "s", "선구분을 입력해주세요!")) return;
+        else if(!checkData(dataObj.pipe_diameter1, "s", "관경1을 입력해주세요!")) return;
+        else if (dataObj.sun_gubun == '복선' && !checkData(dataObj.pipe_diameter2, "s", "관경2를 입력해주세요!")) return;
+        else if (!checkData(dataObj.gover_own_yn, "s", "국공유지여부를 입력해주세요!")) return;
+        else if (!checkData(dataObj.jijuk_area, "s", "지적면적을 입력해주세요!")) return;
+        else if (!checkData(dataObj.jimok_text, "s", "지목을 입력해주세요!")) return;
+        else if (!checkData(dataObj.maddress, "s", "주소를 입력해주세요!")) return;
+        else if (soujaArr <= 0) {
+            alert("소유자 정보를 입력해주세요!");
+            return;
+        }
+
+        console.log("------dataObj--------");
+        console.log(dataObj);
+
+        // 서버 전송
+        // url = "/jisang/api/Save";
+        // $.ajax({
+        //     url: url,
+        //     type: 'POST',
+        //     contentType: "application/json",
+        //     data: JSON.stringify(dataObj),
+
+        //     dataType: "json",
+        //     beforeSend: function (request) {
+        //         console.log("beforesend ........................");
+        //         loadingShow();
+        //     },
+        //     success: function (response) {
+        //         loadingHide();
+        //         console.log(response);
+        //         if (response.success = "Y") {
+        //             console.log("response.success Y");
+        //             console.log("response.resultData length:" + response.resultData.length);
+        //             alert("정상적으로 등록 되었습니다.");
+        //             /*$("#popup_bg").show();
+        //             $("#popup").show(500);
+        //             //$("#addrPopupLayer tbody td").remove();
+        //             for(var i=0;i<response.resultData.length;i++){
+        //                 $("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+        //             }*/
+        //         }
+        //         else {
+        //             console.log("response.success N");
+        //         }
+        //     },
+        //     error: function (jqXHR, textStatus, errorThrown) {
+        //         alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
+        //         return false;
+        //     }
+        // });
+
+    });
 
 });

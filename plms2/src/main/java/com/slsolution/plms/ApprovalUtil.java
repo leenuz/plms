@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,6 +22,11 @@ import javax.xml.xpath.XPathFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 
@@ -216,6 +222,153 @@ public class ApprovalUtil  {
 		
 		return sb.toString();
 	}
-				
+	
+	
+	/**
+	 * 결재 신청, 완료 시 처리 하는 서비스
+	 * 
+	 * @param request, response
+	 * @throws IOException
+	 */
+	@Transactional
+	public void GetPLMSCompforXML(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("@@@@@ GetPLMSDataforXML START");
+
+		// XML 수신
+		BufferedReader br = null;
+		ServletInputStream is = request.getInputStream();
+		br = new BufferedReader(new InputStreamReader(is));
+		String strLine;
+
+		String rtnXmlStr = "";
+		while ((strLine = br.readLine()) != null) {
+			System.out.println(strLine);
+			rtnXmlStr = rtnXmlStr.concat(strLine);
+		}
+
+		 System.out.println("@@@@@ rtnXmlStr : " + rtnXmlStr);
+
+		Document rtnXmlDoc = null;
+
+		String xml_GUBUN = "";
+		String xml_LANG = "";
+		String xml_SDATE = "";
+		String xml_STIME = "";
+		String xml_USERCD = "";
+		String xml_SEARCHKEY1 = "";
+		String xml_DOCKEY = "";
+		String xml_WDID = "";
+		String xml_URL = "";
+		String xml_STATUS = "";
+		String xml_DISPOSE = "";
+
+		String str_return = "Y";
+		String str_meg = "정상처리완료";
+		try {
+			rtnXmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(rtnXmlStr.getBytes()));
+
+			// xpath 생성
+			XPath xpath = XPathFactory.newInstance().newXPath();
+
+			xml_GUBUN = xpath.compile("//*/GUBUN").evaluate(rtnXmlDoc);
+			xml_LANG = xpath.compile("//*/LANG").evaluate(rtnXmlDoc);
+			xml_SDATE = xpath.compile("//*/SDATE").evaluate(rtnXmlDoc);
+			xml_STIME = xpath.compile("//*/STIME").evaluate(rtnXmlDoc);
+			xml_USERCD = xpath.compile("//*/USERCD").evaluate(rtnXmlDoc);
+			xml_SEARCHKEY1 = xpath.compile("//*/SEARCHKEY1").evaluate(rtnXmlDoc);
+			xml_DOCKEY = xpath.compile("//*/DOCKEY").evaluate(rtnXmlDoc);
+			xml_WDID = xpath.compile("//*/WDID").evaluate(rtnXmlDoc);
+			xml_URL = xpath.compile("//*/URL").evaluate(rtnXmlDoc);
+			xml_STATUS = xpath.compile("//*/STATUS").evaluate(rtnXmlDoc);
+			xml_DISPOSE = xpath.compile("//*/DISPOSE").evaluate(rtnXmlDoc);
+
+			System.out.println("@@@@@ xml_DOCKEY : " + xml_DOCKEY);
+			System.out.println("@@@@@ xml_STATUS : " + xml_STATUS);
+
+		} catch (Exception e) {
+			str_meg = "데이터 처리중 에러가 발생하였습니다.";
+			str_return = "N";
+			e.printStackTrace();
+		}
+
+		if ("".equals(CU.evl(xml_DOCKEY, ""))) {
+			str_meg = "[DOCKEY]값이 없습니다.";
+			str_return = "N";
+		}
+		if ("".equals(CU.evl(xml_STATUS, ""))) {
+			str_meg = "[STATUS]값이 없습니다.";
+			str_return = "N";
+		}
+
+		// DB값 저장
+		if ("Y".equals(str_return)) {
+			try {
+				HashMap hms = new HashMap();
+				hms.put("GUBUN", CU.evl(xml_GUBUN, ""));
+				hms.put("LANG", CU.evl(xml_LANG, ""));
+				hms.put("SDATE", CU.evl(xml_SDATE, ""));
+				hms.put("STIME", CU.evl(xml_STIME, ""));
+				hms.put("USERCD", CU.evl(xml_USERCD, ""));
+				hms.put("SEARCHKEY1", CU.evl(xml_SEARCHKEY1, ""));
+				hms.put("DOCKEY", CU.evl(xml_DOCKEY, ""));
+				hms.put("WDID", CU.evl(xml_WDID, ""));
+				hms.put("URL", CU.evl(xml_URL, ""));
+				hms.put("STATUS", CU.evl(xml_STATUS, ""));
+				hms.put("DISPOSE", CU.evl(xml_DISPOSE, ""));
+				System.out.println("hms=" + hms);
+
+//				int nCount = (Integer) mainService.selectCountQuery("testSQL.selectGetPLMSCompforXML", hms);
+////
+//				if (nCount > 0) {
+//					mainService.UpdateQuery("testSQL.updateGetPLMSCompforXML", hms);
+//				} else {
+//					mainService.InsertQuery("testSQL.insertGetPLMSCompforXML", hms);
+//				}
+
+			} catch (Exception e) {
+				str_meg = "상태값을 저장하던 중 에러가 발생하였습니다.";
+				str_return = "N";
+				e.printStackTrace();
+			}
+		}
+
+		// 결과값 리턴
+		String rtnXml = getReturnXmlData(str_meg, str_return);
+
+		// System.out.println("!!!!!!!!!!!!!!!!!! GetPLMSCompforXML return rtnXml= ["+rtnXml+"]");
+
+		response.setContentLength(rtnXml.length());
+		response.setContentType("text/xml; charset=UTF-8");
+
+		// 전송
+		OutputStream os = null;
+		os = response.getOutputStream();
+		os.write(rtnXml.getBytes("utf-8"));
+		os.flush();
+		os.close();
+
+		System.out.println("@@@@@ ApprRtnServlet END ###");
+	}
+	
+	
+	/**
+	 * 반환받은 xmlData를 이용하여 xml 생성
+	 * 
+	 * @param xmlData
+	 * @return xmlString
+	 * @throws UnsupportedEncodingException
+	 */
+	private String getReturnXmlData(String msg, String yn) throws UnsupportedEncodingException {
+		System.out.println("@@@@@ getReturnXmlData START");
+
+		String str_msg = msg; // URLEncoder.encode(msg, "utf-8");
+
+		StringBuffer sb = new StringBuffer();
+		sb.append("<?xml version='1.0' encoding='utf-8'?>");
+		sb.append("<RETURN><FLAG>" + yn + "</FLAG>\n");
+		sb.append("<MSG>" + msg + "</MSG></RETURN>                                         \n");
+
+		return sb.toString();
+	}
 
 }
