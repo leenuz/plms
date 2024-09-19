@@ -233,6 +233,7 @@
                     <ul class="customSelectBtns" id="pipeNameUl"></ul>
                   </section>
                 </li>
+				
 				<!-- 단/복선 -->
 				<li class="content selectContentArea">
 				  <div class="hiddenSelectBox">
@@ -246,6 +247,7 @@
 				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
+				
                 <!-- 관경 -->
                 <li class="content lineWrap inputArea">
                   <div class="doubleLine">
@@ -262,6 +264,7 @@
                     </div>
                   </div>
                 </li>
+				
 				<!-- 감면여부 -->
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
@@ -297,11 +300,7 @@
 				<!-- 점용구분 -->
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="use_purpos"
-                      id="masterRegSelectBox08"
-                      hidden>
+                    <select name="use_purpos" id="masterRegSelectBox08" hidden>
 					  <option value="전체">전체</option>
                       <option th:each="usePurpos : ${usePurposlist}" th:value="${usePurpos['sc_code_name']}" th:text="${usePurpos['sc_code_name']}"></option>
                     </select>

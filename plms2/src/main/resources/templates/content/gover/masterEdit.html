@@ -262,34 +262,28 @@
 				<!-- 단/복선 -->
 				<li class="content selectContentArea">
 				  <div class="hiddenSelectBox">
-				    <select
-				      name="sun_gubun"
-				      id="masterEditSelectBox06"
-				      hidden>
+				    <select name="sun_gubun" id="masterEditSelectBox06" hidden>
 				      <option value="단선" th:selected="${resultData.gm_sun_gubun == '단선'}">단선</option>
 				      <option value="복선" th:selected="${resultData.gm_sun_gubun == '복선'}">복선</option>
 				    </select>
 				  </div>
 				  <section class="customSelectBox">
 				    <button class="customSelectView">[[${resultData.gm_sun_gubun}]]</button>
-				    <ul class="customSelectBtns">
-				      <li><button type="button" class="moreSelectBtn">단선</button></li>
-				      <li><button type="button" class="moreSelectBtn">복선</button></li>
-				    </ul>
+				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
 				
 				<!-- 관경 -->
 				<li class="content inputArea lineWrap">
-				  <div class="doubleLine" style="display: none;">
+				  <div class="doubleLine">
 				    <div class="inputWrap">
-				      <input type="text" name="pipe_meter1" th:value="${resultData.gm_pipe_meter}"/>
+				      <input type="text" name="pipe_meter" th:value="${resultData.gm_pipe_meter}"/>
 				    </div>
 				    <div class="inputWrap">
 				      <input type="text" name="pipe_meter2" th:value="${resultData.gm_pipe_meter2}"/>
 				    </div>
 				  </div>
-				  <div class="singleLine" style="display: none;">
+				  <div class="singleLine">
 				    <div class="inputWrap">
 				      <input type="text" name="pipe_meter_single" th:value="${resultData.gm_pipe_meter}"/>
 				    </div>
@@ -334,11 +328,7 @@
 				<!-- 점용구분 -->
 				<li class="content selectContentArea">
 				  <div class="hiddenSelectBox">
-				    <!-- name도 추가 -->
-				    <select
-				      name="use_purpos"
-				      id="masterEditSelectBox08"
-				      hidden>
+				    <select name="use_purpos" id="masterEditSelectBox08" hidden>
 					  <option value="전체" th:selected="${resultData.gm_use_purpos == '전체'}">전체</option>
 					  <option th:each="usePurpos : ${usePurposlist}"
 					          th:value="${usePurpos['sc_code_name']}"
@@ -350,24 +340,7 @@
 				  <section class="customSelectBox">
 				    <!-- 버튼에 초기값 표시 -->
 				    <button class="customSelectView">[[${resultData.gm_use_purpos}]]</button>
-
-				    <ul class="customSelectBtns">
-				      <!-- 버튼 리스트 생성 -->
-				      <li><button type="button" class="moreSelectBtn">전체</button></li>
-				      <li><button type="button" class="moreSelectBtn">공원부지점용</button></li>
-				      <li><button type="button" class="moreSelectBtn">국유지사용</button></li>
-				      <li><button type="button" class="moreSelectBtn">녹지점용</button></li>
-				      <li><button type="button" class="moreSelectBtn">국유림점용</button></li>
-				      <li><button type="button" class="moreSelectBtn">농업수자원부지사용</button></li>
-				      <li><button type="button" class="moreSelectBtn">농업시설목적외사용</button></li>
-				      <li><button type="button" class="moreSelectBtn">도로점용</button></li>
-				      <li><button type="button" class="moreSelectBtn">고속도로점용</button></li>
-				      <li><button type="button" class="moreSelectBtn">철도부지점용</button></li>
-				      <li><button type="button" class="moreSelectBtn">하천점용</button></li>
-				      <li><button type="button" class="moreSelectBtn">구거점용 등</button></li>
-				      <li><button type="button" class="moreSelectBtn">항만시설사용</button></li>
-				      <li><button type="button" class="moreSelectBtn">공유수면사용</button></li>
-				    </ul>
+				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
 

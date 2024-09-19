@@ -6,19 +6,18 @@ $(document).ready(function() {
   // 초기 로드 시 단/복선 값에 따라 div 표시
   const sunGubunValue = $('#masterEditSelectBox06').val();
   toggleLineDisplay(sunGubunValue);
-
-    // 단/복선 선택이 변경될 때마다 관경 설정
-    $('#masterEditSelectBox06').on('change', function() {
-        const selectedValue = $(this).val();
-        toggleLineDisplay(selectedValue);
-    });
+ 
+	// 단/복선 선택이 변경될 때마다 관경 설정
+	$('#masterEditSelectBox06').on('change', function() {
+		console.log("단복선 선택");
+		const selectedValue = $(this).val();
+	    toggleLineDisplay(selectedValue);
+		console.log("selectedValue"+selectedValue);
+	});
 
     // 모든 셀렉트 박스에 대해 커스텀 셀렉트 박스 초기화 실행
     createCustomLimasterReg();  // 페이지가 로드될 때 초기화
-	
-	// 소속 토지 정보의 행 추가 버튼 비활성화 초기화
-	$(".addBtn").prop("disabled", true);
-	
+
 	// 지사 선택 시 허가관청, 관로명 목록 업데이트를 위한 change 트리거
 	 $(document).on("click", "#jisaUl li", function () {
 	     const selectedJisa = $(this).text().trim();
@@ -147,9 +146,6 @@ $(document).ready(function() {
 
                  // 관리기관 리스트 소속 토지 정보에도 업데이트
                  updateGoverAdmOffice(data);
-
-                 // 허가관청과 관리기관 선택을 활성화
-                 checkEnableAddBtn();
              },
              error: function (jqXHR, textStatus, errorThrown) {
                  console.error("Error: ", textStatus, errorThrown);
@@ -211,19 +207,6 @@ $(document).ready(function() {
  	     parentUl.siblings(".customSelectView").text(selectedAdmOffice);
  	     targetSelectBox.val(selectedAdmOffice).change();  // change 이벤트 트리거
  	 });
-
-     // 지사와 허가관청 선택 후 추가 버튼 활성화
-     function checkEnableAddBtn() {
-         const selectedJisa = $("#masterEditSelectBox01").val();
-         const selectedPmtOffice = $("#masterEditSelectBox02").val();
-
-         // 지사와 허가관청이 모두 선택되었을 때만 추가 버튼 활성화
-         if (selectedJisa && selectedPmtOffice) {
-             $(".addBtn").prop("disabled", false);
-         } else {
-             $(".addBtn").prop("disabled", true);
-         }
-     }
 	 
 	// 드래그 앤 드롭 영역 파일 첨부 관련 코드 시작
 	var objDragAndDrop = $(".fileUploadBox");
@@ -345,9 +328,6 @@ $(document).ready(function() {
      
         //status.setAbort(jqXHR);
     }
-	
-	// 소속 토지 정보의 행 추가 버튼 비활성화 초기화
-	$(".addBtn").prop("disabled", true);
 });
 
 // '소속 토지 정보' 내의 체크박스 클릭 시 다른 체크박스 비활성화
@@ -463,9 +443,12 @@ function updateRowNumbers() {
     });
 }
 
+// 관경 표시 설정 함수
 function toggleLineDisplay(value) {
   const singleLineDiv = $('.singleLine');
   const doubleLineDiv = $('.doubleLine');
+  
+  console.log('toggleLineDisplay 함수 호출, value:', value); // 디버깅용 콘솔 로그 추가
 
   if (value === '단선') {
     singleLineDiv.show();
@@ -555,7 +538,7 @@ const createCustomLimasterReg = (parentElement = document) => {
                 parentSelectBox.classList.remove('active');
 
                 // 만약 단/복선 선택 박스(masterRegSelectBox06)일 경우 toggleLineDisplay 호출
-                if (notsetAddSelectBox.id === 'masterRegSelectBox06') {
+                if (notsetAddSelectBox.id === 'masterEditSelectBox06') {
                     toggleLineDisplay(selectedValue);
                 }
             });
