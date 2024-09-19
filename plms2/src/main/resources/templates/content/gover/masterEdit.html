@@ -516,6 +516,7 @@
 			    <input type="hidden" id="goverIndex" value="0">
 			      <input type="text" class="notWriteInput" readonly placeholder="1" />
 			    </li>
+				
 			    <!-- 관리기관 -->
 			    <li class="content largeWidth selectContentArea">
 			      <div class="hiddenSelectBox">
@@ -528,6 +529,7 @@
 					<ul class="customSelectBtns" id="admOfficeUl01"></ul>
 			      </section>
 			    </li>
+				
 			    <!-- 국공유지 여부 -->
 			    <li class="content middleWidth selectContentArea">
 			      <div class="hiddenSelectBox">
@@ -616,18 +618,35 @@
   		        <li class="content smallWidth">
   		          <input type="text" class="notWriteInput" readonly placeholder="1" />
   		        </li>
+				
   		        <!-- 관리기관 -->
   		        <li class="content largeWidth selectContentArea">
   		          <div class="hiddenSelectBox">
   		            <select name="adm_office" id="goverEditSelectBox03" hidden>
-  		              <option value="전체">전체</option>
+  		              <option value="전체" th:selected="${pnuList[0].gp_adm_office == '전체'}">전체</option>
   		            </select>
   		          </div>
   		          <section class="customSelectBox">
-  		            <button class="customSelectView"  id="admOfficeText01">선택</button>
+  		            <button class="customSelectView"  id="admOfficeText01">[[${resultData.gm_adm_office}]]</button>
   		            <ul class="customSelectBtns" id="admOfficeUl01"></ul>
   		          </section>
   		        </li>
+				
+				<!-- 관리기관 -->
+				<!--<li class="content largeTitle selectContentArea">
+				  <div class="hiddenSelectBox">
+				    <select name="adm_office" id="masterEditSelectBox03" hidden>
+				      <option value="전체" th:selected="${resultData.gm_adm_office == '전체'}">전체</option>
+				    </select>
+				  </div>
+				  <section class="customSelectBox">
+				    <button class="customSelectView" id="admOfficeText">[[${resultData.gm_adm_office}]]</button>
+				    <ul class="customSelectBtns" id="admOfficeUl">
+				      <li><p>전체</p></li>
+				    </ul>
+				  </section>
+				</li>-->
+				
 				<!-- 국공유지 여부 -->
 				<li class="content middleWidth selectContentArea">
 				  <div class="hiddenSelectBox">
@@ -730,7 +749,7 @@
   		            </select>
   		          </div>
   		          <section class="customSelectBox">
-					<button class="customSelectView" id="admOfficeText01">선택</button>
+					<button class="customSelectView" id="admOfficeText01">[[${resultData.gm_adm_office}]]</button>
                     <ul class="customSelectBtns" id="admOfficeUl01">
   		          </section>
   		        </li>

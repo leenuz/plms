@@ -18,7 +18,7 @@ $(document).ready(function() {
     // 모든 셀렉트 박스에 대해 커스텀 셀렉트 박스 초기화 실행
     createCustomLimasterReg();  // 페이지가 로드될 때 초기화
 
-	// 셀렉 박스 초기화 함수 호출
+	// 셀렉 박스 초기화 함수 호출(담당지사,허가관청,관리기관(기본정보,소속토지정보),관로명)
 	initSelectBoxes();
 	
 	// 지사 선택 시 허가관청, 관로명 목록 업데이트를 위한 change 트리거
@@ -28,157 +28,36 @@ $(document).ready(function() {
 	     $("#masterEditSelectBox01").val(selectedJisa).change(); // change 이벤트 트리거
 	 });
 	 
-	 // 지사 선택에 따른 관로명 목록 업데이트
-     $(document).on("change", "#masterEditSelectBox01", function () {
-		console.log("지사 선택");
-         const selectedJisa = $("#masterEditSelectBox01").val();
-         if (!selectedJisa) return;
-
-         const allData = { jisa: selectedJisa };
-		 
-		 console.log("allData"+allData);
-
-         $.ajax({
-             url: "/gover/getPipeName", // 허가관청 목록을 가져오는 API
-             data: JSON.stringify(allData),
-             async: true,
-             type: "POST",
-             dataType: "json",
-             contentType: "application/json; charset=utf-8",
-             success: function (rt) {
-                 const data = rt.resultData;
-
-                 // 허가관청 리스트 초기화 및 업데이트
-                 $("#pipeNameUl li").remove();
-                 $("#masterEditSelectBox05 option").remove();
-                 $("#pipeNameUl").append("<li><p>전체</p></li>");
-                 $("#masterEditSelectBox05").append("<option value=''>전체</option>");
-                 for (let i = 0; i < data.length; i++) {
-                     $("#pipeNameUl").append("<li><p>" + data[i].jzn_zone_name + "</p></li>");
-                     $("#masterEditSelectBox05").append("<option>" + data[i].jzn_zone_name + "</option>");
-                 }
-             },
-             error: function (jqXHR, textStatus, errorThrown) {
-                 console.error("Error: ", textStatus, errorThrown);
-             }
-         });
-     });
+	 // 지사 선택에 따른 허가관청, 관로명 목록 업데이트
+	 $(document).on("change", "#masterEditSelectBox01", function () {
+	     const selectedJisa = $("#masterEditSelectBox01").val();
+	     if (selectedJisa) {
+	         updatePmtOfficeList(selectedJisa); // 이미 정의된 함수 호출
+	         updatePipeNameList(selectedJisa);  // 이미 정의된 함수 호출
+	     }
+	 });
 	 
-	 // 관리기관 선택 (선택 후 추가적인 동작이 필요하다면 이곳에 추가)
+	 // 허가관청 선택 시 관리기관 목록 업데이트
+	 $(document).on("change", "#masterEditSelectBox02", function () {
+	     const selectedPmtOffice = $("#masterEditSelectBox02").val();
+	     const selectedJisa = $("#masterEditSelectBox01").val();
+	     if (selectedPmtOffice && selectedJisa) {
+	         updateAdmOfficeList(selectedJisa, selectedPmtOffice); // 이미 정의된 함수 호출
+	     }
+	 });
+	 
+	 // 관리기관 선택 반영
  	 $(document).on("click", "#pipeNameUl li", function () {
  	     const selectedAdmOffice = $(this).text().trim();
  	     $("#pipeNameText").text(selectedAdmOffice);
  	 });
 	 
-	 // 지사 선택에 따른 허가관청 목록 업데이트
-      $(document).on("change", "#masterEditSelectBox01", function () {
-          const selectedJisa = $("#masterEditSelectBox01").val();
-		  console.log("selectedJisa:"+selectedJisa);
-          if (!selectedJisa) return;
-
-          const allData = { jisa: selectedJisa };
-
-          $.ajax({
-              url: "/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
-              data: JSON.stringify(allData),
-              async: true,
-              type: "POST",
-              dataType: "json",
-              contentType: "application/json; charset=utf-8",
-              success: function (rt) {
-                  const data = rt.resultData;
-				  
-				  console.log("data:" +  data);
-				  
-                  // 허가관청 리스트 초기화 및 업데이트
-                  $("#pmtOfficeUl li").remove();
-                  $("#masterEditSelectBox02 option").remove();
-                  $("#pmtOfficeUl").append("<li><p>전체</p></li>");
-                  $("#masterEditSelectBox02").append("<option value=''>전체</option>");
-                  for (let i = 0; i < data.length; i++) {
-                      $("#pmtOfficeUl").append("<li><p>" + data[i].so_pmt_office + "</p></li>");
-                      $("#masterEditSelectBox02").append("<option>" + data[i].so_pmt_office + "</option>");
-                  }
-              },
-              error: function (jqXHR, textStatus, errorThrown) {
-                  console.error("Error: ", textStatus, errorThrown);
-              }
-          });
-      });
-	 
-	 // 허가관청 선택 시 관리기관 목록 업데이트
+	 // 허가관청 선택 시 관리기관 목록 업데이트를 위한 change 트리거
 	 $(document).on("click", "#pmtOfficeUl li", function () {
 	     const selectedPmtOffice = $(this).text().trim();
 	     $("#pmtOfficeText").text(selectedPmtOffice);
 	     $("#masterEditSelectBox02").val(selectedPmtOffice).change(); // change 이벤트 트리거
 	 });
-	 
-	 // 허가관청 선택 시 관리기관 목록 업데이트
-     $(document).on("change", "#masterEditSelectBox02", function () {
-         const selectedPmtOffice = $("#masterEditSelectBox02").val();
-         const selectedJisa = $("#masterEditSelectBox01").val(); // 지사 선택된 값
-
-         if (!selectedPmtOffice || !selectedJisa) return;
-
-         const allData = {
-             pmt_office: selectedPmtOffice,
-             jisa: selectedJisa
-         };
-
-         $.ajax({
-             url: "/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
-             data: JSON.stringify(allData),
-             async: true,
-             type: "POST",
-             dataType: "json",
-             contentType: "application/json; charset=utf-8",
-             success: function (rt) {
-                 const data = rt.resultData;
-
-                 // 관리기관 리스트 초기화 및 업데이트 (기본 정보)
-                 $("#admOfficeUl li").remove();
-                 $("#masterEditSelectBox03 option").remove();
-                 $("#admOfficeUl").append("<li><p>전체</p></li>");
-                 $("#masterEditSelectBox03").append("<option value=''>전체</option>");
-                 for (let i = 0; i < data.length; i++) {
-                     $("#admOfficeUl").append("<li><p>" + data[i].so_adm_office + "</p></li>");
-                     $("#masterEditSelectBox03").append("<option>" + data[i].so_adm_office + "</option>");
-                 }
-
-                 // 관리기관 리스트 소속 토지 정보에도 업데이트
-                 updateGoverAdmOffice(data);
-             },
-             error: function (jqXHR, textStatus, errorThrown) {
-                 console.error("Error: ", textStatus, errorThrown);
-             }
-         });
-     });
-
-     // 행 추가 시 관리기관 셀렉트 박스 동기화
-     function updateGoverAdmOffice(data) {
-		console.log("updateGoverAdmOffice 함수 실행 ");
-         $("#goverEditSelectBox03 option").remove();
-         $("#goverEditSelectBox03").append("<option value=''>전체</option>");
-         for (let i = 0; i < data.length; i++) {
-             $("#goverEditSelectBox03").append("<option>" + data[i].so_adm_office + "</option>");
-         }
-
-         // 커스텀 셀렉트 박스의 버튼들 업데이트(첫 줄)
-         const customSelectBtns = $("#goverUl #admOfficeUl01");
-         customSelectBtns.empty();
-         customSelectBtns.append("<li><p>전체</p></li>");
-         for (let i = 0; i < data.length; i++) {
-             customSelectBtns.append("<li><p>" + data[i].so_adm_office + "</p></li>");
-         }
-		 
-		 // 커스텀 셀렉트 박스의 버튼들 업데이트(2개 이상 줄)
-          const customSelectBtns02 = $("#goverUl02 #admOfficeUl01");
-          customSelectBtns02.empty();
-          customSelectBtns02.append("<li><p>전체</p></li>");
-          for (let i = 0; i < data.length; i++) {
-              customSelectBtns02.append("<li><p>" + data[i].so_adm_office + "</p></li>");
-          }
-     }
 	 
 	 // 관리기관 선택 (선택 후 추가적인 동작이 필요하다면 이곳에 추가)
 	 $(document).on("click", "#admOfficeUl li", function () {
@@ -187,7 +66,7 @@ $(document).ready(function() {
 	     $("#masterEditSelectBox03").val(selectedAdmOffice).change(); // change 이벤트 트리거
 	 });
 	 
-	 // 소속 토지 정보의 관리기관 선택 (동적으로 추가된 요소에도 적용)
+	 // 소속 토지 정보의 관리기관 선택 (첫번째 행)
 	 $(document).on("click", "#goverUl .customSelectBtns li", function () {
 	     const selectedAdmOffice = $(this).text().trim();
 	     const parentUl = $(this).closest("ul");
@@ -198,7 +77,7 @@ $(document).ready(function() {
 	     targetSelectBox.val(selectedAdmOffice).change();  // change 이벤트 트리거
 	 });
 	 
-	 // 소속 토지 정보의 관리기관 선택 (동적으로 추가된 요소에도 적용)
+	 // 소속 토지 정보의 관리기관 선택 (2개 이상일 때 반복문 행)
  	 $(document).on("click", "#goverUl02 .customSelectBtns li", function () {
  	     const selectedAdmOffice = $(this).text().trim();
  	     const parentUl = $(this).closest("ul");
@@ -341,7 +220,7 @@ function initSelectBoxes() {
     const admOfficeValue = resultData.gm_adm_office;  // 관리기관 초기화
     const pipeNameValue = resultData.gm_pipe_name;  // 관로명 초기화
 
-	console.log("지사"+jisaValue+"pmt"+pmtOfficeValue+"adm"+admOfficeValue+"관로명"+pipeNameValue);
+	console.log("지사: "+jisaValue+", pmt: "+pmtOfficeValue+", adm: "+admOfficeValue+", 관로명: "+pipeNameValue);
 	
     // 담당지사 값에 따라 허가관청, 관로명 목록 업데이트
     if (jisaValue) {
@@ -357,9 +236,7 @@ function initSelectBoxes() {
 
 // 허가관청 목록 업데이트 함수
 function updatePmtOfficeList(jisaValue) {
-	console.log("jisaValue:"+jisaValue);
     const allData = { jisa: jisaValue };
-	console.log("allData: "+allData);
 
     $.ajax({
         url: "/gover/getPmtOffice",
@@ -392,8 +269,6 @@ function updatePmtOfficeList(jisaValue) {
 
 // 관로명 목록 업데이트 함수
 function updatePipeNameList(jisaValue) {
-    console.log("관로명 목록 업데이트 시작, 지사값:", jisaValue);
-
     const allData = { jisa: jisaValue };
 
     $.ajax({
@@ -453,12 +328,41 @@ function updateAdmOfficeList(jisaValue, pmtOfficeValue) {
 
             // 관리기관 선택값을 설정
             $("#masterEditSelectBox03").val(resultData.gm_adm_office).change();
+			
+			// 관리기관 리스트 소속 토지 정보에도 업데이트
+            updateGoverAdmOffice(data);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error("관리기관 목록 업데이트 실패:", textStatus, errorThrown);
         }
     });
 }
+
+// 행 추가 시 관리기관 셀렉트 박스 동기화
+ function updateGoverAdmOffice(data) {
+	console.log("updateGoverAdmOffice 함수 실행 ");
+     $("#goverEditSelectBox03 option").remove();
+     $("#goverEditSelectBox03").append("<option value=''>전체</option>");
+     for (let i = 0; i < data.length; i++) {
+         $("#goverEditSelectBox03").append("<option>" + data[i].so_adm_office + "</option>");
+     }
+
+     // 커스텀 셀렉트 박스의 버튼들 업데이트(첫 줄)
+     const customSelectBtns = $("#goverUl #admOfficeUl01");
+     customSelectBtns.empty();
+     customSelectBtns.append("<li><p>전체</p></li>");
+     for (let i = 0; i < data.length; i++) {
+         customSelectBtns.append("<li><p>" + data[i].so_adm_office + "</p></li>");
+     }
+	 
+	 // 커스텀 셀렉트 박스의 버튼들 업데이트(2개 이상 줄)
+      const customSelectBtns02 = $("#goverUl02 #admOfficeUl01");
+      customSelectBtns02.empty();
+      customSelectBtns02.append("<li><p>전체</p></li>");
+      for (let i = 0; i < data.length; i++) {
+          customSelectBtns02.append("<li><p>" + data[i].so_adm_office + "</p></li>");
+      }
+ }
 
 // '소속 토지 정보' 내의 체크박스 클릭 시 다른 체크박스 비활성화
 $(document).on("click", ".landAdressInfo input[type=checkbox]", function() {
