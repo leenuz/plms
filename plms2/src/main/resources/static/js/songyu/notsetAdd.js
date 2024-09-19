@@ -744,26 +744,35 @@ $(document).ready(function () {
             alert("소유자 정보를 입력해주세요!");
             return;
         }
-
+		dataObj.sidoNm=dataObj.sido_nm;
+		dataObj.gugunNm=dataObj.sgg_nm;
+		dataObj.dongNm=dataObj.emd_nm;
+		dataObj.riNm=dataObj.ri_nm;
+		dataObj.jisaNm=dataObj.jisa;
+		dataObj.jibun=dataObj.mjibun;
+		dataObj.goverYN=dataObj.gover_own_yn;
+		dataObj.zone=dataObj.pipe_name;
+		dataObj.sunGubun=dataObj.sun_gubun;
+		dataObj.gubun="insert";
         console.log("------dataObj--------");
         console.log(dataObj);
 
         // 서버 전송
-        // url = "/jisang/api/Save";
-        // $.ajax({
-        //     url: url,
-        //     type: 'POST',
-        //     contentType: "application/json",
-        //     data: JSON.stringify(dataObj),
+         url = "/songyu/insertSonguList";
+         $.ajax({
+             url: url,
+             type: 'POST',
+             contentType: "application/json",
+             data: JSON.stringify(dataObj),
 
-        //     dataType: "json",
-        //     beforeSend: function (request) {
-        //         console.log("beforesend ........................");
-        //         loadingShow();
-        //     },
-        //     success: function (response) {
-        //         loadingHide();
-        //         console.log(response);
+             dataType: "json",
+             beforeSend: function (request) {
+                 console.log("beforesend ........................");
+                 loadingShow();
+             },
+             success: function (response) {
+                 loadingHide();
+                 console.log(response);
         //         if (response.success = "Y") {
         //             console.log("response.success Y");
         //             console.log("response.resultData length:" + response.resultData.length);
@@ -778,12 +787,12 @@ $(document).ready(function () {
         //         else {
         //             console.log("response.success N");
         //         }
-        //     },
-        //     error: function (jqXHR, textStatus, errorThrown) {
-        //         alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
-        //         return false;
-        //     }
-        // });
+             },
+             error: function (jqXHR, textStatus, errorThrown) {
+                 alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
+                 return false;
+             }
+         });
 
     });
 

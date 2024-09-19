@@ -12,6 +12,7 @@ import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ import com.slsolution.plms.MainService;
 import com.slsolution.plms.ParameterParser;
 import com.slsolution.plms.ParameterUtil;
 import com.slsolution.plms.config.GlobalConfig;
+import com.slsolution.plms.json.JSONArray;
 import com.slsolution.plms.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -793,64 +795,125 @@ public class songyuController {
 	
 	
 	// 미설정/미점용 등록
+	@Transactional
 	@PostMapping(path="/insertSonguList")
 		public void insertSonguList(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		 log.info("requestParams:"+requestParams);
+		 JSONObject requestParamObj=new JSONObject(requestParams);
 			ArrayList list = new ArrayList();
 			CommonUtil comm = new CommonUtil();
 
 			ParameterParser parser = new ParameterParser(request);
 
-			String notsetNo = (parser.getString("notsetNo", "")); // 수정할 미설정/미점용 번호
+//			String notsetNo = (parser.getString("notsetNo", "")); // 수정할 미설정/미점용 번호
+//
+//			String sinm = (parser.getString("sidoNm", "")).replaceAll("전체", ""); // 시
+//			// 네임
+//			String gungunm = (parser.getString("gugunNm", "")).replaceAll("전체", ""); // 시군구
+//			// 네임
+//			String dongnm = (parser.getString("dongNm", "")).replaceAll("전체", ""); // 동
+//			// 네임
+//			String rinm = (parser.getString("riNm", "")).replaceAll("전체", ""); // 리
+//			// 네임
+//			String jisanm = parser.getString("jisaNm", "").replaceAll("전체", ""); // 지사
+//			// 네임
+//			String jibun = parser.getString("jibun", ""); // 지번
+//			String addrcode = parser.getString("addrcode", ""); // 주소코드
+//			String jisa = parser.getString("jisa", ""); // 담당지사
+//			String goverownyn = parser.getString("goverYN", "N"); // 국공유지여부
+//			String zone = parser.getString("zone", ""); // 관로명(구간)
+//			String sun_gubun = parser.getString("sunGubun", ""); // 단/복선
+//			String pipeMeter = parser.getString("pipeMeter", ""); // 관경
+//			String pipeMeter2 = parser.getString("pipeMeter2", ""); // 관경2
+//			String pnu = parser.getString("pnu", ""); // 검색결과 PNU
+//			String jijuk_area = parser.getString("jijukArea", ""); // 지면 면적(㎡)
+//			String jimok_text = parser.getString("jimokText", ""); // 지면 면적(㎡)
+//
+//			String tojiType = parser.getString("tojiType", ""); // 관로일치여부
+//			String pipeYn = parser.getString("pipeYn", ""); // 관로일치여부
+//
+//			String soyunumber = parser.getString("soyunumber", ""); // 소유자 수
+//			System.out.println(parser.getString("soyunumber"));
+//			String filenumber = parser.getString("filenumber", ""); // 파일 수
+//
+//			String gubun = parser.getString("gubun", ""); // 구분( modify : 수정, insert
+//			// : 등록 )
+//			String fileseq = parser.getString("fileSeq", ""); // 파일 seq
+//			// int FILE_CNT = Integer.parseInt(parser.getString("flieCnt", "0")); //
+//			// 파일수
+//
+//			String modifyReason1 = parser.getString("modifyReason1", ""); // 변경이력-기본정보
+//			String modifyReason2 = parser.getString("modifyReason2", ""); // 변경이력-소유자정보
+//
+//			String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
+//			String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
+//
+//			String CONVERT_FLAG = parser.getString("CONVERT_FLAG", "N");
+//			String CONVERT_BEFORE_KEY = parser.getString("CONVERT_BEFORE_KEY", "");
+//
+//			String str_result = "Y";
+//
+//			String minwon = parser.getString("minwon", ""); // 민원관리에서 넘어왔을 경우 플래그.
+//			String minwonSeq = parser.getString("minwonSeq", ""); // 민원관리에서 넘어왔을 경우 플래그.
+			
+			
+			String notsetNo = requestParamObj.has("notsetNo")?requestParamObj.getString("notsetNo"):""; // 수정할 미설정/미점용 번호
 
-			String sinm = (parser.getString("sidoNm", "")).replaceAll("전체", ""); // 시
+			String sinm = (requestParamObj.getString("sido_nm")).replaceAll("전체", ""); // 시
 			// 네임
-			String gungunm = (parser.getString("gugunNm", "")).replaceAll("전체", ""); // 시군구
+			String gungunm = (requestParamObj.getString("sgg_nm")).replaceAll("전체", ""); // 시군구
 			// 네임
-			String dongnm = (parser.getString("dongNm", "")).replaceAll("전체", ""); // 동
+			String dongnm = (requestParamObj.getString("emd_nm")).replaceAll("전체", ""); // 동
 			// 네임
-			String rinm = (parser.getString("riNm", "")).replaceAll("전체", ""); // 리
+			String rinm = (requestParamObj.getString("ri_nm")).replaceAll("전체", ""); // 리
 			// 네임
-			String jisanm = parser.getString("jisaNm", "").replaceAll("전체", ""); // 지사
+			String jisanm = requestParamObj.getString("jisa").replaceAll("전체", ""); // 지사
 			// 네임
-			String jibun = parser.getString("jibun", ""); // 지번
-			String addrcode = parser.getString("addrcode", ""); // 주소코드
-			String jisa = parser.getString("jisa", ""); // 담당지사
-			String goverownyn = parser.getString("goverYN", "N"); // 국공유지여부
-			String zone = parser.getString("zone", ""); // 관로명(구간)
-			String sun_gubun = parser.getString("sunGubun", ""); // 단/복선
-			String pipeMeter = parser.getString("pipeMeter", ""); // 관경
-			String pipeMeter2 = parser.getString("pipeMeter2", ""); // 관경2
-			String pnu = parser.getString("pnu", ""); // 검색결과 PNU
-			String jijuk_area = parser.getString("jijukArea", ""); // 지면 면적(㎡)
-			String jimok_text = parser.getString("jimokText", ""); // 지면 면적(㎡)
+			String jibun = requestParamObj.getString("mjibun"); // 지번
+			String addrcode = requestParamObj.getString("addrcode"); // 주소코드
+			String jisa = requestParamObj.getString("jisa"); // 담당지사
+			String goverownyn = requestParamObj.getString("goverYN"); // 국공유지여부
+			String zone = requestParamObj.getString("zone"); // 관로명(구간)
+			String sun_gubun = requestParamObj.getString("sunGubun"); // 단/복선
+			String pipeMeter = requestParamObj.getString("pipe_diameter1"); // 관경
+			String pipeMeter2 = requestParamObj.getString("pipe_diameter2"); // 관경2
+			String pnu = requestParamObj.getString("mpnu"); // 검색결과 PNU
+			String jijuk_area = requestParamObj.getString("jijuk_area"); // 지면 면적(㎡)
+			String jimok_text = requestParamObj.getString("jimok_text"); // 지면 면적(㎡)
 
-			String tojiType = parser.getString("tojiType", ""); // 관로일치여부
-			String pipeYn = parser.getString("pipeYn", ""); // 관로일치여부
+			String tojiType = requestParamObj.has("tojiType")?requestParamObj.getString("tojiType"):""; // 관로일치여부
+			String pipeYn = requestParamObj.getString("overlap_yn"); // 관로일치여부
+			String memo = requestParamObj.getString("memo"); // 메모
 
-			String soyunumber = parser.getString("soyunumber", ""); // 소유자 수
-			System.out.println(parser.getString("soyunumber"));
-			String filenumber = parser.getString("filenumber", ""); // 파일 수
+			//String soyunumber = requestParamObj.getString("soyunumber"); // 소유자 수
+			//System.out.println(requestParamObj.getString("soyunumber"));
+			//String filenumber = requestParamObj.getString("filenumber"); // 파일 수
 
-			String gubun = parser.getString("gubun", ""); // 구분( modify : 수정, insert
+			String gubun = requestParamObj.getString("gubun"); // 구분( modify : 수정, insert
 			// : 등록 )
-			String fileseq = parser.getString("fileSeq", ""); // 파일 seq
+			//String fileseq = requestParamObj.getString("fileSeq"); // 파일 seq
 			// int FILE_CNT = Integer.parseInt(parser.getString("flieCnt", "0")); //
 			// 파일수
 
-			String modifyReason1 = parser.getString("modifyReason1", ""); // 변경이력-기본정보
-			String modifyReason2 = parser.getString("modifyReason2", ""); // 변경이력-소유자정보
+			String modifyReason1 = requestParamObj.has("modifyReason1")?requestParamObj.getString("modifyReason1"):""; // 변경이력-기본정보
+			String modifyReason2 = requestParamObj.has("modifyReason2")?requestParamObj.getString("modifyReason2"):""; // 변경이력-소유자정보
 
 			String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
 			String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
 
-			String CONVERT_FLAG = parser.getString("CONVERT_FLAG", "N");
-			String CONVERT_BEFORE_KEY = parser.getString("CONVERT_BEFORE_KEY", "");
+			String CONVERT_FLAG = requestParamObj.has("CONVERT_FLAG")?requestParamObj.getString("CONVERT_FLAG"):"N";
+			String CONVERT_BEFORE_KEY = requestParamObj.has("CONVERT_BEFORE_KEY")?requestParamObj.getString("CONVERT_BEFORE_KEY"):"";
 
 			String str_result = "Y";
 
-			String minwon = parser.getString("minwon", ""); // 민원관리에서 넘어왔을 경우 플래그.
-			String minwonSeq = parser.getString("minwonSeq", ""); // 민원관리에서 넘어왔을 경우 플래그.
+			String minwon = requestParamObj.has("minwon")?requestParamObj.getString("minwon"):""; // 민원관리에서 넘어왔을 경우 플래그.
+			String minwonSeq = requestParamObj.has("minwonSeq")?requestParamObj.getString("minwonSeq"):""; // 민원관리에서 넘어왔을 경우 플래그.
+			
+			
+			JSONArray soujaArr=new JSONArray(requestParamObj.getString("soujaInfo"));
+			JSONArray fileArr=new JSONArray(requestParamObj.getString("uploadFiles"));
+			log.info("soujaArrsize:"+soujaArr.length());
 
 			try {
 
@@ -858,7 +921,7 @@ public class songyuController {
 				ArrayList NotsetList = (ArrayList) mainService.selectQuery("songyuSQL.selectNotsetNextNo", null);
 				HashMap params = new HashMap();
 
-				params.put("FILESEQ", fileseq);
+				//params.put("FILESEQ", fileseq);
 				params.put("SIDO_NM", sinm);
 				params.put("SGG_NM", gungunm);
 				params.put("EMD_NM", dongnm);
@@ -876,7 +939,7 @@ public class songyuController {
 				params.put("PIPE_YN", pipeYn);
 				params.put("PIPE_METER", pipeMeter);
 				params.put("PIPE_METER2", pipeMeter2);
-				params.put("FILE_SEQ", fileseq);
+				//params.put("FILE_SEQ", fileseq);
 				params.put("USER_ID", USER_ID);
 				params.put("USER_NAME", USER_NAME);
 				params.put("MINWON_SEQ", minwonSeq);
@@ -885,7 +948,7 @@ public class songyuController {
 
 				// 로깅처리를 위하여 기존 지적도 데이터 조회
 				ArrayList tmpList=new ArrayList();
-				tmpList=(ArrayList) mainService.selectQuery("songyusQL.selectJijukBeforePNU", params);
+				tmpList=(ArrayList) mainService.selectQuery("songyuSQL.selectJijukBeforePNU", params);
 				
 //				Map logParam = (HashMap) Database.getInstance().queryForObject("Json.selectJijukBeforePNU", params);
 				HashMap logParam=(HashMap)tmpList.get(0);
@@ -895,7 +958,20 @@ public class songyuController {
 					notsetNo = (String) params.get("NOTSET_NO");
 
 				} else {
-					String Next_notsetNo = String.valueOf(Integer.parseInt((String) ((HashMap) NotsetList.get(0)).get("NOW_NOTSETNO")) + 1);
+					log.info("notsetlist:"+NotsetList.get(0));
+					String Next_notsetNo=""; // = String.valueOf(Integer.parseInt((String) ((HashMap) NotsetList.get(0)).get("now_notsetno")) + 1);
+					// HashMap에서 값을 안전하게 가져와서 처리
+					Object notsetnoObj = ((HashMap) NotsetList.get(0)).get("now_notsetno");
+
+					if (notsetnoObj != null) {
+					    String notsetnoStr = notsetnoObj.toString();  // 안전하게 toString() 사용
+					    int nextNotsetNo = Integer.parseInt(notsetnoStr) + 1;
+					    Next_notsetNo = String.valueOf(nextNotsetNo);
+					} else {
+					    // null인 경우에 대한 처리 (예: 초기화하거나 에러 처리)
+					    Next_notsetNo = "1"; // 기본값 설정
+					}
+
 					int n_Next_notsetNo = Next_notsetNo.length();
 
 					String add_Zero = "";
@@ -911,6 +987,13 @@ public class songyuController {
 				if (gubun.equals("insert")) {
 //					Database.getInstance().insert("Json.insertNotsetMaster", params);
 					mainService.InsertQuery("songyuSQL.insertNotsetMaster", params);
+					//메모도 여기서 등록한다.
+					HashMap memoParam=new HashMap();
+					memoParam.put("manage_no", params.get("NOTSET_NO"));
+					memoParam.put("wmemo", memo);
+					memoParam.put("wname", (USER_NAME==null || USER_NAME=="null")?"":USER_NAME);
+					mainService.InsertQuery("commonSQL.putMemoData", memoParam);
+					//mainService.InsertQeury("commonSQL.putMemoData",params);
 					params.put("STATUS", "NOTSET");
 					params.put("GOVEROWNYN", goverownyn);
 					params.put("JISANGNO", params.get("NOTSET_NO"));
@@ -966,11 +1049,13 @@ public class songyuController {
 				}
 
 				// 소유자
-				for (int i = 0; i < Integer.parseInt(soyunumber); i++) {
-					String JIBUN = parser.getString("jibun" + String.valueOf(i), "");
-					String NAME = parser.getString("name" + String.valueOf(i), "");
-					String ADDR = parser.getString("addr" + String.valueOf(i), "");
-					String TEL = parser.getString("tel" + String.valueOf(i), "");
+				for (int i = 0; i < soujaArr.length(); i++) {
+					JSONObject obj=new JSONObject(soujaArr.get(i).toString());
+					log.info("obj:"+obj);
+					String JIBUN = obj.getString("jibun");
+					String NAME = obj.getString("soujaName");
+					String ADDR = obj.getString("soujaAddress");
+					String TEL = obj.getString("soujaContact1");
 
 					params.put("JIBUN", JIBUN); // 공유지분
 					params.put("NAME", NAME); // 성명
@@ -992,7 +1077,8 @@ public class songyuController {
 				}
 
 				if (gubun.equals("modify")) {
-					for (int i = 0; i < Integer.parseInt(filenumber); i++) {
+					for (int i = 0; i < fileArr.length(); i++) {
+						JSONObject jobj=new JSONObject(fileArr.get(i));
 						String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
 						String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
 
@@ -1037,7 +1123,7 @@ public class songyuController {
 					}
 				}
 
-				mainService.UpdateQuery("songyuSQL.updateNotsetSeqFile", params);
+				if (seq_fileList.size()>0) mainService.UpdateQuery("songyuSQL.updateNotsetSeqFile", params);
 				
 				// 신규등록일때만. 수정모드가 아닐때만 신규등록처리.
 				if (!"modify".equals(gubun)) {

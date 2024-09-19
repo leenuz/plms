@@ -298,6 +298,7 @@ $(document).on("click", ".addressResultSelectBtn", function () {
     var sgg_nm = $(this).parent().parent().find(".popContent0202").html();
     var emd_nm = $(this).parent().parent().find(".popContent0203").html();
     var ri_nm = $(this).parent().parent().find(".popContent0204").html();
+	var bcode = $(this).parent().parent().find(".popContent0205").html();
     console.log("pnu:" + pnu);
     console.log("address:" + address);
     console.log("jibun:" + jibun);
@@ -309,6 +310,7 @@ $(document).on("click", ".addressResultSelectBtn", function () {
     $("#sgg_nm").val(sgg_nm);
     $("#emd_nm").val(emd_nm);
     $("#ri_nm").val(ri_nm);
+	$("#addrcode").val(bcode);
 
     $('#addressSearchResult').html(address + ' ' + jibun);
     var targetDiv = $("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");

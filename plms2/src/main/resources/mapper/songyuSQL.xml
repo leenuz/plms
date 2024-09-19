@@ -411,7 +411,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHEN MAX(CAST(SUBSTRING(nm_NOTSET_NO, 3) AS INTEGER)) IS NULL THEN '0' 
         ELSE MAX(CAST(SUBSTRING(nm_NOTSET_NO, 3) AS INTEGER)) 
     END AS NOW_NOTSETNO
-FROM NOTSET_MASTER;
+FROM NOTSET_MASTER
 
 	</select>
 	
@@ -443,13 +443,13 @@ FROM NOTSET_MASTER;
 		Values
 		(
 		#{NOTSET_NO}
-		, {#SIDO_NM}
+		, #{SIDO_NM}
 		, #{SGG_NM}
 		, #{EMD_NM}
 		, #{RI_NM}
 		, #{JIBUN}
 		, #{JISA}
-		, #{JIJUK_AREA}
+		, ${JIJUK_AREA}
 		, #{PIPE_NAME}
 		, #{SUN_GUBUN}
 		, #{COMPLE_YN}
@@ -459,14 +459,14 @@ FROM NOTSET_MASTER;
 		, #{JIMOK_TEXT}
 		, #{DOCKEY}
 		, #{PIPE_YN}
-		, #{PIPE_METER}
-		, #{PIPE_METER2}
+		, nullif(#{PIPE_METER},'')::numeric
+		, nullif(#{PIPE_METER2},'')::numeric
 		, #{TOJI_TYPE}
 		)
 	</insert>
 	<update id="updateTogiJisang_Status2Null" parameterType="HashMap">
 		UPDATE JIJUK_2024 SET
-		JISANG_STATUS = TO_CHAR(#{STATUS})
+		JISANG_STATUS = #{STATUS}
 			 , JISANG_NO = null
 			 , JISA = null
 			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVEROWNYN)" >
@@ -486,26 +486,26 @@ FROM NOTSET_MASTER;
 	</update>
 	<update id="updateTogiJisang_Status" parameterType="HashMap">
 		UPDATE JIJUK_2024 SET
-		JISANG_STATUS = TO_CHAR(#{STATUS})
+		JISANG_STATUS = #{STATUS}
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVEROWNYN)" >
-			, GOVER_OWN_YN = TO_CHAR(#{GOVEROWNYN})
+			, GOVER_OWN_YN = #{GOVEROWNYN}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)" >
-			, JISANG_NO = TO_CHAR(#{JISANGNO})
+			, JISANG_NO = #{JISANGNO}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JASANNO)" >
-			, ERP_NO = TO_CHAR(#{JASANNO})
+			, ERP_NO = #{JASANNO}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOSIPLAN)" >
-			, DOSIPLAN = TO_CHAR(#{DOSIPLAN})
+			, DOSIPLAN = #{DOSIPLAN}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
-			, JISA = TO_CHAR(#{JISA})
+			, JISA = #{JISA}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PIPEYN)" >
-			, PIPE_OVERLAP_YN = TO_CHAR(#{PIPEYN})
+			, PIPE_OVERLAP_YN = #{PIPEYN}
 		</if>
-		WHERE PNU = TO_CHAR(#{PNU})
+		WHERE PNU = #{PNU}
 	</update>
 	
 	<select id="selectNotsetRowDetail_KibonInfo"  parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -627,12 +627,12 @@ FROM NOTSET_MASTER;
 	</delete>
 	<select id="selectNotset_ATCFILE_NoCheck" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT * FROM NOTSET_ATCFILE
-		WHERE na_SEQ = TO_CHAR(#{FILESEQ})
+		WHERE na_SEQ = #{FILESEQ}
 	</select>
 		<update id="updateNotsetSeqFile" parameterType="HashMap">
 		UPDATE NOTSET_ATCFILE SET
-		na_NOTSET_NO = TO_CHAR(#{NOTSET_NO})
-		WHERE na_SEQ = TO_CHAR(#{FILE_SEQ})
+		na_NOTSET_NO = #{NOTSET_NO}
+		WHERE na_SEQ = #{FILE_SEQ}
 	</update>
 	<select id="makePnuIssueSeq" resultType="String" parameterType="HashMap">
  
@@ -652,11 +652,11 @@ FROM NOTSET_MASTER;
 		        , pi_ISSUE_DATE
 		        , pi_REGISTED_YN
 		        , pi_PERMITTED_YN
-		        , pi_ADDRCODE
+		        , pi_address_code
 		        , pi_JIBUN
 		) VALUES (
 		        #{PNU}
-		        , #{SEQ}
+		        , #{SEQ}::bigint
 		        , #{CODE_DEPTH1}
 		        , #{CODE_DEPTH2}
 		        , #{CODE_DEPTH3}
@@ -684,7 +684,7 @@ FROM NOTSET_MASTER;
 			) VALUES (
 			        (SELECT COALESCE(MAX(S.pih_HISTORY_SEQ), 0) + 1 FROM POTENTIAL_ISSUE_HISTORY S)
 			        , #{PNU}
-			        , #{SEQ}
+			        , #{SEQ}::bigint
 			        , #{HISTORY_TYPE}
 			        , #{HISTORY_CONTENT}
 			        , CURRENT_TIMESTAMP
@@ -741,4 +741,13 @@ FROM NOTSET_MASTER;
 		FROM GOVER_MASTER;
 
 	</select>
+		<select id="selectJijukBeforePNU"  parameterType="java.util.HashMap" resultType="java.util.HashMap">
+SELECT PNU
+     , JISANG_NO AS JISANG_NO_OLD
+     , JISANG_STATUS AS JISANG_STATUS_OLD
+     , GOVER_OWN_YN AS GOVER_OWN_YN_OLD
+     , PIPE_OVERLAP_YN AS PIPE_OVERLAP_YN_OLD
+     , JISA AS JISA_OLD
+  FROM JIJUK_2024
+</select>
 </mapper>
