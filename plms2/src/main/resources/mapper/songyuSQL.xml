@@ -572,9 +572,9 @@ FROM NOTSET_MASTER;
 		(#{NOTSET_NO}, CURRENT_TIMESTAMP, #{GUBUN}, #{CONT}, #{USER_NAME}, #{USER_ID})
 	</insert>
 	
-	<update id="updateTogiJisang_Status" parameterType="HashMap">
+	<!-- <update id="updateTogiJisang_Status" parameterType="HashMap">
 		UPDATE JIJUK_2024 SET
-		JISANG_STATUS = TO_CHAR(#STATUS#)
+		JISANG_STATUS = TO_CHAR(#{STATUS})
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVEROWNYN)" >
 			, GOVER_OWN_YN = TO_CHAR(#{GOVEROWNYN})
 		</if>
@@ -594,7 +594,7 @@ FROM NOTSET_MASTER;
 			, PIPE_OVERLAP_YN = TO_CHAR(#{PIPEYN})
 		</if>
 		WHERE PNU = TO_CHAR(#{PNU})
-	</update>
+	</update> -->
 	
 	<delete id="deleteNotsetSoyu" parameterType="HashMap">
 		DELETE FROM NOTSET_SOUJA

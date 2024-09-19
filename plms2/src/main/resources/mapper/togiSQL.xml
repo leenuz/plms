@@ -170,5 +170,11 @@
 			
 		
 	</select>
+	
+	<select id="selectDosiNextNo" resultType="HashMap" parameterType="HashMap">
+		SELECT 
+	    COALESCE(MAX(CAST(SUBSTR(dm_DOSI_NO, 3) AS INTEGER)), 0) AS NOW_DOSINO
+		FROM DOSI_MASTER
+	</select>
 
 </mapper>
