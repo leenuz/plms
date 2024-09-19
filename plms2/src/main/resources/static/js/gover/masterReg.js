@@ -59,6 +59,12 @@ $(document).ready(function() {
          });
      });
 	 
+	 // 관리기관 선택 (선택 후 추가적인 동작이 필요하다면 이곳에 추가)
+ 	 $(document).on("click", "#pipeNameUl li", function () {
+ 	     const selectedAdmOffice = $(this).text().trim();
+ 	     $("#pipeNameText").text(selectedAdmOffice);
+ 	 });
+	 
 	 // 지사 선택에 따른 허가관청 목록 업데이트
       $(document).on("change", "#masterRegSelectBox01", function () {
           const selectedJisa = $("#masterRegSelectBox01").val();
