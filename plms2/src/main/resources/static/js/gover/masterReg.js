@@ -231,6 +231,7 @@ $(document).ready(function() {
 	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
 	});
     
+	var rowCount=0;
     function handleFileUpload(files,obj) {
 		console.log("-------------handleFileUpload---------------");
 		console.log(files);
@@ -238,12 +239,14 @@ $(document).ready(function() {
             var fd = new FormData(); // FormData 객체 생성 (파일 업로드를 위한 객체)
             fd.append('file', files[i]); // 파일 객체를 FormData에 추가
      		
-            var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); // 파일 업로드 상태바 생성
+            var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
             sendFileToServer(fd,status); // 서버로 파일 전송 함수 호출
+			
+			rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
        }
     }
-	                
-    var rowCount=0;
+
+	// Status bar 생성 함수
     function createStatusbar(obj,name,size,no){
 		console.log("----------start createStatusBar------------");
         console.log(obj.html());
