@@ -176,5 +176,125 @@
 	    COALESCE(MAX(CAST(SUBSTR(dm_DOSI_NO, 3) AS INTEGER)), 0) AS NOW_DOSINO
 		FROM DOSI_MASTER
 	</select>
+	
+		<insert id="insertDosiMaster" parameterType="HashMap">
+		INSERT INTO DOSI_MASTER
+		(
+		dm_DOSI_SEQ 
+		,dm_DOSI_NO
+		, dm_SIDO_NM
+		, dm_SGG_NM
+		, dm_EMD_NM
+		, dm_RI_NM
+		, dm_JIBUN
+		, dm_JISA
+		, dm_JIJUK_AREA
+		, dm_DOSIPLAN
+		, dm_USE_STATE
+		, dm_ADDRCODE
+		, dm_PNU
+		, dm_JIMOK_TEXT
+		, dm_TOJI_TYPE
+		, dm_PIPE_YN
+		, dm_LENGTH
+		, dm_SOYOUJA
+		, dm_MASTER_YN)
+		VALUES
+		(
+		nextval('DOSI_SEQ') 
+		,TO_CHAR(#{DOSI_NO})
+		, TO_CHAR(#{SIDO_NM})
+		, TO_CHAR(#{SGG_NM})
+		, TO_CHAR(#{EMD_NM})
+		, TO_CHAR(#{RI_NM})
+		, TO_CHAR(#{JIBUN})
+		, TO_CHAR(#{JISA})
+		, TO_CHAR(#{JIJUK_AREA})
+		, TO_CHAR(#{DOSIPLAN})
+		,TO_CHAR(#{USE_STATE})
+		, TO_CHAR(#{ADDRCODE})
+		, TO_CHAR(#{PNU})
+		, TO_CHAR(#{JIMOK_TEXT})
+		, TO_CHAR(#{TOJI_TYPE})
+		, TO_CHAR(#{PIPE_YN})
+		, TO_CHAR(#{LENGTH})
+		, TO_CHAR(#{SOYOUJA})
+		, TO_CHAR(#{MASTER_YN})
+		)
+	</insert>
+	<delete id="deleteDosiInfo" parameterType="HashMap">
+		DELETE FROM DOSI_INFO
+		WHERE di_DOSI_NO = TO_CHAR(#{DOSI_NO})
+	</delete>
+	<insert id="insertDosiInfo" parameterType="HashMap">
+		INSERT INTO DOSI_INFO
+		(
+		di_DOSI_NO
+		, di_BUSINESS_NM,
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STRDATE)" >
+			di_STRDATE,
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ENDDATE)" >
+			di_ENDDATE,
+		</if>
+		di_ADM_OFFICE
+		, di_BUSINESS_OPER
+		, di_USER_ID
+		)
+		VALUES
+		(
+		TO_CHAR(#{DOSI_NO})
+		, TO_CHAR(#{BUSINESS_NM}),
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STRDATE)" >
+			TO_DATE(#{STRDATE} || '00:00:00', 'YYYYMMDDHH24:MI:SS') ,
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ENDDATE)" >
+			TO_DATE(#{ENDDATE} || '00:00:00', 'YYYYMMDDHH24:MI:SS') ,
+		</if>
+		TO_CHAR(#{ADM_OFFICE})
+		, TO_CHAR(#{BUSINESS_OPER})
+		, #{USER_ID})
+	</insert>
+		<delete id="deleteDosiDept" parameterType="HashMap">
+		DELETE FROM DOSI_DEPT
+		WHERE DOSI_NO = TO_CHAR(#DOSI_NO#)
+	</delete>
+		<insert id="insertDosiDept" parameterType="HashMap">
+		INSERT INTO DOSI_DEPT
+		(dd_DEPT_SEQ, dd_DOSI_NO, dd_DEPT_NM, dd_MANAGER, dd_CONTACT_NUM)
+		VALUES
+		(nextval('DOSI_DEPT_SEQ'), TO_CHAR(#{DOSI_NO}), TO_CHAR(#{DEPT_NM}), TO_CHAR(#{MANAGER}), TO_CHAR(#{CONTACT_NUM}))
+	</insert>
+	<delete id="dosiDeleteFile" parameterType="HashMap">
+		DELETE FROM DOSI_ATCFILE
+		WHERE da_DOSI_NO = TO_CHAR(#{DOSI_NO})
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+			AND da_FILE_SEQ = TO_CHAR(#{SEQ})
+		</if>
+	</delete>
+	<select id="selectDosiRowDetail_Files"  resultType="HashMap" parameterType="HashMap">
+		SELECT *
+		FROM DOSI_ATCFILE
+		WHERE da_DOSI_NO = TO_CHAR(#{DOSI_NO})
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+			AND da_SEQ = TO_CHAR(#{SEQ})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(FILE_SEQ)" >
+			AND da_FILE_SEQ = TO_CHAR(#{FILE_SEQ})
+		</if>
+		ORDER BY SEQ DESC
+	</select>
+	
+		<update id="updateDosiSeqFile" parameterType="HashMap">
+		UPDATE DOSI_ATCFILE SET
+		da_DOSI_NO = TO_CHAR(#{DOSI_NO})
+		WHERE da_SEQ = TO_CHAR(#{FILE_SEQ})
+	</update>
+	
+		<delete id="deleteDosiMaster" parameterType="HashMap">
+		DELETE FROM DOSI_MASTER
+		WHERE dm_DOSI_NO = TO_CHAR(#{DOSI_NO})
+	</delete>
+	
 
 </mapper>

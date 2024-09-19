@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -225,6 +226,7 @@ public class togiController {
 	
 	
 	// 토지개발 도시개발 등록 및 수정
+	@Transactional
 	@PostMapping(path="/insertDosiList")
 		public void insertDosiList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String requestParams = ParameterUtil.getRequestBodyToStr(request);
@@ -304,7 +306,7 @@ public class togiController {
 
 					if ("modify".equals(gubun)) {
 						if (i == 0) {
-							Database.getInstance().insert("Json.deleteDosiMaster", params);
+							mainService.InsertQuery("togiSQL.deleteDosiMaster", params);
 						}
 
 					}
@@ -335,12 +337,12 @@ public class togiController {
 				params.put("BUSINESS_OPER", bizOper);
 
 				if ("modify".equals(gubun)) {
-					Database.getInstance().insert("Json.deleteDosiInfo", params);
+					mainService.InsertQuery("togiSQL.deleteDosiInfo", params);
 				}
 
 				// 도시개발 정보 추가
 				params.put("USER_ID", USER_ID);
-				Database.getInstance().insert("Json.insertDosiInfo", params);
+				mainService.InsertQuery("togiSQL.insertDosiInfo", params);
 
 				for (int i = 0; i < addDosiDeptNumber; i++) {
 					String deptNM = parser.getString("deptNM" + i, "");
@@ -354,12 +356,12 @@ public class togiController {
 					if ("modify".equals(gubun)) {
 						// 수정일 경우 기존 부서정보 모두 삭제 후 재등록처리
 						if (i == 0) {
-							Database.getInstance().insert("Json.deleteDosiDept", params);
+							mainService.InsertQuery("togiSQL.deleteDosiDept", params);
 						}
 					}
 
 					// 부서 추가
-					Database.getInstance().insert("Json.insertDosiDept", params);
+					mainService.InsertQuery("togiSQL.insertDosiDept", params);
 
 				}
 
@@ -377,16 +379,16 @@ public class togiController {
 							params.put("SEQ", "");
 							params.put("DOSI_NO", String.valueOf((params.get("DOSI_NO"))));
 							params.put("FILE_SEQ", DEL_SEQ);
-							ArrayList File_list = (ArrayList) Database.getInstance().queryForList("Json.selectDosiRowDetail_Files", params); // 첨부
+							ArrayList File_list = (ArrayList) mainService.selectQuery("togiSQL.selectDosiRowDetail_Files", params); // 첨부
 																																				// 파일
 
 							params.put("SEQ", DEL_SEQ);
-							Database.getInstance().update("Json.dosiDeleteFile", params);
+							mainService.UpdateQuery("togiSQL.dosiDeleteFile", params);
 						}
 					}
 				}
 
-				Database.getInstance().update("Json.updateDosiSeqFile", params);
+				mainService.UpdateQuery("togiSQL.updateDosiSeqFile", params);
 				
 
 			} catch (Exception e) {
