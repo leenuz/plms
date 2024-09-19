@@ -399,7 +399,341 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 </if>
 
 </select>
-	<select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[
+	<select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select jm_set_money,jm_save_status from jisang_master 
-	]]></select>
+	</select>
+	
+	
+	
+	<select id="selectNotsetNextNo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT 
+    CASE 
+        WHEN MAX(CAST(SUBSTRING(nm_NOTSET_NO, 3) AS INTEGER)) IS NULL THEN '0' 
+        ELSE MAX(CAST(SUBSTRING(nm_NOTSET_NO, 3) AS INTEGER)) 
+    END AS NOW_NOTSETNO
+FROM NOTSET_MASTER;
+
+	</select>
+	
+	
+	<insert id="insertNotsetMaster" parameterType="HashMap">
+		Insert into NOTSET_MASTER
+		(
+		nm_NOTSET_NO
+		, nm_SIDO_NM
+		, nm_SGG_NM
+		, nm_EMD_NM
+		, nm_RI_NM
+		, nm_JIBUN
+		, nm_JISA
+		, nm_JIJUK_AREA
+		, nm_PIPE_NAME
+		, nm_SUN_GUBUN
+		, nm_COMPLE_YN
+		,nm_GOVER_OWN_YN
+		, nm_ADDRCODE
+		, nm_PNU
+		, nm_JIMOK_TEXT
+		, nm_DOCKEY
+		, nm_PIPE_YN
+		, nm_PIPE_METER
+		, nm_PIPE_METER2
+		, nm_TOJI_TYPE
+		)
+		Values
+		(
+		#{NOTSET_NO}
+		, {#SIDO_NM}
+		, #{SGG_NM}
+		, #{EMD_NM}
+		, #{RI_NM}
+		, #{JIBUN}
+		, #{JISA}
+		, #{JIJUK_AREA}
+		, #{PIPE_NAME}
+		, #{SUN_GUBUN}
+		, #{COMPLE_YN}
+		,#{GOVER_OWN_YN}
+		, #{ADDRCODE}
+		, #{PNU}
+		, #{JIMOK_TEXT}
+		, #{DOCKEY}
+		, #{PIPE_YN}
+		, #{PIPE_METER}
+		, #{PIPE_METER2}
+		, #{TOJI_TYPE}
+		)
+	</insert>
+	<update id="updateTogiJisang_Status2Null" parameterType="HashMap">
+		UPDATE JIJUK_2024 SET
+		JISANG_STATUS = TO_CHAR(#{STATUS})
+			 , JISANG_NO = null
+			 , JISA = null
+			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVEROWNYN)" >
+		
+			, GOVER_OWN_YN = TO_CHAR(#{GOVEROWNYN})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JASANNO)" >
+			, ERP_NO = TO_CHAR(#{JASANNO})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOSIPLAN)" >
+			, DOSIPLAN = TO_CHAR(#{DOSIPLAN})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PIPEYN)" >
+			, PIPE_OVERLAP_YN = TO_CHAR(#{PIPEYN})
+		</if>
+		WHERE PNU = TO_CHAR(#{PNU})
+	</update>
+	<update id="updateTogiJisang_Status" parameterType="HashMap">
+		UPDATE JIJUK_2024 SET
+		JISANG_STATUS = TO_CHAR(#{STATUS})
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVEROWNYN)" >
+			, GOVER_OWN_YN = TO_CHAR(#{GOVEROWNYN})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)" >
+			, JISANG_NO = TO_CHAR(#{JISANGNO})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JASANNO)" >
+			, ERP_NO = TO_CHAR(#{JASANNO})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOSIPLAN)" >
+			, DOSIPLAN = TO_CHAR(#{DOSIPLAN})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
+			, JISA = TO_CHAR(#{JISA})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PIPEYN)" >
+			, PIPE_OVERLAP_YN = TO_CHAR(#{PIPEYN})
+		</if>
+		WHERE PNU = TO_CHAR(#{PNU})
+	</update>
+	
+	<select id="selectNotsetRowDetail_KibonInfo"  parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT NM.nm_notset_no as NOTSET_NO
+		, NM.nm_jisa as JISA
+		, NM.nm_pipe_name as PIPE_NAME
+		, NM.nm_sun_gubun as SUN_GUBUN
+		, NM.nm_sido_nm as SIDO_NM
+		, NM.nm_sgg_nm as SGG_NM
+		, NM.nm_emd_nm as EMD_NM
+		, NM.nm_ri_nm as RI_NM
+		, NM.nm_jibun as JIBUN
+		, NM.nm_jijuk_area as JIJUK_AREA
+		, NM.nm_jimok_text as JIMOK_TEXT
+		, NM.nm_pnu as PNU
+		, NM.nm_pipe_yn as PIPE_YN
+		, NM.nm_pipe_meter as PIPE_METER
+		, NM.nm_pipe_meter2 as PIPE_METER2
+		, NM.nm_gover_own_yn as GOVER_OWN_YN
+		, NM.nm_addrcode as ADDRCODE
+		FROM NOTSET_MASTER NM
+		WHERE NM.nm_NOTSET_NO = TO_CHAR(#{NOTSET_NO})
+	</select>
+	
+	<update id="updateNotsetMasterStatus" parameterType="HashMap">
+		UPDATE JIJUK_2024 SET
+		JISANG_STATUS = 'N'
+		, ERP_NO = ''
+		, JISANG_NO = ''
+		, DOSIPLAN = ''
+		, GOVER_OWN_YN = 'N'
+		, JISA = ''
+		WHERE PNU IN ( SELECT nm_PNU PNU FROM NOTSET_MASTER WHERE nm_NOTSET_NO = TO_CHAR(#{JISANGNO}) )
+	</update>
+	
+	<update id="updateNotsetMaster" parameterType="HashMap">
+		UPDATE NOTSET_MASTER
+		SET
+		nm_SIDO_NM = #{SIDO_NM}
+		, nm_SGG_NM = #{SGG_NM}
+		, nm_EMD_NM = #{EMD_NM}
+		, nm_RI_NM = #{RI_NM}
+		, nm_JIBUN = #{JIBUN}
+		, nm_JISA = #{JISA}
+		, nm_JIJUK_AREA = to_number(#{JIJUK_AREA})
+		, nm_PIPE_NAME = #{PIPE_NAME}
+		, nm_SUN_GUBUN = #{SUN_GUBUN}
+		, nm_ADDRCODE = #{ADDRCODE}
+		, nm_PIPE_YN = #{PIPE_YN}
+		, nm_PIPE_METER = #{PIPE_METER}
+		, nm_PIPE_METER2 = #{PIPE_METER2}
+		, nm_PNU = #{PNU}
+		, nm_GOVER_OWN_YN = #{GOVER_OWN_YN}
+		, nm_JIMOK_TEXT = #{JIMOK_TEXT}
+
+		WHERE nm_NOTSET_NO = TO_CHAR(#{NOTSET_NO})
+
+	</update>
+	
+	<insert id="insertNotsetModifyHistory" parameterType="HashMap">
+		Insert into NOTSET_MODIFY
+		( nn_NOTSET_NO, nn_MODIFY_DATE, nn_GUBUN, nn_CONT, nn_USER_NAME, nn_USER_ID )
+		Values
+		(#{NOTSET_NO}, CURRENT_TIMESTAMP, #{GUBUN}, #{CONT}, #{USER_NAME}, #{USER_ID})
+	</insert>
+	
+	<update id="updateTogiJisang_Status" parameterType="HashMap">
+		UPDATE JIJUK_2024 SET
+		JISANG_STATUS = TO_CHAR(#STATUS#)
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVEROWNYN)" >
+			, GOVER_OWN_YN = TO_CHAR(#{GOVEROWNYN})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)" >
+			, JISANG_NO = TO_CHAR(#{JISANGNO})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JASANNO)" >
+			, ERP_NO = TO_CHAR(#{JASANNO})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOSIPLAN)" >
+			, DOSIPLAN = TO_CHAR(#{DOSIPLAN})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
+			, JISA = TO_CHAR(#{JISA})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PIPEYN)" >
+			, PIPE_OVERLAP_YN = TO_CHAR(#{PIPEYN})
+		</if>
+		WHERE PNU = TO_CHAR(#{PNU})
+	</update>
+	
+	<delete id="deleteNotsetSoyu" parameterType="HashMap">
+		DELETE FROM NOTSET_SOUJA
+		WHERE ns_NOTSET_NO = TO_CHAR(#{NOTSET_NO})
+	</delete>
+	<insert id="insertNotsetSoyu" parameterType="HashMap">
+		Insert into NOTSET_SOUJA
+		(ns_NOTSET_NO, ns_JIBUN, ns_SOUJA_NAME, ns_ADDRESS, ns_CONTACT)
+		Values
+		(#{NOTSET_NO}, #{JIBUN}, #{NAME}, #{ADDR}, #{TEL})
+	</insert>
+		<select id="selectNotsetRowDetail_Files" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM NOTSET_ATCFILE
+		WHERE na_NOTSET_NO = TO_CHAR(#{NOTSET_NO})
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+			AND na_SEQ = TO_CHAR(#SEQ#)
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(FILE_SEQ)" >
+			AND na_FILE_SEQ = TO_CHAR(#{FILE_SEQ})
+		</if>
+		ORDER BY na_SEQ DESC
+	</select>
+		<delete id="notsetDeleteFile" parameterType="HashMap">
+		DELETE FROM NOTSET_ATCFILE
+		WHERE na_NOTSET_NO = TO_CHAR(#{NOTSET_NO})
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+			AND na_FILE_SEQ = TO_CHAR(#{SEQ})
+		</if>
+	</delete>
+	<select id="selectNotset_ATCFILE_NoCheck" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT * FROM NOTSET_ATCFILE
+		WHERE na_SEQ = TO_CHAR(#{FILESEQ})
+	</select>
+		<update id="updateNotsetSeqFile" parameterType="HashMap">
+		UPDATE NOTSET_ATCFILE SET
+		na_NOTSET_NO = TO_CHAR(#{NOTSET_NO})
+		WHERE na_SEQ = TO_CHAR(#{FILE_SEQ})
+	</update>
+	<select id="makePnuIssueSeq" resultType="String" parameterType="HashMap">
+ 
+			SELECT COALESCE(MAX(S.pi_SEQ), 0) + 1 AS SEQ FROM POTENTIAL_ISSUE S
+
+	</select>
+	<insert id="insertPnuIssue" parameterType="HashMap">
+	 
+		INSERT INTO POTENTIAL_ISSUE (
+		        pi_PNU
+		        , pi_SEQ
+		        , pi_CODE_DEPTH1
+		        , pi_CODE_DEPTH2
+		        , pi_CODE_DEPTH3
+		        , pi_ISSUE_COMMENT
+		        , pi_DEL_FLAG
+		        , pi_ISSUE_DATE
+		        , pi_REGISTED_YN
+		        , pi_PERMITTED_YN
+		        , pi_ADDRCODE
+		        , pi_JIBUN
+		) VALUES (
+		        #{PNU}
+		        , #{SEQ}
+		        , #{CODE_DEPTH1}
+		        , #{CODE_DEPTH2}
+		        , #{CODE_DEPTH3}
+		        , #{ISSUE_COMMENT}
+		        , 'N'
+		        , CURRENT_TIMESTAMP
+		        , #{REGISTED_YN}
+		        , #{PERMITTED_YN}
+		        , #{ADDRCODE}
+		        , #{JIBUN}
+		)
+	
+	</insert>
+	<insert id="insertPnuIssueHistory" parameterType="HashMap">
+	 
+			INSERT INTO POTENTIAL_ISSUE_HISTORY (
+			        pih_HISTORY_SEQ
+			        , pih_PNU
+			        , pih_SEQ
+			        , pih_HISTORY_TYPE
+			        , pih_CONTENT
+			        , pih_HISTORY_DATE
+			        , pih_ADDRCODE
+			        , pih_JIBUN
+			) VALUES (
+			        (SELECT COALESCE(MAX(S.pih_HISTORY_SEQ), 0) + 1 FROM POTENTIAL_ISSUE_HISTORY S)
+			        , #{PNU}
+			        , #{SEQ}
+			        , #{HISTORY_TYPE}
+			        , #{HISTORY_CONTENT}
+			        , CURRENT_TIMESTAMP
+			        , #{ADDRCODE}
+			        , #{JIBUN}
+			)
+	
+	</insert>
+	<update id="updateMinwonPnuComplete" parameterType="HashMap"> 
+			UPDATE MINWON_PNU
+			   SET mp_COMP_DATE = CURRENT_TIMESTAMP
+			 WHERE mp_MINWON_SEQ = #{MINWON_SEQ}
+			   AND mp_PNU = #{PNU}
+	</update>
+	<insert id="insertJijukLog" parameterType="HashMap"> 
+       INSERT INTO PLMS_JIJUK_LOG (
+		    LOG_SEQ,
+		    PNU,
+		    JISANG_NO_OLD,
+		    JISANG_NO,
+		    JISANG_STATUS_OLD,
+		    JISANG_STATUS,
+		    GOVER_OWN_YN_OLD,
+		    GOVER_OWN_YN,
+		    PIPE_OVERLAP_YN_OLD,
+		    PIPE_OVERLAP_YN,
+		    JISA_OLD,
+		    JISA,
+		    LOG_TIME,
+		    LOG_USER,
+		    LOG_TYPE
+		) 
+		VALUES (
+		    (SELECT COALESCE(MAX(LOG_SEQ), 0) + 1 FROM PLMS_JIJUK_LOG),
+		    #{PNU},
+		    #{JISANG_NO_OLD},
+		    #{JISANG_NO},
+		    #{JISANG_STATUS_OLD},
+		    #{JISANG_STATUS},
+		    #{GOVER_OWN_YN_OLD},
+		    #{GOVER_OWN_YN},
+		    #{PIPE_OVERLAP_YN_OLD},
+		    #{PIPE_OVERLAP_YN},
+		    #{JISA_OLD},
+		    #{JISA},
+		    CURRENT_TIMESTAMP,
+		    #{LOG_USER},
+		    #{LOG_TYPE}
+		)
+
+</insert>
 </mapper>

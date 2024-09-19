@@ -32,7 +32,7 @@ public interface MainService {
 	
 	public ArrayList<HashMap> selectQuery(String string, HashMap hashMap) throws Exception;
 	public HashMap selectHashmapQuery(String string, HashMap hashMap) throws Exception;
-	
+	public String selectStringQuery(String string, HashMap hashMap) throws Exception;
 	
 	
 	
