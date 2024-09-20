@@ -1078,6 +1078,8 @@ $(document).on("click",".resultSelectBtn",function(){
 	var sgg_nm=$(this).parent().parent().find(".popContent0202").html();
 	var emd_nm=$(this).parent().parent().find(".popContent0203").html();
 	var ri_nm=$(this).parent().parent().find(".popContent0204").html();
+	var addrcode=$(this).parent().parent().find(".popContent0205").html();
+	var jibun_full=$(this).parent().parent().find(".popContent0206").html();
 	var jimok=$(this).parent().parent().find(".popContent05").html();
 	
 	console.log("pnu: " + pnu);
@@ -1091,6 +1093,14 @@ $(document).on("click",".resultSelectBtn",function(){
 	
 	openerTargetEle.parent().parent().find("#pnu").val(pnu);
 	openerTargetEle.parent().parent().find("#addr").val(juso);
+	openerTargetEle.parent().parent().find("#sido_nm").val(sido_nm);
+	openerTargetEle.parent().parent().find("#sgg_nm").val(sgg_nm);
+	openerTargetEle.parent().parent().find("#emd_nm").val(emd_nm);
+	openerTargetEle.parent().parent().find("#ri_nm").val(ri_nm);
+	openerTargetEle.parent().parent().find("#jibun").val(jibun);
+	openerTargetEle.parent().parent().find("#jibun_full").val(jibun_full);
+	openerTargetEle.parent().parent().find("#addrcode").val(addrcode);
+	
 	// 지목 값 select 박스에 반영
 	var jimokSelectBox = openerTargetEle.parent().parent().find("#jimok");
 	jimokSelectBox.val(jimok); // 지목 값을 select 박스에 설정
