@@ -449,7 +449,6 @@
 		              <option value="전체">전체</option>
 		            </select>
 		          </div>
-				  
 		          <section class="customSelectBox">
 					<button class="customSelectView" id="admOfficeText01">선택</button>
                     <ul class="customSelectBtns" id="admOfficeUl01">
@@ -542,7 +541,7 @@
 				<!-- 관리기관 -->
 		        <li class="content largeWidth selectContentArea">
 		          <div class="hiddenSelectBox">
-		            <select name="masterRegSelectBox16" id="masterRegSelectBox16" hidden>
+		            <select name="adm_office" id="masterRegSelectBox16" hidden>
 		              <option value="전체">전체</option>
 		            </select>
 		          </div>
@@ -554,7 +553,7 @@
 		        <!-- 국공유지 여부 -->
 		        <li class="content middleWidth selectContentArea">
 		          <div class="hiddenSelectBox">
-		            <select name="masterRegSelectBox17" id="masterRegSelectBox17" hidden>
+		            <select name="gover_own_yn" id="masterRegSelectBox17" hidden>
 		              <option value="국유지">국유지</option>
 		              <option value="사유지">사유지</option>
 		            </select>
@@ -566,19 +565,19 @@
 		        </li>
 		        <!-- 대표필지 -->
 		        <li class="content checkboxWrap">
-		          <input type="checkbox" id="masterRegSelectBox_" />
+		          <input type="checkbox" id="masterRegSelectBox_" name="rep_flag" />
 		          <label for="masterRegSelectBox_"></label>
 		        </li>
 		        <!-- 주소 -->
 		        <li class="content addressInfoWidth">
 		          <!--<div class="addressData">-->
-		            <input type="text" id="addr"/>
+		            <input type="text" id="addr" name="addr"/>
 		          <!--</div>-->
 		          <button class="searchAddressBtn">검색</button>
 		        </li>
 		        <!-- PNU -->
 		        <li class="content middleWidth">
-		          <input type="text" id="pnu"/>
+		          <input type="text" name="pnu" id="pnu"/>
 		        </li>
 		        <!-- 지목 -->
 		        <li class="content selectContentArea">
@@ -595,11 +594,11 @@
 		        </li>
 		        <!-- 점용연장 -->
 		        <li class="content">
-		          <input type="text" />
+		          <input type="text" name="gover_length" />
 		        </li>
 		        <!-- 점용면적 -->
 		        <li class="content">
-		          <input type="text" />
+		          <input type="text" name="gover_area" />
 		        </li>
 		        <!-- 관로일치 여부 -->
 		        <li class="content middleWidth selectContentArea">
