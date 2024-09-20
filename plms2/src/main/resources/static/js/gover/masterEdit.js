@@ -851,7 +851,10 @@ $(document).on("click",".searchAddressBtn",function(){
 	
 	console.log($(this).parent().parent().html());
 	var idObj=$(this).parent().parent().find("#addr");
-	var id=$(this).parent().parent().find("#goverIndex").val();
+	//var id=$(this).parent().parent().find("#goverIndex").val();
+	
+	// 여기서 #notWriteInput의 placeholder 값을 id로 사용
+    var id = $(this).parent().parent().find(".notWriteInput").attr("placeholder");
 		
 	console.log(idObj.val()); 
 	console.log(id);
@@ -913,7 +916,8 @@ $(document).on("click",".resultSelectBtn",function(){
 	
 	var openerEle=$("#goverUlDiv");
 	//	console.log($(openerEle).html());
-	var openerTargetEle=openerEle.find('input[id="goverIndex"][value="'+id+'"]');
+	// var openerTargetEle=openerEle.find('input[id="goverIndex"][value="'+id+'"]');
+	var openerTargetEle = openerEle.find('input[placeholder="' + id + '"]');
 	//console.log(openerTargetEle.parent().parent().html());
 	
 	openerTargetEle.parent().parent().find("#pnu").val(pnu);
