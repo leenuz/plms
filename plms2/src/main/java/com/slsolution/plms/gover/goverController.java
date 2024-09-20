@@ -462,6 +462,7 @@ public class goverController {
 			
 			return mav;
 		}
+
 		@GetMapping(path="/orgAdmin") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView orgAdmin(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
@@ -470,7 +471,43 @@ public class goverController {
 			mav.setViewName("content/gover/orgAdmin");
 			return mav;
 		}
-		
+
+		@GetMapping(path="/orgAdminPopupAccept") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView orgAdminPopupAccept(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/gover/orgAdminPopupAccept");
+			return mav;
+		}
+
+		@GetMapping(path="/orgAdminPopupMod") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView orgAdminPopupMod(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/gover/orgAdminPopupMod");
+			return mav;
+		}
+
+		@GetMapping(path="/orgAdminPopupReg") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView orgAdminPopupReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/gover/orgAdminPopupReg");
+			return mav;
+		}
+
+		@GetMapping(path="/orgAdminPopupRegCancel") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView orgAdminPopupRegCancel(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/gover/orgAdminPopupRegCancel");
+			return mav;
+		}
+
 		@GetMapping(path="/masterReg") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView masterReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
