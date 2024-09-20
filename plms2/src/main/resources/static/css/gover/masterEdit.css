@@ -620,7 +620,7 @@ button {
   width: 9.2%;
 }
 #masterEdit .landAdressInfo .contWrap .smallWidth {
-  width: 3%;
+  /* width: 3%; */
 }
 #masterEdit .landAdressInfo .contWrap .largeWidth {
   width: 11.8%;

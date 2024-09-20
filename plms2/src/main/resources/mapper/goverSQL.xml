@@ -68,7 +68,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and ga_gover_no=#{idx}
 		</if>
-
 	</select>
 	
 	<select id="selectModifyList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
