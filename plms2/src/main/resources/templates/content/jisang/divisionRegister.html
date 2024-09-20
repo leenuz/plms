@@ -165,7 +165,7 @@ border: 1px solid black;
                             </ul>
                         </li>
                         <li class="title">소유자</li>
-                        <li class="title">회계처리필요여부</li>
+                        <li class="title">회계처리필요여부*</li>
                     </ul>
                     <ul class="contents lastContents" >
                         <li class="content numInfoWidth">
@@ -234,21 +234,21 @@ border: 1px solid black;
                         <li class="title numInfoWidth">순번</li>
                         <li class="title middleWidth">지상권번호</li>
                         <li class="title addressInfoWidth">주소</li>
-                        <li class="title middleWidth">토지유형</li>
+                        <li class="title middleWidth">토지유형*</li>
                         <li class="title titleBox">
                             지상권설정
                             <ul class="secondTitles">
-                                <li class="secondTitle">지목</li>
-                                <li class="secondTitle">지적면적</li>
-                                <li class="secondTitle">편입면적</li>
-                                <li class="secondTitle">자산번호</li>
+                                <li class="secondTitle">지목*</li>
+                                <li class="secondTitle">지적면적*</li>
+                                <li class="secondTitle">편입면적*</li>
+                                <li class="secondTitle">자산번호*</li>
                             </ul>
                         </li>
                         <li class="title">관로저촉</li>
                         <li class="title">해지여부</li>
                         <li class="title">자료승계</li>
                         <li class="title middleWidth">위치보기</li>
-                        <li class="title middleWidth">회계처리필요여부</li>
+                        <li class="title middleWidth">회계처리필요여부*</li>
                         <li class="title titleBtnWrap">추가/삭제</li>
                     </ul>
                     <div class="contentsBox">
@@ -277,13 +277,13 @@ border: 1px solid black;
                   <!-- name도 추가 -->
                   <select name="togiBunhalTogiType"  id="divisionRegistSelectBox02" class="divisionRegistSelectBox02_"hidden>
                     <option value="" hidden></option>
-                    <option value="사유지">사유지</option>
                     <option value="국유지">국유지</option>
+                    <option value="사유지">사유지</option>
                   </select>
                 </div>
                 <section class="customSelectBox">
                   <button class="customSelectView tojiSelect_" id="hiddenBtn">
-                    선택
+                      선택
                   </button>
 
                   <ul class="customSelectBtns">
@@ -325,7 +325,7 @@ border: 1px solid black;
                 </div>
                 <section class="customSelectBox">
                   <button class="customSelectView accountYN_">
-                    선택
+                    Y
                   </button>
 
                   <ul class="customSelectBtns">
@@ -373,7 +373,7 @@ border: 1px solid black;
                             </li>
                             <li class="content addressInfoWidth">
                                 <div class="addressData">
-                                    <input type="text" th:value="${val.address}" placeholder="서울특별시 서초구 서초동 1" name="togiBunhalAddr" id="bunhalSaddr_0" class="notWriteInput">
+                                    <input type="text" th:value="${val.address}" placeholder="서울특별시 서초구 서초동 1" name="togiBunhalAddr" id="bunhalAddres" class="notWriteInput">
                                 </div>
                                 <button class="searchAddressBtn">검색</button>
                             </li>
@@ -381,14 +381,13 @@ border: 1px solid black;
                                 <div class="hiddenSelectBox">
                                     <!-- name도 추가 -->
                                     <select name="togiBunhalTogiType" id="divisionRegistSelectBox02" hidden>
-                                          <option value="">전체</option>
                                         <option value="국유지">국유지</option>
                                         <option value="사유지">사유지</option>
                                     </select>
                                 </div>
                                 <section class="customSelectBox">
-                                    <button class="customSelectView">
-                                        [[${#lists.isEmpty(val.jb_toji_type)}?'전체':${val.jb_toji_type}]]
+                                    <button class="customSelectView" id="hiddenBtn">
+                                        [[${#lists.isEmpty(val.jb_toji_type)}?'선택':${val.jb_toji_type}]]
                                     </button>
                                 
                                     <ul class="customSelectBtns">
@@ -429,21 +428,12 @@ border: 1px solid black;
                                 <div class="hiddenSelectBox">
                                     <!-- name도 추가 -->
                                     <select name="togiBunhalAccountYn" id="divisionRegistSelectBox03" hidden>
-                                        <option value="Y1">Y1</option>
-                                        <option value="Y2">Y2</option>
-                                        <option value="Y3">Y3</option>
-                                        <option value="Y4">Y4</option>
-                                        <option value="Y5">Y5</option>
-                                        <option value="Y6">Y6</option>
-                                        <option value="Y7">Y7</option>
-                                        <option value="Y8">Y8</option>
-                                        <option value="Y9">Y9</option>
-                                        <option value="Y10">Y10</option>
+                                        <option value="Y">Y</option>
+                                        <option value="N">N</option>
                                     </select>
                                 </div>
                                 <section class="customSelectBox">
-                                    <button class="customSelectView">
-                                        &#160
+                                    <button class="customSelectView" th:text="${resultData.jm_account_yn}?:'N'">
                                     </button>
                 
                                     <ul class="customSelectBtns">
@@ -728,14 +718,14 @@ border: 1px solid black;
                         <li class="title middleWidth">회계처리필요여부</li>
                     </ul>
 
-                    <ul class="contents lastContents" id="cancelInfoHiddenUl" style="display:none">
+                    <ul class="contents" id="cancelInfoHiddenUl" style="display:none">
                         <li class="content addressInfoWidth">
                             <div class="addressData">
-                                <input type="text" name="cancelAddress" placeholder="경기도 평택시 동천리 606-132" th:value="${resultData.address}" readonly class="notWriteInput">
+                                <input type="text" name="cancelAddress" id="cancelAddress" th:value="${resultData.address}" readonly class="notWriteInput">
                             </div>
                         </li>
                         <li class="content middleWidth">
-                            <input type="text" name="cancelTojiType" th:value="${resultData.jm_toji_type}">
+                            <input type="text" name="cancelTojiType" id="cancelTojiType" th:value="${resultData.jm_toji_type}">
                         </li>
                         <li class="content contentBox">
                             <ul class="secondContents">
@@ -771,49 +761,49 @@ border: 1px solid black;
                             </section>
                         </li>
                     </ul>
-                    <ul class="contents lastContents" id="cancelInfoUl">
-                        <li class="content addressInfoWidth">
-                            <div class="addressData">
-                                <input type="text" name="cancelAddress" placeholder="경기도 평택시 동천리 606-132" th:value="${resultData.address}" readonly class="notWriteInput">
-                            </div>
-                        </li>
-                        <li class="content middleWidth">
-                            <input type="text" name="cancelTojiType" th:value="${resultData.jm_toji_type}">
-                        </li>
-                        <li class="content contentBox">
-                            <ul class="secondContents">
-                                <li class="secondContent"><input type="text" name="cancelChuideukMoney" th:value="${resultData.jm_chuideuk_money}"></li>
-                                <li class="secondContent"><input type="text" name="cancelGammoney" th:value="${resultData.jm_gammoney}"></li>
-                                <li class="secondContent"><input type="text" name="cancelRemainderMoney" th:value="${resultData.jm_remainder_money}"></li>
-                            </ul>
-                        </li>
-                        <li class="content contentBox">
-                            <ul class="secondContents">
-                                <li class="secondContent"><input type="text" name="cancelBosangMoney"></li>
-                                <li class="secondContent"><input type="text" name="cancelProfitLoss"></li>
-                            </ul>
-                        </li>
-                        <li class="content middleWidth selectContentArea">
-                            <div class="hiddenSelectBox">
-                                <!-- name도 추가 -->
-                                <select name="cancelAccountYn" id="divisionRegistSelectBox06" hidden>
-                                    <option value="">선택</option>
-                                    <option value="Y">Y</option>
-                                    <option value="N">N</option>
-                                   
-                                </select>
-                            </div>
-                            <section class="customSelectBox">
-                                <button class="customSelectView">
-                                    선택
-                                </button>
-                        
-                                <ul class="customSelectBtns">
-                                    <!-- createCustomLiDivisionRegist(); -->
-                                </ul>
-                            </section>
-                        </li>
-                    </ul>
+<!--                    <ul class="contents" id="cancelInfoUl">-->
+<!--                        <li class="content addressInfoWidth">-->
+<!--                            <div class="addressData">-->
+<!--                                <input type="text" name="cancelAddress" placeholder="경기도 평택시 동천리 606-132" th:value="${resultData.address}" readonly class="notWriteInput">-->
+<!--                            </div>-->
+<!--                        </li>-->
+<!--                        <li class="content middleWidth">-->
+<!--                            <input type="text" name="cancelTojiType" th:value="${resultData.jm_toji_type}">-->
+<!--                        </li>-->
+<!--                        <li class="content contentBox">-->
+<!--                            <ul class="secondContents">-->
+<!--                                <li class="secondContent"><input type="text" name="cancelChuideukMoney" th:value="${resultData.jm_chuideuk_money}"></li>-->
+<!--                                <li class="secondContent"><input type="text" name="cancelGammoney" th:value="${resultData.jm_gammoney}"></li>-->
+<!--                                <li class="secondContent"><input type="text" name="cancelRemainderMoney" th:value="${resultData.jm_remainder_money}"></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+<!--                        <li class="content contentBox">-->
+<!--                            <ul class="secondContents">-->
+<!--                                <li class="secondContent"><input type="text" name="cancelBosangMoney" th:value="${resultData.jm_cancel_bosang_money}"></li>-->
+<!--                                <li class="secondContent"><input type="text" name="cancelProfitLoss" th:value="${resultData.jm_remainder_money}"></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+<!--                        <li class="content middleWidth selectContentArea">-->
+<!--                            <div class="hiddenSelectBox">-->
+<!--                                &lt;!&ndash; name도 추가 &ndash;&gt;-->
+<!--                                <select name="cancelAccountYn" id="divisionRegistSelectBox06" hidden>-->
+<!--                                    <option value="">선택</option>-->
+<!--                                    <option value="Y">Y</option>-->
+<!--                                    <option value="N">N</option>-->
+<!--                                   -->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            <section class="customSelectBox">-->
+<!--                                <button class="customSelectView">-->
+<!--                                    선택-->
+<!--                                </button>-->
+<!--                        -->
+<!--                                <ul class="customSelectBtns">-->
+<!--                                    &lt;!&ndash; createCustomLiDivisionRegist(); &ndash;&gt;-->
+<!--                                </ul>-->
+<!--                            </section>-->
+<!--                        </li>-->
+<!--                    </ul>-->
                 </div>
             </div>
         </section>
@@ -821,7 +811,7 @@ border: 1px solid black;
         <!-- 분할사유 및 검토의견 -->
         <section class="reasonTermination">
             <div class="subTitle">
-                분할사유 및 검토의견
+                분할사유 및 검토의견*
             </div>
 
             <div class="contWrap">
@@ -856,7 +846,7 @@ border: 1px solid black;
 
         <section class="attachDocuments">
             <div class="subTitle">
-                첨부 서류
+                첨부 서류*
             </div>
 
             <div class="contWrap">
@@ -1110,7 +1100,7 @@ border: 1px solid black;
         </div>
 
         <div class="finalBtnBox btnWrap">
-            <button class="backBtn grayBtn finalBtn">이전</button>
+            <button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
             <button class="temporarySaveBtn vividBlueBtn finalBtn">임시저장</button>
             <button class="lightBlueBtn approvalBtn finalBtn" id="sangsinBtn">상신</button>
         </div>

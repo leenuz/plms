@@ -332,6 +332,16 @@ $(document).ready(function(){
 			        });
 			        //status.setAbort(jqXHR);
 			    }
+
+    //해지 정보 리스트 업데이트
+    $('input[name="togiBunhalCancelYn"]').each(function() {
+      if ($(this).prop('checked')) {
+        console.log('Checkbox is already checked.');
+
+        // 체크박스를 클릭하지 않지만, change 이벤트 발생
+        $(this).trigger('change');
+      }
+    });
 }); //end ready
 
 
@@ -742,10 +752,10 @@ $(document).on("click","#addBtn",function(){
 					 
 					 
 		var terminate = addDiv.find('input.terminate_');
-		terminate.attr({'class':'terminate_'+index,'id': 'terminate_'+index,'name' : 'terminate_'+index});
+//		terminate.attr({'class':'terminate_'+index,'id': 'terminate_'+index,'name' : 'terminate_'+index});
+		terminate.attr({'class':'terminate_'+index,'id': 'terminate_'+index,'name' : 'togiBunhalCancelYn'});
 		var label2 = terminate.closest('li').find('label').first();
 		label2.attr({'for': 'terminate_'+index,'name' : 'terminate_'+index});
-		
 		
 		var jaryo = addDiv.find('input.jaryo_');
 		jaryo.attr({'class':'jaryo_'+index,'name' : 'jaryo_'+index,'id': 'jaryo_'+index});
@@ -764,11 +774,65 @@ $(document).on("click",".delBtn",function(){
 	console.log("------------deleteSoujaBtn click---------");
 	var thisUl=$(this).parent().parent().parent().parent();
 	var thisContents=$(this).parent().parent().parent().parent().parent().find(".contents");
+
+    //체크 박스 태그 가져와서 체크 되어있을 시 체크 해재
+	const checkbox = thisUl.find('input[name="togiBunhalCancelYn"]')
+	if(checkbox.prop('checked')){
+	    checkbox.trigger('click');
+	}
+
 	console.log($(thisContents).html());
 	console.log($(thisContents).length);
 	if ($(thisContents).length<=2) return;
 	$(thisUl).remove();
 
+});
+
+//해지여부 에서 사용할 리스트 인덱스
+var terminateIndex = 1;
+//해지여부 클릭 이벤트
+//$(document).on("change","#terminate_1",function(){
+$(document).on('change', 'input[name="togiBunhalCancelYn"]', function(event) {
+
+	console.log("----------------terminate_Yn btn-------------------------");
+        const checkbox = event.target;
+        const cancelInfoUl = checkbox.parentNode.parentNode;
+
+        if (checkbox.checked) {
+            // 체크박스가 선택된 경우
+            var bunhalAddress = cancelInfoUl.querySelector('input#bunhalAddres').value;
+            const tojiSelect = cancelInfoUl.querySelector('button#hiddenBtn').textContent.trim();
+
+            var addUl=$("#cancelInfoHiddenUl").html();
+
+            var addDiv = $('<ul class="contents" id="cancelInfoUl">'+addUl+'</ul>');
+            addDiv.attr('id', 'terminateIndex__' + terminateIndex); // ul 태그에 전역 변수 terminateIndex id 부여
+
+            // 체크박스에도 terminateIndex 저장
+            $(checkbox).attr('data-terminate-index', terminateIndex);
+
+            addDiv.find("bunhalIndex").val(index);
+            console.log($(addDiv).html());
+
+            if(!bunhalAddress){
+                bunhalAddress = cancelInfoUl.querySelector('input#bunhalAddres').getAttribute('placeholder')
+            }
+
+            //해지 여부 체크된 주소 입력
+            addDiv.find('input#cancelAddress').val(bunhalAddress);
+            //해지 여부 체크된 토지유형 입력
+//            addDiv.find('input#cancelTojiType').val(tojiSelect);
+
+            $("#cancelInfoDiv").append(addDiv);
+            terminateIndex++;  // 다음에 추가될 요소의 id가 고유하게 증가
+        } else {
+            // 체크박스 선택이 해제된 경우
+            const index = $(checkbox).attr('data-terminate-index');  // 체크박스에 저장된 terminateIndex 값 가져오기
+            const targetUl = $('#terminateIndex__' + index);  // terminateIndex 사용해 ul 선택
+            if (targetUl.length) {
+              targetUl.remove();  // 해당 ul 삭제
+            }
+        }
 });
 
 
@@ -780,6 +844,6 @@ $(document).on("click","#sangsinBtn",function(){
 
 	               
 	                
-	                // 새 창의 문서 닫기 (렌더링을 완료)
-	                newWindow.document.close();
+    // 새 창의 문서 닫기 (렌더링을 완료)
+    newWindow.document.close();
 })
