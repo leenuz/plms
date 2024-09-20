@@ -1,184 +1,163 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      
-      layout:decorate="~{layout/default_layout}">
- <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link th:href="@{/css/common.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/gover/orgAdmin.css" />
 
-
- 
-  
-   
-  
-	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	
- <link rel="stylesheet" href="/css/gover/orgAdmin.css" /> 
-	  
-		<script src="/js/songyu/menu01.js"></script>	
-		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <script src="/js/songyu/menu01.js"></script>
+  <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
-		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
+  <style>
+    div.dt-top-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+    }
 
-div.dt-center-in-div {
-  margin: 0 auto;
+    div.dt-center-in-div {
+      margin: 0 auto;
       float: right;
-    margin-right: 30px;
-   
-}
-div.dt-center-in-div>div{
+      margin-right: 30px;
+    }
 
-display:inline;
-}
+    div.dt-center-in-div>div {
+      display: inline;
+    }
 
-div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
-}
+    div.dt-filter-spacer {
+      margin: 10px 0;
+      border: 1px solid red;
+    }
 
+    .dt-title {
+      text-align: center;
+      width: 180px;
+      float: left;
+    }
 
-.dt-title{
+    .dt-buttons {
+      display: inline-block;
+      width: 180px;
+    }
 
-text-align:center;
-width:180px;
-float:left;
+    .dt-length {
+      display: inline-block;
+    }
 
-}
-.dt-buttons{
-display:inline-block;
+    .dt-button {
+      color: white;
+      background-color: #4e5871;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 10px;
+      background-image: url(/assets/media/menu01/download.png);
+      background-size: 11px;
+      background-repeat: no-repeat;
+      background-position: 123px center;
+      text-align: left;
+      margin-right: 10px;
+      width: 159px;
+      height: 38px;
+    }
 
-width:180px;
+    .dt-paging {
+      text-align: center;
+    }
 
-}
-.dt-length{
-display:inline-block;
-}
-.dt-button{
+    .dt-paging-button {
+      box-sizing: border-box;
+      display: inline-block;
+      min-width: 1.5em;
+      padding: 0.5em 1em;
+      margin-left: 2px;
+      text-align: center;
+      text-decoration: none !important;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      background: transparent;
+      color: #007bff !important;
+      font-size: 15px;
+      font-weight: 600;
+    }
 
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
+    .bottom {
+      text-align: center;
+    }
 
-}
+    .top {
+      text-align: right;
+      margin: 10px;
+    }
+  </style>
 
-.dt-paging {
-text-align: center;
-}
-
-.dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-    
-    
-}
-
-.bottom{
-text-align:center;
-
-}
-.top{
-
-text-align:right;
-margin:10px;
-
-}
-
-		</style>
-		
-    <title>관리기관 관리</title>
-  </head>
+  <title>관리기관 관리</title>
+</head>
 <th:block layout:fragment="content">
-    <!-- 관리기관 관리 -->
-    <div class="orgAdminWrappers">
-      
-      <main id="orgAdmin">
-        <div class="mainTitle">
-          <h1>관리기관 관리</h1>
-        </div>
+  <!-- 관리기관 관리 -->
+  <div class="orgAdminWrappers">
 
-        <section class="tableArea">
-          <div class="contWrap contentScr">
-            <table>
-              <caption class="hiddenCaption">
-                관리기관 관리
-              </caption>
+    <main id="orgAdmin">
+      <div class="mainTitle">
+        <h1>관리기관 관리</h1>
+      </div>
 
-              <thead>
-                <tr>
-                  <th class="smallWidth">순번</th>
-                  <th>담당지사</th>
-                  <th>허가관청</th>
-                  <th>관리기관</th>
-                  <th>등록현황</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="1"
-                      class="notWriteInput"
-                      readonly />
-                  </td>
-                  <td rowspan="13">
-                    <input
-                      type="text"
-                      placeholder="경인지사"
-                      class="notWriteInput"
-                      readonly />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      class="notWriteInput"
-                      readonly />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      class="notWriteInput"
-                      readonly />
-                  </td>
-                  <td>
+      <section class="tableArea">
+        <div class="contWrap contentScr">
+          <table>
+            <caption class="hiddenCaption">
+              관리기관 관리
+            </caption>
+
+            <thead>
+              <tr>
+                <th class="smallWidth">순번</th>
+                <th>담당지사</th>
+                <th>허가관청</th>
+                <th>관리기관</th>
+                <th>등록현황</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="1" class="notWriteInput" readonly />
+                </td>
+                <td rowspan="13">
+                  <input type="text" placeholder="경인지사" class="notWriteInput" readonly />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" class="notWriteInput" readonly />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" class="notWriteInput" readonly />
+                </td>
+                <td>
+                  <div class="btnWrap">
+                    <div class="btnBox">
+                      <button class="pendingApprovalBtn">승인대기</button>
+                    </div>
+                    <div class="btnBox">
+                      <button class="deleteBtn">삭제</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="2" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
                       <div class="btnBox">
                         <button class="pendingApprovalBtn">승인대기</button>
@@ -187,696 +166,548 @@ margin:10px;
                         <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="2"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="3" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="3"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="4" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="4"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="5" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="5"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="6" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="6"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="7" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="7"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="8" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="8"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="9" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="9"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="10" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="10"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="11" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="11"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="12" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="12"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="13" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="13"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="14" readonly class="notWriteInput" />
+                </td>
+                <td rowspan="13">
+                  <input type="text" placeholder="충청지사" class="notWriteInput" readonly />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="14"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td rowspan="13">
-                    <input
-                      type="text"
-                      placeholder="충청지사"
-                      class="notWriteInput"
-                      readonly />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="15" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="15"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="16" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="16"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="17" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="17"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="18" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="18"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="19" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="19"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="smallWidth">
+                  <input type="text" placeholder="20" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="당진시" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" readonly class="notWriteInput" />
+                </td>
+                <td>
+                  <div class="btnWrap">
                     <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
+                      <div class="btnBox">
+                        <button class="pendingApprovalBtn">승인대기</button>
+                      </div>
+                      <div class="btnBox">
+                        <button class="deleteBtn">삭제</button>
                       </div>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="smallWidth">
-                    <input
-                      type="text"
-                      placeholder="20"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="당진시"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="하천계획과"
-                      readonly
-                      class="notWriteInput" />
-                  </td>
-                  <td>
-                    <div class="btnWrap">
-                      <div class="btnWrap">
-                        <div class="btnBox">
-                          <button class="pendingApprovalBtn">승인대기</button>
-                        </div>
-                        <div class="btnBox">
-                          <button class="deleteBtn">삭제</button>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <div class="finalBtnBox btnWrap">
-          <!-- 관리기관 등록 팝업 호출 -->
-          <button class="vividBlueBtn finalBtn">등록</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </main>
+      </section>
+
+      <div class="finalBtnBox btnWrap">
+        <!-- 관리기관 등록 팝업 호출 -->
+        <button class="vividBlueBtn finalBtn">등록</button>
+      </div>
+    </main>
+  </div>
+  <div class="orgAdminRegisterPopWrapper">
+    <link
+    rel="stylesheet"
+    as="style"
+    crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+  />
+  <link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
+  <div id="register_Cancel_Popup" class="register_Cancel_Popup active">
+    <!-- 등록현황 버튼 누르면 나오는 팝업,수정 불가 팝업 (등록취소버튼)-->
+    <div class="popupWrap">
+      <h2>
+        <p>관리기관 등록</p>
+        <span class="topCloseBtn"></span>
+      </h2>
+      <div class="register_wrap">
+        <ul class="register_title">
+          <!-- 관리지사 -->
+  
+          <li class="register_title_th">
+            <h3>관리지사</h3>
+          </li>
+          <li class="popSelectWrap">
+            <div class="hidden_SelectBox">
+              <select hidden>
+                <option value="경인지사">경인지사</option>
+                <option value="경인지사1">경인지사1</option>
+                <option value="경인지사2">경인지사2</option>
+                <option value="경인지사3">경인지사3</option>
+                <option value="경인지사4">경인지사4</option>
+              </select>
+            </div>
+            <div class="Popup_Custom_SelectBox">
+              <button class="Popup_Custom_SelectView">경인지사</button>
+              <ul class="Popup_Custom_SelectBtns"></ul>
+            </div>
+          </li>
+  
+          <!-- 허가관청 신규입력 -->
+  
+          <li class="register_title_th3">
+            <h3>허가관청 신규입력</h3>
+          </li>
+          <li class="register_title_th4">
+            <input
+              type="checkbox"
+              id="registerPopup_checkbox"
+              class="approve_checkbox"
+              disabled
+            />
+            <label for="registerPopup_checkbox" class="approve_checkbox_label">
+            </label>
+          </li>
+  
+          <!-- 허가관청 -->
+  
+          <li class="register_title_th5">
+            <h3>허가관청</h3>
+          </li>
+          <li class="popSelectWrap register_title_th6">
+            <div class="hidden_SelectBox">
+              <select hidden>
+                <option value="전체">전체</option>
+                <option value="전체1">전체1</option>
+                <option value="전체2">전체2</option>
+                <option value="전체3">전체3</option>
+              </select>
+            </div>
+            <div class="Popup_Custom_SelectBox active">
+              <button class="Popup_Custom_SelectView">전체</button>
+              <ul class="Popup_Custom_SelectBtns"></ul>
+            </div>
+          </li>
+  
+          <!-- 관리기관 -->
+          <li class="register_title_th7">
+            <h3>관리기관</h3>
+          </li>
+          <li class="register_title_th8"><input type="text" disabled/></li>
+        </ul>
+      </div>
+  
+      <div class="registerbtnWrap">
+        <button class="closeBtn finalBtn">닫기</button>
+        <button class="cancelBtn finalBtn">등록 취소</button>
+      </div>
     </div>
-    <div class="orgAdminRegisterPopWrapper"></div>
-    <div class="orgAdminApprovePopWrapper"></div>
-    <div class="orgAdminRevisePopWrapper"></div>
-    <div class="orgAdminRegisterApprovePopWrapper"></div>
-    <script type="module" src="/components/surfaceMain.js"></script>
-    <script src="/components/js/menu03/orgAdmin.js"></script>
- </th:block>
+  </div>
+  <script>
+  
+    //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+    const registerCancelPopupPopupOpen = document.getElementById(
+      "register_Cancel_Popup"
+    );
+    if (registerCancelPopupPopupOpen) {
+      registerCancelPopupPopupOpen
+        .querySelectorAll(".topCloseBtn, .finalBtn")
+        .forEach(function (btn) {
+          btn.addEventListener("click", () => {
+            registerCancelPopupPopupOpen.classList.remove("active");
+          });
+        });
+    }
+  
+  </script>
+  
+  </div>
+  <div class="orgAdminApprovePopWrapper"></div>
+  <div class="orgAdminRevisePopWrapper"></div>
+  <div class="orgAdminRegisterApprovePopWrapper"></div>
+  <script src="/components/js/menu03/orgAdmin.js"></script>
+</th:block>
+
 </html>

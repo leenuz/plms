@@ -1,0 +1,117 @@
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
+<div id="approve_Popup" class="active">
+    <div class="popupWrap">
+        <h2>
+            <p>관리기관 승인</p>
+            <span class="topCloseBtn"></span>
+        </h2>
+        <div class="aprrove_wrap">
+            <ul class="approve_title">
+                <li>관리지사</li>
+                <li class="popContent">
+                    <input type="text" placeholder="경인지사" readonly />
+                </li>
+                <li>허가관청 신규입력</li>
+                <li class="popContent">
+                    <input type="checkbox" id="approvePopup_checkbox" class="approve_checkbox" onclick="toggleElements()" />
+                    <label for="approvePopup_checkbox" class="approve_checkbox_label">
+                    </label>
+                </li>
+                <li>허가관청</li>
+                <li class="popContent">
+                    <input type="text" placeholder="고양시" class="popContent_default active" readonly />
+                    <input class="approve_hidden_text" type="text" />
+                </li>
+                <li>관리기관</li>
+                <li class="popContent">
+                    <input type="text" placeholder="도로관리과" class="popContent" readonly />
+                </li>
+            </ul>
+        </div>
+        <div class="approvehistory_wrap">
+            <h3>변경이력</h3>
+            <div class="approvehistory">
+                <ul class="approvehistory_title">
+                    <li class="approvehistory_title_1">변경일시</li>
+                    <li class="approvehistory_title_2">구분</li>
+                    <li class="approvehistory_title_3">내용</li>
+                </ul>
+                <div class="approvehistorycontent_wrap">
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">수정</li>
+                        <li class="approvehistory_title_4">
+                            허가관청 = 고양시 > 안양시<br />
+                            관리기관 = 도로과 > 녹지과
+                        </li>
+                    </ul>
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">신규등록</li>
+                        <li class="approvehistory_title_4">
+                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+                        </li>
+                    </ul>
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">신규등록</li>
+                        <li class="approvehistory_title_4">
+                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+                        </li>
+                    </ul>
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">신규등록</li>
+                        <li class="approvehistory_title_4">
+                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="registerbtnWrap">
+            <button class="closeBtn finalBtn">닫기</button>
+            <button class="approveBtn finalBtn">승인</button>
+        </div>
+    </div>
+</div>
+<script>
+    //스크롤이벤트_ 목록이 6개 이상일 경우 스크롤발생
+    const approveScrollLength = document.querySelectorAll(
+        ".approvehistorycontent_wrap ul"
+    );
+    const historycontent = document.querySelector(".approvehistorycontent_wrap");
+    if (approveScrollLength.length >= 6) {
+        historycontent.classList.add("scroll");
+    } else {
+        historycontent.classList.remove("scroll");
+    }
+
+    //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+    const approve_PopupPopupOpen = document.getElementById("approve_Popup");
+    if (approve_PopupPopupOpen) {
+        approve_PopupPopupOpen
+            .querySelectorAll(".topCloseBtn, .finalBtn")
+            .forEach(function (btn) {
+                btn.addEventListener("click", () => {
+                    approve_PopupPopupOpen.classList.remove("active");
+                });
+            });
+    }
+
+    // 체크박스 선택 이벤트
+    function toggleElements() {
+        const checkbox = document.getElementById("approvePopup_checkbox");
+        const inputContainer = document.querySelector(".approve_hidden_text");
+        const selectContainer = document.querySelector(".popContent_default");
+
+        if (checkbox.checked) {
+            inputContainer.classList.add("active");
+            selectContainer.classList.remove("active");
+        } else {
+            inputContainer.classList.remove("active");
+            selectContainer.classList.add("active");
+        }
+    }
+</script>

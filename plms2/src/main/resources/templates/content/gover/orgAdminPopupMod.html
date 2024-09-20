@@ -1,0 +1,257 @@
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
+<div id="approve_correction_Popup" class="active">
+    <div class="popupWrap">
+        <h2>
+            <p>관리기관 수정</p>
+            <span class="topCloseBtn"></span>
+        </h2>
+        <div class="aprrove_wrap">
+            <ul class="approve_title">
+                <li class="approve_title_1">관리지사</li>
+                <li class="popSelectWrap approve_select">
+                    <div class="hidden_SelectBox">
+                        <select name="approve_correction_Popup_Selectbox1" id="approve_correction_Popup_Selectbox1" hidden>
+                            <option value="전체">전체</option>
+                            <option value="전체1">전체1</option>
+                            <option value="전체2">전체2</option>
+                        </select>
+                    </div>
+                    <div class="Popup_Custom_SelectBox">
+                        <button class="Popup_Custom_SelectView">전체</button>
+                        <ul class="Popup_Custom_SelectBtns"></ul>
+                    </div>
+                </li>
+                <li>허가관청 신규입력</li>
+                <li>
+                    <input type="checkbox" id="approve_correction_Popup_checkbox" class="approve_checkbox" onclick="toggleElements02()" />
+                    <label for="approve_correction_Popup_checkbox" class="approve_checkbox_label">
+                    </label>
+                </li>
+                <li>허가관청</li>
+                <li class="popSelectWrap approve_select">
+                    <div class="hidden_SelectBox">
+                        <select name="approve_correction_Popup_Selectbox2" id="approve_correction_Popup_Selectbox2" hidden>
+                            <option value="전체">전체</option>
+                            <option value="전체1">전체1</option>
+                            <option value="전체2">전체2</option>
+                            <option value="전체3">전체3</option>
+                            <option value="전체4">전체4</option>
+                            <option value="전체5">전체5</option>
+                            <option value="전체6">전체6</option>
+                            <option value="전체7">전체7</option>
+                        </select>
+                    </div>
+                    <div class="Popup_Custom_SelectBox fix_default active">
+                        <button class="Popup_Custom_SelectView">전체</button>
+                        <ul class="Popup_Custom_SelectBtns"></ul>
+                    </div>
+                    <input class="fix_hidden_text" type="text" />
+                </li>
+                <li>관리기관</li>
+                <li class="approve_input_1"><input type="text" /></li>
+            </ul>
+        </div>
+        <div class="approvehistory_wrap">
+            <h3>변경이력</h3>
+            <div class="approvehistory">
+                <ul class="approvehistory_title">
+                    <li class="approvehistory_title_1">변경일시</li>
+                    <li class="approvehistory_title_2">구분</li>
+                    <li class="approvehistory_title_3">내용</li>
+                </ul>
+                <div class="approvehistorycontent_wrap">
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">수정</li>
+                        <li class="approvehistory_title_4">
+                            허가관청 = 고양시 > 안양시<br />
+                            관리기관 = 도로과 > 녹지과
+                        </li>
+                    </ul>
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">수정</li>
+                        <li class="approvehistory_title_4">
+                            허가관청 = 고양시 > 안양시<br />
+                            관리기관 = 도로과 > 녹지과
+                        </li>
+                    </ul>
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">신규등록</li>
+                        <li class="approvehistory_title_4">
+                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+                        </li>
+                    </ul>
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">신규등록</li>
+                        <li class="approvehistory_title_4">
+                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+                        </li>
+                    </ul>
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">신규등록</li>
+                        <li class="approvehistory_title_4">
+                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+                        </li>
+                    </ul>
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">신규등록</li>
+                        <li class="approvehistory_title_4">
+                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+                        </li>
+                    </ul>
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">신규등록</li>
+                        <li class="approvehistory_title_4">
+                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+                        </li>
+                    </ul>
+                    <!-- <ul class="approvehistory_content">
+            <li class="approvehistory_title_1">2024-04-01</li>
+            <li class="approvehistory_title_2">신규등록</li>
+            <li class="approvehistory_title_4">
+              관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+            </li>
+          </ul> -->
+                </div>
+            </div>
+        </div>
+        <div class="registerbtnWrap">
+            <button class="closeBtn finalBtn">닫기</button>
+            <button class="approveBtn finalBtn">승인 요청</button>
+        </div>
+    </div>
+</div>
+<script>
+    //스크롤이벤트_ 목록이 6개 이상일 경우 스크롤발생
+    const approveRegistScrollLength = document.querySelectorAll(
+        ".approvehistorycontent_wrap ul"
+    );
+    const approveRegistHistorycontent = document.querySelector(".approvehistorycontent_wrap");
+    if (approveRegistScrollLength.length >= 6) {
+        approveRegistHistorycontent.classList.add("scroll");
+    } else {
+        approveRegistHistorycontent.classList.remove("scroll");
+    }
+
+    //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+
+    const approveCorrectPopEvet = () => {
+        const approvecorrectionPopupOpen = document.getElementById(
+            "approve_correction_Popup"
+        );
+        if (approvecorrectionPopupOpen) {
+            approvecorrectionPopupOpen
+                .querySelectorAll(".topCloseBtn, .finalBtn")
+                .forEach(function (btn) {
+                    btn.addEventListener("click", () => {
+                        approvecorrectionPopupOpen.classList.remove("active");
+                    });
+                });
+        }
+    };
+
+    approveCorrectPopEvet();
+
+    //셀렉박스 이벤트
+    function newcomplaintSelect02() {
+        const approvecorrectionSelectWrapitems = document.querySelectorAll(
+            "#approve_correction_Popup .popSelectWrap"
+        );
+
+        if (approvecorrectionSelectWrapitems) {
+            approvecorrectionSelectWrapitems.forEach((contentitem) => {
+                const nowIssueSelectBox02 = contentitem.querySelector("select");
+
+                if (!nowIssueSelectBox02) return;
+
+                const popCustomSelectBox02 = contentitem.querySelector(
+                    "#approve_correction_Popup .Popup_Custom_SelectBox"
+                );
+                const popCustomSelectBtns02 = popCustomSelectBox02.querySelector(
+                    "#approve_correction_Popup .Popup_Custom_SelectBtns"
+                );
+
+                for (let i = 0; i < nowIssueSelectBox02.length; i++) {
+                    const optionValue02 = nowIssueSelectBox02.options[i].value;
+                    const li02 = document.createElement("li");
+                    const button02 = document.createElement("button");
+                    button02.classList.add("PopupMoreSelectBtn");
+                    button02.type = "button";
+                    button02.textContent = optionValue02;
+                    li02.appendChild(button02);
+                    popCustomSelectBtns02.appendChild(li02);
+                }
+            });
+        }
+    }
+
+    newcomplaintSelect02();
+
+    const customSelectView02 = document.querySelectorAll(
+        "#approve_correction_Popup .Popup_Custom_SelectView"
+    );
+
+    if (customSelectView02) {
+        customSelectView02.forEach((btn) => {
+            btn.addEventListener("click", function () {
+                btn.classList.toggle("active");
+                if (btn.nextElementSibling) {
+                    btn.nextElementSibling.classList.toggle("active");
+                }
+            });
+        });
+    }
+
+    const PopupMoreSelectBtn02 = document.querySelectorAll(
+        "#approve_correction_Popup .PopupMoreSelectBtn"
+    );
+
+    if (PopupMoreSelectBtn02) {
+        PopupMoreSelectBtn02.forEach((moreBtn) => {
+            moreBtn.addEventListener("click", function () {
+                var moreBtnText02 = moreBtn.innerText;
+                console.log(moreBtnText02);
+                const parentMoreBtn02 = moreBtn.closest(".Popup_Custom_SelectBtns");
+                const editViewBtn02 = parentMoreBtn02.previousElementSibling;
+                while (editViewBtn02.firstChild) {
+                    editViewBtn02.removeChild(editViewBtn02.firstChild);
+                }
+                const textNode02 = document.createTextNode(moreBtnText02);
+
+                editViewBtn02.appendChild(textNode02);
+                editViewBtn02.classList.remove("active");
+                parentMoreBtn02.classList.remove("active");
+
+                const nearByContent02 = moreBtn.closest(".popSelectWrap");
+                const nearBySelectBox02 = nearByContent02.querySelector("select");
+                nearBySelectBox02.value = moreBtn.textContent;
+
+                console.log(`Selected value: ${nearBySelectBox02.value}`);
+            });
+        });
+    }
+
+    // 체크박스 선택 이벤트
+    function toggleElements02() {
+        const checkbox = document.getElementById(
+            "approve_correction_Popup_checkbox"
+        );
+        const inputContainer = document.querySelector(".fix_hidden_text");
+        const selectContainer = document.querySelector(".fix_default");
+
+        if (checkbox.checked) {
+            inputContainer.classList.add("active");
+            selectContainer.classList.remove("active");
+        } else {
+            inputContainer.classList.remove("active");
+            selectContainer.classList.add("active");
+        }
+    }
+</script>
