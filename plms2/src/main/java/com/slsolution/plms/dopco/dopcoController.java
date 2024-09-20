@@ -9,9 +9,9 @@ import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
-<<<<<<< Updated upstream
+
 import org.springframework.web.bind.annotation.*;
-=======
+
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
->>>>>>> Stashed changes
+
 import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.CommonUtil;
