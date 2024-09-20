@@ -1,0 +1,194 @@
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
+<div id="registerPopup" class="register_Popup active">
+    <div class="popupWrap">
+        <!-- 관리기관 등록 가능한 팝업 (승인요청버튼)-->
+        <h2>
+            <p>관리기관 등록</p>
+            <span class="topCloseBtn"></span>
+        </h2>
+        <div class="register_wrap">
+            <ul class="register_title">
+                <!-- 관리지사 -->
+
+                <li class="register_title_th">
+                    <h3>관리지사</h3>
+                </li>
+                <li class="popSelectWrap">
+                    <div class="hidden_SelectBox">
+                        <select hidden>
+                            <option value="경인지사">경인지사</option>
+                            <option value="경인지사1">경인지사1</option>
+                            <option value="경인지사2">경인지사2</option>
+                            <option value="경인지사3">경인지사3</option>
+                            <option value="경인지사4">경인지사4</option>
+                        </select>
+                    </div>
+                    <div class="Popup_Custom_SelectBox">
+                        <button class="Popup_Custom_SelectView">경인지사</button>
+                        <ul class="Popup_Custom_SelectBtns"></ul>
+                    </div>
+                </li>
+
+                <!-- 허가관청 신규입력 -->
+
+                <li class="register_title_th3">
+                    <h3>허가관청 신규입력</h3>
+                </li>
+                <li class="register_title_th4">
+                    <input type="checkbox" id="registerPopup_checkbox02" class="approve_checkbox" onclick="toggleElements03()" />
+                    <label for="registerPopup_checkbox02" class="approve_checkbox_label">
+                    </label>
+                </li>
+
+                <!-- 허가관청 -->
+
+                <li class="register_title_th5">
+                    <h3>허가관청</h3>
+                </li>
+                <li class="popSelectWrap register_title_th6">
+                    <div class="hidden_SelectBox">
+                        <select hidden>
+                            <option value="전체">전체</option>
+                            <option value="전체1">전체1</option>
+                            <option value="전체2">전체2</option>
+                            <option value="전체3">전체3</option>
+                        </select>
+                    </div>
+                    <div class="Popup_Custom_SelectBox active">
+                        <button class="Popup_Custom_SelectView">전체</button>
+                        <ul class="Popup_Custom_SelectBtns"></ul>
+                    </div>
+                    <input class="register_hidden_text" type="text" />
+                </li>
+
+                <!-- 관리기관 -->
+                <li class="register_title_th7">
+                    <h3>관리기관</h3>
+                </li>
+                <li class="register_title_th8"><input type="text" /></li>
+            </ul>
+        </div>
+
+        <!-- 버튼 -->
+        <div class="registerbtnWrap">
+            <button class="closeBtn finalBtn">닫기</button>
+            <button class="approveBtn finalBtn">승인 요청</button>
+        </div>
+    </div>
+</div>
+<script>
+    //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+
+    const registerApprovePopEvet = () => {
+        const registerApprovePopupOpen = document.getElementById("registerPopup");
+        if (registerApprovePopupOpen) {
+            registerApprovePopupOpen
+                .querySelectorAll(".topCloseBtn, .finalBtn")
+                .forEach(function (btn) {
+                    btn.addEventListener("click", () => {
+                        registerApprovePopupOpen.classList.remove("active");
+                    });
+                });
+        }
+    };
+
+    registerApprovePopEvet();
+
+    //셀렉박스 이벤트
+    function newcomplaintSelect01() {
+        const registerApproveSelectWrapitems = document.querySelectorAll(
+            "#registerPopup .popSelectWrap"
+        );
+
+        if (registerApproveSelectWrapitems) {
+            registerApproveSelectWrapitems.forEach((contentitem) => {
+                const nowIssueSelectBox01 = contentitem.querySelector("select");
+
+                if (!nowIssueSelectBox01) return;
+
+                const popCustomSelectBox01 = contentitem.querySelector(
+                    "#registerPopup .Popup_Custom_SelectBox"
+                );
+                const popCustomSelectBtns01 = popCustomSelectBox01.querySelector(
+                    "#registerPopup .Popup_Custom_SelectBtns"
+                );
+
+                for (let i = 0; i < nowIssueSelectBox01.length; i++) {
+                    const optionValue01 = nowIssueSelectBox01.options[i].value;
+                    const li01 = document.createElement("li");
+                    const button01 = document.createElement("button");
+                    button01.classList.add("PopupMoreSelectBtn");
+                    button01.type = "button";
+                    button01.textContent = optionValue01;
+                    li01.appendChild(button01);
+                    popCustomSelectBtns01.appendChild(li01);
+                }
+            });
+        }
+    }
+
+    newcomplaintSelect01();
+
+    const customSelectView01 = document.querySelectorAll(
+        "#registerPopup .Popup_Custom_SelectView"
+    );
+
+    if (customSelectView01) {
+        customSelectView01.forEach((btn) => {
+            btn.addEventListener("click", function () {
+                btn.classList.toggle("active");
+                if (btn.nextElementSibling) {
+                    btn.nextElementSibling.classList.toggle("active");
+                }
+            });
+        });
+    }
+
+    const PopupMoreSelectBtn01 = document.querySelectorAll(
+        "#registerPopup .PopupMoreSelectBtn"
+    );
+
+    if (PopupMoreSelectBtn01) {
+        PopupMoreSelectBtn01.forEach((moreBtn) => {
+            moreBtn.addEventListener("click", function () {
+                var moreBtnText01 = moreBtn.innerText;
+                console.log(moreBtnText01);
+                const parentMoreBtn01 = moreBtn.closest(".Popup_Custom_SelectBtns");
+                const editViewBtn01 = parentMoreBtn01.previousElementSibling;
+                while (editViewBtn01.firstChild) {
+                    editViewBtn01.removeChild(editViewBtn01.firstChild);
+                }
+                const textNode01 = document.createTextNode(moreBtnText01);
+
+                editViewBtn01.appendChild(textNode01);
+                editViewBtn01.classList.remove("active");
+                parentMoreBtn01.classList.remove("active");
+
+                const nearByContent01 = moreBtn.closest(".popSelectWrap");
+                const nearBySelectBox01 = nearByContent01.querySelector("select");
+                nearBySelectBox01.value = moreBtn.textContent;
+
+                console.log(`Selected value: ${nearBySelectBox01.value}`);
+            });
+        });
+    }
+
+    // 체크박스 선택 이벤트
+    function toggleElements03() {
+        const checkbox03 = document.getElementById("registerPopup_checkbox02");
+        const inputContainer03 = document.querySelector("#registerPopup .register_hidden_text");
+        const selectContainer03 = document.querySelector(
+            "#registerPopup .register_title_th6 .Popup_Custom_SelectBox"
+        );
+
+        if (checkbox03.checked) {
+            inputContainer03.classList.add("active");
+            selectContainer03.classList.remove("active");
+        } else {
+            inputContainer03.classList.remove("active");
+            selectContainer03.classList.add("active");
+        }
+    }
+
+</script>

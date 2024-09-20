@@ -554,9 +554,132 @@ $(document).on("click", "#draftSaveBtn", function() {
 		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
 	}
     
+	
+	console.log("대상토지 정보");
+	   	var togiDatas=[];
+	   	var togiUls=$("#goverUlDiv #goverUl");
+	   	console.log(togiUls);
+		return;
+	   	for(var i=0;i<togiUls.length;i++){
+			var togiJisa=$("#jisa").val();
+	   		var togiManageNo=$(togiUls[i]).find("input[name='togiBunhalJisangNo']").val();
+	   		var togiaddress=$(togiUls[i]).find("input[name='togiBunhalAddr'").val();
+			var togiTogiType=$(togiUls[i]).find("select[name='togiBunhalTogiType']").val();
+	   		var togiJimokText=$(togiUls[i]).find("input[name='togiBunhalJimokText']").val();
+	   		var togiJijukArea=$(togiUls[i]).find("input[name='togiBunhalJiJukArea']").val();
+	   		var togiPyeonibArea=$(togiUls[i]).find("input[name='togiBunhalPyeonibArea']").val();
+	   		var togiJasanNo=$(togiUls[i]).find("input[name='togiBunhalJasanNo']").val();
+			var togiPipeYn="N";
+			if ($(togiUls[i]).find("input:checkbox[name='togiBunhalPipeYn']").is(":checked")==true){
+				togiPipeYn="Y";
+			};
+			var togiCancelYn="N";
+			if ($(togiUls[i]).find("input:checkbox[name='togiBunhalCancelYn']").is(":checked")==true){
+				console.log("############");	
+				togiCancelYn="Y";
+			}
+			 
+			//var togiCancelYn=ljsIsNull($(togiUls[i]).find("input[name='togiBunhalCancelYn']").val())?'off':'on';
+			var togiDemise="N";
+			if ($(togiUls[i]).find("input:checkbox[name='togiBunhalDemise']").is(":checked")==true){
+				togiDemise="Y";
+			}
+			var gover_own_yn="";
+			if (togiTogiType=="국유지") gover_own_yn='Y';
+			else gover_own_yn='N';
+			var togiAccountYn=$(togiUls[i]).find("select[name='togiBunhalAccountYn']").val();
+			var togiBunhalStatus="임시저장";
+	   		var togiSidoNm=$(togiUls[i]).find("#togisido_nm").val();
+			var togiSggNm=$(togiUls[i]).find("#togisgg_nm").val();
+			var togiEmdNm=$(togiUls[i]).find("#togiemd_nm").val();
+			var togiRiNm=$(togiUls[i]).find("#togiri_nm").val();
+			
+			var togiJibun=$(togiUls[i]).find("#togijibun").val();
+			var togiPnu=$(togiUls[i]).find("#togipnu").val();
+	   		
+	   		//console.log("togiManageNo:"+togiManageNo);
+	   		var togiObj={
+				"togiSidoNm":ljsIsNull(togiSidoNm)?'':togiSidoNm
+				,"togiSggNm":togiSggNm
+				,"togiEmdNm":togiEmdNm
+				,"togiRiNm":togiRiNm
+				,"togiJibun":togiJibun
+				,"togiPnu":togiPnu
+				,"togiManageNo":togiManageNo
+	   			,"togiaddress":togiaddress.trim()
+				,"togiTogiType":togiTogiType
+	   			,"togiJimokText":togiJimokText
+	   			,"togiJijukArea":ljsIsNull(togiJijukArea)?'':togiJijukArea
+	   			,"togiPyeonibArea":togiPyeonibArea
+	   			,"togiJasanNo":togiJasanNo
+				,"togiPipeYn":togiPipeYn
+	   			,"togiCancelYn":togiCancelYn
+	   			,"togiDemise":togiDemise
+				,"togiAccountYn":togiAccountYn
+				,"togiBunhalStatus":togiBunhalStatus
+				,"togiGoverOwnYn":gover_own_yn
+				,"togiJisa":togiJisa
+				
+	   			
+	   		}
+	   		console.log(togiObj);
+	   		togiDatas.push(togiObj);
+	   	}
+	   
+	     console.log("----------togiDatas-------------");
+		 console.log(togiDatas);
+		 
+		 object.togiDatas=togiDatas;
+	
+	
+	
+	
     var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
     console.log("----------jsonobj------------");
-    console.log(json); // JSON 문자열 출력
+    //console.log(json); // JSON 문자열 출력
+
+	console.log(object);
+	return;
+	url="/gover/insertGoverMaster"; 
+				   $.ajax({
+				   			
+				   				url:url,
+				   				type:'POST',
+				   				contentType:"application/json",
+				   				data:JSON.stringify(object),
+				   				
+				   				dataType:"json",
+				   				beforeSend:function(request){
+				   					console.log("beforesend ........................");
+				   					loadingShow();
+				   				},
+				   				success:function(response){
+				   					loadingHide();
+				   					console.log(response);
+				   					if (response.success="Y"){
+				   						console.log("response.success Y");
+				   						console.log("response.resultData length:"+response.resultData.length);
+										alert("정상적으로 등록 되었습니다.");
+				   						/*$("#popup_bg").show();
+				   						$("#popup").show(500);
+				   						//$("#addrPopupLayer tbody td").remove();
+				   						for(var i=0;i<response.resultData.length;i++){
+				   							$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+				   						}*/
+				   					}
+				   					else {
+				   						console.log("response.success N");
+				   					}
+				   				},
+				   				error:function(jqXHR,textStatus,errorThrown){
+				   					alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+									return false;
+				   				}
+				   			
+				   		}); 
+	
+	
+	
 });
 
 // '승인요청' 버튼 클릭 시, 폼 데이터를 로그로 출력

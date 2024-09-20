@@ -1061,5 +1061,49 @@ FROM NOTSET_MASTER
 		WHERE gm_GOVER_NO = TO_CHAR(#{GOVER_NO})
 
 	</update>
+	
+	<delete id="deleteGoverPNU" parameterType="HashMap">
+		DELETE FROM GOVER_PNU
+		WHERE gp_GOVER_NO =#{GOVER_NO}
+	</delete>
+<select id="selectTogiData"  resultType="HashMap" parameterType="HashMap">
+           
+            SELECT PNU, SIDO_NM, SGG_NM, EMD_NM, RI_NM, JIBUN, JIMOK_TEXT, GOVER_OWN_YN, JISANG_STATUS, ERP_NO, JISANG_NO
+            FROM JIJUK_2024
+			WHERE PNU = #{PNU}
+			ORDER BY PNU ASC
+			
+	</select>
+	<select id="selectGoverRowDetailFilesObject" resultType="HashMap" parameterType="HashMap">
+		SELECT *
+		FROM GOVER_ATCFILE
+		WHERE ga_SEQ = #{FILESEQ}
+		ORDER BY ga_SEQ DESC
+                , ga_FILE_PATH DESC
+	</select>
+	<update id="updateSeqFile_Gover" parameterType="HashMap">
+		UPDATE GOVER_ATCFILE SET
+		ga_GOVER_NO = #{GOVER_NO}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADD_PMT_NO)" >
+			, ga_PMT_NO = #{ADD_PMT_NO}
+		</if>
+		WHERE ga_FILE_SEQ = #{FILESEQ}
+	</update>
 
+	<update id="updateSeqFile_Gover_SEQ" parameterType="HashMap">
+		UPDATE GOVER_ATCFILE SET
+		ga_GOVER_NO = #{GOVER_NO}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADD_PMT_NO)" >
+			, ga_PMT_NO = #{ADD_PMT_NO}
+		</if>
+		WHERE ga_SEQ = #{FILESEQ}
+	</update>
+	
+		<delete id="deleteGoverFile" parameterType="HashMap">
+		DELETE FROM GOVER_ATCFILE
+		WHERE ga_GOVER_NO =#{GOVER_NO}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+			AND ga_FILE_SEQ =#{SEQ}
+		</if>
+	</delete>
 </mapper>

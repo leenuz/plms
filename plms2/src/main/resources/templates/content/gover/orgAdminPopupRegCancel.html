@@ -1,0 +1,94 @@
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
+<div id="register_Cancel_Popup" class="register_Cancel_Popup active">
+    <!-- 등록현황 버튼 누르면 나오는 팝업,수정 불가 팝업 (등록취소버튼)-->
+    <div class="popupWrap">
+        <h2>
+            <p>관리기관 등록</p>
+            <span class="topCloseBtn"></span>
+        </h2>
+        <div class="register_wrap">
+            <ul class="register_title">
+                <!-- 관리지사 -->
+
+                <li class="register_title_th">
+                    <h3>관리지사</h3>
+                </li>
+                <li class="popSelectWrap">
+                    <div class="hidden_SelectBox">
+                        <select hidden>
+                            <option value="경인지사">경인지사</option>
+                            <option value="경인지사1">경인지사1</option>
+                            <option value="경인지사2">경인지사2</option>
+                            <option value="경인지사3">경인지사3</option>
+                            <option value="경인지사4">경인지사4</option>
+                        </select>
+                    </div>
+                    <div class="Popup_Custom_SelectBox">
+                        <button class="Popup_Custom_SelectView">경인지사</button>
+                        <ul class="Popup_Custom_SelectBtns"></ul>
+                    </div>
+                </li>
+
+                <!-- 허가관청 신규입력 -->
+
+                <li class="register_title_th3">
+                    <h3>허가관청 신규입력</h3>
+                </li>
+                <li class="register_title_th4">
+                    <input type="checkbox" id="registerPopup_checkbox" class="approve_checkbox" disabled />
+                    <label for="registerPopup_checkbox" class="approve_checkbox_label">
+                    </label>
+                </li>
+
+                <!-- 허가관청 -->
+
+                <li class="register_title_th5">
+                    <h3>허가관청</h3>
+                </li>
+                <li class="popSelectWrap register_title_th6">
+                    <div class="hidden_SelectBox">
+                        <select hidden>
+                            <option value="전체">전체</option>
+                            <option value="전체1">전체1</option>
+                            <option value="전체2">전체2</option>
+                            <option value="전체3">전체3</option>
+                        </select>
+                    </div>
+                    <div class="Popup_Custom_SelectBox active">
+                        <button class="Popup_Custom_SelectView">전체</button>
+                        <ul class="Popup_Custom_SelectBtns"></ul>
+                    </div>
+                </li>
+
+                <!-- 관리기관 -->
+                <li class="register_title_th7">
+                    <h3>관리기관</h3>
+                </li>
+                <li class="register_title_th8"><input type="text" disabled /></li>
+            </ul>
+        </div>
+
+        <div class="registerbtnWrap">
+            <button class="closeBtn finalBtn">닫기</button>
+            <button class="cancelBtn finalBtn">등록 취소</button>
+        </div>
+    </div>
+</div>
+<script>
+
+    //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+    const registerCancelPopupPopupOpen = document.getElementById(
+        "register_Cancel_Popup"
+    );
+    if (registerCancelPopupPopupOpen) {
+        registerCancelPopupPopupOpen
+            .querySelectorAll(".topCloseBtn, .finalBtn")
+            .forEach(function (btn) {
+                btn.addEventListener("click", () => {
+                    registerCancelPopupPopupOpen.classList.remove("active");
+                });
+            });
+    }
+
+</script>
