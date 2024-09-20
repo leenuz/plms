@@ -2425,4 +2425,86 @@ WHERE
 		jmt_DOCKEY = #{DOCKEY}
 		WHERE jmt_JISANG_NO = #{JISANGNO}
 	</update>
+	<delete id="deleteJisangBunhalTmp" parameterType="HashMap">
+		DELETE FROM JISANG_BUNHAL
+		WHERE jb_BUNHAL_ORG_NO = #{JISANGNO}
+	</delete>
+	<update id="updateSoyuJa_JisangNo" parameterType="HashMap">
+		UPDATE JISANG_SOUJA SET
+		js_JISANG_NO =#{JISANGNO}
+		WHERE js_JISANG_NO = #{ORI_JISANGNO}
+	</update>
+	<insert id="insertJisangBunhalMasterNew" parameterType="HashMap"> 
+INSERT INTO JISANG_MASTER (
+	jm_JISANG_NO
+	,jm_SIDO_NM
+	,jm_SGG_NM
+	,jm_EMD_NM
+	,jm_RI_NM
+	,jm_JIBUN
+	,jm_JIMOK_TEXT
+	,jm_JISA
+	,jm_GOVER_OWN_YN
+	,jm_JIJUK_AREA
+	,jm_PIPE_NAME
+	,jm_SUN_GUBUN
+	,jm_YONGDO
+	,jm_DOSIPLAN
+	,jm_COMPLE_YN
+	,jm_PYEONIB_AREA
+	,jm_JASAN_NO
+	,jm_ADDRCODE
+	,jm_PNU
+	,jm_USE_STATE
+	,jm_BUNHAL_ORG_NO
+	,jm_PIPE_YN
+	,jm_SET_MONEY
+	,jm_SAVE_STATUS
+	,jm_CHUIDEUK_DATE
+	,jm_DEUNGGI_DATE
+	,jm_DEUNGGI_NO
+	,jm_DEUNGGISO
+	,jm_SPECIAL_CONT
+	,jm_PERMITTED_YN
+	,jm_LOCATION
+	)
+VALUES (
+	#{JISANGNO}
+	,#{SINM}
+	,#{GUNGUNM}
+	,#{DONGNM}
+	,#{RINM}
+	,#{JIBUN}
+	,#{JIMOKTEXT}
+	,#{JISANM}
+	,#{GOVEROWNYN}
+	,#{JIJUKAREA}::numeric
+	,#{ZONE}
+	,#{SUNGUBUN}
+	,#{YONGDO}
+	,#{DOSIPLAN}
+	,#{COMPLEYN}
+	,#{PYEONIBAREA}::numeric
+	,#{JASANNO}
+	,#{ADDRCODE}
+	,#{PNU}
+	,#{USESTATE}
+	,#{BUNHALORGNO}
+	,#{PIPE_YN}
+	,#{SET_MONEY}
+	,#{SAVE_STATUS}
+	,TO_DATE(#{CHUIDEUK_DATE}, 'YYYY-MM-DD')
+	,TO_DATE(#{DGSTARTDAY}, 'YYYY-MM-DD')
+	,#{DEUNGGINO}
+	,#{DEUNGGISO}
+	,#{SPECIAL_CONT}
+	,#{PERMITTED_YN}
+	,#{LOCATION}
+	)
+	</insert>
+	<delete id="deleteJisangMergeTmp" parameterType="HashMap">
+		DELETE FROM JISANG_MERGE_TMP
+		WHERE jmt_REP_JISANG_NO = #{REP_JISANG_NO}
+	</delete>
+	
 </mapper>

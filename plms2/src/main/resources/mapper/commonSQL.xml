@@ -275,5 +275,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				( nextval('APPROVAL_CNT_SEQ'),	#{GUBUN}, #{LANG}, #{SDATE}, #{STIME}, #{USERCD}#, #{SEARCHKEY1}, #{DOCKEY}, #{WDID}, #{URL}, #{STATUS})
 			
 	</insert>
+	<select id="selectJijukBefore" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+SELECT PNU
+     , JISANG_NO AS JISANG_NO_OLD
+     , JISANG_STATUS AS JISANG_STATUS_OLD
+     , GOVER_OWN_YN AS GOVER_OWN_YN_OLD
+     , PIPE_OVERLAP_YN AS PIPE_OVERLAP_YN_OLD
+     , JISA AS JISA_OLD
+  FROM JIJUK_2024
+ WHERE PNU IN ( SELECT PNU FROM JISANG_MASTER WHERE jm_JISANG_NO = #{JISANGNO} )
+</select>
 	
 </mapper>
