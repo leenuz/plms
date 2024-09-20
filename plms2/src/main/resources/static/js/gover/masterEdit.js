@@ -125,7 +125,8 @@ $(document).ready(function() {
 	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
 	});
     
-	var rowCount=0;
+	var rowCount = document.querySelectorAll("#fileListDiv > ul").length + 1;  // 현재 렌더된 파일 개수 계산
+	
     function handleFileUpload(files,obj) {
 		console.log("-------------handleFileUpload---------------");
 		console.log(files);
@@ -133,7 +134,8 @@ $(document).ready(function() {
             var fd = new FormData(); // FormData 객체 생성 (파일 업로드를 위한 객체)
             fd.append('file', files[i]); // 파일 객체를 FormData에 추가
      		
-            var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
+            // var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
+			var status = new createStatusbar($("#fileListDiv"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
             sendFileToServer(fd,status); // 서버로 파일 전송 함수 호출
 			
 			rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
@@ -160,7 +162,7 @@ $(document).ready(function() {
 		row += '<label for="masterEdit_attachFile'+no+'"></label>';
 		row += '</li>';
 		row += '<li class="content registDateWidth">';
-		row += '<input type="text" value="" readonly class="notWriteInput" />';
+		row += '<input type="text" value="" readonly class="notWriteInput" name="registDateWidth"/>';
 		row += '</li>';
 		row += '<li class="content fileNameWidth">';
 		row += '<input type="text" value="' + name + '" readonly class="notWriteInput" />';
@@ -170,7 +172,7 @@ $(document).ready(function() {
 		row += '</li>';
 		row += '</ul>';
 		
-        obj.after(row); // 파일 목록이 있는 DOM 요소 뒤에 파일 정보를 추가
+        obj.append(row); // 파일 목록이 있는 DOM 요소 뒤에 파일 정보를 추가
 		
 		var radio=$(row).find('input'); // row에서 input 요소를 찾음
 		console.log("---------------radio checkbox----------");
@@ -178,8 +180,7 @@ $(document).ready(function() {
      	console.log($(radio).parent().html());
     }
 	                
-    function sendFileToServer(formData,status)
-    {
+    function sendFileToServer(formData,status) {
         var uploadURL = "/gover/fileUpload/post"; //Upload URL
         var extraData ={}; //Extra Data.
         var jqXHR = $.ajax({
@@ -215,7 +216,6 @@ $(document).ready(function() {
 				//allCheckEventLandRightsRegist();   
             }
         }); 
-     
         //status.setAbort(jqXHR);
     }
 });
