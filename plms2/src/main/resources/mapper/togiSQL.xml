@@ -163,12 +163,37 @@
 			,concat(dm_sido_nm,' ',dm_sgg_nm,' ',dm_emd_nm,' ',dm_ri_nm,' ',dm_jibun) as address
 			FROM dosi_master dm
 			LEFT JOIN dosi_info di ON dm.dm_dosi_no=di.di_dosi_no
+			LEFT JOIN dosi_dept dd ON dm.dm_dosi_no=dd.dd_dosi_no
 			where 1=1
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and dm_dosi_no=#{idx}
 			</if>
-			
-		
+	</select>
+
+	<select id="selectDaepyoData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		,concat(dm_sido_nm,' ',dm_sgg_nm,' ',dm_emd_nm,' ',dm_ri_nm,' ',dm_jibun) as address
+		FROM dosi_master dm
+		LEFT JOIN dosi_info di ON dm.dm_dosi_no=di.di_dosi_no
+		LEFT JOIN dosi_dept dd ON dm.dm_dosi_no=dd.dd_dosi_no
+		where 1=1
+		and dm_master_yn ='Y'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and dm_dosi_no=#{idx}
+		</if>
+	</select>
+
+	<select id="selectSosokData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		,concat(dm_sido_nm,' ',dm_sgg_nm,' ',dm_emd_nm,' ',dm_ri_nm,' ',dm_jibun) as address
+		FROM dosi_master dm
+		LEFT JOIN dosi_info di ON dm.dm_dosi_no=di.di_dosi_no
+		LEFT JOIN dosi_dept dd ON dm.dm_dosi_no=dd.dd_dosi_no
+		where 1=1
+		and dm_master_yn ='N'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and dm_dosi_no=#{idx}
+		</if>
 	</select>
 	
 	<select id="selectDosiNextNo" resultType="HashMap" parameterType="HashMap">

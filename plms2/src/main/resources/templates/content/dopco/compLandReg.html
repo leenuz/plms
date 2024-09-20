@@ -132,6 +132,8 @@ margin:10px;
           <h1>회사토지 등록</h1>
         </div>
 
+
+        <form id="searchForm" onSubmit="return false;">
         <!-- 기본 정보 -->
         <section class="basicOwnerInfo">
           <div class="subTitle">기본 정보</div>
@@ -151,22 +153,17 @@ margin:10px;
                       name="compLandRegSelectBox01"
                       id="compLandRegSelectBox01"
                       hidden>
-                      <option value="전체">전체</option>
-                      <option value="서울지사">서울지사</option>
-                      <option value="경인지사">경인지사</option>
-                      <option value="대전지사">대전지사</option>
-                      <option value="충청지사">충청지사</option>
-                      <option value="영남지사">영남지사</option>
-                      <option value="전남지사">전남지사</option>
-                      <option value="전북지사">전북지사</option>
-                      <option value="경남지사">경남지사</option>
-                      <option value="강원지사">강원지사</option>
+                      <option value=""></option>
+                      <th:block th:each="val:${jisaList}">
+                        <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+                      </th:block>
                     </select>
                   </div>
                   <section class="customSelectBox">
-                    <button class="customSelectView">서울지사</button>
+                    <button class="customSelectView">선택</button>
 
-                    <ul class="customSelectBtns"></ul>
+                    <ul class="customSelectBtns">
+                    </ul>
                   </section>
                 </li>
                 <li class="content selectContentArea">
@@ -175,7 +172,7 @@ margin:10px;
                       name="compLandRegSelectBox02"
                       id="compLandRegSelectBox02"
                       hidden>
-                      <option value="선택">선택</option>
+                      <option value=""></option>
                       <option value="송유관로">송유관로</option>
                       <option value="밸브박스">밸브박스</option>
                       <option value="가압소">가압소</option>
@@ -196,7 +193,7 @@ margin:10px;
                       name="compLandRegSelectBox03"
                       id="compLandRegSelectBox03"
                       hidden>
-                      <option value="전체">전체</option>
+                      <option value=""></option>
                       <option value="SNP 구간">SNP 구간</option>
                       <option value="광주지선">광주지선</option>
                     </select>
@@ -213,6 +210,7 @@ margin:10px;
                       name="compLandRegSelectBox04"
                       id="compLandRegSelectBox04"
                       hidden>
+                      <option value=""></option>
                       <option value="단선">단선</option>
                       <option value="복선">복선</option>
                     </select>
@@ -241,8 +239,8 @@ margin:10px;
               </ul>
               <ul class="contents">
                 <li class="content inputWrap">
-                  <div class="inputBox">
-                    <input type="text" />
+                  <div class="inputBox addressData" >
+                    <input name="addressData" type="text" />
                   </div>
                   <button class="searchBtn">검색</button>
                 </li>
@@ -252,6 +250,7 @@ margin:10px;
                       name="compLandRegSelectBox05"
                       id="compLandRegSelectBox05"
                       hidden>
+                      <option value=""></option>
                       <option value="Y">Y</option>
                       <option value="N">N</option>
                     </select>
@@ -262,25 +261,19 @@ margin:10px;
                     <ul class="customSelectBtns"></ul>
                   </section>
                 </li>
-                <li class="content">
-                  <input type="text" readonly class="notWriteInput" />
+                <li class="content areaData">
+                  <input type="text" name="areaData" readonly class="notWriteInput" />
                 </li>
-                <li class="content selectContentArea">
+                <li class="content selectContentArea jimokData">
                   <div class="hiddenSelectBox">
                     <select
                       name="compLandRegSelectBox06"
                       id="compLandRegSelectBox06"
                       hidden>
-                      <option value="선택">선택</option>
-                      <option value="선택1">선택1</option>
-                      <option value="선택2">선택2</option>
-                      <option value="선택3">선택3</option>
-                      <option value="선택4">선택4</option>
-                      <option value="선택5">선택5</option>
-                      <option value="선택6">선택6</option>
-                      <option value="선택7">선택7</option>
-                      <option value="선택8">선택8</option>
-                      <option value="선택9">선택9</option>
+                      <option value=""></option>
+                      <th:block th:each="val:${resultJimokList}">
+                        <option th:text="${val.jm_name}" th:value="${val.jm_name}"></option>
+                      </th:block>
                     </select>
                   </div>
                   <section class="customSelectBox">
@@ -312,6 +305,7 @@ margin:10px;
                       name="compLandRegSelectBox07"
                       id="compLandRegSelectBox07"
                       hidden>
+                      <option value=""></option>
                       <option value="Y">Y</option>
                       <option value="N">N</option>
                     </select>
@@ -323,19 +317,20 @@ margin:10px;
                   </section>
                 </li>
                 <li class="content">
-                  <input type="text" />
+                  <input name="current" type="text" />
                 </li>
                 <li class="content">
                   <div class="dateInputWrap">
                     <input
                       type="date"
+                      name="chuideukDate"
                       data-placeholder="날짜선택"
                       required
                       aria-required="true" />
                   </div>
                 </li>
                 <li class="content">
-                  <input type="text" />
+                  <input name="jasan" type="text" />
                 </li>
               </ul>
             </div>
@@ -360,6 +355,7 @@ margin:10px;
                       name="compLandRegSelectBox08"
                       id="compLandRegSelectBox08"
                       hidden>
+                      <option value=""></option>
                       <option value="Y">Y</option>
                       <option value="N">N</option>
                     </select>
@@ -373,16 +369,17 @@ margin:10px;
                   <div class="dateInputWrap">
                     <input
                       type="date"
+                      name="deunggiDate"
                       data-placeholder="날짜선택"
                       required
                       aria-required="true" />
                   </div>
                 </li>
                 <li class="content">
-                  <input type="text" />
+                  <input name="deunggiNo" type="text" />
                 </li>
                 <li class="content">
-                  <input type="text" />
+                  <input  name="deunggiso" type="text" />
                 </li>
               </ul>
             </div>
@@ -395,6 +392,7 @@ margin:10px;
           <div class="contWrap">
             <div class="depth1">
               <ul class="titles">
+                <li class="title smallWidth">선택</li>
                 <li class="title">권리명</li>
                 <li class="title">설정금액</li>
                 <li class="title">설정일</li>
@@ -403,17 +401,23 @@ margin:10px;
                 <li class="title">연락처</li>
                 <li class="title largeWidth">주소</li>
               </ul>
+              <div class="contentsBox">
               <ul class="contents">
-                <li class="content">
-                  <input type="text" />
+                <li class="content smallWidth checkboxWrap">
+                  <input type="checkbox" id="compLandReg_checkbox01">
+                  <label for="compLandReg_checkbox01"></label>
                 </li>
                 <li class="content">
-                  <input type="text" />
+                  <input name="rightName" type="text" />
+                </li>
+                <li class="content">
+                  <input name="rightMoney" type="text" />
                 </li>
                 <li class="content">
                   <div class="dateInputWrap">
                     <input
                       type="date"
+                      name="rightDate"
                       data-placeholder="날짜선택"
                       required
                       aria-required="true" />
@@ -423,26 +427,29 @@ margin:10px;
                   <div class="dateInputWrap">
                     <input
                       type="date"
+                      name="cancleDate"
                       data-placeholder="날짜선택"
                       required
                       aria-required="true" />
                   </div>
                 </li>
                 <li class="content">
-                  <input type="text" />
+                  <input name="rightUname" type="text" />
                 </li>
                 <li class="content">
-                  <input type="text" />
+                  <input name="rightPhone" type="text" />
                 </li>
                 <li class="content largeWidth">
-                  <input type="text" />
+                  <input name="rightAddr" type="text" />
                 </li>
               </ul>
+              </div>
             </div>
           </div>
 
           <div class="btnWrap">
-            <button class="contentAddBtn">권리내역 추가</button>
+            <button class="contentBtn delBtn">권리내역 삭제</button>
+            <button class="contentAddBtn addBtn">권리내역 추가</button>
           </div>
         </section>
         <!-- 첨부파일 -->
@@ -453,7 +460,7 @@ margin:10px;
               *개당 20MB 이하의 파일만 안정적으로 업로드 가능합니다.
             </div>
             <div class="fileBtnWrap">
-              <input type="file" id="compLandReg_myPcFiles" />
+              <input type="file" name="fileUpload" id="compLandReg_myPcFiles" />
               <label for="compLandReg_myPcFiles">내 PC</label>
             </div>
           </div>
@@ -467,21 +474,88 @@ margin:10px;
               <p>파일을 마우스로 끌어오세요.</p>
             </div>
           </div>
+          <div class="contWrap">
+            <div class="depth1" id="fileListDiv">
+              <ul class="titles" id="fileTitleUl">
+                <li class="title01 allSelectCheck">
+                  <!-- 선택 -->
+
+                  <input type="checkbox" id="landRightsRegistration_file_select_all" name="landRightsRegistration_file_select_all">
+                  <label for="landRightsRegistration_file_select_all"></label>
+                </li>
+                <li class="title02">파일명</li>
+              </ul>
+            </div>
+          </div>
+          <div class="btnWrap">
+            <button class="fileDelBtn delBtn" id="deleteFileBtn">선택파일 삭제</button>
+          </div>
         </section>
         <!-- 메모 -->
         <section class="memoSection">
           <div class="subTitle">메모</div>
 
           <textarea
+                  name="meno"
             placeholder="내용을 입력해주세요. (200자 이내)"
             maxlength="200"></textarea>
         </section>
         <div class="finalBtnBox btnWrap">
-          <button class="prevBtn finalBtn">이전</button>
+          <button class="prevBtn finalBtn"><a href="/dopco/menu05_1">이전</a></button>
           <button class="registBtn finalBtn">등록</button>
         </div>
+        </form>
       </main>
     </div>
+
+  <div class="landRegPopWrapper" id="searchResultPopDiv">
+
+    <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+    <div id="searchResultsPopup">
+      <div class="popupWrap" id="popupWrap">
+        <h2>
+          <p>검색결과</p>
+          <span class="topCloseBtn"></span>
+        </h2>
+
+        <div class="popupCont">
+          <ul class="popTitles">
+            <li class="popTitle01">PNU</li>
+            <li class="popTitle02">주소</li>
+            <li class="popTitle03">지번</li>
+            <li class="popTitle04">선택</li>
+
+          </ul>
+          <div class="popContentBox" >
+            <ul class="popContents" th:each="val:${addressList}">
+
+              <li class="popContent01"> [[${val.pnu}]]</li>
+              <li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.jibun}]]</li>
+              <li class="popContent0201" hidden>[[${val.sido_nm}]]</li>
+              <li class="popContent0202" hidden>[[${val.sgg_nm}]]</li>
+              <li class="popContent0203" hidden>[[${val.emd_nm}]]</li>
+              <li class="popContent0204" hidden>[[${val.ri_nm}]]</li>
+              <li class="popContent03">[[${val.jibun}]]</li>
+              <li class="popContent04">
+                <button class="resultSelectBtn">선택</button>
+              </li>
+              <li class="popContent07" hidden>[[${val.jijuk_area}]]</li>
+              <li class="popContent06" hidden>[[${val.jimok_text}]]</li>
+
+            </ul>
+
+
+          </div>
+        </div>
+
+        <div class="lastBtnBox btnWrap">
+          <button class="saveBtn finalBtn" id="notPNUBtn">PNU 없이 선택</button>
+          <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
     <script type="module" src="/js/module/surfaceMain.js"></script>
     <script src="/js/dopco/compLandReg.js"></script>
  </th:block>

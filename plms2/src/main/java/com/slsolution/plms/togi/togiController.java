@@ -62,6 +62,14 @@ public class togiController {
 //		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+
+//		String pnu = httpRequest.getParameter("pnu");
+		params.put("pnu","4423010300100700004");
+
+		ArrayList<HashMap> searchList = mainService.selectQuery("jisangSQL.selectBasicSearchList", params);
+
+		mav.addObject("searchList", searchList);
 		mav.setViewName("content/togi/landReg");
 		return mav;
 	}
@@ -71,13 +79,16 @@ public class togiController {
 		ModelAndView mav=new ModelAndView();
 
 		HashMap params = new HashMap();
-		ArrayList<HashMap>  list=new ArrayList<HashMap>();
-		ArrayList<HashMap> data = mainService.selectQuery("togiSQL.selectAllData",params);
 
 		String idx = httpRequest.getParameter("idx");
 
 		params.put("idx",idx);
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		ArrayList<HashMap> data = mainService.selectQuery("togiSQL.selectDaepyoData",params);
+		ArrayList<HashMap> sosokData = mainService.selectQuery("togiSQL.selectSosokData",params);
+
 		mav.addObject("resultData",data.get(0));
+		mav.addObject("sosokData",sosokData);
 
 		mav.setViewName("content/togi/landDevInfo");
 		return mav;
@@ -85,8 +96,19 @@ public class togiController {
 	@GetMapping(path="/landEdit") //http://localhost:8080/api/get/dbTest
     public ModelAndView landEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 
-
 		ModelAndView mav=new ModelAndView();
+
+		HashMap params = new HashMap();
+
+		String idx = httpRequest.getParameter("idx");
+
+		params.put("idx",idx);
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		ArrayList<HashMap> data = mainService.selectQuery("togiSQL.selectDaepyoData",params);
+		ArrayList<HashMap> sosokData = mainService.selectQuery("togiSQL.selectSosokData",params);
+
+		mav.addObject("resultData",data.get(0));
+		mav.addObject("sosokData",sosokData);
 
 		mav.setViewName("content/togi/landEdit");
 		return mav;

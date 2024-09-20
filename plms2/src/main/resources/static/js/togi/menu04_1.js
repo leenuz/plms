@@ -193,9 +193,18 @@ $(document).on("click",".emd li",function(){
 
 $(document).on("click","#registerBtn",function(){
 
-	   console.log($("#searchForm").serialize());
 	    var formSerializeArray = $('#searchForm').serializeArray();
-       console.log(formSerializeArray)
+         var object = {};
+    	   for (var i = 0; i < formSerializeArray.length; i++){
+    	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+    	   }
+
+    	   var json = JSON.stringify(formSerializeArray);
+
+           console.log(json);
+           console.log(object);
+           loadDataTable(object);
+
 
 });
 
@@ -219,8 +228,6 @@ function loadDataTable(params){
 		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
 		dom:'<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
 		 buttons: [{extend:'excel',text:'엑셀 다운로드'}],
-
-
 
 				pageLength: 20,
                 bPaginate: true,
@@ -252,7 +259,7 @@ function loadDataTable(params){
                         d.jasan_no=params.jasan_no;
 						d.dosiplan=params.dosiplan;
                         d.jimok_text=ljsIsNull(params.jimok_text)?'':params.jimok_text;
-                        d.comple_yn=params.comple_yn;
+                        d.complete_yn=params.complete_yn;
                         d.deunggi_date=params.start_date + '~' + params.end_date;
                         d.account_yn=params.account_yn;
                         d.start_date = params.start_date;

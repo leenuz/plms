@@ -9,11 +9,7 @@ import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.CommonUtil;
@@ -41,7 +37,14 @@ public class dopcoController {
     public ModelAndView menu05_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		HashMap params = new HashMap();
+		ArrayList<HashMap> list=new ArrayList<HashMap>();
+		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+
 		ModelAndView mav=new ModelAndView();
+		mav.addObject("jisaList",jisalist);
+		mav.addObject("sidoList",sidolist);
 		mav.setViewName("content/dopco/menu05_1");
 		return mav;
 	}
@@ -52,10 +55,51 @@ public class dopcoController {
     public ModelAndView compLandReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		HashMap params = new HashMap();
+		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+		ArrayList<HashMap> addressList = mainService.selectQuery("jisangSQL.bunhalAddressSearch",params);
+		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("content/dopco/compLandReg");
+		mav.addObject("addressList",addressList);
+		mav.addObject("resultJimokList",jimoklist);
+		mav.addObject("jisaList",jisalist);
+
 		return mav;
 	}
+	@PostMapping(path="/getBunhalJIjukSelect") //http://localhost:8080/api/get/dbTest
+	public ModelAndView getBunhalJIjukSelect(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		//log.info("httpRequest:"+Arrays.toString(httpRequest));
+
+		String address=httpRequest.getParameter("address");
+		String sido_nm=httpRequest.getParameter("sido_nm");
+		String sgg_nm=httpRequest.getParameter("sgg_nm");
+		String emd_nm=httpRequest.getParameter("emd_nm");
+		String ri_nm=httpRequest.getParameter("ri_nm");
+		String jibun=httpRequest.getParameter("jibun");
+
+
+
+		params.put("address", address);
+		params.put("sido_nm", sido_nm);
+		params.put("sgg_nm", sgg_nm);
+		params.put("emd_nm", emd_nm);
+		params.put("ri_nm", ri_nm);
+		params.put("jibun", jibun);
+
+
+
+		log.info("params:"+params);
+		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectAddressFromJijuk",params);
+		log.info("addressList:"+addressList);
+		mav.addObject("addressList",addressList);
+		mav.setViewName("content/dopco/compLandReg :: #searchResultPopDiv");
+		return mav;
+	}
+
 	@GetMapping(path="/menu05_2") //http://localhost:8080/api/get/dbTest
     public ModelAndView menu05_2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //		response.setHeader("X-Frame-Options", "SAMEORIGIN");

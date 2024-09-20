@@ -153,33 +153,33 @@ margin:10px;
               </ul>
               <ul class="contents lastContents" >
                 <li class="content contentBox">
-                  <input type="text" placeholder="123"
-                         readonly class="notWriteInput" style="text-align:center;">
-<!--                         th:value="${resultData.di_business_nm}" -->
+                  <input type="text" placeholder=""
+                         readonly class="notWriteInput" style="text-align:center;"
+                         th:value="${resultData.di_business_nm}" >
                 </li>
                 <li class="content contentBox2">
                   <ul class="secondContents">
                     <li class="secondContent">
-                      <input type="text" placeholder="dd"
-                             readonly class="notWriteInput">
-<!--                             th:value="${resultData.di_strdate}" -->
+                      <input type="text" placeholder=""
+                             readonly class="notWriteInput"
+                             th:value="${resultData.di_strdate}">
                     </li>
                     <li class="secondContent">
-                      <input type="text" placeholder="182"
-                             readonly class="notWriteInput">
-<!--                             th:value="${resultData.di_enddate}" -->
+                      <input type="text" placeholder=""
+                             readonly class="notWriteInput"
+                             th:value="${resultData.di_enddate}">
                     </li>
                   </ul>
                 </li>
                 <li class="content contentBox">
-                  <input type="text" placeholder="123"
-                         readonly class="notWriteInput" style="text-align:center;">
-<!--                         th:value="${resultData.di_business_oper}" -->
+                  <input type="text" placeholder=""
+                         readonly class="notWriteInput" style="text-align:center;"
+                         th:value="${resultData.di_adm_office}" >
                 </li>
                 <li class="content contentBox">
-                  <input type="text" placeholder="123"
-                         readonly class="notWriteInput" style="text-align:center;">
-<!--                         th:value="${resultData.di_business_oper}" -->
+                  <input type="text" placeholder=""
+                         readonly class="notWriteInput" style="text-align:center;"
+                         th:value="${resultData.di_business_oper}" >
                 </li>
               </ul>
             </div>
@@ -202,25 +202,25 @@ margin:10px;
                 <li class="content">
                   <input
                     type="text"
-                    placeholder="충남지역본부"
+                    placeholder=""
                     readonly
-                    class="notWriteInput" />
-<!--                    th:value="${resultData.dd_dept_nm}"-->
+                    class="notWriteInput"
+                    th:value="${resultData.dd_dept_nm}"/>
                 </li>
                 <li class="content">
                   <input
                     type="text"
-                    placeholder="김경진"
+                    placeholder=""
                     readonly
-                    class="notWriteInput" />
-<!--                    th:value="${resultData.dd_manager}"-->
+                    class="notWriteInput"
+                    th:value="${resultData.dd_manager}" />
                 </li>
                 <li class="content">
                   <input
                     type="text"
-                    placeholder="010-6231-5051"
-                    readonly class="notWriteInput"/>
-<!--                    th:value="${resultData.dd_contact_num}"-->
+                    placeholder=""
+                    readonly class="notWriteInput"
+                    th:value="${resultData.dd_contact_num}"/>
 
                 </li>
               </ul>
@@ -250,57 +250,57 @@ margin:10px;
                 <li class="content largeWidth">
                   <input
                     type="text"
-                    placeholder="점용"
+                    placeholder=""
                     readonly
-                    class="notWriteInput" />
-<!--                             th:value="${resultData.right}" -->
+                    class="notWriteInput"
+                    th:value="${resultData.dm_toji_type}" />
                 </li>
                 <li class="content middleWidth">
                   <input
                     type="text"
-                    placeholder="Y"
+                    placeholder=""
                     readonly
-                    class="notWriteInput" />
-                  <!--                             th:value="${resultData.dm_pipe_yn}" -->
+                    class="notWriteInput"
+                    th:value="${resultData.dm_pipe_yn}"/>
                 </li>
                 <li class="content middleWidth">
                   <input
                     type="text"
-                    placeholder="경인지사"
+                    placeholder=""
                     readonly
-                    class="notWriteInput" />
-                  <!--                             th:value="${resultData.dm_jisa}" -->
+                    class="notWriteInput"
+                    th:value="${resultData.dm_jisa}"/>
                 </li>
                 <li class="content addressWidth">
                   <input
                     type="text"
-                    placeholder="인천광역시 계양구 장기동 115-161"
+                    placeholder=""
                     readonly
-                    class="notWriteInput" />
-                  <!--                             th:value="${resultData.address}" -->
+                    class="notWriteInput"
+                    th:value="${resultData.address}"/>
                 </li>
                 <li class="content">
-                  <input type="text" readonly class="notWriteInput" />
-                  <!--                             th:value="${resultData.dm_jimok_text}" -->
+                  <input type="text" readonly class="notWriteInput"
+                   th:value="${resultData.dm_jimok_text}" />
                 </li>
                 <li class="content">
-                  <input type="text" readonly class="notWriteInput" />
-                  <!--                             th:value="${resultData.dm_length}" -->
+                  <input type="text" readonly class="notWriteInput"
+                 th:value="${resultData.dm_length}" />
                 </li>
                 <li class="content">
                   <input
                     type="text"
-                    placeholder="3316"
+                    placeholder=""
                     readonly
-                    class="notWriteInput" />
-                  <!--                             th:value="${resultData.dm_jijuk_area}" -->
+                    class="notWriteInput"
+                   th:value="${resultData.dm_jijuk_area}"/>
                 </li>
                 <li class="content largeWidth">
-                  <input type="text" readonly class="notWriteInput" />
-                  <!--                             th:value="${resultData.dm_soyouja}" -->
+                  <input type="text" readonly class="notWriteInput"
+                   th:value="${resultData.dm_soyouja}" />
                 </li>
                 <li class="content middleWidth btnBox">
-                  <button class="viewDetailButton lightBlueBtn">
+                  <button class="viewDetailButton lightBlueBtn" id='moveMap' >
                     위치보기
                   </button>
                 </li>
@@ -327,58 +327,38 @@ margin:10px;
                 <li class="title largeWidth">소유자</li>
                 <li class="title middleWidth">지도</li>
               </ul>
-              <ul class="contents">
+              <ul class="contents" th:each="val:${sosokData}">
                 <li class="content largeWidth">
-                  <input
-                    type="text"
-                    placeholder="점용"
-                    readonly
-                    class="notWriteInput" />
-<!--                             th:value="${resultData.dm_jisa}" -->
+                  <input type="text" readonly class="notWriteInput"
+                         th:value="${val.dm_toji_type}" />
                 </li>
                 <li class="content middleWidth">
-                  <input
-                    type="text"
-                    placeholder="Y"
-                    readonly
-                    class="notWriteInput" />
-                  <!--                             th:value="${resultData.dm_jimok_text}" -->
+                  <input type="text" readonly class="notWriteInput"
+                         th:value="${val.dm_pipe_yn}" />
                 </li>
                 <li class="content middleWidth">
-                  <input
-                    type="text"
-                    placeholder="경인지사"
-                    readonly
-                    class="notWriteInput" />
-                  <!--                             th:value="${resultData.dm_jisa}" -->
+                  <input type="text" readonly class="notWriteInput"
+                         th:value="${val.dm_jisa}" />
                 </li>
                 <li class="content addressWidth">
-                  <input
-                    type="text"
-                    placeholder="인천광역시 계양구 장기동 115-161"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <!--                             th:value="${resultData.address}" -->
-                <li class="content">
-                  <input type="text" readonly class="notWriteInput" />
-                  <!--                             th:value="${resultData.dm_jimok_text}" -->
+                  <input type="text" readonly class="notWriteInput"
+                         th:value="${val.address}" />
                 </li>
                 <li class="content">
-                  <input type="text" readonly class="notWriteInput" />
-                  <!--                             th:value="${resultData.dm_length}" -->
+                  <input type="text" readonly class="notWriteInput"
+                         th:value="${val.dm_jimok_text}" />
                 </li>
                 <li class="content">
-                  <input
-                    type="text"
-                    placeholder="3316"
-                    readonly
-                    class="notWriteInput" />
-                  <!--                             th:value="${resultData.dm_jijuk_area}" -->
+                  <input type="text" readonly class="notWriteInput"
+                         th:value="${val.dm_length}" />
+                </li>
+                <li class="content">
+                  <input type="text" readonly class="notWriteInput"
+                         th:value="${val.dm_jijuk_area}" />
                 </li>
                 <li class="content largeWidth">
-                  <input type="text" readonly class="notWriteInput" />
-                  <!--                             th:value="${resultData.dm_soyouja}" -->
+                  <input type="text" readonly class="notWriteInput"
+                         th:value="${val.dm_soyouja}" />
                 </li>
                 <li class="content middleWidth btnBox">
                   <button class="viewDetailButton lightBlueBtn">
@@ -673,8 +653,8 @@ margin:10px;
           <button class="finalBtn deleteBtn">삭제</button>
           <button class="finalBtn completeBtn">완료처리</button>
           <button class="finalBtn printBtn">출력</button>
-          <button class="finalBtn editBtn">
-            <a href="/togi/landEdit">수정</a>
+          <button class="finalBtn editBtn">수정
+<!--            <a href="/togi/landEdit">수정</a>-->
           </button>
         </div>
       </main>

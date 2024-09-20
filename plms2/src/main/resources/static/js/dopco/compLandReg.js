@@ -16,7 +16,7 @@ const createCustomLiCompLandReg = () => {
         const customSelectBox = contentItem.querySelector('.customSelectBox');
         const customSelectBtns = customSelectBox.querySelector('.customSelectBtns');
 
-        for (let i = 0; i < notsetAddSelectBox.length; i++) {
+        for (let i = 1; i < notsetAddSelectBox.length; i++) {
             const optionValue = notsetAddSelectBox.options[i].value;
             const li = document.createElement('li');
             const button = document.createElement('button');
@@ -148,6 +148,7 @@ compLandRegSelectEvent02();
 
 // 후순위 권리 click 이벤트
 
+var index=1;
 const compLandRegInfoAddBtnEvent = () => {
     const infoContentsDetailBox = document.querySelector('#compLandReg .subordinateRts .contWrap');
     const infoSection = infoContentsDetailBox.closest('.subordinateRts');
@@ -190,12 +191,21 @@ const compLandRegInfoAddBtnEvent = () => {
 
                 } else if (1 < i && i < 4 || 5 < i && i < 9) {
 
-                    if (i == 8) {
-                        infoLi.classList.add('largeWidth');
-                    }
                     const infoInput = document.createElement('input');
                     infoInput.type = 'text';
 
+                    if(i == 2){
+                        infoInput.name = 'rightName_'+ index;
+                    }else if(i == 3){
+                        infoInput.name = 'rightMoney_'+ index;
+                    }else if(i == 6){
+                         infoInput.name = 'rightUname_'+ index;
+                     }else if(i == 7){
+                         infoInput.name = 'rightPhone_'+ index;
+                     }else if (i == 8) {
+                        infoInput.name = 'rightAddr_'+ index;
+                        infoLi.classList.add('largeWidth');
+                    }
                     // li안에 넣기
                     infoLi.append(infoInput);
 
@@ -210,7 +220,11 @@ const compLandRegInfoAddBtnEvent = () => {
                     dateInput.setAttribute('data-placeholder', '날짜선택');
                     dateInput.setAttribute('ariaRequired', 'true');
                     dateInput.required = true;
-
+                    if(i == 4){
+                    dateInput.name = 'rightDate_'+ index;
+                    }else if(i ==5){
+                     dateInput.name = 'cancleDate_'+ index;
+                    }
                     // div에 input 넣기
 
                     dateDiv.appendChild(dateInput);
@@ -219,10 +233,11 @@ const compLandRegInfoAddBtnEvent = () => {
 
                 infoUl.appendChild(infoLi);
             }
+            index++;
             infoContentsBox.appendChild(infoUl);
 
             const subordinateRtsContents = infoContentsDetailBox.querySelectorAll('.contents');
-            
+
             if (subordinateRtsContents.length > 5) {
                 infoContentsBox.classList.add('contentScr');
                 infoTitles.classList.add('titleScr');
@@ -264,7 +279,6 @@ const compLandRegInfoAddBtnEvent = () => {
 
 }
 compLandRegInfoAddBtnEvent();
-
 // 파일 첨부 기본 모습
 
 //const defaultFileUploadWrap = document.querySelectorAll('.fileUploadDisplay');
@@ -520,3 +534,242 @@ const compLandRegSearchOpenPopUp = () => {
 }
 
 compLandRegSearchOpenPopUp();
+
+
+$(document).on("click",".registBtn",function(){
+
+	var formSerializeArray = $('#searchForm').serializeArray();
+
+       len = formSerializeArray.length;
+       var dataObj = {};
+       for (i=0; i<len; i++) {
+        dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
+       }
+
+       console.log("**dataObj**");
+       console.log(dataObj);
+
+        var json = JSON.stringify(formSerializeArray);
+           console.log("----------jsonobj------------");
+           console.log(json); // JSON 문자열 출력
+
+
+});
+$(document).on("click",".searchBtn",function(){
+
+
+	var addr = $(this).parent().find(".addressData input").val().trim();
+	console.log(addr);
+	var datas={"address":addr}
+
+   if (addr==null || addr=="" || addr==undefined) {
+    alert("주소를 입력해주세요.");
+    return;
+   }
+
+	$.ajax({
+    				   	   	  url: "/dopco/getBunhalJIjukSelect",
+    				   	   	  type: "POST",
+    				   	   	  data: datas,
+    				   	   })
+    				   	   .done(function (fragment) {
+    				   	      $('#searchResultPopDiv').replaceWith(fragment);
+    						  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+    						  	   $(popupOpen).addClass("open");
+    						  	   popupOpen.classList.add("active");
+//                            	 $('.resultSelectBtn').attr('data-index', id);
+//                               	$('.saveBtn').attr('data-index', id);
+    				   	   	});
+
+    });
+
+$(document).on("click",".topCloseBtn",function(){
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+});
+
+$(document).on("click","#popupCloseBtn",function(){
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+});
+
+//주소 선택 버튼
+$(document).on("click",".resultSelectBtn",function(){
+//var id =  $('.resultSelectBtn').data('index');
+//
+//console.log("***클릭된 id*** : " + id);
+//console.log($(this).parent().parent().html());
+	var juso=$(this).parent().parent().find(".popContent02").html();
+	var jibun=$(this).parent().parent().find(".popContent03").html();
+	var area=$(this).parent().parent().find(".popContent07").html();
+    var jimok=$(this).parent().parent().find(".popContent06").html();
+
+console.log(area);
+console.log(jimok);
+$(".addressData input").val(juso);
+
+$(".areaData input").val(area);
+$(".jimokData .customSelectView").val(jimok);
+$(".jimokData #compLandRegSelectBox06").val(jimok);
+ const button = document.querySelector('.jimokData .customSelectView');
+       button.textContent = jimok;
+
+$(".popupWrap").removeClass("active");
+//$(".bunhalAddres_" + id).attr("readonly", true);
+
+})
+
+//pnu없이 선택/
+$(document).on("click","#notPNUBtn",function(){
+
+    $(".addressData input").val("");
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+
+});
+
+/*첨부파일*/
+var uploadFiles=new Array();
+	  $(document).ready(function(){
+
+	 var objDragAndDrop = $(".fileUploadBox");
+
+	                $(document).on("dragenter",".fileUploadBox",function(e){
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                    $(this).css('border', '2px solid #0B85A1');
+	                });
+	                $(document).on("dragover",".fileUploadBox",function(e){
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                });
+	                $(document).on("drop",".fileUploadBox",function(e){
+
+	                    $(this).css('border', '2px dotted #0B85A1');
+	                    e.preventDefault();
+	                    var files = e.originalEvent.dataTransfer.files;
+
+	                    handleFileUpload(files,objDragAndDrop);
+	                });
+
+	                $(document).on('dragenter', function (e){
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                });
+	                $(document).on('dragover', function (e){
+	                  e.stopPropagation();
+	                  e.preventDefault();
+	                  objDragAndDrop.css('border', '2px dotted #0B85A1');
+	                });
+	                $(document).on('drop', function (e){
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                });
+	                //drag 영역 클릭시 파일 선택창
+	                objDragAndDrop.on('click',function (e){
+	                    $('input[type=file]').trigger('click');
+	                });
+
+	                $('input[type=file]').on('change', function(e) {
+	                    var files = e.originalEvent.target.files;
+	                    handleFileUpload(files,objDragAndDrop);
+	                });
+
+	                function handleFileUpload(files,obj)
+	                {
+						console.log("-------------handleFileUpload---------------");
+						console.log(files);
+	                   for (var i = 0; i < files.length; i++)
+	                   {
+	                        var fd = new FormData();
+	                        fd.append('file', files[i]);
+
+	                        var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
+	                      //  status.setFileNameSize(files[i].name,files[i].size);
+	                        sendFileToServer(fd,status);
+
+	                   }
+	                }
+
+	                var rowCount=0;
+	                function createStatusbar(obj,name,size,no){
+						console.log("----------start createStatusBar------------");
+	                        console.log(obj.html());
+
+						var sizeStr="";
+						                        var sizeKB = size/1024;
+						                        if(parseInt(sizeKB) > 1024){
+						                            var sizeMB = sizeKB/1024;
+						                            sizeStr = sizeMB.toFixed(2)+" MB";
+						                        }else{
+						                            sizeStr = sizeKB.toFixed(2)+" KB";
+						                        }
+
+	                    var row='<ul class="contents" id="fileListUl">';
+						row+='<li class="content01 content checkboxWrap">';
+						row+='<input type="checkbox" id="landRightsRegistration_attachFile'+no+'" name="landRightsRegistration_attachFile" >';
+						row+='<label for="landRightsRegistration_attachFile'+no+'"></label>';
+						row+='</li>';
+						row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
+	                    obj.after(row);
+
+						var radio=$(row).find('input');
+						console.log("---------------radio checkbox----------");
+						$(radio).find('input').attr("disabled",false);
+	                 	console.log($(radio).parent().html());
+	                }
+
+	                function sendFileToServer(formData,status)
+	                {
+	                    var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+	                    var extraData ={}; //Extra Data.
+	                    var jqXHR=$.ajax({
+	                            xhr: function() {
+	                            var xhrobj = $.ajaxSettings.xhr();
+	                            if (xhrobj.upload) {
+	                                    xhrobj.upload.addEventListener('progress', function(event) {
+	                                        var percent = 0;
+	                                        var position = event.loaded || event.position;
+	                                        var total = event.total;
+	                                        if (event.lengthComputable) {
+	                                            percent = Math.ceil(position / total * 100);
+	                                        }
+	                                        //Set progress
+	                                      //  status.setProgress(percent);
+	                                    }, false);
+	                                }
+	                            return xhrobj;
+	                        },
+	                        url: uploadURL,
+	                        type: "POST",
+	                        contentType:false,
+	                        processData: false,
+	                        cache: false,
+	                        data: formData,
+	                        success: function(data){
+
+	                        }
+	                    });
+
+	                }
+
+	 });
+
+
+	 $(document).on("click","#deleteFileBtn",function(){
+
+     	const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+     	console.log(clickedAttachFiles);
+     	console.log(uploadFiles);
+     	for(var i=0;i<clickedAttachFiles.length;i++){
+     		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
+     		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
+     		$(delEle).remove();
+
+
+     	}
+
+     })

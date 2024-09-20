@@ -79,6 +79,16 @@ window.addEventListener("load" , () => {
 			 handleCheckboxes(dopcoLandDevelopmentManage);
 			    return landDevelopmentManageSelectEvet("#dopcoLandDevelopmentManage .landDevelopmentManageSelectsTitleBtn" ,"#dopcoLandDevelopmentManage .sufaceSelectList"  ,"#dopcoLandDevelopmentManage .sufaceSelectList .surfaceSelectListMember" );
 			}
+			//회사토지
+            else if(pathName === `/dopco/menu05_1`){
+            const dopcoCompanyLand01 = document.getElementsByName("dopcoCompanyLand01");
+             handleCheckboxes(dopcoCompanyLand01);
+                return landDevelopmentManageSelectEvet("#dopcoCompanyLand01 .companyLandSelectsTitleBtn" ,"#dopcoCompanyLand01 .sufaceSelectList"  ,"#dopcoCompanyLand01 .sufaceSelectList.surfaceSelectListMember" );
+            } else if(pathName === `/dopco/menu05_2`){
+                         const dopcoCompanyLand01 = document.getElementsByName("dopcoCompanyLand02");
+                          handleCheckboxes(dopcoCompanyLand02);
+                             return landDevelopmentManageSelectEvet("#dopcoCompanyLand02 .companyLandSelectsTitleBtn" ,"#dopcoCompanyLand02 .sufaceSelectList"  ,"#dopcoCompanyLand02 .sufaceSelectList.surfaceSelectListMember" );
+                         }
 			//이설공사 확인 필지
           else if(pathName === `/relocation/relocationCheckPilji`){
                         const relocationCheckPiljiDiv = document.getElementsByName("relocationCheckPiljiDiv");
