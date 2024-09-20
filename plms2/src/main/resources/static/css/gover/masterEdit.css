@@ -570,7 +570,9 @@ button {
 }
 #masterEdit .changeHistory .depth1 .contentScr {
   /* height: 90px; */
-  height: calc(45px * 5);
+  /* height: calc(45px * 5); */
+  max-height: calc(45px * 5);
+  overflow-y: auto; /* 스크롤 활성화 */
 }
 /* 메모 */
 
@@ -777,7 +779,9 @@ button {
 }
 #masterEdit .attachFileInfo .contentScr {
   /* height: 90px; */
-  height: calc(45px * 5);
+  /* height: calc(45px * 5); */
+  max-height: calc(45px * 5);
+  overflow-y: auto; /* 스크롤 활성화 */
 }
 /* .fileDelBtn {
   width: 129px;
