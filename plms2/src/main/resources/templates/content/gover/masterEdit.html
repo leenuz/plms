@@ -608,25 +608,10 @@
   		            </select>
   		          </div>
   		          <section class="customSelectBox">
-  		            <button class="customSelectView"  id="admOfficeText01">[[${resultData.gm_adm_office}]]</button>
+  		            <button class="customSelectView"  id="admOfficeText01">[[${pnuList[0].gp_adm_office}]]</button>
   		            <ul class="customSelectBtns" id="admOfficeUl01"></ul>
   		          </section>
   		        </li>
-				
-				<!-- 관리기관 -->
-				<!--<li class="content largeTitle selectContentArea">
-				  <div class="hiddenSelectBox">
-				    <select name="adm_office" id="masterEditSelectBox03" hidden>
-				      <option value="전체" th:selected="${resultData.gm_adm_office == '전체'}">전체</option>
-				    </select>
-				  </div>
-				  <section class="customSelectBox">
-				    <button class="customSelectView" id="admOfficeText">[[${resultData.gm_adm_office}]]</button>
-				    <ul class="customSelectBtns" id="admOfficeUl">
-				      <li><p>전체</p></li>
-				    </ul>
-				  </section>
-				</li>-->
 				
 				<!-- 국공유지 여부 -->
 				<li class="content middleWidth selectContentArea">
@@ -728,7 +713,7 @@
   		            <select name="adm_office" id="goverEditSelectBox03" hidden></select>
   		          </div>
   		          <section class="customSelectBox">
-					<button class="customSelectView" id="admOfficeText01">[[${resultData.gm_adm_office}]]</button>
+					<button class="customSelectView" id="admOfficeText01">[[${pnu.gp_adm_office}]]</button>
                     <ul class="customSelectBtns" id="admOfficeUl01">
   		          </section>
   		        </li>
