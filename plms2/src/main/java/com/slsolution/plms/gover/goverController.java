@@ -484,18 +484,28 @@ public class goverController {
 
 		@GetMapping(path="/orgAdminPopupMod") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView orgAdminPopupMod(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+			HashMap params = new HashMap();
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+
+			//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			ModelAndView mav=new ModelAndView();
+			mav.addObject("jisaList",jisalist);
+
 			mav.setViewName("content/gover/orgAdminPopupMod");
 			return mav;
 		}
 
 		@GetMapping(path="/orgAdminPopupReg") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView orgAdminPopupReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			HashMap params = new HashMap();
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			ModelAndView mav=new ModelAndView();
+			mav.addObject("jisaList",jisalist);
+
 			mav.setViewName("content/gover/orgAdminPopupReg");
 			return mav;
 		}
