@@ -2103,8 +2103,73 @@ log.info("params:"+params);
 
 		}
 		
-		
-		
+		//점용 상신
+		@PostMapping(path="/selectGoverEcho")
+		public void selectGoverEcho(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//			ArrayList list = new ArrayList();
+//			ArrayList togiList = new ArrayList();
+//			ArrayList fileList = new ArrayList();
+//
+//			ParameterParser parser = new ParameterParser(request);
+//			String gover_no = parser.getString("GOVER_NO", "");
+//			String type = parser.getString("TYPE", "");
+//
+//			/*** 파라미터 하드코딩 ***/
+//			// gover_no = "G_000201";
+//			// type = "update";
+//			/*** 파라미터 하드코딩 ***/
+//			String str_result = "Y";
+//
+//			ElectronicPaymentHTML eph = new ElectronicPaymentHTML(); // 상신용 HTML
+//			ElectronicPaymentUtil epc = new ElectronicPaymentUtil(); // 전자결재 연계
+//			CommonUtil cu = new CommonUtil();
+//
+//			String str_appNo = cu.getNextAppovalSeq();
+//			boolean res_Echo = false;
+//
+//			HashMap map = new HashMap();
+//
+//			if ("".equals(str_appNo)) {
+//				map.put("message", "N");
+//			} else {
+//				String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
+//				String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
+//				String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
+//				String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
+//				String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+//				res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getGover_HTML("", gover_no, "", "", "", request, response), str_UserId, "", "", "GetHoldUsageDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
+//			}
+//
+//			if (res_Echo) {
+//
+//				// 문서번호 업데이트
+//				map.put("DOCKEY", str_appNo);
+//				map.put("message", "Y");
+//				map.put("GOVER_NO", gover_no);
+//				Database.getInstance().update("Json.updateGoverEchoNo", map);
+//
+//				// System.out.println("%%%%%%%%%%%%map=" + map);
+//				// 문서 URL조회
+//				ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectGoverDocInfo", map);
+//				if (null != echolist && echolist.size() > 0) {
+//					String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+//					System.out.println("str_EchoNo=====" + str_EchoNo);
+//					map.put("OUT_URL", str_EchoNo);
+//				}
+//
+//			} else {
+//				map.put("message", "N");
+//			}
+
+			JSONObject jo = new JSONObject("");
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
 		
 		
 }
