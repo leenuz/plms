@@ -155,11 +155,21 @@ $(document).ready(function() {
         }
 		
         var row='<ul class="contents" id="fileListUl">';
-		row+='<li class="content01 content checkboxWrap">';
-		row+='<input type="checkbox" id="landRightsRegistration_attachFile'+no+'" name="landRightsRegistration_attachFile" >';
-		row+='<label for="landRightsRegistration_attachFile'+no+'"></label>';
-		row+='</li>';
-		row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
+		row += '<li class="selectWidth content checkboxWrap">';
+		row += '<input type="checkbox" id="masterEdit_attachFile'+no+'" name="masterEdit_attachFile" >';
+		row += '<label for="masterEdit_attachFile'+no+'"></label>';
+		row += '</li>';
+		row += '<li class="content registDateWidth">';
+		row += '<input type="text" value="" readonly class="notWriteInput" />';
+		row += '</li>';
+		row += '<li class="content fileNameWidth">';
+		row += '<input type="text" value="' + name + '" readonly class="notWriteInput" />';
+		row += '</li>';
+		row += '<li class="content viewBtnBox">';
+		row += '<button class="viewDetailButton lightBlueBtn">보기</button>';
+		row += '</li>';
+		row += '</ul>';
+		
         obj.after(row); // 파일 목록이 있는 DOM 요소 뒤에 파일 정보를 추가
 		
 		var radio=$(row).find('input'); // row에서 input 요소를 찾음
@@ -726,7 +736,7 @@ $(document).on("click","#deleteFileBtn",function(){
 	    	console.log($(this).val());
 	    }
 	})*/
-	const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+	const clickedAttachFiles = document.querySelectorAll('input[name="masterEdit_attachFile"]:checked');
 	console.log(clickedAttachFiles);
 	console.log(uploadFiles);
 	for(var i=0;i<clickedAttachFiles.length;i++){
