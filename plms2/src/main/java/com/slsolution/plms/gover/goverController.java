@@ -36,6 +36,7 @@ import com.slsolution.plms.ParameterParser;
 import com.slsolution.plms.ParameterUtil;
 import com.slsolution.plms.config.GlobalConfig;
 import com.slsolution.plms.jisang.jisangController;
+import com.slsolution.plms.json.JSONArray;
 import com.slsolution.plms.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -1645,37 +1646,38 @@ public class goverController {
 //			String OCCUPREPAYDATE=parser.getString("occuPrePayDate","");
 			
 			
-			String PAGETYPE = requestParamsObj.getString("PAGETYPE"); // 수정화면에서 상신을 눌렀는지
+			String PAGETYPE = requestParamsObj.has("pagetype")?requestParamsObj.getString("PAGETYPE"):""; // 수정화면에서 상신을 눌렀는지
 			// 확인
-			String JISA = requestParamsObj.getString("JISA"); // 지사
-			String YONGDO = requestParamsObj.getString("YONGDO"); // 용도
-			String PIPE_NAME = requestParamsObj.getString("PIPE_NAME"); // 관로명
-			String PIPE_METER = requestParamsObj.getString("PIPE_METER"); // 관경
-			String PIPE_METER2 = requestParamsObj.getString("PIPE_METER2"); // 관경
-			String SUN_GUBUN = requestParamsObj.getString("SUN_GUBUN"); // 단/복선
+			String JISA = requestParamsObj.getString("jisa"); // 지사
+			String YONGDO = requestParamsObj.getString("yongdo"); // 용도
+			String PIPE_NAME = requestParamsObj.getString("pipe_name"); // 관로명
+			String PIPE_METER = requestParamsObj.getString("pipe_meter"); // 관경
+			String PIPE_METER2 = requestParamsObj.getString("pipe_meter2"); // 관경
+			String SUN_GUBUN = requestParamsObj.getString("sun_gubun"); // 단/복선
 			// String USE_PURPOS = parser.getString("USE_PURPOS", ""); // 점용 목록
-			String GOVER_ST_DATE = requestParamsObj.getString("GOVER_ST_DATE"); // 점용기간 시작
-			String GOVER_ED_DATE = requestParamsObj.getString("GOVER_ED_DATE"); // 점용기간 끝
-			String PMT_OFFICE = requestParamsObj.getString("PMT_OFFICE"); // 허가관청
-			String ADM_OFFICE = requestParamsObj.getString("ADM_OFFICE"); // 관리기관
-			String OFFICE_DEPART = requestParamsObj.getString("OFFICE_DEPART"); // 관리부서
-			String OFFICE_CHARGE = requestParamsObj.getString("OFFICE_CHARGE"); // 부서담당자
-			String OFFICE_CONTACT = requestParamsObj.getString("OFFICE_CONTACT"); // 담당자연락처
-			String OFFICE_MOBILE = requestParamsObj.getString("OFFICE_MOBILE"); // 담당자연락처
-			String GOVER_PERIOD = requestParamsObj.getString("GOVER_PERIOD"); // 담당자연락처
-			String SAVE_STATUS = requestParamsObj.getString("SAVE_STATUS"); // 담당자연락처
+			String GOVER_ST_DATE = requestParamsObj.getString("gover_st_date"); // 점용기간 시작
+			String GOVER_ED_DATE = requestParamsObj.getString("gover_ed_date"); // 점용기간 끝
+			String PMT_OFFICE = requestParamsObj.getString("pmt_office"); // 허가관청
+			String ADM_OFFICE = requestParamsObj.getString("adm_office"); // 관리기관
+			String OFFICE_DEPART = requestParamsObj.getString("office_depart"); // 관리부서
+			String OFFICE_CHARGE = requestParamsObj.getString("office_charege"); // 부서담당자
+			String OFFICE_CONTACT = requestParamsObj.getString("office_contact"); // 담당자연락처
+			String OFFICE_MOBILE = requestParamsObj.getString("office_mobile"); // 담당자연락처
+			String GOVER_PERIOD = requestParamsObj.getString("gover_period"); // 담당자연락처
+			String SAVE_STATUS = requestParamsObj.getString("save_status"); // 담당자연락처
 			String gubun = requestParamsObj.getString("gubun"); // 구분( modify : 수정, insert
 					// : 등록 )
-			String ori_GOVER_NO = requestParamsObj.getString("GOVER_NO");
-			String PNU_CNT = requestParamsObj.getString("pnuCnt"); // 소속토지 수
-			String PMT_CNT = requestParamsObj.getString("pmtCnt"); // 허가정보 수
-			String FILE_CNT = requestParamsObj.getString("fileCnt"); // 파일수
-			String fileseq = requestParamsObj.getString("fileseq"); // 파일 seq
+			 String ori_GOVER_NO =requestParamsObj.has("gover_no")?requestParamsObj.getString("gover_no"):"";
 			
-			String modifyReason1 = requestParamsObj.getString("modifyReason1"); // 변경이력-기본정보
-			String modifyReason2 = requestParamsObj.getString("modifyReason2"); // 변경이력-소속토지정보
-			String modifyReason3 = requestParamsObj.getString("modifyReason3"); // 변경이력-허가기본정보
-			String modifyReason4 = requestParamsObj.getString("modifyReason4"); // 변경이력-허가관리
+			String PNU_CNT = requestParamsObj.has("pnuCnt")?requestParamsObj.getString("pnuCnt"):"0"; // 소속토지 수
+			String PMT_CNT = requestParamsObj.has("pmtCnt")?requestParamsObj.getString("pmtCnt"):"0"; // 허가정보 수
+			String FILE_CNT = requestParamsObj.has("fileCnt")?requestParamsObj.getString("fileCnt"):"0"; // 파일수
+			String fileseq = requestParamsObj.has("fileseq")?requestParamsObj.getString("fileseq"):""; // 파일 seq
+			
+			String modifyReason1 = requestParamsObj.has("modifyReason1")?requestParamsObj.getString("modifyReason1"):""; // 변경이력-기본정보
+			String modifyReason2 = requestParamsObj.has("modifyReason2")?requestParamsObj.getString("modifyReason2"):""; // 변경이력-소속토지정보
+			String modifyReason3 = requestParamsObj.has("modifyReason3")?requestParamsObj.getString("modifyReason3"):""; // 변경이력-허가기본정보
+			String modifyReason4 = requestParamsObj.has("modifyReason4")?requestParamsObj.getString("modifyReason4"):""; // 변경이력-허가관리
 									// 및
 									// 납부현황
 			
@@ -1684,16 +1686,22 @@ public class goverController {
 			
 			
 			//ljs 이슈정보 추가
-			String NEWREGREASON=parser.getString("newRegReason","");
-			String OCCUNONPAYREASON=parser.getString("occuNonPayReason","");
-			String PERMPOSSYN=parser.getString("permPossYn","");
-			String OCCUPREPAYYN=parser.getString("occuPrePayYn","");
-			String OCCUPREPAYDATE=parser.getString("occuPrePayDate","");
+			String NEWREGREASON=requestParamsObj.has("newRegReason")?requestParamsObj.getString("newRegReason"):"";
+			String OCCUNONPAYREASON=requestParamsObj.has("occuNonPayReason")?requestParamsObj.getString("occuNonPayReason"):"";
+			String PERMPOSSYN=requestParamsObj.has("permPossYn")?requestParamsObj.getString("permPossYn"):"";
+			String OCCUPREPAYYN=requestParamsObj.has("occuPrePayYn")?requestParamsObj.getString("occuPrePayYn"):"";
+			String OCCUPREPAYDATE=requestParamsObj.has("occuPrePayDate")?requestParamsObj.getString("occuPrePayDate"):"";
 
 			System.out.println("modifyReason1=" + modifyReason1);
 			System.out.println("modifyReason2=" + modifyReason2);
 			System.out.println("modifyReason3=" + modifyReason3);
 			System.out.println("modifyReason4=" + modifyReason4);
+			
+			
+			JSONArray togiArr=new JSONArray(requestParamsObj.getString("togiDatas"));
+			
+			
+			
 
 			String str_GUBUN = "";
 			String str_GOVERNO = "";
@@ -1745,9 +1753,10 @@ public class goverController {
 					str_GOVERNO = ori_GOVER_NO;
 
 				} else {
-					ArrayList GoverList = (ArrayList) mainService.selectQuery("goverSQL.selectGoverNextNo", null);
-
-					String Next_goverNo = String.valueOf(Integer.parseInt((String) ((HashMap) GoverList.get(0)).get("NOW_GOVERNO")) + 1);
+					ArrayList GoverList = (ArrayList) mainService.selectQuery("songyuSQL.selectGoverNextNo", null);
+					String no=(((HashMap) GoverList.get(0)).get("now_governo").toString());
+						log.info(":"+(Integer.parseInt(no)+1));
+					String Next_goverNo = String.valueOf((Integer.parseInt(no)+1));
 					int n_Next_goverNo = Next_goverNo.length();
 
 					String add_Zero = "";
@@ -1794,34 +1803,62 @@ public class goverController {
 																						// 수정
 
 				}
-
+				
 				// 소속토지
-				for (int i = 0; i < Integer.parseInt(PNU_CNT); i++) {
-					String SIDO_NM = (parser.getString("SIDO_NM" + String.valueOf(i), "")).replaceAll("전체", "");
-					String SGG_NM = (parser.getString("SGG_NM" + String.valueOf(i), "")).replaceAll("전체", "");
-					String EMD_NM = (parser.getString("EMD_NM" + String.valueOf(i), "")).replaceAll("전체", "");
-					String RI_NM = (parser.getString("RI_NM" + String.valueOf(i), "")).replaceAll("전체", "");
-					String JIBUN = parser.getString("JIBUN" + String.valueOf(i), "");
-					String JIBUN_FULL = parser.getString("JIBUN_FULL" + String.valueOf(i), "");
-					String ADDRCODE = parser.getString("ADDRCODE" + String.valueOf(i), "");
-					String PNU = parser.getString("ChkPNU" + String.valueOf(i), "");
-					String ORG_PNU = parser.getString("ORG_PNU" + String.valueOf(i), "");
-					String GOVEROWNYN = parser.getString("GOVER_OWN_YN" + String.valueOf(i), "");
-					String JIJUK_AREA = parser.getString("JIJUK_AREA" + String.valueOf(i), "");
-					String JIMOK_TEXT = parser.getString("JIMOK_TEXT" + String.valueOf(i), "");
-					String GOVER_LENGTH = parser.getString("GOVER_LENGTH" + String.valueOf(i), "");
-					String GOVER_AREA = parser.getString("GOVER_AREA" + String.valueOf(i), "");
-					String ADM_OFFICE_PNU = parser.getString("ADM_OFFICE" + String.valueOf(i), "");
-					String USE_PURPOS_PNU = parser.getString("USE_PURPOS" + String.valueOf(i), "");
-					String REP_FLAG = parser.getString("REP_FLAG" + String.valueOf(i), "");
-					String ORG_PNU_NULL = parser.getString("ORG_PNU_NULL" + String.valueOf(i), ""); // pnu값이
+				//for (int i = 0; i < Integer.parseInt(PNU_CNT); i++) {
+				for (int i = 0; i < togiArr.length(); i++) {
+					JSONObject obj=new JSONObject(togiArr.get(i).toString());
+					String SIDO_NM = (obj.getString("sido_nm")).replaceAll("전체", "");
+					String SGG_NM = (obj.getString("sgg_nm")).replaceAll("전체", "");
+					String EMD_NM = (obj.getString("emd_nm")).replaceAll("전체", "");
+					String RI_NM = (obj.getString("ri_nm")).replaceAll("전체", "");
+					String JIBUN = obj.getString("jibun");
+					String JIBUN_FULL = obj.getString("jibun_full");
+					String ADDRCODE = obj.getString("addrcode");
+					String PNU = obj.getString("pnu");
+					String ORG_PNU = obj.getString("org_pnu");
+					String GOVEROWNYN = obj.getString("gover_own_yn");
+					String JIJUK_AREA = obj.getString("jijuk_area");
+					String JIMOK_TEXT = obj.getString("jimok_text");
+					String GOVER_LENGTH = obj.getString("gover_length");
+					String GOVER_AREA = obj.getString("gover_area");
+					String ADM_OFFICE_PNU = obj.getString("adm_office");
+					String USE_PURPOS_PNU =obj.has("use_purpos")?obj.getString("use_purpos"):"";
+					String REP_FLAG = obj.getString("rep_flag");
+					String ORG_PNU_NULL =obj.has("org_pnu_null")?obj.getString("org_pnu_null"):""; // pnu값이
 																									// "NULL"도
 																									// 아닌
 																									// ""값인
 																									// 예외
 																									// 체크
 
-					String PIPE_OVERLAP_YN = parser.getString("PIPE_OVERLAP_YN" + String.valueOf(i), "");
+					String PIPE_OVERLAP_YN = obj.getString("pipe_overlab_yn");
+					
+//					String SIDO_NM = (parser.getString("SIDO_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+//					String SGG_NM = (parser.getString("SGG_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+//					String EMD_NM = (parser.getString("EMD_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+//					String RI_NM = (parser.getString("RI_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+//					String JIBUN = parser.getString("JIBUN" + String.valueOf(i), "");
+//					String JIBUN_FULL = parser.getString("JIBUN_FULL" + String.valueOf(i), "");
+//					String ADDRCODE = parser.getString("ADDRCODE" + String.valueOf(i), "");
+//					String PNU = parser.getString("ChkPNU" + String.valueOf(i), "");
+//					String ORG_PNU = parser.getString("ORG_PNU" + String.valueOf(i), "");
+//					String GOVEROWNYN = parser.getString("GOVER_OWN_YN" + String.valueOf(i), "");
+//					String JIJUK_AREA = parser.getString("JIJUK_AREA" + String.valueOf(i), "");
+//					String JIMOK_TEXT = parser.getString("JIMOK_TEXT" + String.valueOf(i), "");
+//					String GOVER_LENGTH = parser.getString("GOVER_LENGTH" + String.valueOf(i), "");
+//					String GOVER_AREA = parser.getString("GOVER_AREA" + String.valueOf(i), "");
+//					String ADM_OFFICE_PNU = parser.getString("ADM_OFFICE" + String.valueOf(i), "");
+//					String USE_PURPOS_PNU = parser.getString("USE_PURPOS" + String.valueOf(i), "");
+//					String REP_FLAG = parser.getString("REP_FLAG" + String.valueOf(i), "");
+//					String ORG_PNU_NULL = parser.getString("ORG_PNU_NULL" + String.valueOf(i), ""); // pnu값이
+//																									// "NULL"도
+//																									// 아닌
+//																									// ""값인
+//																									// 예외
+//																									// 체크
+//
+//					String PIPE_OVERLAP_YN = parser.getString("PIPE_OVERLAP_YN" + String.valueOf(i), "");
 
 					if (SIDO_NM.equals("") && SGG_NM.equals("") && EMD_NM.equals("") && RI_NM.equals("") && JIBUN.equals(""))
 						continue;
@@ -1889,13 +1926,13 @@ public class goverController {
 						mainService.InsertQuery("songyuSQL.insertJijukLog", logParam);
 					}
 
-					String CANCLE_YN = parser.getString("CANCLE_YN" + String.valueOf(i), "");// 소속토지정보
+					String CANCLE_YN = obj.getString("CANCLE_YN");// 소속토지정보
 																								// -
 																								// 해지여부
 
 					System.out.println("CANCLE_YN :: " + CANCLE_YN);
-					PNU = parser.getString("ChkPNU" + String.valueOf(i), "");
-					ORG_PNU = parser.getString("ORG_PNU" + String.valueOf(i), "");
+					PNU = obj.getString("pnu");
+					ORG_PNU = obj.getString("org_pnu");
 					String IN_PNU = ""; // DB에 Insert할 PNU
 
 					if (CANCLE_YN.equals("N")) {
@@ -1985,57 +2022,60 @@ public class goverController {
 						mainService.UpdateQuery("songyuSQL.updateTogiJisang_Status2Null", params);
 					}
 				}
+log.info("params:"+params);
+				if (Integer.parseInt(FILE_CNT)>0) {
+					// 20170517 - GOVER_ATCFILE테이블에 PMT_NO가 없다면 GOVER_PERMIT에서 조회해서 업데이트
+					ArrayList GOVER_ATCFILE_PmtNo = (ArrayList) mainService.selectQuery("goverSQL.selectGoverRowDetailFilesObject", params);
+					String Next_PMT_NO = String.valueOf(params.get("NEXTSEQ"));
 
-				// 20170517 - GOVER_ATCFILE테이블에 PMT_NO가 없다면 GOVER_PERMIT에서 조회해서 업데이트
-				ArrayList GOVER_ATCFILE_PmtNo = (ArrayList) mainService.selectQuery("goverSQL.selectGoverRowDetailFilesObject", params);
-				String Next_PMT_NO = String.valueOf(params.get("NEXTSEQ"));
+					if (null != GOVER_ATCFILE_PmtNo && GOVER_ATCFILE_PmtNo.size() > 0) {
 
-				if (null != GOVER_ATCFILE_PmtNo && GOVER_ATCFILE_PmtNo.size() > 0) {
+						for (int k = 0; k < GOVER_ATCFILE_PmtNo.size(); k++) {
+							params.put("ADD_PMT_NO", "");
+							params.put("FILESEQ", fileseq);
 
-					for (int k = 0; k < GOVER_ATCFILE_PmtNo.size(); k++) {
-						params.put("ADD_PMT_NO", "");
-						params.put("FILESEQ", fileseq);
+							HashMap hm_GAP_NO = (HashMap) GOVER_ATCFILE_PmtNo.get(k);
+							String str_GAP_NO = CommonUtil.nvl(String.valueOf(hm_GAP_NO.get("ga_pmt_no")));
+							String str_GAP_FILESQL = CommonUtil.nvl(String.valueOf(hm_GAP_NO.get("ga_file_seq")));
 
-						HashMap hm_GAP_NO = (HashMap) GOVER_ATCFILE_PmtNo.get(k);
-						String str_GAP_NO = CommonUtil.nvl(String.valueOf(hm_GAP_NO.get("ga_pmt_no")));
-						String str_GAP_FILESQL = CommonUtil.nvl(String.valueOf(hm_GAP_NO.get("ga_file_seq")));
+							// 파일을 건으로 업데이트
+							if ("".equals(str_GAP_NO)) {
+								// NEXTSEQ를 그대로 넣으면 무조건 업데이트가 되기때문에 key를 바꿈
+								params.put("ADD_PMT_NO", Next_PMT_NO);
+								params.put("FILESEQ", str_GAP_FILESQL);
 
-						// 파일을 건으로 업데이트
-						if ("".equals(str_GAP_NO)) {
-							// NEXTSEQ를 그대로 넣으면 무조건 업데이트가 되기때문에 key를 바꿈
-							params.put("ADD_PMT_NO", Next_PMT_NO);
-							params.put("FILESEQ", str_GAP_FILESQL);
-
-							/** codecanyon에서 파일업로드 **/
-							mainService.UpdateQuery("goverSQL.updateSeqFile_Gover", params); // 파일SEQ로
-																								// PMTNO
-																								// 업데이트
-						} else {
-							// 해당 seq에 맞는 전체파일 업데이트
-							/** codecanyon에서 파일업로드 **/
-							mainService.UpdateQuery("goverSQL.updateSeqFile_Gover_SEQ", params); // SEQ로
-																									// 지상권번호
+								/** codecanyon에서 파일업로드 **/
+								mainService.UpdateQuery("goverSQL.updateSeqFile_Gover", params); // 파일SEQ로
+																									// PMTNO
 																									// 업데이트
+							} else {
+								// 해당 seq에 맞는 전체파일 업데이트
+								/** codecanyon에서 파일업로드 **/
+								mainService.UpdateQuery("goverSQL.updateSeqFile_Gover_SEQ", params); // SEQ로
+																										// 지상권번호
+																										// 업데이트
+							}
+
 						}
 
 					}
 
-				}
+					if (gubun.equals("modify")) {
+						for (int i = 0; i < Integer.parseInt(FILE_CNT); i++) {
+							String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
+							String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
 
-				if (gubun.equals("modify")) {
-					for (int i = 0; i < Integer.parseInt(FILE_CNT); i++) {
-						String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
-						String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
+							if (IS_DEL.equals("Y")) {
+								System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
+								params.put("SEQ", DEL_SEQ);
+								mainService.UpdateQuery("goverSQL.deleteGoverFile", params);
 
-						if (IS_DEL.equals("Y")) {
-							System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
-							params.put("SEQ", DEL_SEQ);
-							mainService.UpdateQuery("goverSQL.deleteGoverFile", params);
-
+							}
 						}
 					}
-				}
 
+				}
+				
 			} catch (Exception e) {
 				str_result = "N";
 				e.printStackTrace();

@@ -736,9 +736,9 @@ FROM NOTSET_MASTER
 		)
 
 </insert>
-<select id="selectGoverNextNo" resultType="String" parameterType="HashMap">
+<select id="selectGoverNextNo" resultType="HashMap" parameterType="HashMap">
 		SELECT COALESCE(MAX(CAST(SUBSTRING(gm_GOVER_NO, 3) AS NUMERIC)), 0) AS NOW_GOVERNO 
-		FROM GOVER_MASTER;
+		FROM GOVER_MASTER
 
 	</select>
 		<select id="selectJijukBeforePNU"  parameterType="java.util.HashMap" resultType="java.util.HashMap">

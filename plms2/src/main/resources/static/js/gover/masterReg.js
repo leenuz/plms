@@ -559,79 +559,98 @@ $(document).on("click", "#draftSaveBtn", function() {
 	   	var togiDatas=[];
 	   	var togiUls=$("#goverUlDiv #goverUl");
 	   	console.log(togiUls);
-		return;
+		
+		/*String SGG_NM = (parser.getString("SGG_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+							String EMD_NM = (parser.getString("EMD_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+							String RI_NM = (parser.getString("RI_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+							String JIBUN = parser.getString("JIBUN" + String.valueOf(i), "");
+							String JIBUN_FULL = parser.getString("JIBUN_FULL" + String.valueOf(i), "");
+							String ADDRCODE = parser.getString("ADDRCODE" + String.valueOf(i), "");
+							String PNU = parser.getString("ChkPNU" + String.valueOf(i), "");
+							String ORG_PNU = parser.getString("ORG_PNU" + String.valueOf(i), "");
+							String GOVEROWNYN = parser.getString("GOVER_OWN_YN" + String.valueOf(i), "");
+							String JIJUK_AREA = parser.getString("JIJUK_AREA" + String.valueOf(i), "");
+							String JIMOK_TEXT = parser.getString("JIMOK_TEXT" + String.valueOf(i), "");
+							String GOVER_LENGTH = parser.getString("GOVER_LENGTH" + String.valueOf(i), "");
+							String GOVER_AREA = parser.getString("GOVER_AREA" + String.valueOf(i), "");
+							String ADM_OFFICE_PNU = parser.getString("ADM_OFFICE" + String.valueOf(i), "");
+							String USE_PURPOS_PNU = parser.getString("USE_PURPOS" + String.valueOf(i), "");
+							String REP_FLAG = parser.getString("REP_FLAG" + String.valueOf(i), "");
+							String ORG_PNU_NULL = parser.getString("ORG_PNU_NULL" + String.valueOf(i), ""); // pnu값이
+																											// "NULL"도*/
 	   	for(var i=0;i<togiUls.length;i++){
-			var togiJisa=$("#jisa").val();
-	   		var togiManageNo=$(togiUls[i]).find("input[name='togiBunhalJisangNo']").val();
-	   		var togiaddress=$(togiUls[i]).find("input[name='togiBunhalAddr'").val();
-			var togiTogiType=$(togiUls[i]).find("select[name='togiBunhalTogiType']").val();
-	   		var togiJimokText=$(togiUls[i]).find("input[name='togiBunhalJimokText']").val();
-	   		var togiJijukArea=$(togiUls[i]).find("input[name='togiBunhalJiJukArea']").val();
-	   		var togiPyeonibArea=$(togiUls[i]).find("input[name='togiBunhalPyeonibArea']").val();
-	   		var togiJasanNo=$(togiUls[i]).find("input[name='togiBunhalJasanNo']").val();
-			var togiPipeYn="N";
-			if ($(togiUls[i]).find("input:checkbox[name='togiBunhalPipeYn']").is(":checked")==true){
-				togiPipeYn="Y";
-			};
-			var togiCancelYn="N";
-			if ($(togiUls[i]).find("input:checkbox[name='togiBunhalCancelYn']").is(":checked")==true){
-				console.log("############");	
-				togiCancelYn="Y";
-			}
-			 
-			//var togiCancelYn=ljsIsNull($(togiUls[i]).find("input[name='togiBunhalCancelYn']").val())?'off':'on';
-			var togiDemise="N";
-			if ($(togiUls[i]).find("input:checkbox[name='togiBunhalDemise']").is(":checked")==true){
-				togiDemise="Y";
-			}
-			var gover_own_yn="";
-			if (togiTogiType=="국유지") gover_own_yn='Y';
-			else gover_own_yn='N';
-			var togiAccountYn=$(togiUls[i]).find("select[name='togiBunhalAccountYn']").val();
-			var togiBunhalStatus="임시저장";
-	   		var togiSidoNm=$(togiUls[i]).find("#togisido_nm").val();
-			var togiSggNm=$(togiUls[i]).find("#togisgg_nm").val();
-			var togiEmdNm=$(togiUls[i]).find("#togiemd_nm").val();
-			var togiRiNm=$(togiUls[i]).find("#togiri_nm").val();
+			var sido_nm=$(togiUls[i]).find("input[name='sido_nm']").val();
+	   		var sgg_nm=$(togiUls[i]).find("input[name='sgg_nm']").val();
+			var emd_nm=$(togiUls[i]).find("input[name='emd_nm']").val();
+			var ri_nm=$(togiUls[i]).find("input[name='ri_nm']").val();
+			var jibun=$(togiUls[i]).find("input[name='jibun']").val();
+			var jibun_full=$(togiUls[i]).find("input[name='jibun_full']").val();
+			var addrcode=$(togiUls[i]).find("input[name='addrcode']").val();
+			var pnu=$(togiUls[i]).find("input[name='pnu']").val();
+			var org_pnu=$(togiUls[i]).find("input[name='pnu']").val();
+			var gover_own_yn=$(togiUls[i]).find("input[name='gover_own_yn']").val();
+			var jijuk_area=$(togiUls[i]).find("input[name='jijuk_area']").val();
+			var gover_length=$(togiUls[i]).find("input[name='gover_length']").val();
+			var gover_area=$(togiUls[i]).find("input[name='gover_area']").val();
+			var jimok_text=$(togiUls[i]).find("input[name='jimok_text']").val();
+			var adm_office=$(togiUls[i]).find("input[name='adm_office']").val();
+			var pipe_overlab_yn=$(togiUls[i]).find("input[name='pipe_overlap_yn']").val();
 			
-			var togiJibun=$(togiUls[i]).find("#togijibun").val();
-			var togiPnu=$(togiUls[i]).find("#togipnu").val();
+			
 	   		
+			var rep_flag="N";
+			if ($(togiUls[i]).find("input:checkbox[name='rep_flag']").is(":checked")==true){
+				rep_flag="Y";
+			};
+			
 	   		//console.log("togiManageNo:"+togiManageNo);
 	   		var togiObj={
-				"togiSidoNm":ljsIsNull(togiSidoNm)?'':togiSidoNm
-				,"togiSggNm":togiSggNm
-				,"togiEmdNm":togiEmdNm
-				,"togiRiNm":togiRiNm
-				,"togiJibun":togiJibun
-				,"togiPnu":togiPnu
-				,"togiManageNo":togiManageNo
-	   			,"togiaddress":togiaddress.trim()
-				,"togiTogiType":togiTogiType
-	   			,"togiJimokText":togiJimokText
-	   			,"togiJijukArea":ljsIsNull(togiJijukArea)?'':togiJijukArea
-	   			,"togiPyeonibArea":togiPyeonibArea
-	   			,"togiJasanNo":togiJasanNo
-				,"togiPipeYn":togiPipeYn
-	   			,"togiCancelYn":togiCancelYn
-	   			,"togiDemise":togiDemise
-				,"togiAccountYn":togiAccountYn
-				,"togiBunhalStatus":togiBunhalStatus
-				,"togiGoverOwnYn":gover_own_yn
-				,"togiJisa":togiJisa
-				
+				"sido_nm":ljsIsNull(sido_nm)?'':sido_nm
+				,"sgg_nm":ljsIsNull(sgg_nm)?'':sgg_nm
+				,"emd_nm":ljsIsNull(emd_nm)?'':emd_nm
+				,"ri_nm":ljsIsNull(ri_nm)?'':ri_nm
+				,"jibun_full":ljsIsNull(jibun_full)?'':jibun_full
+				,"jibun":ljsIsNull(jibun)?'':jibun
+				,"addrcode":ljsIsNull(addrcode)?'':addrcode
+				,"pnu":ljsIsNull(pnu)?'':pnu
+				,"org_pnu":ljsIsNull(org_pnu)?'':org_pnu
+				,"gover_own_yn":ljsIsNull(gover_own_yn)?'':gover_own_yn
+				,"jijuk_area":ljsIsNull(jijuk_area)?'':jijuk_area
+				,"gover_length":ljsIsNull(gover_length)?'':gover_length
+				,"jimok_text":ljsIsNull(jimok_text)?'':jimok_text
+				,"adm_office":ljsIsNull(adm_office)?'':adm_office
+				,"pipe_overlab_yn":ljsIsNull(pipe_overlab_yn)?'':pipe_overlab_yn
+				,"rep_flag":ljsIsNull(rep_flag)?'N':rep_flag
+				,"gover_area":ljsIsNull(gover_area)?'':gover_area
 	   			
 	   		}
 	   		console.log(togiObj);
 	   		togiDatas.push(togiObj);
 	   	}
+		
+		const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+						   console.log(attachFileUls);
+		
+		var files=new Array();
+					   for(var i=0;i<attachFileUls.length;i++){
+						console.log($(attachFileUls[i]).parent().parent().html());
+							var fname=$(attachFileUls[i]).parent().parent().find("#filename").attr('placeholder');
+							console.log(fname);
+							files.push(fname);
+						}
 	   
 	     console.log("----------togiDatas-------------");
 		 console.log(togiDatas);
-		 
+		 console.log("----------files-------------");
+		 	 console.log(files);
+			 
 		 object.togiDatas=togiDatas;
-	
-	
+		 object.files=files;
+		 object.fileCnt=files.length;
+		 object.office_mobile="";
+		 object.save_status="";
+			object.gubun="insert"; //신규등록
+		
 	
 	
     var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
@@ -639,7 +658,7 @@ $(document).on("click", "#draftSaveBtn", function() {
     //console.log(json); // JSON 문자열 출력
 
 	console.log(object);
-	return;
+
 	url="/gover/insertGoverMaster"; 
 				   $.ajax({
 				   			

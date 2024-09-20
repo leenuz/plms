@@ -241,5 +241,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    ORDER BY sc_sort_order ASC
 	    ]]>
 	</select>
+		<insert id="insertLog" parameterType="HashMap">
+            <![CDATA[ 
+			INSERT INTO SYS_LOG
+    			(SEQ,LOG_DATE, EMPCD, LOG_MENU_CD, GUBUN)
+			VALUES 
+				(nextVal(LOG_SEQ),Now(),#{EMPCD},#{LOG_MENU_CD},#{GUBUN})
+			]]>
+	</insert>
 
+<select id="selectGetPLMSCompforXML" parameterType="java.util.HashMap" resultType="Integer">
+		SELECT count(*) FROM PLMS_APPROVAL where pa_DOCKEY = #{DOCKEY} and (pa_status is null or pa_status not in ('X'))
+	</select>
+	<update id="updateGetPLMSCompforXML" parameterType="HashMap">
+		UPDATE PLMS_APPROVAL SET
+		pa_GUBUN = #{GUBUN}
+		, pa_LANG = #{LANG}
+		, pa_SDATE = #{SDATE}
+		, pa_STIME = #{STIME}
+		, pa_USERCD = #{USERCD}
+		, pa_SEARCHKEY1 = #{SEARCHKEY1}
+		, pa_WDID = #{WDID}
+		, pa_URL = #{URL}
+		, pa_STATUS = #{STATUS}
+		, pa_DISPOSE = #{DISPOSE}
+		WHERE DOCKEY = #{DOCKEY}
+	</update>
+	<insert id="insertGetPLMSCompforXML" parameterType="HashMap">
+           
+			insert into PLMS_APPROVAL
+				( pa_SEQ, pa_GUBUN, pa_LANG, pa_SDATE, pa_STIME, pa_USERCD, pa_SEARCHKEY1, pa_DOCKEY, pa_WDID, pa_URL, pa_STATUS )
+			values
+				( nextval('APPROVAL_CNT_SEQ'),	#{GUBUN}, #{LANG}, #{SDATE}, #{STIME}, #{USERCD}#, #{SEARCHKEY1}, #{DOCKEY}, #{WDID}, #{URL}, #{STATUS})
+			
+	</insert>
+	
 </mapper>

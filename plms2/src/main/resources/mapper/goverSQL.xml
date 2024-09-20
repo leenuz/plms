@@ -975,7 +975,7 @@ FROM NOTSET_MASTER
 		, gm_GOVER_ED_DATE
 		, gm_PMT_STATUS
 		, gm_OFFICE_DEPART
-		, gm_OFFICE_CHARGE
+		, gm_OFFICE_CHAREGE
 		, gm_OFFICE_CONTACT
 		, gm_OFFICE_MOBILE
 		, gm_GOVER_PERIOD
@@ -991,7 +991,7 @@ FROM NOTSET_MASTER
 		, #{YONGDO}
 		, #{PIPE_NAME}
 		, #{SUN_GUBUN}
-		, to_number(#{PIPE_METER})
+		, nullif(#{PIPE_METER},'')::numeric
 		, to_date(#{GOVER_ST_DATE}, 'yyyy-mm-dd')
 		, to_date(#{GOVER_ED_DATE}, 'yyyy-mm-dd')
 		, #{PMT_STATUS}
@@ -1003,7 +1003,7 @@ FROM NOTSET_MASTER
 		, #{PMT_OFFICE}
 		, #{ADM_OFFICE}
 		, #{SAVE_STATUS}
-		, #{PIPE_METER2}
+		, nullif(#{PIPE_METER2},'')::numeric
 		 )
 	</insert>
 	<update id="updateGoverMaster" parameterType="HashMap">
@@ -1076,7 +1076,8 @@ FROM NOTSET_MASTER
 	<select id="selectGoverRowDetailFilesObject" resultType="HashMap" parameterType="HashMap">
 		SELECT *
 		FROM GOVER_ATCFILE
-		WHERE ga_SEQ = #{FILESEQ}
+		WHERE 
+		ga_SEQ = #{FILESEQ}
 		ORDER BY ga_SEQ DESC
                 , ga_FILE_PATH DESC
 	</select>
@@ -1104,5 +1105,10 @@ FROM NOTSET_MASTER
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
 			AND ga_FILE_SEQ =#{SEQ}
 		</if>
+	</delete>
+	<delete id="deleteGoverPNUObject" parameterType="HashMap">
+		DELETE FROM GOVER_PNU
+		WHERE gp_GOVER_NO = #{GOVER_NO}
+		AND gp_PNU = #{PNU}
 	</delete>
 </mapper>

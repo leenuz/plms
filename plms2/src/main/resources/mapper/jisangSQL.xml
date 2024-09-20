@@ -2212,4 +2212,217 @@ WHERE
 		#{DOCKEY}
 		)
 	</insert>
+	
+	<select id="selectJijangNextNo"  parameterType="HashMap" resultType="java.util.HashMap">
+		
+		SELECT
+		MAX(NOW_JISANGNO) AS NOW_JISANGNO
+		FROM
+		(
+		SELECT
+		COALESCE(MAX(SUBSTR(jm_JISANG_NO, 3)), NULL, '0', MAX(SUBSTR(jm_JISANG_NO, 3))) AS NOW_JISANGNO
+		FROM
+		JISANG_MASTER
+		UNION ALL
+		SELECT
+		COALESCE(MAX(SUBSTR(jm_JISANG_NO, 3)), NULL, '0', MAX(SUBSTR(jm_JISANG_NO, 3))) AS NOW_JISANGNO
+		FROM
+		JISANG_MERGE
+		)
+	</select>
+	<insert id="insertJisangMaster" parameterType="HashMap">
+		Insert into JISANG_MASTER
+		(jm_JISANG_NO, jm_SIDO_NM, jm_SGG_NM, jm_EMD_NM,jm_RI_NM, jm_JIBUN, jm_JISA, jm_GOVER_OWN_YN,
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CD_STARTDAY)" >
+			jm_CHUIDEUK_DATE,
+		</if>
+
+		jm_JIJUK_AREA, jm_PIPE_NAME, jm_SUN_GUBUN, jm_YONGDO, jm_DOSIPLAN, jm_COMPLE_YN, jm_PYEONIB_AREA,
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DGSTARTDAY)" >
+			jm_DEUNGGI_DATE,
+		</if>
+		jm_DEUNGGI_NO, jm_DEUNGGISO, jm_JASAN_NO, jm_ADDRCODE, jm_PNU, jm_USE_STATE, jm_SPECIAL_CONT, jm_LOCATION, jm_JIMOK_TEXT
+		, jm_SAVE_STATUS, jm_PERMITTED_YN)
+		Values
+		(#{JISANGNO}, #{SINM}, #{GUNGUNM}, #{DONGNM}, #{RINM}, #{JIBUN}, #{JISANM}, #{GOVEROWNYN},
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CD_STARTDAY)" >
+			TO_DATE(#{CD_STARTDAY} || '00:00:00', 'YYYYMMDDHH24:MI:SS'),
+		</if>
+
+		#{JIJUKAREA},
+		#{ZONE}, #{SUNGUBUN}, #{YONGDO}, #{DOSIPLAN}, #{COMPLEYN}, #{PYEONIBAREA},
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DGSTARTDAY)" >
+			TO_DATE(#{DGSTARTDAY#} || '00:00:00', 'YYYYMMDDHH24:MI:SS') ,
+		</if>
+		#{DEUNGGINO}, #{DEUNGGISO},
+		#{JASANNO}, #{ADDRCODE}, #{PNU#{ ,#{USESTATE#{ , #{SPECIALCONT#{ , #{LOCATION}, #{JIMOK}, #{SAVE_STATUS}, #{PERMITTED_YN})
+	</insert>
+	
+	<insert id="insertJisangMasterTmp" parameterType="HashMap">
+		Insert into JISANG_MASTER_TMP
+		(jmt_JISANG_NO, jmt_SIDO_NM, jmt_SGG_NM, jmt_EMD_NM,jmt_RI_NM, jmt_JIBUN, jmt_JISA, jmt_GOVER_OWN_YN,
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CD_STARTDAY)" >
+		
+			jmt_CHUIDEUK_DATE,
+		</if>
+
+		jmt_JIJUK_AREA, jmt_PIPE_NAME, jmt_SUN_GUBUN, jmt_YONGDO,jmt_DOSIPLAN, jmt_COMPLE_YN, jmt_PYEONIB_AREA,
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DGSTARTDAY)" >
+			jmt_DEUNGGI_DATE,
+		</if>
+		jmt_DEUNGGI_NO, jmt_DEUNGGISO, jmt_JASAN_NO, jmt_ADDRCODE, jmt_PNU, jmt_USE_STATE
+		, jmt_SPECIAL_CONT, jmt_LOCATION, jmt_JIMOK_TEXT)
+		Values
+		({JISANGNO}, {SINM}, {GUNGUNM}, {DONGNM}, {RINM}, {JIBUN}, {JISANM}, {GOVEROWNYN},
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CD_STARTDAY)" >
+			TO_DATE({CD_STARTDAY} || '00:00:00', 'YYYYMMDDHH24:MI:SS'),
+		</if>
+
+		{JIJUKAREA},
+		{ZONE}, {SUNGUBUN}, {YONGDO}, {DOSIPLAN}, {COMPLEYN}, to_number({PYEONIBAREA}),
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DGSTARTDAY)" >
+			TO_DATE({DGSTARTDAY} || '00:00:00', 'YYYYMMDDHH24:MI:SS') ,
+		</if>
+		{DEUNGGINO}, {DEUNGGISO},
+		{JASANNO}, {ADDRCODE}, {PNU} ,{USESTATE} , {SPECIALCONT} , {LOCATION}, {JIMOK})
+	</insert>
+	<update id="updateJisangMasterStatus" parameterType="HashMap">
+		UPDATE JISANG_MASTER SET jm_SAVE_STATUS = #{SAVE_STATUS} WHERE jm_JISANG_NO = #{JISANGNO}
+	</update>
+		<insert id="insertJisangTmpModifyHistory" parameterType="HashMap">
+		Insert into JISANG_MODIFY_TMP
+		( JISANG_NO, MODIFY_DATE, GUBUN, CONT, USER_NAME, USER_ID )
+		Values
+		(#{JISANGNO}, Now(), #{GUBUN}, #{CONT}, #{USER_NAME}, #{USER_ID})
+	</insert>
+		<delete id="deleteJisangSoyuTmp" parameterType="HashMap">
+		DELETE FROM JISANG_SOUJA_TMP
+		WHERE jst_JISANG_NO = #{JISANGNO}
+	</delete>
+		<insert id="insertJisangSoyuTmp" parameterType="HashMap">
+		Insert into JISANG_SOUJA_TMP
+		(jst_JISANG_NO, jst_JIBUN, jst_SOUJA_NAME, jst_ADDRESS, jst_HOME_NUMBER ,jst_PHONE_NUMBER)
+		Values
+		(#{JISANGNO}, #{JIBUN}, #{NAME}, #{ADDR}, #{TEL} , #{HP})
+	</insert>
+		<insert id="insertJisangSoyu" parameterType="HashMap">
+		Insert into JISANG_SOUJA
+		(js_JISANG_NO, js_JIBUN, js_SOUJA_NAME, js_ADDRESS, js_HOME_NUMBER ,js_PHONE_NUMBER)
+		Values
+		(#{JISANGNO}, #{JIBUN}, #{NAME}, #{ADDR}, #{TEL} , #{HP})
+	</insert>
+	
+		<select id="selectJISANG_ATCFILE_NoCheck" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT * FROM JISANG_ATCFILE
+		WHERE ja_SEQ = #{FILESEQ}
+	</select>
+	<delete id="deleteAllFileTmp" parameterType="HashMap">
+		DELETE FROM JISANG_ATCFILE_TMP
+		WHERE jat_SEQ = #{FILESEQ}
+	</delete>
+	<insert id="insertJisangFileTmp_SEQ" parameterType="HashMap">
+            
+			INSERT INTO JISANG_ATCFILE_TMP( jat_SEQ, jat_FILE_PATH, jat_FILE_NM, jat_FILE_SEQ )
+			VALUES ( #{SEQ} , #{FILE_PATH}, #{FILE_NM},  #{FILE_SEQ} )
+			
+	</insert>
+	<select id="selectJisangRowDetailTmp_Files" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM JISANG_ATCFILE_TMP
+		WHERE jat_JISANG_NO = #{FILENO}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+			AND jat_SEQ = #{SEQ}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(FILE_SEQ)" >
+			AND jat_FILE_SEQ = #{FILE_SEQ}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DEL_FLAG)" >
+			AND jat_DEL_FLAG = #{DEL_FLAG}
+		</if>
+		ORDER BY jat_SEQ DESC
+	</select>
+	<update id="updateSeqFile" parameterType="HashMap">
+		UPDATE JISANG_ATCFILE SET
+		ja_JISANG_NO = #{JISANGNO}
+		WHERE ja_SEQ = #{FILESEQ}
+	</update>
+
+	<update id="updateSeqFileTmp" parameterType="HashMap">
+		UPDATE JISANG_ATCFILE_TMP SET
+		jat_JISANG_NO = #{JISANGNO}
+		WHERE jat_SEQ = #{FILESEQ}
+	</update>
+	<insert id="insertJisangModifyHistory" parameterType="HashMap">
+		Insert into JISANG_MODIFY
+		( jm_JISANG_NO, jm_MODIFY_DATE, jm_GUBUN, jm_CONT, jm_USER_NAME, jm_USER_ID )
+		Values
+		(#{JISANGNO}, Now(), #{GUBUN}, #{CONT}, #{USER_NAME}, #{USER_ID})
+	</insert>
+	<insert id="DelFileTmp" parameterType="HashMap">
+		UPDATE
+		JISANG_ATCFILE_TMP
+		SET
+		jat_DEL_FLAG = #{DEL_FLAG}
+		WHERE
+		jat_FILE_SEQ = #{FILE_SEQ}
+	</insert>
+	<select id="selectJisangDetailTmpList" parameterType="HashMap" resultType="java.util.HashMap">
+				SELECT JMT.jmt_jisang_no AS JISANG_NO,
+		       JMT.jmt_sido_nm AS SIDO_NM,
+		       JMT.jmt_sgg_nm AS SGG_NM,
+		       JMT.jmt_emd_nm AS EMD_NM,
+		       JMT.jmt_ri_nm AS RI_NM,
+		       JMT.jmt_jibun AS JIBUN,
+		       JMT.jmt_jisa AS JISA,
+		       TO_DATE(JMT.jmt_chuideuk_date, 'YYYY-MM-DD') AS CHUIDEUK_DATE,
+		       JMT.jmt_jijuk_area AS JIJUK_AREA,
+		       JMT.jmt_jimok_text AS JIMOK_TEXT,
+		       JMT.jmt_pipe_name AS PIPE_NAME,
+		       JMT.jmt_sun_gubun AS SUN_GUBUN,
+		       JMT.jmt_yongdo AS YONGDO,
+		       JMT.jmt_dosiplan AS DOSIPLAN,
+		       JMT.jmt_comple_yn AS COMPLE_YN,
+		       JMT.jmt_pyeonib_area AS PYEONIB_AREA,
+		       JMT.jmt_use_state AS USE_STATE,
+		       TO_DATE(JMT.jmt_deunggi_date, 'YYYY-MM-DD') AS DEUNGGI_DATE,
+		       JMT.jmt_deunggi_no AS DEUNGGI_NO,
+		       JMT.jmt_deunggiso AS DEUNGGISO,
+		       JMT.jmt_jasan_no AS JASAN_NO,
+		       JMT.jmt_gover_own_yn AS GOVER_OWN_YN,
+		       JMT.jmt_addrcode AS ADDRCODE,
+		       JMT.jmt_special_cont AS SPECIAL_CONT,
+		       JMT.jmt_pnu AS PNU,
+		       JMT.jmt_dockey AS DOCKEY,
+		       JMT.jmt_toji_type AS TOJI_TYPE,
+		       JMT.jmt_pipe_yn AS PIPE_YN,
+		       PA.pa_status AS STATUS
+				FROM jisang_master_tmp JMT
+				LEFT JOIN plms_approval PA
+				       ON JMT.dockey = PA.dockey
+				WHERE 1=1
+				<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)">
+				  AND JMT.jmt_jisang_no = #{JISANGNO}
+				</if>
+				ORDER BY JMT.jmt_jisang_no DESC
+
+	</select>
+	
+	<select id="selectJisangDetailSoyuTmp" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT js_JISANG_NO, js_JIBUN, js_SOUJA_NAME, js_ADDRESS, js_PHONE_NUMBER, js_HOME_NUMBER
+		FROM JISANG_SOUJA_TMP
+		WHERE 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)">
+			AND js_JISANG_NO = #{JISANGNO}
+		</if>
+		ORDER BY js_SOUJA_NAME
+
+	</select>
+	<select id="selectJisangTmpDocInfo" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT * FROM PLMS_APPROVAL where pa_DOCKEY in (select jmt_dockey from JISANG_MASTER_TMP where jmt_JISANG_NO = #{JISANGNO}) and (pa_status is null or pa_status not in ('X'))
+	</select>
+	<update id="updateJisangTmpEchoNo" parameterType="HashMap">
+		UPDATE JISANG_MASTER_TMP SET
+		jmt_DOCKEY = #{DOCKEY}
+		WHERE jmt_JISANG_NO = #{JISANGNO}
+	</update>
 </mapper>
