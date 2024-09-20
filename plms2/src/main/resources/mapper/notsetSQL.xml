@@ -69,17 +69,34 @@
 
     </select>
 
-<!--    <select id="selectMergeList" parameterType="java.util.HashMap" resultType="java.util.HashMap">-->
-<!--        select *,(row_number() over()) as no-->
-<!--        from notset_merge-->
-<!--        where 1=1-->
-<!--        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">-->
-<!--            and nm_notset_no=#{idx}-->
-<!--        </if>-->
 
-<!--    </select>-->
 
-    <select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[
+    <select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select nm_set_money,nm_save_status from notset_master
-	]]></select>
+	</select>
+	
+	<update id="deleteNotsetMaster" parameterType="HashMap">
+		UPDATE
+		NOTSET_MASTER
+		SET
+		nm_DEL_FLAG = 'Y'
+		WHERE nm_NOTSET_NO = #{NOTSET_NO}
+	</update>
+	<select id="selectNotsetObject" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT
+		nm_notset_no as NOTSET_NO,
+		nm_pnu as PNU
+		FROM
+		NOTSET_MASTER
+		WHERE
+		nm_SIDO_NM = #{SIDO_NM} AND
+		nm_SGG_NM = #{SGG_NM} AND
+		nm_EMD_NM = #{EMD_NM} AND
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(RI_NM)">
+			nm_RI_NM = #{RI_NM} AND
+		</if>
+		nm_JIBUN = #{JIBUN} AND
+		DEL_FLAG ='N'
+
+	</select>
 </mapper>
