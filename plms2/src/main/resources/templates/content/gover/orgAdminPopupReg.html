@@ -10,28 +10,22 @@
         <div class="register_wrap">
             <ul class="register_title">
                 <!-- 관리지사 -->
-
                 <li class="register_title_th">
                     <h3>관리지사</h3>
                 </li>
                 <li class="popSelectWrap">
                     <div class="hidden_SelectBox">
-                        <select hidden>
-                            <option value="경인지사">경인지사</option>
-                            <option value="경인지사1">경인지사1</option>
-                            <option value="경인지사2">경인지사2</option>
-                            <option value="경인지사3">경인지사3</option>
-                            <option value="경인지사4">경인지사4</option>
+                        <select name="jisa" id="jisa" hidden>
+                            <option value="">전체</option>
+                            <option th:each="val:${jisaList}" th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
                         </select>
                     </div>
                     <div class="Popup_Custom_SelectBox">
-                        <button class="Popup_Custom_SelectView">경인지사</button>
+                        <button class="Popup_Custom_SelectView">전체</button>
                         <ul class="Popup_Custom_SelectBtns"></ul>
                     </div>
                 </li>
-
                 <!-- 허가관청 신규입력 -->
-
                 <li class="register_title_th3">
                     <h3>허가관청 신규입력</h3>
                 </li>
@@ -40,9 +34,7 @@
                     <label for="registerPopup_checkbox02" class="approve_checkbox_label">
                     </label>
                 </li>
-
                 <!-- 허가관청 -->
-
                 <li class="register_title_th5">
                     <h3>허가관청</h3>
                 </li>
@@ -61,7 +53,6 @@
                     </div>
                     <input class="register_hidden_text" type="text" />
                 </li>
-
                 <!-- 관리기관 -->
                 <li class="register_title_th7">
                     <h3>관리기관</h3>
@@ -79,8 +70,7 @@
 </div>
 <script>
     //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
-
-    const registerApprovePopEvet = () => {
+    registerApprovePopEvet = () => {
         const registerApprovePopupOpen = document.getElementById("registerPopup");
         if (registerApprovePopupOpen) {
             registerApprovePopupOpen
@@ -120,7 +110,7 @@
                     const button01 = document.createElement("button");
                     button01.classList.add("PopupMoreSelectBtn");
                     button01.type = "button";
-                    button01.textContent = optionValue01;
+                    button01.textContent = optionValue01 == '' ? '전체' : optionValue01;
                     li01.appendChild(button01);
                     popCustomSelectBtns01.appendChild(li01);
                 }
@@ -130,7 +120,7 @@
 
     newcomplaintSelect01();
 
-    const customSelectView01 = document.querySelectorAll(
+    customSelectView01 = document.querySelectorAll(
         "#registerPopup .Popup_Custom_SelectView"
     );
 
@@ -145,7 +135,7 @@
         });
     }
 
-    const PopupMoreSelectBtn01 = document.querySelectorAll(
+    PopupMoreSelectBtn01 = document.querySelectorAll(
         "#registerPopup .PopupMoreSelectBtn"
     );
 

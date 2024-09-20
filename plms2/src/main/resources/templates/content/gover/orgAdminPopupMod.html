@@ -12,9 +12,8 @@
                 <li class="popSelectWrap approve_select">
                     <div class="hidden_SelectBox">
                         <select name="approve_correction_Popup_Selectbox1" id="approve_correction_Popup_Selectbox1" hidden>
-                            <option value="전체">전체</option>
-                            <option value="전체1">전체1</option>
-                            <option value="전체2">전체2</option>
+                            <option value="">전체</option>
+                            <option th:each="val:${jisaList}" th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
                         </select>
                     </div>
                     <div class="Popup_Custom_SelectBox">
@@ -130,10 +129,10 @@
 </div>
 <script>
     //스크롤이벤트_ 목록이 6개 이상일 경우 스크롤발생
-    const approveRegistScrollLength = document.querySelectorAll(
+    approveRegistScrollLength = document.querySelectorAll(
         ".approvehistorycontent_wrap ul"
     );
-    const approveRegistHistorycontent = document.querySelector(".approvehistorycontent_wrap");
+    approveRegistHistorycontent = document.querySelector(".approvehistorycontent_wrap");
     if (approveRegistScrollLength.length >= 6) {
         approveRegistHistorycontent.classList.add("scroll");
     } else {
@@ -142,7 +141,7 @@
 
     //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
 
-    const approveCorrectPopEvet = () => {
+    approveCorrectPopEvet = () => {
         const approvecorrectionPopupOpen = document.getElementById(
             "approve_correction_Popup"
         );
@@ -184,7 +183,7 @@
                     const button02 = document.createElement("button");
                     button02.classList.add("PopupMoreSelectBtn");
                     button02.type = "button";
-                    button02.textContent = optionValue02;
+                    button02.textContent = optionValue02 == '' ? '전체' : optionValue02;
                     li02.appendChild(button02);
                     popCustomSelectBtns02.appendChild(li02);
                 }
@@ -194,7 +193,7 @@
 
     newcomplaintSelect02();
 
-    const customSelectView02 = document.querySelectorAll(
+    customSelectView02 = document.querySelectorAll(
         "#approve_correction_Popup .Popup_Custom_SelectView"
     );
 
@@ -209,7 +208,7 @@
         });
     }
 
-    const PopupMoreSelectBtn02 = document.querySelectorAll(
+    PopupMoreSelectBtn02 = document.querySelectorAll(
         "#approve_correction_Popup .PopupMoreSelectBtn"
     );
 

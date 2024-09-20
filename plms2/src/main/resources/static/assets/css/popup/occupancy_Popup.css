@@ -58,7 +58,7 @@ textarea:focus {
   display: inline-block;
   width: 24px;
   height: 24px;
-  background: url(/assets/media/menu01/images/back_icon.png) no-repeat center;
+  background: url(/assets/media/popup/images/back_icon.png) no-repeat center;
   background-size: 20px;
   cursor: pointer;
 }
@@ -116,6 +116,7 @@ textarea:focus {
   height: 25px;
   /**/
 }
+
 .Popup_Custom_SelectView {
   width: 100%;
   height: 100%;
@@ -128,22 +129,25 @@ textarea:focus {
   box-sizing: border-box;
   color: #6e7d88;
   background-size: 18px !important;
-  background: url(/assets/media/popup/images/arrow-down-s-line_gray.png)
-    no-repeat right 8px center;
+  background: url(/assets/media/popup/images/arrow-down-s-line_gray.png) no-repeat right 8px center;
   font-size: 13px;
   font-weight: 500;
   background-color: #ffffff;
 }
+
 .Popup_Custom_SelectView.active {
   border: 1px solid #2b7de1;
   color: #2b7de1;
-  background: url(/assets/media/popup/images/arrow-down-s-line_blue.png)
-    no-repeat right 8px center;
+  /* 이미지 경로 수정 */
+  /* background: url(/assets/media/popup/images/arrow-down-s-line_blue.png) no-repeat right 8px center; */
+  background: url(/assets/media/popup/images/arrowDownBlue.png) no-repeat right 8px center;
   background-color: #ffffff;
 }
+
 .Popup_Custom_SelectBtns {
   position: absolute;
   width: 100%;
+  transform: translateZ(0);
   top: calc(100% + 4px);
   box-sizing: border-box;
   max-height: 0;
@@ -154,48 +158,60 @@ textarea:focus {
   border: 1px solid #acbdd7;
   padding-left: 4px !important;
 }
+
 .Popup_Custom_SelectBtns::-webkit-scrollbar {
   width: 4px !important;
 }
+
 .Popup_Custom_SelectBtns::-webkit-scrollbar-thumb {
   height: 30% !important;
   border-radius: 10px !important;
   background: #d2d2d2 !important;
 }
-.Popup_Custom_SelectBtns > li {
-  width: calc(100% -10px);
+
+.Popup_Custom_SelectBtns::-webkit-scrollbar-track {
+  background: #ffffff;
+  margin: 10px 0;
+}
+
+.Popup_Custom_SelectBtns>li {
+  width: calc(100% - 10px);
   height: 34px;
   display: flex;
   padding: 0 5px;
   color: #4e5871;
 }
-.Popup_Custom_SelectBtns > li:hover {
+
+.Popup_Custom_SelectBtns>li:hover {
   background-color: #edf2f9;
-  border-radius: 5px;
+  border-radius: 10px;
 }
-.Popup_Custom_SelectBtns > li > button {
+
+.Popup_Custom_SelectBtns>li>button {
   all: unset;
   font-size: 13px;
   width: 100%;
   font-weight: 500;
 }
+
 .Popup_Custom_SelectBtns.active {
   padding: 6px 0;
-  border-radius: 10px;
+  border-radius: 8px;
   background: #ffffff;
-  max-height: 233px;
   overflow-y: scroll;
   transition: 500ms;
   opacity: 1;
+  max-height: 233px;
 }
+
 /* 공용 셀렉트 끝 */
 /* 달력버튼 시작 */
-#occupancyfeePopup .dateBar {
+.occupancyfeePopup .dateBar {
   width: 10px;
   height: 2px;
   background: #cfddf2;
 }
-#occupancyfeePopup .dateInputBox {
+.occupancyfeePopup .dateInputBox {
   width: 100%;
   height: 100%;
   display: flex;
@@ -213,7 +229,7 @@ textarea:focus {
     center;
   background-size: 18px;
 }
-#occupancyfeePopup input[type="date"] {
+.occupancyfeePopup input[type="date"] {
   width: 100%;
   height: 100%;
   border-radius: 10px;
@@ -222,7 +238,7 @@ textarea:focus {
   background: transparent;
   text-align: right;
 }
-#occupancyfeePopup input[type="date"]::-webkit-calendar-picker-indicator {
+.occupancyfeePopup input[type="date"]::-webkit-calendar-picker-indicator {
   background: transparent;
   z-index: 1;
   position: absolute;
@@ -231,7 +247,7 @@ textarea:focus {
   width: 100%;
   height: 100%;
 }
-#occupancyfeePopup input[type="date"]::before {
+.occupancyfeePopup input[type="date"]::before {
   content: attr(data-placeholder);
   position: absolute;
   top: 50%;
@@ -240,12 +256,12 @@ textarea:focus {
   color: #6e7d88;
   pointer-events: none;
 }
-#occupancyfeePopup input[type="date"]:focus,
-#occupancyfeePopup input[type="date"]:valid {
+.occupancyfeePopup input[type="date"]:focus,
+.occupancyfeePopup input[type="date"]:valid {
   color: #6e7d88;
 }
-#occupancyfeePopup input[type="date"]:focus::before,
-#occupancyfeePopup input[type="date"]:valid::before {
+.occupancyfeePopup input[type="date"]:focus::before,
+.occupancyfeePopup input[type="date"]:valid::before {
   content: "";
 }
 
@@ -268,6 +284,7 @@ textarea:focus {
 #register_Cancel_Popup.active,
 #registerPopup.active {
   display: block;
+
 }
 
 /* popWrap 코드 display:none처리함 */
@@ -280,6 +297,7 @@ textarea:focus {
 #register_Cancel_Popup .popupWrap,
 #registerPopup .popupWrap {
   display: block;
+  z-index:9999;
 }
 
 /**/
@@ -337,31 +355,151 @@ textarea:focus {
   width: 802px;
   height: 128px;
   border-radius: 5px;
-  border: 1px #cddbf0 dashed;
+  /* border: 1px #cddbf0 dashed; */
+  overflow: hidden;
 }
 .upload_box {
-  display: flex;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.excel_upload 
+.upload_box 
+.excel_Popup_file_wrap 
+.excel_Popup_file_default {
+  width: 100%;
+  height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 32px 310px;
-  box-sizing: border-box;
-  background-color: #f7f9fc;
-  overflow: hidden;
+  gap: 12px;
 }
-.excel_upload .img_wrap {
-  width: 35px;
-  height: 35px;
+
+.excel_upload
+.upload_box
+.excel_Popup_file_wrap
+.excel_Popup_file_default
+.excel_Popup_file_img_wrap{
+width: 35px;
+height: 35px;
 }
-.excel_upload .img_wrap img {
+.excel_upload 
+.upload_box 
+.excel_Popup_file_wrap 
+.excel_Popup_file_default 
+.excel_Popup_file_img_wrap img{
   width: 100%;
-  height: 100%;
 }
-.excel_font {
-  padding-top: 12px;
+.excel_upload 
+.upload_box 
+.excel_Popup_file_wrap 
+.excel_Popup_file_default p{
   font-size: 14px;
   color: #88a2c8;
   font-weight: 600;
+}
+
+.excel_Popup_file_wrap {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.excel_Popup_file_wrap 
+.excel_Popup_file_default {
+  width: 100%;
+  height: 100%;
+  background-color: #f7f9fc;
+  box-sizing: border-box;
+  display: none;
+}
+
+.excel_Popup_file_wrap 
+.excel_Popup_file_default.active {
+  display: flex;
+}
+
+.excel_Popup_file_wrap .excel_Popup_file_add_contents {
+  width: 100%;
+  height: 128px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: none;
+}
+
+.excel_Popup_file_wrap .excel_Popup_file_add_contents.active {
+  display: block;
+}
+
+.excel_Popup_file_add_contents::-webkit-scrollbar {
+  width: 4px;
+}
+
+.excel_Popup_file_add_contents::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2
+}
+
+.excel_Popup_file_add_contents::-webkit-scrollbar-track {
+  background: #ffffff;
+  margin: 10px 0;
+}
+
+.excel_Popup_file_add_contents>ul {
+  display: grid;
+  grid-template-columns: 1fr 15fr 3fr 3fr;
+  height: 33px;
+}
+
+.excel_Popup_file_add_contents>.excel_Popup_file_add_contents_th {
+  background-color: #F7F9FC;
+}
+
+.excel_Popup_file_add_contents>ul>li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.excel_Popup_file_add_contents>ul>li>p {
+  color: #000000;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.excel_Popup_file_add_contents>ul>.file_add_name {
+  justify-content: start;
+  padding: 0 10px;
+}
+
+.excel_Popup_file_add_contents ul>li>figure {
+  width: 10px;
+  height: 10px;
+}
+
+.excel_Popup_file_add_contents ul>li>figure img {
+  width: 100%;
+}
+
+.excel_Popup_file_add_contents ul>li>button {
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.excel_Popup_file_add_contents ul>li>button img {
+  width: 100%;
+}
+
+.excel_font {
+  padding-top: 12px;
 }
 #exceluploadPopup .excelbtnWrap,
 #land_exceluploadPopup .excelbtnWrap {
@@ -398,54 +536,221 @@ textarea:focus {
   border-radius: 10px;
   cursor: pointer;
 }
+
+/* 추가 */
+#exceluploadPopup .popfileLargeWrap {
+  width: 100%;
+  position: relative;
+  height: 128px;
+}
+#exceluploadPopup .popfileLargeWrap .popfileUploadWrap {
+  width: 100%;
+  /* margin-bottom: 18px; */
+  /* overflow-y: scroll; */
+  border-radius: 5px;
+}
+#exceluploadPopup .popfileLargeWrap .popfileUploadDisplay {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#exceluploadPopup .popfileLargeWrap .popfileUploadDisplay.active {
+  display: block;
+}
+#exceluploadPopup .excel_upload .popfileUploadBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #f7f9fc;
+  border: 1px dashed #cddbf0;
+  box-sizing: border-box;
+}
+#exceluploadPopup .excel_upload .popfileUploadBox .fileUploadIcon {
+  width: 35px;
+  height: 35px;
+}
+#exceluploadPopup .excel_upload .popfileUploadBox p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #88a2c8;
+}
+#exceluploadPopup .popfileUploadAfter {
+  border: 1px solid #CDDBF0;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  overflow-y: hidden;
+  background: #fff;
+}
+
+#exceluploadPopup .popfileUploadAfter.scroll {
+  overflow-y: scroll;
+}
+#exceluploadPopup .popfileUploadAfter::-webkit-scrollbar {
+  width: 4px;
+}
+#exceluploadPopup .popfileUploadAfter::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+#exceluploadPopup .popfileUploadAfter .poptitles {
+  display: grid;
+  grid-template-columns: 32fr 1324fr 200fr 200fr ;
+  grid-template-rows: 33px;
+  background: #F7F9FC;
+  border-bottom: 1px solid #CDDBF0;
+  border-radius: 5px 5px 0 0;
+}
+#exceluploadPopup .popfileUploadAfter .poptitle {
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#exceluploadPopup .popfileUploadAfter .popfilenameBox {
+  padding-left: 25px;
+  box-sizing: border-box;
+  position: relative;
+}
+#exceluploadPopup .popfileUploadAfter p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3C3C3C;
+}
+#exceluploadPopup .popfileUploadAfter .popfilenameBox p {
+  width: 100%;
+  text-align: left;
+}
+#exceluploadPopup .popfileUploadAfter .popfilenameBox .poptypeIcon {
+  width: 15px;
+  height: 15px;
+  /* 이미지 경로 수정 */
+  /* background: url(../../media/popup/images/fileextensionIcon.png) no-repeat center; */
+  background: url(/assets/media/popup/images/fileextensionIcon.png) no-repeat center;
+  background-size: 15px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5px;
+}
+#exceluploadPopup .popfileUploadAfter .poptitle .popBtnbox {
+  height: 100%;
+}
+#exceluploadPopup .popfileUploadAfter .popAllDeleteFileBtn,
+#exceluploadPopup .popfileUploadAfter .popfileDeleteBtn {
+  width: 33px;
+  height: 33px;
+  /* 이미지 경로 수정 */
+  /* background: url(../../media/popup/images/back_icon.png) no-repeat center; */
+  background: url(/assets/media/popup/images/back_icon.png) no-repeat center;
+  background-size: 15px;
+}
+#exceluploadPopup .popfileUploadAfter .popcontents {
+  display: grid;
+  grid-template-columns: 32fr 1324fr 200fr 200fr;
+  grid-template-rows: 33px;
+}
+#exceluploadPopup .popfileUploadAfter .popcontent {
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* 점용 엑셀업로드 팝업 끝*/
 /* 점용 변경이력 팝업 시작*/
-#changehistoryPopup .popupWrap {
+.changehistoryPopup .popupWrap {
   width: 1130px;
   height: 611px;
+  box-sizing: border-box;
 }
-#changehistoryPopup .popupWrap .historywrap {
+
+.changehistoryPopup .popupWrap .historywrap {
   border: 1px solid #cddbf0;
   border-radius: 5px;
+  width: 1106px;
+  height: 462px;
   overflow: hidden;
-  margin: 19px 0;
-  background-color: #f7f9fc;
+  margin: 19px auto;
+  box-sizing: border-box;
 }
+
+.historywrap .historytitle_wrap {
+  width: 100%;
+  max-height: 34px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #cddbf0;
+  background: #f7f9fc;
+  z-index: 10;
+  position: sticky;
+  top: 0;
+}
+
 .historywrap .historytitle {
   width: 100%;
-  height: 34px;
-  background: #f7f9fc;
-  display: flex;
-  border-bottom: 1px solid #cddbf0;
-  font-size: 14px;
-  font-weight: 500;
+  max-height: 34px;
+  display: grid;
+  grid-template-columns: 175px 208px 723px;
+  box-sizing: border-box;
 }
+
 .historytitle > li {
-  text-align: center;
+  width: 100%;
   line-height: 34px;
   border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
 }
-.historytitle > .historytitle_th1 {
-  width: 175px;
-}
-.historytitle > .historytitle_th2 {
-  width: 208px;
-}
-.historytitle > .historytitle_th3 {
-  width: 706px;
-  border-right: none;
-}
-.historycontent ul {
+
+.historywrap > div > ul > li > p {
   width: 100%;
-  height: 84px;
-  display: flex;
-  border-bottom: 1px solid rgba(205, 219, 240, 0.6);
+  height: 100%;
   font-size: 14px;
   font-weight: 500;
-  background-color: #ffffff;
-}
-.historycontent ul > li {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.historytitle > li:last-child {
+  border-right: none;
+}
+
+.historycontent {
+  width: 100%;
+  height: 100%;
+  background: #f7f9fc;
+  box-sizing: border-box;
+}
+
+.historycontent .historycontent_td {
+  width: 100%;
+
+  min-height: 83px;
+  display: grid;
+  grid-template-columns: 175px 208px 723px;
+  border-bottom: 1px solid rgba(205, 219, 240, 0.6);
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+.historytitle_td3 {
+  padding: 10px 34px;
+  box-sizing: border-box;
+}
+.historycontent > ul > li {
+  display: flex;
+  min-height: 85px;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -454,56 +759,59 @@ textarea:focus {
   /* 추가 */
   font-size: 14px;
   font-weight: 500;
-}
-.historycontent > ul > .historytitle_td1 {
-  width: 175px;
-}
-.historycontent > ul > .historytitle_td2 {
-  width: 208px;
-}
-.historycontent > ul > .historytitle_td3 {
-  width: 706px;
-  border-right: none;
-  /* 추가 */
-  padding: 0 34px;
   box-sizing: border-box;
 }
-.historycontent {
-  height: 430px;
-}
+
 /* css추가*/
 
 .historycontent.scroll {
+  overflow-x: hidden;
   overflow-y: scroll;
+  width: 1102px;
+  height: 428px;
+  background: #ffffff;
+}
+.historycontent.scroll .historycontent_td {
+  width: 1094px;
+  min-height: 83px;
+  display: grid;
+  grid-template-columns: 175px 208px 711px;
+  border-bottom: 1px solid rgba(205, 219, 240, 0.6);
+  font-size: 14px;
+  font-weight: 500;
+  box-sizing: border-box;
 }
 /**/
 
 .historycontent::-webkit-scrollbar {
-  width: 10px;
-  border: 1px solid #cddbf0;
+  width: 5px;
+}
+
+.historycontent::-webkit-scrollbar-track {
+  height: 30%;
+  background: transparent;
+  margin: 10px 0;
 }
 
 .historycontent::-webkit-scrollbar-thumb {
+  background: #d9d9d9;
   border-radius: 10px !important;
-  background: #d9d9d9 !important;
-  width: 5px !important;
-  border: 3px solid #ffffff;
 }
-.historycontent::-webkit-scrollbar-track {
-  background: #ffffff;
-}
+
 .historybtn {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 /* 점용 변경이력 팝업 끝*/
 /* 점용료 납부 팝업 시작*/
 .occupancywrap {
   width: 1264px;
-  height: 700px;
+  max-height: 900px;
 }
 .whitehall {
+  width: 100%;
   padding-top: 30px;
   padding-left: 6px;
 }
@@ -669,6 +977,7 @@ textarea:focus {
   background-color: #cce0ff;
   color: #2b7de1;
   border-radius: 20px;
+  cursor: pointer;
 }
 .file_wrap {
   width: 1240px;
@@ -679,7 +988,7 @@ textarea:focus {
   border-radius: 5px;
   box-sizing: border-box;
 }
-.file_wrap > ul > li {
+.file_wrap > .filetitle_wrap > ul > li {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -687,9 +996,10 @@ textarea:focus {
   border-right: 1px solid #cddbf0;
   box-sizing: border-box;
 }
-.file_wrap > ul > li:last-child {
+.file_wrap > .filetitle_wrap > ul > li:last-child {
   border: none;
 }
+
 .filetitle {
   display: grid;
   grid-template-columns: 80px 160px 820px 180px;
@@ -703,6 +1013,10 @@ textarea:focus {
   grid-template-columns: 80px 160px 820px 180px;
   box-sizing: border-box;
   height: 33px;
+  border-bottom: 1px solid #cddbf0;
+}
+.filecontent:last-child {
+  border-bottom: none;
 }
 .filecontent > li {
   padding: 3px 5px;
@@ -734,6 +1048,7 @@ textarea:focus {
   justify-content: center;
   align-items: center;
   gap: 3px;
+  cursor: pointer;
 }
 .filecontent_wrap {
   width: 12px;
@@ -744,12 +1059,49 @@ textarea:focus {
   height: 100%;
 }
 
+/* 점용료 납부 첨부파일 스크롤*/
+
+.filecontents_wrap.scroll {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 164px;
+  width: 1236px;
+}
+.filecontents_wrap.scroll .filecontent {
+  display: grid;
+  width: 1229px;
+  grid-template-columns: 80px 160px 820px 169px;
+  box-sizing: border-box;
+  height: 33px;
+  border-bottom: 1px solid #cddbf0;
+}
+.filecontents_wrap.scroll .filecontent .filetitle_td_4 {
+  padding-left: 25px;
+}
+
+.filecontents_wrap::-webkit-scrollbar {
+  width: 5px;
+}
+
+.filecontents_wrap::-webkit-scrollbar-track {
+  border-radius: 10px !important;
+  background: #d9d9d9 !important;
+  width: 5px !important;
+  margin: 10px 0;
+  height: 30% !important;
+}
+
+.filecontents_wrap::-webkit-scrollbar-thumb {
+  background: #d9d9d9;
+  border-radius: 10px !important;
+}
 .occupancybtn {
+  margin-top: 30px;
+  margin-bottom: 15px;
   display: flex;
   gap: 10px;
   justify-content: center;
   align-items: center;
-  padding-bottom: 10px;
 }
 .occupancybtn button {
   width: 116px;
@@ -762,95 +1114,117 @@ textarea:focus {
   cursor: pointer;
 }
 /* 점용료 납부 팝업 끝*/
-/* 관리기간 등록 팝업 시작 */
+
+/* 관리기관 등록 팝업 시작 */
 #registerPopup {
   width: 1264px;
-  height: 192px;
+  height: 237px;
 }
+
+.register_wrap {
+  width: 100%;
+  height: 44px;
+}
+
 .register_title {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 155px 155px 230px 80px 155px 145px 155px 155px;
   margin-top: 21px;
   border: 1px solid #cddbf0;
   border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
 }
+
 .register_title > li {
+  border-right: 1px solid #cddbf0;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-right: 1px solid #cddbf0;
+}
+
+.register_title > li:last-child {
+  border-right: none;
+}
+
+.register_title > li > h3 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f9fc;
   font-size: 14px;
+  font-weight: 500;
 }
-.register_title > .register_title_th {
-  width: 155px;
-  height: 33px;
-  background-color: #f7f9fc;
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+
+.register_title input[type="text"] {
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 13px;
+  color: #6e7d88;
 }
-.register_title > #register_title_th2 {
-  width: 145px;
-  height: 23px;
-  padding: 5px;
-}
-.register_title > #register_title_th2 .Popup_Custom_SelectView,
-.register_title > #register_title_th6 .Popup_Custom_SelectView {
-  border-radius: 8px;
-}
-.register_title > .register_title_th3 {
-  width: 230px;
-  height: 33px;
-  background-color: #f7f9fc;
-}
-.register_title > .register_title_th4 {
-  width: 80px;
-  height: 33px;
-}
-.register_title > .register_title_th5 {
-  width: 155px;
-  height: 33px;
-  background-color: #f7f9fc;
-}
-.register_title > #register_title_th6 {
-  width: 145px;
-  height: 23px;
-  padding: 5px;
-}
-.register_title > .register_title_th7 {
-  width: 155px;
-  height: 33px;
-  background-color: #f7f9fc;
-}
-.register_title > .register_title_th8 {
-  width: 135px;
-  height: 33px;
-  border: none;
+.register_wrap .register_title .popSelectWrap {
   padding: 0 5px;
+  box-sizing: border-box;
 }
-.register_title_th8 input[type="text"] {
+
+.register_wrap .register_title .popSelectWrap .Popup_Custom_SelectBox {
+  height: 36px;
+  box-sizing: border-box;
+  font-size: 13px;
+}
+
+/* 허가관청 체크박스 값에 따라 다르게 나온는 곳 */
+.register_title_th6 .Popup_Custom_SelectBox {
+  display: none;
+}
+
+.register_title_th6 .Popup_Custom_SelectBox.active {
+  display: block;
+}
+
+.register_title_th6 .register_hidden_text {
+  display: none;
+}
+
+.register_title_th6 .register_hidden_text.active {
+  display: block;
   background-color: #edf2f9;
   width: 100%;
-  height: 25px;
+  height: 36px;
   border-radius: 5px;
   padding: 0 10px;
 }
+
+.register_title_th8 {
+  padding: 5px 4px;
+}
+
+.register_title_th8 input[type="text"] {
+  background-color: #edf2f9;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
 .registerbtnWrap {
-  padding-top: 18px;
+  margin-top: 50px;
   padding-bottom: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
 }
+
 .registerbtnWrap .closeBtn {
   width: 116px;
   height: 44px;
   font-size: 15px;
+  cursor: pointer;
 }
+
 .registerbtnWrap .approveBtn {
   width: 116px;
   height: 44px;
@@ -860,13 +1234,16 @@ textarea:focus {
   cursor: pointer;
   font-size: 15px;
 }
+
 .registerbtnWrap .cancelBtn {
   width: 116px;
   height: 44px;
   color: #ffffff;
   background-color: #2b7de1;
   border-radius: 10px;
+  cursor: pointer;
 }
+
 .approveBtn {
   width: 116px;
   height: 44px;
@@ -875,11 +1252,10 @@ textarea:focus {
   border-radius: 10px;
   cursor: pointer;
 }
-#register_Cancel_Popup .closeBtn {
-  cursor: default;
-}
-/* 관리기간 등록 팝업 끝 */
-/* 관리기간 승인 팝업 시작 */
+
+/* 관리기관 등록 팝업 끝 */
+
+/* 관리기관 승인 팝업 시작 */
 .aprrove_wrap {
   width: 1240px;
   min-height: 33px;
@@ -906,6 +1282,28 @@ textarea:focus {
 
 #approve_correction_Popup .approve_title > li:last-child {
   border-right: none;
+}
+
+/* 관리기관 승인 허가관청 체크박스 값에 따라 다르게 나온는 곳 */
+.popContent_default {
+  display: none;
+}
+
+.popContent_default.active {
+  display: block;
+}
+
+.approve_hidden_text {
+  display: none;
+}
+
+.approve_hidden_text.active {
+  display: block;
+  background-color: #edf2f9;
+  width: 100%;
+  height: 25px;
+  border-radius: 5px;
+  padding: 0 10px;
 }
 
 /**/
@@ -966,7 +1364,6 @@ textarea:focus {
 
 .approvehistory {
   width: 1240px;
-  height: 134px;
   border: 1px solid #cddbf0;
   border-radius: 8px;
   overflow: hidden;
@@ -1021,9 +1418,8 @@ textarea:focus {
 }
 .approvehistory_content {
   display: grid;
-  grid-template-columns: 155px 200px 875px;
+  grid-template-columns: 155px 200px 885px;
   border-bottom: 1px solid #cddbf0;
-  min-height: 33px;
   box-sizing: border-box;
 }
 .approvehistory_content:last-child {
@@ -1038,6 +1434,12 @@ textarea:focus {
   align-items: center;
   box-sizing: border-box;
 }
+.approvehistory_content > li:last-child {
+  border-right: none;
+}
+.approvehistory_title_1 {
+  color: #000000;
+}
 .approvehistory_content > .approvehistory_title_2,
 .approvehistory_content > .approvehistory_title_4 {
   color: #3c3c3c;
@@ -1047,8 +1449,63 @@ textarea:focus {
 }
 
 .approvehistorycontent_wrap {
-  height: 99px;
+  height: 100%;
+}
+
+/* 관리기관 수정 */
+
+.aprrove_wrap
+  .approve_title
+  .popSelectWrap
+  .Popup_Custom_SelectBox
+  .Popup_Custom_SelectBtns.active {
+  max-height: 220px;
+}
+
+.aprrove_wrap
+  .approve_title
+  .popSelectWrap
+  .Popup_Custom_SelectBox
+  .Popup_Custom_SelectBtns
+  > li {
+  height: 36px;
+}
+.approve_select {
+  padding: 4px 5px;
+}
+
+/* 관리기관 수정 허가관청 체크박스 값에 따라 다르게 나온는 곳 */
+.fix_default {
+  display: none;
+}
+
+.fix_default.active {
+  display: block;
+}
+
+.fix_hidden_text {
+  display: none;
+}
+
+.fix_hidden_text.active {
+  display: block;
+  background-color: #edf2f9;
+  width: 100%;
+  height: 25px;
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
+/* 스크롤 이벤트 */
+.approvehistorycontent_wrap.scroll {
   overflow-y: scroll;
+  max-height: 230px;
+}
+.approvehistorycontent_wrap.scroll .approvehistory_content {
+  grid-template-columns: 155px 200px 875px;
+}
+.approvehistorycontent_wrap.scroll .approvehistory_content > li:last-child {
+  border-right: 1px solid #cddbf0;
 }
 .approvehistorycontent_wrap::-webkit-scrollbar {
   width: 10px;
@@ -1065,4 +1522,4 @@ textarea:focus {
   background: #ffffff;
 }
 
-/* 관리기간 승인 팝업 끝 */
+/* 관리기관 승인 팝업 끝 */

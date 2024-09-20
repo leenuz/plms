@@ -78,10 +78,10 @@
 </div>
 <script>
     //스크롤이벤트_ 목록이 6개 이상일 경우 스크롤발생
-    const approveScrollLength = document.querySelectorAll(
+    approveScrollLength = document.querySelectorAll(
         ".approvehistorycontent_wrap ul"
     );
-    const historycontent = document.querySelector(".approvehistorycontent_wrap");
+    historycontent = document.querySelector(".approvehistorycontent_wrap");
     if (approveScrollLength.length >= 6) {
         historycontent.classList.add("scroll");
     } else {
@@ -89,7 +89,7 @@
     }
 
     //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
-    const approve_PopupPopupOpen = document.getElementById("approve_Popup");
+    approve_PopupPopupOpen = document.getElementById("approve_Popup");
     if (approve_PopupPopupOpen) {
         approve_PopupPopupOpen
             .querySelectorAll(".topCloseBtn, .finalBtn")
