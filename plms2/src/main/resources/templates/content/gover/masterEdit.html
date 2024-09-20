@@ -540,7 +540,7 @@
 			    <li class="content addressInfoWidth">
 				  <!-- text 창 높이를 위해 주석처리 -->
 			      <!--<div class="addressData">-->
-			        <input type="text" name="addr" id="addr"/>
+			        <input type="text" id="addr" name="addr"/>
 			      <!--</div>-->
 			      <button class="searchAddressBtn">검색</button>
 			    </li>
@@ -651,13 +651,13 @@
   		        <li class="content addressInfoWidth">
   		          <!--<div class="addressData">-->
   					<!-- text 창 높이를 위해 주석처리 -->
-					<input type="text" name="addr" th:value="${pnuList[0].gp_sido_nm + ' ' + pnuList[0].gp_sgg_nm + ' ' + pnuList[0].gp_emd_nm + ' ' + pnuList[0].gp_ri_nm + ' ' + pnuList[0].gp_jibun}" />
+					<input type="text" id="addr" name="addr" th:value="${pnuList[0].gp_sido_nm + ' ' + pnuList[0].gp_sgg_nm + ' ' + pnuList[0].gp_emd_nm + ' ' + pnuList[0].gp_ri_nm + ' ' + pnuList[0].gp_jibun}" />
   		          <!--</div>-->
   		          <button class="searchAddressBtn">검색</button>
   		        </li>
   		        <!-- PNU -->
   		        <li class="content middleWidth">
-  		          <input type="text" name="pnu" th:value="${pnuList[0].gp_pnu}"/>
+  		          <input type="text" name="pnu" id="pnu" th:value="${pnuList[0].gp_pnu}"/>
   		        </li>
   		        <!-- 지목 -->
 				<li class="content selectContentArea">
@@ -671,7 +671,7 @@
 				    </select>
 				  </div>
 				  <section class="customSelectBox">
-				    <button class="customSelectView" th:text="${pnuList[0].gp_jimok_text}">전</button>
+				    <button class="customSelectView" th:text="${pnuList[0].gp_jimok_text}" id="jimok">선택</button>
 				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
@@ -763,13 +763,13 @@
   		        <!-- 주소 -->
   		        <li class="content addressInfoWidth">
   		          <!--<div class="addressData">-->
-					<input type="text" name="addr" th:value="${pnu.gp_sido_nm + ' ' + pnu.gp_sgg_nm + ' ' + pnu.gp_emd_nm + ' ' + pnu.gp_ri_nm + ' ' + pnu.gp_jibun}"/>
+					<input type="text" id="addr" name="addr" th:value="${pnu.gp_sido_nm + ' ' + pnu.gp_sgg_nm + ' ' + pnu.gp_emd_nm + ' ' + pnu.gp_ri_nm + ' ' + pnu.gp_jibun}"/>
   		          <!--</div>-->
   		          <button class="searchAddressBtn">검색</button>
   		        </li>
   		        <!-- PNU -->
   		        <li class="content middleWidth">
-  		          <input type="text" name="pnu" th:value="${pnu.gp_pnu}" />
+  		          <input type="text" name="pnu" id="pnu" th:value="${pnu.gp_pnu}" />
   		        </li>
 				<!-- 지목 -->
 				<li class="content selectContentArea">
@@ -783,7 +783,7 @@
 				    </select>
 				  </div>
 				  <section class="customSelectBox">
-				    <button class="customSelectView" th:text="${pnu.gp_jimok_text}">전</button>
+				    <button class="customSelectView" th:text="${pnu.gp_jimok_text}" id="jimok">선택</button>
 				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
@@ -882,14 +882,14 @@
   		        <!-- 주소 -->
   		        <li class="content addressInfoWidth">
   		          <!--<div class="addressData">-->
-  		            <input type="text" name="addr"/>
+  		            <input type="text" id="addr" name="addr"/>
   		          <!--</div>-->
   		          <button class="searchAddressBtn">검색</button>
   		        </li>
 				
   		        <!-- PNU -->
   		        <li class="content middleWidth">
-  		          <input type="text" name="pnu"/>
+  		          <input type="text" name="pnu" id="pnu" />
   		        </li>
   		        <!-- 지목 -->
   		        <li class="content selectContentArea">
@@ -899,7 +899,7 @@
   		            </select>
   		          </div>
   		          <section class="customSelectBox">
-  		            <button class="customSelectView">전</button>
+  		            <button class="customSelectView" id="jimok">선택</button>
   		            <ul class="customSelectBtns"></ul>
   		          </section>
   		        </li>
@@ -1122,6 +1122,54 @@
     </div>
     <div class="masterEditChangeHistoryWrapper"></div>
     <div class="masterEditExcelPopWrapper"></div>
+	
+	<!-- 주소 검색 팝업 -->
+
+	<div class="masterRegExcelPopWrapper" id="searchResultPopDiv">
+		<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+		    <div id="searchResultsPopup">
+		        <div class="popupWrap">
+		            <h2>
+		                <p>검색결과</p>
+		                <span class="topCloseBtn"></span>
+		            </h2>
+
+					<!-- 검색 결과 grid 헤더 -->
+		            <div class="popupCont">
+		                <ul class="popTitles">
+		                    <li class="popTitle01">PNU</li>
+		                    <li class="popTitle02">주소</li>
+		                    <li class="popTitle03">지번</li>
+		                    <li class="popTitle04">선택</li>
+		                </ul>
+		                <div class="popContentBox" >
+		                    <ul class="popContents" th:each="val:${jisangBasicSearchList}">
+		                        <li class="popContent01">115001100010010001</li>
+		                        <li class="popContent02">서울특별시 강서구 개화동</li>
+		                        <li class="popContent03">1-1</li>
+		                        <li class="popContent04">
+		                            <button class="resultSelectBtn">선택</button>
+		                        </li>
+		                    </ul>
+		                    <ul class="popContents">
+		                        <li class="popContent01">115001100010010001</li>
+		                        <li class="popContent02">서울특별시 강서구 개화동</li>
+		                        <li class="popContent03">1-1</li>
+		                        <li class="popContent04">
+		                            <button class="resultSelectBtn">선택</button>
+		                        </li>
+		                    </ul>
+		                </div>
+		            </div>
+
+		            <div class="lastBtnBox btnWrap">
+		                <button class="backBtn finalBtn">닫기</button>
+		                <button class="saveBtn finalBtn">PNU 없이 선택</button>
+		            </div>
+		        </div>
+		    </div>
+	</div>
+
     <!-- script -->
     <script src="/js/gover/masterEdit.js"></script>
     <script type="module" src="/js/module/surfaceMain.js"></script>
