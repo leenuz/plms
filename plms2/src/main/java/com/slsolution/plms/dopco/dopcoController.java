@@ -199,6 +199,15 @@ public class dopcoController {
 		return mav;
 	}
 	
+	@GetMapping(path="/compLandDispReg") //http://localhost:8080/api/get/dbTest
+    public ModelAndView compLandDispReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/dopco/compLandDispReg");
+		return mav;
+	}
+
 	@RequestMapping(value="/menu05_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> menu05_1DataTableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
