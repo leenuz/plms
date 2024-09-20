@@ -950,11 +950,11 @@ $(document).on("click",".resultSelectBtn",function(){
 	
 	var pnu=$(this).parent().parent().find(".popContent01").html();
 	var juso=$(this).parent().parent().find(".popContent02").html();	
-/*	var jibun=$(this).parent().parent().find(".popContent03").html();
+	var jibun=$(this).parent().parent().find(".popContent03").html();
     var sido_nm=$(this).parent().parent().find(".popContent0201").html();
 	var sgg_nm=$(this).parent().parent().find(".popContent0202").html();
 	var emd_nm=$(this).parent().parent().find(".popContent0203").html();
-	var ri_nm=$(this).parent().parent().find(".popContent0204").html();*/
+	var ri_nm=$(this).parent().parent().find(".popContent0204").html();
 	var jimok=$(this).parent().parent().find(".popContent05").html();
 	
 	console.log("pnu: " + pnu);
