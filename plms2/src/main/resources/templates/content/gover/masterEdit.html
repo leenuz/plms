@@ -495,7 +495,14 @@
 			    <!-- 순번 -->
 			    <li class="content smallWidth">
 			    <input type="hidden" id="goverIndex" value="0">
-			      <input type="text" class="notWriteInput" readonly placeholder="1" />
+				<input type="hidden" id="sido_nm" name="sido_nm" >
+				<input type="hidden" id="sgg_nm" name="sgg_nm" >
+				<input type="hidden" id="emd_nm" name="emd_nm" >
+				<input type="hidden" id="ri_nm" name="ri_nm" >
+				<input type="hidden" id="jibun" name="jibun" >
+				<input type="hidden" id="jibun_full" name="jibun_full" >
+				<input type="hidden" id="addrcode" name="addrcode" >
+			    <input type="text" class="notWriteInput" readonly placeholder="1" />
 			    </li>
 				
 			    <!-- 관리기관 -->
@@ -597,7 +604,15 @@
 			    </li>-->
   		        <!-- 순번 -->
   		        <li class="content smallWidth">
-  		          <input type="text" class="notWriteInput" readonly placeholder="1" />
+					<input type="hidden" id="goverIndex" value="0">
+					<input type="hidden" id="sido_nm" name="sido_nm" >
+					<input type="hidden" id="sgg_nm" name="sgg_nm" >
+					<input type="hidden" id="emd_nm" name="emd_nm" >
+					<input type="hidden" id="ri_nm" name="ri_nm" >
+					<input type="hidden" id="jibun" name="jibun" >
+					<input type="hidden" id="jibun_full" name="jibun_full" >
+					<input type="hidden" id="addrcode" name="addrcode" >
+	  		        <input type="text" class="notWriteInput" readonly placeholder="1" />
   		        </li>
 				
   		        <!-- 관리기관 -->
@@ -647,7 +662,7 @@
   		        <!-- 지목 -->
 				<li class="content selectContentArea">
 				  <div class="hiddenSelectBox">
-				    <select name="masterRegSelectBox18" id="masterRegSelectBox18" hidden>
+				    <select name="jimok_text" id="masterRegSelectBox18" hidden>
 				      <option th:each="jimok : ${jimokList}" 
 				              th:value="${jimok['jm_name']}" 
 				              th:text="${jimok['jm_name']}" 
@@ -671,7 +686,7 @@
   		        <!-- 관로일치 여부 -->
 				<li class="content middleWidth selectContentArea">
 				  <div class="hiddenSelectBox">
-				    <select name="masterRegSelectBox19" id="masterRegSelectBox19" hidden>
+				    <select name="pipe_overlap_yn" id="masterRegSelectBox19" hidden>
 				      <option value="Y" th:selected="${pnuList[0].gp_pipe_overlap_yn == 'Y'}">Y</option>
 				      <option value="N" th:selected="${pnuList[0].gp_pipe_overlap_yn == 'N'}">N</option>
 				    </select>
@@ -704,7 +719,15 @@
 				
 				<!-- 순번 -->
 	        	<li class="content smallWidth">
-  		          <input type="text" class="notWriteInput" readonly th:placeholder="${pnu.no}" />
+					<input type="hidden" id="goverIndex" value="0">
+					<input type="hidden" id="sido_nm" name="sido_nm" >
+					<input type="hidden" id="sgg_nm" name="sgg_nm" >
+					<input type="hidden" id="emd_nm" name="emd_nm" >
+					<input type="hidden" id="ri_nm" name="ri_nm" >
+					<input type="hidden" id="jibun" name="jibun" >
+					<input type="hidden" id="jibun_full" name="jibun_full" >
+					<input type="hidden" id="addrcode" name="addrcode" >
+	  		        <input type="text" class="notWriteInput" readonly th:placeholder="${pnu.no}" />
   		        </li>
 				
 				<!-- 관리기관 -->
@@ -734,13 +757,13 @@
 				</li>
 				<!-- 대표필지 -->
 				<li class="content checkboxWrap">
-					<input type="checkbox" th:id="'masterRegSelectBox_0' + ${pnu.no}" th:checked="${pnu.gp_rep_flag == 'Y'}" />
+					<input type="checkbox" th:id="'masterRegSelectBox_0' + ${pnu.no}" th:checked="${pnu.gp_rep_flag == 'Y'}" name="rep_flag"/>
 					<label th:for="'masterRegSelectBox_0' + ${pnu.no}"></label>
 				</li>
   		        <!-- 주소 -->
   		        <li class="content addressInfoWidth">
   		          <!--<div class="addressData">-->
-					<input type="text" name="addr" th:value="${pnu.gp_sido_nm + ' ' + pnu.gp_sgg_nm + ' ' + pnu.gp_emd_nm + ' ' + pnu.gp_ri_nm + ' ' + pnu.gp_jibun}" />
+					<input type="text" name="addr" th:value="${pnu.gp_sido_nm + ' ' + pnu.gp_sgg_nm + ' ' + pnu.gp_emd_nm + ' ' + pnu.gp_ri_nm + ' ' + pnu.gp_jibun}"/>
   		          <!--</div>-->
   		          <button class="searchAddressBtn">검색</button>
   		        </li>
@@ -751,7 +774,7 @@
 				<!-- 지목 -->
 				<li class="content selectContentArea">
 				  <div class="hiddenSelectBox">
-				    <select name="masterRegSelectBox18" id="masterRegSelectBox18" hidden>
+				    <select name="jimok_text" id="masterRegSelectBox18" hidden>
 				      <option th:each="jimok : ${jimokList}" 
 				              th:value="${jimok['jm_name']}" 
 				              th:text="${jimok['jm_name']}" 
@@ -775,7 +798,7 @@
 				<!-- 관로일치 여부 -->
 				<li class="content middleWidth selectContentArea">
 				  <div class="hiddenSelectBox">
-				    <select name="masterRegSelectBox19" id="masterRegSelectBox19" hidden>
+				    <select name="pipe_overlap_yn" id="masterRegSelectBox19" hidden>
 				      <option value="Y" th:selected="${pnu.gp_pipe_overlap_yn == 'Y'}">Y</option>
 				      <option value="N" th:selected="${pnu.gp_pipe_overlap_yn == 'N'}">N</option>
 				    </select>
@@ -812,13 +835,21 @@
 				
 				<!-- 순번 -->
   		        <li class="content smallWidth">
-  		          <input type="text" class="notWriteInput" readonly placeholder="1" />
+					<input type="hidden" id="goverIndex" value="0">
+					<input type="hidden" id="sido_nm" name="sido_nm" >
+					<input type="hidden" id="sgg_nm" name="sgg_nm" >
+					<input type="hidden" id="emd_nm" name="emd_nm" >
+					<input type="hidden" id="ri_nm" name="ri_nm" >
+					<input type="hidden" id="jibun" name="jibun" >
+					<input type="hidden" id="jibun_full" name="jibun_full" >
+					<input type="hidden" id="addrcode" name="addrcode" >
+  		        	<input type="text" class="notWriteInput" readonly placeholder="1" />
   		        </li>
 				
 				<!-- 관리기관 -->
   		        <li class="content largeWidth selectContentArea">
   		          <div class="hiddenSelectBox">
-  		            <select name="masterRegSelectBox16" id="goverRegSelectBox03" hidden>
+  		            <select name="adm_office" id="goverRegSelectBox03" hidden>
   		              <option value="전체">전체</option>
   		            </select>
   		          </div>
@@ -831,7 +862,7 @@
   		        <!-- 국공유지 여부 -->
   		        <li class="content middleWidth selectContentArea">
   		          <div class="hiddenSelectBox">
-  		            <select name="masterRegSelectBox17" id="masterRegSelectBox17" hidden>
+  		            <select name="gover_own_yn" id="masterRegSelectBox17" hidden>
   		              <option value="국유지">국유지</option>
   		              <option value="사유지">사유지</option>
   		            </select>
@@ -844,26 +875,26 @@
 				
   		        <!-- 대표필지 -->
   		        <li class="content checkboxWrap">
-  		          <input type="checkbox" id="masterRegSelectBox_" />
+  		          <input type="checkbox" id="masterRegSelectBox_" name="rep_flag"/>
   		          <label for="masterRegSelectBox_"></label>
   		        </li>
 				
   		        <!-- 주소 -->
   		        <li class="content addressInfoWidth">
   		          <!--<div class="addressData">-->
-  		            <input type="text" />
+  		            <input type="text" name="addr"/>
   		          <!--</div>-->
   		          <button class="searchAddressBtn">검색</button>
   		        </li>
 				
   		        <!-- PNU -->
   		        <li class="content middleWidth">
-  		          <input type="text" />
+  		          <input type="text" name="pnu"/>
   		        </li>
   		        <!-- 지목 -->
   		        <li class="content selectContentArea">
   		          <div class="hiddenSelectBox">
-  		            <select name="masterRegSelectBox18" id="masterRegSelectBox18" hidden>
+  		            <select name="jimok_text" id="masterRegSelectBox18" hidden>
   		              <option th:each="jimok : ${jimokList}" th:value="${jimok['jm_name']}" th:text="${jimok['jm_name']}"></option>
   		            </select>
   		          </div>
@@ -874,16 +905,16 @@
   		        </li>
   		        <!-- 점용연장 -->
   		        <li class="content">
-  		          <input type="text" />
+  		          <input type="text" name="gover_length"/>
   		        </li>
   		        <!-- 점용면적 -->
   		        <li class="content">
-  		          <input type="text" />
+  		          <input type="text" name="gover_area"/>
   		        </li>
   		        <!-- 관로일치 여부 -->
   		        <li class="content middleWidth selectContentArea">
   		          <div class="hiddenSelectBox">
-  		            <select name="masterRegSelectBox19" id="masterRegSelectBox19" hidden>
+  		            <select name="pipe_overlap_yn" id="masterRegSelectBox19" hidden>
   		              <option value="Y">Y</option>
   		              <option value="N">N</option>
   		            </select>
