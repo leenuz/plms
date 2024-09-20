@@ -4,6 +4,12 @@ var table;
 $(document).ready(function() {
 	console.log("gover/menu03_1.js start");
 	loadDataTable("");
+	
+	// 초기 화면에서 허가관청과 관리기관 비활성화
+	$("#pmtOfficeText").attr("disabled", true);
+	$("#admOfficeText").attr("disabled", true);
+	$("#privateUseSelectBox01_3").attr("disabled", true);
+	$("#privateUseSelectBox01_4").attr("disabled", true);
 });
 
 //조회하기 클릭시 상단 정보 출력
@@ -32,6 +38,28 @@ $(document).on("click","#searchBtn",function(){
 	loadDataTable(object);
 	console.log("-----------------------");
 })
+
+// 지사 선택 시 허가관청 활성화
+$(document).on("click", "#jisaUl li", function () {
+    const selectedJisa = $(this).text().trim();
+    $("#jisaText").text(selectedJisa);
+    $("#privateUseSelectBox01_1").val(selectedJisa).change();
+    if (selectedJisa !== "전체") {
+        $("#pmtOfficeText").attr("disabled", false);
+        $("#privateUseSelectBox01_3").attr("disabled", false);
+    }
+});
+
+// 허가관청 선택 시 관리기관 활성화
+$(document).on("click", "#pmtOfficeUl li", function () {
+    const selectedPmtOffice = $(this).text().trim();
+    $("#pmtOfficeText").text(selectedPmtOffice);
+    $("#privateUseSelectBox01_3").val(selectedPmtOffice).change();
+    if (selectedPmtOffice !== "전체") {
+        $("#admOfficeText").attr("disabled", false);
+        $("#privateUseSelectBox01_4").attr("disabled", false);
+    }
+});
 
 // 주소 - 선택형 동작하도록 (id 값: sido_nm, sgg, emd, ri)
 $(document).on("click", "#sido_ul li", function () {
