@@ -546,12 +546,54 @@ $(document).on("click",".registBtn",function(){
         dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
        }
 
+       var rightDatas=[];
+	   	var rightUls=$("#rightDiv .contents");
+	   	 console.log("----------deptUls------------");
+	   	console.log(rightUls);
+	   	/*String RIGHT_NAME = parser.getString("RIGHT_NAME" + String.valueOf(i), ""); // 권리명
+					String RIGHT_MONEY = parser.getString("RIGHT_MONEY" + String.valueOf(i), ""); // 설정금액
+					String RIGHT_DATE = parser.getString("RIGHT_DATE" + String.valueOf(i), ""); // 설정일
+					String CANCLE_DATE = parser.getString("CANCLE_DATE" + String.valueOf(i), ""); // 해지일
+					String RIGHT_UNAME = parser.getString("RIGHT_UNAME" + String.valueOf(i), ""); // 성명
+					String RIGHT_PHONE = parser.getString("RIGHT_PHONE" + String.valueOf(i), ""); // 연락처
+					String RIGHT_ADDR = parser.getString("RIGHT_ADDR" + String.valueOf(i), ""); // 주소*/
+
+	   	for(var i=0;i<rightUls.length;i++){
+			var rightName=$(rightUls[i]).find("input[name='rightName']").val();
+	   		var rightMoney=$(rightUls[i]).find("input[name='rightMoney']").val();
+			var rightDate=$(rightUls[i]).find("input[name='rightDate']").val();
+			var cancleDate=$(rightUls[i]).find("input[name='cancleDate']").val();
+			var rightUname=$(rightUls[i]).find("input[name='rightUname']").val();
+			var rightPhone=$(rightUls[i]).find("input[name='rightPhone']").val();
+			var rightAddr=$(rightUls[i]).find("input[name='rightAddr']").val();
+			
+			
+			
+			
+	   		//console.log("togiManageNo:"+togiManageNo);
+	   		var deptObj={
+				"RIGHT_NAME":ljsIsNull(rightName)?'':rightName
+				,"RIGHT_MONEY":ljsIsNull(rightMoney)?'':rightMoney
+				,"RIGHT_DATE":ljsIsNull(rightDate)?'':rightDate
+				,"CANCLE_DATE":ljsIsNull(cancleDate)?'':cancleDate
+				,"RIGHT_UNAME":ljsIsNull(rightUname)?'':rightUname
+				,"RIGHT_PHONE":ljsIsNull(rightPhone)?'':rightPhone
+				,"RIGHT_ADDR":ljsIsNull(rightAddr)?'':rightAddr
+				
+	   			
+	   		}
+	   		console.log(deptObj);
+	   		rightDatas.push(deptObj);
+	   	}
+	   	dataObj.rightDatas=rightDatas;
+		dataObj.gubun="insert"; //modify:수정
+		dataObj.dosiNo=""; //수정일때는 들어간다
        console.log("**dataObj**");
        console.log(dataObj);
 
-        var json = JSON.stringify(formSerializeArray);
+       /* var json = JSON.stringify(formSerializeArray);
            console.log("----------jsonobj------------");
-           console.log(json); // JSON 문자열 출력
+           console.log(json); // JSON 문자열 출력*/
 
 
 });
