@@ -681,14 +681,24 @@ $(document).on("click",".resultSelectBtn",function(){
 //
 //console.log("***클릭된 id*** : " + id);
 //console.log($(this).parent().parent().html());
+var pnu=$(this).parent().parent().find(".popContent01").html();
 	var juso=$(this).parent().parent().find(".popContent02").html();
 	var jibun=$(this).parent().parent().find(".popContent03").html();
+	var sido_nm=$(this).parent().parent().find(".popContent0201").html();
+	var sgg_nm=$(this).parent().parent().find(".popContent0202").html();
+	var emd_nm=$(this).parent().parent().find(".popContent0203").html();
+	var ri_nm=$(this).parent().parent().find(".popContent0204").html();
+	
 	var area=$(this).parent().parent().find(".popContent07").html();
     var jimok=$(this).parent().parent().find(".popContent06").html();
 
 console.log(area);
 console.log(jimok);
 $(".addressData input").val(juso);
+$("#sido_nm").val(sido_nm);
+$("#sgg_nm").val(sgg_nm);
+$("#emd_nm").val(emd_nm);
+$("#ri_nm").val(ri_nm);
 
 $(".areaData input").val(area);
 $(".jimokData .customSelectView").val(jimok);
