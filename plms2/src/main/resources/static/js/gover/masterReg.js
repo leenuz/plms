@@ -648,7 +648,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 		 object.files=files;
 		 object.fileCnt=files.length;
 		 object.office_mobile="";
-		 object.save_status="";
+		 object.save_status="Q";
 			object.gubun="insert"; //신규등록
 		
 	

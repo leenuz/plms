@@ -766,6 +766,51 @@ WHERE GOVER_NO = #{GOVER_NO}
 
 	</select>
 	
+	<insert id="insertGoverPnu" parameterType="HashMap">
+INSERT
+     INTO GOVER_PNU (
+           gp_SEQ
+           , gp_GOVER_NO
+           , gp_PNU
+           , gp_ADDRCODE
+           , gp_SIDO_NM
+           , gp_SGG_NM
+           , gp_EMD_NM
+           , gp_RI_NM
+           , gp_JIBUN
+           , gp_JIBUN_FULL
+           , gp_GOVER_OWN_YN
+           , gp_JIJUK_AREA
+           , gp_JIMOK_TEXT
+           , gp_GOVER_LENGTH
+           , gp_GOVER_AREA
+           , gp_ADM_OFFICE
+           , gp_USE_PURPOS
+           , gp_REP_FLAG
+           , gp_PIPE_OVERLAP_YN
+        )
+VALUES
+	( nextval('gover_pnu_seq')
+        , #{GOVER_NO}
+        , #{IN_PNU}
+        , #{ADDRCODE}
+        , #{SIDO_NM}
+        , #{SGG_NM}
+        , #{EMD_NM}
+		, #{RI_NM}
+		, #{JIBUN}
+		, #{JIBUN_FULL}
+		, #{GOVEROWNYN}
+		, nullif(#{JIJUK_AREA},'')::numeric
+		, #{JIMOK_TEXT}
+		, #{GOVER_LENGTH}::numeric
+		, #{GOVER_AREA}::numeric
+		, #{ADM_OFFICE}
+		, #{USE_PURPOS}
+		, #{REP_FLAG}
+		, #{PIPEYN}
+    )
+	</insert>
 	
 	<insert id="insertGoverPnuLog" parameterType="HashMap">
 		INSERT INTO GOVER_PNU_LOG (
@@ -1111,4 +1156,11 @@ FROM NOTSET_MASTER
 		WHERE gp_GOVER_NO = #{GOVER_NO}
 		AND gp_PNU = #{PNU}
 	</delete>
+	
+	
+	<update id="updateGoverMasterStatus" parameterType="HashMap">
+		UPDATE GOVER_MASTER
+		SET gm_SAVE_STATUS = #{SAVE_STATUS}
+		WHERE gm_GOVER_NO = #{GOVER_NO}
+	</update>
 </mapper>

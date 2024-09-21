@@ -96,7 +96,7 @@
 			nm_RI_NM = #{RI_NM} AND
 		</if>
 		nm_JIBUN = #{JIBUN} AND
-		DEL_FLAG ='N'
+		nm_DEL_FLAG ='N'
 
 	</select>
 </mapper>

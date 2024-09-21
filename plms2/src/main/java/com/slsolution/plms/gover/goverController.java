@@ -1664,7 +1664,7 @@ public class goverController {
 			String OFFICE_CONTACT = requestParamsObj.getString("office_contact"); // 담당자연락처
 			String OFFICE_MOBILE = requestParamsObj.getString("office_mobile"); // 담당자연락처
 			String GOVER_PERIOD = requestParamsObj.getString("gover_period"); // 담당자연락처
-			String SAVE_STATUS = requestParamsObj.getString("save_status"); // 담당자연락처
+			String SAVE_STATUS = requestParamsObj.getString("save_status"); // 저장 코드  T:승인대기 R:반려 Q:임시저장
 			String gubun = requestParamsObj.getString("gubun"); // 구분( modify : 수정, insert
 					// : 등록 )
 			 String ori_GOVER_NO =requestParamsObj.has("gover_no")?requestParamsObj.getString("gover_no"):"";
@@ -1926,7 +1926,7 @@ public class goverController {
 						mainService.InsertQuery("songyuSQL.insertJijukLog", logParam);
 					}
 
-					String CANCLE_YN = obj.getString("CANCLE_YN");// 소속토지정보
+					String CANCLE_YN = obj.has("CANCEL_YN")?obj.getString("CANCLE_YN"):"N";// 소속토지정보
 																								// -
 																								// 해지여부
 
@@ -2172,4 +2172,51 @@ log.info("params:"+params);
 		}
 		
 		
+		//승인처리 / 반려처리
+		@PostMapping(path="/updateGoverSaveStatus")
+		public void updateGoverSaveStatus(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			
+			ArrayList list = new ArrayList();
+			ParameterParser parser = new ParameterParser(request);
+
+			String goverNo = requestParamsObj.getString("goverNo");
+			String saveStatus =(!requestParamsObj.has("saveStatus")||  requestParamsObj.getString("saveStatus")==null)?"":requestParamsObj.getString("saveStatus");
+			String str_result = "Y";
+			try {
+
+				HashMap params = new HashMap();
+				params.put("GOVER_NO", goverNo);
+				params.put("SAVE_STATUS", saveStatus);
+
+				System.out.println("updateGoverSaveStatus params=" + params);
+
+				mainService.UpdateQuery("goverSQL.updateGoverMasterStatus", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
 }
