@@ -688,7 +688,7 @@ var pnu=$(this).parent().parent().find(".popContent01").html();
 	var sgg_nm=$(this).parent().parent().find(".popContent0202").html();
 	var emd_nm=$(this).parent().parent().find(".popContent0203").html();
 	var ri_nm=$(this).parent().parent().find(".popContent0204").html();
-	
+	var addrcode=$(this).parent().parent().find(".popContent0205").html();
 	var area=$(this).parent().parent().find(".popContent07").html();
     var jimok=$(this).parent().parent().find(".popContent06").html();
 
@@ -699,6 +699,8 @@ $("#sido_nm").val(sido_nm);
 $("#sgg_nm").val(sgg_nm);
 $("#emd_nm").val(emd_nm);
 $("#ri_nm").val(ri_nm);
+$("#pnu").val(pnu);
+$("#addrcode").val(addrcode);
 
 $(".areaData input").val(area);
 $(".jimokData .customSelectView").val(jimok);

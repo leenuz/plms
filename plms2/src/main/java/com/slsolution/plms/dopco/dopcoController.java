@@ -410,21 +410,21 @@ public class dopcoController {
 		log.info("requestParams:"+requestParams);
 			ArrayList list = new ArrayList();
 			ParameterParser parser = new ParameterParser(request);
-			String JISA = requestParamsObj.getString("JISA").replaceAll("전체", "");
-			String YONGDO = requestParamsObj.getString("YONGDO");
-			String PIPE_NAME = requestParamsObj.getString("PIPE_NAME");
-			String SUN_GUBUN = requestParamsObj.getString("SUN_GUBUN");
+			String JISA = requestParamsObj.getString("jisa").replaceAll("전체", "");
+			String YONGDO = requestParamsObj.getString("yongdo");
+			String PIPE_NAME = requestParamsObj.getString("pipe_name");
+			String SUN_GUBUN = requestParamsObj.getString("sun_gubun");
 
-			String SIDO_NM = (requestParamsObj.getString("SIDO_NM").replaceAll("전체", ""));
-			String SGG_NM = (requestParamsObj.getString("SGG_NM").replaceAll("전체", ""));
-			String EMD_NM = (requestParamsObj.getString("EMD_NM").replaceAll("전체", ""));
-			String RI_NM = (requestParamsObj.getString("RI_NM").replaceAll("전체", ""));
-			String JIBUN = requestParamsObj.getString("JIBUN");
-			String GOVER_OWN_YN =requestParamsObj.has("GOVER_OWN_YN")?requestParamsObj.getString("GOVER_OWN_YN"):"N";
-			String JIJUKAREA = requestParamsObj.getString("JIJUKAREA");
-			String JIMOK_TEXT = requestParamsObj.getString("JIMOK_TEXT");
-			String PNU = requestParamsObj.getString("PNU");
-			String ORG_PNU = requestParamsObj.getString("ORG_PNU");
+			String SIDO_NM = (requestParamsObj.getString("sido_nm").replaceAll("전체", ""));
+			String SGG_NM = (requestParamsObj.getString("sgg_nm").replaceAll("전체", ""));
+			String EMD_NM = (requestParamsObj.getString("emd_nm").replaceAll("전체", ""));
+			String RI_NM = (requestParamsObj.getString("ri_nm").replaceAll("전체", ""));
+			String JIBUN = requestParamsObj.getString("jibun");
+			String GOVER_OWN_YN =requestParamsObj.has("gover_own_yn")?requestParamsObj.getString("gover_own_yn"):"N";
+			String JIJUKAREA = requestParamsObj.getString("areaData");
+			String JIMOK_TEXT = requestParamsObj.getString("jimok_text");
+			String PNU = requestParamsObj.getString("pnu");
+			String ORG_PNU = requestParamsObj.getString("pnu");
 			String ADDRCODE = requestParamsObj.getString("ADDRCODE");
 
 			String DOSIPLAN = requestParamsObj.getString("DOSIPLAN");
