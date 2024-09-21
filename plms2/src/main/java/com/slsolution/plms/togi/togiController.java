@@ -22,6 +22,7 @@ import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.MainService;
 import com.slsolution.plms.ParameterParser;
 import com.slsolution.plms.ParameterUtil;
+import com.slsolution.plms.json.JSONArray;
 import com.slsolution.plms.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -254,6 +255,11 @@ public class togiController {
 		String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		 log.info("requestParams:"+requestParams);
 		 JSONObject requestParamObj=new JSONObject(requestParams);
+		 
+		 
+		 	JSONArray togiArr=new JSONArray(requestParamObj.getString("togiDatas"));
+		 	JSONArray deptArr=new JSONArray(requestParamObj.getString("deptDatas"));
+		 	
 			ParameterParser parser = new ParameterParser(request);
 			String str_result = "Y";
 			String gubun = null;
@@ -263,39 +269,43 @@ public class togiController {
 			try {
 				CommonUtil comm = new CommonUtil();
 
-				int addDosiNumber = Integer.parseInt(parser.getString("addDosiNumber", ""));
-				int addDosiDeptNumber = Integer.parseInt(parser.getString("addDosiDeptNumber", ""));
+				//int addDosiNumber = Integer.parseInt(parser.getString("addDosiNumber", ""));
+				int addDosiNumber = togiArr.length();
+				//int addDosiDeptNumber = Integer.parseInt(parser.getString("addDosiDeptNumber", ""));
+				int addDosiDeptNumber = deptArr.length();
 
 				// 수정을 위한 기존 토지,부서 사이즈
-				int deptSize = Integer.parseInt(parser.getString("deptSize", ""));
-				int togiSize = Integer.parseInt(parser.getString("togiSize", ""));
+//				int deptSize = Integer.parseInt(parser.getString("deptSize", ""));
+//				int togiSize = Integer.parseInt(parser.getString("togiSize", ""));
 
 				// System.out.println("addDosiDeptNumber :: " + addDosiDeptNumber);
 				// System.out.println("addDosiNumber :: " + addDosiNumber);
 				HashMap<String, String> params = new HashMap<String, String>();
 
-				String fileseq = parser.getString("fileseq", ""); // 파일 seq
-				String filenumber = parser.getString("filenumber", ""); // 파일 수
-				String bizNM = parser.getString("bizNM", "");
-				String strDate = parser.getString("strDate", "").replace("-", "");
-				String endDate = parser.getString("endDate", "").replace("-", "");
-				String admOffice = parser.getString("admOffice", "");
-				String bizOper = parser.getString("bizOper", "");
-				String dosiNo = parser.getString("dosiNo", "");
-				gubun = parser.getString("gubun", "");
+//				String fileseq = parser.getString("fileseq", ""); // 파일 seq
+//				String filenumber = parser.getString("filenumber", ""); // 파일 수
+				String bizNM = requestParamObj.getString("business_nm");
+				String strDate = requestParamObj.getString("startDate").replace("-", "");
+				String endDate = requestParamObj.getString("endDate").replace("-", "");
+				String admOffice = requestParamObj.getString("adm_office");
+				String bizOper = requestParamObj.getString("business_oper");
+				String dosiNo = requestParamObj.getString("dosiNo");
+				gubun = requestParamObj.getString("gubun");
 
 				// System.out.println("#########gubun::" + gubun);
 				// System.out.println("#########filenumber::" + filenumber);
 				// System.out.println("#########fileseq::" + fileseq);
 
-				params.put("FILESEQ", fileseq);
-				params.put("FILE_SEQ", fileseq);
+//				params.put("FILESEQ", fileseq);
+//				params.put("FILE_SEQ", fileseq);
 
 				// 도시마스터 채번
 				ArrayList DosiList = (ArrayList) mainService.selectQuery("togiSQL.selectDosiNextNo", null);
 
 				if ("insert".equals(gubun)) {
-					String Next_DosiNo = String.valueOf(Integer.parseInt((String) ((HashMap) DosiList.get(0)).get("NOW_DOSINO")) + 1);
+					String no=(((HashMap) DosiList.get(0)).get("now_dosino").toString());
+					//String Next_DosiNo = String.valueOf(Integer.parseInt((String) ((HashMap) DosiList.get(0)).get("now_dosino")) + 1);
+					String Next_DosiNo = String.valueOf((Integer.parseInt(no)+1));
 					int n_Next_DosiNo = Next_DosiNo.length();
 
 					String add_Zero = "";
@@ -309,22 +319,23 @@ public class togiController {
 					params.put("DOSI_NO", dosiNo);
 				}
 
-				for (int i = 0; i < addDosiNumber; i++) {
-					String masterYN = parser.getString("masterYN" + i, ""); // 대표토지 Y,N
-					String togiStatus = parser.getString("togiStatus" + i, "").replaceAll("전체", "");
-					String jisa = parser.getString("jisa" + i, "").replaceAll("전체", "");
-					String pipeYN = parser.getString("pipeYN" + i, "").replaceAll("전체", "");
-					String sodiNm = parser.getString("sidoNm" + i, "").replaceAll("전체", "");
-					String gugunNM = parser.getString("gugunNM" + i, "").replaceAll("전체", "");
-					String dongNm = parser.getString("dongNm" + i, "").replaceAll("전체", "");
-					String riNm = parser.getString("riNm" + i, "").replaceAll("전체", "");
-					String jibun = parser.getString("jibun" + i, "");
-					String pnu = parser.getString("pnu" + i, "");
-					String jimok = parser.getString("jimok" + i, "");
-					String jijukArea = parser.getString("jijukArea" + i, "");
-					String length = parser.getString("length" + i, "");
-					String soyou = parser.getString("soyou" + i, "");
-					String addrCode = parser.getString("addrCode" + i, "");
+				for (int i = 0; i < togiArr.length(); i++) {
+					JSONObject obj=new JSONObject(togiArr.get(i).toString());
+					String masterYN = obj.getString("master_yn"); // 대표토지 Y,N
+					String togiStatus = obj.getString("toji_type").replaceAll("전체", "");
+					String jisa = obj.getString("jisa").replaceAll("전체", "");
+					String pipeYN = obj.getString("pipe_yn").replaceAll("전체", "");
+					String sodiNm = obj.getString("sido_nm").replaceAll("전체", "");
+					String gugunNM = obj.getString("sgg_nm").replaceAll("전체", "");
+					String dongNm = obj.getString("emd_nm").replaceAll("전체", "");
+					String riNm = obj.getString("ri_nm").replaceAll("전체", "");
+					String jibun = obj.getString("jibun");
+					String pnu = obj.getString("pnu");
+					String jimok = obj.getString("jimok_text");
+					String jijukArea = obj.getString("jijuk_area");
+					String length = obj.getString("length");
+					String soyou = obj.getString("souja");
+					String addrCode = obj.getString("addrcode");
 
 					if ("modify".equals(gubun)) {
 						if (i == 0) {
@@ -366,10 +377,11 @@ public class togiController {
 				params.put("USER_ID", USER_ID);
 				mainService.InsertQuery("togiSQL.insertDosiInfo", params);
 
-				for (int i = 0; i < addDosiDeptNumber; i++) {
-					String deptNM = parser.getString("deptNM" + i, "");
-					String mng = parser.getString("mng" + i, "");
-					String contactNum = parser.getString("contactNum" + i, "");
+				for (int i = 0; i < deptArr.length(); i++) {
+					JSONObject obj=new JSONObject(deptArr.get(i).toString());
+					String deptNM = obj.getString("dept_nm");
+					String mng = obj.getString("manager");
+					String contactNum = obj.getString("contact_num");
 
 					params.put("DEPT_NM", deptNM);
 					params.put("MANAGER", mng);
@@ -387,30 +399,31 @@ public class togiController {
 
 				}
 
+				//파일첨부는 별도로 처리 ljs
 				// 첨부파일 관련 처리
 				if (gubun.equals("modify")) {
-					// System.out.println("filenumber = " + filenumber);
-					for (int i = 0; i < Integer.parseInt(filenumber); i++) {
-						String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
-						String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
-
-						if (IS_DEL.equals("Y")) {
-							// System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
-
-							// 조회용 parma셋팅
-							params.put("SEQ", "");
-							params.put("DOSI_NO", String.valueOf((params.get("DOSI_NO"))));
-							params.put("FILE_SEQ", DEL_SEQ);
-							ArrayList File_list = (ArrayList) mainService.selectQuery("togiSQL.selectDosiRowDetail_Files", params); // 첨부
-																																				// 파일
-
-							params.put("SEQ", DEL_SEQ);
-							mainService.UpdateQuery("togiSQL.dosiDeleteFile", params);
-						}
-					}
+//					// System.out.println("filenumber = " + filenumber);
+//					for (int i = 0; i < Integer.parseInt(filenumber); i++) {
+//						String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
+//						String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
+//
+//						if (IS_DEL.equals("Y")) {
+//							// System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
+//
+//							// 조회용 parma셋팅
+//							params.put("SEQ", "");
+//							params.put("DOSI_NO", String.valueOf((params.get("DOSI_NO"))));
+//							params.put("FILE_SEQ", DEL_SEQ);
+//							ArrayList File_list = (ArrayList) mainService.selectQuery("togiSQL.selectDosiRowDetail_Files", params); // 첨부
+//																																				// 파일
+//
+//							params.put("SEQ", DEL_SEQ);
+//							mainService.UpdateQuery("togiSQL.dosiDeleteFile", params);
+//						}
+//					}
 				}
 
-				mainService.UpdateQuery("togiSQL.updateDosiSeqFile", params);
+				//mainService.UpdateQuery("togiSQL.updateDosiSeqFile", params);
 				
 
 			} catch (Exception e) {

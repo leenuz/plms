@@ -227,29 +227,29 @@
 		VALUES
 		(
 		nextval('DOSI_SEQ') 
-		,TO_CHAR(#{DOSI_NO})
-		, TO_CHAR(#{SIDO_NM})
-		, TO_CHAR(#{SGG_NM})
-		, TO_CHAR(#{EMD_NM})
-		, TO_CHAR(#{RI_NM})
-		, TO_CHAR(#{JIBUN})
-		, TO_CHAR(#{JISA})
-		, TO_CHAR(#{JIJUK_AREA})
-		, TO_CHAR(#{DOSIPLAN})
-		,TO_CHAR(#{USE_STATE})
-		, TO_CHAR(#{ADDRCODE})
-		, TO_CHAR(#{PNU})
-		, TO_CHAR(#{JIMOK_TEXT})
-		, TO_CHAR(#{TOJI_TYPE})
-		, TO_CHAR(#{PIPE_YN})
-		, TO_CHAR(#{LENGTH})
-		, TO_CHAR(#{SOYOUJA})
-		, TO_CHAR(#{MASTER_YN})
+		,#{DOSI_NO}
+		, #{SIDO_NM}
+		, #{SGG_NM}
+		, #{EMD_NM}
+		, #{RI_NM}
+		, #{JIBUN}
+		, #{JISA}
+		, nullif(#{JIJUK_AREA},'')::numeric
+		, #{DOSIPLAN}
+		,#{USE_STATE}
+		, #{ADDRCODE}
+		, #{PNU}
+		, #{JIMOK_TEXT}
+		, #{TOJI_TYPE}
+		, #{PIPE_YN}
+		, #{LENGTH}
+		, #{SOYOUJA}
+		, #{MASTER_YN}
 		)
 	</insert>
 	<delete id="deleteDosiInfo" parameterType="HashMap">
 		DELETE FROM DOSI_INFO
-		WHERE di_DOSI_NO = TO_CHAR(#{DOSI_NO})
+		WHERE di_DOSI_NO = #{DOSI_NO}
 	</delete>
 	<insert id="insertDosiInfo" parameterType="HashMap">
 		INSERT INTO DOSI_INFO
@@ -268,27 +268,28 @@
 		)
 		VALUES
 		(
-		TO_CHAR(#{DOSI_NO})
-		, TO_CHAR(#{BUSINESS_NM}),
+		#{DOSI_NO}
+		, #{BUSINESS_NM},
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STRDATE)" >
 			TO_DATE(#{STRDATE} || '00:00:00', 'YYYYMMDDHH24:MI:SS') ,
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ENDDATE)" >
 			TO_DATE(#{ENDDATE} || '00:00:00', 'YYYYMMDDHH24:MI:SS') ,
 		</if>
-		TO_CHAR(#{ADM_OFFICE})
-		, TO_CHAR(#{BUSINESS_OPER})
-		, #{USER_ID})
+		#{ADM_OFFICE}
+		,#{BUSINESS_OPER}
+		, #{USER_ID}
+		)
 	</insert>
 		<delete id="deleteDosiDept" parameterType="HashMap">
 		DELETE FROM DOSI_DEPT
-		WHERE DOSI_NO = TO_CHAR(#DOSI_NO#)
+		WHERE DOSI_NO = #DOSI_NO#
 	</delete>
 		<insert id="insertDosiDept" parameterType="HashMap">
 		INSERT INTO DOSI_DEPT
 		(dd_DEPT_SEQ, dd_DOSI_NO, dd_DEPT_NM, dd_MANAGER, dd_CONTACT_NUM)
 		VALUES
-		(nextval('DOSI_DEPT_SEQ'), TO_CHAR(#{DOSI_NO}), TO_CHAR(#{DEPT_NM}), TO_CHAR(#{MANAGER}), TO_CHAR(#{CONTACT_NUM}))
+		(nextval('DOSI_DEPT_SEQ'), #{DOSI_NO},#{DEPT_NM},#{MANAGER},#{CONTACT_NUM})
 	</insert>
 	<delete id="dosiDeleteFile" parameterType="HashMap">
 		DELETE FROM DOSI_ATCFILE

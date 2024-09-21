@@ -574,20 +574,102 @@ $.ajax({
 //저장버튼
 $(document).on("click","#finalBtn",function(){
 
-	var formSerializeArray = $('#searchForm').serializeArray();
+	var formSerializeArray = $('#saveForm').serializeArray();
 
        len = formSerializeArray.length;
        var dataObj = {};
        for (i=0; i<len; i++) {
         dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
        }
-
+       
+        	var togiDatas=[];
+	   	var togiUls=$("#togiInfoDiv .contents");
+	   	 console.log("----------togiUls------------");
+	   	console.log(togiUls);
+	   	for(var i=0;i<togiUls.length;i++){
+			var sido_nm=$(togiUls[i]).find("input[name='sido_nm']").val();
+	   		var sgg_nm=$(togiUls[i]).find("input[name='sgg_nm']").val();
+			var emd_nm=$(togiUls[i]).find("input[name='emd_nm']").val();
+			var ri_nm=$(togiUls[i]).find("input[name='ri_nm']").val();
+			var jibun=$(togiUls[i]).find("input[name='jibun']").val();
+			var jibun_full=$(togiUls[i]).find("input[name='jibun_full']").val();
+			var addrcode=$(togiUls[i]).find("input[name='addrcode']").val();
+			var pnu=$(togiUls[i]).find("input[name='pnu']").val();
+			
+			var toji_type=$(togiUls[i]).find("input[name='hakbo']").val(); //권리확보
+			//var master_yn=$(togiUls[i]).find("input[name='daepyoPilji']").val(); //대표토지
+			var master_yn="N";
+			if ($(togiUls[i]).find("input:checkbox[name='daepyoPilji']").is(":checked")==true){
+				master_yn="Y";
+			};
+			var pipe_yn=$(togiUls[i]).find("input[name='jeochok']").val();
+			var jisa=$(togiUls[i]).find("input[name='jisa']").val();
+			var address=$(togiUls[i]).find("input[name='address']").val();
+			var length=$(togiUls[i]).find("input[name='yeonjang']").val();
+			var jimok_text=$(togiUls[i]).find("input[name='jimok']").val();
+			
+			var jijuk_area=$(togiUls[i]).find("input[name='myeonjuk']").val();
+			var souja=$(togiUls[i]).find("input[name='souja']").val();
+			
+			
+	   		//console.log("togiManageNo:"+togiManageNo);
+	   		var togiObj={
+				"sido_nm":ljsIsNull(sido_nm)?'':sido_nm
+				,"sgg_nm":ljsIsNull(sgg_nm)?'':sgg_nm
+				,"emd_nm":ljsIsNull(emd_nm)?'':emd_nm
+				,"ri_nm":ljsIsNull(ri_nm)?'':ri_nm
+				,"jibun_full":ljsIsNull(jibun_full)?'':jibun_full
+				,"jibun":ljsIsNull(jibun)?'':jibun
+				,"addrcode":ljsIsNull(addrcode)?'':addrcode
+				,"pnu":ljsIsNull(pnu)?'':pnu
+				,"toji_type":ljsIsNull(toji_type)?'':toji_type
+				,"master_yn":ljsIsNull(master_yn)?'':master_yn
+				,"pipe_yn":ljsIsNull(pipe_yn)?'N':pipe_yn
+				,"jisa":ljsIsNull(jisa)?'':jisa
+				,"address":ljsIsNull(address)?'':address
+				,"length":ljsIsNull(length)?'':length
+				,"jimok_text":ljsIsNull(jimok_text)?'':jimok_text
+				,"jijuk_area":ljsIsNull(jijuk_area)?'':jijuk_area
+				,"souja":ljsIsNull(souja)?'':souja
+	   			
+	   		}
+	   		console.log(togiObj);
+	   		togiDatas.push(togiObj);
+	   	}
+	   	dataObj.togiDatas=togiDatas;
+	   	
+	   	var deptDatas=[];
+	   	var deptUls=$("#deptDiv .contents");
+	   	 console.log("----------deptUls------------");
+	   	console.log(deptUls);
+	   	for(var i=0;i<deptUls.length;i++){
+			var dept_nm=$(deptUls[i]).find("input[name='dept_nm']").val();
+	   		var manager=$(deptUls[i]).find("input[name='manager']").val();
+			var contact_num=$(deptUls[i]).find("input[name='contact_num']").val();
+			
+			
+			
+			
+	   		//console.log("togiManageNo:"+togiManageNo);
+	   		var deptObj={
+				"dept_nm":ljsIsNull(dept_nm)?'':dept_nm
+				,"manager":ljsIsNull(manager)?'':manager
+				,"contact_num":ljsIsNull(contact_num)?'':contact_num
+				
+	   			
+	   		}
+	   		console.log(deptObj);
+	   		deptDatas.push(deptObj);
+	   	}
+	   	dataObj.deptDatas=deptDatas;
+		dataObj.gubun="insert";
+		dataObj.dosiNo=""; //수정일때는 들어간다
        console.log("**dataObj**");
        console.log(dataObj);
 
-        var json = JSON.stringify(formSerializeArray);
+       /* var json = JSON.stringify(formSerializeArray);
            console.log("----------jsonobj------------");
-           console.log(json); // JSON 문자열 출력
+           console.log(json); // JSON 문자열 출력*/
 
 
 });
