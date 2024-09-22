@@ -26,6 +26,7 @@ import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.MainService;
 import com.slsolution.plms.ParameterParser;
 import com.slsolution.plms.ParameterUtil;
+import com.slsolution.plms.json.JSONArray;
 import com.slsolution.plms.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -407,7 +408,14 @@ public class dopcoController {
 		public void insertDopcoList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		JSONObject requestParamsObj=new JSONObject(requestParams);
+		
+		
+		
 		log.info("requestParams:"+requestParams);
+		
+		JSONArray rightArr=new JSONArray(requestParamsObj.getString("rightDatas"));
+		
+		
 			ArrayList list = new ArrayList();
 			ParameterParser parser = new ParameterParser(request);
 			String JISA = requestParamsObj.getString("jisa").replaceAll("전체", "");
@@ -425,32 +433,42 @@ public class dopcoController {
 			String JIMOK_TEXT = requestParamsObj.getString("jimok_text");
 			String PNU = requestParamsObj.getString("pnu");
 			String ORG_PNU = requestParamsObj.getString("pnu");
-			String ADDRCODE = requestParamsObj.getString("ADDRCODE");
+			String ADDRCODE = requestParamsObj.getString("addrcode");
 
-			String DOSIPLAN = requestParamsObj.getString("DOSIPLAN");
-			String DOPCO_STATUS = requestParamsObj.getString("DOPCO_STATUS");
-			String JASAN_NO = requestParamsObj.getString("JASAN_NO");
+			String DOSIPLAN = requestParamsObj.getString("dosiplan");
+			String DOPCO_STATUS = requestParamsObj.getString("current");
+			String JASAN_NO = requestParamsObj.getString("jasan");
 
-			String COMPLE_YN = requestParamsObj.getString("COMPLE_YN");
-			String DEUNGGI_DATE = requestParamsObj.getString("DEUNGGI_DATE");
-			String DEUNGGI_NO = requestParamsObj.getString("DEUNGGI_NO");
-			String DEUNGGISO = requestParamsObj.getString("DEUNGGISO");
-			String CHUIDEUK_DATE = requestParamsObj.getString("CHUIDEUK_DATE"); // 취득일
+			String COMPLE_YN = requestParamsObj.getString("comple_yn");
+			String DEUNGGI_DATE = requestParamsObj.getString("deunggiDate");
+			String DEUNGGI_NO = requestParamsObj.getString("deunggiNo");
+			String DEUNGGISO = requestParamsObj.getString("deunggiso");
+			String CHUIDEUK_DATE = requestParamsObj.getString("chuideukDate"); // 취득일
 
-			String gubun = requestParamsObj.getString("GUBUN"); // 구분( modify : 수정, insert
+			String gubun = requestParamsObj.getString("gubun"); // 구분( modify : 수정, insert
 															// : 등록 )
-			String ori_DOPCO_NO = requestParamsObj.getString("DOPCO_NO");
-			String RIGHT_CNT = requestParamsObj.has("RIGHT_CNT")?requestParamsObj.getString("RIGHT_CNT"):"0"; // 후순위권리내역 수
-			String TOJA_CNT = requestParamsObj.has("TOJA_CNT")?requestParamsObj.getString("TOJA_CNT"):"0"; // 투자오더 수
-			String FILE_CNT = requestParamsObj.has("FILE_CNT")?requestParamsObj.getString("FILE_CNT"):"0"; // 파일수
+			String ori_DOPCO_NO = requestParamsObj.getString("dopcoNo");
+			//String RIGHT_CNT = requestParamsObj.has("RIGHT_CNT")?requestParamsObj.getString("RIGHT_CNT"):"0"; // 후순위권리내역 수
+			String RIGHT_CNT =String.valueOf(rightArr.length());
+			String TOJA_CNT = requestParamsObj.has("TOJA_CNT")?requestParamsObj.getString("toja_cnt"):"0"; // 투자오더 수
+			String FILE_CNT = requestParamsObj.has("FILE_CNT")?requestParamsObj.getString("file_cnt"):"0"; // 파일수
+			
+			String fileseq ="";
 
-			String fileseq = requestParamsObj.getString("fileseq"); // 파일 seq
+			String modifyReason1 ="";
+			String modifyReason2 = "";
+			String modifyReason3 = "";
+			String modifyReason4 = "";
+			String modifyReason5 = "";
+			if ("modify".equals(gubun)) {
+			 fileseq = requestParamsObj.has("fileseq")?requestParamsObj.getString("fileseq"):""; // 파일 seq
 
-			String modifyReason1 = requestParamsObj.getString("modifyReason1"); // 변경이력-기본정보
-			String modifyReason2 = requestParamsObj.getString("modifyReason2"); // 변경이력-소속토지정보
-			String modifyReason3 = requestParamsObj.getString("modifyReason3"); // 변경이력-지상권정보
-			String modifyReason4 = requestParamsObj.getString("modifyReason4"); // 변경이력-권리확보내역
-			String modifyReason5 = requestParamsObj.getString("modifyReason5"); // 변경이력-후순위권리내역
+			 modifyReason1 = requestParamsObj.getString("modifyReason1"); // 변경이력-기본정보
+			 modifyReason2 = requestParamsObj.getString("modifyReason2"); // 변경이력-소속토지정보
+			 modifyReason3 = requestParamsObj.getString("modifyReason3"); // 변경이력-지상권정보
+			 modifyReason4 = requestParamsObj.getString("modifyReason4"); // 변경이력-권리확보내역
+			 modifyReason5 = requestParamsObj.getString("modifyReason5"); // 변경이력-후순위권리내역
+			}
 
 			String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
 			String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
@@ -548,7 +566,10 @@ public class dopcoController {
 				} else {
 					ArrayList DopcoList = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoNextNo", null);
 
-					String Next_dopcoNo = String.valueOf(Integer.parseInt((String) ((HashMap) DopcoList.get(0)).get("NOW_DOPCONO")) + 1);
+					String no=(((HashMap) DopcoList.get(0)).get("now_dopcono").toString());
+					//String Next_DosiNo = String.valueOf(Integer.parseInt((String) ((HashMap) DosiList.get(0)).get("now_dosino")) + 1);
+					String Next_dopcoNo = String.valueOf((Integer.parseInt(no)+1));
+					//String Next_dopcoNo = String.valueOf(Integer.parseInt((String) ((HashMap) DopcoList.get(0)).get("NOW_DOPCONO")) + 1);
 					int n_Next_dopcoNo = Next_dopcoNo.length();
 
 					String add_Zero = "";
@@ -637,15 +658,15 @@ public class dopcoController {
 				 */
 
 				// 후순위 권리내역
-				for (int i = 0; i < Integer.parseInt(RIGHT_CNT); i++) {
-
-					String RIGHT_NAME = parser.getString("RIGHT_NAME" + String.valueOf(i), ""); // 권리명
-					String RIGHT_MONEY = parser.getString("RIGHT_MONEY" + String.valueOf(i), ""); // 설정금액
-					String RIGHT_DATE = parser.getString("RIGHT_DATE" + String.valueOf(i), ""); // 설정일
-					String CANCLE_DATE = parser.getString("CANCLE_DATE" + String.valueOf(i), ""); // 해지일
-					String RIGHT_UNAME = parser.getString("RIGHT_UNAME" + String.valueOf(i), ""); // 성명
-					String RIGHT_PHONE = parser.getString("RIGHT_PHONE" + String.valueOf(i), ""); // 연락처
-					String RIGHT_ADDR = parser.getString("RIGHT_ADDR" + String.valueOf(i), ""); // 주소
+				for (int i = 0; i < rightArr.length(); i++) {
+					JSONObject obj=new JSONObject(rightArr.get(i).toString());
+					String RIGHT_NAME = obj.getString("RIGHT_NAME"); // 권리명
+					String RIGHT_MONEY = obj.getString("RIGHT_MONEY"); // 설정금액
+					String RIGHT_DATE = obj.getString("RIGHT_DATE"); // 설정일
+					String CANCLE_DATE = obj.getString("CANCLE_DATE"); // 해지일
+					String RIGHT_UNAME = obj.getString("RIGHT_UNAME"); // 성명
+					String RIGHT_PHONE = obj.getString("RIGHT_PHONE"); // 연락처
+					String RIGHT_ADDR = obj.getString("RIGHT_ADDR"); // 주소
 
 					params.put("RIGHT_NAME", RIGHT_NAME);
 					params.put("RIGHT_MONEY", RIGHT_MONEY);
@@ -690,11 +711,11 @@ public class dopcoController {
 						}
 					}
 				}
-
+				
 				/** codecanyon에서 파일업로드 **/
-				mainService.UpdateQuery("dopcoSQL.updateSeqFile_Dopco", params); // 파일테이블에
+				//mainService.UpdateQuery("dopcoSQL.updateSeqFile_Dopco", params); // 파일테이블에
 																					// 지상권번호
-																					// 업데이트
+							//메모추가 해야함														// 업데이트
 
 			} catch (Exception e) {
 				str_result = "N";
@@ -721,4 +742,56 @@ public class dopcoController {
 			response.getWriter().flush();
 
 		}
+	
+	// 회사토지 해지 등록(처분)
+	@Transactional
+	@PostMapping(path="/insertDopcoTerminationAdd")
+		public void insertDopcoTerminationAdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject requestParamsObj=new JSONObject(requestParams);
+		log.info("requestParams:"+requestParams);
+			ParameterParser parser = new ParameterParser(request);
+			String cancleDate = requestParamsObj.getString("cancleDate");
+			String userName = requestParamsObj.getString("userName");
+			String dopcoNo = requestParamsObj.getString("dopcoNo");
+			String pnu = requestParamsObj.getString("pnu");
+			String empCd = String.valueOf(request.getSession().getAttribute("userId"));
+
+			String str_result = "Y";
+			try {
+
+				HashMap params = new HashMap();
+				params.put("DOPCO_NO", dopcoNo);
+				params.put("USERNAME", userName);
+				params.put("CANCLEDATE", cancleDate);
+				params.put("STR_PNU", pnu);
+				params.put("EMPCD", empCd);
+
+				System.out.println("insertDopcoTerminationAdd >>>>> 회사토지 해제된 PNU = " + pnu);
+				/** JIJUK_MASTER 테이블 지상권 해제 **/
+				mainService.UpdateQuery("goverSQL.updateJijukMasterStatus_Gover", params);
+
+				/** DOPCO_MASTER 테이블 해제 등록 **/
+				mainService.UpdateQuery("dopcoSQL.insertDopcoTerminationAdd", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+			HashMap map = new HashMap();
+
+			map.put("message", str_result);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
+	
+	
+	
 }

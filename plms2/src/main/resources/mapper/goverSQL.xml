@@ -976,7 +976,7 @@ WHERE
 		<update id="updateJijukMasterStatus_Gover" parameterType="HashMap">
 		UPDATE JIJUK_2024 SET
 		JISANG_STATUS = 'N'
-		, ERP_NO = ''
+		<!-- , ERP_NO = '' -->
 		, JISANG_NO = ''
 		, DOSIPLAN = ''
 		, GOVER_OWN_YN = 'N'

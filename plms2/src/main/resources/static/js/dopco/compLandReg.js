@@ -587,14 +587,14 @@ $(document).on("click",".registBtn",function(){
 	   	}
 	   	dataObj.rightDatas=rightDatas;
 		dataObj.gubun="insert"; //modify:수정
-		dataObj.dosiNo=""; //수정일때는 들어간다
+		dataObj.dopcoNo=""; //수정일때는 들어간다
        console.log("**dataObj**");
        console.log(dataObj);
 
        /* var json = JSON.stringify(formSerializeArray);
            console.log("----------jsonobj------------");
            console.log(json); // JSON 문자열 출력*/
-           return;
+         
        url="/dopco/insertDopcoList"; 
 	   $.ajax({
 	   			

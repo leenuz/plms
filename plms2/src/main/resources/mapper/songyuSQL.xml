@@ -474,7 +474,7 @@ FROM NOTSET_MASTER
 			, GOVER_OWN_YN = TO_CHAR(#{GOVEROWNYN})
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JASANNO)" >
-			, ERP_NO = TO_CHAR(#{JASANNO})
+			<!-- , ERP_NO = TO_CHAR(#{JASANNO}) -->
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOSIPLAN)" >
 			, DOSIPLAN = TO_CHAR(#{DOSIPLAN})
@@ -494,7 +494,7 @@ FROM NOTSET_MASTER
 			, JISANG_NO = #{JISANGNO}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JASANNO)" >
-			, ERP_NO = #{JASANNO}
+			<!-- , ERP_NO = #{JASANNO} -->
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DOSIPLAN)" >
 			, DOSIPLAN = #{DOSIPLAN}
@@ -533,7 +533,7 @@ FROM NOTSET_MASTER
 	<update id="updateNotsetMasterStatus" parameterType="HashMap">
 		UPDATE JIJUK_2024 SET
 		JISANG_STATUS = 'N'
-		, ERP_NO = ''
+		<!-- , ERP_NO = '' -->
 		, JISANG_NO = ''
 		, DOSIPLAN = ''
 		, GOVER_OWN_YN = 'N'

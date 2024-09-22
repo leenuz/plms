@@ -142,10 +142,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertDopcoMaster" parameterType="HashMap">
 		Insert into DOPCO_MASTER
-		( dm_DOPCO_NO, dm_SIDO_NM, dm_SGG_NM, dm_EMD_NM, dm_RI_NM, dm_JIBUN, dm_ADDRCODE
-		, dm_JISA, dm_DOPCO_STATUS, dm_YONGDO, dm_PIPE_NAME, dm_SUN_GUBUN, dm_JIJUK_AREA
-		, dm_GOVER_OWN_YN, dm_DOSIPLAN, dm_JASAN_NO, dm_COMPLE_YN, dm_DEUNGGI_DATE, dm_DEUNGGI_NO
-		, dm_DEUNGGISO, dm_PNU, dm_JIMOK_TEXT, dm_CHUIDEUK_DATE )
+		( dom_DOPCO_NO, dom_SIDO_NM, dom_SGG_NM, dom_EMD_NM, dom_RI_NM, dom_JIBUN, dom_ADDRCODE
+		, dom_JISA, dom_DOPCO_STATUS, dom_YONGDO, dom_PIPE_NAME, dom_SUN_GUBUN, dom_JIJUK_AREA
+		, dom_GOVER_OWN_YN, dom_DOSIPLAN, dom_JASAN_NO, dom_COMPLE_YN, dom_DEUNGGI_DATE, dom_DEUNGGI_NO
+		, dom_DEUNGGISO, dom_PNU, dom_JIMOK_TEXT, dom_CHUIDEUK_DATE )
 		Values
 		( #{DOPCO_NO}, #{SIDO_NM},#{SGG_NM},#{EMD_NM},#{RI_NM},#{JIBUN#},#{ADDRCODE}
 		,#{JISA},#{DOPCO_STATUS},#{YONGDO},#{PIPE_NAME},#{SUN_GUBUN},#{JIJUK_AREA}
@@ -160,14 +160,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	<insert id="insertDopcoRight" parameterType="HashMap">
 		Insert into DOPCO_RIGHT
-		( dr_DOPCO_NO, dr_RIGHT_NAME, dr_RIGHT_MONEY
+		( DOPCO_NO, RIGHT_NAME, RIGHT_MONEY
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(RIGHT_DATE)" >
-			,dr_RIGHT_DATE
+			,RIGHT_DATE
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CANCLE_DATE)" >
-			,dr_CANCLE_DATE
+			,CANCLE_DATE
 		</if>
-		, dr_RIGHT_UNAME, dr_RIGHT_PHONE, dr_RIGHT_ADDR )
+		, RIGHT_UNAME, RIGHT_PHONE, RIGHT_ADDR )
 		Values
 		( #{DOPCO_NO},#{RIGHT_NAME},#{RIGHT_MONEY}
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(RIGHT_DATE)" >
@@ -188,47 +188,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE DOPCO_MASTER
 		SET
 
-		dm_SIDO_NM = #{SIDO_NM}
-		, dm_SGG_NM = #{SGG_NM}
-		, dm_EMD_NM = #{EMD_NM}
-		, dm_RI_NM = #{RI_NM}
-		, dm_JIBUN = #{JIBUN}
-		, dm_ADDRCODE = #{ADDRCODE}
-		, dm_JISA = #{JISA}
-		, dm_DOPCO_STATUS = #{DOPCO_STATUS}
-		, dm_YONGDO = #{YONGDO}
-		, dm_PIPE_NAME = #{PIPE_NAME}
-		, dm_SUN_GUBUN = #{SUN_GUBUN}
-		, dm_JIJUK_AREA = #{JIJUKAREA}
-		, dm_GOVER_OWN_YN = #{GOVEROWNYN}
-		, dm_DOSIPLAN = #{DOSIPLAN}
-		, dm_JASAN_NO = #{JASANNO}
-		, dm_COMPLE_YN =#{COMPLE_YN}
-		, dm_DEUNGGI_DATE = TO_DATE(#{DEUNGGI_DATE}, 'yyyy-mm-dd')
-		, dm_DEUNGGI_NO = #{DEUNGGI_NO}
-		, dm_DEUNGGISO = #{DEUNGGISO}
-		, dm_PNU = #{IN_PNU}
-		, dm_JIMOK_TEXT = #{JIMOK_TEXT}
-		, dm_CHUIDEUK_DATE = TO_DATE(#{CHUIDEUK_DATE}, 'yyyy-mm-dd')
+		dom_SIDO_NM = #{SIDO_NM}
+		, dom_SGG_NM = #{SGG_NM}
+		, dom_EMD_NM = #{EMD_NM}
+		, dom_RI_NM = #{RI_NM}
+		, dom_JIBUN = #{JIBUN}
+		, dom_ADDRCODE = #{ADDRCODE}
+		, dom_JISA = #{JISA}
+		, dom_DOPCO_STATUS = #{DOPCO_STATUS}
+		, dom_YONGDO = #{YONGDO}
+		, dom_PIPE_NAME = #{PIPE_NAME}
+		, dom_SUN_GUBUN = #{SUN_GUBUN}
+		, dom_JIJUK_AREA = #{JIJUKAREA}
+		, dom_GOVER_OWN_YN = #{GOVEROWNYN}
+		, dom_DOSIPLAN = #{DOSIPLAN}
+		, dom_JASAN_NO = #{JASANNO}
+		, dom_COMPLE_YN =#{COMPLE_YN}
+		, dom_DEUNGGI_DATE = TO_DATE(#{DEUNGGI_DATE}, 'yyyy-mm-dd')
+		, dom_DEUNGGI_NO = #{DEUNGGI_NO}
+		, dom_DEUNGGISO = #{DEUNGGISO}
+		, dom_PNU = #{IN_PNU}
+		, dom_JIMOK_TEXT = #{JIMOK_TEXT}
+		, dom_CHUIDEUK_DATE = TO_DATE(#{CHUIDEUK_DATE}, 'yyyy-mm-dd')
 
-		WHERE dm_DOPCO_NO = #{DOPCO_NO}
+		WHERE dom_DOPCO_NO = #{DOPCO_NO}
 
 	</update>
 		<insert id="insertDopcoModifyHistory" parameterType="HashMap">
 		Insert into DOPCO_MODIFY
-		( dm_DOPCO_NO, dm_MODIFY_DATE, dm_GUBUN, dm_CONT, dm_USER_NAME, dm_USER_ID)
+		( dom_DOPCO_NO, dom_MODIFY_DATE, dom_GUBUN, dom_CONT, dom_USER_NAME, dom_USER_ID)
 		Values
 		(#{DOPCO_NO},Now(), #{GUBUN}, #{CONT}, #{USER_NAME}, #{USER_ID})
 	</insert>
 	
 	<select id="selectDopcoNextNo" resultType="HashMap" parameterType="HashMap">
-		SELECT COALESCE(MAX(CAST(SUBSTRING(dm_DOPCO_NO FROM 3) AS INTEGER)), 0) AS NOW_DOPCONO
+		SELECT COALESCE(MAX(CAST(SUBSTRING(dom_DOPCO_NO FROM 3) AS INTEGER)), 0) AS NOW_DOPCONO
 		FROM DOPCO_MASTER;
 
 	</select>
 		<delete id="deleteDopcoRight" parameterType="HashMap">
 		DELETE FROM DOPCO_RIGHT
-		WHERE dr_DOPCO_NO = #{DOPCO_NO}
+		WHERE DOPCO_NO = #{DOPCO_NO}
 	</delete>
 	
 	<delete id="deleteFile_dopco" parameterType="HashMap">
@@ -241,10 +241,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="updateSeqFile_Dopco" parameterType="HashMap">
 		UPDATE DOPCO_ATCFILE SET
-		da_DOPCO_NO = #{DOPCO_NO}
-		WHERE da_SEQ = #{FILESEQ}
+		DOPCO_NO = #{DOPCO_NO}
+		WHERE SEQ = #{FILESEQ}
 	</update>
-	
+	<update id="insertDopcoTerminationAdd" parameterType="HashMap">
+		UPDATE DOPCO_MASTER
+		SET
+		dom_CANCLE_YN = 'Y'
+		,dom_CANCLE_DATE = TO_DATE(#{CANCLEDATE},'yyyy-mm-dd')
+		,dom_CANCLE_NAME = #{USERNAME}
+		,dom_CANCLE_EMPCD = #{EMPCD}
+		WHERE dom_DOPCO_NO = #DOPCO_NO#
+
+	</update>
 	
 	
 </mapper>
