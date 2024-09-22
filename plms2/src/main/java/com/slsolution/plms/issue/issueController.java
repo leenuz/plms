@@ -346,6 +346,7 @@ public class issueController {
 			response.getWriter().flush();
 		}
 	
+	//민원신규등록
 	@Transactional
 	@PostMapping(path="/saveMinwonData") 
 	public void saveMinwonData(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -910,7 +911,77 @@ log.info("SANGSIN_FLAG:"+SANGSIN_FLAG);
 		response.getWriter().flush();
 	}
 
-	
+	@Transactional
+	@PostMapping(path="/cancelMinwonDataApproval")
+	public void cancelMinwonDataApproval(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		 JSONObject requestParamObj=new JSONObject(requestParams);
+		ParameterParser parser = new ParameterParser(request);
+		String MW_SEQ = requestParamObj.getString("MW_SEQ");
+		HashMap map = new HashMap();
+		try {
+			HashMap params = new HashMap();
+			params.put("MW_SEQ", MW_SEQ);
+			// HashMap target = (HashMap) Database.getInstance().queryForObject("Json.selectMinwonDetail", params);
+			// String dockey = (String)target.get("DOCKEY");
+			// params.put("DOCKEY", dockey);
+
+			System.out.println("###" + params.toString());
+			mainService.UpdateQuery("issueSQL.cancelNinwonEchoNo", params);
+			map.put("message", "success");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("message", "처리 중 오류가 발생했습니다.");
+		}
+
+		JSONObject jo = new JSONObject(map);
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+
+	@Transactional
+	@PostMapping(path="/deleteMinwonMaster")
+	public void deleteMinwonMaster(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		 JSONObject requestParamObj=new JSONObject(requestParams);
+		ParameterParser parser = new ParameterParser(request);
+		String MW_SEQ = (!requestParamObj.has("MW_SEQ")||requestParamObj.getString("MW_SEQ")==null)?"":requestParamObj.getString("MW_SEQ");
+
+		ArrayList list = null;
+		HashMap map = new HashMap();
+		HashMap detailMap = null;
+		try {
+			HashMap params = new HashMap();
+			params.put("MW_SEQ", MW_SEQ);
+
+			detailMap = (HashMap) mainService.selectHashmapQuery("issueSQL.selectMinwonDetail", params);
+			if (detailMap != null && !detailMap.isEmpty() && !"".equals(detailMap.get("DOCKEY"))) {
+				mainService.UpdateQuery("issueSQL.deleteMinwonMaster", params);
+			} else {
+				map.put("message", "삭제처리가 불가능한 민원정보 데이터입니다.");
+			}
+
+			map.put("message", "success");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("message", "처리 중 오류가 발생했습니다.");
+		}
+
+		JSONObject jo = new JSONObject(map);
+
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
 //	@PostMapping(path="/selectMinwonAgreeDetail")
 //	public void selectMinwonAgreeDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //		ParameterParser parser = new ParameterParser(request);
@@ -950,5 +1021,97 @@ log.info("SANGSIN_FLAG:"+SANGSIN_FLAG);
 //		response.getWriter().print(jo);
 //		response.getWriter().flush();
 //	}
-	
+	// 민원협의 삭제처리
+	@Transactional
+	@PostMapping(path="/deleteMinwonAgreeData")
+		public void deleteMinwonAgreeData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		 JSONObject requestParamObj=new JSONObject(requestParams);
+		 
+			ParameterParser parser = new ParameterParser(request);
+			String fileseq = (!requestParamObj.has("fileseq")||requestParamObj.getString("fileseq")==null)?"":requestParamObj.getString("fileseq");
+			
+			String MW_SEQ = (!requestParamObj.has("MW_SEQ")||requestParamObj.getString("MW_SEQ")==null)?"":requestParamObj.getString("MW_SEQ");
+			String AGREE_SEQ = requestParamObj.getString("AGREE_SEQ");
+
+			ArrayList list = null;
+			HashMap map = new HashMap();
+			HashMap detailMap = null;
+			int agreeSeq = 0;
+			try {
+				HashMap params = new HashMap();
+				agreeSeq = Integer.parseInt(AGREE_SEQ);
+
+				params.put("MW_SEQ", MW_SEQ);
+				params.put("AGREE_SEQ", agreeSeq);
+				params.put("REG_ID", String.valueOf(request.getSession().getAttribute("userName")));
+
+				// 삭제가능 상태정보 체크
+				detailMap = (HashMap) mainService.selectHashmapQuery("issueSQL.selectMinwonAgreeData", params);
+				if (detailMap != null && !detailMap.isEmpty() && ("".equals(detailMap.get("DOCKEY")) || detailMap.get("DOCKEY") == null)) {
+					mainService.UpdateQuery("issueSQL.deleteMinwonAgree", params);
+					map.put("message", "success");
+				} else {
+					// 상신되었을 경우 삭제불가.
+					map.put("message", "해당 협의내용은 삭제할 수 없습니다.");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				map.put("message", "처리 중 오류가 발생했습니다.");
+			}
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
+	// 민원협의 관리자 강제삭제처리
+	@Transactional
+	@PostMapping(path="/deleteMinwonAgreeDataAdmin")
+		public void deleteMinwonAgreeDataAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		 JSONObject requestParamObj=new JSONObject(requestParams);
+		 
+			ParameterParser parser = new ParameterParser(request);
+			String fileseq = (!requestParamObj.has("fileseq")||requestParamObj.getString("fileseq")==null)?"":requestParamObj.getString("fileseq");
+			
+			String MW_SEQ = (!requestParamObj.has("MW_SEQ")||requestParamObj.getString("MW_SEQ")==null)?"":requestParamObj.getString("MW_SEQ");
+			String AGREE_SEQ = requestParamObj.getString("AGREE_SEQ");
+
+			ArrayList list = null;
+			HashMap map = new HashMap();
+			HashMap detailMap = null;
+			int agreeSeq = 0;
+			try {
+				HashMap params = new HashMap();
+				agreeSeq = Integer.parseInt(AGREE_SEQ);
+
+				params.put("MW_SEQ", MW_SEQ);
+				params.put("AGREE_SEQ", agreeSeq);
+				params.put("REG_ID", String.valueOf(request.getSession().getAttribute("userName")));
+
+				// 삭제가능 상태정보 체크 안함.
+				mainService.UpdateQuery("issueSQL.deleteMinwonAgree", params);
+				map.put("message", "success");
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				map.put("message", "처리 중 오류가 발생했습니다.");
+			}
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
+
 }

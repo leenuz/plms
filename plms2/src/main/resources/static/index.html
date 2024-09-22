@@ -8,11 +8,40 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
-index page
+
+<p><a href="#" >   민원협의 관리자 강제삭제처리</a>: /issue/deleteMinwonAgreeDataAdmin</p>
+<p><a href="#" >   민원협의 삭제처리</a>: /issue/deleteMinwonAgreeData</p>
+<p><a href="#" >   상신 삭제</a>: /issue/deleteMinwonMaster</p>
+<p><a href="#" >   상신 취소</a>: /issue/cancelMinwonDataApproval</p>
+<p><a href="#" >  민원협의 내용저장 상신</a>: /issue/minwonCompleteSave
+<pre>
+* 민원완료처리
+	 * 상신키를 눌렀을때 
+	
+	 dataType: json
+</pre>
+</p>
 
 
+<p><a href="#" >  민원협의 내용저장 상신</a>: /issue/saveMinwonAgreeData
+<pre>
+* 민원협의 내용저장 상신
+	
+	 dataType: json
+</pre>
+</p>
 
-
+<p><a href="#" >  민원관리 대응방안수립 저장처리</a>: /issue/saveMinwonHandling
+<pre>
+* 민원관리 대응방안수립 저장처리
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 dataType: json
+</pre>
+</p>
+<p><a href="#" >  민원 신규 등록</a>: /issue/saveMinwonData</p>	
 <p><a href="#" >  회사토지 처분(해지)등록</a>: /dopco/insertDopcoTerminationAdd</p>
 <p><a href="#" >  합병 추가버튼 클릭시 지상정보 조회</a>: /jisang/selectJisangDetail</p>
 <p><a href="#" > 지상권 합필 승인</a>: /jisang/completeMerge</p>

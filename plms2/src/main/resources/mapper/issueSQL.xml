@@ -661,4 +661,166 @@ UPDATE MINWON_MASTER
 	<select id="selectMinwonCompleteDocInfo" resultType="HashMap" parameterType="HashMap">
 		SELECT * FROM PLMS_APPROVAL WHERE pa_DOCKEY IN (SELECT mm_COMPLE_DOCKEY FROM MINWON_MASTER WHERE mm_MW_SEQ = ${MW_SEQ}  ) AND (pa_STATUS IS NULL OR pa_STATUS NOT IN ('X'))
 	</select>
+	
+	<update id="cancelNinwonEchoNo" parameterType="HashMap">
+UPDATE MINWON_MASTER
+   SET mm_DOCKEY = ''
+     , mm_SANGSIN_YN = 'N'
+ WHERE mm_MW_SEQ = #{MW_SEQ}
+</update>
+	<update id="deleteMinwonMaster" parameterType="HashMap">
+UPDATE MINWON_MASTER
+   SET mm_DEL_FLAG = 'Y'
+     , mm_DEL_DATE = Now()
+ WHERE mm_MW_SEQ = #{MW_SEQ}
+	</update>
+	<update id="deleteMinwonAgree" parameterType="HashMap"> 
+UPDATE MINWON_AGREEMENT
+   SET ma_DEL_FLAG = 'Y'
+     , ma_DEL_DATE = Now()
+ WHERE ma_MW_SEQ = #{MW_SEQ}
+   AND ma_AGREE_SEQ = #{AGREE_SEQ}
+	</update>
+	<select id="selectTogiMgtJisangSearch" resultType="HashMap" parameterType="HashMap">
+		SELECT 
+		    JOIN_MST.JISANG_STATUS,
+		    JOIN_MST.COMPLE_YN,
+		    COUNT(*) AS CNT
+		FROM (
+		    SELECT 
+		        JM.jm_JISANG_NO AS MASTER_NO,
+		        'JISANG' AS JISANG_STATUS,
+		        JM.jm_JISA AS JISA,
+		        JM.jm_SIDO_NM AS SIDO_NM,
+		        JM.jm_sgg_nm AS SGG_NM,
+		        JM.jm_emd_nm AS EMD_NM,
+		        JM.jm_ri_nm AS RI_NM,
+		        JM.jm_jibun AS JIBUN,
+		        JM.jm_pnu AS PNU,
+		        JM.jm_addrcode AS ADDRCODE,
+		        JM.jm_jasan_no AS JASAN_NO,
+		        TO_CHAR(JM.jm_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE,
+		        JM.jm_chuideuk_money AS CHUIDEUK_MONEY,
+		        JM.jm_jasan_money AS JASAN_MONEY,
+		        NULL AS PMT_NO,
+		        NULL AS PAY_MONEY,
+		        NULL AS PAY_DATE,
+		        NULL AS PMT_ST_DATE,
+		        NULL AS PMT_ED_DATE,
+		        NULL AS GOVER_LENGTH,
+		        NULL AS GOVER_AREA,
+		        NULL AS PIPE_METER,
+		        NULL AS PIPE_METER2,
+		        JS.SOUJA_NAME AS SOUJA_NAME,
+		        (
+		            SELECT COUNT(js_JISANG_NO) - 1
+		            FROM JISANG_SOUJA
+		            WHERE js_jisang_no = JM.jm_jisang_no
+		        ) AS SOUJA_CNT,
+		        JM.jm_gover_own_yn AS GOVER_OWN_YN,
+		        COALESCE(JM.jm_COMPLE_YN, 'N') AS COMPLE_YN
+		    FROM JISANG_MASTER JM
+		    LEFT JOIN (
+		        SELECT 
+		            js_jisang_no AS JISANG_NO,
+		            js_souja_name AS SOUJA_NAME,
+		            ROW_NUMBER() OVER (PARTITION BY js_jisang_no ORDER BY js_jisang_no ASC) AS ROW_IDX
+		        FROM JISANG_SOUJA
+		        GROUP BY js_jisang_no, js_souja_name
+		    ) JS ON JM.jm_jisang_no = JS.JISANG_NO
+		    WHERE (JM.jm_cancel_yn IS NULL OR JM.jm_cancel_yn != 'Y')
+		    
+		    UNION ALL
+		    
+		    SELECT 
+		        GP.gp_GOVER_NO AS MASTER_NO,
+		        'GOVER' AS JISANG_STATUS,
+		        (SELECT S.gm_JISA FROM GOVER_MASTER S WHERE S.gm_GOVER_NO = GP.gp_GOVER_NO) AS JISA,
+		        GP.gp_sido_nm as SIDO_NM,
+		        GP.gp_sgg_nm as SGG_NM,
+		        GP.gp_emd_nm as EMD_NM,
+		        GP.gp_ri_nm as RI_NM,
+		        GP.gp_jibun as JIBUN,
+		        GP.gp_pnu as PNU,
+		        GP.gp_addrcode as ADDRCODE,
+		        NULL AS JASAN_NO,
+		        NULL AS CHUIDEUK_DATE,
+		        NULL AS CHUIDEUK_MONEY,
+		        NULL AS JASAN_MONEY,
+		        GPE.gp_pmt_no as PMT_NO,
+		        GPE.gp_pay_money as PAY_MONEY,
+		        TO_CHAR(GPE.gp_PAY_DATE, 'YYYY-MM-DD') AS PAY_DATE,
+		        TO_CHAR(GM.gm_GOVER_ST_DATE, 'YYYY-MM-DD') AS PMT_ST_DATE,
+		        TO_CHAR(GM.gm_GOVER_ED_DATE, 'YYYY-MM-DD') AS PMT_ED_DATE,
+		        GP.gp_gover_length as GOVER_LENGTH,
+		        GP.gp_gover_area as GOVER_AREA,
+		        (SELECT S.gm_PIPE_METER FROM GOVER_MASTER S WHERE S.gm_GOVER_NO = GP.gp_GOVER_NO) AS PIPE_METER,
+		        (SELECT S.gm_PIPE_METER2 FROM GOVER_MASTER S WHERE S.gm_GOVER_NO = GP.gp_GOVER_NO) AS PIPE_METER2,
+		        NULL AS SOUJA_NAME,
+		        0 AS SOUJA_CNT,
+		        GP.gp_gover_own_yn as GOVER_OWN_YN,
+		        'N' AS COMPLE_YN
+		    FROM GOVER_PNU GP
+		    LEFT JOIN (
+		        SELECT S.gp_GOVER_NO, S.gp_PAY_MONEY, S.gp_PAY_VAT, S.gp_PAY_DATE, S.gp_PAY_WAY, S.gp_PMT_NO, S.gp_PMT_ST_DATE, S.gp_PMT_ED_DATE
+		        FROM GOVER_PERMIT S
+		        JOIN (
+		            SELECT MAX(SS.gp_SEQ) AS SEQ, SS.gp_GOVER_NO
+		            FROM GOVER_PERMIT SS
+		            WHERE SS.gp_PMT_NO IS NOT NULL
+		            AND SS.gp_DOCKEY IN (SELECT SSS.pa_DOCKEY FROM PLMS_APPROVAL SSS WHERE SSS.pa_STATUS IS NOT NULL AND SSS.pa_STATUS != 'X')
+		            GROUP BY SS.gp_GOVER_NO
+		        ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.gp_GOVER_NO
+		    ) GPE ON GP.gp_GOVER_NO = GPE.gp_GOVER_NO
+		    LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
+		    WHERE GM.gm_SAVE_STATUS = 'A' AND GM.gm_CANCEL_YN IS NULL
+		    
+		    UNION ALL
+		    
+		     SELECT 
+		        NM.nm_NOTSET_NO AS MASTER_NO,
+		        'NOTSET' AS JISANG_STATUS,
+		        NM.nm_jisa as JISA,
+		        NM.nm_sido_nm as SIDO_NM,
+		        NM.nm_sgg_nm as SGG_NM,
+		        NM.nm_emd_nm as EMD_NM,
+		        NM.nm_ri_nm as RI_NM,
+		        NM.nm_jibun as JIBUN,
+		        NM.nm_pnu as PNU,
+		        NM.nm_addrcode as ADDRCODE,
+		        NULL AS JASAN_NO,
+		        NULL AS CHUIDEUK_DATE,
+		        NULL AS CHUIDEUK_MONEY,
+		        NULL AS JASAN_MONEY,
+		        NULL AS PMT_NO,
+		        NULL AS PAY_MONEY,
+		        NULL AS PAY_DATE,
+		        NULL AS PMT_ST_DATE,
+		        NULL AS PMT_ED_DATE,
+		        NULL AS GOVER_LENGTH,
+		        NULL AS GOVER_AREA,
+		        NULL AS PIPE_METER,
+		        NULL AS PIPE_METER2,
+		        NS.ns_souja_name as SOUJA_NAME,
+		        (SELECT COUNT(ns_NOTSET_NO) - 1 FROM NOTSET_SOUJA WHERE ns_NOTSET_NO = NM.nm_NOTSET_NO) AS SOUJA_CNT,
+		        NM.nm_gover_own_yn as GOVER_OWN_YN,
+		        'N' AS COMPLE_YN
+		    FROM NOTSET_MASTER NM
+		    LEFT JOIN (
+		        SELECT ns_notset_no , ns_souja_name , ROW_NUMBER() OVER (PARTITION BY ns_NOTSET_NO ORDER BY ns_NOTSET_NO ASC) AS ROW_IDX
+		        FROM NOTSET_SOUJA
+		        GROUP BY ns_NOTSET_NO, ns_SOUJA_NAME
+		    ) NS ON NM.nm_NOTSET_NO = NS.ns_NOTSET_NO
+		    WHERE NM.nm_DEL_FLAG = 'N'
+		) JOIN_MST
+ 		WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'N'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
+   			AND JOIN_MST.${KIJUN} = #{JISA}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRCODE)" >
+   		AND SUBSTR( JOIN_MST.PNU, 0, 5) like '${ADDRCODE}%'
+		</if>
+ GROUP BY JOIN_MST.JISANG_STATUS, JOIN_MST.COMPLE_YN
+	</select>
+	
 </mapper>
