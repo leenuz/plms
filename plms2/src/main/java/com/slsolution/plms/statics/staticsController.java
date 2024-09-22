@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.ExcelUtil;
@@ -204,6 +205,23 @@ public class staticsController {
 		response.getWriter().flush();
 	}
 	
+	// 통계> 권리확보현황통계> 토지 관리 현황(권리확보현황) 조회하기
+	@PostMapping(path="/selectTogiMgtStateList")
+		public void selectTogiMgtStateList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HashMap map = selectTogiMgtStateListReturn(request, response);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
+	
+	
+	
 	// 토지 관리 현황(권리확보현황) 조회리스트 리턴
 		public HashMap selectTogiMgtStateListReturn(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			String requestParams = ParameterUtil.getRequestBodyToStr(request);
@@ -286,6 +304,89 @@ public class staticsController {
 				result.put("issueList", issueList);
 				// System.out.println("result="+result);
 
+			} catch (Exception e) {
+				map.put("code", "N");
+				e.printStackTrace();
+			}
+
+			map.put("code", "Y");
+			map.put("message", "success");
+			map.put("result", result);
+
+			return map;
+		}
+		
+		
+		// 토지 관리 현황(권리확보현황) > Excel 다운로드
+		@PostMapping(path="/TogiMgtStateExcelDownload")
+		public ModelAndView TogiMgtStateExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			 JSONObject requestParamObj=new JSONObject(requestParams);
+			ArrayList list = new ArrayList();
+			ParameterParser parser = new ParameterParser(request);
+			String pagegubun = requestParamObj.getString("GUBUN");
+			String str_Title = "";
+			String str_pageGubun = "";
+
+			try {
+
+				HashMap map = new HashMap();
+				if ("1".equals(pagegubun)) { // 사유지
+
+					str_Title = "사유지내역조회.xls";
+					str_pageGubun = "jisasng";
+					map = selectTogiMgtStateJisangExcelReturn(request, response);
+
+				} else if ("2".equals(pagegubun)) { // 국유지
+
+					str_Title = "국유지내역조회.xls";
+					str_pageGubun = "gover";
+					map = selectTogiMgtStateJisangExcelReturn(request, response);
+				}
+				list = (ArrayList) map.get("result");
+
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+			response.setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(str_Title, "UTF-8") + ";");
+			response.setHeader("Content-Type", "application/octet-stream; charset=utf-8");
+
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("CommonUtil", new CommonUtil());
+			mav.addObject("list", list);
+			mav.addObject("pageGubun", str_pageGubun);
+			mav.addObject("nTotalCount", list.size());
+			mav.setViewName("togiSearch/tsExcel");
+
+			return mav;
+		}
+		
+		// 토지 관리 현황(권리확보현황) - 사유지 엑셀저장 조회
+		public HashMap selectTogiMgtStateJisangExcelReturn(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			ParameterParser parser = new ParameterParser(request);
+			String JISA = parser.getString("JISA", "");
+			String ADDRCODE = parser.getString("ADDRCODE", "");
+			String KIJUN = parser.getString("KIJUN", "JISA");
+			String pagegubun = parser.getString("GUBUN", "");
+
+			CommonUtil cu = new CommonUtil();
+			HashMap map = new HashMap();
+			ArrayList result = new ArrayList();
+
+			try {
+				HashMap params = new HashMap();
+				params.put("JISA", JISA);
+				params.put("ADDRCODE", ADDRCODE);
+				params.put("KIJUN", KIJUN);
+				// System.out.println(params);
+
+				if (pagegubun.equals("1"))
+					result = (ArrayList) mainService.selectQuery("Json.selectTogiMgtJisangExcelList", params); // 사유지
+				else
+					result = (ArrayList) mainService.selectQuery("Json.selectTogiMgtGoverExcelList", params); // 국유지
+
+				// System.out.println("result=" + result.size());
 			} catch (Exception e) {
 				map.put("code", "N");
 				e.printStackTrace();
