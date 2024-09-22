@@ -4,6 +4,141 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="staticSQL">
+<select id="searchStatisticsTojiCount" parameterType="HashMap" resultType="HashMap">
 
+
+SELECT SUM(TT.CNT) AS CNT,
+       TT.GUBUN,
+       TT.TYPE
+FROM (
+    SELECT COUNT(*) AS CNT,
+           SUBSTRING(PPI.pi_CODE_DEPTH1, 1, 1) AS GUBUN,  -- SUBSTRING 사용, 인덱스 1부터 시작
+           'ISSUE' AS TYPE
+    FROM POTENTIAL_ISSUE PPI
+    LEFT JOIN (
+        SELECT S.jm_pnu as PNU,
+               S.jm_jisa as JISA,
+               S.jm_JISANG_NO AS NO,
+               RPAD(S.jm_ADDRCODE, 10, '0') AS ADDRCODE,
+               S.jm_jibun as JIBUN
+        FROM JISANG_MASTER S
+        WHERE COALESCE(S.jm_CANCEL_YN, 'N') != 'Y'
+
+        UNION ALL
+
+        SELECT GP.gp_pnu as PNU,
+               GM.gm_jisa as JISA,
+               GM.gm_GOVER_NO AS JISANG_NO,
+               GP.gp_addrcode as ADDRCODE,
+               GP.gp_jibun as JIBUN
+        FROM GOVER_PNU GP
+        JOIN GOVER_POTENTIAL_ISSUE GPI ON GP.gp_GOVER_NO = GPI.GOVER_NO
+        JOIN GOVER_MASTER GM ON GM.gm_GOVER_NO = GPI.GOVER_NO
+        WHERE COALESCE(GM.gm_CANCEL_YN, 'N') != 'Y'
+
+        UNION ALL
+
+        SELECT S3.nm_pnu as PNU,
+               S3.nm_jisa as JISA,
+               S3.nm_NOTSET_NO AS NO,
+               RPAD(S3.nm_ADDRCODE, 10, '0') AS ADDRCODE,
+               S3.nm_jibun as JIBUN
+        FROM NOTSET_MASTER S3
+        WHERE S3.nm_DEL_FLAG != 'Y'
+    ) T ON PPI.pi_address_code = T.ADDRCODE AND PPI.pi_JIBUN = T.JIBUN
+    WHERE PPI.pi_DEL_FLAG != 'Y'
+      AND PPI.pi_CODE_DEPTH3 != 'DY010101'
+      AND PPI.pi_CODE_DEPTH2 NOT IN ('GY010100', 'GY020100')
+      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
+   		AND T.JISA = #{JISA}
+	  </if> 
+    GROUP BY SUBSTRING(PPI.pi_CODE_DEPTH1, 1, 1)
+
+    UNION ALL
+
+    SELECT COUNT(*) AS CNT,
+           SUBSTRING(A.mm_MW_CODE1, 1, 1) AS GUBUN,
+           'MINWON' AS TYPE
+    FROM MINWON_MASTER A
+    JOIN MINWON_PNU B ON A.mm_MW_SEQ = B.mp_MINWON_SEQ
+    LEFT JOIN JIJUK_2024 JM ON B.mp_PNU = JM.PNU
+    WHERE A.mm_DEL_FLAG != 'Y'
+      AND A.mm_STATUS IN ('3', '4')
+      AND A.mm_MW_CODE3 != 'DY010101'
+      AND A.mm_MW_CODE2 NOT IN ('GY010100', 'GY020100')
+      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
+   AND T.JISA = #{JISA}
+		    </if> 
+    GROUP BY SUBSTRING(A.mm_MW_CODE1, 1, 1)
+
+    UNION ALL
+
+    SELECT COUNT(*) AS CNT,
+           SUBSTRING(GPI.CODE_DEPTH1, 1, 1) AS GUBUN,
+           'ISSUE' AS TYPE
+    FROM GOVER_POTENTIAL_ISSUE GPI
+    LEFT JOIN (
+        SELECT GP.gp_pnu as PNU,
+               GM.gm_jisa as JISA,
+               GM.gm_GOVER_NO AS JISANG_NO,
+               GP.gp_addrcode as ADDRCODE,
+               GP.gp_jibun as JIBUN
+        FROM GOVER_PNU GP
+        JOIN GOVER_POTENTIAL_ISSUE GPI ON GP.gp_GOVER_NO = GPI.GOVER_NO
+        JOIN GOVER_MASTER GM ON GM.gm_GOVER_NO = GPI.GOVER_NO
+        WHERE COALESCE(GM.gm_CANCEL_YN, 'N') != 'Y'
+    ) T ON GPI.GOVER_NO = T.JISANG_NO
+    WHERE GPI.DEL_FLAG != 'Y'
+      AND GPI.CODE_DEPTH3 != 'DY010101'
+      AND GPI.CODE_DEPTH2 NOT IN ('GY010100', 'GY020100')
+      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
+   AND T.JISA = #{JISA}
+		    </if> 
+    GROUP BY SUBSTRING(GPI.CODE_DEPTH1, 1, 1)
+) TT
+GROUP BY TT.GUBUN, TT.TYPE
+
+
+
+
+
+	</select>
+	
+	<!-- 권리확보현황 마감처리 데이터 저장 -->
+	<insert id="insertStatisticsDeadlineProcess" parameterType="HashMap"> 
+INSERT INTO JISANG_STAT (
+        SEQ,
+        SAVE_YEAR,
+        SAVE_QUARTER,
+        SAVE_DATE,
+        PROCESS_DATE,
+        SAYUJI_N,
+        SAYUJI_Y_Y,
+        SAYUJI_Y_N,
+        SAYUJI_TOTAL,
+        GUKYUJI_Y,
+        GUKYUJI_J,
+        GUKYUJI_N,
+        GUKYUJI_TOTAL,
+        FILE_PATH,
+        FILE_NAME
+) VALUES (
+        (SELECT NVL(MAX(SEQ), 0) + 1 FROM JISANG_STAT S),
+        #{SAVE_YEAR},
+        #{SAVE_QUARTER},
+        Now(),
+        #{PROCESS_DATE},
+        #{SAYUJI_N},
+        #{SAYUJI_Y_Y},
+        #{SAYUJI_Y_N}
+        #{SAYUJI_TOTAL}
+        #{GUKYUJI_Y}
+        #{GUKYUJI_J}
+        #{GUKYUJI_N}
+        #{GUKYUJI_TOTAL}
+        #{FILE_PATH}
+        #{FILE_NAME}
+)
+	</insert>
 
 </mapper>
