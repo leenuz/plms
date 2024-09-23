@@ -16,102 +16,79 @@
     <script src="/js/songyu/menu03.js"></script>
     <style>
 		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
-
-div.dt-center-in-div {
-  margin: 0 auto;
-      float: right;
-    margin-right: 30px;
-   
-}
-div.dt-center-in-div>div{
-
-display:inline;
-}
-
-div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
-}
-
-
-.dt-title{
-
-text-align:center;
-width:180px;
-float:left;
-
-}
-.dt-buttons{
-display:inline-block;
-
-width:180px;
-
-}
-.dt-length{
-display:inline-block;
-}
-.dt-button{
-
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
-
-}
-
-.dt-paging {
-text-align: center;
-}
-
-.dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-    
-    
-}
-
-.bottom{
-text-align:center;
-
-}
-.top{
-
-text-align:right;
-margin:10px;
-
-}
-
-		</style>
+			display: grid;
+			grid-template-columns: auto auto auto;
+		}
+		div.dt-center-in-div {
+		  margin: 0 auto;
+		      float: right;
+		    margin-right: 30px;
+		}
+		div.dt-center-in-div>div{
+		display:inline;
+		}
+		div.dt-filter-spacer {
+		  margin: 10px 0;
+		  border:1px solid red;
+		}		
+		.dt-title{
+		text-align:center;
+		width:180px;
+		float:left;
+		}
+		.dt-buttons{
+		display:inline-block;
+		width:180px;
+		}
+		.dt-length{
+		display:inline-block;
+		}
+		.dt-button{
+		color:white;
+		background-color:#4e5871;
+		font-size:15px;
+		font-weight:600;
+		border-radius:10px;
+		background-image:url(/assets/media/menu01/download.png);
+		background-size:11px;
+		background-repeat:no-repeat;
+		background-position:123px center;
+		text-aline:left;
+		margin-right:10px;
+		width:159px;
+		height:38px;
+		}
+		.dt-paging {
+		text-align: center;
+		}
+		.dt-paging-button {
+		  box-sizing: border-box;
+		  display: inline-block;
+		  min-width: 1.5em;
+		  padding: 0.5em 1em;
+		  margin-left: 2px;
+		  text-align: center;
+		  text-decoration: none !important;
+		  cursor: pointer;
+		  border: 1px solid transparent;
+		  border-radius: 2px;
+		  background: transparent;
+		  color: #007bff !important;
+		  font-size: 15px;
+		  font-weight: 600;
+		}
+		.bottom{
+		text-align:center;
+		}
+		.top{
+		text-align:right;
+		margin:10px;
+		}
+	</style>
     <title>지상권</title>
   </head>
 <th:block layout:fragment="content">
     <!-- Begin Page Content -->
-    <!--권리확보현황-->
     <!--관리필지조회-->
     <div id="dopcoSurfacePart03">
       
@@ -320,7 +297,6 @@ margin:10px;
                       <div class="sufaceSelectList smallHeight">
                         <ul class="surfaceSelectListMember" id="sggUl">
                           <li><p>전체</p></li>
-                          <li><p>N</p></li>
                         </ul>
                       </div>
                     </div>
@@ -336,8 +312,6 @@ margin:10px;
                       <div class="sufaceSelectList smallHeight">
                         <ul class="surfaceSelectListMember" id="emdUl">
                           <li><p>전체</p></li>
-                          <li><p>Y</p></li>
-                          <li><p>N</p></li>
                         </ul>
                       </div>
                     </div>
@@ -348,8 +322,6 @@ margin:10px;
                       <div class="sufaceSelectList smallHeight">
                         <ul class="surfaceSelectListMember" id="riUl">
                           <li><p>전체</p></li>
-                          <li><p>Y</p></li>
-                          <li><p>N</p></li>
                         </ul>
                       </div>
                     </div>

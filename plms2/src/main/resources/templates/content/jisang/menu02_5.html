@@ -12,62 +12,43 @@
       as="style"
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
-
-
-
- 
-  
-   
-  
 	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	
- <link rel="stylesheet" href="/css/jisang/menu02_5.css" /> 
-	 	<script src="/vendor/datatables/rowsGroup.js"></script>
-		<script src="/js/jisang/menu02_5.js"></script>	
-		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	  <link rel="stylesheet" href="/css/jisang/menu02_5.css" /> 
+	  
+	  <script src="/vendor/datatables/rowsGroup.js"></script>
+	  <script src="/js/jisang/menu02_5.js"></script>	
+	  <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
-		div.dt-top-container {
+<style>
+div.dt-top-container {
   display: grid;
   grid-template-columns: auto auto auto;
 }
-
 div.dt-center-in-div {
   margin: 0 auto;
       float: right;
     margin-right: 30px;
-   
 }
 div.dt-center-in-div>div{
-
 display:inline;
 }
-
 div.dt-filter-spacer {
   margin: 10px 0;
   border:1px solid red;
 }
-
-
 .dt-title{
-
 text-align:center;
 width:180px;
 float:left;
-
 }
 .dt-buttons{
 display:inline-block;
-
 width:180px;
-
 }
 .dt-length{
 display:inline-block;
 }
 .dt-button{
-
 color:white;
 background-color:#4e5871;
 font-size:15px;
@@ -81,13 +62,10 @@ text-aline:left;
 margin-right:10px;
 width:159px;
 height:38px;
-
 }
-
 .dt-paging {
 text-align: center;
 }
-
 .dt-paging-button {
   box-sizing: border-box;
   display: inline-block;
@@ -97,29 +75,21 @@ text-align: center;
   text-align: center;
   text-decoration: none !important;
   cursor: pointer;
-  
   border: 1px solid transparent;
   border-radius: 2px;
   background: transparent;
   color: #007bff !important;
     font-size: 15px;
     font-weight: 600;
-    
-    
 }
-
 .bottom{
 text-align:center;
-
 }
 .top{
-
 text-align:right;
 margin:10px;
-
 }
-
-		</style>
+</style>
 		
     <title>지상권 사용 승락</title>
   </head>
@@ -202,9 +172,7 @@ margin:10px;
                 </ul>
                 <ul class="radioBoxs menuRadioEvet05">
                   <li>
-                    <input type="radio" name="askMenu01" value="1" /><span
-                      >선택형</span
-                    >
+                    <input type="radio" name="askMenu01" value="1" /><span>선택형</span>
                   </li>
                   <li>
                     <!--수정부분 지사-->
@@ -255,8 +223,6 @@ margin:10px;
                         id="emd"
                         hidden>
                         <option value="">전체</option>
-                        <option value="Y2">Y2</option>
-                        <option value="N3">N3</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
@@ -276,8 +242,6 @@ margin:10px;
                         id="ri"
                         hidden>
                         <option value="">전체</option>
-                        <option value="Y22">Y22</option>
-                        <option value="N33">N33</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
@@ -317,13 +281,11 @@ margin:10px;
         <div class="surfaceInquireMainContentWrapper">
             <div class="surfaceInquireMainContent">
               <div class="dataTitles">
-                <h5>총 검색 건 수<span id="dataTableTotalCount">154</span>건</h5>
-              
+                <h5>총 검색 건 수<span id="dataTableTotalCount"></span>건</h5>
                   </div>
                 </div>
               </div>
            
-               
                <div class="">
 				<table id="userTable" class="cell-border nowrap" style="width:120%;" >
 				    <thead>
@@ -343,13 +305,10 @@ margin:10px;
 				            <th>관리번호</th>
 				            <th>지도</th>
 				            <th>ECHO문서보기</th>
-				           
-				            
 				        </tr>
 				    </thead>
 				    <!-- tbody 태그 필요 없다. -->
 				</table>
-
 			  </div>
               
               <!-- 데이터박스 -->
@@ -360,9 +319,6 @@ margin:10px;
               
             </div>
           </div>
-        
-        
-        
         </main>
       </div>
     </div>
