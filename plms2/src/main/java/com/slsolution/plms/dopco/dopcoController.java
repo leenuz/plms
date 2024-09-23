@@ -80,6 +80,24 @@ public class dopcoController {
 
 		return mav;
 	}
+
+	@GetMapping(path="/compLandEdit") //http://localhost:8080/api/get/dbTest
+    public ModelAndView compLandEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		HashMap params = new HashMap();
+		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+		ArrayList<HashMap> addressList = mainService.selectQuery("jisangSQL.bunhalAddressSearch",params);
+		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/dopco/compLandEdit");
+		mav.addObject("addressList",addressList);
+		mav.addObject("resultJimokList",jimoklist);
+		mav.addObject("jisaList",jisalist);
+
+		return mav;
+	}
+
 	@PostMapping(path="/getBunhalJIjukSelect") //http://localhost:8080/api/get/dbTest
 	public ModelAndView getBunhalJIjukSelect(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
