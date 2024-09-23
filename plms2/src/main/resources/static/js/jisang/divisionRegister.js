@@ -391,9 +391,24 @@ $(document).on("click",".temporarySaveBtn",function(){
 				togiPipeYn="Y";
 			};
 			var togiCancelYn="N";
+			var cancelChuideukMoney;
+			var cancelGammoney;
+			var cancelRemainderMoney;
+			var cancelBosangMoney;
+			var cancelProfitLoss;
 			if ($(togiUls[i]).find("input:checkbox[name='togiBunhalCancelYn']").is(":checked")==true){
 				console.log("############");	
 				togiCancelYn="Y";
+				const checkbox = $(togiUls[i]).find("input:checkbox[name='togiBunhalCancelYn']");
+				const terminateIndex = checkbox.attr('data-terminate-index');
+				if(terminateIndex){
+                    const targetUl = $('#terminateIndex__' + terminateIndex);  // terminateIndex 사용해 ul 선택
+                    cancelChuideukMoney = $(targetUl).find("input[name='cancelChuideukMoney']").val();
+                    cancelGammoney = $(targetUl).find("input[name='cancelGammoney']").val();
+                    cancelRemainderMoney = $(targetUl).find("input[name='cancelRemainderMoney']").val();
+                    cancelBosangMoney = $(targetUl).find("input[name='cancelBosangMoney']").val();
+                    cancelProfitLoss = $(targetUl).find("input[name='cancelProfitLoss']").val();
+				}
 			}
 			 
 			//var togiCancelYn=ljsIsNull($(togiUls[i]).find("input[name='togiBunhalCancelYn']").val())?'off':'on';
@@ -436,8 +451,11 @@ $(document).on("click",".temporarySaveBtn",function(){
 				,"togiBunhalStatus":togiBunhalStatus
 				,"togiGoverOwnYn":gover_own_yn
 				,"togiJisa":togiJisa
-				
-	   			
+				,"cancelChuideukMoney":ljsIsNull(cancelChuideukMoney)?'':cancelChuideukMoney
+				,"cancelGammoney":ljsIsNull(cancelGammoney)?'':cancelGammoney
+				,"cancelRemainderMoney":ljsIsNull(cancelRemainderMoney)?'':cancelRemainderMoney
+				,"cancelBosangMoney":ljsIsNull(cancelBosangMoney)?'':cancelBosangMoney
+				,"cancelProfitLoss":ljsIsNull(cancelProfitLoss)?'':cancelProfitLoss
 	   		}
 	   		console.log(togiObj);
 	   		togiDatas.push(togiObj);
