@@ -68,9 +68,9 @@ public class togiController {
 //		String pnu = httpRequest.getParameter("pnu");
 		params.put("pnu","4423010300100700004");
 
-		ArrayList<HashMap> searchList = mainService.selectQuery("jisangSQL.selectBasicSearchList", params);
+//		ArrayList<HashMap> searchList = mainService.selectQuery("jisangSQL.selectBasicSearchList", params);
 
-		mav.addObject("searchList", searchList);
+//		mav.addObject("searchList", searchList);
 		mav.setViewName("content/togi/landReg");
 		return mav;
 	}
@@ -241,9 +241,9 @@ public class togiController {
 
 		log.info("params:"+params);
 		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectAddressFromJijuk",params);
-		//log.info("addressList:"+addressList);
+
 		mav.addObject("addressList",addressList);
-		mav.setViewName("content/togi/landReg :: #togiInfoDiv");
+		mav.setViewName("content/togi/landReg :: #searchResultPopDiv");
 		return mav;
 	}
 	

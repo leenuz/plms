@@ -161,6 +161,15 @@ button {
 }
 
 /* 스크롤바 */
+#landReg .customSelectBox .customSelectBtns::-webkit-scrollbar {
+  width: 4px;
+}
+
+#landReg .customSelectBox .customSelectBtns::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
 
 .landRegWrappers::-webkit-scrollbar {
   width: 3px;
@@ -826,4 +835,90 @@ button {
   display: flex;
   justify-content: flex-end;
   margin-top: 15px;
+}
+
+#landReg .customSelectBox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#landReg
+  .landInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectView {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  /* font-size: 15px; */
+  font-size: 14px;
+  font-weight: 500;
+  color: #6e7d88;
+  background: #fff;
+  text-align-last: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  box-sizing: border-box;
+  background: url(/assets/media/menu02/images/arrowDown.png) no-repeat right 8px
+    center;
+  background-size: 21px;
+}
+#landReg
+  .customSelectBox
+  .customSelectView.active {
+  background: url(/assets/media/menu02/images/arrowDownBlue.png) no-repeat right
+    8px center;
+  background-size: 21px;
+}
+#landReg
+  .customSelectBox
+  .customSelectView.active {
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+#landReg
+  .customSelectBox
+  .customSelectBtns {
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 4px);
+  box-sizing: border-box;
+  max-height: 0;
+  overflow-y: hidden;
+  z-index: 10;
+  transition: 500ms;
+  opacity: 0;
+  border: 1px solid #acbdd7;
+}
+#landReg
+  .customSelectBox
+  .customSelectBtns.active {
+  padding: 6px 0;
+  border-radius: 10px;
+  background: #fff;
+  max-height: 233px;
+  overflow-y: scroll;
+  transition: 500ms;
+  opacity: 1;
+}
+
+#landReg
+  .landInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns
+  li {
+  padding-top: 3px;
+  height: 33px;
+}
+
+#landReg .jimokData{
+padding-top:3px;
 }

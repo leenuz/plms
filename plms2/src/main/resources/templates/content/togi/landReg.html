@@ -194,6 +194,8 @@ margin:10px;
             </div>
           </div>
         </section>
+
+      </form>
         <!-- 시행자 관할 부서 -->
         <section class="adminDept" >
           <div class="subTitle">
@@ -212,13 +214,13 @@ margin:10px;
               <div class="contentsBox">
               <ul class="contents" id="deptUl">
                 <li class="content">
-                  <input type="text" name="dept_nm" />
+                  <input type="text" name="dept_nm_0" />
                 </li>
                 <li class="content">
-                  <input type="text" name="manager"/>
+                  <input type="text" name="manager_0"/>
                 </li>
                 <li class="content">
-                  <input type="text" name="contact_num"/>
+                  <input type="text" name="contact_num_0"/>
                 </li>
                 <li class="content btnBox smallWidth">
                   <div class="newBtnWrap">
@@ -268,47 +270,67 @@ margin:10px;
                   <!-- 순번 -->
                   <input type="text" placeholder="1" readonly  class="notWriteInput contentsNum"/>
                 </li>
-                <li class="content">
-                  <!-- 권리확보 -->
-                  <input type="text"  name="hakbo" />
+                <li class="content selectContentArea">
+                  <div class="hiddenSelectBox">
+                    <!-- name도 추가 -->
+                    <select name="hakbo_0" id="landDevelopmentManageSelectBox01" hidden>
+                      <option value="" selected>선택</option>
+                      <option value="지상권">지상권</option>
+                      <option value="미설정">미설정</option>
+                      <option value="점용">점용</option>
+                      <option value="회사토지">회사토지</option>
+
+                    </select>
+
+                  </div>
+                  <section class="customSelectBox">
+                    <button class="customSelectView">
+                      선택
+
+                    </button>
+
+                    <ul class="customSelectBtns">
+
+                    </ul>
+                  </section>
                 </li>
                 <li class="content checkboxWrap smallWidth">
                   <!-- 대표필지 -->
-                  <input type="checkbox" id="landRegMainParcelChk_Checkbox01"  />
-                  <label for="landRegMainParcelChk_Checkbox01" name="daepyoPilji" ></label>
+                  <input type="checkbox" id="landRegMainParcelChk_0" name="daepyoPilji"/>
+                  <label for="landRegMainParcelChk_0" ></label>
                 </li>
                 <li class="content middleWidth">
                   <!-- 관로저촉 -->
-                  <input type="text" name="jeochok" />
+                  <input type="text" name="jeochok_0" />
                 </li>
                 <li class="content middleWidth">
                   <!-- 담당지사 -->
-                  <input type="text"  name="jisa"/>
+                  <input type="text" name="jisa_0"/>
                 </li>
                 <li class="content addressWidth">
                   <!-- 주소 -->
                   <div class="addressData">
-                    <input type="text" id="address" name="address" readonly class="notWriteInput"/>
+                    <input type="text" id="address_0" name="address_0"/>
                   </div>
-                  <button class="searchAddressBtn landRegSearchBtn">
+                  <button class="searchAddressBtn landRegSearchBtn" id="0">
                     검색
                   </button>
                 </li>
                 <li class="content">
                   <!-- 지목 -->
-                  <input type="text" name="jimok" />
+                  <input type="text" readonly  class="notWriteInput jimokData" name="jimok_0" />
                 </li>
                 <li class="content">
                   <!-- 연장 -->
-                  <input type="text"  name="yeonjang"/>
+                  <input type="text" name="yeonjang_0"/>
                 </li>
                 <li class="content">
                   <!-- 면적 -->
-                  <input type="text"  name="myeonjuk"/>
+                  <input type="text" readonly  class="notWriteInput areaData" name="myeonjuk_0"/>
                 </li>
                 <li class="content middleWidth">
                   <!-- 소유자 -->
-                  <input type="text" name="souja"/>
+                  <input type="text" name="souja_0"/>
                 </li>
                 <li class="content middleWidth btnBox">
                   <!-- 보기 -->
@@ -347,26 +369,26 @@ margin:10px;
               </ul>
               <ul class="contents">
                 <li class="content middleWidth">
-                  <input type="text" name="daepyoHakbo"/>
+                  <input type="text" readonly  class="notWriteInput" name="daepyoHakbo"/>
                 </li>
                 <li class="content middleWidth">
-                  <input type="text"  name="daepyoJeochok"/>
+                  <input type="text" readonly  class="notWriteInput" name="daepyoJeochok"/>
                 </li>
 
                 <li class="content addressWidth">
-                  <input type="text"  name="daepyoAddress" />
+                  <input type="text"  readonly  class="notWriteInput" name="daepyoAddress" />
                 </li>
                 <li class="content">
-                  <input type="text"  name="daepyoJimok" />
+                  <input type="text" readonly  class="notWriteInput" name="daepyoJimok" />
                 </li>
                 <li class="content">
-                  <input type="text"  name="daepyoYeonjang"/>
+                  <input type="text" readonly  class="notWriteInput" name="daepyoYeonjang"/>
                 </li>
                 <li class="content">
-                  <input type="text"  name="daepyoMyeonjuk"/>
+                  <input type="text" readonly  class="notWriteInput" name="daepyoMyeonjuk"/>
                 </li>
                 <li class="content largeWidth">
-                  <input type="text"  name="daepyoSouja"/>
+                  <input type="text" readonly  class="notWriteInput" name="daepyoSouja"/>
                 </li>
                 <li class="content middleWidth btnBox">
                   <button class="viewDetailButton lightBlueBtn" id="moveMap">
@@ -427,7 +449,6 @@ margin:10px;
         <button class="finalBtn registBtn "  id="finalBtn">등록</button>
       </div>
     </main>
-    </form>
   </div>
 
   <div class="landRegPopWrapper" id="searchResultPopDiv">
@@ -442,25 +463,32 @@ margin:10px;
 
         <div class="popupCont">
           <ul class="popTitles">
+            <li class="popTitle05"></li>
             <li class="popTitle01">PNU</li>
             <li class="popTitle02">주소</li>
             <li class="popTitle03">지번</li>
             <li class="popTitle04">선택</li>
-            <li class="popTitle05"></li>
+
           </ul>
           <div class="popContentBox" >
-            <ul class="popContents">
-
-              <li class="popContent01"> 115001100010010001</li>
-              <li class="popContent02"> 서울특별시 강서구 개화동</li>
-              <li class="popContent03"> 1-1</li>
-              <li class="popContent04">
-                <button class="resultSelectBtn">선택</button>
-              </li>
+            <ul class="popContents" th:each="val:${addressList}">
               <li class="popContent05">
                 <input type="checkbox" id="chkResultPop_Checkbox01">
                 <label for="chkResultPop_Checkbox01"></label>
               </li>
+              <li class="popContent01"> [[${val.pnu}]]</li>
+              <li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.ri_nm}]]</li>
+              <li class="popContent0201" hidden>[[${val.sido_nm}]]</li>
+              <li class="popContent0202" hidden>[[${val.sgg_nm}]]</li>
+              <li class="popContent0203" hidden>[[${val.emd_nm}]]</li>
+              <li class="popContent0204" hidden>[[${val.ri_nm}]]</li>
+              <li class="popContent03">[[${val.jibun}]]</li>
+              <li class="popContent04">
+                <button class="resultSelectBtn">선택</button>
+              </li>
+              <li class="popContent07" hidden>[[${val.jijuk_area}]]</li>
+              <li class="popContent06" hidden>[[${val.jimok_text}]]</li>
+
             </ul>
 
 
