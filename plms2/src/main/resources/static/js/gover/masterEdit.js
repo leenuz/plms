@@ -838,7 +838,8 @@ const masterEditExcelPopOpenEvet = () => {
     }
 }
 
-masterEditExcelPopOpenEvet();
+// 주석 풀면 첨부파일 선택창이 한번 더 열리는 오류
+// masterEditExcelPopOpenEvet();
 
 // 선택된 버튼 값이 select 박스의 값으로 동기화되도록 JavaScript를 추가합니다.
 document.querySelectorAll('.moreSelectBtn').forEach(button => {
