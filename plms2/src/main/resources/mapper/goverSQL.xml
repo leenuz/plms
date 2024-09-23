@@ -693,7 +693,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        gp_ri_nm AS ri_nm,
 	        gp_jibun AS jibun,
 	        gp_jimok_text AS jimok_text,
-	        gp_jijuk_area AS jijuk_area
+	        gp_jijuk_area AS jijuk_area,
+	        gp_dosiplan AS dosiplan
 	    FROM gover_pnu
 	    WHERE gp_gover_no = #{idx}
 	    AND gp_rep_flag = 'Y'
