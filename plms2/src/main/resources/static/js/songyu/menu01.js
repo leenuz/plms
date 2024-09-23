@@ -267,7 +267,9 @@ function loadDataTable(params){
 						//d=params;
 						d.jisa=ljsIsNull(params.jisa)?'':params.jisa;
 						d.manage_no=params.manage_no;
-						d.toji_type=params.toji_type;
+						if (params.toji_type=="국유지") d.toji_type="Y";
+						else if (params.toji_type=="사유지") d.toji_type="N";
+						else d.toji_type="";
 						d.toji_plan_type=params.toji_plan_type;
 						d.right_overlap=params.OverlapCheck01;
 						
@@ -343,16 +345,16 @@ function loadDataTable(params){
                     {data: "no","orderable":false},
                     {data: "jisa"},
                     {data:"address"},
-                    {data:"pipe_yn","defaultContent":""},
+                    {data:"pipe_overlap_yn","defaultContent":""},
                     {data: "pipe_meter","defaultContent":""},
                     {data: "jimok_text","defaultContent":""}, //5
                     {data: "souja_name","defaultContent":""},
                     {data: "jijuk_area","defaultContent":""},
                     {data: "toji_type","defaultContent":""},
-                    {data: "right"},
+                    {data: "jisang_status"},
                     {data: "jasan_no"}, //10
-                    {data: "idx"},
-                    {data: "comple_yn"},
+                    {data: "master_no"},
+                    {data: "jisang_comple_yn"},
                     {data: "permitted_yn"},
                     {data: "chuideuk_date"},
                     {data: "gover_date"}, //15
@@ -361,12 +363,12 @@ function loadDataTable(params){
 					{data: "gover_length"},
 					{data: "jasan_money"},
 					{data: "pay_money"}, //20
-					{data: "jisa"},
-					{data: "jisa"},
-					{data: "jisa"},
-					{data: "jisa"},
-					{data: "jisa"},
-					{data: "jisa"}
+					{data: "registed_yn"},
+					{data: "permitted_yn"},
+					{data: "code_depth1"},
+					{data: "code_depth2"},
+					{data: "code_depth3"},
+					{data: "dosiplan"}
                 ],
                 columnDefs:[
 					
@@ -391,7 +393,20 @@ function loadDataTable(params){
 							rtn=addCommas(ljsIsNull(full.jijuk_area)?'':full.jijuk_area);
 							return rtn;
 						}
-					},
+					}
+					,
+					{
+						targets:[8]
+						,width:"100px"
+						,render:function(data,type,full,meta){
+							var rtn;
+							if (full.gover_own_yn == "Y") rtn="국유지";
+							else if (full.gover_own_yn == "N") rtn="사유지";
+							else rtn="";
+							return rtn;
+						}
+					}
+					,
 					{
 						targets:[14],width:"150px"
 						,render:function(data,type,full,meta){
@@ -400,6 +415,18 @@ function loadDataTable(params){
 								rtn="";
 							}
 							else rtn=full.chuideuk_date;
+							return rtn;
+						}
+					}
+					,
+					{
+						targets:[15],width:"300px"
+						,render:function(data,type,full,meta){
+							var rtn;
+							
+								rtn=full.pmt_st_date==undefined?"":full.pmt_st_date+" ~ "+full.pmt_ed_date;
+							
+							
 							return rtn;
 						}
 					}
