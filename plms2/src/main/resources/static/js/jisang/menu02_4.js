@@ -43,7 +43,28 @@ $(document).on("click","#mergeBtn",function(){
 
 	   var formSerializeArray = $('#searchForm').serializeArray();
 
+       //체크 된 행 합필 하도록 전송
+       // tbody 내의 체크된 체크박스들을 찾습니다.
+       const checkedCheckboxes = document.querySelectorAll("#userTable input[type='checkbox']:checked");
+       let queryParams = [];
+
+       // 선택된 체크박스의 data-idx 값을 수집합니다.
+       checkedCheckboxes.forEach((checkbox, index) => {
+           const idxValue = checkbox.getAttribute("data-idx");
+           queryParams.push(`idx${index + 1}=${idxValue}`);
+       });
+
+       // 선택된 인덱스 값을 확인
+       console.log("Query parameters:", queryParams);
+
        url= "/jisang/landRightMerge?idx=";    //합필등록
+
+       if (queryParams.length > 0) {
+          // 매겨진 파라미터를 사용하여 쿼리 스트링 생성
+          const queryString = queryParams.join('&');
+          url = `/jisang/landRightMerge?${queryString}`;
+      }
+
        window.location = url;
 
      })
@@ -349,7 +370,7 @@ function loadDataTable(params){
   columns : [
                     {
                         render: function(data, type, row, meta) {
-                            return `<input type="checkbox" id="inquirecombCheck01" /> <label for="inquirecombCheck01"></label>`;
+                            return `<input type="checkbox" id="inquirecombCheck01" data-idx="${row.idx}"/> <label for="inquirecombCheck01"></label>`;
                         },
                         "orderable":false
                     },
