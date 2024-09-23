@@ -468,8 +468,36 @@ public class goverController {
 		@GetMapping(path="/orgAdmin") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView orgAdmin(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+////			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+//			String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
+//			JSONObject requestParamsObj=new JSONObject(requestParams);
+//			log.info("requestParams:"+requestParams);
+//			
+			ArrayList list = new ArrayList();
+			ArrayList addlist = new ArrayList();
+
+			ParameterParser parser = new ParameterParser(httpRequest);
+
+			String str_result = "Y";
+			ArrayList returnList = new ArrayList();
+			try {
+
+				HashMap params = new HashMap();
+
+//				String JISA = requestParamsObj.getString("JISA");
+				params.put("JISA", "");
+				int count=(int)mainService.selectCountQuery("goverSQL.selectOfficeJisaCount", params);
+				list = (ArrayList) mainService.selectQuery("goverSQL.selectOfficeInfoAll", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+			
 			ModelAndView mav=new ModelAndView();
+			mav.addObject("list",list);
 			mav.setViewName("content/gover/orgAdmin");
 			return mav;
 		}
@@ -2121,6 +2149,114 @@ log.info("params:"+params);
 
 			map.put("message", str_result);
 			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
+		
+		
+		//관리기관등록
+		@PostMapping(path="/insertOfficeMng")
+		public void insertOfficeMng(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			
+			ArrayList list = new ArrayList();
+			ArrayList addlist = new ArrayList();
+
+			ParameterParser parser = new ParameterParser(request);
+
+			String afGoverNo = "";
+			String str_result = "Y";
+			ArrayList returnList = new ArrayList();
+			try {
+
+				HashMap params = new HashMap();
+				String JISA = requestParamsObj.getString("JISA");
+				String PMT_OFFICE = requestParamsObj.getString("PMT_OFFICE");
+				String ADM_OFFICE = requestParamsObj.getString("ADM_OFFICE");
+
+				String mx_adm_seq = (String) ((HashMap) ((ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params)).get(0)).get("MX_ADM_SEQ");
+
+				params.put("ADM_SEQ", mx_adm_seq);
+				params.put("JISA", JISA);
+				params.put("PMT_OFFICE", PMT_OFFICE);
+				params.put("ADM_OFFICE", ADM_OFFICE);
+				System.out.println("insertOfficeMng params=" + params);
+				mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보
+																				// 저장
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", list);
+			map.put("loginKey", String.valueOf(request.getSession().getAttribute("loginKey")));
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
+		
+		//점용관리기관조회
+		@PostMapping(path="/selectOfficeInfoAll")
+		public void selectOfficeInfoAll(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			
+			ArrayList list = new ArrayList();
+			ArrayList addlist = new ArrayList();
+
+			ParameterParser parser = new ParameterParser(request);
+
+			String str_result = "Y";
+			ArrayList returnList = new ArrayList();
+			try {
+
+				HashMap params = new HashMap();
+
+				String JISA = requestParamsObj.getString("JISA");
+				params.put("JISA", JISA);
+
+				list = (ArrayList) mainService.selectQuery("goverSQL.selectOfficeInfoAll", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", list);
+			map.put("loginKey", String.valueOf(request.getSession().getAttribute("loginKey")));
 
 			JSONObject jo = new JSONObject(map);
 

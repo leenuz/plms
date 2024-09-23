@@ -7,6 +7,7 @@
             <p>관리기관 등록</p>
             <span class="topCloseBtn"></span>
         </h2>
+        <form id="saveForm" onSubmit="return false;">
         <div class="register_wrap">
             <ul class="register_title">
                 <!-- 관리지사 -->
@@ -66,6 +67,7 @@
             <button class="closeBtn finalBtn">닫기</button>
             <button class="approveBtn finalBtn">승인 요청</button>
         </div>
+        </form>
     </div>
 </div>
 <script>
@@ -74,14 +76,27 @@
         const registerApprovePopupOpen = document.getElementById("registerPopup");
         if (registerApprovePopupOpen) {
             registerApprovePopupOpen
-                .querySelectorAll(".topCloseBtn, .finalBtn")
+                .querySelectorAll(".topCloseBtn, .closeBtn")
                 .forEach(function (btn) {
                     btn.addEventListener("click", () => {
+
                         registerApprovePopupOpen.classList.remove("active");
                     });
+                    
                 });
+            registerApprovePopupOpen
+            .querySelectorAll(".topCloseBtn, .approveBtn")
+            .forEach(function (btn) {
+                btn.addEventListener("click", () => {
+					console.log("----------------approveBtn----------------");
+                   // registerApprovePopupOpen.classList.remove("active");
+                });
+                
+            });
         }
     };
+    
+    
 
     registerApprovePopEvet();
 

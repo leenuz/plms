@@ -180,3 +180,36 @@ function checkData(str,mode,message="오류메세지 미확인"){
 	return true;
 }
 
+
+
+function mergeTableCells(tableId, columnIndex) {
+    var rows = $(tableId + ' tr');
+    var previousCell = null;
+    var rowspan = 1;
+
+    rows.each(function(index) {
+        var currentCell = $(this).find('td').eq(columnIndex);
+		console.log(currentCell);
+		console.log("cur:"+currentCell.find("input").val());
+		//console.log("pre:"+previousCell.text());
+		
+        if (previousCell === null) {
+            previousCell = currentCell;
+        } else if (currentCell.find("input").val() === previousCell.find("input").val()) {
+            rowspan++;
+            currentCell.remove();  // 중복된 셀 제거
+        } else {
+            if (rowspan > 1) {
+                previousCell.attr('rowspan', rowspan);
+            }
+            previousCell = currentCell;
+            rowspan = 1;
+        }
+    });
+
+    // 마지막 그룹 처리
+    if (rowspan > 1) {
+        previousCell.attr('rowspan', rowspan);
+    }
+}
+

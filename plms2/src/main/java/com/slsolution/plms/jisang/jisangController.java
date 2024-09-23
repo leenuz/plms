@@ -3225,19 +3225,39 @@ log.info("gubun:"+gubun);
       			return mav;
     }
 
+	//지상권합필하기 눌렀을때 나오는 페이지
 	@GetMapping(path="/landRightMerge") //http://localhost:8080/api/get/dbTest
 	public ModelAndView landRightMerge(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		HashMap params = new HashMap();
-		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		//ArrayList<HashMap>  list=new ArrayList<HashMap>();
 
 		String idx = httpRequest.getParameter("idx");
 		String index = httpRequest.getParameter("index");
+		String tcount = httpRequest.getParameter("tcount");
+		List<HashMap<String, String>> jisangList = new ArrayList<HashMap<String, String>>();
+		String jisangCnt = "";
+		for(int i=1;i<Integer.parseInt(tcount);i++) {
+			String jisangNo=httpRequest.getParameter("idx"+i);
+		
+			params.put("JISANGNO", jisangNo);
+			log.info("params:"+params);
+			ArrayList<HashMap<String, String>> List =(ArrayList) mainService.selectQuery("jisangSQL.selectJisangDetailListNew", params);
+			ArrayList<HashMap<String, String>> soyuList =(ArrayList) mainService.selectQuery("jisangSQL.selectJisangDetailSoyu", params);
+			for (HashMap tmpMap : List) {
+				tmpMap.put("soyuList", soyuList);
+				System.out.println("tmpMap=" + tmpMap);
+				jisangList.add(tmpMap);
+			}
+		}
 
-		params.put("idx",idx);
-		params.put("manage_no",idx);
-		params.put("index",index);
-		log.info("params:"+params);
-
+		if (jisangList != null && !jisangList.isEmpty()) {
+			jisangCnt = String.valueOf(jisangList.size());
+		}
+		
+		
+//		ArrayList<HashMap<String, String>> List =(ArrayList) mainService.selectQuery("jisangSQL.selectJisangDetailListNew", params);
+//		ArrayList<HashMap<String, String>> soyuList =(ArrayList) mainService.selectQuery("jisangSQL.selectJisangDetailSoyu", params);
+//		List<HashMap<String, String>> soyuList = Database.getInstance().queryForList("Json.selectJisangDetailSoyu", params);
 		//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 //		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 //		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
@@ -3280,22 +3300,17 @@ log.info("gubun:"+gubun);
 //		log.info("jisangPermitList:"+jisangPermitList);
 //		log.info("souja count:"+soujaList.size());
 //		log.info("soujaList:"+soujaList);
-//		log.info("atcFileList:"+atcFileList);
+		log.info("jisangList:"+jisangList);
 //		log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
 
 		ModelAndView mav=new ModelAndView();
-//		mav.addObject("jisaList",jisalist);
-//		mav.addObject("resultJimokList",jimoklist);
-//		mav.addObject("sidoList",sidolist);
+//		mav.addObject("List",List);
 //
-//		mav.addObject("resultData",data.get(0));
-//		mav.addObject("soujaList",soujaList);
-//		mav.addObject("jisangPermitList",jisangPermitList);
-//		mav.addObject("atcFileList",atcFileList);
-//		mav.addObject("jisangModifyList",jisangModifyList);
-//		mav.addObject("jisangMergeList",jisangMergeList);
-//
-//		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+//		mav.addObject("soyuList",soyuList);
+		mav.addObject("jisangList", jisangList);
+		mav.addObject("jisangCnt", jisangCnt);
+		mav.addObject("CommonUtil", new CommonUtil());
+		mav.addObject("loginKey", String.valueOf(httpRequest.getSession().getAttribute("loginKey")));
 		mav.setViewName("content/jisang/landRightMerge");
 		return mav;
 	}
@@ -4485,6 +4500,30 @@ log.info("gubun:"+gubun);
 			response.getWriter().flush();
 
 		}
+	
+//	@PostMapping(path="/selectRowDetailTab_Merge")
+//	public void selectRowDetailTab_Merge(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//
+//		ParameterParser parser = new ParameterParser(request);
+//		String JISANG_NO = parser.getString("jisangNo", "");
+//
+//		Map params = new HashMap();
+//		params.put("JISANG_NO", JISANG_NO);
+//
+//		ArrayList list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_Merge", params);
+//
+//		HashMap map = new HashMap();
+//
+//		if (list != null)
+//			map.put("count", list.size());
+//		else
+//			map.put("count", 0);
+//
+//		map.put("result", list);
+//		map.put("key", String.valueOf(request.getSession().getAttribute("loginKey")));
+//
+//		this.mapToJsonResponse(response, map);
+//	}
 
 
 }

@@ -1859,13 +1859,13 @@ LEFT JOIN jisang_toja_order jto ON jto.jto_jisang_no=jm.jm_jisang_no
 LEFT JOIN plms_approval ja ON ja.pa_dockey=jm.jm_dockey
 LEFT JOIN jijuk_2024 j2 ON j2.pnu=jm.jm_pnu
 WHERE 1=1
-		<!-- AND (JM.BUNHAL_YN IS NULL OR JM.BUNHAL_YN != 'Y' OR JM.BUNHAL_ORG_NO IS NOT NULL) -->
+		AND (JM.BUNHAL_YN IS NULL OR JM.BUNHAL_YN != 'Y' OR JM.BUNHAL_ORG_NO IS NOT NULL)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)" >
 			AND jm.jm_jisang_no =#{JISANGNO}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUNHAL_ORG_NO)" >
 		
-			AND jm.jm_bunhal_org_no =#{BUNHAL_ORG_NO
+			AND jm.jm_bunhal_org_no =#{BUNHAL_ORG_NO}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MERGE_NO)" >
 		
@@ -1878,6 +1878,107 @@ WHERE 1=1
 		
 		ORDER BY jm.jm_jisang_no DESC
 	</select>
+	
+	
+	<select id="selectJisangDetailListNew" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT JM.jm_jisang_no as JISANG_NO,
+       JM.jm_sido_nm as SIDO_NM,
+       JM.jm_sgg_nm as SGG_NM,
+       JM.jm_emd_nm as EMD_NM,
+       JM.jm_ri_nm as RI_NM,
+       JM.jm_jibun as JIBUN,
+       JM.jm_jisa as JISA,
+       TO_CHAR(JM.jm_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE,
+       TRIM(TO_CHAR(JT.CHUIDEUK_MONEY, '999,999,999,999,999')) AS CHUIDEUK_MONEY,
+       JM.jm_JIJUK_AREA + COALESCE((SELECT SUM(COALESCE(S.jm_JIJUK_AREA, 0))
+                                         FROM JISANG_MERGE S
+                                         WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS JIJUK_AREA,
+       JIJUK_MST.JIMOK_TEXT,
+       JM.jm_pipe_name as PIPE_NAME,
+       JM.jm_sun_gubun as SUN_GUBUN,
+       JM.jm_yongdo as YONGDO,
+       JM.jm_dosiplan as DOSIPLAN,
+       JM.jm_comple_yn as COMPLE_YN,
+       JM.jm_PYEONIB_AREA + COALESCE((SELECT SUM(COALESCE(S.jm_PYEONIB_AREA, 0))
+                                           FROM JISANG_MERGE S
+                                           WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS PYEONIB_AREA,
+       JM.jm_use_state as USE_STATE,
+       TO_CHAR(JM.jm_DEUNGGI_DATE, 'YYYY-MM-DD') AS DEUNGGI_DATE,
+       JM.jm_deunggi_no as DEUNGGI_NO,
+       JM.jm_deunggiso as DEUNGGISO,
+       JM.jm_jasan_no as JASAN_NO,
+       JM.jm_cancel_yn as CANCLE_YN,
+       (CASE
+            WHEN JM.jm_CANCEL_DATE IS NOT NULL THEN TO_CHAR(JM.jm_CANCEL_DATE, 'YYYY-MM-DD')
+            ELSE TO_CHAR(JT.CANCLE_DATE, 'YYYY-MM-DD')
+        END) AS CANCLE_DATE,
+       (CASE
+            WHEN JM.jm_CANCEL_EMPCD IS NOT NULL THEN JM.jm_CANCEL_EMPCD
+            ELSE JT.CANCLE_EMPCD
+        END) AS CANCLE_EMPCD,
+       (CASE
+            WHEN JM.jm_CANCEL_NAME IS NOT NULL THEN JM.jm_CANCEL_NAME
+            ELSE JT.CANCLE_NAME
+        END) AS CANCLE_NAME,
+       (CASE
+            WHEN JM.jm_CANCEL_BOSANG_YN IS NOT NULL THEN JM.jm_CANCEL_BOSANG_YN
+            ELSE JT.CANCLE_BOSANG_YN
+        END) AS CANCLE_BOSANG_YN,
+       (CASE
+            WHEN JM.jm_CANCEL_BOSANG_MONEY IS NOT NULL THEN TRIM(TO_CHAR(JM.jm_CANCEL_BOSANG_MONEY, '999,999,999,999,999'))
+            ELSE TRIM(TO_CHAR(JT.CANCLE_BOSANG_MONEY, '999,999,999,999,999'))
+        END) AS CANCLE_BOSANG_MONEY,
+       JIJUK_MST.GOVER_OWN_YN,
+       JM.jm_bunhal_yn as BUNHAL_YN,
+       TO_CHAR(JM.jm_BUNHAL_DATE, 'YYYY-MM-DD') AS BUNHAL_DATE,
+       JM.jm_bunhal_reason as BUNHAL_REASON,
+       JM.jm_bunhal_org_no as BUNHAL_ORG_NO,
+       JM.jm_addrcode as ADDRCODE,
+       TOR.TOJA_NO,
+       JM.jm_pnu as PNU,
+       JT.CANCLE_REASON,
+       JT.CANCLE_COMMENT,
+       TRIM(TO_CHAR(JT.GAMMONEY, '999,999,999,999,999')) AS GAMMONEY,
+       TRIM(TO_CHAR(JT.REMAINDER_MONEY, '999,999,999,999,999')) AS REMAINDER_MONEY,
+       JT.CANCLE_STATUS,
+       JM.jm_dockey as DOCKEY,
+       JM.jm_toji_type as TOJI_TYPE,
+       JM.jm_bunhal_comment as BUNHAL_COMMENT,
+       JM.jm_pipe_yn as PIPE_YN,
+       JM.jm_SET_MONEY AS SET_MONEY,
+       PA.pa_status as STATUS,
+       JM.jm_merge_reason as MERGE_REASON,
+       JM.jm_merge_comment as MERGE_COMMENT,
+       JM.jm_merge_no as MERGE_NO,
+       JM.jm_merge_rep_yn as MERGE_REP_YN,
+       JM.jm_save_status as SAVE_STATUS,
+       JM.jm_location as LOCATION,
+       JM.jm_special_cont as SPECIAL_CONT,
+       JM.jm_permitted_yn as PERMITTED_YN
+FROM JISANG_MASTER JM
+LEFT JOIN TOJA_ORDER TOR ON JM.jm_JISANG_NO = TOR.JISANG_NO
+LEFT JOIN PLMS_APPROVAL PA ON JM.jm_DOCKEY = PA.pa_DOCKEY
+LEFT JOIN JISANG_TERMINATION JT ON JM.jm_JISANG_NO = JT.JISANG_NO
+LEFT JOIN JIJUK_2024 JIJUK_MST ON JM.jm_PNU = JIJUK_MST.PNU
+		WHERE 1=1
+		<!-- AND (JM.BUNHAL_YN IS NULL OR JM.BUNHAL_YN != 'Y' OR JM.BUNHAL_ORG_NO IS NOT NULL) -->
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)" >
+			AND JM.jm_JISANG_NO = #{JISANGNO}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(BUNHAL_ORG_NO)" >
+			AND JM.BUNHAL_ORG_NO = #{BUNHAL_ORG_NO}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MERGE_NO)" >
+			AND JM.MERGE_NO = #{MERGE_NO}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PNU)" >
+			AND JM.PNU = #{PNU}
+		</if>
+		
+		ORDER BY JM.jm_JISANG_NO DESC
+	</select>
+	
+	
 	
 	<select id="selectJisangBunHalDocInfo" parameterType="HashMap" resultType="java.util.HashMap">
 		SELECT * FROM plms_approval where dockey in (select dockey from jisang_bunhal where jb_jisang_no = #{JISANGNO}) and (status is null or status not in ('X'))

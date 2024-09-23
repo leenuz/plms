@@ -1113,5 +1113,58 @@ log.info("SANGSIN_FLAG:"+SANGSIN_FLAG);
 			response.getWriter().print(jo);
 			response.getWriter().flush();
 		}
+	
+	
+	// 이슈관리 -> 이슈코드관리 목록 조회
+	@PostMapping(path="/selectIssueCodeList")
+		public void selectIssueCodeList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		 JSONObject requestParamObj=new JSONObject(requestParams);
+		
+			log.info("LJS : jsonResultController.java selectIssueCodeList()");
+			ParameterParser parser = new ParameterParser(request);
+			String REGISTED_YN = requestParamObj.getString("REGISTED_YN");
+			String PERMITTED_YN = requestParamObj.getString("PERMITTED_YN");
+			String DEPTH1 = requestParamObj.getString("DEPTH1");
+			String DEPTH2 = requestParamObj.getString("DEPTH2");
+			String DEPTH3 = requestParamObj.getString("DEPTH3");
+			String TYPE = requestParamObj.getString("TYPE");
+
+			ArrayList list = null;
+			try {
+
+				HashMap params = new HashMap();
+				params.put("REGISTED_YN", REGISTED_YN);
+				params.put("PERMITTED_YN", PERMITTED_YN);
+				params.put("DEPTH1", DEPTH1);
+				params.put("DEPTH2", DEPTH2);
+				params.put("DEPTH3", DEPTH3);
+				params.put("TYPE", TYPE);
+
+				list = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeList", params);
+
+				HashMap map = new HashMap();
+
+				if (list.size() > 0) {
+					map.put("message", "success");
+				} else {
+					map.put("message", "조회된 목록이 없습니다.");
+				}
+				map.put("result", list);
+
+				JSONObject jo = new JSONObject(map);
+
+				response.setCharacterEncoding("UTF-8");
+				response.setHeader("Access-Control-Allow-Origin", "*");
+				response.resetBuffer();
+				response.setContentType("application/json");
+				response.getWriter().print(jo);
+				response.getWriter().flush();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 
 }

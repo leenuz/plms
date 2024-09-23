@@ -8,7 +8,7 @@
   <link th:href="@{/css/common.css}" rel="stylesheet" />
   <link rel="stylesheet" href="/css/gover/orgAdmin.css" />
 
-  <script src="/js/songyu/menu01.js"></script>
+  
   <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
   <style>
@@ -107,7 +107,7 @@
 
       <section class="tableArea">
         <div class="contWrap contentScr">
-          <table>
+          <table id="mainTable">
             <caption class="hiddenCaption">
               관리기관 관리
             </caption>
@@ -122,31 +122,32 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr th:each="row:${list}">
                 <td class="smallWidth">
-                  <input type="text" placeholder="1" class="notWriteInput" readonly />
-                </td>
-                <td rowspan="2">
-                  <input type="text" placeholder="경인지사" class="notWriteInput" readonly />
+                <input type="hidden" placeholder="1" th:value="${row.idx}"  class="notWriteInput" readonly />
+                  <input type="text" placeholder="1" th:value="${row.no}"  class="notWriteInput" readonly />
                 </td>
                 <td>
-                  <input type="text" placeholder="당진시" class="notWriteInput" readonly />
+                  <input type="text" placeholder="경인지사" th:value="${row.jisa}" class="notWriteInput" readonly />
                 </td>
                 <td>
-                  <input type="text" placeholder="하천계획과" class="notWriteInput" readonly onclick="showModPopup()"/>
+                  <input type="text" placeholder="당진시" th:value="${row.pmt_office}"  class="notWriteInput" readonly />
+                </td>
+                <td>
+                  <input type="text" placeholder="하천계획과" th:value="${row.adm_office}"  class="notWriteInput" readonly onclick="showModPopup()"/>
                 </td>
                 <td>
                   <div class="btnWrap">
-                    <div class="btnBox">
+                    <div class="btnBox" th:if="${row.approve=='N'}">
                       <button class="pendingApprovalBtn" onclick="showAcceptPopup()">승인대기</button>
                     </div>
-                    <div class="btnBox">
+                    <div class="btnBox" >
                       <button class="deleteBtn">삭제</button>
                     </div>
                   </div>
                 </td>
               </tr>
-              <tr>
+             <!--  <tr>
                 <td class="smallWidth">
                   <input type="text" placeholder="2" readonly class="notWriteInput" />
                 </td>
@@ -217,7 +218,7 @@
                     </div>
                   </div>
                 </td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
@@ -231,7 +232,7 @@
   </div>
   <!-- 팝업 -->
   <div class="popupWrapper"></div>
-  <script src="/components/js/menu03/orgAdmin.js"></script>
+  <script src="/js/gover/orgAdmin.js"></script>
 </th:block>
 
 </html>
