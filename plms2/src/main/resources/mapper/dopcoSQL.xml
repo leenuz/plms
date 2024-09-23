@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 		select * from (
 		SELECT *,
+		(row_number() OVER()) AS no,
 		TRIM(CONCAT(dom.dom_sido_nm, ' ', dom.dom_sgg_nm, ' ',dom.dom_emd_nm,' ',dom.dom_ri_nm, ' ', dom.dom_jibun)) AS address
 		FROM dopco_master dom
 		
