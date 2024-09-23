@@ -62,10 +62,14 @@ $(document).on("click","#mergeBtn",function(){
        if (queryParams.length > 0) {
           // 매겨진 파라미터를 사용하여 쿼리 스트링 생성
           const queryString = queryParams.join('&');
-          url = `/jisang/landRightMerge?${queryString}`;
+          url = `/jisang/landRightMerge?${queryString}&tcount=${queryParams.length}`;
+          window.location = url;
+      }
+      else{
+          alert('합필을 원하는 주소를 선택 하여 주세요.')
       }
 
-       window.location = url;
+
 
      })
 
