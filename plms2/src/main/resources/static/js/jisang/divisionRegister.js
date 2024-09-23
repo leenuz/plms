@@ -391,11 +391,13 @@ $(document).on("click",".temporarySaveBtn",function(){
 				togiPipeYn="Y";
 			};
 			var togiCancelYn="N";
+			var cancelTojiType;
 			var cancelChuideukMoney;
 			var cancelGammoney;
 			var cancelRemainderMoney;
 			var cancelBosangMoney;
 			var cancelProfitLoss;
+			var cancelAccountYn;
 			if ($(togiUls[i]).find("input:checkbox[name='togiBunhalCancelYn']").is(":checked")==true){
 				console.log("############");	
 				togiCancelYn="Y";
@@ -403,11 +405,13 @@ $(document).on("click",".temporarySaveBtn",function(){
 				const terminateIndex = checkbox.attr('data-terminate-index');
 				if(terminateIndex){
                     const targetUl = $('#terminateIndex__' + terminateIndex);  // terminateIndex 사용해 ul 선택
+                    cancelTojiType = $(targetUl).find("input[name='cancelTojiType']").val();
                     cancelChuideukMoney = $(targetUl).find("input[name='cancelChuideukMoney']").val();
                     cancelGammoney = $(targetUl).find("input[name='cancelGammoney']").val();
                     cancelRemainderMoney = $(targetUl).find("input[name='cancelRemainderMoney']").val();
                     cancelBosangMoney = $(targetUl).find("input[name='cancelBosangMoney']").val();
                     cancelProfitLoss = $(targetUl).find("input[name='cancelProfitLoss']").val();
+                    cancelAccountYn = $(targetUl).find("button#cancelAccountYn").text().trim();
 				}
 			}
 			 
@@ -451,11 +455,13 @@ $(document).on("click",".temporarySaveBtn",function(){
 				,"togiBunhalStatus":togiBunhalStatus
 				,"togiGoverOwnYn":gover_own_yn
 				,"togiJisa":togiJisa
+				,"cancelTojiType":ljsIsNull(cancelTojiType)?'':cancelTojiType
 				,"cancelChuideukMoney":ljsIsNull(cancelChuideukMoney)?'':cancelChuideukMoney
 				,"cancelGammoney":ljsIsNull(cancelGammoney)?'':cancelGammoney
 				,"cancelRemainderMoney":ljsIsNull(cancelRemainderMoney)?'':cancelRemainderMoney
 				,"cancelBosangMoney":ljsIsNull(cancelBosangMoney)?'':cancelBosangMoney
 				,"cancelProfitLoss":ljsIsNull(cancelProfitLoss)?'':cancelProfitLoss
+				,"cancelAccountYn":ljsIsNull(cancelAccountYn)?'':cancelAccountYn
 	   		}
 	   		console.log(togiObj);
 	   		togiDatas.push(togiObj);
@@ -647,6 +653,8 @@ console.log($(this).parent().parent().html());
 		var datas={"address":addr,"sido_nm":sido_nm,"sgg_nm":sgg_nm,"emd_nm":emd_nm,"ri_nm":ri_nm,"jibun":jibun}
 					   console.log($(this).parent().html());
 					   console.log(datas);
+
+
 					   
 				  
 				   //searchResultPopDiv 화면뿌릴 DIV
