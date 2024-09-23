@@ -843,7 +843,7 @@ public class goverController {
 		//feeDetail  상세 조회
 		@GetMapping(path="/feeDetail") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView feeDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-			log.info("점용 feeDetail 컨트롤러 동작");
+			log.info("feeDetail 컨트롤러 동작");
 			
 			ModelAndView mav=new ModelAndView();
 			
@@ -862,6 +862,7 @@ public class goverController {
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
 			ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
 			ArrayList<HashMap> goverPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
+			ArrayList<HashMap> repFlagPnu = mainService.selectQuery("goverSQL.selectRepFlagPnu",params);
 
 			// 조회 데이터 로그
 			log.info("data:"+data.get(0));
@@ -869,6 +870,7 @@ public class goverController {
 			log.info("atcFileList:"+atcFileList);
 			log.info("goverPnuList:"+goverPnuList);
 			log.info("goverPermitList:"+goverPermitList);
+			log.info("repFlagPnu:"+repFlagPnu);
 
 			// 각 리스트가 null 또는 비어있는 경우 처리
 			if (data == null || data.isEmpty()) {
@@ -894,7 +896,7 @@ public class goverController {
 		    if (goverPnuList == null || goverPnuList.isEmpty()) {
 		        mav.addObject("goverPnuList", new HashMap<>());
 		    } else {
-		        mav.addObject("goverPnuList", goverPnuList.get(0));
+		        mav.addObject("goverPnuList", goverPnuList);
 		    }
 		    
 		    if (goverPermitList == null || goverPermitList.isEmpty()) {
@@ -903,6 +905,12 @@ public class goverController {
 		    } else {
 		        mav.addObject("goverPermitList", goverPermitList.get(0));
 		        mav.addObject("goverPermitListAll", goverPermitList);
+		    }
+		    
+		    if (repFlagPnu == null || repFlagPnu.isEmpty()) {
+		        mav.addObject("repFlagPnu", new HashMap<>());
+		    } else {
+		        mav.addObject("repFlagPnu", repFlagPnu.get(0));
 		    }
 		    
   			mav.setViewName("content/gover/feeDetail");

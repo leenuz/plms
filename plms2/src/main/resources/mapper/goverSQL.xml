@@ -683,6 +683,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    </if>
 	</select>
 	
+	<select id="selectRepFlagPnu" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	    SELECT 
+	        gp_gover_own_yn AS gover_own_yn,
+	        gp_pipe_overlap_yn AS pipe_overlap_yn,
+	        gp_sido_nm AS sido_nm,
+	        gp_sgg_nm AS sgg_nm,
+	        gp_emd_nm AS emd_nm,
+	        gp_ri_nm AS ri_nm,
+	        gp_jibun AS jibun,
+	        gp_jimok_text AS jimok_text,
+	        gp_jijuk_area AS jijuk_area
+	    FROM gover_pnu
+	    WHERE gp_gover_no = #{idx}
+	    AND gp_rep_flag = 'Y'
+	</select>
+	
 	<!-- 지사에 따른 허가관청 목록 조회 -->
 	<select id="selectPmtOfficesByJisa" parameterType="String" resultType="java.util.HashMap">
 	    SELECT so_pmt_office, so_sort_order

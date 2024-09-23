@@ -211,7 +211,12 @@
 		                    <input type="text"
 		                        class="notWriteInput"
 		                        readonly
-		                        th:value="${pnu.gp_sido_nm + ' ' + pnu.gp_sgg_nm + ' ' + pnu.gp_emd_nm + ' ' + pnu.gp_ri_nm + ' ' + pnu.gp_jibun}" />
+								th:value="
+								    ${(pnu.gp_sido_nm != null ? pnu.gp_sido_nm : '') 
+								    + (pnu.gp_sgg_nm != null ? ' ' + pnu.gp_sgg_nm : '') 
+								    + (pnu.gp_emd_nm != null ? ' ' + pnu.gp_emd_nm : '') 
+								    + (pnu.gp_ri_nm != null ? ' ' + pnu.gp_ri_nm : '') 
+								    + (pnu.gp_jibun != null ? ' ' + pnu.gp_jibun : '')}" />
 		                </li>
 		                <!-- 전체면적 -->
 		                <li class="content">
