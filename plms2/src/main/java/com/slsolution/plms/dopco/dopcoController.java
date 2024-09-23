@@ -137,7 +137,8 @@ public class dopcoController {
 		
 		String idx = httpRequest.getParameter("idx");
 		//String index = httpRequest.getParameter("index");
-		
+		String isCancel = httpRequest.getParameter("cancel");
+
 		params.put("idx",idx);
 		params.put("manage_no",idx);
 	//	params.put("index",index);
@@ -201,6 +202,8 @@ public class dopcoController {
 //		log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
 //		log.info("jisangMemoList:"+jisangMemoList);
 //		log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+		mav.addObject("isCancel", isCancel);
+
 		mav.setViewName("content/dopco/compLandInfo");
 		return mav;
 	}
