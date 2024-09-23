@@ -1,153 +1,160 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  <link th:href="@{/css/common.css}" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/gover/orgAdmin.css" />
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" as="style" crossorigin
+		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+	<link th:href="@{/css/common.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="/css/gover/orgAdmin.css" />
 
-  
-  <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
+	<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-  <style>
-    div.dt-top-container {
-      display: grid;
-      grid-template-columns: auto auto auto;
-    }
+	<style>
+		div.dt-top-container {
+			display: grid;
+			grid-template-columns: auto auto auto;
+		}
 
-    div.dt-center-in-div {
-      margin: 0 auto;
-      float: right;
-      margin-right: 30px;
-    }
+		div.dt-center-in-div {
+			margin: 0 auto;
+			float: right;
+			margin-right: 30px;
+		}
 
-    div.dt-center-in-div>div {
-      display: inline;
-    }
+		div.dt-center-in-div>div {
+			display: inline;
+		}
 
-    div.dt-filter-spacer {
-      margin: 10px 0;
-      border: 1px solid red;
-    }
+		div.dt-filter-spacer {
+			margin: 10px 0;
+			border: 1px solid red;
+		}
 
-    .dt-title {
-      text-align: center;
-      width: 180px;
-      float: left;
-    }
+		.dt-title {
+			text-align: center;
+			width: 180px;
+			float: left;
+		}
 
-    .dt-buttons {
-      display: inline-block;
-      width: 180px;
-    }
+		.dt-buttons {
+			display: inline-block;
+			width: 180px;
+		}
 
-    .dt-length {
-      display: inline-block;
-    }
+		.dt-length {
+			display: inline-block;
+		}
 
-    .dt-button {
-      color: white;
-      background-color: #4e5871;
-      font-size: 15px;
-      font-weight: 600;
-      border-radius: 10px;
-      background-image: url(/assets/media/menu01/download.png);
-      background-size: 11px;
-      background-repeat: no-repeat;
-      background-position: 123px center;
-      text-align: left;
-      margin-right: 10px;
-      width: 159px;
-      height: 38px;
-    }
+		.dt-button {
+			color: white;
+			background-color: #4e5871;
+			font-size: 15px;
+			font-weight: 600;
+			border-radius: 10px;
+			background-image: url(/assets/media/menu01/download.png);
+			background-size: 11px;
+			background-repeat: no-repeat;
+			background-position: 123px center;
+			text-align: left;
+			margin-right: 10px;
+			width: 159px;
+			height: 38px;
+		}
 
-    .dt-paging {
-      text-align: center;
-    }
+		.dt-paging {
+			text-align: center;
+		}
 
-    .dt-paging-button {
-      box-sizing: border-box;
-      display: inline-block;
-      min-width: 1.5em;
-      padding: 0.5em 1em;
-      margin-left: 2px;
-      text-align: center;
-      text-decoration: none !important;
-      cursor: pointer;
-      border: 1px solid transparent;
-      border-radius: 2px;
-      background: transparent;
-      color: #007bff !important;
-      font-size: 15px;
-      font-weight: 600;
-    }
+		.dt-paging-button {
+			box-sizing: border-box;
+			display: inline-block;
+			min-width: 1.5em;
+			padding: 0.5em 1em;
+			margin-left: 2px;
+			text-align: center;
+			text-decoration: none !important;
+			cursor: pointer;
+			border: 1px solid transparent;
+			border-radius: 2px;
+			background: transparent;
+			color: #007bff !important;
+			font-size: 15px;
+			font-weight: 600;
+		}
 
-    .bottom {
-      text-align: center;
-    }
+		.bottom {
+			text-align: center;
+		}
 
-    .top {
-      text-align: right;
-      margin: 10px;
-    }
-  </style>
+		.top {
+			text-align: right;
+			margin: 10px;
+		}
+	</style>
 
-  <title>관리기관 관리</title>
+	<title>관리기관 관리</title>
 </head>
 <th:block layout:fragment="content">
-  <!-- 관리기관 관리 -->
-  <div class="orgAdminWrappers">
+	<!-- 관리기관 관리 -->
+	<div class="orgAdminWrappers">
 
-    <main id="orgAdmin">
-      <div class="mainTitle">
-        <h1>관리기관 관리</h1>
-      </div>
+		<main id="orgAdmin">
+			<div class="mainTitle">
+				<h1>관리기관 관리</h1>
+			</div>
 
-      <section class="tableArea">
-        <div class="contWrap contentScr">
-          <table id="mainTable">
-            <caption class="hiddenCaption">
-              관리기관 관리
-            </caption>
+			<section class="tableArea">
+				<div class="contWrap contentScr">
+					<table id="mainTable">
+						<caption class="hiddenCaption">
+							관리기관 관리
+						</caption>
 
-            <thead>
-              <tr>
-                <th class="smallWidth">순번</th>
-                <th>담당지사</th>
-                <th>허가관청</th>
-                <th>관리기관</th>
-                <th>등록현황</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="row:${list}">
-                <td class="smallWidth">
-                <input type="hidden" id="idx" placeholder="1" th:value="${row.idx}"  class="notWriteInput" readonly />
-                  <input type="text" placeholder="1" th:value="${row.no}"  class="notWriteInput" readonly />
-                </td>
-                <td>
-                  <input type="text" placeholder="경인지사" th:value="${row.jisa}" class="notWriteInput" readonly />
-                </td>
-                <td>
-                  <input type="text" placeholder="당진시" th:value="${row.pmt_office}"  class="notWriteInput" readonly />
-                </td>
-                <td>
-                  <input type="text" placeholder="하천계획과" th:value="${row.adm_office}"  class="notWriteInput" readonly onclick="showModPopup()"/>
-                </td>
-                <td>
-                  <div class="btnWrap">
-                    <div class="btnBox" th:if="${row.approve=='N'}">
-                      <button class="pendingApprovalBtn" >승인대기</button>
-                    </div>
-                    <div class="btnBox" >
-                      <button class="deleteBtn">삭제</button>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-             <!--  <tr>
+						<thead>
+							<tr>
+								<th class="smallWidth">순번</th>
+								<th>담당지사</th>
+								<th>허가관청</th>
+								<th>관리기관</th>
+								<th>등록현황</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="row:${list}">
+								<td class="smallWidth">
+									<input type="hidden" id="idx" placeholder="1" th:value="${row.idx}"
+										class="notWriteInput" readonly />
+									<input type="text" placeholder="1" th:value="${row.no}" class="notWriteInput"
+										readonly />
+								</td>
+								<td>
+									<input type="text" placeholder="경인지사" th:value="${row.jisa}" class="notWriteInput"
+										readonly />
+								</td>
+								<td>
+									<input type="text" placeholder="당진시" th:value="${row.pmt_office}"
+										class="notWriteInput" readonly />
+								</td>
+								<td>
+									<input type="text" placeholder="하천계획과" th:value="${row.adm_office}"
+										class="notWriteInput" readonly onclick="showModPopup()" />
+								</td>
+								<td>
+									<div class="btnWrap">
+										<div class="btnBox" th:if="${row.approve=='N'}">
+											<button class="pendingApprovalBtn">승인대기</button>
+										</div>
+										<div class="btnBox">
+											<button class="deleteBtn">삭제</button>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<!--  <tr>
                 <td class="smallWidth">
                   <input type="text" placeholder="2" readonly class="notWriteInput" />
                 </td>
@@ -219,167 +226,175 @@
                   </div>
                 </td>
               </tr> -->
-            </tbody>
-          </table>
-        </div>
-      </section>
+						</tbody>
+					</table>
+				</div>
+			</section>
 
-      <div class="finalBtnBox btnWrap">
-        <!-- 관리기관 등록 팝업 호출 -->
-        <button class="vividBlueBtn finalBtn">등록</button>
-      </div>
-    </main>
-  </div>
-  <!-- 팝업 -->
-  <div class="popupWrapper">
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-<link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
-<div id="registerPopup" class="register_Popup ">
-    <div class="popupWrap">
-        <!-- 관리기관 등록 가능한 팝업 (승인요청버튼)-->
-        <h2>
-            <p>관리기관 등록</p>
-            <span class="topCloseBtn"></span>
-        </h2>
-        <form id="saveForm" onSubmit="return false;">
-        <div class="register_wrap">
-            <ul class="register_title">
-                <!-- 관리지사 -->
-                <li class="register_title_th">
-                    <h3>관리지사</h3>
-                </li>
-                <li class="popSelectWrap">
-                    <div class="hidden_SelectBox">
-                        <select name="jisa" id="jisa" hidden>
-                            <option value="">전체</option>
-                            <option th:each="val:${jisaList}" th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
-                        </select>
-                    </div>
-                    <div class="Popup_Custom_SelectBox">
-                        <button class="Popup_Custom_SelectView">전체</button>
-                        <ul class="Popup_Custom_SelectBtns"></ul>
-                    </div>
-                </li>
-                <!-- 허가관청 신규입력 -->
-                <li class="register_title_th3">
-                    <h3>허가관청 신규입력</h3>
-                </li>
-                <li class="register_title_th4">
-                    <input type="checkbox" name="newCheck" id="registerPopup_checkbox02" class="approve_checkbox" onclick="toggleElements03()" />
-                    <label for="registerPopup_checkbox02" class="approve_checkbox_label">
-                    </label>
-                </li>
-                <!-- 허가관청 -->
-                <li class="register_title_th5">
-                    <h3>허가관청</h3>
-                </li>
-                <li class="popSelectWrap register_title_th6">
-                    <div class="hidden_SelectBox">
-                        <select hidden name="epmt_office" id="epmt_office">
-                            <option value="전체">전체</option>
-                          
-                        </select>
-                    </div>
-                    <div class="Popup_Custom_SelectBox active">
-                        <button class="Popup_Custom_SelectView">전체</button>
-                        <ul class="Popup_Custom_SelectBtns"></ul>
-                    </div>
-                    <input class="register_hidden_text" name="pmt_office" type="text" />
-                </li>
-                <!-- 관리기관 -->
-                <li class="register_title_th7">
-                    <h3>관리기관</h3>
-                </li>
-                <li class="register_title_th8"><input type="text" name="adm_office"/></li>
-            </ul>
-        </div>
+			<div class="finalBtnBox btnWrap">
+				<!-- 관리기관 등록 팝업 호출 -->
+				<button class="vividBlueBtn finalBtn">등록</button>
+			</div>
+		</main>
+	</div>
 
-        <!-- 버튼 -->
-        <div class="registerbtnWrap">
-            <button class="closeBtn finalBtn">닫기</button>
-            <button class="approveBtn finalBtn">승인 요청</button>
-        </div>
-        </form>
-    </div>
-</div>
-<div id="approve_Popup" class="">
-    <div class="popupWrap">
-        <h2>
-            <p>관리기관 승인</p>
-            <span class="topCloseBtn"></span>
-        </h2>
-        <div class="aprrove_wrap">
-            <ul class="approve_title">
-                <li>관리지사</li>
-                <li class="popContent">
-                    <input type="text" th:if="${data!=null}" th:value="${data.jisa}" placeholder="경인지사" readonly />
-                </li>
-                <li>허가관청 신규입력</li>
-                <li class="popContent">
-                    <input type="checkbox" id="approvePopup_checkbox" class="approve_checkbox" onclick="toggleElements()" />
-                    <label for="approvePopup_checkbox" class="approve_checkbox_label">
-                    </label>
-                </li>
-                <li>허가관청</li>
-                <li class="popContent">
-                    <input type="text" placeholder="고양시" class="popContent_default active" readonly />
-                    <input class="approve_hidden_text" type="text" />
-                </li>
-                <li>관리기관</li>
-                <li class="popContent">
-                    <input type="text" placeholder="도로관리과" class="popContent" readonly />
-                </li>
-            </ul>
-        </div>
-        <div class="approvehistory_wrap">
-            <h3>변경이력</h3>
-            <div class="approvehistory">
-                <ul class="approvehistory_title">
-                    <li class="approvehistory_title_1">변경일시</li>
-                    <li class="approvehistory_title_2">구분</li>
-                    <li class="approvehistory_title_3">내용</li>
-                </ul>
-                <div class="approvehistorycontent_wrap">
-                    <ul class="approvehistory_content">
-                        <li class="approvehistory_title_1">2024-04-01</li>
-                        <li class="approvehistory_title_2">수정</li>
-                        <li class="approvehistory_title_4">
-                            허가관청 = 고양시 > 안양시<br />
-                            관리기관 = 도로과 > 녹지과
-                        </li>
-                    </ul>
-                    <ul class="approvehistory_content">
-                        <li class="approvehistory_title_1">2024-04-01</li>
-                        <li class="approvehistory_title_2">신규등록</li>
-                        <li class="approvehistory_title_4">
-                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
-                        </li>
-                    </ul>
-                    <ul class="approvehistory_content">
-                        <li class="approvehistory_title_1">2024-04-01</li>
-                        <li class="approvehistory_title_2">신규등록</li>
-                        <li class="approvehistory_title_4">
-                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
-                        </li>
-                    </ul>
-                    <ul class="approvehistory_content">
-                        <li class="approvehistory_title_1">2024-04-01</li>
-                        <li class="approvehistory_title_2">신규등록</li>
-                        <li class="approvehistory_title_4">
-                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="registerbtnWrap">
-            <button class="closeBtn finalBtn">닫기</button>
-            <button class="approveBtn finalBtn">승인</button>
-        </div>
-    </div>
-</div>
-  </div>
-  <script src="/js/gover/orgAdmin.js"></script>
+	<!-- 팝업 -->
+	<div class="popupWrapper">
+		<link rel="stylesheet" as="style" crossorigin
+			href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+		<link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
+		<div id="registerPopup" class="register_Popup ">
+			<div class="popupWrap">
+				<!-- 관리기관 등록 가능한 팝업 (승인요청버튼)-->
+				<h2>
+					<p>관리기관 등록</p>
+					<span class="topCloseBtn"></span>
+				</h2>
+				<form id="saveForm" onSubmit="return false;">
+					<div class="register_wrap">
+						<ul class="register_title">
+							<!-- 관리지사 -->
+							<li class="register_title_th">
+								<h3>관리지사</h3>
+							</li>
+							<li class="popSelectWrap">
+								<div class="hidden_SelectBox">
+									<select name="jisa" id="jisaSelectBox" hidden>
+										<option value="">전체</option>
+										<option th:each="val:${jisaList}" th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+									</select>
+								</div>
+								<div class="Popup_Custom_SelectBox">
+									<button class="Popup_Custom_SelectView"  id="jisaText">전체</button>
+									<ul class="Popup_Custom_SelectBtns" id="jisaUl"></ul>
+								</div>
+							</li>
+
+							<!-- 허가관청 신규입력 -->
+							<li class="register_title_th3">
+								<h3>허가관청 신규입력</h3>
+							</li>
+							<li class="register_title_th4">
+								<input type="checkbox" name="newCheck" id="registerPopup_checkbox02"
+									class="approve_checkbox" onclick="toggleElements03()" />
+								<label for="registerPopup_checkbox02" class="approve_checkbox_label">
+								</label>
+							</li>
+
+							<!-- 허가관청 -->
+							<li class="register_title_th5">
+								<h3>허가관청</h3>
+							</li>
+							<!--허가관청 셀렉트박스-->
+							<li class="popSelectWrap register_title_th6">
+								<div class="hidden_SelectBox">
+									<select hidden name="epmt_office" id="epmt_office">
+										<option value="전체">전체</option>
+									</select>
+								</div>
+								<div class="Popup_Custom_SelectBox active">
+									<button class="Popup_Custom_SelectView" id="pmtOfficeText">전체</button>
+									<ul class="Popup_Custom_SelectBtns" id="pmtOfficeUl"></ul>
+								</div>
+								<input class="register_hidden_text" name="pmt_office" type="text" />
+							</li>
+
+							<!-- 관리기관 -->
+							<li class="register_title_th7">
+								<h3>관리기관</h3>
+							</li>
+							<li class="register_title_th8"><input type="text" name="adm_office" /></li>
+						</ul>
+					</div>
+
+					<!-- 버튼 -->
+					<div class="registerbtnWrap">
+						<button class="closeBtn finalBtn">닫기</button>
+						<button class="approveBtn finalBtn">승인 요청</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div id="approve_Popup" class="">
+			<div class="popupWrap">
+				<h2>
+					<p>관리기관 승인</p>
+					<span class="topCloseBtn"></span>
+				</h2>
+				<div class="aprrove_wrap">
+					<ul class="approve_title">
+						<li>관리지사</li>
+						<li class="popContent">
+							<input type="text" th:if="${data!=null}" th:value="${data.jisa}" placeholder="경인지사"
+								readonly />
+						</li>
+						<li>허가관청 신규입력</li>
+						<li class="popContent">
+							<input type="checkbox" id="approvePopup_checkbox" class="approve_checkbox"
+								onclick="toggleElements()" />
+							<label for="approvePopup_checkbox" class="approve_checkbox_label">
+							</label>
+						</li>
+						<li>허가관청</li>
+						<li class="popContent">
+							<input type="text" placeholder="고양시" class="popContent_default active" readonly />
+							<input class="approve_hidden_text" type="text" />
+						</li>
+						<li>관리기관</li>
+						<li class="popContent">
+							<input type="text" placeholder="도로관리과" class="popContent" readonly />
+						</li>
+					</ul>
+				</div>
+				<div class="approvehistory_wrap">
+					<h3>변경이력</h3>
+					<div class="approvehistory">
+						<ul class="approvehistory_title">
+							<li class="approvehistory_title_1">변경일시</li>
+							<li class="approvehistory_title_2">구분</li>
+							<li class="approvehistory_title_3">내용</li>
+						</ul>
+						<div class="approvehistorycontent_wrap">
+							<ul class="approvehistory_content">
+								<li class="approvehistory_title_1">2024-04-01</li>
+								<li class="approvehistory_title_2">수정</li>
+								<li class="approvehistory_title_4">
+									허가관청 = 고양시 > 안양시<br />
+									관리기관 = 도로과 > 녹지과
+								</li>
+							</ul>
+							<ul class="approvehistory_content">
+								<li class="approvehistory_title_1">2024-04-01</li>
+								<li class="approvehistory_title_2">신규등록</li>
+								<li class="approvehistory_title_4">
+									관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+								</li>
+							</ul>
+							<ul class="approvehistory_content">
+								<li class="approvehistory_title_1">2024-04-01</li>
+								<li class="approvehistory_title_2">신규등록</li>
+								<li class="approvehistory_title_4">
+									관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+								</li>
+							</ul>
+							<ul class="approvehistory_content">
+								<li class="approvehistory_title_1">2024-04-01</li>
+								<li class="approvehistory_title_2">신규등록</li>
+								<li class="approvehistory_title_4">
+									관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="registerbtnWrap">
+					<button class="closeBtn finalBtn">닫기</button>
+					<button class="approveBtn finalBtn">승인</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/js/gover/orgAdmin.js"></script>
 </th:block>
 
 </html>
