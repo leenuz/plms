@@ -1,9 +1,5 @@
 
-
-    
 var table;
-     
-
 
 $(document).ready(function() {
   console.log("songyu/menu01.js start");
@@ -11,11 +7,7 @@ $(document).ready(function() {
 //testAjax();
 //init_Table();
 loadDataTable("");
-
 });
-
-
-
 
 
 //조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
@@ -35,7 +27,6 @@ $(document).on("click","#registerBtn",function(){
 	  console.log("----------jsonobj------------");
 	  console.log(json);
 	  console.log("object askMenu01:"+object.askMenu01); 
-	  
 	  
 	  
 	   loadDataTable(object);
@@ -96,8 +87,7 @@ $(document).on("change","#sido",function(){
 					
 					    }
 					  }) //end ajax 
-})	 
-	 
+})
 
 
 $(document).on("change","#sgg",function(){
@@ -207,9 +197,7 @@ $(document).on("change","#emd",function(){
 					
 					    }
 					  }) //end ajax 
-})	 
-	 
-	 
+})
 	 
 
 function datatablebasic(){
@@ -242,11 +230,9 @@ function loadDataTable(params){
 	//var json=JSON.stringify(params);
 
 	table=$('#userTable').DataTable({
-		
 		fixedColumns:{
 			start:3,
-			
-			},
+		},
 		scrollCollapse:true,
 		scrollX:true,
 		scrollY:600,
@@ -254,25 +240,23 @@ function loadDataTable(params){
 		"oLanguage":{"sLengthMenu":"_MENU_"},
 		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
 		dom:'<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
-		 buttons: [{extend:'excel',text:'엑셀 다운로드'}],
-				
+		buttons: [{extend:'excel',text:'엑셀 다운로드'}],
 		
-				    
-				pageLength: 20,
-                bPaginate: true,
-                bLengthChange: true,
-                bInfo:false,
-                lengthMenu : [ [ 10, 20, 50, -1 ], [ "10건","20건","50건", "All" ] ],
-                bAutoWidth: false,
-                processing: true,
-                ordering: true,
-                bServerSide: true,
-                searching: false,
-				destroy:true,
-				
-                rowReorder:{
-					dataSrc:'b_seq'
-				},
+		pageLength: 20,
+        bPaginate: true,
+        bLengthChange: true,
+        bInfo:false,
+        lengthMenu : [ [ 10, 20, 50, -1 ], [ "10건","20건","50건", "All" ] ],
+        bAutoWidth: false,
+        processing: true,
+        ordering: true,
+        bServerSide: true,
+        searching: false,
+		destroy:true,
+		
+        rowReorder:{
+			dataSrc:'b_seq'
+		},
 			//	sAjaxSources:"/songyu/menu01DataTableList",
 			//	sServerMethod:"POST",
                 ajax : {
@@ -302,7 +286,6 @@ function loadDataTable(params){
 						var ask=(params.askMenu01==undefined || params.askMenu01==null)?'0':params.askMenu01;
 						console.log("askmenu:"+ask);
 						
-						
 						if (ask=="0") {
 							console.log("---------3--------------");
 							d.saddr=(params.addressFull==undefined || params.addressFull==null)?'':params.addressFull;
@@ -318,6 +301,8 @@ function loadDataTable(params){
 							else addrs=addrs+" "+params.emd;
 							if (ljsIsNull(params.ri)) addrs=addrs+"";
 							else addrs=addrs+" "+params.ri;
+							if (ljsIsNull(params.jibun)) addrs=addrs+"";
+							else addrs=addrs+" "+params.jibun;
 							//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
 							//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
 							console.log("addrs:"+addrs);
@@ -478,15 +463,8 @@ function loadDataTable(params){
 							return rtn;
 						}
 					}					
-					
-					
-					
 				]
- 
             });
-			
-			
-			
 			
 			table.on('click','tr',function() {
 			      /*  var data = table.fnGetData( this );
