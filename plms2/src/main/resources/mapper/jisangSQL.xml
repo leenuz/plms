@@ -1954,7 +1954,10 @@ WHERE 1=1
        JM.jm_save_status as SAVE_STATUS,
        JM.jm_location as LOCATION,
        JM.jm_special_cont as SPECIAL_CONT,
-       JM.jm_permitted_yn as PERMITTED_YN
+       JM.jm_permitted_yn as PERMITTED_YN,
+       JM.jm_account_yn AS ACCOUNT_YN,
+       JIJUK_MST.x,
+       JIJUK_MST.y
 FROM JISANG_MASTER JM
 LEFT JOIN TOJA_ORDER TOR ON JM.jm_JISANG_NO = TOR.JISANG_NO
 LEFT JOIN PLMS_APPROVAL PA ON JM.jm_DOCKEY = PA.pa_DOCKEY
@@ -2033,7 +2036,7 @@ LEFT JOIN JIJUK_2024 JIJUK_MST ON JM.jm_PNU = JIJUK_MST.PNU
 		SELECT JS_JISANG_NO, JS_JIBUN, JS_SOUJA_NAME, JS_ADDRESS, JS_PHONE_NUMBER, JS_HOME_NUMBER
 		FROM JISANG_SOUJA
 		WHERE 1=1
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MERGE_CHECK)" >
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)" >
 			AND JS_JISANG_NO = #{JISANGNO}
 		</if>
 		ORDER BY JS_SOUJA_NAME
