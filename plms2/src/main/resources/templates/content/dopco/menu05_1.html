@@ -1,151 +1,122 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      
-      layout:decorate="~{layout/default_layout}">
- <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
+  <link th:href="@{/css/common.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/dopco/menu05_1.css" />
 
- 
-  
-   
-  
-	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	
- <link rel="stylesheet" href="/css/dopco/menu05_1.css" /> 
-	  
-<!--		<script src="/js/songyu/menu01.js"></script>	-->
-		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <!--		<script src="/js/songyu/menu01.js"></script>	-->
+  <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
-		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
+  <style>
+    div.dt-top-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+    }
 
-div.dt-center-in-div {
-  margin: 0 auto;
+    div.dt-center-in-div {
+      margin: 0 auto;
       float: right;
-    margin-right: 30px;
-   
-}
-div.dt-center-in-div>div{
+      margin-right: 30px;
+    }
 
-display:inline;
-}
+    div.dt-center-in-div>div {
+      display: inline;
+    }
 
-div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
-}
+    div.dt-filter-spacer {
+      margin: 10px 0;
+      border: 1px solid red;
+    }
 
+    .dt-title {
+      text-align: center;
+      width: 180px;
+      float: left;
+    }
 
-.dt-title{
+    .dt-buttons {
+      display: inline-block;
+      width: 180px;
+    }
 
-text-align:center;
-width:180px;
-float:left;
+    .dt-length {
+      display: inline-block;
+    }
 
-}
-.dt-buttons{
-display:inline-block;
+    .dt-button {
+      color: white;
+      background-color: #4e5871;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 10px;
+      background-image: url(/assets/media/menu01/download.png);
+      background-size: 11px;
+      background-repeat: no-repeat;
+      background-position: 123px center;
+      margin-right: 10px;
+      width: 159px;
+      height: 38px;
+    }
 
-width:180px;
+    .dt-paging {
+      text-align: center;
+    }
 
-}
-.dt-length{
-display:inline-block;
-}
-.dt-button{
+    .dt-paging-button {
+      box-sizing: border-box;
+      display: inline-block;
+      min-width: 1.5em;
+      padding: 0.5em 1em;
+      margin-left: 2px;
+      text-align: center;
+      text-decoration: none !important;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      background: transparent;
+      color: #007bff !important;
+      font-size: 15px;
+      font-weight: 600;
+    }
 
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
+    .bottom {
+      text-align: center;
+    }
 
-}
+    .top {
+      text-align: right;
+      margin: 10px;
+    }
+  </style>
 
-.dt-paging {
-text-align: center;
-}
-
-.dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-    
-    
-}
-
-.bottom{
-text-align:center;
-
-}
-.top{
-
-text-align:right;
-margin:10px;
-
-}
-
-		</style>
-		
-    <title>회사토지조회</title>
-  </head>
+  <title>회사토지조회</title>
+</head>
 <th:block layout:fragment="content">
-    <!--회사토지조회-->
-    <div id="dopcoCompanyLand01">
-      <!--header삽입-->
-      <div class="companyLandheader01"></div>
-      <div class="companyLandWrappers01">
-        <div class="companyLandTitleBoxs">
-          <h5>회사토지조회</h5>
-        </div>
+  <!--회사토지조회-->
+  <div id="dopcoCompanyLand01">
+    <!--header삽입-->
+    <div class="companyLandheader01"></div>
+    <div class="companyLandWrappers01">
+      <div class="companyLandTitleBoxs">
+        <h5>회사토지조회</h5>
+      </div>
 
-        <form id="searchForm" onSubmit="return false;">
+      <form id="searchForm" onSubmit="return false;">
         <section class="companyLandSectionBoxs">
           <div class="companyLandSectionCont">
             <div class="companyLandSectionContDevide">
               <ul class="selectContent sectionMenuListBoxs">
-                <li class="selectTitle"><p>지사</p></li>
+                <li class="selectTitle">
+                  <p>지사</p>
+                </li>
                 <!--수정부분 지사-->
                 <div class="companyLandSelectWrappers">
-                  <select
-                    name="jisa"
-                    class="companyLandHiddenSelect01"
-                    id="companyLandSelectBox01_1"
-                    hidden>
+                  <select name="jisa" class="companyLandHiddenSelect01" id="companyLandSelectBox01_1" hidden>
                     <option value="">전체</option>
                     <th:block th:each="val:${jisaList}">
                       <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
@@ -157,26 +128,34 @@ margin:10px;
                   <button class="companyLandSelectsTitleBtn">전체</button>
                   <div class="sufaceSelectList">
                     <ul class="surfaceSelectListMember">
-                      <li><p>전체</p></li>
+                      <li>
+                        <p>전체</p>
+                      </li>
                       <th:block th:each="val:${jisaList}">
-                        <li><p th:text="${val.jm_jisa_name}">Y</p></li>
+                        <li>
+                          <p th:text="${val.jm_jisa_name}">Y</p>
+                        </li>
                       </th:block>
                     </ul>
                   </div>
                 </div>
               </ul>
               <ul class="inputControlBoxs sectionMenuListBoxs">
-                <li class="selectTitle"><p>자산분류번호</p></li>
+                <li class="selectTitle">
+                  <p>자산분류번호</p>
+                </li>
                 <div class="inputControlList">
                   <input name="jasan_no" type="text" />
                 </div>
               </ul>
               <ul class="inputControlBoxs sectionMenuListBoxs">
-                <li class="selectTitle"><p>취득기간</p></li>
+                <li class="selectTitle">
+                  <p>취득기간</p>
+                </li>
                 <div class="inputControlList dateListBox">
-                  <input type="date" name="start_date"/>
+                  <input type="date" name="start_date" />
                   <span>-</span>
-                  <input type="date" name="end_date"/>
+                  <input type="date" name="end_date" />
                 </div>
               </ul>
             </div>
@@ -186,32 +165,20 @@ margin:10px;
               <div class="companyLandSectionRadioBoxs">
                 <ul class="radioBoxs">
                   <li>
-                    <input type="radio" name="askMenu01" value="0" checked/><span
-                      >입력형</span
-                    >
+                    <input type="radio" name="askMenu01" value="0" checked /><span>입력형</span>
                   </li>
                   <li class="addressInput">
-                    <input
-                      type="search"
-                      name="addressFull"
-                      placeholder="주소입력"
-                      class="searchInputBox01" />
+                    <input type="search" name="addressFull" placeholder="주소입력" class="searchInputBox01" />
                   </li>
                 </ul>
                 <ul class="radioBoxs menuRadioEvet01">
                   <li>
-                    <input type="radio" name="askMenu01" value="1"/><span
-                      >선택형</span
-                    >
+                    <input type="radio" name="askMenu01" value="1" /><span>선택형</span>
                   </li>
                   <li>
                     <!--시도-->
                     <div class="companyLandSelectWrappers">
-                      <select
-                        name="sido"
-                        class="companyLandHiddenSelect01"
-                        id="sido"
-                        hidden>
+                      <select name="sido" class="companyLandHiddenSelect01" id="sido" hidden>
                         <option value="">전체</option>
                         <th:block th:each="val:${sidoList}">
                           <option th:text="${val.sm_name}" th:value="${val.sm_name}"></option>
@@ -223,22 +190,22 @@ margin:10px;
                       <button class="companyLandSelectsTitleBtn" id="sidoText">전체</button>
                       <div class="sufaceSelectList smallHeight">
                         <ul class="surfaceSelectListMember sido">
-                          <li><p>전체</p></li>
+                          <li>
+                            <p>전체</p>
+                          </li>
                           <th:block th:each="val:${sidoList}">
-                            <li><p th:text="${val.sm_name}">Y</p></li>
+                            <li>
+                              <p th:text="${val.sm_name}">Y</p>
+                            </li>
                             <th:block>
                         </ul>
                       </div>
                     </div>
                   </li>
-                  <li >
+                  <li>
                     <!--구군-->
                     <div class="companyLandSelectWrappers">
-                      <select
-                        name="sgg"
-                        class="companyLandHiddenSelect01"
-                        id="sgg"
-                        hidden>
+                      <select name="sgg" class="companyLandHiddenSelect01" id="sgg" hidden>
                         <option value="">전체</option>
                       </select>
                     </div>
@@ -247,7 +214,9 @@ margin:10px;
                       <button class="companyLandSelectsTitleBtn" id="sggText">전체</button>
                       <div class="sufaceSelectList smallHeight">
                         <ul class="surfaceSelectListMember sgg" id="sggUl">
-                          <li><p>전체</p></li>
+                          <li>
+                            <p>전체</p>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -255,11 +224,7 @@ margin:10px;
                   <li>
                     <!--읍면동-->
                     <div class="companyLandSelectWrappers">
-                      <select
-                        name="emd"
-                        class="companyLandHiddenSelect01"
-                        id="emd"
-                        hidden>
+                      <select name="emd" class="companyLandHiddenSelect01" id="emd" hidden>
                         <option value="">전체</option>
                       </select>
                     </div>
@@ -267,8 +232,10 @@ margin:10px;
                     <div class="companyLandSelects">
                       <button class="companyLandSelectsTitleBtn" id="emdText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"  id="emdUl">
-                          <li><p>전체</p></li>
+                        <ul class="surfaceSelectListMember" id="emdUl">
+                          <li>
+                            <p>전체</p>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -276,11 +243,7 @@ margin:10px;
                   <li>
                     <!--리-->
                     <div class="companyLandSelectWrappers">
-                      <select
-                        name="ri"
-                        class="companyLandHiddenSelect01"
-                        id="ri"
-                        hidden>
+                      <select name="ri" class="companyLandHiddenSelect01" id="ri" hidden>
                         <option value="">전제</option>
                       </select>
                     </div>
@@ -288,19 +251,17 @@ margin:10px;
                     <div class="companyLandSelects">
                       <button class="companyLandSelectsTitleBtn" id="riText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"  id="riUl">
-                          <li><p>전체</p></li>
+                        <ul class="surfaceSelectListMember" id="riUl">
+                          <li>
+                            <p>전체</p>
+                          </li>
                         </ul>
                       </div>
                     </div>
                   </li>
                   <li style="padding: 0px 3px">
                     <div class="inputControlList">
-                      <input
-                        type="text"
-                        name="jibun"
-                        placeholder="지번입력"
-                        class="menuAdderssInput01" />
+                      <input type="text" name="jibun" placeholder="지번입력" class="menuAdderssInput01" />
                     </div>
                   </li>
                 </ul>
@@ -313,20 +274,20 @@ margin:10px;
           </div>
           <!--companyLandSectionCont-->
         </section>
-        </form>
+      </form>
 
-        <main>
-          <div class="companyLandMainContentWrapper">
-            <div class="companyLandMainContent">
-              <div class="dataTitles">
-                <h5>총 검색 건 수<span  id="dataTableTotalCount">154</span>건</h5>
-                  </div>
-                </div>
-              </div>
-              <!-- 데이터박스 -->
-          <div class="">
-            <table id="userTable" class="cell-border nowrap" style="width:120%;" >
-              <thead>
+      <main>
+        <div class="companyLandMainContentWrapper">
+          <div class="companyLandMainContent">
+            <div class="dataTitles">
+              <h5>총 검색 건 수<span id="dataTableTotalCount">154</span>건</h5>
+            </div>
+          </div>
+        </div>
+        <!-- 데이터박스 -->
+        <div class="">
+          <table id="userTable" class="cell-border nowrap" style="width:120%;">
+            <thead>
               <tr>
                 <th>순번</th>
                 <th>담당지사</th>
@@ -338,19 +299,19 @@ margin:10px;
                 <th>면적</th>
                 <th>지도</th>
               </tr>
-
-              </thead>
-              <!-- tbody 태그 필요 없다. -->
-            </table>
-          </div>
-        </main>
-      </div>
+            </thead>
+            <!-- tbody 태그 필요 없다. -->
+          </table>
+        </div>
+      </main>
     </div>
+  </div>
 
-    <script type="module" src="/js/module/surfaceMain.js"></script>
-    <script src="/js/dopco/companyLandLinkEvet.js"></script>
+  <script type="module" src="/js/module/surfaceMain.js"></script>
+  <script src="/js/dopco/companyLandLinkEvet.js"></script>
   <script src="/js/dopco/menu05_1.js"></script>
-<!--    <script src="/js/dopco/companyLandRadioEvet.js"></script>-->
-   <!--  <script src="/js/dopco/resultPageEvet.js"></script> -->
-  </th:block>
+  <!--    <script src="/js/dopco/companyLandRadioEvet.js"></script>-->
+  <!--  <script src="/js/dopco/resultPageEvet.js"></script> -->
+</th:block>
+
 </html>

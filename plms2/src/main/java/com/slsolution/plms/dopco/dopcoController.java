@@ -115,9 +115,14 @@ public class dopcoController {
 
 	@GetMapping(path="/menu05_2") //http://localhost:8080/api/get/dbTest
     public ModelAndView menu05_2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		HashMap params = new HashMap();
+		ArrayList<HashMap> list=new ArrayList<HashMap>();
+		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+
 		ModelAndView mav=new ModelAndView();
+		mav.addObject("jisaList",jisalist);
+		mav.addObject("sidoList",sidolist);
 		mav.setViewName("content/dopco/menu05_2");
 		return mav;
 	}

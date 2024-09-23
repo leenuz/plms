@@ -111,8 +111,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		TRIM(CONCAT(dom.dom_sido_nm, ' ', dom.dom_sgg_nm, ' ',dom.dom_emd_nm,' ',dom.dom_ri_nm, ' ', dom.dom_jibun)) AS address
 		FROM dopco_master dom
 		
-		WHERE 1 = 1
-		dom_cancel_date IS NOT null
+		WHERE dom_cancel_date IS NOT null
+		
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and dom.dom_jisa=#{jisa}
 		</if>
