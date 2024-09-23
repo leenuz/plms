@@ -239,8 +239,8 @@ function loadDataTable(params) {
 			{ data: "dom_chuideuk_date", "defaultContent": "" },   // 취득일
 			{ data: "dom_deunggi_date", "defaultContent": "" },   // 등기일
 			{ data: "dom_jijuk_area", "defaultContent": "" },// 면적
-			{ data: "dom_jijuk_area", "defaultContent": "" },// 처분여부
-			{ data: "dom_jijuk_area", "defaultContent": "" },// 처분일
+			{ data: "dom_cancel_yn", "defaultContent": "" },// 처분여부
+			{ data: "dom_cancel_date", "defaultContent": "" },// 처분일
 			{ data: "dom_idx", "defaultContent": "" }, // 지도
 		],
 		columnDefs: [
@@ -254,7 +254,11 @@ function loadDataTable(params) {
 			{ targets: [5], width: "100px" },  // 취득일 칼럼
 			{ targets: [6], width: "100px" },  // 등기일 칼럼
 			{ targets: [7], width: "100px" },  // 면적 칼럼
-			{ targets: [8], width: "100px" },  // 처분여부 칼럼
+			{ targets: [8], width: "100px",
+				render: function (data, type, row, meta) {
+					return data == null ? '미처분' : '처분';
+				}
+			},  // 처분여부 칼럼
 			{ targets: [9], width: "100px" },  // 처분일 칼럼
 			{
 				targets: [10], width: "100px"
