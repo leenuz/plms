@@ -142,68 +142,36 @@
               <li class="title">사용자</li>
             </ul>
             <!-- 대상토지 목록 -->
-            <ul class="contents">
+            <ul class="contents" th:each="val:${tojiList}">
               <li class="content addressInfoWidth addressInfoBox">
                 <div class="addressData">
-                  <input type="text" placeholder="경기도 평택시 진위면 동천리 606-132" readonly class="notWriteInput" />
+                  <input type="text" th:value="${val.addr}" readonly class="notWriteInput" />
                 </div>
               </li>
               <li class="content contentBox">
                 <ul class="secondContents">
                   <li class="secondContent">
-                    <input type="text" placeholder="답" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.jimok}" readonly class="notWriteInput" />
                   </li>
                   <li class="secondContent">
-                    <input type="text" placeholder="182" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.jimok}" readonly class="notWriteInput" />
                   </li>
                   <li class="secondContent">
-                    <input type="text" placeholder="181" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.jimok}" readonly class="notWriteInput" />
                   </li>
                   <li class="secondContent largeSecondTitle">
-                    <input type="text" readonly placeholder="4,732,000" />
+                    <input type="text" readonly th:value="${val.jimok}" />
                   </li>
                   <li class="secondContent">
-                    <input type="text" placeholder="9010237" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.jasan_no}" readonly class="notWriteInput" />
                   </li>
                 </ul>
               </li>
               <li class="content">
-                <input type="text" placeholder="홍길동" readonly class="notWriteInput" />
+                <input type="text" th:value="${val.soyuja}" readonly class="notWriteInput" />
               </li>
               <li class="content">
-                <input type="text" placeholder="김순애" readonly class="notWriteInput" />
-              </li>
-            </ul>
-            <ul class="contents lastContents" id="togiUl">
-              <li class="content addressInfoWidth addressInfoBox">
-                <div class="addressData">
-                  <input type="text" placeholder="경기도 평택시 진위면 동천리 606-132" readonly class="notWriteInput" />
-                </div>
-              </li>
-              <li class="content contentBox">
-                <ul class="secondContents">
-                  <li class="secondContent">
-                    <input type="text" placeholder="전" readonly class="notWriteInput" />
-                  </li>
-                  <li class="secondContent">
-                    <input type="text" placeholder="1544" readonly class="notWriteInput" />
-                  </li>
-                  <li class="secondContent">
-                    <input type="text" placeholder="20" readonly class="notWriteInput" />
-                  </li>
-                  <li class="secondContent largeSecondTitle">
-                    <input type="text" readonly placeholder="8,000,000" />
-                  </li>
-                  <li class="secondContent">
-                    <input type="text" placeholder="9010238" readonly class="notWriteInput" />
-                  </li>
-                </ul>
-              </li>
-              <li class="content">
-                <input type="text" placeholder="김순자" readonly class="notWriteInput" />
-              </li>
-              <li class="content">
-                <input type="text" placeholder="이미자" readonly class="notWriteInput" />
+                <input type="text" th:value="${val.pmt_user}" readonly class="notWriteInput" />
               </li>
             </ul>
           </div>

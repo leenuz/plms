@@ -3189,11 +3189,11 @@ log.info("gubun:"+gubun);
 		//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
 		
 		log.info("data:"+data);
-      			mav.addObject("resultData",data.get(0));
-      			
-      			
-      			mav.setViewName("content/jisang/usePermitDetail");
-      			return mav;
+
+      	mav.addObject("resultData", data.get(0));
+      	mav.addObject("tojiList", data);
+		mav.setViewName("content/jisang/usePermitDetail");
+		return mav;
     }
 	
 	@GetMapping(path="/usePermitEdit") //http://localhost:8080/api/get/dbTest
