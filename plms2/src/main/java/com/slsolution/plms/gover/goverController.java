@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -475,7 +476,7 @@ public class goverController {
 //			
 			ArrayList list = new ArrayList();
 			ArrayList addlist = new ArrayList();
-
+			ArrayList<HashMap> jisalist=new ArrayList();
 			ParameterParser parser = new ParameterParser(httpRequest);
 
 			String str_result = "Y";
@@ -488,6 +489,7 @@ public class goverController {
 				params.put("JISA", "");
 				int count=(int)mainService.selectCountQuery("goverSQL.selectOfficeJisaCount", params);
 				list = (ArrayList) mainService.selectQuery("goverSQL.selectOfficeInfoAll", params);
+				 jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 
 			} catch (Exception e) {
 				str_result = "N";
@@ -498,6 +500,8 @@ public class goverController {
 			
 			ModelAndView mav=new ModelAndView();
 			mav.addObject("list",list);
+			mav.addObject("jisaList",jisalist);
+			log.info("jisalist:"+jisalist);
 			mav.setViewName("content/gover/orgAdmin");
 			return mav;
 		}
@@ -2187,19 +2191,26 @@ log.info("params:"+params);
 			try {
 
 				HashMap params = new HashMap();
-				String JISA = requestParamsObj.getString("JISA");
-				String PMT_OFFICE = requestParamsObj.getString("PMT_OFFICE");
-				String ADM_OFFICE = requestParamsObj.getString("ADM_OFFICE");
-
-				String mx_adm_seq = (String) ((HashMap) ((ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params)).get(0)).get("MX_ADM_SEQ");
-
+				String JISA = requestParamsObj.getString("jisa");
+				String PMT_OFFICE = requestParamsObj.getString("pmt_office");
+				String ADM_OFFICE = requestParamsObj.getString("adm_office");
+				String GUBUN = requestParamsObj.getString("gubun");
+				ArrayList tmp=(ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params);
+				log.info("tmp:"+((HashMap) tmp.get(0)).get("mx_adm_seq"));
+				//String mx_adm_seq = (String) ((HashMap) ((ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params)).get(0)).get("mx_adm_seq");
+				String mx_adm_seq =((HashMap) tmp.get(0)).get("mx_adm_seq").toString();
 				params.put("ADM_SEQ", mx_adm_seq);
 				params.put("JISA", JISA);
 				params.put("PMT_OFFICE", PMT_OFFICE);
 				params.put("ADM_OFFICE", ADM_OFFICE);
+				params.put("APPROVE", "N");
 				System.out.println("insertOfficeMng params=" + params);
 				mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보
 																				// 저장
+				if ("modify".equals(GUBUN)) params.put("history_gubun","수정");
+				else params.put("history_gubun","신규등록");
+				//params.put("history_content","허가관청 = )
+				mainService.InsertQuery("goverSQL.insertOfficeMngHistory", params); // 기본정보
 
 			} catch (Exception e) {
 				str_result = "N";
@@ -2274,5 +2285,86 @@ log.info("params:"+params);
 			response.setContentType("application/json");
 			response.getWriter().print(jo);
 			response.getWriter().flush();
+		}
+		
+		
+		//점용관리기관등록시 기존데이터가 있을때
+				@PostMapping(path="/getselectOfficeMng")
+				public void getselectOfficeMng(HttpServletRequest request, HttpServletResponse response) throws Exception {
+					String requestParams = ParameterUtil.getRequestBodyToStr(request);
+					JSONObject requestParamsObj=new JSONObject(requestParams);
+					log.info("requestParams:"+requestParams);
+					
+					ArrayList list = new ArrayList();
+					ArrayList addlist = new ArrayList();
+
+					ParameterParser parser = new ParameterParser(request);
+
+					String str_result = "Y";
+					ArrayList returnList = new ArrayList();
+					try {
+
+						HashMap params = new HashMap();
+
+						String JISA = requestParamsObj.getString("jisa");
+						params.put("JISA", JISA);
+
+						list = (ArrayList) mainService.selectQuery("goverSQL.selectOfficeInfoAll", params);
+
+					} catch (Exception e) {
+						str_result = "N";
+						e.printStackTrace();
+					}
+
+					HashMap map = new HashMap();
+
+					if (list != null)
+						map.put("count", list.size());
+					else
+						map.put("count", 0);
+
+					map.put("message", str_result);
+					map.put("result", list);
+					map.put("loginKey", String.valueOf(request.getSession().getAttribute("loginKey")));
+
+					JSONObject jo = new JSONObject(map);
+
+					response.setCharacterEncoding("UTF-8");
+					response.setHeader("Access-Control-Allow-Origin", "*");
+					response.resetBuffer();
+					response.setContentType("application/json");
+					response.getWriter().print(jo);
+					response.getWriter().flush();
+				}
+				
+		
+		
+		@PostMapping(path="/getGoverOfficeMngEditPage") //http://localhost:8080/api/get/dbTest
+		public ModelAndView getGoverOfficeMngEditPage(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			ModelAndView mav=new ModelAndView();
+			HashMap params = new HashMap();
+			
+			//log.info("httpRequest:"+Arrays.toString(httpRequest));
+
+			String idx=httpRequest.getParameter("idx");
+			
+			
+
+
+			params.put("idx", idx);
+		
+			
+			
+
+			log.info("params:"+params);
+			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectOfficeInfo",params);
+			params.put("seq", list.get(0).get("adm_seq"));
+			ArrayList<HashMap> historyList = mainService.selectQuery("goverSQL.selectOfficeHistoryList",params);
+			//log.info("addressList:"+addressList);
+			mav.addObject("data",list.get(0));
+			mav.addObject("historyList",historyList);
+			log.info("historyList:"+historyList);
+			mav.setViewName("content/gover/orgAdmin :: #approve_Popup");
+			return mav;
 		}
 }

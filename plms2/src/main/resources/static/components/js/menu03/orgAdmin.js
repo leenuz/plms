@@ -23,7 +23,7 @@ function showRegPopup() {
       }
     };
     xhr.send();
-    console.log('orgAdminRegisterPopWrapper작동');
+    console.log('orgAdminRegisterPopWrapper작동:showRegPopup');
   }
 }
 
@@ -61,7 +61,9 @@ function showModPopup() {
       }
     };
     xhr.send();
-    console.log('orgAdminRegisterPopWrapper작동');
+    console.log('orgAdminRegisterPopWrapper작동:showModPopup');
+	var ul=$(this).parent().parent().parent().html();
+		console.log(ul);
   }
 }
 
@@ -80,7 +82,12 @@ function showAcceptPopup() {
       }
     };
     xhr.send();
-    console.log('orgAdminRegisterPopWrapper작동');
+	
+	console.log('orgAdminRegisterPopWrapper작동:showAcceptPopup');
+	var ul=$(this).parent().parent().parent().html();
+	console.log(ul);
+	
+	
   }
 }
 

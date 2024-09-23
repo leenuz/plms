@@ -124,7 +124,7 @@
             <tbody>
               <tr th:each="row:${list}">
                 <td class="smallWidth">
-                <input type="hidden" placeholder="1" th:value="${row.idx}"  class="notWriteInput" readonly />
+                <input type="hidden" id="idx" placeholder="1" th:value="${row.idx}"  class="notWriteInput" readonly />
                   <input type="text" placeholder="1" th:value="${row.no}"  class="notWriteInput" readonly />
                 </td>
                 <td>
@@ -139,7 +139,7 @@
                 <td>
                   <div class="btnWrap">
                     <div class="btnBox" th:if="${row.approve=='N'}">
-                      <button class="pendingApprovalBtn" onclick="showAcceptPopup()">승인대기</button>
+                      <button class="pendingApprovalBtn" >승인대기</button>
                     </div>
                     <div class="btnBox" >
                       <button class="deleteBtn">삭제</button>
@@ -231,7 +231,154 @@
     </main>
   </div>
   <!-- 팝업 -->
-  <div class="popupWrapper"></div>
+  <div class="popupWrapper">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
+<div id="registerPopup" class="register_Popup ">
+    <div class="popupWrap">
+        <!-- 관리기관 등록 가능한 팝업 (승인요청버튼)-->
+        <h2>
+            <p>관리기관 등록</p>
+            <span class="topCloseBtn"></span>
+        </h2>
+        <form id="saveForm" onSubmit="return false;">
+        <div class="register_wrap">
+            <ul class="register_title">
+                <!-- 관리지사 -->
+                <li class="register_title_th">
+                    <h3>관리지사</h3>
+                </li>
+                <li class="popSelectWrap">
+                    <div class="hidden_SelectBox">
+                        <select name="jisa" id="jisa" hidden>
+                            <option value="">전체</option>
+                            <option th:each="val:${jisaList}" th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+                        </select>
+                    </div>
+                    <div class="Popup_Custom_SelectBox">
+                        <button class="Popup_Custom_SelectView">전체</button>
+                        <ul class="Popup_Custom_SelectBtns"></ul>
+                    </div>
+                </li>
+                <!-- 허가관청 신규입력 -->
+                <li class="register_title_th3">
+                    <h3>허가관청 신규입력</h3>
+                </li>
+                <li class="register_title_th4">
+                    <input type="checkbox" name="newCheck" id="registerPopup_checkbox02" class="approve_checkbox" onclick="toggleElements03()" />
+                    <label for="registerPopup_checkbox02" class="approve_checkbox_label">
+                    </label>
+                </li>
+                <!-- 허가관청 -->
+                <li class="register_title_th5">
+                    <h3>허가관청</h3>
+                </li>
+                <li class="popSelectWrap register_title_th6">
+                    <div class="hidden_SelectBox">
+                        <select hidden name="epmt_office" id="epmt_office">
+                            <option value="전체">전체</option>
+                          
+                        </select>
+                    </div>
+                    <div class="Popup_Custom_SelectBox active">
+                        <button class="Popup_Custom_SelectView">전체</button>
+                        <ul class="Popup_Custom_SelectBtns"></ul>
+                    </div>
+                    <input class="register_hidden_text" name="pmt_office" type="text" />
+                </li>
+                <!-- 관리기관 -->
+                <li class="register_title_th7">
+                    <h3>관리기관</h3>
+                </li>
+                <li class="register_title_th8"><input type="text" name="adm_office"/></li>
+            </ul>
+        </div>
+
+        <!-- 버튼 -->
+        <div class="registerbtnWrap">
+            <button class="closeBtn finalBtn">닫기</button>
+            <button class="approveBtn finalBtn">승인 요청</button>
+        </div>
+        </form>
+    </div>
+</div>
+<div id="approve_Popup" class="">
+    <div class="popupWrap">
+        <h2>
+            <p>관리기관 승인</p>
+            <span class="topCloseBtn"></span>
+        </h2>
+        <div class="aprrove_wrap">
+            <ul class="approve_title">
+                <li>관리지사</li>
+                <li class="popContent">
+                    <input type="text" th:if="${data!=null}" th:value="${data.jisa}" placeholder="경인지사" readonly />
+                </li>
+                <li>허가관청 신규입력</li>
+                <li class="popContent">
+                    <input type="checkbox" id="approvePopup_checkbox" class="approve_checkbox" onclick="toggleElements()" />
+                    <label for="approvePopup_checkbox" class="approve_checkbox_label">
+                    </label>
+                </li>
+                <li>허가관청</li>
+                <li class="popContent">
+                    <input type="text" placeholder="고양시" class="popContent_default active" readonly />
+                    <input class="approve_hidden_text" type="text" />
+                </li>
+                <li>관리기관</li>
+                <li class="popContent">
+                    <input type="text" placeholder="도로관리과" class="popContent" readonly />
+                </li>
+            </ul>
+        </div>
+        <div class="approvehistory_wrap">
+            <h3>변경이력</h3>
+            <div class="approvehistory">
+                <ul class="approvehistory_title">
+                    <li class="approvehistory_title_1">변경일시</li>
+                    <li class="approvehistory_title_2">구분</li>
+                    <li class="approvehistory_title_3">내용</li>
+                </ul>
+                <div class="approvehistorycontent_wrap">
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">수정</li>
+                        <li class="approvehistory_title_4">
+                            허가관청 = 고양시 > 안양시<br />
+                            관리기관 = 도로과 > 녹지과
+                        </li>
+                    </ul>
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">신규등록</li>
+                        <li class="approvehistory_title_4">
+                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+                        </li>
+                    </ul>
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">신규등록</li>
+                        <li class="approvehistory_title_4">
+                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+                        </li>
+                    </ul>
+                    <ul class="approvehistory_content">
+                        <li class="approvehistory_title_1">2024-04-01</li>
+                        <li class="approvehistory_title_2">신규등록</li>
+                        <li class="approvehistory_title_4">
+                            관리지사 = 경인지사, 허가관청 = 도로과, 관리기관 = 재무처
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="registerbtnWrap">
+            <button class="closeBtn finalBtn">닫기</button>
+            <button class="approveBtn finalBtn">승인</button>
+        </div>
+    </div>
+</div>
+  </div>
   <script src="/js/gover/orgAdmin.js"></script>
 </th:block>
 
