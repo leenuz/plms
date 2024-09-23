@@ -275,7 +275,7 @@ function loadDataTable(params) {
 			console.log(data);
 			console.log(data.idx);
 
-			var url = "/docpo/compLandInfo?idx=" + data.idx;
+			var url = "/dopco/compLandInfo?idx=" + data.dom_idx;
 			window.location = url;
 		}
 	});
