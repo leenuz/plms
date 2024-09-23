@@ -16,11 +16,15 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 
 public class ExcelUtil {
 
@@ -55,19 +59,19 @@ public class ExcelUtil {
 					}
 
 					if (sheet.getRow(i).getCell(cellIdx) != null) {
-						if (sheet.getRow(i).getCell(cellIdx).getCellType() == XSSFCell.CELL_TYPE_STRING) {
+						if (sheet.getRow(i).getCell(cellIdx).getCellType() == CellType.STRING) {
 							rowMap.put(headersStr, sheet.getRow(i).getCell(cellIdx).getStringCellValue());
 						}
 
-						if (sheet.getRow(i).getCell(cellIdx).getCellType() == XSSFCell.CELL_TYPE_NUMERIC) {
+						if (sheet.getRow(i).getCell(cellIdx).getCellType() == CellType.NUMERIC) {
 							rowMap.put(headersStr, String.valueOf(Math.round(sheet.getRow(i).getCell(cellIdx).getNumericCellValue())));
 						}
 
-						if (sheet.getRow(i).getCell(cellIdx).getCellType() == XSSFCell.CELL_TYPE_BOOLEAN) {
+						if (sheet.getRow(i).getCell(cellIdx).getCellType() == CellType.BOOLEAN) {
 							rowMap.put(headersStr, String.valueOf(sheet.getRow(i).getCell(cellIdx).getBooleanCellValue()));
 						}
 
-						if (sheet.getRow(i).getCell(cellIdx).getCellType() == XSSFCell.CELL_TYPE_BLANK) {
+						if (sheet.getRow(i).getCell(cellIdx).getCellType() == CellType.BLANK) {
 						}
 					}
 				}
@@ -114,22 +118,22 @@ public class ExcelUtil {
 
 		// 헤더 스타일 작성
 		HSSFCellStyle headerStyle = wb.createCellStyle();
-		headerStyle.setBorderBottom(HSSFCellStyle.BORDER_DOUBLE);
-		headerStyle.setBottomBorderColor(HSSFColor.BLACK.index);
-		headerStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		headerStyle.setLeftBorderColor(HSSFColor.BLACK.index);
-		headerStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		headerStyle.setRightBorderColor(HSSFColor.BLACK.index);
-		headerStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		headerStyle.setTopBorderColor(HSSFColor.BLACK.index);
-		headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+		headerStyle.setBorderBottom(BorderStyle.DOUBLE);
+		headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+		headerStyle.setBorderLeft(BorderStyle.THIN);
+		headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+		headerStyle.setBorderRight(BorderStyle.THIN);
+		headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+		headerStyle.setBorderTop(BorderStyle.THIN);
+		headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+		headerStyle.setAlignment(HorizontalAlignment.CENTER);
 		headerStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
 
 		/*
 		 * 헤더 작성.
 		 */
 		for (int ii = 0; ii < headerTextList.size(); ii++) {
-			HSSFCell headerCell = row0.createCell(ii, HSSFCell.CELL_TYPE_STRING);
+			HSSFCell headerCell = row0.createCell(ii, CellType.STRING);
 			headerCell.setCellValue((String) headerTextList.get(ii));
 
 			headerCell.setCellStyle(headerStyle);
@@ -145,7 +149,7 @@ public class ExcelUtil {
 
 				for (int j = 0; j < mapNames.length; j++) {
 					// Cell 생성
-					HSSFCell cell = row.createCell(j, HSSFCell.CELL_TYPE_STRING);
+					HSSFCell cell = row.createCell(j, CellType.STRING);
 
 					if ( dataList.get(i).get(mapNames[j]) == null || "".equals(dataList.get(i).get(mapNames[j]))) {
 						cell.setCellValue("");
