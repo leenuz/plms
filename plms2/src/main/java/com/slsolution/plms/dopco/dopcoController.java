@@ -163,10 +163,12 @@ public class dopcoController {
 		log.info("params:"+params);
 		
 		ArrayList<HashMap> data = mainService.selectQuery("dopcoSQL.selectAllData",params);
+		HashMap resultData = new HashMap<>();
 		HashMap jijuk = new HashMap<>();
 		jijuk.put("x", 0);
 		jijuk.put("y", 0);
 		if (data.size() > 0) {
+			resultData = data.get(0);
 			HashMap jijukParam = new HashMap<>();
 			jijukParam.put("sido_nm", data.get(0).get("jm_sido_nm"));
 			jijukParam.put("sgg_nm", data.get(0).get("jm_sgg_nm"));
@@ -221,6 +223,8 @@ public class dopcoController {
 //		log.info("jisangMemoList:"+jisangMemoList);
 //		log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
 		mav.addObject("isCancel", isCancel);
+		mav.addObject("data", resultData);
+		mav.addObject("jijuk", jijuk);
 
 		mav.setViewName("content/dopco/compLandInfo");
 		return mav;
