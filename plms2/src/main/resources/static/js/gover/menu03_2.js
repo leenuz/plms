@@ -267,45 +267,49 @@ function loadDataTable(params) {
                     return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
                 }
             },
-			{ data: "echo_no", "defaultContent": "" } // 15
-        ],
-        columnDefs: [
-            { "className": "dt-head-center", "targets": "_all" },
-            { className: 'dt-center', "targets": "_all" },
-            { targets: [0], width: "50px" },
-            { targets: [1], width: "150px" },
-            { targets: [2], width: "400px" },
-            { targets: [3], width: "150px" },
-            { targets: [4], width: "100px" },
-            { targets: [5], width: "200px" },
-            { targets: [6], width: "150px" },
-            { targets: [7], width: "150px" },
-            { targets: [8], width: "200px" },
-            { targets: [9], width: "100px" },
-            { targets: [10], width: "200px" },
-            { targets: [11], width: "100px" },
-            { targets: [12], width: "100px" },
-            { targets: [13], width: "100px" },
-            { targets: [14], width: "100px" },
+			{ data: "echo_no", "defaultContent": "",
+				render: function(data, type, row, meta) {
+					return `<button class="viewDetailButton">상세보기</button> `;
+				}
+			}	 // 15
+		],
+		columnDefs: [
+			{ "className": "dt-head-center", "targets": "_all" },
+			{ className: 'dt-center', "targets": "_all" },
+			{ targets: [0], width: "50px" },
+			{ targets: [1], width: "150px" },
+	        { targets: [2], width: "400px" },
+	        { targets: [3], width: "150px" },
+	        { targets: [4], width: "100px" },
+	        { targets: [5], width: "200px" },
+	        { targets: [6], width: "150px" },
+	        { targets: [7], width: "150px" },
+	        { targets: [8], width: "200px" },
+	        { targets: [9], width: "100px" },
+	        { targets: [10], width: "200px" },
+	        { targets: [11], width: "100px" },
+	        { targets: [12], width: "100px" },
+	        { targets: [13], width: "100px" },
+	        { targets: [14], width: "100px" },
 			{ targets: [15], width: "100px" }
-        ]
-    });
+		]
+	});
 
-    table.on('click', 'tr', function(event) {
-        var target = $(event.target);
-        var isButtonCell = target.closest('td').index() === 14;
-
-        if (isButtonCell) {
-            return;
-        } else {
-            var data = table.row(this).data();
-            console.log(data);
-            console.log(data.idx);
-
-            var url = "/gover/feeDetail?idx=" + data.idx;
-            window.location = url;
-        }
-    });
+	table.on('click', 'tr', function(event) {
+		var target = $(event.target);
+	    var isButtonCell = target.closest('td').index() === 14;
+	
+	    if (isButtonCell) {
+	        return;
+	    } else {
+			var data = table.row(this).data();
+	        console.log(data);
+	        console.log(data.idx);
+	
+	        var url = "/gover/feeDetail?idx=" + data.idx;
+			window.location = url;
+		}
+	});
 }
 
 

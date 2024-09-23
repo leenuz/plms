@@ -350,6 +350,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 	        and gm.gm_jisa=#{jisa}
 	        </if>
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_start)">
+	            AND gpm.gp_pay_date &gt;= TO_DATE(#{pay_date_start}, 'YYYY-MM-DD')
+	        </if>
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_end)">
+	            AND gpm.gp_pay_date &lt;= TO_DATE(#{pay_date_end}, 'YYYY-MM-DD')
+	        </if>
 	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 	        ORDER BY ${orderCol} ${desc}
 	        </if>
@@ -447,6 +453,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 	        and gm.gm_jisa=#{jisa}
 	        </if>
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_start)">
+	            AND gpm.gp_pay_date &gt;= TO_DATE(#{pay_date_start}, 'YYYY-MM-DD')
+	        </if>
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_end)">
+	            AND gpm.gp_pay_date &lt;= TO_DATE(#{pay_date_end}, 'YYYY-MM-DD')
+	        </if>
 	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 	        ORDER BY ${orderCol} ${desc}
 	        </if>
@@ -543,6 +555,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        WHERE 1 = 1
 	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 	        and gm.gm_jisa=#{jisa}
+	        </if>
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_start)">
+	            AND gpm.gp_pay_date &gt;= TO_DATE(#{pay_date_start}, 'YYYY-MM-DD')
+	        </if>
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_end)">
+	            AND gpm.gp_pay_date &lt;= TO_DATE(#{pay_date_end}, 'YYYY-MM-DD')
 	        </if>
 	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 	        ORDER BY ${orderCol} ${desc}
@@ -643,6 +661,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        WHERE 1 = 1
 	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 	        and gm.gm_jisa=#{jisa}
+	        </if>
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_start)">
+	            AND gpm.gp_pay_date &gt;= TO_DATE(#{pay_date_start}, 'YYYY-MM-DD')
+	        </if>
+	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_end)">
+	            AND gpm.gp_pay_date &lt;= TO_DATE(#{pay_date_end}, 'YYYY-MM-DD')
 	        </if>
 	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 	        ORDER BY ${orderCol} ${desc}
