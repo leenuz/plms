@@ -1378,73 +1378,59 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 	</select>
 
 	<insert id="insertOfficeMng" parameterType="HashMap">
-		INSERT INTO SYS_OFFICEMNG (
-		so_ADM_SEQ
-		, so_JISA
-		, so_PMT_OFFICE
-		, so_ADM_OFFICE
-		, so_SORT_ORDER
-		,so_approve
-		) VALUES (
-		#{ADM_SEQ}
-		, #{JISA}
-		, #{PMT_OFFICE}
-		, #{ADM_OFFICE}
-		, #{ADM_SEQ}
-		,#{APPROVE}
-		)
+	    INSERT INTO SYS_OFFICEMNG (
+	        so_ADM_SEQ
+	        , so_JISA
+	        , so_PMT_OFFICE
+	        , so_ADM_OFFICE
+	        , so_SORT_ORDER
+	        , so_approve
+	    ) VALUES (
+	        #{ADM_SEQ, jdbcType=BIGINT}
+	        , #{JISA}
+	        , #{PMT_OFFICE}
+	        , #{ADM_OFFICE}
+	        , #{ADM_SEQ, jdbcType=BIGINT}
+	        , #{APPROVE}
+	    )
 	</insert>
 	
 	<select id="selectOfficeInfoAll" resultType="HashMap" parameterType="HashMap">
-	
-	
-	
 		SELECT TT.*,(row_number() over()) as NO
-FROM (	
-		SELECT T.so_idx as idx,T.so_adm_seq as ADM_SEQ, T.so_jisa as JISA, T.so_pmt_office as PMT_OFFICE, T.so_adm_office as ADM_OFFICE,T.so_approve as APPROVE
-		
-		FROM SYS_OFFICEMNG T
-		WHERE 1 = 1
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
+		FROM (	
+			SELECT 
+			T.so_idx as idx,
+			T.so_adm_seq as ADM_SEQ, 
+			T.so_jisa as JISA, 
+			T.so_pmt_office as PMT_OFFICE, 
+			T.so_adm_office as ADM_OFFICE,
+			T.so_approve as APPROVE
+			FROM SYS_OFFICEMNG T
+			WHERE 1 = 1
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
 			AND T.so_JISA = #{JISA}
-		</if>
-		ORDER BY T.so_JISA ASC, T.so_PMT_OFFICE ASC, T.so_ADM_OFFICE ASC
-		)TT
+			</if>
+			ORDER BY T.so_JISA ASC, T.so_PMT_OFFICE ASC, T.so_ADM_OFFICE ASC
+			)TT
 	</select>
 	
-	
 	<select id="selectOfficeInfo" resultType="HashMap" parameterType="HashMap">
-	
-	
-	
 		SELECT TT.*
-FROM (	
-		SELECT T.so_idx as idx,T.so_adm_seq as ADM_SEQ, T.so_jisa as JISA, T.so_pmt_office as PMT_OFFICE, T.so_adm_office as ADM_OFFICE,T.so_approve as APPROVE
-		
-		FROM SYS_OFFICEMNG T
-		WHERE 1 = 1
-		and T.so_idx=${idx}
-		
-		
-		)TT
+		FROM (	
+			SELECT T.so_idx as idx,T.so_adm_seq as ADM_SEQ, T.so_jisa as JISA, T.so_pmt_office as PMT_OFFICE, T.so_adm_office as ADM_OFFICE,T.so_approve as APPROVE
+			FROM SYS_OFFICEMNG T
+			WHERE 1 = 1
+			and T.so_idx=${idx}		
+			)TT
 	</select>
 	
 	<select id="selectOfficeHistoryList" resultType="HashMap" parameterType="HashMap">
-	
-	
-	
 		SELECT *
 		from sys_office_history
 		WHERE 1 = 1
 		and adm_seq=#{seq}::varchar
-		
-		
 	</select>
-	
-	
-	
-	
-	
+
 	
 	<select id="selectOfficeJisaCount" resultType="integer" parameterType="HashMap">
 		SELECT count(*)

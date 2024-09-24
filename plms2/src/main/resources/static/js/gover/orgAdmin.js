@@ -73,7 +73,6 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 	console.log("idx:" + idx);
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
 
-
 	/* let orgAdminRegisterPath = '/gover/orgAdminPopupAccept';
 	 var buttonElement = this;  // 일반 JavaScript로 접근
 	   console.log(buttonElement);  // 현재 버튼 element를 확인
@@ -102,7 +101,6 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 		data: datas,
 	})
 		.done(function(fragment) {
-
 			console.log("***fragment***");
 			console.log(fragment);
 			$('#approve_Popup').replaceWith(fragment);
@@ -118,7 +116,6 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 // 승인 팝업
 function showAcceptPopup() {
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
-
 
 	let orgAdminRegisterPath = '/gover/orgAdminPopupAccept';
 	var buttonElement = this;  // 일반 JavaScript로 접근
@@ -139,7 +136,6 @@ function showAcceptPopup() {
 		};
 		xhr.send();
 		console.log('orgAdminRegisterPopWrapper작동:showAcceptPopup');
-
 	}
 }
 
@@ -149,21 +145,13 @@ $('.vividBlueBtn').on('click', function() {
 	const popupOpen = document.querySelector("#registerPopup");
 	console.log($(popupOpen).html());
 	$(popupOpen).addClass("active");
-
 });
-
-/*
-$(document).on("change","#jisa",function(){
-	console.log("------jisa change------------");
-})
-*/
 
 
 $(document).ready(function() {
 	console.log("-------------orgAdmin load--------------");
 	mergeTableCells("#mainTable", 1);
 	//mergeTableCells("#mainTable",2);
-
 })
 
 
@@ -205,7 +193,7 @@ function toggleElements() {
 	}
 }
 
-
+// 관리기관 등록 팝업
 registerApprovePopEvet = () => {
 	const registerApprovePopupOpen = document.getElementById("registerPopup");
 	if (registerApprovePopupOpen) {
@@ -213,38 +201,43 @@ registerApprovePopEvet = () => {
 			.querySelectorAll(".topCloseBtn, .closeBtn")
 			.forEach(function(btn) {
 				btn.addEventListener("click", () => {
-
 					registerApprovePopupOpen.classList.remove("active");
 				});
-
 			});
 		registerApprovePopupOpen
 			.querySelectorAll(".topCloseBtn, .approveBtn")
 			.forEach(function(btn) {
 				btn.addEventListener("click", () => {
 					console.log("----------------approveBtn----------------");
+					
+					// 폼 데이터 직렬화
 					var formSerializeArray = $('#saveForm').serializeArray();
 					var object = {};
+					
+					// 직렬화된 데이터를 object로 변환
 					for (var i = 0; i < formSerializeArray.length; i++) {
 						if (formSerializeArray[i].name == "togiBunhalJisangNo") continue;
 						object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
 					}
+					
+					// 선택된 epmt_office 값 수동 추가
+					object.epmt_office = document.getElementById("epmt_office").value;
+					object.pmt_office = $("input[name='pmt_office']").val(); // pmt_office 값 추가
+
 					console.log(object);
+					
 					if (object.newCheck == "on") object.gubun = "insert";
 					else {
 						object.gubun = "modify";
 						
 						}
 					// registerApprovePopupOpen.classList.remove("active");
-
 					url = "/gover/insertOfficeMng";
 					$.ajax({
-
 						url: url,
 						type: 'POST',
 						contentType: "application/json",
 						data: JSON.stringify(object),
-
 						dataType: "json",
 						beforeSend: function(request) {
 							console.log("beforesend ........................");
@@ -253,18 +246,10 @@ registerApprovePopEvet = () => {
 						success: function(response) {
 							loadingHide();
 							console.log(response);
-							if (response.success = "Y") {
+							if (response.success == "Y") {
 								console.log("response.success Y");
-								//console.log("response.resultData length:"+response.resultData.length);
 								alert("정상적으로 등록 되었습니다.");
-								/*$("#popup_bg").show();
-								$("#popup").show(500);
-								//$("#addrPopupLayer tbody td").remove();
-								for(var i=0;i<response.resultData.length;i++){
-									$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-								}*/
-							}
-							else {
+							} else {
 								console.log("response.success N");
 							}
 						},
@@ -272,22 +257,11 @@ registerApprovePopEvet = () => {
 							alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
 							return false;
 						}
-
 					});
-
-
 				});
-
-
-
 			});
-
-
-
 	}
 };
-
-
 
 registerApprovePopEvet();
 
@@ -485,9 +459,13 @@ $(document).on("change", "#jisaSelectBox", function () {
 // 허가관청 선택 시 관리기관 목록 업데이트
 $(document).on("click", "#pmtOfficeUl li", function () {
     const selectedPmtOffice = $(this).text().trim();
-    $("#pmtOfficeText").text(selectedPmtOffice);
-	
-	// 셀렉 박스 닫기
-	$("#pmtOfficeText").removeClass("active"); // 셀렉 박스를 열고 닫는 클래스 제거
-	$("#pmtOfficeUl").removeClass("active"); // 드롭다운 목록 닫기
+    $("#pmtOfficeText").text(selectedPmtOffice); // 화면에 선택된 허가관청 표시
+    
+    // 선택한 허가관청을 hidden input 및 selectbox에 반영
+    $("input[name='pmt_office']").val(selectedPmtOffice); // pmt_office input에 값 설정
+    $("#epmt_office").val(selectedPmtOffice); // epmt_office selectbox에 값 설정
+
+    // 셀렉 박스 닫기
+    $("#pmtOfficeText").removeClass("active"); // 셀렉 박스를 열고 닫는 클래스 제거
+    $("#pmtOfficeUl").removeClass("active"); // 드롭다운 목록 닫기
 });
