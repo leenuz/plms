@@ -2166,73 +2166,57 @@ log.info("params:"+params);
 		}
 		
 		
-		//관리기관등록
-		@PostMapping(path="/insertOfficeMng")
-		public void insertOfficeMng(HttpServletRequest request, HttpServletResponse response) throws Exception {
-			String requestParams = ParameterUtil.getRequestBodyToStr(request);
-			JSONObject requestParamsObj=new JSONObject(requestParams);
-			log.info("requestParams:"+requestParams);
-			
-			ArrayList list = new ArrayList();
-			ArrayList addlist = new ArrayList();
+		@PostMapping(path = "/insertOfficeMng")
+		@ResponseBody  // JSON 응답을 위해 추가
+		public HashMap<String, Object> insertOfficeMng(HttpServletRequest request) {
+		    HashMap<String, Object> responseMap = new HashMap<>();
+		    String str_result = "Y";
 
-			ParameterParser parser = new ParameterParser(request);
+		    try {
+		        String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		        JSONObject requestParamsObj = new JSONObject(requestParams);
+		        log.info("requestParams:" + requestParams);
 
-			String afGoverNo = "";
-			String str_result = "Y";
-			ArrayList returnList = new ArrayList();
-			try {
-				HashMap params = new HashMap();
-				String JISA = requestParamsObj.getString("jisa");
-				String PMT_OFFICE = requestParamsObj.getString("pmt_office");
-				String ADM_OFFICE = requestParamsObj.getString("adm_office");
-				String GUBUN = requestParamsObj.getString("gubun");
-				
-				ArrayList tmp=(ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params);
-				log.info("tmp:"+((HashMap) tmp.get(0)).get("mx_adm_seq"));
-				
-				//String mx_adm_seq = (String) ((HashMap) ((ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params)).get(0)).get("mx_adm_seq");
-				String mx_adm_seq =((HashMap) tmp.get(0)).get("mx_adm_seq").toString();
-				
-				//params.put("ADM_SEQ", mx_adm_seq);
-				params.put("ADM_SEQ", Long.parseLong(mx_adm_seq));
-				params.put("JISA", JISA);
-				params.put("PMT_OFFICE", PMT_OFFICE);
-				params.put("ADM_OFFICE", ADM_OFFICE);
-				params.put("APPROVE", "N");
-				
-				System.out.println("insertOfficeMng params=" + params);
-				mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보
-																				// 저장
-				if ("modify".equals(GUBUN)) params.put("history_gubun","수정");
-				else params.put("history_gubun","신규등록");
-				//params.put("history_content","허가관청 = )
-				mainService.InsertQuery("goverSQL.insertOfficeMngHistory", params); // 기본정보
+		        HashMap<String, Object> params = new HashMap<>();
+		        String JISA = requestParamsObj.getString("jisa");
+		        String PMT_OFFICE = requestParamsObj.getString("pmt_office");
+		        String ADM_OFFICE = requestParamsObj.getString("adm_office");
+		        String GUBUN = requestParamsObj.getString("gubun");
 
-			} catch (Exception e) {
-				str_result = "N";
-				e.printStackTrace();
-			}
+		        // so_adm_seq 가져오기
+		        ArrayList<HashMap<String, Object>> tmp = (ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params);
+		        String mx_adm_seq = tmp.get(0).get("mx_adm_seq").toString();
+		        log.info("mx_adm_seq:" + mx_adm_seq);
 
-			HashMap map = new HashMap();
+		        // Insert params
+		        params.put("ADM_SEQ", Long.parseLong(mx_adm_seq));
+		        params.put("JISA", JISA);
+		        params.put("PMT_OFFICE", PMT_OFFICE);
+		        params.put("ADM_OFFICE", ADM_OFFICE);
+		        params.put("APPROVE", "N");
 
-			if (list != null)
-				map.put("count", list.size());
-			else
-				map.put("count", 0);
+		        log.info("insertOfficeMng params=" + params);
+		        mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보 저장
 
-			map.put("message", str_result);
-			map.put("result", list);
-			map.put("loginKey", String.valueOf(request.getSession().getAttribute("loginKey")));
+		        if ("modify".equals(GUBUN)) {
+		            params.put("history_gubun", "수정");
+		        } else {
+		            params.put("history_gubun", "신규등록");
+		        }
 
-			JSONObject jo = new JSONObject(map);
+		        // History 저장 (필요 시)
+		        // mainService.InsertQuery("goverSQL.insertOfficeMngHistory", params);
 
-			response.setCharacterEncoding("UTF-8");
-			response.setHeader("Access-Control-Allow-Origin", "*");
-			response.resetBuffer();
-			response.setContentType("application/json");
-			response.getWriter().print(jo);
-			response.getWriter().flush();
+		        responseMap.put("success", "Y");
+		        responseMap.put("message", "등록 성공");
+		    } catch (Exception e) {
+		        log.error("Error during insertOfficeMng", e);
+		        str_result = "N";
+		        responseMap.put("success", "N");
+		        responseMap.put("message", "등록 실패");
+		    }
+
+		    return responseMap;
 		}
 		
 		//점용관리기관조회

@@ -216,7 +216,6 @@ registerApprovePopEvet = () => {
 					
 					// 직렬화된 데이터를 object로 변환
 					for (var i = 0; i < formSerializeArray.length; i++) {
-						if (formSerializeArray[i].name == "togiBunhalJisangNo") continue;
 						object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
 					}
 					
@@ -226,15 +225,13 @@ registerApprovePopEvet = () => {
 
 					console.log(object);
 					
-					if (object.newCheck == "on") object.gubun = "insert";
-					else {
+					if (object.newCheck == "on") {
+						object.gubun = "insert";
+					} else {
 						object.gubun = "modify";
-						
-						}
-					// registerApprovePopupOpen.classList.remove("active");
-					url = "/gover/insertOfficeMng";
+					}
 					$.ajax({
-						url: url,
+						url: "/gover/insertOfficeMng",
 						type: 'POST',
 						contentType: "application/json",
 						data: JSON.stringify(object),
@@ -248,9 +245,11 @@ registerApprovePopEvet = () => {
 							console.log(response);
 							if (response.success == "Y") {
 								console.log("response.success Y");
-								alert("정상적으로 등록 되었습니다.");
+								alert(response.message);
+								registerApprovePopupOpen.classList.remove("active"); // 팝업 닫기
 							} else {
 								console.log("response.success N");
+								alert(response.message);
 							}
 						},
 						error: function(jqXHR, textStatus, errorThrown) {
