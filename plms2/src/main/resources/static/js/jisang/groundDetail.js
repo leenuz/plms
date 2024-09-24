@@ -120,7 +120,7 @@ $(document).ready(function () {
     }
 	                
     function sendFileToServer(formData,status) {
-        var uploadURL = "/gover/fileUpload/post"; //Upload URL
+        var uploadURL = "/jisang/fileUpload/post"; //Upload URL
         var extraData ={}; //Extra Data.
         var jqXHR = $.ajax({
 			xhr: function() {

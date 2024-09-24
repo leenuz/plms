@@ -387,35 +387,35 @@
                                 <ul class="contents lastContents" th:if="${jisangPermitList.size()==0}">
                                     <li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
                                 </ul>
-                                <ul class="contents lastContents" th:each="val:${jisangPermitList}">
-                                    <li class="content01 content">
-                                        1
-                                    </li>
-                                    <li class="content02 content">
-                                        P_000006
-                                    </li>
-                                    <li class="content03 content">
-                                        가설건축물(컨테이너) 설치
-                                    </li>
-                                    <li class="content04 content">
-                                        2017-01-09 ~ 2019-01-08
-                                    </li>
-                                    <li class="content05 content">
-                                        서울특별시 서초구 원지동 28
-                                    </li>
-                                    <li class="content06 content">
-                                        김철수
-                                    </li>
-                                    <li class="content06 content">
-                                        김철수
-                                    </li>
-                                    <li class="content06 content">
-                                        결재완료
-                                    </li>
-                                    <li class="content06 content">
-                                        <button class="viewDetailButton">문서보기</button>
-                                    </li>
-                                </ul>
+								<ul class="contents lastContents" th:each="val, iterStat : ${jisangPermitList}">
+								    <li class="content01 content">
+								        <span th:text="${iterStat.count}"></span> <!-- 순번 -->
+								    </li>
+								    <li class="content02 content">
+								        <span th:text="${val.jpm_pmt_no}"></span> <!-- 문서번호 -->
+								    </li>
+								    <li class="content03 content">
+								        <span th:text="${val.jmp_use_purpos}"></span> <!-- 사용 목적 -->
+								    </li>
+								    <li class="content04 content">
+								        <span th:text="${#dates.format(val.jpm_use_st_date, 'yyyy-MM-dd')} + ' ~ ' + ${#dates.format(val.jpm_use_ed_date, 'yyyy-MM-dd')}"></span> <!-- 사용 기간 -->
+								    </li>
+								    <li class="content05 content">
+								        <span th:text="${val.jpt_addr}"></span> <!-- 토지 주소?? -->
+								    </li>
+								    <li class="content06 content">
+								        <span th:text="${val.jpt_soyuja}"></span> <!-- 소유자?? -->
+								    </li>
+								    <li class="content06 content">
+								        <span th:text="${val.jpt_pmt_user}"></span> <!-- 사용자?? -->
+								    </li>
+								    <li class="content06 content">
+								        <span th:text="${val.jpm_pmt_status}"></span> <!-- 등록상태 -->
+								    </li>
+								    <li class="content06 content">
+								        <button class="viewDetailButton" th:text="'문서보기'" th:attr="data-echo-no=${val.jpm_echo_no}">문서보기</button> <!-- ECHO 문서보기 -->
+								    </li>
+								</ul>
                             </div>
                         </div>
                     </div>
@@ -447,35 +447,35 @@
                                 <ul class="contents " th:if="${jisangMergeList.size()==0}">
                                     <li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
                                 </ul>
-                                <ul class="contents" th:each="val:${jisangMergeList}">
-                                    <li class="content01 content">
-                                        9006412
-                                    </li>
-                                    <li class="content02 content">
-                                        J_006387
-                                    </li>
-                                    <li class="content03 content">
-                                        서울지사
-                                    </li>
-                                    <li class="content04 content">
-                                        서울특별시 서초구 서초동 1
-                                    </li>
-                                    <li class="content05 content">
-                                        답
-                                    </li>
-                                    <li class="content06 content">
-                                        2089
-                                    </li>
-                                    <li class="content06 content">
-                                        154
-                                    </li>
-                                    <li class="content06 content">
-                                        &#160
-                                    </li>
-                                    <li class="content06 content">
-                                        <button class="viewDetailButton">위치보기</button>
-                                    </li>
-                                </ul>
+								<ul class="contents" th:each="val, iterStat : ${jisangMergeList}">
+								    <li class="content01 content">
+								        <span th:text="${val.jm_jasan_no}"></span> <!-- 기존자산번호 -->
+								    </li>
+								    <li class="content02 content">
+								        <span th:text="${val.jm_jisang_no}"></span> <!-- 기존지상권번호 -->
+								    </li>
+								    <li class="content03 content">
+								        <span th:text="${val.jm_jisa}"></span> <!-- 지사 -->
+								    </li>
+								    <li class="content04 content">
+								        <span th:text="|${val.jm_sido_nm != null ? val.jm_sido_nm + ' ' : ''}${val.jm_sgg_nm != null ? val.jm_sgg_nm + ' ' : ''}${val.jm_emd_nm != null ? val.jm_emd_nm + ' ' : ''}${val.jm_ri_nm != null ? val.jm_ri_nm + ' ' : ''}${val.jm_jibun != null ? val.jm_jibun : ''}|"></span> <!-- 주소 -->
+								    </li>
+								    <li class="content05 content">
+								        <span th:text="${val.jm_jimok_text}"></span> <!-- 지목 -->
+								    </li>
+								    <li class="content06 content">
+								        <span th:text="${val.jm_jijuk_area}"></span> <!-- 지적면적 -->
+								    </li>
+								    <li class="content06 content">
+								        <span th:text="${val.jm_pyeonib_area}"></span> <!-- 편입면적 -->
+								    </li>
+								    <li class="content06 content">
+								        <span th:text="${val.jm_set_money}"></span> <!-- 설정금액 -->
+								    </li>
+								    <li class="content06 content">
+								        <button class="viewDetailButton">위치보기</button> <!-- 위치보기 -->
+								    </li>
+								</ul>
                             </div>
                         </div>
                     </div>
@@ -501,38 +501,25 @@
                                 <ul class="contents " th:if="${jisangModifyList.size()==0}">
                                     <li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
                                 </ul>
-                                <ul class="contents" th:each="val:${jisangModifyList}">
-                                    <li class="content01 content">
-                                        1
-                                    </li>
-                                    <li class="content02 content">
-                                        2024-04-02 15:40:01
-                                    </li>
-                                    <li class="content03 content">
-                                        지상권 정보
-                                    </li>
-                                    <li class="content04 content">
-                                        &#160
-                                    </li>
-                                </ul>
-
+								<ul class="contents" th:each="val, iterStat : ${jisangModifyList}">
+								    <li class="content01 content">
+								        <span th:text="${iterStat.count}"></span> <!-- 순번 -->
+								    </li>
+								    <li class="content02 content">
+								        <span th:text="${val.jm_modify_date}"></span> <!-- 변경일시 -->
+								    </li>
+								    <li class="content03 content">
+								        <span th:text="${val.jm_gubun}"></span> <!-- 구분 -->
+								    </li>
+								    <li class="content04 content">
+								        <span th:text="${val.jm_cont}"></span> <!-- 내용 -->
+								    </li>
+								</ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            <!-- <div class="card">
-			 
-			 <div class="card-header">첨부파일</div>
-			 <div class="card-body">
-				  <div id="fileUpload" class="dragAndDropDiv">Drag & Drop Files Here or Browse Files</div>
-        			<input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
-        			<div id="status"></div>
-			 </div>
-			 <div class="card-footer">
-				 
-			 </div>
-		 </div> -->
 		 
 		 <!-- 필지 첨부파일 -->
          <section class="parcelAttachments">
