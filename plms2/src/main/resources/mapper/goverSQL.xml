@@ -1466,15 +1466,13 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 		  ,#{fseq}
 		  )
 	</insert>
-	
-<<<<<<< Updated upstream
+
 	<update id="updateApproveStatus" parameterType="hashmap">
 	    UPDATE SYS_OFFICEMNG
 	    SET so_approve = 'Y'
 	    WHERE so_idx = CAST(#{idx} AS INTEGER)
 	</update>
 
-=======
 	<insert id="insertGoverUploadData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="ga_idx" keyProperty="ga_idx">
 		
 		INSERT INTO gover_atcfile 
@@ -1502,5 +1500,5 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 	
 	</select>
 	
->>>>>>> Stashed changes
+
 </mapper>
