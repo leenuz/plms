@@ -1441,5 +1441,26 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 		</if>
 		
 	</select>
+	<insert id="insertJisangUploadData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="ga_idx" keyProperty="ga_idx">
+		
+		INSERT INTO gover_atcfile 
+		(
+
+		 ga_jisang_no
+		 ,ga_seq
+		 ,ga_file_path
+		 ,ga_file_nm
+		 ,ga_file_seq
+		) 
+		 VALUES (
+		  #{goverNo}
+		  ,#{seq}::integer
+		  ,#{fpath}
+		  ,#{fname}
+		  ,#{fseq}
+		  
+		    )
+	
+	</insert>
 	
 </mapper>

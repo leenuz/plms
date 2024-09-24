@@ -628,7 +628,8 @@ $(document).on("click", "#draftSaveBtn", function() {
 	   		togiDatas.push(togiObj);
 	   	}
 		
-		const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+		//const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+		const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
 						   console.log(attachFileUls);
 		
 		var files=new Array();

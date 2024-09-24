@@ -92,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DOPCO_MASTER
 		WHERE
 		1 = 1
-		AND dom_CANCEL_YN !='Y'
+		and (dom_CANCEL_YN !='Y' or dom_cancel_yn IS NULL)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and dom.dom_jisa=#{jisa}
 		</if>
@@ -114,6 +114,66 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="length>0">
 			limit #{length} offset #{start}
 		</if>
+		
+		
+		
+
+	</select>
+	<select id="selectDopcoDetailList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		
+		select * from (
+		SELECT
+		(row_number() OVER()) AS RN,
+		(row_number() OVER()) AS no,
+		TRIM(CONCAT(dom_sido_nm, ' ', dom_sgg_nm, ' ',dom_emd_nm,' ',dom_ri_nm, ' ', dom_jibun)) AS address,
+		dom_dopco_no as DOPCO_NO,
+		dom_sido_nm as SIDO_NM,
+		dom_sgg_nm as SGG_NM,
+		dom_emd_nm as EMD_NM,
+		dom_ri_nm as RI_NM,
+		dom_jibun as JIBUN,
+		dom_addrcode as ADDRCODE,
+		dom_jisa as JISA,
+		dom_dopco_status as DOPCO_STATUS,
+		TO_CHAR(dom_DEUNGGI_DATE, 'YYYY-MM-DD') AS DEUNGGI_DATE,
+		dom_pnu as PNU,
+		dom_yongdo as YONGDO,
+		dom_pipe_name as PIPE_NAME,
+		dom_sun_gubun as SUN_GUBUN,
+		dom_JIJUK_AREA AS JIJUK_AREA,
+		dom_gover_own_yn as GOVER_OWN_YN,
+		dom_dosiplan as DOSIPLAN,
+		dom_jasan_no as JASAN_NO,
+		dom_comple_yn as COMPLE_YN,
+		dom_deunggi_no as DEUNGGI_NO,
+		dom_deunggiso as DEUNGGISO,
+		dom_jimok_text as JIMOK_TEXT,
+		TO_CHAR(dom_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE
+		FROM
+		DOPCO_MASTER
+		WHERE
+		1 = 1
+		and (dom_CANCEL_YN !='Y' or dom_cancel_yn IS NULL)
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and dom.dom_jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
+			and dom.dom_jasan_no like '%${jasan_no}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+			and dom.dom_chuideuk_date::date between #{start_date}::date and #{end_date}::date
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dopco_no)" >
+			AND dom_DOPCO_NO = #{dopco_no}
+		</if>
+		
+		) r
+		where 1=1
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '%${address}%'
+		</if>
+		
 		
 		
 		
@@ -313,6 +373,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE dom_DOPCO_NO = #DOPCO_NO#
 
 	</update>
+		<select id="selectDopcoRowDetail_Toja" resultType="HashMap" parameterType="HashMap">
+		select *
+		from DOPCO_TOJA
+		where DOPCO_NO = #{DOPCO_NO}
+	</select>
+	<select id="selectDopcoRowDetail_Right" resultType="HashMap" parameterType="HashMap">
+		select TO_CHAR(CANCLE_DATE, 'yyyy-mm-dd') AS CANCLE_DATE, DOPCO_NO, RIGHT_ADDR, TO_CHAR(RIGHT_DATE, 'yyyy-mm-dd') AS RIGHT_DATE, RIGHT_MONEY, RIGHT_NAME, RIGHT_PHONE, RIGHT_UNAME
+		from DOPCO_RIGHT
+		where DOPCO_NO = #{DOPCO_NO}
+	</select>
+		<select id="selectDopcoRowDetail_Modify" resultType="HashMap" parameterType="HashMap">
+		SELECT *
+		FROM DOPCO_MODIFY
+		WHERE DOPCO_NO = #{DOPCO_NO}
+		ORDER BY MODIFY_DATE
+	</select>
+		<select id="selectDopcoRowDetail_Files" resultType="HashMap" parameterType="HashMap">
+		SELECT *
+		FROM DOPCO_ATCFILE
+		WHERE DOPCO_NO = #{DOPCO_NO}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+			AND SEQ = #{SEQ}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(FILE_SEQ)" >
+			AND FILE_SEQ = #{FILE_SEQ}
+		</if>
+		ORDER BY SEQ DESC
+	</select>
+	
 	
 	
 </mapper>

@@ -158,18 +158,23 @@ public class dopcoController {
 		ArrayList<HashMap>  list=new ArrayList<HashMap>();
 		
 		String idx = httpRequest.getParameter("idx");
+		String dopco_no = httpRequest.getParameter("dopcoNo");
 		//String index = httpRequest.getParameter("index");
 		String isCancel = httpRequest.getParameter("cancel");
 
 		params.put("idx",idx);
 		params.put("manage_no",idx);
+		params.put("dopco_no",dopco_no);
+		params.put("DOPCO_NO",dopco_no);
 	//	params.put("index",index);
 		log.info("params:"+params);
-		list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoList", params); // 기본정보
-//		ArrayList toja_list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoRowDetail_Toja", params); // 투자오더
-//		ArrayList right_list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoRowDetail_Right", params); // 권리내역
-//		ArrayList modify_list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoRowDetail_Modify", params); // 변경이력
-//		ArrayList file_list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoRowDetail_Files", params); // 첨부파일
+		list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoDetailList", params); // 기본정보
+		ArrayList toja_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Toja", params); // 투자오더
+		ArrayList right_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Right", params); // 권리내역
+		ArrayList modify_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Modify", params); // 변경이력
+		//params.put("dopco_no", modify_list)
+		
+		ArrayList file_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Files", params); // 첨부파일
 		//ArrayList<HashMap> data = mainService.selectQuery("dopcoSQL.selectAllData",params);
 		HashMap resultData = new HashMap<>();
 		HashMap jijuk = new HashMap<>();
@@ -231,8 +236,14 @@ public class dopcoController {
 //		log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
 //		log.info("jisangMemoList:"+jisangMemoList);
 //		log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+		
+				
 		mav.addObject("isCancel", isCancel);
 		mav.addObject("data", resultData);
+		mav.addObject("toja_list", toja_list);
+		mav.addObject("right_list", right_list);
+		mav.addObject("modify_list", modify_list);
+		mav.addObject("file_list", file_list);
 		mav.addObject("jijuk", jijuk);
 log.info("resultData:"+resultData);
 		mav.setViewName("content/dopco/compLandInfo");
