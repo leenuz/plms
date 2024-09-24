@@ -601,7 +601,7 @@ $(document).on("click",".registBtn",function(){
 			url:url,
 			type:'POST',
 			contentType:"application/json",
-			data:JSON.stringify(object),
+			data:JSON.stringify(dataObj),
 			
 			dataType:"json",
 			beforeSend:function(request){
@@ -613,7 +613,7 @@ $(document).on("click",".registBtn",function(){
 				console.log(response);
 				if (response.success="Y"){
 					console.log("response.success Y");
-					console.log("response.resultData length:"+response.resultData.length);
+					//console.log("response.resultData length:"+response.resultData.length);
 					alert("정상적으로 등록 되었습니다.");
 					/*$("#popup_bg").show();
 					$("#popup").show(500);
@@ -700,6 +700,7 @@ $("#sgg_nm").val(sgg_nm);
 $("#emd_nm").val(emd_nm);
 $("#ri_nm").val(ri_nm);
 $("#pnu").val(pnu);
+$("#jibun").val(jibun);
 $("#addrcode").val(addrcode);
 
 $(".areaData input").val(area);

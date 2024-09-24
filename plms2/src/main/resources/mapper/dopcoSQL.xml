@@ -5,11 +5,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="dopcoSQL">
 <select id="selectTotalCount" parameterType="java.util.HashMap" resultType="Integer">
 		select count(*) from (
-		SELECT *,
-		TRIM(CONCAT(dom.dom_sido_nm, ' ', dom.dom_sgg_nm, ' ',dom.dom_emd_nm,' ',dom.dom_ri_nm, ' ', dom.dom_jibun)) AS address
-		FROM dopco_master dom
-		
-		WHERE 1 = 1
+		SELECT
+		(row_number() OVER()) AS RN,
+		(row_number() OVER()) AS no,
+		TRIM(CONCAT(dom_sido_nm, ' ', dom_sgg_nm, ' ',dom_emd_nm,' ',dom_ri_nm, ' ', dom_jibun)) AS address,
+		dom_dopco_no as DOPCO_NO,
+		dom_sido_nm as SIDO_NM,
+		dom_sgg_nm as SGG_NM,
+		dom_emd_nm as EMD_NM,
+		dom_ri_nm as RI_NM,
+		dom_jibun as JIBUN,
+		dom_addrcode as ADDRCODE,
+		dom_jisa as JISA,
+		dom_dopco_status as DOPCO_STATUS,
+		TO_CHAR(dom_DEUNGGI_DATE, 'YYYY-MM-DD') AS DEUNGGI_DATE,
+		dom_pnu as PNU,
+		dom_yongdo as YONGDO,
+		dom_pipe_name as PIPE_NAME,
+		dom_sun_gubun as SUN_GUBUN,
+		dom_JIJUK_AREA AS JIJUK_AREA,
+		dom_gover_own_yn as GOVER_OWN_YN,
+		dom_dosiplan as DOSIPLAN,
+		dom_jasan_no as JASAN_NO,
+		dom_comple_yn as COMPLE_YN,
+		dom_deunggi_no as DEUNGGI_NO,
+		dom_deunggiso as DEUNGGISO,
+		dom_jimok_text as JIMOK_TEXT,
+		TO_CHAR(dom_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE
+		FROM
+		DOPCO_MASTER
+		WHERE
+		1 = 1
+		AND dom_CANCEL_YN !='Y'
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and dom.dom_jisa=#{jisa}
 		</if>
@@ -19,6 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
 			and dom.dom_chuideuk_date::date between #{start_date}::date and #{end_date}::date
 		</if>
+		
 		) r
 		where 1=1
 		
@@ -27,16 +55,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		
 		
+		
+		
 	</select>
 	<select id="selectDopcoList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		
 		select * from (
-		SELECT *,
+		SELECT
+		(row_number() OVER()) AS RN,
 		(row_number() OVER()) AS no,
-		TRIM(CONCAT(dom.dom_sido_nm, ' ', dom.dom_sgg_nm, ' ',dom.dom_emd_nm,' ',dom.dom_ri_nm, ' ', dom.dom_jibun)) AS address
-		FROM dopco_master dom
-		
-		WHERE 1 = 1
+		TRIM(CONCAT(dom_sido_nm, ' ', dom_sgg_nm, ' ',dom_emd_nm,' ',dom_ri_nm, ' ', dom_jibun)) AS address,
+		dom_dopco_no as DOPCO_NO,
+		dom_sido_nm as SIDO_NM,
+		dom_sgg_nm as SGG_NM,
+		dom_emd_nm as EMD_NM,
+		dom_ri_nm as RI_NM,
+		dom_jibun as JIBUN,
+		dom_addrcode as ADDRCODE,
+		dom_jisa as JISA,
+		dom_dopco_status as DOPCO_STATUS,
+		TO_CHAR(dom_DEUNGGI_DATE, 'YYYY-MM-DD') AS DEUNGGI_DATE,
+		dom_pnu as PNU,
+		dom_yongdo as YONGDO,
+		dom_pipe_name as PIPE_NAME,
+		dom_sun_gubun as SUN_GUBUN,
+		dom_JIJUK_AREA AS JIJUK_AREA,
+		dom_gover_own_yn as GOVER_OWN_YN,
+		dom_dosiplan as DOSIPLAN,
+		dom_jasan_no as JASAN_NO,
+		dom_comple_yn as COMPLE_YN,
+		dom_deunggi_no as DEUNGGI_NO,
+		dom_deunggiso as DEUNGGISO,
+		dom_jimok_text as JIMOK_TEXT,
+		TO_CHAR(dom_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE
+		FROM
+		DOPCO_MASTER
+		WHERE
+		1 = 1
+		AND dom_CANCEL_YN !='Y'
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and dom.dom_jisa=#{jisa}
 		</if>

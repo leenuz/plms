@@ -1602,7 +1602,7 @@ public class goverController {
 			// 확인
 			String JISA = requestParamsObj.getString("jisa"); // 지사
 			String YONGDO = requestParamsObj.getString("yongdo"); // 용도
-			String PIPE_NAME = requestParamsObj.getString("pipe_name"); // 관로명
+			String PIPE_NAME = requestParamsObj.has("pipe_name")?requestParamsObj.getString("pipe_name"):""; // 관로명
 			String PIPE_METER = requestParamsObj.getString("pipe_meter"); // 관경
 			String PIPE_METER2 = requestParamsObj.getString("pipe_meter2"); // 관경
 			String SUN_GUBUN = requestParamsObj.getString("sun_gubun"); // 단/복선

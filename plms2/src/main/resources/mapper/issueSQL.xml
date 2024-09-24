@@ -924,5 +924,140 @@ WHERE 1 = 1
           , DEPTH3_CODE ASC
    
 	</select>
+	<select id="selectIssueCodeListDepth" resultType="HashMap" parameterType="HashMap">
+      
+SELECT A.CODE,
+       A.CODE_DEPTH,
+       A.CODE_NAME,
+       A.REGISTED_YN,
+       A.PERMITTED_YN,
+       A.CASE_TEXT,
+       A.ETC_TEXT,
+       (SELECT COUNT(*) FROM PLMS_ISSUE_CODE S WHERE SUBSTR(S.CODE, 1, 4) = SUBSTR(A.CODE, 1, 4) AND S.CODE_DEPTH = 2) AS SUB_1_CNT,
+       (SELECT COUNT(*) FROM PLMS_ISSUE_CODE S WHERE SUBSTR(S.CODE, 1, 6) = SUBSTR(A.CODE, 1, 6) AND S.CODE_DEPTH = 3) AS SUB_2_CNT
+  FROM PLMS_ISSUE_CODE A
+ WHERE A.CODE_DEPTH = #{CODE_DEPTH}
+      
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DEPTH1)" >
+			AND SUBSTR(A.CODE, 1, 4) = SUBSTR(#{DEPTH1}, 1, 4)
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DEPTH2)" >
+			AND SUBSTR(A.CODE, 1, 6) = SUBSTR(#{DEPTH2}, 1, 6)
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(REGISTED_YN)" >
+			AND A.REGISTED_YN = #{REGISTED_YN}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PERMITTED_YN)" >
+			AND A.PERMITTED_YN = #{PERMITTED_YN}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(IS_CODE_ADMIN)" >
+			AND SUBSTR(A.CODE, 0, 1) = #{IS_CODE_ADMIN}
+		</if>
+ ORDER BY SUBSTR(A.CODE , 1, 1) ASC
+          , A.REGISTED_YN DESC
+          , A.PERMITTED_YN DESC
+          , A.CODE ASC
+	</select>
+	
+	<select id="selectIssueCodeDetail" resultType="HashMap" parameterType="HashMap">
+   
+	SELECT A.CODE
+	       , A.CODE_DEPTH
+	       , (
+	        SELECT S.CODE_NAME
+	          FROM PLMS_ISSUE_CODE S
+	         WHERE S.CODE = CONCAT(SUBSTR(A.CODE, 1, 4), '0000')
+	) AS DEPTH1_NAME
+	       , (
+	        SELECT S.CODE_NAME
+	          FROM PLMS_ISSUE_CODE S
+	         WHERE S.CODE = CONCAT(SUBSTR(A.CODE, 1, 6), '00')
+	) AS DEPTH2_NAME
+	       , A.CODE_NAME
+	       , A.REGISTED_YN
+	       , A.PERMITTED_YN
+	       , A.CASE_TEXT
+	       , A.ETC_TEXT
+	  FROM PLMS_ISSUE_CODE A
+	 WHERE A.CODE = #{CODE}
+	    
+	</select>
+	
+	<select id="selectIssueCodeManualList" resultType="HashMap" parameterType="HashMap">
+      
+SELECT A.CODE
+       , A.FILE_NM
+       , A.FILE_PATH
+       , A.SEQ
+       , A.FILE_SEQ
+       , A.FILE_VERSION
+       , A.FILE_REGDATE
+       , A.MANUAL_TITLE
+  FROM (
+        SELECT S.CODE
+               , MAX(TO_NUMBER(S.FILE_VERSION) * 10) / 10  AS FILE_VERSION
+               , S.MANUAL_TITLE
+          FROM PLMS_ISSUE_CODE_ATC_FILE S
+         WHERE S.CODE = #{CODE}
+         GROUP BY S.CODE
+                  , S.MANUAL_TITLE
+) T
+       , PLMS_ISSUE_CODE_ATC_FILE A
+ WHERE A.CODE = T.CODE
+   AND A.FILE_VERSION  = T.FILE_VERSION
+   AND A.MANUAL_TITLE  = T.MANUAL_TITLE
+ ORDER BY A.SEQ DESC
+     
+	</select>
+	<update id="updateIssueCodeText" parameterType="HashMap">
+   
+UPDATE PLMS_ISSUE_CODE
+   SET CASE_TEXT = #{CASE_TEXT}
+     , ETC_TEXT = #{ETC_TEXT}
+ WHERE CODE = #{CODE}
+      
+	</update>
+	<update id="updateSeqFileIssue" parameterType="HashMap">  
+		         
+			UPDATE PLMS_ISSUE_CODE_ATC_FILE SET
+				 CODE = #{CODE}
+				 , FILE_VERSION = #{FILE_VERSION}
+				 , MANUAL_TITLE = #{MANUAL_TITLE}
+			WHERE SEQ = #{FILESEQ}
+		
+	</update>
+	<select id="selectIssueManualFileVersionList" resultType="HashMap" parameterType="HashMap">
+		
+SELECT CODE
+       , FILE_NM
+       , FILE_PATH
+       , SEQ
+       , FILE_SEQ
+       , FILE_VERSION
+       , FILE_REGDATE
+       , MANUAL_TITLE
+  FROM PLMS_ISSUE_CODE_ATC_FILE
+ WHERE CODE = #{CODE}
+   AND MANUAL_TITLE = #{MANUAL_TITLE}
+ ORDER BY FILE_VERSION DESC
+	
+	</select>
+	<delete id="deleteIssueManualBySeq" parameterType="HashMap">
+		 
+DELETE FROM PLMS_ISSUE_CODE_ATC_FILE
+ WHERE FILE_SEQ = #{FILE_SEQ}
+   AND SEQ = #{SEQ}
+   AND CODE = #{CODE}
+		
+	</delete>
+
+	<delete id="deleteIssueManualByTitle" parameterType="HashMap">
+		 
+DELETE FROM PLMS_ISSUE_CODE_ATC_FILE
+ WHERE CODE = #{CODE}
+   AND MANUAL_TITLE = #{MANUAL_TITLE}
+		
+
+	</delete>
 	
 </mapper>
