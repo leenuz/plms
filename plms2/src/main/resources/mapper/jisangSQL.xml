@@ -2648,11 +2648,12 @@ VALUES (
 		
 		
 	</select>
-		<select id="selectJisangRowDetail_Merge" resultType="HashMap" parameterType="HashMap">
+	
+	<select id="selectJisangRowDetail_Merge" resultType="HashMap" parameterType="HashMap">
 		SELECT *
 		FROM JISANG_MERGE
-		WHERE REP_JISANG_NO = #{JISANG_NO}
-		ORDER BY JISANG_NO ASC
+		WHERE jm_REP_JISANG_NO = #{JISANG_NO}
+		ORDER BY jm_JISANG_NO ASC
 	</select>
 	
 </mapper>
