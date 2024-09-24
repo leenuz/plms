@@ -72,6 +72,10 @@ public class dopcoController {
 		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 		ArrayList<HashMap> addressList = mainService.selectQuery("jisangSQL.bunhalAddressSearch",params);
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+		
+		
+		
+		
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("content/dopco/compLandReg");
 		mav.addObject("addressList",addressList);
@@ -161,20 +165,25 @@ public class dopcoController {
 		params.put("manage_no",idx);
 	//	params.put("index",index);
 		log.info("params:"+params);
-		
-		ArrayList<HashMap> data = mainService.selectQuery("dopcoSQL.selectAllData",params);
+		list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoList", params); // 기본정보
+//		ArrayList toja_list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoRowDetail_Toja", params); // 투자오더
+//		ArrayList right_list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoRowDetail_Right", params); // 권리내역
+//		ArrayList modify_list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoRowDetail_Modify", params); // 변경이력
+//		ArrayList file_list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoRowDetail_Files", params); // 첨부파일
+		//ArrayList<HashMap> data = mainService.selectQuery("dopcoSQL.selectAllData",params);
 		HashMap resultData = new HashMap<>();
 		HashMap jijuk = new HashMap<>();
 		jijuk.put("x", 0);
 		jijuk.put("y", 0);
-		if (data.size() > 0) {
-			resultData = data.get(0);
+		
+		if (list.size() > 0) {
+			resultData = list.get(0);
 			HashMap jijukParam = new HashMap<>();
-			jijukParam.put("sido_nm", data.get(0).get("jm_sido_nm"));
-			jijukParam.put("sgg_nm", data.get(0).get("jm_sgg_nm"));
-			jijukParam.put("emd_nm", data.get(0).get("jm_emd_nm"));
-			jijukParam.put("ri_nm", data.get(0).get("jm_ri_nm"));
-			jijukParam.put("jibun", data.get(0).get("jm_jibun"));
+			jijukParam.put("sido_nm", list.get(0).get("sido_nm"));
+			jijukParam.put("sgg_nm", list.get(0).get("sgg_nm"));
+			jijukParam.put("emd_nm", list.get(0).get("emd_nm"));
+			jijukParam.put("ri_nm", list.get(0).get("ri_nm"));
+			jijukParam.put("jibun", list.get(0).get("jibun"));
 
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
 			if (jijukList.size() > 0) {
@@ -225,7 +234,7 @@ public class dopcoController {
 		mav.addObject("isCancel", isCancel);
 		mav.addObject("data", resultData);
 		mav.addObject("jijuk", jijuk);
-
+log.info("resultData:"+resultData);
 		mav.setViewName("content/dopco/compLandInfo");
 		return mav;
 	}
@@ -822,6 +831,77 @@ public class dopcoController {
 			response.getWriter().flush();
 		}
 	
-	
+//	// 회사토지 상세조회
+//	
+//		public void selectDopcoDetailList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//			ArrayList list = new ArrayList();
+//			ArrayList toja_list = new ArrayList();
+//			ArrayList right_list = new ArrayList();
+//			ArrayList modify_list = new ArrayList();
+//			ArrayList file_list = new ArrayList();
+//
+//			HashMap map = new HashMap();
+//			ParameterParser parser = new ParameterParser(request);
+//			String dopcoNo = parser.getString("dopcoNo", "");
+//
+//			String str_result = "Y";
+//			try {
+//
+//				Map params = new HashMap();
+//				params.put("DOPCO_NO", dopcoNo);
+//				params.put("FILENO", dopcoNo);
+//
+//				list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoList", params); // 기본정보
+//				toja_list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoRowDetail_Toja", params); // 투자오더
+//				right_list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoRowDetail_Right", params); // 권리내역
+//				modify_list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoRowDetail_Modify", params); // 변경이력
+//				file_list = (ArrayList) Database.getInstance().queryForList("Json.selectDopcoRowDetail_Files", params); // 첨부파일
+//				// System.out.println(list);
+//				// System.out.println("pmt_list="+pmt_list);
+//
+//				String userCd = String.valueOf(request.getSession().getAttribute("userId"));
+//				String userPwd = String.valueOf(request.getSession().getAttribute("userPwd"));
+//				String userId = "";
+//
+//				params.put("EMPCD", userCd);
+//				ArrayList list4 = (ArrayList) Database.getInstanceMember().queryForList("Json.selectUserId", params); // UserId
+//
+//				if (list4.size() > 0) {
+//					userId = (String) ((HashMap) list4.get(0)).get("USERID");
+//				}
+//
+//				map.put("userId", userId);
+//				map.put("userCd", userCd);
+//				map.put("userPwd", userPwd);
+//
+//			} catch (Exception e) {
+//				str_result = "N";
+//				e.printStackTrace();
+//			}
+//
+//			if (list != null)
+//				map.put("count", list.size());
+//			else
+//				map.put("count", 0);
+//
+//			map.put("message", str_result);
+//			map.put("result", list);
+//			map.put("result_toja", toja_list);
+//			map.put("result_right", right_list);
+//			map.put("result_modify", modify_list);
+//			map.put("result_file", file_list);
+//			map.put("userName", String.valueOf(request.getSession().getAttribute("userName")));
+//			map.put("userCode", String.valueOf(request.getSession().getAttribute("userId")));
+//			map.put("key", String.valueOf(request.getSession().getAttribute("loginKey")));
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//		}
 	
 }

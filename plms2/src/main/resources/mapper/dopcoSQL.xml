@@ -127,6 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 		and dom_idx=cast(#{idx} as integer)
 		</if>
+		and 
 		
 	</select>
 	
