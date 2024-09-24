@@ -479,13 +479,14 @@ function moveToCityHall(x,y) {
 	}
 }
 
-// 지사 선택 시 허가관청 목록 업데이트
+// 지사 선택 시 허가관청 목록 업데이트를 위한 change 이벤트 트리거
 $(document).on("click", "#jisaUl li", function () {
     const selectedJisa = $(this).text().trim();
     $("#jisaText").text(selectedJisa);
     $("#privateUseSelectBox01_1").val(selectedJisa).change(); // change 이벤트 트리거
 });
 
+// 지사 선택 시 허가관청 목록 업데이트
 $(document).on("change", "#privateUseSelectBox01_1", function () {
     const selectedJisa = $("#privateUseSelectBox01_1").val();
     console.log("지사 선택에 따라 허가관청 목록 업데이트");

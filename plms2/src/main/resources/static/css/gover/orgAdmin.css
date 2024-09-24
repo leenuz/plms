@@ -68,7 +68,7 @@ table {
   font-size: 13px;
   font-weight: 600;
   /* 삭제버튼은 display:none */
-  display: none;
+  /* display: none; */
 }
 
 #orgAdmin .contWrap .btnWrap {

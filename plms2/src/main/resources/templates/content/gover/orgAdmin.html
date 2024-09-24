@@ -148,7 +148,7 @@
 										<div class="btnBox" th:if="${row.approve=='N'}">
 											<button class="pendingApprovalBtn">승인대기</button>
 										</div>
-										<div class="btnBox">
+										<div class="btnBox" th:if="${row.approve=='Y'}">
 											<button class="deleteBtn">삭제</button>
 										</div>
 									</div>
@@ -243,6 +243,8 @@
 		<link rel="stylesheet" as="style" crossorigin
 			href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 		<link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
+		
+		<!--관리기관 등록 팝업-->
 		<div id="registerPopup" class="register_Popup ">
 			<div class="popupWrap">
 				<!-- 관리기관 등록 가능한 팝업 (승인요청버튼)-->
@@ -306,7 +308,7 @@
 							<li class="register_title_th8"><input type="text" name="adm_office" /></li>
 						</ul>
 					</div>
-
+					
 					<!-- 버튼 -->
 					<div class="registerbtnWrap">
 						<button class="closeBtn finalBtn">닫기</button>
@@ -315,6 +317,8 @@
 				</form>
 			</div>
 		</div>
+		
+		<!--관리기관 승인 팝업-->
 		<div id="approve_Popup" class="">
 			<div class="popupWrap">
 				<h2>

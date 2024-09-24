@@ -465,121 +465,9 @@ public class goverController {
 			
 			return mav;
 		}
-
-		@GetMapping(path="/orgAdmin") //http://localhost:8080/api/get/dbTest
-	    public ModelAndView orgAdmin(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
-////			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
-//			String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
-//			JSONObject requestParamsObj=new JSONObject(requestParams);
-//			log.info("requestParams:"+requestParams);
-//			
-			ArrayList list = new ArrayList();
-			ArrayList addlist = new ArrayList();
-			ArrayList<HashMap> jisalist=new ArrayList();
-			ParameterParser parser = new ParameterParser(httpRequest);
-
-			String str_result = "Y";
-			ArrayList returnList = new ArrayList();
-			try {
-
-				HashMap params = new HashMap();
-
-//				String JISA = requestParamsObj.getString("JISA");
-				params.put("JISA", "");
-				int count=(int)mainService.selectCountQuery("goverSQL.selectOfficeJisaCount", params);
-				list = (ArrayList) mainService.selectQuery("goverSQL.selectOfficeInfoAll", params);
-				 jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
-
-			} catch (Exception e) {
-				str_result = "N";
-				e.printStackTrace();
-			}
-
-			HashMap map = new HashMap();
-			
-			ModelAndView mav=new ModelAndView();
-			mav.addObject("list",list);
-			mav.addObject("jisaList",jisalist);
-			log.info("jisalist:"+jisalist);
-			mav.setViewName("content/gover/orgAdmin");
-			return mav;
-		}
-
-		@GetMapping(path="/orgAdminPopupAccept") //http://localhost:8080/api/get/dbTest
-	    public ModelAndView orgAdminPopupAccept(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
-			ModelAndView mav=new ModelAndView();
-			mav.setViewName("content/gover/orgAdminPopupAccept");
-			return mav;
-		}
-
-		@GetMapping(path="/orgAdminPopupMod") //http://localhost:8080/api/get/dbTest
-	    public ModelAndView orgAdminPopupMod(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-			HashMap params = new HashMap();
-			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
-
-			//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
-			ModelAndView mav=new ModelAndView();
-			mav.addObject("jisaList",jisalist);
-
-			mav.setViewName("content/gover/orgAdminPopupMod");
-			return mav;
-		}
-
-		@GetMapping(path="/orgAdminPopupReg") //http://localhost:8080/api/get/dbTest
-	    public ModelAndView orgAdminPopupReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-			HashMap params = new HashMap();
-			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
-
-//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
-			ModelAndView mav=new ModelAndView();
-			mav.addObject("jisaList",jisalist);
-
-			mav.setViewName("content/gover/orgAdminPopupReg");
-			return mav;
-		}
-
-		@GetMapping(path="/orgAdminPopupRegCancel") //http://localhost:8080/api/get/dbTest
-	    public ModelAndView orgAdminPopupRegCancel(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
-			ModelAndView mav=new ModelAndView();
-			mav.setViewName("content/gover/orgAdminPopupRegCancel");
-			return mav;
-		}
-
-		@GetMapping(path="/masterReg") //http://localhost:8080/api/get/dbTest
-	    public ModelAndView masterReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
-			
-			ModelAndView mav = new ModelAndView();
-			HashMap params = new HashMap();
-			
-			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
-			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
-			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
-			
-			log.info("jisaList:"+jisaList);
-			log.info("jimokList:"+jimokList);
-			
-			mav.addObject("jisaList",jisaList);
-			mav.addObject("jimokList",jimokList);
-			mav.addObject("usePurposlist",usePurposlist);
-			
-			mav.setViewName("content/gover/masterReg");
-			return mav;
-		}
-		
 		
 		@RequestMapping(value="/menu03_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
-		public ResponseEntity<?> datatableList03_1(HttpServletRequest req, HttpServletResponse res) throws Exception {
-
-			
+		public ResponseEntity<?> datatableList03_1(HttpServletRequest req, HttpServletResponse res) throws Exception {			
 			//일반웹형식
 			Properties requestParams = CommonUtil.convertToProperties(req);
 
@@ -627,11 +515,7 @@ public class goverController {
 			params.put("save_status",save_status);
 			params.put("idx", idx);
 			params.put("address", address);
-
-//			String[] right_arr= {};
-//			right_arr=right_type.split(",");
-//			params.put("right_type", right_arr);
-
+			
 			params.put("manageYn","Y");
 			if (orderColumn==null || orderColumn.equals("null")) {
 				log.info("----------null--------");
@@ -663,95 +547,7 @@ public class goverController {
 			JSONObject obj =new JSONObject(resultmap);
 			log.info("obj:"+obj);
 			return ResponseEntity.ok(obj.toString());
-
 		}
-		
-		// masterEdit 상세 조회
-		@GetMapping(path="/masterEdit") //http://localhost:8080/api/get/dbTest
-	    public ModelAndView masterEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-			ModelAndView mav=new ModelAndView();
-			
-			log.info("점용 마스터 수정 컨트롤러 동작");
-			HashMap params = new HashMap();
-			ArrayList<HashMap>  list=new ArrayList<HashMap>();
-			
-			String idx = httpRequest.getParameter("idx");
-			String index = httpRequest.getParameter("index");
-			
-			params.put("idx",idx);
-			params.put("gover_no",idx);
-			params.put("index",index);
-			log.info("params:"+params);
-
-			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
-			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
-			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
-			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
-			ArrayList<HashMap> goverMemoList = mainService.selectQuery("goverSQL.selectMemoList",params);
-			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
-			ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
-			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
-			
-		    // goverPnuList 크기 구하기
-		    int goverPnuListSize = goverPnuList.size();
-			
-			log.info("data:"+data.get(0));
-			log.info("jisaList:"+jisaList);
-			log.info("goverModifyList:"+goverModifyList);
-			log.info("atcFileList:"+atcFileList);
-			log.info("goverMemoList:"+goverMemoList);
-			log.info("jimokList:"+jimokList);
-			log.info("goverPnuList:"+goverPnuList);
-			log.info("goverPnuListSize:" + goverPnuListSize);
-			log.info("usePurposlist:" + usePurposlist);
-//			log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
-
-			mav.addObject("resultData",data.get(0));
-			mav.addObject("jisaList",jisaList);
-	  		mav.addObject("goverModifyList",goverModifyList);
-	  		mav.addObject("atcFileList",atcFileList);
-	  		mav.addObject("memoList",goverMemoList);
-	  		mav.addObject("jimokList",jimokList);
-	  		mav.addObject("pnuList",goverPnuList);
-	  		mav.addObject("pnuListSize", goverPnuListSize);
-	  		mav.addObject("usePurposlist",usePurposlist);
-  			
-  			mav.setViewName("content/gover/masterEdit");
-  			return mav;
-	    }
-		
-		// 소속 토지 정보를 제공하는 API
-		@GetMapping("/getGoverPnuList")
-		public ResponseEntity<?> getGoverPnuList(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		        // 요청된 idx에 맞는 소속 토지 정보를 조회
-		        String idx = request.getParameter("idx");
-
-		        log.info("-----------getGoverPnuList 동작-------------");
-		        if (idx == null || idx.isEmpty()) {
-		            return ResponseEntity.badRequest().body("idx 없음");
-		        }
-
-		        HashMap<String, Object> params = new HashMap<>();
-		        params.put("idx", idx);
-
-		        // 소속 토지 정보 조회 (SQL 매퍼 또는 서비스 호출)
-		        ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList", params);
-
-		        log.info("goverPnuList: " + goverPnuList);
-		        // 조회 결과가 없을 경우 빈 리스트 반환
-		        if (goverPnuList == null || goverPnuList.isEmpty()) {
-		            return ResponseEntity.noContent().build();
-		        }
-
-		        // 결과를 JSON으로 반환
-		        HashMap<String, Object> resultMap = new HashMap<>();
-		        resultMap.put("data", goverPnuList);
-
-		        // 성공적으로 조회된 데이터를 JSON으로 반환
-		        JSONObject jsonResponse = new JSONObject(resultMap);
-		        return ResponseEntity.ok(jsonResponse.toString());
-		}
-
 		
 		@RequestMapping(value="/menu03_2DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 		public ResponseEntity<?> datatableList03_2(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -763,8 +559,7 @@ public class goverController {
 			Enumeration<String> obj1 = req.getParameterNames();
 			int cnt=0;
 
-			while (obj1.hasMoreElements())
-			{
+			while (obj1.hasMoreElements()) {
 				String paramName = obj1.nextElement();
 				String paramValue = req.getParameter(paramName);
 				returnHash.put(paramName, paramValue);
@@ -843,83 +638,6 @@ public class goverController {
 			
 			return ResponseEntity.ok(obj.toString());
 		}
-
-		//feeDetail  상세 조회
-		@GetMapping(path="/feeDetail") //http://localhost:8080/api/get/dbTest
-	    public ModelAndView feeDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-			log.info("feeDetail 컨트롤러 동작");
-			
-			ModelAndView mav=new ModelAndView();
-			
-			String idx = httpRequest.getParameter("idx");
-			String index = httpRequest.getParameter("index");
-			
-		    HashMap<String, String> params = new HashMap<>();
-		    params.put("idx", idx);
-		    params.put("gover_no", idx);
-		    params.put("index", index);
-		    log.info("params:" + params);
-
-		    // 데이터 조회
-			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
-			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
-			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
-			ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
-			ArrayList<HashMap> goverPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
-			ArrayList<HashMap> repFlagPnu = mainService.selectQuery("goverSQL.selectRepFlagPnu",params);
-
-			// 조회 데이터 로그
-			log.info("data:"+data.get(0));
-			log.info("goverModifyList:"+goverModifyList);
-			log.info("atcFileList:"+atcFileList);
-			log.info("goverPnuList:"+goverPnuList);
-			log.info("goverPermitList:"+goverPermitList);
-			log.info("repFlagPnu:"+repFlagPnu);
-
-			// 각 리스트가 null 또는 비어있는 경우 처리
-			if (data == null || data.isEmpty()) {
-		        log.error("No data found for idx: " + idx);
-		        mav.addObject("resultData", new HashMap<>());
-		    } else {
-		        mav.addObject("resultData", data.get(0));
-		    }
-		    
-		    // 각 리스트가 null 또는 비어있는 경우 처리
-		    if (goverModifyList == null || goverModifyList.isEmpty()) {
-		        mav.addObject("goverModifyList", new ArrayList<>());
-		    } else {
-		        mav.addObject("goverModifyList", goverModifyList);
-		    }
-		    
-		    if (atcFileList == null || atcFileList.isEmpty()) {
-		        mav.addObject("atcFileList", new ArrayList<>());
-		    } else {
-		        mav.addObject("atcFileList", atcFileList);
-		    }
-		    
-		    if (goverPnuList == null || goverPnuList.isEmpty()) {
-		        mav.addObject("goverPnuList", new HashMap<>());
-		    } else {
-		        mav.addObject("goverPnuList", goverPnuList);
-		    }
-		    
-		    if (goverPermitList == null || goverPermitList.isEmpty()) {
-		        mav.addObject("goverPermitList", new HashMap<>());
-		        mav.addObject("goverPermitListAll", new ArrayList<>());
-		    } else {
-		        mav.addObject("goverPermitList", goverPermitList.get(0));
-		        mav.addObject("goverPermitListAll", goverPermitList);
-		    }
-		    
-		    if (repFlagPnu == null || repFlagPnu.isEmpty()) {
-		        mav.addObject("repFlagPnu", new HashMap<>());
-		    } else {
-		        mav.addObject("repFlagPnu", repFlagPnu.get(0));
-		    }
-		    
-  			mav.setViewName("content/gover/feeDetail");
-  			return mav;
-	    }
 		
 		@RequestMapping(value="/menu03_3DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 		public ResponseEntity<?> datatableList03_3(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -1013,6 +731,164 @@ public class goverController {
 			
 			return ResponseEntity.ok(obj.toString());
 		}
+		
+		@GetMapping(path="/masterReg") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView masterReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			
+			ModelAndView mav = new ModelAndView();
+			HashMap params = new HashMap();
+			
+			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
+			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
+			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
+			
+			log.info("jisaList:"+jisaList);
+			log.info("jimokList:"+jimokList);
+			
+			mav.addObject("jisaList",jisaList);
+			mav.addObject("jimokList",jimokList);
+			mav.addObject("usePurposlist",usePurposlist);
+			
+			mav.setViewName("content/gover/masterReg");
+			return mav;
+		}
+		
+		
+		
+		
+		// masterEdit 상세 조회
+		@GetMapping(path="/masterEdit") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView masterEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			ModelAndView mav=new ModelAndView();
+			
+			log.info("점용 마스터 수정 컨트롤러 동작");
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			
+			String idx = httpRequest.getParameter("idx");
+			String index = httpRequest.getParameter("index");
+			
+			params.put("idx",idx);
+			params.put("gover_no",idx);
+			params.put("index",index);
+			log.info("params:"+params);
+
+			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
+			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
+			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
+			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
+			ArrayList<HashMap> goverMemoList = mainService.selectQuery("goverSQL.selectMemoList",params);
+			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
+			ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
+			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
+			
+		    // goverPnuList 크기 구하기
+		    int goverPnuListSize = goverPnuList.size();
+			
+			log.info("data:"+data.get(0));
+			log.info("jisaList:"+jisaList);
+			log.info("goverModifyList:"+goverModifyList);
+			log.info("atcFileList:"+atcFileList);
+			log.info("goverMemoList:"+goverMemoList);
+			log.info("jimokList:"+jimokList);
+			log.info("goverPnuList:"+goverPnuList);
+			log.info("goverPnuListSize:" + goverPnuListSize);
+			log.info("usePurposlist:" + usePurposlist);
+
+			mav.addObject("resultData",data.get(0));
+			mav.addObject("jisaList",jisaList);
+	  		mav.addObject("goverModifyList",goverModifyList);
+	  		mav.addObject("atcFileList",atcFileList);
+	  		mav.addObject("memoList",goverMemoList);
+	  		mav.addObject("jimokList",jimokList);
+	  		mav.addObject("pnuList",goverPnuList);
+	  		mav.addObject("pnuListSize", goverPnuListSize);
+	  		mav.addObject("usePurposlist",usePurposlist);
+  			
+  			mav.setViewName("content/gover/masterEdit");
+  			return mav;
+	    }
+
+
+		//feeDetail  상세 조회
+		@GetMapping(path="/feeDetail") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView feeDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			log.info("feeDetail 컨트롤러 동작");
+			
+			ModelAndView mav=new ModelAndView();
+			
+			String idx = httpRequest.getParameter("idx");
+			String index = httpRequest.getParameter("index");
+			
+		    HashMap<String, String> params = new HashMap<>();
+		    params.put("idx", idx);
+		    params.put("gover_no", idx);
+		    params.put("index", index);
+		    log.info("params:" + params);
+
+		    // 데이터 조회
+			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
+			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
+			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
+			ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
+			ArrayList<HashMap> goverPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
+			ArrayList<HashMap> repFlagPnu = mainService.selectQuery("goverSQL.selectRepFlagPnu",params);
+
+			// 조회 데이터 로그
+			log.info("data:"+data.get(0));
+			log.info("goverModifyList:"+goverModifyList);
+			log.info("atcFileList:"+atcFileList);
+			log.info("goverPnuList:"+goverPnuList);
+			log.info("goverPermitList:"+goverPermitList);
+			log.info("repFlagPnu:"+repFlagPnu);
+
+			// 각 리스트가 null 또는 비어있는 경우 처리
+			if (data == null || data.isEmpty()) {
+		        log.error("No data found for idx: " + idx);
+		        mav.addObject("resultData", new HashMap<>());
+		    } else {
+		        mav.addObject("resultData", data.get(0));
+		    }
+		    
+		    // 각 리스트가 null 또는 비어있는 경우 처리
+		    if (goverModifyList == null || goverModifyList.isEmpty()) {
+		        mav.addObject("goverModifyList", new ArrayList<>());
+		    } else {
+		        mav.addObject("goverModifyList", goverModifyList);
+		    }
+		    
+		    if (atcFileList == null || atcFileList.isEmpty()) {
+		        mav.addObject("atcFileList", new ArrayList<>());
+		    } else {
+		        mav.addObject("atcFileList", atcFileList);
+		    }
+		    
+		    if (goverPnuList == null || goverPnuList.isEmpty()) {
+		        mav.addObject("goverPnuList", new HashMap<>());
+		    } else {
+		        mav.addObject("goverPnuList", goverPnuList);
+		    }
+		    
+		    if (goverPermitList == null || goverPermitList.isEmpty()) {
+		        mav.addObject("goverPermitList", new HashMap<>());
+		        mav.addObject("goverPermitListAll", new ArrayList<>());
+		    } else {
+		        mav.addObject("goverPermitList", goverPermitList.get(0));
+		        mav.addObject("goverPermitListAll", goverPermitList);
+		    }
+		    
+		    if (repFlagPnu == null || repFlagPnu.isEmpty()) {
+		        mav.addObject("repFlagPnu", new HashMap<>());
+		    } else {
+		        mav.addObject("repFlagPnu", repFlagPnu.get(0));
+		    }
+		    
+  			mav.setViewName("content/gover/feeDetail");
+  			return mav;
+	    }
+		
 
 		//useDetail  상세 조회
 		@GetMapping(path="/useDetail") //http://localhost:8080/api/get/dbTest
@@ -1051,16 +927,14 @@ public class goverController {
 		//occupancyEndReg  상세 조회
 		@GetMapping(path="/occupancyEndReg") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView occupancyEndReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-
 			ModelAndView mav=new ModelAndView();
 			
 			log.info("occupancyEndReg 컨트롤러 동작");
 			
-			HashMap params = new HashMap();
-			
 			String idx = httpRequest.getParameter("idx");
 			String index = httpRequest.getParameter("index");
 			
+			HashMap params = new HashMap();
 			params.put("idx",idx);
 			params.put("gover_no",idx);
 			params.put("index",index);
@@ -1084,6 +958,125 @@ public class goverController {
   			return mav;
 	    }
 		
+		@GetMapping(path="/orgAdmin") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView orgAdmin(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+////			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+//			String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
+//			JSONObject requestParamsObj=new JSONObject(requestParams);
+//			log.info("requestParams:"+requestParams);
+//			
+			ArrayList list = new ArrayList();
+			ArrayList addlist = new ArrayList();
+			ArrayList<HashMap> jisalist=new ArrayList();
+			ParameterParser parser = new ParameterParser(httpRequest);
+
+			String str_result = "Y";
+			ArrayList returnList = new ArrayList();
+			try {
+
+				HashMap params = new HashMap();
+
+//				String JISA = requestParamsObj.getString("JISA");
+				params.put("JISA", "");
+				int count=(int)mainService.selectCountQuery("goverSQL.selectOfficeJisaCount", params);
+				list = (ArrayList) mainService.selectQuery("goverSQL.selectOfficeInfoAll", params);
+				 jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+			
+			ModelAndView mav=new ModelAndView();
+			mav.addObject("list",list);
+			mav.addObject("jisaList",jisalist);
+			log.info("jisalist:"+jisalist);
+			mav.setViewName("content/gover/orgAdmin");
+			return mav;
+		}
+
+		@GetMapping(path="/orgAdminPopupAccept") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView orgAdminPopupAccept(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/gover/orgAdminPopupAccept");
+			return mav;
+		}
+
+		@GetMapping(path="/orgAdminPopupMod") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView orgAdminPopupMod(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			HashMap params = new HashMap();
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+
+			//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.addObject("jisaList",jisalist);
+
+			mav.setViewName("content/gover/orgAdminPopupMod");
+			return mav;
+		}
+
+		@GetMapping(path="/orgAdminPopupReg") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView orgAdminPopupReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			HashMap params = new HashMap();
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.addObject("jisaList",jisalist);
+
+			mav.setViewName("content/gover/orgAdminPopupReg");
+			return mav;
+		}
+
+		@GetMapping(path="/orgAdminPopupRegCancel") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView orgAdminPopupRegCancel(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("content/gover/orgAdminPopupRegCancel");
+			return mav;
+		}
+		
+		// 소속 토지 정보를 제공하는 API
+		@GetMapping("/getGoverPnuList")
+		public ResponseEntity<?> getGoverPnuList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		        // 요청된 idx에 맞는 소속 토지 정보를 조회
+		        String idx = request.getParameter("idx");
+
+		        log.info("-----------getGoverPnuList 동작-------------");
+		        if (idx == null || idx.isEmpty()) {
+		            return ResponseEntity.badRequest().body("idx 없음");
+		        }
+
+		        HashMap<String, Object> params = new HashMap<>();
+		        params.put("idx", idx);
+
+		        // 소속 토지 정보 조회 (SQL 매퍼 또는 서비스 호출)
+		        ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList", params);
+
+		        log.info("goverPnuList: " + goverPnuList);
+		        // 조회 결과가 없을 경우 빈 리스트 반환
+		        if (goverPnuList == null || goverPnuList.isEmpty()) {
+		            return ResponseEntity.noContent().build();
+		        }
+
+		        // 결과를 JSON으로 반환
+		        HashMap<String, Object> resultMap = new HashMap<>();
+		        resultMap.put("data", goverPnuList);
+
+		        // 성공적으로 조회된 데이터를 JSON으로 반환
+		        JSONObject jsonResponse = new JSONObject(resultMap);
+		        return ResponseEntity.ok(jsonResponse.toString());
+		}
+
+
 		
 		@RequestMapping(value = "/fileUpload/post") //ajax에서 호출하는 부분
 	    @ResponseBody
@@ -1181,8 +1174,8 @@ public class goverController {
 		        // response.getOutputStream().write(jo);
 		        response.getWriter().print(obj);
 		        response.getWriter().flush();
-		        
 		}
+		
 		@PostMapping(path="/selectGoverPnuList") //http://localhost:8080/api/get/dbTest
 	    public void selectGoverPnuList(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 			String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
@@ -2189,21 +2182,25 @@ log.info("params:"+params);
 			String str_result = "Y";
 			ArrayList returnList = new ArrayList();
 			try {
-
 				HashMap params = new HashMap();
 				String JISA = requestParamsObj.getString("jisa");
 				String PMT_OFFICE = requestParamsObj.getString("pmt_office");
 				String ADM_OFFICE = requestParamsObj.getString("adm_office");
 				String GUBUN = requestParamsObj.getString("gubun");
+				
 				ArrayList tmp=(ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params);
 				log.info("tmp:"+((HashMap) tmp.get(0)).get("mx_adm_seq"));
+				
 				//String mx_adm_seq = (String) ((HashMap) ((ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params)).get(0)).get("mx_adm_seq");
 				String mx_adm_seq =((HashMap) tmp.get(0)).get("mx_adm_seq").toString();
-				params.put("ADM_SEQ", mx_adm_seq);
+				
+				//params.put("ADM_SEQ", mx_adm_seq);
+				params.put("ADM_SEQ", Long.parseLong(mx_adm_seq));
 				params.put("JISA", JISA);
 				params.put("PMT_OFFICE", PMT_OFFICE);
 				params.put("ADM_OFFICE", ADM_OFFICE);
 				params.put("APPROVE", "N");
+				
 				System.out.println("insertOfficeMng params=" + params);
 				mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보
 																				// 저장
