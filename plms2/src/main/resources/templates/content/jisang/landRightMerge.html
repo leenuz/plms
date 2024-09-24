@@ -145,9 +145,9 @@ margin:10px;
                 <div class="depth1">
                     <ul class="titles">
                         <li class="title">지상권번호</li>
-                        <li class="title">대표지상권</li>
+                        <li class="title">대표지상권*</li>
                         <li class="title addressInfoWidth">주소</li>
-                        <li class="title">토지유형</li>
+                        <li class="title">토지유형*</li>
                         <li class="title titleBox ">
                             지상권설정
                             <ul class="secondTitles">
@@ -160,44 +160,36 @@ margin:10px;
                         </li>
                         <li class="title">소유자</li>
                         <li class="title">위치보기</li>
-                        <li class="title">회계처리필요여부</li>
+                        <li class="title">회계처리필요여부*</li>
                         <li class="title titleBtnWrap">추가/삭제</li>
                     </ul>
                     <div class="contentsBox">
-                        <ul class="contents">
+                        <ul class="contents" id="tojiUl" th:if="${jisangList.size()>0}" th:each="val, stat:${jisangList}">
                             <li class="content">
-                                <input type="text" placeholder="J_010598" readonly class="notWriteInput">
+                                <input type="text" th:value="${val.jisang_no}" readonly class="notWriteInput" id="jisang_no">
                             </li>
                             <li class="content checkboxWrap">
                                 <!-- 주석처리 -->
                                 <!-- <input type="text" placeholder="O" readonly class="notWriteInput"> -->
-                                 <input type="checkbox" id="landRightMerge_checkbox_01">
-                                 <label for="landRightMerge_checkbox_01"></label>
+                                 <input type="checkbox" th:id="'landRightMerge_checkbox_' + ${stat.index}" name="repLandRight" class="single-select-checkbox">
+                                 <label th:for="'landRightMerge_checkbox_' + ${stat.index}"></label>
                             </li>
                             <li class="content addressInfoWidth addressInfoBox">
-                                <div class="addressData"><input type="text" placeholder="서울특별시 서초구 서초동 1" readonly class="notWriteInput"></div>
+                                <div class="addressData"><input type="text" th:value="|${val.sido_nm} ${val.sgg_nm} ${val.emd_nm} ${val.ri_nm} ${val.jibun}|" readonly class="notWriteInput" id="merge_address"></div>
                                 <button class="searchAddressBtn">검색</button>
                             </li>
                             <li class="content selectContentArea">
                                 <div class="hiddenSelectBox">
                                     <!-- name도 추가 -->
                                     <select name="landMergeSelectBox01" id="landMergeSelectBox01" hidden>
-                                        <option value="선택1">선택1</option>
-                                        <option value="선택2">선택2</option>
-                                        <option value="선택3">선택3</option>
-                                        <option value="선택4">선택4</option>
-                                        <option value="선택5">선택5</option>
-                                        <option value="선택6">선택6</option>
-                                        <option value="선택7">선택7</option>
-                                        <option value="선택8">선택8</option>
-                                        <option value="선택9">선택9</option>
-                                        <option value="선택10">선택10</option>
+                                        <option value="국유지">국유지</option>
+                                        <option value="사유지">사유지</option>
                                     </select>
                                 
                                 </div>
                                 <section class="customSelectBox">
                                     <button class="customSelectView">
-                                        선택
+                                        [[${val.toji_type} == null ? '선택' : ${val.toji_type}]]
                                     </button>
                             
                                     <ul class="customSelectBtns">
@@ -207,14 +199,14 @@ margin:10px;
                             </li>
                             <li class="content contentBox">
                                 <ul class="secondContents">
-                                    <li class="secondContent"><input type="text" placeholder="답" readonly class="notWriteInput"></li>
-                                    <li class="secondContent"><input type="text" placeholder="182" readonly class="notWriteInput"></li>
-                                    <li class="secondContent"><input type="text" placeholder="181" readonly class="notWriteInput"></li>
-                                    <li class="secondContent largeSecondTitle"><input type="text" placeholder="10,000,000" readonly class="notWriteInput"></li>
-                                    <li class="secondContent"><input type="text" placeholder="9010237" readonly class="notWriteInput"></li>
+                                    <li class="secondContent"><input type="text" th:placeholder="${val.jimok_text}" readonly class="notWriteInput" id="jimok_text"></li>
+                                    <li class="secondContent"><input type="text" th:placeholder="${val.jijuk_area}" readonly class="notWriteInput" id="jijuk_area"></li>
+                                    <li class="secondContent"><input type="text" th:placeholder="${val.pyeonib_area}" readonly class="notWriteInput" id="pyeonib_area"></li>
+                                    <li class="secondContent largeSecondTitle"><input type="text" th:placeholder="${val.set_money}" readonly class="notWriteInput" id="set_money"></li>
+                                    <li class="secondContent"><input type="text" th:placeholder="${val.jasan_no}" readonly class="notWriteInput" id="jasan_no"></li>
                                 </ul>
                             </li>
-                            <li class="content"><input type="text" placeholder="홍길동" readonly class="notWriteInput"></li>
+                            <li class="content"><input type="text" th:value="${val.soyuList.size() > 0 ? val.soyuList[0].js_souja_name : ''}" readonly class="notWriteInput" id="souja"></li>
                             <li class="content">
                                 <button class="viewDetailButton">위치보기</button>
                             </li>
@@ -222,22 +214,14 @@ margin:10px;
                                 <div class="hiddenSelectBox">
                                     <!-- name도 추가 -->
                                     <select name="landMergeSelectBox02" id="landMergeSelectBox02" hidden>
-                                        <option value="Y1">Y1</option>
-                                        <option value="Y2">Y2</option>
-                                        <option value="Y3">Y3</option>
-                                        <option value="Y4">Y4</option>
-                                        <option value="Y5">Y5</option>
-                                        <option value="Y6">Y6</option>
-                                        <option value="Y7">Y7</option>
-                                        <option value="Y8">Y8</option>
-                                        <option value="Y9">Y9</option>
-                                        <option value="Y10">Y10</option>
+                                        <option value="Y">Y</option>
+                                        <option value="N">N</option>
                                     </select>
                                 
                                 </div>
                                 <section class="customSelectBox">
                                     <button class="customSelectView">
-                                        &#160
+                                        선택
                                     </button>
                                 
                                     <ul class="customSelectBtns">
@@ -395,42 +379,34 @@ margin:10px;
                         <li class="title middleWidth">회계처리필요여부</li>
                     </ul>
                     <ul class="contents lastContents">
-                        <li class="content middleWidth"><input type="text" placeholder="J_010598" readonly class="notWriteInput"></li>
+                        <li class="content middleWidth"><input type="text" placeholder="" readonly class="notWriteInput" id="mergeToji_no"></li>
                         <li class="content addressInfoWidth">
-                            <div class="addressData"><input type="text" placeholder="경기도 평택시 동천리 606-132" readonly class="notWriteInput"></div>
+                            <div class="addressData"><input type="text" placeholder="" readonly class="notWriteInput" id="mergeToji_address"></div>
                         </li>
                         <li class="content contentBox">
                             <ul class="secondContents">
-                                <li class="secondContent"><input type="text"></li>
-                                <li class="secondContent"><input type="text"></li>
-                                <li class="secondContent"><input type="text"></li>
-                                <li class="secondContent"><input type="text"></li>
-                                <li class="secondContent"><input type="text"></li>
+                                <li class="secondContent"><input type="text" id="mergeToji_jimok" readonly class="notWriteInput"></li>
+                                <li class="secondContent"><input type="text" id="mergeToji_jijuk" readonly class="notWriteInput"></li>
+                                <li class="secondContent"><input type="text" id="mergeToji_pyeonib_area" readonly class="notWriteInput"></li>
+                                <li class="secondContent"><input type="text" id="mergeToji_set_money" readonly class="notWriteInput"></li>
+                                <li class="secondContent"><input type="text" id="mergeToji_jasan_money" readonly class="notWriteInput"></li>
                             </ul>
                         </li>
                         <li class="content">
-                            <input type="text" placeholder="홍길동" readonly class="notWriteInput">
+                            <input type="text" placeholder="" readonly class="notWriteInput" id="mergeToji_souja">
                         </li>
                         <li class="content middleWidth selectContentArea">
                             <div class="hiddenSelectBox">
                                 <!-- name도 추가 -->
                                 <select name="landMergeSelectBox05" id="landMergeSelectBox05" hidden>
-                                    <option value="Y1">Y1</option>
-                                    <option value="Y2">Y2</option>
-                                    <option value="Y3">Y3</option>
-                                    <option value="Y4">Y4</option>
-                                    <option value="Y5">Y5</option>
-                                    <option value="Y6">Y6</option>
-                                    <option value="Y7">Y7</option>
-                                    <option value="Y8">Y8</option>
-                                    <option value="Y9">Y9</option>
-                                    <option value="Y10">Y10</option>
+                                    <option value="Y">Y</option>
+                                    <option value="N">N</option>
                                 </select>
                             
                             </div>
                             <section class="customSelectBox">
-                                <button class="customSelectView">
-                                    &#160
+                                <button class="customSelectView" id="mergeToji_accountYn">
+                                    선택
                                 </button>
             
                                 <ul class="customSelectBtns">
@@ -449,7 +425,7 @@ margin:10px;
         <!-- 합병사유 및 검토의견 -->
         <section class="mergeTermination">
             <div class="subTitle">
-                합병사유 및 검토의견
+                합병사유 및 검토의견*
             </div>
 
             <div class="contWrap">
@@ -457,7 +433,7 @@ margin:10px;
                     <ul class="rowListBox">
                         <li class="title">합병사유</li>
                         <li class="content inputWrap">
-                            <input type="text" placeholder="직접입력">
+                            <input type="text" placeholder="직접입력 (최소 10자 이상)">
                         </li>
                     </ul>
                 </div>
@@ -465,7 +441,7 @@ margin:10px;
                     <ul class="rowListBox">
                         <li class="title">검토의견</li>
                         <li class="content lastRowList">
-                            <textarea placeholder="직접입력"></textarea>
+                            <textarea placeholder="직접입력 (최소 10자 이상)"></textarea>
                         </li>
                     </ul>
                 </div>
@@ -476,7 +452,7 @@ margin:10px;
 
         <section class="attachDocuments">
             <div class="subTitle">
-                첨부 서류
+                첨부 서류*
             </div>
 
             <div class="contWrap">
