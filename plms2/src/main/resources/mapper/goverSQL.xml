@@ -731,6 +731,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        SELECT so_pmt_office, so_sort_order, ROW_NUMBER() OVER (PARTITION BY so_pmt_office ORDER BY so_sort_order) as rn
 	        FROM sys_officemng
 	        WHERE so_jisa = #{jisa}
+	        AND so_approve = 'Y'
 	    ) AS temp
 	    WHERE rn = 1
 	    ORDER BY so_sort_order
@@ -742,6 +743,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    FROM sys_officemng
 	    WHERE so_jisa = #{jisa}
 	    AND so_pmt_office = #{pmt_office}
+	    AND so_approve = 'Y'
 	    ORDER BY so_sort_order ASC
 	</select>
 	
