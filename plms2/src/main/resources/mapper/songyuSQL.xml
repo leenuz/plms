@@ -797,7 +797,10 @@ SELECT   NEWREGREASON,
         CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.PERMITTED_YN ELSE GPI.PERMITTED_YN END AS PERMITTED_YN,
         CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH1 ELSE GPI.CODE_DEPTH1 END AS CODE_DEPTH1,
         CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH2 ELSE GPI.CODE_DEPTH2 END AS CODE_DEPTH2,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3,
+        JOIN_MST.idx,
+        JOIN_MST.index,
+        JOIN_MST.gidx
 	 FROM (	
 		  SELECT
 		   
@@ -836,7 +839,10 @@ SELECT   NEWREGREASON,
             JM.jm_jijuk_area as JIJUK_AREA,
             JM.jm_comple_yn as COMPLE_YN,
             JM.jm_permitted_yn as PERMITTED_YN,
-            JM.jm_pipe_yn as PIPE_YN
+            JM.jm_pipe_yn as PIPE_YN,
+            JM.jm_JISANG_NO AS idx,
+            JM.jm_idx as index,
+            0 as gidx
         FROM JISANG_MASTER JM
         LEFT JOIN (
             SELECT *
@@ -888,7 +894,10 @@ SELECT   NEWREGREASON,
             GP.gp_jijuk_area as JIJUK_AREA,
             '' as COMPLE_YN,
             '' as PERMITTED_YN,
-            GP.gp_pipe_overlap_yn as PIPE_YN
+            GP.gp_pipe_overlap_yn as PIPE_YN,
+            GP.gp_GOVER_NO AS idx,
+            GM.gm_idx as index,
+            coalesce(GP.gp_idx,0) as gidx
         FROM GOVER_PNU GP
         LEFT JOIN (
             SELECT S.gp_gover_no as GOVER_NO
@@ -954,7 +963,10 @@ SELECT   NEWREGREASON,
             NM.nm_jijuk_area as JIJUK_AREA,
             '' as COMPLE_YN,
             '' as PERMITTED_YN,
-            '' as PIPE_YN
+            '' as PIPE_YN,
+            NM.nm_NOTSET_NO AS idx,
+            NM.nm_idx as idx,
+            0 as gidx
         FROM NOTSET_MASTER NM
         LEFT JOIN (
             SELECT *
@@ -1005,7 +1017,10 @@ SELECT   NEWREGREASON,
             DM.dom_jijuk_area as JIJUK_AREA,
             '' as COMPLE_YN,
             '' as PERMITTED_YN,
-            '' as PIPE_YN
+            '' as PIPE_YN,
+            DM.dom_DOPCO_NO AS idx,
+            DM.dom_idx as index,
+            0 as gidx
         FROM DOPCO_MASTER DM
         WHERE DM.dom_CANCEL_YN IS NULL
     ) JOIN_MST 

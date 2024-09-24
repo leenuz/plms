@@ -1602,8 +1602,8 @@ public class goverController {
 			// String USE_PURPOS = parser.getString("USE_PURPOS", ""); // 점용 목록
 			String GOVER_ST_DATE = requestParamsObj.getString("gover_st_date"); // 점용기간 시작
 			String GOVER_ED_DATE = requestParamsObj.getString("gover_ed_date"); // 점용기간 끝
-			String PMT_OFFICE = requestParamsObj.getString("pmt_office"); // 허가관청
-			String ADM_OFFICE = requestParamsObj.getString("adm_office"); // 관리기관
+			String PMT_OFFICE = requestParamsObj.has("pmt_office")?requestParamsObj.getString("pmt_office"):""; // 허가관청
+			String ADM_OFFICE = requestParamsObj.has("adm_office")?requestParamsObj.getString("adm_office"):""; // 관리기관
 			String OFFICE_DEPART = requestParamsObj.getString("office_depart"); // 관리부서
 			String OFFICE_CHARGE = requestParamsObj.getString("office_charege"); // 부서담당자
 			String OFFICE_CONTACT = requestParamsObj.getString("office_contact"); // 담당자연락처
@@ -1644,6 +1644,7 @@ public class goverController {
 			
 			
 			JSONArray togiArr=new JSONArray(requestParamsObj.getString("togiDatas"));
+			JSONArray fileArr=new JSONArray(requestParamsObj.getString("files"));
 			
 			
 			
@@ -1970,39 +1971,62 @@ public class goverController {
 log.info("params:"+params);
 				if (Integer.parseInt(FILE_CNT)>0) {
 					// 20170517 - GOVER_ATCFILE테이블에 PMT_NO가 없다면 GOVER_PERMIT에서 조회해서 업데이트
-					ArrayList GOVER_ATCFILE_PmtNo = (ArrayList) mainService.selectQuery("goverSQL.selectGoverRowDetailFilesObject", params);
-					String Next_PMT_NO = String.valueOf(params.get("NEXTSEQ"));
-
-					if (null != GOVER_ATCFILE_PmtNo && GOVER_ATCFILE_PmtNo.size() > 0) {
-
-						for (int k = 0; k < GOVER_ATCFILE_PmtNo.size(); k++) {
-							params.put("ADD_PMT_NO", "");
-							params.put("FILESEQ", fileseq);
-
-							HashMap hm_GAP_NO = (HashMap) GOVER_ATCFILE_PmtNo.get(k);
-							String str_GAP_NO = CommonUtil.nvl(String.valueOf(hm_GAP_NO.get("ga_pmt_no")));
-							String str_GAP_FILESQL = CommonUtil.nvl(String.valueOf(hm_GAP_NO.get("ga_file_seq")));
-
-							// 파일을 건으로 업데이트
-							if ("".equals(str_GAP_NO)) {
-								// NEXTSEQ를 그대로 넣으면 무조건 업데이트가 되기때문에 key를 바꿈
-								params.put("ADD_PMT_NO", Next_PMT_NO);
-								params.put("FILESEQ", str_GAP_FILESQL);
-
-								/** codecanyon에서 파일업로드 **/
-								mainService.UpdateQuery("goverSQL.updateSeqFile_Gover", params); // 파일SEQ로
-																									// PMTNO
-																									// 업데이트
-							} else {
-								// 해당 seq에 맞는 전체파일 업데이트
-								/** codecanyon에서 파일업로드 **/
-								mainService.UpdateQuery("goverSQL.updateSeqFile_Gover_SEQ", params); // SEQ로
-																										// 지상권번호
-																										// 업데이트
-							}
-
+//					ArrayList GOVER_ATCFILE_PmtNo = (ArrayList) mainService.selectQuery("goverSQL.selectGoverRowDetailFilesObject", params);
+//					String Next_PMT_NO = String.valueOf(params.get("NEXTSEQ"));
+//
+//					if (null != GOVER_ATCFILE_PmtNo && GOVER_ATCFILE_PmtNo.size() > 0) {
+//
+//						for (int k = 0; k < GOVER_ATCFILE_PmtNo.size(); k++) {
+//							params.put("ADD_PMT_NO", "");
+//							params.put("FILESEQ", fileseq);
+//
+//							HashMap hm_GAP_NO = (HashMap) GOVER_ATCFILE_PmtNo.get(k);
+//							String str_GAP_NO = CommonUtil.nvl(String.valueOf(hm_GAP_NO.get("ga_pmt_no")));
+//							String str_GAP_FILESQL = CommonUtil.nvl(String.valueOf(hm_GAP_NO.get("ga_file_seq")));
+//
+//							// 파일을 건으로 업데이트
+//							if ("".equals(str_GAP_NO)) {
+//								// NEXTSEQ를 그대로 넣으면 무조건 업데이트가 되기때문에 key를 바꿈
+//								params.put("ADD_PMT_NO", Next_PMT_NO);
+//								params.put("FILESEQ", str_GAP_FILESQL);
+//
+//								/** codecanyon에서 파일업로드 **/
+//								mainService.UpdateQuery("goverSQL.updateSeqFile_Gover", params); // 파일SEQ로
+//																									// PMTNO
+//																									// 업데이트
+//							} else {
+//								// 해당 seq에 맞는 전체파일 업데이트
+//								/** codecanyon에서 파일업로드 **/
+//								mainService.UpdateQuery("goverSQL.updateSeqFile_Gover_SEQ", params); // SEQ로
+//																										// 지상권번호
+//																										// 업데이트
+//							}
+//
+//						}
+//
+//					}
+					if (gubun.equals("insert")) {
+						for (int i = 0; i < fileArr.length(); i++) {
+							//JSONObject fobj=new JSONObject(fileArr.get(i).toString());
+							String file_name=fileArr.getString(i);
+							log.info("file_name:"+file_name);
+							 HashMap<String, Object> filesMap= new HashMap<>();
+							 //
+//							     			filesMap=CommonUtil.JsonArraytoMap(obj);
+							 //
+							     			filesMap.put("goverNo",str_GOVERNO);
+							     			filesMap.put("seq",String.format("%06d",i));
+							     			filesMap.put("fseq",i);
+							     			filesMap.put("fname",file_name);
+//
+							     			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+							     			 String dataPath = GC.getGoverFileDataDir()+"/"+str_GOVERNO; //설정파일로 뺀다.
+							     			 filesMap.put("fpath",dataPath+"/"+file_name);
+							     			 CommonUtil.moveFile(file_name, tempPath, dataPath);
+							     			log.info("filesMap:"+filesMap);
+//							     			mainService.InsertQuery("jisangSQL.insertJisangUploadData", filesMap);
+							
 						}
-
 					}
 
 					if (gubun.equals("modify")) {
