@@ -10,12 +10,14 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -1216,5 +1218,28 @@ public class songyuController {
 			response.getWriter().flush();
 
 		}
+	
+
+    // 지사 선택에 따라 관로명 목록을 반환하는 API
+    @PostMapping("/getPipeName")
+    public ResponseEntity<Map<String, Object>> getPipeName(@RequestBody Map<String, String> requestData) throws Exception {
+    	log.info("getPipeName 컨트롤러 동작");
+        String selectedJisa = requestData.get("jisa");
+
+        // 직접 SQL 쿼리를 호출하여 데이터를 가져옴
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("jisa", selectedJisa);
+
+        // SQL 호출하여 데이터 가져오기
+        ArrayList<HashMap> pipeNameList = mainService.selectQuery("goverSQL.selectPipeNameByJisa", params);
+
+        log.info("pipeNameList: "+ pipeNameList);
+        
+        // 결과를 담은 Map 객체 생성
+        Map<String, Object> response = new HashMap<>();
+        response.put("resultData", pipeNameList);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 	
 }

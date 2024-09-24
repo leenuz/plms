@@ -407,7 +407,7 @@ $(document).on("click", "#completeSoujaBtn", function () {
     console.log("0:" + $(input).eq(0).val());
 
     if ($(input).eq(0).val() == "" || $(input).eq(1).val() == "" || $(input).eq(2).val() == "" || $(input).eq(3).val() == "") {
-        alert("입력사항을 체크하세요! 공유지분,성명,주소는 필수 입력입니다.");
+        alert("입력사항을 체크하세요! 공유지분,성명,주소,연락처는 필수 입력입니다.");
         return;
     }
 
@@ -546,6 +546,7 @@ $(document).ready(function () {
         handleFileUpload(files, objDragAndDrop);
     });
 
+	var rowCount = 0;
     function handleFileUpload(files, obj) {
         console.log("-------------handleFileUpload---------------");
         console.log(files);
@@ -553,14 +554,14 @@ $(document).ready(function () {
             var fd = new FormData();
             fd.append('file', files[i]);
 
-            var status = new createStatusbar($("#fileTitleUl"), files[i].name, files[i].size, i); //Using this we can set progress.
+            var status = new createStatusbar($("#fileTitleUl"), files[i].name, files[i].size, rowCount); //Using this we can set progress.
             //  status.setFileNameSize(files[i].name,files[i].size);
             sendFileToServer(fd, status);
 
+			rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
         }
     }
 
-    var rowCount = 0;
     function createStatusbar(obj, name, size, no) {
         console.log("----------start createStatusBar------------");
         console.log(obj.html());
@@ -797,3 +798,49 @@ $(document).ready(function () {
     });
 
 });
+
+// 지사 선택 시 관로명 목록 업데이트를 위한 change 트리거
+$(document).on("click", "#jisaUl li", function () {
+    const selectedJisa = $(this).text().trim();
+    $("#jisaBtn").text(selectedJisa);
+    $("#jisa").val(selectedJisa).change(); // change 이벤트 트리거
+});
+
+// 지사 선택에 따른 관로명 목록 업데이트
+$(document).on("change", "#jisa", function () {
+    const selectedJisa = $("#jisa").val();
+    if (!selectedJisa) return;
+
+    const allData = { jisa: selectedJisa };
+
+    $.ajax({
+        url: "/gover/getPipeName", // 관로명 목록을 가져오는 API
+        data: JSON.stringify(allData),
+        async: true,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (rt) {
+            const data = rt.resultData;
+
+            // 관로명 리스트 초기화 및 업데이트
+            $("#pipe_name_ul li").remove(); // 기존 항목 제거
+            $("#pipeNameSelectBox option").remove(); // 기존 option 제거
+            $("#pipe_name_ul").append("<li><button class='moreSelectBtn' type='button'>전체</button></li>"); // '전체' 버튼 추가
+            $("#pipeNameSelectBox").append("<option value=''>전체</option>"); // '전체' option 추가
+
+            // 관로명 목록을 버튼으로 추가
+            for (let i = 0; i < data.length; i++) {
+                const pipeName = data[i].jzn_zone_name;
+                // 목록에 button 요소 추가
+                $("#pipe_name_ul").append("<li><button class='moreSelectBtn' type='button'>" + pipeName + "</button></li>");
+                // select 박스에 option 요소 추가
+                $("#pipeNameSelectBox").append("<option value='" + pipeName + "'>" + pipeName + "</option>");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error: ", textStatus, errorThrown);
+        }
+    });
+});
+

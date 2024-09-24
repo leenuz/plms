@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -128,15 +127,11 @@
                           <option value="">전체</option>
                           <option th:each="val:${jisaList}" th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
                         </select>
-                        </div>
-                        <section class="customSelectBox">
-                          <button class="customSelectView" id="jisaBtn">
-                            전체
-                            <figure></figure>
-                          </button>
-                          <ul class="customSelectBtns">
-                          </ul>
-                        </section>
+                      </div>
+                      <section class="customSelectBox">
+                        <button class="customSelectView" id="jisaBtn">전체</button>
+                        <ul class="customSelectBtns" id="jisaUl"></ul>
+                      </section>
                     </div>
                   </li>
                   <!-- 관로 일치 여부 선택 -->
@@ -163,14 +158,10 @@
                       <!-- name도 추가 -->
                       <select name="pipe_name" id="pipeNameSelectBox" hidden>
                         <option value="" selected>선택</option>
-                        <option value="SNP구간">SNP구간</option>
-                        <option value="과천지선">과천지선</option>
                       </select>
                     </div>
                     <section class="customSelectBox">
-                      <button class="customSelectView">
-                        선택
-                      </button>
+                      <button class="customSelectView" id="pipeNameText">선택</button>
                       <ul class="customSelectBtns" id="pipe_name_ul">
                       </ul>
                     </section>
