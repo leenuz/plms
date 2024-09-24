@@ -479,7 +479,7 @@ var fileNo = 1;
 
 	                        var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,fileNo); //Using this we can set progress.
 	                      //  status.setFileNameSize(files[i].name,files[i].size);
-	                        sendFileToServer(fd,status);
+//	                        sendFileToServer(fd,status);
 
 	                   }fileNo++;
 	                }
@@ -509,37 +509,37 @@ var fileNo = 1;
 
 	                }
 
-	                  function sendFileToServer(formData,status)
-                    	                {
-                    	                    var uploadURL = "/jisang/fileUpload/post"; //Upload URL
-                    	                    var extraData ={}; //Extra Data.
-                    	                    var jqXHR=$.ajax({
-                    	                            xhr: function() {
-                    	                            var xhrobj = $.ajaxSettings.xhr();
-                    	                            if (xhrobj.upload) {
-                    	                                    xhrobj.upload.addEventListener('progress', function(event) {
-                    	                                        var percent = 0;
-                    	                                        var position = event.loaded || event.position;
-                    	                                        var total = event.total;
-                    	                                        if (event.lengthComputable) {
-                    	                                            percent = Math.ceil(position / total * 100);
-                    	                                        }
-                    	                                    }, false);
-                    	                                }
-                    	                            return xhrobj;
-                    	                        },
-                    	                        url: uploadURL,
-                    	                        type: "POST",
-                    	                        contentType:false,
-                    	                        processData: false,
-                    	                        cache: false,
-                    	                        data: formData,
-                    	                        success: function(data){
-                    	                        }
-                    	                    });
-
-                    	                }
-
+//	                  function sendFileToServer(formData,status)
+//                    	                {
+//                    	                    var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+//                    	                    var extraData ={}; //Extra Data.
+//                    	                    var jqXHR=$.ajax({
+//                    	                            xhr: function() {
+//                    	                            var xhrobj = $.ajaxSettings.xhr();
+//                    	                            if (xhrobj.upload) {
+//                    	                                    xhrobj.upload.addEventListener('progress', function(event) {
+//                    	                                        var percent = 0;
+//                    	                                        var position = event.loaded || event.position;
+//                    	                                        var total = event.total;
+//                    	                                        if (event.lengthComputable) {
+//                    	                                            percent = Math.ceil(position / total * 100);
+//                    	                                        }
+//                    	                                    }, false);
+//                    	                                }
+//                    	                            return xhrobj;
+//                    	                        },
+//                    	                        url: uploadURL,
+//                    	                        type: "POST",
+//                    	                        contentType:false,
+//                    	                        processData: false,
+//                    	                        cache: false,
+//                    	                        data: formData,
+//                    	                        success: function(data){
+//                    	                        }
+//                    	                    });
+//
+//                    	                }
+//
                     	 });
 
 /*선택파일 삭제*/

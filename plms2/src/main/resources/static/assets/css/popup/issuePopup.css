@@ -637,3 +637,135 @@ textarea:focus {
 .parcelChangeParcelDetailPopWrapper .popupWrap .pilji_total > button > figure img {
   width: 100%;
 }
+
+/* 전자결재 문서 추가 팝업 시작 */
+.landDevInfoPopWrapper .popupWrap {
+    width: 827px;
+    height: 324px;
+  }
+  .add_document_wrap {
+    border: 1px solid #cddbf0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 13px;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  .add_document_wrap ul {
+    display: flex;
+    align-items: center;
+    height: 46px;
+    border-bottom: 1px solid #cddbf0;
+    font-weight: 500;
+  }
+  .add_document_wrap ul input[type="text"] {
+    height: 36px;
+    border-radius: 10px;
+    background-color: #edf2f9;
+    text-align: left;
+    padding: 0 10px;
+  }
+  .add_document_calender {
+    height: 36px;
+    padding: 5px 0;
+  }
+
+  .add_document_wrap ul:last-child {
+    border: none;
+  }
+
+  .add_document_wrap ul .add_document_title {
+    width: 189px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #cddbf0;
+    background-color: #f7f9fc;
+    height: 100%;
+  }
+  .add_document_wrap ul .add_document_content,
+  .add_document_wrap ul .add_document_calender {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 613px;
+    padding: 0 5px;
+  }
+  .lastBtnBox {
+    margin-top: 13px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .lastBtnBox button {
+    width: 116px;
+    height: 44px;
+  }
+  .lastBtnBox .saveBtn {
+    color: #ffffff;
+    background-color: #2b7de1;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .popupWrap input[type="text"] {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+  }
+  .popupWrap input[type="text"]::placeholder {
+    color: #3c3c3c;
+  }
+/* 전자결재 문서 추가 팝업 끝 */
+
+/* 달력버튼 시작 */
+.complaint_calender_wrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cddbf0;
+  position: relative;
+  background: url(/assets/media/popup/images/calendar.png) no-repeat left 8px
+    center;
+  background-size: 18px;
+}
+.landDevInfoPopWrapper input[type="date"] {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+  color: transparent;
+  background: transparent;
+  /* text-align: right; */
+  /* 추가 */
+  text-align: left;
+  text-indent: 17px;
+}
+.landDevInfoPopWrapper input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.landDevInfoPopWrapper input[type="date"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 50%;
+  left: 42px;
+  transform: translateY(-50%);
+  color: #6e7d88;
+  pointer-events: none;
+}
+.landDevInfoPopWrapper input[type="date"]:focus,
+.landDevInfoPopWrapper input[type="date"]:valid {
+  color: #6e7d88;
+}
+.landDevInfoPopWrapper input[type="date"]:focus::before,
+.landDevInfoPopWrapper input[type="date"]:valid::before {
+  content: "";
+}
+/* 달력버튼 끝 */

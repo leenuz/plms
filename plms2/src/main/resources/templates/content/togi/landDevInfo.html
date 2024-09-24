@@ -132,6 +132,7 @@ margin:10px;
           <h1>토지 개발정보</h1>
         </div>
 
+        <form id="saveForm" onSubmit="return false;">
         <!-- 기본 정보 -->
         <section class="defaultInfo">
           <div class="subTitle">
@@ -381,28 +382,28 @@ margin:10px;
                 <li class="title fileNameWidth">파일명</li>
                 <li class="title">파일보기</li>
               </ul>
-              <ul class="contents">
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder="2022-06-30"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content fileNameWidth">
-                  <input
-                    type="text"
-                    placeholder="경과보고 4. hwp"
-                    readonly
-                    class="notWriteInput" />
-                  <!--                             th:value="${resultData.da_file_nm}" -->
-                </li>
-                <li class="content btnBox">
-                  <button class="viewDetailButton lightBlueBtn">
-                    상세보기 <span class="downloadIcon"></span>
-                  </button>
-                </li>
-              </ul>
+<!--              <div class="contentScr">-->
+<!--              <ul class="contents" th:each="val:${togiAtcFileList}">-->
+<!--                <li class="content">-->
+<!--                  <input type="text"-->
+<!--                    readonly-->
+<!--                    class="notWriteInput" th:value="${val.date}"/>-->
+<!--                </li>-->
+<!--                <li class="content fileNameWidth">-->
+<!--                  <input-->
+<!--                    type="text"-->
+<!--                    readonly-->
+<!--                    th:value="${val.da_file_nm}"-->
+<!--                    class="notWriteInput" />-->
+<!--                  &lt;!&ndash;                             th:value="${resultData.da_file_nm}" &ndash;&gt;-->
+<!--                </li>-->
+<!--                <li class="content btnBox">-->
+<!--                  <button class="viewDetailButton lightBlueBtn">-->
+<!--                    상세보기-->
+<!--                  </button>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--              </div>-->
               <ul class="contents">
                 <li class="content">
                   <input
@@ -424,72 +425,12 @@ margin:10px;
                   </button>
                 </li>
               </ul>
-              <ul class="contents">
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder="2022-06-21"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content fileNameWidth">
-                  <input
-                    type="text"
-                    placeholder="송유관 측량 표시.hwp"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content btnBox">
-                  <button class="viewDetailButton lightBlueBtn">
-                    상세보기 <span class="downloadIcon"></span>
-                  </button>
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder="2022-06-21"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content fileNameWidth">
-                  <input
-                    type="text"
-                    placeholder="송유관 측량 표시.hwp"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content btnBox">
-                  <button class="viewDetailButton lightBlueBtn">
-                    상세보기 <span class="downloadIcon"></span>
-                  </button>
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder="2022-06-21"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content fileNameWidth">
-                  <input
-                    type="text"
-                    placeholder="송유관 측량 표시.hwp"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content btnBox">
-                  <button class="viewDetailButton lightBlueBtn">
-                    상세보기 <span class="downloadIcon"></span>
-                  </button>
-                </li>
-              </ul>
+
             </div>
           </div>
         </section>
+        </form>
+
         <!-- 전자결재문서 열람 -->
         <section class="eDocView">
           <div class="subTitle">
@@ -504,13 +445,15 @@ margin:10px;
                 <li class="title">제목</li>
                 <li class="title">승인일</li>
               </ul>
-              <ul class="contents">
+              <div class="contentsBox">
+              <ul class="contents" id="fileListUl">
                 <li class="content smallWidth checkboxWrap">
-                  <input type="checkbox" id="landDevInfo_eDocView_Checkbox01" />
-                  <label for="landDevInfo_eDocView_Checkbox01"></label>
+                  <input type="checkbox" id="landDevInfo_eDocView_Checkbox_0" name="landDevInfo_eDocFile" />
+                  <label for="landDevInfo_eDocView_Checkbox_0"></label>
                 </li>
                 <li class="content middleWidth">
                   <input
+                    id="docNum_0"
                     type="text"
                     readonly
                     placeholder="현장지원팀"
@@ -518,6 +461,7 @@ margin:10px;
                 </li>
                 <li class="content">
                   <input
+                          id="docTitle_0"
                     type="text"
                     readonly
                     placeholder="광양노후관 개량구간 공사"
@@ -525,120 +469,15 @@ margin:10px;
                 </li>
                 <li class="content">
                   <input
+                          id="docDate_0"
                     type="text"
                     readonly
                     placeholder="2023-07-05"
                     class="notWriteInput" />
                 </li>
               </ul>
-              <ul class="contents">
-                <li class="content smallWidth checkboxWrap">
-                  <input type="checkbox" id="landDevInfo_eDocView_Checkbox02" />
-                  <label for="landDevInfo_eDocView_Checkbox02"></label>
-                </li>
-                <li class="content middleWidth">
-                  <input
-                    type="text"
-                    readonly
-                    placeholder="현장지원팀"
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    readonly
-                    placeholder="광양노후관 개량구간 공사"
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    readonly
-                    placeholder="2023-07-05"
-                    class="notWriteInput" />
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content smallWidth checkboxWrap">
-                  <input type="checkbox" id="landDevInfo_eDocView_Checkbox03" />
-                  <label for="landDevInfo_eDocView_Checkbox03"></label>
-                </li>
-                <li class="content middleWidth">
-                  <input
-                    type="text"
-                    readonly
-                    placeholder="현장지원팀"
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    readonly
-                    placeholder="광양노후관 개량구간 공사"
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    readonly
-                    placeholder="2023-07-05"
-                    class="notWriteInput" />
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content smallWidth checkboxWrap">
-                  <input type="checkbox" id="landDevInfo_eDocView_Checkbox04" />
-                  <label for="landDevInfo_eDocView_Checkbox04"></label>
-                </li>
-                <li class="content middleWidth">
-                  <input
-                    type="text"
-                    readonly
-                    placeholder="현장지원팀"
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    readonly
-                    placeholder="광양노후관 개량구간 공사"
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    readonly
-                    placeholder="2023-07-05"
-                    class="notWriteInput" />
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content smallWidth checkboxWrap">
-                  <input type="checkbox" id="landDevInfo_eDocView_Checkbox05" />
-                  <label for="landDevInfo_eDocView_Checkbox05"></label>
-                </li>
-                <li class="content middleWidth">
-                  <input
-                    type="text"
-                    readonly
-                    placeholder="현장지원팀"
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    readonly
-                    placeholder="광양노후관 개량구간 공사"
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    readonly
-                    placeholder="2023-07-05"
-                    class="notWriteInput" />
-                </li>
-              </ul>
+              </div>
+
             </div>
           </div>
 
@@ -658,6 +497,51 @@ margin:10px;
           </button>
         </div>
       </main>
+
+
+      <div class="landDevInfoPopWrapper" id="searchResultPopDiv">
+
+        <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+        <div id="searchResultsPopup">
+          <div class="popupWrap" id="popupWrap">
+            <h2>
+              <p>전자결재 문서 추가</p>
+              <span class="topCloseBtn"></span>
+            </h2>
+            <div class="add_document_wrap">
+              <ul>
+                <li class="add_document_title">문서번호</li>
+                <li class="add_document_content"><input type="text" name="documentNo"/></li>
+              </ul>
+              <ul>
+                <li class="add_document_title">제목</li>
+                <li class="add_document_content"><input type="text" name="documentTitle"/></li>
+              </ul>
+              <ul>
+                <li class="add_document_title">승인일</li>
+                <li class="add_document_calender">
+                  <div class="complaint_calender_wrap">
+                    <input
+                            type="date"
+                            name="documentdate"
+                            data-placeholder="2024-01-01"
+                            required
+                            aria-required="true" />
+                  </div>
+                </li>
+              </ul>
+              <ul>
+                <li class="add_document_title">URL</li>
+                <li class="add_document_content"><input type="text" name="documentURL"/></li>
+              </ul>
+            </div>
+
+            <div class="lastBtnBox btnWrap">
+              <button class="saveBtn finalBtn" id="saveBtn">저장</button>
+              <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+            </div>
+          </div>
+        </div>
     </div>
     <div class="landDevInfoApprovalPopWrapper"></div>
     <script type="module" src="/js/module/surfaceMain.js"></script>
