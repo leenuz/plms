@@ -256,27 +256,27 @@
                   <li class="title">연락처</li>
                   <li class="title largeWidth">주소</li>
                 </ul>
-                <ul class="contents">
+                <ul class="contents" th:each="val:${right_list}">
                   <li class="content">
-                    <input type="text" placeholder="근저당권설정" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.right_name}" readonly class="notWriteInput" />
                   </li>
                   <li class="content middleWidth">
-                    <input type="text" placeholder="61,800,000,000" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.right_money}" readonly class="notWriteInput" />
                   </li>
                   <li class="content">
-                    <input type="text" placeholder="2005-09-14" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.right_date}" readonly class="notWriteInput" />
                   </li>
                   <li class="content">
-                    <input type="text" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.cancle_date}" readonly class="notWriteInput" />
                   </li>
                   <li class="content">
-                    <input type="text" placeholder="한국석유공사" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.right_uname}" readonly class="notWriteInput" />
                   </li>
                   <li class="content">
-                    <input type="text" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.right_phone}" readonly class="notWriteInput" />
                   </li>
                   <li class="content largeWidth">
-                    <input type="text" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.right_addr}" readonly class="notWriteInput" />
                   </li>
                 </ul>
               </div>
@@ -293,9 +293,9 @@
                   <li class="title largeWidth">파일명</li>
                   <li class="title smallWidth">다운로드</li>
                 </ul>
-                <ul class="contents">
+                <ul class="contents" th:each="val:${file_list}">
                   <li class="content largeWidth">
-                    <input type="text" placeholder="석운동 65-3 토지대장.tif" class="notWriteInput" readonly />
+                    <input type="text" th:value="${val.file_nm}" class="notWriteInput" readonly />
                   </li>
                   <li class="content btnsWrap smallWidth">
                     <button class="fileDownloadBtn">
@@ -323,32 +323,18 @@
                   <li class="title largeWidth">내용</li>
                 </ul>
                 <div class="contentScr">
-                  <ul class="contents">
+                  <ul class="contents" th:each="val:${modify_list}">
                     <li class="content smallWidth">
-                      <input type="text" placeholder="1" class="notWriteInput" readonly />
+                      <input type="text" th:value="${valStat.index + 1}" class="notWriteInput" readonly />
                     </li>
                     <li class="content">
-                      <input type="text" placeholder="2022-10-27 09:14:07.0" class="notWriteInput" readonly />
+                      <input type="text" th:value="${val.modifiy_date}" class="notWriteInput" readonly />
                     </li>
                     <li class="content">
-                      <input type="text" placeholder="지상권 정보" class="notWriteInput" readonly />
+                      <input type="text" th:value="${val.gubun}" class="notWriteInput" readonly />
                     </li>
                     <li class="content largeWidth">
-                      <input type="text" class="notWriteInput" readonly placeholder="취득일 변경(‘’ > ‘1995-06-30’)" />
-                    </li>
-                  </ul>
-                  <ul class="contents">
-                    <li class="content smallWidth">
-                      <input type="text" placeholder="2" class="notWriteInput" readonly />
-                    </li>
-                    <li class="content">
-                      <input type="text" placeholder="2022-10-27 09:14:07.0" class="notWriteInput" readonly />
-                    </li>
-                    <li class="content">
-                      <input type="text" placeholder="소속 토지정보" class="notWriteInput" readonly />
-                    </li>
-                    <li class="content largeWidth">
-                      <input type="text" class="notWriteInput" readonly placeholder="지적 변경(‘경기도 성남시 분당구 석운동 65-3’ > ‘경기도 성남시 분당구 석운동65-3’)" />
+                      <input type="text" class="notWriteInput" readonly th:value="${val.cont}" />
                     </li>
                   </ul>
                 </div>
@@ -370,26 +356,15 @@
                   <li class="title">작성자</li>
                   <li class="title largeWidth">내용</li>
                 </ul>
-                <ul class="contents">
+                <ul class="contents" hidden th:each="val:${memo_list}">
                   <li class="content">
-                    <input type="text" placeholder="2022-11-01" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.mm_wdate}" readonly class="notWriteInput" />
                   </li>
                   <li class="content">
-                    <input type="text" placeholder="김철수" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.mm_user_name}" readonly class="notWriteInput" />
                   </li>
                   <li class="content largeWidth">
-                    <input type="text" placeholder="협의 중" readonly class="notWriteInput" />
-                  </li>
-                </ul>
-                <ul class="contents">
-                  <li class="content">
-                    <input type="text" placeholder="2022-11-01" readonly class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input type="text" placeholder="김철수" readonly class="notWriteInput" />
-                  </li>
-                  <li class="content largeWidth">
-                    <input type="text" placeholder="협의 중" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.mm_memo}" readonly class="notWriteInput" />
                   </li>
                 </ul>
               </div>
@@ -400,10 +375,10 @@
       <div class="finalBtnBox btnWrap">
         <button class="prevBtn finalBtn">이전</button>
         <button class="editBtn finalBtn" th:if="${isCancel != 'Y'}">
-          <a href="/dopco/compLandEdit">수정</a>
+          <a href="/dopco/compLandEdit" th:href="'/dopco/compLandEdit?idx=' + ${data.idx} + '&dopcoNo=' + ${data.dopco_no}">수정</a>
         </button>
         <button class="editBtn finalBtn" th:if="${isCancel == 'Y'}">
-          <a href="/dopco/compLandDispReg">등록</a>
+          <a href="/dopco/compLandDispReg" th:href="'/dopco/compLandDispReg?idx=' + ${data.idx} + '&dopcoNo=' + ${data.dopco_no}">등록</a>
         </button>
         <button class="printBtn finalBtn">출력</button>
       </div>

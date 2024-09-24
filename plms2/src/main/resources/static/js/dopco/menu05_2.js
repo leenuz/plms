@@ -283,7 +283,7 @@ function loadDataTable(params) {
 			console.log(data);
 			console.log(data.idx);
 
-			var url = "/dopco/compLandInfo?idx=" + data.dom_idx + '&cancel=Y';
+			var url = "/dopco/compLandInfo?idx=" + data.dom_idx + '&dopcoNo=' + data.dom_dopco_no + '&cancel=Y';
 			window.location = url;
 		}
 	});

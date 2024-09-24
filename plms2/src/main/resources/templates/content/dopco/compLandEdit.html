@@ -131,8 +131,7 @@
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">선택</button>
-
+                                        <button class="customSelectView" th:text="${data.jisa}"></button>
                                         <ul class="customSelectBtns">
                                         </ul>
                                     </section>
@@ -150,7 +149,7 @@
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">선택</button>
+                                        <button class="customSelectView" th:text="${data.yongdo}">선택</button>
 
                                         <ul class="customSelectBtns"></ul>
                                     </section>
@@ -164,7 +163,7 @@
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">선택</button>
+                                        <button class="customSelectView" th:text="${data.pipe_name}">선택</button>
 
                                         <ul class="customSelectBtns"></ul>
                                     </section>
@@ -178,7 +177,7 @@
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">선택</button>
+                                        <button class="customSelectView" th:text="${data.sun_gubun}">선택</button>
 
                                         <ul class="customSelectBtns"></ul>
                                     </section>
@@ -221,13 +220,13 @@
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">Y/N</button>
+                                        <button class="customSelectView" th:text="${data.gover_own_yn}">Y/N</button>
 
                                         <ul class="customSelectBtns"></ul>
                                     </section>
                                 </li>
                                 <li class="content areaData">
-                                    <input type="text" name="areaData" readonly class="notWriteInput" />
+                                    <input type="text" name="areaData" readonly class="notWriteInput" th:value="${data.jijuk_area}"/>
                                 </li>
                                 <li class="content selectContentArea jimokData">
                                     <div class="hiddenSelectBox">
@@ -239,7 +238,7 @@
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">선택</button>
+                                        <button class="customSelectView" th:text="${data.jimok_text}">선택</button>
 
                                         <ul class="customSelectBtns"></ul>
                                     </section>
@@ -270,8 +269,7 @@
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">Y/N</button>
-
+                                        <button class="customSelectView" th:text="${data.dosiplan}">Y/N</button>
                                         <ul class="customSelectBtns"></ul>
                                     </section>
                                 </li>
@@ -280,11 +278,11 @@
                                 </li>
                                 <li class="content">
                                     <div class="dateInputWrap">
-                                        <input type="date" name="chuideukDate" data-placeholder="날짜선택" required aria-required="true" />
+                                        <input type="date" name="chuideukDate" data-placeholder="날짜선택" th:value="${data.chuideuk_date}"/>
                                     </div>
                                 </li>
                                 <li class="content">
-                                    <input name="jasan" type="text" />
+                                    <input name="jasan" type="text" th:value="${data.jasan_no}"/>
                                 </li>
                             </ul>
                         </div>
@@ -312,20 +310,20 @@
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">Y/N</button>
+                                        <button class="customSelectView" th:text="${data.comple_yn}">Y/N</button>
                                         <ul class="customSelectBtns"></ul>
                                     </section>
                                 </li>
                                 <li class="content">
                                     <div class="dateInputWrap">
-                                        <input type="date" name="deunggiDate" data-placeholder="날짜선택" required aria-required="true" />
+                                        <input type="date" name="deunggiDate" data-placeholder="날짜선택" th:value="${data.deunggi_date}" />
                                     </div>
                                 </li>
                                 <li class="content">
-                                    <input name="deunggiNo" type="text" />
+                                    <input name="deunggiNo" type="text" th:value="${data.deunggi_no}"/>
                                 </li>
                                 <li class="content">
-                                    <input name="deunggiso" type="text" />
+                                    <input name="deunggiso" type="text" th:value="${data.deunggiso}"/>
                                 </li>
                             </ul>
                         </div>
@@ -348,35 +346,35 @@
                                 <li class="title largeWidth">주소</li>
                             </ul>
                             <div class="contentsBox">
-                                <ul class="contents">
+                                <ul class="contents" th:each="val:${right_list}">
                                     <li class="content smallWidth checkboxWrap">
                                         <input type="checkbox" id="compLandReg_checkbox01">
                                         <label for="compLandReg_checkbox01"></label>
                                     </li>
                                     <li class="content">
-                                        <input name="rightName" type="text" />
+                                        <input name="rightName" type="text" th:value="${val.right_name}"/>
                                     </li>
                                     <li class="content">
-                                        <input name="rightMoney" type="text" />
+                                        <input name="rightMoney" type="text" th:value="${val.right_money}"/>
                                     </li>
                                     <li class="content">
                                         <div class="dateInputWrap">
-                                            <input type="date" name="rightDate" data-placeholder="날짜선택" required aria-required="true" />
+                                            <input type="date" name="rightDate" data-placeholder="날짜선택"  th:value="${val.right_date}"/>
                                         </div>
                                     </li>
                                     <li class="content">
                                         <div class="dateInputWrap">
-                                            <input type="date" name="cancleDate" data-placeholder="날짜선택" required aria-required="true" />
+                                            <input type="date" name="cancleDate" data-placeholder="날짜선택"  th:value="${val.cancle_date}"/>
                                         </div>
                                     </li>
                                     <li class="content">
-                                        <input name="rightUname" type="text" />
+                                        <input name="rightUname" type="text" th:value="${val.right_uname}"/>
                                     </li>
                                     <li class="content">
-                                        <input name="rightPhone" type="text" />
+                                        <input name="rightPhone" type="text" th:value="${val.right_phone}"/>
                                     </li>
                                     <li class="content largeWidth">
-                                        <input name="rightAddr" type="text" />
+                                        <input name="rightAddr" type="text" th:value="${val.right_addr}"/>
                                     </li>
                                 </ul>
                             </div>
@@ -423,12 +421,6 @@
                     <div class="btnWrap">
                         <button class="fileDelBtn delBtn" id="deleteFileBtn">선택파일 삭제</button>
                     </div>
-                </section>
-                <!-- 메모 -->
-                <section class="memoSection">
-                    <div class="subTitle">메모</div>
-
-                    <textarea name="meno" placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200"></textarea>
                 </section>
                 <div class="finalBtnBox btnWrap">
                     <button class="prevBtn finalBtn"><a href="/dopco/menu05_1">이전</a></button>

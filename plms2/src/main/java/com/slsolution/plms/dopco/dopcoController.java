@@ -87,17 +87,67 @@ public class dopcoController {
 
 	@GetMapping(path="/compLandEdit") //http://localhost:8080/api/get/dbTest
     public ModelAndView compLandEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+
 		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 		ArrayList<HashMap> addressList = mainService.selectQuery("jisangSQL.bunhalAddressSearch",params);
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+
+		String idx = httpRequest.getParameter("idx");
+		String dopco_no = httpRequest.getParameter("dopcoNo");
+
+		params.put("idx",idx);
+		params.put("manage_no",idx);
+		params.put("dopco_no",dopco_no);
+		params.put("DOPCO_NO",dopco_no);
+
+		list = (ArrayList) mainService.selectQuery("dopcoSQL.selectAllData", params); // 기본정보
+		ArrayList toja_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Toja", params); // 투자오더
+		ArrayList right_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Right", params); // 권리내역
+		ArrayList modify_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Modify", params); // 변경이력
+		//params.put("dopco_no", modify_list)
+		
+		ArrayList file_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Files", params); // 첨부파일
+		//ArrayList<HashMap> data = mainService.selectQuery("dopcoSQL.selectAllData",params);
+		HashMap resultData = new HashMap<>();
+		HashMap jijuk = new HashMap<>();
+		jijuk.put("x", 0);
+		jijuk.put("y", 0);
+		
+		if (list.size() > 0) {
+			resultData = list.get(0);
+			HashMap jijukParam = new HashMap<>();
+			jijukParam.put("sido_nm", list.get(0).get("sido_nm"));
+			jijukParam.put("sgg_nm", list.get(0).get("sgg_nm"));
+			jijukParam.put("emd_nm", list.get(0).get("emd_nm"));
+			jijukParam.put("ri_nm", list.get(0).get("ri_nm"));
+			jijukParam.put("jibun", list.get(0).get("jibun"));
+
+			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			if (jijukList.size() > 0) {
+				jijuk = jijukList.get(0);
+			}
+			else {
+				jijuk = new HashMap<>();
+				jijuk.put("x", 0);
+				jijuk.put("y", 0);
+			}
+		}
+
+		log.info("data : " + resultData);
 		ModelAndView mav=new ModelAndView();
-		mav.setViewName("content/dopco/compLandEdit");
+		mav.addObject("data", resultData);
+		mav.addObject("toja_list", toja_list);
+		mav.addObject("right_list", right_list);
+		mav.addObject("modify_list", modify_list);
+		mav.addObject("file_list", file_list);
+		mav.addObject("memo_list", new ArrayList<>());
+		mav.addObject("jijuk", jijuk);
 		mav.addObject("addressList",addressList);
 		mav.addObject("resultJimokList",jimoklist);
 		mav.addObject("jisaList",jisalist);
+		mav.setViewName("content/dopco/compLandEdit");
 
 		return mav;
 	}
@@ -168,7 +218,7 @@ public class dopcoController {
 		params.put("DOPCO_NO",dopco_no);
 	//	params.put("index",index);
 		log.info("params:"+params);
-		list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoDetailList", params); // 기본정보
+		list = (ArrayList) mainService.selectQuery("dopcoSQL.selectAllData", params); // 기본정보
 		ArrayList toja_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Toja", params); // 투자오더
 		ArrayList right_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Right", params); // 권리내역
 		ArrayList modify_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Modify", params); // 변경이력
@@ -244,6 +294,7 @@ public class dopcoController {
 		mav.addObject("right_list", right_list);
 		mav.addObject("modify_list", modify_list);
 		mav.addObject("file_list", file_list);
+		mav.addObject("memo_list", new ArrayList<>());
 		mav.addObject("jijuk", jijuk);
 log.info("resultData:"+resultData);
 		mav.setViewName("content/dopco/compLandInfo");
@@ -252,9 +303,63 @@ log.info("resultData:"+resultData);
 	
 	@GetMapping(path="/compLandDispReg") //http://localhost:8080/api/get/dbTest
     public ModelAndView compLandDispReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		
+		String idx = httpRequest.getParameter("idx");
+		String dopco_no = httpRequest.getParameter("dopcoNo");
+		//String index = httpRequest.getParameter("index");
+		String isCancel = httpRequest.getParameter("cancel");
+
+		params.put("idx",idx);
+		params.put("manage_no",idx);
+		params.put("dopco_no",dopco_no);
+		params.put("DOPCO_NO",dopco_no);
+	//	params.put("index",index);
+		log.info("params:"+params);
+		list = (ArrayList) mainService.selectQuery("dopcoSQL.selectAllData", params); // 기본정보
+		ArrayList toja_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Toja", params); // 투자오더
+		ArrayList right_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Right", params); // 권리내역
+		ArrayList modify_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Modify", params); // 변경이력
+		//params.put("dopco_no", modify_list)
+		
+		ArrayList file_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Files", params); // 첨부파일
+		//ArrayList<HashMap> data = mainService.selectQuery("dopcoSQL.selectAllData",params);
+		HashMap resultData = new HashMap<>();
+		HashMap jijuk = new HashMap<>();
+		jijuk.put("x", 0);
+		jijuk.put("y", 0);
+		
+		if (list.size() > 0) {
+			resultData = list.get(0);
+			HashMap jijukParam = new HashMap<>();
+			jijukParam.put("sido_nm", list.get(0).get("sido_nm"));
+			jijukParam.put("sgg_nm", list.get(0).get("sgg_nm"));
+			jijukParam.put("emd_nm", list.get(0).get("emd_nm"));
+			jijukParam.put("ri_nm", list.get(0).get("ri_nm"));
+			jijukParam.put("jibun", list.get(0).get("jibun"));
+
+			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			if (jijukList.size() > 0) {
+				jijuk = jijukList.get(0);
+			}
+			else {
+				jijuk = new HashMap<>();
+				jijuk.put("x", 0);
+				jijuk.put("y", 0);
+			}
+		}
+				
+		mav.addObject("isCancel", isCancel);
+		mav.addObject("data", resultData);
+		mav.addObject("toja_list", toja_list);
+		mav.addObject("right_list", right_list);
+		mav.addObject("modify_list", modify_list);
+		mav.addObject("file_list", file_list);
+		mav.addObject("memo_list", new ArrayList<>());
+		mav.addObject("jijuk", jijuk);
+log.info("resultData:"+resultData);
 		mav.setViewName("content/dopco/compLandDispReg");
 		return mav;
 	}

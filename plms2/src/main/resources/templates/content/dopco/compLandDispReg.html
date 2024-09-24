@@ -32,16 +32,16 @@
                         </ul>
                         <ul class="contents">
                             <li class="content">
-                                <input type="text" placeholder="서울지사" readonly class="notWriteInput" />
+                                <input type="text" th:value="${data.jisa}" readonly class="notWriteInput" />
                             </li>
                             <li class="content">
-                                <input type="text" placeholder="저유소" readonly class="notWriteInput" />
+                                <input type="text" th:value="${data.yongdo}" readonly class="notWriteInput" />
                             </li>
                             <li class="content">
-                                <input type="text" readonly class="notWriteInput" />
+                                <input type="text" th:value="${data.pipe_name}" readonly class="notWriteInput" />
                             </li>
                             <li class="content">
-                                <input type="text" readonly class="notWriteInput" />
+                                <input type="text" th:value="${data.sun_gubun}" readonly class="notWriteInput" />
                             </li>
                         </ul>
                     </div>
@@ -60,13 +60,13 @@
                         </ul>
                         <ul class="contents">
                             <li class="content">
-                                <input type="text" readonly class="notWriteInput" placeholder="경기도 성남시 분당구 석운동 65-3" />
+                                <input type="text" readonly class="notWriteInput" th:value="${data.address}" />
                             </li>
                             <li class="content">
-                                <input type="text" readonly class="notWriteInput" placeholder="N" />
+                                <input type="text" readonly class="notWriteInput" th:value="${data.gover_own_yn}" />
                             </li>
                             <li class="content">
-                                <input type="text" readonly class="notWriteInput" placeholder="208093" />
+                                <input type="text" readonly class="notWriteInput" th:value="${data.jijuk_area}" />
                             </li>
                         </ul>
                     </div>
@@ -85,13 +85,13 @@
                         </ul>
                         <ul class="contents">
                             <li class="content">
-                                <input type="text" placeholder="Y" readonly class="notWriteInput" />
+                                <input type="text" th:value="${data.dosiplan}" readonly class="notWriteInput" />
                             </li>
                             <li class="content">
-                                <input type="text" placeholder="서울저유소" readonly class="notWriteInput" />
+                                <input type="text" th:value="${data.dopco_status}" readonly class="notWriteInput" />
                             </li>
                             <li class="content">
-                                <input type="text" placeholder="1000032" readonly class="notWriteInput" />
+                                <input type="text" th:value="${data.jasan_no}" readonly class="notWriteInput" />
                             </li>
                         </ul>
                     </div>
@@ -111,16 +111,16 @@
                         </ul>
                         <ul class="contents">
                             <li class="content">
-                                <input type="text" placeholder="Y" readonly class="notWriteInput" />
+                                <input type="text" th:value="${data.comple_yn}" readonly class="notWriteInput" />
                             </li>
                             <li class="content">
-                                <input type="text" placeholder="1995-06-30" readonly class="notWriteInput" />
+                                <input type="text" th:value="${data.deunggi_date}" readonly class="notWriteInput" />
                             </li>
                             <li class="content">
-                                <input type="text" placeholder="1356-1996-052605" readonly class="notWriteInput" />
+                                <input type="text" th:value="${data.deunggi_no}" readonly class="notWriteInput" />
                             </li>
                             <li class="content">
-                                <input type="text" placeholder="수원지방법원 성남지원 분당등기소" readonly class="notWriteInput" />
+                                <input type="text" th:value="${data.deunggiso}" readonly class="notWriteInput" />
                             </li>
                         </ul>
                     </div>
@@ -141,27 +141,27 @@
                             <li class="title">연락처</li>
                             <li class="title largeWidth">주소</li>
                         </ul>
-                        <ul class="contents">
+                        <ul class="contents" th:each="val:${right_list}">
                             <li class="content">
-                                <input type="text" readonly class="notWriteInput" placeholder="근저당권설정" />
+                                <input type="text" readonly class="notWriteInput" th:value="${val.right_name}" />
                             </li>
                             <li class="content">
-                                <input type="text" readonly class="notWriteInput" placeholder="61,800,000,000" />
+                                <input type="text" readonly class="notWriteInput" th:value="${val.right_money}" />
                             </li>
                             <li class="content">
-                                <input type="text" readonly class="notWriteInput" placeholder="2005-09-14" />
+                                <input type="text" readonly class="notWriteInput" th:value="${val.right_date}" />
                             </li>
                             <li class="content">
-                                <input type="text" readonly class="notWriteInput" />
+                                <input type="text" readonly class="notWriteInput" th:value="${val.cancle_date}" />
                             </li>
                             <li class="content">
-                                <input type="text" readonly class="notWriteInput" placeholder="한국석유공사" />
+                                <input type="text" readonly class="notWriteInput" th:value="${val.right_uname}" />
                             </li>
                             <li class="content">
-                                <input type="text" readonly class="notWriteInput" />
+                                <input type="text" readonly class="notWriteInput" th:value="${val.right_phone}"/>
                             </li>
                             <li class="content largeWidth">
-                                <input type="text" readonly class="notWriteInput" />
+                                <input type="text" readonly class="notWriteInput" th:value="${val.right_addr}"/>
                             </li>
                         </ul>
                     </div>

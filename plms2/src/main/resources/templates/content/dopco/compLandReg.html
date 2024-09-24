@@ -1,139 +1,136 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      
-      layout:decorate="~{layout/default_layout}">
- <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
 
 
- 
-  
-   
-  
-	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	
- <link rel="stylesheet" href="/css/dopco/compLandReg.css" /> 
-	  
-		<script src="/js/songyu/menu01.js"></script>	
-		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
+
+
+
+
+  <link th:href="@{/css/common.css}" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/dopco/compLandReg.css" />
+
+  <script src="/js/songyu/menu01.js"></script>
+  <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
-		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
+  <style>
+    div.dt-top-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+    }
 
-div.dt-center-in-div {
-  margin: 0 auto;
+    div.dt-center-in-div {
+      margin: 0 auto;
       float: right;
-    margin-right: 30px;
-   
-}
-div.dt-center-in-div>div{
+      margin-right: 30px;
 
-display:inline;
-}
+    }
 
-div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
-}
+    div.dt-center-in-div>div {
+
+      display: inline;
+    }
+
+    div.dt-filter-spacer {
+      margin: 10px 0;
+      border: 1px solid red;
+    }
 
 
-.dt-title{
+    .dt-title {
 
-text-align:center;
-width:180px;
-float:left;
+      text-align: center;
+      width: 180px;
+      float: left;
 
-}
-.dt-buttons{
-display:inline-block;
+    }
 
-width:180px;
+    .dt-buttons {
+      display: inline-block;
 
-}
-.dt-length{
-display:inline-block;
-}
-.dt-button{
+      width: 180px;
 
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
+    }
 
-}
+    .dt-length {
+      display: inline-block;
+    }
 
-.dt-paging {
-text-align: center;
-}
+    .dt-button {
 
-.dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-    
-    
-}
+      color: white;
+      background-color: #4e5871;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 10px;
+      background-image: url(/assets/media/menu01/download.png);
+      background-size: 11px;
+      background-repeat: no-repeat;
+      background-position: 123px center;
+      text-aline: left;
+      margin-right: 10px;
+      width: 159px;
+      height: 38px;
 
-.bottom{
-text-align:center;
+    }
 
-}
-.top{
+    .dt-paging {
+      text-align: center;
+    }
 
-text-align:right;
-margin:10px;
+    .dt-paging-button {
+      box-sizing: border-box;
+      display: inline-block;
+      min-width: 1.5em;
+      padding: 0.5em 1em;
+      margin-left: 2px;
+      text-align: center;
+      text-decoration: none !important;
+      cursor: pointer;
 
-}
+      border: 1px solid transparent;
+      border-radius: 2px;
+      background: transparent;
+      color: #007bff !important;
+      font-size: 15px;
+      font-weight: 600;
 
-		</style>
-		
-    <title>회사토지 등록</title>
-  </head>
+
+    }
+
+    .bottom {
+      text-align: center;
+
+    }
+
+    .top {
+
+      text-align: right;
+      margin: 10px;
+
+    }
+  </style>
+
+  <title>회사토지 등록</title>
+</head>
 <th:block layout:fragment="content">
-    <!-- 회사토지 등록 -->
-    <div class="compLandRegWrappers">
-     
-      <main id="compLandReg">
-        <div class="mainTitle">
-          <h1>회사토지 등록</h1>
-        </div>
+  <!-- 회사토지 등록 -->
+  <div class="compLandRegWrappers">
+
+    <main id="compLandReg">
+      <div class="mainTitle">
+        <h1>회사토지 등록</h1>
+      </div>
 
 
-        <form id="saveForm" onSubmit="return false;">
+      <form id="saveForm" onSubmit="return false;">
         <!-- 기본 정보 -->
         <section class="basicOwnerInfo">
           <div class="subTitle">기본 정보</div>
@@ -149,10 +146,7 @@ margin:10px;
               <ul class="contents">
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
-                    <select
-                      name="jisa"
-                      id="compLandRegSelectBox01"
-                      hidden>
+                    <select name="jisa" id="compLandRegSelectBox01" hidden>
                       <option value=""></option>
                       <th:block th:each="val:${jisaList}">
                         <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
@@ -168,10 +162,7 @@ margin:10px;
                 </li>
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
-                    <select
-                      name="yongdo"
-                      id="compLandRegSelectBox02"
-                      hidden>
+                    <select name="yongdo" id="compLandRegSelectBox02" hidden>
                       <option value=""></option>
                       <option value="송유관로">송유관로</option>
                       <option value="밸브박스">밸브박스</option>
@@ -189,10 +180,7 @@ margin:10px;
                 </li>
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
-                    <select
-                      name="pipe_name"
-                      id="compLandRegSelectBox03"
-                      hidden>
+                    <select name="pipe_name" id="compLandRegSelectBox03" hidden>
                       <option value=""></option>
                       <option value="SNP 구간">SNP 구간</option>
                       <option value="광주지선">광주지선</option>
@@ -206,10 +194,7 @@ margin:10px;
                 </li>
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
-                    <select
-                      name="sun_gubun"
-                      id="compLandRegSelectBox04"
-                      hidden>
+                    <select name="sun_gubun" id="compLandRegSelectBox04" hidden>
                       <option value=""></option>
                       <option value="단선">단선</option>
                       <option value="복선">복선</option>
@@ -228,14 +213,14 @@ margin:10px;
         <!-- 소속 토지 정보 -->
         <section class="rightsDetails">
           <div class="subTitle">소속 토지 정보</div>
-			<input type="hidden" name="sido_nm" id="sido_nm">
-			<input type="hidden" name="sgg_nm" id="sgg_nm">
-			<input type="hidden" name="emd_nm" id="emd_nm">
-			<input type="hidden" name="ri_nm" id="ri_nm">
-			<input type="hidden" name="jibun" id="jibun">
-			<input type="hidden" name="pnu" id="pnu">
-			<input type="hidden" name="addrcode" id="addrcode">
-			
+          <input type="hidden" name="sido_nm" id="sido_nm">
+          <input type="hidden" name="sgg_nm" id="sgg_nm">
+          <input type="hidden" name="emd_nm" id="emd_nm">
+          <input type="hidden" name="ri_nm" id="ri_nm">
+          <input type="hidden" name="jibun" id="jibun">
+          <input type="hidden" name="pnu" id="pnu">
+          <input type="hidden" name="addrcode" id="addrcode">
+
           <div class="contWrap">
             <div class="depth1">
               <ul class="titles">
@@ -246,17 +231,14 @@ margin:10px;
               </ul>
               <ul class="contents">
                 <li class="content inputWrap">
-                  <div class="inputBox addressData" >
+                  <div class="inputBox addressData">
                     <input name="addressData" type="text" />
                   </div>
                   <button class="searchBtn">검색</button>
                 </li>
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
-                    <select
-                      name="gover_own_yn"
-                      id="compLandRegSelectBox05"
-                      hidden>
+                    <select name="gover_own_yn" id="compLandRegSelectBox05" hidden>
                       <option value=""></option>
                       <option value="Y">Y</option>
                       <option value="N">N</option>
@@ -273,10 +255,7 @@ margin:10px;
                 </li>
                 <li class="content selectContentArea jimokData">
                   <div class="hiddenSelectBox">
-                    <select
-                      name="jimok_text"
-                      id="compLandRegSelectBox06"
-                      hidden>
+                    <select name="jimok_text" id="compLandRegSelectBox06" hidden>
                       <option value=""></option>
                       <th:block th:each="val:${resultJimokList}">
                         <option th:text="${val.jm_name}" th:value="${val.jm_name}"></option>
@@ -308,10 +287,7 @@ margin:10px;
               <ul class="contents">
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
-                    <select
-                      name="dosiplan"
-                      id="compLandRegSelectBox07"
-                      hidden>
+                    <select name="dosiplan" id="compLandRegSelectBox07" hidden>
                       <option value=""></option>
                       <option value="Y">Y</option>
                       <option value="N">N</option>
@@ -328,12 +304,7 @@ margin:10px;
                 </li>
                 <li class="content">
                   <div class="dateInputWrap">
-                    <input
-                      type="date"
-                      name="chuideukDate"
-                      data-placeholder="날짜선택"
-                      required
-                      aria-required="true" />
+                    <input type="date" name="chuideukDate" data-placeholder="날짜선택" />
                   </div>
                 </li>
                 <li class="content">
@@ -358,10 +329,7 @@ margin:10px;
               <ul class="contents">
                 <li class="content selectContentArea">
                   <div class="hiddenSelectBox">
-                    <select
-                      name="comple_yn"
-                      id="compLandRegSelectBox08"
-                      hidden>
+                    <select name="comple_yn" id="compLandRegSelectBox08" hidden>
                       <option value=""></option>
                       <option value="Y">Y</option>
                       <option value="N">N</option>
@@ -374,19 +342,14 @@ margin:10px;
                 </li>
                 <li class="content">
                   <div class="dateInputWrap">
-                    <input
-                      type="date"
-                      name="deunggiDate"
-                      data-placeholder="날짜선택"
-                      required
-                      aria-required="true" />
+                    <input type="date" name="deunggiDate" data-placeholder="날짜선택" />
                   </div>
                 </li>
                 <li class="content">
                   <input name="deunggiNo" type="text" />
                 </li>
                 <li class="content">
-                  <input  name="deunggiso" type="text" />
+                  <input name="deunggiso" type="text" />
                 </li>
               </ul>
             </div>
@@ -409,47 +372,37 @@ margin:10px;
                 <li class="title largeWidth">주소</li>
               </ul>
               <div class="contentsBox">
-              <ul class="contents">
-                <li class="content smallWidth checkboxWrap">
-                  <input type="checkbox" id="compLandReg_checkbox01">
-                  <label for="compLandReg_checkbox01"></label>
-                </li>
-                <li class="content">
-                  <input name="rightName" type="text" />
-                </li>
-                <li class="content">
-                  <input name="rightMoney" type="text" />
-                </li>
-                <li class="content">
-                  <div class="dateInputWrap">
-                    <input
-                      type="date"
-                      name="rightDate"
-                      data-placeholder="날짜선택"
-                      required
-                      aria-required="true" />
-                  </div>
-                </li>
-                <li class="content">
-                  <div class="dateInputWrap">
-                    <input
-                      type="date"
-                      name="cancleDate"
-                      data-placeholder="날짜선택"
-                      required
-                      aria-required="true" />
-                  </div>
-                </li>
-                <li class="content">
-                  <input name="rightUname" type="text" />
-                </li>
-                <li class="content">
-                  <input name="rightPhone" type="text" />
-                </li>
-                <li class="content largeWidth">
-                  <input name="rightAddr" type="text" />
-                </li>
-              </ul>
+                <ul class="contents">
+                  <li class="content smallWidth checkboxWrap">
+                    <input type="checkbox" id="compLandReg_checkbox01">
+                    <label for="compLandReg_checkbox01"></label>
+                  </li>
+                  <li class="content">
+                    <input name="rightName" type="text" />
+                  </li>
+                  <li class="content">
+                    <input name="rightMoney" type="text" />
+                  </li>
+                  <li class="content">
+                    <div class="dateInputWrap">
+                      <input type="date" name="rightDate" data-placeholder="날짜선택" />
+                    </div>
+                  </li>
+                  <li class="content">
+                    <div class="dateInputWrap">
+                      <input type="date" name="cancleDate" data-placeholder="날짜선택" />
+                    </div>
+                  </li>
+                  <li class="content">
+                    <input name="rightUname" type="text" />
+                  </li>
+                  <li class="content">
+                    <input name="rightPhone" type="text" />
+                  </li>
+                  <li class="content largeWidth">
+                    <input name="rightAddr" type="text" />
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -474,10 +427,7 @@ margin:10px;
 
           <div class="fileUploadWrap">
             <div class="fileUploadBox">
-              <img
-                src="/assets/media/menu05/images/file-upload.png"
-                alt="파일 업로드 아이콘"
-                class="fileUploadIcon" />
+              <img src="/assets/media/menu05/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
               <p>파일을 마우스로 끌어오세요.</p>
             </div>
           </div>
@@ -502,18 +452,15 @@ margin:10px;
         <section class="memoSection">
           <div class="subTitle">메모</div>
 
-          <textarea
-                  name="meno"
-            placeholder="내용을 입력해주세요. (200자 이내)"
-            maxlength="200"></textarea>
+          <textarea name="meno" placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200"></textarea>
         </section>
         <div class="finalBtnBox btnWrap">
           <button class="prevBtn finalBtn"><a href="/dopco/menu05_1">이전</a></button>
           <button class="registBtn finalBtn">등록</button>
         </div>
-        </form>
-      </main>
-    </div>
+      </form>
+    </main>
+  </div>
 
   <div class="landRegPopWrapper" id="searchResultPopDiv">
 
@@ -533,7 +480,7 @@ margin:10px;
             <li class="popTitle04">선택</li>
 
           </ul>
-          <div class="popContentBox" >
+          <div class="popContentBox">
             <ul class="popContents" th:each="val:${addressList}">
 
               <li class="popContent01"> [[${val.pnu}]]</li>
@@ -564,7 +511,8 @@ margin:10px;
     </div>
 
   </div>
-    <script type="module" src="/js/module/surfaceMain.js"></script>
-    <script src="/js/dopco/compLandReg.js"></script>
- </th:block>
+  <script type="module" src="/js/module/surfaceMain.js"></script>
+  <script src="/js/dopco/compLandReg.js"></script>
+</th:block>
+
 </html>
