@@ -1417,7 +1417,13 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 	<select id="selectOfficeInfo" resultType="HashMap" parameterType="HashMap">
 		SELECT TT.*
 		FROM (	
-			SELECT T.so_idx as idx,T.so_adm_seq as ADM_SEQ, T.so_jisa as JISA, T.so_pmt_office as PMT_OFFICE, T.so_adm_office as ADM_OFFICE,T.so_approve as APPROVE
+			SELECT 
+			T.so_idx as idx,
+			T.so_adm_seq as ADM_SEQ, 
+			T.so_jisa as JISA, 
+			T.so_pmt_office as PMT_OFFICE, 
+			T.so_adm_office as ADM_OFFICE,
+			T.so_approve as APPROVE
 			FROM SYS_OFFICEMNG T
 			WHERE 1 = 1
 			and T.so_idx=${idx}		
@@ -1441,5 +1447,13 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 		</if>
 		
 	</select>
+	
+	<update id="updateApproveStatus" parameterType="hashmap">
+	    UPDATE SYS_OFFICEMNG
+	    SET so_approve = 'Y'
+	    WHERE so_idx = CAST(#{idx} AS INTEGER)
+	</update>
+
+
 	
 </mapper>

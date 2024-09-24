@@ -2319,26 +2319,22 @@ log.info("params:"+params);
 				}
 				
 		
-		
+		// 관리기관 관리 - 승인 대기 팝업
 		@PostMapping(path="/getGoverOfficeMngEditPage") //http://localhost:8080/api/get/dbTest
 		public ModelAndView getGoverOfficeMngEditPage(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 			ModelAndView mav=new ModelAndView();
+			
+			//log.info("httpRequest:"+Arrays.toString(httpRequest))
+			
+			String idx = httpRequest.getParameter("idx");
+			
 			HashMap params = new HashMap();
-			
-			//log.info("httpRequest:"+Arrays.toString(httpRequest));
-
-			String idx=httpRequest.getParameter("idx");
-			
-			
-
-
 			params.put("idx", idx);
-		
+			log.info("params: "+params);
 			
-			
-
-			log.info("params:"+params);
 			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectOfficeInfo",params);
+			log.info("list: " + list.get(0));
+			
 			params.put("seq", list.get(0).get("adm_seq"));
 			ArrayList<HashMap> historyList = mainService.selectQuery("goverSQL.selectOfficeHistoryList",params);
 			//log.info("addressList:"+addressList);
@@ -2348,4 +2344,27 @@ log.info("params:"+params);
 			mav.setViewName("content/gover/orgAdmin :: #approve_Popup");
 			return mav;
 		}
+		
+		// 관리기관 관리 - 승인
+		@PostMapping(path = "/approveGoverOffice")
+		public ResponseEntity<String> approveGoverOffice(HttpServletRequest request) throws Exception {
+		    String idx = request.getParameter("idx");
+		    
+		    if (idx == null || idx.isEmpty()) {
+		        return ResponseEntity.badRequest().body("Invalid idx");
+		    }
+		    
+		    HashMap<String, Object> params = new HashMap<>();
+		    params.put("idx", idx);
+		    
+		    // so_approve 값을 Y로 업데이트
+		    int result = (int) mainService.UpdateQuery("goverSQL.updateApproveStatus", params);
+		    
+		    if (result > 0) {
+		        return ResponseEntity.ok("Success");
+		    } else {
+		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update approval status");
+		    }
+		}
+
 }

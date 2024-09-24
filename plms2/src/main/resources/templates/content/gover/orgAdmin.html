@@ -324,13 +324,13 @@
 				<h2>
 					<p>관리기관 승인</p>
 					<span class="topCloseBtn"></span>
+					<input type="hidden" name="idx" th:if="${data!=null}" th:value="${data.idx}" />
 				</h2>
 				<div class="aprrove_wrap">
 					<ul class="approve_title">
 						<li>관리지사</li>
 						<li class="popContent">
-							<input type="text" th:if="${data!=null}" th:value="${data.jisa}" placeholder="경인지사"
-								readonly />
+							<input type="text" th:if="${data!=null}" th:value="${data.jisa}" readonly />
 						</li>
 						<li>허가관청 신규입력</li>
 						<li class="popContent">
@@ -339,14 +339,16 @@
 							<label for="approvePopup_checkbox" class="approve_checkbox_label">
 							</label>
 						</li>
+						
 						<li>허가관청</li>
 						<li class="popContent">
-							<input type="text" placeholder="고양시" class="popContent_default active" readonly />
+							<input type="text" th:if="${data!=null}" th:value="${data.pmt_office}" class="popContent_default active" readonly />
 							<input class="approve_hidden_text" type="text" />
 						</li>
+						
 						<li>관리기관</li>
 						<li class="popContent">
-							<input type="text" placeholder="도로관리과" class="popContent" readonly />
+							<input type="text" th:if="${data!=null}" th:value="${data.adm_office}" class="popContent" readonly />
 						</li>
 					</ul>
 				</div>

@@ -65,12 +65,14 @@ function showModPopup() {
 	}
 }
 
+// 승인대기 버튼 클릭 시 팝업
 $(document).on("click", ".pendingApprovalBtn", function() {
 	var ul = $(this).parent().parent().parent().parent().html();
-
 	console.log(ul);
+	
 	var idx = $(this).parent().parent().parent().parent().find("#idx").val();
 	console.log("idx:" + idx);
+	
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
 
 	/* let orgAdminRegisterPath = '/gover/orgAdminPopupAccept';
@@ -100,17 +102,45 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 		type: "POST",
 		data: datas,
 	})
-		.done(function(fragment) {
-			console.log("***fragment***");
-			console.log(fragment);
-			$('#approve_Popup').replaceWith(fragment);
-			const popupOpen = document.querySelector("#approve_Popup");
-			console.log($(popupOpen).html());
-			$(popupOpen).addClass("active");
-			// popupOpen.classList.add("active");
-		});
-
+	.done(function(fragment) {
+		console.log("***fragment***");
+		console.log(fragment);
+		$('#approve_Popup').replaceWith(fragment);
+		const popupOpen = document.querySelector("#approve_Popup");
+		console.log($(popupOpen).html());
+		$(popupOpen).addClass("active");
+		// popupOpen.classList.add("active");
+	});
 })
+
+
+// 승인 버튼 클릭 이벤트
+$(document).on("click", "#approve_Popup .approveBtn", function() {
+    const idx = $("#approve_Popup").find("input[name='idx']").val(); // idx 값을 가져옴
+
+    if (!idx) {
+        alert("Invalid data");
+        return;
+    }
+
+    $.ajax({
+        url: '/gover/approveGoverOffice',
+        type: 'POST',
+        data: { idx: parseInt(idx, 10) },  // 정수로 변환
+        success: function(result) {
+            if (result === "Success") {
+                alert("승인이 완료되었습니다.");
+                $("#approve_Popup").removeClass("active");
+            } else {
+                alert("승인에 실패했습니다.");
+            }
+        },
+        error: function(error) {
+            console.error('Error:', error);
+            alert("승인 중 오류가 발생했습니다.");
+        }
+    });
+});
 
 
 // 승인 팝업
@@ -139,6 +169,13 @@ function showAcceptPopup() {
 	}
 }
 
+
+// x 버튼, 닫기, 승인 버튼 클릭 시 팝업 닫기
+$(document).on("click", "#approve_Popup .topCloseBtn, #approve_Popup .closeBtn", function() {
+    $("#approve_Popup").removeClass("active");
+});
+
+
 // 등록버튼 클릭 이벤트
 $('.vividBlueBtn').on('click', function() {
 	//showRegPopup();
@@ -166,17 +203,6 @@ if (approveScrollLength.length >= 6) {
 	historycontent.classList.remove("scroll");
 }
 
-//x버튼, 닫기, 승인요청 클릭시 팝업클로즈
-approve_PopupPopupOpen = document.getElementById("approve_Popup");
-if (approve_PopupPopupOpen) {
-	approve_PopupPopupOpen
-		.querySelectorAll(".topCloseBtn, .finalBtn")
-		.forEach(function(btn) {
-			btn.addEventListener("click", () => {
-				approve_PopupPopupOpen.classList.remove("active");
-			});
-		});
-}
 
 // 체크박스 선택 이벤트
 function toggleElements() {
