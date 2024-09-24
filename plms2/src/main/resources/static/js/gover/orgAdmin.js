@@ -182,6 +182,11 @@ $('.vividBlueBtn').on('click', function() {
 	const popupOpen = document.querySelector("#registerPopup");
 	console.log($(popupOpen).html());
 	$(popupOpen).addClass("active");
+	
+	// 폼 초기화
+	$('#saveForm')[0].reset();  // 폼의 모든 값을 초기화
+	$("#jisaText").text("전체");  // 지사 셀렉트 박스 초기화
+	$("#pmtOfficeText").text("전체");  // 허가관청 셀렉트 박스 초기화
 });
 
 
@@ -250,6 +255,20 @@ registerApprovePopEvet = () => {
 					object.pmt_office = $("input[name='pmt_office']").val(); // pmt_office 값 추가
 
 					console.log(object);
+					
+					// 입력값 검증: 지사, 허가관청, 관리기관이 비어있는지 확인
+					if (!object.jisa) {
+						alert("지사를 입력해주세요.");
+						return;
+					}
+					if (!object.pmt_office) {
+						alert("허가관청을 입력해주세요.");
+						return;
+					}
+					if (!object.adm_office) {
+						alert("관리기관을 입력해주세요.");
+						return;
+					}
 					
 					if (object.newCheck == "on") {
 						object.gubun = "insert";
@@ -468,8 +487,6 @@ $(document).on("change", "#jisaSelectBox", function () {
             // 허가관청 리스트 초기화 및 업데이트
             $("#pmtOfficeUl li").remove(); // 기존 허가관청 목록 제거
             $("#epmtOfficeSelectBox option").remove(); // 허가관청 selectbox 옵션 초기화
-            $("#pmtOfficeUl").append("<li><p>전체</p></li>"); // '전체' 옵션 추가
-            $("#epmtOfficeSelectBox").append("<option value=''>전체</option>");
             for (let i = 0; i < data.length; i++) {
                 $("#pmtOfficeUl").append("<li><p>" + data[i].so_pmt_office + "</p></li>");
                 $("#epmtOfficeSelectBox").append("<option>" + data[i].so_pmt_office + "</option>");

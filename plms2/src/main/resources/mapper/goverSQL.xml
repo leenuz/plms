@@ -1445,13 +1445,11 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
 			AND T.so_JISA = #{JISA}
 		</if>
-		
 	</select>
+	
 	<insert id="insertJisangUploadData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="ga_idx" keyProperty="ga_idx">
-		
 		INSERT INTO gover_atcfile 
 		(
-
 		 ga_jisang_no
 		 ,ga_seq
 		 ,ga_file_path
@@ -1464,9 +1462,7 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 		  ,#{fpath}
 		  ,#{fname}
 		  ,#{fseq}
-		  
-		    )
-	
+		  )
 	</insert>
 	
 	<update id="updateApproveStatus" parameterType="hashmap">
@@ -1475,6 +1471,4 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 	    WHERE so_idx = CAST(#{idx} AS INTEGER)
 	</update>
 
-
-	
 </mapper>
