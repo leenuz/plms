@@ -721,7 +721,13 @@ public class jisangController {
 		
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+<<<<<<< Updated upstream
 		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+=======
+		
+		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params);
+>>>>>>> Stashed changes
 		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
 		// jisangModifyList를 역순으로 정렬 (변경일시 내림차순 하기 위해서)
 		Collections.reverse(jisangModifyList);
@@ -3352,6 +3358,8 @@ log.info("gubun:"+gubun);
 	}
 	
 	
+	
+	
 	// 지상권 내역 임시등록
 	@Transactional
 	@PostMapping(path="/insertJisangTmpList")
@@ -3849,47 +3857,47 @@ log.info("gubun:"+gubun);
 			String CONVERT_BEFORE_KEY = parser.getString("CONVERT_BEFORE_KEY", "");
 
 			String str_result = "Y";
-			try {
-
-				Map params = new HashMap();
-				params.put("FILESEQ", fileseq);
-				params.put("SINM", sinm);
-				params.put("GUNGUNM", gungunm);
-				params.put("DONGNM", dongnm);
-				params.put("RINM", rinm);
-				//params.put("JISANM", jisanm);
-				params.put("JIBUN", jibun);
-				params.put("ADDRCODE", addrcode);
-				params.put("JISA", jisa);
-				params.put("GOVEROWNYN", goverownyn);
-				params.put("YONGDO", yongdo);
-				params.put("ZONE", zone);
-				params.put("SUNGUBUN", sun_gubun);
-				params.put("PNU", pnu);
-				params.put("JIJUKAREA", jijuk_area);
-				params.put("COMPLEYN", comple_yn);
-				params.put("PYEONIBAREA", pyeonib_area);
-				params.put("USESTATE", use_state);
-				params.put("DGSTARTDAY", dg_startday);
-				params.put("DEUNGGINO", deunggi_no);
-				params.put("DEUNGGISO", deunggiso);
-				params.put("DOSIPLAN", dosiplan);
-				params.put("CD_STARTDAY", cd_startday);
-				params.put("TOJANO", toja_no);
-				params.put("JASANNO", jasan_no);
-				params.put("SPECIALCONT", special_cont);
-				params.put("LOCATION", location);
-				params.put("STATUS", "JISANG");
-				params.put("JIMOK", jimok);
-				params.put("USER_ID", USER_ID);
-				params.put("USER_NAME", USER_NAME);
-				params.put("PERMITTED_YN", permitted_yn);
-				params.put("PIPEYN", pipeOverlapYn);
-
-				// System.out.println(params);
-				
+//			try {
+//
+//				HashMap params = new HashMap();
+//				params.put("FILESEQ", fileseq);
+//				params.put("SINM", sinm);
+//				params.put("GUNGUNM", gungunm);
+//				params.put("DONGNM", dongnm);
+//				params.put("RINM", rinm);
+//				//params.put("JISANM", jisanm);
+//				params.put("JIBUN", jibun);
+//				params.put("ADDRCODE", addrcode);
+//				params.put("JISA", jisa);
+//				params.put("GOVEROWNYN", goverownyn);
+//				params.put("YONGDO", yongdo);
+//				params.put("ZONE", zone);
+//				params.put("SUNGUBUN", sun_gubun);
+//				params.put("PNU", pnu);
+//				params.put("JIJUKAREA", jijuk_area);
+//				params.put("COMPLEYN", comple_yn);
+//				params.put("PYEONIBAREA", pyeonib_area);
+//				params.put("USESTATE", use_state);
+//				params.put("DGSTARTDAY", dg_startday);
+//				params.put("DEUNGGINO", deunggi_no);
+//				params.put("DEUNGGISO", deunggiso);
+//				params.put("DOSIPLAN", dosiplan);
+//				params.put("CD_STARTDAY", cd_startday);
+//				params.put("TOJANO", toja_no);
+//				params.put("JASANNO", jasan_no);
+//				params.put("SPECIALCONT", special_cont);
+//				params.put("LOCATION", location);
+//				params.put("STATUS", "JISANG");
+//				params.put("JIMOK", jimok);
+//				params.put("USER_ID", USER_ID);
+//				params.put("USER_NAME", USER_NAME);
+//				params.put("PERMITTED_YN", permitted_yn);
+//				params.put("PIPEYN", pipeOverlapYn);
+//
+//				// System.out.println(params);
+//				
 //				// 로깅처리를 위하여 기존 지적도 데이터 조회
-//				Map logParam = (HashMap) Database.getInstance().queryForObject("Json.selectJijukBeforePNU", params);
+//				Map logParam = (HashMap) mainService.selectHashmapQuery("songyuSQL.selectJijukBeforePNU", params);
 //
 //				/**********************
 //				 * 다음 지상권 번호 조회 시작
@@ -3898,7 +3906,7 @@ log.info("gubun:"+gubun);
 //					params.put("JISANGNO", mod_jisangNo);
 //
 //				} else {
-//					ArrayList JiSangList = (ArrayList) Database.getInstance().queryForList("Json.selectJijangNextNo", null);
+//					ArrayList JiSangList = (ArrayList) mainService.selectQuery("jisangSQL.selectJijangNextNo", null);
 //
 //					String Next_jisangNo = String.valueOf(Integer.parseInt((String) ((HashMap) JiSangList.get(0)).get("NOW_JISANGNO")) + 1);
 //					int n_Next_jisangNo = Next_jisangNo.length();
@@ -3917,14 +3925,14 @@ log.info("gubun:"+gubun);
 //				 ************************/
 //				if (gubun.equals("insert")) {
 //					params.put("SAVE_STATUS", "승인");
-//					Database.getInstance().insert("Json.insertJisangMaster", params); // 기본정보
+//					mainService.InsertQuery("jisangSQL.insertJisangMaster", params); // 기본정보
 //																						// 저장
 //				} else if (gubun.equals("modify")) {
 //
 //					/***********************
 //					 * 행정구역이 변경이 되면, 기존의 행정구역은 미설정으로 바꾸고, 변경된 행정구역을 지상권으로 설정함. <= 안함.
 //					 ************************/
-//					ArrayList jijanglist = (ArrayList) Database.getInstance().queryForList("Json.selectJisangList", params);
+//					ArrayList jijanglist = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangList", params);
 //					String str_BeforePNU = "";
 //					String str_BeforeADDRCODE = "";
 //					String str_BeforeJIBUN = "";
@@ -3949,7 +3957,7 @@ log.info("gubun:"+gubun);
 //						// if(hunhalCnt <= 1){
 //						// ** JIJUK_MASTER 테이블 지상권 해제 **//
 //						// System.out.println("insertJisangList >>>>>> 지상권해제params=" + params);
-//						Database.getInstance().update("Json.updateJijukMasterStatus", params);
+//						mainService.UpdateQuery("commonSQL.updateJijukMasterStatus", params);
 //
 //						// }
 //						
@@ -4219,11 +4227,11 @@ log.info("gubun:"+gubun);
 //					logParam.put("LOG_TYPE", "U");
 //					Database.getInstance().insert("Json.insertJijukLog", logParam);
 //				}
-
-			} catch (Exception e) {
-				str_result = "N";
-				e.printStackTrace();
-			}
+//
+//			} catch (Exception e) {
+//				str_result = "N";
+//				e.printStackTrace();
+//			}
 
 			if (list != null)
 				map.put("count", list.size());
@@ -5001,6 +5009,40 @@ log.info("gubun:"+gubun);
 //
 //		this.mapToJsonResponse(response, map);
 //	}
+	
+	
+	// 지상권 상세 정보 > 사용 승락 정보
+//		public void selectRowDetailTab_Permit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//
+//			ParameterParser parser = new ParameterParser(request);
+//			String JISANG_NO = parser.getString("jisangNo", "");
+//
+//			Map params = new HashMap();
+//			params.put("JISANG_NO", JISANG_NO);
+//
+//			ArrayList list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_Permit", params);
+//
+//			HashMap map = new HashMap();
+//
+//			if (list != null)
+//				map.put("count", list.size());
+//			else
+//				map.put("count", 0);
+//
+//			map.put("result", list);
+//
+//			// System.out.println("list1 = " + list1);
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//
+//		}
 
 
 }

@@ -287,5 +287,39 @@ SELECT PNU
   FROM JIJUK_2024
  WHERE PNU IN ( SELECT PNU FROM JISANG_MASTER WHERE jm_JISANG_NO = #{JISANGNO} )
 </select>
-	
+<update id="updateJijukMasterStatus" parameterType="HashMap">
+		UPDATE JIJUK_2024 SET
+		JISANG_STATUS = 'N'
+		, ERP_NO = ''
+		, JISANG_NO = ''
+		, DOSIPLAN = ''
+		, GOVER_OWN_YN = 'N'
+		, JISA = ''
+		WHERE PNU IN ( SELECT jm_pnu as PNU FROM JISANG_MASTER WHERE jm_JISANG_NO = #{JISANGNO} )
+	</update>
+	<select id="selectPnuIssue" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<![CDATA[ 
+SELECT T.pi_pnu as PNU
+       , T.pi_seq as SEQ
+       , T.pi_code_depth1 as CODE_DEPTH1
+       , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.pi_CODE_DEPTH1) AS CODE_DEPTH1_NAME
+       , T.pi_code_depth2 as CODE_DEPTH2
+       , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.pi_CODE_DEPTH2) AS CODE_DEPTH2_NAME
+       , T.pi_code_depth3 as CODE_DEPTH3
+       , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.pi_CODE_DEPTH3) AS CODE_DEPTH3_NAME
+       , T.pi_issue_comment as ISSUE_COMMENT
+       , T.pi_del_flag as DEL_FLAG
+       , T.pi_del_comment as DEL_COMMENT
+       , TO_CHAR(T.pi_ISSUE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS ISSUE_DATE
+       , T.pi_address_code as ADDRCODE
+       , T.pi_jibun as JIBUN
+       ,pi_registed_yn as REGISTED_YN
+       ,pi_permitted_yn as PERMITTED_YN
+  FROM POTENTIAL_ISSUE T
+ WHERE ((T.pi_PNU = #{PNU} AND COALESCE(T.PNU, '99999') != '99999')
+    OR  ( T.ADDRCODE = #ADDRCODE# AND T.JIBUN = #JIBUN# ))
+   AND T.DEL_FLAG = 'N'
+ ORDER BY T.ISSUE_DATE DESC
+	]]>
+	</select>
 </mapper>
