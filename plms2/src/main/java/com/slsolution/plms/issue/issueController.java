@@ -1166,5 +1166,898 @@ log.info("SANGSIN_FLAG:"+SANGSIN_FLAG);
 			}
 		}
 
+	// 이슈관리 -> 이슈코드관리 DEPTH1 조회
+		@PostMapping(path="/selectIssueCodeListDepth1")
+	public void selectIssueCodeListDepth1(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("LJS : jsonResultController.java selectIssueCodeListDepth1()");
+		ParameterParser parser = new ParameterParser(request);
+		String DEPTH1 = parser.getString("DEPTH1", "");
+		String DEPTH2 = parser.getString("DEPTH2", "");
+		String REGISTED_YN = parser.getString("REGISTED_YN", "");
+		String PERMITTED_YN = parser.getString("PERMITTED_YN", "");
+		String IS_CODE_ADMIN = parser.getString("IS_CODE_ADMIN", "");
 
+		ArrayList list = null;
+		try {
+
+			HashMap params = new HashMap();
+			params.put("CODE_DEPTH", "1");
+			params.put("DEPTH1", DEPTH1);
+			params.put("DEPTH2", DEPTH2);
+			params.put("REGISTED_YN", REGISTED_YN);
+			params.put("PERMITTED_YN", PERMITTED_YN);
+			params.put("IS_CODE_ADMIN", IS_CODE_ADMIN);
+
+			list = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeListDepth", params);
+
+			HashMap map = new HashMap();
+
+			if (list.size() > 0) {
+				map.put("message", "success");
+			} else {
+				map.put("message", "조회된 목록이 없습니다.");
+			}
+			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 이슈관리 -> 이슈코드관리 DEPTH2 조회
+	@PostMapping(path="/selectIssueCodeListDepth2")
+	public void selectIssueCodeListDepth2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("LJS : jsonResultController.java selectIssueCodeListDepth2()");
+		ParameterParser parser = new ParameterParser(request);
+		String DEPTH1 = parser.getString("DEPTH1", "");
+		String DEPTH2 = parser.getString("DEPTH2", "");
+		String REGISTED_YN = parser.getString("REGISTED_YN", "");
+		String PERMITTED_YN = parser.getString("PERMITTED_YN", "");
+		String IS_CODE_ADMIN = parser.getString("IS_CODE_ADMIN", "");
+
+		ArrayList list = null;
+		try {
+
+			HashMap params = new HashMap();
+			params.put("CODE_DEPTH", "2");
+			params.put("DEPTH1", DEPTH1);
+			params.put("DEPTH2", DEPTH2);
+			params.put("REGISTED_YN", REGISTED_YN);
+			params.put("PERMITTED_YN", PERMITTED_YN);
+			params.put("IS_CODE_ADMIN", IS_CODE_ADMIN);
+
+			list = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeListDepth", params);
+
+			HashMap map = new HashMap();
+
+			if (list.size() > 0) {
+				map.put("message", "success");
+			} else {
+				map.put("message", "조회된 목록이 없습니다.");
+			}
+			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 이슈관리 -> 이슈코드관리 DEPTH3 조회
+	@PostMapping(path="/selectIssueCodeListDepth3")
+	public void selectIssueCodeListDepth3(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("LJS : jsonResultController.java selectIssueCodeListDepth3()");
+		ParameterParser parser = new ParameterParser(request);
+		String DEPTH1 = parser.getString("DEPTH1", "");
+		String DEPTH2 = parser.getString("DEPTH2", "");
+		String REGISTED_YN = parser.getString("REGISTED_YN", "");
+		String PERMITTED_YN = parser.getString("PERMITTED_YN", "");
+		String IS_CODE_ADMIN = parser.getString("IS_CODE_ADMIN", "");
+
+		ArrayList list = null;
+		try {
+
+			HashMap params = new HashMap();
+			params.put("CODE_DEPTH", "3");
+			params.put("DEPTH1", DEPTH1);
+			params.put("DEPTH2", DEPTH2);
+			params.put("REGISTED_YN", REGISTED_YN);
+			params.put("PERMITTED_YN", PERMITTED_YN);
+			params.put("IS_CODE_ADMIN", IS_CODE_ADMIN);
+
+			list = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeListDepth", params);
+
+			HashMap map = new HashMap();
+
+			if (list.size() > 0) {
+				map.put("message", "success");
+			} else {
+				map.put("message", "조회된 목록이 없습니다.");
+			}
+			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	// 이슈코드 상세조회
+	@PostMapping(path="/selectIssueCodeDetail")	
+	public void selectIssueCodeDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("LJS : jsonResultController.java selectIssueCodeDetail()");
+		ParameterParser parser = new ParameterParser(request);
+		String CODE = parser.getString("CODE", "");
+
+		ArrayList list = null;
+		ArrayList manualList = null;
+		try {
+
+			HashMap params = new HashMap();
+			params.put("CODE", CODE);
+
+			list = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeDetail", params);
+
+			manualList = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeManualList", params);
+
+			HashMap map = new HashMap();
+
+			if (list.size() > 0) {
+				map.put("message", "success");
+			} else {
+				map.put("message", "조회된 데이터가 없습니다.");
+			}
+			map.put("result", list);
+			map.put("manualList", manualList);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	// 이슈코드 내용 없데이트
+	@Transactional
+	@PostMapping(path="/updateIssueCodeText")	
+	public void updateIssueCodeText(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("LJS : jsonResultController.java updateIssueCodeText()");
+		ParameterParser parser = new ParameterParser(request);
+		String CODE = parser.getString("CODE", "");
+		String CASE_TEXT = parser.getString("CASE_TEXT", "");
+		String ETC_TEXT = parser.getString("ETC_TEXT", "");
+
+		ArrayList list = null;
+		try {
+
+			HashMap params = new HashMap();
+			params.put("CODE", CODE);
+			params.put("CASE_TEXT", CASE_TEXT);
+			params.put("ETC_TEXT", ETC_TEXT);
+			int result = (int) mainService.UpdateQuery("issueSQL.updateIssueCodeText", params);
+
+			HashMap map = new HashMap();
+			if (result > 0) {
+				map.put("message", "success");
+			} else {
+				map.put("message", "처리된 데이터가 없습니다.");
+			}
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//이슈 메뉴얼 파일 저장
+	@Transactional
+	@PostMapping(path="/insertIssueManualFile")	
+	public void insertIssueManualFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String fileseq = parser.getString("fileseq", ""); // 파일 seq
+		String CODE = parser.getString("CODE", "");
+		String FILE_VERSION = parser.getString("FILE_VERSION", "");
+		String MANUAL_TITLE = parser.getString("MANUAL_TITLE", "");
+
+		ArrayList list = null;
+		try {
+
+			HashMap params = new HashMap();
+			params.put("FILESEQ", fileseq);
+			params.put("CODE", CODE);
+			params.put("FILE_VERSION", FILE_VERSION);
+			if (FILE_VERSION.equals("1.0")) {
+				params.put("MANUAL_TITLE", MANUAL_TITLE);
+			} else {
+				params.put("MANUAL_TITLE", MANUAL_TITLE);
+			}
+			int result = (int) mainService.UpdateQuery("issueSQL.updateSeqFileIssue", params);
+
+			HashMap map = new HashMap();
+			if (result > 0) {
+				map.put("message", "success");
+			} else {
+				map.put("message", "처리된 데이터가 없습니다.");
+			}
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//이슈 메뉴얼 파일 리스트 조회
+	@PostMapping(path="/selectIssueManualFileVersionList")	
+	public void selectIssueManualFileVersionList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String CODE = parser.getString("CODE", "");
+		String MANUAL_TITLE = parser.getString("MANUAL_TITLE", "");
+
+		ArrayList list = null;
+		try {
+
+			HashMap params = new HashMap();
+			params.put("CODE", CODE);
+			params.put("MANUAL_TITLE", MANUAL_TITLE);
+
+			list = (ArrayList) mainService.selectQuery("issueSQL.selectIssueManualFileVersionList", params);
+
+			HashMap map = new HashMap();
+
+			if (list.size() > 0) {
+				map.put("message", "success");
+			} else {
+				map.put("message", "조회된 목록이 없습니다.");
+			}
+			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+		//이슈 메뉴얼 삭제 seq 기준
+		@Transactional
+		@PostMapping(path="/deleteIssueManualBySeq")	
+	public void deleteIssueManualBySeq(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("LJS : jsonResultController.java deleteIssueManualBySeq()");
+		ParameterParser parser = new ParameterParser(request);
+		String CODE = parser.getString("CODE", "");
+		String SEQ = parser.getString("SEQ", "");
+		String file_seq = parser.getString("FILE_SEQ", "");
+
+		try {
+
+			HashMap params = new HashMap();
+			params.put("CODE", CODE);
+			params.put("SEQ", SEQ);
+			params.put("FILE_SEQ", file_seq);
+
+			// 물리파일 삭제는 그냥 패스
+
+			int result =(int) mainService.DeleteQuery("issueSQL.deleteIssueManualBySeq", params);
+
+			HashMap map = new HashMap();
+
+			if (result > 0) {
+				map.put("message", "success");
+			} else {
+				map.put("message", "처리된 데이터가 없습니다");
+			}
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+		//이슈 메뉴얼 삭제 title 기준
+	@Transactional
+	@PostMapping(path="/deleteIssueManualByTitle")	
+	public void deleteIssueManualByTitle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("LJS : jsonResultController.java deleteIssueManualByTitle()");
+		ParameterParser parser = new ParameterParser(request);
+		String CODE = parser.getString("CODE", "");
+		String MANUAL_TITLE = parser.getString("MANUAL_TITLE", "");
+
+		try {
+
+			HashMap params = new HashMap();
+			params.put("CODE", CODE);
+			params.put("MANUAL_TITLE", MANUAL_TITLE);
+
+			int result = (int) mainService.DeleteQuery("issueSQL.deleteIssueManualByTitle", params);
+
+			HashMap map = new HashMap();
+
+			if (result > 0) {
+				map.put("message", "success");
+			} else {
+				map.put("message", "처리된 데이터가 없습니다");
+			}
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	//이슈 메뉴얼 삭제 title 기준
+//	@Transactional
+//	@PostMapping(path="/deleteIssueManualByTitle")	
+//	public void saveIssueCodeAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		log.info("LJS : jsonResultController.java saveIssueCodeAdmin()");
+//		ParameterParser parser = new ParameterParser(request);
+//		String DATA_LENGTH = parser.getString("DATA_LENGTH", "");
+//		String PARENT_CODE = parser.getString("PARENT_CODE", "");
+//
+//		HashMap map = new HashMap();
+//		try {
+//			int result = 0;
+//
+//			Map params = new HashMap();
+//			for (int i = 0; i < Integer.parseInt(DATA_LENGTH); i++) {
+//				params = new HashMap();
+//				params.put("CODE", parser.getString("CODE_" + i, ""));
+//				params.put("CODE_DEPTH", parser.getString("CODE_DEPTH_" + i, ""));
+//				params.put("CODE_NAME", parser.getString("CODE_NAME_" + i, ""));
+//				params.put("PERMITTED_YN", parser.getString("PERMITTED_YN_" + i, ""));
+//				params.put("REGISTED_YN", parser.getString("REGISTED_YN_" + i, ""));
+//
+//				if ("".equals(parser.getString("CODE_NAME_" + i, "")) && !"Y".equals(parser.getString("CODE_DEL_" + i, ""))) {
+//					throw new Exception("코드명 없음.");
+//				}
+//
+//				// 분기처리
+//				if ("Y".equals(parser.getString("CODE_DEL_" + i, ""))) {
+//					result += Database.getInstance().delete("Json.deleteIssueCode", params);
+//				} else if ("NEW".equals(parser.getString("CODE_" + i, ""))) {
+//					String newCode = null;
+//					if ("1".equals(parser.getString("CODE_DEPTH_" + i, ""))) {
+//						Map tmpMap = new HashMap();
+//						tmpMap.put("CODE", PARENT_CODE.substring(0, 2));
+//						newCode = (String) Database.getInstance().queryForObject("Json.makeIssueNextCodeDepth1", tmpMap);
+//					}
+//					if ("2".equals(parser.getString("CODE_DEPTH_" + i, ""))) {
+//						Map tmpMap = new HashMap();
+//						tmpMap.put("CODE", PARENT_CODE.substring(0, 4));
+//						newCode = (String) Database.getInstance().queryForObject("Json.makeIssueNextCodeDepth2", tmpMap);
+//					}
+//					if ("3".equals(parser.getString("CODE_DEPTH_" + i, ""))) {
+//						Map tmpMap = new HashMap();
+//						tmpMap.put("CODE", PARENT_CODE.substring(0, 6));
+//						newCode = (String) Database.getInstance().queryForObject("Json.makeIssueNextCodeDepth3", tmpMap);
+//					}
+//					params.put("CODE", newCode);
+//					Database.getInstance().insert("Json.insertIssueCode", params);
+//					result++;
+//				} else {
+//					// update
+//					Database.getInstance().update("Json.updateIssueCodeName", params);
+//					result++;
+//				}
+//			}
+//
+//			if (result > 0) {
+//				map.put("message", "success");
+//			} else {
+//				map.put("message", "처리된 데이터가 없습니다");
+//			}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			map.put("message", "처리 중 오류가 발생했습니다");
+//		}
+//
+//		JSONObject jo = new JSONObject(map);
+//
+//		response.setCharacterEncoding("UTF-8");
+//		response.setHeader("Access-Control-Allow-Origin", "*");
+//		response.resetBuffer();
+//		response.setContentType("application/json");
+//		response.getWriter().print(jo);
+//		response.getWriter().flush();
+//	}
+//
+//	public void checkIssueCodeStatus(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		log.info("LJS : jsonResultController.java checkIssueCodeStatus()");
+//		ParameterParser parser = new ParameterParser(request);
+//		String CODE = parser.getString("CODE", "");
+//
+//		HashMap map = new HashMap();
+//		HashMap map2 = new HashMap();
+//		try {
+//			int result = 0;
+//
+//			Map params = new HashMap();
+//			params.put("CODE", CODE);
+//			map = (HashMap) Database.getInstance().queryForObject("Json.checkIssueCodeStatus", params); // 잠재이슈 체크
+//			map2 = (HashMap) Database.getInstance().queryForObject("Json.checkIssueCodeMinwonStatus", params); // 민원 체크
+//
+//			map.put("MINWON_CNT", map2.get("MINWON_CNT"));
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			map.put("message", "처리 중 오류가 발생했습니다");
+//		}
+//
+//		JSONObject jo = new JSONObject(map);
+//
+//		response.setCharacterEncoding("UTF-8");
+//		response.setHeader("Access-Control-Allow-Origin", "*");
+//		response.resetBuffer();
+//		response.setContentType("application/json");
+//		response.getWriter().print(jo);
+//		response.getWriter().flush();
+//	}
+//
+//	public void selectIssueByPnu(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		log.info("LJS : jsonResultController.java selectIssueByPnu()");
+//		ParameterParser parser = new ParameterParser(request);
+//		String PNU = parser.getString("PNU", "");
+//		String ADDRCODE = parser.getString("ADDRCODE", "");
+//		String JIBUN = parser.getString("JIBUN", "");
+//
+//		ArrayList list = null;
+//		ArrayList historyList = null;
+//		try {
+//
+//			Map params = new HashMap();
+//			params.put("PNU", PNU);
+//			params.put("ADDRCODE", ADDRCODE);
+//			params.put("JIBUN", JIBUN);
+//			log.info("LJS params:"+params);
+//			list = (ArrayList) Database.getInstance().queryForList("Json.selectPnuIssue", params);
+//			historyList = (ArrayList) Database.getInstance().queryForList("Json.selectPnuIssueHistoryList", params);
+//
+//			HashMap map = new HashMap();
+//
+//			if (list.size() > 0) {
+//				map.put("message", "success");
+//			} else {
+//				map.put("message", "조회된 목록이 없습니다.");
+//			}
+//			map.put("result", list);
+//			map.put("historyList", historyList);
+//			
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	public void selectIssueForGover(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		ParameterParser parser = new ParameterParser(request);
+//		String GOVER_NO = parser.getString("GOVER_NO", "");
+//		log.info("LJS : jsonResultController.java selectIssueForGover()");
+//		ArrayList list = null;
+//		ArrayList historyList = null;
+//		try {
+//
+//			Map params = new HashMap();
+//			params.put("GOVER_NO", GOVER_NO);
+//
+//			list = (ArrayList) Database.getInstance().queryForList("Json.selectPnuIssueGover", params);
+//			historyList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverIssueHistoryList", params);
+//
+//			HashMap map = new HashMap();
+//
+//			if (list.size() > 0) {
+//				map.put("message", "success");
+//			} else {
+//				map.put("message", "조회된 목록이 없습니다.");
+//			}
+//			map.put("result", list);
+//			map.put("historyList", historyList);
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	public void selectIssueByPnuDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		log.info("LJS : jsonResultController.java selectIssueByPnuDetail()");
+//		ParameterParser parser = new ParameterParser(request);
+//		String PNU = parser.getString("PNU", "");
+//		String SEQ = parser.getString("SEQ", "");
+//		String ADDRCODE = parser.getString("ADDRCODE", "");
+//		String JIBUN = parser.getString("JIBUN", "");
+//
+//		ArrayList list = null;
+//		try {
+//
+//			Map params = new HashMap();
+//			params.put("PNU", PNU);
+//			params.put("SEQ", SEQ);
+//			params.put("ADDRCODE", ADDRCODE);
+//			params.put("JIBUN", JIBUN);
+//
+//			System.out.println(params.toString());
+//			list = (ArrayList) Database.getInstance().queryForList("Json.selectPnuIssueDetail", params);
+//			log.info("LJS:Json.selectPnuIssueDetail data:"+list);
+//			HashMap map = new HashMap();
+//
+//			if (list.size() > 0) {
+//				map.put("message", "success");
+//			} else {
+//				map.put("message", "조회된 목록이 없습니다.");
+//			}
+//			map.put("result", list);
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	public void selectIssueGoverDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		log.info("LJS : jsonResultController.java selectIssueGoverDetail()");
+//		ParameterParser parser = new ParameterParser(request);
+//		String GOVER_NO = parser.getString("GOVER_NO", "");
+//		String SEQ = parser.getString("SEQ", "");
+//
+//		ArrayList list = null;
+//		try {
+//
+//			Map params = new HashMap();
+//			params.put("GOVER_NO", GOVER_NO);
+//			params.put("SEQ", SEQ);
+//
+//			list = (ArrayList) Database.getInstance().queryForList("Json.selectGoverIssueDetail", params);
+//
+//			HashMap map = new HashMap();
+//
+//			if (list.size() > 0) {
+//				map.put("message", "success");
+//			} else {
+//				map.put("message", "조회된 목록이 없습니다.");
+//			}
+//			map.put("result", list);
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	public void insertPnuIssue(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		log.info("LJS : jsonResultController.java insertPnuIssue()");
+//		ParameterParser parser = new ParameterParser(request);
+//		String PNU = parser.getString("PNU", "");
+//		String SEQ = parser.getString("SEQ", "");
+//		String ADDRCODE = parser.getString("ADDRCODE", "");
+//		String JIBUN = parser.getString("JIBUN", "");
+//		String CODE_DEPTH1 = parser.getString("CODE_DEPTH1", "");
+//		String CODE_DEPTH2 = parser.getString("CODE_DEPTH2", "");
+//		String CODE_DEPTH3 = parser.getString("CODE_DEPTH3", "");
+//		String ISSUE_COMMENT = parser.getString("ISSUE_COMMENT", "");
+//		String HISTORY_TYPE = parser.getString("HISTORY_TYPE", "");
+//		String HISTORY_CONTENT = parser.getString("HISTORY_CONTENT", "");
+//		String REGISTED_YN = parser.getString("REGISTED_YN", "");
+//		String PERMITTED_YN = parser.getString("PERMITTED_YN", "");
+//
+//		try {
+//
+//			Map params = new HashMap();
+//
+//			if ("99999".equals(PNU) || "null".equals(PNU)) {
+//				// 2023.03.09 :: pnu가 null인 경우가 있음. 
+//				params.put("PNU", null);
+//			} else {
+//				params.put("PNU", PNU);
+//			}
+//
+//			params.put("SEQ", SEQ);
+//			params.put("ADDRCODE", ADDRCODE);
+//			params.put("JIBUN", JIBUN);
+//			params.put("CODE_DEPTH1", CODE_DEPTH1);
+//			params.put("CODE_DEPTH2", CODE_DEPTH2);
+//			params.put("CODE_DEPTH3", CODE_DEPTH3);
+//			params.put("ISSUE_COMMENT", ISSUE_COMMENT);
+//			params.put("HISTORY_TYPE", HISTORY_TYPE);
+//			params.put("HISTORY_CONTENT", HISTORY_CONTENT);
+//			params.put("REGISTED_YN", REGISTED_YN);
+//			params.put("PERMITTED_YN", PERMITTED_YN);
+//			System.out.println("params="+params.toString());
+//			int result = 0;
+//			if ("".equals(SEQ)) {
+//				SEQ = (String) Database.getInstance().queryForObject("Json.makePnuIssueSeq", params);
+//				params.put("SEQ", SEQ);
+//				result = Database.getInstance().update("Json.insertPnuIssue", params);
+//			} else {
+//				result = Database.getInstance().update("Json.updatePnuIssue", params);
+//			}
+//			
+//			System.out.println("result = "+result);
+//
+//			if (result > 0) {
+//				Database.getInstance().update("Json.insertPnuIssueHistory", params);
+//			}
+//
+//			HashMap map = new HashMap();
+//
+//			if (result > 0) {
+//				map.put("message", "success");
+//			} else {
+//				map.put("message", "처리된 데이터가 없습니다");
+//			}
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	public void insertPnuIssueGover(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		log.info("LJS : jsonResultController.java insertPnuIssueGover()");
+//		ParameterParser parser = new ParameterParser(request);
+//		String GOVER_NO = parser.getString("GOVER_NO", "");
+//		String SEQ = parser.getString("SEQ", "");
+//		String CODE_DEPTH1 = parser.getString("CODE_DEPTH1", "");
+//		String CODE_DEPTH2 = parser.getString("CODE_DEPTH2", "");
+//		String CODE_DEPTH3 = parser.getString("CODE_DEPTH3", "");
+//		String ISSUE_COMMENT = parser.getString("ISSUE_COMMENT", "");
+//		String HISTORY_TYPE = parser.getString("HISTORY_TYPE", "");
+//		String HISTORY_CONTENT = parser.getString("HISTORY_CONTENT", "");
+//		String REGISTED_YN = parser.getString("REGISTED_YN", "");
+//		String PERMITTED_YN = parser.getString("PERMITTED_YN", "");
+//		String LNEWREG = parser.getString("LNEWREG", "");
+//		String LPERMITIONYN = parser.getString("LPERMITIONYN", "");
+//		String LOCCUP_FEE = parser.getString("LOCCUP_FEE", "");
+//		String LPREPAY = parser.getString("LPREPAY", "");
+//
+//		try {
+//
+//			Map params = new HashMap();
+//
+//			params.put("GOVER_NO", GOVER_NO);
+//			params.put("CODE_DEPTH1", CODE_DEPTH1);
+//			params.put("CODE_DEPTH2", CODE_DEPTH2);
+//			params.put("CODE_DEPTH3", CODE_DEPTH3);
+//			params.put("ISSUE_COMMENT", ISSUE_COMMENT);
+//			params.put("HISTORY_TYPE", HISTORY_TYPE);
+//			params.put("HISTORY_CONTENT", HISTORY_CONTENT);
+//			params.put("REGISTED_YN", REGISTED_YN);
+//			params.put("PERMITTED_YN", PERMITTED_YN);
+//			params.put("LNEWREG", LNEWREG);
+//			params.put("LPERMITIONYN", LPERMITIONYN);
+//			params.put("LOCCUP_FEE", LOCCUP_FEE);
+//			params.put("LPREPAY", LPREPAY);
+//			int result = 0;
+//			if ("".equals(SEQ)) {
+//				SEQ = (String) Database.getInstance().queryForObject("Json.makeGoverIssueSeq", params);
+//				params.put("SEQ", SEQ);
+//				result = Database.getInstance().update("Json.insertGoverIssue", params);
+//			} else {
+//				params.put("SEQ", SEQ);
+//				System.out.println(params);
+//				result = Database.getInstance().update("Json.updateGoverIssue", params);
+//			}
+//
+//			Database.getInstance().update("Json.insertGoverIssueHistory", params);
+//
+//			HashMap map = new HashMap();
+//
+//			if (result > 0) {
+//				map.put("message", "success");
+//			} else {
+//				map.put("message", "처리된 데이터가 없습니다");
+//			}
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	public void deletePnuIssue(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		ParameterParser parser = new ParameterParser(request);
+//		String PNU = parser.getString("PNU", "");
+//		String SEQ = parser.getString("SEQ", "");
+//		String DEL_COMMENT = parser.getString("DEL_COMMENT", "");
+//		String HISTORY_TYPE = parser.getString("HISTORY_TYPE", "");
+//		String HISTORY_CONTENT = parser.getString("HISTORY_CONTENT", "");
+//
+//		try {
+//
+//			Map params = new HashMap();
+//			params.put("PNU", PNU);
+//			params.put("SEQ", SEQ);
+//			params.put("DEL_COMMENT", DEL_COMMENT);
+//			params.put("HISTORY_TYPE", HISTORY_TYPE);
+//			params.put("HISTORY_CONTENT", HISTORY_CONTENT);
+//
+//			int result = Database.getInstance().update("Json.deletePnuIssue", params);
+//			Database.getInstance().update("Json.insertPnuIssueHistory", params);
+//
+//			HashMap map = new HashMap();
+//
+//			if (result > 0) {
+//				map.put("message", "success");
+//			} else {
+//				map.put("message", "처리된 데이터가 없습니다");
+//			}
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	public void deleteGoverIssue(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		ParameterParser parser = new ParameterParser(request);
+//		String GOVER_NO = parser.getString("GOVER_NO", "");
+//		String SEQ = parser.getString("SEQ", "");
+//		String DEL_COMMENT = parser.getString("DEL_COMMENT", "");
+//		String HISTORY_TYPE = parser.getString("HISTORY_TYPE", "");
+//		String HISTORY_CONTENT = parser.getString("HISTORY_CONTENT", "");
+//
+//		try {
+//
+//			Map params = new HashMap();
+//			params.put("GOVER_NO", GOVER_NO);
+//			params.put("SEQ", SEQ);
+//			params.put("DEL_COMMENT", DEL_COMMENT);
+//			params.put("HISTORY_TYPE", HISTORY_TYPE);
+//			params.put("HISTORY_CONTENT", HISTORY_CONTENT);
+//
+//			System.out.println("params=" + params);
+//
+//			int result = Database.getInstance().update("Json.deleteGoverIssue", params);
+//			int hisResult = Database.getInstance().update("Json.insertGoverIssueHistory", params);
+//
+//			System.out.println(result + " // " + hisResult);
+//
+//			HashMap map = new HashMap();
+//
+//			if (result > 0) {
+//				map.put("message", "success");
+//			} else {
+//				map.put("message", "처리된 데이터가 없습니다");
+//			}
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			System.out.println("map.toString()=" + map.toString());
+//			System.out.println("jo.toString()=" + jo.toString());
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 }

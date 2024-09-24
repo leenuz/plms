@@ -227,7 +227,10 @@ registerApprovePopEvet = () => {
 					console.log(object);
 					
 					if (object.newCheck == "on") object.gubun = "insert";
-					else object.gubun = "modify";
+					else {
+						object.gubun = "modify";
+						
+						}
 					// registerApprovePopupOpen.classList.remove("active");
 					url = "/gover/insertOfficeMng";
 					$.ajax({

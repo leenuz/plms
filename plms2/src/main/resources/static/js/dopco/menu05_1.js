@@ -232,13 +232,13 @@ function loadDataTable(params) {
 
 		columns: [
 			{ data: "no", "orderable": false },          // 순번
-			{ data: "dom_jisa", "defaultContent": "" },      // 담당지사
+			{ data: "jisa", "defaultContent": "" },      // 담당지사
 			{ data: "address", "defaultContent": "" },   // 주소
-			{ data: "dom_jasan_no", "defaultContent": "" },   // 자산분류번호
-			{ data: "dom_dopco_status", "defaultContent": "" },   // 활용현황
-			{ data: "dom_chuideuk_date", "defaultContent": "" },   // 취득일
-			{ data: "dom_deunggi_date", "defaultContent": "" },   // 등기일
-			{ data: "dom_jijuk_area", "defaultContent": "" },// 면적
+			{ data: "jasan_no", "defaultContent": "" },   // 자산분류번호
+			{ data: "dopco_status", "defaultContent": "" },   // 활용현황
+			{ data: "chuideuk_date", "defaultContent": "" },   // 취득일
+			{ data: "deunggi_date", "defaultContent": "" },   // 등기일
+			{ data: "jijuk_area", "defaultContent": "" },// 면적
 			{ data: "dom_idx", "defaultContent": "" }, // 지도
 		],
 		columnDefs: [

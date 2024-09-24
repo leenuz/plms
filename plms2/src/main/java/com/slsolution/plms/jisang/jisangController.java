@@ -3236,7 +3236,7 @@ log.info("gubun:"+gubun);
 		String tcount = httpRequest.getParameter("tcount");
 		List<HashMap<String, String>> jisangList = new ArrayList<HashMap<String, String>>();
 		String jisangCnt = "";
-		for(int i=1;i<Integer.parseInt(tcount);i++) {
+		for(int i=1;i<Integer.parseInt(tcount)+1;i++) {
 			String jisangNo=httpRequest.getParameter("idx"+i);
 		
 			params.put("JISANGNO", jisangNo);
