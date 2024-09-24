@@ -411,10 +411,6 @@ public class songyuController {
 				
 				
 				//int total=list.size();
-			
-				
-				
-				
 				 HashMap<String,Object> resultmap=new HashMap();
 			        resultmap.put("draw",draw);
 			        resultmap.put("recordsTotal",total);
