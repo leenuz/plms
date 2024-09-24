@@ -106,8 +106,36 @@
                 <h1>회사토지 수정</h1>
             </div>
 
-
             <form id="saveForm" onSubmit="return false;">
+                <input type="hidden" name="dopcoNo" id="dopcoNo" th:value="${data.dopco_no}">
+                <!-- 기본 정보(기존) -->
+                <input type="hidden" name="jisa_p" id="jisa_p" th:value="${data.jisa}">
+                <input type="hidden" name="yongdo_p" id="yongdo_p" th:value="${data.yongdo}">
+                <input type="hidden" name="pipe_name_p" id="pipe_name_p" th:value="${data.pipe_name}">
+                <input type="hidden" name="sun_gubun_p" id="sun_gubun_p" th:value="${data.sun_gubun}">
+                <!-- 소속 토지 정보(기존) -->
+                <input type="hidden" name="sido_nm_p" id="sido_nm_p" th:value="${data.sido_nm}">
+                <input type="hidden" name="sgg_nm_p" id="sgg_nm_p" th:value="${data.sgg_nm}">
+                <input type="hidden" name="emd_nm_p" id="emd_nm_p" th:value="${data.emd_nm}">
+                <input type="hidden" name="ri_nm_p" id="ri_nm_p" th:value="${data.ri_nm}">
+                <input type="hidden" name="jibun_p" id="jibun_p" th:value="${data.jibun}">
+                <input type="hidden" name="pnu_p" id="pnu_p" th:value="${data.pnu}">
+                <input type="hidden" name="addrcode_p" id="addrcode_p" th:value="${data.addrcode}">
+
+                <input type="hidden" name="addressData_p" id="addressData_p" th:value="${data.address}">
+                <input type="hidden" name="gover_own_yn_p" id="gover_own_yn_p" th:value="${data.gover_own_yn}">
+                <input type="hidden" name="areaData_p" id="areaData_p" th:value="${data.jijuk_area}">
+                <input type="hidden" name="jimok_text_p" id="jimok_text_p" th:value="${data.jimok_text}">
+                <!-- 회사 토지 지상권 정보(기존) -->
+                <input type="hidden" name="dosiplan_p" id="dosiplan_p" th:value="${data.dosiplan}">
+                <input type="hidden" name="current_p" id="current_p" th:value="${data.dopco_status}">
+                <input type="hidden" name="chuideukDate_p" id="chuideukDate_p" th:value="${data.chuideuk_date}">
+                <input type="hidden" name="jasan_p" id="jasan_p" th:value="${data.jasan_no}">
+                <!-- 권리확보 내역(기존) -->
+                <input type="hidden" name="comple_yn_p" id="comple_yn_p" th:value="${data.comple_yn}">
+                <input type="hidden" name="deunggiDate_p" id="deunggiDate_p" th:value="${data.deunggi_date}">
+                <input type="hidden" name="deunggiNo_p" id="deunggiNo_p" th:value="${data.deunggi_no}">
+                <input type="hidden" name="deunggiso_p" id="deunggiso_p" th:value="${data.deunggiso}">
                 <!-- 기본 정보 -->
                 <section class="basicOwnerInfo">
                     <div class="subTitle">기본 정보</div>
@@ -123,10 +151,10 @@
                             <ul class="contents">
                                 <li class="content selectContentArea">
                                     <div class="hiddenSelectBox">
-                                        <select name="jisa" id="compLandRegSelectBox01" hidden>
+                                        <select name="jisa" id="compLandRegSelectBox01" hidden >
                                             <option value=""></option>
                                             <th:block th:each="val:${jisaList}">
-                                                <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+                                                <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}" th:selected="${val.jm_jisa_name}==${data.jisa}"></option>
                                             </th:block>
                                         </select>
                                     </div>
@@ -140,17 +168,16 @@
                                     <div class="hiddenSelectBox">
                                         <select name="yongdo" id="compLandRegSelectBox02" hidden>
                                             <option value=""></option>
-                                            <option value="송유관로">송유관로</option>
-                                            <option value="밸브박스">밸브박스</option>
-                                            <option value="가압소">가압소</option>
-                                            <option value="저유소">저유소</option>
-                                            <option value="펌프장">펌프장</option>
-                                            <option value="시설물">시설물</option>
+                                            <option value="송유관로" th:selected="${data.yongdo} == '송유관로'">송유관로</option>
+                                            <option value="밸브박스" th:selected="${data.yongdo} == '밸브박스'">밸브박스</option>
+                                            <option value="가압소" th:selected="${data.yongdo} == '가압소'">가압소</option>
+                                            <option value="저유소" th:selected="${data.yongdo} == '저유소'">저유소</option>
+                                            <option value="펌프장" th:selected="${data.yongdo} == '펌프장'">펌프장</option>
+                                            <option value="시설물" th:selected="${data.yongdo} == '시설물'">시설물</option>
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
                                         <button class="customSelectView" th:text="${data.yongdo}">선택</button>
-
                                         <ul class="customSelectBtns"></ul>
                                     </section>
                                 </li>
@@ -158,8 +185,8 @@
                                     <div class="hiddenSelectBox">
                                         <select name="pipe_name" id="compLandRegSelectBox03" hidden>
                                             <option value=""></option>
-                                            <option value="SNP 구간">SNP 구간</option>
-                                            <option value="광주지선">광주지선</option>
+                                            <option value="SNP 구간" th:selected="${data.pipe_name} == 'SNP 구간'">SNP 구간</option>
+                                            <option value="광주지선" th:selected="${data.pipe_name} == '광주지선'">광주지선</option>
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
@@ -172,8 +199,8 @@
                                     <div class="hiddenSelectBox">
                                         <select name="sun_gubun" id="compLandRegSelectBox04" hidden>
                                             <option value=""></option>
-                                            <option value="단선">단선</option>
-                                            <option value="복선">복선</option>
+                                            <option value="단선" th:selected="${data.sun_gubun} == '단선'">단선</option>
+                                            <option value="복선" th:selected="${data.sun_gubun} == '복선'">복선</option>
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
@@ -189,12 +216,13 @@
                 <!-- 소속 토지 정보 -->
                 <section class="rightsDetails">
                     <div class="subTitle">소속 토지 정보</div>
-                    <input type="hidden" name="sido_nm" id="sido_nm">
-                    <input type="hidden" name="sgg_nm" id="sgg_nm">
-                    <input type="hidden" name="emd_nm" id="emd_nm">
-                    <input type="hidden" name="ri_nm" id="ri_nm">
-                    <input type="hidden" name="pnu" id="pnu">
-                    <input type="hidden" name="addrcode" id="addrcode">
+                    <input type="hidden" name="sido_nm" id="sido_nm" th:value="${data.sido_nm}">
+                    <input type="hidden" name="sgg_nm" id="sgg_nm" th:value="${data.sgg_nm}">
+                    <input type="hidden" name="emd_nm" id="emd_nm" th:value="${data.emd_nm}">
+                    <input type="hidden" name="ri_nm" id="ri_nm" th:value="${data.ri_nm}">
+                    <input type="hidden" name="jibun" id="jibun" th:value="${data.jibun}">
+                    <input type="hidden" name="pnu" id="pnu" th:value="${data.pnu}">
+                    <input type="hidden" name="addrcode" id="addrcode" th:value="${data.addrcode}">
 
                     <div class="contWrap">
                         <div class="depth1">
@@ -207,7 +235,7 @@
                             <ul class="contents">
                                 <li class="content inputWrap">
                                     <div class="inputBox addressData">
-                                        <input name="addressData" type="text" />
+                                        <input name="addressData" type="text" th:value="${data.address}"/>
                                     </div>
                                     <button class="searchBtn">검색</button>
                                 </li>
@@ -215,8 +243,8 @@
                                     <div class="hiddenSelectBox">
                                         <select name="gover_own_yn" id="compLandRegSelectBox05" hidden>
                                             <option value=""></option>
-                                            <option value="Y">Y</option>
-                                            <option value="N">N</option>
+                                            <option value="Y" th:selected="${data.gover_own_yn} == 'Y'">Y</option>
+                                            <option value="N" th:selected="${data.gover_own_yn} == 'N'">N</option>
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
@@ -233,7 +261,7 @@
                                         <select name="jimok_text" id="compLandRegSelectBox06" hidden>
                                             <option value=""></option>
                                             <th:block th:each="val:${resultJimokList}">
-                                                <option th:text="${val.jm_name}" th:value="${val.jm_name}"></option>
+                                                <option th:text="${val.jm_name}" th:value="${val.jm_name}" th:selected="${val.jm_name} == ${data.jimok_text}"></option>
                                             </th:block>
                                         </select>
                                     </div>
@@ -264,8 +292,8 @@
                                     <div class="hiddenSelectBox">
                                         <select name="dosiplan" id="compLandRegSelectBox07" hidden>
                                             <option value=""></option>
-                                            <option value="Y">Y</option>
-                                            <option value="N">N</option>
+                                            <option value="Y" th:selected="${data.dosiplan} == 'Y'">Y</option>
+                                            <option value="N" th:selected="${data.dosiplan} == 'N'">N</option>
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
@@ -274,7 +302,7 @@
                                     </section>
                                 </li>
                                 <li class="content">
-                                    <input name="current" type="text" />
+                                    <input name="current" type="text" th:value="${data.dopco_status}"/>
                                 </li>
                                 <li class="content">
                                     <div class="dateInputWrap">
@@ -305,8 +333,8 @@
                                     <div class="hiddenSelectBox">
                                         <select name="comple_yn" id="compLandRegSelectBox08" hidden>
                                             <option value=""></option>
-                                            <option value="Y">Y</option>
-                                            <option value="N">N</option>
+                                            <option value="Y" th:selected="${data.comple_yn} == 'Y'">Y</option>
+                                            <option value="N" th:selected="${data.comple_yn} == 'N'">N</option>
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
@@ -423,7 +451,7 @@
                     </div>
                 </section>
                 <div class="finalBtnBox btnWrap">
-                    <button class="prevBtn finalBtn"><a href="/dopco/menu05_1">이전</a></button>
+                    <button class="prevBtn finalBtn" onclick="history.back()">이전</button>
                     <button class="registBtn finalBtn">등록</button>
                 </div>
             </form>

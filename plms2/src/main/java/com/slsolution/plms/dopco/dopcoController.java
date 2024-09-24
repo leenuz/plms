@@ -136,6 +136,7 @@ public class dopcoController {
 		}
 
 		log.info("data : " + resultData);
+		log.info("jijuk : " + jijuk);
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("data", resultData);
 		mav.addObject("toja_list", toja_list);
@@ -693,7 +694,7 @@ log.info("resultData:"+resultData);
 				params.put("RI_NM", RI_NM);
 				params.put("JIBUN", JIBUN);
 				params.put("GOVEROWNYN", GOVER_OWN_YN);
-				params.put("JIJUKAREA", JIJUKAREA);
+				params.put("JIJUKAREA", Double.parseDouble(JIJUKAREA));
 				params.put("JIMOK_TEXT", JIMOK_TEXT);
 				params.put("PNU", PNU);
 				params.put("ADDRCODE", ADDRCODE);

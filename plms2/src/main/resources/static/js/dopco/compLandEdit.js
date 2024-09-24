@@ -553,17 +553,81 @@ $(document).on("click", ".registBtn", function () {
             , "RIGHT_UNAME": ljsIsNull(rightUname) ? '' : rightUname
             , "RIGHT_PHONE": ljsIsNull(rightPhone) ? '' : rightPhone
             , "RIGHT_ADDR": ljsIsNull(rightAddr) ? '' : rightAddr
-
-
         }
         console.log(deptObj);
         rightDatas.push(deptObj);
     }
+
     dataObj.rightDatas = rightDatas;
-    dataObj.gubun = "insert"; //modify:수정
-    dataObj.dopcoNo = ""; //수정일때는 들어간다
+    dataObj.gubun = "modify"; //modify:수정
+    // dataObj.dopcoNo = ""; //수정일때는 들어간다(form에 추가함)
     console.log("**dataObj**");
     console.log(dataObj);
+
+    // 변경이력 체크
+    var modifyReason1 = '';
+    var modifyReason2 = '';
+    var modifyReason3 = '';
+    var modifyReason4 = '';
+    var modifyReason5 = '';
+    // 기본정보 변경이력
+    if (dataObj.jisa_p != dataObj.jisa) {
+        modifyReason1 += "담당지사 변경('" + dataObj.jisa_p + "' > '" + dataObj.jisa + "') ";
+    }
+    if (dataObj.yongdo_p != dataObj.yongdo) {
+        modifyReason1 += "용도 변경('" + dataObj.yongdo_p + "' > '" + dataObj.yongdo + "') ";
+    }
+    if (dataObj.pipe_name_p != dataObj.pipe_name) {
+        modifyReason1 += "관로명 변경('" + dataObj.pipe_name_p + "' > '" + dataObj.pipe_name + "') ";
+    }
+    if (dataObj.sun_gubun_p != dataObj.sun_gubun) {
+        modifyReason1 += "단/복선 변경('" + dataObj.sun_gubun_p + "' > '" + dataObj.sun_gubun + "') ";
+    }
+    // 소속 토지 정보 변경이력
+    if (dataObj.addressData_p + dataObj.jibun_p != dataObj.addressData + dataObj.jibun) {
+        modifyReason2 += "행정구역 변경('" + dataObj.addressData_p + dataObj.jibun_p + "' > '" + dataObj.addressData + dataObj.jibun + "') ";
+    }
+    if (dataObj.gover_own_yn_p != dataObj.gover_own_yn) {
+        modifyReason2 += "국공유지 여부 변경('" + dataObj.gover_own_yn_p + "' > '" + dataObj.gover_own_yn + "') ";
+    }
+    if (dataObj.areaData_p != dataObj.areaData) {
+        modifyReason2 += "지적면적 변경('" + dataObj.areaData_p + "' > '" + dataObj.areaData + "') ";
+    }
+    if (dataObj.jimok_text_p != dataObj.jimok_text) {
+        modifyReason2 += "지목 변경('" + dataObj.jimok_text_p + "' > '" + dataObj.jimok_text + "') ";
+    }
+    // 소속 토지 지상권 변경이력
+    if (dataObj.dosiplan_p != dataObj.dosiplan) {
+        modifyReason3 += "도시 계획 설정여부 변경('" + dataObj.dosiplan_p + "' > '" + dataObj.dosiplan + "') ";
+    }
+    if (dataObj.current_p != dataObj.current) {
+        modifyReason3 += "현재 활용 현황 변경('" + dataObj.current_p + "' > '" + dataObj.current + "') ";
+    }
+    if (dataObj.chuideukDate_p != dataObj.chuideukDate) {
+        modifyReason3 += "취득일 변경('" + dataObj.chuideukDate_p + "' > '" + dataObj.chuideukDate + "') ";
+    }
+    if (dataObj.jasan_p != dataObj.jasan) {
+        modifyReason3 += "자산분류번호 변경('" + dataObj.jasan_p + "' > '" + dataObj.jasan + "') ";
+    }
+    // 권리확보 내역 변경이력
+    if (dataObj.comple_yn_p != dataObj.comple_yn) {
+        modifyReason4 += "완결여부 변경('" + dataObj.comple_yn_p + "' > '" + dataObj.comple_yn + "') ";
+    }
+    if (dataObj.deunggiDate_p != dataObj.deunggiDate) {
+        modifyReason4 += "등기일 변경('" + dataObj.deunggiDate_p + "' > '" + dataObj.deunggiDate + "') ";
+    }
+    if (dataObj.deunggiNo_p != dataObj.deunggiNo) {
+        modifyReason4 += "등기번호 변경('" + dataObj.deunggiNo_p + "' > '" + dataObj.deunggiNo + "') ";
+    }
+    if (dataObj.deunggiso_p != dataObj.deunggiso) {
+        modifyReason4 += "등기소 변경('" + dataObj.deunggiso_p + "' > '" + dataObj.deunggiso + "') ";
+    }
+
+    dataObj.modifyReason1 = modifyReason1;
+    dataObj.modifyReason2 = modifyReason2;
+    dataObj.modifyReason3 = modifyReason3;
+    dataObj.modifyReason4 = modifyReason4;
+    dataObj.modifyReason5 = modifyReason5;
 
     /* var json = JSON.stringify(formSerializeArray);
         console.log("----------jsonobj------------");
