@@ -1,9 +1,14 @@
 package com.slsolution.plms.statics;
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -398,5 +403,697 @@ public class staticsController {
 
 			return map;
 		}
+		
+//잠재이슈 엑셀 다운로드
+@PostMapping(path="/landExcelDownload")
+public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			
+			log.info("LJS jsonResultController.java: landExcelDownload");
+			log.info(""+request);
+			ArrayList<HashMap> list = new ArrayList<HashMap>();
+			ArrayList<HashMap> pList = new ArrayList<HashMap>();
+			ParameterParser parser = new ParameterParser(request);
+			log.info(""+parser);
+			String str_Title = "";
+			String str_pageGubun = "";
+			HashMap<String,Object> pData=new HashMap<>();
+			
+			try {
+				String JISA=parser.getString("JISA","");
+				String JIBUN = parser.getString("JIBUN", "");
+				HashMap params = new HashMap();
+				params.put("JISA", JISA);
+			
+				//통계를 위한 변수 설정
+				int seoulg1=0; //서울정상
+				int seoulg2=0; //경과
+				int seoulg3=0; //정상필지수
+				int seoulg4=0; //경과필지수
+				
+				int seoulp=0; //서울필지수
+				int seoulp1=0; //서울 납부
+				int seoulp11=0; //납부필지수
+				int seoulp2=0; //서울 영구무상
+				int seoulp22=0; //영구무상필지수
+				int seoulp3=0; //서울 소액미청구
+				int seoulp33=0; //소액미청구 필지
+				int seoulp4=0; // 선납
+				int seoulp44=0;
+				int seoulp5=0; //기타 미납부
+				 
+				
+				//경인
+				int kyounging1=0;
+				int kyounging2=0;
+				int kyounging3=0; //정상필지수
+				int kyounging4=0; //경과필지수
+				int kyounginp=0;
+				int kyounginp1=0;
+				int kyounginp11=0; //납부필지수
+				int kyounginp2=0;
+				int kyounginp22=0; //영구무상필지수
+				int kyounginp3=0;
+				int kyounginp33=0; //소액미청구 필지
+				int kyounginp4=0;
+				int kyounginp44=0;
+				int kyounginp5=0; //기타 미납부
+				
+				//충청
+				int choungg1=0;
+				int choungg2=0;
+				int choungg3=0; //정상필지수
+				int choungg4=0; //경과필지수
+				int choungp=0;
+				int choungp1=0;
+				int choungp11=0; //납부필지수
+				int choungp2=0;
+				int choungp22=0; //영구무상필지수
+				int choungp3=0;
+				int choungp33=0; //소액미청구 필지
+				int choungp4=0;
+				int choungp44=0;
+				int choungp5=0; //기타 미납부
+				
+				//대전
+				int daejung1=0;
+				int daejung2=0;
+				int daejung3=0; //정상필지수
+				int daejung4=0; //경과필지수
+				int daejunp=0;
+				int daejunp1=0;
+				int daejunp11=0; //납부필지수
+				int daejunp2=0;
+				int daejunp22=0; //영구무상필지수
+				int daejunp3=0;
+				int daejunp33=0; //소액미청구 필지
+				int daejunp4=0;
+				int daejunp44=0;
+				int daejunp5=0; //기타 미납부
+				//영남
+				int youngnamg1=0;
+				int youngnamg2=0;
+				int youngnamg3=0; //정상필지수
+				int youngnamg4=0; //경과필지수
+				int youngnamp=0;
+				int youngnamp1=0;
+				int youngnamp11=0; //납부필지수
+				int youngnamp2=0;
+				int youngnamp22=0; //영구무상필지수
+				int youngnamp3=0;
+				int youngnamp33=0; //소액미청구 필지
+				int youngnamp4=0;
+				int youngnamp44=0;
+				int youngnamp5=0; //기타 미납부
+				
+				//전남
+				int jeunnamg1=0;
+				int jeunnamg2=0;
+				int jeunnamg3=0; //정상필지수
+				int jeunnamg4=0; //경과필지수
+				int jeunnamp=0;
+				int jeunnamp1=0;
+				int jeunnamp11=0; //납부필지수
+				int jeunnamp2=0;
+				int jeunnamp22=0; //영구무상필지수
+				int jeunnamp3=0;
+				int jeunnamp33=0; //소액미청구 필지
+				int jeunnamp4=0;
+				int jeunnamp44=0;
+				int jeunnamp5=0; //기타 미납부
+				
+				//전북
+				int jeunbukg1=0;
+				int jeunbukg2=0;
+				int jeunbukg3=0; //정상필지수
+				int jeunbukg4=0; //경과필지수
+				int jeunbukp=0;
+				int jeunbukp1=0;
+				int jeunbukp11=0; //납부필지수
+				int jeunbukp2=0;
+				int jeunbukp22=0; //영구무상필지수
+				int jeunbukp3=0;
+				int jeunbukp33=0; //소액미청구 필지
+				int jeunbukp4=0;
+				int jeunbukp44=0; //선납필지
+				int jeunbukp5=0; //기타 미납부
+				
+				//강원
+				int gangwong1=0;
+				int gangwong2=0;
+				int gangwong3=0; //정상필지수
+				int gangwong4=0; //경과필지수
+				int gangwonp=0;
+				int gangwonp1=0;
+				int gangwonp11=0; //납부필지수
+				int gangwonp2=0;
+				int gangwonp22=0; //영구무상필지수
+				int gangwonp3=0;
+				int gangwonp33=0; //소액미청구 필지
+				int gangwonp4=0;
+				int gangwonp44=0; //선납필지
+				int gangwonp5=0; //기타 미납부
+				
+				//경남
+				int kyungnamg1=0;
+				int kyungnamg2=0;
+				int kyungnamg3=0; //정상필지수
+				int kyungnamg4=0; //경과필지수
+				int kyungnamp=0;
+				int kyungnamp1=0;
+				int kyungnamp11=0; //납부필지수
+				int kyungnamp2=0;
+				int kyungnamp22=0; //영구무상필지수
+				int kyungnamp3=0;
+				int kyungnamp33=0; //소액미청구 필지
+				int kyungnamp4=0;
+				int kyungnamp44=0; //선납필지
+				int kyungnamp5=0; //기타 미납부
+				
+				
+				
+				
+				str_Title = "점용허가관리현황.xls";
+				str_pageGubun = "";
+				list = (ArrayList) mainService.selectQuery("Json.selectNewGoverStaticList", params);
+				
+				log.info("list count:"+list.size());
+			//	log.info(list.toString());
+				
+				for(int i=0;i<list.size();i++) {
+					long diffDays=0;
+					HashMap tList = (HashMap) list.get(i);
+				//	System.out.println("JISA="+tList.get("JISA")+","+"STDATE="+tList.get("PMT_ST_DATE")+","+"NEWREGREASON="+tList.get("NEWREGREASON")+",PAYDATE="+tList.get("PAY_DATE"));
+					if (tList.get("PMT_ED_DATE")!=null && tList.get("PAY_DATE")!=null) {
+						//점용허가기간체크
+//						DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//						//SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+//						LocalDate date1 = LocalDate.parse(tList.get("PAY_DATE").toString(),formatter);
+//						LocalDate date2 = LocalDate.now();
+//						LocalDate date3 = LocalDate.parse(tList.get("PMT_ED_DATE").toString(),formatter);
+						
+						
+						Calendar getToday = Calendar.getInstance();
+						getToday.setTime(new Date());
+						Date date = new SimpleDateFormat("yyyy-MM-dd").parse(tList.get("PAY_DATE").toString());
+						Date pmdate = new SimpleDateFormat("yyyy-MM-dd").parse(tList.get("PMT_ED_DATE").toString());
+						
+						Calendar toDay=Calendar.getInstance();
+						toDay.setTime(date);
+						
+						Calendar toDay1=Calendar.getInstance();
+						toDay1.setTime(pmdate);
+						
+						
+						long diffSec = (getToday.getTimeInMillis()-toDay.getTimeInMillis())/1000;
+						 diffDays=diffSec/(24*60*60);
+						
+						long diffSec1 = (toDay1.getTimeInMillis()-getToday.getTimeInMillis())/1000;
+						long diffDays1=diffSec1/(24*60*60);
+						
+						
+					//	log.info("diffdays="+diffDays);
+					//	log.info("diffdays1="+diffDays1);
+						
+					
+						//점용허가기간 카운팅
+						 if ("서울지사".equals(tList.get("JISA")) && diffDays1>0) {
+							 seoulg1++;
+							 seoulg3+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("서울지사".equals(tList.get("JISA")) && diffDays1<0) {
+							 seoulg2++;
+							 seoulg4+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("경인지사".equals(tList.get("JISA")) && diffDays1>0) {
+							 kyounging1++;
+							 kyounging3+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("경인지사".equals(tList.get("JISA")) && diffDays1<0) {
+							 kyounging2++;
+							 kyounging4+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("강원지사".equals(tList.get("JISA")) && diffDays1>0) {
+							 gangwong1++;
+							 gangwong3+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("강원지사".equals(tList.get("JISA")) && diffDays1<0) {
+							 gangwong2++;
+							 gangwong4+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("충청지사".equals(tList.get("JISA")) && diffDays1>0) {
+							 choungg1++;
+							 choungg3+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("충청지사".equals(tList.get("JISA")) && diffDays1<0) {
+							 choungg2++;
+							 choungg4+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("대전지사".equals(tList.get("JISA")) && diffDays1>0) {
+							 daejung1++;
+							 daejung3+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("대전지사".equals(tList.get("JISA")) && diffDays1<0) {
+							 daejung2++;
+							 daejung4+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("영남지사".equals(tList.get("JISA")) && diffDays1>0) {
+							 youngnamg1++;
+							 youngnamg3+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("영남지사".equals(tList.get("JISA")) && diffDays1<0) {
+							 youngnamg2++;
+							 youngnamg4+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("전남지사".equals(tList.get("JISA")) && diffDays1>0) {
+							 jeunnamg1++;
+							 jeunnamg3+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("전남지사".equals(tList.get("JISA")) && diffDays1<0) {
+							 jeunnamg2++;
+							 jeunnamg4+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("전북지사".equals(tList.get("JISA")) && diffDays1>0) {
+							 jeunbukg1++;
+							 jeunbukg3+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("전북지사".equals(tList.get("JISA")) && diffDays1<0) {
+							 jeunbukg2++;
+							 jeunbukg4+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("경남지사".equals(tList.get("JISA")) && diffDays1>0) {
+							 kyungnamg1++;
+							 kyungnamg3+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 else if ("경남지사".equals(tList.get("JISA")) && diffDays1<0) {
+							 kyungnamg2++;
+							 kyungnamg4+=Integer.parseInt(tList.get("PCOUNT").toString());
+						 }
+						 
+						 
+						 if (diffDays<365) { //납부
+								if ("서울지사".equals(tList.get("JISA"))) {
+									seoulp1++;
+									seoulp11+=Integer.parseInt(tList.get("PCOUNT").toString());
+								}
+								else if ("경인지사".equals(tList.get("JISA"))) {
+									kyounginp1++;
+									kyounginp11+=Integer.parseInt(tList.get("PCOUNT").toString());
+								}
+								else if ("강원지사".equals(tList.get("JISA"))) {
+									gangwonp1++;
+									gangwonp11+=Integer.parseInt(tList.get("PCOUNT").toString());
+								}
+								else if ("충청지사".equals(tList.get("JISA"))) {
+									choungp1++;
+									choungp11+=Integer.parseInt(tList.get("PCOUNT").toString());
+								}
+								else if ("대전지사".equals(tList.get("JISA"))) {
+									daejunp1++;
+									daejunp11+=Integer.parseInt(tList.get("PCOUNT").toString());
+								}
+								else if ("영남지사".equals(tList.get("JISA"))) {
+									youngnamp1++;
+									youngnamp11+=Integer.parseInt(tList.get("PCOUNT").toString());
+								}
+								else if ("전남지사".equals(tList.get("JISA"))) {
+									jeunnamp1++;
+									jeunnamp11+=Integer.parseInt(tList.get("PCOUNT").toString());
+								}
+								else if ("전북지사".equals(tList.get("JISA"))) {
+									jeunbukp1++;
+									jeunbukp11+=Integer.parseInt(tList.get("PCOUNT").toString());
+								}
+								else if ("경남지사".equals(tList.get("JISA"))) {
+									kyungnamp1++;
+									kyungnamp11+=Integer.parseInt(tList.get("PCOUNT").toString());
+								}
+								
+							}
+							else { //미납부
+								//점용료 납부 카운팅
+								 if ("서울지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUNONPAYREASON"))) {
+									 seoulp2++;
+									 seoulp22+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("서울지사".equals(tList.get("JISA")) && "2".equals(tList.get("OCCUNONPAYREASON"))) {
+									 seoulp3++;
+									 seoulp33+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("경인지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUNONPAYREASON"))) {
+									 kyounginp2++;
+									 kyounginp22+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("경인지사".equals(tList.get("JISA")) && "2".equals(tList.get("OCCUNONPAYREASON"))) {
+									 kyounginp3++;
+									 kyounginp33+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("강원지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUNONPAYREASON"))) {
+									 gangwonp2++;
+									 gangwonp22+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("강원지사".equals(tList.get("JISA")) && "2".equals(tList.get("OCCUNONPAYREASON"))) {
+									 gangwonp3++;
+									 gangwonp33+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("충청지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUNONPAYREASON"))) {
+									 choungp2++;
+									 choungp22+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("충청지사".equals(tList.get("JISA")) && "2".equals(tList.get("OCCUNONPAYREASON"))) {
+									 choungp3++;
+									 choungp33+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("대전지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUNONPAYREASON"))) {
+									 daejunp2++;
+									 daejunp22+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("대전지사".equals(tList.get("JISA")) && "2".equals(tList.get("OCCUNONPAYREASON"))) {
+									 daejunp3++;
+									 daejunp33+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("영남지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUNONPAYREASON"))) {
+									 youngnamp2++;
+									 youngnamp22+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("영남지사".equals(tList.get("JISA")) && "2".equals(tList.get("OCCUNONPAYREASON"))) {
+									 youngnamp3++;
+									 youngnamp33+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("전남지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUNONPAYREASON"))) {
+									 jeunnamp2++;
+									 jeunnamp22+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("전남지사".equals(tList.get("JISA")) && "2".equals(tList.get("OCCUNONPAYREASON"))) {
+									 jeunnamp3++;
+									 jeunnamp33+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("전북지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUNONPAYREASON"))) {
+									 jeunbukp2++;
+									 jeunbukp22+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("전북지사".equals(tList.get("JISA")) && "2".equals(tList.get("OCCUNONPAYREASON"))) {
+									 jeunbukp3++;
+									 jeunbukp33+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("경남지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUNONPAYREASON"))) {
+									 kyungnamp2++;
+									 kyungnamp22+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("경남지사".equals(tList.get("JISA")) && "2".equals(tList.get("OCCUNONPAYREASON"))) {
+									 kyungnamp3++;
+									 kyungnamp33+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else {
+									 if ("서울지사".equals(tList.get("JISA"))) seoulp5++; 
+									 else if ("경인지사".equals(tList.get("JISA"))) kyounginp5++; 
+									 else if ("강원지사".equals(tList.get("JISA"))) gangwonp5++; 
+									 else if ("대전지사".equals(tList.get("JISA"))) daejunp5++; 
+									 else if ("영남지사".equals(tList.get("JISA"))) youngnamp5++; 
+									 else if ("전남지사".equals(tList.get("JISA"))) jeunnamp5++; 
+									 else if ("전북지사".equals(tList.get("JISA"))) jeunbukp5++; 
+									 else if ("경남지사".equals(tList.get("JISA"))) kyungnamp5++;
+								 }
+										 
+								 if ("서울지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUPREPAYYN"))) {
+									 seoulp4++;
+									 seoulp44+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("경인지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUPREPAYYN"))) {
+									 kyounginp4++;
+									 kyounginp44+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("강원지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUPREPAYYN"))) {
+									 gangwonp4++;
+									 gangwonp44+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("충청지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUPREPAYYN"))) {
+									 choungp4++;
+									 choungp44+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("대전지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUPREPAYYN"))) {
+									 daejunp4++;
+									 daejunp44+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("영남지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUPREPAYYN"))) {
+									 youngnamp4++;
+									 youngnamp44+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("전남지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUPREPAYYN"))) {
+									 jeunnamp4++;
+									 jeunnamp44+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("전북지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUPREPAYYN"))) {
+									 jeunbukp4++;
+									 jeunbukp44+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+								 else if ("경남지사".equals(tList.get("JISA")) && "1".equals(tList.get("OCCUPREPAYYN"))) {
+									 kyungnamp4++;
+									 kyungnamp44+=Integer.parseInt(tList.get("PCOUNT").toString());
+								 }
+									
+									  else { if ("서울지사".equals(tList.get("JISA"))) seoulp5++; else if
+									  ("경인지사".equals(tList.get("JISA"))) kyounginp5++; else if
+									  ("강원지사".equals(tList.get("JISA"))) gangwonp5++; else if
+									  ("대전지사".equals(tList.get("JISA"))) daejunp5++; else if
+									  ("영남지사".equals(tList.get("JISA"))) youngnamp5++; else if
+									  ("전남지사".equals(tList.get("JISA"))) jeunnamp5++; else if
+									  ("전북지사".equals(tList.get("JISA"))) jeunbukp5++; else if
+									  ("경남지사".equals(tList.get("JISA"))) kyungnamp5++; }
+									 
+							}
+					
+					}
+					else {
+						//null 일경우 경과로 취급
+						if ("서울지사".equals(tList.get("JISA"))) seoulg2++;
+						else if ("경인지사".equals(tList.get("JISA"))) kyounging2++; 
+						else if ("강원지사".equals(tList.get("JISA"))) gangwong2++;
+						else if ("대전지사".equals(tList.get("JISA"))) daejung2++;
+						else if ("영남지사".equals(tList.get("JISA"))) youngnamg2++;
+						else if ("전남지사".equals(tList.get("JISA"))) jeunnamg2++;
+						else if ("전북지사".equals(tList.get("JISA"))) jeunbukg2++;
+						else if ("경남지사".equals(tList.get("JISA"))) kyungnamg2++;
+					}
+						
+					
+					
+					
+					
+				}
+				
+				
+				//log.info("seoulg1="+seoulg1+","+"seoulg2="+seoulg2+","+"seoulp2="+seoulp2+","+"seoulp3="+seoulp3+","+"seoulp4="+seoulp4+","+"seoulp5="+seoulp5);
+				//log.info("gangwong1="+gangwong1+","+"gangwong2="+gangwong2+","+"gangwonp2="+gangwonp2+","+"gangwonp3="+gangwonp3+","+"gangwonp4="+gangwonp4+","+"gangwonp5="+gangwonp5);
+				//log.info("kyounging1="+kyounging1+","+"kyounging2="+kyounging2+","+"kyounginp2="+kyounginp2+","+"kyounginp3="+kyounginp3+","+"kyounginp4="+kyounginp4+",kyounginp5="+kyounginp5);
+				//log.info("choungg1="+choungg1+","+"choungg2="+choungg2+","+"choungp2="+choungp2+","+"choungp3="+choungp3+","+"choungp4="+choungp4+","+"choungp5="+choungp5);
+				//log.info("daejung1="+daejung1+","+"daejung2="+daejung2+","+"daejunp2="+daejunp2+","+"daejunp3="+daejunp3+","+"daejunp4="+daejunp4+","+"daejunp5="+daejunp5);
+			//	log.info("youngnamg1="+youngnamg1+","+"youngnamg2="+youngnamg2+","+"youngnamp2="+youngnamp2+","+"youngnamp3="+youngnamp3+","+"youngnamp4="+youngnamp4+","+"youngnamp5="+youngnamp5);
+			//	log.info("jeunnamg1="+jeunnamg1+","+"jeunnamg2="+jeunnamg2+","+"jeunnamp2="+jeunnamp2+","+"jeunnamp3="+jeunnamp3+","+"jeunnamp4="+jeunnamp4+","+"jeunnamp5="+jeunnamp5);
+			//	log.info("jeunbukg1="+jeunbukg1+","+"jeunbukg2="+jeunbukg2+","+"jeunbukp2="+jeunbukp2+","+"jeunbukp3="+jeunbukp3+","+"jeunbukp4="+jeunbukp4+","+"jeunbukp5="+jeunbukp5);
+			//	log.info("kyungnamg1="+kyungnamg1+","+"kyungnamg2="+kyungnamg2+","+"kyungnamp2="+kyungnamp2+","+"kyungnamp3="+kyungnamp3+","+"kyungnamp4="+kyungnamp4+","+"kyungnamp5="+kyungnamp5);
+				
+				
+				
+				HashMap map = new HashMap();
+				map.put("pay", seoulp1);
+				map.put("pcount1", seoulg3);map.put("pcount2", seoulg4); map.put("pcount3", seoulp11); map.put("pcount4", seoulp22);
+				map.put("pcount5", seoulp33);map.put("pcount6", seoulp44);
+				map.put("jisa", "서울");map.put("perm1", seoulg1); map.put("perm2", seoulg2); map.put("nonpay2", seoulp3); map.put("onpay", seoulp4);	map.put("nonpay1", seoulp2);
+				 map.put("nopay", seoulp5);
+				pData.put("A",map);
+				map = new HashMap();
+				map.put("pay", kyounginp1);
+				map.put("pcount1", kyounging3);map.put("pcount2", kyounging4); map.put("pcount3", kyounginp11);map.put("pcount4", kyounginp22);
+				map.put("pcount5", kyounginp33);map.put("pcount6", kyounginp44);
+				map.put("jisa", "경인");map.put("perm1", kyounging1); map.put("perm2", kyounging2); map.put("nonpay1", kyounginp2); map.put("nonpay2", kyounginp3); map.put("onpay", kyounginp4);
+				 map.put("nopay", kyounginp5);
+				pData.put("B", map);
+				map = new HashMap();
+				map.put("pay", choungp1);
+				map.put("pcount1", choungg3);map.put("pcount2", choungg4); map.put("pcount3", choungp11);map.put("pcount4", choungp22);
+				map.put("pcount5", choungp33);map.put("pcount6", choungp44);
+				map.put("jisa", "충청");map.put("perm1", choungg1); map.put("perm2", choungg2); map.put("nonpay1", choungp2); 	map.put("nonpay2", choungp3); map.put("onpay", choungp4);
+				 map.put("nopay", choungp5);
+				pData.put("C", map);
+				map = new HashMap();
+				map.put("pay", daejunp1);
+				map.put("pcount1", daejung3);map.put("pcount2", daejung4); map.put("pcount3", daejunp11);map.put("pcount4", daejunp22);
+				map.put("pcount5", daejunp33);map.put("pcount6", daejunp44);
+				map.put("jisa", "대전");map.put("perm1", daejung1); map.put("perm2", daejung2); map.put("nonpay1", daejunp2); 	map.put("nonpay2", daejunp3); map.put("onpay", daejunp4);
+				 map.put("nopay", daejunp5);
+				pData.put("D", map);
+				
+				map = new HashMap();
+				map.put("pay", youngnamp1);
+				map.put("pcount1", youngnamg3);map.put("pcount2", youngnamg4); map.put("pcount3", youngnamp11);map.put("pcount4", youngnamp22);
+				map.put("pcount5", youngnamp33);map.put("pcount6", youngnamp44);
+				map.put("jisa", "영남");map.put("perm1", youngnamg1); map.put("perm2", youngnamg2); map.put("nonpay1", youngnamp2); 	map.put("nonpay2", youngnamp3); map.put("onpay", youngnamp4);
+				 map.put("nopay", youngnamp5);
+				pData.put("E", map);
+				
+				map = new HashMap();
+				map.put("pay", jeunnamp1);
+				map.put("pcount1", jeunnamg3);map.put("pcount2", jeunnamg4); map.put("pcount3", jeunnamp11);map.put("pcount4", jeunnamp22);
+				map.put("pcount5", jeunnamp33);map.put("pcount6", jeunnamp44);
+				map.put("jisa", "전남");map.put("perm1", jeunnamg1); map.put("perm2", jeunnamg2); map.put("nonpay1", jeunnamp2); 	map.put("nonpay2", jeunnamp3); map.put("onpay", jeunnamp4);
+				 map.put("nopay", jeunnamp5);
+				pData.put("F", map);
+				
+				map = new HashMap();
+				map.put("pay", jeunbukp1);
+				map.put("pcount1", jeunbukg3);map.put("pcount2", jeunbukg4);map.put("pcount3", jeunbukp11);map.put("pcount4", jeunbukp22);
+				map.put("pcount5", jeunbukp33);map.put("pcount6", jeunbukp44);
+				map.put("jisa", "전북");map.put("perm1", jeunbukg1); map.put("perm2", jeunbukg2); map.put("nonpay1", jeunbukp2); 	map.put("nonpay2", jeunbukp3); map.put("onpay", jeunbukp4);
+				 map.put("nopay", jeunbukp5);
+				pData.put("G", map);
+				
+				map = new HashMap();
+				map.put("pay", gangwonp1);
+				map.put("pcount1", gangwong3);map.put("pcount2", gangwong4); map.put("pcount3", gangwonp11);map.put("pcount4", gangwonp22);
+				map.put("pcount5", gangwonp33);map.put("pcount6", gangwonp44);
+				map.put("jisa", "강원");map.put("perm1", gangwong1); map.put("perm2", gangwong2); map.put("nonpay1", gangwonp2); 	map.put("nonpay2", gangwonp3); map.put("onpay", gangwonp4);
+				 map.put("nopay", gangwonp5);
+				pData.put("H", map);
+				
+				map = new HashMap();
+				map.put("pay", kyungnamp1);
+				map.put("pcount1", kyungnamg3); map.put("pcount2", kyungnamg4); map.put("pcount3", kyungnamp11);map.put("pcount4", kyungnamp22);
+				map.put("pcount5", kyungnamp33);map.put("pcount6", kyungnamp44);
+				map.put("jisa", "경남");map.put("perm1", kyungnamg1); map.put("perm2", kyungnamg2); map.put("nonpay1", kyungnamp2); 	map.put("nonpay2", kyungnamp3); map.put("onpay", kyungnamp4);
+				 map.put("nopay", kyungnamp5);
+				pData.put("I", map);
+			//	log.info(pData);
+				//List<String> keySet=new ArrayList<>(pData.keySet());
+				SortedSet<String> keySet = new TreeSet<>(pData.keySet());
+				//Collections.sort(keySet);
+				
+
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			//list를 가공하여 출력 가능한 map으로 만들어서 넘긴다.
+			//LJSWORK
+		//	log.info(pData);
+			//log.info(list);
+			/*
+			 * HashMap<String,Object> pData=new HashMap<>(); pData.put("result",map);
+			 * pData.put("result1",map); pData.put("result2",map);
+			 */
+			//pList=map;
+			
+			
+			
+			 
+			//주석 처리하면 페이지로 볼수 있다 페이지로 보이게 만든다음에 주석을 제거 하면 엑셀로 나타난다. by-ljs
+			response.setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(str_Title, "UTF-8") + ";");
+			response.setHeader("Content-Type", "application/octet-stream; charset=utf-8");
+			//mapToJsonResponse(response,map);
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("CommonUtil", new CommonUtil());
+			mav.addObject("list",pData);
+			mav.addObject("pageGubun", str_pageGubun);
+			mav.addObject("nTotalCount", 10);
+			mav.setViewName("statistics/landExcel");
+
+			return mav;
+		}
+
+
+	//통계 > 이슈 민원현황 조회
+	@PostMapping(path="/selectIssueStatisticsList")
+	public void selectIssueStatisticsList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String SEARCH_START_DAY = parser.getString("SEARCH_START_DAY", "");
+		String SEARCH_END_DAY = parser.getString("SEARCH_END_DAY", "");
+		String SEARCH_STATUS = parser.getString("SEARCH_STATUS", "");
+		String SEARCH_REGISTED = parser.getString("SEARCH_REGISTED", "");
+		String SEARCH_PERMITTED = parser.getString("SEARCH_PERMITTED", "");
+		String SEARCH_JISA = parser.getString("SEARCH_JISA", "");
+		String SEARCH_CODE_1 = parser.getString("SEARCH_CODE_1", "");
+		String SEARCH_CODE_2 = parser.getString("SEARCH_CODE_2", "");
+		String SEARCH_CODE_3 = parser.getString("SEARCH_CODE_3", "");
+	
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			HashMap params = new HashMap();
+			params.put("SEARCH_START_DAY", SEARCH_START_DAY);
+			params.put("SEARCH_END_DAY", SEARCH_END_DAY);
+			params.put("SEARCH_STATUS", SEARCH_STATUS);
+			params.put("SEARCH_REGISTED", SEARCH_REGISTED);
+			params.put("SEARCH_PERMITTED", SEARCH_PERMITTED);
+			params.put("SEARCH_JISA", SEARCH_JISA);
+			params.put("SEARCH_CODE_1", SEARCH_CODE_1);
+			params.put("SEARCH_CODE_2", SEARCH_CODE_2);
+			params.put("SEARCH_CODE_3", SEARCH_CODE_3);
+	
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectIssueStatisticsData", params);
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+//	// 토지 종합 정보 조회 > Excel 다운로드
+//		public ModelAndView tsExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//
+//			ParameterParser parser = new ParameterParser(request);
+//			ArrayList list = null;
+//
+//			String EMD_NM = parser.getString("TOGI_EXCEL_EMD_NM", "");
+//			String JIBUN = parser.getString("TOGI_EXCEL_JIBUN", "");
+//			String JISANG_STATUS = parser.getString("TOGI_EXCEL_JISANG_STATUS", "");
+//			String ALL_CHECK = parser.getString("TOGI_EXCEL_ALL_CHECK", "");
+//			String JISA = parser.getString("TOGI_EXCEL_JISA", "");
+//			String GUBUN = parser.getString("TOGI_EXCEL_GUBUN", "1");
+//			String ADDRCODE = parser.getString("TOGI_EXCEL_ADDRCODE", "");
+//
+//			try {
+//
+//				Map params = new HashMap();
+//				params.put("EMD_NM", EMD_NM);
+//				params.put("JIBUN", JIBUN);
+//				params.put("JISA", JISA);
+//				params.put("ADDRCODE", ADDRCODE);
+//
+//				if (ALL_CHECK.equals("false")) {
+//					params.put("JISANG_STATUS", JISANG_STATUS);
+//				}
+//				if (ALL_CHECK.equals("true") && GUBUN.equals("2")) {
+//					params.put("JISANG_STATUS", "'JISANG','GOVER','DOPCO'");
+//				}
+//
+//				// System.out.println(params);
+//
+//				list = (ArrayList) Database.getInstance().queryForList("Json.selectTogiList", params);
+//
+//			} catch (Exception e) {
+//				System.out.println(e);
+//			}
+//
+//			response.setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode("토지정보조회.xls", "UTF-8") + ";");
+//			response.setHeader("Content-Type", "application/octet-stream; charset=utf-8");
+//
+//			ModelAndView mav = new ModelAndView();
+//			mav.addObject("list", list);
+//			mav.addObject("nTotalCount", list.size());
+//			mav.setViewName("togiSearch/tsExcel");
+//
+//			return mav;
+//		}
 
 }
