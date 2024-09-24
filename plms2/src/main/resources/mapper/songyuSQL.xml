@@ -500,6 +500,12 @@ SELECT   NEWREGREASON,
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
 	and r.gover_own_yn=#{toji_type}
 	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
+	and r.master_no=#{manage_no}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+	and r.jisa=#{jisa}
+	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
 	and (SELECT COUNT(o.address) AS overlap 
 		FROM
@@ -742,6 +748,7 @@ SELECT   NEWREGREASON,
 	<select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select jm_set_money,jm_save_status from jisang_master 
 	</select>
+	
 	<select id="selectAllList3" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT r.*
     , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH1) AS CODE_DEPTH1_NAME
@@ -1064,6 +1071,12 @@ SELECT   NEWREGREASON,
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
 	and r.gover_own_yn=#{toji_type}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
+	and r.master_no=#{manage_no}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+	and r.jisa=#{jisa}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
 	and (SELECT COUNT(o.address) AS overlap 
