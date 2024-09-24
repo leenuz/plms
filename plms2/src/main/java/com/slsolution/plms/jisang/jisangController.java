@@ -721,18 +721,20 @@ public class jisangController {
 		
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
-<<<<<<< Updated upstream
-		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
-=======
+
+//		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+
 		
 		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
 		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params);
->>>>>>> Stashed changes
+		
 		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
 		// jisangModifyList를 역순으로 정렬 (변경일시 내림차순 하기 위해서)
 		Collections.reverse(jisangModifyList);
 		
-		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
+		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
+		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params);
+
 		params.put("pnu", data.get(0).get("jm_pnu"));
 		
 		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
