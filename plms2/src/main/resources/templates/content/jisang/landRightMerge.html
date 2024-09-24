@@ -142,7 +142,7 @@ margin:10px;
 
             <div class="contWrap">
 
-                <div class="depth1">
+                <div class="depth1" id="tojiDiv">
                     <ul class="titles">
                         <li class="title">지상권번호</li>
                         <li class="title">대표지상권*</li>
@@ -164,8 +164,16 @@ margin:10px;
                         <li class="title titleBtnWrap">추가/삭제</li>
                     </ul>
                     <div class="contentsBox">
+                        <input type="hidden" id="lastIndex" th:value="${jisangList.size() - 1}">
                         <ul class="contents" id="tojiUl" th:if="${jisangList.size()>0}" th:each="val, stat:${jisangList}">
                             <li class="content">
+                                <input type="hidden" id="mergeIndex" th:value="${stat.index}">
+                                <input type="hidden" id="togisido_nm" th:value="${val.sido_nm}">
+                                <input type="hidden" id="togisgg_nm" th:value="${val.sgg_nm}">
+                                <input type="hidden" id="togiemd_nm" th:value="${val.emd_nm}">
+                                <input type="hidden" id="togiri_nm" th:value="${val.ri_nm}">
+                                <input type="hidden" id="togijibun" th:value="${val.jibun}">
+                                <input type="hidden" id="togipnu" th:value="${val.pnu}">
                                 <input type="text" th:value="${val.jisang_no}" readonly class="notWriteInput" id="jisang_no">
                             </li>
                             <li class="content checkboxWrap">
@@ -188,7 +196,7 @@ margin:10px;
                                 
                                 </div>
                                 <section class="customSelectBox">
-                                    <button class="customSelectView">
+                                    <button class="customSelectView" id="toji_type">
                                         [[${val.toji_type} == null ? '선택' : ${val.toji_type}]]
                                     </button>
                             
@@ -199,11 +207,11 @@ margin:10px;
                             </li>
                             <li class="content contentBox">
                                 <ul class="secondContents">
-                                    <li class="secondContent"><input type="text" th:placeholder="${val.jimok_text}" readonly class="notWriteInput" id="jimok_text"></li>
-                                    <li class="secondContent"><input type="text" th:placeholder="${val.jijuk_area}" readonly class="notWriteInput" id="jijuk_area"></li>
-                                    <li class="secondContent"><input type="text" th:placeholder="${val.pyeonib_area}" readonly class="notWriteInput" id="pyeonib_area"></li>
-                                    <li class="secondContent largeSecondTitle"><input type="text" th:placeholder="${val.set_money}" readonly class="notWriteInput" id="set_money"></li>
-                                    <li class="secondContent"><input type="text" th:placeholder="${val.jasan_no}" readonly class="notWriteInput" id="jasan_no"></li>
+                                    <li class="secondContent"><input type="text" th:value="${val.jimok_text}" readonly class="notWriteInput" id="jimok_text"></li>
+                                    <li class="secondContent"><input type="text" th:value="${val.jijuk_area}" readonly class="notWriteInput" id="jijuk_area"></li>
+                                    <li class="secondContent"><input type="text" th:value="${val.pyeonib_area}" readonly class="notWriteInput" id="pyeonib_area"></li>
+                                    <li class="secondContent largeSecondTitle"><input type="text" th:value="${val.set_money}" readonly class="notWriteInput" id="set_money"></li>
+                                    <li class="secondContent"><input type="text" th:value="${val.jasan_no}" readonly class="notWriteInput" id="jasan_no"></li>
                                 </ul>
                             </li>
                             <li class="content"><input type="text" th:value="${val.soyuList.size() > 0 ? val.soyuList[0].js_souja_name : ''}" readonly class="notWriteInput" id="souja"></li>
@@ -220,7 +228,7 @@ margin:10px;
                                 
                                 </div>
                                 <section class="customSelectBox">
-                                    <button class="customSelectView">
+                                    <button class="customSelectView" id="account_yn">
                                         선택
                                     </button>
                                 
@@ -433,7 +441,7 @@ margin:10px;
                     <ul class="rowListBox">
                         <li class="title">합병사유</li>
                         <li class="content inputWrap">
-                            <input type="text" placeholder="직접입력 (최소 10자 이상)">
+                            <input type="text" placeholder="직접입력 (최소 10자 이상)" id="merge_reason">
                         </li>
                     </ul>
                 </div>
@@ -441,7 +449,7 @@ margin:10px;
                     <ul class="rowListBox">
                         <li class="title">검토의견</li>
                         <li class="content lastRowList">
-                            <textarea placeholder="직접입력 (최소 10자 이상)"></textarea>
+                            <textarea placeholder="직접입력 (최소 10자 이상)" id="merge_comment"></textarea>
                         </li>
                     </ul>
                 </div>
@@ -584,7 +592,51 @@ margin:10px;
 </div>
 
 <!-- 추가 -->
- <div class="landRightMergeSearchPopWrappers"></div>
+    <div class="divisionRegistSearchPopWrappers" id="searchResultPopDiv">
+        <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+        <div id="searchResultsPopup">
+            <div class="popupWrap" id="popupWrap">
+                <h2>
+                    <p>검색결과</p>
+                    <span class="topCloseBtn"></span>
+                </h2>
+
+                <div class="popupCont">
+                    <ul class="popTitles">
+                        <li class="popTitle01">PNU</li>
+                        <li class="popTitle02">주소</li>
+                        <li class="popTitle03">지번</li>
+                        <li class="popTitle04">선택</li>
+                    </ul>
+                    <div class="popContentBox" >
+                        <ul class="popContents" th:each="val:${addressList}">
+                            <li class="popContent01"> [[${val.pnu}]]</li>
+                            <li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.jibun}]]</li>
+                            <ii class="popContent0201" hidden>[[${val.sido_nm}]]</ii>
+                            <ii class="popContent0202" hidden>[[${val.sgg_nm}]]</ii>
+                            <ii class="popContent0203" hidden>[[${val.emd_nm}]]</ii>
+                            <ii class="popContent0204" hidden>[[${val.ri_nm}]]</ii>
+                            <ii class="popContent0205" hidden>[[${val.bcode}]]</ii>
+                            <ii class="popContent0206" hidden>[[${val.jibun_full}]]</ii>
+                            <li class="popContent03">[[${val.jibun}]]</li>
+                            <li class="popContent04">
+                                <button class="resultSelectBtn" >선택</button>
+                            </li>
+                            <ii class="popContent05" hidden>[[${val.jimok_text}]]</ii>
+                        </ul>
+
+
+                    </div>
+                </div>
+
+                <div class="lastBtnBox btnWrap">
+                    <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+                    <button class="saveBtn finalBtn">PNU 없이 선택</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <!-- script -->
     <script src="/js/jisang/landRightMerge.js"></script>
     <script type="module" src="/js/module/surfaceMain.js"></script>
