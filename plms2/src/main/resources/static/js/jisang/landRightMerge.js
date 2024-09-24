@@ -222,7 +222,10 @@ const landRightMergeInfoAddBtnEvent = () => {
                     const infoInput = document.createElement('input');
                     infoInput.type = 'text';
                     infoInput.readOnly = true;
+                    infoInput.value  = "신규"
                     infoInput.classList.add('notWriteInput');
+                    infoInput.id = "jisang_no";
+                    if(i == 6) infoInput.id = "souja";
 
                     // li안에 넣기
                     infoLi.append(infoInput);
@@ -233,6 +236,8 @@ const landRightMergeInfoAddBtnEvent = () => {
                     const checkboxInput = document.createElement('input');
                     checkboxInput.type = 'checkbox';
                     checkboxInput.id = `landRightMerge_checkbox_${Date.now()}_${i}`;
+                    checkboxInput.className  = 'single-select-checkbox';
+                    checkboxInput.name = 'repLandRight';
 
                     infoLi.appendChild(checkboxInput);
 
@@ -254,6 +259,7 @@ const landRightMergeInfoAddBtnEvent = () => {
                     addressInput.classList.add('notWriteInput');
                     addressInput.readOnly = true;
                     addressInput.type = 'text';
+                    addressInput.id = "merge_address";
 
                     // div에 input 넣기
 
@@ -283,13 +289,33 @@ const landRightMergeInfoAddBtnEvent = () => {
                     divideSelect.hidden = true;
 
                     // option 만들기
-                    for (let n = 1; n < 11; n++) {
-                        const divideOption = document.createElement('option');
-                        divideOption.value = `선택${n}`;
-                        divideOption.textContent = `선택${n}`;
+//                    for (let n = 1; n < 3; n++) {
+//                        const divideOption = document.createElement('option');
+//                        divideOption.value = `선택${n}`;
+//                        divideOption.textContent = `선택${n}`;
+//
+//                        divideSelect.appendChild(divideOption);
+//                    }
+                    const divideOption1 = document.createElement('option');
+                    const divideOption2 = document.createElement('option');
 
-                        divideSelect.appendChild(divideOption);
+                    if(i == 4){
+                        divideOption1.value = `국유지`;
+                        divideOption1.textContent = `국유지`;
+
+                        divideOption2.value = `사유지`;
+                        divideOption2.textContent = `사유지`;
                     }
+                    else{
+                        divideOption1.value = `Y`;
+                        divideOption1.textContent = `Y`;
+
+                        divideOption2.value = `N`;
+                        divideOption2.textContent = `N`;
+                    }
+
+                    divideSelect.appendChild(divideOption1);
+                    divideSelect.appendChild(divideOption2);
 
                     divideHidden.appendChild(divideSelect);
                     infoLi.appendChild(divideHidden);
@@ -301,9 +327,9 @@ const landRightMergeInfoAddBtnEvent = () => {
                     // custom button
                     const customButton = document.createElement('button');
                     customButton.classList.add('customSelectView');
-                    if (i == 4) {
-                        customButton.textContent = '선택';
-                    }
+//                    if (i == 4) {
+                    customButton.textContent = '선택';
+//                    }
 
                     // custom list
                     const customUl = document.createElement('ul');
@@ -336,6 +362,17 @@ const landRightMergeInfoAddBtnEvent = () => {
                         secondInput.type = 'text';
                         secondInput.readOnly = true;
                         secondInput.classList.add('notWriteInput');
+                        if(q == 0){
+                            secondInput.id = "jimok_text";
+                        }else if(q == 1){
+                            secondInput.id = "jijuk_area";
+                        }else if(q == 2){
+                            secondInput.id = "pyeonib_area";
+                        }else if(q == 3){
+                            secondInput.id = "set_money";
+                        }else if(q == 4){
+                            secondInput.id = "jasan_no";
+                        }
 
                         secondLi.appendChild(secondInput);
                         secondUl.appendChild(secondLi);
@@ -441,5 +478,61 @@ const landRightMergeSearchOpenPopUp = () => {
 
     }
 }
+
+//대표지상권 체크박스 이벤트 설정
+$(document).on('change', 'input[name="repLandRight"]', function(event) {
+
+        if (this.checked) {
+            // Select all checkboxes with the class 'single-select-checkbox'
+            const checkboxes = document.querySelectorAll('.single-select-checkbox');
+            // Uncheck all other checkboxes
+            checkboxes.forEach(cb => {
+                if (cb !== this) {
+                    cb.checked = false;
+                }
+            });
+
+            const parentRow  = this.closest('ul.contents');
+
+            // 값을 가져와서 id가 "mergeToji_" 로 시작하는 요소들에 값 넣기
+            document.getElementById("mergeToji_no").value = parentRow.querySelector('input#jisang_no').value || '';
+            document.getElementById("mergeToji_address").value = parentRow.querySelector('input#merge_address').value || '';
+            document.getElementById("mergeToji_jimok").value = parentRow.querySelector('input#jimok_text').placeholder || '';
+            document.getElementById("mergeToji_jasan_money").value = parentRow.querySelector('input#jasan_no').placeholder || '';
+            document.getElementById("mergeToji_souja").value = parentRow.querySelector('input#souja').value || '';
+
+            // 모든 'jijuk_area' ID를 가진 요소를 선택합니다.
+            const jijukAreaElements = document.querySelectorAll('input#jijuk_area');
+            const jijukAreaValues = Array.from(jijukAreaElements).map(input => input.placeholder || 0);
+            // 지적면적 합산 계산
+            const totalJijukArea = jijukAreaValues.reduce((acc, value) => acc + (parseFloat(value) || 0), 0);
+            document.getElementById('mergeToji_jijuk').value = totalJijukArea;
+
+            // 모든 'pyeonib_area' ID를 가진 요소를 선택합니다.
+            const pyeonibAreaElements = document.querySelectorAll('input#pyeonib_area');
+            const pyeonibAreaValues = Array.from(pyeonibAreaElements).map(input => input.placeholder || 0);
+            // 편입면적 합산 계산
+            const totalPyeonibArea = pyeonibAreaValues.reduce((acc, value) => acc + (parseFloat(value) || 0), 0);
+            document.getElementById('mergeToji_pyeonib_area').value = totalPyeonibArea;
+
+            // 모든 'set_money' ID를 가진 요소를 선택합니다.
+            const setMoneyElements = document.querySelectorAll('input#set_money');
+            const setMoneyValues = Array.from(setMoneyElements).map(input => input.placeholder || 0);
+            // 편입면적 합산 계산
+            const totalSetMoney = setMoneyValues.reduce((acc, value) => acc + (parseFloat(value) || 0), 0);
+            document.getElementById('mergeToji_set_money').value = totalSetMoney;
+
+        } else {
+              // 체크가 해제되었을 때
+              document.getElementById("mergeToji_no").value = '';
+              document.getElementById("mergeToji_address").value = '';
+              document.getElementById("mergeToji_jimok").value = '';
+              document.getElementById("mergeToji_jijuk").value = '';
+              document.getElementById("mergeToji_pyeonib_area").value = '';
+              document.getElementById("mergeToji_set_money").value = '';
+              document.getElementById("mergeToji_jasan_money").value = '';
+              document.getElementById("mergeToji_souja").value = '';
+        }
+});
 
 landRightMergeSearchOpenPopUp();
