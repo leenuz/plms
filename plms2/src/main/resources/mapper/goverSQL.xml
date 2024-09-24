@@ -1101,10 +1101,10 @@ FROM NOTSET_MASTER
 		, gm_YONGDO = #{YONGDO}
 		, gm_pipe_name = #{PIPE_NAME}
 		, gm_SUN_GUBUN = #{SUN_GUBUN}
-		, gm_PIPE_METER = #PIPE_METER#
-		, gm_PIPE_METER2 = #PIPE_METER2#
-		, gm_GOVER_ST_DATE = to_date(#GOVER_ST_DATE#, 'yyyy-mm-dd')
-		, gm_GOVER_ED_DATE = to_date(#GOVER_ED_DATE#, 'yyyy-mm-dd')
+		, gm_PIPE_METER = nullif(#{PIPE_METER},'')::numeric
+		, gm_PIPE_METER2 = nullif(#{PIPE_METER2},'')::numeric
+		, gm_GOVER_ST_DATE = to_date(#{GOVER_ST_DATE}, 'yyyy-mm-dd')
+		, gm_GOVER_ED_DATE = to_date(#{GOVER_ED_DATE}, 'yyyy-mm-dd')
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_OFFICE)" >
 			, gm_PMT_OFFICE = #{PMT_OFFICE}
 		</if>
@@ -1115,7 +1115,7 @@ FROM NOTSET_MASTER
 			, gm_OFFICE_DEPART = #{OFFICE_DEPART}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(OFFICE_CHARGE)" >
-			, gm_OFFICE_CHARGE = #{OFFICE_CHARGE}
+			, gm_office_charege = #{OFFICE_CHARGE}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(OFFICE_CONTACT)" >
 			, gm_OFFICE_CONTACT = #{OFFICE_CONTACT}
@@ -1145,7 +1145,7 @@ FROM NOTSET_MASTER
 		
 		
 		
-		WHERE gm_GOVER_NO = TO_CHAR(#{GOVER_NO})
+		WHERE gm_GOVER_NO = #{GOVER_NO}
 
 	</update>
 	
@@ -1467,10 +1467,40 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 		  )
 	</insert>
 	
+<<<<<<< Updated upstream
 	<update id="updateApproveStatus" parameterType="hashmap">
 	    UPDATE SYS_OFFICEMNG
 	    SET so_approve = 'Y'
 	    WHERE so_idx = CAST(#{idx} AS INTEGER)
 	</update>
 
+=======
+	<insert id="insertGoverUploadData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="ga_idx" keyProperty="ga_idx">
+		
+		INSERT INTO gover_atcfile 
+		(
+
+		 ga_gover_no
+		 ,ga_seq
+		 ,ga_file_path
+		 ,ga_file_nm
+		 ,ga_file_seq
+		) 
+		 VALUES (
+		  #{goverNo}
+		  ,#{seq}::integer
+		  ,#{fpath}
+		  ,#{fname}
+		  ,#{fseq}
+		  
+		    )
+	
+	</insert>
+	
+	<select id="getGoverAtcFileSeq" parameterType="java.util.HashMap" resultType="integer">
+		SELECT MAX(ga_file_seq) FROM gover_atcfile ga WHERE ga.ga_gover_no=#{GOVER_NO};
+	
+	</select>
+	
+>>>>>>> Stashed changes
 </mapper>

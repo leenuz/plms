@@ -100,6 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 ,mm_user_name
 		 ,mm_memo
 		 ,mm_wdate
+		 ,mm_user_id
 		
 		 ) 
 		 VALUES (
@@ -107,6 +108,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 ,#{wname}
 		 ,#{wmemo}
 		 ,Now()
+		 ,#{wid}
 		)
 	
 	</insert>

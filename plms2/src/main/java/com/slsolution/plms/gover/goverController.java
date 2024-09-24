@@ -784,6 +784,13 @@ public class goverController {
 			ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
 			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
+			
+//			goverList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverList", params); //기본정보
+//			pnuList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPnuList", params); //소속토지정보
+//			pmtList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPmtList", params); //허가 정보
+//			fileList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverRowDetail_Files", params); //첨부파일
+//			modifyList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverModifyHistory", params); //첨부파일
+			
 		    // goverPnuList 크기 구하기
 		    int goverPnuListSize = goverPnuList.size();
 			
@@ -1612,6 +1619,7 @@ public class goverController {
 			String SAVE_STATUS = requestParamsObj.getString("save_status"); // 저장 코드  T:승인대기 R:반려 Q:임시저장
 			String gubun = requestParamsObj.getString("gubun"); // 구분( modify : 수정, insert
 					// : 등록 )
+			String memo=requestParamsObj.getString("memo");
 			 String ori_GOVER_NO =requestParamsObj.has("gover_no")?requestParamsObj.getString("gover_no"):"";
 			
 			String PNU_CNT = requestParamsObj.has("pnuCnt")?requestParamsObj.getString("pnuCnt"):"0"; // 소속토지 수
@@ -1724,8 +1732,14 @@ public class goverController {
 
 				System.out.println("기본정보 params = " + params);
 				if (gubun.equals("insert")) {
-					mainService.InsertQuery("goverSQL.insertGoverMaster", params); // 기본정보
-																						// 저장
+					mainService.InsertQuery("goverSQL.insertGoverMaster", params); // 기본정보 저장
+					HashMap memoParam=new HashMap();
+					memoParam.put("manage_no", str_GOVERNO);
+					memoParam.put("wname", USER_NAME);
+					memoParam.put("wid", USER_ID);
+					memoParam.put("wmemo", memo);
+					
+					mainService.InsertQuery("commonSQL.putMemoData", memoParam);
 				} else if (gubun.equals("modify")) {
 
 					// 변경이력 등록
@@ -2024,22 +2038,48 @@ log.info("params:"+params);
 							     			 filesMap.put("fpath",dataPath+"/"+file_name);
 							     			 CommonUtil.moveFile(file_name, tempPath, dataPath);
 							     			log.info("filesMap:"+filesMap);
-//							     			mainService.InsertQuery("jisangSQL.insertJisangUploadData", filesMap);
+							     			mainService.InsertQuery("goverSQL.insertGoverUploadData", filesMap);
 							
 						}
 					}
 
 					if (gubun.equals("modify")) {
-						for (int i = 0; i < Integer.parseInt(FILE_CNT); i++) {
-							String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
-							String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
-
-							if (IS_DEL.equals("Y")) {
-								System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
-								params.put("SEQ", DEL_SEQ);
-								mainService.UpdateQuery("goverSQL.deleteGoverFile", params);
-
-							}
+//						for (int i = 0; i < Integer.parseInt(FILE_CNT); i++) {
+//							String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
+//							String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
+//
+//							if (IS_DEL.equals("Y")) {
+//								System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
+//								params.put("SEQ", DEL_SEQ);
+//								mainService.UpdateQuery("goverSQL.deleteGoverFile", params);
+//
+//							}
+//						}
+						log.info("param:"+params);
+						//seq 가져오기
+						int nseq=(int) mainService.selectCountQuery("goverSQL.getGoverAtcFileSeq", params);
+						log.info("nseq:"+nseq);
+						//fileseq 가져오기
+						for (int i = 0; i < fileArr.length(); i++) {
+							//JSONObject fobj=new JSONObject(fileArr.get(i).toString());
+							String file_name=fileArr.getString(i);
+							log.info("file_name:"+file_name);
+							 HashMap<String, Object> filesMap= new HashMap<>();
+							 //
+//							     			filesMap=CommonUtil.JsonArraytoMap(obj);
+							 //
+							     			filesMap.put("goverNo",str_GOVERNO);
+							     			filesMap.put("seq",String.format("%06d",i));
+							     			filesMap.put("fseq",nseq+i);
+							     			filesMap.put("fname",file_name);
+//
+							     			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+							     			 String dataPath = GC.getGoverFileDataDir()+"/"+str_GOVERNO; //설정파일로 뺀다.
+							     			 filesMap.put("fpath",dataPath+"/"+file_name);
+							     			 CommonUtil.moveFile(file_name, tempPath, dataPath);
+							     			log.info("filesMap:"+filesMap);
+							     			mainService.InsertQuery("goverSQL.insertGoverUploadData", filesMap);
+							
 						}
 					}
 
