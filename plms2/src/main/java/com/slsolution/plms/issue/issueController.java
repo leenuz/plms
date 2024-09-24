@@ -1553,114 +1553,116 @@ log.info("SANGSIN_FLAG:"+SANGSIN_FLAG);
 		}
 	}
 
-	//이슈 메뉴얼 삭제 title 기준
-//	@Transactional
-//	@PostMapping(path="/deleteIssueManualByTitle")	
-//	public void saveIssueCodeAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		log.info("LJS : jsonResultController.java saveIssueCodeAdmin()");
-//		ParameterParser parser = new ParameterParser(request);
-//		String DATA_LENGTH = parser.getString("DATA_LENGTH", "");
-//		String PARENT_CODE = parser.getString("PARENT_CODE", "");
+	//이슈코드 저장
+	@Transactional
+	@PostMapping(path="/saveIssueCodeAdmin")	
+	public void saveIssueCodeAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("LJS : jsonResultController.java saveIssueCodeAdmin()");
+		ParameterParser parser = new ParameterParser(request);
+		String DATA_LENGTH = parser.getString("DATA_LENGTH", "");
+		String PARENT_CODE = parser.getString("PARENT_CODE", "");
+
+		HashMap map = new HashMap();
+		try {
+			int result = 0;
+
+			HashMap params = new HashMap();
+			for (int i = 0; i < Integer.parseInt(DATA_LENGTH); i++) {
+				params = new HashMap();
+				params.put("CODE", parser.getString("CODE_" + i, ""));
+				params.put("CODE_DEPTH", parser.getString("CODE_DEPTH_" + i, ""));
+				params.put("CODE_NAME", parser.getString("CODE_NAME_" + i, ""));
+				params.put("PERMITTED_YN", parser.getString("PERMITTED_YN_" + i, ""));
+				params.put("REGISTED_YN", parser.getString("REGISTED_YN_" + i, ""));
+
+				if ("".equals(parser.getString("CODE_NAME_" + i, "")) && !"Y".equals(parser.getString("CODE_DEL_" + i, ""))) {
+					throw new Exception("코드명 없음.");
+				}
+
+				// 분기처리
+				if ("Y".equals(parser.getString("CODE_DEL_" + i, ""))) {
+					result +=(int) mainService.DeleteQuery("issueSQL.deleteIssueCode", params);
+				} else if ("NEW".equals(parser.getString("CODE_" + i, ""))) {
+					String newCode = null;
+					if ("1".equals(parser.getString("CODE_DEPTH_" + i, ""))) {
+						HashMap tmpMap = new HashMap();
+						tmpMap.put("CODE", PARENT_CODE.substring(0, 2));
+						newCode = (String) mainService.selectStringQuery("issueSQL.makeIssueNextCodeDepth1", tmpMap);
+					}
+					if ("2".equals(parser.getString("CODE_DEPTH_" + i, ""))) {
+						HashMap tmpMap = new HashMap();
+						tmpMap.put("CODE", PARENT_CODE.substring(0, 4));
+						newCode = (String) mainService.selectStringQuery("issueSQL.makeIssueNextCodeDepth2", tmpMap);
+					}
+					if ("3".equals(parser.getString("CODE_DEPTH_" + i, ""))) {
+						HashMap tmpMap = new HashMap();
+						tmpMap.put("CODE", PARENT_CODE.substring(0, 6));
+						newCode = (String) mainService.selectStringQuery("issueSQL.makeIssueNextCodeDepth3", tmpMap);
+					}
+					params.put("CODE", newCode);
+					mainService.InsertQuery("issueSQL.insertIssueCode", params);
+					result++;
+				} else {
+					// update
+					mainService.UpdateQuery("issueSQL.updateIssueCodeName", params);
+					result++;
+				}
+			}
+
+			if (result > 0) {
+				map.put("message", "success");
+			} else {
+				map.put("message", "처리된 데이터가 없습니다");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("message", "처리 중 오류가 발생했습니다");
+		}
+
+		JSONObject jo = new JSONObject(map);
+
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
 //
-//		HashMap map = new HashMap();
-//		try {
-//			int result = 0;
-//
-//			Map params = new HashMap();
-//			for (int i = 0; i < Integer.parseInt(DATA_LENGTH); i++) {
-//				params = new HashMap();
-//				params.put("CODE", parser.getString("CODE_" + i, ""));
-//				params.put("CODE_DEPTH", parser.getString("CODE_DEPTH_" + i, ""));
-//				params.put("CODE_NAME", parser.getString("CODE_NAME_" + i, ""));
-//				params.put("PERMITTED_YN", parser.getString("PERMITTED_YN_" + i, ""));
-//				params.put("REGISTED_YN", parser.getString("REGISTED_YN_" + i, ""));
-//
-//				if ("".equals(parser.getString("CODE_NAME_" + i, "")) && !"Y".equals(parser.getString("CODE_DEL_" + i, ""))) {
-//					throw new Exception("코드명 없음.");
-//				}
-//
-//				// 분기처리
-//				if ("Y".equals(parser.getString("CODE_DEL_" + i, ""))) {
-//					result += Database.getInstance().delete("Json.deleteIssueCode", params);
-//				} else if ("NEW".equals(parser.getString("CODE_" + i, ""))) {
-//					String newCode = null;
-//					if ("1".equals(parser.getString("CODE_DEPTH_" + i, ""))) {
-//						Map tmpMap = new HashMap();
-//						tmpMap.put("CODE", PARENT_CODE.substring(0, 2));
-//						newCode = (String) Database.getInstance().queryForObject("Json.makeIssueNextCodeDepth1", tmpMap);
-//					}
-//					if ("2".equals(parser.getString("CODE_DEPTH_" + i, ""))) {
-//						Map tmpMap = new HashMap();
-//						tmpMap.put("CODE", PARENT_CODE.substring(0, 4));
-//						newCode = (String) Database.getInstance().queryForObject("Json.makeIssueNextCodeDepth2", tmpMap);
-//					}
-//					if ("3".equals(parser.getString("CODE_DEPTH_" + i, ""))) {
-//						Map tmpMap = new HashMap();
-//						tmpMap.put("CODE", PARENT_CODE.substring(0, 6));
-//						newCode = (String) Database.getInstance().queryForObject("Json.makeIssueNextCodeDepth3", tmpMap);
-//					}
-//					params.put("CODE", newCode);
-//					Database.getInstance().insert("Json.insertIssueCode", params);
-//					result++;
-//				} else {
-//					// update
-//					Database.getInstance().update("Json.updateIssueCodeName", params);
-//					result++;
-//				}
-//			}
-//
-//			if (result > 0) {
-//				map.put("message", "success");
-//			} else {
-//				map.put("message", "처리된 데이터가 없습니다");
-//			}
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			map.put("message", "처리 중 오류가 발생했습니다");
-//		}
-//
-//		JSONObject jo = new JSONObject(map);
-//
-//		response.setCharacterEncoding("UTF-8");
-//		response.setHeader("Access-Control-Allow-Origin", "*");
-//		response.resetBuffer();
-//		response.setContentType("application/json");
-//		response.getWriter().print(jo);
-//		response.getWriter().flush();
-//	}
-//
-//	public void checkIssueCodeStatus(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		log.info("LJS : jsonResultController.java checkIssueCodeStatus()");
-//		ParameterParser parser = new ParameterParser(request);
-//		String CODE = parser.getString("CODE", "");
-//
-//		HashMap map = new HashMap();
-//		HashMap map2 = new HashMap();
-//		try {
-//			int result = 0;
-//
-//			Map params = new HashMap();
-//			params.put("CODE", CODE);
-//			map = (HashMap) Database.getInstance().queryForObject("Json.checkIssueCodeStatus", params); // 잠재이슈 체크
-//			map2 = (HashMap) Database.getInstance().queryForObject("Json.checkIssueCodeMinwonStatus", params); // 민원 체크
-//
-//			map.put("MINWON_CNT", map2.get("MINWON_CNT"));
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			map.put("message", "처리 중 오류가 발생했습니다");
-//		}
-//
-//		JSONObject jo = new JSONObject(map);
-//
-//		response.setCharacterEncoding("UTF-8");
-//		response.setHeader("Access-Control-Allow-Origin", "*");
-//		response.resetBuffer();
-//		response.setContentType("application/json");
-//		response.getWriter().print(jo);
-//		response.getWriter().flush();
-//	}
+	//이슈코드 삭제시 상태체크 사용중인지 이슈코드 삭제전 상태확인
+	@PostMapping(path="/checkIssueCodeStatus")
+	public void checkIssueCodeStatus(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("LJS : jsonResultController.java checkIssueCodeStatus()");
+		ParameterParser parser = new ParameterParser(request);
+		String CODE = parser.getString("CODE", "");
+
+		HashMap map = new HashMap();
+		HashMap map2 = new HashMap();
+		try {
+			int result = 0;
+
+			HashMap params = new HashMap();
+			params.put("CODE", CODE);
+			map = (HashMap) mainService.selectHashmapQuery("issueSQL.checkIssueCodeStatus", params); // 잠재이슈 체크
+			map2 = (HashMap) mainService.selectHashmapQuery("issueSQL.checkIssueCodeMinwonStatus", params); // 민원 체크
+
+			map.put("MINWON_CNT", map2.get("MINWON_CNT"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("message", "처리 중 오류가 발생했습니다");
+		}
+
+		JSONObject jo = new JSONObject(map);
+
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
 //
 //	public void selectIssueByPnu(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //		log.info("LJS : jsonResultController.java selectIssueByPnu()");

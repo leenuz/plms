@@ -1059,5 +1059,79 @@ DELETE FROM PLMS_ISSUE_CODE_ATC_FILE
 		
 
 	</delete>
+		<delete id="deleteIssueCode" parameterType="HashMap">
+	
+DELETE PLMS_ISSUE_CODE
+ WHERE CODE = #{CODE}
+	
+	</delete>
+	<select id="makeIssueNextCodeDepth1" resultType="String" parameterType="HashMap">
+	
+SELECT RPAD(#{CODE} || LPAD(COALESCE(MAX(CAST(SUBSTRING(CODE, 3, 2) AS INTEGER)), 0) + 1, 2, '0'), 8, '0') AS CODE
+FROM PLMS_ISSUE_CODE T
+WHERE T.CODE LIKE #{CODE} || '%'
+  AND CODE_DEPTH = 1
+	
+	</select>
+	<select id="makeIssueNextCodeDepth2"  resultType="String" parameterType="HashMap">
+	 
+SELECT RPAD(#{CODE} || LPAD(COALESCE(MAX(CAST(SUBSTRING(CODE, 5, 2) AS INTEGER)), '0')) + 1, 2, '0'), 8, '0') AS CODE
+  FROM PLMS_ISSUE_CODE T
+ WHERE T.CODE LIKE #{CODE}||'%'
+   AND CODE_DEPTH = 2
+	
+	</select>
+
+	<select id="makeIssueNextCodeDepth3"  resultType="String" parameterType="HashMap">
+	 
+SELECT RPAD(#{CODE} || LPAD(COALESCE(MAX(CAST(SUBSTRING(CODE, 7, 2) AS INTEGER, '0')) + 1, 2, '0'), 8, '0') AS CODE
+  FROM PLMS_ISSUE_CODE T
+ WHERE T.CODE LIKE #{CODE} ||'%'
+   AND CODE_DEPTH = 3
+	
+	</select>
+	<insert id="insertIssueCode" parameterType="HashMap">
+	 
+INSERT INTO PLMS_ISSUE_CODE (
+        CODE
+        , CODE_DEPTH
+        , CODE_NAME
+        , REGISTED_YN
+        , PERMITTED_YN
+) VALUES (
+        #{CODE}
+        , #{CODE_DEPTH}
+        , #{CODE_NAME}
+        , #{REGISTED_YN}
+        , #{PERMITTED_YN}
+)
+	
+	</insert>
+	
+		<update id="updateIssueCodeName" parameterType="HashMap">
+	
+UPDATE PLMS_ISSUE_CODE
+   SET CODE_NAME = #{CODE_NAME}
+ WHERE CODE = #{CODE}
+	
+	</update>
+	
+		<!-- 이슈코드 삭제전 상태확인 -->
+	<select id="checkIssueCodeStatus" parameterType="HashMap" resultType="HashMap"> 
+SELECT COUNT(*) AS ISSUE_CNT
+  FROM POTENTIAL_ISSUE A
+ WHERE ( A.CODE_DEPTH1 = #{CODE}
+    OR A.CODE_DEPTH2  = #{CODE}
+    OR A.CODE_DEPTH3  = #{CODE} )
+   AND A.DEL_FLAG !='Y'
+	</select>
+	<select id="checkIssueCodeMinwonStatus" parameterType="HashMap" resultType="HashMap"> 
+SELECT COUNT(*) AS MINWON_CNT
+  FROM MINWON_MASTER A
+ WHERE ( A.MW_CODE1 = #{CODE}
+    OR A.MW_CODE2  = #{CODE}
+    OR A.MW_CODE3  = #{CODE} )
+   AND A.DEL_FLAG != 'Y'
+</select>
 	
 </mapper>
