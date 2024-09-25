@@ -610,7 +610,7 @@ $(document).on("click","#submit_btn",function(){
     };
 	//해지의 필수 첨부파일은 jisang_req_doc1디비에 담는다
     // 필수 값 체크
-    let errors = [];
+   /* let errors = [];
 
     if (!formData.account_yn) {
         errors.push('회계처리 필요 여부는 필수입니다.');
@@ -639,12 +639,12 @@ $(document).on("click","#submit_btn",function(){
     if (errors.length > 0) {
         alert(errors.join('\n')); // 에러 메시지들을 알림창으로 표시
         return null; // 필수 값이 누락된 경우 null 반환
-    }
+    }*/
 
     console.log("----------저장 Object------------");
     console.log(formData);
 
-    landTerminationSangsinSave(formData)
+   // landTerminationSangsinSave(formData)
     console.log("-----------------------");
     })
 
