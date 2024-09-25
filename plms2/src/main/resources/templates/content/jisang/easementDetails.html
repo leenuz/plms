@@ -15,7 +15,6 @@
     <link th:href="@{/css/common.css}" rel="stylesheet" />
     <title>지상권 상세정보</title>
     <link rel="stylesheet" href="/css/jisang/easementDetails.css" />
-    <link rel="stylesheet" href="/assets/css/header.css" />
   </head>
   
   <th:block layout:fragment="content">
@@ -31,6 +30,8 @@
           <div class="subTitle">기본/소유자 정보</div>
 
           <div class="contWrap">
+			
+			<!--기본 정보-->
             <div class="contBox">
               <div class="thirdTitle">
                 <h2>・기본 정보</h2>
@@ -39,58 +40,57 @@
                 </div>
               </div>
 
-              <div class="contentDetailBox">
-                <div class="depth1">
-                  <ul class="titles">
-                    <li class="title">지상권번호</li>
-                    <li class="title">담당지사</li>
-                    <li class="title">관로일치여부</li>
-                    <li class="title">용도</li>
-                    <li class="title">관로명(구간)</li>
-                    <li class="title">단/복선</li>
-                    <li class="title07 title">주소</li>
-                    <li class="title">지적면적(m²)</li>
-                    <li class="title">지목</li>
-                    <li class="title">회계처리 필요여부</li>
-                  </ul>
-                  <ul class="contents lastContents">
-                    <li class="content">
-                      <input type="text" placeholder="J_004666" readonly />
-                    </li>
-                    <li class="content">
-                      <input type="text" placeholder="서울지사" readonly />
-                    </li>
-                    <li class="content">
-                      <input type="text" placeholder="N" readonly />
-                    </li>
-                    <li class="content">
-                      <input type="text" placeholder="송유관로" readonly />
-                    </li>
-                    <li class="content">
-                      <input type="text" readonly />
-                    </li>
-                    <li class="content">
-                      <input type="text" placeholder="단선" readonly />
-                    </li>
-                    <li class="content07 content">
-                      <input
-                        type="text"
-                        placeholder="서울특별시 서초구 원지동 28"
-                        readonly />
-                    </li>
-                    <li class="content">
-                      <input type="text" placeholder="3,008" readonly />
-                    </li>
-                    <li class="content">
-                      <input type="text" placeholder="전" readonly />
-                    </li>
-                    <li class="content">
-                      <input type="text" placeholder="N" readonly />
-                    </li>
-                  </ul>
-                </div>
-              </div>
+			  <div class="contentDetailBox">
+			      <div class="depth1">
+			          <ul class="titles">
+			              <li class="title">지상권번호</li>
+			              <li class="title">담당지사</li>
+			              <li class="title">관로일치여부</li>
+			              <li class="title">용도</li>
+			              <li class="title">관로명(구간)</li>
+			              <li class="title">단/복선</li>
+			              <li class="title07 title">주소</li>
+			              <li class="title">지적면적(m²)</li>
+			              <li class="title">지목</li>
+			              <li class="title">회계처리 필요여부</li>
+			          </ul>
+			          <ul class="contents lastContents">
+			              <li class="content">
+			                  <input type="text" th:value="${resultData.jm_jisang_no}" readonly />
+			              </li>
+			              <li class="content">
+			                  <input type="text" th:value="${resultData.jm_jisa}" readonly />
+			              </li>
+			              <li class="content">
+			                  <input type="text" th:value="${resultData.jm_pipe_yn}" readonly />
+			              </li>
+			              <li class="content">
+			                  <input type="text" th:value="${resultData.jm_yongdo}" readonly />
+			              </li>
+			              <li class="content">
+			                  <input type="text" th:value="${resultData.jm_pipe_name}" readonly />
+			              </li>
+			              <li class="content">
+			                  <input type="text" th:value="${resultData.jm_sun_gubun}" readonly />
+			              </li>
+			              <li class="content07 content">
+			                  <input type="text" th:value="${resultData.address}" readonly />
+			              </li>
+			              <li class="content">
+			                  <input type="text" th:value="${resultData.jm_jijuk_area}" readonly />
+			              </li>
+			              <li class="content">
+			                  <input type="text" th:value="${resultData.jm_jimok_text}" readonly />
+			              </li>
+			              <li class="content">
+			                  <input type="text" th:value="${resultData.jm_account_yn}" readonly />
+			              </li>
+			          </ul>
+			      </div>
+			  </div>
             </div>
+			
+			<!--소유자 정보-->
             <div class="contBox contBoxMini03">
               <div class="thirdTitle">
                 <h2>・소유자 정보</h2>
@@ -106,618 +106,417 @@
                     <li class="title05 title">연락처 1</li>
                     <li class="title05 title">연락처 2</li>
                   </ul>
-                  <ul class="contents">
-                    <li class="content01 content">
-                      <input type="text" placeholder="1" readonly />
-                    </li>
-                    <li class="content02 content">
-                      <input type="text" placeholder="1/2" readonly />
-                    </li>
-                    <li class="content02 content">
-                      <input type="text" placeholder="홍길동" readonly />
-                    </li>
-                    <li class="content04 content">
-                      <input
-                        type="text"
-                        placeholder="서울특별시 서초구 서초동 1"
-                        readonly />
-                    </li>
-                    <li class="content05 content">
-                      <input type="text" placeholder="02-654-5548" readonly />
-                    </li>
-                    <li class="content05 content">
-                      <input type="text" placeholder="010-1234-1234" readonly />
-                    </li>
-                  </ul>
-                  <ul class="contents">
-                    <li class="content01 content">
-                      <input type="text" placeholder="2" readonly />
-                    </li>
-                    <li class="content02 content">
-                      <input type="text" placeholder="1/2" readonly />
-                    </li>
-                    <li class="content02 content">
-                      <input type="text" placeholder="홍길동" readonly />
-                    </li>
-                    <li class="content04 content">
-                      <input
-                        type="text"
-                        placeholder="서울특별시 서초구 서초동 202"
-                        readonly />
-                    </li>
-                    <li class="content05 content">
-                      <input type="text" placeholder="02-654-5548" readonly />
-                    </li>
-                    <li class="content05 content">
-                      <input type="text" placeholder="010-1234-1234" readonly />
-                    </li>
-                  </ul>
+				  <!-- 데이터가 없을 때 표시 -->
+				  <ul class="contents lastContents" th:if="${soujaList.size() == 0}">
+				      <li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+				  </ul>
+				  
+				  <ul class="contents" th:each="souja, iterStat : ${soujaList}">
+				      <!-- 순번: 타임리프 내장변수인 iterStat.index 사용 -->
+				      <li class="content01 content">
+				          <input type="text" th:value="${iterStat.index + 1}" readonly />
+				      </li>
+				      <!-- 공유지분 -->
+				      <li class="content02 content">
+				          <input type="text" th:value="${souja.js_jibun}" readonly />
+				      </li>
+				      <!-- 성명 -->
+				      <li class="content02 content">
+				          <input type="text" th:value="${souja.js_souja_name}" readonly />
+				      </li>
+				      <!-- 주소 -->
+				      <li class="content04 content">
+				          <input type="text" th:value="${souja.js_address}" readonly />
+				      </li>
+				      <!-- 연락처 1 -->
+				      <li class="content05 content">
+				          <input type="text" th:value="${souja.js_home_number}" readonly />
+				      </li>
+				      <!-- 연락처 2 -->
+				      <li class="content05 content">
+				          <input type="text" th:value="${souja.js_phone_number}" readonly />
+				      </li>
+				  </ul>
                 </div>
               </div>
             </div>
           </div>
         </section>
+		
         <!-- 지상권 정보 -->
         <section class="surfaceRightInfo">
           <div class="subTitle">지상권 정보</div>
 
           <div class="contWrap">
+			<!--지상권 정보 - 지상권 정보-->
             <div class="contBox">
               <div class="thirdTitle">
                 <h2>・지상권 정보</h2>
               </div>
 
-              <div class="contentDetailBox contBoxMini07">
-                <div class="depth1">
-                  <ul class="titles">
-                    <li class="title">등기여부</li>
-                    <li class="title02 title">편입면적(m²)</li>
-                    <li class="title">위치</li>
-                    <li class="title">계약유형</li>
-                    <li class="title">등기일</li>
-                    <li class="title06 title">등기번호</li>
-                    <li class="title06 title">등기소</li>
-                    <li class="title06 title">도시계획 결정여부</li>
-                    <li class="title06 title">취득일</li>
-                    <li class="title06 title">자산분류번호</li>
-                  </ul>
-                  <ul class="contents">
-                    <li class="content">
-                      <input type="text" placeholder="Y" readonly />
-                    </li>
-                    <li class="content02 content">
-                      <input type="text" placeholder="75" readonly />
-                    </li>
-                    <li class="content">
-                      <input type="text" placeholder="북서쪽" readonly />
-                    </li>
-                    <li class="content">
-                      <input type="text" placeholder="기공승낙서" readonly />
-                    </li>
-                    <li class="content noClickEvent">
-                      <div class="dateInputWrap">
-                        <input
-                          type="date"
-                          data-placeholder="1996-10-25"
-                          aria-required="true"
-                          readonly />
-                      </div>
-                    </li>
-                    <li class="content06 content">
-                      <input type="text" placeholder="50000" readonly />
-                    </li>
-                    <li class="content06 content">
-                      <input
-                        type="text"
-                        placeholder="서울지방법원 등기국"
-                        readonly />
-                    </li>
-                    <li class="content06 content">
-                      <input type="text" readonly />
-                    </li>
-                    <li class="content06 content">
-                      <div class="dateInputWrap">
-                        <input
-                          type="date"
-                          data-placeholder="1996-05-20"
-                          aria-required="true"
-                          readonly />
-                      </div>
-                    </li>
-                    <li class="content06 content">
-                      <input type="text" placeholder="90000857" readonly />
-                    </li>
-                  </ul>
-                </div>
-                <div class="depth2">
-                  <ul class="titles">
-                    <li class="title01 title">특약사항</li>
-                  </ul>
-                  <ul class="contents">
-                    <li class="content01 content">
-                      <input
-                        type="text"
-                        placeholder="지상권존속기간중 지료는 지급치 아니하고 증액하지 아니한다."
-                        readonly />
-                    </li>
-                  </ul>
-                </div>
-              </div>
+			  <div class="contentDetailBox contBoxMini07">
+			    <div class="depth1">
+			      <ul class="titles">
+			        <li class="title">등기여부</li>
+			        <li class="title02 title">편입면적(m²)</li>
+			        <li class="title">위치</li>
+			        <li class="title">계약유형</li>
+			        <li class="title">등기일</li>
+			        <li class="title06 title">등기번호</li>
+			        <li class="title06 title">등기소</li>
+			        <li class="title06 title">도시계획 결정여부</li>
+			        <li class="title06 title">취득일</li>
+			        <li class="title06 title">자산분류번호</li>
+			      </ul>
+			      <ul class="contents">
+			        <!-- 등기여부 -->
+			        <li class="content">
+			          <input type="text" th:value="${resultData.jm_comple_yn}" readonly />
+			        </li>
+			        <!-- 편입면적 -->
+			        <li class="content02 content">
+			          <input type="text" th:value="${resultData.jm_pyeonib_area}" readonly />
+			        </li>
+			        <!-- 위치 -->
+			        <li class="content">
+			          <input type="text" th:value="${resultData.jm_location}" readonly />
+			        </li>
+			        <!-- 계약유형 -->
+			        <li class="content">
+			          <input type="text" th:value="${resultData.jm_permitted_yn}" readonly />
+			        </li>
+			        <!-- 등기일 -->
+			        <li class="content noClickEvent">
+			          <div class="dateInputWrap">
+			            <input type="text" th:value="${resultData.jm_deunggi_date}" readonly />
+			          </div>
+			        </li>
+			        <!-- 등기번호 -->
+			        <li class="content06 content">
+			          <input type="text" th:value="${resultData.jm_deunggi_no}" readonly />
+			        </li>
+			        <!-- 등기소 -->
+			        <li class="content06 content">
+			          <input type="text" th:value="${resultData.jm_deunggiso}" readonly />
+			        </li>
+			        <!-- 도시계획 결정여부 -->
+			        <li class="content06 content">
+			          <input type="text" th:value="${resultData.jm_dosiplan}" readonly />
+			        </li>
+			        <!-- 취득일 -->
+			        <li class="content06 content">
+			          <div class="dateInputWrap">
+			            <input type="text" th:value="${resultData.jm_chuideuk_date}" readonly />
+			          </div>
+			        </li>
+			        <!-- 자산분류번호 -->
+			        <li class="content06 content">
+			          <input type="text" th:value="${resultData.jm_jasan_no}" readonly />
+			        </li>
+			      </ul>
+			    </div>
+			    <div class="depth2">
+			      <ul class="titles">
+			        <li class="title01 title">특약사항</li>
+			      </ul>
+			      <ul class="contents">
+			        <li class="content01 content">
+			          <input type="text" th:value="${resultData.jm_special_cont}" readonly />
+			        </li>
+			      </ul>
+			    </div>
+			  </div>
             </div>
-            <div class="contBox fileContbox">
-              <div class="thirdTitle">
-                <h2>・첨부파일</h2>
-              </div>
+			
+			<!--지상권 정보 - 첨부파일-->
+			<div class="contBox fileContbox">
+			  <div class="thirdTitle">
+			    <h2>・첨부파일</h2>
+			  </div>
 
-              <div class="contentDetailBox">
-                <div class="depth1">
-                  <ul class="titles">
-                    <li class="title">등록일</li>
-                    <li class="title02 title">파일명</li>
-                    <li class="title">파일보기</li>
-                    <li class="title">파일저장</li>
-                  </ul>
-                  <div class="contentScr">
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2024-03-31" readonly />
-                      </li>
-                      <li class="content02 content">
-                        <input
-                          type="text"
-                          placeholder="서울특별시 서초구 원지동 28.pdf"
-                          readonly />
-                      </li>
-                      <li class="content03 content">
-                        <button class="viewDetailButton">보기</button>
-                      </li>
-                      <li class="content04 content btnsWrap">
-                        <button class="fileDownloadBtn">
-                          다운로드 <span class="downloadIcon"></span>
-                        </button>
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2024-03-31" readonly />
-                      </li>
-                      <li class="content02 content">
-                        <input
-                          type="text"
-                          placeholder="원지동 28 등기부등본.pdf"
-                          readonly />
-                      </li>
-                      <li class="content03 content">
-                        <button class="viewDetailButton">보기</button>
-                      </li>
-                      <li class="content04 content btnsWrap">
-                        <button class="fileDownloadBtn">
-                          다운로드 <span class="downloadIcon"></span>
-                        </button>
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2024-03-31" readonly />
-                      </li>
-                      <li class="content02 content">
-                        <input type="text" placeholder="파일명.pdf" readonly />
-                      </li>
-                      <li class="content03 content">
-                        <button class="viewDetailButton">보기</button>
-                      </li>
-                      <li class="content04 content btnsWrap">
-                        <button class="fileDownloadBtn">
-                          다운로드 <span class="downloadIcon"></span>
-                        </button>
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2024-03-31" readonly />
-                      </li>
-                      <li class="content02 content">
-                        <input type="text" placeholder="파일명.png" readonly />
-                      </li>
-                      <li class="content03 content">
-                        <button class="viewDetailButton">보기</button>
-                      </li>
-                      <li class="content04 content btnsWrap">
-                        <button class="fileDownloadBtn">
-                          다운로드 <span class="downloadIcon"></span>
-                        </button>
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2024-03-31" readonly />
-                      </li>
-                      <li class="content02 content">
-                        <input type="text" placeholder="파일명.png" readonly />
-                      </li>
-                      <li class="content03 content">
-                        <button class="viewDetailButton">보기</button>
-                      </li>
-                      <li class="content04 content btnsWrap">
-                        <button class="fileDownloadBtn">
-                          다운로드 <span class="downloadIcon"></span>
-                        </button>
-                      </li>
-                    </ul>
-                    <ul class="contents lastContents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2024-03-31" readonly />
-                      </li>
-                      <li class="content02 content">
-                        <input type="text" placeholder="파일명.png" readonly />
-                      </li>
-                      <li class="content03 content">
-                        <button class="viewDetailButton">보기</button>
-                      </li>
-                      <li class="content04 content btnsWrap">
-                        <button class="fileDownloadBtn">
-                          다운로드 <span class="downloadIcon"></span>
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+			  <div class="contentDetailBox">
+			    <div class="depth1">
+			      <ul class="titles">
+			        <li class="title">등록일</li>
+			        <li class="title02 title">파일명</li>
+			        <li class="title">파일보기</li>
+			        <li class="title">파일저장</li>
+			      </ul>
+			      <div class="contentScr">
+					<!-- 데이터가 없을 때 표시 -->
+					<ul class="contents lastContents" th:if="${atcFileList.size() == 0}">
+					    <li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+					</ul>
+													
+			        <!-- Thymeleaf 반복문으로 첨부파일 리스트 출력 -->
+			        <ul class="contents" th:each="file : ${atcFileList}">
+			          <!-- 등록일 -->
+			          <li class="content01 content">
+						<input type="text" th:value="${#dates.format(file.ja_wdate, 'yyyy-MM-dd')}" readonly />
+			          </li>
+			          <!-- 파일명 -->
+			          <li class="content02 content">
+			            <input type="text" th:value="${file.ja_file_nm}" readonly />
+			          </li>
+			          <!-- 파일보기 버튼 -->
+			          <li class="content03 content">
+			            <button class="viewDetailButton">보기</button>
+			          </li>
+			          <!-- 파일다운로드 버튼 -->
+			          <li class="content04 content btnsWrap">
+			            <button class="fileDownloadBtn">
+			              다운로드 <span class="downloadIcon"></span>
+			            </button>
+			            <!-- 파일 경로를 숨겨서 저장 -->
+			            <input type="hidden" th:value="${file.ja_file_path}" />
+			          </li>
+			        </ul>
+			      </div>
+			    </div>
+			  </div>
+			</div> <!-- 첨부파일 끝 -->
           </div>
         </section>
+		
         <!-- 사용승락 -->
-        <section class="usageApproval">
-          <div class="subTitle">사용승락</div>
+		<section class="usageApproval">
+		  <div class="subTitle">사용승락</div>
+		  
+		  <div class="contWrap">
+		    <div class="contBox">
+		      <div class="contentDetailBox">
+		        <div class="depth1">
+		          <ul class="titles">
+		            <li class="title01 title">순번</li>
+		            <li class="title02 title">문서번호</li>
+		            <li class="title03 title">사용 목적</li>
+		            <li class="title04 title">사용 기간</li>
+		            <li class="title05 title">토지 주소</li>
+		            <li class="title06 title">소유자</li>
+		            <li class="title06 title">사용자</li>
+		            <li class="title06 title">등록상태</li>
+		            <li class="title06 title">ECHO 문서보기</li>
+		          </ul>
 
-          <div class="contWrap">
-            <div class="contBox">
-              <div class="contentDetailBox">
-                <div class="depth1">
-                  <ul class="titles">
-                    <li class="title01 title">순번</li>
-                    <li class="title02 title">문서번호</li>
-                    <li class="title03 title">사용 목적</li>
-                    <li class="title04 title">사용 기간</li>
-                    <li class="title05 title">토지 주소</li>
-                    <li class="title06 title">소유자</li>
-                    <li class="title06 title">사용자</li>
-                    <li class="title06 title">등록상태</li>
-                    <li class="title06 title">ECHO 문서보기</li>
-                  </ul>
-                  <div class="contentScr">
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="1" readonly />
-                      </li>
-                      <li class="content02 content">
-                        <input type="text" placeholder="P_000006" readonly />
-                      </li>
-                      <li class="content03 content">
-                        <input
-                          type="text"
-                          placeholder="가설건축물(컨테이너) 설치"
-                          readonly />
-                      </li>
-                      <li class="content04 content">
-                        <input
-                          type="text"
-                          placeholder="2017-01-09 ~ 2019-01-08"
-                          readonly />
-                      </li>
-                      <li class="content05 content">
-                        <input
-                          type="text"
-                          placeholder="서울특별시 서초구 원지동 28"
-                          readonly />
-                      </li>
-                      <li class="content06 content">
-                        <input type="text" placeholder="김철수" readonly />
-                      </li>
-                      <li class="content06 content">
-                        <input type="text" placeholder="김철수" readonly />
-                      </li>
-                      <li class="content06 content">
-                        <input type="text" placeholder="결재완료" readonly />
-                      </li>
-                      <li class="content06 content">
-                        <button class="viewDetailButton">문서보기</button>
-                      </li>
-                    </ul>
-                    <ul class="contents lastContents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="1" readonly />
-                      </li>
-                      <li class="content02 content">
-                        <input type="text" placeholder="P_000006" readonly />
-                      </li>
-                      <li class="content03 content">
-                        <input
-                          type="text"
-                          placeholder="가설건축물(컨테이너) 설치"
-                          readonly />
-                      </li>
-                      <li class="content04 content">
-                        <input
-                          type="text"
-                          placeholder="2017-01-09 ~ 2019-01-08"
-                          readonly />
-                      </li>
-                      <li class="content05 content">
-                        <input
-                          type="text"
-                          placeholder="서울특별시 서초구 원지동 28"
-                          readonly />
-                      </li>
-                      <li class="content06 content">
-                        <input type="text" placeholder="김철수" readonly />
-                      </li>
-                      <li class="content06 content">
-                        <input type="text" placeholder="김철수" readonly />
-                      </li>
-                      <li class="content06 content">
-                        <input type="text" placeholder="결재완료" readonly />
-                      </li>
-                      <li class="content06 content">
-                        <button class="viewDetailButton">문서보기</button>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+		          <div class="contentScr">
+					<!-- 데이터가 없을 때 표시 -->
+					<ul class="contents lastContents" th:if="${jisangPermitList.size() == 0}">
+					  <li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+					</ul>
+					
+		            <ul class="contents" th:each="permit, iterStat : ${jisangPermitList}">
+		              <li class="content01 content">
+		                <!-- 순번 -->
+		                <input type="text" th:value="${iterStat.count}" readonly />
+		              </li>
+		              <li class="content02 content">
+		                <!-- 문서번호 -->
+		                <input type="text" th:value="${permit.jpm_pmt_no}" readonly />
+		              </li>
+		              <li class="content03 content">
+		                <!-- 사용 목적 -->
+		                <input type="text" th:value="${permit.jmp_use_purpos}" readonly />
+		              </li>
+		              <li class="content04 content">
+		                <!-- 사용 기간 -->
+		                <input type="text"
+		                  th:value="${permit.jpm_use_st_date} + ' ~ ' + ${permit.jpm_use_ed_date}" readonly />
+		              </li>
+		              <li class="content05 content">
+		                <!-- 토지 주소 -->
+		                <input type="text" th:value="${permit.jpt_addr}" readonly />
+		              </li>
+		              <li class="content06 content">
+		                <!-- 소유자 -->
+		                <input type="text" th:value="${permit.jpt_soyuja}" readonly />
+		              </li>
+		              <li class="content06 content">
+		                <!-- 사용자 -->
+		                <input type="text" th:value="${permit.jpt_pmt_user}" readonly />
+		              </li>
+		              <li class="content06 content">
+		                <!-- 등록상태 -->
+		                <input type="text" th:value="${permit.jpm_pmt_status}" readonly />
+		              </li>
+		              <li class="content06 content">
+		                <!-- ECHO 문서보기 버튼 -->
+		                <button class="viewDetailButton">문서보기</button>
+		                <!-- ECHO 문서번호를 저장 -->
+		                <input type="hidden" th:value="${permit.jpm_echo_no}" />
+		              </li>
+		            </ul>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</section>
+		
         <!-- 합필 지상권 정보 -->
-        <section class="mergedSurfaceInfo">
-          <div class="subTitle">합필 지상권 정보</div>
+		<section class="mergedSurfaceInfo">
+		  <div class="subTitle">합필 지상권 정보</div>
 
-          <div class="contWrap">
-            <div class="contBox">
-              <div class="contentDetailBox">
-                <div class="depth1">
-                  <ul class="titles">
-                    <li class="title01 title">기존자산번호</li>
-                    <li class="title02 title">기존지상권번호</li>
-                    <li class="title03 title">지사</li>
-                    <li class="title04 title">주소</li>
-                    <li class="title05 title">지목</li>
-                    <li class="title06 title">지적면적</li>
-                    <li class="title06 title">편입면적</li>
-                    <li class="title06 title">설정금액</li>
-                    <li class="title06 title">위치보기</li>
-                  </ul>
-                  <ul class="contents">
-                    <li class="content01 content">
-                      <input type="text" placeholder="9006412" readonly />
-                    </li>
-                    <li class="content02 content">
-                      <input type="text" placeholder="J_006387" readonly />
-                    </li>
-                    <li class="content03 content">
-                      <input type="text" placeholder="서울지사" readonly />
-                    </li>
-                    <li class="content04 content">
-                      <input
-                        type="text"
-                        placeholder="서울특별시 서초구 서초동 1"
-                        readonly />
-                    </li>
-                    <li class="content05 content">
-                      <input type="text" placeholder="답" readonly />
-                    </li>
-                    <li class="content06 content">
-                      <input type="text" placeholder="2089" readonly />
-                    </li>
-                    <li class="content06 content">
-                      <input type="text" placeholder="154" readonly />
-                    </li>
-                    <li class="content06 content">
-                      <input type="text" readonly />
-                    </li>
-                    <li class="content06 content">
-                      <button class="viewDetailButton">위치보기</button>
-                    </li>
-                  </ul>
-                  <ul class="contents lastContents">
-                    <li class="content01 content">
-                      <input type="text" placeholder="9006412" readonly />
-                    </li>
-                    <li class="content02 content">
-                      <input type="text" placeholder="J_006387" readonly />
-                    </li>
-                    <li class="content03 content">
-                      <input type="text" placeholder="서울지사" readonly />
-                    </li>
-                    <li class="content04 content">
-                      <input
-                        type="text"
-                        placeholder="서울특별시 서초구 서초동 202"
-                        readonly />
-                    </li>
-                    <li class="content05 content">
-                      <input type="text" placeholder="답" readonly />
-                    </li>
-                    <li class="content06 content">
-                      <input type="text" placeholder="170" readonly />
-                    </li>
-                    <li class="content06 content">
-                      <input type="text" placeholder="90" readonly />
-                    </li>
-                    <li class="content06 content">
-                      <input type="text" readonly />
-                    </li>
-                    <li class="content06 content">
-                      <button class="viewDetailButton">위치보기</button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+		  <div class="contWrap">
+		    <div class="contBox">
+		      <div class="contentDetailBox">
+		        <div class="depth1">
+		          <ul class="titles">
+		            <li class="title01 title">기존자산번호</li>
+		            <li class="title02 title">기존지상권번호</li>
+		            <li class="title03 title">지사</li>
+		            <li class="title04 title">주소</li>
+		            <li class="title05 title">지목</li>
+		            <li class="title06 title">지적면적</li>
+		            <li class="title06 title">편입면적</li>
+		            <li class="title06 title">설정금액</li>
+		            <li class="title06 title">위치보기</li>
+		          </ul>
+		          
+				  <!-- 데이터가 없을 때 표시 -->
+				  <ul class="contents lastContents" th:if="${jisangMergeList.size() == 0}">
+				    <li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+				  </ul>
+				  
+		          <ul class="contents" th:each="merge : ${jisangMergeList}">
+		            <li class="content01 content">
+		              <!-- 기존자산번호 -->
+		              <input type="text" th:value="${merge.jm_jasan_no}" readonly />
+		            </li>
+		            <li class="content02 content">
+		              <!-- 기존지상권번호 -->
+		              <input type="text" th:value="${merge.jm_jisang_no}" readonly />
+		            </li>
+		            <li class="content03 content">
+		              <!-- 지사 -->
+		              <input type="text" th:value="${merge.jm_jisa}" readonly />
+		            </li>
+		            <li class="content04 content">
+		              <!-- 주소 -->
+		              <input type="text" th:value="
+		                ${#strings.concat(
+		                  merge.jm_sido_nm != null ? merge.jm_sido_nm + ' ' : '', 
+		                  merge.jm_sgg_nm != null ? merge.jm_sgg_nm + ' ' : '',
+		                  merge.jm_emd_nm != null ? merge.jm_emd_nm + ' ' : '',
+		                  merge.jm_ri_nm != null ? merge.jm_ri_nm + ' ' : '',
+		                  merge.jm_jibun != null ? merge.jm_jibun : ''
+		                )}" readonly />
+		            </li>
+		            <li class="content05 content">
+		              <!-- 지목 -->
+		              <input type="text" th:value="${merge.jm_jimok_text}" readonly />
+		            </li>
+		            <li class="content06 content">
+		              <!-- 지적면적 -->
+		              <input type="text" th:value="${merge.jm_jijuk_area}" readonly />
+		            </li>
+		            <li class="content06 content">
+		              <!-- 편입면적 -->
+		              <input type="text" th:value="${merge.jm_pyeonib_area}" readonly />
+		            </li>
+		            <li class="content06 content">
+		              <!-- 설정금액 -->
+		              <input type="text" th:value="${merge.jm_set_money}" readonly />
+		            </li>
+		            <li class="content06 content">
+		              <!-- 위치보기 버튼 -->
+		              <button class="viewDetailButton">위치보기</button>
+		            </li>
+		          </ul>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</section>
 
         <!-- 변경이력 -->
+		<section class="changeHistory">
+		  <div class="subTitle">변경이력</div>
 
-        <section class="changeHistory">
-          <div class="subTitle">변경이력</div>
-
-          <div class="contWrap">
-            <div class="contBox">
-              <div class="contentDetailBox">
-                <div class="depth1">
-                  <ul class="titles titleScr">
-                    <li class="title01 title">순번</li>
-                    <li class="title02 title">변경일시</li>
-                    <li class="title02 title">구분</li>
-                    <li class="title04 title">내용</li>
-                  </ul>
-                  <div class="contentScr">
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="1" readonly />
-                      </li>
-                      <li class="content02 content">
-                        <input
-                          type="text"
-                          placeholder="2024-04-02 15:40:01"
-                          readonly />
-                      </li>
-                      <li class="content03 content">
-                        <input type="text" placeholder="지상권 정보" readonly />
-                      </li>
-                      <li class="content04 content">
-                        <input type="text" readonly />
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2" readonly />
-                      </li>
-                      <li class="content02 content">
-                        <input
-                          type="text"
-                          placeholder="2024-04-02 15:40:01"
-                          readonly />
-                      </li>
-                      <li class="content03 content">
-                        <input type="text" placeholder="파일 정보" readonly />
-                      </li>
-                      <li class="content04 content">
-                        <input type="text" readonly />
-                      </li>
-                    </ul>
-                    <ul class="contents lastContents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2" readonly />
-                      </li>
-                      <li class="content02 content">
-                        <input
-                          type="text"
-                          placeholder="2024-04-02 15:40:01"
-                          readonly />
-                      </li>
-                      <li class="content03 content">
-                        <input type="text" placeholder="파일 정보" readonly />
-                      </li>
-                      <li class="content04 content">
-                        <input type="text" readonly />
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+		  <div class="contWrap">
+		    <div class="contBox">
+		      <div class="contentDetailBox">
+		        <div class="depth1">
+		          <ul class="titles titleScr">
+		            <li class="title01 title">순번</li>
+		            <li class="title02 title">변경일시</li>
+		            <li class="title02 title">구분</li>
+		            <li class="title04 title">내용</li>
+		          </ul>
+		          
+		          <div class="contentScr">
+					<!-- 데이터가 없을 경우 -->
+					<ul class="contents lastContents" th:if="${jisangModifyList.size() == 0}">
+					  <li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+					</ul>
+					
+		            <!-- Thymeleaf 반복문 시작 -->
+		            <ul class="contents" th:each="modify, iterStat : ${jisangModifyList}">
+		              <li class="content01 content">
+		                <!-- 순번 -->
+		                <input type="text" th:value="${iterStat.count}" readonly />
+		              </li>
+		              <li class="content02 content">
+		                <!-- 변경일시 -->
+						<input type="text" th:value="${#dates.format(modify.jm_modify_date, 'yyyy-MM-dd HH:mm:ss')}" readonly />
+		              </li>
+		              <li class="content03 content">
+		                <!-- 구분 -->
+		                <input type="text" th:value="${modify.jm_gubun}" readonly />
+		              </li>
+		              <li class="content04 content">
+		                <!-- 내용 -->
+		                <input type="text" th:value="${modify.jm_cont}" readonly />
+		              </li>
+		            </ul>
+		            <!-- Thymeleaf 반복문 끝 -->
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</section>
 
         <!-- 메모 -->
+		<section class="memoSection onlyReadMemo">
+		    <div class="subTitle">메모</div>
 
-        <section class="memoSection onlyReadMemo">
-          <div class="subTitle">메모</div>
-
-          <div class="contWrap">
-            <div class="contBox">
-              <div class="contentDetailBox">
-                <div class="depth1">
-                  <ul class="titles titleScr">
-                    <li class="title01 title">작성일시</li>
-                    <li class="title02 title">작성자</li>
-                    <li class="title03 title">내용</li>
-                  </ul>
-                  <div class="contentScr">
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2024-04-02" readonly />
-                      </li>
-                      <li class="content02 content editSpace">
-                        <input type="text" placeholder="김철수" readonly />
-                      </li>
-                      <li class="content03 content editSpace">
-                        <input type="text" placeholder="협의 중" readonly />
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2024-04-02" readonly />
-                      </li>
-                      <li class="content02 content editSpace">
-                        <input type="text" placeholder="김철수" readonly />
-                      </li>
-                      <li class="content03 content editSpace">
-                        <input type="text" placeholder="협의 중" readonly />
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2024-04-02" readonly />
-                      </li>
-                      <li class="content02 content editSpace">
-                        <input type="text" placeholder="김철수" readonly />
-                      </li>
-                      <li class="content03 content editSpace">
-                        <input type="text" placeholder="협의 중" readonly />
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2024-04-02" readonly />
-                      </li>
-                      <li class="content02 content editSpace">
-                        <input type="text" placeholder="김철수" readonly />
-                      </li>
-                      <li class="content03 content editSpace">
-                        <input type="text" placeholder="협의 중" readonly />
-                      </li>
-                    </ul>
-                    <ul class="contents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2024-04-02" readonly />
-                      </li>
-                      <li class="content02 content editSpace">
-                        <input type="text" placeholder="김철수" readonly />
-                      </li>
-                      <li class="content03 content editSpace">
-                        <input type="text" placeholder="협의 중" readonly />
-                      </li>
-                    </ul>
-                    <ul class="contents lastContents">
-                      <li class="content01 content">
-                        <input type="text" placeholder="2024-04-02" readonly />
-                      </li>
-                      <li class="content02 content editSpace">
-                        <input type="text" placeholder="김철수" readonly />
-                      </li>
-                      <li class="content03 content editSpace">
-                        <input type="text" placeholder="협의 중" readonly />
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+		    <div class="contWrap">
+		        <div class="contBox">
+		            <div class="contentDetailBox">
+		                <div class="depth1">
+		                    <ul class="titles titleScr">
+		                        <li class="title01 title">작성일시</li>
+		                        <li class="title02 title">작성자</li>
+		                        <li class="title03 title">내용</li>
+		                    </ul>
+		                    <div class="contentScr">
+								<!-- 데이터가 없을 때 표시 -->
+								<ul class="contents lastContents" th:if="${memoList.size() == 0}">
+								    <li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+								</ul>
+								
+		                        <!-- Thymeleaf 반복문 시작 -->
+		                        <ul class="contents" th:each="memo : ${memoList}">
+		                            <li class="content01 content">
+		                                <!-- 작성일시 -->
+		                                <input type="text" th:value="${#dates.format(memo.mm_wdate, 'yyyy-MM-dd')}" readonly />
+		                            </li>
+		                            <li class="content02 content editSpace">
+		                                <!-- 작성자 -->
+		                                <input type="text" th:value="${memo.mm_user_name}" readonly />
+		                            </li>
+		                            <li class="content03 content editSpace">
+		                                <!-- 내용 -->
+		                                <input type="text" th:value="${memo.mm_memo}" readonly />
+		                            </li>
+		                        </ul>
+		                        <!-- Thymeleaf 반복문 끝 -->
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</section>
 
         <!-- 참고 -->
 

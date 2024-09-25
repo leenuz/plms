@@ -223,7 +223,8 @@ a {
   width: 100%;
 }
 #easementDetails .contBoxMini03 .contentDetailBox {
-  height: 137px;
+  /*height: 137px;*/
+  height: auto; /* 데이터 개수에 맞춰 높이를 자동으로 설정 */
 }
 #easementDetails .basicOwnerInfo .contBoxMini03 .contents:last-child {
   border-bottom: 0;
@@ -338,7 +339,9 @@ a {
 /* 첨부파일 */
 
 #easementDetails .surfaceRightInfo .fileContbox .contentDetailBox .contentScr {
-  height: 180px;
+  /*height: 180px;*/
+  max-height: calc(45px * 4);
+  overflow-y: auto; /* 스크롤 활성화 */
 }
 #easementDetails
   .surfaceRightInfo
@@ -431,7 +434,10 @@ a {
 }
 /* 사용 승락 */
 #easementDetails .usageApproval .contentDetailBox .contentScr {
-  height: 45px;
+  /*height: 45px;*/
+  height: calc(45px * 1);
+  max-height: calc(45px * 1);
+  overflow-y: auto; /* 스크롤 활성화 */
 }
 #easementDetails .usageApproval .contentDetailBox .depth1 .titles {
   padding-right: 4px;
@@ -523,7 +529,9 @@ a {
   width: 62.1%;
 }
 #easementDetails .changeHistory .depth1 .contentScr {
-  height: 90px;
+  /*height: 90px;*/
+  max-height: calc(45px * 2);
+  overflow-y: auto; /* 스크롤 활성화 */
 }
 #easementDetails .changeHistory .depth1 .contents .content {
   width: 15.2%;
@@ -610,7 +618,9 @@ a {
   display: flex;
 }
 #easementDetails .memoSection .contentScr {
-  height: 90px;
+  /*height: 90px;*/
+  max-height: calc(45px * 2);
+  overflow-y: auto; /* 스크롤 활성화 */
 }
 #easementDetails .memoSection.onlyReadMemo .titles .title.title01 {
   width: 15.7%;
@@ -734,4 +744,16 @@ a {
 #easementDetails input[type="date"]:focus::before,
 #easementDetails input[type="date"]:valid::before {
   content: "";
+}
+
+/* input 필드를 중앙에 정렬 */
+.contents .content input {
+    width: 100%;              /* 입력 필드가 부모 요소에 맞게 확장되도록 설정 */
+    text-align: center;        /* 입력 필드 내부 텍스트를 가로로 중앙 정렬 */
+    display: flex;             /* 플렉스 박스로 변환 */
+    justify-content: center;   /* 가로 중앙 정렬 */
+    align-items: center;       /* 세로 중앙 정렬 */
+    height: 100%;              /* 높이 100%로 부모 요소와 일치 */
+    padding: 0;                /* 기본 패딩 제거 */
+    box-sizing: border-box;    /* 패딩과 테두리를 포함해 전체 크기 계산 */
 }
