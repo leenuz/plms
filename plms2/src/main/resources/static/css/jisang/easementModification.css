@@ -1,0 +1,1225 @@
+@charset "UTF-8";
+* {
+  padding: 0;
+  margin: 0;
+}
+body * {
+  font-family: pretendard;
+}
+li {
+  list-style: none;
+}
+select {
+  outline: 0;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #6e7d88;
+  text-indent: 12px;
+}
+input {
+  border: 0;
+  outline: 0;
+}
+input:focus {
+  border: 0;
+}
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+button {
+  border: 0;
+}
+.disabled {
+  pointer-events: none;
+}
+.normalLineHeight {
+  line-height: normal;
+}
+.fileUploadIcon {
+  width: 35px;
+  height: 35px;
+}
+
+/* css추가 */
+
+.easementModificationWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.easementModificationWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.easementModificationWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.easementModificationHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+/**/
+
+#easementModification * {
+  font-family: pretendard;
+}
+
+#easementModification {
+  width: calc(100% - 100px);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+
+#easementModification .contents .content {
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+  box-sizing: border-box;
+}
+#easementModification .contents .content:last-child {
+  border-right: 0;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns::-webkit-scrollbar {
+  width: 4px;
+}
+
+#easementModification
+  .defaultInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+#easementModification .attachFileInfo .fileUploadWrap::-webkit-scrollbar {
+  width: 4px;
+}
+
+#easementModification .attachFileInfo .fileUploadWrap::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+.SearchAddressBtn {
+  display: inline-block;
+  width: 100%;
+  height: 44px;
+  border-radius: 100px;
+  background: #cdd2dd;
+  color: #949aac;
+  font-size: 15px;
+  font-weight: 600;
+}
+.SearchAddressBtn.active {
+  background: #4e5871;
+  color: #fff;
+}
+.moreSelectBtn {
+  /* font-size: 15px; */
+  font-size: 14px;
+  font-weight: 500;
+  color: #4e5871;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  text-align-last: left;
+  padding-left: 12px;
+  box-sizing: border-box;
+}
+
+#easementModification .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+#easementModification .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#easementModification .subTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #31394c;
+  margin-bottom: 24px;
+}
+#easementModification .defaultInfo {
+  /* padding: 40px 0; */
+  padding: 27px 0 40px 0;
+}
+#easementModification .contWrap {
+  width: 100%;
+  /* width: 1782px; */
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+}
+#easementModification .contWrap .titles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 45px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+}
+#easementModification .contWrap .depth1 .titles {
+  border-radius: 5px 5px 0 0;
+}
+#easementModification .contWrap .titles li {
+  height: 100%;
+  text-align: center;
+  line-height: 45px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+  /* flex-grow: 1; */
+}
+#easementModification .contWrap .titles li:last-child {
+  border-right: 0;
+}
+#easementModification .defaultInfo .contWrap .depth1 .titles .title {
+  width: 9.1%;
+}
+#easementModification .defaultInfo .contWrap .depth1 .titles .title01 {
+  width: 13.38%;
+}
+#easementModification .defaultInfo .contWrap .depth1 .titles .title02 {
+  width: 7.31%;
+}
+#easementModification .defaultInfo .contWrap .depth1 .titles .title03 {
+  width: 8%;
+}
+#easementModification .defaultInfo .contWrap .depth1 .titles .title04 {
+  width: 13.8%;
+}
+#easementModification .defaultInfo .contWrap .depth1 .titles .title05 {
+  width: 10.3%;
+}
+#easementModification .contWrap .depth1 .contents {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 47px;
+  background: #fff;
+  border-bottom: 1px solid #cddbf0;
+}
+#easementModification .contWrap .depth1 .contents li {
+  height: 100%;
+  padding: 6px 8px;
+  box-sizing: border-box;
+}
+#easementModification .contWrap .depth1 .contents:last-child {
+  border-radius: 0 0 5px 5px;
+}
+#easementModification .contWrap .depth1 .contents li.content {
+  border-right: 1px solid #cddbf0;
+}
+#easementModification .contWrap .depth1 .contents li:last-child {
+  border-right: 0;
+}
+#easementModification .defaultInfo .contWrap .contents li .customSelectBox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectView {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  /* font-size: 15px; */
+  font-size: 14px;
+  font-weight: 500;
+  color: #6e7d88;
+  background: #fff;
+  text-align-last: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  box-sizing: border-box;
+  background: url(/assets/media/menu02/images/arrowDown.png) no-repeat right 8px
+    center;
+  background-size: 21px;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectView.active {
+  background: url(/assets/media/menu02/images/arrowDownBlue.png) no-repeat right
+    8px center;
+  background-size: 21px;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectView.active {
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns {
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 4px);
+  box-sizing: border-box;
+  max-height: 0;
+  overflow-y: hidden;
+  z-index: 10;
+  transition: 500ms;
+  opacity: 0;
+  border: 1px solid #acbdd7;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns.active {
+  padding: 6px 0;
+  border-radius: 10px;
+  background: #fff;
+  max-height: 233px;
+  overflow-y: scroll;
+  transition: 500ms;
+  opacity: 1;
+}
+
+#easementModification
+  .defaultInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns
+  li {
+  padding: 0;
+  height: 41px;
+}
+#easementModification .contWrap .contents li input[type="text"] {
+  width: 100%;
+  height: 100%;
+  background: #edf2f9;
+  border-radius: 10px;
+  text-align: center;
+}
+#easementModification .contWrap .contents li input[type="text"].notWriteInput {
+  background: transparent;
+}
+#easementModification .contWrap .contents li input[type="text"]::placeholder {
+  color: #3c3c3c;
+}
+#easementModification .contWrap .contents li input[type="text"]::placeholder {
+  text-align: center;
+  text-indent: 0;
+}
+#easementModification input[type="checkbox"] {
+  display: none;
+}
+.checkboxWrap label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+}
+/* date */
+#easementModification .dateInputWrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  position: relative;
+  background: url(/assets/media/menu02/images/calendarInputIcon.png) no-repeat
+    left 8px center;
+  background-size: 18px;
+}
+#easementModification input[type="date"] {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: transparent;
+  background: transparent;
+  text-align: right;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+#easementModification input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+#easementModification input[type="date"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #6e7d88;
+}
+
+#easementModification input[type="date"]:focus,
+#easementModification input[type="date"]:valid {
+  color: #6e7d88;
+}
+
+#easementModification input[type="date"]:focus::before,
+#easementModification input[type="date"]:valid::before {
+  content: "";
+}
+
+/* label */
+
+#easementModification input[type="checkbox"] {
+  display: none;
+}
+
+#easementModification input[type="checkbox"] ~ label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #eff6ff;
+  display: inline-block;
+  position: relative;
+}
+
+#easementModification .allSelectCheck input[type="checkbox"] ~ label {
+  background: #dce7f5;
+}
+
+#easementModification input[type="checkbox"]:checked ~ label {
+  background: #4e5871;
+}
+
+#easementModification input[type="checkbox"]:checked ~ label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 10px;
+  background: url(/assets/media/menu02/images/checkIcon.png) no-repeat center;
+  background-size: contain;
+}
+
+#easementModification .defaultInfo .contWrap .depth1 .contents .content {
+  width: 9.1%;
+  font-size: 14px;
+  font-weight: 500;
+}
+#easementModification .defaultInfo .contWrap .depth1 .contents .content01 {
+  width: 13.38%;
+}
+
+#easementModification .defaultInfo .contWrap .depth1 .contents .content02 {
+  width: 7.31%;
+}
+
+#easementModification .defaultInfo .contWrap .depth1 .contents .content03 {
+  width: 8%;
+}
+
+#easementModification .defaultInfo .contWrap .depth1 .contents .content04 {
+  width: 13.8%;
+}
+#easementModification .defaultInfo .contWrap .depth1 .contents .content05 {
+  width: 10.3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* depth2 */
+#easementModification .defaultInfo .contWrap .depth2 .titles .title01 {
+  /* width: 613px; */
+  width: 34.46%;
+}
+
+#easementModification .defaultInfo .contWrap .depth2 .titles .title02 {
+  /* width: 1157px; */
+  /* width: 65.04%; */
+  width: calc(100% - 34.46%);
+}
+#easementModification .defaultInfo .contWrap .depth2 .contents {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: #fff;
+  height: 111px;
+  border-radius: 0 0 5px 5px;
+}
+
+#easementModification .defaultInfo .contWrap .depth2 .contents > li {
+  box-sizing: border-box;
+  border-right: 1px solid #cddbf0;
+  /* flex-grow: 1; */
+  height: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+}
+#easementModification .defaultInfo .contWrap .depth2 .contents > li:last-child {
+  border-right: 0;
+}
+#easementModification .defaultInfo .contWrap .depth2 .contents .content01 {
+  /* width: 613px; */
+  width: 34.46%;
+  text-align: center;
+  line-height: 111px;
+}
+
+#easementModification .defaultInfo .contWrap .depth2 .contents .content02 {
+  /* width: 1157px; */
+  /* width: 65.04%; */
+  width: calc(100% - 34.46%);
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0 10px;
+  gap: 10px;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .depth2
+  .contents
+  .content02
+  .radioBox {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 0;
+  box-sizing: border-box;
+  gap: 7px;
+  height: 100%;
+  justify-content: flex-start;
+  /* flex-grow: 1; */
+  width: 93%;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .depth2
+  .contents
+  .content02
+  .inputBtnArea {
+  padding: 6px 2px;
+  box-sizing: border-box;
+  width: 8%;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .depth2
+  .contents
+  .content02
+  .radioBox
+  .inputArea {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .depth2
+  .contents
+  .content02
+  .radioBox
+  .inputArea
+  input[type="text"] {
+  /* width: 944px; */
+  height: 44px;
+  border-radius: 10px;
+  background: #edf2f9;
+  /* flex-grow: 1; */
+  width: 19.2%;
+}
+#easementModification .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea .selectContentArea {
+  width: 19.2%;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .depth2
+  .contents
+  .content02
+  .radioBox
+  .inputArea
+  input[type="text"]::placeholder {
+  font-size: 15px;
+  color: #a9b1bd;
+  font-weight: 500;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .depth2
+  .contents
+  .content02
+  .radioBox
+  .inputArea
+  .inputWrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 15px;
+  min-width: 61px;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .depth2
+  .contents
+  .content02
+  .radioBox
+  .inputArea
+  .inputWrap
+  label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #31394c;
+}
+
+#easementModification
+  .defaultInfo
+  .contWrap
+  .depth2
+  .contents
+  .content02
+  .radioBox
+  .inputArea
+  select {
+  width: 180px;
+  height: 44px;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .depth2
+  .contents
+  .content02
+  .radioBox
+  .inputArea.inputArea02
+  input[type="text"] {
+  /* width: 180px; */
+  width: 19.2%;
+}
+#easementModification .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea input[type="text"].largeWidth {
+  width: 100%;
+}
+#easementModification
+  .defaultInfo
+  .contWrap
+  .depth2
+  .contents
+  li
+  .customSelectBox {
+  /* width: 180px; */
+  width: 100%;
+}
+
+#easementModification .ownerInfo .contents .content.btnBox .editBefore,
+#easementModification .ownerInfo .contents .content.btnBox .editAfter {
+  width: 100%;
+}
+
+#easementModification .ownerInfo .contents .content.btnBox .editBefore {
+  display: flex;
+  justify-content: center;
+}
+
+#easementModification .ownerInfo .contents.editing .content.btnBox .editBefore {
+  display: none;
+}
+
+#easementModification .ownerInfo .contents .content.btnBox .editAfter {
+  display: none;
+}
+
+#easementModification .ownerInfo .contents.editing .content.btnBox .editAfter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#easementModification .ownerInfo .contents .content.btnBox .btnWrap {
+  width: 50%;
+  justify-content: center;
+}
+
+#easementModification
+  .ownerInfo
+  .contents
+  .content.btnBox
+  .btnWrap:first-child {
+  border-right: 1px solid #cddbf0;
+}
+
+#easementModification .ownerInfo .contentScr {
+  height: 180px;
+}
+
+/* 수정 전일 때 */
+
+#easementModification
+  .ownerInfo
+  .contWrap
+  .depth1
+  .contents
+  .content.editSpace
+  input[type="text"].editingContent {
+  color: #3c3c3c;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+  text-indent: 0;
+  background: transparent;
+}
+
+#easementModification
+  .ownerInfo
+  .contents
+  .editSpace
+  input[type="text"]::placeholder {
+  color: #3c3c3c;
+}
+
+/* 수정중일때 */
+
+#easementModification .ownerInfo .contents.editing .editSpace {
+  padding: 6px;
+  box-sizing: border-box;
+  line-height: normal;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#easementModification
+  .ownerInfo
+  .contWrap
+  .depth1
+  .contents.editing
+  .content.editSpace
+  input[type="text"].editingContent {
+  border-radius: 10px;
+  background: #edf2f9;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #6e7d88;
+}
+
+#easementModification
+  .ownerInfo
+  .contents.editing
+  .editSpace
+  .editingHideContent {
+  display: none;
+}
+
+#easementModification .ownerInfo .contents.editing .editSpace .editBtn {
+  background: rgba(180, 180, 180, 0.6);
+  color: #707070;
+}
+
+#easementModification
+  .ownerInfo
+  .contents.editing
+  .editSpace
+  input[type="text"] {
+  color: #6e7d88;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+}
+
+#easementModification
+  .ownerInfo
+  .contents.editing
+  .editSpace
+  input[type="text"]::placeholder {
+  color: #6e7d88;
+}
+
+#easementModification .ownerInfo {
+  padding-bottom: 40px;
+}
+#easementModification .ownerInfo .contWrap .depth1 .contents:last-child {
+  border-bottom: 0;
+}
+#easementModification .ownerInfo .contWrap .depth1 .titles .title01 {
+  /* width: 173px; */
+  width: 9.72%;
+}
+
+#easementModification .ownerInfo .contWrap .depth1 .titles .title02 {
+  /* width: 287px; */
+  width: 16.13%;
+}
+
+#easementModification .ownerInfo .contWrap .depth1 .titles .title03 {
+  /* width: 496px; */
+  width: 27.88%;
+}
+
+#easementModification .ownerInfo .contWrap .depth1 .titles .title04 {
+  /* width: 309px; */
+  width: 17.37%;
+}
+
+#easementModification .ownerInfo .contWrap .depth1 .titles .title05 {
+  /* width: 309px; */
+  width: 17.37%;
+}
+
+#easementModification .ownerInfo .contWrap .depth1 .titles .title06 {
+  /* width: 205px; */
+  width: 11.52%;
+}
+#easementModification .ownerInfo .contWrap .depth1 .contents .content01 {
+  /* width: 173px; */
+  width: 9.72%;
+}
+
+#easementModification .ownerInfo .contWrap .depth1 .contents .content02 {
+  /* width: 287px; */
+  width: 16.13%;
+}
+
+#easementModification .ownerInfo .contWrap .depth1 .contents .content03 {
+  /* width: 496px; */
+  width: 27.88%;
+}
+
+#easementModification .ownerInfo .contWrap .depth1 .contents .content04 {
+  /* width: 309px; */
+  width: 17.37%;
+}
+
+#easementModification .ownerInfo .contWrap .depth1 .contents .content05 {
+  /* width: 309px; */
+  width: 17.37%;
+}
+
+#easementModification .ownerInfo .contWrap .depth1 .contents .content06 {
+  /* width: 205px; */
+  width: 11.52%;
+  display: flex;
+  padding: 0;
+}
+#easementModification
+  .ownerInfo
+  .contWrap
+  .depth1
+  .contents
+  .content06
+  .btnWrap {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #cddbf0;
+}
+#easementModification
+  .ownerInfo
+  .contWrap
+  .depth1
+  .contents
+  .content06
+  .btnWrap:last-child {
+  border-right: 0;
+}
+#easementModification .miniBtn {
+  width: 74px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+#easementModification .addBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+#easementModification .delBtn {
+  background: #9a9a9a;
+  color: #fff;
+}
+#easementModification .registBtn {
+  background: #fff;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+  /* background: #4E5871;
+    color: #fff; */
+}
+
+/* 지상권 정보 */
+
+#easementModification .surfaceRightInfo {
+  padding-bottom: 40px;
+}
+
+#easementModification .surfaceRightInfo .depth1 .titles .title {
+  width: 16.6%;
+  text-align: center;
+  line-height: 45px;
+}
+
+#easementModification .surfaceRightInfo .depth1 .contents .content {
+  width: 16.6%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#easementModification .surfaceRightInfo .depth2 .titles .title {
+  width: 100%;
+  text-align: center;
+}
+#easementModification .surfaceRightInfo .depth2 .contents {
+  height: 45px;
+}
+#easementModification .surfaceRightInfo .depth2 .contents .content {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+#easementModification .surfaceRightInfo .depth2 .contents .content.content01 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 8px;
+  box-sizing: border-box;
+}
+#easementModification
+  .surfaceRightInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns::-webkit-scrollbar {
+  width: 4px;
+}
+
+#easementModification
+  .surfaceRightInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#easementModification
+  .surfaceRightInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#easementModification
+  .surfaceRightInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectView {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  /* font-size: 15px; */
+  font-size: 14px;
+  font-weight: 500;
+  color: #6e7d88;
+  background: #fff;
+  text-align-last: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  box-sizing: border-box;
+  background: url(/assets/media/menu02/images/arrowDown.png) no-repeat right 8px
+    center;
+  background-size: 21px;
+}
+#easementModification
+  .surfaceRightInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectView.active {
+  background: url(/assets/media/menu02/images/arrowDownBlue.png) no-repeat right
+    8px center;
+  background-size: 21px;
+}
+
+#easementModification
+  .surfaceRightInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectView.active {
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+}
+
+#easementModification
+  .surfaceRightInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns {
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 4px);
+  box-sizing: border-box;
+  max-height: 0;
+  overflow-y: hidden;
+  z-index: 10;
+  transition: 500ms;
+  opacity: 0;
+  border: 1px solid #acbdd7;
+}
+
+#easementModification
+  .surfaceRightInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns.active {
+  padding: 6px 0;
+  border-radius: 10px;
+  background: #fff;
+  max-height: 233px;
+  overflow-y: scroll;
+  transition: 500ms;
+  opacity: 1;
+}
+
+#easementModification
+  .surfaceRightInfo
+  .contWrap
+  .contents
+  li
+  .customSelectBox
+  .customSelectBtns
+  li {
+  padding: 0;
+  height: 41px;
+}
+
+/* 첨부파일 정보 */
+#easementModification .myPc {
+  width: 81px;
+  height: 27px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+#easementModification .attachFileInfo {
+  padding-bottom: 40px;
+}
+#easementModification .attachFileInfo .subTitle {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+}
+#easementModification .attachFileInfo .fileUploadWrap {
+  width: 100%;
+  margin-bottom: 18px;
+  height: 130px;
+  overflow-y: scroll;
+  border: 1px dashed #cddbf0;
+  border-radius: 5px;
+}
+#easementModification .attachFileInfo .fileUploadBox {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #f7f9fc;
+}
+#easementModification .attachFileInfo .fileUploadBox p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #88a2c8;
+}
+#easementModification .attachFileInfo .contWrap .depth1 .contents:last-child {
+  border-bottom: 0;
+}
+#easementModification .attachFileInfo .contWrap .depth1 .titles .title01 {
+  width: 154px;
+}
+#easementModification
+  .attachFileInfo
+  .contWrap
+  .depth1
+  .titles
+  .title01.allSelectCheck {
+  line-height: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#easementModification .attachFileInfo .contWrap .depth1 .titles .title02 {
+  width: auto;
+  flex-grow: 1;
+}
+#easementModification .attachFileInfo .contWrap .depth1 .contents .content01 {
+  width: 154px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#easementModification .attachFileInfo .contWrap .depth1 .contents .content02 {
+  width: auto;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#easementModification
+  .attachFileInfo
+  .contWrap
+  .depth1
+  .contents
+  .content02
+  .fileName {
+  text-align: center;
+  color: #3c3c3c;
+  font-size: 14px;
+  font-weight: 500;
+}
+#easementModification .attachFileInfo .btnWrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+.fileDelBtn {
+  width: 129px;
+  height: 37px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+/* 이전, 저장 버튼 */
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 10px;
+}
+.finalBtn.vividBlueBtn {
+  background: #2b7de1;
+}
+
+.finalBtn.grayBtn {
+  background: #919191;
+}
+
+.finalBtn.lightBlueBtn {
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+}
+
+/*  */
+#easementModification input[type="file"] {
+  display: none;
+}
+
+.fileBtnWrap label {
+  width: 81px;
+  height: 27px;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

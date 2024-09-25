@@ -898,6 +898,59 @@ public class jisangController {
 		return mav;
 	}
 	
+	// 지상권 내역 수정
+	@GetMapping(path="/easementModification") //http://localhost:8080/api/get/dbTest
+	public ModelAndView easementModification(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+
+		HashMap params = new HashMap();
+
+		String idx = httpRequest.getParameter("idx");
+		String index = httpRequest.getParameter("index");
+
+		params.put("idx",idx);
+		params.put("manage_no",idx);
+		params.put("index",index);
+		log.info("params:"+params);
+
+		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
+		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 최신버전
+		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
+		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
+		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
+		params.put("pnu", data.get(0).get("jm_pnu"));
+		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
+		log.info("jisangIssueList size:"+jisangIssueList.size());
+		if (jisangIssueList.size()>0) {
+			params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
+			params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
+			params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
+		}
+		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
+		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
+		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+
+		mav.addObject("resultData",data.get(0));
+		mav.addObject("soujaList",soujaList);
+		mav.addObject("jisangPermitList",jisangPermitList);
+		mav.addObject("atcFileList",atcFileList);
+		mav.addObject("jisangModifyList",jisangModifyList);
+		mav.addObject("jisangMergeList",jisangMergeList);
+		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+		mav.addObject("jisangIssueList",jisangIssueList);
+		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
+		mav.addObject("memoList",jisangMemoList);
+		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+		
+		mav.setViewName("content/jisang/easementModification");
+		
+		return mav;
+	}
+	
 	//아이디를 기준으로 해당 영역만 리플래쉬 되도록 하는 로직
 	@PostMapping(path="/getAtcFileData") //http://localhost:8080/api/get/dbTest
     public ModelAndView getAtcFileData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
