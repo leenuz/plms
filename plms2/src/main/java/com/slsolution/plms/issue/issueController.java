@@ -51,7 +51,7 @@ public class issueController {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("jisaList",jisalist);
 		mav.addObject("sidoList",sidolist);
-
+ 
 		mav.setViewName("content/issue/menu06_1");
 		return mav;
 	}
