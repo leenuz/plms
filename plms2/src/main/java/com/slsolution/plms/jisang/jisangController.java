@@ -2402,11 +2402,110 @@ log.info("PMT_NO:"+PMT_NO);
 			response.getWriter().flush();
 		}
 	
-	// 지상권 해지 등록
+	
+	// 지상권 해지 저장 >> 해지사유 및 검토 의견만 임시 저장처리
+	@Transactional
+	@PostMapping(path="/insertJisangTerminationTemp")
+		public void insertJisangTerminationTemp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		 log.info("requestParams:"+requestParams);
+		 JSONObject requestParamObj=new JSONObject(requestParams);
+			ParameterParser parser = new ParameterParser(request);
+			String jisangNo = requestParamObj.getString("jisang_no");
+			String startDay = requestParamObj.getString("cancel_date").replace("-", "");
+			String cancle_yes = requestParamObj.has("cancle_yes")?requestParamObj.getString("cancle_yes"):""; //해지여부
+			String cancle_bosang_money = requestParamObj.getString("cancel_bosang_money");
+			String empCd = String.valueOf(request.getSession().getAttribute("userId"));
+			String empName = String.valueOf(request.getSession().getAttribute("userName"));
+			String cancle_chuideuk_money = requestParamObj.getString("chuideuk_money");
+			String cancle_chuideuk_gammoney = requestParamObj.getString("gammoney");
+			String cancle_chuideuk_remainder_money = requestParamObj.getString("remainder_money");
+			String cancle_reason = requestParamObj.getString("cancel_reason");
+			String cancle_comment = requestParamObj.getString("cancel_comment");
+			//String filenumber = requestParamObj.getString("filenumber");
+			//String fileseq = requestParamObj.getString("fileseq"); // 파일 seq
+
+			String str_result = "Y";
+			try {
+
+				HashMap params = new HashMap();
+				params.put("JISANGNO", jisangNo);
+				params.put("STARTDAY", startDay);
+				params.put("CANCLE_YES", cancle_yes);
+				params.put("CANCLE_BOSANG_MONEY", cancle_bosang_money);
+				params.put("CHUIDEUKMONEY", cancle_chuideuk_money);
+				params.put("GAMMONEY", cancle_chuideuk_gammoney);
+				params.put("REMAINDERMONEY", cancle_chuideuk_remainder_money);
+				params.put("EMPCD", empCd);
+				params.put("NAME", empName);
+				params.put("CANCLE_REASON", cancle_reason);
+				params.put("CANCLE_COMMENT", cancle_comment);
+				//params.put("FILESEQ", fileseq);
+				params.put("CANCLE_STATUS", "임시저장");
+
+				 //////mainService.UpdateQuery("jisangSQL.insertJisangTerminationTemp", params);
+
+				mainService.UpdateQuery("jisangSQL.mergeJisangTermination", params);
+
+//				for (int i = 0; i < Integer.parseInt(filenumber); i++) {
+//					String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
+//					String DEL_SEQ = parser.getString("fileseq" + String.valueOf(i), "");
+//
+//					if (IS_DEL.equals("Y")) {
+//						// System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
+//
+//						// 조회용 param셋팅
+//						params.put("SEQ", "");
+//						params.put("FILENO", String.valueOf((params.get("JISANGNO"))));
+//						params.put("FILE_SEQ", DEL_SEQ);
+//					//	ArrayList File_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_Files", params); // 첨부
+//
+//						params.put("SEQ", DEL_SEQ);
+//						//Database.getInstance().update("Json.deleteFile", params);
+//
+//						// 변경이력 등록
+////						if (null != File_list && File_list.size() > 0) {
+////							String str_FileName = String.valueOf(((HashMap) File_list.get(0)).get("FILE_NM"));
+////							params.put("GUBUN", "파일정보");
+////							params.put("CONT", "파일삭제(" + str_FileName + ")");
+////							//Database.getInstance().insert("Json.insertJisangModifyHistory", params);
+////						}
+//					}
+//				}
+
+				// System.out.println("params=" + params);
+				/** codecanyon에서 파일업로드 **/
+				//Database.getInstance().update("Json.updateSeqFile", params); // 파일테이블에 지상권번호 업데이트
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+			HashMap map = new HashMap();
+
+			map.put("message", str_result);
+			 JSONObject obj = new JSONObject(map);
+	    	 // log.info("jo:"+jo);
+	        response.setCharacterEncoding("UTF-8");
+	        response.setHeader("Access-Control-Allow-Origin", "*");
+	        response.setHeader("Cache-Control", "no-cache");
+	        response.resetBuffer();
+	        response.setContentType("application/json");
+	        // response.getOutputStream().write(jo);
+	        response.getWriter().print(obj);
+	        response.getWriter().flush();
+
+
+			//this.mapToJsonResponse(response, map);
+		}
+	
+	// 지상권 해지 등록 > 상신
 	@Transactional
 	@GetMapping(path="/insertJisangTerminationAdd")
 		public void insertJisangTerminationAdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+		 String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		 log.info("requestParams:"+requestParams);
+		 JSONObject requestParamObj=new JSONObject(requestParams);
 			ParameterParser parser = new ParameterParser(request);
 			String jisangNo = parser.getString("jisangNo", "");
 			String startDay = parser.getString("startDay", "").replace("-", "");

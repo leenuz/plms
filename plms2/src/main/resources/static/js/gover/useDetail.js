@@ -2,7 +2,7 @@ const useDetailCangehistoryPopEvet = () => {
     
    const useDetailHistoryBtn = document.querySelector("#useDetail .useDetailHistoryBtn");
    const useDetailChangeHistoryWrapper = document.querySelector(".useDetailChangeHistoryWrapper");
-   let htmlFilePath = '/components/popuphtml/occupancy_Popup/changehistoryPopup.html'; // 삽입할 html 파일 경로
+   let htmlFilePath = '/components/popuphtml/changehistoryPopup.html'; // 삽입할 html 파일 경로
 
    if(useDetailChangeHistoryWrapper){
 
