@@ -723,15 +723,15 @@ public class jisangController {
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 //		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
 		
-		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
-		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params);
+		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
+		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 최신버전
 		
 		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
 		// jisangModifyList를 역순으로 정렬 (변경일시 내림차순 하기 위해서)
 		Collections.reverse(jisangModifyList);
 		
-		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
-		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params);
+		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
+		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
 
 		params.put("pnu", data.get(0).get("jm_pnu"));
 		
@@ -861,9 +861,11 @@ public class jisangController {
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
-		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
+		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 최신버전
 		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
-		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
+		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
+		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
 		params.put("pnu", data.get(0).get("jm_pnu"));
 		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
 		log.info("jisangIssueList size:"+jisangIssueList.size());
@@ -888,6 +890,7 @@ public class jisangController {
 		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
 		mav.addObject("memoList",jisangMemoList);
 		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+		
 		mav.setViewName("content/jisang/easementDetails");
 		
 		return mav;
