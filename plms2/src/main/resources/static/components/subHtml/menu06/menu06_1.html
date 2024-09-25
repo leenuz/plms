@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="/assets/css/header.css" />
+    <link rel="stylesheet" href="/assets/css/menu06/menu06_1.css" />
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <title>민원관리</title>
+  </head>
+  <body>
+    <!--민원관리-->
+    <div id="dopcoIssueManage">
+      <!--header삽입-->
+      <div class="issueManageheader"></div>
+      <div class="issueManageWrappers01">
+        <div class="issueManageTitleBoxs">
+          <h5>민원관리</h5>
+        </div>
+        <section class="issueManageSectionBoxs">
+          <div class="issueManageSectionCont">
+            <div class="issueManageSectionContDevide">
+              <ul class="inputControlBoxs sectionMenuListBoxs">
+                <li class="selectTitle"><p>발생일자</p></li>
+                <div class="inputControlList dateListBox">
+                  <input type="date" />
+                  <span>-</span>
+                  <input type="date" />
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>진행현황</p></li>
+                <!--수정부분 지사-->
+                <div class="issueManageSelectWrappers">
+                  <select
+                    name=""
+                    class="issueManageHiddenSelect"
+                    id="issueManageSelectBox01"
+                    hidden>
+                    <option value="전체">전체</option>
+                    <option value="임시저장">임시저장</option>
+                    <option value="민원발생">민원발생</option>
+                    <option value="대응방안수립">대응방안수립</option>
+                    <option value="협의중">협의중</option>
+                    <option value="완료">완료</option>
+                  </select>
+                </div>
+                <!--보여지는 셀렉박스-->
+                <div class="issueManageSelects">
+                  <button class="issueManageSelectsTitleBtn"></button>
+                  <div class="sufaceSelectList">
+                    <ul class="surfaceSelectListMember"></ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs addSelectWidth">
+                <li class="selectTitle"><p>이슈유형</p></li>
+                <!--수정부분 지사-->
+                <div class="issueManageSelectTotalContent">
+                  <div class="issueManageSelectWrappers">
+                    <select
+                      name=""
+                      class="issueManageHiddenSelect"
+                      id="issueManageSelectBox02"
+                      hidden>
+                      <option value="전체">전체</option>
+                      <option value="대분류">대분류</option>
+                    </select>
+                  </div>
+                  <!--보여지는 셀렉박스-->
+                  <div class="issueManageSelects">
+                    <button class="issueManageSelectsTitleBtn"></button>
+                    <div class="sufaceSelectList extrasmallHeight">
+                      <ul class="surfaceSelectListMember"></ul>
+                    </div>
+                  </div>
+                  <!--수정부분 지사-->
+                  <div class="issueManageSelectWrappers">
+                    <select
+                      name=""
+                      class="issueManageHiddenSelect"
+                      id="issueManageSelectBox03"
+                      hidden>
+                      <option value="전체">전체</option>
+                      <option value="중분류">중분류</option>
+                    </select>
+                  </div>
+                  <!--보여지는 셀렉박스-->
+                  <div class="issueManageSelects">
+                    <button class="issueManageSelectsTitleBtn"></button>
+                    <div class="sufaceSelectList extrasmallHeight">
+                      <ul class="surfaceSelectListMember"></ul>
+                    </div>
+                  </div>
+                  <!--수정부분 지사-->
+                  <div class="issueManageSelectWrappers">
+                    <select
+                      name=""
+                      class="issueManageHiddenSelect"
+                      id="issueManageSelectBox04"
+                      hidden>
+                      <option value="전체">전체</option>
+                      <option value="소분류">소분류</option>
+                    </select>
+                  </div>
+                  <!--보여지는 셀렉박스-->
+                  <div class="issueManageSelects">
+                    <button class="issueManageSelectsTitleBtn"></button>
+                    <div class="sufaceSelectList extrasmallHeight">
+                      <ul class="surfaceSelectListMember"></ul>
+                    </div>
+                  </div>
+                </div>
+                <!--totalContent-->
+              </ul>
+              <ul class="selectContent sectionMenuListBoxs">
+                <li class="selectTitle"><p>발생지사</p></li>
+                <!--수정부분 지사-->
+                <div class="issueManageSelectWrappers">
+                  <select
+                    name=""
+                    class="issueManageHiddenSelect"
+                    id="issueManageSelectBox05"
+                    hidden>
+                    <option value="전체">전체</option>
+                    <option value="서울지사">서울지사</option>
+                    <option value="경인지사">경인지사</option>
+                    <option value="대전지사">대전지사</option>
+                    <option value="부산지사">부산지사</option>
+                    <option value="충청지사">충청지사</option>
+                    <option value="충청지사">충청지사</option>
+                    <option value="충청지사">충청지사</option>
+                  </select>
+                </div>
+                <!--보여지는 셀렉박스-->
+                <div class="issueManageSelects">
+                  <button class="issueManageSelectsTitleBtn"></button>
+                  <div class="sufaceSelectList">
+                    <ul class="surfaceSelectListMember"></ul>
+                  </div>
+                </div>
+              </ul>
+              <ul class="inputControlBoxs sectionMenuListBoxs">
+                <li class="selectTitle"><p>민원명</p></li>
+                <div class="inputControlList">
+                  <input type="text" placeholder="민원명 입력" />
+                </div>
+              </ul>
+            </div>
+            <!-- 라디오버튼 있는 섹션-->
+            <div class="issueManageSectionContDevide">
+              <p class="devideSecondTitles">주소</p>
+              <div class="issueManageSectionRadioBoxs">
+                <ul class="radioBoxs">
+                  <li>
+                    <input type="radio" name="issueManageRadio01" /><span
+                      >입력형</span
+                    >
+                  </li>
+                  <li class="addressInput">
+                    <input
+                      type="search"
+                      placeholder="주소입력"
+                      class="searchInputBox01" />
+                  </li>
+                </ul>
+                <ul class="radioBoxs menuRadioEvet01">
+                  <li>
+                    <input type="radio" name="issueManageRadio01" /><span
+                      >선택형</span
+                    >
+                  </li>
+                  <li>
+                    <!--수정부분 지사-->
+                    <div class="issueManageSelectWrappers">
+                      <select
+                        name=""
+                        class="issueManageHiddenSelect"
+                        id="issueManageSelectBox06"
+                        hidden>
+                        <option value="전체">전체</option>
+                        <option value="Y1">Y1</option>
+                        <option value="N2">N2</option>
+                        <option value="N3">N3</option>
+                        <option value="N4">N4</option>
+                        <option value="N5">N5</option>
+                        <option value="N6">N6</option>
+                        <option value="N7">N7</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="issueManageSelects">
+                      <button class="issueManageSelectsTitleBtn"></button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember"></ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <!--수정부분 지사-->
+                    <div class="issueManageSelectWrappers">
+                      <select
+                        name=""
+                        class="issueManageHiddenSelect"
+                        id="issueManageSelectBox07"
+                        hidden>
+                        <option value="전체">전체</option>
+                        <option value="Y">Y</option>
+                        <option value="N">N</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="issueManageSelects">
+                      <button class="issueManageSelectsTitleBtn"></button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember"></ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <!--수정부분 지사-->
+                    <div class="issueManageSelectWrappers">
+                      <select
+                        name=""
+                        class="issueManageHiddenSelect"
+                        id="issueManageSelectBox08"
+                        hidden>
+                        <option value="전체1">전체1</option>
+                        <option value="Y2">Y2</option>
+                        <option value="N3">N3</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="issueManageSelects">
+                      <button class="issueManageSelectsTitleBtn"></button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember"></ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <!--수정부분 지사-->
+                    <div class="issueManageSelectWrappers">
+                      <select
+                        name=""
+                        class="issueManageHiddenSelect"
+                        id="issueManageSelectBox09"
+                        hidden>
+                        <option value="전체11">전체11</option>
+                        <option value="Y22">Y22</option>
+                        <option value="N33">N33</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="issueManageSelects">
+                      <button class="issueManageSelectsTitleBtn"></button>
+                      <div class="sufaceSelectList smallHeight">
+                        <ul class="surfaceSelectListMember"></ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li style="padding: 0px 3px">
+                    <div class="inputControlList">
+                      <input
+                        type="text"
+                        placeholder="지번입력"
+                        class="menuAdderssInput01" />
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <!--issueManageSectionRadioBoxs-->
+              <div class="issueManageSectionBtnBoxs">
+                <button class="issueManageTotalBtn">현황통계</button>
+                <button class="newIssueBtn">신규민원</button>
+                <button class="issueManageRegisterBtn">조회하기</button>
+              </div>
+            </div>
+          </div>
+          <!--issueManageSectionCont-->
+        </section>
+        <main>
+          <div class="issueManageMainContentWrapper">
+            <div class="issueManageMainContent">
+              <!-- 데이터박스 -->
+              <div class="dataBoxswrappers">
+                <div class="dataBoxCont dataBoxsFirst06">
+                  <ul class="dataTitle">
+                    <li class="largeWidth"><p>민원 명</p></li>
+                    <li class="largeWidth"><p>주소</p></li>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="largeWidth">
+                        <p>지상권 미설정토지 보상협의 통보</p>
+                      </li>
+                      <li class="largeWidth">
+                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="largeWidth">
+                        <p>지상권 미설정토지 보상협의 통보</p>
+                      </li>
+                      <li class="largeWidth">
+                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="largeWidth">
+                        <p>지상권 미설정토지 보상협의 통보</p>
+                      </li>
+                      <li class="largeWidth">
+                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="largeWidth">
+                        <p>지상권 미설정토지 보상협의 통보</p>
+                      </li>
+                      <li class="largeWidth">
+                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="largeWidth">
+                        <p>지상권 미설정토지 보상협의 통보</p>
+                      </li>
+                      <li class="largeWidth">
+                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="largeWidth">
+                        <p>지상권 미설정토지 보상협의 통보</p>
+                      </li>
+                      <li class="largeWidth">
+                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="largeWidth">
+                        <p>지상권 미설정토지 보상협의 통보</p>
+                      </li>
+                      <li class="largeWidth">
+                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="largeWidth">
+                        <p>지상권 미설정토지 보상협의 통보</p>
+                      </li>
+                      <li class="largeWidth">
+                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="largeWidth">
+                        <p>지상권 미설정토지 보상협의 통보</p>
+                      </li>
+                      <li class="largeWidth">
+                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
+                      </li>
+                    </a>
+                  </ul>
+                  <ul class="dataContent">
+                    <a href="" class="linkCont">
+                      <li class="largeWidth">
+                        <p>지상권 미설정토지 보상협의 통보</p>
+                      </li>
+                      <li class="largeWidth">
+                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
+                      </li>
+                    </a>
+                  </ul>
+                </div>
+                <!-- 오른쪽 좌우스크롤 가진 데이터박스 -->
+                <div class="dataBoxCont dataBoxsSecond06">
+                  <div class="scrollContentBoxies">
+                    <ul class="dataTitle">
+                      <li><p>진행현황</p></li>
+                      <li><p>이슈유형</p></li>
+                      <li><p>발생일자</p></li>
+                      <li><p>완료일</p></li>
+                    </ul>
+                    <ul class="dataContent issueManageLink">
+                      <a href="" class="linkCont02">
+                        <li><p>1000032</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <button class="btnDesign issuePopBtn">
+                            이슈보기
+                          </button>
+                        </li>
+                      </div>
+                      <a href="" class="linkCont">
+                        <li><p>1995-06-30</p></li>
+                        <li><p>1995-06-30</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent issueManageLink">
+                      <a href="" class="linkCont02">
+                        <li><p>1000032</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <button class="btnDesign issuePopBtn">
+                            이슈보기
+                          </button>
+                        </li>
+                      </div>
+                      <a href="" class="linkCont">
+                        <li><p>1995-06-30</p></li>
+                        <li><p>1995-06-30</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent issueManageLink">
+                      <a href="" class="linkCont02">
+                        <li><p>1000032</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <button class="btnDesign issuePopBtn">
+                            이슈보기
+                          </button>
+                        </li>
+                      </div>
+                      <a href="" class="linkCont">
+                        <li><p>1995-06-30</p></li>
+                        <li><p>1995-06-30</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent issueManageLink">
+                      <a href="" class="linkCont02">
+                        <li><p>1000032</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <button class="btnDesign issuePopBtn">
+                            이슈보기
+                          </button>
+                        </li>
+                      </div>
+                      <a href="" class="linkCont">
+                        <li><p>1995-06-30</p></li>
+                        <li><p>1995-06-30</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent issueManageLink">
+                      <a href="" class="linkCont02">
+                        <li><p>1000032</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <button class="btnDesign issuePopBtn">
+                            이슈보기
+                          </button>
+                        </li>
+                      </div>
+                      <a href="" class="linkCont">
+                        <li><p>1995-06-30</p></li>
+                        <li><p>1995-06-30</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent issueManageLink">
+                      <a href="" class="linkCont02">
+                        <li><p>1000032</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <button class="btnDesign issuePopBtn">
+                            이슈보기
+                          </button>
+                        </li>
+                      </div>
+                      <a href="" class="linkCont">
+                        <li><p>1995-06-30</p></li>
+                        <li><p>1995-06-30</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent issueManageLink">
+                      <a href="" class="linkCont02">
+                        <li><p>1000032</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <button class="btnDesign issuePopBtn">
+                            이슈보기
+                          </button>
+                        </li>
+                      </div>
+                      <a href="" class="linkCont">
+                        <li><p>1995-06-30</p></li>
+                        <li><p>1995-06-30</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent issueManageLink">
+                      <a href="" class="linkCont02">
+                        <li><p>1000032</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <button class="btnDesign issuePopBtn">
+                            이슈보기
+                          </button>
+                        </li>
+                      </div>
+                      <a href="" class="linkCont">
+                        <li><p>1995-06-30</p></li>
+                        <li><p>1995-06-30</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent issueManageLink">
+                      <a href="" class="linkCont02">
+                        <li><p>1000032</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <button class="btnDesign issuePopBtn">
+                            이슈보기
+                          </button>
+                        </li>
+                      </div>
+                      <a href="" class="linkCont">
+                        <li><p>1995-06-30</p></li>
+                        <li><p>1995-06-30</p></li>
+                      </a>
+                    </ul>
+                    <ul class="dataContent issueManageLink">
+                      <a href="" class="linkCont02">
+                        <li><p>1000032</p></li>
+                      </a>
+                      <div class="dataContBtnBox">
+                        <li>
+                          <button class="btnDesign issuePopBtn">
+                            이슈보기
+                          </button>
+                        </li>
+                      </div>
+                      <a href="" class="linkCont">
+                        <li><p>1995-06-30</p></li>
+                        <li><p>1995-06-30</p></li>
+                      </a>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!--dataBoxswrappers-->
+              <div class="boardPageBoxs">
+                <ul>
+                  <li class="arrowLeftWrapper">
+                    <button>
+                      <img
+                        src="/assets/media/menu01/arrowRightLine02.png"
+                        alt="preBtnImg" />
+                    </button>
+                    <button>
+                      <img
+                        src="/assets/media/menu01/arrowRightLine01.png"
+                        alt="preBtnImg" />
+                    </button>
+                  </li>
+                  <li class="pageCountBoxs">
+                    <p>1</p>
+                    <p>2</p>
+                    <p>3</p>
+                    <p>4</p>
+                    <p>5</p>
+                  </li>
+                  <li class="arrowRightWrapper">
+                    <button>
+                      <img
+                        src="/assets/media/menu01/arrowRightLine01.png"
+                        alt="nextBtnImg" />
+                    </button>
+                    <button>
+                      <img
+                        src="/assets/media/menu01/arrowRightLine02.png"
+                        alt="nextBtnImg" />
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <!--boardPageBoxs-->
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <div class="issueManageIssuePopWrapper"></div>
+    <div class="issueManageNewIssuePopWrapper"></div>
+    <div class="issueManageIssueTotalWrapper"></div>
+    
+    <script type="module" src="/components/surfaceMain.js"></script>
+    <script src="/components/js/menu06/issueManageRadioEvet.js"></script>
+    <script src="/components/js/menu06/issueManageLinkEvet.js"></script>
+    <script src="/components/js/menu01/resultPageEvet.js"></script>
+    <script src="/components/js/menu06/menu06_1.js"></script>
+  </body>
+</html>
