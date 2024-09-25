@@ -213,3 +213,24 @@ function mergeTableCells(tableId, columnIndex) {
     }
 }
 
+
+/**
+ * 진행 현황 관련 함수
+ **/
+//진행 현황 데이터
+const progStatusMap = {
+    "임시저장": "1",
+    "민원발생": "2",
+    "대응방안수립": "3",
+    "협의중": "4",
+    "완료": "5"
+};
+// 진행 현황 상태 찾는 함수
+function findProgStatus(input) {
+    if (progStatusMap[input]) {
+        return progStatusMap[input];
+    }
+    const statusEntry = Object.entries(progStatusMap).find(([key, value]) => value === input);
+    return statusEntry ? statusEntry[0] : null; 
+}
+

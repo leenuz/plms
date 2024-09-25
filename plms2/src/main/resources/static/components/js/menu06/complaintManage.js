@@ -175,4 +175,92 @@ const complainManageComplainFinPopEvet = () => {
 complainManageComplainFinPopEvet();
 
 
+//실행
+$(function(){
+      // 현재 페이지의 URL에서 쿼리 스트링 부분을 가져옴
+      const queryString = window.location.search;
+      // URLSearchParams 객체 생성 (쿼리 스트링을 파싱)
+      const urlParams = new URLSearchParams(queryString);
+      // 파라미터 값 가져오기 (예: ?paramName=value 형태에서 paramName의 값)
+      const mw_seq = urlParams.get('mw_seq');
+      console.log("mw_seq = " + mw_seq);
+      self.onDataLoad(mw_seq);
+})
 
+
+//지역명을 조합하는 함수
+function getFullAddress(data) {
+    const parts = [];
+    if (data.sido_nm) parts.push(data.sido_nm);
+    if (data.sgg_nm) parts.push(data.sgg_nm);
+    if (data.emd_nm) parts.push(data.emd_nm);
+    if (data.ri_nm) parts.push(data.ri_nm);
+    if (data.jibun_full) parts.push(data.jibun_full);
+    return parts.join(' ');
+}
+
+function onDataLoad(mw_seq){
+	var allData = { "MW_SEQ" : mw_seq };
+	$.ajax({
+		url: "/issue/selectMinwonDetail",
+		data: JSON.stringify(allData),
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: 'application/json; charset=utf-8',
+		success: function (data, jqXHR) {
+            console.log(data);
+            const result = data.result;
+            const agreeList = data.agreeList;
+            const tojiList = data.tojiList;
+            const fileList = data.fileList;
+
+            $('#dopcoAllWrappers .com_name').val(result.mw_title); //민원명
+            $('#dopcoAllWrappers .occ_date').val(result.mw_occur_date); //발생일자
+            $('#dopcoAllWrappers .jisa').val(result.jisa); //발생지사
+            $('#dopcoAllWrappers .issue_type').val(`${result.code_str1} > ${result.code_str2} > ${result.code_str3}`); //이슈타입
+            $('#dopcoAllWrappers .prog_status').val(result.status_str); //진행현황
+            $('#dopcoAllWrappers .land_history').text(""); //토지이력
+            $('#dopcoAllWrappers .requirements').text(""); //요구사항
+            $('#dopcoAllWrappers .land_contents').text(""); //내용
+
+            $('#dopcoAllWrappers .civil_petition_land .contents').remove();
+            $.each(tojiList, function (index, item) {
+            var newItem = `
+            <ul class="contents">
+              <li class="content">
+                <input type="text" readonly class="notWriteInput" value="${item.rep_yn}">
+              </li>
+              <li class="content largeWidth">
+                <input type="text" readonly class="notWriteInput" value="${getFullAddress(item)}">
+              </li>
+              <li class="content">
+                <input type="text" readonly class="notWriteInput" value="${item.registed_yn}">
+              </li>
+              <li class="content">
+                <input type="text" readonly class="notWriteInput" value="${item.permitted_yn}">
+              </li>
+            </ul>
+           `;
+            $('#dopcoAllWrappers .civil_petition_land').append(newItem);
+            });
+		},
+		beforeSend: function () {
+			//(이미지 보여주기 처리)
+			//$('#load').show();
+            loadingShow();
+		},
+		complete: function () {
+			//(이미지 감추기 처리)
+			//$('#load').hide();
+            loadingHide();
+		},
+		error: function (jqXHR, textStatus, errorThrown, responseText) {
+			//alert("ajax error \n" + textStatus + " : " + errorThrown);
+			console.log(jqXHR);
+			console.log(jqXHR.readyState);
+			console.log(jqXHR.responseText);
+			console.log(jqXHR.responseJSON);
+		}
+	}) //end ajax
+}
