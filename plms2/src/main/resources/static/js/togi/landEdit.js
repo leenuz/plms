@@ -18,8 +18,8 @@ const landEditInfoAddBtnEvent01 = () => {
 
 
     infoContentsBox.addEventListener('click', function (event) {
-         const contentsBoxElement = document.querySelector('.contentsBox');
-         const index = getUlCountInContentsBox(contentsBoxElement);
+         const contentsBoxElement = document.querySelector('#deptDiv .contentsBox');
+         const indexx = getUlCountInContentsBox(contentsBoxElement);
 
         // 버튼 클릭시 추가되게
         if (event.target.classList.contains('addBtn')) {
@@ -37,11 +37,11 @@ const landEditInfoAddBtnEvent01 = () => {
                     const infoInput = document.createElement('input');
                     infoInput.type = 'text';
                     if(i==1){
-                    infoInput.name="dept_nm_" + index;
+                    infoInput.name="dept_nm_" + indexx;
                     }else if(i==2){
-                   infoInput.name="manager_" + index;
+                   infoInput.name="manager_" + indexx;
                     }else if(i==3){
-                   infoInput.name="contact_num_" + index;
+                   infoInput.name="contact_num_" + indexx;
                     }
                     infoLi.appendChild(infoInput);
 
@@ -103,19 +103,20 @@ const getInfoIndexForLandEdit = (event) => {
 }
 
 // 토지개발 등록 -> 토지 정보 click event
-
-const landEditInfoAddBtnEvent02 = () => {
     const infoContentsDetailBox02 = document.querySelector('#landEdit .landInfo .contWrap');
     const infoContentsBox02 = infoContentsDetailBox02.querySelector('.contentsBox');
-    const infoAddBtn02 = infoContentsDetailBox02.querySelectorAll('.addBtn');
     const infoContents02 = infoContentsDetailBox02.querySelectorAll('.contents');
     const infoTitles02 = infoContentsDetailBox02.querySelector('.titles');
 
+
+const landEditInfoAddBtnEvent02 = () => {
 
     infoContentsBox02.addEventListener('click', function (event) {
 
         // 버튼 클릭시 추가되게
         if (event.target.classList.contains('addBtn')) {
+         const contentsBoxElement = document.querySelector('#togiInfoDiv .contentsBox');
+         const index = getUlCountInContentsBox(contentsBoxElement);
             // ul 만들기
             const infoUl = document.createElement('ul');
             infoUl.classList.add('contents');
@@ -133,12 +134,12 @@ const landEditInfoAddBtnEvent02 = () => {
                     const checkboxInput = document.createElement('input');
                     checkboxInput.type = 'checkbox';
 
-
-                    if (i == 1 ) {
-                        checkboxInput.id = `landEdit_checkbox_${Date.now()}_${i}`;
-                    } else if (i == 4) {
-                        checkboxInput.id = `landEdit_MainParcelChk_${Date.now()}_${i}`;
-                    }
+                    if (i == 1) {
+                     checkboxInput.id ='landEdit_Checkbox_' + index;
+                     }else if (i == 4){
+                     checkboxInput.id ='landEditMainParcelChk_Checkbox_' + index;
+                     checkboxInput.name ='landEditMainParcelChk_Checkbox01';
+                   }
 
                     infoLi.appendChild(checkboxInput);
 
@@ -149,87 +150,134 @@ const landEditInfoAddBtnEvent02 = () => {
 
                     infoLi.appendChild(checkboxLabel);
 
-                } else if (1<i && i<4 || 4<i && i<7 || 7<i && i<12) {
+                 }else if(i == 3){
+                        infoLi.classList.add('selectContentArea');
+                        const newContent = `
+                          <div class="hiddenSelectBox">
+                            <select id="landDevelopmentManageSelectBox01" hidden>
+                              <option value="" selected>선택</option>
+                              <option value="지상권">지상권</option>
+                              <option value="미설정">미설정</option>
+                              <option value="점용">점용</option>
+                              <option value="회사토지">회사토지</option>
+                            </select>
+                          </div>
+                          <section class="customSelectBox">
+                            <button class="customSelectView">선택</button>
+                            <ul class="customSelectBtns">
+                                <li><button class="moreSelectBtn" type="button">지상권</button></li>
+                              <li><button class="moreSelectBtn" type="button">미설정</button></li>
+                                <li><button class="moreSelectBtn" type="button">점용</button></li>
+                              <li><button class="moreSelectBtn" type="button">회사토지</button></li>
+                            </ul>
+                          </section>
+                        `;
 
-                    if ( i == 2){
-                        infoLi.classList.add('smallWidth');
-                    } else if (4 < i && i < 7 || i == 11 ) {
-                        infoLi.classList.add('middleWidth');
-                    }
-                    // input 만들기
+                        // infoLi에 새 내용을 추가합니다.
+                        infoLi.insertAdjacentHTML('beforeend', newContent);
+                        var selectElement = infoLi.querySelector('#landDevelopmentManageSelectBox01');
+                        selectElement.setAttribute('name', 'hakbo_' + index);
+                   } else if (1<i && i<3 || 4<i && i<7 || 7<i && i<12) {
                     const infoInput = document.createElement('input');
-                    infoInput.type = 'text';
-                    infoInput.readOnly = true;
-                    infoInput.classList.add('notWriteInput');
-                    if ( i ==  2) {
-                        // 순번을 위해서
+                       infoInput.type = 'text';
+
+                       if ( i == 2){
+                           infoLi.classList.add('smallWidth');
                         infoInput.classList.add('contentsNum');
-                    }
-
-                    // li안에 넣기
-                    infoLi.append(infoInput);
-                }  else if (i == 7) {
-                    infoLi.classList.add('addressWidth');
-                    // div 만들기
-                    const addressDiv = document.createElement('div');
-                    addressDiv.classList.add('addressData');
-                    // input 만들기
-                    const addressInput = document.createElement('input');
-                    addressInput.classList.add('notWriteInput');
-                    addressInput.readOnly = true;
-                    addressInput.type = 'text';
-
-                    // div에 input 넣기
-
-                    addressDiv.appendChild(addressInput);
-                    infoLi.appendChild(addressDiv);
-
-                    // 검색버튼 만들기
-
-                    const addressBtn = document.createElement('button');
-                    addressBtn.classList.add('searchAddressBtn');
-                    addressBtn.classList.add('landEditSearchBtn');
-                    addressBtn.textContent = '검색';
-
-                    // li안에 넣기
-                    infoLi.appendChild(addressBtn);
-                    infoLi.classList.add('contentBox');
-
-                } else if (i == 12) {
-                    infoLi.classList.add('btnBox');
-                    infoLi.classList.add('middleWidth');
-
-                    const viewBtn = document.createElement('button');
-                    // 버튼 class 삭제
-                    // viewBtn.classList.add('lightBlueBtn');
-                    viewBtn.classList.add('viewDetailButton');
-                    viewBtn.textContent = '위치보기';
-
-                    infoLi.appendChild(viewBtn);
-                } else if (i == 13) {
-                    infoLi.classList.add('middleWidth');
-                    infoLi.classList.add('btnBox');
-
-                    for (let w = 0; w < 2; w++) {
-                        const btnWrapDiv = document.createElement('div');
-                        btnWrapDiv.classList.add('btnWrap');
-
-                        const miniBtn = document.createElement('button');
-                        miniBtn.classList.add('miniBtn');
-
-                        if (w == 0) {
-                            miniBtn.classList.add('addBtn');
-                            miniBtn.textContent = '추가';
-                        } else if (w == 1) {
-                            miniBtn.classList.add('delBtn');
-                            miniBtn.textContent = '삭제';
+                           infoInput.readOnly = true;
+                           infoInput.classList.add('notWriteInput');
+                       } else if (4 < i && i < 7 || i == 11 ) {
+                           infoLi.classList.add('middleWidth');
+                        if(i == 5){
+                          infoInput.name = 'jeochok_'+index;
+                        }else if(i == 6){
+                          infoInput.name = 'jisa_'+index;
+                        }else if(i == 11){
+                          infoInput.name = 'souja_'+index;
+                        }
+                       }else if(i == 8){
+                            infoInput.name = 'jimok_'+index;
+                           infoInput.readOnly = true;
+                        infoInput.classList.add('jimokData');
+                        infoInput.classList.add('notWriteInput');
+                      } else if(i == 9){
+                              infoInput.name = 'yeonjang_'+index;
+                        }else if(i == 10){
+                          infoInput.name = 'myeonjuk_'+index;
+                          infoInput.readOnly = true;
+                          infoInput.classList.add('areaData');
+                          infoInput.classList.add('notWriteInput');
                         }
 
-                        btnWrapDiv.appendChild(miniBtn);
-                        infoLi.appendChild(btnWrapDiv);
-                    }
+                       // li안에 넣기
+                       infoLi.append(infoInput);
+                   }  else if (i == 7) {
+                       infoLi.classList.add('addressWidth');
+                       // div 만들기
+                       const addressDiv = document.createElement('div');
+                       addressDiv.classList.add('addressData');
+                       // input 만들기
+                       const addressInput = document.createElement('input');
+                       addressInput.id = 'address_'+index;
+                       addressInput.name = 'address_'+index;
+                       addressInput.type = 'text';
 
-                }
+                       // div에 input 넣기
+
+                       addressDiv.appendChild(addressInput);
+                       infoLi.appendChild(addressDiv);
+
+                       // 검색버튼 만들기
+
+                       const addressBtn = document.createElement('button');
+                       addressBtn.classList.add('searchAddressBtn');
+                       // 추가
+                       addressBtn.classList.add('landRegSearchBtn');
+
+                       addressBtn.textContent = '검색';
+                        addressBtn.id= index;
+                       // li안에 넣기
+                       infoLi.appendChild(addressBtn);
+                       infoLi.classList.add('contentBox');
+
+
+                    }else if (i == 12) {
+                       infoLi.classList.add('btnBox');
+                       infoLi.classList.add('middleWidth');
+
+                       const viewBtn = document.createElement('button');
+                       // 버튼 class 삭제
+                        viewBtn.classList.add('lightBlueBtn');
+                       viewBtn.classList.add('viewDetailButton');
+                       viewBtn.textContent = '위치보기';
+                       viewBtn.id = 'moveMap';
+
+                       infoLi.appendChild(viewBtn);
+
+                    } else if (i == 13) {
+                       infoLi.classList.add('middleWidth');
+                       infoLi.classList.add('btnBox');
+
+                       for (let w = 0; w < 2; w++) {
+                           const btnWrapDiv = document.createElement('div');
+                           btnWrapDiv.classList.add('btnWrap');
+
+                           const miniBtn = document.createElement('button');
+                           miniBtn.classList.add('miniBtn');
+
+                           if (w == 0) {
+                               miniBtn.classList.add('addBtn');
+                               miniBtn.textContent = '추가';
+                           } else if (w == 1) {
+                               miniBtn.classList.add('delBtn');
+                               miniBtn.textContent = '삭제';
+                           }
+
+                           btnWrapDiv.appendChild(miniBtn);
+                           infoLi.appendChild(btnWrapDiv);
+                       }
+
+                   }
 
                 infoUl.appendChild(infoLi);
                 infoContentsBox02.appendChild(infoUl);
@@ -607,7 +655,7 @@ $(document).on("click","#landEdit_file_select_all",function(){
 })
 
 /*대표필지 선택*/
-$(document).on('change', 'input[name="landRegMainParcelChk_Checkbox01"]', function(event) {
+$(document).on('change', 'input[name="landEditMainParcelChk_Checkbox01"]', function(event) {
     const checkedbox = event.target;
     const daepyoCheck = checkedbox.parentNode.parentNode;
 
@@ -634,7 +682,7 @@ $(document).on('change', 'input[name="landRegMainParcelChk_Checkbox01"]', functi
         document.querySelector('input[name="daepyoSouja"]').value = souja;
     }
 
-    const checkboxes = document.querySelectorAll('input[name="landRegMainParcelChk_Checkbox01"]');
+    const checkboxes = document.querySelectorAll('input[name="landEditMainParcelChk_Checkbox01"]');
 
      checkboxes.forEach((checkbox) => {
             checkbox.addEventListener('change', function() {
@@ -664,3 +712,285 @@ $(document).on('change', 'input[name="landRegMainParcelChk_Checkbox01"]', functi
 
 });
 
+/* 주소 검색 */
+$(document).on("click",".searchAddressBtn",function(){
+                          const clickedButtonId = $(this).attr('id');
+                          var address = $('#address_'+clickedButtonId).val().trim();
+                          if (address==null || address=="" || address==undefined) {
+                            alert("주소를 입력해주세요.");
+                            return;
+                           }
+
+                              var formSerializeArray = {
+                                  address: address
+                              };
+   $.ajax({
+				   	   	  url: "/togi/getEditTogiJIjukSelect",
+				   	   	  type: "POST",
+				   	   	  data: formSerializeArray,
+				   	   })
+				   	   .done(function (fragment) {
+				   	      $('#searchResultPopDiv').replaceWith(fragment);
+						  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+						  	   $(popupOpen).addClass("open");
+						  	   popupOpen.classList.add("active");
+                                $('.resultSelectBtn').attr('data-index', clickedButtonId);
+                           	    $('.saveBtn').attr('data-index', clickedButtonId);
+
+ 	                       });
+	});
+
+$(document).on("click",".topCloseBtn",function(){
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+});
+
+$(document).on("click","#popupCloseBtn",function(){
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+});
+
+//주소 선택 버튼
+$(document).on("click",".resultSelectBtn",function(){
+var id =  $('.resultSelectBtn').data('index');
+
+    var pnu=$(this).parent().parent().find(".popContent01").html();
+	var juso=$(this).parent().parent().find(".popContent02").html();
+	var jibun=$(this).parent().parent().find(".popContent03").html();
+	var area=$(this).parent().parent().find(".popContent07").html();
+    var jimok=$(this).parent().parent().find(".popContent06").html();
+
+//$(".addressData input").val(juso + " " +jibun);
+//$(".areaData_"+id).val(area);
+//$(".jimokData_"+id).val(jimok);
+$("input[name='address_" + id + "']").val(juso + " " +jibun);
+$("input[name='myeonjuk_" + id + "']").val(area);
+$("input[name='jimok_" + id + "']").val(jimok);
+
+ $("input[name='myeonjuk_" + id + "']").attr("readonly");
+$("input[name='myeonjuk_" + id + "']").addClass("notWriteInput");
+$("input[name='jimok_" + id + "']").attr("readonly");
+$("input[name='jimok_" + id + "']").addClass("notWriteInput");
+
+$(".popupWrap").removeClass("active");
+
+})
+
+
+//체크 주소 선택 등록
+$(document).on("click", "#selectBtn", function() {
+    const checkboxes = document.querySelectorAll('input[id="chkResultPop_Checkbox01"]:checked'); // 체크된 체크박스만 선택
+    var id =  $('#selectBtn').data('index');
+
+    checkboxes.forEach((checkbox,checkno) => {
+        var jusoInfo = checkbox.parentNode.parentNode;
+         const address = jusoInfo.querySelector('li.popContent02').textContent + " " +jusoInfo.querySelector('li.popContent03').textContent;
+         const jimok = jusoInfo.querySelector('li.popContent06').textContent
+         const area = jusoInfo.querySelector('li.popContent07').textContent
+
+        if (checkno === 0) {
+        // 선택된 칸에 데이터 넣기
+          $("input[name='address_" + id + "']").val(address);
+          $("input[name='myeonjuk_" + id + "']").val(area);
+          $("input[name='jimok_" + id + "']").val(jimok);
+
+          }else{
+                 const contentsBoxElement2 = document.querySelector('#togiInfoDiv .contentsBox');
+                const index2 = getUlCountInContentsBox(contentsBoxElement2);
+
+                      // ul 만들기
+                      const infoUl = document.createElement('ul');
+                      infoUl.classList.add('contents');
+
+                      for (let i = 1; i <= 13; i++) {
+                          // li 만들기
+                          const infoLi = document.createElement('li');
+                          infoLi.classList.add('content');
+
+                          if (i == 1 || i == 4) {
+                              infoLi.classList.add('checkboxWrap');
+                              infoLi.classList.add('smallWidth');
+
+                              // input checkbox 세팅
+                              const checkboxInput = document.createElement('input');
+                              checkboxInput.type = 'checkbox';
+
+                              if (i == 1) {
+                               checkboxInput.id ='landEdit_Checkbox_' + index2;
+                               }else if (i == 4){
+                               checkboxInput.id ='landEditMainParcelChk_Checkbox_' + index2;
+                               checkboxInput.name ='landEditMainParcelChk_Checkbox01';
+                             }
+
+                              infoLi.appendChild(checkboxInput);
+
+                              // label 세팅
+                              const checkboxLabel = document.createElement('label');
+
+                              checkboxLabel.setAttribute('for', checkboxInput.id);
+
+                              infoLi.appendChild(checkboxLabel);
+
+                           }else if(i == 3){
+                                  infoLi.classList.add('selectContentArea');
+                                  const newContent = `
+                                    <div class="hiddenSelectBox">
+                                      <select id="landDevelopmentManageSelectBox01" hidden>
+                                        <option value="" selected>선택</option>
+                                        <option value="지상권">지상권</option>
+                                        <option value="미설정">미설정</option>
+                                        <option value="점용">점용</option>
+                                        <option value="회사토지">회사토지</option>
+                                      </select>
+                                    </div>
+                                    <section class="customSelectBox">
+                                      <button class="customSelectView">선택</button>
+                                      <ul class="customSelectBtns">
+                                          <li><button class="moreSelectBtn" type="button">지상권</button></li>
+                                        <li><button class="moreSelectBtn" type="button">미설정</button></li>
+                                          <li><button class="moreSelectBtn" type="button">점용</button></li>
+                                        <li><button class="moreSelectBtn" type="button">회사토지</button></li>
+                                      </ul>
+                                    </section>
+                                  `;
+
+                                  // infoLi에 새 내용을 추가합니다.
+                                  infoLi.insertAdjacentHTML('beforeend', newContent);
+                                  var selectElement = infoLi.querySelector('#landDevelopmentManageSelectBox01');
+                                  selectElement.setAttribute('name', 'hakbo_' + index2);
+                             } else if (1<i && i<3 || 4<i && i<7 || 7<i && i<12) {
+                              const infoInput = document.createElement('input');
+                                 infoInput.type = 'text';
+
+                                 if ( i == 2){
+                                     infoLi.classList.add('smallWidth');
+                                  infoInput.classList.add('contentsNum');
+                                     infoInput.readOnly = true;
+                                     infoInput.classList.add('notWriteInput');
+                                 } else if (4 < i && i < 7 || i == 11 ) {
+                                     infoLi.classList.add('middleWidth');
+                                  if(i == 5){
+                                    infoInput.name = 'jeochok_'+index2;
+                                  }else if(i == 6){
+                                    infoInput.name = 'jisa_'+index2;
+                                  }else if(i == 11){
+                                    infoInput.name = 'souja_'+index2;
+                                  }
+                                 }else if(i == 8){
+                                      infoInput.name = 'jimok_'+index2;
+                                     infoInput.readOnly = true;
+                                  infoInput.classList.add('jimokData');
+                                  infoInput.classList.add('notWriteInput');
+                                  infoInput.value=jimok;
+                                } else if(i == 9){
+                                        infoInput.name = 'yeonjang_'+index2;
+                                  }else if(i == 10){
+                                    infoInput.name = 'myeonjuk_'+index2;
+                                    infoInput.readOnly = true;
+                                    infoInput.classList.add('areaData');
+                                    infoInput.classList.add('notWriteInput');
+                                     infoInput.value=area;
+                                  }
+
+                                 // li안에 넣기
+                                 infoLi.append(infoInput);
+                             }  else if (i == 7) {
+                                 infoLi.classList.add('addressWidth');
+                                 // div 만들기
+                                 const addressDiv = document.createElement('div');
+                                 addressDiv.classList.add('addressData');
+                                 // input 만들기
+                                 const addressInput = document.createElement('input');
+                                 addressInput.id = 'address_'+index2;
+                                 addressInput.name = 'address_'+index2;
+                                 addressInput.type = 'text';
+                                 addressInput.value=address;
+
+                                 // div에 input 넣기
+
+                                 addressDiv.appendChild(addressInput);
+                                 infoLi.appendChild(addressDiv);
+
+                                 // 검색버튼 만들기
+
+                                 const addressBtn = document.createElement('button');
+                                 addressBtn.classList.add('searchAddressBtn');
+                                 // 추가
+                                 addressBtn.classList.add('landRegSearchBtn');
+
+                                 addressBtn.textContent = '검색';
+                                  addressBtn.id= index2;
+                                 // li안에 넣기
+                                 infoLi.appendChild(addressBtn);
+                                 infoLi.classList.add('contentBox');
+
+
+                              }else if (i == 12) {
+                                 infoLi.classList.add('btnBox');
+                                 infoLi.classList.add('middleWidth');
+
+                                 const viewBtn = document.createElement('button');
+                                 // 버튼 class 삭제
+                                  viewBtn.classList.add('lightBlueBtn');
+                                 viewBtn.classList.add('viewDetailButton');
+                                 viewBtn.textContent = '위치보기';
+                                 viewBtn.id = 'moveMap';
+
+                                 infoLi.appendChild(viewBtn);
+
+                              } else if (i == 13) {
+                                 infoLi.classList.add('middleWidth');
+                                 infoLi.classList.add('btnBox');
+
+                                 for (let w = 0; w < 2; w++) {
+                                     const btnWrapDiv = document.createElement('div');
+                                     btnWrapDiv.classList.add('btnWrap');
+
+                                     const miniBtn = document.createElement('button');
+                                     miniBtn.classList.add('miniBtn');
+
+                                     if (w == 0) {
+                                         miniBtn.classList.add('addBtn');
+                                         miniBtn.textContent = '추가';
+                                     } else if (w == 1) {
+                                         miniBtn.classList.add('delBtn');
+                                         miniBtn.textContent = '삭제';
+                                     }
+
+                                     btnWrapDiv.appendChild(miniBtn);
+                                     infoLi.appendChild(btnWrapDiv);
+                                 }
+
+                             }
+
+                          infoUl.appendChild(infoLi);
+                          infoContentsBox02.appendChild(infoUl);
+          }
+                      // 순번
+                      const contentsNum = infoUl.querySelector('.contentsNum');
+                      contentsNum.placeholder = getInfoIndexForLandEdit(infoUl) + 1;
+
+        }
+    });
+    $(".popupWrap").removeClass("active");
+});
+
+//pnu없이 선택/
+$(document).on("click","#notPNUBtn",function(){
+
+    var id =  $('.resultSelectBtn').data('index');
+
+    $("input[name='address_" + id + "']").val("");
+    $("input[name='myeonjuk_" + id + "']").val("");
+    $("input[name='myeonjuk_" + id + "']").removeAttr("readonly");
+    $("input[name='myeonjuk_" + id + "']").removeClass("notWriteInput");
+    $("input[name='jimok_" + id + "']").val("");
+    $("input[name='jimok_" + id + "']").removeAttr("readonly");
+    $("input[name='jimok_" + id + "']").removeClass("notWriteInput");
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+
+});

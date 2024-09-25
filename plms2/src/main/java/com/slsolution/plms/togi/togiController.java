@@ -231,8 +231,6 @@ public class togiController {
 		String emd_nm=httpRequest.getParameter("emd_nm");
 		String ri_nm=httpRequest.getParameter("ri_nm");
 		String jibun=httpRequest.getParameter("jibun");
-		
-
 
 		params.put("address", address);
 		params.put("sido_nm", sido_nm);
@@ -250,8 +248,36 @@ public class togiController {
 		mav.setViewName("content/togi/landReg :: #searchResultPopDiv");
 		return mav;
 	}
-	
-	
+
+	@PostMapping(path="/getEditTogiJIjukSelect") //http://localhost:8080/api/get/dbTest
+	public ModelAndView getEditTogiJIjukSelect(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		//log.info("httpRequest:"+Arrays.toString(httpRequest));
+
+		String address=httpRequest.getParameter("address");
+		String sido_nm=httpRequest.getParameter("sido_nm");
+		String sgg_nm=httpRequest.getParameter("sgg_nm");
+		String emd_nm=httpRequest.getParameter("emd_nm");
+		String ri_nm=httpRequest.getParameter("ri_nm");
+		String jibun=httpRequest.getParameter("jibun");
+
+		params.put("address", address);
+		params.put("sido_nm", sido_nm);
+		params.put("sgg_nm", sgg_nm);
+		params.put("emd_nm", emd_nm);
+		params.put("ri_nm", ri_nm);
+		params.put("jibun", jibun);
+
+		log.info("params:"+params);
+		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectAddressFromJijuk",params);
+
+		mav.addObject("addressList",addressList);
+		mav.setViewName("content/togi/landEdit :: #searchResultPopDiv");
+		return mav;
+	}
+
 	// 토지개발 도시개발 등록 및 수정
 	@Transactional
 	@PostMapping(path="/insertDosiList")
