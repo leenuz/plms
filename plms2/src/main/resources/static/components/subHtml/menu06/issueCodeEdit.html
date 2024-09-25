@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이슈 코드 상세 수정</title>
+    <link rel="stylesheet" href="/assets/css/menu06/issueCodeEdit.css">
+    <link rel="stylesheet" href="/assets/css/header.css" />
+</head>
+<body>
+    <!-- 이슈 코드 상세 수정 -->
+    <div class="issueCodeEditWrappers">
+        <div class="issueCodeEditHeader"></div>
+        <main id="issueCodeEdit">
+            <div class="mainTitle">
+                <h1>이슈 코드 상세 수정</h1>
+            </div>
+    
+            <div class="sectionBox">
+                <section class="codeManagement basicInfo">
+                    <div class="subTitle">
+                        <div class="subTitleText">기본 정보</div>
+                    </div>
+    
+                    <div class="contWrap">
+                        <div class="depth1">
+                            <ul class="rowListBox">
+                                <li class="title">등기여부</li>
+                                <li class="content">
+                                    <input type="text" placeholder="지상권 미설정" class="notWriteInput" readonly>
+                                </li>
+                            </ul>
+                            <ul class="rowListBox">
+                                <li class="title">계약여부</li>
+                                <li class="content">
+                                    <input type="text" placeholder="계약 체결" class="notWriteInput" readonly>
+                                </li>
+                            </ul>
+                            <ul class="rowListBox">
+                                <li class="title">이슈세부유형</li>
+                                <li class="content categoryWrap">
+                                    <div class="categoryForIssue categoryMain">
+                                        <p>토지소유자와 계약</p>
+                                    </div>
+                                    <span>></span>
+                                    <div class="categoryForIssue categorySub">
+                                        <p>소유자 변경 없음</p>
+                                    </div>
+                                    <span>></span>
+                                    <div class="categoryForIssue categoryDetail">
+                                        <p>등기진행 누락</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+    
+                <!-- 발생 가능 사례 -->
+                <section class="casePossible">
+                    <div class="subTitle">
+                        <div class="subTitleText">발생 가능 사례</div>
+                    </div>
+    
+                    <div class="contWrap">
+                        <textarea>&#10625; 지상권 설정 계약 후 등기진행 누락 / 토지소유자가 변경 없거나, 상속된 경우
+&#10625; 지상권 설정 계약 후 보상금 전부, 일부를 미지급 (단, 토지소유자 변경 없음.)</textarea>
+                    </div> 
+                </section>
+    
+                <!-- 대응방안 -->
+                <section class="responsePlan">
+                    <div class="subTitle">
+                        <div class="subTitleText">대응방안</div>
+                    </div>
+    
+                    <div class="contWrap">
+                        <textarea>&lt;대응 업무지원_해당지사&gt;
+-해당필지 지상권 관로부지 계약사항 확인&#10625; 계약서 원본, 보상금지급 증빙서류 등
+
+&lt;등기이행 청구 추진_자산관리팀&법무팀&gt;
+-토지 소유자에게 등기이행 내용증명 발송
+-등기 미이행시 : 처분금지가처분 신청 및 등기이행 소송 추진(w/법무팀)
+*인근 지상권 미설정 관로부지 민원확산 등을 고려, 신중히 접근 필요.
+                        
+(법적권리)
+&#10625; 계약 후 20년 경과 전 : 계약이행 청구 가능
+&#10625; 계약 후 20년 경과 후 : 계약이행 청구 및 점유시효 취득 등기이행청구 모두 가능
+                        </textarea>
+                    </div> 
+                </section>
+    
+                <!-- 메뉴얼 -->
+    
+                <section class="menualFile">
+                    <div class="subTitle">
+                        <div class="subTitleText">메뉴얼</div>
+                    </div>
+                    
+                    <div class="contWrap">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title largeWidth"><p>메뉴얼명</p></li>
+                                <li class="title middleWidth"><p>파일명</p></li>
+                                <li class="title middleWidth"><p>개정일자</p></li>
+                                <li class="title"><p>파일저장</p></li>
+                                <li class="title"><p>메뉴얼개정</p></li>
+                                <li class="title"><p>삭제</p></li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="content largeWidth">
+                                    <input type="text" readonly class="notWriteInput" placeholder="계약 후 지상권 등기진행 누락">
+                                </li>
+                                <li class="content middleWidth">
+                                    <input type="text" readonly class="notWriteInput" placeholder="토지사용승락서.docx">
+                                </li>
+                                <li class="content middleWidth">
+                                    <input type="text" readonly class="notWriteInput" placeholder="2021-11-05 13:20:80.0">
+                                </li>
+                                <li class="content btnBox">
+                                    <button class="downloadBtn">다운로드</button>
+                                </li>
+                                <li class="content btnBox">
+                                    <button class="reviseBtn">개정</button>
+                                </li>
+                                <li class="content btnBox">
+                                    <button class="delBtn">삭제</button>
+                                </li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="content largeWidth">
+                                    <input type="text" readonly class="notWriteInput" placeholder="계약 후 보상금 일부_전부 미지급">
+                                </li>
+                                <li class="content middleWidth">
+                                    <input type="text" readonly class="notWriteInput" placeholder="등기부등본2.tif">
+                                </li>
+                                <li class="content middleWidth">
+                                    <input type="text" readonly class="notWriteInput" placeholder="2021-11-05 13:20:80.0">
+                                </li>
+                                <li class="content btnBox">
+                                    <button class="downloadBtn">다운로드</button>
+                                </li>
+                                <li class="content btnBox">
+                                    <button class="reviseBtn">개정</button>
+                                </li>
+                                <li class="content btnBox">
+                                    <button class="delBtn">삭제</button>
+                                </li>
+                            </ul>
+    
+                        </div>
+                    </div>
+    
+                    <div class="resultArea">
+                        <button class="newAddBtn">신규등록</button>
+                    </div>
+                </section>
+            </div>
+    
+    
+            <div class="finalBtnBox">
+                <button class="saveBtn">저장</button>
+                <button class="backBtn">이전</button>
+            
+            </div>
+    
+        </main>
+    </div>
+
+
+    <div class="newMenualPopupForEditWrapper"></div>
+    <!-- script -->
+    <script type="module" src="/components/surfaceMain.js"></script>
+    <script src="/components/js/menu06/issueCodeEdit.js"></script>
+</body>
+</html>

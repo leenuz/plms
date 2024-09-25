@@ -51,7 +51,7 @@ public class issueController {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("jisaList",jisalist);
 		mav.addObject("sidoList",sidolist);
-
+ 
 		mav.setViewName("content/issue/menu06_1");
 		return mav;
 	}
@@ -1169,12 +1169,12 @@ log.info("SANGSIN_FLAG:"+SANGSIN_FLAG);
 		
 			log.info("LJS : jsonResultController.java selectIssueCodeList()");
 			ParameterParser parser = new ParameterParser(request);
-			String REGISTED_YN = requestParamObj.getString("REGISTED_YN");
-			String PERMITTED_YN = requestParamObj.getString("PERMITTED_YN");
-			String DEPTH1 = requestParamObj.getString("DEPTH1");
-			String DEPTH2 = requestParamObj.getString("DEPTH2");
-			String DEPTH3 = requestParamObj.getString("DEPTH3");
-			String TYPE = requestParamObj.getString("TYPE");
+			String REGISTED_YN =requestParamObj.has("REGISTED_YN")?requestParamObj.getString("REGISTED_YN"):"";
+			String PERMITTED_YN = requestParamObj.has("PERMITTED_YN")?requestParamObj.getString("PERMITTED_YN"):"";
+			String DEPTH1 = requestParamObj.has("DEPTH1")?requestParamObj.getString("DEPTH1"):"";
+			String DEPTH2 = requestParamObj.has("DEPTH2")?requestParamObj.getString("DEPTH2"):"";
+			String DEPTH3 = requestParamObj.has("DEPTH3")?requestParamObj.getString("DEPTH3"):"";
+			String TYPE = requestParamObj.has("TYPE")?requestParamObj.getString("TYPE"):"";
 
 			ArrayList list = null;
 			try {

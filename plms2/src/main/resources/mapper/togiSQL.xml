@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="togiSQL">
 
 
@@ -9,7 +9,7 @@
 		SELECT *,
 		(row_number() OVER()) AS no
 		FROM (
-			SELECT 
+		SELECT
 		dm.dm_idx AS index,
 		dm.dm_dosi_no AS idx,
 		dm.dm_dosi_no AS dosi_no,
@@ -41,20 +41,20 @@
 		j.dd_manager AS manager,
 		j.dd_contact_num AS contact_num,
 		TRIM(CONCAT(dm.dm_sido_nm, ' ', dm.dm_sgg_nm, ' ', dm.dm_ri_nm, ' ', dm.dm_jibun)) AS address
-		
-		
+
+
 		FROM dosi_master dm
 		LEFT JOIN dosi_info di ON di.di_dosi_no=dm.dm_dosi_no
 		left JOIN (
-		
-				SELECT dd.dd_dosi_no,dd.dd_dept_nm,dd.dd_manager,dd.dd_contact_num,dd.dd_dept_seq,(row_number() over()) as NO FROM dosi_dept dd
-			
-		
+
+		SELECT dd.dd_dosi_no,dd.dd_dept_nm,dd.dd_manager,dd.dd_contact_num,dd.dd_dept_seq,(row_number() over()) as NO FROM dosi_dept dd
+
+
 		) j ON dm.dm_dosi_no=j.dd_dosi_no AND j.no=1
-	
+
 		WHERE 1 = 1
-		
-		
+
+
 		) AS r
 		where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -64,7 +64,7 @@
 			and r.complete_yn=#{complete_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date)">
-			and r.strdate::date = #{start_date}::date 
+			and r.strdate::date = #{start_date}::date
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
 			and r.enddate::date=#{end_date}::date
@@ -72,11 +72,11 @@
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and r.address like '%${address}%'
 		</if>
-		
+
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 			ORDER BY ${orderCol} ${desc}
 		</if>
-				
+
 		<if test="length>0">
 			limit #{length} offset #{start}
 		</if>
@@ -85,9 +85,9 @@
 	</select>
 	<select id="selectDosiListCount" parameterType="java.util.HashMap" resultType="Integer">
 		SELECT count(*)
-		
+
 		FROM (
-			SELECT 
+		SELECT
 		dm.dm_idx AS index,
 		dm.dm_dosi_no AS idx,
 		dm.dm_dosi_no AS dosi_no,
@@ -119,20 +119,20 @@
 		j.dd_manager AS manager,
 		j.dd_contact_num AS contact_num,
 		TRIM(CONCAT(dm.dm_sido_nm, ' ', dm.dm_sgg_nm, ' ', dm.dm_ri_nm, ' ', dm.dm_jibun)) AS address
-		
-		
+
+
 		FROM dosi_master dm
 		LEFT JOIN dosi_info di ON di.di_dosi_no=dm.dm_dosi_no
 		left JOIN (
-		
-				SELECT dd.dd_dosi_no,dd.dd_dept_nm,dd.dd_manager,dd.dd_contact_num,dd.dd_dept_seq,(row_number() over()) as NO FROM dosi_dept dd
-			
-		
+
+		SELECT dd.dd_dosi_no,dd.dd_dept_nm,dd.dd_manager,dd.dd_contact_num,dd.dd_dept_seq,(row_number() over()) as NO FROM dosi_dept dd
+
+
 		) j ON dm.dm_dosi_no=j.dd_dosi_no AND j.no=1
-	
+
 		WHERE 1 = 1
-		
-		
+
+
 		) AS r
 		where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -142,7 +142,7 @@
 			and r.complete_yn=#{complete_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date)">
-			and r.strdate::date = #{start_date}::date 
+			and r.strdate::date = #{start_date}::date
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
 			and r.enddate::date=#{end_date}::date
@@ -150,24 +150,24 @@
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and r.address like '%${address}%'
 		</if>
-		
+
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 			ORDER BY ${orderCol} ${desc}
 		</if>
-				
+
 
 
 	</select>
 	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-			SELECT * 
-			,concat(dm_sido_nm,' ',dm_sgg_nm,' ',dm_emd_nm,' ',dm_ri_nm,' ',dm_jibun) as address
-			FROM dosi_master dm
-			LEFT JOIN dosi_info di ON dm.dm_dosi_no=di.di_dosi_no
-			LEFT JOIN dosi_dept dd ON dm.dm_dosi_no=dd.dd_dosi_no
-			where 1=1
-			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+		SELECT *
+		,concat(dm_sido_nm,' ',dm_sgg_nm,' ',dm_emd_nm,' ',dm_ri_nm,' ',dm_jibun) as address
+		FROM dosi_master dm
+		LEFT JOIN dosi_info di ON dm.dm_dosi_no=di.di_dosi_no
+		LEFT JOIN dosi_dept dd ON dm.dm_dosi_no=dd.dd_dosi_no
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and dm_dosi_no=#{idx}
-			</if>
+		</if>
 	</select>
 
 	<select id="selectDaepyoData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -195,17 +195,26 @@
 			and dm_dosi_no=#{idx}
 		</if>
 	</select>
-	
+
+	<select id="selectDeptData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM dosi_dept
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and dd_dosi_no=#{idx}
+		</if>
+	</select>
+
 	<select id="selectDosiNextNo" resultType="HashMap" parameterType="HashMap">
-		SELECT 
-	    COALESCE(MAX(CAST(SUBSTR(dm_DOSI_NO, 3) AS INTEGER)), 0) AS NOW_DOSINO
+		SELECT
+		COALESCE(MAX(CAST(SUBSTR(dm_DOSI_NO, 3) AS INTEGER)), 0) AS NOW_DOSINO
 		FROM DOSI_MASTER
 	</select>
-	
-		<insert id="insertDosiMaster" parameterType="HashMap">
+
+	<insert id="insertDosiMaster" parameterType="HashMap">
 		INSERT INTO DOSI_MASTER
 		(
-		dm_DOSI_SEQ 
+		dm_DOSI_SEQ
 		,dm_DOSI_NO
 		, dm_SIDO_NM
 		, dm_SGG_NM
@@ -226,7 +235,7 @@
 		, dm_MASTER_YN)
 		VALUES
 		(
-		nextval('DOSI_SEQ') 
+		nextval('DOSI_SEQ')
 		,#{DOSI_NO}
 		, #{SIDO_NM}
 		, #{SGG_NM}
@@ -281,11 +290,11 @@
 		, #{USER_ID}
 		)
 	</insert>
-		<delete id="deleteDosiDept" parameterType="HashMap">
+	<delete id="deleteDosiDept" parameterType="HashMap">
 		DELETE FROM DOSI_DEPT
 		WHERE DOSI_NO = #DOSI_NO#
 	</delete>
-		<insert id="insertDosiDept" parameterType="HashMap">
+	<insert id="insertDosiDept" parameterType="HashMap">
 		INSERT INTO DOSI_DEPT
 		(dd_DEPT_SEQ, dd_DOSI_NO, dd_DEPT_NM, dd_MANAGER, dd_CONTACT_NUM)
 		VALUES
@@ -310,17 +319,17 @@
 		</if>
 		ORDER BY SEQ DESC
 	</select>
-	
-		<update id="updateDosiSeqFile" parameterType="HashMap">
+
+	<update id="updateDosiSeqFile" parameterType="HashMap">
 		UPDATE DOSI_ATCFILE SET
 		da_DOSI_NO = TO_CHAR(#{DOSI_NO})
 		WHERE da_SEQ = TO_CHAR(#{FILE_SEQ})
 	</update>
-	
-		<delete id="deleteDosiMaster" parameterType="HashMap">
+
+	<delete id="deleteDosiMaster" parameterType="HashMap">
 		DELETE FROM DOSI_MASTER
 		WHERE dm_DOSI_NO = TO_CHAR(#{DOSI_NO})
 	</delete>
-	
+
 
 </mapper>
