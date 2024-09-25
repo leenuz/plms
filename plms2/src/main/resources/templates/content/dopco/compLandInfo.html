@@ -373,7 +373,12 @@
         </div>
       </section>
       <div class="finalBtnBox btnWrap">
-        <button class="prevBtn finalBtn" onclick="history.back()">이전</button>
+        <button class="prevBtn finalBtn" th:if="${isCancel != 'Y'}">
+          <a href="/dopco/menu05_1">이전</a>
+        </button>
+        <button class="prevBtn finalBtn" th:if="${isCancel == 'Y'}">
+          <a href="/dopco/menu05_2">이전</a>
+        </button>
         <button class="editBtn finalBtn" th:if="${isCancel != 'Y'}">
           <a href="/dopco/compLandEdit" th:href="'/dopco/compLandEdit?idx=' + ${data.idx} + '&dopcoNo=' + ${data.dopco_no}">수정</a>
         </button>

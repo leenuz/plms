@@ -10,198 +10,206 @@
     <link rel="stylesheet" href="/css/dopco/compLandDispReg.css" />
 </head>
 <th:block layout:fragment="content">
-<body>
-    <!-- 회사토지 처분등록 -->
-    <div class="compLandDispRegWrappers">
-        <main id="compLandDispReg">
-            <div class="mainTitle">
-                <h1>회사토지 처분등록</h1>
-            </div>
 
-            <!-- 기본 정보 -->
-            <section class="basicOwnerInfo">
-                <div class="subTitle">기본 정보</div>
-
-                <div class="contWrap">
-                    <div class="depth1">
-                        <ul class="titles">
-                            <li class="title">담당지사</li>
-                            <li class="title">용도</li>
-                            <li class="title">관로명(구간)</li>
-                            <li class="title">단/복선</li>
-                        </ul>
-                        <ul class="contents">
-                            <li class="content">
-                                <input type="text" th:value="${data.jisa}" readonly class="notWriteInput" />
-                            </li>
-                            <li class="content">
-                                <input type="text" th:value="${data.yongdo}" readonly class="notWriteInput" />
-                            </li>
-                            <li class="content">
-                                <input type="text" th:value="${data.pipe_name}" readonly class="notWriteInput" />
-                            </li>
-                            <li class="content">
-                                <input type="text" th:value="${data.sun_gubun}" readonly class="notWriteInput" />
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            <!-- 소속 토지 정보 -->
-            <section class="rightsDetails">
-                <div class="subTitle">소속 토지 정보</div>
-
-                <div class="contWrap">
-                    <div class="depth1">
-                        <ul class="titles">
-                            <li class="title">행정구역</li>
-                            <li class="title">국공유지 여부</li>
-                            <li class="title">지적면적(㎡)</li>
-                        </ul>
-                        <ul class="contents">
-                            <li class="content">
-                                <input type="text" readonly class="notWriteInput" th:value="${data.address}" />
-                            </li>
-                            <li class="content">
-                                <input type="text" readonly class="notWriteInput" th:value="${data.gover_own_yn}" />
-                            </li>
-                            <li class="content">
-                                <input type="text" readonly class="notWriteInput" th:value="${data.jijuk_area}" />
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            <!-- 회사 토지 지상권 정보 -->
-            <section class="compLandLease">
-                <div class="subTitle">회사 토지 지상권 정보</div>
-
-                <div class="contWrap">
-                    <div class="depth1">
-                        <ul class="titles">
-                            <li class="title">도시 계획 설정여부</li>
-                            <li class="title">현재 활용 현황</li>
-                            <li class="title">자산분류번호</li>
-                        </ul>
-                        <ul class="contents">
-                            <li class="content">
-                                <input type="text" th:value="${data.dosiplan}" readonly class="notWriteInput" />
-                            </li>
-                            <li class="content">
-                                <input type="text" th:value="${data.dopco_status}" readonly class="notWriteInput" />
-                            </li>
-                            <li class="content">
-                                <input type="text" th:value="${data.jasan_no}" readonly class="notWriteInput" />
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            <!-- 권리확보 내역 -->
-            <section class="securedRights">
-                <div class="subTitle">권리확보 내역</div>
-
-                <div class="contWrap">
-                    <div class="depth1">
-                        <ul class="titles">
-                            <li class="title">완결여부</li>
-                            <li class="title">등기일</li>
-                            <li class="title">등기번호</li>
-                            <li class="title">등기소</li>
-                        </ul>
-                        <ul class="contents">
-                            <li class="content">
-                                <input type="text" th:value="${data.comple_yn}" readonly class="notWriteInput" />
-                            </li>
-                            <li class="content">
-                                <input type="text" th:value="${data.deunggi_date}" readonly class="notWriteInput" />
-                            </li>
-                            <li class="content">
-                                <input type="text" th:value="${data.deunggi_no}" readonly class="notWriteInput" />
-                            </li>
-                            <li class="content">
-                                <input type="text" th:value="${data.deunggiso}" readonly class="notWriteInput" />
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            <!-- 후순위 권리 내역 -->
-            <section class="subordinateRts">
-                <div class="subTitle">후순위 권리 내역</div>
-
-                <div class="contWrap">
-                    <div class="depth1">
-                        <ul class="titles">
-                            <li class="title">권리명</li>
-                            <li class="title">설정금액</li>
-                            <li class="title">설정일</li>
-                            <li class="title">처분일</li>
-                            <li class="title">성명</li>
-                            <li class="title">연락처</li>
-                            <li class="title largeWidth">주소</li>
-                        </ul>
-                        <ul class="contents" th:each="val:${right_list}">
-                            <li class="content">
-                                <input type="text" readonly class="notWriteInput" th:value="${val.right_name}" />
-                            </li>
-                            <li class="content">
-                                <input type="text" readonly class="notWriteInput" th:value="${val.right_money}" />
-                            </li>
-                            <li class="content">
-                                <input type="text" readonly class="notWriteInput" th:value="${val.right_date}" />
-                            </li>
-                            <li class="content">
-                                <input type="text" readonly class="notWriteInput" th:value="${val.cancle_date}" />
-                            </li>
-                            <li class="content">
-                                <input type="text" readonly class="notWriteInput" th:value="${val.right_uname}" />
-                            </li>
-                            <li class="content">
-                                <input type="text" readonly class="notWriteInput" th:value="${val.right_phone}"/>
-                            </li>
-                            <li class="content largeWidth">
-                                <input type="text" readonly class="notWriteInput" th:value="${val.right_addr}"/>
-                            </li>
-                        </ul>
-                    </div>
+    <body>
+        <!-- 회사토지 처분등록 -->
+        <div class="compLandDispRegWrappers">
+            <main id="compLandDispReg">
+                <div class="mainTitle">
+                    <h1>회사토지 처분등록</h1>
                 </div>
 
-                <!-- <div class="btnWrap">
+                <!-- 기본 정보 -->
+                <section class="basicOwnerInfo">
+                    <div class="subTitle">기본 정보</div>
+
+                    <div class="contWrap">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title">담당지사</li>
+                                <li class="title">용도</li>
+                                <li class="title">관로명(구간)</li>
+                                <li class="title">단/복선</li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="content">
+                                    <input type="text" th:value="${data.jisa}" readonly class="notWriteInput" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" th:value="${data.yongdo}" readonly class="notWriteInput" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" th:value="${data.pipe_name}" readonly class="notWriteInput" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" th:value="${data.sun_gubun}" readonly class="notWriteInput" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <!-- 소속 토지 정보 -->
+                <section class="rightsDetails">
+                    <div class="subTitle">소속 토지 정보</div>
+
+                    <div class="contWrap">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title">행정구역</li>
+                                <li class="title">국공유지 여부</li>
+                                <li class="title">지적면적(㎡)</li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="content">
+                                    <input type="text" readonly class="notWriteInput" th:value="${data.address}" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" readonly class="notWriteInput" th:value="${data.gover_own_yn}" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" readonly class="notWriteInput" th:value="${data.jijuk_area}" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <!-- 회사 토지 지상권 정보 -->
+                <section class="compLandLease">
+                    <div class="subTitle">회사 토지 지상권 정보</div>
+
+                    <div class="contWrap">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title">도시 계획 설정여부</li>
+                                <li class="title">현재 활용 현황</li>
+                                <li class="title">자산분류번호</li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="content">
+                                    <input type="text" th:value="${data.dosiplan}" readonly class="notWriteInput" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" th:value="${data.dopco_status}" readonly class="notWriteInput" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" th:value="${data.jasan_no}" readonly class="notWriteInput" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <!-- 권리확보 내역 -->
+                <section class="securedRights">
+                    <div class="subTitle">권리확보 내역</div>
+
+                    <div class="contWrap">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title">완결여부</li>
+                                <li class="title">등기일</li>
+                                <li class="title">등기번호</li>
+                                <li class="title">등기소</li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="content">
+                                    <input type="text" th:value="${data.comple_yn}" readonly class="notWriteInput" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" th:value="${data.deunggi_date}" readonly class="notWriteInput" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" th:value="${data.deunggi_no}" readonly class="notWriteInput" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" th:value="${data.deunggiso}" readonly class="notWriteInput" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <!-- 후순위 권리 내역 -->
+                <section class="subordinateRts">
+                    <div class="subTitle">후순위 권리 내역</div>
+
+                    <div class="contWrap">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title">권리명</li>
+                                <li class="title">설정금액</li>
+                                <li class="title">설정일</li>
+                                <li class="title">처분일</li>
+                                <li class="title">성명</li>
+                                <li class="title">연락처</li>
+                                <li class="title largeWidth">주소</li>
+                            </ul>
+                            <ul class="contents" th:each="val:${right_list}">
+                                <li class="content">
+                                    <input type="text" readonly class="notWriteInput" th:value="${val.right_name}" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" readonly class="notWriteInput" th:value="${val.right_money}" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" readonly class="notWriteInput" th:value="${val.right_date}" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" readonly class="notWriteInput" th:value="${val.cancle_date}" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" readonly class="notWriteInput" th:value="${val.right_uname}" />
+                                </li>
+                                <li class="content">
+                                    <input type="text" readonly class="notWriteInput" th:value="${val.right_phone}" />
+                                </li>
+                                <li class="content largeWidth">
+                                    <input type="text" readonly class="notWriteInput" th:value="${val.right_addr}" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- <div class="btnWrap">
             <button class="contentAddBtn">권리내역 추가</button>
           </div> -->
-            </section>
-            <!-- 회사토지 처분 정보 -->
-            <section class="compLandDispInfo">
-                <div class="subTitle">
-                    <div class="subTitleText">회사토지 처분 정보</div>
-                </div>
+                </section>
+                <!-- 회사토지 처분 정보 -->
+                <form id="saveForm" onSubmit="return false;">
+                    <input type="hidden" name="dopcoNo" id="dopcoNo" th:value="${data.dopco_no}"/>
+                    <input type="hidden" name="pnu" id="pnu" th:value="${data.pnu}"/>
+                    <input type="hidden" name="idx" id="idx" th:value="${data.idx}"/>
+                    <section class="compLandDispInfo">
+                        <div class="subTitle">
+                            <div class="subTitleText">회사토지 처분 정보</div>
+                        </div>
 
-                <div class="contWrap">
-                    <div class="depth1">
-                        <ul class="rowListBox">
-                            <li class="title">해지일</li>
-                            <li class="content">
-                                <div class="dateInputWrap">
-                                    <input type="date" data-placeholder="24/01/01" required aria-required="true" />
-                                </div>
-                            </li>
-                        </ul>
-                        <ul class="rowListBox">
-                            <li class="title">담당자</li>
-                            <li class="content">
-                                <input type="text" placeholder="박영환" />
-                            </li>
-                        </ul>
-                    </div>
+                        <div class="contWrap">
+                            <div class="depth1">
+                                <ul class="rowListBox">
+                                    <li class="title">해지일</li>
+                                    <li class="content">
+                                        <div class="dateInputWrap">
+                                            <input type="date" name="cancleDate" id="cancleDate" data-placeholder="24/01/01" />
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul class="rowListBox">
+                                    <li class="title">담당자</li>
+                                    <li class="content">
+                                        <input type="text" name="userName" id="userName" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </form>
+                <div class="finalBtnBox btnWrap">
+                    <button class="prevBtn finalBtn" onclick="history.back()">이전</button>
+                    <button class="registBtn finalBtn">처분</button>
                 </div>
-            </section>
-            <div class="finalBtnBox btnWrap">
-                <button class="prevBtn finalBtn" onclick="history.back()">이전</button>
-                <button class="registBtn finalBtn">처분</button>
-            </div>
-        </main>
-    </div>
-</body>
+            </main>
+        </div>
+    </body>
+    <script src="/js/dopco/compLandDispReg.js"></script>
 </th:block>
+
 </html>
