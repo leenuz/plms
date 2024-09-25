@@ -1,6 +1,15 @@
+/* ul 태그 개수 찾기 */
+const getUlCountInContentsBox = (contentsBoxElement) => {
+    // contentsBoxElement 내부에서 'contents' 클래스를 가진 모든 ul 태그를 찾음
+    const ulElements = contentsBoxElement.querySelectorAll('ul.contents');
+    // ul 태그들의 개수를 반환
+    return ulElements.length;
+}
+
 // 토지개발 등록 시행자 관할 부서 click 이벤트
 
 const landEditInfoAddBtnEvent01 = () => {
+
     const infoContentsDetailBox = document.querySelector('#landEdit .adminDept .contWrap');
     const infoContentsBox = infoContentsDetailBox.querySelector('.contentsBox');
     const infoAddBtn = infoContentsDetailBox.querySelectorAll('.addBtn');
@@ -9,6 +18,8 @@ const landEditInfoAddBtnEvent01 = () => {
 
 
     infoContentsBox.addEventListener('click', function (event) {
+         const contentsBoxElement = document.querySelector('.contentsBox');
+         const index = getUlCountInContentsBox(contentsBoxElement);
 
         // 버튼 클릭시 추가되게
         if (event.target.classList.contains('addBtn')) {
@@ -25,7 +36,13 @@ const landEditInfoAddBtnEvent01 = () => {
                     // input 만들기
                     const infoInput = document.createElement('input');
                     infoInput.type = 'text';
-
+                    if(i==1){
+                    infoInput.name="dept_nm_" + index;
+                    }else if(i==2){
+                   infoInput.name="manager_" + index;
+                    }else if(i==3){
+                   infoInput.name="contact_num_" + index;
+                    }
                     infoLi.appendChild(infoInput);
 
                 } else if (i == 4) {
@@ -55,7 +72,6 @@ const landEditInfoAddBtnEvent01 = () => {
 
                 infoUl.appendChild(infoLi);
                 infoContentsBox.appendChild(infoUl);
-
             }
 
         }
@@ -68,7 +84,7 @@ const landEditInfoAddBtnEvent01 = () => {
     })
 
 }
-//landEditInfoAddBtnEvent01();
+landEditInfoAddBtnEvent01();
 
 // ul의 순번을 구하는 함수
 
@@ -116,7 +132,7 @@ const landEditInfoAddBtnEvent02 = () => {
                     // input checkbox 세팅
                     const checkboxInput = document.createElement('input');
                     checkboxInput.type = 'checkbox';
-                    
+
 
                     if (i == 1 ) {
                         checkboxInput.id = `landEdit_checkbox_${Date.now()}_${i}`;
@@ -223,7 +239,7 @@ const landEditInfoAddBtnEvent02 = () => {
             // 순번
             const contentsNum = infoUl.querySelector('.contentsNum');
             contentsNum.placeholder = getInfoIndexForLandEdit(infoUl) + 1;
-            
+
         }
         // 삭제 버튼 누를 때
         if (event.target.classList.contains('delBtn')) {
@@ -239,16 +255,16 @@ const landEditInfoAddBtnEvent02 = () => {
         }
         if (event.target.classList.contains('landEditSearchBtn')) {
             var searchBtn = event.target;
-            
+
             const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
-           
+
             popupOpen.classList.add("active");
         }
 
     })
 
 }
-//landEditInfoAddBtnEvent02();
+landEditInfoAddBtnEvent02();
 
 // 파일 첨부시 모습 변경
 
@@ -344,55 +360,6 @@ const landEditFileEvent = () => {
 }
 //landEditFileEvent()
 
-/* 검색결과팝업 */
-
-const landEditOpenPopUp = () => {
-
-   const landEditSearchBtn = document.querySelectorAll(".landEditSearchBtn");
-   const landEditResultPop = document.querySelector(".landEditSearchPopWrapper");
-   let landEditResultFilePath = '/components/popuphtml/searchResultsPopup.html'; // 삽입할 html 파일 경로
-
-   if(landEditSearchBtn){
-      
-      let xhr01 = new XMLHttpRequest();
-      xhr01.open('GET', landEditResultFilePath, true);
-      xhr01.onreadystatechange = function() {
-          if (xhr01.readyState == 4 && xhr01.status == 200) {
-              landEditResultPop.innerHTML = xhr01.responseText;
-              runScriptsInElement(landEditResultPop); // 삽입된 html내 스크립트 실행 함수 호출
-          }
-      };
-      xhr01.send();
-      console.log('landEditResultPop 작동');
-
-      landEditSearchBtn.forEach((btn) => {
-
-         btn.addEventListener("click" , () => {
-      
-            const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
-           
-            popupOpen.classList.add("active");
-  
-        })
-      })
-     
-
-  // 삽입된 html내 스크립트 실행 함수
-  const runScriptsInElement = (element) => {
-      const scripts = element.getElementsByTagName('script');
-      for (let i = 0; i < scripts.length; i++) {
-          const script = document.createElement('script');
-          script.textContent = scripts[i].textContent;
-          document.body.appendChild(script).parentNode.removeChild(script);
-      }
-  }
-
-   }
-}
-
-landEditOpenPopUp();
-
-
 
 /* 엑셀업로드팝업 */
 
@@ -443,6 +410,257 @@ const landEditExcelPopEvet = () => {
 
 }
 
-landEditExcelPopEvet();
+//landEditExcelPopEvet();
 
+
+/*select box*/
+// 커스텀 selectbox
+
+createCustomLiDivisionRegist();
+
+function createCustomLiDivisionRegist() {
+    const contentItems = document.querySelectorAll('.selectContentArea');
+
+    contentItems.forEach(contentItem => {
+
+        // 추가
+        if (contentItem.classList.contains('customLiProcessed')) {
+            return;
+        }
+        const notsetAddSelectBox = contentItem.querySelector('select');
+        // select가 없으면 return
+        if (!notsetAddSelectBox) return;
+
+        const customSelectBox = contentItem.querySelector('.customSelectBox');
+        const customSelectBtns = customSelectBox.querySelector('.customSelectBtns');
+
+        for (let i = 0; i < notsetAddSelectBox.length; i++) {
+
+            const optionValue = notsetAddSelectBox.options[i].value;
+            if(optionValue != ''){
+            const li = document.createElement('li');
+            const button = document.createElement('button');
+            button.classList.add('moreSelectBtn');
+            button.type = 'button';
+            button.textContent = optionValue;
+            li.appendChild(button);
+            customSelectBtns.appendChild(li);
+            }
+        }
+
+        // 함수가 한번 적용된 selectContentArea에 class 붙여서 구분한다. 중복실행 되지 않도록
+        contentItem.classList.add('customLiProcessed');
+    });
+}
+
+// 동적으로 추가된 요소에 이벤트를 바인딩하는 방법
+$(document).on('click', '.customSelectView', function() {
+    // 버튼 클릭 시 실행할 코드
+    $(this).toggleClass('active');
+
+    if ($(this).next()) {
+        $(this).next().toggleClass('active');
+
+    }
+});
+
+// .moreSelectBtn 요소에 대한 클릭 이벤트 등록
+$(document).on('click', '.moreSelectBtn', function() {
+    var moreSelectBtnText = $(this).text();
+
+    const parentMoreSelectBtn = $(this).closest('.customSelectBtns');
+    const EditCustomViewBtn = parentMoreSelectBtn.prev('.customSelectView');
+
+//    // EditCustomViewBtn의 모든 자식을 제거
+    EditCustomViewBtn.empty();
+//
+//    // 새로운 텍스트 노드를 추가합니다.
+    EditCustomViewBtn.text(moreSelectBtnText);
+//
+    EditCustomViewBtn.removeClass('active');
+    parentMoreSelectBtn.removeClass('active');
+//
+//    // 선택한 걸 select의 value값으로 변경하기
+    const nearByContent = $(this).closest('.selectContentArea');
+    const nearBySelectBox = nearByContent.find('select');
+    nearBySelectBox.val(moreSelectBtnText);
+    console.log(`Selected value: ${nearBySelectBox.val()}`);
+});
+
+
+
+/* 첨부파일 */
+var fileNo = 1;
+	var uploadFiles=new Array();
+	  $(document).ready(function(){
+
+	 var objDragAndDrop = $(".fileUploadBox");
+
+	                $(document).on("dragenter",".fileUploadBox",function(e){
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                    $(this).css('border', '2px solid #0B85A1');
+	                });
+	                $(document).on("dragover",".fileUploadBox",function(e){
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                });
+	                $(document).on("drop",".fileUploadBox",function(e){
+
+	                    $(this).css('border', '2px dotted #0B85A1');
+	                    e.preventDefault();
+	                    var files = e.originalEvent.dataTransfer.files;
+
+	                    handleFileUpload(files,objDragAndDrop);
+	                });
+
+	                $(document).on('dragenter', function (e){
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                });
+	                $(document).on('dragover', function (e){
+	                  e.stopPropagation();
+	                  e.preventDefault();
+	                  objDragAndDrop.css('border', '2px dotted #0B85A1');
+	                });
+	                $(document).on('drop', function (e){
+	                    e.stopPropagation();
+	                    e.preventDefault();
+	                });
+	                //drag 영역 클릭시 파일 선택창
+	                objDragAndDrop.on('click',function (e){
+	                    $('input[type=file]').trigger('click');
+	                });
+
+	                $('input[type=file]').on('change', function(e) {
+
+	                const fileListDiv = document.getElementById('fileListDiv');
+                    const listItems = fileListDiv.getElementsByTagName('ul');
+                    const itemCount = listItems.length; // ul 요소의 갯수
+
+
+	                    var files = e.originalEvent.target.files;
+
+	                    handleFileUpload(files,objDragAndDrop);
+	                });
+
+	                function handleFileUpload(files,obj)
+	                {
+
+	                   for (var i = 0; i < files.length; i++)
+	                   {
+	                        var fd = new FormData();
+	                        fd.append('file', files[i]);
+
+	                        var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,fileNo); //Using this we can set progress.
+
+	                   }fileNo++;
+	                }
+
+	                var rowCount=0;
+	                function createStatusbar(obj,name,size,no){
+
+						var sizeStr="";
+						                        var sizeKB = size/1024;
+						                        if(parseInt(sizeKB) > 1024){
+						                            var sizeMB = sizeKB/1024;
+						                            sizeStr = sizeMB.toFixed(2)+" MB";
+						                        }else{
+						                            sizeStr = sizeKB.toFixed(2)+" KB";
+						                        }
+
+	                    var row='<ul class="contents" id="fileListUl">';
+						row+='<li class="content01 content checkboxWrap">';
+						row+='<input type="checkbox" id="landEdit_myPcFiles'+no+'" name="landEdit_myPcFiles" >';
+						row+='<label for="landEdit_myPcFiles'+no+'"></label>';
+						row+='</li>';
+						row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
+	                    obj.after(row);
+
+						var radio=$(row).find('input');
+						$(radio).find('input').attr("disabled",false);
+
+	                }
+
+                    	 });
+
+/*선택파일 삭제*/
+$(document).on("click","#deleteSelectedBtn",function(){
+	const clickedAttachFiles = document.querySelectorAll('input[name="landEdit_myPcFiles"]:checked');
+
+	for(var i=0;i<clickedAttachFiles.length;i++){
+		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
+		$(delEle).remove();
+
+	}
+
+})
+
+/* 첨부파일 체크박스 전체 선택 */
+$(document).on("click","#landEdit_file_select_all",function(){
+   const attachFiles = document.querySelectorAll('input[name="landEdit_myPcFiles"]');
+
+            attachFiles.forEach((checkbox) => {
+                checkbox.checked = clickedAllinput.checked;
+            })
+
+})
+
+/*대표필지 선택*/
+$(document).on('change', 'input[name="landRegMainParcelChk_Checkbox01"]', function(event) {
+    const checkedbox = event.target;
+    const daepyoCheck = checkedbox.parentNode.parentNode;
+
+    const id = checkedbox.id.split('_').reverse()[0];
+    const hakbo = daepyoCheck.querySelector('button.customSelectView').innerText;
+    const jeochok = daepyoCheck.querySelector(`input[name="jeochok_${id}"]`).value;
+    const address = daepyoCheck.querySelector(`input[name="address_${id}"]`).value;
+    const jimok = daepyoCheck.querySelector(`input[name="jimok_${id}"]`).value;
+    const yeonjang = daepyoCheck.querySelector(`input[name="yeonjang_${id}"]`).value;
+    const myeonjuk = daepyoCheck.querySelector(`input[name="myeonjuk_${id}"]`).value;
+    const souja = daepyoCheck.querySelector(`input[name="souja_${id}"]`).value;
+
+    if (hakbo === '선택') {
+        alert("권리확보를 필수로 선택하셔야합니다.");
+        checkedbox.checked = false;
+        return;
+    } else {
+        document.querySelector('input[name="daepyoHakbo"]').value = hakbo;
+        document.querySelector('input[name="daepyoJeochok"]').value = jeochok;
+        document.querySelector('input[name="daepyoAddress"]').value = address;
+        document.querySelector('input[name="daepyoJimok"]').value = jimok;
+        document.querySelector('input[name="daepyoYeonjang"]').value = yeonjang;
+        document.querySelector('input[name="daepyoMyeonjuk"]').value = myeonjuk;
+        document.querySelector('input[name="daepyoSouja"]').value = souja;
+    }
+
+    const checkboxes = document.querySelectorAll('input[name="landRegMainParcelChk_Checkbox01"]');
+
+     checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', function() {
+                // 현재 체크된 체크박스가 어떤 것인지 확인
+                if (this.checked) {
+                    // 모든 체크박스를 순회하며, 현재 체크된 체크박스 외에는 해제
+                  checkboxes.forEach((cb) => {
+                               if (cb !== this) {
+                                   cb.checked = false; // 기존 체크된 체크박스 해제
+                               }
+                           });
+                }
+            });
+     });
+    // 체크 없으면 빈칸으로
+    const isAnyChecked = Array.from(checkboxes).some(cb => cb.checked);
+    if (!isAnyChecked) {
+        document.querySelector('input[name="daepyoHakbo"]').value = '';
+        document.querySelector('input[name="daepyoJeochok"]').value = '';
+        document.querySelector('input[name="daepyoAddress"]').value = '';
+        document.querySelector('input[name="daepyoJimok"]').value = '';
+        document.querySelector('input[name="daepyoYeonjang"]').value = '';
+        document.querySelector('input[name="daepyoMyeonjuk"]').value = '';
+        document.querySelector('input[name="daepyoSouja"]').value = '';
+    }
+
+
+});
 
