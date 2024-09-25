@@ -13,6 +13,7 @@
             and nm_idx=cast(${index} as varchar)
         </if>
     </select>
+    
     <select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
         select *
         ,concat(nm_sido_nm,' ',nm_sgg_nm,' ',nm_ri_nm,' ',nm_jibun) as address
@@ -24,8 +25,8 @@
         <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(index)">
             and nm_idx=cast(#{index} as integer)
         </if>
-
     </select>
+    
     <select id="selectSoyujaData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
         select *,(row_number() over()) as no
         from notset_souja
@@ -33,8 +34,6 @@
         <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
             and ns_notset_no=#{idx}
         </if>
-
-
     </select>
 
     <select id="selectAtcFileList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -44,8 +43,6 @@
         <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
             and na_notset_no=#{idx}
         </if>
-
-
     </select>
 
     <select id="selectModifyList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -55,7 +52,6 @@
         <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
             and nm_notset_no=#{idx}
         </if>
-
     </select>
 
     <select id="selectIssueHistoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -66,10 +62,7 @@
         <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
 <!--            and pih_seq=(select pi_seq from potential_issue where pi_manage_no=#{idx})-->
         </if>
-
     </select>
-
-
 
     <select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select nm_set_money,nm_save_status from notset_master

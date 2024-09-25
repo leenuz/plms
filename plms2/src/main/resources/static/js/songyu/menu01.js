@@ -499,28 +499,28 @@ function loadDataTable(params){
 					
 					console.log("--------------tr click---------------------");
 					
-					
 					var data = table.row( this ).data();
-										       console.log(data);
+			        console.log(data);
 					console.log(data.idx);
 					
 					var url;	
-					if (data.idx.substring(0,1)=="J"){
+					if (data.idx.substring(0,1)=="J"){ // 지상권
 						console.log("jisang");
 						url="/jisang/groundDetail?idx="+data.idx+"&index="+data.index+"&gidx=0";
 					}
-					else if (data.idx.substring(0,1)=="G"){
+					else if (data.idx.substring(0,1)=="G"){ // 점용
 						url="/gover/occupationDetails?idx="+data.idx+"&index="+data.index+"&gidx="+data.gidx;
-						
 					}
-					else if (data.idx.substring(0,1)=="N"){
+					else if (data.idx.substring(0,1)=="N"){ // 미설정
 						url="/notset/unsetOccupationDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
-						
 					}
+					else if (data.idx.substring(0,1)=="L"){ // 회사토지
+						url="/dopco/companyLandDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
+					}
+										
 					else return;					   
 					
-					window.location = url;						   
-											   
+					window.location = url;
 			    });
 			
 			/*$("table th").resizable({

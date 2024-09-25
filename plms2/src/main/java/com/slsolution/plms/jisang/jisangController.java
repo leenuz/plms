@@ -785,6 +785,7 @@ public class jisangController {
 		return mav;
     }
 	
+	// 지상권 분할- 지상권 상세정보
 	@GetMapping(path="/forDivisionEasementDetails") //http://localhost:8080/api/get/dbTest
 	public ModelAndView forDivisionEasementDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //		response.setHeader("X-Frame-Options", "SAMEORIGIN");
@@ -839,6 +840,56 @@ public class jisangController {
 		mav.addObject("memoList",jisangMemoList);
 		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
 		mav.setViewName("content/jisang/forDivisionEasementDetails");
+		return mav;
+	}
+	
+	// 지상권 조회 - 지상권 상세정보
+	@GetMapping(path="/easementDetails") //http://localhost:8080/api/get/dbTest
+	public ModelAndView easementDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+
+		HashMap params = new HashMap();
+
+		String idx = httpRequest.getParameter("idx");
+		String index = httpRequest.getParameter("index");
+
+		params.put("idx",idx);
+		params.put("manage_no",idx);
+		params.put("index",index);
+		log.info("params:"+params);
+
+		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
+		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
+		params.put("pnu", data.get(0).get("jm_pnu"));
+		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
+		log.info("jisangIssueList size:"+jisangIssueList.size());
+		if (jisangIssueList.size()>0) {
+			params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
+			params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
+			params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
+		}
+		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
+		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
+		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+
+		mav.addObject("resultData",data.get(0));
+		mav.addObject("soujaList",soujaList);
+		mav.addObject("jisangPermitList",jisangPermitList);
+		mav.addObject("atcFileList",atcFileList);
+		mav.addObject("jisangModifyList",jisangModifyList);
+		mav.addObject("jisangMergeList",jisangMergeList);
+		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+		mav.addObject("jisangIssueList",jisangIssueList);
+		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
+		mav.addObject("memoList",jisangMemoList);
+		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+		mav.setViewName("content/jisang/easementDetails");
+		
 		return mav;
 	}
 	
