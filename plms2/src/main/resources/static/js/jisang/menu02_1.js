@@ -430,7 +430,7 @@ function loadDataTable(params){
                             console.log(data);
                             console.log(data.idx);
 
-                            var url = "/jisang/groundDetail?idx=" + data.idx;
+                            var url = "/jisang/easementDetails?idx=" + data.idx;
                             window.location = url;
                         }
 											   

@@ -5,7 +5,7 @@
   href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
 />
 <link rel="stylesheet" href="/assets/css/popup/Issue_development_Popup.css" />
-<div id="newcomplaint_Popup" class="newcomplaint_Popup">
+<div id="newcomplaint_Popup" class="newcomplaint_Popup"  th:fragment="newcomplaint">
   <div class="popupWrap">
     <h2>
       <p>신규 민원 등록</p>
@@ -106,8 +106,8 @@
                 <button class="landStatusPopOpenBtn">검색</button>
               </li>
               <li class="landinfo_content_5"><input type="text" /></li>
-              <li class="landinfo_content_5"><input type="text" /></li>
-              <li class="landinfo_content_5"><input type="text" /></li>
+              <li class="landinfo_content_6"><input type="text" /></li>
+              <li class="landinfo_content_7"><input type="text" /></li>
               <li class="landinfo_content_8">
                 <button class="complaint_addition">추가</button>
               </li>
@@ -128,7 +128,7 @@
             <li class="daepyo_pilji_list_1">
               <input
                 type="text"
-                placeholder="강원특별자치도 강릉시 강문동 1-1"
+                placeholder=""
               />
             </li>
             <li class="daepyo_pilji_list_2">
@@ -801,7 +801,8 @@
       }
     })
   }
-  landStatusPopLoadEvet()
+  //landStatusPopLoadEvet()
+
 
 
 </script>

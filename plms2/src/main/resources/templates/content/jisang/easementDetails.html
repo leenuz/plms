@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      
       layout:decorate="~{layout/default_layout}">
  <head>
     <meta charset="UTF-8" />
@@ -12,18 +13,15 @@
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link th:href="@{/css/common.css}" rel="stylesheet" />
-	
     <title>지상권 상세정보</title>
-    <link
-      rel="stylesheet"
-      href="/css/jisang/forDivisionEasementDetails.css" />
+    <link rel="stylesheet" href="/css/jisang/easementDetails.css" />
+    <link rel="stylesheet" href="/assets/css/header.css" />
   </head>
   
   <th:block layout:fragment="content">
-    <!-- 지상권 상세정보 분할버튼 포함 -->
-    <div class="forDivisionEasementDetailsWrappers">
-		
-      <main id="forDivisionEasementDetails">
+    <div class="easementDetailsWrappers">
+      <!-- 지상권 상세정보 -->
+      <main id="easementDetails">
         <div class="mainTitle">
           <h1>지상권 상세정보</h1>
         </div>
@@ -726,13 +724,14 @@
         <div class="finalBtnBox btnWrap">
           <button class="backBtn grayBtn finalBtn">이전</button>
           <button class="printBtn vividBlueBtn finalBtn">출력</button>
-          <button class="divideBtn lightBlueBtn finalBtn">
-            <a href="/components/subHtml/menu02/divisionRegister.html">분할</a>
+          <button class="editBtn lightBlueBtn finalBtn">
+            <a href="/components/subHtml/menu02/easementModification.html"
+              >수정</a
+            >
           </button>
         </div>
       </main>
     </div>
-	
     <script type="module" src="/js/module/surfaceMain.js"></script>
   </th:block>
 </html>

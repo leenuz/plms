@@ -105,10 +105,14 @@ public class togiController {
 
 		params.put("idx",idx);
 		ArrayList<HashMap>  list=new ArrayList<HashMap>();
-		ArrayList<HashMap> data = mainService.selectQuery("togiSQL.selectDaepyoData",params);
+		ArrayList<HashMap> data = mainService.selectQuery("togiSQL.selectAllData",params);
+		ArrayList<HashMap> deptdata = mainService.selectQuery("togiSQL.selectDeptData",params);
+		ArrayList<HashMap> daepyodata = mainService.selectQuery("togiSQL.selectDaepyoData",params);
 		ArrayList<HashMap> sosokData = mainService.selectQuery("togiSQL.selectSosokData",params);
 
-		mav.addObject("resultData",data.get(0));
+		mav.addObject("resultData",data);
+		mav.addObject("deptdata",deptdata);
+		mav.addObject("daepyodata",daepyodata.get(0));
 		mav.addObject("sosokData",sosokData);
 
 		mav.setViewName("content/togi/landEdit");

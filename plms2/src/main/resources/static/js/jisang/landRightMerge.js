@@ -212,6 +212,7 @@ const landRightMergeInfoAddBtnEvent = () => {
             // ul 만들기
             const infoUl = document.createElement('ul');
             infoUl.classList.add('contents');
+            infoUl.id = 'tojiUl';
 
             for (let i = 1; i <= 9; i++) {
                 // li 만들기
@@ -221,10 +222,56 @@ const landRightMergeInfoAddBtnEvent = () => {
                 if (i == 1 || i == 6) {
                     const infoInput = document.createElement('input');
                     infoInput.type = 'text';
-                    infoInput.readOnly = true;
+//                    infoInput.readOnly = true;
                     infoInput.value  = "신규"
                     infoInput.classList.add('notWriteInput');
                     infoInput.id = "jisang_no";
+                    if(i == 1){
+                        mergeIndex++;
+                        const mergeIndexInput = document.createElement('input');
+                        mergeIndexInput.type = "hidden";
+                        mergeIndexInput.id = "mergeIndex";
+                        mergeIndexInput.value = mergeIndex;
+
+                        const tojiPnuInput = document.createElement('input');
+                        tojiPnuInput.type = "hidden";
+                        tojiPnuInput.id = "togipnu";
+                        tojiPnuInput.value = "";
+
+                        const tojiSidoInput = document.createElement('input');
+                        tojiSidoInput.type = "hidden";
+                        tojiSidoInput.id = "togisido_nm";
+                        tojiSidoInput.value = "";
+
+                        const tojiSggNmInput = document.createElement('input');
+                        tojiSggNmInput.type = "hidden";
+                        tojiSggNmInput.id = "togisgg_nm";
+                        tojiSggNmInput.value = "";
+
+                        const tojiEmdNmInput = document.createElement('input');
+                        tojiEmdNmInput.type = "hidden";
+                        tojiEmdNmInput.id = "togiemd_nm";
+                        tojiEmdNmInput.value = "";
+
+                        const tojiRiNmInput = document.createElement('input');
+                        tojiRiNmInput.type = "hidden";
+                        tojiRiNmInput.id = "togiri_nm";
+                        tojiRiNmInput.value = "";
+
+                        const tojiJibunInput = document.createElement('input');
+                        tojiJibunInput.type = "hidden";
+                        tojiJibunInput.id = "togijibun";
+                        tojiJibunInput.value = "";
+
+                        infoLi.append(mergeIndexInput);
+                        infoLi.append(tojiPnuInput);
+                        infoLi.append(tojiSidoInput);
+                        infoLi.append(tojiSggNmInput);
+                        infoLi.append(tojiEmdNmInput);
+                        infoLi.append(tojiRiNmInput);
+                        infoLi.append(tojiJibunInput);
+                    }
+
                     if(i == 6) infoInput.id = "souja";
 
                     // li안에 넣기
@@ -257,7 +304,7 @@ const landRightMergeInfoAddBtnEvent = () => {
                     // input 만들기
                     const addressInput = document.createElement('input');
                     addressInput.classList.add('notWriteInput');
-                    addressInput.readOnly = true;
+//                    addressInput.readOnly = true;
                     addressInput.type = 'text';
                     addressInput.id = "merge_address";
 
@@ -327,6 +374,8 @@ const landRightMergeInfoAddBtnEvent = () => {
                     // custom button
                     const customButton = document.createElement('button');
                     customButton.classList.add('customSelectView');
+                    if(i == 4) customButton.id = "toji_type";
+                    else customButton.id = "account_yn";
 //                    if (i == 4) {
                     customButton.textContent = '선택';
 //                    }
@@ -360,7 +409,7 @@ const landRightMergeInfoAddBtnEvent = () => {
                         // input 만들기
                         const secondInput = document.createElement('input');
                         secondInput.type = 'text';
-                        secondInput.readOnly = true;
+//                        secondInput.readOnly = true;
                         secondInput.classList.add('notWriteInput');
                         if(q == 0){
                             secondInput.id = "jimok_text";
@@ -422,15 +471,22 @@ const landRightMergeInfoAddBtnEvent = () => {
         if (event.target.classList.contains('delBtn')) {
             var thisDelContent = event.target.closest('.contents');
 
+            //체크 박스 태그 가져와서 체크 되어있을 시 체크 해재
+            const checkbox = thisDelContent.querySelector('input[name="repLandRight"]');
+            if(checkbox && checkbox.checked){
+                checkbox.click();
+            }
+
+            mergeIndex--;
             thisDelContent.remove();
         }
         // 검색 버튼 누를 때
-        if (event.target.classList.contains('searchAddressBtn')) {
-            var searchBtn = event.target;
-            const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
-            searchBtn.classList.add("open");
-            popupOpen.classList.add("active");
-        }
+//        if (event.target.classList.contains('searchAddressBtn')) {
+//            var searchBtn = event.target;
+//            const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+//            searchBtn.classList.add("open");
+//            popupOpen.classList.add("active");
+//        }
 
     })
 
@@ -439,45 +495,47 @@ landRightMergeInfoAddBtnEvent();
 
 /* js추가 검색팝업오픈 */
 
-const landRightMergeSearchOpenPopUp = () => {
+//const landRightMergeSearchOpenPopUp = () => {
+//
+//    const landRightMergeSearchBtn = document.querySelectorAll(".searchAddressBtn");
+//    const landRightMergeearchResultPop = document.querySelector(".landRightMergeSearchPopWrappers");
+//    let htmlFilePath = '/components/popuphtml/searchResultsPopup.html'; // 삽입할 html 파일 경로
+//
+//    if (landRightMergeSearchBtn) {
+//
+//        let xhr = new XMLHttpRequest();
+//        xhr.open('GET', htmlFilePath, true);
+//        xhr.onreadystatechange = function () {
+//            if (xhr.readyState == 4 && xhr.status == 200) {
+//                landRightMergeearchResultPop.innerHTML = xhr.responseText;
+//                runScriptsInElement(landRightMergeearchResultPop); // 삽입된 html내 스크립트 실행 함수 호출
+//            }
+//        };
+//        xhr.send();
+//        console.log('landRightMergeSearchResultPop 작동');
+//
+//        landRightMergeSearchBtn.forEach((searchBtn) => {
+//            searchBtn.addEventListener('click', () => {
+//                const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+//                searchBtn.classList.add("open");
+//                popupOpen.classList.add("active");
+//            })
+//        })
+//
+//        // 삽입된 html내 스크립트 실행 함수
+//        const runScriptsInElement = (element) => {
+//            const scripts = element.getElementsByTagName('script');
+//            for (let i = 0; i < scripts.length; i++) {
+//                const script = document.createElement('script');
+//                script.textContent = scripts[i].textContent;
+//                document.body.appendChild(script).parentNode.removeChild(script);
+//            }
+//        }
+//
+//    }
+//}
 
-    const landRightMergeSearchBtn = document.querySelectorAll(".searchAddressBtn");
-    const landRightMergeearchResultPop = document.querySelector(".landRightMergeSearchPopWrappers");
-    let htmlFilePath = '/components/popuphtml/searchResultsPopup.html'; // 삽입할 html 파일 경로
-
-    if (landRightMergeSearchBtn) {
-
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', htmlFilePath, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                landRightMergeearchResultPop.innerHTML = xhr.responseText;
-                runScriptsInElement(landRightMergeearchResultPop); // 삽입된 html내 스크립트 실행 함수 호출
-            }
-        };
-        xhr.send();
-        console.log('landRightMergeSearchResultPop 작동');
-
-        landRightMergeSearchBtn.forEach((searchBtn) => {
-            searchBtn.addEventListener('click', () => {
-                const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
-                searchBtn.classList.add("open");
-                popupOpen.classList.add("active");
-            })
-        })
-
-        // 삽입된 html내 스크립트 실행 함수
-        const runScriptsInElement = (element) => {
-            const scripts = element.getElementsByTagName('script');
-            for (let i = 0; i < scripts.length; i++) {
-                const script = document.createElement('script');
-                script.textContent = scripts[i].textContent;
-                document.body.appendChild(script).parentNode.removeChild(script);
-            }
-        }
-
-    }
-}
+//landRightMergeSearchOpenPopUp();
 
 //대표지상권 체크박스 이벤트 설정
 $(document).on('change', 'input[name="repLandRight"]', function(event) {
@@ -497,27 +555,27 @@ $(document).on('change', 'input[name="repLandRight"]', function(event) {
             // 값을 가져와서 id가 "mergeToji_" 로 시작하는 요소들에 값 넣기
             document.getElementById("mergeToji_no").value = parentRow.querySelector('input#jisang_no').value || '';
             document.getElementById("mergeToji_address").value = parentRow.querySelector('input#merge_address').value || '';
-            document.getElementById("mergeToji_jimok").value = parentRow.querySelector('input#jimok_text').placeholder || '';
-            document.getElementById("mergeToji_jasan_money").value = parentRow.querySelector('input#jasan_no').placeholder || '';
+            document.getElementById("mergeToji_jimok").value = parentRow.querySelector('input#jimok_text').value || '';
+            document.getElementById("mergeToji_jasan_money").value = parentRow.querySelector('input#jasan_no').value || '';
             document.getElementById("mergeToji_souja").value = parentRow.querySelector('input#souja').value || '';
 
             // 모든 'jijuk_area' ID를 가진 요소를 선택합니다.
             const jijukAreaElements = document.querySelectorAll('input#jijuk_area');
-            const jijukAreaValues = Array.from(jijukAreaElements).map(input => input.placeholder || 0);
+            const jijukAreaValues = Array.from(jijukAreaElements).map(input => input.value || 0);
             // 지적면적 합산 계산
             const totalJijukArea = jijukAreaValues.reduce((acc, value) => acc + (parseFloat(value) || 0), 0);
             document.getElementById('mergeToji_jijuk').value = totalJijukArea;
 
             // 모든 'pyeonib_area' ID를 가진 요소를 선택합니다.
             const pyeonibAreaElements = document.querySelectorAll('input#pyeonib_area');
-            const pyeonibAreaValues = Array.from(pyeonibAreaElements).map(input => input.placeholder || 0);
+            const pyeonibAreaValues = Array.from(pyeonibAreaElements).map(input => input.value || 0);
             // 편입면적 합산 계산
             const totalPyeonibArea = pyeonibAreaValues.reduce((acc, value) => acc + (parseFloat(value) || 0), 0);
             document.getElementById('mergeToji_pyeonib_area').value = totalPyeonibArea;
 
             // 모든 'set_money' ID를 가진 요소를 선택합니다.
             const setMoneyElements = document.querySelectorAll('input#set_money');
-            const setMoneyValues = Array.from(setMoneyElements).map(input => input.placeholder || 0);
+            const setMoneyValues = Array.from(setMoneyElements).map(input => input.value || 0);
             // 편입면적 합산 계산
             const totalSetMoney = setMoneyValues.reduce((acc, value) => acc + (parseFloat(value) || 0), 0);
             document.getElementById('mergeToji_set_money').value = totalSetMoney;
@@ -535,4 +593,264 @@ $(document).on('change', 'input[name="repLandRight"]', function(event) {
         }
 });
 
-landRightMergeSearchOpenPopUp();
+let mergeIndex = document.getElementById('lastIndex').value;
+//   주소 검색
+$(document).on("click",".searchAddressBtn",function(){
+//console.log($(this).parent().parent().html());
+		var idObj=$(this).parent().parent().find(".addressData input");
+		var id=$(this).parent().parent().find("#mergeIndex").val();
+//		var sido_nm=$(this).parent().parent().find("#togisido_nm").val();
+//		var sgg_nm=$(this).parent().parent().find("#togisgg_nm").val();
+//		var emd_nm=$(this).parent().parent().find("#togiemd_nm").val();
+//		var ri_nm=$(this).parent().parent().find("#togiri_nm").val();
+//		var jibun=$(this).parent().parent().find("#togijibun").val();
+
+//		console.log(idObj.val());
+//    	console.log(id);
+
+		var addr=idObj.val();
+		var datas={"address":addr,"sido_nm":"","sgg_nm":"","emd_nm":"","ri_nm":"","jibun":""}
+//        console.log($(this).parent().html());
+//        console.log(datas);
+
+        //searchResultPopDiv 화면뿌릴 DIV
+        if (addr==null || addr=="" || addr==undefined) {
+            alert("주소를 입력해주세요.");
+            return;
+        }
+        $.ajax({
+            url: "/jisang/getBunhalJIjukSelect",
+            type: "POST",
+            data: datas,
+        })
+        .done(function (fragment) {
+//         console.log("***fragment***");
+//         console.log(fragment);
+          $('#searchResultPopDiv').replaceWith(fragment);
+          const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+//                console.log($(popupOpen).html());
+               $(popupOpen).addClass("open");
+               popupOpen.classList.add("active");
+             $('.resultSelectBtn').attr('data-index', id);
+            $('.saveBtn').attr('data-index', id);
+        });
+
+});
+
+// 주소 선택 클릭
+$(document).on("click",".resultSelectBtn",function(){
+var id =  $('.resultSelectBtn').data('index');
+
+console.log("***클릭된 id*** : " + id);
+console.log($(this).parent().parent().html());
+var pnu=$(this).parent().parent().find(".popContent01").html();
+	var juso=$(this).parent().parent().find(".popContent02").html();
+	var jibun=$(this).parent().parent().find(".popContent03").html();
+    var sido_nm=$(this).parent().parent().find(".popContent0201").html();
+	var sgg_nm=$(this).parent().parent().find(".popContent0202").html();
+	var emd_nm=$(this).parent().parent().find(".popContent0203").html();
+	var ri_nm=$(this).parent().parent().find(".popContent0204").html();
+
+	var openerEle=$("#tojiDiv");
+//	console.log($(openerEle).html());
+	var openerTargetEle=openerEle.find('input[id="mergeIndex"][value="'+id+'"]');
+	openerTargetEle.parent().parent().find("#merge_address").val(sido_nm+" "+sgg_nm + " " + emd_nm +" " +ri_nm  + " " + jibun);
+	openerTargetEle.parent().parent().find("#togisido_nm").val(sido_nm);
+    openerTargetEle.parent().parent().find("#togisgg_nm").val(sgg_nm);
+    openerTargetEle.parent().parent().find("#togiemd_nm").val(emd_nm);
+    openerTargetEle.parent().parent().find("#togiri_nm").val(ri_nm);
+    openerTargetEle.parent().parent().find("#togijibun").val(jibun);
+	openerTargetEle.parent().parent().find("#togipnu").val(pnu);
+$(".merge_address_" + id).attr("readonly", true);
+$(".merge_address_"+id).val(sido_nm+" "+sgg_nm + " " + emd_nm +" " +ri_nm  + " " + jibun);
+})
+
+//pnu없이 선택/
+$(document).on("click",".saveBtn",function(){
+    var id =  $('.saveBtn').data('index');
+    $(".merge_address_" + id).val("");
+	$(".merge_address_" + id).removeAttr("readonly");
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+    console.log(id);
+
+});
+
+$(document).on("click","#popupCloseBtn",function(){
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+//	$(".popupWrap").toggleClass("active");
+});
+
+$(document).on("click",".topCloseBtn",function(){
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+//	$(".popupWrap").toggleClass("active");
+});
+
+
+/*임시저장 버튼 클릭시*/
+$(document).on("click",".temporarySaveBtn",function(){
+    var object = {};
+    var togiDatas=[];
+    var togiUls=$("#tojiDiv #tojiUl");
+
+    //합필 토지 정보
+    const mergeToji_no = $("#mergeToji_no").val();
+    const mergeToji_address = $("#mergeToji_address").val();
+    const mergeToji_jimok = $("#mergeToji_jimok").val();
+    const mergeToji_jijuk = $("#mergeToji_jijuk").val();
+    const mergeToji_pyeonib_area = $("#mergeToji_pyeonib_area").val();
+    const mergeToji_set_money = $("#mergeToji_set_money").val();
+    const mergeToji_jasan_money = $("#mergeToji_jasan_money").val();
+    const mergeToji_souja = $("#mergeToji_souja").val();
+    const mergeToji_accountYn = $("#mergeToji_accountYn").val();
+    const merge_reason = $("#merge_reason").val();
+    const merge_comment = $("#merge_comment").val();
+
+    // 필수 값 체크
+    let errors = [];
+
+    //대표 지상권 체크 확인
+    let repLandRightCheck = false;
+    const checkboxes = document.querySelectorAll('.single-select-checkbox');
+    // Uncheck all other checkboxes
+    for (const cb of checkboxes) {
+        if (cb.checked) {
+            repLandRightCheck = true;
+            break;
+        }
+    }
+
+    if(!repLandRightCheck){
+        errors.push('대표지상권 체크는 필수입니다.');
+    }
+
+    if (!merge_reason) {
+        errors.push('합병사유는 필수입니다.');
+    } else if (merge_reason.length < 10) {
+        errors.push('합병사유는 최소 10자 이상이어야 합니다.');
+    }
+    if (!merge_comment) {
+        errors.push('검토의견은 필수입니다.');
+    } else if (merge_comment.length < 10) {
+        errors.push('검토의견은 최소 10자 이상이어야 합니다.');
+    }
+
+    // 에러가 있을 경우 처리 (예: 에러 메시지 출력)
+    if (errors.length > 0) {
+        alert(errors.join('\n')); // 에러 메시지들을 알림창으로 표시
+        return null; // 필수 값이 누락된 경우 null 반환
+    }
+
+    object.MERGE_INSERT_REASON = merge_reason; // 합필사유
+    object.MERGE_INSERT_COMMENT = merge_comment; // 검토의견
+
+    object.MAIN_JISANG_NO = mergeToji_no;
+    object.MAIN_TMP_JISANG_NO = "";
+    object.MERGE_INSERT_CNT = togiUls.length;
+    object.MERGE_STATUS = "임시저장";
+    object.GUBUN = togiUls.length;
+
+    for(var i=0;i<togiUls.length;i++){
+        var togiJisa=$("#jisa").val();
+        var togiManageNo=$(togiUls[i]).find("input#jisang_no").val();
+        var togiaddress=$(togiUls[i]).find("input#merge_address").val();
+        var togiTogiType=$(togiUls[i]).find("button#toji_type").text().trim();
+        var togiJimokText=$(togiUls[i]).find("input#jimok_text").val();
+        var togiJijukArea=$(togiUls[i]).find("input#jijuk_area").val();
+        var togiPyeonibArea=$(togiUls[i]).find("input#pyeonib_area").val();
+        var togiSetMoney=$(togiUls[i]).find("input#set_money").val();
+        var togiJasanNo=$(togiUls[i]).find("input#jasan_no").val();
+        var togiSouja=$(togiUls[i]).find("input#souja").val();
+        var togiAccountYn=$(togiUls[i]).find("button#account_yn").text().trim();
+
+        if(togiTogiType == "선택"){
+            alert("토지 유형은 필수 입니다.");
+            return null;
+        }
+        if(togiAccountYn == "선택"){
+            alert("회계처리필요여부는 필수 입니다.");
+            return null;
+        }
+
+        var gover_own_yn="";
+        if (togiTogiType=="국유지") gover_own_yn='Y';
+        else gover_own_yn='N';
+        var togiBunhalStatus="임시저장";
+        var togiSidoNm=$(togiUls[i]).find("#togisido_nm").val();
+        var togiSggNm=$(togiUls[i]).find("#togisgg_nm").val();
+        var togiEmdNm=$(togiUls[i]).find("#togiemd_nm").val();
+        var togiRiNm=$(togiUls[i]).find("#togiri_nm").val();
+        var togiJibun=$(togiUls[i]).find("#togijibun").val();
+        var togiPnu=$(togiUls[i]).find("#togipnu").val();
+
+        //console.log("togiManageNo:"+togiManageNo);
+        var togiObj={
+            "togiSidoNm":ljsIsNull(togiSidoNm)?'':togiSidoNm
+            ,"togiSggNm":togiSggNm
+            ,"togiEmdNm":togiEmdNm
+            ,"togiRiNm":togiRiNm
+            ,"togiJibun":togiJibun
+            ,"togiPnu":togiPnu
+            ,"togiManageNo":togiManageNo
+            ,"togiaddress":togiaddress.trim()
+            ,"togiTogiType":togiTogiType
+            ,"togiJimokText":togiJimokText
+            ,"togiJijukArea":ljsIsNull(togiJijukArea)?'':togiJijukArea
+            ,"togiPyeonibArea":togiPyeonibArea
+            ,"togiJasanNo":togiJasanNo
+            ,"togiAccountYn":togiAccountYn
+            ,"togiBunhalStatus":togiBunhalStatus
+            ,"togiGoverOwnYn":gover_own_yn
+            ,"togiJisa":togiJisa
+        }
+        console.log(togiObj);
+        togiDatas.push(togiObj);
+    }
+     console.log("----------togiDatas-------------");
+     console.log(togiDatas);
+
+     object.togiDatas=togiDatas;
+
+     url="/jisang/saveJisangMerge";
+     $.ajax({
+        url:url,
+        type:'POST',
+        contentType:"application/json",
+        data:JSON.stringify(object),
+
+        dataType:"json",
+        beforeSend:function(request){
+            console.log("beforesend ........................");
+            loadingShow();
+        },
+        success:function(response){
+            loadingHide();
+            console.log(response);
+            if (response.success="Y"){
+                console.log("response.success Y");
+                console.log("response.resultData length:"+response.resultData.length);
+                alert("정상적으로 등록 되었습니다.");
+                /*$("#popup_bg").show();
+                $("#popup").show(500);
+                //$("#addrPopupLayer tbody td").remove();
+                for(var i=0;i<response.resultData.length;i++){
+                    $("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+                }*/
+            }
+            else {
+                console.log("response.success N");
+            }
+        },
+        error:function(jqXHR,textStatus,errorThrown){
+            alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+            return false;
+        }
+
+     });
+
+});

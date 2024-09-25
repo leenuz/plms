@@ -71,9 +71,9 @@ window.addEventListener("load" , () => {
             }//이슈관리
             else if(pathName === `/components/subHtml/menu06/menu06_1.html`){
                   return issueManageSelectEvet("#dopcoIssueManage .issueManageSelectsTitleBtn" ,"#dopcoIssueManage .sufaceSelectList"  ,"#dopcoIssueManage .sufaceSelectList .surfaceSelectListMember" , ".issueManageHiddenSelect");
+            }else if(pathName === `/components/subHtml/menu06/codeMgmt.html`){
+                  return issueManageSelectEvet("#dopcoIssueManage .issueManageSelectsTitleBtn" ,"#dopcoIssueManage .sufaceSelectList"  ,"#dopcoIssueManage .sufaceSelectList .surfaceSelectListMember" , ".issueManageHiddenSelect");
             }
-
-
 
 
       }

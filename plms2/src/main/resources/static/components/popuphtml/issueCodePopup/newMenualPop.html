@@ -1,0 +1,290 @@
+
+<link rel="stylesheet" href="/assets/css/popup/newMenualPopup.css">
+<!-- 메뉴얼 신규등록 팝업 -->
+<div id="newMenualPopup">
+    <div class="popupFrame">
+        <h2>
+            <p>메뉴얼 신규등록</p>
+            <span class="topCloseBtn"></span>
+        </h2>
+        <div class="popupContwrap">
+            <div class="popDepth1">
+                <ul class="popLowList">
+                    <li class="popRowListTitle">메뉴얼명</li>
+                    <li class="popRowListContent">
+                        <input type="text">
+                    </li>
+                </ul>
+            </div>
+            <div class="popDepth2">
+                <div class="newMenual_fileBox">
+                    <div class="popSubtitleBox">
+                        <h3>파일선택</h3>
+                        <div class="popSubtltleBtnBox">
+                            <input type="file" id="newMenualPopup_file" multiple>
+                            <label for="newMenualPopup_file"><p>내 PC</p></label>
+                        </div>
+                    </div>
+                    <div class="popfileLargeWrap">
+                        <!-- 파일이 첨부되지 않았을 때 모습 -->
+                        <div class="popfileUploadWrap popfileUploadDisplay">
+                            <label for="newMenualPopup_file" class="popfileUploadBox">
+                                <img src="/assets/media/menu06/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
+                                <p>파일을 마우스로 끌어오세요.</p>
+                            </label>
+                        </div>
+                        <div class="popfileUploadAfterWrap popfileUploadDisplay">
+                            <!-- 추가, 업로드시 나오는 거 -->
+                            <div class="popfileUploadAfter">
+                                <ul class="poptitles">
+                                    <li class="popBtnbox">
+                                        <button class="popAllDeleteFileBtn"></button>
+                                    </li>
+                                    <li class="poptitle popfilenameBox">
+                                        <p>파일명</p>
+                                    </li>
+                                    <li class="poptitle">
+                                        <p>업로드 상태</p>
+                                    </li>
+                                    <li class="poptitle">
+                                        <p>용량</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popFinalBtnBox">
+            <button class="saveBtn finalBtn">저장</button>
+            <button class="closeBtn finalBtn">닫기</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // 저장, 닫기 버튼 click시 팝업 사라지게
+
+        const PopupFinalBtns = document.querySelectorAll('#newMenualPopup .popupFrame .finalBtn');
+
+        const largeNewMenualPopup = document.getElementById('newMenualPopup');
+        PopupFinalBtns.forEach((button) => {
+            button.addEventListener('click', function () {
+                button.classList.toggle("active");
+                largeNewMenualPopup.classList.toggle('active');
+            })
+        })
+
+        // x 버튼 click시 팝업 사라지게
+
+        const topCloseBtn = document.querySelector('#newMenualPopup .popupFrame .topCloseBtn');
+        if (topCloseBtn) {
+            topCloseBtn.addEventListener('click', function () {
+                largeNewMenualPopup.classList.remove("active");
+            })
+        }
+    // 파일 첨부 기본 모습
+
+    const defaultNewMenualFileUploadWrap = document.querySelectorAll('.popfileUploadDisplay');
+    defaultNewMenualFileUploadWrap[0].classList.add('active');
+
+    // 파일 첨부시 모습 변경, x버튼 클릭시 비우기
+
+    const newMenualFileEvent = () => {
+
+        if (document.getElementById('newMenualPopup_file')) {
+
+            const newMenualPopup_file_myPcFiles = document.getElementById('newMenualPopup_file');
+            const newMenualFiles = newMenualPopup_file_myPcFiles.files;
+            // input[type file]을 가진 제일 큰 부모
+            const newmenualFileBox = newMenualPopup_file_myPcFiles.closest('.newMenual_fileBox');
+            // 업로드시 보이는 영역
+            const popfileUploadAfterWrap = newmenualFileBox.querySelector('.popfileUploadAfter');
+            const allPopupNewMenualContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+
+            var newMenualpopfileInfoName = '';
+            var newMenualpopfileInfoSize = '';
+            var newMenualpopfileInfoType = '';
+
+            newMenualPopup_file_myPcFiles.addEventListener('change', function () {
+
+                // 기존의 ul 초기화
+                const popExistContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+
+                popExistContents.forEach((list) => {
+                    list.remove();
+                })
+
+                // 삭제 잘 되었는지 확인
+                const newPopExistContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+                console.log(newPopExistContents.length);
+
+                if (newMenualPopup_file_myPcFiles.files.length > 0) {
+
+                    for (let i = 0; i <= newMenualPopup_file_myPcFiles.files.length - 1; i++) {
+                        const thisNewMenualPopFileName = newMenualPopup_file_myPcFiles.files[i].name;
+                        const thisNewMenualPopFileSize = newMenualPopup_file_myPcFiles.files[i].size;
+                        const thisNewMenualPopFileType = newMenualPopup_file_myPcFiles.files[i].type;
+
+                        // 사이즈를 바꾸자
+                        const newMenualformattedSize = byteTransformForPop(thisNewMenualPopFileSize);
+
+                        // 문자열에 변수를 담자
+                        newMenualpopfileInfoName = thisNewMenualPopFileName;
+                        newMenualpopfileInfoSize = newMenualformattedSize;
+                        newMenualpopfileInfoType = thisNewMenualPopFileType;
+
+                        // 파일 지우는 버튼용 li
+
+                        const popdeleteLi = '<li class="popbtnbox"><button class="popfileDeleteBtn"></button></li>';
+
+                        // 파일 아이콘, 파일명 들어가는 li
+                        const popfilenameBoxLi = `<li class="popcontent popfilenameBox"><figure class="poptypeIcon"></figure><p class="popfileNameText">${newMenualpopfileInfoName}</p></li >`;
+
+                        // 업로드 상태
+                        const popuploadStatusLi = '<li class="popcontent"><p>-</p></li>';
+
+                        // 파일 크기 들어가는 li
+                        const popfileSizeLi = `<li class="popcontent">
+            <p class="popfileSizeText"> ${newMenualpopfileInfoSize} </p>
+        </li>`;
+
+                        const listBox = popdeleteLi + popfilenameBoxLi + popuploadStatusLi + popfileSizeLi;
+
+                        // ul.contents 만들기
+                        const popContentsUl = document.createElement('ul');
+                        popContentsUl.classList.add('popcontents');
+
+                        popContentsUl.innerHTML = listBox;
+
+                        popfileUploadAfterWrap.appendChild(popContentsUl);
+
+
+                        // 값 잘 담겼는지 확인
+
+                        console.log('담긴 파일 이름:' + thisNewMenualPopFileName);
+
+
+                        // 다음 걸 받기 위해 비워주기
+
+                        newMenualpopfileInfoName = '';
+                        newMenualpopfileInfoSize = '';
+                        newMenualpopfileInfoType = '';
+
+                    }
+
+
+                    defaultNewMenualFileUploadWrap.forEach((wrap) => {
+                        wrap.classList.remove('active');
+                    })
+                    defaultNewMenualFileUploadWrap[1].classList.add('active');
+
+                    if (newMenualPopup_file_myPcFiles.files.length > 2) {
+                        popfileUploadAfterWrap.classList.add('scroll');
+                    } else {
+                        popfileUploadAfterWrap.classList.remove('scroll');
+                    }
+
+
+                } else {
+
+                    newMenualPopup_file_myPcFiles.value = '';
+                    defaultNewMenualFileUploadWrap.forEach((wrap) => {
+                        wrap.classList.remove('active');
+                    })
+                    defaultNewMenualFileUploadWrap[0].classList.add('active');
+                }
+            })
+
+            // 개별 delbtn 누르면 생기는 이벤트
+            popfileUploadAfterWrap.addEventListener('click', function (event) {
+                if (event.target.classList.contains('popfileDeleteBtn')) {
+                    const popfileDeleteBtns = popfileUploadAfterWrap.querySelectorAll('.popfileDeleteBtn');
+                    const popfileDelBtn = event.target;
+                    const popnearbyContents = event.target.closest('.popcontents');
+                    const popfileNameToRemove = popnearbyContents.querySelector('.popfileNameText').textContent;
+
+                    // 파일명이랑 틀린 것만 저장하는 함수
+                    removeFileforPop(popfileNameToRemove);
+                    popnearbyContents.remove();
+
+                    for (let b = 0; b < newMenualPopup_file_myPcFiles.files.length; b++) {
+                        console.log('현재 input[type=file]의 files name: ' + newMenualPopup_file_myPcFiles.files[b].name);
+                    }
+
+                    console.log('남은 파일의 개수:' + newMenualPopup_file_myPcFiles.files.length);
+
+                    if (newMenualPopup_file_myPcFiles.files.length < 3) {
+                        popfileUploadAfterWrap.classList.remove('scroll');
+                    }
+
+                    // 현재 선택된 파일이 없으면 input 값 비우기
+                    if (newMenualPopup_file_myPcFiles.files.length === 0) {
+                        newMenualPopup_file_myPcFiles.value = '';
+                        defaultNewMenualFileUploadWrap.forEach((wrap) => {
+                            wrap.classList.remove('active');
+                        });
+                        defaultNewMenualFileUploadWrap[0].classList.add('active');
+                    }
+                }
+
+
+            })
+
+            // 전체 삭제 버튼
+            const popallDeleteFileBtn = popfileUploadAfterWrap.querySelector('.popAllDeleteFileBtn');
+
+            popallDeleteFileBtn.addEventListener('click', function () {
+
+                const nowAllPopcontents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+                nowAllPopcontents.forEach((contents) => {
+                    contents.remove();
+                })
+
+                newMenualPopup_file_myPcFiles.value = '';
+
+
+                // 값 잘 사라졌는지 확인
+                console.log(newMenualPopup_file_myPcFiles.value);
+
+
+                if (newMenualPopup_file_myPcFiles.files.length == 0) {
+                    newMenualPopup_file_myPcFiles.value = '';
+                    defaultNewMenualFileUploadWrap.forEach((wrap) => {
+                        wrap.classList.remove('active');
+                    })
+                    defaultNewMenualFileUploadWrap[0].classList.add('active');
+                    popfileUploadAfterWrap.classList.remove('scroll');
+                }
+            })
+
+            // 용량 크기 변환하는 함수
+            function byteTransformForPop(bytes) {
+                const dataSizeforPop = ['Bytes', 'KB', 'MB', 'GB', 'TB']
+
+                if (bytes === 0) return 'not available';
+
+                const d = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+                if (d === 0) return `${bytes} ${dataSizeforPop[d]}`;
+                return `${(bytes / (1024 ** d)).toFixed(1)} ${dataSizeforPop[d]}`;
+            }
+
+            // 파일 삭제처리 하는 함수
+            const removeFileforPop = (popfileNameToRemove) => {
+                const filesArrayforPop = Array.from(newMenualPopup_file_myPcFiles.files);
+                const popNewDataTransfer = new DataTransfer();
+                filesArrayforPop.forEach(file => {
+                    if (file.name !== popfileNameToRemove) {
+                        popNewDataTransfer.items.add(file);
+                    }
+                });
+                newMenualPopup_file_myPcFiles.files = popNewDataTransfer.files; // 새로운 files 설정
+            };
+        }
+
+    }
+
+    newMenualFileEvent();
+</script>

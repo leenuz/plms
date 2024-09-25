@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>민원관리</title>
+    <link rel="stylesheet" href="/assets/css/header.css" />
+    <link rel="stylesheet" href="/assets/css/menu06/complaintManage.css" />
+  </head>
+  <body>
+    <!-- 민원관리 -->
+    <div class="complaintManageWrappers">
+      <div class="complaintManageHeader"></div>
+      <main id="complaintManage">
+        <div class="mainTitle">
+          <h1>민원관리</h1>
+        </div>
+
+        <div class="sectionBox contentScr">
+          <section class="toolPlace">
+            <div class="selectPlace">
+              <div class="selectContentArea">
+                <div class="hiddenSelectBox">
+                  <!-- id명, name명 변경 -->
+                  <select
+                    name="complaintManageSelectBox01"
+                    id="complaintManageSelectBox01"
+                    hidden>
+                    <option value="문서선택1">문서선택1</option>
+                    <option value="문서선택2">문서선택2</option>
+                    <option value="문서선택3">문서선택3</option>
+                    <option value="문서선택4">문서선택4</option>
+                    <option value="문서선택5">문서선택5</option>
+                    <option value="문서선택6">문서선택6</option>
+                    <option value="문서선택7">문서선택7</option>
+                    <option value="문서선택8">문서선택8</option>
+                    <option value="문서선택9">문서선택9</option>
+                    <option value="문서선택10">문서선택10</option>
+                  </select>
+                </div>
+                <section class="customSelectBox">
+                  <button class="customSelectView">문서선택</button>
+
+                  <ul class="customSelectBtns"></ul>
+                </section>
+              </div>
+            </div>
+            <button class="toolBtn viewBtn">문서보기</button>
+            <button class="toolBtn completeBtn complainFinBtn">민원완료</button>
+          </section>
+          <section class="codeManagement">
+            <div class="subTitle">
+              <div class="subTitleText">민원 현황 상세</div>
+            </div>
+
+            <div class="contWrap">
+              <div class="depth1">
+                <ul class="rowListBox">
+                  <li class="title">민원 명</li>
+                  <li class="content">
+                    <input
+                      type="text"
+                      class="notWriteInput"
+                      placeholder="오류로 인한 지상권 해지"
+                      readonly />
+                  </li>
+                </ul>
+                <ul class="rowListBox">
+                  <li class="title">발생일자</li>
+                  <li class="content">
+                    <input
+                      type="text"
+                      class="notWriteInput"
+                      placeholder="2022-06-22"
+                      readonly />
+                  </li>
+                </ul>
+                <ul class="rowListBox">
+                  <li class="title">발생지사</li>
+                  <li class="content">
+                    <input
+                      type="text"
+                      class="notWriteInput"
+                      placeholder="서울지사"
+                      readonly />
+                  </li>
+                </ul>
+                <ul class="rowListBox">
+                  <li class="title">이슈 유형</li>
+                  <li class="content">
+                    <input
+                      type="text"
+                      class="notWriteInput"
+                      placeholder="지소유자와 계약 > 권리상실 > 해지업무 착오로 인한 지상권 소실"
+                      readonly />
+                  </li>
+                </ul>
+                <ul class="rowListBox">
+                  <li class="title">진행 현황</li>
+                  <li class="content">
+                    <input
+                      type="text"
+                      class="notWriteInput"
+                      placeholder="협의 중"
+                      readonly />
+                  </li>
+                </ul>
+              </div>
+              <div class="depth2">
+                <div class="titleBox">
+                  <ul class="titles leftTitle">
+                    <li class="title divisionWidth">구분</li>
+                  </ul>
+                  <ul class="titles rightTitle">
+                    <li class="title smallWidth">순번</li>
+                    <li class="title smallWidth">성명</li>
+                    <li class="title">생년월일</li>
+                    <li class="title largeWidth">토지주와의 관계</li>
+                    <li class="title largeWidth">연락처</li>
+                    <li class="title">현장입회</li>
+                  </ul>
+                </div>
+                <div class="contentsWrap">
+                  <ul class="titles">
+                    <li class="title leftTitle">민원인/토지주</li>
+                  </ul>
+                  <div class="contentsBox">
+                    <ul class="contents">
+                      <li class="content smallWidth">
+                        <input
+                          type="text"
+                          class="notWriteInput"
+                          placeholder="1"
+                          readonly />
+                      </li>
+                      <li class="content smallWidth">
+                        <input type="text" class="notWriteInput" readonly />
+                      </li>
+                      <li class="content">
+                        <input type="text" class="notWriteInput" readonly />
+                      </li>
+                      <li class="content largeWidth">
+                        <input type="text" class="notWriteInput" readonly />
+                      </li>
+                      <li class="content largeWidth">
+                        <input type="text" class="notWriteInput" readonly />
+                      </li>
+                      <li class="content">
+                        <input
+                          type="text"
+                          class="notWriteInput"
+                          placeholder="Y"
+                          readonly />
+                      </li>
+                    </ul>
+                    <ul class="contents">
+                      <li class="content smallWidth">
+                        <input
+                          type="text"
+                          class="notWriteInput"
+                          placeholder="2"
+                          readonly />
+                      </li>
+                      <li class="content smallWidth">
+                        <input type="text" class="notWriteInput" readonly />
+                      </li>
+                      <li class="content">
+                        <input type="text" class="notWriteInput" readonly />
+                      </li>
+                      <li class="content largeWidth">
+                        <input type="text" class="notWriteInput" readonly />
+                      </li>
+                      <li class="content largeWidth">
+                        <input type="text" class="notWriteInput" readonly />
+                      </li>
+                      <li class="content">
+                        <input
+                          type="text"
+                          class="notWriteInput"
+                          placeholder="Y"
+                          readonly />
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="depth3">
+                <ul class="rowListBox">
+                  <li class="title">토지이력</li>
+                  <li class="content">
+                    <textarea readonly class="notWriteInput"></textarea>
+                  </li>
+                </ul>
+                <ul class="rowListBox">
+                  <li class="title">요구사항</li>
+                  <li class="content">
+                    <textarea readonly class="notWriteInput"></textarea>
+                  </li>
+                </ul>
+                <ul class="rowListBox">
+                  <li class="title">내용</li>
+                  <li class="content">
+                    <textarea readonly class="notWriteInput"></textarea>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 민원토지 -->
+          <section class="complaintLand">
+            <div class="subTitle">
+              <div class="subTitleText">민원 토지</div>
+            </div>
+
+            <div class="contWrap">
+              <div class="depth1">
+                <ul class="titles">
+                  <li class="title">대표토지여부</li>
+                  <li class="title largeWidth">주소</li>
+                  <li class="title">등기 여부</li>
+                  <li class="title">계약 여부</li>
+                </ul>
+                <ul class="contents">
+                  <li class="content">
+                    <input
+                      type="text"
+                      readonly
+                      placeholder="Y"
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content largeWidth">
+                    <input
+                      type="text"
+                      readonly
+                      placeholder="경기도 평택시 월곡동 140-7"
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content">
+                    <input
+                      type="text"
+                      readonly
+                      placeholder="N"
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content">
+                    <input
+                      type="text"
+                      readonly
+                      placeholder="N"
+                      class="notWriteInput" />
+                  </li>
+                </ul>
+                <ul class="contents">
+                  <li class="content">
+                    <input
+                      type="text"
+                      readonly
+                      placeholder="N"
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content largeWidth">
+                    <input
+                      type="text"
+                      readonly
+                      placeholder="경기도 평택시 월곡동 산36-4"
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content">
+                    <input
+                      type="text"
+                      readonly
+                      placeholder="N"
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content">
+                    <input
+                      type="text"
+                      readonly
+                      placeholder="N"
+                      class="notWriteInput" />
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 첨부파일 -->
+          <section class="attachFileInfo">
+            <div class="subTitle">
+              <div class="subTitleText">첨부파일</div>
+            </div>
+
+            <div class="contWrap">
+              <div class="depth1">
+                <ul class="titles titleScr">
+                  <li class="title">날짜</li>
+                  <li class="title fileNameWidth">파일명</li>
+                  <li class="title">다운로드</li>
+                </ul>
+                <ul class="contents">
+                  <li class="content">
+                    <input
+                      type="text"
+                      placeholder="2022-06-30"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content fileNameWidth">
+                    <input
+                      type="text"
+                      placeholder="지상권 해지 경과보고 4.hwp"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content btnsWrap">
+                    <button class="fileDownloadBtn">
+                      다운로드 <span class="downloadIcon"></span>
+                    </button>
+                  </li>
+                </ul>
+                <ul class="contents">
+                  <li class="content">
+                    <input
+                      type="text"
+                      placeholder="2022-06-21"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content fileNameWidth">
+                    <input
+                      type="text"
+                      placeholder="지적측량 결과 - 평택시 월곡동 산32-6번지.pdf"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content btnsWrap">
+                    <button class="fileDownloadBtn">
+                      다운로드 <span class="downloadIcon"></span>
+                    </button>
+                  </li>
+                </ul>
+                <ul class="contents">
+                  <li class="content">
+                    <input
+                      type="text"
+                      placeholder="2022-06-21"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content fileNameWidth">
+                    <input
+                      type="text"
+                      placeholder="송유관 측량 표시.hwp"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content btnsWrap">
+                    <button class="fileDownloadBtn">
+                      다운로드 <span class="downloadIcon"></span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+          <!-- 협의내용 -->
+          <section class="consultDetails">
+            <div class="subTitle">
+              <div class="subTitleText">협의 내용</div>
+            </div>
+
+            <div class="contWrap">
+              <div class="depth1">
+                <ul class="titles titleScr">
+                  <li class="title">일시</li>
+                  <li class="title smallWidth">진행 현황</li>
+                  <li class="title fileNameWidth">파일명</li>
+                  <li class="title">ECHO 문서보기</li>
+                </ul>
+                <ul class="contents">
+                  <li class="content">
+                    <input
+                      type="text"
+                      placeholder="2022-06-30"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content smallWidth">
+                    <input
+                      type="text"
+                      placeholder="협의 중"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content fileNameWidth">
+                    <input
+                      type="text"
+                      placeholder="민원협의 완료에 따른 지상권 재설정(월곡동 산36-4)"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content btnsWrap">
+                    <button class="viewDetailButton">문서보기</button>
+                  </li>
+                </ul>
+                <ul class="contents">
+                  <li class="content">
+                    <input
+                      type="text"
+                      placeholder="2022-06-21"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content smallWidth">
+                    <input
+                      type="text"
+                      placeholder="협의 중"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content fileNameWidth">
+                    <input
+                      type="text"
+                      placeholder="지상권 재설정 협의 방문(월곡동 산36-4)"
+                      readonly
+                      class="notWriteInput" />
+                  </li>
+                  <li class="content btnsWrap">
+                    <button class="viewDetailButton">문서보기</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="finalBtnBox btnWrap">
+          <button class="backBtn">이전</button>
+          <button class="addBtn addComplainBtn">협의 추가</button>
+        </div>
+      </main>
+    </div>
+    <div class="complainManageaddComplainWrapper"></div>
+    <div class="complainManageComplainFinishWrapper"></div>
+    <!-- script -->
+    <script type="module" src="/components/surfaceMain.js"></script>
+    <script src="/components/js/menu06/complaintManage.js"></script>
+  </body>
+</html>

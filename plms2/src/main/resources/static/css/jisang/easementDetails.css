@@ -1,0 +1,737 @@
+@charset "UTF-8";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body * {
+  font-family: pretendard;
+}
+
+li {
+  list-style: none;
+}
+
+select {
+  outline: 0;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #6e7d88;
+  text-indent: 12px;
+}
+
+input {
+  border: 0;
+  outline: 0;
+}
+
+input:focus {
+  border: 0;
+}
+
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+
+button {
+  border: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.subBtn {
+  width: 81px;
+  height: 27px;
+  border-radius: 20px;
+  background: #2b7de1;
+  color: #fff;
+}
+
+/* css추가 */
+
+.easementDetailsWrappers {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.easementDetailsWrappers::-webkit-scrollbar {
+  width: 3px;
+}
+
+.easementDetailsWrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.easementDetailsHeader {
+  width: 100px;
+  height: 100vh;
+  float: left;
+}
+
+/**/
+
+#easementDetails {
+  width: calc(100% - 100px);
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: left;
+}
+
+#easementDetails .mainTitle {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+
+#easementDetails .mainTitle h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #31394c;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#easementDetails .subTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #31394c;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#easementDetails .basicOwnerInfo {
+  /* padding: 40px 0; */
+  padding: 27px 0 40px 0;
+}
+.thirdTitle {
+  margin-bottom: 15px;
+}
+.thirdTitle h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2b7de1;
+}
+.thirdTitle .btnbox {
+  margin-left: 8px;
+}
+#easementDetails .basicOwnerInfo .thirdTitle {
+  display: flex;
+  align-items: center;
+}
+.contWrap {
+  width: 100%;
+}
+.contBox {
+}
+
+#easementDetails .basicOwnerInfo .contWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+#easementDetails .contentDetailBox {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #cddbf0;
+  overflow: hidden;
+}
+#easementDetails .titles {
+  display: flex;
+  align-items: center;
+  height: 45px;
+  border-bottom: 1px solid #cddbf0;
+  background: #f7f9fc;
+}
+#easementDetails .titles .title {
+  border-right: 1px solid #cddbf0;
+  height: 100%;
+  text-align: center;
+  line-height: 45px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #000;
+  box-sizing: border-box;
+}
+#easementDetails .basicOwnerInfo .contBox {
+  width: 100%;
+}
+#easementDetails .basicOwnerInfo .contBox .titles .title {
+  width: 8.5%;
+}
+#easementDetails .basicOwnerInfo .contBox .titles .title.title07 {
+  width: 25.6%;
+}
+#easementDetails .basicOwnerInfo .contBox .contents .content {
+  width: 8.5%;
+}
+#easementDetails .basicOwnerInfo .contBox .contents .content.content07 {
+  width: 25.6%;
+}
+#easementDetails .titles .title:last-child {
+  border-right: 0;
+}
+#easementDetails .contents {
+  display: flex;
+  align-items: center;
+  height: 45px;
+  border-bottom: 1px solid #cddbf0;
+}
+#easementDetails .contents .content {
+  border-right: 1px solid #cddbf0;
+  height: 100%;
+  text-align: center;
+  line-height: 45px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c3c3c;
+  box-sizing: border-box;
+}
+#easementDetails .contents .content:last-child {
+  border-right: 0;
+}
+#easementDetails .contents .content input {
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+}
+#easementDetails .contents .content input::placeholder {
+  color: #3c3c3c;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+.viewDetailButton {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+  font-size: 13px;
+  font-weight: 600;
+}
+#easementDetails .basicOwnerInfo .contBoxMini03 {
+  width: 100%;
+}
+#easementDetails .contBoxMini03 .contentDetailBox {
+  height: 137px;
+}
+#easementDetails .basicOwnerInfo .contBoxMini03 .contents:last-child {
+  border-bottom: 0;
+}
+#easementDetails .basicOwnerInfo .contBoxMini03 .titles .title {
+  width: 10%;
+  height: 100%;
+  text-align: center;
+  line-height: 45px;
+}
+#easementDetails .basicOwnerInfo .contBoxMini03 .titles .title04 {
+  width: 38.2%;
+}
+#easementDetails .basicOwnerInfo .contBoxMini03 .titles .title05 {
+  width: 17.5%;
+}
+#easementDetails .basicOwnerInfo .contBoxMini03 .contents .content {
+  width: 10%;
+  height: 100%;
+  text-align: center;
+  line-height: 45px;
+}
+#easementDetails .basicOwnerInfo .contBoxMini03 .contents .content04 {
+  width: 38.2%;
+}
+#easementDetails .basicOwnerInfo .contBoxMini03 .contents .content05 {
+  width: 17.5%;
+}
+#easementDetails .surfaceRightInfo {
+  padding-bottom: 40px;
+}
+#easementDetails .surfaceRightInfo .contWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+#easementDetails
+  .surfaceRightInfo
+  .contentDetailBox.contBoxMini07
+  .depth1
+  .titles
+  .title {
+  width: 7.9%;
+  text-align: center;
+  line-height: 45px;
+}
+#easementDetails
+  .surfaceRightInfo
+  .contentDetailBox.contBoxMini07
+  .depth1
+  .titles
+  .title.title02 {
+  width: 10.5%;
+}
+#easementDetails
+  .surfaceRightInfo
+  .contentDetailBox.contBoxMini07
+  .depth1
+  .titles
+  .title.title06 {
+  width: 12.5%;
+}
+#easementDetails
+  .surfaceRightInfo
+  .contentDetailBox.contBoxMini07
+  .depth1
+  .contents
+  .content.content02 {
+  width: 10.5%;
+}
+#easementDetails
+  .surfaceRightInfo
+  .contentDetailBox.contBoxMini07
+  .depth1
+  .contents
+  .content.content06 {
+  width: 12.5%;
+}
+#easementDetails
+  .surfaceRightInfo
+  .contentDetailBox.contBoxMini07
+  .depth1
+  .contents
+  .content {
+  width: 7.9%;
+  text-align: center;
+  line-height: 45px;
+}
+#easementDetails .surfaceRightInfo .contentDetailBox .depth2 .titles .title {
+  width: 100%;
+  text-align: center;
+}
+#easementDetails
+  .surfaceRightInfo
+  .contentDetailBox
+  .depth2
+  .contents
+  .content {
+  width: 100%;
+  text-align: center;
+}
+#easementDetails
+  .surfaceRightInfo
+  .contentDetailBox
+  .depth2
+  .contents:last-child {
+  border-bottom: 0;
+}
+#easementDetails .lastContents {
+  border-bottom: 0;
+}
+/* 첨부파일 */
+
+#easementDetails .surfaceRightInfo .fileContbox .contentDetailBox .contentScr {
+  height: 180px;
+}
+#easementDetails
+  .surfaceRightInfo
+  .fileContbox
+  .contentDetailBox
+  .depth1
+  .titles {
+  padding-right: 4px;
+  box-sizing: border-box;
+}
+#easementDetails
+  .surfaceRightInfo
+  .fileContbox
+  .contentDetailBox
+  .depth1
+  .titles
+  .title {
+  width: 16.9%;
+}
+#easementDetails
+  .surfaceRightInfo
+  .fileContbox
+  .contentDetailBox
+  .depth1
+  .titles
+  .title.title02 {
+  width: 50%;
+}
+#easementDetails
+  .surfaceRightInfo
+  .fileContbox
+  .contentDetailBox
+  .depth1
+  .contents
+  .content {
+  width: 16.9%;
+}
+#easementDetails
+  .surfaceRightInfo
+  .fileContbox
+  .contentDetailBox
+  .depth1
+  .contents
+  .content.content02 {
+  width: 50%;
+}
+.fileDownloadBtn {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  background: #4e5871;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+.downloadIcon {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  background: url(/assets/media/menu02/images/download.png) no-repeat center;
+  background-size: contain;
+}
+#easementDetails
+  .surfaceRightInfo
+  .contentDetailBox
+  .depth1
+  .contents
+  .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#easementDetails
+  .surfaceRightInfo
+  .contentDetailBox
+  .depth1
+  .contents
+  .content.btnsWrap {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#easementDetails > section {
+  padding-bottom: 40px;
+}
+/* 사용 승락 */
+#easementDetails .usageApproval .contentDetailBox .contentScr {
+  height: 45px;
+}
+#easementDetails .usageApproval .contentDetailBox .depth1 .titles {
+  padding-right: 4px;
+  box-sizing: border-box;
+}
+#easementDetails .usageApproval .contentDetailBox .depth1 .titles .title {
+  width: 8.5%;
+}
+#easementDetails
+  .usageApproval
+  .contentDetailBox
+  .depth1
+  .titles
+  .title.title03 {
+  width: 13.3%;
+}
+#easementDetails
+  .usageApproval
+  .contentDetailBox
+  .depth1
+  .titles
+  .title.title04 {
+  width: 18.1%;
+}
+#easementDetails
+  .usageApproval
+  .contentDetailBox
+  .depth1
+  .titles
+  .title.title05 {
+  width: 22.3%;
+}
+#easementDetails .usageApproval .contentDetailBox .depth1 .contents .content {
+  width: 8.5%;
+}
+#easementDetails
+  .usageApproval
+  .contentDetailBox
+  .depth1
+  .contents
+  .content.content03 {
+  width: 13.3%;
+}
+#easementDetails
+  .usageApproval
+  .contentDetailBox
+  .depth1
+  .contents
+  .content.content04 {
+  width: 18.1%;
+}
+#easementDetails
+  .usageApproval
+  .contentDetailBox
+  .depth1
+  .contents
+  .content.content05 {
+  width: 22.3%;
+}
+#easementDetails .mergedSurfaceInfo {
+  padding-bottom: 40px;
+}
+#easementDetails .mergedSurfaceInfo .depth1 .titles .title {
+  width: 8.6%;
+}
+#easementDetails .mergedSurfaceInfo .depth1 .titles .title.title02 {
+  width: 10.1%;
+}
+#easementDetails .mergedSurfaceInfo .depth1 .titles .title.title04 {
+  width: 33.1%;
+}
+#easementDetails .mergedSurfaceInfo .depth1 .contents .content {
+  width: 8.6%;
+}
+#easementDetails .mergedSurfaceInfo .depth1 .contents .content.content02 {
+  width: 10.1%;
+}
+
+#easementDetails .mergedSurfaceInfo .depth1 .contents .content.content04 {
+  width: 33.1%;
+}
+#easementDetails .changeHistory .depth1 .titles .title {
+  width: 15.2%;
+}
+#easementDetails .changeHistory .depth1 .titles .title.title01 {
+  width: 6.8%;
+}
+#easementDetails .changeHistory .depth1 .titles .title.title04 {
+  width: 62.1%;
+}
+#easementDetails .changeHistory .depth1 .contentScr {
+  height: 90px;
+}
+#easementDetails .changeHistory .depth1 .contents .content {
+  width: 15.2%;
+}
+#easementDetails .changeHistory .depth1 .contents .content.content01 {
+  width: 6.8%;
+}
+#easementDetails .changeHistory .depth1 .contents .content.content04 {
+  width: 62.1%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#easementDetails .contentScr {
+  overflow-y: scroll;
+}
+#easementDetails .contentScr::-webkit-scrollbar {
+  width: 4px;
+}
+
+#easementDetails .contentScr::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+#easementDetails .myPc {
+  width: 81px;
+  height: 27px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2b7de1;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+#easementDetails .btnWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+/* css추가 */
+#easementDetails .editBtn a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #2b7de1;
+}
+#easementDetails .editBtn a:visited {
+  color: #2b7de1;
+}
+
+/**/
+
+
+/* 메모 */
+#easementDetails .memoSection .titles {
+  padding-right: 4px;
+  box-sizing: border-box;
+}
+#easementDetails .memoSection .titles .title {
+  width: 11.2%;
+}
+#easementDetails .memoSection .titles .title.title03 {
+  width: 59.4%;
+}
+#easementDetails .memoSection .titles .title.title04 {
+  width: 6.5%;
+}
+#easementDetails .memoSection .contents .content {
+  width: 11.2%;
+}
+#easementDetails .memoSection .contents .content.content03 {
+  width: 59.4%;
+}
+#easementDetails .memoSection .contents .content.content04 {
+  width: 6.5%;
+}
+#easementDetails .memoSection .contents .content.btnBox {
+  display: flex;
+}
+#easementDetails .memoSection .contentScr {
+  height: 90px;
+}
+#easementDetails .memoSection.onlyReadMemo .titles .title.title01 {
+  width: 15.7%;
+}
+#easementDetails .memoSection.onlyReadMemo .titles .title.title02 {
+  width: 10.9%;
+}
+#easementDetails .memoSection.onlyReadMemo .titles .title.title03 {
+  width: 72.3%;
+}
+#easementDetails .memoSection.onlyReadMemo .contents .content.content01 {
+  width: 15.7%;
+}
+#easementDetails .memoSection.onlyReadMemo .contents .content.content02 {
+  width: 10.9%;
+}
+#easementDetails .memoSection.onlyReadMemo .contents .content.content03 {
+  width: 72.3%;
+}
+#easementDetails .titles.titleScr {
+  padding-right: 4px;
+  box-sizing: border-box;
+}
+
+/* 이전, 출력 버튼 */
+
+.finalBtnBox {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.finalBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 10px;
+}
+.finalBtn.vividBlueBtn {
+  background: #2b7de1;
+}
+.finalBtn.grayBtn {
+  background: #919191;
+}
+.finalBtn.lightBlueBtn {
+  background: rgba(204, 224, 255, 0.6);
+  color: #2b7de1;
+}
+
+/* date */
+/* 안보이게 하기 */
+#easementDetails .noClickEvent {
+  pointer-events: none;
+}
+#easementDetails input[type="date"]::-webkit-datetime-edit-text {
+  -webkit-appearance: none;
+  display: none;
+}
+
+#easementDetails input[type="date"]::-webkit-datetime-edit-month-field {
+  -webkit-appearance: none;
+  display: none;
+}
+
+#easementDetails input[type="date"]::-webkit-datetime-edit-day-field {
+  -webkit-appearance: none;
+  display: none;
+}
+
+#easementDetails input[type="date"]::-webkit-datetime-edit-year-field {
+  -webkit-appearance: none;
+  display: none;
+}
+#easementDetails .dateInputWrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-size: 18px;
+}
+
+#easementDetails input[type="date"] {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: transparent;
+  background: transparent;
+  text-align: right;
+}
+
+#easementDetails input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#easementDetails input[type="date"]::before {
+  width: 100%;
+  content: attr(data-placeholder);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #3c3c3c;
+  text-align: center;
+}
+
+#easementDetails input[type="date"]:focus,
+#easementDetails input[type="date"]:valid {
+  color: #6e7d88;
+}
+
+#easementDetails input[type="date"]:focus::before,
+#easementDetails input[type="date"]:valid::before {
+  content: "";
+}

@@ -7,18 +7,12 @@
  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link
       rel="stylesheet"
       as="style"
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
-
-
-
- 
-  
-   
   
 	  <link th:href="@{/css/common.css}" rel="stylesheet" />
 	
@@ -27,100 +21,7 @@
 		<!-- <script src="/js/issue/menu06_1.js"></script> -->	
 		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
-		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
 
-div.dt-center-in-div {
-  margin: 0 auto;
-      float: right;
-    margin-right: 30px;
-   
-}
-div.dt-center-in-div>div{
-
-display:inline;
-}
-
-div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
-}
-
-
-.dt-title{
-
-text-align:center;
-width:180px;
-float:left;
-
-}
-.dt-buttons{
-display:inline-block;
-
-width:180px;
-
-}
-.dt-length{
-display:inline-block;
-}
-.dt-button{
-
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
-
-}
-
-.dt-paging {
-text-align: center;
-}
-
-.dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-    
-    
-}
-
-.bottom{
-text-align:center;
-
-}
-.top{
-
-text-align:right;
-margin:10px;
-
-}
-
-		</style>
-		
     <title>민원관리</title>
   </head>
 <th:block layout:fragment="content">
@@ -132,135 +33,114 @@ margin:10px;
         <div class="issueManageTitleBoxs">
           <h5>민원관리</h5>
         </div>
+        <form id="searchForm" onsubmit="return false;">
         <section class="issueManageSectionBoxs">
           <div class="issueManageSectionCont">
             <div class="issueManageSectionContDevide">
-              <ul class="inputControlBoxs sectionMenuListBoxs">
-                <li class="selectTitle"><p>발생일자</p></li>
-                <div class="inputControlList dateListBox">
-                  <input type="date" />
-                  <span>-</span>
-                  <input type="date" />
-                </div>
-              </ul>
-              <ul class="selectContent sectionMenuListBoxs">
-                <li class="selectTitle"><p>진행현황</p></li>
-                <!--수정부분 지사-->
-                <div class="issueManageSelectWrappers">
-                  <select
-                    name=""
-                    class="issueManageHiddenSelect"
-                    id="issueManageSelectBox01"
-                    hidden>
-                    <option value="전체">전체</option>
-                    <option value="임시저장">임시저장</option>
-                    <option value="민원발생">민원발생</option>
-                    <option value="대응방안수립">대응방안수립</option>
-                    <option value="협의중">협의중</option>
-                    <option value="완료">완료</option>
-                  </select>
-                </div>
-                <!--보여지는 셀렉박스-->
-                <div class="issueManageSelects">
-                  <button class="issueManageSelectsTitleBtn"></button>
-                  <div class="sufaceSelectList">
-                    <ul class="surfaceSelectListMember"></ul>
+                <ul class="inputControlBoxs sectionMenuListBoxs">
+                  <li class="selectTitle"><p>발생일자</p></li>
+                  <div class="inputControlList dateListBox active">
+                    <input name="start_date" type="date">
+                    <span>-</span>
+                    <input name="end_date" type="date">
                   </div>
-                </div>
-              </ul>
-              <ul class="selectContent sectionMenuListBoxs addSelectWidth">
-                <li class="selectTitle"><p>이슈유형</p></li>
-                <!--수정부분 지사-->
-                <div class="issueManageSelectTotalContent">
-                  <div class="issueManageSelectWrappers">
-                    <select
-                      name=""
-                      class="issueManageHiddenSelect"
-                      id="issueManageSelectBox02"
-                      hidden>
-                      <option value="전체">전체</option>
-                      <option value="대분류">대분류</option>
-                    </select>
-                  </div>
-                  <!--보여지는 셀렉박스-->
-                  <div class="issueManageSelects">
-                    <button class="issueManageSelectsTitleBtn"></button>
-                    <div class="sufaceSelectList extrasmallHeight">
-                      <ul class="surfaceSelectListMember"></ul>
-                    </div>
-                  </div>
+                </ul>
+                <ul class="selectContent sectionMenuListBoxs">
+                  <li class="selectTitle"><p>진행현황</p></li>
                   <!--수정부분 지사-->
                   <div class="issueManageSelectWrappers">
-                    <select
-                      name=""
-                      class="issueManageHiddenSelect"
-                      id="issueManageSelectBox03"
-                      hidden>
+                    <select name="status" class="issueManageHiddenSelect" id="issueManageSelectBox01" hidden="">
                       <option value="전체">전체</option>
-                      <option value="중분류">중분류</option>
+                      <option value="임시저장">임시저장</option>
+                      <option value="민원발생">민원발생</option>
+                      <option value="대응방안수립">대응방안수립</option>
+                      <option value="협의중">협의중</option>
+                      <option value="완료">완료</option>
                     </select>
                   </div>
                   <!--보여지는 셀렉박스-->
                   <div class="issueManageSelects">
-                    <button class="issueManageSelectsTitleBtn"></button>
-                    <div class="sufaceSelectList extrasmallHeight">
-                      <ul class="surfaceSelectListMember"></ul>
+                    <button class="issueManageSelectsTitleBtn">임시저장</button>
+                    <div class="sufaceSelectList">
+                      <ul class="surfaceSelectListMember"><li><p>전체</p></li><li><p>임시저장</p></li><li><p>민원발생</p></li><li><p>대응방안수립</p></li><li><p>협의중</p></li><li><p>완료</p></li></ul>
                     </div>
                   </div>
+                </ul>
+                <ul class="selectContent sectionMenuListBoxs addSelectWidth">
+                  <li class="selectTitle"><p>이슈유형</p></li>
+                  <!--수정부분 지사-->
+                  <div class="issueManageSelectTotalContent">
+                    <div class="issueManageSelectWrappers">
+                      <select name="code1" class="issueManageHiddenSelect" id="issueManageSelectBox02" hidden="">
+                        <option value="전체">전체</option>
+                        <option value="대분류">대분류</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="issueManageSelects">
+                      <button class="issueManageSelectsTitleBtn">전체</button>
+                      <div class="sufaceSelectList extrasmallHeight">
+                        <ul class="surfaceSelectListMember"><li><p>전체</p></li><li><p>대분류</p></li></ul>
+                      </div>
+                    </div>
+                    <!--수정부분 지사-->
+                    <div class="issueManageSelectWrappers">
+                      <select name="code2" class="issueManageHiddenSelect" id="issueManageSelectBox03" hidden="">
+                        <option value="전체">전체</option>
+                        <option value="중분류">중분류</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="issueManageSelects">
+                      <button class="issueManageSelectsTitleBtn">전체</button>
+                      <div class="sufaceSelectList extrasmallHeight">
+                        <ul class="surfaceSelectListMember"><li><p>전체</p></li><li><p>중분류</p></li></ul>
+                      </div>
+                    </div>
+                    <!--수정부분 지사-->
+                    <div class="issueManageSelectWrappers">
+                      <select name="code3" class="issueManageHiddenSelect" id="issueManageSelectBox04" hidden="">
+                        <option value="전체">전체</option>
+                        <option value="소분류">소분류</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="issueManageSelects">
+                      <button class="issueManageSelectsTitleBtn">전체</button>
+                      <div class="sufaceSelectList extrasmallHeight">
+                        <ul class="surfaceSelectListMember"><li><p>전체</p></li><li><p>소분류</p></li></ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!--totalContent-->
+                </ul>
+                <ul class="selectContent sectionMenuListBoxs">
+                  <li class="selectTitle"><p>발생지사</p></li>
                   <!--수정부분 지사-->
                   <div class="issueManageSelectWrappers">
-                    <select
-                      name=""
-                      class="issueManageHiddenSelect"
-                      id="issueManageSelectBox04"
-                      hidden>
+                    <select name="jisa" class="issueManageHiddenSelect" id="issueManageSelectBox05" hidden>
                       <option value="전체">전체</option>
-                      <option value="소분류">소분류</option>
+                    <th:block th:each="val:${jisaList}">
+                      <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+                    </th:block>
                     </select>
                   </div>
                   <!--보여지는 셀렉박스-->
                   <div class="issueManageSelects">
-                    <button class="issueManageSelectsTitleBtn"></button>
-                    <div class="sufaceSelectList extrasmallHeight">
-                      <ul class="surfaceSelectListMember"></ul>
+                    <button class="issueManageSelectsTitleBtn">전체</button>
+                     <div class="sufaceSelectList">
+                    <ul class="surfaceSelectListMember">
+                      </ul>                   
                     </div>
                   </div>
-                </div>
-                <!--totalContent-->
-              </ul>
-              <ul class="selectContent sectionMenuListBoxs">
-                <li class="selectTitle"><p>발생지사</p></li>
-                <!--수정부분 지사-->
-                <div class="issueManageSelectWrappers">
-                  <select
-                    name=""
-                    class="issueManageHiddenSelect"
-                    id="issueManageSelectBox05"
-                    hidden>
-                    <option value="전체">전체</option>
-                    <option value="서울지사">서울지사</option>
-                    <option value="경인지사">경인지사</option>
-                    <option value="대전지사">대전지사</option>
-                    <option value="부산지사">부산지사</option>
-                    <option value="충청지사">충청지사</option>
-                    <option value="충청지사">충청지사</option>
-                    <option value="충청지사">충청지사</option>
-                  </select>
-                </div>
-                <!--보여지는 셀렉박스-->
-                <div class="issueManageSelects">
-                  <button class="issueManageSelectsTitleBtn"></button>
-                  <div class="sufaceSelectList">
-                    <ul class="surfaceSelectListMember"></ul>
+
+                </ul>
+                <ul class="inputControlBoxs sectionMenuListBoxs">
+                  <li class="selectTitle"><p>민원명</p></li>
+                  <div class="inputControlList">
+                    <input name="mw_title" type="text" placeholder="민원명 입력">
                   </div>
-                </div>
-              </ul>
-              <ul class="inputControlBoxs sectionMenuListBoxs">
-                <li class="selectTitle"><p>민원명</p></li>
-                <div class="inputControlList">
-                  <input type="text" placeholder="민원명 입력" />
-                </div>
-              </ul>
+                </ul>
             </div>
             <!-- 라디오버튼 있는 섹션-->
             <div class="issueManageSectionContDevide">
@@ -268,7 +148,7 @@ margin:10px;
               <div class="issueManageSectionRadioBoxs">
                 <ul class="radioBoxs">
                   <li>
-                    <input type="radio" name="issueManageRadio01" /><span
+                    <input type="radio" name="issueManageRadio01"  value="0" checked  /><span
                       >입력형</span
                     >
                   </li>
@@ -276,12 +156,13 @@ margin:10px;
                     <input
                       type="search"
                       placeholder="주소입력"
+                       name="addressFull"
                       class="searchInputBox01" />
                   </li>
                 </ul>
                 <ul class="radioBoxs menuRadioEvet01">
                   <li>
-                    <input type="radio" name="issueManageRadio01" /><span
+                    <input type="radio" name="issueManageRadio01" value="1"  /><span
                       >선택형</span
                     >
                   </li>
@@ -289,25 +170,23 @@ margin:10px;
                     <!--수정부분 지사-->
                     <div class="issueManageSelectWrappers">
                       <select
-                        name=""
+                        name="sido"
+                        id="sido"
                         class="issueManageHiddenSelect"
-                        id="issueManageSelectBox06"
                         hidden>
                         <option value="전체">전체</option>
-                        <option value="Y1">Y1</option>
-                        <option value="N2">N2</option>
-                        <option value="N3">N3</option>
-                        <option value="N4">N4</option>
-                        <option value="N5">N5</option>
-                        <option value="N6">N6</option>
-                        <option value="N7">N7</option>
+                        <th:block th:each="val:${sidoList}">
+                          <option th:text="${val.sm_name}" th:value="${val.sm_name}"></option>
+                        </th:block>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="issueManageSelects">
-                      <button class="issueManageSelectsTitleBtn"></button>
+                      <button
+                        class="issueManageSelectsTitleBtn" id="sidoText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember sido">
+                         </ul>
                       </div>
                     </div>
                   </li>
@@ -315,20 +194,20 @@ margin:10px;
                     <!--수정부분 지사-->
                     <div class="issueManageSelectWrappers">
                       <select
-                        name=""
+                        name="sgg"
+                        id="sgg"
                         class="issueManageHiddenSelect"
-                        id="issueManageSelectBox07"
                         hidden>
                         <option value="전체">전체</option>
-                        <option value="Y">Y</option>
-                        <option value="N">N</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="issueManageSelects">
-                      <button class="issueManageSelectsTitleBtn"></button>
+                      <button
+                        class="issueManageSelectsTitleBtn" id="sggText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember sgg" id="sggUl">
+                        </ul>
                       </div>
                     </div>
                   </li>
@@ -336,20 +215,20 @@ margin:10px;
                     <!--수정부분 지사-->
                     <div class="issueManageSelectWrappers">
                       <select
-                        name=""
+                        name="emd"
+                        id="emd"
                         class="issueManageHiddenSelect"
-                        id="issueManageSelectBox08"
                         hidden>
-                        <option value="전체1">전체1</option>
-                        <option value="Y2">Y2</option>
-                        <option value="N3">N3</option>
+                        <option value="전체">전체</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="issueManageSelects">
-                      <button class="issueManageSelectsTitleBtn"></button>
+                      <button
+                        class="issueManageSelectsTitleBtn" id="emdText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember emd" id="emdUl">
+                        </ul>
                       </div>
                     </div>
                   </li>
@@ -357,26 +236,26 @@ margin:10px;
                     <!--수정부분 지사-->
                     <div class="issueManageSelectWrappers">
                       <select
-                        name=""
-                        class="issueManageHiddenSelect"
-                        id="issueManageSelectBox09"
+                        name="ri"
+                        id="ri"
+                           class="issueManageHiddenSelect"
                         hidden>
-                        <option value="전체11">전체11</option>
-                        <option value="Y22">Y22</option>
-                        <option value="N33">N33</option>
+                        <option value="전체">전체</option>
                       </select>
                     </div>
                     <!--보여지는 셀렉박스-->
                     <div class="issueManageSelects">
-                      <button class="issueManageSelectsTitleBtn"></button>
+                      <button class="issueManageSelectsTitleBtn"id="riText">전체</button>
                       <div class="sufaceSelectList smallHeight">
-                        <ul class="surfaceSelectListMember"></ul>
+                        <ul class="surfaceSelectListMember" id="riUl">
+                        </ul>
                       </div>
                     </div>
                   </li>
                   <li style="padding: 0px 3px">
                     <div class="inputControlList">
                       <input
+                        name="jibun"
                         type="text"
                         placeholder="지번입력"
                         class="menuAdderssInput01" />
@@ -384,346 +263,99 @@ margin:10px;
                   </li>
                 </ul>
               </div>
+
               <!--issueManageSectionRadioBoxs-->
               <div class="issueManageSectionBtnBoxs">
                 <button class="issueManageTotalBtn">현황통계</button>
                 <button class="newIssueBtn">신규민원</button>
-                <button class="issueManageRegisterBtn">조회하기</button>
+                <button id="searchBtn" class="issueManageRegisterBtn">조회하기</button>
               </div>
             </div>
           </div>
           <!--issueManageSectionCont-->
         </section>
+        </form>
         <main>
-          <div class="issueManageMainContentWrapper">
-            <div class="issueManageMainContent">
+          <div class="privateUseMainContentWrapper">
+            <div class="privateUseMainContent">
+              <div class="dataTitles">
+                <h5>총 검색 건 수<span id="dataTableTotalCount"></span>건</h5>
+              </div>
+            </div>
+          </div>
+               
+	       <div class="">
+			<table id="userTable" class="cell-border nowrap" style="width:100%;" >
+			    <thead>
+			        <tr>
+			            <th>민원명</th>
+			            <th>주소</th>
+			            <th>진행현황</th>
+			            <th>이슈유형</th>
+			            <th>발생일자</th>
+			            <th>완료일</th>
+			        </tr>
+			    </thead>
+			    <!-- tbody 태그 필요 없다. -->
+			</table>
+	
+		  </div>
+              
               <!-- 데이터박스 -->
-              <div class="dataBoxswrappers">
-                <div class="dataBoxCont dataBoxsFirst06">
-                  <ul class="dataTitle">
-                    <li class="largeWidth"><p>민원 명</p></li>
-                    <li class="largeWidth"><p>주소</p></li>
-                  </ul>
-                  <ul class="dataContent">
-                    <a href="" class="linkCont">
-                      <li class="largeWidth">
-                        <p>지상권 미설정토지 보상협의 통보</p>
-                      </li>
-                      <li class="largeWidth">
-                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
-                      </li>
-                    </a>
-                  </ul>
-                  <ul class="dataContent">
-                    <a href="" class="linkCont">
-                      <li class="largeWidth">
-                        <p>지상권 미설정토지 보상협의 통보</p>
-                      </li>
-                      <li class="largeWidth">
-                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
-                      </li>
-                    </a>
-                  </ul>
-                  <ul class="dataContent">
-                    <a href="" class="linkCont">
-                      <li class="largeWidth">
-                        <p>지상권 미설정토지 보상협의 통보</p>
-                      </li>
-                      <li class="largeWidth">
-                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
-                      </li>
-                    </a>
-                  </ul>
-                  <ul class="dataContent">
-                    <a href="" class="linkCont">
-                      <li class="largeWidth">
-                        <p>지상권 미설정토지 보상협의 통보</p>
-                      </li>
-                      <li class="largeWidth">
-                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
-                      </li>
-                    </a>
-                  </ul>
-                  <ul class="dataContent">
-                    <a href="" class="linkCont">
-                      <li class="largeWidth">
-                        <p>지상권 미설정토지 보상협의 통보</p>
-                      </li>
-                      <li class="largeWidth">
-                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
-                      </li>
-                    </a>
-                  </ul>
-                  <ul class="dataContent">
-                    <a href="" class="linkCont">
-                      <li class="largeWidth">
-                        <p>지상권 미설정토지 보상협의 통보</p>
-                      </li>
-                      <li class="largeWidth">
-                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
-                      </li>
-                    </a>
-                  </ul>
-                  <ul class="dataContent">
-                    <a href="" class="linkCont">
-                      <li class="largeWidth">
-                        <p>지상권 미설정토지 보상협의 통보</p>
-                      </li>
-                      <li class="largeWidth">
-                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
-                      </li>
-                    </a>
-                  </ul>
-                  <ul class="dataContent">
-                    <a href="" class="linkCont">
-                      <li class="largeWidth">
-                        <p>지상권 미설정토지 보상협의 통보</p>
-                      </li>
-                      <li class="largeWidth">
-                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
-                      </li>
-                    </a>
-                  </ul>
-                  <ul class="dataContent">
-                    <a href="" class="linkCont">
-                      <li class="largeWidth">
-                        <p>지상권 미설정토지 보상협의 통보</p>
-                      </li>
-                      <li class="largeWidth">
-                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
-                      </li>
-                    </a>
-                  </ul>
-                  <ul class="dataContent">
-                    <a href="" class="linkCont">
-                      <li class="largeWidth">
-                        <p>지상권 미설정토지 보상협의 통보</p>
-                      </li>
-                      <li class="largeWidth">
-                        <p>충청북도 청주시 서원구 현도면 죽전리 423-7</p>
-                      </li>
-                    </a>
-                  </ul>
-                </div>
-                <!-- 오른쪽 좌우스크롤 가진 데이터박스 -->
-                <div class="dataBoxCont dataBoxsSecond06">
-                  <div class="scrollContentBoxies">
-                    <ul class="dataTitle">
-                      <li><p>진행현황</p></li>
-                      <li><p>이슈유형</p></li>
-                      <li><p>발생일자</p></li>
-                      <li><p>완료일</p></li>
-                    </ul>
-                    <ul class="dataContent issueManageLink">
-                      <a href="" class="linkCont02">
-                        <li><p>1000032</p></li>
-                      </a>
-                      <div class="dataContBtnBox">
-                        <li>
-                          <button class="btnDesign issuePopBtn">
-                            이슈보기
-                          </button>
-                        </li>
-                      </div>
-                      <a href="" class="linkCont">
-                        <li><p>1995-06-30</p></li>
-                        <li><p>1995-06-30</p></li>
-                      </a>
-                    </ul>
-                    <ul class="dataContent issueManageLink">
-                      <a href="" class="linkCont02">
-                        <li><p>1000032</p></li>
-                      </a>
-                      <div class="dataContBtnBox">
-                        <li>
-                          <button class="btnDesign issuePopBtn">
-                            이슈보기
-                          </button>
-                        </li>
-                      </div>
-                      <a href="" class="linkCont">
-                        <li><p>1995-06-30</p></li>
-                        <li><p>1995-06-30</p></li>
-                      </a>
-                    </ul>
-                    <ul class="dataContent issueManageLink">
-                      <a href="" class="linkCont02">
-                        <li><p>1000032</p></li>
-                      </a>
-                      <div class="dataContBtnBox">
-                        <li>
-                          <button class="btnDesign issuePopBtn">
-                            이슈보기
-                          </button>
-                        </li>
-                      </div>
-                      <a href="" class="linkCont">
-                        <li><p>1995-06-30</p></li>
-                        <li><p>1995-06-30</p></li>
-                      </a>
-                    </ul>
-                    <ul class="dataContent issueManageLink">
-                      <a href="" class="linkCont02">
-                        <li><p>1000032</p></li>
-                      </a>
-                      <div class="dataContBtnBox">
-                        <li>
-                          <button class="btnDesign issuePopBtn">
-                            이슈보기
-                          </button>
-                        </li>
-                      </div>
-                      <a href="" class="linkCont">
-                        <li><p>1995-06-30</p></li>
-                        <li><p>1995-06-30</p></li>
-                      </a>
-                    </ul>
-                    <ul class="dataContent issueManageLink">
-                      <a href="" class="linkCont02">
-                        <li><p>1000032</p></li>
-                      </a>
-                      <div class="dataContBtnBox">
-                        <li>
-                          <button class="btnDesign issuePopBtn">
-                            이슈보기
-                          </button>
-                        </li>
-                      </div>
-                      <a href="" class="linkCont">
-                        <li><p>1995-06-30</p></li>
-                        <li><p>1995-06-30</p></li>
-                      </a>
-                    </ul>
-                    <ul class="dataContent issueManageLink">
-                      <a href="" class="linkCont02">
-                        <li><p>1000032</p></li>
-                      </a>
-                      <div class="dataContBtnBox">
-                        <li>
-                          <button class="btnDesign issuePopBtn">
-                            이슈보기
-                          </button>
-                        </li>
-                      </div>
-                      <a href="" class="linkCont">
-                        <li><p>1995-06-30</p></li>
-                        <li><p>1995-06-30</p></li>
-                      </a>
-                    </ul>
-                    <ul class="dataContent issueManageLink">
-                      <a href="" class="linkCont02">
-                        <li><p>1000032</p></li>
-                      </a>
-                      <div class="dataContBtnBox">
-                        <li>
-                          <button class="btnDesign issuePopBtn">
-                            이슈보기
-                          </button>
-                        </li>
-                      </div>
-                      <a href="" class="linkCont">
-                        <li><p>1995-06-30</p></li>
-                        <li><p>1995-06-30</p></li>
-                      </a>
-                    </ul>
-                    <ul class="dataContent issueManageLink">
-                      <a href="" class="linkCont02">
-                        <li><p>1000032</p></li>
-                      </a>
-                      <div class="dataContBtnBox">
-                        <li>
-                          <button class="btnDesign issuePopBtn">
-                            이슈보기
-                          </button>
-                        </li>
-                      </div>
-                      <a href="" class="linkCont">
-                        <li><p>1995-06-30</p></li>
-                        <li><p>1995-06-30</p></li>
-                      </a>
-                    </ul>
-                    <ul class="dataContent issueManageLink">
-                      <a href="" class="linkCont02">
-                        <li><p>1000032</p></li>
-                      </a>
-                      <div class="dataContBtnBox">
-                        <li>
-                          <button class="btnDesign issuePopBtn">
-                            이슈보기
-                          </button>
-                        </li>
-                      </div>
-                      <a href="" class="linkCont">
-                        <li><p>1995-06-30</p></li>
-                        <li><p>1995-06-30</p></li>
-                      </a>
-                    </ul>
-                    <ul class="dataContent issueManageLink">
-                      <a href="" class="linkCont02">
-                        <li><p>1000032</p></li>
-                      </a>
-                      <div class="dataContBtnBox">
-                        <li>
-                          <button class="btnDesign issuePopBtn">
-                            이슈보기
-                          </button>
-                        </li>
-                      </div>
-                      <a href="" class="linkCont">
-                        <li><p>1995-06-30</p></li>
-                        <li><p>1995-06-30</p></li>
-                      </a>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+              
               <!--dataBoxswrappers-->
-              <div class="boardPageBoxs">
-                <ul>
-                  <li class="arrowLeftWrapper">
-                    <button>
-                      <img
-                        src="/assets/media/menu01/arrowRightLine02.png"
-                        alt="preBtnImg" />
-                    </button>
-                    <button>
-                      <img
-                        src="/assets/media/menu01/arrowRightLine01.png"
-                        alt="preBtnImg" />
-                    </button>
-                  </li>
-                  <li class="pageCountBoxs">
-                    <p>1</p>
-                    <p>2</p>
-                    <p>3</p>
-                    <p>4</p>
-                    <p>5</p>
-                  </li>
-                  <li class="arrowRightWrapper">
-                    <button>
-                      <img
-                        src="/assets/media/menu01/arrowRightLine01.png"
-                        alt="nextBtnImg" />
-                    </button>
-                    <button>
-                      <img
-                        src="/assets/media/menu01/arrowRightLine02.png"
-                        alt="nextBtnImg" />
-                    </button>
-                  </li>
-                </ul>
-              </div>
+              
               <!--boardPageBoxs-->
+              
             </div>
           </div>
         </main>
       </div>
     </div>
+
+
+    
     <div class="issueManageIssuePopWrapper"></div>
-    <div class="issueManageNewIssuePopWrapper">
+    <div class="issueManageNewIssuePopWrapper"></div>
+    <div class="issueManageIssueTotalWrapper"></div>
+
+    <link rel="stylesheet" href="/assets/css/popup/Issue_development_Popup.css" />
+<div id="issuePopup" class="issuePopup">
+  <div class="popupWrap">
+    <h2>
+      <p>이슈보기</p>
+      <span class="topCloseBtn"></span>
+    </h2>
+    <div class="issue_wrap">
+      <ul>
+        <li class="issue_title">이슈유형</li>
+        <li class="issue_content">
+          지소유자와 계약 > 권리상실 > 해지업무 착오로 인한 지상권 소실
+        </li>
+      </ul>
+    </div>
+    <div class="document_add_btnWrap">
+      <button class="closeBtn finalBtn">닫기</button>
+    </div>
+  </div>
+</div>
+<script>
+  //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+  const issuePopupOpen = document.getElementById("issuePopup");
+
+  if (issuePopupOpen) {
+    issuePopupOpen
+      .querySelectorAll(".topCloseBtn, .finalBtn")
+      .forEach(function (btn) {
+        btn.addEventListener("click", () => {
+          issuePopupOpen.classList.remove("active");
+        });
+      });
+  }
+</script>
 
 <link rel="stylesheet" href="/assets/css/popup/Issue_development_Popup.css" />
-<div id="newcomplaint_Popup" class="newcomplaint_Popup">
+<div id="newcomplaint_Popup" class="newcomplaint_Popup"  th:fragment="newcomplaint">
   <div class="popupWrap">
     <h2>
       <p>신규 민원 등록</p>
@@ -824,8 +456,8 @@ margin:10px;
                 <button class="landStatusPopOpenBtn">검색</button>
               </li>
               <li class="landinfo_content_5"><input type="text" /></li>
-              <li class="landinfo_content_5"><input type="text" /></li>
-              <li class="landinfo_content_5"><input type="text" /></li>
+              <li class="landinfo_content_6"><input type="text" /></li>
+              <li class="landinfo_content_7"><input type="text" /></li>
               <li class="landinfo_content_8">
                 <button class="complaint_addition">추가</button>
               </li>
@@ -846,7 +478,7 @@ margin:10px;
             <li class="daepyo_pilji_list_1">
               <input
                 type="text"
-                placeholder="강원특별자치도 강릉시 강문동 1-1"
+                placeholder=""
               />
             </li>
             <li class="daepyo_pilji_list_2">
@@ -1022,195 +654,898 @@ margin:10px;
 
 <!-- 추가, 검색결과 (토지상태) -->
 <div class="issueManageLandStatusPopWrapper"></div>
-    	
-</div>
-    </div>
-    <div class="issueManageIssueTotalWrapper">
-    	<div id="issueTotalPopContent" hidden>
-    <div class="issueTotalPopWrap">
-      <div class="issueTotalPopContent">
-        <div class="issueTotalPopTitles">
-          <h5>현황 통계</h5>
-          <button class="issueTotalcloseBtn">
-            <img src="/assets/media/popup/issueTotalMedia/closeBtn.png" alt="close" />
-         </button>
-        </div>
-        <div class="issueTotalSectionContDevide">
-          <ul class="selectContent sectionMenuListBoxs">
-            <li class="selectTitle"><p>발생지사</p></li>
-            <!--수정부분 지사-->
-            <div class="selectWrappers">
-              <select
-                name=""
-                class="issueTotalHiddenSelect"
-                id="issueTotalHiddenSelectBox01"
-                multiple="multiple"
-                hidden>
-                <option value="전체">전체</option>
-                <option value="지사1">지사1</option>
-                <option value="지사2">지사2</option>
-                <option value="지사3">지사3</option>
-                <option value="지사4">지사4</option>
-              </select>
-            </div>
-            <!--보여지는 셀렉박스-->
-            <div class="surfaceSelects">
-              <button class="issueTotalSelectsTitleBtn"></button>
-              <div class="sufaceSelectList">
-                <ul class="surfaceSelectListMember  checkBoxsContent"></ul>
-              </div>
-            </div>
-          </ul>
-          <ul class="selectContent sectionMenuListBoxs">
-            <li class="selectTitle"><p>진행현황</p></li>
-            <!--수정부분 지사-->
-            <div class="selectWrappers">
-              <select
-                name=""
-                class="issueTotalHiddenSelect"
-                id="issueTotalHiddenSelectBox02"
-                multiple="multiple"
-                hidden>
-                <option value="전체">전체</option>
-                <option value="임시저장">임시저장</option>
-                <option value="민원발생">민원발생</option>
-                <option value="대응방안수립">대응방안수립</option>
-                <option value="협의중">협의중</option>
-                <option value="완료">완료</option>
-              </select>
-            </div>
-            <!--보여지는 셀렉박스-->
-            <div class="surfaceSelects">
-              <button class="issueTotalSelectsTitleBtn"></button>
-              <div class="sufaceSelectList">
-                <ul class="surfaceSelectListMember"></ul>
-              </div>
-            </div>
-          </ul>
-          <ul class="selectContent sectionMenuListBoxs">
-            <li class="selectTitle"><p>발생연월</p></li>
-            <!--수정부분 지사-->
-            <div class="selectWrappers">
-              <select
-                name=""
-                class="issueTotalHiddenSelect"
-                id="issueTotalHiddenSelectBox03"
-                multiple="multiple"
-                hidden>
-                <option value="1월">1월</option>
-                <option value="2월">2월</option>
-                <option value="3월">3월</option>
-                <option value="4월">4월</option>
-                <option value="5월">5월</option>
-                <option value="6월">6월</option>
-                <option value="7월">7월</option>
-                <option value="8월">8월</option>
-                <option value="9월">9월</option>
-                <option value="10월">10월</option>
-                <option value="11월">11월</option>
-                <option value="12월">12월</option>
-              </select>
-            </div>
-            <!--보여지는 셀렉박스-->
-            <div class="surfaceSelects">
-              <button class="issueTotalSelectsTitleBtn"></button>
-              <div class="sufaceSelectList">
-                <ul class="surfaceSelectListMember selectChoice"></ul>
-              </div>
-            </div>
-          </ul>
-        </div>
-        <div class="issueTotalDataWrapper">
-          <div class="issueTotalDataScrollBoxs">
-          <div class="issueDataTitleBoxs">
-             <ul>
-                <li><h5>민원발생</h5></li>
-                <li><h5>대응방안수립</h5></li>
-                <li><h5>협의중</h5></li>
-                <li><h5>완료</h5></li>
-             </ul>
-          </div>
-         <div class="issueDataBoxs">
-             <img src="/assets/media/popup/issueTotalMedia/dataImg.png" alt="dataImg">
-         </div>
-         </div><!--issueTotalDataScrollBoxs-->
-        </div>
-      <div class="issueDataTextContent">
-              <div class="issueDataTable">
-                  <ul class="titles">
-                     <li><p>구분</p></li>
-                     <li><p>민원발생</p></li>
-                     <li><p>대응방안수립</p></li>
-                     <li><p>협의중</p></li>
-                     <li><p>완료</p></li>
-                  </ul>
-                 <div class="issueDataTextScrollBoxs">
-                  <ul class="datas">
-                    <li><p>서울지사</p></li>
-                    <li><p>3</p></li>
-                    <li><p>14</p></li>
-                    <li><p>0</p></li>
-                    <li><p>0</p></li>
-                  </ul>
-                  <ul class="datas">
-                    <li><p>경인지사</p></li>
-                    <li><p>3</p></li>
-                    <li><p>14</p></li>
-                    <li><p>0</p></li>
-                    <li><p>0</p></li>
-                  </ul>
-                  <ul class="datas">
-                    <li><p>충청지사</p></li>
-                    <li><p>3</p></li>
-                    <li><p>14</p></li>
-                    <li><p>0</p></li>
-                    <li><p>0</p></li>
-                  </ul>
-                  <ul class="datas">
-                    <li><p>대전지사</p></li>
-                    <li><p>3</p></li>
-                    <li><p>14</p></li>
-                    <li><p>0</p></li>
-                    <li><p>0</p></li>
-                  </ul>
-                  <ul class="datas">
-                    <li><p>영남지사</p></li>
-                    <li><p>3</p></li>
-                    <li><p>14</p></li>
-                    <li><p>0</p></li>
-                    <li><p>0</p></li>
-                  </ul>
-                  <ul class="datas">
-                    <li><p>영남지사</p></li>
-                    <li><p>3</p></li>
-                    <li><p>14</p></li>
-                    <li><p>0</p></li>
-                    <li><p>0</p></li>
-                  </ul>
-                  <ul class="datas">
-                    <li><p>영남지사</p></li>
-                    <li><p>3</p></li>
-                    <li><p>14</p></li>
-                    <li><p>0</p></li>
-                    <li><p>0</p></li>
-                  </ul>
-                  <ul class="datas">
-                    <li><p>영남지사</p></li>
-                    <li><p>3</p></li>
-                    <li><p>14</p></li>
-                    <li><p>0</p></li>
-                    <li><p>0</p></li>
-                  </ul>
-              </div>
+<script>
+  //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+  const newcomplaintPopupOpen = document.getElementById("newcomplaint_Popup");
 
-          </div>
+  if (newcomplaintPopupOpen) {
+    newcomplaintPopupOpen
+      .querySelectorAll(".topCloseBtn, .finalBtn")
+      .forEach(function (btn) {
+        btn.addEventListener("click", () => {
+          newcomplaintPopupOpen.classList.remove("active");
+        });
+      });
+  }
+
+  // 토지 정보
+  // 버튼 눌렀을시 ul 추가 삭제 이벤트
+
+  function infoadd() {
+    // ul이 들어갈 공간 지정
+    const landinfoList = document.querySelector(".landinfo_box");
+    // 체크박스 시작 id번호
+    let checkboxCounter = 2;
+
+    landinfoList.addEventListener("click", function (event) {
+      if (
+        event.target &&
+        event.target.classList.contains("complaint_addition")
+      ) {
+        addLandInfo();
+      }
+      if (event.target && event.target.classList.contains("complaint_delete")) {
+        deleteLandInfo(event.target);
+      }
+    });
+
+    function addLandInfo() {
+      // ul 추가
+      const newListItem = document.createElement("ul");
+      // 추가 되는 ul에 "landinfo_content" class 이름 붙힘
+      newListItem.classList.add("landinfo_content");
+
+      // ul 추가 될때마다 체크박스 id에 +1씩 더해서 나오게
+      const checkboxId = `newcomplaint_checkbox${checkboxCounter++}`;
+
+      // 추가 버튼 누를시 추가되는 내용
+      newListItem.innerHTML = `
+              <li class="landinfo_content_2">${
+                document.querySelectorAll(".landinfo_content").length + 1
+              }</li>
+              <li class="landinfo_content_3">
+                <input type="checkbox" id="${checkboxId}" class="approve_checkbox" />
+                <label for="${checkboxId}" class="approve_checkbox_label"></label>
+              </li>
+              <li class="landinfo_content_4">
+                <input type="text" />
+                <button class="landStatusPopOpenBtn">검색</button>
+              </li>
+              <li class="landinfo_content_5"><input type="text" /></li>
+              <li class="landinfo_content_6"><input type="text" /></li>
+              <li class="landinfo_content_7"><input type="text" /></li>
+              <li class="landinfo_content_8">
+                <div class="landinfocontent_btn_wrap1">
+                  <button class="complaint_addition">추가</button>
+                </div>
+                <div class="landinfocontent_btn_wrap2">
+                  <button class="complaint_delete">삭제</button>
+                </div>
+              </li>
+                `;
+
+                // 검색 버튼에 class명 추가
+      // ul들어갈 공간 div의 자식 요소로 ul지정
+      landinfoList.appendChild(newListItem);
+    }
+
+    // 행 삭제
+    function deleteLandInfo(button) {
+      // 누른 삭제 버튼이 위치한 행
+      const listItem = button.closest(".landinfo_content");
+      // 누른 삭제 버튼이 있는 행 제거
+      if (listItem) {
+        landinfoList.removeChild(listItem);
+      }
+      // 순번 업데이트
+      updateOrderNumbers();
+    }
+
+    // 순번 업데이트
+    function updateOrderNumbers() {
+      // 모든 .landinfo_content 요소를 선택
+      document.querySelectorAll(".landinfo_content").forEach((item, index) => {
+        // 모든 .landinfo_content의 순번을 업데이트
+        item.querySelector(".landinfo_content_2").textContent = index + 1;
+      });
+    }
+  }
+
+  infoadd();
+  /* 민원 내용 민원인/토지주 추가 + 셀렉트 */
+
+  function complaintsselect() {
+    function initializeCustomSelect(contentitem) {
+      const nowIssueSelectBox03 = contentitem.querySelector("select");
+
+      if (!nowIssueSelectBox03) return;
+
+      const popCustomSelectBox03 = contentitem.querySelector(
+        ".Popup_Custom_SelectBox"
+      );
+      const popCustomSelectBtns03 = popCustomSelectBox03.querySelector(
+        ".Popup_Custom_SelectBtns"
+      );
+
+      // 중복을 피하기 위해 초기화
+      popCustomSelectBtns03.innerHTML = "";
+
+      nowIssueSelectBox03.querySelectorAll("option").forEach((option) => {
+        const optionValue03 = option.value;
+        const li03 = document.createElement("li");
+        const button03 = document.createElement("button");
+        button03.classList.add("PopupMoreSelectBtn");
+        button03.type = "button";
+        button03.textContent = optionValue03;
+        li03.appendChild(button03);
+        popCustomSelectBtns03.appendChild(li03);
+      });
+
+      const selectViewButton = popCustomSelectBox03.querySelector(
+        ".Popup_Custom_SelectView"
+      );
+      selectViewButton.addEventListener("click", function () {
+        selectViewButton.classList.toggle("active");
+        popCustomSelectBtns03.classList.toggle("active");
+      });
+
+      // 버튼 클릭시 옵션 선택 처리
+      popCustomSelectBtns03
+        .querySelectorAll(".PopupMoreSelectBtn")
+        .forEach((moreBtn) => {
+          moreBtn.addEventListener("click", function () {
+            const moreBtnText = moreBtn.innerText;
+            const editViewBtn = popCustomSelectBox03.querySelector(
+              ".Popup_Custom_SelectView"
+            );
+            editViewBtn.textContent = moreBtnText;
+            editViewBtn.classList.remove("active");
+            popCustomSelectBtns03.classList.remove("active");
+            nowIssueSelectBox03.value = moreBtn.textContent;
+
+            console.log(`Selected value: ${nowIssueSelectBox03.value}`);
+          });
+        });
+    }
+
+    function newcomplaintSelect03() {
+      const newcomplaintSelectWrapitems = document.querySelectorAll(
+        "#newcomplaint_Popup .popSelectWrap"
+      );
+      newcomplaintSelectWrapitems.forEach((contentitem) => {
+        initializeCustomSelect(contentitem);
+      });
+    }
+
+    // 페이지로드시 기존의 select 요소 초기화
+    newcomplaintSelect03();
+
+    const landinfoList = document.querySelector(".com_content_contents_1");
+
+    landinfoList.addEventListener("click", function (event) {
+      if (
+        event.target &&
+        event.target.classList.contains("complaint_addition")
+      ) {
+        addLandInfo();
+      }
+      if (event.target && event.target.classList.contains("complaint_delete")) {
+        deleteLandInfo(event.target);
+      }
+    });
+
+    function addLandInfo() {
+      const newListItem = document.createElement("ul");
+      newListItem.classList.add("landowner_wrap");
+
+      newListItem.innerHTML = `
+            <li class="landowner_num"><input type="text" value="${
+              document.querySelectorAll(".landowner_wrap").length + 1
+            }" readonly /></li>
+            <li><input type="text" /></li>
+            <li><input type="text" /></li>
+            <li><input type="text" /></li>
+            <li><input type="text" /></li>
+            <li class="popSelectWrap">
+                <div class="hidden_SelectBox">
+                    <select hidden>
+                        <option value="Y">Y</option>
+                        <option value="N">N</option>
+                    </select>
+                </div>
+                <div class="Popup_Custom_SelectBox">
+                    <button class="Popup_Custom_SelectView">Y/N</button>
+                    <ul class="Popup_Custom_SelectBtns"></ul>
+                </div>
+            </li>
+            <li class="landowner_btns">
+                <div class="landinfocontent_btn_wrap1">
+                    <button class="complaint_addition">추가</button>
+                </div>
+                <div class="landinfocontent_btn_wrap2">
+                    <button class="complaint_delete">삭제</button>
+                </div>
+            </li>
+        `;
+
+      landinfoList.appendChild(newListItem);
+
+      // 추가된 커스텀 셀렉트 요소 초기화
+      initializeCustomSelect(newListItem.querySelector(".popSelectWrap"));
+    }
+
+    // 행 삭제
+    function deleteLandInfo(button) {
+      const listItem = button.closest(".landowner_wrap");
+      if (listItem) {
+        landinfoList.removeChild(listItem);
+      }
+      updateOrderNumbers();
+    }
+
+    // 순번 업데이트
+    function updateOrderNumbers() {
+      document.querySelectorAll(".landowner_wrap").forEach((item, index) => {
+        item.querySelector(".landowner_num input").value = index + 1;
+      });
+    }
+  }
+  complaintsselect();
+
+  // textarea 자동 높이 조절
+
+  const textareas = document.querySelectorAll(".auto_textarea");
+
+  // 각 textarea에 대해 input 이벤트 리스너를 추가
+  textareas.forEach((textarea) => {
+    textarea.addEventListener("input", function () {
+      // 텍스트 영역의 높이를 자동으로 설정하여 초기화
+      this.style.height = "auto";
+      // 내용의 높이에 따라 텍스트 영역의 높이를 설정
+      this.style.height = this.scrollHeight + "px";
+    });
+  });
+</script>
+
+<script>
+  // 파일첨부 추가 스크립트
+  // 파일 첨부 기본 모습
+
+  const defaultNewComplaintRegiFileUploadWrap = document.querySelectorAll(
+    ".popfileUploadDisplay"
+  );
+
+  defaultNewComplaintRegiFileUploadWrap[0].classList.add("active");
+
+  // 파일 첨부시 모습 변경, x버튼 클릭시 비우기
+
+  const newcomplaintRegiFileEvent = () => {
+    if (document.getElementById("complaint_contents_contents3_Popup_file")) {
+      const newComplaintRegiPopup_myPcFiles = document.getElementById(
+        "complaint_contents_contents3_Popup_file"
+      );
+      const newComplaintRegiFiles = newComplaintRegiPopup_myPcFiles.files;
+      // input[type file]을 가진 제일 큰 부모
+      const newComplaintRegiFileInfo = newComplaintRegiPopup_myPcFiles.closest(
+        ".complaint_contents_content3_file"
+      );
+      // 업로드시 보이는 영역
+      const popfileUploadAfterWrap = newComplaintRegiFileInfo.querySelector(
+        ".popfileUploadAfter"
+      );
+      const allPopupNewComplaintRegiContents =
+        popfileUploadAfterWrap.querySelectorAll(".popcontents");
+
+      var newComplaintRegipopfileInfoName = "";
+      var newComplaintRegipopfileInfoSize = "";
+      var newComplaintRegipopfileInfoType = "";
+
+      newComplaintRegiPopup_myPcFiles.addEventListener("change", function () {
+        // 기존의 ul 초기화
+        const popExistContents =
+          popfileUploadAfterWrap.querySelectorAll(".popcontents");
+
+        popExistContents.forEach((list) => {
+          list.remove();
+        });
+
+        // 삭제 잘 되었는지 확인
+        const newPopExistContents =
+          popfileUploadAfterWrap.querySelectorAll(".popcontents");
+        console.log(newPopExistContents.length);
+
+        if (newComplaintRegiPopup_myPcFiles.files.length > 0) {
+          for (
+            let i = 0;
+            i <= newComplaintRegiPopup_myPcFiles.files.length - 1;
+            i++
+          ) {
+            const thiscomplaintRegiPopFileName =
+              newComplaintRegiPopup_myPcFiles.files[i].name;
+            const thiscomplaintRegiPopFileSize =
+              newComplaintRegiPopup_myPcFiles.files[i].size;
+            const thiscomplaintRegiPopFileType =
+              newComplaintRegiPopup_myPcFiles.files[i].type;
+
+            // 사이즈를 바꾸자
+            const complaintRegiformattedSize =
+              byteTransformForPop_New_complaintRegi(
+                thiscomplaintRegiPopFileSize
+              );
+
+            // 문자열에 변수를 담자
+            newComplaintRegipopfileInfoName = thiscomplaintRegiPopFileName;
+            newComplaintRegipopfileInfoSize = complaintRegiformattedSize;
+            newComplaintRegipopfileInfoType = thiscomplaintRegiPopFileType;
+
+            // 파일 지우는 버튼용 li
+
+            const popdeleteLi =
+              '<li class="popbtnbox"><button class="popfileDeleteBtn"></button></li>';
+
+            // 파일 아이콘, 파일명 들어가는 li
+            const popfilenameBoxLi = `<li class="popcontent popfilenameBox"><figure class="poptypeIcon"></figure><p class="popfileNameText">${newComplaintRegipopfileInfoName}</p></li >`;
+
+            // 업로드 상태
+            const popuploadStatusLi = '<li class="popcontent"><p>-</p></li>';
+
+            // 파일 크기 들어가는 li
+            const popfileSizeLi = `<li class="popcontent">
+                  <p class="popfileSizeText"> ${newComplaintRegipopfileInfoSize} </p>
+              </li>`;
+
+            const listBox =
+              popdeleteLi +
+              popfilenameBoxLi +
+              popuploadStatusLi +
+              popfileSizeLi;
+
+            // ul.contents 만들기
+            const popContentsUl = document.createElement("ul");
+            popContentsUl.classList.add("popcontents");
+
+            popContentsUl.innerHTML = listBox;
+
+            popfileUploadAfterWrap.appendChild(popContentsUl);
+
+            // 값 잘 담겼는지 확인
+
+            console.log("담긴 파일 이름:" + thiscomplaintRegiPopFileName);
+
+            // 다음 걸 받기 위해 비워주기
+
+            newComplaintRegipopfileInfoName = "";
+            newComplaintRegipopfileInfoSize = "";
+            newComplaintRegipopfileInfoType = "";
+          }
+
+          defaultNewComplaintRegiFileUploadWrap.forEach((wrap) => {
+            wrap.classList.remove("active");
+          });
+          defaultNewComplaintRegiFileUploadWrap[1].classList.add("active");
+
+          if (newComplaintRegiPopup_myPcFiles.files.length > 2) {
+            popfileUploadAfterWrap.classList.add("scroll");
+          } else {
+            popfileUploadAfterWrap.classList.remove("scroll");
+          }
+        } else {
+          newComplaintRegiPopup_myPcFiles.value = "";
+          defaultNewComplaintRegiFileUploadWrap.forEach((wrap) => {
+            wrap.classList.remove("active");
+          });
+          defaultNewComplaintRegiFileUploadWrap[0].classList.add("active");
+        }
+      });
+
+      // 개별 delbtn 누르면 생기는 이벤트
+      popfileUploadAfterWrap.addEventListener("click", function (event) {
+        if (event.target.classList.contains("popfileDeleteBtn")) {
+          const popfileDeleteBtns =
+            popfileUploadAfterWrap.querySelectorAll(".popfileDeleteBtn");
+          const popfileDelBtn = event.target;
+          const popnearbyContents = event.target.closest(".popcontents");
+          const popfileNameToRemove =
+            popnearbyContents.querySelector(".popfileNameText").textContent;
+
+          // 파일명이랑 틀린 것만 저장하는 함수
+          removeFileforPop_new_complaintRegi(popfileNameToRemove);
+          popnearbyContents.remove();
+
+          for (
+            let b = 0;
+            b < newComplaintRegiPopup_myPcFiles.files.length;
+            b++
+          ) {
+            console.log(
+              "현재 input[type=file]의 files name: " +
+                newComplaintRegiPopup_myPcFiles.files[b].name
+            );
+          }
+
+          console.log(
+            "남은 파일의 개수:" + newComplaintRegiPopup_myPcFiles.files.length
+          );
+
+          if (newComplaintRegiPopup_myPcFiles.files.length < 3) {
+            popfileUploadAfterWrap.classList.remove("scroll");
+          }
+
+          // 현재 선택된 파일이 없으면 input 값 비우기
+          if (newComplaintRegiPopup_myPcFiles.files.length === 0) {
+            newComplaintRegiPopup_myPcFiles.value = "";
+            defaultNewComplaintRegiFileUploadWrap.forEach((wrap) => {
+              wrap.classList.remove("active");
+            });
+            defaultNewComplaintRegiFileUploadWrap[0].classList.add("active");
+          }
+        }
+      });
+
+      // 전체 삭제 버튼
+      const popallDeleteFileBtn = popfileUploadAfterWrap.querySelector(
+        ".popAllDeleteFileBtn"
+      );
+
+      popallDeleteFileBtn.addEventListener("click", function () {
+        const nowAllContents =
+          popfileUploadAfterWrap.querySelectorAll(".popcontents");
+        nowAllContents.forEach((contents) => {
+          contents.remove();
+        });
+
+        newComplaintRegiPopup_myPcFiles.value = "";
+
+        // 값 잘 사라졌는지 확인
+        console.log(newComplaintRegiPopup_myPcFiles.value);
+
+        if (newComplaintRegiPopup_myPcFiles.files.length == 0) {
+          newComplaintRegiPopup_myPcFiles.value = "";
+          defaultNewComplaintRegiFileUploadWrap.forEach((wrap) => {
+            wrap.classList.remove("active");
+          });
+          defaultNewComplaintRegiFileUploadWrap[0].classList.add("active");
+          popfileUploadAfterWrap.classList.remove("scroll");
+        }
+      });
+
+      // 용량 크기 변환하는 함수
+      function byteTransformForPop_New_complaintRegi(bytes) {
+        const dataSizeforPop = ["Bytes", "KB", "MB", "GB", "TB"];
+
+        if (bytes === 0) return "not available";
+
+        const d = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+        if (d === 0) return `${bytes} ${dataSizeforPop[d]}`;
+        return `${(bytes / 1024 ** d).toFixed(1)} ${dataSizeforPop[d]}`;
+      }
+
+      // 파일 삭제처리 하는 함수
+      const removeFileforPop_new_complaintRegi = (popfileNameToRemove) => {
+        const filesArrayforPop = Array.from(
+          newComplaintRegiPopup_myPcFiles.files
+        );
+        const popNewDataTransfer = new DataTransfer();
+        filesArrayforPop.forEach((file) => {
+          if (file.name !== popfileNameToRemove) {
+            popNewDataTransfer.items.add(file);
+          }
+        });
+        newComplaintRegiPopup_myPcFiles.files = popNewDataTransfer.files; // 새로운 files 설정
+      };
+    }
+  };
+
+  newcomplaintRegiFileEvent();
+
+  // 토지상태 항목 검색결과 추가
+
+  const landStatusPopLoadEvet = () => {
+
+    const newcomplaintLandInfoBox = document.querySelector('#newcomplaint_Popup .landinfo_box');
+
+    newcomplaintLandInfoBox.addEventListener('click',function (event){
+      if (event.target.classList.contains('landStatusPopOpenBtn')) {
+        const landStatusPopup = document.getElementById('landStatusPopup');
+        landStatusPopup.classList.add('active');
+      }
+    })
+  }
+  //landStatusPopLoadEvet()
+
+
+
+</script>
+
+<link rel="stylesheet" href="/assets/css/popup/issueTotalPop.css" />
+<div id="issueTotalPopContent">
+  <div class="issueTotalPopWrap">
+    <div class="issueTotalPopContent">
+      <div class="issueTotalPopTitles">
+        <h5>현황 통계</h5>
+        <button class="issueTotalcloseBtn">
+          <img src="/assets/media/popup/issueTotalMedia/closeBtn.png" alt="close" />
+       </button>
       </div>
-
+      <div class="issueTotalSectionContDevide">
+        <ul class="selectContent sectionMenuListBoxs">
+          <li class="selectTitle"><p>발생지사</p></li>
+          <!--수정부분 지사-->
+          <div class="selectWrappers">
+            <select
+              name=""
+              class="issueTotalHiddenSelect"
+              id="issueTotalHiddenSelectBox01"
+              multiple="multiple"
+              hidden>
+              <option value="전체">전체</option>
+              <option value="지사1">지사1</option>
+              <option value="지사2">지사2</option>
+              <option value="지사3">지사3</option>
+              <option value="지사4">지사4</option>
+            </select>
+          </div>
+          <!--보여지는 셀렉박스-->
+          <div class="surfaceSelects">
+            <button class="issueTotalSelectsTitleBtn"></button>
+            <div class="sufaceSelectList">
+              <ul class="surfaceSelectListMember  checkBoxsContent"></ul>
+            </div>
+          </div>
+        </ul>
+        <ul class="selectContent sectionMenuListBoxs">
+          <li class="selectTitle"><p>진행현황</p></li>
+          <!--수정부분 지사-->
+          <div class="selectWrappers">
+            <select
+              name=""
+              class="issueTotalHiddenSelect"
+              id="issueTotalHiddenSelectBox02"
+              multiple="multiple"
+              hidden>
+              <option value="전체">전체</option>
+              <option value="임시저장">임시저장</option>
+              <option value="민원발생">민원발생</option>
+              <option value="대응방안수립">대응방안수립</option>
+              <option value="협의중">협의중</option>
+              <option value="완료">완료</option>
+            </select>
+          </div>
+          <!--보여지는 셀렉박스-->
+          <div class="surfaceSelects">
+            <button class="issueTotalSelectsTitleBtn"></button>
+            <div class="sufaceSelectList">
+              <ul class="surfaceSelectListMember"></ul>
+            </div>
+          </div>
+        </ul>
+        <ul class="selectContent sectionMenuListBoxs">
+          <li class="selectTitle"><p>발생연월</p></li>
+          <!--수정부분 지사-->
+          <div class="selectWrappers">
+            <select
+              name=""
+              class="issueTotalHiddenSelect"
+              id="issueTotalHiddenSelectBox03"
+              multiple="multiple"
+              hidden>
+              <option value="1월">1월</option>
+              <option value="2월">2월</option>
+              <option value="3월">3월</option>
+              <option value="4월">4월</option>
+              <option value="5월">5월</option>
+              <option value="6월">6월</option>
+              <option value="7월">7월</option>
+              <option value="8월">8월</option>
+              <option value="9월">9월</option>
+              <option value="10월">10월</option>
+              <option value="11월">11월</option>
+              <option value="12월">12월</option>
+            </select>
+          </div>
+          <!--보여지는 셀렉박스-->
+          <div class="surfaceSelects">
+            <button class="issueTotalSelectsTitleBtn"></button>
+            <div class="sufaceSelectList">
+              <ul class="surfaceSelectListMember selectChoice"></ul>
+            </div>
+          </div>
+        </ul>
       </div>
+      <div class="issueTotalDataWrapper">
+        <div class="issueTotalDataScrollBoxs">
+        <div class="issueDataTitleBoxs">
+           <ul>
+              <li><h5>민원발생</h5></li>
+              <li><h5>대응방안수립</h5></li>
+              <li><h5>협의중</h5></li>
+              <li><h5>완료</h5></li>
+           </ul>
+        </div>
+       <div class="issueDataBoxs">
+           <img src="/assets/media/popup/issueTotalMedia/dataImg.png" alt="dataImg">
+       </div>
+       </div><!--issueTotalDataScrollBoxs-->
+      </div>
+    <div class="issueDataTextContent">
+            <div class="issueDataTable">
+                <ul class="titles">
+                   <li><p>구분</p></li>
+                   <li><p>민원발생</p></li>
+                   <li><p>대응방안수립</p></li>
+                   <li><p>협의중</p></li>
+                   <li><p>완료</p></li>
+                </ul>
+               <div class="issueDataTextScrollBoxs">
+                <ul class="datas">
+                  <li><p>서울지사</p></li>
+                  <li><p>3</p></li>
+                  <li><p>14</p></li>
+                  <li><p>0</p></li>
+                  <li><p>0</p></li>
+                </ul>
+                <ul class="datas">
+                  <li><p>경인지사</p></li>
+                  <li><p>3</p></li>
+                  <li><p>14</p></li>
+                  <li><p>0</p></li>
+                  <li><p>0</p></li>
+                </ul>
+                <ul class="datas">
+                  <li><p>충청지사</p></li>
+                  <li><p>3</p></li>
+                  <li><p>14</p></li>
+                  <li><p>0</p></li>
+                  <li><p>0</p></li>
+                </ul>
+                <ul class="datas">
+                  <li><p>대전지사</p></li>
+                  <li><p>3</p></li>
+                  <li><p>14</p></li>
+                  <li><p>0</p></li>
+                  <li><p>0</p></li>
+                </ul>
+                <ul class="datas">
+                  <li><p>영남지사</p></li>
+                  <li><p>3</p></li>
+                  <li><p>14</p></li>
+                  <li><p>0</p></li>
+                  <li><p>0</p></li>
+                </ul>
+                <ul class="datas">
+                  <li><p>영남지사</p></li>
+                  <li><p>3</p></li>
+                  <li><p>14</p></li>
+                  <li><p>0</p></li>
+                  <li><p>0</p></li>
+                </ul>
+                <ul class="datas">
+                  <li><p>영남지사</p></li>
+                  <li><p>3</p></li>
+                  <li><p>14</p></li>
+                  <li><p>0</p></li>
+                  <li><p>0</p></li>
+                </ul>
+                <ul class="datas">
+                  <li><p>영남지사</p></li>
+                  <li><p>3</p></li>
+                  <li><p>14</p></li>
+                  <li><p>0</p></li>
+                  <li><p>0</p></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
 
     </div>
+
   </div>
-    </div>
+</div>
+<script>
+
+/* x표시 클릭시 닫기 */
+
+const issueTotalcloseBtn = document.querySelector(".issueTotalcloseBtn");
+const issueTotalPopContentWrap = document.getElementById("issueTotalPopContent");
+
+if(issueTotalcloseBtn){
+issueTotalcloseBtn.addEventListener("click" , () => {
+  issueTotalPopContentWrap.classList.remove("active");
+})
+}
+
+/* 셀렉트박스 함수 */
+
+const issueTotalSelectEvet = () => {
+
+const issueTotalSelectsTitleBtn = document.querySelectorAll(".issueTotalPopWrap .issueTotalSelectsTitleBtn");
+const issueTotalSelectList = document.querySelectorAll(".issueTotalPopWrap .sufaceSelectList");
+const issueTotalSelectListMember = document.querySelectorAll(".issueTotalPopWrap .sufaceSelectList .surfaceSelectListMember");
+const issueTotalselectWrappers = document.querySelectorAll(".issueTotalHiddenSelect"); //셀렉박스
+
+
+let issueTotalAnswer = "";
+let issueTotalCheckAnswer = "";
+
+//셀렉버튼 최초값 함수
+const initialValues = () => {
+   if(issueTotalselectWrappers.length > 0){
+    for(let d = 0; d <= issueTotalselectWrappers.length - 1; d++){
+
+       let issueTotalselectValuesInitial = issueTotalselectWrappers[d].children;
+       issueTotalSelectsTitleBtn[d].innerText = issueTotalselectValuesInitial[0].value; //셀렉박스의 첫번째 값들이 surfaceSelectsTitleBtn값의 첫 값이 됨
+       issueTotalselectWrappers[d].value = issueTotalSelectsTitleBtn[d].innerText; //셀렉박스의 value값을 surfaceSelectsTitleBtn값으로 설정
+       
+       if(issueTotalSelectListMember[d].classList.contains("selectChoice")){ 
+          issueTotalSelectsTitleBtn[d].innerText = `선택`;
+          }
+   }
+ }
+}
+
+if(issueTotalselectWrappers.length > 0){
+
+initialValues();//최초의값
+
+//체크박스가 아닐 경우, 셀렉박스 값  li p값에 담기 
+for(let i = 0; i <= issueTotalselectWrappers.length - 1; i++){
+
+   const selectValues = issueTotalselectWrappers[i].children; //셀렉박스옵션값 
+
+   for(let x = 0; x <= selectValues.length - 1; x++){
+
+     issueTotalAnswer += `<li><p>${selectValues[x].value}</p></li>`;
+
+       //체크박스가 있는 경우, 셀렉박스 값 li input p 값 이용
+       if(issueTotalSelectListMember[i].classList.contains("checkBoxsContent")){ //체크박스
+         issueTotalCheckAnswer += `<li>
+           <input
+             type="checkbox"
+             id="issueTotalPopCheckBox0${x+1}"
+             name="issueTotalPopCheck" />
+           <label for="issueTotalPopCheckBox0${x+1}"></label><p>${selectValues[x].value}</p></li>`
+       }
+   }
+
+   issueTotalSelectListMember[i].innerHTML = issueTotalSelectListMember[i].classList.contains("checkBoxsContent") ? issueTotalCheckAnswer : issueTotalAnswer;
+   issueTotalAnswer = '';
+   issueTotalCheckAnswer = '';
+}
+}
+
+issueTotalSelectsTitleBtn.forEach((btns, index) => {
+     
+  btns.addEventListener("click" , () => {
+    const nextSiblings = btns.nextElementSibling;
+
+    issueTotalSelectsTitleBtn.forEach((otherBtn) => {
+     if (otherBtn !== btns) {
+       otherBtn.classList.remove("active");
+     }
+    });
+    btns.classList.toggle("active");
+    nextSiblings.classList.toggle("active");
+
+     //surfaceSelectList관련 toggle버튼
+    issueTotalSelectList.forEach((box, boxIndex) => {
+     //셀렉버튼의 인덱스와  surfaceSelectList 인덱스번호가 일치하면 메뉴를 오픈하고, btn에 active를 포함
+     if (index === boxIndex) {
+        box.classList.toggle(
+           "active",
+           btns.classList.contains("active")
+        );
+     } else {
+        //그렇지 않으면 메뉴닫기
+        box.classList.remove("active");
+     }
+     });
+
+  });
+ 
+
+  issueTotalSelectList.forEach((list) => {
+     list.addEventListener("click" , (event) => {
+      
+       const thisBtns = event.target.parentElement.parentElement.parentElement.previousElementSibling;
+       const selectContent =  event.target.parentElement.parentElement.parentElement.parentElement.previousElementSibling.children[0];//셀렉박스
+       let currentSelect = selectContent.getAttribute("id");//셀렉박스아이디 가져오기
+       
+       if (event.target.nodeName === "P") {
+
+           //빌생지사클릭시
+           if( currentSelect === "issueTotalHiddenSelectBox01"){
+               return issueTotalSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
+               issueTotalSelectList.forEach((lists) => lists.classList.remove("active"));
+           }else{ 
+               let currentSelectValue = document.getElementById(currentSelect); //현재 셀렉박스 가져오기
+               return thisBtns.innerText = event.target.innerText,
+               $(currentSelectValue).val(event.target.innerText),//셀렉박스 값에 현재 클릭된 값의 텍스트 담기 
+               console.log(currentSelectValue.value), //셀렉박스값표시
+               issueTotalSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
+               issueTotalSelectList.forEach((lists) => lists.classList.remove("active"));
+           }
+
+       }
+           
+       if(event.target.nodeName === "LABEL" || event.target.nodeName === "INPUT[TYPE='CHECKBOX']" ){ return; }
+
+
+ });
+
+});
+
+
+})
+}
+
+issueTotalSelectEvet();
+
+
+/* 체크박스 함수 */
+
+const issueTatalCheckboxes = (checkboxes) =>  {
+const issueTotalPopCheck = document.getElementsByName("issueTotalPopCheck");
+checkboxes = issueTotalPopCheck;
+
+const valuesArray = []; //셀렉박스 값 저장할 배열
+
+if(checkboxes){
+Array.from(checkboxes).forEach((checkBtn, index) => {
+
+  //버튼 내 p값 가져오기 
+  const values = checkBtn.nextElementSibling.nextElementSibling.innerText;
+
+  checkBtn.addEventListener("change", () => {
+
+      //체크박스를 체크했을 때
+      if (checkBtn.checked) {
+          // 첫 번째 체크박스가 체크되었을 때
+          if (index === 0) {
+              // 나머지 체크박스들의 체크 상태를 해제, 배열에서 제거
+              for (let i = 1; i < checkboxes.length; i++) {
+                  checkboxes[i].checked = false; // 체크 해제
+                  const valueToRemove = checkboxes[i].nextElementSibling.nextElementSibling.innerText;
+                  const indexToRemove = valuesArray.indexOf(valueToRemove);
+                  if (indexToRemove !== -1) {
+                      valuesArray.splice(indexToRemove, 1); // 배열에서 제거
+                  }
+              }
+          } else {
+              // 첫 번째 체크박스가 체크되어 있을 때, 다른 체크박스를 체크하면 첫 번째 체크박스 해제
+              checkboxes[0].checked = false;
+              const valueToRemove = checkboxes[0].nextElementSibling.nextElementSibling.innerText;
+              const indexToRemove = valuesArray.indexOf(valueToRemove);
+              if (indexToRemove !== -1) {
+                  valuesArray.splice(indexToRemove, 1); // 배열에서 제거
+              }
+          }
+          
+          // 배열에 값 추가
+          valuesArray.push(values);
+      } else {
+          // 체크박스가 체크 해제되었을 때 배열에서 값 제거
+          const index = valuesArray.indexOf(values);
+          if (index !== -1) {
+              valuesArray.splice(index, 1);
+          }
+      }
+
+      // 변경된 배열 값을 버튼의 텍스트에 삽입
+      const displayElement = checkboxes[0].parentElement.parentElement.parentElement.previousElementSibling;
+      displayElement.innerText = valuesArray.join(', '); // 배열을 문자열로 변환해서 출력
+
+  });
+});
+
+}
+
+}
+
+issueTatalCheckboxes();
+
+  </script>
+
     
     <script type="module" src="/js/module/surfaceMain.js"></script>
     <script src="/js/issue/issueManageRadioEvet.js"></script>

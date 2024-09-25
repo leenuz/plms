@@ -1,126 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      
-      layout:decorate="~{layout/default_layout}">
- <head>
+<html lang="en">
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
-  
-	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	
- <link rel="stylesheet" href="/css/issue/issueCodeMgmt.css" /> 
-	  
-		<script src="/js/songyu/menu01.js"></script>	
-		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
-		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
-
-div.dt-center-in-div {
-  margin: 0 auto;
-      float: right;
-    margin-right: 30px;
-   
-}
-div.dt-center-in-div>div{
-
-display:inline;
-}
-
-div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
-}
-
-
-.dt-title{
-
-text-align:center;
-width:180px;
-float:left;
-
-}
-.dt-buttons{
-display:inline-block;
-
-width:180px;
-
-}
-.dt-length{
-display:inline-block;
-}
-.dt-button{
-
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
-
-}
-
-.dt-paging {
-text-align: center;
-}
-
-.dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-    
-    
-}
-
-.bottom{
-text-align:center;
-
-}
-.top{
-
-text-align:right;
-margin:10px;
-
-}
-
-		</style>
-		
     <title>이슈코드관리</title>
+    <link rel="stylesheet" href="/assets/css/header.css" />
+    <link rel="stylesheet" href="/assets/css/menu06/issueCodeMgmt.css" />
   </head>
-<th:block layout:fragment="content">
+  <body>
     <!-- 이슈코드 관리 -->
     <div class="issueCodeMgmtWrappers">
-    
+      <div class="issueCodeMgmtHeader"></div>
       <main id="issueCodeMgmt">
         <div class="mainTitle">
           <h1>이슈코드관리</h1>
@@ -137,8 +27,7 @@ margin:10px;
                     <li class="radioContent">
                       <input
                         type="radio"
-                        name="issueCodeMgmt_rightsSecured"
-                        checked="true"
+                        name="issueCodeMgmt_rightsSecured" 
                         /><span>전체</span>
                     </li>
                     <li class="radioContent">
@@ -176,8 +65,7 @@ margin:10px;
                       <input
                         type="radio"
                         name="issueCodeMgmt_contractStatus" 
-                        checked="true"
-                       /><span>전체</span>
+                        /><span>전체</span>
                     </li>
                     <li class="radioContent">
                       <input
@@ -269,7 +157,7 @@ margin:10px;
               <!--privateUseSectionRadioBoxs-->
               <div class="privateUseSectionBtnBoxs">
                 <button class="manageCodeBtn issueCodeMgmtBtn">
-                  <a href="/issue/codeMgmt"
+                  <a href="/components/subHtml/menu06/codeMgmt.html"
                     >코드관리</a
                   >
                 </button>
@@ -327,7 +215,8 @@ margin:10px;
                     <td>
                       <p>지가상승으로 인한 과거설정지료 과소</p>
                     </td>
-                    <td>
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>추가보상 요구</p>
                     </td>
                   </tr>
@@ -338,7 +227,8 @@ margin:10px;
                     <td>
                       <p>오류매설 및 존치기간 이의제기</p>
                     </td>
-                    <td>
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>철거 또는 추가보상 요구</p>
                     </td>
                   </tr>
@@ -391,17 +281,23 @@ margin:10px;
                     <td rowspan="3">
                       <p>소유자 변경 없음</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>등기진행 누락</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>타권리와의 충돌</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>계약서 미날인</p>
                     </td>
                   </tr>
@@ -410,17 +306,23 @@ margin:10px;
                     <td rowspan="3">
                       <p>소유자 변경 발생</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>변경일로 부터 5년 이내</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>변경일로 부터 20년 이내</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>변경일로 부터 20년 초과</p>
                     </td>
                   </tr>
@@ -429,17 +331,23 @@ margin:10px;
                     <td rowspan="3">
                       <p>권리상실</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>토지개발사업 편입 / 지상권 소멸</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>등기공무원의 지상권 이기누락(소실)</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>해지업무 착오로 인한 지상권 소실</p>
                     </td>
                   </tr>
@@ -451,22 +359,30 @@ margin:10px;
                     <td rowspan="4">
                       <p>계약자 변경 발생</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>사실을 안날, 3년 이내</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>계약일로 부터 10년 이내</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>계약일로 부터 20년 이내</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>계약일로 부터 20년 초과</p>
                     </td>
                   </tr>
@@ -481,12 +397,16 @@ margin:10px;
                     <td rowspan="2">
                       <p>소유자 변경 없음</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>보상금 지급(일부지급 포함)</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>보상금 미지급</p>
                     </td>
                   </tr>
@@ -495,7 +415,9 @@ margin:10px;
                     <td>
                       <p>소유자 변경 발생</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>보상금 지급 / 미지급</p>
                     </td>
                   </tr>
@@ -506,7 +428,9 @@ margin:10px;
                     <td>
                       <p>토지소유자 협의없이 매설</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>오류 / 무단매설</p>
                     </td>
                   </tr>
@@ -514,7 +438,9 @@ margin:10px;
                     <td>
                       <p>토지개발사업 편입</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>송유관 매설부지의 권리 변경</p>
                     </td>
                   </tr>
@@ -522,7 +448,9 @@ margin:10px;
                     <td>
                       <p>토지소유자 변경</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>국유지의 용도폐지(사유지)</p>
                     </td>
                   </tr>
@@ -530,12 +458,16 @@ margin:10px;
                     <td rowspan="2">
                       <p>등기불가사유 존재</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>지번 확인 불가</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>소유자 확인 불가</p>
                     </td>
                   </tr>
@@ -590,12 +522,16 @@ margin:10px;
                     <td rowspan="2">
                       <p>미 부과</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>영구 무상점용</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>소액 미청구</p>
                     </td>
                   </tr>
@@ -604,12 +540,16 @@ margin:10px;
                     <td rowspan="2">
                       <p>미 고지</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>점용기간 미경과, 연납부 기한 경과</p>
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>점용기간 경과</p>
                     </td>
                   </tr>
@@ -627,7 +567,9 @@ margin:10px;
                     <td>
                       <p>미 고지</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>점용허가 재검증</p>
                     </td>
                   </tr>
@@ -635,7 +577,9 @@ margin:10px;
                     <td>
                       <p>토지소유자 변경</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>사지의 국유지 편입</p>
                     </td>
                   </tr>
@@ -643,7 +587,9 @@ margin:10px;
                     <td>
                       <p>신규발견</p>
                     </td>
-                    <td>
+                    
+                    <!-- class="dataDetail" 추가 -->
+                    <td class="dataDetail">
                       <p>ILI 조사결과 확인</p>
                     </td>
                   </tr>
@@ -655,7 +601,7 @@ margin:10px;
       </main>
     </div>
     <!-- script -->
-    <script type="module" src="/js/module/surfaceMain.js"></script>
+    <script type="module" src="/components/surfaceMain.js"></script>
     <script src="/components/js/menu06/issueCodeMgmt.js"></script>
-  </th:block>
+  </body>
 </html>

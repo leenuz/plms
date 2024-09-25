@@ -1,0 +1,1208 @@
+@charset "UTF-8";
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body * {
+    font-family: pretendard;
+}
+
+li {
+    list-style: none;
+}
+
+select {
+    outline: 0;
+    border: 1px solid #CFDDF2;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #6E7D88;
+    text-indent: 12px;
+}
+
+input {
+    border: 0;
+    outline: 0;
+}
+
+input:focus {
+    border: 0;
+}
+
+textarea:focus {
+    border: 0;
+    outline: 0;
+}
+
+button {
+    border: 0;
+}
+textarea {
+    border: 0;
+    outline: 0;
+    resize: none;
+}
+
+
+/* css추가 */ 
+
+.unsetOccupationDetailsWrappers{
+
+    overflow-y: scroll;
+  }
+  
+ /* 스크롤바 */
+  
+.unsetOccupationDetailsWrappers::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+.unsetOccupationDetailsWrappers::-webkit-scrollbar-thumb {
+      height: 30%;
+      border-radius: 10px;
+      background: #d2d2d2;
+    }
+  
+  
+.unsetOccupationDetailHeader{
+      width: 100px;
+      height: 100vh;
+      float:left;
+  }
+
+
+#unsetOccupationDetails {
+    width: calc(100% - 100px);
+    padding: 0 20px 20px 20px;
+    box-sizing: border-box;
+    float: left;
+}
+
+#unsetOccupationDetails .mainTitle {
+    padding: 30px 0;
+    border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+}
+
+#unsetOccupationDetails .mainTitle h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #31394C;
+    padding-left: 20px;
+    box-sizing: border-box;
+
+}
+#unsetOccupationDetails .subTitle {
+    font-size: 18px;
+    font-weight: 700;
+    color: #31394C;
+    margin-bottom: 24px;
+}
+
+#unsetOccupationDetails .basicOwnerInfo {
+    padding: 27px 0 40px 0;
+}
+#unsetOccupationDetails .thirdTitle {
+    margin-bottom: 15px;
+}
+.thirdTitle h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2B7DE1;
+}
+.contWrap {
+    width: 100%;
+}
+.contBox {
+}
+.contBoxMini01 {
+    width: 46.2%;
+}
+.contBoxMini02 {
+    width: 52.5%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contWrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+#unsetOccupationDetails .mapFigure {
+    background: url(/assets/media/menu01/images/groundMap.png) no-repeat center;
+    background-size: cover;
+}
+#unsetOccupationDetails .contentDetailBox {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #CDDBF0;
+    overflow: hidden;
+}
+#unsetOccupationDetails .basicOwnerInfo .contentDetailBox {
+    height: 272px;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth1 {
+    width: 100%;
+}
+#unsetOccupationDetails .titles {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+    background: #F7F9FC;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth1 .titles .title {
+    width: 23.5%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth1 .titles .title.title01 {
+    width: 29.3%;
+}
+#unsetOccupationDetails .titles .title {
+    border-right: 1px solid #CDDBF0;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #000;
+    box-sizing: border-box;
+}
+#unsetOccupationDetails .titles .title:last-child {
+    border-right: 0;
+}
+#unsetOccupationDetails .contents {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth1 .contents .content {
+    width: 23.5%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth1 .contents .content.content01 {
+    width: 29.3%;
+}
+#unsetOccupationDetails .contents .content {
+    border-right: 1px solid #CDDBF0;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+    box-sizing: border-box;
+}
+#unsetOccupationDetails .contents .content:last-child {
+    border-right: 0;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth2 {
+    width: 100%;
+}
+
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth2 .titles {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+    background: #F7F9FC;
+}
+
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth2 .titles .title {
+    width: 23.5%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #000;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth2 .titles .title.title03 {
+    width: 54%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth2 .contents {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+}
+
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth2 .contents .content {
+    width: 23.5%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth2 .contents .content.content03 {
+    width: 54%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth3 {
+    width: 100%;
+}
+
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth3 .titles {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+    background: #F7F9FC;
+}
+
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth3 .titles .title {
+    width: 32.9%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #000;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth3 .titles .title.title02 {
+    width: 40.2%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth3 .titles .title.title03 {
+    width: 26.8%;
+}
+
+
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth3 .contents {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth3 .contents:last-child {
+    border-bottom: 0;
+}
+
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth3 .contents .content {
+    width: 32.9%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth3 .contents .content.content02 {
+    width: 40.2%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini02 .depth3 .contents .content.content03 {
+    width: 26.8%;
+}
+
+.viewDetailButton {
+    width: 116px;
+    height: 27px;
+    border-radius: 20px;
+    background: rgba(204, 224, 255, 0.6);
+    color: #2B7DE1;
+    font-size: 13px;
+    font-weight: 600;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini03 {
+    width: 100%;
+}
+#unsetOccupationDetails .contBoxMini03 .contentDetailBox {
+    height: auto;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini03 .contents:last-child {
+    border-bottom: 0;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini03 .titles .title {
+    width: 10.1%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini03 .titles .title.title01 {
+    width:6.7%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini03 .titles .title.title04 {
+    width:38.2%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini03 .titles .title.title05 {
+    width:17.6%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini03 .contents .content {
+    width: 10.1%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini03 .contents .content01 {
+    width:6.7%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini03 .contents .content.content04 {
+    width:38.2%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini03 .contents .content.content05 {
+    width:17.6%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 {
+    width: 100%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .contentDetailBox {
+    height: auto;
+    display: flex;
+    align-items: center;
+}
+
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .contentDetailBox .depth1 {
+    width: 89%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .contentDetailBox .depth2 {
+    width: 11%;
+    border-left: 1px solid #CDDBF0;
+}
+
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .contentDetailBox .depth1 .titles {
+    width: 100%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .contents:last-child {
+    border-bottom: 0;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .titles .title {
+    width: 12.9%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .titles .title.title01 {
+    width:5.6%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .titles .title.title02 {
+    width:43.4%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .titles .title.title06 {
+    width: 12.4%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .contents .content {
+    width: 12.9%;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+}
+
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .thirdTitle {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 13px;
+}
+#unsetOccupationDetails .viewAllBtn {
+    width: 134px;
+    height: 39px;
+    border-radius: 20px;
+    background: #2B7DE1;
+    color: #fff;
+}
+#unsetOccupationDetails .landListViewBtn {
+    width: 121px;
+    height: 27px;
+    border-radius: 20px;
+    background: #2B7DE1;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .depth2 .contents .content01 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .depth2 .titles {
+    width: 100%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .depth2 .titles .title01 {
+    width: 100%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .depth2 .contents {
+    height: 90px;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .contents .content01 {
+    width:5.6%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .contents .content02 {
+    width:43.4%;
+}
+#unsetOccupationDetails .basicOwnerInfo .contBoxMini04 .contents .content06 {
+    width:12.4%;
+}
+
+#unsetOccupationDetails .occupationPermitBasicInfo {
+    padding-bottom: 40px;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .titles {
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contentDetailBox .depth1 .titles .title {
+    width: 11%;
+    text-align: center;
+    line-height: 45px;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contentDetailBox .depth1 .titles .title.title01 {
+    width: 6%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contentDetailBox .depth1 .contents .content {
+    width: 11%;
+    text-align: center;
+    line-height: 45px;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contentDetailBox .depth1 .contents .content.content01 {
+    width: 6%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contentDetailBox .depth2 .titles .title {
+    width: 100%;
+    text-align: center;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contentDetailBox .depth2 .contents .content {
+    width: 100%;
+    text-align: center;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contentDetailBox .depth2 .contents:last-child {
+    border-bottom: 0;
+}
+#unsetOccupationDetails .lastContents {
+    border-bottom: 0;
+}
+
+/* 점용 허가 및 점용료 납부 현황 */
+
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox {
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .titles {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .titles.bluetitle {
+    background: #ECF1F8;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .titles .title {
+    width: 100%;
+    line-height: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox {
+    display: flex;
+    
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth1 {
+    width: 5%;
+    border-right: 1px solid #CDDBF0;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth1 .titles {
+    height: 90px;
+
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth1 .contents {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth1 .contents .content {
+    width: 100%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth1 .titles .title {
+    width: 100%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth2 {
+    width: 30.8%;
+    border-right: 1px solid #CDDBF0;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth3 {
+    width: 18.2%;
+    border-right: 1px solid #CDDBF0;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth3 .titles {
+    width: 100%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth3 .contents {
+    width: 100%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth3 .contents .content {
+    width: 100%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth4 {
+    width: 35.7%;
+    border-right: 1px solid #CDDBF0;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth4 .contents {
+    width: 100%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth4 .contents .content {
+    width: 100%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth5 {
+    width: 10%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth5 .titles {
+    height: 90px;
+
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini05 .contentDetailBox .depth5 .contents {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contentScr {
+    height: 90px;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini06 .depth1 .titles {
+    padding-right: 4px;
+    box-sizing: border-box;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini06 .contentDetailBox .depth1 .titles .title{
+    width: 16.6%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini06 .contentDetailBox .depth1 .titles .title.title02{
+    width: 51.2%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini06 .contentDetailBox .depth1 .contents .content{
+    width: 16.6%;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contBoxMini06 .contentDetailBox .depth1 .contents .content.content02{
+    width: 51.2%;
+}
+#unsetOccupationDetails .changeHistory .depth1 .titles {
+    padding-right: 4px;
+    box-sizing: border-box;
+}
+#unsetOccupationDetails .changeHistory .contBoxMini06 .contentDetailBox .depth1 .titles .title{
+    width: 16.6%;
+}
+#unsetOccupationDetails .changeHistory .contBoxMini06 .contentDetailBox .depth1 .titles .title.title02{
+    width: 51.2%;
+}
+#unsetOccupationDetails .changeHistory .contBoxMini06 .contentDetailBox .depth1 .contents .content{
+    width: 16.6%;
+}
+#unsetOccupationDetails .changeHistory .contBoxMini06 .contentDetailBox .depth1 .contents .content.content02{
+    width: 51.2%;
+}
+#unsetOccupationDetails .changeHistory .contentScr {
+    height: 140px;
+}
+
+.fileSaveBtn {
+    background: #2B7DE1;
+    color: #fff;
+}
+#unsetOccupationDetails input[type=file] {
+    display: none;
+}
+
+#unsetOccupationDetails .fileBtnWrap label {
+    width: 81px;
+    height: 27px;
+    background: #2B7DE1;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.switchBtn {
+    background: #4E5871;
+}
+.fileDownloadBtn {
+    width: 116px;
+    height: 27px;
+    border-radius: 20px;
+    background: #4E5871;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+.downloadIcon {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    background: url(/assets/media/menu01/images/download.png) no-repeat center;
+    background-size: contain;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contentDetailBox .depth1 .contents .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#unsetOccupationDetails .occupationPermitBasicInfo .contentDetailBox .depth1 .contents .content.btnsWrap {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#unsetOccupationDetails > section {
+    padding-bottom: 40px;
+    
+}
+#unsetOccupationDetails .usageApproval .contentDetailBox .depth1 .titles .title {
+    width: 8.5%;
+}
+#unsetOccupationDetails .usageApproval .contentDetailBox .depth1 .titles .title.title03 {
+    width: 13.3%;
+}
+#unsetOccupationDetails .usageApproval .contentDetailBox .depth1 .titles .title.title04 {
+    width: 18.1%;
+}
+#unsetOccupationDetails .usageApproval .contentDetailBox .depth1 .titles .title.title05 {
+    width: 22.3%;
+}
+#unsetOccupationDetails .usageApproval .contentDetailBox .depth1 .contents .content {
+    width: 8.5%;
+}
+#unsetOccupationDetails .usageApproval .contentDetailBox .depth1 .contents .content.content03 {
+    width: 13.3%;
+}
+#unsetOccupationDetails .usageApproval .contentDetailBox .depth1 .contents .content.content04 {
+    width: 18.1%;
+}
+#unsetOccupationDetails .usageApproval .contentDetailBox .depth1 .contents .content.content05 {
+    width: 22.3%;
+}
+#unsetOccupationDetails .mergedSurfaceInfo {
+    padding-bottom: 40px;
+}
+#unsetOccupationDetails .mergedSurfaceInfo .depth1 .titles .title {
+    width: 8.6%;
+}
+#unsetOccupationDetails .mergedSurfaceInfo .depth1 .titles .title.title02 {
+    width: 10.1%;
+}
+#unsetOccupationDetails .mergedSurfaceInfo .depth1 .titles .title.title04 {
+    width: 33.1%;
+}
+#unsetOccupationDetails .mergedSurfaceInfo .depth1 .contents .content {
+    width: 8.6%;
+}
+#unsetOccupationDetails .mergedSurfaceInfo .depth1 .contents .content.content02 {
+    width: 10.1%;
+}
+
+#unsetOccupationDetails .mergedSurfaceInfo .depth1 .contents .content.content04 {
+    width: 33.1%;
+}
+#unsetOccupationDetails .changeHistory .depth1 .titles .title {
+    width: 15.2%;
+}
+#unsetOccupationDetails .changeHistory .depth1 .titles .title.title01 {
+    width: 6.8%;
+}
+#unsetOccupationDetails .changeHistory .depth1 .titles .title.title04 {
+    width: 62.1%;
+}
+#unsetOccupationDetails .changeHistory .depth1 .contents {
+    height: 70px;
+    min-height: 70px;
+}
+#unsetOccupationDetails .changeHistory .depth1 .contents .content {
+    width: 15.2%;
+    line-height: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#unsetOccupationDetails .changeHistory .depth1 .contents .content.content01 {
+    width: 6.8%;
+}
+#unsetOccupationDetails .changeHistory .depth1 .contents .content.content04 {
+    width: 62.1%;
+}
+#unsetOccupationDetails .parcelAttachments .fileUploadWrap {
+    width: 100%;
+    margin-bottom: 18px;
+    height: 130px;
+    overflow-y: scroll;
+    border: 1px dashed #CDDBF0;
+    border-radius: 5px;
+}
+#unsetOccupationDetails .parcelAttachments .fileUploadWrap::-webkit-scrollbar {
+    width: 4px;
+}
+
+#unsetOccupationDetails .parcelAttachments .fileUploadWrap::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+
+#unsetOccupationDetails .parcelAttachments .fileUploadBox {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    background: #F7F9FC;
+}
+
+#unsetOccupationDetails .parcelAttachments .fileUploadBox p {
+    font-size: 14px;
+    font-weight: 600;
+    color: #88A2C8;
+}
+
+#unsetOccupationDetails .parcelAttachments .contentScr {
+    height: 90px;
+}
+#unsetOccupationDetails .contentScr {
+    overflow-y: scroll;
+}
+#unsetOccupationDetails .contentScr::-webkit-scrollbar {
+    width: 4px;
+}
+
+#unsetOccupationDetails .contentScr::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+#unsetOccupationDetails .myPc {
+    width: 81px;
+    height: 27px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #2B7DE1;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+#unsetOccupationDetails .parcelAttachments .subTitle {
+    display: flex;
+    align-items: center;
+    gap: 21px;
+}
+.fileUploadIcon {
+    width: 35px;
+    height: 35px;
+}
+#unsetOccupationDetails .parcelAttachments .contWrap {
+    margin-bottom: 18px;
+}
+#unsetOccupationDetails .parcelAttachments .contentDetailBox {
+    margin-bottom: 18px;
+}
+#unsetOccupationDetails .parcelAttachments .depth1 .titles {
+    padding-right: 4px;
+    box-sizing: border-box;
+}
+#unsetOccupationDetails .parcelAttachments .depth1 .titles .title {
+    width: 16%;
+}
+#unsetOccupationDetails .parcelAttachments .depth1 .titles .title.title03 {
+    width: 59%;
+}
+#unsetOccupationDetails .parcelAttachments .depth1 .titles .title.title01 {
+    width: 8.6%;
+}
+#unsetOccupationDetails .parcelAttachments .depth1 .contents .content {
+    width: 16%;
+}
+#unsetOccupationDetails .parcelAttachments .depth1 .contents .content.content03 {
+    width: 59%;
+}
+#unsetOccupationDetails .parcelAttachments .depth1 .contents .content.content01 {
+    width: 8.6%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* label */
+
+#unsetOccupationDetails input[type=checkbox] {
+    display: none;
+}
+
+#unsetOccupationDetails label {
+    width: 21px;
+    height: 21px;
+    border-radius: 5px;
+    background: #EFF6FF;
+    display: inline-block;
+    position: relative;
+}
+#unsetOccupationDetails input[type=checkbox]:checked ~ label {
+    background: #4E5871;
+}
+#unsetOccupationDetails input[type=checkbox]:checked ~ label::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 14px;
+    height: 10px;
+    background: url(/assets/media/menu01/images/checkIcon.png) no-repeat center;
+    background-size: contain;
+    
+}
+#unsetOccupationDetails .addBtn {
+    color: #fff;
+    background: #2B7DE1;
+}
+
+#unsetOccupationDetails .delBtn {
+    background: #9A9A9A;
+    color: #fff;
+}
+#unsetOccupationDetails .registBtn {
+    background: #4E5871;
+    color: #fff;
+}
+#unsetOccupationDetails .editing .newBtnWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#unsetOccupationDetails .editing .registBtn {
+    display: block;
+    border: 0;
+}
+.fileBtn {
+    width: 129px;
+    height: 37px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+#unsetOccupationDetails .btnWrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+#unsetOccupationDetails .potentialIssues .subTitle {
+    display: flex;
+    justify-content: flex-start;
+    gap: 16px;
+}
+#unsetOccupationDetails .potentialIssues .issueAdd {
+    width: 81px;
+    height: 27px;
+    background: #2B7DE1;
+    border-radius: 20px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#unsetOccupationDetails .potentialIssues .depth1 .titles .title {
+    width: 8.6%;
+}
+
+#unsetOccupationDetails .potentialIssues .depth1 .titles .title.title03 {
+    width: 16.2%;
+}
+#unsetOccupationDetails .potentialIssues .depth1 .titles .title.title04 {
+    width: 12.8%;
+}
+
+#unsetOccupationDetails .potentialIssues .depth1 .contents .content {
+    width: 8.6%;
+}
+
+#unsetOccupationDetails .potentialIssues .depth1 .contents .content.content03 {
+    width: 16.2%;
+}
+#unsetOccupationDetails .potentialIssues .depth1 .contents .content.content04 {
+    width: 12.8%;
+}
+#unsetOccupationDetails .potentialIssues .contWrap .contBox07 .depth1 .contents .content05 {
+    width: 12.8%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#unsetOccupationDetails .potentialIssues .contWrap .depth1 .contents .content04 .btnWrap {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #CDDBF0;
+}
+
+#unsetOccupationDetails .potentialIssues .contWrap .depth1 .contents .content04 .btnWrap:last-child {
+    border-right: 0;
+}
+#unsetOccupationDetails .potentialIssues .btnBox {
+    display: flex;
+}
+#unsetOccupationDetails .miniBtn {
+    width: 74px;
+    height: 27px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#unsetOccupationDetails .addBtn {
+    background: #fff;
+    border: 1px solid #2B7DE1;
+    color: #2B7DE1;
+}
+
+#unsetOccupationDetails .delBtn {
+    background: #9A9A9A;
+    color: #fff;
+}
+#unsetOccupationDetails .editBtn {
+    background: rgba(204, 224, 255, 0.6);
+    color: #2B7DE1;
+}
+
+#unsetOccupationDetails .potentialIssuesChangeHistory .titles .title {
+    width: 5.6%;
+}
+#unsetOccupationDetails .potentialIssuesChangeHistory .titles .title.title02 {
+    width: 8.4%;
+}
+#unsetOccupationDetails .potentialIssuesChangeHistory .titles .title.title03 {
+    width: 13.4%;
+}
+#unsetOccupationDetails .potentialIssuesChangeHistory .titles .title.title04 {
+    width: 59.2%;
+}
+#unsetOccupationDetails .potentialIssuesChangeHistory .contents .content {
+    width: 5.6%;
+}
+#unsetOccupationDetails .potentialIssuesChangeHistory .contents .content.content02 {
+    width: 8.4%;
+}
+#unsetOccupationDetails .potentialIssuesChangeHistory .contents .content.content03 {
+    width: 13.4%;
+}
+#unsetOccupationDetails .potentialIssuesChangeHistory .contents .content.content04 {
+    width: 59.2%;
+}
+
+/* 잠재이슈 대응방안 메뉴얼 */
+
+#unsetOccupationDetails .potentialIssuesResponseManual .titles .title {
+    width: 11.8%;
+}
+#unsetOccupationDetails .potentialIssuesResponseManual .titles .title.title01 {
+    width: 69.5%;
+}
+#unsetOccupationDetails .potentialIssuesResponseManual .titles .title.title02 {
+    width: 6.4%;
+}
+#unsetOccupationDetails .potentialIssuesResponseManual .contents .content {
+    width: 11.8%;
+}
+#unsetOccupationDetails .potentialIssuesResponseManual .contents .content.content01 {
+    width: 69.5%;
+}
+#unsetOccupationDetails .potentialIssuesResponseManual .contents .content.content02 {
+    width: 6.4%;
+}
+#unsetOccupationDetails .potentialIssuesResponseManual .contWrap .depth1 .contents .content.btnsWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 메모 */
+#unsetOccupationDetails .memoSection .titles {
+    padding-right: 4px;
+    box-sizing: border-box;
+}
+#unsetOccupationDetails .memoSection .titles .title {
+    width: 11.2%;
+}
+#unsetOccupationDetails .memoSection .titles .title.title03 {
+    width: 59.4%;
+}
+#unsetOccupationDetails .memoSection .titles .title.title04 {
+    width: 6.5%;
+}
+#unsetOccupationDetails .memoSection .contents .content {
+    width: 11.2%;
+}
+#unsetOccupationDetails .memoSection .contents .content.content03 {
+    width: 59.4%;
+}
+#unsetOccupationDetails .memoSection .contents .content.content04 {
+    width: 6.5%;
+}
+#unsetOccupationDetails .memoSection .contents .content.btnBox {
+    display: flex;
+}
+#unsetOccupationDetails .memoSection .contents .content.btnBox .editBefore,
+#unsetOccupationDetails .memoSection .contents .content.btnBox .editAfter {
+    width: 100%;
+}
+#unsetOccupationDetails .memoSection .contents .content.btnBox .editBefore {
+    display: flex;
+    justify-content: center;
+}
+#unsetOccupationDetails .memoSection .contents.editing .content.btnBox .editBefore {
+    display: none;
+}
+#unsetOccupationDetails .memoSection .contents .content.btnBox .editAfter {
+    display: none;
+}
+#unsetOccupationDetails .memoSection .contents.editing .content.btnBox .editAfter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#unsetOccupationDetails .memoSection .contents .content.btnBox .btnWrap {
+    width: 50%;
+    justify-content: center;
+}
+#unsetOccupationDetails .memoSection .contents .content.btnBox .btnWrap:first-child {
+    border-right: 1px solid #CDDBF0;
+}
+#unsetOccupationDetails .memoSection .contentScr {
+    height: 180px;
+}
+/* 수정 전일 때 */
+
+
+#unsetOccupationDetails .memoSection .contents .editSpace input[type=text] {
+    color: #3C3C3C;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+
+}
+#unsetOccupationDetails .memoSection .contents .editSpace input[type=text]::placeholder {
+    
+    color: #3C3C3C;
+}
+
+/* 수정중일때 */
+
+#unsetOccupationDetails .memoSection .contents.editing .editSpace {
+    padding: 6px;
+    box-sizing: border-box;
+    line-height: normal;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#unsetOccupationDetails .memoSection .contents.editing .editSpace .editingContent {
+    border-radius: 10px;
+    background: #EDF2F9;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #6E7D88;
+    
+}
+#unsetOccupationDetails .memoSection .contents.editing .editSpace .editingHideContent {
+    display: none;
+}
+#unsetOccupationDetails .memoSection .contents.editing .editSpace .editBtn {
+    background: rgba(180, 180, 180, 0.6);
+    color: #707070;
+}
+#unsetOccupationDetails .memoSection .contents.editing .editSpace input[type=text] {
+    color: #6E7D88;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+
+}
+#unsetOccupationDetails .memoSection .contents.editing .editSpace input[type=text]::placeholder {
+    
+    color: #6E7D88;
+}
+
+
+/* 이전, 출력 버튼 */
+
+.finalBtnBox {
+    padding-bottom: 40px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.finalBtn {
+    width: 116px;
+    height: 44px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.finalBtn.backBtn {
+    background: #919191;
+}
+
+.finalBtn.printBtn {
+    background: #2B7DE1;
+}
+
+/* a링크 추가 */
+
+.finalBtn .reviseLink{ 
+    color:#2B7DE1; 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* input */
+#unsetOccupationDetails input[type=text] {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+}
+#unsetOccupationDetails input[type=text]::placeholder {
+    color: #3c3c3c;
+}
+
+/* input readonly */
+#unsetOccupationDetails input.notWriteInput {
+    background: transparent;
+}
+
+#unsetOccupationDetails textarea {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+}
+#unsetOccupationDetails textarea::placeholder {
+    text-align: center;
+    color: #3c3c3c;
+}

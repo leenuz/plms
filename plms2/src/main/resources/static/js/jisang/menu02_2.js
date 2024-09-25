@@ -427,12 +427,13 @@ function loadDataTable(params){
 
                     if (isButtonCell) {
                        if(target.closest('td').index() === 12){
+						// 해지등록 클릭
                             const buttonClass = event.target.className;
 
                             if(buttonClass=="regisRemoveBtn"){
                                 url= "/jisang/landTerminationRegistration?idx=" + data.idx +"&index=" +data.index;        //해지등록
                             }else{
-                                url = "/jisang/groundDetail?idx=" + data.idx+"&index=" +data.index;      //상세보기
+                                url = "/jisang/easementDetails?idx=" + data.idx+"&index=" +data.index;      //상세보기
                             }
                              window.location = url;
                        }else if(target.closest('td').index() === 13){
@@ -444,8 +445,7 @@ function loadDataTable(params){
 
                        }
                     } else {
-
-                        url = "/jisang/groundDetail?idx=" + data.idx;
+                        url = "/jisang/easementDetails?idx=" + data.idx;
                         window.location = url;
                     }
 											   

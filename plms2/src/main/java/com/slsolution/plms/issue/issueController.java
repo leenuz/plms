@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,9 +44,14 @@ public class issueController {
 	private MainService mainService;
 	@GetMapping(path="/menu06_1") //http://localhost:8080/api/get/dbTest
     public ModelAndView menu06_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		HashMap params = new HashMap();
+		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+
 		ModelAndView mav=new ModelAndView();
+		mav.addObject("jisaList",jisalist);
+		mav.addObject("sidoList",sidolist);
+ 
 		mav.setViewName("content/issue/menu06_1");
 		return mav;
 	}
@@ -58,6 +64,53 @@ public class issueController {
 		mav.setViewName("content/issue/issueCodeMgmt");
 		return mav;
 	}
+	@GetMapping(path="/codeMgmt") //http://localhost:8080/api/get/dbTest
+    public ModelAndView codeMgmt(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/issue/codeMgmt");
+		return mav;
+	}
+	@GetMapping(path="/complaintManage") //http://localhost:8080/api/get/dbTest
+    public ModelAndView complaintManage(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("content/issue/complaintManage");
+		return mav;
+	}
+
+
+	@PostMapping(path = "/getBunhalJIjukSelect")
+	@ResponseBody  // 데이터를 JSON으로 반환
+	public ArrayList<HashMap> getBunhalJIjukSelect(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		HashMap<String, Object> params = new HashMap<>();
+		ArrayList<HashMap> list = new ArrayList<>();
+		String address = httpRequest.getParameter("address");
+		String sido_nm = httpRequest.getParameter("sido_nm");
+		String sgg_nm = httpRequest.getParameter("sgg_nm");
+		String emd_nm = httpRequest.getParameter("emd_nm");
+		String ri_nm = httpRequest.getParameter("ri_nm");
+		String jibun = httpRequest.getParameter("jibun");
+
+		// 파라미터 추가
+		params.put("address", address);
+		params.put("sido_nm", sido_nm);
+		params.put("sgg_nm", sgg_nm);
+		params.put("emd_nm", emd_nm);
+		params.put("ri_nm", ri_nm);
+		params.put("jibun", jibun);
+		// 로그 기록
+		log.info("params:" + params);
+		// DB 쿼리 실행
+		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectAddressFromJijuk", params);
+		// 로그 기록
+		log.info("addressList:" + addressList);
+		// 데이터만 JSON 형식으로 반환
+		return addressList;
+	}
+
 	@RequestMapping(value="/menu06_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> menu06_1DataTableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
@@ -89,15 +142,13 @@ public class issueController {
 		
 		String address=req.getParameter("saddr");
 
-		
-		
 
-		String mw_title="";
-		String code1="";
-		String code2="";
-		String code3="";
-		String status="";
-		String start_date=req.getParameter("start_date"); //취득기간
+		String mw_title=req.getParameter("mw_title");
+		String code1=req.getParameter("code1");
+		String code2=req.getParameter("code2");
+		String code3=req.getParameter("code3");
+		String status=req.getParameter("status");
+		String start_date=req.getParameter("start_date");
 		String end_date=req.getParameter("end_date");
 
 		Map map=req.getParameterMap();
@@ -108,17 +159,13 @@ public class issueController {
 		
 		params.put("jisa",jisa); //발생지사
 		params.put("mw_title",mw_title); //민원명
-		params.put("code1",mw_title); //이슈유형1
-		params.put("code2",mw_title); //이슈유형
-		params.put("code3",mw_title); //이슈유형
-		params.put("status",mw_title); //진행현황
+		params.put("code1",code1); //이슈유형1
+		params.put("code2",code2); //이슈유형
+		params.put("code3",code3); //이슈유형
+		params.put("status",status); //진행현황
 		
 		params.put("address",address);
 
-		
-		
-
-		
 		params.put("start_date", start_date); //발생일자
 		params.put("end_date", end_date); //발생일자
 
@@ -148,7 +195,6 @@ public class issueController {
 		ArrayList<HashMap> list = mainService.selectQuery("issueSQL.selectMinwonList",params);
 		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
 		log.info("list:"+list);
-
 
 		HashMap<String,Object> resultmap=new HashMap();
 		resultmap.put("draw",draw);

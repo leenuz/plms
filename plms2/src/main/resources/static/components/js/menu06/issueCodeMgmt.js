@@ -82,3 +82,8 @@ const detailDataEvent = () => {
     })
 }
 detailDataEvent();
+
+//기본 실행
+$(function(){
+   
+});

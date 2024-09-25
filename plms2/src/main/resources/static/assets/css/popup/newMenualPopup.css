@@ -1,0 +1,554 @@
+@charset "UTF-8";
+
+.popupFrame * {
+    margin: 0;padding: 0;
+    font-family: pretendard;
+}
+.popupFrame li {list-style: none;}
+.popupFrame input {
+    border: 0;
+    outline: 0;
+}
+.popupFrame button {
+    border: 0;
+}
+
+.popupFrame input:focus {
+    border: 0;
+}
+
+.popupFrame textarea:focus {
+    border: 0;
+    outline: 0;
+}
+.popupFrame button {
+    cursor: pointer;
+}
+.popupFrame h2 {
+    height: 44px;
+    background: rgba(247, 249, 252, 1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 12px 20px ;
+    box-sizing: border-box;
+    justify-content: space-between;
+
+}
+.popupFrame h2 p {
+    font-size: 16px;
+    font-weight: 700;
+    color: #4F5871;
+}
+.popupFrame h2 .topCloseBtn {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: url(/assets/media/popup/images/back_icon.png) no-repeat center;
+    background-size: 20px;
+    cursor: pointer;
+}
+.popupFrame .popupCont {
+    width: 100%;
+    border-radius: 5px ;
+    border: 1px solid #CDDBF0;
+    margin: 12px 0 18px 0;
+}
+.popupFrame .popupCont > li {
+    width: 100%;
+    display: flex;
+    height: 44px;
+    border-bottom: 1px solid #CDDBF0;
+
+}
+
+/* 메뉴얼 신규 등록 팝업 */
+#newMenualPopup {
+    display: none;
+}
+#newMenualPopup.active {
+    display: block;
+}
+#newMenualPopup .popupFrame {
+    width: 827px;
+    background: #fff;
+    box-shadow: 0 1px 20px rgba(181, 187, 194, 0.8);
+    border-radius: 20px;
+    padding: 12px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 99999;
+}
+#newMenualPopup .popupContwrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0 15px 0 ;
+}
+#newMenualPopup .popDepth1 {
+    border: 1px solid #CDDBF0;
+    border-radius: 5px;
+}
+#newMenualPopup .popDepth1 .popLowList {
+    display: flex;
+    align-items: center;
+    height: 46px;
+}
+#newMenualPopup .popDepth1 .popLowList .popRowListTitle {
+    width: 19.2%;
+    font-size: 14px;
+    font-weight: 500;
+    background: #F7F9FC;
+    height: 100%;
+    border-right: 1px solid #CDDBF0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px 0 0 5px;
+}
+#newMenualPopup .popDepth1 .popLowList .popRowListContent {
+    width: calc(100% - 19.2%);
+    height: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+#newMenualPopup input[type=text] {
+    background: #EDF2F9;
+    height: 100%;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    border-radius: 10px ;
+}
+#newMenualPopup .newMenual_fileBox .popSubtitleBox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 13px;
+}
+#newMenualPopup .newMenual_fileBox .popSubtitleBox h3 {
+    color: #31394C;
+    font-size: 15px;
+    font-weight: 700;
+}
+#newMenualPopup .newMenual_fileBox .popSubtltleBtnBox input[type=file] {
+    display: none;
+}
+#newMenualPopup .newMenual_fileBox .popSubtltleBtnBox label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 81px;
+    height: 27px;
+    background: #2B7DE1;
+    border-radius: 20px;
+    cursor: pointer;
+}
+#newMenualPopup .newMenual_fileBox .popSubtltleBtnBox label p {
+    font-size: 13px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+/* 팝업 파일 업로드 */
+#newMenualPopup .popfileLargeWrap {
+    width: 100%;
+    position: relative;
+    height: 128px;
+}
+#newMenualPopup .popfileLargeWrap .popfileUploadWrap {
+    width: 100%;
+    border-radius: 5px;
+}
+
+#newMenualPopup .popfileLargeWrap .popfileUploadDisplay {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#newMenualPopup .popfileLargeWrap .popfileUploadDisplay.active {
+    display: block;
+}
+
+#newMenualPopup .popfileUploadBox {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    background: #f7f9fc;
+    border: 1px dashed #cddbf0;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+#newMenualPopup .popfileUploadBox .fileUploadIcon {
+    width: 35px;
+    height: 35px;
+}
+
+#newMenualPopup .popfileUploadBox p {
+    font-size: 14px;
+    font-weight: 600;
+    color: #88a2c8;
+}
+
+#newMenualPopup .popfileUploadAfter {
+    border: 1px solid #CDDBF0;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow-y: hidden;
+    background: #fff;
+}
+
+#newMenualPopup .popfileUploadAfter.scroll {
+    overflow-y: scroll;
+}
+
+#newMenualPopup .popfileUploadAfter::-webkit-scrollbar {
+    width: 4px;
+}
+
+#newMenualPopup .popfileUploadAfter::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+
+#newMenualPopup .popfileUploadAfter .poptitles {
+    display: grid;
+    grid-template-columns: 32fr 1324fr 200fr 200fr;
+    grid-template-rows: 33px;
+    background: #F7F9FC;
+    border-bottom: 1px solid #CDDBF0;
+    border-radius: 5px 5px 0 0;
+}
+
+#newMenualPopup .popfileUploadAfter .poptitle {
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#newMenualPopup .popfileUploadAfter .popfilenameBox {
+    padding-left: 25px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+#newMenualPopup .popfileUploadAfter p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+}
+
+#newMenualPopup .popfileUploadAfter .popfilenameBox p {
+    width: 100%;
+    text-align: left;
+}
+
+#newMenualPopup .popfileUploadAfter .popfilenameBox .poptypeIcon {
+    width: 15px;
+    height: 15px;
+    background: url(/assets/media/popup/images/fileextensionIcon.png) no-repeat center;
+    background-size: 15px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5px;
+}
+
+#newMenualPopup .popfileUploadAfter .poptitle .popBtnbox {
+    height: 100%;
+}
+
+#newMenualPopup .popfileUploadAfter .popAllDeleteFileBtn,
+#newMenualPopup .popfileUploadAfter .popfileDeleteBtn {
+    width: 33px;
+    height: 33px;
+    background: url(/assets/media/popup/images/back_icon.png) no-repeat center;
+    background-size: 15px;
+}
+
+#newMenualPopup .popfileUploadAfter .popcontents {
+    display: grid;
+    grid-template-columns: 32fr 1324fr 200fr 200fr;
+    grid-template-rows: 33px;
+}
+
+#newMenualPopup .popfileUploadAfter .popcontent {
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* 공통 */
+.popupFrame .popupCont .popTitles {
+    width: 100%;
+    height: 34px;
+    background: #F7F9FC;
+    display: flex;
+    border-bottom: 1px solid rgba(205, 219, 240, 0.6);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px 5px 0 0;
+    box-sizing: border-box;
+}
+/* 스크롤 */
+.popupFrame .popupCont .popTitles.poptitleScr {
+    padding-right: 4px;
+}
+.popupFrame .popupCont .popTitles>li {
+    text-align: center;
+    line-height: 34px;
+    border-right: 1px solid rgba(205, 219, 240, 0.6);
+    box-sizing: border-box;
+}
+.popupFrame .popupCont .popTitles>li p {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.popupFrame .popupCont .popContents {
+    width: 100%;
+    height: 34px;
+    display: flex;
+    border-bottom: 1px solid rgba(205, 219, 240, 0.6);
+    font-size: 14px;
+    font-weight: 500;
+    box-sizing: border-box;
+}
+.popupFrame .popupCont .popContents:last-child {
+    border-bottom: 0;
+}
+.popupFrame .popupCont .popContents>li {
+    text-align: center;
+    line-height: 34px;
+    border-right: 1px solid rgba(205, 219, 240, 0.6);
+    color: #3C3C3C;
+    box-sizing: border-box;
+}
+.popupFrame .popupCont .popContents>li p {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.popupFrame .popupCont .popTitles>li:last-child {
+    border-right: 0;
+}
+.popupFrame .popupCont .popContents>li:last-child {
+    border-right: 0;
+}
+/*  */
+/* 검색결과 (토지상태가 포함된 검색결과 팝업) */
+
+#landStatusPopup {
+    display: none;
+}
+#landStatusPopup.active {
+    display: block;
+}
+#landStatusPopup .popupFrame {
+    width: 887px;
+    max-height: 518px;
+    background: #fff;
+    box-shadow: 0 1px 20px rgba(181, 187, 194, 0.8);
+    border-radius: 20px;
+    padding: 12px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 99999;
+}
+#landStatusPopup .popupFrame .popupCont .popTitles .popTitle01 {
+    width: 26.6%;
+}
+#landStatusPopup .popupFrame .popupCont .popTitles .popTitle02 {
+    width: 29.2%;
+}
+#landStatusPopup .popupFrame .popupCont .popTitles .popTitle03 {
+    width: 16.2%;
+}
+#landStatusPopup .popupFrame .popupCont .popTitles .popTitle04 {
+    width: 11.5%;
+}
+#landStatusPopup .popupFrame .popupCont .popTitles .popTitle05 {
+    width: 16.1%;
+}
+#landStatusPopup .popupFrame .popupCont .popContents .popContent01 {
+    width: 26.6%;
+}
+#landStatusPopup .popupFrame .popupCont .popContents .popContent02 {
+    width: 29.2%;
+}
+#landStatusPopup .popupFrame .popupCont .popContents .popContent03 {
+    width: 16.2%;
+}
+#landStatusPopup .popupFrame .popupCont .popContents .popContent04 {
+    width: 11.5%;
+}
+#landStatusPopup .popupFrame .popupCont .popContents .popContent05 {
+    width: 16.1%;
+}
+
+/* 검색결과 (checkbox 포함된 팝업) */
+#chkResultPopup {
+    display: none;
+}
+#chkResultPopup.active {
+    display: block;
+}
+#chkResultPopup .popupFrame {
+    width: 827px;
+    background: #fff;
+    box-shadow: 0 1px 20px rgba(181, 187, 194, 0.8);
+    border-radius: 20px;
+    padding: 12px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 99999;
+}
+#chkResultPopup .popupFrame .popupCont .popTitles .popTitle01 {
+    width: 28.6%;
+}
+#chkResultPopup .popupFrame .popupCont .popTitles .popTitle02 {
+    width: 31.4%;
+}
+#chkResultPopup .popupFrame .popupCont .popTitles .popTitle03 {
+    width: 16.2%;
+}
+#chkResultPopup .popupFrame .popupCont .popTitles .popTitle04 {
+    width: 17.4%;
+}
+#chkResultPopup .popupFrame .popupCont .popTitles .popTitle05 {
+    width: 9.7%;
+}
+#chkResultPopup .popupFrame .popupCont .popContents .popContent01 {
+    width: 28.6%;
+}
+#chkResultPopup .popupFrame .popupCont .popContents .popContent02 {
+    width: 31.4%;
+}
+#chkResultPopup .popupFrame .popupCont .popContents .popContent03 {
+    width: 16.2%;
+}
+#chkResultPopup .popupFrame .popupCont .popContents .popContent04 {
+    width: 17.4%;
+}
+#chkResultPopup .popupFrame .popupCont .popContents .popContent05 {
+    width: 9.7%;
+}
+#chkResultPopup input[type=checkbox] {
+    display: none;
+}
+#chkResultPopup input[type=checkbox] ~ label {
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    background: #EFF6FF;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+}
+#chkResultPopup input[type=checkbox]:checked ~ label {
+    background: #4e5871;
+}
+#chkResultPopup input[type=checkbox]:checked~label::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 10px;
+    background: url(/assets/media/popup/images/checkIcon.png) no-repeat center;
+    background-size: contain;
+}
+#chkResultPopup .popCheckboxWrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#chkResultPopup .popupFrame .popupCont .popContentBox {
+    max-height: 340px;
+}
+.popupFrame .resultSelectBtn {
+    width: 61px;
+    height: 25px;
+    border-radius: 20px;
+    background: #2B7DE1;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+}
+#landStatusPopup .popupFrame .popupCont .popContentBox {
+    max-height: 340px;
+}
+.popupFrame .popupCont .popContentBox.popContentScr {
+    overflow-y: scroll;
+}
+
+.popupFrame .popupCont .popContentBox::-webkit-scrollbar {
+    width: 4px;
+}
+
+.popupFrame .popupCont .popContentBox::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+/* 저장, 닫기 버튼 */
+.popupFrame .popFinalBtnBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.popupFrame .popFinalBtnBox .finalBtn {
+    width: 120px;
+    height: 35px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.popupFrame .popFinalBtnBox .saveBtn {
+    background: #2B7DE1;
+    color: #fff;
+}
+.popupFrame .popFinalBtnBox .closeBtn {
+    background: #919191;
+    color: #fff;
+}
+.popupFrame .popFinalBtnBox .checkedBtn {
+    background: #2B7DE1;
+    color: #fff;
+}
