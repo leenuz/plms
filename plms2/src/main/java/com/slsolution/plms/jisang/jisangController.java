@@ -913,6 +913,7 @@ public class jisangController {
 		params.put("index",index);
 		log.info("params:"+params);
 
+		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectJisaList",params);
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
@@ -934,6 +935,7 @@ public class jisangController {
 		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 
+		mav.addObject("jisaList",jisalist);
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("soujaList",soujaList);
 		mav.addObject("jisangPermitList",jisangPermitList);
