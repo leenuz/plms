@@ -721,7 +721,9 @@ public class jisangController {
 		
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+
 //		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+
 		
 		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
 		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params);
@@ -3843,312 +3845,347 @@ log.info("gubun:"+gubun);
 			String requestParams = ParameterUtil.getRequestBodyToStr(request);
 			JSONObject requestParamsObj=new JSONObject(requestParams);
 			log.info("requestParams:"+requestParams);
+			JSONArray soujaArr=new JSONArray(requestParamsObj.getString("soujaInfo"));
+			JSONArray fileArr=new JSONArray(requestParamsObj.getString("uploadFiles"));
+			
+			
+			
 			ArrayList list = new ArrayList();
 			CommonUtil comm = new CommonUtil();
 
 			HashMap map = new HashMap();
-
+			
 			ParameterParser parser = new ParameterParser(request);
 			
-			String sinm = (parser.getString("sido_nm", "")).replaceAll("전체", ""); // 시
+			String sinm = (requestParamsObj.getString("sido_nm")).replaceAll("전체", ""); // 시
 																				// 네임
-			String gungunm = (parser.getString("sgg_nm", "")).replaceAll("전체", ""); // 시군구
+			String gungunm = (requestParamsObj.getString("sgg_nm")).replaceAll("전체", ""); // 시군구
 																						// 네임
-			String dongnm = (parser.getString("emd_nm", "")).replaceAll("전체", ""); // 동
+			String dongnm = (requestParamsObj.getString("emd_nm")).replaceAll("전체", ""); // 동
 																					// 네임
-			String rinm = (parser.getString("ri_nm", "")).replaceAll("전체", ""); // 리
+			String rinm = (requestParamsObj.getString("ri_nm")).replaceAll("전체", ""); // 리
 																				// 네임
-			//String jisanm = parser.getString("jisanm", "").replaceAll("전체", ""); // 지사
+			String jisanm = requestParamsObj.has("jisanm")?requestParamsObj.getString("jisanm"):requestParamsObj.getString("jisa"); // 지사
 																					// 네임
-			String jibun = parser.getString("mjibun", ""); // 지번
-			String addrcode = parser.getString("addrcode", ""); // 주소코드
-			String jisa = parser.getString("jisa", ""); // 담당지사
-			String goverownyn = parser.getString("gover_own_yn", "N"); // 국공유지여부
-			String yongdo = parser.getString("yongdo", ""); // 용도
-			String zone = parser.getString("pipe_name", ""); // 관로명(구간)
-			String sun_gubun = parser.getString("sun_gubun", ""); // 단/복선
-			String pnu = parser.getString("mpnu", ""); // 검색결과 PNU
-			String jijuk_area = parser.getString("jijuk_area", ""); // 지면 면적(㎡)
-			String comple_yn = parser.getString("comple_yn", ""); // 완결여부
-			String pyeonib_area = parser.getString("pyeonib_area", ""); // 편입 면적(㎡)
-			String use_state = parser.getString("use_state", ""); // 사용현황
-			String dg_startday = parser.getString("dg_startday", "").replace("-", ""); // 등기일
-			String deunggi_no = parser.getString("deunggi_no", ""); // 등기번호
-			String deunggiso = parser.getString("deunggiso", ""); // 등기소
-			String dosiplan = parser.getString("dosiplan", ""); // 도시계획
-			String cd_startday = parser.getString("cd_startday", "").replaceAll("-", ""); // 취득일
-			String toja_no = parser.getString("toja_no", ""); // 투자오더
-			String jasan_no = parser.getString("jasan_no", ""); // 자산분류번호
-			String special_cont = parser.getString("special_cont", ""); // 특약사항
-			String location = parser.getString("location", ""); // 위치
-			String jimok = parser.getString("jimok", ""); // 지목
-			String pipeOverlapYn = parser.getString("pipeOverlapYn", ""); // 관로일치여부
-			String permitted_yn = parser.getString("permitted_yn", ""); // 지목
+			String jibun = requestParamsObj.getString("mjibun"); // 지번
+			String addrcode =requestParamsObj.has("addrcode")?requestParamsObj.getString("addrcode"):""; // 주소코드
+			String jisa = requestParamsObj.getString("jisa"); // 담당지사
+			String goverownyn = requestParamsObj.getString("gover_own_yn"); // 국공유지여부
+			String yongdo = requestParamsObj.getString("youngdo"); // 용도
+			String zone = requestParamsObj.getString("pipe_name"); // 관로명(구간)
+			String sun_gubun = requestParamsObj.getString("sun_gubun"); // 단/복선
+			String pnu = requestParamsObj.getString("mpnu"); // 검색결과 PNU
+			String jijuk_area = requestParamsObj.getString("jijuk_area"); // 지면 면적(㎡)
+			String comple_yn = requestParamsObj.getString("mcomple_yn"); // 완결여부
+			String pyeonib_area = requestParamsObj.getString("mpyeonib_area"); // 편입 면적(㎡)
+			String use_state = requestParamsObj.has("use_state")?requestParamsObj.getString("use_state"):""; // 사용현황
+			String dg_startday = requestParamsObj.getString("mdeunggi_date").replace("-", ""); // 등기일
+			String deunggi_no = requestParamsObj.getString("mdeunggi_no"); // 등기번호
+			String deunggiso = requestParamsObj.getString("mdeunggiso"); // 등기소
+			String dosiplan = requestParamsObj.getString("mdosi_plan"); // 도시계획
+			String cd_startday = requestParamsObj.getString("mchuideuk_date").replaceAll("-", ""); // 취득일
+			String toja_no = requestParamsObj.has("toja_no")?requestParamsObj.getString("toja_no"):""; // 투자오더
+			String jasan_no = requestParamsObj.getString("mjasan_no"); // 자산분류번호
+			String special_cont = requestParamsObj.getString("special_cont"); // 특약사항
+			String location = requestParamsObj.getString("mloacation"); // 위치
+			String jimok = requestParamsObj.getString("jimok_text"); // 지목
+			String pipeOverlapYn = requestParamsObj.getString("overlap_yn"); // 관로일치여부
+			String permitted_yn = requestParamsObj.getString("mpermit_yn"); // 지목
 
-			String soyunumber = parser.getString("soyunumber", "0"); // 소유자 수
-			String okaynumber = parser.getString("okaynumber", ""); // 승인자 수
-			String filenumber = parser.getString("filenumber", ""); // 파일 수
-			String TOJA_CNT = parser.getString("TOJA_CNT", ""); // 투자오더 수
+//			String soyunumber = requestParamsObj.getString("soyunumber", "0"); // 소유자 수
+//			String okaynumber = requestParamsObj.getString("okaynumber", ""); // 승인자 수
+//			String filenumber = requestParamsObj.getString("filenumber", ""); // 파일 수
+//			String TOJA_CNT = requestParamsObj.getString("TOJA_CNT", ""); // 투자오더 수
 
-			String gubun = parser.getString("gubun", ""); // 구분( modify : 수정, insert : 등록 )
-			String mod_jisangNo = parser.getString("mod_jisangNo", ""); // 수정할 지상권번호
-			String fileseq = parser.getString("fileseq", ""); // 파일 seq
-			// int FILE_CNT = Integer.parseInt(parser.getString("flieCnt", "0")); //
+			String gubun = requestParamsObj.getString("gubun"); // 구분( modify : 수정, insert : 등록 )
+			String mod_jisangNo = requestParamsObj.has("mod_jisangNo")?requestParamsObj.getString("mod_jisangNo"):""; // 수정할 지상권번호
+//			String fileseq = requestParamsObj.getString("fileseq"); // 파일 seq
+			// int FILE_CNT = Integer.parseInt(requestParamsObj.getString("flieCnt", "0")); //
 			// 파일수
 
-			String modifyReason1 = parser.getString("modifyReason1", ""); // 변경이력-기본정보
-			String modifyReason2 = parser.getString("modifyReason2", ""); // 변경이력-소유자정보
-			String modifyReason3 = parser.getString("modifyReason3", ""); // 변경이력-지상권정보
+			String modifyReason1 = requestParamsObj.has("modifyReason1")?requestParamsObj.getString("modifyReason1"):""; // 변경이력-기본정보
+			String modifyReason2 = requestParamsObj.has("modifyReason2")?requestParamsObj.getString("modifyReason2"):""; // 변경이력-소유자정보
+			String modifyReason3 = requestParamsObj.has("modifyReason3")?requestParamsObj.getString("modifyReason3"):""; // 변경이력-지상권정보
 
 			String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
 			String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
 
-			String CONVERT_FLAG = parser.getString("CONVERT_FLAG", "N");
-			String CONVERT_PAGE = parser.getString("CONVERT_PAGE", "");
-			String CONVERT_BEFORE_KEY = parser.getString("CONVERT_BEFORE_KEY", "");
+			String CONVERT_FLAG = requestParamsObj.has("CONVERT_FLAG")?requestParamsObj.getString("CONVERT_FLAG"):"N";
+			String CONVERT_PAGE = requestParamsObj.has("CONVERT_PAGE")?requestParamsObj.getString("CONVERT_PAGE"):"";
+			String CONVERT_BEFORE_KEY = requestParamsObj.has("CONVERT_PAGE")?requestParamsObj.getString("CONVERT_BEFORE_KEY"):"";
 
 			String str_result = "Y";
-//			try {
-//
-//				HashMap params = new HashMap();
-//				params.put("FILESEQ", fileseq);
-//				params.put("SINM", sinm);
-//				params.put("GUNGUNM", gungunm);
-//				params.put("DONGNM", dongnm);
-//				params.put("RINM", rinm);
-//				//params.put("JISANM", jisanm);
-//				params.put("JIBUN", jibun);
-//				params.put("ADDRCODE", addrcode);
-//				params.put("JISA", jisa);
-//				params.put("GOVEROWNYN", goverownyn);
-//				params.put("YONGDO", yongdo);
-//				params.put("ZONE", zone);
-//				params.put("SUNGUBUN", sun_gubun);
-//				params.put("PNU", pnu);
-//				params.put("JIJUKAREA", jijuk_area);
-//				params.put("COMPLEYN", comple_yn);
-//				params.put("PYEONIBAREA", pyeonib_area);
-//				params.put("USESTATE", use_state);
-//				params.put("DGSTARTDAY", dg_startday);
-//				params.put("DEUNGGINO", deunggi_no);
-//				params.put("DEUNGGISO", deunggiso);
-//				params.put("DOSIPLAN", dosiplan);
-//				params.put("CD_STARTDAY", cd_startday);
-//				params.put("TOJANO", toja_no);
-//				params.put("JASANNO", jasan_no);
-//				params.put("SPECIALCONT", special_cont);
-//				params.put("LOCATION", location);
-//				params.put("STATUS", "JISANG");
-//				params.put("JIMOK", jimok);
-//				params.put("USER_ID", USER_ID);
-//				params.put("USER_NAME", USER_NAME);
-//				params.put("PERMITTED_YN", permitted_yn);
-//				params.put("PIPEYN", pipeOverlapYn);
-//
-//				// System.out.println(params);
-//				
-//				// 로깅처리를 위하여 기존 지적도 데이터 조회
-//				Map logParam = (HashMap) mainService.selectHashmapQuery("songyuSQL.selectJijukBeforePNU", params);
-//
-//				/**********************
-//				 * 다음 지상권 번호 조회 시작
-//				 **********************/
-//				if (gubun.equals("modify")) {
-//					params.put("JISANGNO", mod_jisangNo);
-//
-//				} else {
-//					ArrayList JiSangList = (ArrayList) mainService.selectQuery("jisangSQL.selectJijangNextNo", null);
-//
-//					String Next_jisangNo = String.valueOf(Integer.parseInt((String) ((HashMap) JiSangList.get(0)).get("NOW_JISANGNO")) + 1);
-//					int n_Next_jisangNo = Next_jisangNo.length();
-//
-//					String add_Zero = "";
-//					for (int i = 0; i < (6 - n_Next_jisangNo); i++) {
-//						add_Zero += "0";
-//					}
-//					Next_jisangNo = "J_" + add_Zero + Next_jisangNo;
-//
-//					params.put("JISANGNO", Next_jisangNo);
-//				}
-//
-//				/***********************
-//				 * 다음 지상권 번호 조회 끝
-//				 ************************/
-//				if (gubun.equals("insert")) {
-//					params.put("SAVE_STATUS", "승인");
-//					mainService.InsertQuery("jisangSQL.insertJisangMaster", params); // 기본정보
-//																						// 저장
-//				} else if (gubun.equals("modify")) {
-//
-//					/***********************
-//					 * 행정구역이 변경이 되면, 기존의 행정구역은 미설정으로 바꾸고, 변경된 행정구역을 지상권으로 설정함. <= 안함.
-//					 ************************/
-//					ArrayList jijanglist = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangList", params);
-//					String str_BeforePNU = "";
-//					String str_BeforeADDRCODE = "";
-//					String str_BeforeJIBUN = "";
-//
-//					if (null != jijanglist && jijanglist.size() > 0) {
-//
-//						HashMap hm = new HashMap();
-//						for (int i = 0; i < list.size(); i++) {
-//							str_BeforePNU = (String) ((HashMap) jijanglist.get(i)).get("PNU");
-//							str_BeforeADDRCODE = (String) ((HashMap) jijanglist.get(i)).get("ADDRCODE");
-//							str_BeforeJIBUN = (String) ((HashMap) jijanglist.get(i)).get("JIBUN");
-//						}
-//					}
-//
-//					// 행정구역이 같지않다면
-//					if (!str_BeforePNU.equals(pnu) && !str_BeforePNU.equals("NULL")) {
-//
-//						/** 분할한 지번인지, 분할한 지번이라면 원지번이 다른곳에서 바라보고있는지 조회 **/
-//						// int hunhalCnt = (Integer)
-//						// Database.getInstance().queryForObject("Json.selectBunhalOrgNo",
-//						// params);
-//						// if(hunhalCnt <= 1){
-//						// ** JIJUK_MASTER 테이블 지상권 해제 **//
-//						// System.out.println("insertJisangList >>>>>> 지상권해제params=" + params);
-//						mainService.UpdateQuery("commonSQL.updateJijukMasterStatus", params);
-//
-//						// }
-//						
-//
-//					}
-//					
-//					if (!str_BeforePNU.equals(pnu)) {
-//
-//						/** 지상권 수정일 경우 잠재이슈 이전처리 **/
-//						Map issueParams = new HashMap();
-//						issueParams.put("JIBUN", str_BeforeJIBUN);
-//						issueParams.put("ADDRCODE", str_BeforeADDRCODE);
-//						issueParams.put("PNU", str_BeforePNU);
-//						
-//						// 1. 기존 잠재이슈 존재하는지 조회 selectPnuIssue, selectPnuIssueHistoryList
-//						ArrayList issuelist = (ArrayList) Database.getInstance().queryForList("Json.selectPnuIssue", issueParams);
-//
-//						if(issuelist != null && issuelist.size() > 0) {
-//							for(int issueIdx = 0 ; issueIdx < issuelist.size() ; issueIdx++ ) {
-//								Map issueData = (Map) issuelist.get(issueIdx);
-//								ArrayList issueHistoryList = (ArrayList) Database.getInstance().queryForList("Json.selectPnuIssueHistoryList", issueData);
-//								issueData.put("issueHistoryList", issueHistoryList);
-//							}
-//						}
-//						
-//						if(issuelist != null && issuelist.size() > 0) {
-//							for(int issueIdx = 0 ; issueIdx < issuelist.size() ; issueIdx++ ) {
-//								Map issueData = (Map) issuelist.get(issueIdx);
-//								// 2. 존재할 경우 기존 잠재이슈 삭제 deletePnuIssueForPnuReal, deletePnuIssueHistory
-//								Database.getInstance().update("Json.deletePnuIssueHistory", issueData);
-//								Database.getInstance().update("Json.deletePnuIssueForPnuReal", issueData);
-//								
-//							}
-//							for(int issueIdx = 0 ; issueIdx < issuelist.size() ; issueIdx++ ) {
-//								Map issueData = (Map) issuelist.get(issueIdx);
-//								ArrayList issueHistoryList = (ArrayList) issueData.get("issueHistoryList");
-//								// 3. 기존 잠재이슈 정보를 신규 토지로 이관처리...? insertPnuIssue, insertPnuIssueHistory
-//								issueData.put("JIBUN", jibun);
-//								issueData.put("ADDRCODE", addrcode);
-//								issueData.put("PNU", pnu);
-//								Database.getInstance().update("Json.insertPnuIssue", issueData);
-//								if(issueHistoryList!= null && issueHistoryList.size() > 0) {
-//									for(int ihIdx = 0 ; ihIdx < issueHistoryList.size() ; ihIdx++ ) {
-//										Map issueHistoryData = (Map) issueHistoryList.get(ihIdx);
-//										Database.getInstance().update("Json.insertPnuIssueHistory", issueHistoryData);
-//									}
-//								}
-//								
-//							}
-//								
-//						}
-//						
-//					}
-//					
-//
-//					Database.getInstance().update("Json.updateJisangMaster", params); // 기본정보 수정
-//
-//					// 변경이력 등록
-//					if (!modifyReason1.equals("")) {
-//						params.put("GUBUN", "기본정보");
-//						params.put("CONT", modifyReason1);
-//						Database.getInstance().insert("Json.insertJisangModifyHistory", params);
-//					}
-//					if (!modifyReason2.equals("")) {
-//						params.put("GUBUN", "소유자 정보");
-//						params.put("CONT", modifyReason2);
-//						Database.getInstance().insert("Json.insertJisangModifyHistory", params);
-//					}
-//					if (!modifyReason3.equals("")) {
-//						params.put("GUBUN", "지상권 정보");
-//						params.put("CONT", modifyReason3);
-//						Database.getInstance().insert("Json.insertJisangModifyHistory", params);
-//					}
-//
-//				}
-//
-//				// System.out.println("params=" + params);
-//
-//				// 소유자
-//				for (int i = 0; i < Integer.parseInt(soyunumber); i++) {
-//					String JIBUN = parser.getString("jibun" + String.valueOf(i), "");
-//					String NAME = parser.getString("name" + String.valueOf(i), "");
-//					String ADDR = parser.getString("addr" + String.valueOf(i), "");
-//					String TEL = parser.getString("tel" + String.valueOf(i), "");
-//					String HP = parser.getString("hp" + String.valueOf(i), "");
-//
-//					params.put("JIBUN", JIBUN); // 공유지분
-//					params.put("NAME", NAME); // 성명
-//					params.put("ADDR", ADDR); // 주소
-//					params.put("TEL", TEL); // 연락처(집)
-//					params.put("HP", HP); // 연락처(모바일)
-//
-//					if (gubun.equals("modify")) {
-//						if (i == 0) {
-//							Database.getInstance().update("Json.deleteJisangSoyu", params); // 기존
-//																							// 소유자
-//																							// 삭제
-//						}
-//					}
-//
-//					// if(!JIBUN.equals("") || !NAME.equals("") ||
-//					// !ADDR.equals("")|| !TEL.equals("")|| !HP.equals(""))
-//					Database.getInstance().insert("Json.insertJisangSoyu", params); // 소유자
-//																					// 저장
-//
-//				}
-//
-//				/*
-//				 * //투자오더 for(int i = 0; i < Integer.parseInt(TOJA_CNT); i++){ String TOJA = parser.getString("TOJA"+String.valueOf(i), ""); params.put("TOJA", TOJA); if(gubun.equals("modify")){ if(i==0){ Database.getInstance().update("Json.deleteJisangToja", params); // 기존 정보 삭제 } } if(!TOJA.equals("")){ //System.out.println("투자오더 params = " + params); Database.getInstance().insert("Json.insertJisangToja", params); // 투자오더 테이블 저장 } }
-//				 */
-//
-//				if (gubun.equals("modify")) {
+			String str_manageNo="";
+			try {
+
+				HashMap params = new HashMap();
+				//params.put("FILESEQ", fileseq);
+				params.put("SINM", sinm);
+				params.put("GUNGUNM", gungunm);
+				params.put("DONGNM", dongnm);
+				params.put("RINM", rinm);
+				params.put("JISANM", jisanm);
+				params.put("JIBUN", jibun);
+				params.put("ADDRCODE", addrcode);
+				params.put("JISA", jisa);
+				params.put("GOVEROWNYN", goverownyn);
+				params.put("YONGDO", yongdo);
+				params.put("ZONE", zone);
+				params.put("SUNGUBUN", sun_gubun);
+				params.put("PNU", pnu);
+				params.put("JIJUKAREA", jijuk_area);
+				params.put("COMPLEYN", comple_yn);
+				params.put("PYEONIBAREA", pyeonib_area);
+				params.put("USESTATE", use_state);
+				params.put("DGSTARTDAY", dg_startday);
+				params.put("DEUNGGINO", deunggi_no);
+				params.put("DEUNGGISO", deunggiso);
+				params.put("DOSIPLAN", dosiplan);
+				params.put("CD_STARTDAY", cd_startday);
+				params.put("TOJANO", toja_no);
+				params.put("JASANNO", jasan_no);
+				params.put("SPECIALCONT", special_cont);
+				params.put("LOCATION", location);
+				params.put("STATUS", "JISANG");
+				params.put("JIMOK", jimok);
+				params.put("USER_ID", USER_ID);
+				params.put("USER_NAME", USER_NAME);
+				params.put("PERMITTED_YN", permitted_yn);				
+				params.put("PIPEYN", pipeOverlapYn);
+
+				System.out.println(params);
+				
+				// 로깅처리를 위하여 기존 지적도 데이터 조회
+				HashMap logParam = (HashMap) mainService.selectHashmapQuery("songyuSQL.selectJijukBeforePNU", params);
+log.info("logParam:"+logParam);
+				/**********************
+				 * 다음 지상권 번호 조회 시작
+				 **********************/
+				if (gubun.equals("modify")) {
+					params.put("JISANGNO", mod_jisangNo);
+
+				} else {
+					ArrayList JiSangList = (ArrayList) mainService.selectQuery("jisangSQL.selectJijangNextNo", null);
+					int no=Integer.parseInt((((HashMap) JiSangList.get(0)).get("now_jisangno").toString()).toString());
+					log.info("jisangList:"+JiSangList.get(0));
+					log.info("jisangList:"+no);
+					//String Next_jisangNo = String.valueOf(Integer.parseInt((String) ((HashMap) JiSangList.get(0)).get("now_jisangno")) + 1);
+					String Next_jisangNo = String.valueOf(no + 1);
+					int n_Next_jisangNo = Next_jisangNo.length();
+
+					String add_Zero = "";
+					for (int i = 0; i < (6 - n_Next_jisangNo); i++) {
+						add_Zero += "0";
+					}
+					Next_jisangNo = "J_" + add_Zero + Next_jisangNo;
+					str_manageNo=Next_jisangNo;
+					params.put("JISANGNO", Next_jisangNo);
+				}
+log.info(" 3932 params:"+params);
+				/***********************
+				 * 다음 지상권 번호 조회 끝
+				 ************************/
+				if (gubun.equals("insert")) {
+					params.put("SAVE_STATUS", "승인");
+					mainService.InsertQuery("jisangSQL.insertJisangMaster", params); // 기본정보
+																						// 저장
+				} else if (gubun.equals("modify")) {
+
+					/***********************
+					 * 행정구역이 변경이 되면, 기존의 행정구역은 미설정으로 바꾸고, 변경된 행정구역을 지상권으로 설정함. <= 안함.
+					 ************************/
+					ArrayList jijanglist = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangList", params);
+					String str_BeforePNU = "";
+					String str_BeforeADDRCODE = "";
+					String str_BeforeJIBUN = "";
+
+					if (null != jijanglist && jijanglist.size() > 0) {
+
+						HashMap hm = new HashMap();
+						for (int i = 0; i < list.size(); i++) {
+							str_BeforePNU = (String) ((HashMap) jijanglist.get(i)).get("PNU");
+							str_BeforeADDRCODE = (String) ((HashMap) jijanglist.get(i)).get("ADDRCODE");
+							str_BeforeJIBUN = (String) ((HashMap) jijanglist.get(i)).get("JIBUN");
+						}
+					}
+
+					// 행정구역이 같지않다면
+					if (!str_BeforePNU.equals(pnu) && !str_BeforePNU.equals("NULL")) {
+
+						/** 분할한 지번인지, 분할한 지번이라면 원지번이 다른곳에서 바라보고있는지 조회 **/
+						// int hunhalCnt = (Integer)
+						// Database.getInstance().queryForObject("Json.selectBunhalOrgNo",
+						// params);
+						// if(hunhalCnt <= 1){
+						// ** JIJUK_MASTER 테이블 지상권 해제 **//
+						// System.out.println("insertJisangList >>>>>> 지상권해제params=" + params);
+						mainService.UpdateQuery("commonSQL.updateJijukMasterStatus", params);
+
+						// }
+						
+
+					}
+					
+					if (!str_BeforePNU.equals(pnu)) {
+
+						/** 지상권 수정일 경우 잠재이슈 이전처리 **/
+						HashMap issueParams = new HashMap();
+						issueParams.put("JIBUN", str_BeforeJIBUN);
+						issueParams.put("ADDRCODE", str_BeforeADDRCODE);
+						issueParams.put("PNU", str_BeforePNU);
+						
+						// 1. 기존 잠재이슈 존재하는지 조회 selectPnuIssue, selectPnuIssueHistoryList
+						ArrayList issuelist = (ArrayList) mainService.selectQuery("commonSQL.selectPnuIssue", issueParams);
+
+						if(issuelist != null && issuelist.size() > 0) {
+							for(int issueIdx = 0 ; issueIdx < issuelist.size() ; issueIdx++ ) {
+								HashMap issueData = (HashMap) issuelist.get(issueIdx);
+								ArrayList issueHistoryList = (ArrayList) mainService.selectQuery("jisangSQL.selectPnuIssueHistoryList", issueData);
+								issueData.put("issueHistoryList", issueHistoryList);
+							}
+						}
+						
+						if(issuelist != null && issuelist.size() > 0) {
+							for(int issueIdx = 0 ; issueIdx < issuelist.size() ; issueIdx++ ) {
+								HashMap issueData = (HashMap) issuelist.get(issueIdx);
+								// 2. 존재할 경우 기존 잠재이슈 삭제 deletePnuIssueForPnuReal, deletePnuIssueHistory
+								mainService.UpdateQuery("jisangSQL.deletePnuIssueHistory", issueData);
+								mainService.UpdateQuery("jisangSQL.deletePnuIssueForPnuReal", issueData);
+								
+							}
+							for(int issueIdx = 0 ; issueIdx < issuelist.size() ; issueIdx++ ) {
+								HashMap issueData = (HashMap) issuelist.get(issueIdx);
+								ArrayList issueHistoryList = (ArrayList) issueData.get("issueHistoryList");
+								// 3. 기존 잠재이슈 정보를 신규 토지로 이관처리...? insertPnuIssue, insertPnuIssueHistory
+								issueData.put("JIBUN", jibun);
+								issueData.put("ADDRCODE", addrcode);
+								issueData.put("PNU", pnu);
+								mainService.UpdateQuery("songyuSQL.insertPnuIssue", issueData);
+								if(issueHistoryList!= null && issueHistoryList.size() > 0) {
+									for(int ihIdx = 0 ; ihIdx < issueHistoryList.size() ; ihIdx++ ) {
+										HashMap issueHistoryData = (HashMap) issueHistoryList.get(ihIdx);
+										mainService.UpdateQuery("songyuSQL.insertPnuIssueHistory", issueHistoryData);
+									}
+								}
+								
+							}
+								
+						}
+						
+					}
+					
+
+					mainService.UpdateQuery("jisangSQL.updateJisangMaster", params); // 기본정보 수정
+
+					// 변경이력 등록
+					if (!modifyReason1.equals("")) {
+						params.put("GUBUN", "기본정보");
+						params.put("CONT", modifyReason1);
+						mainService.InsertQuery("jisangsQL.insertJisangModifyHistory", params);
+					}
+					if (!modifyReason2.equals("")) {
+						params.put("GUBUN", "소유자 정보");
+						params.put("CONT", modifyReason2);
+						mainService.InsertQuery("jisangsQL.insertJisangModifyHistory", params);
+					}
+					if (!modifyReason3.equals("")) {
+						params.put("GUBUN", "지상권 정보");
+						params.put("CONT", modifyReason3);
+						mainService.InsertQuery("jisangsQL.insertJisangModifyHistory", params);
+					}
+
+				}
+
+				// System.out.println("params=" + params);
+
+				// 소유자
+				for (int i = 0; i < soujaArr.length(); i++) {
+					JSONObject obj=new JSONObject(soujaArr.get(i).toString());
+					String JIBUN = obj.getString("jibun");
+					String NAME = obj.getString("soujaName");
+					String ADDR = obj.getString("soujaAddress");
+					String TEL = obj.getString("soujaContact1");
+					String HP = obj.getString("soujaContact2");
+
+					params.put("JIBUN", JIBUN); // 공유지분
+					params.put("NAME", NAME); // 성명
+					params.put("ADDR", ADDR); // 주소
+					params.put("TEL", TEL); // 연락처(집)
+					params.put("HP", HP); // 연락처(모바일)
+
+					if (gubun.equals("modify")) {
+						if (i == 0) {
+							mainService.UpdateQuery("jisangSQL.deleteJisangSoyu", params); // 기존
+																							// 소유자
+																							// 삭제
+						}
+					}
+
+					// if(!JIBUN.equals("") || !NAME.equals("") ||
+					// !ADDR.equals("")|| !TEL.equals("")|| !HP.equals(""))
+					mainService.InsertQuery("jisangSQL.insertJisangSoyu", params); // 소유자
+																					// 저장
+
+				}
+
+				/*
+				 * //투자오더 for(int i = 0; i < Integer.parseInt(TOJA_CNT); i++){ String TOJA = parser.getString("TOJA"+String.valueOf(i), ""); params.put("TOJA", TOJA); if(gubun.equals("modify")){ if(i==0){ Database.getInstance().update("Json.deleteJisangToja", params); // 기존 정보 삭제 } } if(!TOJA.equals("")){ //System.out.println("투자오더 params = " + params); Database.getInstance().insert("Json.insertJisangToja", params); // 투자오더 테이블 저장 } }
+				 */
+
+				if (gubun.equals("modify")) {
+					//수정에서 의미가 없다 각 파트에서 삭제할때 변경 이력을 등록해야함
 //					for (int i = 0; i < Integer.parseInt(filenumber); i++) {
 //						String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
 //						String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
 //
-//						if (IS_DEL.equals("Y")) {
-//							// System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
-//
-//							// 조회용 parma셋팅
-//							params.put("SEQ", "");
-//							params.put("FILENO", String.valueOf((params.get("JISANGNO"))));
-//							params.put("FILE_SEQ", DEL_SEQ);
-//							ArrayList File_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_Files", params); // 첨부파일
-//
-//							params.put("SEQ", DEL_SEQ);
-//							Database.getInstance().update("Json.deleteFile", params);
-//
-//							// 변경이력 등록
-//							if (null != File_list && File_list.size() > 0) {
-//								String str_FileName = String.valueOf(((HashMap) File_list.get(0)).get("FILE_NM"));
-//								params.put("GUBUN", "파일정보");
-//								params.put("CONT", "파일삭제(" + str_FileName + ")");
-//								Database.getInstance().insert("Json.insertJisangModifyHistory", params);
-//							}
-//						}
+////						if (IS_DEL.equals("Y")) {
+////							// System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
+////
+////							// 조회용 parma셋팅
+////							params.put("SEQ", "");
+////							params.put("FILENO", String.valueOf((params.get("JISANGNO"))));
+////							params.put("FILE_SEQ", DEL_SEQ);
+////							ArrayList File_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_Files", params); // 첨부파일
+////
+////							params.put("SEQ", DEL_SEQ);
+////							Database.getInstance().update("Json.deleteFile", params);
+////
+////							// 변경이력 등록
+////							if (null != File_list && File_list.size() > 0) {
+////								String str_FileName = String.valueOf(((HashMap) File_list.get(0)).get("FILE_NM"));
+////								params.put("GUBUN", "파일정보");
+////								params.put("CONT", "파일삭제(" + str_FileName + ")");
+////								Database.getInstance().insert("Json.insertJisangModifyHistory", params);
+////							}
+////						}
 //					}
-//				}
+				}
+
+				// 추가된 파일이 있으면 등록하고 변경이력에 등록
+				for (int i = 0; i < fileArr.length(); i++) {
+					//JSONObject fobj=new JSONObject(fileArr.get(i).toString());
+					String file_name=fileArr.getString(i);
+					log.info("file_name:"+file_name);
+					 HashMap<String, Object> filesMap= new HashMap<>();
+					 //
+//					     			filesMap=CommonUtil.JsonArraytoMap(obj);
+					 //
+					     			filesMap.put("jisangNo",str_manageNo);
+					     			filesMap.put("seq",String.format("%06d",i));
+					     			filesMap.put("fseq",i);
+					     			filesMap.put("fname",file_name);
 //
-//				// 추가된 파일이 있으면 변경이력에 등록
+					     			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+					     			 String dataPath = GC.getJisangFileDataDir()+"/"+str_manageNo; //설정파일로 뺀다.
+					     			 filesMap.put("fpath",dataPath+"/"+file_name);
+					     			 CommonUtil.moveFile(file_name, tempPath, dataPath);
+					     			log.info("filesMap:"+filesMap);
+					     			mainService.InsertQuery("jisangSQL.insertJisangUploadData", filesMap);
+					     			params.put("GUBUN", "파일정보");
+									params.put("CONT", "파일등록(" + file_name + ")");
+									mainService.InsertQuery("jisangSQL.insertJisangModifyHistory", params);
+					
+				}
 //				ArrayList seq_fileList = (ArrayList) Database.getInstance().queryForList("Json.selectJISANG_ATCFILE_NoCheck", params); // 첨부 파일
 //				if (null != seq_fileList && seq_fileList.size() > 0) {
 //					for (int i = 0; i < seq_fileList.size(); i++) {
@@ -4163,126 +4200,128 @@ log.info("gubun:"+gubun);
 //						}
 //					}
 //				}
-//
+
 //				/** codecanyon에서 파일업로드 **/
 //				Database.getInstance().update("Json.updateSeqFile", params); // 파일테이블에 지상권번호 업데이트
-//
-//				// ** JIJUK_MASTER 테이블 새로운 행정구역으로 지상권 등록**//
-//				// 토지정보 상태변경
-//				if (!pnu.equals("NULL")) {
-//					Database.getInstance().update("Json.updateTogiJisang_Status", params);
-//				}
-//
-//				// 점용에서 지상권 전환용 추가
-//				if ("Y".equals(CONVERT_FLAG)) {
-//					if ("GOVER".equals(CONVERT_PAGE)) {
-//						Map convertParams = new HashMap();
-//						convertParams.put("PNU", pnu);
-//						convertParams.put("GOVER_NO", CONVERT_BEFORE_KEY);
-//
-//						// 점용 토지정보 정보 조회 :: selectGoverPnuList
-//						ArrayList goverPnuLIst = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPnuList", convertParams);
-//
-//						// 점용 토지정보가 여러건일 경우 해당 토지정보만 제거 :: deleteGoverPNUObject
-//						if (goverPnuLIst != null && goverPnuLIst.size() > 1) {
-//							Database.getInstance().delete("Json.deleteGoverPNUObject", convertParams);
-//
-//						} else if (goverPnuLIst.size() == 1) { // 점용 토지정보가 단건일 경우 해당 점용정보 제거 :: deleteGoverPNU
-//							// 삭제시 위험성이 큰 관계로 해지처리로 대체 ::
-//							convertParams.put("USER_NAME", USER_NAME);
-//							convertParams.put("EMPCD", USER_ID);
-//							Database.getInstance().update("Json.insertGoverTerminationAdd", convertParams);
-//							Database.getInstance().delete("Json.deleteGoverPNU", convertParams);
-//						}
-//						// 점용에서 전환되었음을 변경이력에 등록
-//						params.put("GUBUN", "기본정보");
-//						params.put("CONT", "점용 [" + CONVERT_BEFORE_KEY + "] 에서 전환등록됨");
-//						Database.getInstance().insert("Json.insertJisangModifyHistory", params);
-//					} else if ("NOTSET".equals(CONVERT_PAGE)) {
-//
-//						params.put("GOVEROWNYN", params.get("GOVER_OWN_YN"));
-//						params.put("STATUS", "JISANG");
-//						params.put("NOTSET_NO", CONVERT_BEFORE_KEY);
-//						Database.getInstance().update("Json.deleteNotsetMaster", params);
-//
-//						// 미설정,미점용 에서 전환되었음을 변경이력에 등록
-//						params.put("GUBUN", "기본정보");
-//						params.put("CONT", "미설정,미점용 [" + CONVERT_BEFORE_KEY + "] 에서 전환등록됨");
-//						Database.getInstance().insert("Json.insertJisangModifyHistory", params);
-//
-//						// 미설정,미점용에서 전환될 경우 파일승계처리
-//						ArrayList<HashMap> list3 = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectNotsetRowDetail_Files", params); // 미설정,미점용 첨부 파일 조회
-//						// 전환처리
-//						for (HashMap notsetAtt : list3) {
-//							// insertJisangFile
-//							notsetAtt.put("JISANGNO", params.get("JISANGNO"));
-//							Database.getInstance().insert("Json.insertJisangFile", notsetAtt);
-//							Database.getInstance().delete("Json.notsetDeleteFile", notsetAtt);
-//						}
-//
-//					}
-//				}
-//
-//				if (!"modify".equals(gubun)) {
-//					/**********************
-//					 * 잠재이슈 기본값 등록처리
-//					 * 지상권 설정, 계약 체결, 이슈없음, 이슈없음, 이슈없음
-//					 **********************/
-//		
-//					int result = 0;
-//					if ("99999".equals(pnu) || "null".equals(pnu) || "".equals(pnu)) {
-//						// 2023.03.09 :: pnu가 null인 경우가 있음. 
-//						params.put("PNU", null);
-//					} else {
-//						params.put("PNU", pnu);
-//					}
-//		
-//					params.put("ADDRCODE", addrcode);
-//					params.put("JIBUN", jibun);
-//					params.put("CODE_DEPTH1", "DY010000");	// 이슈없음
-//					params.put("CODE_DEPTH2", "DY010100");	// 이슈없음
-//					params.put("CODE_DEPTH3", "DY010101");	// 이슈없음
-//					params.put("ISSUE_COMMENT", "지상권 신규등록");
-//					params.put("HISTORY_TYPE", "신규 등록");
-//					params.put("HISTORY_CONTENT", "신규 등록: [이슈없음 &gt; 이슈없음 &gt; 이슈없음], 사유: [신규등록]");
-//					params.put("REGISTED_YN", "DY");
-//					params.put("PERMITTED_YN", "Y");
-//					System.out.println("params="+params.toString());
-//					String SEQ = (String) Database.getInstance().queryForObject("Json.makePnuIssueSeq", params);
-//					params.put("SEQ", SEQ);
-//					result = Database.getInstance().update("Json.insertPnuIssue", params);
-//		
-//					if (result > 0) {
-//						Database.getInstance().update("Json.insertPnuIssueHistory", params);
-//					}
-//				
-//				}
-//				/**********************
-//				 * 잠재이슈 기본값 등록처리
-//				 * 지상권 설정, 계약 체결, 이슈없음, 이슈없음, 이슈없음
-//				 **********************/
-//
-//				map.put("JISANGNO", params.get("JISANGNO"));
-//				
-//
-//				// 로깅처리를 위하여 기존 지적도 데이터 조회
-////				Map logParam = (HashMap) Database.getInstance().queryForObject("Json.selectJijukBefore", params);
-//				if(logParam != null ) {
-//					// 해지처리미설정 정보 처리
-//					logParam.put("JISANG_NO", params.get("JISANGNO"));
-//					logParam.put("JISANG_STATUS","JISANG");
-//					logParam.put("GOVER_OWN_YN", params.get("GOVER_OWN_YN"));
-//					logParam.put("PIPE_OVERLAP_YN", pipeOverlapYn);
-//					logParam.put("JISA", jisa);
-//					logParam.put("LOG_USER", String.valueOf(request.getSession().getAttribute("userId")));
-//					logParam.put("LOG_TYPE", "U");
-//					Database.getInstance().insert("Json.insertJijukLog", logParam);
-//				}
-//
-//			} catch (Exception e) {
-//				str_result = "N";
-//				e.printStackTrace();
-//			}
+
+				// ** JIJUK_MASTER 테이블 새로운 행정구역으로 지상권 등록**//
+				// 토지정보 상태변경
+				if (!pnu.equals("NULL")) {
+					log.info("4130 params:"+params);
+					mainService.UpdateQuery("songyuSQL.updateTogiJisang_Status", params);
+				}
+
+				// 점용에서 지상권 전환용 추가
+				if ("Y".equals(CONVERT_FLAG)) {
+					if ("GOVER".equals(CONVERT_PAGE)) {
+						HashMap convertParams = new HashMap();
+						convertParams.put("PNU", pnu);
+						convertParams.put("GOVER_NO", CONVERT_BEFORE_KEY);
+
+						// 점용 토지정보 정보 조회 :: selectGoverPnuList
+						ArrayList goverPnuLIst = (ArrayList) mainService.selectQuery("goversQL.selectGoverPnuList", convertParams);
+
+						// 점용 토지정보가 여러건일 경우 해당 토지정보만 제거 :: deleteGoverPNUObject
+						if (goverPnuLIst != null && goverPnuLIst.size() > 1) {
+							mainService.DeleteQuery("goverSQL.deleteGoverPNUObject", convertParams);
+
+						} else if (goverPnuLIst.size() == 1) { // 점용 토지정보가 단건일 경우 해당 점용정보 제거 :: deleteGoverPNU
+							// 삭제시 위험성이 큰 관계로 해지처리로 대체 ::
+							convertParams.put("USER_NAME", USER_NAME);
+							convertParams.put("EMPCD", USER_ID);
+							mainService.UpdateQuery("goverSQL.insertGoverTerminationAdd", convertParams);
+							mainService.DeleteQuery("goverSQL.deleteGoverPNU", convertParams);
+						}
+						// 점용에서 전환되었음을 변경이력에 등록
+						params.put("GUBUN", "기본정보");
+						params.put("CONT", "점용 [" + CONVERT_BEFORE_KEY + "] 에서 전환등록됨");
+						mainService.InsertQuery("jisangSQL.insertJisangModifyHistory", params);
+					} else if ("NOTSET".equals(CONVERT_PAGE)) {
+
+						params.put("GOVEROWNYN", params.get("GOVER_OWN_YN"));
+						params.put("STATUS", "JISANG");
+						params.put("NOTSET_NO", CONVERT_BEFORE_KEY);
+						mainService.UpdateQuery("notsetSQL.deleteNotsetMaster", params);
+
+						// 미설정,미점용 에서 전환되었음을 변경이력에 등록
+						params.put("GUBUN", "기본정보");
+						params.put("CONT", "미설정,미점용 [" + CONVERT_BEFORE_KEY + "] 에서 전환등록됨");
+						mainService.InsertQuery("jisangSQL.insertJisangModifyHistory", params);
+
+						// 미설정,미점용에서 전환될 경우 파일승계처리
+						ArrayList<HashMap> list3 = (ArrayList<HashMap>) mainService.selectQuery("songyuSQL.selectNotsetRowDetail_Files", params); // 미설정,미점용 첨부 파일 조회
+						// 전환처리
+						for (HashMap notsetAtt : list3) {
+							// insertJisangFile
+							notsetAtt.put("JISANGNO", params.get("JISANGNO"));
+							mainService.InsertQuery("jisangSQL.insertJisangFile", notsetAtt);
+							mainService.DeleteQuery("songyuSQL.notsetDeleteFile", notsetAtt);
+						}
+
+					}
+				}
+
+				if (!"modify".equals(gubun)) {
+					/**********************
+					 * 잠재이슈 기본값 등록처리
+					 * 지상권 설정, 계약 체결, 이슈없음, 이슈없음, 이슈없음
+					 **********************/
+		
+					int result = 0;
+					if ("99999".equals(pnu) || "null".equals(pnu) || "".equals(pnu)) {
+						// 2023.03.09 :: pnu가 null인 경우가 있음. 
+						params.put("PNU", null);
+					} else {
+						params.put("PNU", pnu);
+					}
+		
+					params.put("ADDRCODE", addrcode);
+					params.put("JIBUN", jibun);
+					params.put("CODE_DEPTH1", "DY010000");	// 이슈없음
+					params.put("CODE_DEPTH2", "DY010100");	// 이슈없음
+					params.put("CODE_DEPTH3", "DY010101");	// 이슈없음
+					params.put("ISSUE_COMMENT", "지상권 신규등록");
+					params.put("HISTORY_TYPE", "신규 등록");
+					params.put("HISTORY_CONTENT", "신규 등록: [이슈없음 &gt; 이슈없음 &gt; 이슈없음], 사유: [신규등록]");
+					params.put("REGISTED_YN", "DY");
+					params.put("PERMITTED_YN", "Y");
+					System.out.println("params="+params.toString());
+					//int iseq=(int)
+					String SEQ = (String) mainService.selectStringQuery("songyuSQL.makePnuIssueSeq", params);
+					params.put("SEQ", SEQ);
+					result = (int) mainService.UpdateQuery("songyuSQL.insertPnuIssue", params);
+		
+					if (result > 0) {
+						mainService.UpdateQuery("songyuSQL.insertPnuIssueHistory", params);
+					}
+				
+				}
+				/**********************
+				 * 잠재이슈 기본값 등록처리
+				 * 지상권 설정, 계약 체결, 이슈없음, 이슈없음, 이슈없음
+				 **********************/
+
+				map.put("JISANGNO", params.get("JISANGNO"));
+				
+
+				// 로깅처리를 위하여 기존 지적도 데이터 조회
+//				Map logParam = (HashMap) Database.getInstance().queryForObject("Json.selectJijukBefore", params);
+				if(logParam != null ) {
+					// 해지처리미설정 정보 처리
+					logParam.put("JISANG_NO", params.get("JISANGNO"));
+					logParam.put("JISANG_STATUS","JISANG");
+					logParam.put("GOVER_OWN_YN", params.get("GOVER_OWN_YN"));
+					logParam.put("PIPE_OVERLAP_YN", pipeOverlapYn);
+					logParam.put("JISA", jisa);
+					logParam.put("LOG_USER", String.valueOf(request.getSession().getAttribute("userId")));
+					logParam.put("LOG_TYPE", "U");
+					mainService.InsertQuery("songyouSQL.insertJijukLog", logParam);
+				}
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
 
 			if (list != null)
 				map.put("count", list.size());
@@ -4291,7 +4330,7 @@ log.info("gubun:"+gubun);
 
 			map.put("message", str_result);
 			map.put("result", list);
-
+log.info("map:"+map);
 			JSONObject jo = new JSONObject(map);
 
 			response.setCharacterEncoding("UTF-8");

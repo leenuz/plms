@@ -468,7 +468,7 @@ $(document).on("click","#finalBtn",function(){
 
 
 				   const soujaUls = document.querySelectorAll('#soujaUl');
-				   const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+				   const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
 				   console.log(attachFileUls);
 
 				//   console.log(soujaUls);
@@ -536,9 +536,9 @@ $(document).on("click","#finalBtn",function(){
 				   console.log("------dataObj--------");
 				   			   console.log(dataObj);
 
+					dataObj.gubun="insert";
 
-
-				   url="/jisang/api/Save";
+				   url="/jisang/insertJisangList";
 				   $.ajax({
 
 				   				url:url,
@@ -556,7 +556,7 @@ $(document).on("click","#finalBtn",function(){
 				   					console.log(response);
 				   					if (response.success="Y"){
 				   						console.log("response.success Y");
-				   						console.log("response.resultData length:"+response.resultData.length);
+				   					//	console.log("response.resultData length:"+response.resultData.length);
 										alert("정상적으로 등록 되었습니다.");
 				   						/*$("#popup_bg").show();
 				   						$("#popup").show(500);

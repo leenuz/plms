@@ -88,7 +88,170 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and mm_manage_no=#{gover_no}
 		</if>
 	</select>
-	
+	<!-- //기본정보 점용 결재내역 상세보기에서 기본정보조회-->
+<select id="selectGoverDetailList" resultType="HashMap" parameterType="HashMap">
+SELECT *
+FROM (
+    SELECT A.GOVER_NO
+         , A.JISA
+         , A.YONGDO
+         , A.PIPE_NAME
+         , A.SUN_GUBUN
+         , TO_CHAR(A.PIPE_METER, 'FM999999999.00') AS PIPE_METER
+         , A.CANCLE_YN
+         , A.CANCLE_DATE
+         , A.CANCLE_NAME
+         , A.CANCLE_EMPCD
+         , A.PNU
+         , A.ADDRCODE
+         , A.SIDO_NM
+         , A.SGG_NM
+         , A.EMD_NM
+         , A.RI_NM
+         , A.JIBUN
+         , A.JIBUN_FULL
+         , A.GOVER_OWN_YN
+         , TO_CHAR(A.JIJUK_AREA, 'FM999999999.00') AS JIJUK_AREA
+         , B.ROWCNT
+         , A.USE_PURPOS
+         , A.GOVER_ST_DATE
+         , A.GOVER_ED_DATE
+         , A.PMT_STATUS
+         , A.GOVER_LENGTH
+         , A.GOVER_AREA
+         , A.OFFICE_DEPART
+         , A.OFFICE_CHAREGE
+         , A.OFFICE_CONTACT
+         , A.OFFICE_MOBILE
+         , A.PMT_OFFICE
+         , A.ADM_OFFICE
+         , A.JIMOK_TEXT
+         , A.GOVER_PERIOD
+         , A.SAVE_STATUS
+         , A.PIPE_METER2
+         , A.REP_FLAG
+         , A.NEWREGREASON
+         , A.OCCUNONPAYREASON
+         , A.PERMPOSSYN
+         , A.OCCUPREPAYYN
+         , A.OCCUPREPAYDATE
+         ,A.EXEMPTIONYN
+    FROM (
+        SELECT GM.gm_GOVER_NO AS GOVER_NO
+             , GM.gm_JISA AS JISA
+             , GM.gm_YONGDO AS YONGDO
+             , GM.gm_PIPE_NAME AS PIPE_NAME
+             , GM.gm_SUN_GUBUN AS SUN_GUBUN
+             , GM.gm_PIPE_METER::numeric AS PIPE_METER
+             , GM.gm_CANCEL_YN AS CANCLE_YN
+             , TO_CHAR(GM.gm_CANCEL_DATE, 'YYYY-MM-DD') AS CANCLE_DATE
+             , GM.gm_CANCEL_NAME AS CANCLE_NAME
+             , GM.gm_CANCEL_EMPCD AS CANCLE_EMPCD
+             , GP.gp_PNU AS PNU
+             , GP.gp_ADDRCODE AS ADDRCODE
+             , GP.gp_SIDO_NM AS SIDO_NM
+             , GP.gp_SGG_NM AS SGG_NM
+             , GP.gp_EMD_NM AS EMD_NM
+             , GP.gp_RI_NM AS RI_NM
+             , GP.gp_JIBUN AS JIBUN
+             , GP.gp_JIBUN_FULL AS JIBUN_FULL
+             , GP.gp_GOVER_OWN_YN AS GOVER_OWN_YN
+             , GP.gp_JIJUK_AREA AS JIJUK_AREA
+             , GM.gm_USE_PURPOS AS USE_PURPOS
+             , TO_CHAR(GM.gm_GOVER_ST_DATE, 'YYYY-MM-DD') AS GOVER_ST_DATE
+             , TO_CHAR(GM.gm_GOVER_ED_DATE, 'YYYY-MM-DD') AS GOVER_ED_DATE
+             , GM.gm_PMT_STATUS AS PMT_STATUS
+             , GP.gp_GOVER_LENGTH AS GOVER_LENGTH
+             , GP.gp_GOVER_AREA AS GOVER_AREA
+             , GM.gm_OFFICE_DEPART AS OFFICE_DEPART
+             , GM.gm_OFFICE_CHAREGE AS OFFICE_CHAREGE
+             , GM.gm_OFFICE_CONTACT AS OFFICE_CONTACT
+             , GM.gm_OFFICE_MOBILE AS OFFICE_MOBILE
+             , GM.gm_PMT_OFFICE AS PMT_OFFICE
+             , GM.gm_ADM_OFFICE AS ADM_OFFICE
+             , GP.gp_JIMOK_TEXT AS JIMOK_TEXT
+             , GM.gm_GOVER_PERIOD AS GOVER_PERIOD
+             , GM.gm_SAVE_STATUS AS SAVE_STATUS
+             , GM.gm_PIPE_METER2::numeric AS PIPE_METER2
+             , GP.gp_REP_FLAG AS REP_FLAG
+             , GM.gm_NEWREGREASON AS NEWREGREASON
+             , GM.gm_OCCUNONPAYREASON AS OCCUNONPAYREASON
+             , GM.gm_PERMPOSSYN AS PERMPOSSYN
+             , GM.gm_OCCUPREPAYYN AS OCCUPREPAYYN
+             , TO_CHAR(GM.gm_OCCUPREPAYDATE, 'YYYY-MM-DD') AS OCCUPREPAYDATE
+             ,GM.gm_exemptionyn as EXEMPTIONYN
+        FROM GOVER_MASTER GM
+        LEFT JOIN GOVER_PNU GP ON GM.gm_GOVER_NO = GP.gp_GOVER_NO
+        WHERE 1=1
+       <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESSCODE)" >
+			AND GP.gp_ADDRCODE LIKE '${ADDRESSCODE}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JIBEON)" >
+			AND GP.gp_JIBUN LIKE '${JIBEON}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
+			AND GM.gm_JISA = #{JISA}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_NO)" >
+			AND GM.gm_PMT_NO LIKE '${PMT_NO}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_OFFICE)" >
+			AND GM.gm_PMT_OFFICE LIKE '${PMT_OFFICE}%'
+		</if>
+        ORDER BY GM.gm_GOVER_NO DESC, GP.gp_REP_FLAG DESC
+    ) A
+    LEFT JOIN (
+        SELECT GM.gm_GOVER_NO, COUNT(*) AS ROWCNT
+        FROM GOVER_MASTER GM
+        LEFT JOIN GOVER_PNU GP ON GM.gm_GOVER_NO = GP.gp_GOVER_NO
+        WHERE 1=1
+        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESSCODE)" >
+			AND GP.gp_ADDRCODE LIKE '${ADDRESSCODE}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JIBEON)" >
+			AND GP.gp_JIBUN LIKE '${JIBEON}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
+			AND GM.gm_JISA = #{JISA}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_NO)" >
+			AND GM.gm_PMT_NO LIKE '${PMT_NO}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_OFFICE)" >
+			AND GM.gm_PMT_OFFICE LIKE '${PMT_OFFICE}%'
+		</if>
+        GROUP BY GM.gm_GOVER_NO
+    ) B ON A.GOVER_NO = B.gm_GOVER_NO
+   	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GOVERNO)" >
+			WHERE A.GOVER_NO = #{GOVERNO}
+		</if>
+) ALL2
+LEFT JOIN (
+    	
+	SELECT * FROM (
+		SELECT gp_gover_no as GOVER_NO
+	         , TO_CHAR(gp_PMT_ST_DATE, 'YYYY-MM-DD') AS PMT_ST_DATE
+	         , TO_CHAR(gp_PMT_ED_DATE, 'YYYY-MM-DD') AS PMT_ED_DATE
+	         , gp_pmt_no as PMT_NO
+	         , gp_pmt_office as PMT_OFFICE
+	         , gp_adm_office as ADM_OFFICE
+	         , gp_dosiplan as DOSIPLAN
+	         ,(row_number() OVER()) AS rn
+	    FROM GOVER_PERMIT
+	    ) r 
+	    WHERE rn=1
+) ALL3 ON ALL2.GOVER_NO = ALL3.GOVER_NO
+WHERE 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_STARTDAY)" >
+			AND PMT_ST_DATE >=to_date( #{PMT_STARTDAY} , 'yyyy-mm-dd')
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_ENDDAY)" >
+			AND PMT_ED_DATE &lt;=
+			to_date( #{PMT_ENDDAY} , 'yyyy-mm-dd')
+		</if>
+
+
+	</select>
 	<select id="selectGoverList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	    SELECT *,
 	           (row_number() OVER()) AS no,
@@ -756,34 +919,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectGoverPnuList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT GP.gp_SEQ AS "SEQ"
-, GP.gp_addrcode AS "ADDRCODE"
-, GP.gp_dosiplan AS "DOSIPLAN"
-, GP.gp_echo_no AS "ECHO_NO"
-, GP.gp_emd_nm AS "EMD_NM"
-, GP.gp_gover_no AS "GOVER_NO"
-, GP.gp_gover_own_yn AS "GOVER_OWN_YN"
-, GP.gp_jibun AS "JIBUN"
-, GP.gp_jibun_full AS "JIBUN_FULL"
-, GP.gp_jijuk_area AS "JIJUK_AREA"
-, GP.gp_jimok_text AS "JIMOK_TEXT"
-, GP.gp_pnu AS "PNU"
-, GP.gp_ri_nm AS "RI_NM"
-, GP.gp_sgg_nm AS "SGG_NM"
-, GP.gp_sido_nm AS "SIDO_NM"
-, GP.gp_gover_length AS "GOVER_LENGTH"
-,GP.gp_gover_area AS "GOVER_AREA"
-, GP.gp_adm_office AS "ADM_OFFICE"
-, GP.gp_use_purpos AS "USE_PURPOS"
-, GP.gp_rep_flag AS "REP_FLAG"
-		, COALESCE(JKM.pipe_overlap_yn, GP.gp_pipe_overlap_yn) AS "PIPE_OVERLAP_YN"
-		, JKM.jisang_status AS "JISANG_STATUS"
-		, JKM.jisa AS "JISA"
+		SELECT * ,(row_number() OVER()) AS no
+ from
+ (
+ SELECT GP.gp_SEQ AS SEQ
+, GP.gp_addrcode AS ADDRCODE
+, GP.gp_dosiplan AS DOSIPLAN
+, GP.gp_echo_no AS ECHO_NO
+, GP.gp_emd_nm AS EMD_NM
+, GP.gp_gover_no AS GOVER_NO
+, GP.gp_gover_own_yn AS GOVER_OWN_YN
+, GP.gp_jibun AS JIBUN
+, GP.gp_jibun_full AS JIBUN_FULL
+, GP.gp_jijuk_area AS JIJUK_AREA
+, GP.gp_jimok_text AS JIMOK_TEXT
+, GP.gp_pnu AS PNU
+, GP.gp_ri_nm AS RI_NM
+, GP.gp_sgg_nm AS SGG_NM
+, GP.gp_sido_nm AS SIDO_NM
+, GP.gp_gover_length AS GOVER_LENGTH
+,GP.gp_gover_area AS GOVER_AREA
+, GP.gp_adm_office AS ADM_OFFICE
+, GP.gp_use_purpos AS USE_PURPOS
+, GP.gp_rep_flag AS REP_FLAG
+		, COALESCE(JKM.pipe_overlap_yn, GP.gp_pipe_overlap_yn) AS PIPE_OVERLAP_YN
+		, JKM.jisang_status AS JISANG_STATUS
+		, JKM.jisa AS JISA
+		
 		FROM GOVER_PNU GP
                 LEFT JOIN JIJUK_2024 JKM ON GP.gp_pnu = JKM.PNU
 		WHERE 1=1
-		and GP.gp_gover_no =#{GOVER_NO}
+		and GP.gp_gover_no ='G_000914'
 		ORDER BY GP.gp_rep_flag DESC, GP.gp_seq ASC
+		) T
 	</select>
 	<select id="selectNextGoverNo" resultType="Integer" parameterType="HashMap">
 		
@@ -854,6 +1022,29 @@ VALUES
 		, #{PIPEYN}
     )
 	</insert>
+	<update id="updaeGoverPnu" parameterType="HashMap">
+UPDATE GOVER_PNU
+SET gp_PNU = #{IN_PNU}
+    , gp_ADDRCODE = #{ADDRCODE}
+    , gp_SIDO_NM = #{SIDO_NM}
+    , gp_SGG_NM = #{SGG_NM}
+    , gp_EMD_NM = #{EMD_NM}
+    , gp_RI_NM = #{RI_NM}
+    , gp_JIBUN = #{JIBUN}
+    , gp_JIBUN_FULL = #{JIBUN_FULL}
+    , gp_GOVER_OWN_YN = #{GOVEROWNYN}
+    , gp_JIJUK_AREA = nullif(#{JIJUK_AREA},'')::numeric
+    , gp_JIMOK_TEXT = #{JIMOK_TEXT}
+    , gp_GOVER_LENGTH = #{GOVER_LENGTH}::numeric
+    , gp_GOVER_AREA = #{GOVER_AREA}::numeric
+    , gp_ADM_OFFICE = #{ADM_OFFICE}
+    , gp_USE_PURPOS = #{USE_PURPOS}
+    , gp_REP_FLAG = #{REP_FLAG}
+    , gp_PIPE_OVERLAP_YN = #{PIPEYN}
+WHERE gp_GOVER_NO = #{GOVER_NO}
+
+	</update>
+	
 	
 	<insert id="insertGoverPnuLog" parameterType="HashMap">
 		INSERT INTO GOVER_PNU_LOG (
@@ -1024,7 +1215,7 @@ WHERE
 		, DOSIPLAN = ''
 		, GOVER_OWN_YN = 'N'
 		, JISA = ''
-		WHERE PNU = TO_CHAR(#{STR_PNU})
+		WHERE PNU = #{STR_PNU}
 	</update>
 	
 		<select id="selectNotsetNextNo"  resultType="HashMap" parameterType="HashMap">
