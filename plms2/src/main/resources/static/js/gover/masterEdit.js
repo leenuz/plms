@@ -50,6 +50,7 @@ $(document).ready(function() {
  	 $(document).on("click", "#pipeNameUl li", function () {
  	     const selectedAdmOffice = $(this).text().trim();
  	     $("#pipeNameText").text(selectedAdmOffice);
+		 
  	 });
 	 
 	 // 허가관청 선택 시 관리기관 목록 업데이트를 위한 change 트리거
@@ -70,10 +71,13 @@ $(document).ready(function() {
 	 $(document).on("click", "#goverUl .customSelectBtns li", function () {
 	     const selectedAdmOffice = $(this).text().trim();
 	     const parentUl = $(this).closest("ul");
+		
 	     const targetSelectBox = parentUl.siblings(".hiddenSelectBox").find("select");
 
 	     // 선택한 관리기관 값을 반영
 	     parentUl.siblings(".customSelectView").text(selectedAdmOffice);
+
+		 
 	     targetSelectBox.val(selectedAdmOffice).change();  // change 이벤트 트리거
 	 });
 	 
@@ -531,6 +535,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 																												// "NULL"도*/
 		   	for(var i=0;i<togiUls.length;i++){
 				var sido_nm=$(togiUls[i]).find("input[name='sido_nm']").val();
+				var addKey=$(togiUls[i]).find("input[name='addKey']").val();
 		   		var sgg_nm=$(togiUls[i]).find("input[name='sgg_nm']").val();
 				var emd_nm=$(togiUls[i]).find("input[name='emd_nm']").val();
 				var ri_nm=$(togiUls[i]).find("input[name='ri_nm']").val();
@@ -544,7 +549,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 				var gover_length=$(togiUls[i]).find("input[name='gover_length']").val();
 				var gover_area=$(togiUls[i]).find("input[name='gover_area']").val();
 				var jimok_text=$(togiUls[i]).find("input[name='jimok_text']").val();
-				var adm_office=$(togiUls[i]).find("input[name='adm_office']").val();
+				var adm_office=$(togiUls[i]).find("#admOfficeText01").text();
 				var pipe_overlab_yn=$(togiUls[i]).find("input[name='pipe_overlap_yn']").val();
 				
 				
@@ -573,6 +578,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 					,"pipe_overlab_yn":ljsIsNull(pipe_overlab_yn)?'':pipe_overlab_yn
 					,"rep_flag":ljsIsNull(rep_flag)?'N':rep_flag
 					,"gover_area":ljsIsNull(gover_area)?'':gover_area
+					,"addKey":addKey
 		   			
 		   		}
 		   		console.log(togiObj);
@@ -648,6 +654,61 @@ $(document).on("click", "#draftSaveBtn", function() {
 					   		}); 
 		
 });
+
+
+$(document).on("click","#reqApprovalBtn",function(){
+	console.log("승인요청");
+	var formSerializeArray = $('#saveForm').serializeArray(); // 폼 데이터를 직렬화하여 배열로 저장
+	    console.log(formSerializeArray); // 배열 형태로 폼 데이터 출력
+	    
+	    var object = {}; // 빈 객체 생성
+	    for (var i = 0; i < formSerializeArray.length; i++) { 
+	        object[formSerializeArray[i]['name']] = formSerializeArray[i]['value']; // 배열의 각 항목을 객체로 변환
+	    }
+		
+		object.saveStatus="T";
+		object.goverNo=object.gover_no;
+		console.log(object);
+		
+		   url="/gover/updateGoverSaveStatus"; 
+		   $.ajax({
+		   			
+		   				url:url,
+		   				type:'POST',
+		   				contentType:"application/json",
+		   				data:JSON.stringify(object),
+		   				
+		   				dataType:"json",
+		   				beforeSend:function(request){
+		   					console.log("beforesend ........................");
+		   					loadingShow();
+		   				},
+		   				success:function(response){
+		   					loadingHide();
+		   					console.log(response);
+		   					if (response.success="Y"){
+		   						console.log("response.success Y");
+		   						//console.log("response.resultData length:"+response.resultData.length);
+								alert("정상적으로 등록 되었습니다.");
+		   						/*$("#popup_bg").show();
+		   						$("#popup").show(500);
+		   						//$("#addrPopupLayer tbody td").remove();
+		   						for(var i=0;i<response.resultData.length;i++){
+		   							$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+		   						}*/
+		   					}
+		   					else {
+		   						console.log("response.success N");
+		   					}
+		   				},
+		   				error:function(jqXHR,textStatus,errorThrown){
+		   					alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+							return false;
+		   				}
+		   			
+		   		}); 
+	
+})
 
 // 체크박스 상태 변경 시 점용료 선납 여부 처리
 function updateOccuprepayynValue(checkbox) {
@@ -1066,7 +1127,7 @@ $(document).on("click",".resultSelectBtn",function(){
 	//	console.log($(openerEle).html());
 	// var openerTargetEle=openerEle.find('input[id="goverIndex"][value="'+id+'"]');
 	var openerTargetEle = openerEle.find('input[placeholder="' + id + '"]');
-	//console.log(openerTargetEle.parent().parent().html());
+	console.log(openerTargetEle.parent().parent().html());
 	
 	openerTargetEle.parent().parent().find("#pnu").val(pnu);
 	openerTargetEle.parent().parent().find("#addr").val(juso);

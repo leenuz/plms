@@ -334,6 +334,7 @@ function loadDataTable(params) {
     });
 
     table.on('click', 'tr', function(event) {
+		var data = table.row(this).data();
         var target = $(event.target);
 		var isButtonCell = [15, 16, 17].includes(target.closest('td').index());
 

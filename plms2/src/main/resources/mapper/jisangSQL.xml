@@ -2307,7 +2307,7 @@ WHERE
 		)
 	</insert>
 	
-	<select id="selectJijangNextNo"  parameterType="HashMap" resultType="java.util.HashMap">
+	<select id="selectJijangNextNo"  parameterType="HashMap" resultType="HashMap">
 		
 		SELECT
 		MAX(NOW_JISANGNO) AS NOW_JISANGNO
@@ -2322,7 +2322,7 @@ WHERE
 		COALESCE(MAX(SUBSTR(jm_JISANG_NO, 3)), NULL, '0', MAX(SUBSTR(jm_JISANG_NO, 3))) AS NOW_JISANGNO
 		FROM
 		JISANG_MERGE
-		)
+		) T
 	</select>
 	<insert id="insertJisangMaster" parameterType="HashMap">
 		Insert into JISANG_MASTER
@@ -2343,13 +2343,13 @@ WHERE
 			TO_DATE(#{CD_STARTDAY} || '00:00:00', 'YYYYMMDDHH24:MI:SS'),
 		</if>
 
-		#{JIJUKAREA},
-		#{ZONE}, #{SUNGUBUN}, #{YONGDO}, #{DOSIPLAN}, #{COMPLEYN}, #{PYEONIBAREA},
+		nullif(#{JIJUKAREA},'')::numeric,
+		#{ZONE}, #{SUNGUBUN}, #{YONGDO}, #{DOSIPLAN}, #{COMPLEYN}, nullif(#{PYEONIBAREA},'')::numeric,
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DGSTARTDAY)" >
 			TO_DATE(#{DGSTARTDAY#} || '00:00:00', 'YYYYMMDDHH24:MI:SS') ,
 		</if>
 		#{DEUNGGINO}, #{DEUNGGISO},
-		#{JASANNO}, #{ADDRCODE}, #{PNU#{ ,#{USESTATE#{ , #{SPECIALCONT#{ , #{LOCATION}, #{JIMOK}, #{SAVE_STATUS}, #{PERMITTED_YN})
+		#{JASANNO}, #{ADDRCODE}, #{PNU} ,#{USESTATE} , #{SPECIALCONT} , #{LOCATION}, #{JIMOK}, #{SAVE_STATUS}, #{PERMITTED_YN})
 	</insert>
 	
 	<insert id="insertJisangMasterTmp" parameterType="HashMap">
@@ -2655,5 +2655,67 @@ VALUES (
 		WHERE jm_REP_JISANG_NO = #{JISANG_NO}
 		ORDER BY jm_JISANG_NO ASC
 	</select>
+	
+	<select id="selectPnuIssueHistoryList" resultType="HashMap" parameterType="HashMap">
+	
+SELECT T.PNU
+       , T.SEQ
+       , T.HISTORY_SEQ
+       , T.HISTORY_TYPE
+       , T.CONTENT
+       , TO_CHAR(T.HISTORY_DATE, 'YYYY-MM-DD HH24:MI:SS') AS HISTORY_DATE
+       , T.ADDRCODE
+       , T.JIBUN
+  FROM PLMS_ISSUE_HISTORY T
+ WHERE ( (T.PNU = #{PNU} AND T.PNU != '99999')
+    OR   (T.ADDRCODE = #{ADDRCODE} AND T.JIBUN = #{JIBUN} ) )
+ ORDER BY T.HISTORY_SEQ DESC
+        , T.SEQ DESC
+	
+	</select>
+	<delete id="deletePnuIssueHistory" parameterType="HashMap">
+	
+DELETE PLMS_ISSUE_HISTORY
+ WHERE ( PNU = #{PNU}
+    OR (PNU = '99999'
+       AND ADDRCODE = #{ADDRCODE}
+       AND JIBUN = #{JIBUN}) )
+	
+	</delete>
+		<delete id="deletePnuIssueForPnuReal" parameterType="HashMap">
+
+DELETE PLMS_POTENTIAL_ISSUE
+ WHERE ( PNU = #{PNU}
+    OR (PNU = '99999'
+       AND ADDRCODE = #{ADDRCODE}
+       AND JIBUN = #{JIBUN}) )
+
+	</delete>
+	
+	<delete id="deleteJisangSoyu" parameterType="HashMap">
+		DELETE FROM JISANG_SOUJA
+		WHERE js_JISANG_NO = #{JISANGNO}
+	</delete>
+		<insert id="insertJisangFile" parameterType="HashMap">
+            
+			INSERT INTO JISANG_ATCFILE(ja_JISANG_NO, ja_SEQ, ja_FILE_PATH, ja_FILE_NM, ja_FILE_SEQ)
+			VALUES (#{JISANGNO}, nextVal('jisang_seq'), #{FILE_PATH}, #{FILE_NM}, 0)
+			
+	</insert>
+	
+	<update id="insertJisangTerminationTemp" parameterType="HashMap">
+		UPDATE JISANG_MASTER SET
+		jm_CANCLE_BOSANG_MONEY = #{CANCLE_BOSANG_MONEY}
+		,jm_CANCLE_BOSANG_YN = #{CANCLE_YES}
+		,jm_CANCLE_DATE = TO_DATE(#{STARTDAY},'YYYYMMDDHH24MISS')
+		,jm_CHUIDEUK_MONEY = #{CHUIDEUKMONEY}
+		,jm_GAMMONEY = #{GAMMONEY}
+		,jm_REMAINDER_MONEY = #{REMAINDERMONEY}
+		,jm_CANCLE_EMPCD = #{EMPCD}
+		,jm_CANCLE_NAME = #{NAME}
+		,jm_CANCLE_REASON = #{CANCLE_REASON}
+		,jm_CANCLE_COMMENT = #{CANCLE_COMMENT}
+		WHERE JISANG_NO = #{JISANGNO}
+	</update>
 	
 </mapper>
