@@ -390,11 +390,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="insertDopcoTerminationAdd" parameterType="HashMap">
 		UPDATE DOPCO_MASTER
 		SET
-		dom_CANCLE_YN = 'Y'
-		,dom_CANCLE_DATE = TO_DATE(#{CANCLEDATE},'yyyy-mm-dd')
-		,dom_CANCLE_NAME = #{USERNAME}
-		,dom_CANCLE_EMPCD = #{EMPCD}
-		WHERE dom_DOPCO_NO = #DOPCO_NO#
+		dom_CANCEL_YN = 'Y'
+		,dom_CANCEL_DATE = TO_DATE(#{CANCLEDATE},'yyyy-mm-dd')
+		,dom_CANCEL_NAME = #{USERNAME}
+		,dom_CANCEL_EMPCD = #{EMPCD}
+		WHERE dom_DOPCO_NO = #{DOPCO_NO}
 
 	</update>
 		<select id="selectDopcoRowDetail_Toja" resultType="HashMap" parameterType="HashMap">
