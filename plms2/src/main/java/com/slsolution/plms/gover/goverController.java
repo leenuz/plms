@@ -772,6 +772,7 @@ public class goverController {
 			
 			params.put("idx",idx);
 			params.put("gover_no",idx);
+			params.put("GOVER_NO",idx);
 			params.put("index",index);
 			log.info("params:"+params);
 
@@ -781,12 +782,12 @@ public class goverController {
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
 			ArrayList<HashMap> goverMemoList = mainService.selectQuery("goverSQL.selectMemoList",params);
 			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
-			ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
+			//ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
 			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
 			
 //			goverList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverList", params); //기본정보
-//			pnuList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPnuList", params); //소속토지정보
+			ArrayList<HashMap> goverPnuList = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPnuList", params); //소속토지정보
 //			pmtList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPmtList", params); //허가 정보
 //			fileList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverRowDetail_Files", params); //첨부파일
 //			modifyList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverModifyHistory", params); //첨부파일
@@ -832,19 +833,38 @@ public class goverController {
 		    HashMap<String, String> params = new HashMap<>();
 		    params.put("idx", idx);
 		    params.put("gover_no", idx);
+		   
+			params.put("GOVER_NO",idx);
+			params.put("GOVERNO",idx);
 		    params.put("index", index);
 		    log.info("params:" + params);
 
 		    // 데이터 조회
-			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
+			//ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
+			
+			
 			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
-			ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
+			ArrayList<HashMap> goverPnuList = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPnuList", params); //소속토지정보
+			//ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
 			ArrayList<HashMap> goverPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
 			ArrayList<HashMap> repFlagPnu = mainService.selectQuery("goverSQL.selectRepFlagPnu",params);
 
+			
+			ArrayList<HashMap> goverList= mainService.selectQuery("goverSQL.selectGoverDetailList",params); //기본정보
+//			goverList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverList", params); //기본정보 //이건 테이블 리스트에서 활용
+//			pnuList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPnuList", params); //소속토지정보
+////			pmtList = (ArrayList)Database.getInstance().queryForList("Json.selectGoverPmtList", params); //허가 정보
+//			pmtList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPmtLast", params); //마지막 허가 정보
+//			fileList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverRowDetail_Files", params); //첨부파일
+//			modifyList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverModifyHistory", params); //첨부파일
+//
+//			payList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPayList", params); //납부실적목록
+			
+			
+			
 			// 조회 데이터 로그
-			log.info("data:"+data.get(0));
+			log.info("data:"+goverList.get(0));
 			log.info("goverModifyList:"+goverModifyList);
 			log.info("atcFileList:"+atcFileList);
 			log.info("goverPnuList:"+goverPnuList);
@@ -852,11 +872,11 @@ public class goverController {
 			log.info("repFlagPnu:"+repFlagPnu);
 
 			// 각 리스트가 null 또는 비어있는 경우 처리
-			if (data == null || data.isEmpty()) {
+			if (goverList == null || goverList.isEmpty()) {
 		        log.error("No data found for idx: " + idx);
 		        mav.addObject("resultData", new HashMap<>());
 		    } else {
-		        mav.addObject("resultData", data.get(0));
+		        mav.addObject("resultData", goverList.get(0));
 		    }
 		    
 		    // 각 리스트가 null 또는 비어있는 경우 처리
@@ -1619,7 +1639,7 @@ public class goverController {
 			String SAVE_STATUS = requestParamsObj.getString("save_status"); // 저장 코드  T:승인대기 R:반려 Q:임시저장
 			String gubun = requestParamsObj.getString("gubun"); // 구분( modify : 수정, insert
 					// : 등록 )
-			String memo=requestParamsObj.getString("memo");
+			String memo=requestParamsObj.has("memo")?requestParamsObj.getString("memo"):"";
 			 String ori_GOVER_NO =requestParamsObj.has("gover_no")?requestParamsObj.getString("gover_no"):"";
 			
 			String PNU_CNT = requestParamsObj.has("pnuCnt")?requestParamsObj.getString("pnuCnt"):"0"; // 소속토지 수
@@ -1768,6 +1788,7 @@ public class goverController {
 				//for (int i = 0; i < Integer.parseInt(PNU_CNT); i++) {
 				for (int i = 0; i < togiArr.length(); i++) {
 					JSONObject obj=new JSONObject(togiArr.get(i).toString());
+					String ADDKEY = obj.getString("addKey");
 					String SIDO_NM = (obj.getString("sido_nm")).replaceAll("전체", "");
 					String SGG_NM = (obj.getString("sgg_nm")).replaceAll("전체", "");
 					String EMD_NM = (obj.getString("emd_nm")).replaceAll("전체", "");
@@ -1912,7 +1933,13 @@ public class goverController {
 						// System.out.println("IN_PNU=" + IN_PNU);
 						params.put("IN_PNU", IN_PNU);
 						System.out.println("insertGoverList >>>>>> IN_PNU=" + IN_PNU);
-						mainService.InsertQuery("goverSQL.insertGoverPnu", params); // PNU
+						
+						//여기서 ADDKEY==add 면 업데이트 new 면 insert 
+//						if ("add".equals(ADDKEY) && gubun.equals("modify")) {
+//							mainService.UpdateQuery("goverSQL.updateGoverPnu", params); // PNU
+//						}
+//						else
+							mainService.InsertQuery("goverSQL.insertGoverPnu", params); // PNU
 																						// 테이블
 																						// 저장
 

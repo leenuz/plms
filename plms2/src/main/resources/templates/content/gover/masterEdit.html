@@ -495,6 +495,7 @@
 			    <!-- 순번 -->
 			    <li class="content smallWidth">
 			    <input type="hidden" id="goverIndex" value="0">
+			    <input type="hidden" id="addKey" value="new">
 				<input type="hidden" id="sido_nm" name="sido_nm" >
 				<input type="hidden" id="sgg_nm" name="sgg_nm" >
 				<input type="hidden" id="emd_nm" name="emd_nm" >
@@ -605,6 +606,7 @@
   		        <!-- 순번 -->
   		        <li class="content smallWidth">
 					<input type="hidden" id="goverIndex" value="0">
+					<input type="hidden" id="addKey" name="addKey" value="add">
 					<input type="hidden" id="sido_nm" name="sido_nm" >
 					<input type="hidden" id="sgg_nm" name="sgg_nm" >
 					<input type="hidden" id="emd_nm" name="emd_nm" >
@@ -619,11 +621,11 @@
   		        <li class="content largeWidth selectContentArea">
   		          <div class="hiddenSelectBox">
   		            <select name="adm_office" id="goverEditSelectBox03" hidden>
-  		              <option value="전체" th:selected="${pnuList[0].gp_adm_office == '전체'}">전체</option>
+  		              <option value="전체" th:selected="${pnuList[0].adm_office == '전체'}">전체</option>
   		            </select>
   		          </div>
   		          <section class="customSelectBox">
-  		            <button class="customSelectView"  id="admOfficeText01">[[${pnuList[0].gp_adm_office}]]</button>
+  		            <button class="customSelectView"  id="admOfficeText01">[[${pnuList[0].adm_office}]]</button>
   		            <ul class="customSelectBtns" id="admOfficeUl01"></ul>
   		          </section>
   		        </li>
@@ -632,13 +634,13 @@
 				<li class="content middleWidth selectContentArea">
 				  <div class="hiddenSelectBox">
 				    <select name="gover_own_yn" id="masterRegSelectBox13" hidden>
-				      <option value="국유지" th:selected="${pnuList[0].gp_gover_own_yn == 'Y'}">국유지</option>
-				      <option value="사유지" th:selected="${pnuList[0].gp_gover_own_yn == 'N'}">사유지</option>
+				      <option value="국유지" th:selected="${pnuList[0].gover_own_yn == 'Y'}">국유지</option>
+				      <option value="사유지" th:selected="${pnuList[0].gover_own_yn == 'N'}">사유지</option>
 				    </select>
 				  </div>
 				  <section class="customSelectBox">
 				    <!-- 버튼에 선택된 값을 표시 -->
-				    <button class="customSelectView" th:text="${pnuList[0].gp_gover_own_yn == 'Y' ? '국유지' : '사유지'}">선택</button>
+				    <button class="customSelectView" th:text="${pnuList[0].gover_own_yn == 'Y' ? '국유지' : '사유지'}">선택</button>
 				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
@@ -651,13 +653,13 @@
   		        <li class="content addressInfoWidth">
   		          <!--<div class="addressData">-->
   					<!-- text 창 높이를 위해 주석처리 -->
-					<input type="text" id="addr" name="addr" th:value="${pnuList[0].gp_sido_nm + ' ' + pnuList[0].gp_sgg_nm + ' ' + pnuList[0].gp_emd_nm + ' ' + pnuList[0].gp_ri_nm + ' ' + pnuList[0].gp_jibun}" />
+					<input type="text" id="addr" name="addr" th:value="${pnuList[0].sido_nm + ' ' + pnuList[0].sgg_nm + ' ' + pnuList[0].emd_nm + ' ' + pnuList[0].ri_nm + ' ' + pnuList[0].jibun}" />
   		          <!--</div>-->
   		          <button class="searchAddressBtn">검색</button>
   		        </li>
   		        <!-- PNU -->
   		        <li class="content middleWidth">
-  		          <input type="text" name="pnu" id="pnu" th:value="${pnuList[0].gp_pnu}"/>
+  		          <input type="text" name="pnu" id="pnu" th:value="${pnuList[0].pnu}"/>
   		        </li>
   		        <!-- 지목 -->
 				<li class="content selectContentArea">
@@ -666,34 +668,34 @@
 				      <option th:each="jimok : ${jimokList}" 
 				              th:value="${jimok['jm_name']}" 
 				              th:text="${jimok['jm_name']}" 
-				              th:selected="${jimok['jm_name'] == pnuList[0].gp_jimok_text}">
+				              th:selected="${jimok['jm_name'] == pnuList[0].jimok_text}">
 				      </option>
 				    </select>
 				  </div>
 				  <section class="customSelectBox">
-				    <button class="customSelectView" th:text="${pnuList[0].gp_jimok_text}" id="jimok">선택</button>
+				    <button class="customSelectView" th:text="${pnuList[0].jimok_text}" id="jimok">선택</button>
 				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
   		        <!-- 점용연장 -->
   		        <li class="content">
-  		          <input type="text" name="gover_length" th:value="${pnuList[0].gp_gover_length}"/>
+  		          <input type="text" name="gover_length" th:value="${pnuList[0].gover_length}"/>
   		        </li>
   		        <!-- 점용면적 -->
   		        <li class="content">
-  		          <input type="text" name="gover_area" th:value="${pnuList[0].gp_gover_area}"/>
+  		          <input type="text" name="gover_area" th:value="${pnuList[0].gover_area}"/>
   		        </li>
   		        <!-- 관로일치 여부 -->
 				<li class="content middleWidth selectContentArea">
 				  <div class="hiddenSelectBox">
 				    <select name="pipe_overlap_yn" id="masterRegSelectBox19" hidden>
-				      <option value="Y" th:selected="${pnuList[0].gp_pipe_overlap_yn == 'Y'}">Y</option>
-				      <option value="N" th:selected="${pnuList[0].gp_pipe_overlap_yn == 'N'}">N</option>
+				      <option value="Y" th:selected="${pnuList[0].pipe_overlap_yn == 'Y'}">Y</option>
+				      <option value="N" th:selected="${pnuList[0].pipe_overlap_yn == 'N'}">N</option>
 				    </select>
 				  </div>
 				  <section class="customSelectBox">
 				    <!-- 버튼에 선택된 값을 표시 -->
-				    <button class="customSelectView" th:text="${pnuList[0].gp_pipe_overlap_yn == 'Y' ? 'Y' : 'N'}">선택</button>
+				    <button class="customSelectView" th:text="${pnuList[0].pipe_overlap_yn == 'Y' ? 'Y' : 'N'}">선택</button>
 				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
@@ -720,6 +722,7 @@
 				<!-- 순번 -->
 	        	<li class="content smallWidth">
 					<input type="hidden" id="goverIndex" value="0">
+					<input type="hidden" id="addKey" name="addKey" value="add">
 					<input type="hidden" id="sido_nm" name="sido_nm" >
 					<input type="hidden" id="sgg_nm" name="sgg_nm" >
 					<input type="hidden" id="emd_nm" name="emd_nm" >
@@ -736,7 +739,7 @@
   		            <select name="adm_office" id="goverEditSelectBox03" hidden></select>
   		          </div>
   		          <section class="customSelectBox">
-					<button class="customSelectView" id="admOfficeText01">[[${pnu.gp_adm_office}]]</button>
+					<button class="customSelectView" id="admOfficeText01">[[${pnu.adm_office}]]</button>
                     <ul class="customSelectBtns" id="admOfficeUl01">
   		          </section>
   		        </li>
@@ -745,31 +748,31 @@
 				<li class="content middleWidth selectContentArea">
 				  <div class="hiddenSelectBox">
 				    <select name="gover_own_yn" id="masterRegSelectBox13" hidden>
-				      <option value="국유지" th:selected="${pnu.gp_gover_own_yn == 'Y'}">국유지</option>
-				      <option value="사유지" th:selected="${pnu.gp_gover_own_yn == 'N'}">사유지</option>
+				      <option value="국유지" th:selected="${pnu.gover_own_yn == 'Y'}">국유지</option>
+				      <option value="사유지" th:selected="${pnu.gover_own_yn == 'N'}">사유지</option>
 				    </select>
 				  </div>
 				  <section class="customSelectBox">
 				    <!-- 버튼에 선택된 값을 표시 -->
-				    <button class="customSelectView" th:text="${pnu.gp_gover_own_yn == 'Y' ? '국유지' : '사유지'}">선택</button>
+				    <button class="customSelectView" th:text="${pnu.gover_own_yn == 'Y' ? '국유지' : '사유지'}">선택</button>
 				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
 				<!-- 대표필지 -->
 				<li class="content checkboxWrap">
-					<input type="checkbox" th:id="'masterRegSelectBox_0' + ${pnu.no}" th:checked="${pnu.gp_rep_flag == 'Y'}" name="rep_flag"/>
+					<input type="checkbox" th:id="'masterRegSelectBox_0' + ${pnu.no}" th:checked="${pnu.rep_flag == 'Y'}" name="rep_flag"/>
 					<label th:for="'masterRegSelectBox_0' + ${pnu.no}"></label>
 				</li>
   		        <!-- 주소 -->
   		        <li class="content addressInfoWidth">
   		          <!--<div class="addressData">-->
-					<input type="text" id="addr" name="addr" th:value="${pnu.gp_sido_nm + ' ' + pnu.gp_sgg_nm + ' ' + pnu.gp_emd_nm + ' ' + pnu.gp_ri_nm + ' ' + pnu.gp_jibun}"/>
+					<input type="text" id="addr" name="addr" th:value="${pnu.sido_nm + ' ' + pnu.sgg_nm + ' ' + pnu.emd_nm + ' ' + pnu.ri_nm + ' ' + pnu.jibun}"/>
   		          <!--</div>-->
   		          <button class="searchAddressBtn">검색</button>
   		        </li>
   		        <!-- PNU -->
   		        <li class="content middleWidth">
-  		          <input type="text" name="pnu" id="pnu" th:value="${pnu.gp_pnu}" />
+  		          <input type="text" name="pnu" id="pnu" th:value="${pnu.pnu}" />
   		        </li>
 				<!-- 지목 -->
 				<li class="content selectContentArea">
@@ -778,34 +781,34 @@
 				      <option th:each="jimok : ${jimokList}" 
 				              th:value="${jimok['jm_name']}" 
 				              th:text="${jimok['jm_name']}" 
-				              th:selected="${jimok['jm_name'] == pnu.gp_jimok_text}">
+				              th:selected="${jimok['jm_name'] == pnu.jimok_text}">
 				      </option>
 				    </select>
 				  </div>
 				  <section class="customSelectBox">
-				    <button class="customSelectView" th:text="${pnu.gp_jimok_text}" id="jimok">선택</button>
+				    <button class="customSelectView" th:text="${pnu.jimok_text}" id="jimok">선택</button>
 				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
   		        <!-- 점용연장 -->
   		        <li class="content">
-  		          <input type="text" name="gover_length" th:value="${pnu.gp_gover_length}"/>
+  		          <input type="text" name="gover_length" th:value="${pnu.gover_length}"/>
   		        </li>
   		        <!-- 점용면적 -->
   		        <li class="content">
-  		          <input type="text" name="gover_area" th:value="${pnu.gp_gover_area}"/>
+  		          <input type="text" name="gover_area" th:value="${pnu.gover_area}"/>
   		        </li>
 				<!-- 관로일치 여부 -->
 				<li class="content middleWidth selectContentArea">
 				  <div class="hiddenSelectBox">
 				    <select name="pipe_overlap_yn" id="masterRegSelectBox19" hidden>
-				      <option value="Y" th:selected="${pnu.gp_pipe_overlap_yn == 'Y'}">Y</option>
-				      <option value="N" th:selected="${pnu.gp_pipe_overlap_yn == 'N'}">N</option>
+				      <option value="Y" th:selected="${pnu.pipe_overlap_yn == 'Y'}">Y</option>
+				      <option value="N" th:selected="${pnu.pipe_overlap_yn == 'N'}">N</option>
 				    </select>
 				  </div>
 				  <section class="customSelectBox">
 				    <!-- 버튼에 선택된 값을 표시 -->
-				    <button class="customSelectView" th:text="${pnu.gp_pipe_overlap_yn == 'Y' ? 'Y' : 'N'}">선택</button>
+				    <button class="customSelectView" th:text="${pnu.pipe_overlap_yn == 'Y' ? 'Y' : 'N'}">선택</button>
 				    <ul class="customSelectBtns"></ul>
 				  </section>
 				</li>
@@ -836,6 +839,8 @@
 				<!-- 순번 -->
   		        <li class="content smallWidth">
 					<input type="hidden" id="goverIndex" value="0">
+					<input type="hidden" id="addKey" name="addKey" value="new">
+					
 					<input type="hidden" id="sido_nm" name="sido_nm" >
 					<input type="hidden" id="sgg_nm" name="sgg_nm" >
 					<input type="hidden" id="emd_nm" name="emd_nm" >
@@ -1105,7 +1110,7 @@
             이슈신규생성
           </button>
           <button class="draftSaveBtn lightBlueBtn finalBtn" id="draftSaveBtn">임시저장</button>
-          <button class="requestBtn vividBlueBtn finalBtn">승인요청</button>
+          <button class="requestBtn vividBlueBtn finalBtn" id="reqApprovalBtn">승인요청</button>
         </div>
 		</form>
       </main>

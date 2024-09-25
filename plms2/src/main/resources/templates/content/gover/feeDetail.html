@@ -56,7 +56,7 @@
                 <li class="content">
                   <input
                     type="text"
-					th:value="${resultData.gm_gover_no}"
+					th:value="${resultData.gover_no}"
                     readonly
                     class="notWriteInput" />
                 </li>
@@ -64,7 +64,7 @@
                 <li class="content">
                   <input
                     type="text"
-					th:value="${resultData.gm_jisa}"
+					th:value="${resultData.jisa}"
                     readonly
                     class="notWriteInput" />
                 </li>
@@ -72,7 +72,7 @@
 				<li class="content">
 				  <input
 				    type="text"
-				    th:value="${repFlagPnu != null && repFlagPnu.gover_own_yn != null ? (#strings.equals(repFlagPnu.gover_own_yn, 'Y') ? '국유지' : '사유지') : ''}"
+				     th:if="${#lists.size(repFlagPnu)>0}" th:value="${repFlagPnu != null && repFlagPnu.gover_own_yn != null ? (#strings.equals(repFlagPnu.gover_own_yn, 'Y') ? '국유지' : '사유지') : ''}"
 				    readonly
 				    class="notWriteInput" />
 				</li>
@@ -80,7 +80,7 @@
 				<li class="content">
 				  <input
 				    type="text"
-				    th:value="${repFlagPnu != null && repFlagPnu.pipe_overlap_yn != null ? repFlagPnu.pipe_overlap_yn : ''}"
+				    th:if="${#lists.size(repFlagPnu)>0}" th:value="${repFlagPnu != null && repFlagPnu.pipe_overlap_yn != null ? repFlagPnu.pipe_overlap_yn : ''}"
 				    readonly
 				    class="notWriteInput" />
 				</li>
@@ -88,7 +88,7 @@
                 <li class="content">
                   <input
                     type="text"
-					th:value="${resultData.gm_yongdo}"
+					th:value="${resultData.yongdo}"
                     readonly
                     class="notWriteInput" />
                 </li>
@@ -96,7 +96,7 @@
                 <li class="content">
                   <input 
 				  type="text" 
-				  th:value="${resultData.gm_pipe_name}"
+				  th:value="${resultData.pipe_name}"
 				  readonly 
 				  class="notWriteInput" />
                 </li>
@@ -104,7 +104,7 @@
                 <li class="content">
                   <input
                     type="text"
-					th:value="${resultData.gm_sun_gubun}"
+					th:value="${resultData.sun_gubun}"
                     readonly
                     class="notWriteInput" />
                 </li>
@@ -112,7 +112,7 @@
                 <li class="content">
                   <input
                     type="text"
-					th:value="${#strings.equals(resultData.gm_sun_gubun, '단선') ? resultData.gm_pipe_meter : resultData.gm_pipe_meter + '/' + resultData.gm_pipe_meter2}"
+					th:value="${#strings.equals(resultData.sun_gubun, '단선') ? resultData.pipe_meter : resultData.pipe_meter + '/' + resultData.pipe_meter2}"
                     readonly
                     class="notWriteInput" />
                 </li>
@@ -120,7 +120,7 @@
                 <li class="content">
                   <input
                     type="text"
-					th:value="${resultData.gm_exemptionyn}"
+					th:value="${resultData.exemptionyn}"
                     readonly
                     class="notWriteInput" />
                 </li>
@@ -137,7 +137,7 @@
 				<!-- 주소 -->
                 <li class="content largeWidth">
                   <input
-                    type="text"
+                    type="text" th:if="${#lists.size(repFlagPnu)>0}"
 					th:value="
 					    ${(repFlagPnu.sido_nm != null ? repFlagPnu.sido_nm : '') 
 					    + (repFlagPnu.sgg_nm != null ? ' ' + repFlagPnu.sgg_nm : '') 
@@ -150,7 +150,7 @@
 				<!-- 지목 -->
                 <li class="content">
                   <input
-                    type="text"
+                    type="text"  th:if="${#lists.size(repFlagPnu)>0}"
 					th:value="${repFlagPnu.jimok_text}"
                     class="notWriteInput"
                     readonly />
@@ -158,7 +158,7 @@
 				<!-- 지적면적 -->
                 <li class="content middleWidth">
                   <input
-                    type="text"
+                    type="text"  th:if="${#lists.size(repFlagPnu)>0}"
 					th:value="${repFlagPnu.jijuk_area}"
                     readonly
                     class="notWriteInput" />
@@ -166,7 +166,7 @@
 				<!-- 토지이용계획 -->
                 <li class="content middleWidth">
                   <input 
-				  type="text" 
+				  type="text"   th:if="${#lists.size(repFlagPnu)>0}"
 				  th:value="${repFlagPnu.dosiplan}"
 				  class="notWriteInput" 
 				  readonly />
@@ -197,7 +197,7 @@
                 <li class="content middleWidth">
                   <input
                     type="text"
-					th:value="${resultData.gm_pmt_office}"
+					th:value="${resultData.pmt_office}"
                     placeholder="인천광역시"
                     class="notWriteInput"
                     readonly />
@@ -206,7 +206,7 @@
                 <li class="content middleWidth">
                   <input
                     type="text"
-					th:value="${resultData.gm_adm_office}"
+					th:value="${resultData.adm_office}"
                     class="notWriteInput"
                     readonly />
                 </li>
@@ -214,7 +214,7 @@
                 <li class="content largeWidth">
                   <input
                     type="text"
-					th:value="${resultData.gm_office_depart}"
+					th:value="${resultData.office_depart}"
                     class="notWriteInput"
                     readonly />
                 </li>
@@ -222,7 +222,7 @@
                 <li class="content">
                   <input
                     type="text"
-					th:value="${resultData.gm_office_charege}"
+					th:value="${resultData.office_charege}"
                     class="notWriteInput"
                     readonly />
                 </li>
@@ -230,7 +230,7 @@
                 <li class="content">
                   <input
                     type="text"
-					th:value="${resultData.gm_office_contact}"
+					th:value="${resultData.office_contact}"
                     placeholder="032-560-4803"
                     class="notWriteInput"
                     readonly />
@@ -278,7 +278,7 @@
                 <li class="content">
                   <input
                     type="text"
-					th:value="${resultData.gm_gover_period}"
+					th:value="${resultData.gover_period}"
                     class="notWriteInput"
                     readonly />
                 </li>
@@ -343,11 +343,11 @@
 	                        class="notWriteInput"
 	                        readonly
 							th:value="${
-							    (pnu.gp_sido_nm != null ? pnu.gp_sido_nm + ' ' : '') + 
-							    (pnu.gp_sgg_nm != null ? pnu.gp_sgg_nm + ' ' : '') + 
-							    (pnu.gp_emd_nm != null ? pnu.gp_emd_nm + ' ' : '') + 
-							    (pnu.gp_ri_nm != null ? pnu.gp_ri_nm + ' ' : '') + 
-							    (pnu.gp_jibun != null ? pnu.gp_jibun : '')
+							    (pnu.sido_nm != null ? pnu.sido_nm + ' ' : '') + 
+							    (pnu.sgg_nm != null ? pnu.sgg_nm + ' ' : '') + 
+							    (pnu.emd_nm != null ? pnu.emd_nm + ' ' : '') + 
+							    (pnu.ri_nm != null ? pnu.ri_nm + ' ' : '') + 
+							    (pnu.jibun != null ? pnu.jibun : '')
 							}" />
 	                </li>
 	                <!-- 전체면적 -->
@@ -355,21 +355,21 @@
 	        	        <input type="text"
 	                        class="notWriteInput"
 	                        readonly
-	                        th:value="${pnu.gp_jijuk_area}" />
+	                        th:value="${pnu.jijuk_area}" />
 	                </li>
 	                <!-- 연장 -->
 	                <li class="content">
 	                    <input type="text"
 	                        class="notWriteInput"
 	                        readonly
-	                        th:value="${pnu.gp_gover_length}" />
+	                        th:value="${pnu.gover_length}" />
 	                </li>
 	                <!-- 면적 -->
 	                <li class="content">
 	                    <input type="text"
 	                        class="notWriteInput"
 	                        readonly
-	                        th:value="${pnu.gp_gover_area}" />
+	                        th:value="${pnu.gover_area}" />
 	                </li>
 	                <!-- 지도 -->
 	                <li class="content btnBox">
