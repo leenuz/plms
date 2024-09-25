@@ -265,8 +265,8 @@ margin:10px;
                 <ul class="contents" id="togiUl" th:each="val, iterStat :${resultData}">
                   <li class="content checkboxWrap smallWidth">
                     <!-- 선택 -->
-                    <input type="checkbox" id="landReg_Checkbox01" name="togiSelect" />
-                    <label for="landReg_Checkbox01" ></label>
+                    <input type="checkbox" th:id="'landEdit_Checkbox_'+ ${iterStat.index}"  name="togiSelect" />
+                    <label th:for="'landEdit_Checkbox_'+ ${iterStat.index}"  ></label>
                   </li>
                   <li class="content smallWidth">
                     <!-- 순번 -->
@@ -306,8 +306,8 @@ margin:10px;
 
                   <li class="content checkboxWrap smallWidth">
                     <!-- 대표필지 -->
-                    <input type="checkbox" th:id="'landRegMainParcelChk_Checkbox_'+ ${iterStat.index}" name="landRegMainParcelChk_Checkbox01" th:checked="${val.dm_master_yn == 'Y'}" />
-                    <label th:for="'landRegMainParcelChk_Checkbox_'+ ${iterStat.index}"  ></label>
+                    <input type="checkbox" th:id="'landEditMainParcelChk_Checkbox_'+ ${iterStat.index}" name="landEditMainParcelChk_Checkbox01" th:checked="${val.dm_master_yn == 'Y'}" />
+                    <label th:for="'landEditMainParcelChk_Checkbox_'+ ${iterStat.index}"  ></label>
                   </li>
                   <li class="content middleWidth">
                     <!-- 관로저촉 -->
@@ -322,13 +322,13 @@ margin:10px;
                     <div class="addressData">
                       <input type="text" th:value="${val.address}" th:name="'address_' + ${iterStat.index}"/>
                     </div>
-                    <button class="searchAddressBtn landEditSearchBtn">
+                    <button class="searchAddressBtn landEditSearchBtn" th:id="${iterStat.index}">
                       검색
                     </button>
                   </li>
                   <li class="content">
                     <!-- 지목 -->
-                    <input type="text"th:value="${val.dm_jimok_text}" th:name="'jimok_' + ${iterStat.index}"/>
+                    <input type="text"th:value="${val.dm_jimok_text}" readonly class="notWriteInput" th:name="'jimok_' + ${iterStat.index}"/>
                   </li>
                   <li class="content">
                     <!-- 연장 -->
@@ -336,7 +336,7 @@ margin:10px;
                   </li>
                   <li class="content">
                     <!-- 면적 -->
-                    <input type="text" th:value="${val.dm_jijuk_area}" th:name="'myeonjuk_' + ${iterStat.index}"/>
+                    <input type="text" th:value="${val.dm_jijuk_area}" readonly class="notWriteInput" th:name="'myeonjuk_' + ${iterStat.index}"/>
                   </li>
                   <li class="content middleWidth">
                     <!-- 소유자 -->
@@ -348,11 +348,24 @@ margin:10px;
                       위치보기
                     </button>
                   </li>
-                  <li class="content middleWidth btnBox">
+
+                  <li class="content middleWidth btnBox"
+                      th:if="${iterStat.index == 0}">
                     <div class="newBtnWrap">
-                      <button class="registBtn addTogiBtn miniBtn">추가</button>
+                      <button class="addBtn addTogiBtn miniBtn">추가</button>
                     </div>
                   </li>
+
+                  <li class="content middleWidth btnBox"
+                      th:unless="${iterStat.index == 0}">
+                    <div class="btnWrap">
+                      <button class="miniBtn addBtn">추가</button>
+                    </div>
+                    <div class="btnWrap">
+                      <button class="miniBtn delBtn">삭제</button>
+                    </div>
+                  </li>
+
                 </ul>
               </div>
             </div>
