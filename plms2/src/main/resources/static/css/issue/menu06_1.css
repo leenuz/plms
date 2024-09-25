@@ -884,7 +884,7 @@ div.dt-filter-spacer {
   background-size: 11px;
   background-repeat: no-repeat;
   background-position: 123px center;
-  text-align: left;
+  text-align: center !important;
   margin-right: 10px;
   width: 159px;
   height: 38px;
@@ -914,4 +914,721 @@ div.dt-filter-spacer {
 .top {
   text-align: right;
   margin: 10px;
+}
+
+/* 메인화면 */
+
+#dopcoIssueManage .privateUseMainContentWrapper {
+  margin: 0 auto;
+  padding: 15px 20px;
+}
+
+#dopcoIssueManage .privateUseMainContentWrapper .privateUseMainContent {
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataTitles {
+  padding: 10px 20px;
+  position: relative;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataTitles
+  h5 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataTitles
+  h5
+  span {
+  color: #2b7de1;
+  padding: 0px 8px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataTitles
+  .privateUseMainContentDownloadBoxs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataTitles
+  .privateUseMainContentDownloadBoxs
+  .privateUseExcelDownload {
+  width: 159px;
+  padding: 0px 30px;
+  height: 38px;
+  line-height: 39px;
+  border-radius: 10px;
+  background-color: #4e5871;
+  font-size: 15px;
+  font-weight: 600;
+  background-image: url(/assets/media/menu01/download.png);
+  background-size: 11px;
+  background-repeat: no-repeat;
+  background-position: 123px center;
+  color: #fff;
+  text-align: left;
+  margin-right: 10px;
+}
+
+/* 총 검색건수의 셀렉박스 */
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataTitles
+  .privateUseMainContentDownloadBoxs
+  .privateUseSelects {
+  width: 137px;
+  height: 38px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataTitles
+  .privateUseMainContentDownloadBoxs
+  .privateUseSelects
+  .sufaceSelectList {
+  top: 40px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  height: 527px;
+  margin-top: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow-x: hidden;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers.scroll {
+  overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers::-webkit-scrollbar {
+  width: 4px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers::-webkit-scrollbar-track {
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont {
+  width: 30%;
+  height: 100%;
+  float: left;
+  position: absolute;
+  top: 0;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond03 {
+  width: 70%;
+  height: auto;
+  overflow-x: scroll;
+  overflow-y: visible;
+  left: 30%;
+  border-left: 1px solid #cddbf0;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond03
+  .scrollContentBoxies {
+  width: 180%;
+  height: 100%;
+}
+
+/* 스크롤바 */
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond03::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond03::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxsSecond03::-webkit-scrollbar-track {
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle {
+  height: 71px;
+  background-color: #f7f9fc;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont:last-child
+  .dataTitle
+  ul
+  li {
+  width: 400px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li {
+  width: 30%;
+  height: 100%;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li {
+  border-right: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li:last-child {
+  border-right: none;
+}
+
+/* 타이틀 li 사이즈별 퍼센트 목록 */
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.extraSmallWidth {
+  width: 15%;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.smallWidth {
+  width: 20%;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.mediumWidth {
+  width: 50%;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li.largeWidth {
+  width: 70%;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul
+  li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataTitle
+  li
+  p {
+  font-size: 14px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: #3c3c3c;
+  font-size: 14px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent.privateLink01
+  a {
+  width: 251.5%;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent.privateLink01
+  a
+  li:last-child {
+  border-right: 1px solid #cddbf0;
+}
+
+/* 위치보기, 문서보기 버튼박스 */
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  .dataContBtnBox {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent.privateLink01
+  .dataContBtnBox
+  li {
+  flex: 1;
+}
+
+/**/
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  a.mouseEvet {
+  color: #2b7de1;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li {
+  width: 30%;
+  height: 44px;
+  border-right: 1px solid #cddbf0;
+  border-bottom: 1px solid #cddbf0;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li:last-child {
+  border-right: none;
+}
+
+/* 컨텐츠 li 사이즈별 목록 */
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li.extraSmallWidth {
+  width: 15%;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li.smallWidth {
+  width: 20%;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li.mediumWidth {
+  width: 50%;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li.largeWidth {
+  width: 70%;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li
+  button.btnDesign {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  color: #2b7de1;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #cce0ff99;
+  cursor: default;
+  position: absolute;
+  z-index: 999;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li
+  .regisBtnHiddenBoxs {
+  position: relative;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li
+  .regisBtnHiddenBoxs
+  button {
+  position: absolute;
+  cursor: default;
+  z-index: 999;
+}
+
+/* 상세정보버튼 a링크 */
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li
+  .regisBtnHiddenBoxs
+  .detailBtn
+  a {
+  color: #2b7de1;
+  font-size: 13px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li
+  .regisBtnHiddenBoxs
+  .detailBtn
+  a:visited {
+  color: #2b7de1;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li
+  .regisBtnHiddenBoxs
+  button.regisRemoveBtn {
+  background-color: #fff;
+  border: 1px solid #2b7de1;
+  display: none;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .dataBoxswrappers
+  .dataBoxCont
+  ul.dataContent
+  li
+  p {
+  text-align: center;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .boardPageBoxs {
+  padding: 30px 0px;
+  margin: 0 auto;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .boardPageBoxs
+  ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .boardPageBoxs
+  ul
+  li {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .boardPageBoxs
+  ul
+  li
+  button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .boardPageBoxs
+  ul
+  li
+  button
+  img {
+  height: 20px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .boardPageBoxs
+  ul
+  li.arrowLeftWrapper
+  button {
+  margin-right: 10px;
+}
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .boardPageBoxs
+  ul
+  li.arrowRightWrapper
+  button {
+  margin-left: 10px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .boardPageBoxs
+  ul
+  li.arrowLeftWrapper
+  img {
+  transform: rotate(180deg);
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .boardPageBoxs
+  ul
+  li.pageCountBoxs
+  p {
+  font-size: 14px;
+  width: 29px;
+  height: 29px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+  margin-right: 12px;
+  color: #b1bad0;
+  font-weight: 700;
+  cursor: pointer;
+}
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .boardPageBoxs
+  ul
+  li.pageCountBoxs
+  p:last-child {
+  margin-right: 0px;
+}
+
+#dopcoIssueManage
+  .privateUseMainContentWrapper
+  .privateUseMainContent
+  .boardPageBoxs
+  ul
+  li.pageCountBoxs
+  p.active {
+  background-color: #edf2f9;
+  color: #2b7de1;
+}
+
+#userTable button.btnDesign {
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  color: #2b7de1;
+  font-size: 13px;
+  font-weight: 600;
+  background-color: #cce0ff99;
 }

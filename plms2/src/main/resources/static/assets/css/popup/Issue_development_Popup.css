@@ -575,11 +575,13 @@ textarea:focus {
 .landinfo_wrap 
 .landinfo 
 .landinfo_content
-.landinfo_content_5{
+.landinfo_content_5, .landinfo_content_6, .landinfo_content_7{
   box-sizing: border-box;
   padding: 0 10px;
 }
-.landinfo_wrap .landinfo .landinfo_content .landinfo_content_5 input[type="text"]
+.landinfo_wrap .landinfo .landinfo_content .landinfo_content_5 input[type="text"],
+.landinfo_wrap .landinfo .landinfo_content .landinfo_content_6 input[type="text"],
+.landinfo_wrap .landinfo .landinfo_content .landinfo_content_7 input[type="text"]
  {
   width: 100%;
   text-align: left;

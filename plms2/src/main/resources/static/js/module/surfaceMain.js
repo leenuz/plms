@@ -5,6 +5,7 @@ import { surfaceSelectEvet , handleCheckboxes } from './surfaceSelectEvet.js';
 import { surfaceInquireSelectEvet , surfaceInquireCheckboxes } from '/js/jisang/surfaceInquireSelectEvet.js';
 import { privateUseSelectEvet } from '/js/gover/privateUseSelecEvet.js';
 import { landDevelopmentManageSelectEvet } from '/js/togi/landDevelopmentSelecEvet.js';
+import { issueManageSelectEvet } from '/js/issue/issueManageSelecEvet.js';
 
 
 console.log("---------------------------surfaceMain.js start----------------------");
@@ -95,7 +96,12 @@ window.addEventListener("load" , () => {
                         return surfaceSelectEvet("#relocationCheckPiljiDiv .surfaceInquireSelectsTitleBtn" ,"#relocationCheckPiljiDiv .sufaceSelectList"),
                         handleCheckboxes(relocationCheckPiljiDiv);
                     }
-              }
+                //이슈코드 관리
+                else if(pathName === `/issue/codeMgmt` || pathName === `/issue/menu06_1`){
+                    return issueManageSelectEvet("#dopcoIssueManage .issueManageSelectsTitleBtn" ,"#dopcoIssueManage .sufaceSelectList"  ,"#dopcoIssueManage .sufaceSelectList .surfaceSelectListMember" , ".issueManageHiddenSelect");
+                } 
+              
+            }
 
       selecBoxsEvetWrappers();
 

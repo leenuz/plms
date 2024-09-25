@@ -285,6 +285,7 @@ button {
 #complaintManage .contWrap .content {
   border-right: 1px solid #cddbf0;
   box-sizing: border-box;
+  height: 100% !important;
 }
 #complaintManage .contWrap .content:last-of-type {
   border-right: 0;
