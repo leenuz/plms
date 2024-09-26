@@ -177,6 +177,33 @@ $(document).ready(function() {
 });
 
 
+// 기본 정보 -> 주소 검색 입력형,선택형 클릭 시 활성화/비활성화
+const radioButtons = document.querySelectorAll('#easementModification .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea .inputWrap input[name="easementModification_addressInput"]');
+const inputAreas = document.querySelectorAll('#easementModification .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea');
+
+radioButtons.forEach((radio) => {
+	radio.addEventListener('click', () => {
+		inputAreas.forEach((area) => {
+			if (area.contains(radio)) {
+				area.querySelectorAll(':scope > *:not(.inputWrap)').forEach((child) => {
+					child.classList.remove('disabled');
+				});
+			} else {
+				area.querySelectorAll(':scope > *:not(.inputWrap)').forEach((child) => {
+					child.classList.add('disabled');
+				});
+			}
+		});
+
+	});
+});
+
+const checkedRadio = document.querySelector('#easementModification .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea .inputWrap input[name="easementModification_addressInput"]:checked');
+if (checkedRadio) {
+	checkedRadio.dispatchEvent(new Event('click'));
+}
+
+
 // 시군구 목록 가져오기
 function getSigunMaster(sidoValue) {
 	const allData = { key: sidoValue };
@@ -336,18 +363,18 @@ $(document).on("click", "#basicSearchBtn", function() {
 });
 
 // 주소 검색 팝업 - x 버튼, 닫기 버튼 클릭 시 닫기 
-$(document).on("click",".topCloseBtn, #popupCloseBtn",function(){
+$(document).on("click", ".topCloseBtn, #popupCloseBtn", function() {
 
-	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	var targetDiv = $("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
 	$(".popupWrap").removeClass("active");
-//	$(".popupWrap").toggleClass("active");
+	//	$(".popupWrap").toggleClass("active");
 });
 
 // 주소 검색 팝업 - 선택 버튼 클릭 시 반영
 $(document).on("click", ".resultSelectBtn", function() {
 	console.log("----------resultSelectBtn-click--------");
 	console.log($(this).parent().parent().html());
-	
+
 	var pnu = $(this).parent().parent().find(".popContent01").html();
 	var address = $(this).parent().parent().find(".popContent02").html();
 	var jibun = $(this).parent().parent().find(".popContent03").html();
@@ -355,11 +382,11 @@ $(document).on("click", ".resultSelectBtn", function() {
 	var sgg_nm = $(this).parent().parent().find(".popContent0202").html();
 	var emd_nm = $(this).parent().parent().find(".popContent0203").html();
 	var ri_nm = $(this).parent().parent().find(".popContent0204").html();
-	
+
 	console.log("pnu:" + pnu);
 	console.log("address:" + address);
 	console.log("jibun:" + jibun);
-	
+
 	$("#maddress").val(address + " " + jibun);
 	$("#raddress").val(address + " " + jibun);
 	$("#mpnu").val(pnu);
@@ -373,10 +400,10 @@ $(document).on("click", ".resultSelectBtn", function() {
 	$(".popupWrap").removeClass("active");
 })
 
-// 주소 검색 팝업 - pnu 없이 선택 클릭 시
+// 주소 검색 팝업 - pnu 없이 선택 클릭 시 (개발 필요)
 $(document).on("click", ".popupWrap .lastBtnBox .saveBtn", function() {
 	console.log("pnu없이 선택");
-	
+
 })
 
 // 첨부파일 전체 선택 체크박스
@@ -689,33 +716,6 @@ $(document).on("click", "#deleteSoujaBtn", function() {
 
 });
 
-// 기본 정보 -> 주소 검색
-
-const radioButtons = document.querySelectorAll('#easementModification .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea .inputWrap input[name="easementModification_addressInput"]');
-const inputAreas = document.querySelectorAll('#easementModification .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea');
-
-radioButtons.forEach((radio) => {
-	radio.addEventListener('click', () => {
-		inputAreas.forEach((area) => {
-			if (area.contains(radio)) {
-				area.querySelectorAll(':scope > *:not(.inputWrap)').forEach((child) => {
-					child.classList.remove('disabled');
-				});
-			} else {
-				area.querySelectorAll(':scope > *:not(.inputWrap)').forEach((child) => {
-					child.classList.add('disabled');
-				});
-			}
-		});
-
-	});
-});
-
-const checkedRadio = document.querySelector('#easementModification .defaultInfo .contWrap .depth2 .contents .content02 .radioBox .inputArea .inputWrap input[name="easementModification_addressInput"]:checked');
-if (checkedRadio) {
-	checkedRadio.dispatchEvent(new Event('click'));
-}
-
 
 // 첨부파일 전체 선택 체크박스
 const AllCheckEventEasementModification = () => {
@@ -807,3 +807,123 @@ const easeModificationOpenPopUp = () => {
 easeModificationOpenPopUp();
 */
 
+
+// 저장버튼 (개발 필요 - 지상권 등록 landRightsRegistration 참고, 현재 클릭 이벤트 x)
+$(document).on("click", "#finalBtn", function() {
+	console.log("---------finalBtn class click------------");
+	console.log($("#saveForm").serialize());
+
+	//데이터를 가공해서 넘김다
+	var formSerializeArray = $('#saveForm').serializeArray();
+	console.log(formSerializeArray);
+
+	len = formSerializeArray.length;
+	var dataObj = {};
+	for (i = 0; i < len; i++) {
+		dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
+	}
+
+	console.log("------dataObj--------");
+	console.log(dataObj);
+
+	const soujaUls = document.querySelectorAll('#soujaUl');
+	const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
+	console.log(attachFileUls);
+
+	//   console.log(soujaUls);
+	var soujaArr = new Array();
+	for (var i = 0; i < soujaUls.length; i++) {
+		console.log(soujaUls[i]);
+		console.log($(soujaUls[i]).find("#soujaJibun").val());
+		var soujaJibun = $(soujaUls[i]).find("#soujaJibun").val();
+		var soujaName = $(soujaUls[i]).find("#soujaName").val();
+		var soujaAddress = $(soujaUls[i]).find("#soujaAddress").val();
+		var soujaContact1 = $(soujaUls[i]).find("#soujaContact1").val();
+		var soujaContact2 = $(soujaUls[i]).find("#soujaContact2").val();
+
+		soujaJibun = (soujaJibun == "undefined" || soujaJibun == "" || soujaJibun == null) ? "" : soujaJibun;
+		soujaName = (soujaName == "undefined" || soujaName == "" || soujaName == null) ? "" : soujaName;
+		soujaAddress = (soujaAddress == "undefined" || soujaAddress == "" || soujaAddress == null) ? "" : soujaAddress;
+		soujaContact1 = (soujaContact1 == "undefined" || soujaContact1 == "" || soujaContact1 == null) ? "" : soujaContact1;
+		soujaContact2 = (soujaContact2 == "undefined" || soujaContact2 == "" || soujaContact2 == null) ? "" : soujaContact2;
+		var soujaInfo = { "jibun": soujaJibun, "soujaName": soujaName, "soujaAddress": soujaAddress, "soujaContact1": soujaContact1, "soujaContact2": soujaContact2 };
+		if (soujaJibun != "" && soujaName != "" && soujaAddress != "" && soujaContact1 != "") soujaArr.push(soujaInfo);
+	}
+
+	var files = new Array();
+	for (var i = 0; i < attachFileUls.length; i++) {
+		console.log($(attachFileUls[i]).parent().parent().html());
+		var fname = $(attachFileUls[i]).parent().parent().find("#filename").attr('placeholder');
+		console.log(fname);
+		files.push(fname);
+	}
+
+	console.log("--------files---------");
+	console.log(files);
+
+	console.log("--------soujaArr------");
+	console.log(soujaArr);
+	dataObj.soujaInfo = soujaArr;
+	dataObj.uploadFiles = files;
+
+	//필수정보체크
+	console.log("jisa:" + dataObj.jisa);
+	if (!checkData(dataObj.jisa, "s", "담당지사를 입력해주세요!")) return;
+	else if (!checkData(dataObj.overlap_yn, "s", "관로일치여부블 입력해주세요!")) return;
+	else if (!checkData(dataObj.youngdo, "s", "용도블 입력해주세요!")) return;
+	else if (!checkData(dataObj.pipe_name, "s", "관로명(구간)을 입력해주세요!")) return;
+	else if (!checkData(dataObj.sun_gubun, "s", "선구분을 입력해주세요!")) return;
+	else if (!checkData(dataObj.gover_own_yn, "s", "국공유지여부를 입력해주세요!")) return;
+	else if (!checkData(dataObj.jijuk_area, "s", "지적면적을 입력해주세요!")) return;
+	else if (!checkData(dataObj.jimok_text, "s", "지목을 입력해주세요!")) return;
+	else if (!checkData(dataObj.account_yn, "s", "회계처리필요여부블 입력해주세요!")) return;
+	else if (!checkData(dataObj.maddress, "s", "주소블 입력해주세요!")) return;
+	else if (soujaArr <= 0) {
+		alert("소유자 정보를 입력해주세요!");
+		return;
+	}
+	else if (!checkData(dataObj.mcomple_yn, "s", "등기여부블 입력해주세요!")) return;
+	else if (!checkData(dataObj.mpyeonib_area, "s", "편입면적을 입력해주세요!")) return;
+	else if (!checkData(dataObj.mpermit_yn, "s", "계약유형을 입력해주세요!")) return;
+
+	console.log("------dataObj--------");
+	console.log(dataObj);
+
+	dataObj.gubun = "insert";
+
+	url = "/jisang/insertJisangList";
+	$.ajax({
+		url: url,
+		type: 'POST',
+		contentType: "application/json",
+		data: JSON.stringify(dataObj),
+
+		dataType: "json",
+		beforeSend: function(request) {
+			console.log("beforesend ........................");
+			loadingShow();
+		},
+		success: function(response) {
+			loadingHide();
+			console.log(response);
+			if (response.success = "Y") {
+				console.log("response.success Y");
+				//	console.log("response.resultData length:"+response.resultData.length);
+				alert("정상적으로 등록 되었습니다.");
+				/*$("#popup_bg").show();
+				$("#popup").show(500);
+				//$("#addrPopupLayer tbody td").remove();
+				for(var i=0;i<response.resultData.length;i++){
+					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+				}*/
+			}
+			else {
+				console.log("response.success N");
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
+			return false;
+		}
+	});
+});
