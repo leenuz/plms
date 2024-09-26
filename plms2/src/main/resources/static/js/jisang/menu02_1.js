@@ -450,24 +450,24 @@ function moveToCityHall(x,y) {
 		//var mapW=window.mapWindow;
 		//console.log(window.name);
 		//var mapW=window.name;
-	if (mapWindow) {
+	// if (mapWindow) {
 	    var cityHallCoords = {};
 
         if(x != 'null' && y != 'null'){
 //            cityHallCoords = { lon: 126.9779692, lat: 37.566535, zoom: 16 }; //테스트를 위해 임시로 넣어둠
             cityHallCoords = { lon: y, lat: x, zoom: 16 };
-            mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송
+            openMapWindow(cityHallCoords);
         }
         else{
             alert("해당 위치에 대한 좌표가 없습니다.");
         }
 		//mapWindow.postMessage(cityHallCoords, 'http://10.168.0.247:8080/'); // 특정 사이트에 전송
 
-	} else {
-	    alert("지도가 열려 있지 않습니다.");
-	/* 	mapWindow = window.open('http://10.168.0.247:8080/', 'mapWindow', 'width=2000,height=1000');
-		var cityHallCoords = { lon: 126.9779692, lat: 37.566535, zoom: 16 };
-		//mapWindow.postMessage(cityHallCoords, 'http://10.168.0.247:8080/'); // 특정 사이트에 전송
-		mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송 */
-	}
+	// } else {
+	//     alert("지도가 열려 있지 않습니다.");
+	// /* 	mapWindow = window.open('http://10.168.0.247:8080/', 'mapWindow', 'width=2000,height=1000');
+	// 	var cityHallCoords = { lon: 126.9779692, lat: 37.566535, zoom: 16 };
+	// 	//mapWindow.postMessage(cityHallCoords, 'http://10.168.0.247:8080/'); // 특정 사이트에 전송
+	// 	mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송 */
+	// }
 	}
