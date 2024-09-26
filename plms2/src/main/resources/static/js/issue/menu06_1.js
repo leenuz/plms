@@ -342,9 +342,9 @@ function loadDataTable(params) {
                 d.start_date = params.start_date;
                 d.end_date = params.end_date;
 
-                d.code1 = params.code1;
-                d.code2 = params.code2;
-                d.code3 = params.code3;
+                d.code1 = params.depth1Code;
+                d.code2 = params.depth2Code;
+                d.code3 = params.depth3Code;
                 d.mw_title = params.mw_title;
 
                 d.status = findProgStatus(params.status)
