@@ -876,7 +876,7 @@ public class songyuController {
 			String sun_gubun = requestParamObj.getString("sunGubun"); // 단/복선
 			String pipeMeter = requestParamObj.getString("pipe_diameter1"); // 관경
 			String pipeMeter2 = requestParamObj.getString("pipe_diameter2"); // 관경2
-			String pnu = requestParamObj.getString("mpnu"); // 검색결과 PNU
+			String pnu = requestParamObj.getString("mpnu").trim(); // 검색결과 PNU
 			String jijuk_area = requestParamObj.getString("jijuk_area"); // 지면 면적(㎡)
 			String jimok_text = requestParamObj.getString("jimok_text"); // 지면 면적(㎡)
 
@@ -947,7 +947,7 @@ public class songyuController {
 				// 로깅처리를 위하여 기존 지적도 데이터 조회
 				ArrayList tmpList=new ArrayList();
 				tmpList=(ArrayList) mainService.selectQuery("songyuSQL.selectJijukBeforePNU", params);
-				
+				log.info("--------------tmpList:"+tmpList);
 //				Map logParam = (HashMap) Database.getInstance().queryForObject("Json.selectJijukBeforePNU", params);
 				HashMap logParam=(HashMap)tmpList.get(0);
 
@@ -956,14 +956,16 @@ public class songyuController {
 					notsetNo = (String) params.get("NOTSET_NO");
 
 				} else {
-					log.info("notsetlist:"+NotsetList.get(0));
+					log.info("notsetlist:"+((HashMap) NotsetList.get(0)).get("now_notsetno"));
 					String Next_notsetNo=""; // = String.valueOf(Integer.parseInt((String) ((HashMap) NotsetList.get(0)).get("now_notsetno")) + 1);
 					// HashMap에서 값을 안전하게 가져와서 처리
 					Object notsetnoObj = ((HashMap) NotsetList.get(0)).get("now_notsetno");
 
+					log.info("notsetnoObj: "+notsetnoObj);
 					if (notsetnoObj != null) {
 					    String notsetnoStr = notsetnoObj.toString();  // 안전하게 toString() 사용
 					    int nextNotsetNo = Integer.parseInt(notsetnoStr) + 1;
+					    log.info("nextNotsetNo: "+nextNotsetNo);
 					    Next_notsetNo = String.valueOf(nextNotsetNo);
 					} else {
 					    // null인 경우에 대한 처리 (예: 초기화하거나 에러 처리)
@@ -979,7 +981,9 @@ public class songyuController {
 					Next_notsetNo = "N_" + add_Zero + Next_notsetNo;
 
 					params.put("NOTSET_NO", Next_notsetNo);
+					params.put("notset_no", Next_notsetNo);
 					notsetNo = (String) params.get("NOTSET_NO");
+					log.info("notsetNo: "+notsetNo);
 				}
 
 				if (gubun.equals("insert")) {
