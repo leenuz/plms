@@ -72,7 +72,7 @@
 				<li class="content">
 				  <input
 				    type="text"
-				     th:if="${#lists.size(repFlagPnu)>0}" th:value="${repFlagPnu != null && repFlagPnu.gover_own_yn != null ? (#strings.equals(repFlagPnu.gover_own_yn, 'Y') ? '국유지' : '사유지') : ''}"
+				       th:value="${#lists.size(repFlagPnu)>0 && repFlagPnu != null && repFlagPnu.gover_own_yn != null ? (#strings.equals(repFlagPnu.gover_own_yn, 'Y') ? '국유지' : '사유지') : ''}"
 				    readonly
 				    class="notWriteInput" />
 				</li>
@@ -80,7 +80,7 @@
 				<li class="content">
 				  <input
 				    type="text"
-				    th:if="${#lists.size(repFlagPnu)>0}" th:value="${repFlagPnu != null && repFlagPnu.pipe_overlap_yn != null ? repFlagPnu.pipe_overlap_yn : ''}"
+				     th:value="${repFlagPnu != null && repFlagPnu.pipe_overlap_yn != null ? repFlagPnu.pipe_overlap_yn : ''}"
 				    readonly
 				    class="notWriteInput" />
 				</li>

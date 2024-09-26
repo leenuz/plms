@@ -920,34 +920,38 @@ WHERE 1=1
 
 	<select id="selectGoverPnuList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT * ,(row_number() OVER()) AS no
- from
- (
- SELECT GP.gp_SEQ AS SEQ
-, GP.gp_addrcode AS ADDRCODE
-, GP.gp_dosiplan AS DOSIPLAN
-, GP.gp_echo_no AS ECHO_NO
-, GP.gp_emd_nm AS EMD_NM
-, GP.gp_gover_no AS GOVER_NO
-, GP.gp_gover_own_yn AS GOVER_OWN_YN
-, GP.gp_jibun AS JIBUN
-, GP.gp_jibun_full AS JIBUN_FULL
-, GP.gp_jijuk_area AS JIJUK_AREA
-, GP.gp_jimok_text AS JIMOK_TEXT
-, GP.gp_pnu AS PNU
-, GP.gp_ri_nm AS RI_NM
-, GP.gp_sgg_nm AS SGG_NM
-, GP.gp_sido_nm AS SIDO_NM
-, GP.gp_gover_length AS GOVER_LENGTH
-,GP.gp_gover_area AS GOVER_AREA
-, GP.gp_adm_office AS ADM_OFFICE
-, GP.gp_use_purpos AS USE_PURPOS
-, GP.gp_rep_flag AS REP_FLAG
+		 from
+		 (
+		 SELECT GP.gp_SEQ AS SEQ
+		, GP.gp_addrcode AS ADDRCODE
+		, GP.gp_dosiplan AS DOSIPLAN
+		, GP.gp_echo_no AS ECHO_NO
+		, GP.gp_emd_nm AS EMD_NM
+		, GP.gp_gover_no AS GOVER_NO
+		, GP.gp_gover_own_yn AS GOVER_OWN_YN
+		, GP.gp_jibun AS JIBUN
+		, GP.gp_jibun_full AS JIBUN_FULL
+		, GP.gp_jijuk_area AS JIJUK_AREA
+		, GP.gp_jimok_text AS JIMOK_TEXT
+		, GP.gp_pnu AS PNU
+		, GP.gp_ri_nm AS RI_NM
+		, GP.gp_sgg_nm AS SGG_NM
+		, GP.gp_sido_nm AS SIDO_NM
+		, GP.gp_gover_length AS GOVER_LENGTH
+		,GP.gp_gover_area AS GOVER_AREA
+		, GP.gp_adm_office AS ADM_OFFICE
+		, GP.gp_use_purpos AS USE_PURPOS
+		, GP.gp_rep_flag AS REP_FLAG
 		, COALESCE(JKM.pipe_overlap_yn, GP.gp_pipe_overlap_yn) AS PIPE_OVERLAP_YN
 		, JKM.jisang_status AS JISANG_STATUS
-		, JKM.jisa AS JISA
+		, CASE 
+		    WHEN JKM.jisa IS NOT NULL  THEN JKM.jisa 
+		    ELSE GM.gm_jisa 
+		 END AS JISA
 		
 		FROM GOVER_PNU GP
                 LEFT JOIN JIJUK_2024 JKM ON GP.gp_pnu = JKM.PNU
+                LEFT JOIN GOVER_MASTER  GM ON GM.gm_gover_no = GP.gp_gover_no
 		WHERE 1=1
 		and GP.gp_gover_no ='G_000914'
 		ORDER BY GP.gp_rep_flag DESC, GP.gp_seq ASC
@@ -1226,11 +1230,11 @@ FROM NOTSET_MASTER
 	<update id="insertGoverTerminationAdd" parameterType="HashMap">
 		UPDATE GOVER_MASTER
 		SET
-		gm_CANCLE_YN = 'Y'
-		,gm_CANCLE_DATE = TO_DATE(#{CANCLEDATE},'yyyy-mm-dd')
-		,gm_CANCLE_NAME = TO_CHAR(#{USERNAME})
-		,gm_CANCLE_EMPCD = TO_CHAR(#{EMPCD})
-		WHERE gm_GOVER_NO = TO_CHAR(#{GOVERNO})
+		gm_CANCEL_YN = 'Y'
+		,gm_CANCEL_DATE = TO_DATE(#{CANCLEDATE},'yyyy-mm-dd')
+		,gm_CANCEL_NAME = #{USERNAME}
+		,gm_CANCEL_EMPCD = nullif(#{EMPCD},'')
+		WHERE gm_GOVER_NO = #{GOVERNO}
 
 	</update>
 	
