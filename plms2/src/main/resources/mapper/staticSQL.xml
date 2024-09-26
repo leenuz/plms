@@ -820,5 +820,34 @@ SELECT TTT.TYPE,
 ) TTT
 
 	</select>
+	<select id="selectMinwonStatusStatic" parameterType="HashMap" resultType="HashMap">
+			SELECT 
+		    mm.mm_jisa,
+		    COUNT(*) AS total_count, 
+		    COUNT(*) FILTER (WHERE mm.mm_status = '1') AS status_1_count,
+		    '임시저장' AS status_1_title,
+		    COUNT(*) FILTER (WHERE mm.mm_status = '2') AS status_2_count,
+		    '민원발생' AS status_2_title,
+		    COUNT(*) FILTER (WHERE mm.mm_status = '3') AS status_3_count,
+		    '대응방안수립' AS status_3_title,
+		    COUNT(*) FILTER (WHERE mm.mm_status = '4') AS status_4_count,
+		    '협의중' AS status_4_title,
+		    COUNT(*) FILTER (WHERE mm.mm_status = '5') AS status_5_count,
+		    '완료' AS status_5_title
+		FROM minwon_master mm
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" > 
+		and mm.mm_jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(status)" > 
+		and mm.mm_status=#{status}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(occurDate)" > 
+		AND TO_CHAR(mm.mm_occur_date, 'YYYY-MM') = #{occurDate}
+		</if>
+		GROUP BY mm.mm_jisa
+		ORDER BY mm.mm_jisa
+	
+	</select>
 
 </mapper>

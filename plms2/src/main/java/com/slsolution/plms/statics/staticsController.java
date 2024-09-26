@@ -1048,6 +1048,48 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		response.getWriter().flush();
 	}
 	
+	//민원관리 현황통계 데이터 조회
+	@PostMapping(path="/selectMinwonStatusStatis")
+	public void selectMinwonStatusStatis(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		 JSONObject requestParamObj=new JSONObject(requestParams);
+		ParameterParser parser = new ParameterParser(request);
+		String jisa = requestParamObj.has("jisa")?requestParamObj.getString("jisa"):"";
+		String status = requestParamObj.has("status")?requestParamObj.getString("status"):"";
+		String occurDate = requestParamObj.has("occur_date")?requestParamObj.getString("occur_date"):"";
+//
+		HashMap map = new HashMap<>();
+//
+		try {
+			HashMap param = new HashMap<>();
+			param.put("jisa",jisa);
+			param.put("status",status);
+			param.put("occurDate", occurDate);
+			
+			
+			ArrayList dataList = (ArrayList) mainService.selectQuery("staticSQL.selectMinwonStatusStatic", param);
+			
+
+			if (dataList.size() > 0) {
+				map.put("result", "success");
+				map.put("data", dataList);
+			} else {
+				map.put("result", "ERROR");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("result", "ERROR");
+		}
+
+		JSONObject jo = new JSONObject(map);
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
 //	// 토지 종합 정보 조회 > Excel 다운로드
 //		public ModelAndView tsExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //
