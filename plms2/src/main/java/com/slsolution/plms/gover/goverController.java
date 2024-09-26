@@ -293,6 +293,9 @@ public class goverController {
 				if (jijukList.size() > 0) {
 					pnuList.get(i).put("lng", jijukList.get(0).get("x"));
 					pnuList.get(i).put("lat", jijukList.get(0).get("y"));
+				} else {
+					pnuList.get(i).put("lng", "0");
+					pnuList.get(i).put("lat", "0");
 				}
 			}
 
