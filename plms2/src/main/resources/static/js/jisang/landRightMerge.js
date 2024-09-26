@@ -880,5 +880,3 @@ function moveToCityHall(x,y) {
 	    alert("지도가 열려 있지 않습니다.");
 	}
 }
-
-});
