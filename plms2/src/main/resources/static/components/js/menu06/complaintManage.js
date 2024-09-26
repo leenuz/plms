@@ -335,7 +335,7 @@ function onDataLoad(){
             $('#dopcoAllWrappers .land_contents').text(result.mw_contents); //내용
 
             //민원 토지 ul 추가
-            if(tojiList != null && tojiList != undefined){
+            if(tojiList != null && tojiList != undefined && tojiList.length > 0){
                 $('#dopcoAllWrappers .complaintLand .depth1 .contents').remove();
                 $.each(tojiList, function (index, item) {
                 var newItem = `
@@ -359,7 +359,7 @@ function onDataLoad(){
             }
 
              //첨부파일 ul 추가
-             if(fileList != null && fileList != undefined){
+             if(fileList != null && fileList != undefined && fileList.length > 0){
                 $('#dopcoAllWrappers .attachFileInfo .depth1 .contents').remove();
                 $.each(fileList, function (index, item) {
                 var newItem = `
@@ -382,7 +382,7 @@ function onDataLoad(){
             }
 
              //협의내용 ul 추가
-             if(agreeList != null && agreeList != undefined){
+             if(agreeList != null && agreeList != undefined  && agreeList.length > 0){
                 $('#dopcoAllWrappers .consultDetails .depth1 .contents').remove();
                 $.each(agreeList, function (index, item) {
                 var newItem = `

@@ -153,7 +153,7 @@ function getPopupJsonData() {
         dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
     }
 
-    dataObj.JISA = ljsIsNull(dataObj.JISA) ? '' : dataObj.JISA;
+    dataObj.JISA = (ljsIsNull(dataObj.JISA) || dataObj.JISA == "전체") ? '' : dataObj.JISA;
 
     //토지 정보
     dataObj.tojiList = [];
@@ -191,11 +191,77 @@ function getPopupJsonData() {
 
 //신규민원 -> 저장
 $(document).on("click", "#newcomplaint_Popup .approveBtn", function () {
-    getPopupJsonData()
+    getPopupJsonData();
+    // $.ajax({
+	// 	url: "/issue/",
+	// 	data: getPopupJsonData(),
+	// 	async: true,
+	// 	type: "POST",
+	// 	dataType: "json",
+	// 	contentType: 'application/json; charset=utf-8',
+	// 	success: function (data, jqXHR) {
+    //         console.log(data);
+    //         if(data.message != null && data.message != undefined && data.message == "success"){
+    //             closeComplaintregisterPopup();
+    //         }else{
+    //              alert(data.message);
+    //         }
+	// 	},
+	// 	beforeSend: function () {
+	// 		//(이미지 보여주기 처리)
+	// 		//$('#load').show();
+    //         // loadingShow();
+	// 	},
+	// 	complete: function () {
+	// 		//(이미지 감추기 처리)
+	// 		//$('#load').hide();
+    //         // loadingHide();
+	// 	},
+	// 	error: function (jqXHR, textStatus, errorThrown, responseText) {
+	// 		//alert("ajax error \n" + textStatus + " : " + errorThrown);
+	// 		console.log(jqXHR);
+	// 		console.log(jqXHR.readyState);
+	// 		console.log(jqXHR.responseText);
+	// 		console.log(jqXHR.responseJSON);
+	// 	}
+	// }); //end ajax
 });
 //신규민원 -> 상신
 $(document).on("click", "#newcomplaint_Popup .sangsinBtn", function () {
-    getPopupJsonData()
+    getPopupJsonData();
+    // $.ajax({
+        // 	url: "/issue/",
+        // 	data: getPopupJsonData(),
+        // 	async: true,
+        // 	type: "POST",
+        // 	dataType: "json",
+        // 	contentType: 'application/json; charset=utf-8',
+        // 	success: function (data, jqXHR) {
+        //         console.log(data);
+        //         if(data.message != null && data.message != undefined && data.message == "success"){
+        //             closeComplaintregisterPopup();
+        //         }else{
+        //              alert(data.message);
+        //         }
+        // 	},
+        // 	beforeSend: function () {
+        // 		//(이미지 보여주기 처리)
+        // 		//$('#load').show();
+        //         // loadingShow();
+        // 	},
+        // 	complete: function () {
+        // 		//(이미지 감추기 처리)
+        // 		//$('#load').hide();
+        //         // loadingHide();
+        // 	},
+        // 	error: function (jqXHR, textStatus, errorThrown, responseText) {
+        // 		//alert("ajax error \n" + textStatus + " : " + errorThrown);
+        // 		console.log(jqXHR);
+        // 		console.log(jqXHR.readyState);
+        // 		console.log(jqXHR.responseText);
+        // 		console.log(jqXHR.responseJSON);
+        // 	}
+        // }); //end ajax
 });
 
 //신규민원 -> 검색
