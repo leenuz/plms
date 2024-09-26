@@ -356,6 +356,7 @@
 
 <link rel="stylesheet" href="/assets/css/popup/Issue_development_Popup.css" />
 <div id="newcomplaint_Popup" class="newcomplaint_Popup"  th:fragment="newcomplaint">
+  <form id="saveFormPop" onsubmit="return false;">
   <div class="popupWrap">
     <h2>
       <p>신규 민원 등록</p>
@@ -370,12 +371,13 @@
         <ul class="complaintinfo">
           <li class="complaintinfo_name">민원 명</li>
           <li class="complaintinfo_input_name">
-            <input type="text" placeholder="민원 명" />
+            <input type="text" name="MW_TITLE" placeholder="민원 명" />
           </li>
           <li class="complaintinfo_input_name2">발생일자</li>
           <li class="complaintinfo_input_name3">
             <div class="complaint_calender_wrap">
               <input
+                name="MW_OCCUR_DATE"
                 type="date"
                 data-placeholder="민원발생일자"
                 required
@@ -387,15 +389,14 @@
           <li class="popSelectWrap">
             <div class="hidden_SelectBox">
               <select
-                name="newcomplaint_Selectbox01"
+                name="JISA"
                 id="newcomplaint_Selectbox01"
                 hidden
               >
-                <option value="전체">전체</option>
-                <option value="전체1">전체1</option>
-                <option value="전체2">전체2</option>
-                <option value="전체3">전체3</option>
-                <option value="전체4">전체4</option>
+              <option value="전체">전체</option>
+              <th:block th:each="val:${jisaList}">
+                <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+              </th:block>
               </select>
             </div>
             <div class="Popup_Custom_SelectBox">
@@ -455,8 +456,8 @@
                 <!-- button class 추가 -->
                 <button class="landStatusPopOpenBtn">검색</button>
               </li>
-              <li class="landinfo_content_5"><input type="text" /></li>
-              <li class="landinfo_content_6"><input type="text" /></li>
+              <li class="landinfo_content_5"><input type="text" readonly/></li>
+              <li class="landinfo_content_6"><input type="text" readonly/></li>
               <li class="landinfo_content_7"><input type="text" /></li>
               <li class="landinfo_content_8">
                 <button class="complaint_addition">추가</button>
@@ -477,15 +478,17 @@
           <ul>
             <li class="daepyo_pilji_list_1">
               <input
+              name = "REP_ADDRESS"
                 type="text"
                 placeholder=""
+                readonly
               />
             </li>
             <li class="daepyo_pilji_list_2">
-              <input type="text" placeholder="N" />
+              <input name="REGISTED_YN" type="text" placeholder="N"  readonly/>
             </li>
             <li class="daepyo_pilji_list_3">
-              <input type="text" placeholder="N" />
+              <input name="PERMITTED_YN" type="text" placeholder="N"  readonly/>
             </li>
           </ul>
         </div>
@@ -542,19 +545,19 @@
           <ul class="complaint_contents_content2">
             <li class="com_content_title2">토지이력</li>
             <li class="com_content_title4">
-              <textarea class="auto_textarea"></textarea>
+              <textarea name="land_history" class="auto_textarea"></textarea>
             </li>
           </ul>
           <ul class="complaint_contents_content2">
             <li class="com_content_title2">요구사항</li>
             <li class="com_content_title4">
-              <textarea class="auto_textarea"></textarea>
+              <textarea name="land_requirements" class="auto_textarea"></textarea>
             </li>
           </ul>
           <ul class="complaint_contents_content2">
             <li class="com_content_title2">내용</li>
             <li class="com_content_title4">
-              <textarea class="auto_textarea"></textarea>
+              <textarea name="land_contents" class="auto_textarea"></textarea>
             </li>
           </ul>
           <ul class="complaint_contents_content3">
@@ -645,11 +648,12 @@
     <!-- 버튼 -->
 
     <div class="complaintinfo_btns">
-      <button class="approveBtn finalBtn">저장</button>
-      <button class="sangsinBtn finalBtn">상신</button>
+      <button class="approveBtn">저장</button>
+      <button class="sangsinBtn">상신</button>
       <button class="closeBtn finalBtn">닫기</button>
     </div>
   </div>
+  </form>
 </div>
 
 <!-- 추가, 검색결과 (토지상태) -->
@@ -711,9 +715,9 @@
                 <input type="text" />
                 <button class="landStatusPopOpenBtn">검색</button>
               </li>
-              <li class="landinfo_content_5"><input type="text" /></li>
-              <li class="landinfo_content_6"><input type="text" /></li>
-              <li class="landinfo_content_7"><input type="text" /></li>
+              <li class="landinfo_content_5"><input type="text" readonly /></li>
+              <li class="landinfo_content_6"><input type="text" readonly /></li>
+              <li class="landinfo_content_7"><input type="text" readonly /></li>
               <li class="landinfo_content_8">
                 <div class="landinfocontent_btn_wrap1">
                   <button class="complaint_addition">추가</button>
@@ -722,7 +726,7 @@
                   <button class="complaint_delete">삭제</button>
                 </div>
               </li>
-                `;
+              `;
 
                 // 검색 버튼에 class명 추가
       // ul들어갈 공간 div의 자식 요소로 ul지정
@@ -739,6 +743,11 @@
       }
       // 순번 업데이트
       updateOrderNumbers();
+
+      //대표필지 없으면 대표 필지정보 초기화
+      if($('.landinfo_box input[type="checkbox"]:checked').length === 0){
+        setReqLand();
+      }
     }
 
     // 순번 업데이트

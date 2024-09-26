@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Plms2Application<plms2>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.slsolution.plms.Plms2Application",
+            "projectName": "plms2",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

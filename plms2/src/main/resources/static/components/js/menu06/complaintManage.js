@@ -176,16 +176,120 @@ complainManageComplainFinPopEvet();
 
 
 //실행
+var mw_seq;
 $(function(){
       // 현재 페이지의 URL에서 쿼리 스트링 부분을 가져옴
       const queryString = window.location.search;
       // URLSearchParams 객체 생성 (쿼리 스트링을 파싱)
       const urlParams = new URLSearchParams(queryString);
       // 파라미터 값 가져오기 (예: ?paramName=value 형태에서 paramName의 값)
-      const mw_seq = urlParams.get('mw_seq');
+      mw_seq = urlParams.get('mw_seq');
       console.log("mw_seq = " + mw_seq);
-      self.onDataLoad(mw_seq);
+      self.onDataLoad();
 })
+
+//팝업 숨김
+function closeComplaintregisterPopup(){
+    const complaintregisterPopupOpen = document.getElementById("complaint_register_Popup");
+    complaintregisterPopupOpen.classList.remove("active");
+}
+
+//팝업 데이터 json
+function getPopupJsonData(){
+    var formSerializeArray = $('#saveFormPop').serializeArray();
+    len = formSerializeArray.length;
+    var dataObj = {};
+    for (i = 0; i < len; i++) {
+        dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
+    }
+   
+    dataObj.MW_SEQ = mw_seq;
+    dataObj.STATUS = findProgStatus(dataObj.STATUS);
+
+    const jsonData = JSON.stringify(dataObj);
+    console.log(jsonData);
+    return jsonData;
+}
+
+//협의 추가 저장
+$(document).on("click", ".document_add_btnWrap .saveBtn", function () {
+    if(dataInfo == null || dataInfo == undefined){
+        return
+    }
+
+	$.ajax({
+		url: "/issue/saveMinwonAgreeData",
+		data: getPopupJsonData(),
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: 'application/json; charset=utf-8',
+		success: function (data, jqXHR) {
+            console.log(data);
+            if(data.message != null && data.message != undefined && data.message == "success"){
+                closeComplaintregisterPopup();
+            }else{
+                 alert(data.message);
+            }
+		},
+		beforeSend: function () {
+			//(이미지 보여주기 처리)
+			//$('#load').show();
+            // loadingShow();
+		},
+		complete: function () {
+			//(이미지 감추기 처리)
+			//$('#load').hide();
+            // loadingHide();
+		},
+		error: function (jqXHR, textStatus, errorThrown, responseText) {
+			//alert("ajax error \n" + textStatus + " : " + errorThrown);
+			console.log(jqXHR);
+			console.log(jqXHR.readyState);
+			console.log(jqXHR.responseText);
+			console.log(jqXHR.responseJSON);
+		}
+	}); //end ajax
+});
+//협의추가 ->상신
+$(document).on("click", ".document_add_btnWrap .sangsinBtn", function () {
+    if(dataInfo == null || dataInfo == undefined){
+        return
+    }
+	$.ajax({
+		url: "/issue/minwonCompleteSave",
+		data: getPopupJsonData(),
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: 'application/json; charset=utf-8',
+		success: function (data, jqXHR) {
+            console.log(data);
+            if(data.message != null && data.message != undefined && data.message == "success"){
+                closeComplaintregisterPopup();
+            }else{
+                 alert(data.message);
+            }
+		},
+		beforeSend: function () {
+			//(이미지 보여주기 처리)
+			//$('#load').show();
+            // loadingShow();
+		},
+		complete: function () {
+			//(이미지 감추기 처리)
+			//$('#load').hide();
+            // loadingHide();
+		},
+		error: function (jqXHR, textStatus, errorThrown, responseText) {
+			//alert("ajax error \n" + textStatus + " : " + errorThrown);
+			console.log(jqXHR);
+			console.log(jqXHR.readyState);
+			console.log(jqXHR.responseText);
+			console.log(jqXHR.responseJSON);
+		}
+	}); //end ajax
+});
 
 
 //지역명을 조합하는 함수
@@ -199,7 +303,8 @@ function getFullAddress(data) {
     return parts.join(' ');
 }
 
-function onDataLoad(mw_seq){
+var dataInfo = {};
+function onDataLoad(){
 	var allData = { "MW_SEQ" : mw_seq };
 	$.ajax({
 		url: "/issue/selectMinwonDetail",
@@ -210,6 +315,7 @@ function onDataLoad(mw_seq){
 		contentType: 'application/json; charset=utf-8',
 		success: function (data, jqXHR) {
             console.log(data);
+            dataInfo = data;
             const result = data.result;
             const agreeList = data.agreeList;
             const tojiList = data.tojiList;
@@ -222,28 +328,78 @@ function onDataLoad(mw_seq){
             $('#dopcoAllWrappers .prog_status').val(result.status_str); //진행현황
             $('#dopcoAllWrappers .land_history').text(""); //토지이력
             $('#dopcoAllWrappers .requirements').text(""); //요구사항
-            $('#dopcoAllWrappers .land_contents').text(""); //내용
+            $('#dopcoAllWrappers .land_contents').text(result.mw_contents); //내용
 
-            $('#dopcoAllWrappers .civil_petition_land .contents').remove();
-            $.each(tojiList, function (index, item) {
-            var newItem = `
-            <ul class="contents">
-              <li class="content">
-                <input type="text" readonly class="notWriteInput" value="${item.rep_yn}">
-              </li>
-              <li class="content largeWidth">
-                <input type="text" readonly class="notWriteInput" value="${getFullAddress(item)}">
-              </li>
-              <li class="content">
-                <input type="text" readonly class="notWriteInput" value="${item.registed_yn}">
-              </li>
-              <li class="content">
-                <input type="text" readonly class="notWriteInput" value="${item.permitted_yn}">
-              </li>
-            </ul>
-           `;
-            $('#dopcoAllWrappers .civil_petition_land').append(newItem);
-            });
+            //민원 토지 ul 추가
+            if(tojiList != null && tojiList != undefined){
+                $('#dopcoAllWrappers .complaintLand .depth1 .contents').remove();
+                $.each(tojiList, function (index, item) {
+                var newItem = `
+                <ul class="contents">
+                <li class="content">
+                    <input type="text" readonly class="notWriteInput" value="${item.rep_yn}">
+                </li>
+                <li class="content largeWidth">
+                    <input type="text" readonly class="notWriteInput" value="${getFullAddress(item)}">
+                </li>
+                <li class="content">
+                    <input type="text" readonly class="notWriteInput" value="${item.registed_yn}">
+                </li>
+                <li class="content">
+                    <input type="text" readonly class="notWriteInput" value="${item.permitted_yn}">
+                </li>
+                </ul>
+                 `;
+                $('#dopcoAllWrappers .complaintLand .depth1').append(newItem);
+                });
+            }
+
+             //첨부파일 ul 추가
+             if(fileList != null && fileList != undefined){
+                $('#dopcoAllWrappers .attachFileInfo .depth1 .contents').remove();
+                $.each(fileList, function (index, item) {
+                var newItem = `
+                <ul class="contents">
+                <li class="content">
+                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.file_regdate}">
+                </li>
+                <li class="content fileNameWidth">
+                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.file_nm}">
+                </li>
+                <li class="content btnsWrap">
+                    <button class="fileDownloadBtn">
+                    다운로드 <span class="downloadIcon"></span>
+                    </button>
+                </li>
+                </ul>
+                `;
+                $('#dopcoAllWrappers .attachFileInfo .depth1').append(newItem);
+                });
+            }
+
+             //협의내용 ul 추가
+             if(agreeList != null && agreeList != undefined){
+                $('#dopcoAllWrappers .consultDetails .depth1 .contents').remove();
+                $.each(agreeList, function (index, item) {
+                var newItem = `
+                <ul class="contents">
+                <li class="content">
+                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.agree_date}">
+                </li>
+                <li class="content smallWidth">
+                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.status_str}">
+                </li>
+                <li class="content fileNameWidth">
+                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.agree_title}">
+                </li>
+                <li class="content btnsWrap">
+                    <button class="viewDetailButton">문서보기</button>
+                </li>
+                </ul>
+                `;
+                $('#dopcoAllWrappers .consultDetails .depth1').append(newItem);
+                });
+            }
 		},
 		beforeSend: function () {
 			//(이미지 보여주기 처리)
