@@ -3887,6 +3887,9 @@ log.info("gubun:"+gubun);
 		if (jisangList != null && !jisangList.isEmpty()) {
 			jisangCnt = String.valueOf(jisangList.size());
 		}
+
+		//필수첨부파일
+		ArrayList<HashMap> reqDoc1list = mainService.selectQuery("jisangSQL.selectJisangReqDoc1",params);
 		
 		
 //		ArrayList<HashMap<String, String>> List =(ArrayList) mainService.selectQuery("jisangSQL.selectJisangDetailListNew", params);
@@ -3936,6 +3939,7 @@ log.info("gubun:"+gubun);
 //		log.info("soujaList:"+soujaList);
 		log.info("jisangList:"+jisangList);
 //		log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+		log.info("jisangDoc1list:"+reqDoc1list);
 
 		ModelAndView mav=new ModelAndView();
 //		mav.addObject("List",List);
@@ -3945,6 +3949,7 @@ log.info("gubun:"+gubun);
 		mav.addObject("jisangCnt", jisangCnt);
 		mav.addObject("CommonUtil", new CommonUtil());
 		mav.addObject("loginKey", String.valueOf(httpRequest.getSession().getAttribute("loginKey")));
+		mav.addObject("reqDoc1list", reqDoc1list);
 		mav.setViewName("content/jisang/landRightMerge");
 		return mav;
 	}

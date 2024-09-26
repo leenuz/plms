@@ -495,82 +495,174 @@ margin:10px;
                     </ul>
 
                     <ul class="contents">
-                        <li class="content"><input type="text" placeholder="토지사용승락서.docx" readonly class="notWriteInput"></li>
+                        <li class="content"  >
+                        <input type="hidden" id="fseq" value="1">
+                        <input name="req_doc_file01" id="req_doc_file01"
+                               type="text"
+                               th:if="${#lists.size(reqDoc1list)>=1}" th:value="${reqDoc1list[0].jrd_fname}"
+                               readonly
+                               class="notWriteInput" style="text-align:center"/>
+                        <input name="req_doc_file01" id="req_doc_file01"
+                               type="text"
+                               th:if="${#lists.size(reqDoc1list)<1}" placeholder=""
+                               readonly
+                               class="notWriteInput" style="text-align:center"/>
+                        </li>
                         <li class="content delContWidth">
-                            <button class="attachDelBtn miniBtn">삭제</button>
+                            <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                         </li>
                         <li class="content selectFileWidth lightfileBtnWrap">
-                            <input type="file" id="landRightMerge_myPcFiles01">
+                            <input type="file" id="landRightMerge_myPcFiles01" name="landRightMerge_myPcFiles01">
                             <label for="landRightMerge_myPcFiles01">파일선택</label>
                         </li>
                     </ul>
                     <ul class="contents">
-                        <li class="content"><input type="text" placeholder="등기부등본2.tif" readonly class="notWriteInput"></li>
+                        <li class="content"  >
+                        <input type="hidden" id="fseq" value="2">
+                        <input  name="req_doc_file02" id="req_doc_file02"
+                                type="text"
+                                th:if="${#lists.size(reqDoc1list)>=2}" th:value="${reqDoc1list[1].jrd_fname!=null?reqDoc1list[1].jrd_fname:''}"
+                                readonly
+                                class="notWriteInput" style="text-align:center"/>
+                        <input  name="req_doc_file02" id="req_doc_file02"
+                                type="text"
+                                th:if="${#lists.size(reqDoc1list)<2}" placeholder=""
+                                readonly
+                                class="notWriteInput" style="text-align:center"/>
+                        </li>
                         <li class="content delContWidth">
-                            <button class="attachDelBtn miniBtn">삭제</button>
+                            <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                         </li>
                         <li class="content selectFileWidth lightfileBtnWrap">
-                            <input type="file" id="landRightMerge_myPcFiles02">
+                            <input type="file" id="landRightMerge_myPcFiles02" name="landRightMerge_myPcFiles02">
                             <label for="landRightMerge_myPcFiles02">파일선택</label>
                         </li>
                     </ul>
                     <ul class="contents">
-                        <li class="content"><input type="text" placeholder="지적도.tif" readonly class="notWriteInput"></li>
+                        <li class="content"  >
+                            <input type="hidden" id="fseq" value="3">
+                            <input  name="req_doc_file03" id="req_doc_file03"
+                                    type="text"
+                                    th:if="${#lists.size(reqDoc1list)>=3}" th:value="${reqDoc1list[2].jrd_fname!=null?reqDoc1list[2].jrd_fname:''}"
+                                    readonly
+                                    class="notWriteInput" style="text-align:center"/>
+                            <input  name="req_doc_file03" id="req_doc_file03"
+                                    type="text"
+                                    th:if="${#lists.size(reqDoc1list)<3}" placeholder=""
+                                    readonly
+                                    class="notWriteInput" style="text-align:center"/>
+                        </li>
                         <li class="content delContWidth">
-                            <button class="attachDelBtn miniBtn">삭제</button>
+                            <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                         </li>
                         <li class="content selectFileWidth lightfileBtnWrap">
-                            <input type="file" id="landRightMerge_myPcFiles03">
+                            <input type="file" id="landRightMerge_myPcFiles03" name="landRightMerge_myPcFiles03">
                             <label for="landRightMerge_myPcFiles03">파일선택</label>
                         </li>
                     </ul>
                     <ul class="contents">
-                        <li class="content"><input type="text" placeholder="현장사진.jpg" readonly class="notWriteInput"></li>
+                        <li class="content">
+                            <input type="hidden" id="fseq" value="4">
+                            <input type="text"  name="req_doc_file04" id="req_doc_file04"
+                                   th:if="${#lists.size(reqDoc1list)>=4}" th:value="${reqDoc1list[3].jrd_fname!=null?reqDoc1list[3].jrd_fname:''}"
+                                   readonly class="notWriteInput" style="text-align:center"/>
+                            <input type="text"  name="req_doc_file04" id="req_doc_file04"
+                                   th:if="${#lists.size(reqDoc1list)<4}" placeholder=""
+                                   readonly class="notWriteInput" style="text-align:center"/>
+                        </li>
                         <li class="content delContWidth">
-                            <button class="attachDelBtn miniBtn">삭제</button>
+                            <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                         </li>
                         <li class="content selectFileWidth lightfileBtnWrap">
-                            <input type="file" id="landRightMerge_myPcFiles04">
+                            <input type="file" id="landRightMerge_myPcFiles04" name="landRightMerge_myPcFiles04">
                             <label for="landRightMerge_myPcFiles04">파일선택</label>
                         </li>
                     </ul>
                     <ul class="contents">
-                        <li class="content"><input type="text" placeholder="검토의견서.tif" readonly class="notWriteInput"></li>
+                        <li class="content">
+                            <input type="hidden" id="fseq" value="5">
+                            <input
+                                    type="text"  name="req_doc_file05" id="req_doc_file05"
+                                    th:if="${#lists.size(reqDoc1list)>=5}" th:value="${reqDoc1list[4].jrd_fname!=null?reqDoc1list[4].jrd_fname:''}"
+                                    readonly
+                                    class="notWriteInput" style="text-align:center"/>
+                            <input
+                                    type="text"  name="req_doc_file05" id="req_doc_file05"
+                                    th:if="${#lists.size(reqDoc1list)<5}" placeholder=""
+                                    readonly
+                                    class="notWriteInput" style="text-align:center"/>
+                        </li>
                         <li class="content delContWidth">
-                            <button class="attachDelBtn miniBtn">삭제</button>
+                            <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                         </li>
                         <li class="content selectFileWidth lightfileBtnWrap">
-                            <input type="file" id="landRightMerge_myPcFiles05">
+                            <input type="file" id="landRightMerge_myPcFiles05" name="landRightMerge_myPcFiles05">
                             <label for="landRightMerge_myPcFiles05">파일선택</label>
                         </li>
                     </ul>
                     <ul class="contents">
-                        <li class="content"><input type="text" placeholder="관계서류.docx" readonly class="notWriteInput"></li>
+                        <li class="content">
+                            <input type="hidden" id="fseq" value="6">
+                            <input
+                                    type="text"  name="req_doc_file06" id="req_doc_file06"
+                                    th:if="${#lists.size(reqDoc1list)>=6}" th:value="${reqDoc1list[5].jrd_fname!=null?reqDoc1list[5].jrd_fname:''}"
+                                    readonly
+                                    class="notWriteInput" style="text-align:center"/>
+                            <input
+                                    type="text"  name="req_doc_file06" id="req_doc_file06"
+                                    th:if="${#lists.size(reqDoc1list)<6}" placeholder=""
+                                    readonly
+                                    class="notWriteInput" style="text-align:center"/>
+                        </li>
                         <li class="content delContWidth">
-                            <button class="attachDelBtn miniBtn">삭제</button>
+                            <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                         </li>
                         <li class="content selectFileWidth lightfileBtnWrap">
-                            <input type="file" id="landRightMerge_myPcFiles06">
+                            <input type="file" id="landRightMerge_myPcFiles06" name="landRightMerge_myPcFiles06">
                             <label for="landRightMerge_myPcFiles06">파일선택</label>
                         </li>
                     </ul>
                     <ul class="contents">
-                        <li class="content"><input type="text" placeholder="승낙서.docx" readonly class="notWriteInput"></li>
+                        <li class="content">
+                            <input type="hidden" id="fseq" value="7">
+                            <input
+                                    type="text"  name="req_doc_file07" id="req_doc_file07"
+                                    th:if="${#lists.size(reqDoc1list)>=7}" th:value="${reqDoc1list[6].jrd_fname!=null?reqDoc1list[6].jrd_fname:''}"
+                                    readonly
+                                    class="notWriteInput" style="text-align:center"/>
+                            <input
+                                    type="text"  name="req_doc_file07" id="req_doc_file07"
+                                    th:if="${#lists.size(reqDoc1list)<7}" placeholder=""
+                                    readonly
+                                    class="notWriteInput" style="text-align:center"/>
+                        </li>
                         <li class="content delContWidth">
-                            <button class="attachDelBtn miniBtn">삭제</button>
+                            <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                         </li>
                         <li class="content selectFileWidth lightfileBtnWrap">
-                            <input type="file" id="landRightMerge_myPcFiles07">
+                            <input type="file" id="landRightMerge_myPcFiles07" name="landRightMerge_myPcFiles07">
                             <label for="landRightMerge_myPcFiles07">파일선택</label>
                         </li>
                     </ul>
                     <ul class="contents">
-                        <li class="content"><input type="text" placeholder="요청공문서.docx" readonly class="notWriteInput"></li>
+                        <li class="content">
+                            <input type="hidden" id="fseq" value="8">
+                            <input
+                                    type="text"  name="req_doc_file08" id="req_doc_file08"
+                                    th:if="${#lists.size(reqDoc1list)>=8}" th:value="${reqDoc1list[7].jrd_fname!=null?reqDoc1list[7].jrd_fname:''}"
+                                    readonly
+                                    class="notWriteInput" style="text-align:center"/>
+                            <input
+                                    type="text"  name="req_doc_file08" id="req_doc_file08"
+                                    th:if="${#lists.size(reqDoc1list)<8}" placeholder=""
+                                    readonly
+                                    class="notWriteInput" style="text-align:center"/>
+                        </li>
                         <li class="content delContWidth">
-                            <button class="attachDelBtn miniBtn">삭제</button>
+                            <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
                         </li>
                         <li class="content selectFileWidth lightfileBtnWrap">
-                            <input type="file" id="landRightMerge_myPcFiles08">
+                            <input type="file" id="landRightMerge_myPcFiles08" name="landRightMerge_myPcFiles08">
                             <label for="landRightMerge_myPcFiles08">파일선택</label>
                         </li>
                     </ul>
