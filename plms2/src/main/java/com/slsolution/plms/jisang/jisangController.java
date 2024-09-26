@@ -2532,9 +2532,13 @@ public class jisangController {
 	
 	// 지상권 사용승락 상신
 	@Transactional
-	@GetMapping(path="/selectJisangPmtDetailListAppoval")
+	@PostMapping(path="/selectJisangPmtDetailListAppoval")
 		public void selectJisangPmtDetailListAppoval(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		  Properties requestParams = CommonUtil.convertToProperties(request);
+		  
+			
+			 JSONObject requestParamObj=new JSONObject(requestParams);
          log.info("requestParams:"+requestParams);
 
 		// String requestParams = ParameterUtil.getRequestBodyToStr(request);

@@ -1707,6 +1707,128 @@ log.info("SANGSIN_FLAG:"+SANGSIN_FLAG);
 		response.getWriter().print(jo);
 		response.getWriter().flush();
 	}
+	@PostMapping(path="/getMinwonJijukSelect") //http://localhost:8080/api/get/dbTest
+	public ModelAndView getMinwonJijukSelect(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		//log.info("httpRequest:"+Arrays.toString(httpRequest));
+
+		String address=httpRequest.getParameter("address");
+		String sido_nm=httpRequest.getParameter("sido_nm");
+		String sgg_nm=httpRequest.getParameter("sgg_nm");
+		String emd_nm=httpRequest.getParameter("emd_nm");
+		String ri_nm=httpRequest.getParameter("ri_nm");
+		String jibun=httpRequest.getParameter("jibun");
+
+
+
+		params.put("address", address);
+		params.put("sido_nm", sido_nm);
+		params.put("sgg_nm", sgg_nm);
+		params.put("emd_nm", emd_nm);
+		params.put("ri_nm", ri_nm);
+		params.put("jibun", jibun);
+
+
+
+		log.info("params:"+params);
+		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectJijukFromJisangAddress",params);
+		log.info("addressList:"+addressList);
+		mav.addObject("addressList",addressList);
+		mav.setViewName("content/dopco/compLandReg :: #searchResultPopDiv");
+		return mav;
+	}
+	
+	
+	//민원 PNU 검색 (토지정보 검색)
+	@RequestMapping(value="/getMinwonJijukSelectNotModel", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+	public void getMinwonJijukSelectNotModel(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		//log.info("httpRequest:"+Arrays.toString(httpRequest));
+
+		String address=httpRequest.getParameter("address");
+		String sido_nm=httpRequest.getParameter("sido_nm");
+		String sgg_nm=httpRequest.getParameter("sgg_nm");
+		String emd_nm=httpRequest.getParameter("emd_nm");
+		String ri_nm=httpRequest.getParameter("ri_nm");
+		String jibun=httpRequest.getParameter("jibun");
+
+
+
+		params.put("address", address);
+		params.put("sido_nm", sido_nm);
+		params.put("sgg_nm", sgg_nm);
+		params.put("emd_nm", emd_nm);
+		params.put("ri_nm", ri_nm);
+		params.put("jibun", jibun);
+
+
+		HashMap map=new HashMap();
+		log.info("params:"+params);
+		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectJijukFromJisangAddress",params);
+		log.info("addressList:"+addressList);
+		map.put("result", addressList);
+		
+
+		JSONObject jo = new JSONObject(map);
+
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+	
+	// PNU 조회 //민원신규등록시 주소검색에서 사용
+//	@PostMapping(path="/selectMinwonPNUList")
+//		public void selectMinwonPNUList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//
+//			ArrayList list = new ArrayList();
+//			ParameterParser parser = new ParameterParser(request);
+//
+//			String addrcode = parser.getString("addrcode", "");
+//			String jibun = parser.getString("jibun", "");
+//			String str_result = "Y";
+//			String setBody = "";
+//			try {
+//
+//				Map params = new HashMap();
+//				params.put("ADDRCODE", addrcode);
+//				params.put("JIBUN", jibun);
+//
+//				list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonPNUList", params);
+//
+//			} catch (Exception e) {
+//				str_result = "N";
+//				e.printStackTrace();
+//			}
+//
+//			HashMap map = new HashMap();
+//
+//			if (list != null)
+//				map.put("count", list.size());
+//			else
+//				map.put("count", 0);
+//
+//			map.put("message", str_result);
+//			map.put("result", list);
+//			map.put("inHtml", setBody);
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//
+//		}
 //
 //	public void selectIssueByPnu(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //		log.info("LJS : jsonResultController.java selectIssueByPnu()");

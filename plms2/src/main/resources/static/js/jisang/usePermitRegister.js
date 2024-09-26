@@ -1077,12 +1077,14 @@ $(document).on("click","#sangsinBtn",function(){
 		
 		dataObj.desangTogis=togiDatas;
 		dataObj.gubun="insert";
-		dataObj.save_status="임시저장";
+		dataObj.pmt_status="임시저장";
 		console.log(dataObj);
 		
 		
+		//임시저장 호출
+
 		url="/jisang/usePermitRegisterSave";
-	   	$.ajax({
+		$.ajax({
 
 			url:url,
 			type:'POST',
@@ -1099,14 +1101,58 @@ $(document).on("click","#sangsinBtn",function(){
 				console.log(response);
 				if (response.success="Y"){
 					console.log("response.success Y");
-					console.log("response.resultData length:"+response.resultData.length);
-					alert("정상적으로 등록 되었습니다.");
+					//console.log("response.resultData length:"+response.resultData.length);
+					 dataObj.PMT_NO=response.PMT_NO;
+					 console.log(dataObj);
+					 console.log("---------------상신으로 넘겨야함-------------");
+					//alert("정상적으로 등록 되었습니다.");
 					/*$("#popup_bg").show();
 					$("#popup").show(500);
 					//$("#addrPopupLayer tbody td").remove();
 					for(var i=0;i<response.resultData.length;i++){
 						$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
 					}*/
+					
+					url="/jisang/usePermitRegisterSave";
+						   	$.ajax({
+
+								url:url,
+								type:'POST',
+								contentType:"application/json",
+								data:JSON.stringify(dataObj),
+
+								dataType:"json",
+								beforeSend:function(request){
+									console.log("beforesend ........................");
+									loadingShow();
+								},
+								success:function(response){
+									loadingHide();
+									console.log(response);
+									if (response.success="Y"){
+										console.log("response.success Y");
+										console.log("response.resultData length:"+response.resultData.length);
+										alert("정상적으로 등록 되었습니다.");
+										/*$("#popup_bg").show();
+										$("#popup").show(500);
+										//$("#addrPopupLayer tbody td").remove();
+										for(var i=0;i<response.resultData.length;i++){
+											$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+										}*/
+									}
+									else {
+										console.log("response.success N");
+									}
+								},
+								error:function(jqXHR,textStatus,errorThrown){
+									alert("sangsin ajax error\n"+textStatus+":"+errorThrown);
+									return false;
+								}
+
+						   	});
+					
+					
+					
 				}
 				else {
 					console.log("response.success N");
@@ -1117,7 +1163,11 @@ $(document).on("click","#sangsinBtn",function(){
 				return false;
 			}
 
-	   	});
+		});
+		
+		
+		
+		
 })
 
 $(document).on("click","#mainSaveBtn",function(){
