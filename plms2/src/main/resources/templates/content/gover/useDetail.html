@@ -14,7 +14,7 @@
        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
    
   <link th:href="@{/css/common.css}" rel="stylesheet" />
-    <link rel="stylesheet" href="/css/gover/feeDetail.css" />
+  <!--   <link rel="stylesheet" href="/css/gover/feeDetail.css" /> -->
     <title>점용 내역 상세정보</title>
     <link rel="stylesheet" href="/css/gover/useDetail.css" />
   </head>
@@ -23,6 +23,7 @@
     <!-- 점용 내역 상세정보 -->
     <div class="useDetailWrappers">
       <main id="useDetail">
+      <form id="saveForm" onSubmit="return false;">
         <div class="mainTitle">
           <h1>점용 내역 상세정보</h1>
         </div>
@@ -54,7 +55,7 @@
 				<!-- 관리번호 -->
                 <li class="content">
                   <input
-                    type="text"
+                    type="text" name="goverNo" id="goverNo"
 					th:value="${resultData.gm_gover_no}"
                     readonly
                     class="notWriteInput" />
@@ -453,13 +454,15 @@
         <div class="finalBtnBox btnWrap">
           <button class="backBtn grayBtn finalBtn">이전</button>
           <button class="vividBlueBtn finalBtn">출력</button>
-          <button class="finalBtn deepGrayBtn">상신취소</button>
+          <button class="finalBtn deepGrayBtn" id="cancelSangsin">상신취소</button>
         </div>
+        </form>
       </main>
     </div>
     <div class="useDetailChangeHistoryWrapper"></div>
     <!-- script -->
-    <script type="module" src="/js/module/surfaceMain.js"></script>
     <script src="/js/gover/useDetail.js"></script>
+    <script type="module" src="/js/module/surfaceMain.js"></script>
+    
  </th:block>
 </html>

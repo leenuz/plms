@@ -496,13 +496,33 @@ var fileNo = 1;
 						                            sizeStr = sizeKB.toFixed(2)+" KB";
 						                        }
 
-	                    var row='<ul class="contents" id="fileListUl">';
-						row+='<li class="content01 content checkboxWrap">';
-						row+='<input type="checkbox" id="landRegistration_attachFile'+no+'" name="landRegistration_attachFile" >';
-						row+='<label for="landRegistration_attachFile'+no+'"></label>';
-						row+='</li>';
-						row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
-	                    obj.after(row);
+//	                    var row='<ul class="contents" id="fileListUl">';
+//						row+='<li class="content01 content checkboxWrap">';
+//						row+='<input type="checkbox" id="landRegistration_attachFile'+no+'" name="landRegistration_attachFile" >';
+//						row+='<label for="landRegistration_attachFile'+no+'"></label>';
+//						row+='</li>';
+//						row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
+//	                    obj.after(row);
+//
+	                     var now = new Date();
+                        var formattedDate = now.toLocaleString();
+                        var row='<ul class="contents" id="fileListUl">';
+                        row+='<li class="content01 content checkboxWrap">';
+                        row+='<input type="checkbox" id="landRegistration_attachFile'+no+'" name="landRegistration_attachFile" >';
+                        row+='<label for="landRegistration_attachFile'+no+'"></label>';
+                        row+='</li>';
+                        row += '<li class="content registDateWidth">';
+                        row += '<input type="text" value="' + formattedDate + '" readonly class="notWriteInput" name="registDateWidth"/>';
+                        row += '</li>';
+                        row += '<li class="content fileNameWidth">';
+                        row += '<input type="text" value="' + name + '" id="filename" readonly class="notWriteInput" />';
+                        row += '</li>';
+                        row += '<li class="content viewBtnBox">';
+                        row += '<button class="viewDetailButton lightBlueBtn">보기</button>';
+                        row += '</li>';
+                        row += '</ul>';
+                        obj.after(row);
+
 
 						var radio=$(row).find('input');
 						$(radio).find('input').attr("disabled",false);
@@ -555,7 +575,9 @@ $(document).on("click","#deleteSelectedBtn",function(){
 })
 
 /* 첨부파일 체크박스 전체 선택 */
-$(document).on("click","#landRightsRegistration_file_select_all",function(){
+const clickedAllinput = document.querySelector('input[name="landRegistration_attachFile_select_all"]');
+
+$(document).on("click","#landRegistration_attachFile_select_all",function(){
    const attachFiles = document.querySelectorAll('input[name="landRegistration_attachFile"]');
 
             attachFiles.forEach((checkbox) => {
