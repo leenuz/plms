@@ -4,6 +4,13 @@ const editAfter = document.querySelectorAll('#occupationDetails .memoSection .co
 const editContent = document.querySelectorAll('#occupationDetails .editSpace');
 const registBtn = document.querySelectorAll('#occupationDetails .registBtn');
 
+$(document).on("click","#moveMap",function(){
+	//openMapWindow();
+	// mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
+	// moveToCityHall();
+
+	openMapWindow({'lon':mapCoordLng, 'lat':mapCoordLat});
+})
 //memoEditBtn.forEach((btn) => {
 //    btn.addEventListener('click', function () {
 //        var thisEditContent = btn.closest('.contents');
