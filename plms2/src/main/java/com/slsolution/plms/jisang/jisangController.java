@@ -914,11 +914,14 @@ public class jisangController {
 		log.info("params:"+params);
 
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectJisaList",params);
+		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+		
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
-		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 최신버전
+		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 신버전
 		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
 		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
 		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
@@ -936,6 +939,8 @@ public class jisangController {
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 
 		mav.addObject("jisaList",jisalist);
+		mav.addObject("jimoklist",jimoklist);
+		mav.addObject("sidoList",sidolist);
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("soujaList",soujaList);
 		mav.addObject("jisangPermitList",jisangPermitList);
@@ -971,11 +976,6 @@ public class jisangController {
 		mav.setViewName("content/jisang/groundDetail :: #pnuAtcFilesDiv");
 		return mav;
 	}
-	
-	
-	
-	
-	
 	
 	
 //	@PostMapping("/getAtcFileData")
