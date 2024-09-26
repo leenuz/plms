@@ -251,7 +251,7 @@ public class jisangController {
        // return new ModelAndView("dbTest", "list", list);
     }
 	@Transactional
-	@RequestMapping(value="/usePermitRegisterSave", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+	@RequestMapping(value="/usePermitRegisterSave1", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
     public void usePermitRegisterSave(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
         
 		//일반웹형식
@@ -516,6 +516,226 @@ public class jisangController {
       			response.getWriter().flush();
        // return new ModelAndView("dbTest", "list", list);
     }
+	
+	
+	// 지상권 사용승락 등록 insertJisangPmtList
+	@Transactional
+	@RequestMapping(value="/usePermitRegisterSave", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+		public void insertJisangPmtList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+        log.info("requestParams:"+requestParams);
+        JSONObject requestJsonObj=new JSONObject(requestParams);
+        
+        
+        JSONArray togiArr=new JSONArray(requestJsonObj.getString("desangTogis"));
+			ArrayList list = new ArrayList();
+			ParameterParser parser = new ParameterParser(request);
+
+			String GUBUN = requestJsonObj.getString("gubun"); // 구분( modify : 수정, insert
+															// : 등록 )
+			//String TOGICNT = requestJsonObj.getString("TOGICNT"); // 대상토지 수
+			String PMT_NO =requestJsonObj.has("pmt_no")?requestJsonObj.getString("pmt_no"):""; // 승락등록 번호
+			String USE_PURPOS = requestJsonObj.getString("purpose"); // 사용목적
+			String USE_ST_DATE = requestJsonObj.getString("useStartDate"); // 사용기간 시작
+			String USE_ED_DATE = requestJsonObj.getString("useEndDate"); // 사용기간 끝
+			String SPOT_RESULT = requestJsonObj.getString("spot_result"); // 현장확인결과
+			String RIVEW = requestJsonObj.getString("review"); // 검토의견
+			String CONTRACT = requestJsonObj.getString("contract"); // 약정사항
+			String PMT_STATUS = requestJsonObj.getString("pmt_status"); // 등록상태
+			String str_result = "Y";
+			String resp_PMT_NO = "";
+			try {
+				HashMap params = new HashMap();
+				params.put("USE_PURPOS", USE_PURPOS);
+				params.put("USE_ST_DATE", USE_ST_DATE);
+				params.put("USE_ED_DATE", USE_ED_DATE);
+				params.put("SPOT_RESULT", SPOT_RESULT);
+				params.put("RIVEW", RIVEW);
+				params.put("CONTRACT", CONTRACT);
+				params.put("PMT_STATUS", PMT_STATUS);
+
+				/**********************
+				 * 다음 지상권 번호 조회 시작
+				 **********************/
+				if (GUBUN.equals("modify")) {
+					resp_PMT_NO = PMT_NO;
+					params.put("PMT_NO", PMT_NO);
+				} else {
+					ArrayList PmtList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtNextNo", null);
+					int no=Integer.parseInt((((HashMap) PmtList.get(0)).get("now_pmt_no").toString()).toString());
+					String Next_pmtNo =  String.valueOf(no + 1);
+					//String Next_pmtNo = String.valueOf(Integer.parseInt((String) ((HashMap) PmtList.get(0)).get("now_pmt_no")) + 1);
+					int n_Next_pmtNo = Next_pmtNo.length();
+
+					String add_Zero = "";
+					for (int i = 0; i < (6 - n_Next_pmtNo); i++) {
+						add_Zero += "0";
+					}
+					Next_pmtNo = "P_" + add_Zero + Next_pmtNo;
+
+					resp_PMT_NO = Next_pmtNo;
+					params.put("PMT_NO", Next_pmtNo);
+				}
+				log.info("resp_PMT_NO:"+resp_PMT_NO);
+				/***********************
+				 * 다음 지상권 번호 조회 끝
+				 ************************/
+
+				if (GUBUN.equals("insert")) {
+					mainService.InsertQuery("jisangSQL.insertPermitMaster", params); // 기본정보
+																						// 저장
+				} else if (GUBUN.equals("modify")) {
+					mainService.UpdateQuery("jisangSQL.updatePermitMaster", params); // 기본정보
+																						// 수정
+				}
+
+				// 대상토지
+				for (int i = 0; i < togiArr.length(); i++) {
+					JSONObject obj=new JSONObject(togiArr.get(i).toString());
+					String JISANG_NO = obj.getString("togiManageNo"); // 지상권번호
+					String ADDRESS = obj.getString("togiaddress"); // 주소
+					String JIMOK = obj.getString("togiJimokText"); // 지목
+					String JIJUK = obj.getString("togiJijukArea"); // 전체면적
+					String PYENIB = obj.getString("togiPyeonibArea"); // 설정면적
+					String MONEY = obj.getString("togiSetMoney"); // 설정금액
+					String JASAN_NO = obj.getString("togiJasanNo"); // 자산분류번호
+					String SOUJA = obj.getString("togiSouja"); // 소유자
+					String USER = obj.getString("togiUseName"); // 사용자
+
+					String SIDO_NM = obj.getString("sido_nm");
+					String SGG_NM = obj.getString("sgg_nm");
+					String EMD_NM = obj.getString("emd_nm");
+					String RI_NM = obj.getString("ri_nm");
+					String JIBUN = obj.getString("jibun");
+					String ADDRCODE = obj.getString("addrcode");
+
+					params.put("JISANG_NO", JISANG_NO);
+					params.put("ADDRESS", ADDRESS);
+					params.put("JIMOK", JIMOK);
+					params.put("JIJUK", JIJUK);
+					params.put("PYENIB", PYENIB);
+					params.put("MONEY", MONEY);
+					params.put("JASAN_NO", JASAN_NO);
+					params.put("SOUJA", SOUJA);
+					params.put("USER", USER);
+					params.put("SIDO_NM", SIDO_NM);
+					params.put("SGG_NM", SGG_NM);
+					params.put("EMD_NM", EMD_NM);
+					params.put("RI_NM", RI_NM);
+					params.put("JIBUN", JIBUN);
+					params.put("ADDRCODE", ADDRCODE);
+
+					if (GUBUN.equals("modify")) {
+						if (i == 0) {
+							mainService.UpdateQuery("jisangSQL.deletePermitTogiList", params); // 기존
+																								// 정보
+																								// 삭제
+						}
+					}
+					mainService.InsertQuery("jisangSQL.insertPermitTogiList", params); // 대상토지
+																						// 테이블
+																						// 저장
+				}
+
+				
+				
+				//사용승락 첨부서류 등록
+		        for(int i=1;i<11;i++) {
+		        	String key=String.format("%02d",i);
+		        	if (requestJsonObj.getString("req_doc_file"+key)!=null) {
+		        		log.info("Key:"+key);
+		        		String fname=requestJsonObj.getString("req_doc_file"+key);
+		        		log.info("fname:"+fname);
+		        		if (fname.equals("") || fname==null ) continue;
+		        		
+		        		
+		        		HashMap<String, Object> filesMap= new HashMap<>();
+		        		filesMap.put("PMT_NO",resp_PMT_NO);
+		    			//filesMap.put("seq",String.format("%06d",i));
+		    			filesMap.put("fseq",i);
+		    			filesMap.put("FILE_GUBUN",i);
+		    			filesMap.put("FILE_NM",fname);
+		    			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+		     			 String dataPath = GC.getJisangFileDataDir()+"/jisangPermit/"+resp_PMT_NO; //설정파일로 뺀다.
+		     			 filesMap.put("FILE_PATH",dataPath+"/"+fname);
+		     			 CommonUtil.moveFile(fname, tempPath, dataPath);
+		     			log.info("filesMap:"+filesMap);
+		     			
+		     			
+		     			//해당파일있는지체크 
+		     			int fcount=(int)mainService.selectCountQuery("jisangSQL.selectPermitFileCount", filesMap);
+		     			log.info("fcount:"+fcount);
+		     			if (fcount>0) mainService.InsertQuery("jisangSQL.updatePermitFile", filesMap);
+		     			else mainService.InsertQuery("jisangSQL.insertPermitFile", filesMap);
+		        	}
+		        }
+				// 첨부파일
+//				MultipartHttpServletRequest multipart = (MultipartHttpServletRequest) request;
+//				List<HashMap> listfile;
+//				FileManager fm = new FileManager();
+//
+//				for (int i = 1; i < 7; i++) {
+//
+//					String FILE_UPDATE_YN = parser.getString("FILE_UPDATE_YN_" + String.valueOf(i), "");
+//					listfile = fm.upload(multipart, "FILE" + i);
+//
+//					if (listfile != null && listfile.size() > 0) {
+//						params.put("FILE_NM", listfile.get(0).get("fileName"));
+//						params.put("FILE_PATH", listfile.get(0).get("filePath"));
+//						params.put("FILE_GUBUN", String.valueOf(i));
+//						// 파일구분 1: 토지사용 승낙서, 2:등기부등본 및 토지대장, 3:위치도및지적도, 4:현장사진,
+//						// 5:검토의견서, 6:부속서류
+//
+//						if (FILE_UPDATE_YN.equals("Y")) {
+//							if (GUBUN.equals("modify")) {
+//								Database.getInstance().update("Json.deletePermitFile", params); // 파일이
+//																								// 변경되었다면
+//																								// 기존파일
+//																								// 삭제
+//							}
+//							Database.getInstance().insert("Json.insertPermitFile", params);
+//						}
+//					} else {
+//						if (!FILE_UPDATE_YN.equals("Y")) {
+//							params.put("FILE_GUBUN", i);
+//							Database.getInstance().update("Json.deletePermitFile", params); // 파일을
+//																							// 등록하지
+//																							// 않았다면
+//																							// 기존파일
+//																							// 삭제
+//						}
+//					}
+//
+//				}
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", list);
+			map.put("PMT_NO", resp_PMT_NO);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		}
 	
 	
 	@GetMapping(path="/api/list") //http://localhost:8080/api/get/dbTest
@@ -881,7 +1101,30 @@ public class jisangController {
 		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 
+		HashMap jijuk = new HashMap<>();
+		jijuk.put("x", 0);
+		jijuk.put("y", 0);
+		if (data.size() > 0) {
+			HashMap jijukParam = new HashMap<>();
+			jijukParam.put("sido_nm", data.get(0).get("jm_sido_nm"));
+			jijukParam.put("sgg_nm", data.get(0).get("jm_sgg_nm"));
+			jijukParam.put("emd_nm", data.get(0).get("jm_emd_nm"));
+			jijukParam.put("ri_nm", data.get(0).get("jm_ri_nm"));
+			jijukParam.put("jibun", data.get(0).get("jm_jibun"));
+
+			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			if (jijukList.size() > 0) {
+				jijuk = jijukList.get(0);
+			}
+			else {
+				jijuk = new HashMap<>();
+				jijuk.put("x", 0);
+				jijuk.put("y", 0);
+			}
+		}
+
 		mav.addObject("resultData",data.get(0));
+		mav.addObject("jijuk", jijuk);
 		mav.addObject("soujaList",soujaList);
 		mav.addObject("jisangPermitList",jisangPermitList);
 		mav.addObject("atcFileList",atcFileList);
@@ -2289,9 +2532,13 @@ public class jisangController {
 	
 	// 지상권 사용승락 상신
 	@Transactional
-	@GetMapping(path="/selectJisangPmtDetailListAppoval")
+	@PostMapping(path="/selectJisangPmtDetailListAppoval")
 		public void selectJisangPmtDetailListAppoval(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		  Properties requestParams = CommonUtil.convertToProperties(request);
+		  
+			
+			 JSONObject requestParamObj=new JSONObject(requestParams);
          log.info("requestParams:"+requestParams);
 
 		// String requestParams = ParameterUtil.getRequestBodyToStr(request);
@@ -3610,6 +3857,7 @@ log.info("gubun:"+gubun);
 			String special_cont = requestParamsObj.getString("special_cont"); // 특약사항
 			String location = requestParamsObj.getString("location"); // 위치
 			String jimok = requestParamsObj.getString("jimok"); // 지목
+			String wmemo=requestParamsObj.getString("jisangMemo");
 
 			String soyunumber = requestParamsObj.getString("soyunumber"); // 소유자 수
 			String okaynumber = requestParamsObj.getString("okaynumber"); // 승인자 수
@@ -4048,6 +4296,7 @@ log.info("gubun:"+gubun);
 			String jimok = requestParamsObj.getString("jimok_text"); // 지목
 			String pipeOverlapYn = requestParamsObj.getString("overlap_yn"); // 관로일치여부
 			String permitted_yn = requestParamsObj.getString("mpermit_yn"); // 지목
+			String wmemo=requestParamsObj.getString("jisangMemo");
 
 //			String soyunumber = requestParamsObj.getString("soyunumber", "0"); // 소유자 수
 //			String okaynumber = requestParamsObj.getString("okaynumber", ""); // 승인자 수
@@ -4146,6 +4395,14 @@ log.info(" 3932 params:"+params);
 					params.put("SAVE_STATUS", "승인");
 					mainService.InsertQuery("jisangSQL.insertJisangMaster", params); // 기본정보
 																						// 저장
+					
+					HashMap memoParam=new HashMap();
+					memoParam.put("manage_no", str_manageNo);
+					memoParam.put("wname", USER_NAME);
+					memoParam.put("wid", USER_ID);
+					memoParam.put("wmemo", wmemo);
+					
+					mainService.InsertQuery("commonSQL.putMemoData", memoParam);
 				} else if (gubun.equals("modify")) {
 
 					/***********************
@@ -5232,6 +5489,8 @@ log.info("map:"+map);
 			response.getWriter().flush();
 
 		}
+	
+	
 	
 //	@PostMapping(path="/selectRowDetailTab_Merge")
 //	public void selectRowDetailTab_Merge(HttpServletRequest request, HttpServletResponse response) throws Exception {

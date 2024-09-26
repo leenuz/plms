@@ -10,4 +10,8 @@ $(document).ready(function () {
         // 페이지 이동을 통한 API 호출
         window.location.href = url;
     });
+
+    $('#mapBtn').on('click', function() {
+        openMapWindow({'lon':mapCoordLng, 'lat':mapCoordLat, 'zoom':'15'});
+    })
 });

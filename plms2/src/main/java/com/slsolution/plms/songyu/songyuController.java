@@ -985,12 +985,15 @@ public class songyuController {
 				if (gubun.equals("insert")) {
 //					Database.getInstance().insert("Json.insertNotsetMaster", params);
 					mainService.InsertQuery("songyuSQL.insertNotsetMaster", params);
+					
+					//메모등록
 					//메모도 여기서 등록한다.
 					HashMap memoParam=new HashMap();
 					memoParam.put("manage_no", params.get("NOTSET_NO"));
 					memoParam.put("wmemo", memo);
 					memoParam.put("wname", (USER_NAME==null || USER_NAME=="null")?"":USER_NAME);
 					mainService.InsertQuery("commonSQL.putMemoData", memoParam);
+					
 					//mainService.InsertQeury("commonSQL.putMemoData",params);
 					params.put("STATUS", "NOTSET");
 					params.put("GOVEROWNYN", goverownyn);
@@ -1138,25 +1141,25 @@ public class songyuController {
 					} else {
 						params.put("PNU", pnu);
 					}
-		
-					params.put("ADDRCODE", addrcode);
-					params.put("JIBUN", jibun);
-					params.put("CODE_DEPTH1", "DN040000");	// 이슈없음
-					params.put("CODE_DEPTH2", "DN040100");	// 이슈없음
-					params.put("CODE_DEPTH3", "DN040101");	// 이슈없음
-					params.put("ISSUE_COMMENT", "미설정 신규등록");
-					params.put("HISTORY_TYPE", "신규 등록");
-					params.put("HISTORY_CONTENT", "신규 등록: [기공승낙서 미존재 &gt; 토지소유자없이 매설 &gt; 오류/무단매설], 사유: [신규등록]");
-					params.put("REGISTED_YN", "DN");
-					params.put("PERMITTED_YN", "N");
-					System.out.println("params="+params.toString());
-					String SEQ = (String) mainService.selectStringQuery("songyuSQL.makePnuIssueSeq", params);
-					params.put("SEQ", SEQ);
-					result =(int)mainService.UpdateQuery("songyuSQL.insertPnuIssue", params);
-		
-					if (result > 0) {
-						mainService.UpdateQuery("songyuSQL.insertPnuIssueHistory", params);
-					}
+					//신규등록일때는 해당 이슈가 변경되어 이슈사항을 기록하지 않는게 맞을듯
+//					params.put("ADDRCODE", addrcode);
+//					params.put("JIBUN", jibun);
+//					params.put("CODE_DEPTH1", "");	// 이슈없음
+//					params.put("CODE_DEPTH2", "");	// 이슈없음
+//					params.put("CODE_DEPTH3", "");	// 이슈없음
+//					params.put("ISSUE_COMMENT", "");
+//					params.put("HISTORY_TYPE", "신규 등록");
+//					params.put("HISTORY_CONTENT", "신규 등록: [기공승낙서 미존재 &gt; 토지소유자없이 매설 &gt; 오류/무단매설], 사유: [신규등록]");
+//					params.put("REGISTED_YN", "");
+//					params.put("PERMITTED_YN", "");
+//					System.out.println("params="+params.toString());
+//					String SEQ = (String) mainService.selectStringQuery("songyuSQL.makePnuIssueSeq", params);
+//					params.put("SEQ", SEQ);
+//					result =(int)mainService.UpdateQuery("songyuSQL.insertPnuIssue", params);
+//		
+//					if (result > 0) {
+//						mainService.UpdateQuery("songyuSQL.insertPnuIssueHistory", params);
+//					}
 					
 					/**********************
 					 * 잠재이슈 기본값 등록처리

@@ -437,7 +437,7 @@ log.info("resultData:"+resultData);
 
 	@RequestMapping(value="/menu05_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> menu05_1DataTableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
-
+		log.info("req.getParameter(\"draw\"):"+req.getParameter("draw"));
 		//일반웹형식
 		Properties requestParams = CommonUtil.convertToProperties(req);
 

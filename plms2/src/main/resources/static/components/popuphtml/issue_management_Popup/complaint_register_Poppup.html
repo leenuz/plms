@@ -5,6 +5,7 @@ crossorigin
 href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <link rel="stylesheet" href="/assets/css/popup//Issue_development_Popup.css" />
 <div id="complaint_register_Popup" class="complaint_register_Popup">
+  <form id="saveFormPop" onsubmit="return false;">
     <div class="popupWrap">
       <h2>
         <p>민원협의 내용 등록/수정</p>
@@ -13,11 +14,12 @@ href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/
       <section class="complainant_contents_box">
         <h3>민원 내용</h3>
         <div class="complaints_contents_wrap">
+       
           <ul>
             <li class="complaints_contents_titles">진행상태</li>
             <li class="popSelectWrap">
               <div class="hidden_SelectBox">
-                <select name="complaint_register_Selectbox01" id="complaint_register_Selectbox01" hidden>
+                <select name="STATUS" id="complaint_register_Selectbox01" hidden>
                   <option value="전체">전체</option>
                   <option value="임시저장">임시저장</option>
                   <option value="민원발생">민원발생</option>
@@ -38,17 +40,17 @@ href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/
             <li class="complaints_contents_titles">협의 날짜</li>
             <li class="complaints_calender_box">
               <div class="complaint_calender_wrap">
-                <input type="date" data-placeholder="날짜선택" required aria-required="true">
+                <input type="date" name="DATE" data-placeholder="날짜선택" required aria-required="true">
               </div>
             </li>
           </ul>
           <ul>
             <li class="complaints_contents_titles">협의 제목</li>
-            <li class="complaints_contents_inputs"><input type="text"></li>
+            <li class="complaints_contents_inputs"><input name="TITLE" type="text"></li>
           </ul>
           <ul class="complaints_contents_minHeight1">
             <li class="complaints_contents_titles">협의 내용</li>
-            <li class="complaints_contents_inputs"><textarea type="text"></textarea></li>
+            <li class="complaints_contents_inputs"><textarea  name="CONTENTS" type="text"></textarea></li>
           </ul>
           <ul class="complaints_contents_minHeight2">
             <li class="complaints_contents_titles">첨부파일</li>
@@ -120,14 +122,16 @@ href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/
               </div>
             </li>
           </ul>
+       
         </div>
       </section>
       <div class="document_add_btnWrap">
-        <button class="saveBtn finalBtn">저장</button>       
-        <button class="sangsinBtn finalBtn">상신</button>       
+        <button class="saveBtn">저장</button>       
+        <button class="sangsinBtn">상신</button>       
         <button class="closeBtn finalBtn">닫기</button>       
       </div>
     </div>
+  </form>
   </div>
 <script>
 
@@ -193,7 +197,7 @@ if (customSelectView04) {
   });
 }
 
-const PopupMoreSelectBtn04 = document.querySelectorAll(
+ const PopupMoreSelectBtn04 = document.querySelectorAll(
   "#complaint_register_Popup .PopupMoreSelectBtn"
 );
 

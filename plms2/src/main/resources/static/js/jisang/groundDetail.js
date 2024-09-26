@@ -2,8 +2,10 @@ var mapWindow;
 
 $(document).on("click","#moveMap",function(){
 	//openMapWindow();
-	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
-	moveToCityHall();
+	// mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
+	// moveToCityHall();
+
+	openMapWindow({'lon':mapCoordLng, 'lat':mapCoordLat});
 })
 
 function moveToCityHall() {

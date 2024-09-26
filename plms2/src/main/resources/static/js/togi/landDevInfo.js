@@ -101,6 +101,7 @@ const ulCount = getUlCountInContentsBox(contentsBoxElement);
 
                              } else {
                                 const infoInput = document.createElement('input');
+                                const infoInput2 = document.createElement('input');
     		       infoInput.classList.add('notWriteInput');
     			infoInput.readOnly = true;
                                  infoInput.type = 'text';
@@ -118,10 +119,16 @@ const ulCount = getUlCountInContentsBox(contentsBoxElement);
                                    infoInput.id='docDate_' + ulCount ;
                                   infoInput.name='docDate_' + ulCount ;
                                    infoInput.placeholder = document.querySelector('input[name="documentdate"]').value;
+                                 infoInput2.type="hidden"
+                                  infoInput2.id='docURL_' + ulCount ;
+                                   infoInput2.name='docURL_' + ulCount ;
+                                    infoInput2.placeholder = document.querySelector('input[name="documentURL"]').value;
+                                    infoLi.append(infoInput2);
                                  }
 
                                  // li안에 넣기
                                  infoLi.append(infoInput);
+
 
                              }
 
@@ -148,3 +155,40 @@ $(document).on("click",".delBtn",function(){
 	}
 
 })
+
+
+//완료처리버튼 클릭
+$(document).on("click",".completeBtn",function(){
+
+var formSerializeArray = $('#saveForm').serializeArray();
+
+       len = formSerializeArray.length;
+       var dataObj = {};
+       for (i=0; i<len; i++) {
+        dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
+       }
+
+       var fileDatas=[];
+       var fileUls=$("#fileList .contents");
+       	   	for(var i=0;i<fileUls.length;i++){
+       			var docNum=$(fileUls[i]).find("input[name='docNum_"+i+"']").attr("placeholder");
+       			var docTitle=$(fileUls[i]).find("input[name='docTitle_"+i+"']").attr("placeholder");
+       			var docDate=$(fileUls[i]).find("input[name='docDate_"+i+"']").attr("placeholder");
+       			var docURL=$(fileUls[i]).find("input[name='docURL_"+i+"']").attr("placeholder");
+
+       	   		var fileObj={
+       				"docNum":ljsIsNull(docNum)?'':docNum
+       				,"docTitle":ljsIsNull(docTitle)?'':docTitle
+       				,"docDate":ljsIsNull(docDate)?'':docDate
+       				,"docURL":ljsIsNull(docURL)?'':docURL
+       	   		}
+       	   		fileDatas.push(fileObj);
+       	   	}
+       	   	dataObj.fileDatas=fileDatas;
+
+		dataObj.gubun="modify";
+//		dataObj.dosiNo=""; //수정일때는 들어간다
+       console.log("**dataObj**");
+       console.log(dataObj);
+
+});

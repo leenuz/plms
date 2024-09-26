@@ -13,6 +13,10 @@
 </head>
 
 <th:block layout:fragment="content">
+	<script>
+		var mapCoordLng = '[[${jijuk.x}]]';
+		var mapCoordLat = '[[${jijuk.y}]]';
+	</script>
 	<div class="easementDetailsWrappers">
 		<!-- 지상권 상세정보 -->
 		<main id="easementDetails">
@@ -31,7 +35,7 @@
 						<div class="thirdTitle">
 							<h2>・기본 정보</h2>
 							<div class="btnbox">
-								<button class="viewLocation subBtn">위치보기</button>
+								<button class="viewLocation subBtn" id="mapBtn">위치보기</button>
 							</div>
 						</div>
 
