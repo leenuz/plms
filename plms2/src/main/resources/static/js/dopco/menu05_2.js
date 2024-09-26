@@ -271,7 +271,7 @@ function loadDataTable(params) {
 
 	table.on('click', 'tr', function () {
 		var target = $(event.target);
-		var isButtonCell = target.closest('td').index() === 8;
+		var isButtonCell = target.closest('td').index() === 10;
 
 		if (isButtonCell) {
 			return;

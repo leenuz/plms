@@ -105,12 +105,26 @@
       <section class="basicOwnerInfo">
         <div class="subTitle">기본/소유자 정보</div>
 
+        <script>
+          var jijukX = '[[${jijuk.x}]]';
+          var jijukY = '[[${jijuk.y}]]';
+            const openMap = () => {
+              var x = parseFloat(jijukX);
+              var y = parseFloat(jijukY);
+              if (x != 0 && y != 0 && !isNaN(x) && !isNaN(y)) {
+                cityHallCoords = { lon: y, lat: x, zoom: 16 };
+                openMapWindow(cityHallCoords);
+              } else {
+                alert("해당 위치에 대한 좌표가 없습니다.");
+              }
+          };
+        </script>
         <div class="contWrap">
           <div class="contBox">
             <div class="thirdTitle">
               <h2>・기본 정보</h2>
               <div class="btnbox">
-                <button class="viewLocation">위치보기</button>
+                <button class="viewLocation" onclick="openMap()">위치보기</button>
               </div>
             </div>
 
