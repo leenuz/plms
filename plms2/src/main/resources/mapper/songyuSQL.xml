@@ -1157,26 +1157,26 @@ FROM NOTSET_MASTER
 		)
 		Values
 		(
-		#{NOTSET_NO}
-		, #{SIDO_NM}
-		, #{SGG_NM}
-		, #{EMD_NM}
-		, #{RI_NM}
-		, #{JIBUN}
-		, #{JISA}
-		, ${JIJUK_AREA}
-		, #{PIPE_NAME}
-		, #{SUN_GUBUN}
-		, #{COMPLE_YN}
-		,#{GOVER_OWN_YN}
-		, #{ADDRCODE}
-		, #{PNU}
-		, #{JIMOK_TEXT}
-		, #{DOCKEY}
-		, #{PIPE_YN}
-		, nullif(#{PIPE_METER},'')::numeric
-		, nullif(#{PIPE_METER2},'')::numeric
-		, #{TOJI_TYPE}
+		#{notset_no}
+		, #{sido_nm}
+		, #{sgg_nm}
+		, #{emd_nm}
+		, nullif(#{ri_nm},'')
+		, #{jibun}
+		, #{jisa}
+		, #{jijuk_area}
+		, #{pipe_name}
+		, #{sun_gubun}
+		, #{comple_yn}
+		,#{gover_own_yn}
+		, #{addrcode}
+		, #{pnu}
+		, #{jimok_text}
+		, #{dockey}
+		, #{pipe_yn}
+		, nullif(#{pipe_meter},'')::numeric
+		, nullif(#{pipe_meter2},'')::numeric
+		, #{toji_type}
 		)
 	</insert>
 	<update id="updateTogiJisang_Status2Null" parameterType="HashMap">

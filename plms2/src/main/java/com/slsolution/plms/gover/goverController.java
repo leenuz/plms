@@ -1501,7 +1501,7 @@ public class goverController {
 				ArrayList list = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPnuList", params); //결과대문자로 넘어옴
 				if (list.size() > 0) {
 					for (int i = 0; i < list.size(); i++) {
-
+						
 						String strPNU = "";
 						strPNU = (String) ((HashMap) list.get(i)).get("PNU");
 						params.put("STR_PNU", strPNU);
@@ -1517,7 +1517,8 @@ public class goverController {
 						System.out.println("dataMap :: " + dataMap.toString());
 
 						ArrayList NotsetList = (ArrayList) mainService.selectQuery("goverSQL.selectNotsetNextNo", null);
-						String Next_notsetNo = String.valueOf(Integer.parseInt((String) ((HashMap) NotsetList.get(0)).get("NOW_NOTSETNO")) + 1);
+						int no=Integer.parseInt((((HashMap) NotsetList.get(0)).get("now_notsetno").toString()).toString());
+						String Next_notsetNo =  String.valueOf(no + 1);
 						int n_Next_notsetNo = Next_notsetNo.length();
 
 						String add_Zero = "";
@@ -1526,7 +1527,7 @@ public class goverController {
 						}
 						Next_notsetNo = "N_" + add_Zero + Next_notsetNo;
 
-						dataMap.put("NOTSET_NO", Next_notsetNo);
+						dataMap.put("notset_no", Next_notsetNo);
 						mainService.InsertQuery("songyuSQL.insertNotsetMaster", dataMap);
 						dataMap.put("STATUS", "NOTSET");
 						dataMap.put("JISANGNO", Next_notsetNo);
