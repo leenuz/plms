@@ -263,7 +263,7 @@ function loadDataTable(params) {
 			{
 				targets: [10], width: "100px"
 				, render: function (data, type, row, meta) {
-					return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
+					return `<button class="btnDesign" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
 				}
 			}, //지도보기
 		]
@@ -271,7 +271,7 @@ function loadDataTable(params) {
 
 	table.on('click', 'tr', function () {
 		var target = $(event.target);
-		var isButtonCell = target.closest('td').index() === 8;
+		var isButtonCell = target.closest('td').index() === 10;
 
 		if (isButtonCell) {
 			return;
@@ -287,4 +287,27 @@ function loadDataTable(params) {
 			window.location = url;
 		}
 	});
+}
+
+/*위치보기*/
+$(document).on("click","#moveMap",function(){
+	//openMapWindow();
+//	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
+	const x = $(this).attr('x')
+	const y = $(this).attr('y')
+	moveToCityHall(x,y);
+})
+
+function moveToCityHall(x, y) {
+    console.log("--------moveToCityHall-------------");
+    var cityHallCoords = {};
+
+	var x = parseFloat(x);
+	var y = parseFloat(y);
+	if (x != 0 && y != 0 && !isNaN(x) && !isNaN(y)) {
+		cityHallCoords = { lon: y, lat: x, zoom: 16 };
+		openMapWindow(cityHallCoords);
+	} else {
+		alert("해당 위치에 대한 좌표가 없습니다.");
+	}
 }

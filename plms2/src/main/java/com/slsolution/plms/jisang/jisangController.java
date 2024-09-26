@@ -252,7 +252,7 @@ public class jisangController {
     }
 	@Transactional
 	@RequestMapping(value="/usePermitRegisterSave1", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
-    public void usePermitRegisterSave(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+    public void usePermitRegisterSave1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
         
 		//일반웹형식
 //		Properties requestParams = CommonUtil.convertToProperties(httpRequest);
@@ -737,124 +737,346 @@ public class jisangController {
 
 		}
 	
-	// 지상권 사용승락 상신 insertJisangPmtList
-		@Transactional
-		@RequestMapping(value="/selectJisangPmtDetailListAppoval", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
-			public void selectJisangPmtDetailListAppoval(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	// 지상권 사용승락 상신
+	@Transactional
+	@RequestMapping(value="/selectJisangPmtDetailListAppoval", method = {RequestMethod.GET, RequestMethod.POST}) 
+	public void selectJisangPmtDetailListAppoval(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+        log.info("requestParams:"+requestParams);
+        JSONObject requestJsonObj=new JSONObject(requestParams);
+        
 
-			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		// String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		 log.info("requestParams:"+requestParams);
+			ArrayList list = new ArrayList();
+			ArrayList togiList = new ArrayList();
+			ArrayList fileList = new ArrayList();
+			log.info("request:"+request);
+			//ParameterParser parser = new ParameterParser(request);
+			String PMT_NO = requestJsonObj.getString("PMT_NO");
+			//String PMT_NO = parser.getString("PMT_NO", "");
+			//String loginKey = String.valueOf(request.getSession().getAttribute("loginKey"));
+			String loginKey=request.getParameter("loginKey");
+log.info("loginKey:"+loginKey);
+log.info("PMT_NO:"+PMT_NO);
+			String str_result = "Y";
+			try {
+
+				HashMap params = new HashMap();
+				params.put("PMT_NO", PMT_NO);
+
+				list = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_MASTER", params); // 상세내용
+				togiList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_TOGI", params); // 대상토지
+				fileList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_FILE", params); // 첨부서류
+				log.info("list:"+list);
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			if (togiList != null)
+				map.put("togiCount", togiList.size());
+			else
+				map.put("togiCount", 0);
+
+			if (fileList != null)
+				map.put("fileCount", fileList.size());
+			else
+				map.put("fileCount", 0);
+
+			map.put("message", str_result);
+			map.put("list", list);
+			map.put("togiList", togiList);
+			map.put("fileList", fileList);
+			map.put("loginKey", loginKey);
+			
+			ApprovalHtmlUtil eph=new ApprovalHtmlUtil();
+			ApprovalUtil epc= new ApprovalUtil();
+//
+//			ElectronicPaymentHTML eph = new ElectronicPaymentHTML(); // 상신용 HTML
+//			ElectronicPaymentUtil epc = new ElectronicPaymentUtil(); // 전자결재 연계
+			CommonUtil cu = new CommonUtil();
+//
+			String str_appNo = cu.getNextAppovalSeq();
+			boolean res_Echo = false;
+			if ("".equals(str_appNo)) {
+				map.put("message", "N");
+			} else {
+
+//				String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
+//				String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
+//				String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
+//				String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
+//				String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+				String str_UserId = "105681";
+				String str_userName = "박영환";
+				String str_userDeptcd = "D250500";
+				String str_userDeptnm = "IT전략.지원팀";
+				String str_userUPDeptcd = "S250100";
+				res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getPERMIT_HTML(map, request, response), str_UserId, "", "", "GetSurfaceRightsDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
+			}
+//
+			if (res_Echo) {
+
+				// 문서번호 업데이트
+				map.put("DOCKEY", str_appNo);
+				map.put("message", "Y");
+				map.put("PMT_NO", PMT_NO);
+				//Database.getInstance().update("Json.updateJisangPmtDetailEchoNo", map);
+				mainService.InsertQuery("jisangSQL.updateJisangPmtDetailEchoNo", map);
+
+				// 문서 URL조회
+				//ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectDocInfo", map);
+				ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectDocInfo", map);
+				if (null != echolist && echolist.size() > 0) {
+					String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+					// System.out.println("str_EchoNo=====" + str_EchoNo);
+					map.put("OUT_URL", str_EchoNo);
+				}
+
+			} else {
+				map.put("message", "N");
+			}
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
+	
+	
+	
+//	// 지상권 사용승락 등록 insertJisangPmtList
+//		@Transactional
+//		@RequestMapping(value="/insertJisangPmtList1", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+//			public void insertJisangPmtList1(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//
+//			
+//			
+//			String requestParams = ParameterUtil.getRequestBodyToStr(request);
 //	        log.info("requestParams:"+requestParams);
 //	        JSONObject requestJsonObj=new JSONObject(requestParams);
 //	        
-	//
-////			// String requestParams = ParameterUtil.getRequestBodyToStr(request);
-////			 log.info("requestParams:"+requestParams);
-////				ArrayList list = new ArrayList();
-////				ArrayList togiList = new ArrayList();
-////				ArrayList fileList = new ArrayList();
-////				log.info("request:"+request);
-////				//ParameterParser parser = new ParameterParser(request);
-////				String PMT_NO = request.getParameter("PMT_NO");
-////				//String PMT_NO = parser.getString("PMT_NO", "");
-////				//String loginKey = String.valueOf(request.getSession().getAttribute("loginKey"));
-////				String loginKey=request.getParameter("loginKey");
-	////log.info("loginKey:"+loginKey);
-	////log.info("PMT_NO:"+PMT_NO);
-////				String str_result = "Y";
-////				try {
-	////
-////					HashMap params = new HashMap();
-////					params.put("PMT_NO", PMT_NO);
-	////
-////					list = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_MASTER", params); // 상세내용
-////					togiList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_TOGI", params); // 대상토지
-////					fileList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_FILE", params); // 첨부서류
-////					log.info("list:"+list);
-////				} catch (Exception e) {
-////					str_result = "N";
-////					e.printStackTrace();
-////				}
-////				HashMap map = new HashMap();
-	////
-////				if (list != null)
-////					map.put("count", list.size());
-////				else
-////					map.put("count", 0);
-	////
-////				if (togiList != null)
-////					map.put("togiCount", togiList.size());
-////				else
-////					map.put("togiCount", 0);
-	////
-////				if (fileList != null)
-////					map.put("fileCount", fileList.size());
-////				else
-////					map.put("fileCount", 0);
-	////
-////				map.put("message", str_result);
-////				map.put("list", list);
-////				map.put("togiList", togiList);
-////				map.put("fileList", fileList);
-////				map.put("loginKey", loginKey);
-////				
-////				ApprovalHtmlUtil eph=new ApprovalHtmlUtil();
-////				ApprovalUtil epc= new ApprovalUtil();
-	//////
-//////				ElectronicPaymentHTML eph = new ElectronicPaymentHTML(); // 상신용 HTML
-//////				ElectronicPaymentUtil epc = new ElectronicPaymentUtil(); // 전자결재 연계
-////				CommonUtil cu = new CommonUtil();
-	//////
-////				String str_appNo = cu.getNextAppovalSeq();
-////				boolean res_Echo = false;
-////				if ("".equals(str_appNo)) {
-////					map.put("message", "N");
-////				} else {
-	////
-//////					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
-//////					String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
-//////					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
-//////					String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
-//////					String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
-////					String str_UserId = "105681";
-////					String str_userName = "박영환";
-////					String str_userDeptcd = "D250500";
-////					String str_userDeptnm = "IT전략.지원팀";
-////					String str_userUPDeptcd = "S250100";
-////					res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getPERMIT_HTML(map, request, response), str_UserId, "", "", "GetSurfaceRightsDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
-////				}
-	//////
-////				if (res_Echo) {
-	////
-////					// 문서번호 업데이트
-////					map.put("DOCKEY", str_appNo);
-////					map.put("message", "Y");
-////					map.put("PMT_NO", PMT_NO);
-////					//Database.getInstance().update("Json.updateJisangPmtDetailEchoNo", map);
-////					mainService.InsertQuery("jisangSQL.updateJisangPmtDetailEchoNo", map);
-	////
-////					// 문서 URL조회
-////					//ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectDocInfo", map);
-////					ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectDocInfo", map);
-////					if (null != echolist && echolist.size() > 0) {
-////						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
-////						// System.out.println("str_EchoNo=====" + str_EchoNo);
-////						map.put("OUT_URL", str_EchoNo);
+//	        
+//	        JSONArray togiArr=new JSONArray(requestJsonObj.getString("desangTogis"));
+//				ArrayList list = new ArrayList();
+//				ParameterParser parser = new ParameterParser(request);
+//
+//				String GUBUN = requestJsonObj.getString("gubun"); // 구분( modify : 수정, insert
+//																// : 등록 )
+//				//String TOGICNT = requestJsonObj.getString("TOGICNT"); // 대상토지 수
+//				String PMT_NO =requestJsonObj.has("pmt_no")?requestJsonObj.getString("pmt_no"):""; // 승락등록 번호
+//				String USE_PURPOS = requestJsonObj.getString("purpose"); // 사용목적
+//				String USE_ST_DATE = requestJsonObj.getString("useStartDate"); // 사용기간 시작
+//				String USE_ED_DATE = requestJsonObj.getString("useEndDate"); // 사용기간 끝
+//				String SPOT_RESULT = requestJsonObj.getString("spot_result"); // 현장확인결과
+//				String RIVEW = requestJsonObj.getString("review"); // 검토의견
+//				String CONTRACT = requestJsonObj.getString("contract"); // 약정사항
+//				String PMT_STATUS = requestJsonObj.getString("pmt_status"); // 등록상태
+//				String str_result = "Y";
+//				String resp_PMT_NO = "";
+//				try {
+//					HashMap params = new HashMap();
+//					params.put("USE_PURPOS", USE_PURPOS);
+//					params.put("USE_ST_DATE", USE_ST_DATE);
+//					params.put("USE_ED_DATE", USE_ED_DATE);
+//					params.put("SPOT_RESULT", SPOT_RESULT);
+//					params.put("RIVEW", RIVEW);
+//					params.put("CONTRACT", CONTRACT);
+//					params.put("PMT_STATUS", PMT_STATUS);
+//
+//					/**********************
+//					 * 다음 지상권 번호 조회 시작
+//					 **********************/
+//					if (GUBUN.equals("modify")) {
+//						resp_PMT_NO = PMT_NO;
+//						params.put("PMT_NO", PMT_NO);
+//					} else {
+//						ArrayList PmtList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtNextNo", null);
+//						int no=Integer.parseInt((((HashMap) PmtList.get(0)).get("now_pmt_no").toString()).toString());
+//						String Next_pmtNo =  String.valueOf(no + 1);
+//						//String Next_pmtNo = String.valueOf(Integer.parseInt((String) ((HashMap) PmtList.get(0)).get("now_pmt_no")) + 1);
+//						int n_Next_pmtNo = Next_pmtNo.length();
+//
+//						String add_Zero = "";
+//						for (int i = 0; i < (6 - n_Next_pmtNo); i++) {
+//							add_Zero += "0";
+//						}
+//						Next_pmtNo = "P_" + add_Zero + Next_pmtNo;
+//
+//						resp_PMT_NO = Next_pmtNo;
+//						params.put("PMT_NO", Next_pmtNo);
+//					}
+//					log.info("resp_PMT_NO:"+resp_PMT_NO);
+//					/***********************
+//					 * 다음 지상권 번호 조회 끝
+//					 ************************/
+//
+//					if (GUBUN.equals("insert")) {
+//						mainService.InsertQuery("jisangSQL.insertPermitMaster", params); // 기본정보
+//																							// 저장
+//					} else if (GUBUN.equals("modify")) {
+//						mainService.UpdateQuery("jisangSQL.updatePermitMaster", params); // 기본정보
+//																							// 수정
+//					}
+//
+//					// 대상토지
+//					for (int i = 0; i < togiArr.length(); i++) {
+//						JSONObject obj=new JSONObject(togiArr.get(i).toString());
+//						String JISANG_NO = obj.getString("togiManageNo"); // 지상권번호
+//						String ADDRESS = obj.getString("togiaddress"); // 주소
+//						String JIMOK = obj.getString("togiJimokText"); // 지목
+//						String JIJUK = obj.getString("togiJijukArea"); // 전체면적
+//						String PYENIB = obj.getString("togiPyeonibArea"); // 설정면적
+//						String MONEY = obj.getString("togiSetMoney"); // 설정금액
+//						String JASAN_NO = obj.getString("togiJasanNo"); // 자산분류번호
+//						String SOUJA = obj.getString("togiSouja"); // 소유자
+//						String USER = obj.getString("togiUseName"); // 사용자
+//
+//						String SIDO_NM = obj.getString("sido_nm");
+//						String SGG_NM = obj.getString("sgg_nm");
+//						String EMD_NM = obj.getString("emd_nm");
+//						String RI_NM = obj.getString("ri_nm");
+//						String JIBUN = obj.getString("jibun");
+//						String ADDRCODE = obj.getString("addrcode");
+//
+//						params.put("JISANG_NO", JISANG_NO);
+//						params.put("ADDRESS", ADDRESS);
+//						params.put("JIMOK", JIMOK);
+//						params.put("JIJUK", JIJUK);
+//						params.put("PYENIB", PYENIB);
+//						params.put("MONEY", MONEY);
+//						params.put("JASAN_NO", JASAN_NO);
+//						params.put("SOUJA", SOUJA);
+//						params.put("USER", USER);
+//						params.put("SIDO_NM", SIDO_NM);
+//						params.put("SGG_NM", SGG_NM);
+//						params.put("EMD_NM", EMD_NM);
+//						params.put("RI_NM", RI_NM);
+//						params.put("JIBUN", JIBUN);
+//						params.put("ADDRCODE", ADDRCODE);
+//
+//						if (GUBUN.equals("modify")) {
+//							if (i == 0) {
+//								mainService.UpdateQuery("jisangSQL.deletePermitTogiList", params); // 기존
+//																									// 정보
+//																									// 삭제
+//							}
+//						}
+//						mainService.InsertQuery("jisangSQL.insertPermitTogiList", params); // 대상토지
+//																							// 테이블
+//																							// 저장
+//					}
+//
+//					
+//					
+//					//사용승락 첨부서류 등록
+//			        for(int i=1;i<11;i++) {
+//			        	String key=String.format("%02d",i);
+//			        	if (requestJsonObj.getString("req_doc_file"+key)!=null) {
+//			        		log.info("Key:"+key);
+//			        		String fname=requestJsonObj.getString("req_doc_file"+key);
+//			        		log.info("fname:"+fname);
+//			        		if (fname.equals("") || fname==null ) continue;
+//			        		
+//			        		
+//			        		HashMap<String, Object> filesMap= new HashMap<>();
+//			        		filesMap.put("PMT_NO",resp_PMT_NO);
+//			    			//filesMap.put("seq",String.format("%06d",i));
+//			    			filesMap.put("fseq",i);
+//			    			filesMap.put("FILE_GUBUN",i);
+//			    			filesMap.put("FILE_NM",fname);
+//			    			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+//			     			 String dataPath = GC.getJisangFileDataDir()+"/jisangPermit/"+resp_PMT_NO; //설정파일로 뺀다.
+//			     			 filesMap.put("FILE_PATH",dataPath+"/"+fname);
+//			     			 CommonUtil.moveFile(fname, tempPath, dataPath);
+//			     			log.info("filesMap:"+filesMap);
+//			     			
+//			     			
+//			     			//해당파일있는지체크 
+//			     			int fcount=(int)mainService.selectCountQuery("jisangSQL.selectPermitFileCount", filesMap);
+//			     			log.info("fcount:"+fcount);
+//			     			if (fcount>0) mainService.InsertQuery("jisangSQL.updatePermitFile", filesMap);
+//			     			else mainService.InsertQuery("jisangSQL.insertPermitFile", filesMap);
+//			        	}
+//			        }
+//					// 첨부파일
+////					MultipartHttpServletRequest multipart = (MultipartHttpServletRequest) request;
+////					List<HashMap> listfile;
+////					FileManager fm = new FileManager();
+//	//
+////					for (int i = 1; i < 7; i++) {
+//	//
+////						String FILE_UPDATE_YN = parser.getString("FILE_UPDATE_YN_" + String.valueOf(i), "");
+////						listfile = fm.upload(multipart, "FILE" + i);
+//	//
+////						if (listfile != null && listfile.size() > 0) {
+////							params.put("FILE_NM", listfile.get(0).get("fileName"));
+////							params.put("FILE_PATH", listfile.get(0).get("filePath"));
+////							params.put("FILE_GUBUN", String.valueOf(i));
+////							// 파일구분 1: 토지사용 승낙서, 2:등기부등본 및 토지대장, 3:위치도및지적도, 4:현장사진,
+////							// 5:검토의견서, 6:부속서류
+//	//
+////							if (FILE_UPDATE_YN.equals("Y")) {
+////								if (GUBUN.equals("modify")) {
+////									Database.getInstance().update("Json.deletePermitFile", params); // 파일이
+////																									// 변경되었다면
+////																									// 기존파일
+////																									// 삭제
+////								}
+////								Database.getInstance().insert("Json.insertPermitFile", params);
+////							}
+////						} else {
+////							if (!FILE_UPDATE_YN.equals("Y")) {
+////								params.put("FILE_GUBUN", i);
+////								Database.getInstance().update("Json.deletePermitFile", params); // 파일을
+////																								// 등록하지
+////																								// 않았다면
+////																								// 기존파일
+////																								// 삭제
+////							}
+////						}
+//	//
 ////					}
-	////
-////				} else {
-////					map.put("message", "N");
-////				}
-	////
-////				JSONObject jo = new JSONObject(map);
-	////
-////				response.setCharacterEncoding("UTF-8");
-////				response.setHeader("Access-Control-Allow-Origin", "*");
-////				response.resetBuffer();
-////				response.setContentType("application/json");
-////				response.getWriter().print(jo);
-////				response.getWriter().flush();
-
-			}
+//
+//				} catch (Exception e) {
+//					str_result = "N";
+//					e.printStackTrace();
+//				}
+//
+//				HashMap map = new HashMap();
+//
+//				if (list != null)
+//					map.put("count", list.size());
+//				else
+//					map.put("count", 0);
+//
+//				map.put("message", str_result);
+//				map.put("result", list);
+//				map.put("PMT_NO", resp_PMT_NO);
+//
+//				JSONObject jo = new JSONObject(map);
+//
+//				response.setCharacterEncoding("UTF-8");
+//				response.setHeader("Access-Control-Allow-Origin", "*");
+//				response.resetBuffer();
+//				response.setContentType("application/json");
+//				response.getWriter().print(jo);
+//				response.getWriter().flush();
+//
+//			}
 	
 	@GetMapping(path="/api/list") //http://localhost:8080/api/get/dbTest
     public void apiList(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
@@ -1781,6 +2003,7 @@ public class jisangController {
 	@RequestMapping(value="/menu02_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> datatableList02_1(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
+		
 		//일반웹형식
 		Properties requestParams = CommonUtil.convertToProperties(req);
 
@@ -1866,12 +2089,13 @@ public class jisangController {
 		}
 		log.info("params:"+params);
 
-		Object count= mainService.selectCountQuery("jisangSQL.selectTotalCount", params);
+		Object count= mainService.selectCountQuery("jisangSQL.selectJisangListCount", params);
 		int total=(int)count;
 
-		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangList",params);
+		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListOrg",params);
+		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangList",params);
 		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
-		log.info("list:"+list);
+		//log.info("list:"+list);
 
 
 		HashMap<String,Object> resultmap=new HashMap();
@@ -1881,7 +2105,7 @@ public class jisangController {
 		resultmap.put("data",list);
 
 		JSONObject obj =new JSONObject(resultmap);
-		log.info("obj:"+obj);
+		//log.info("obj:"+obj);
 		return ResponseEntity.ok(obj.toString());
 
 	}
@@ -2688,130 +2912,30 @@ public class jisangController {
 	@GetMapping(path="/test1111")
 	public void test1111(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		 String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
-		 
-		 
+		
+		 log.info("requestParams:"+requestParams);
+		 JSONObject requestParamObj=new JSONObject(requestParams);
+		 HashMap<String,Object> resultmap=new HashMap();
+	        resultmap.put("resultCode","0000");
+	        resultmap.put("params", requestParamObj);
+	        resultmap.put("resultData","");
+	        resultmap.put("resultMessage","success");
+	        JSONObject obj =new JSONObject(resultmap);
+//	        System.out.println(obj);
+	       
+	      //log.info("jo:"+jo);
+	      			response.setCharacterEncoding("UTF-8");
+	      			response.setHeader("Access-Control-Allow-Origin", "*");
+	      			response.setHeader("Cache-Control", "no-cache");
+	      			response.resetBuffer();
+	      			response.setContentType("application/json");
+	      			//response.getOutputStream().write(jo);
+	      			response.getWriter().print(obj);
+	      			response.getWriter().flush();
 	}
 	
 	
-	
-//	// 지상권 사용승락 상신
-//	@Transactional
-//	@RequestMapping(value="/selectJisangPmtDetailListAppoval", method = {RequestMethod.GET, RequestMethod.POST}) 
-//	public void selectJisangPmtDetailListAppoval(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		
-//		String requestParams = ParameterUtil.getRequestBodyToStr(request);
-//        log.info("requestParams:"+requestParams);
-//        JSONObject requestJsonObj=new JSONObject(requestParams);
-//        
-//
-////		// String requestParams = ParameterUtil.getRequestBodyToStr(request);
-////		 log.info("requestParams:"+requestParams);
-////			ArrayList list = new ArrayList();
-////			ArrayList togiList = new ArrayList();
-////			ArrayList fileList = new ArrayList();
-////			log.info("request:"+request);
-////			//ParameterParser parser = new ParameterParser(request);
-////			String PMT_NO = request.getParameter("PMT_NO");
-////			//String PMT_NO = parser.getString("PMT_NO", "");
-////			//String loginKey = String.valueOf(request.getSession().getAttribute("loginKey"));
-////			String loginKey=request.getParameter("loginKey");
-////log.info("loginKey:"+loginKey);
-////log.info("PMT_NO:"+PMT_NO);
-////			String str_result = "Y";
-////			try {
-////
-////				HashMap params = new HashMap();
-////				params.put("PMT_NO", PMT_NO);
-////
-////				list = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_MASTER", params); // 상세내용
-////				togiList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_TOGI", params); // 대상토지
-////				fileList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_FILE", params); // 첨부서류
-////				log.info("list:"+list);
-////			} catch (Exception e) {
-////				str_result = "N";
-////				e.printStackTrace();
-////			}
-////			HashMap map = new HashMap();
-////
-////			if (list != null)
-////				map.put("count", list.size());
-////			else
-////				map.put("count", 0);
-////
-////			if (togiList != null)
-////				map.put("togiCount", togiList.size());
-////			else
-////				map.put("togiCount", 0);
-////
-////			if (fileList != null)
-////				map.put("fileCount", fileList.size());
-////			else
-////				map.put("fileCount", 0);
-////
-////			map.put("message", str_result);
-////			map.put("list", list);
-////			map.put("togiList", togiList);
-////			map.put("fileList", fileList);
-////			map.put("loginKey", loginKey);
-////			
-////			ApprovalHtmlUtil eph=new ApprovalHtmlUtil();
-////			ApprovalUtil epc= new ApprovalUtil();
-//////
-//////			ElectronicPaymentHTML eph = new ElectronicPaymentHTML(); // 상신용 HTML
-//////			ElectronicPaymentUtil epc = new ElectronicPaymentUtil(); // 전자결재 연계
-////			CommonUtil cu = new CommonUtil();
-//////
-////			String str_appNo = cu.getNextAppovalSeq();
-////			boolean res_Echo = false;
-////			if ("".equals(str_appNo)) {
-////				map.put("message", "N");
-////			} else {
-////
-//////				String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
-//////				String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
-//////				String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
-//////				String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
-//////				String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
-////				String str_UserId = "105681";
-////				String str_userName = "박영환";
-////				String str_userDeptcd = "D250500";
-////				String str_userDeptnm = "IT전략.지원팀";
-////				String str_userUPDeptcd = "S250100";
-////				res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getPERMIT_HTML(map, request, response), str_UserId, "", "", "GetSurfaceRightsDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
-////			}
-//////
-////			if (res_Echo) {
-////
-////				// 문서번호 업데이트
-////				map.put("DOCKEY", str_appNo);
-////				map.put("message", "Y");
-////				map.put("PMT_NO", PMT_NO);
-////				//Database.getInstance().update("Json.updateJisangPmtDetailEchoNo", map);
-////				mainService.InsertQuery("jisangSQL.updateJisangPmtDetailEchoNo", map);
-////
-////				// 문서 URL조회
-////				//ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectDocInfo", map);
-////				ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectDocInfo", map);
-////				if (null != echolist && echolist.size() > 0) {
-////					String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
-////					// System.out.println("str_EchoNo=====" + str_EchoNo);
-////					map.put("OUT_URL", str_EchoNo);
-////				}
-////
-////			} else {
-////				map.put("message", "N");
-////			}
-////
-////			JSONObject jo = new JSONObject(map);
-////
-////			response.setCharacterEncoding("UTF-8");
-////			response.setHeader("Access-Control-Allow-Origin", "*");
-////			response.resetBuffer();
-////			response.setContentType("application/json");
-////			response.getWriter().print(jo);
-////			response.getWriter().flush();
-//		}
-	
+
 	
 	// 지상권 해지 저장 - 해지사유 및 검토 의견만 임시 저장처리
 	@Transactional
