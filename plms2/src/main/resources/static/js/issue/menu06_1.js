@@ -192,6 +192,8 @@ $(document).on("click", ".landinfo .landStatusPopOpenBtn", function () {
     });
 });
 
+
+
 //신규민원 -> 검색 -> 선택 버튼
 const resultSelectBtnClick = function (view, index) {
     var juso = $(view).closest("li").siblings(".popContent02").find("p").text();
@@ -215,13 +217,12 @@ $(document).on("change", ".approve_checkbox", function () {
     }
 });
 
-
+var saveJsonData = [];
 function loadDataTable(params) {
     console.log("-----start loadDataTable----------");
     console.log("Params:", params); // params 객체 출력
 
     //var json=JSON.stringify(params);
-
     table = $('#userTable').DataTable({
         // fixedColumns: {
         //     start: 3,
@@ -257,14 +258,13 @@ function loadDataTable(params) {
                 d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
                 d.start_date = params.start_date;
                 d.end_date = params.end_date;
-                d.status = params.status;
+                
                 d.code1 = params.code1;
                 d.code2 = params.code2;
                 d.code3 = params.code3;
                 d.mw_title = params.mw_title;
 
-
-                d.idx = params.idx;
+                d.status = findProgStatus(params.status)
 
                 //주소
                 var ask = (params.issueManageRadio01 == undefined || params.issueManageRadio01 == null) ? '0' : params.issueManageRadio01;
@@ -279,7 +279,7 @@ function loadDataTable(params) {
                 else {
                     console.log("----------------------------1--------------");
                     console.log(ljsIsNull(params.sgg));
-                    var addrs = params.sido_nm;
+                    var addrs = params.sido;
                     console.log("addrs:" + addrs);
                     if (ljsIsNull(params.sgg)) addrs = addrs + "";
                     else addrs = addrs + " " + params.sgg;
@@ -300,12 +300,15 @@ function loadDataTable(params) {
                 console.log(params);
                 console.log("-----------d-----------");
                 console.log(d);
+
             },
 
             dataSrc: function (json) {
                 console.log("-------------json---------------");
                 console.log(json);
                 $("#dataTableTotalCount").html(json.recordsTotal);
+
+                saveJsonData = json.data;
                 return json.data;
             }
 
@@ -318,22 +321,7 @@ function loadDataTable(params) {
             { data: "address", "defaultContent": "" },
             {
                 data: "mm_status", render: function (data, type, row, meta) {
-                    if (data === "1") {
-                        return "임시저장";
-                    } else if (data == "2") {
-                        return "민원발생";
-                    }
-                    else if (data == "3") {
-                        return "대응방안수립";
-                    }
-                    else if (data == "4") {
-                        return "협의중";
-                    }
-                    else if (data == "5") {
-                        return "완료";
-                    } else {
-                        return "";
-                    }
+                    return findProgStatus(data)
                 }
             },
             { data: "mm_idx", "defaultContent": "" },
@@ -344,14 +332,14 @@ function loadDataTable(params) {
         columnDefs: [
             { "className": "dt-head-center", "targets": "_all" },
             { className: 'dt-center', "targets": "_all" },
-            { targets: [0], width: "100px" },
-            { targets: [1], width: "150px" },
+            { targets: [0], width: "200px" },
+            { targets: [1], width: "250px" },
             { targets: [2], width: "50px" },
             {
                 targets: [3]
                 , width: "50px"
                 , render: function (data, type, row, meta) {
-                    return `<button class="btnDesign issuePopBtn" onclick="issuePop()" >이슈보기</button>`;
+                    return `<button class="btnDesign issuePopBtn" onclick="issuePop(${data})" >이슈보기</button>`;
                 }
             },
             { targets: [4], width: "50px" },
@@ -370,15 +358,20 @@ function loadDataTable(params) {
             // 다른 열을 클릭했을 때만 상세 페이지로 이동
             console.log("--------------tr click---------------------");
             var data = table.row(this).data();
-            var url = "/issue/complaintManage?idx=" + data.mm_idx;
+            var url = "/issue/complaintManage?mw_seq=" + data.mm_mw_seq;
+
+            history.replaceState({ page: 'current' }, document.title);
+            
             window.location = url;
         }
     });
 }
 
-function issuePop() {
+function issuePop(idx) {
+    const data = saveJsonData.find(function(obj){return obj.mm_idx == idx})
     const popupOpen = document.getElementById("issuePopup");
     if (popupOpen) {
+        $("#issuePopup .issue_content").text(`${data.mm_mw_code1} > ${data.mm_mw_code2} > ${data.mm_mw_code3}`)
         popupOpen.classList.add("active");
     }
 }

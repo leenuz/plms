@@ -138,8 +138,6 @@ public class issueController {
 		String[] order_cols=req.getParameterValues("order");
 
 		String jisa = req.getParameter("jisa");
-		
-		
 		String address=req.getParameter("saddr");
 
 
@@ -163,7 +161,7 @@ public class issueController {
 		params.put("code2",code2); //이슈유형
 		params.put("code3",code3); //이슈유형
 		params.put("status",status); //진행현황
-		
+		params.put("length",length);
 		params.put("address",address);
 
 		params.put("start_date", start_date); //발생일자
