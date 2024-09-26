@@ -1595,13 +1595,13 @@ public class jisangController {
 		String jisa = httpRequest.getParameter("jisa");
 		String pnu = httpRequest.getParameter("pnu");
 		String sido_nm = httpRequest.getParameter("sido");
-		String sgg_nm=httpRequest.getParameter("gugun");
-		String emd_nm=httpRequest.getParameter("landRightsRegistSelectBox11");
-		String ri_nm=httpRequest.getParameter("landRightsRegistSelectBox12");
-		String jibun=httpRequest.getParameter("mjibun");
+		String sgg_nm=httpRequest.getParameter("sgg");
+		String emd_nm=httpRequest.getParameter("emd");
+		String ri_nm=httpRequest.getParameter("ri");
+		String jibun=httpRequest.getParameter("jibun");
 		String address=httpRequest.getParameter("address");
 		
-		String addressRadioValue=httpRequest.getParameter("landRightsRegistration_addressInput");
+		String addressRadioValue=httpRequest.getParameter("easementModification_addressInput");
 		params.put("jisa",jisa);
 		
 		params.put("jibun", jibun);
@@ -1618,7 +1618,7 @@ public class jisangController {
 		ArrayList<HashMap> jisangBasicSearchList = mainService.selectQuery("jisangSQL.selectBasicSearchList",params);
 		log.info("jisangBasicSearchList:"+jisangBasicSearchList);
 		mav.addObject("jisangBasicSearchList",jisangBasicSearchList);
-		mav.setViewName("content/jisang/landRightsRegistration :: #searchResultPopDiv");
+		mav.setViewName("content/jisang/easementModification :: #searchResultPopDiv");
 		return mav;
 	}
 

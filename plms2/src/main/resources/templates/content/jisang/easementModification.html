@@ -213,7 +213,15 @@
 						<ul class="contents">
 							<!--주소-->
 							<li class="content01">
-								<input type="text" readonly class="notWriteInput" th:value="${#strings.concat(
+								<input type="hidden" name="maddress" id="maddress"/>
+								<input type="hidden" name="mpnu" id="mpnu"/>
+								<input type="hidden" name="mjibun" id="mjibun"/>
+								<input type="hidden" name="sido_nm" id="sido_nm"></input>
+								<input type="hidden" name="sgg_nm" id="sgg_nm"></input>
+								<input type="hidden" name="emd_nm" id="emd_nm"></input>
+								<input type="hidden" name="ri_nm" id="ri_nm"></input>
+								
+								<input type="text" id="raddress" readonly class="notWriteInput" th:value="${#strings.concat(
 							                        resultData.jm_sido_nm != null ? resultData.jm_sido_nm + ' ' : '', 
 							                        resultData.jm_sgg_nm != null ? resultData.jm_sgg_nm + ' ' : '', 
 							                        resultData.jm_emd_nm != null ? resultData.jm_emd_nm + ' ' : '', 
@@ -226,21 +234,21 @@
 								<ul class="radioBox">
 									<li class="inputArea inputArea01">
 										<div class="inputWrap">
-											<input type="radio" name="easementModification_addressInput" checked>
+											<input type="radio" name="easementModification_addressInput" value="0" checked>
 											<label>입력형</label>
 										</div>
-										<input type="text" placeholder="주소 입력" class="largeWidth">
+										<input type="text" name="address" placeholder="주소 입력" class="largeWidth">
 									</li>
 									<li class="inputArea inputArea02">
 										<div class="inputWrap">
-											<input type="radio" name="easementModification_addressInput">
+											<input type="radio" name="easementModification_addressInput" value="1">
 											<label>선택형</label>
 										</div>
 
 										<!--시도-->
 										<div class="selectContentArea">
 											<div class="hiddenSelectBox">
-												<select name="easementModifySelectBox09" id="easementModifySelectBox09" hidden>
+												<select name="sido" id="easementModifySelectBox09" hidden>
 													<option th:each="sido : ${sidoList}" th:value="${sido.sm_name}" th:text="${sido.sm_name}">
 													</option>
 												</select>
@@ -256,8 +264,8 @@
 										<!--시군구-->
 										<div class="selectContentArea">
 											<div class="hiddenSelectBox">
-												<select name="easementModifySelectBox10" id="easementModifySelectBox10" hidden>
-													<option value="전체1">전체1</option>
+												<select name="sgg" id="easementModifySelectBox10" hidden>
+													<option value="">전체</option>
 												</select>
 											</div>
 											<section class="customSelectBox">
@@ -271,8 +279,8 @@
 										<!--읍면동-->
 										<div class="selectContentArea">
 											<div class="hiddenSelectBox">
-												<select name="easementModifySelectBox11" id="easementModifySelectBox11" hidden>
-													<option value="전체1">전체1</option>
+												<select name="emd" id="easementModifySelectBox11" hidden>
+													<option value="">전체</option>
 												</select>
 											</div>
 											<section class="customSelectBox">
@@ -286,8 +294,8 @@
 										<!--리-->
 										<div class="selectContentArea">
 											<div class="hiddenSelectBox">
-												<select name="easementModifySelectBox12" id="easementModifySelectBox12" hidden>
-													<option value="전체1">전체1</option>
+												<select name="ri" id="easementModifySelectBox12" hidden>
+													<option value="">전체</option>
 												</select>
 											</div>
 											<section class="customSelectBox">
@@ -299,7 +307,7 @@
 										</div>
 
 										<!--지번-->
-										<input type="text" placeholder="지번 입력">
+										<input type="text" name="jibun" placeholder="지번 입력">
 
 									</li>
 								</ul>
@@ -615,7 +623,7 @@
 
 			<div class="finalBtnBox btnWrap">
 				<button class="backBtn grayBtn finalBtn">이전</button>
-				<button class="saveBtn vividBlueBtn finalBtn">저장</button>
+				<button class="saveBtn vividBlueBtn finalBtn" id="finalBtn">저장</button>
 			</div>
 			</form>
 			

@@ -319,7 +319,7 @@ $(document).on("click", "#basicSearchBtn", function() {
 	/* console.log($("#searchResultPopDiv").html());*/
 	//searchResultPopDiv 화면뿌릴 DIV
 	$.ajax({
-		url: "/jisang/getBasicSearchData",
+		url: "/jisang/getBasicSearchDataForEdit",
 		type: "POST",
 		data: formSerializeArray,
 	})
@@ -335,6 +335,49 @@ $(document).on("click", "#basicSearchBtn", function() {
 		});
 });
 
+// 주소 검색 팝업 - x 버튼, 닫기 버튼 클릭 시 닫기 
+$(document).on("click",".topCloseBtn, #popupCloseBtn",function(){
+
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+//	$(".popupWrap").toggleClass("active");
+});
+
+// 주소 검색 팝업 - 선택 버튼 클릭 시 반영
+$(document).on("click", ".resultSelectBtn", function() {
+	console.log("----------resultSelectBtn-click--------");
+	console.log($(this).parent().parent().html());
+	
+	var pnu = $(this).parent().parent().find(".popContent01").html();
+	var address = $(this).parent().parent().find(".popContent02").html();
+	var jibun = $(this).parent().parent().find(".popContent03").html();
+	var sido_nm = $(this).parent().parent().find(".popContent0201").html();
+	var sgg_nm = $(this).parent().parent().find(".popContent0202").html();
+	var emd_nm = $(this).parent().parent().find(".popContent0203").html();
+	var ri_nm = $(this).parent().parent().find(".popContent0204").html();
+	
+	console.log("pnu:" + pnu);
+	console.log("address:" + address);
+	console.log("jibun:" + jibun);
+	
+	$("#maddress").val(address + " " + jibun);
+	$("#raddress").val(address + " " + jibun);
+	$("#mpnu").val(pnu);
+	$("#mjibun").val(jibun);
+	$("#sido_nm").val(sido_nm);
+	$("#sgg_nm").val(sgg_nm);
+	$("#emd_nm").val(emd_nm);
+	$("#ri_nm").val(ri_nm);
+
+	var targetDiv = $("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+})
+
+// 주소 검색 팝업 - pnu 없이 선택 클릭 시
+$(document).on("click", ".popupWrap .lastBtnBox .saveBtn", function() {
+	console.log("pnu없이 선택");
+	
+})
 
 // 첨부파일 전체 선택 체크박스
 const allCheckEventLandRightsRegist = () => {
@@ -763,3 +806,4 @@ const easeModificationOpenPopUp = () => {
 }
 easeModificationOpenPopUp();
 */
+
