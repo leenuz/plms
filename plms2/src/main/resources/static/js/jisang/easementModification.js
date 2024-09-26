@@ -146,7 +146,168 @@ $(document).ready(function() {
 
 		//status.setAbort(jqXHR);
 	}
+
+	// 시도 선택 시 시군구 목록 가져오기
+	$("#easementModifySelectBox09").change(function() {
+		const sido = $(this).val();
+		console.log("시도 change 동작, sido:" + sido);
+		if (sido) {
+			getSigunMaster(sido);  // 시군구 목록 API 호출
+		}
+	});
+
+	// 시군구 선택 시 읍면동 목록 가져오기
+	$("#easementModifySelectBox10").change(function() {
+		const sigungu = $(this).val();
+		const sido = $("#easementModifySelectBox09").val();  // 시도 값도 함께 가져옴
+		if (sigungu && sido) {
+			getDongMaster(sido, sigungu);  // 읍면동 목록 API 호출
+		}
+	});
+
+	// 읍면동 선택 시 리 목록 가져오기
+	$("#easementModifySelectBox11").change(function() {
+		const dong = $(this).val();
+		const sigungu = $("#easementModifySelectBox10").val();  // 시군구 값
+		const sido = $("#easementModifySelectBox09").val();  // 시도 값
+		if (dong && sigungu && sido) {
+			getRiMaster(sido, sigungu, dong);  // 리 목록 API 호출
+		}
+	});
 });
+
+
+// 시군구 목록 가져오기
+function getSigunMaster(sidoValue) {
+	const allData = { key: sidoValue };
+
+	$.ajax({
+		url: "/api/getSigunMaster",
+		data: JSON.stringify(allData),
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function(rt) {
+			const data = rt.resultData;
+			console.log("시군구 data: " + data);
+
+			// 시군구 셀렉트 박스 초기화 및 추가
+			const selectBox = $("#easementModifySelectBox10");
+			const customSelectBtns = $("#customSelectBtns10"); // 해당 시군구에 맞는 custom 버튼
+
+			selectBox.empty().append("<option value=''>전체</option>");
+			customSelectBtns.empty(); // 해당 커스텀 UI도 초기화
+
+			for (let i = 0; i < data.length; i++) {
+				const gugun = data[i].sm_gugun;
+				
+				// 실제 <select> 태그에 옵션 추가
+				selectBox.append("<option value='" + gugun + "'>" + gugun + "</option>");
+				
+				// 해당 커스텀 UI에 <li> 항목 추가
+				customSelectBtns.append("<li><button type='button' class='moreSelectBtn'>" + gugun + "</button></li>");
+			}
+
+			// 커스텀 드롭다운 항목을 선택할 때 해당 select box 값만 동기화
+			customSelectBtns.find(".moreSelectBtn").on("click", function() {
+				const selectedText = $(this).text();
+				selectBox.val(selectedText).trigger("change");
+				customSelectBtns.siblings(".customSelectView").text(selectedText); // 버튼 텍스트 변경
+			});
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.error("Error: ", textStatus, errorThrown);
+		}
+	});
+}
+
+
+// 읍면동 목록 가져오기
+function getDongMaster(sidoValue, sigunguValue) {
+	const allData = { sidoKey: sidoValue, gugunKey: sigunguValue };
+
+	$.ajax({
+		url: "/api/getDongMaster",
+		data: JSON.stringify(allData),
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function(rt) {
+			const data = rt.resultData;
+
+			// 읍면동 셀렉트 박스 초기화 및 추가
+			const selectBox = $("#easementModifySelectBox11");
+			const customSelectBtns = $("#customSelectBtns11"); // 해당 읍면동에 맞는 custom 버튼
+
+			selectBox.empty().append("<option value=''>전체</option>");
+			customSelectBtns.empty(); // 해당 커스텀 UI도 초기화
+
+			for (let i = 0; i < data.length; i++) {
+				const dong = data[i].bm_dong;
+				
+				// 실제 <select> 태그에 옵션 추가
+				selectBox.append("<option value='" + dong + "'>" + dong + "</option>");
+				
+				// 해당 커스텀 UI에 <li> 항목 추가
+				customSelectBtns.append("<li><button type='button' class='moreSelectBtn'>" + dong + "</button></li>");
+			}
+
+			// 커스텀 드롭다운 항목을 선택할 때 해당 select box 값만 동기화
+			customSelectBtns.find(".moreSelectBtn").on("click", function() {
+				const selectedText = $(this).text();
+				selectBox.val(selectedText).trigger("change");
+				customSelectBtns.siblings(".customSelectView").text(selectedText); // 버튼 텍스트 변경
+			});
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.error("Error: ", textStatus, errorThrown);
+		}
+	});
+}
+
+
+// 리 목록 가져오기
+function getRiMaster(sidoValue, sigunguValue, dongValue) {
+	const allData = { sidoKey: sidoValue, gugunKey: sigunguValue, dongKey: dongValue };
+
+	$.ajax({
+		url: "/api/getRiMaster",
+		data: JSON.stringify(allData),
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function(rt) {
+			const data = rt.resultData;
+
+			// 리 셀렉트 박스 초기화 및 추가
+			const selectBox = $("#easementModifySelectBox12");
+			const customSelectBtns = $("#customSelectBtns12"); // 해당 리에 맞는 custom 버튼
+
+			selectBox.empty().append("<option value=''>전체</option>");
+			customSelectBtns.empty(); // 해당 커스텀 UI도 초기화
+
+			for (let i = 0; i < data.length; i++) {
+				const ri = data[i].rm_ri;
+				
+				// 실제 <select> 태그에 옵션 추가
+				selectBox.append("<option value='" + ri + "'>" + ri + "</option>");
+				
+				// 해당 커스텀 UI에 <li> 항목 추가
+				customSelectBtns.append("<li><button type='button' class='moreSelectBtn'>" + ri + "</button></li>");
+			}
+
+			// 커스텀 드롭다운 항목을 선택할 때 해당 select box 값만 동기화
+			customSelectBtns.find(".moreSelectBtn").on("click", function() {
+				const selectedText = $(this).text();
+				selectBox.val(selectedText).trigger("change");
+				customSelectBtns.siblings(".customSelectView").text(selectedText); // 버튼 텍스트 변경
+			});
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.error("Error: ", textStatus, errorThrown);
+		}
+	});
+}
 
 
 // 첨부파일 전체 선택 체크박스
@@ -343,27 +504,27 @@ $(document).on("click", ".moreSelectBtn", function() {
 // customSelectBtns 리스트 click 했을 때 해당 내용으로 바뀌게하기
 /*
 const MoreSelectBtn = document.querySelectorAll('.moreSelectBtn')
-
+	
 MoreSelectBtn.forEach((moreBtn) => {
 		moreBtn.addEventListener('click', function () {
 				var moreSelectBtnText = moreBtn.innerText;
 				console.log(moreSelectBtnText);
 				const parentMoreSelectBtn = moreBtn.closest('.customSelectBtns')
 				const EditCustomViewBtn = parentMoreSelectBtn.previousElementSibling;
-
+	
 				while (EditCustomViewBtn.firstChild) {
 						EditCustomViewBtn.removeChild(EditCustomViewBtn.firstChild);
 				}
-
+	
 				// 새로운 텍스트 노드를 추가합니다.
 				const textNode = document.createTextNode(moreSelectBtnText);
 				EditCustomViewBtn.appendChild(textNode);
-
+	
 				EditCustomViewBtn.classList.remove('active')
 				parentMoreSelectBtn.classList.remove('active')
-
+	
 				// 선택한 걸 select의 value값으로 변경하기
-
+	
 				const nearByContent = moreBtn.closest('.selectContentArea');
 				const nearBySelectBox = nearByContent.querySelector('select');
 				nearBySelectBox.value = moreBtn.textContent;
@@ -374,8 +535,6 @@ MoreSelectBtn.forEach((moreBtn) => {
 
 // 소유자 정보 추가 click시 이벤트
 
-// 소유자 정보 추가 click시 이벤트
-
 const ownerInfoAddBtn = document.querySelectorAll('#landRightsRegistration .ownerInfo .addBtn')
 const editBefore = document.querySelectorAll('#landRightsRegistration .ownerInfo .contents .content.btnBox .editBefore');
 const editAfter = document.querySelectorAll('#landRightsRegistration .ownerInfo .contents .content.btnBox .editAfter');
@@ -383,80 +542,80 @@ const editContent = document.querySelectorAll('#landRightsRegistration .editSpac
 const registBtn = document.querySelectorAll('#landRightsRegistration .registBtn');
 
 
-$(document).on("click",".addBtn",function(){
+$(document).on("click", ".addBtn", function() {
 	console.log("---------addBtn click-----------");
 
 	var thisEditContent = this.closest('.contents');
-	        console.log(thisEditContent);
-//			thisEditContent.classList.add('editing');
-			const inputs = thisEditContent.querySelectorAll('input');
+	console.log(thisEditContent);
+	//			thisEditContent.classList.add('editing');
+	const inputs = thisEditContent.querySelectorAll('input');
 
-			        if (thisEditContent.classList.contains('editing')) {
-			            inputs.forEach(input => {
-			              input.setAttribute('readonly', 'readonly');
+	if (thisEditContent.classList.contains('editing')) {
+		inputs.forEach(input => {
+			input.setAttribute('readonly', 'readonly');
 
 
-			            });
-			        } else {
-			            inputs.forEach(input => {
-			            thisEditContent.classList.add('editing');
-			            input.removeAttribute('readonly');
-			            });
-			        }
+		});
+	} else {
+		inputs.forEach(input => {
+			thisEditContent.classList.add('editing');
+			input.removeAttribute('readonly');
+		});
+	}
 });
-$(document).on("click","#completeSoujaBtn",function(){
-		console.log("------------completeSoujaBtn click---------");
-        const soujaDiv = document.getElementById('soujaDiv');
-        const editingElements = soujaDiv.querySelectorAll('.editing');
-        const editingCount = editingElements.length;
+$(document).on("click", "#completeSoujaBtn", function() {
+	console.log("------------completeSoujaBtn click---------");
+	const soujaDiv = document.getElementById('soujaDiv');
+	const editingElements = soujaDiv.querySelectorAll('.editing');
+	const editingCount = editingElements.length;
 
-		var thisUl=$(this).parent().parent().parent().parent();
-		console.log("editingCount" + editingCount);
-		var addUl=$("#soujaHiddenUl").html();
+	var thisUl = $(this).parent().parent().parent().parent();
+	console.log("editingCount" + editingCount);
+	var addUl = $("#soujaHiddenUl").html();
 
-		var input=$(thisUl).find("input");
-		console.log(input);
-		console.log(input.length);
-		console.log("0:"+$(input).eq(0).val());
+	var input = $(thisUl).find("input");
+	console.log(input);
+	console.log(input.length);
+	console.log("0:" + $(input).eq(0).val());
 
-		if ($(input).eq(0).val()=="" || $(input).eq(1).val()=="" || $(input).eq(2).val()=="" ||  $(input).eq(3).val()==""){
-			alert("입력사항을 체크하세요! 공유지분,성명,주소는 필수 입력입니다.");
-			return;
-		}
+	if ($(input).eq(0).val() == "" || $(input).eq(1).val() == "" || $(input).eq(2).val() == "" || $(input).eq(3).val() == "") {
+		alert("입력사항을 체크하세요! 공유지분,성명,주소는 필수 입력입니다.");
+		return;
+	}
 
 
-		if ($(input).eq(0).val()!="" && $(input).eq(1).val()!="" && $(input).eq(2).val()!="" && $(input).eq(3).val()!="") {
+	if ($(input).eq(0).val() != "" && $(input).eq(1).val() != "" && $(input).eq(2).val() != "" && $(input).eq(3).val() != "") {
 		//	alert("소유자 정보를 정확하게 입력해주세요!");
-			$(thisUl).removeClass("editing");
-            $(thisUl).find('li input').attr('readonly', true);
-			if(editingCount < 3){
-			    $("#soujaDiv").append('<ul class="contents editing" id="soujaUl">'+addUl+'</ul>');
-			}
-
-			//return;
+		$(thisUl).removeClass("editing");
+		$(thisUl).find('li input').attr('readonly', true);
+		if (editingCount < 3) {
+			$("#soujaDiv").append('<ul class="contents editing" id="soujaUl">' + addUl + '</ul>');
 		}
-		//if ($(input).eq(0).html()=="" || )
 
-//		$(thisUl).removeClass("editing");
-		/*for(var i=0;i<input.length;i++) {
-			console.log($(input).eq(i).parent().html());
-		}*/
+		//return;
+	}
+	//if ($(input).eq(0).html()=="" || )
 
-					            /*$(input).forEach(input => {
-					                input.setAttribute('readonly', 'readonly');
-					            });*/
+	//		$(thisUl).removeClass("editing");
+	/*for(var i=0;i<input.length;i++) {
+		console.log($(input).eq(i).parent().html());
+	}*/
+
+	/*$(input).forEach(input => {
+			input.setAttribute('readonly', 'readonly');
+	});*/
 
 
 });
 
 
-$(document).on("click","#deleteSoujaBtn",function(){
+$(document).on("click", "#deleteSoujaBtn", function() {
 	console.log("------------deleteSoujaBtn click---------");
-	var thisUl=$(this).parent().parent().parent().parent();
-	var thisContents=$(this).parent().parent().parent().parent().parent().find(".contents");
+	var thisUl = $(this).parent().parent().parent().parent();
+	var thisContents = $(this).parent().parent().parent().parent().parent().find(".contents");
 	console.log($(thisContents).html());
 	console.log($(thisContents).length);
-	if ($(thisContents).length<=2) return;
+	if ($(thisContents).length <= 2) return;
 	$(thisUl).remove();
 
 });
