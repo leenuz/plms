@@ -753,7 +753,7 @@ $(document).on("click",".temporarySaveBtn",function(){
     object.MAIN_TMP_JISANG_NO = "";
     object.MERGE_INSERT_CNT = togiUls.length;
     object.MERGE_STATUS = "임시저장";
-    object.GUBUN = togiUls.length;
+    object.GUBUN = "save";
 
     for(var i=0;i<togiUls.length;i++){
         var togiJisa=$("#jisa").val();
@@ -796,13 +796,14 @@ $(document).on("click",".temporarySaveBtn",function(){
             ,"togiRiNm":togiRiNm
             ,"togiJibun":togiJibun
             ,"togiPnu":togiPnu
-            ,"togiManageNo":togiManageNo
+            ,"jm_jisang_no":togiManageNo
             ,"togiaddress":togiaddress.trim()
             ,"togiTogiType":togiTogiType
-            ,"togiJimokText":togiJimokText
-            ,"togiJijukArea":ljsIsNull(togiJijukArea)?'':togiJijukArea
-            ,"togiPyeonibArea":togiPyeonibArea
-            ,"togiJasanNo":togiJasanNo
+            ,"jm_jimok_text":togiJimokText
+            ,"jm_jijuk_area":ljsIsNull(togiJijukArea)?'':togiJijukArea
+            ,"jm_pyeonib_area":togiPyeonibArea
+            ,"jm_set_money":togiSetMoney
+            ,"jm_jasan_no":togiJasanNo
             ,"togiAccountYn":togiAccountYn
             ,"togiBunhalStatus":togiBunhalStatus
             ,"togiGoverOwnYn":gover_own_yn
@@ -814,7 +815,7 @@ $(document).on("click",".temporarySaveBtn",function(){
      console.log("----------togiDatas-------------");
      console.log(togiDatas);
 
-     object.togiDatas=togiDatas;
+     object.mergeList=togiDatas;
 
      url="/jisang/saveJisangMerge";
      $.ajax({
@@ -833,7 +834,6 @@ $(document).on("click",".temporarySaveBtn",function(){
             console.log(response);
             if (response.success="Y"){
                 console.log("response.success Y");
-                console.log("response.resultData length:"+response.resultData.length);
                 alert("정상적으로 등록 되었습니다.");
                 /*$("#popup_bg").show();
                 $("#popup").show(500);

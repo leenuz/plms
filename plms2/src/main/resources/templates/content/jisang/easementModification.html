@@ -22,6 +22,7 @@
 				<h1>지상권 내역 수정</h1>
 			</div>
 
+			<form name="saveForm"  id="saveForm" onSubmit="return false;">
 			<section class="defaultInfo">
 				<div class="subTitle">기본 정보</div>
 
@@ -218,14 +219,14 @@
 							                        resultData.jm_emd_nm != null ? resultData.jm_emd_nm + ' ' : '', 
 							                        resultData.jm_ri_nm != null ? resultData.jm_ri_nm + ' ' : '', 
 							                        resultData.jm_jibun != null ? resultData.jm_jibun : ''
-							                      )}" placeholder="경기도 고양시 덕양구 강매동 1">
+							                      )}">
 							</li>
 							<!--주소 입력 선택 방식-->
 							<li class="content02">
 								<ul class="radioBox">
 									<li class="inputArea inputArea01">
 										<div class="inputWrap">
-											<input type="radio" name="easementModification_addressInput">
+											<input type="radio" name="easementModification_addressInput" checked>
 											<label>입력형</label>
 										</div>
 										<input type="text" placeholder="주소 입력" class="largeWidth">
@@ -246,7 +247,7 @@
 											</div>
 											<section class="customSelectBox">
 												<button class="customSelectView">전체</button>
-												<ul class="customSelectBtns">
+												<ul id="customSelectBtns09" class="customSelectBtns">
 													<!-- createCustomLiEasementModify() -->
 												</ul>
 											</section>
@@ -257,12 +258,11 @@
 											<div class="hiddenSelectBox">
 												<select name="easementModifySelectBox10" id="easementModifySelectBox10" hidden>
 													<option value="전체1">전체1</option>
-													<option value="전체2">전체2</option>
 												</select>
 											</div>
 											<section class="customSelectBox">
 												<button class="customSelectView">전체</button>
-												<ul class="customSelectBtns">
+												<ul id="customSelectBtns10" class="customSelectBtns">
 													<!-- createCustomLiEasementModify() -->
 												</ul>
 											</section>
@@ -273,12 +273,11 @@
 											<div class="hiddenSelectBox">
 												<select name="easementModifySelectBox11" id="easementModifySelectBox11" hidden>
 													<option value="전체1">전체1</option>
-													<option value="전체2">전체2</option>
 												</select>
 											</div>
 											<section class="customSelectBox">
 												<button class="customSelectView">전체</button>
-												<ul class="customSelectBtns">
+												<ul id="customSelectBtns11" class="customSelectBtns">
 													<!-- createCustomLiEasementModify() -->
 												</ul>
 											</section>
@@ -289,12 +288,11 @@
 											<div class="hiddenSelectBox">
 												<select name="easementModifySelectBox12" id="easementModifySelectBox12" hidden>
 													<option value="전체1">전체1</option>
-													<option value="전체2">전체2</option>
 												</select>
 											</div>
 											<section class="customSelectBox">
 												<button class="customSelectView">전체</button>
-												<ul class="customSelectBtns">
+												<ul id="customSelectBtns12" class="customSelectBtns">
 													<!-- createCustomLiEasementModify() -->
 												</ul>
 											</section>
@@ -306,7 +304,7 @@
 									</li>
 								</ul>
 								<div class="inputBtnArea">
-									<button class="SearchAddressBtn active easeModificationBtn">검색</button>
+									<button class="SearchAddressBtn active easeModificationBtn" id="basicSearchBtn">검색</button>
 								</div>
 							</li>
 						</ul>
@@ -367,7 +365,7 @@
 								</div>
 							</li>
 						</ul>
-						
+
 						<!-- 데이터가 0개 일 때 -->
 						<ul class="contents editing" th:if="${soujaList.size() == 0}" id="soujaUl">
 							<li class="content01 content editSpace">
@@ -409,20 +407,24 @@
 						<!--데이터가 1개 이상일 때-->
 						<ul class="contents editing" th:if="${soujaList.size() > 0}" th:each="souja : ${soujaList}" id="soujaUl">
 							<li class="content01 content editSpace">
-								<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun" th:value="${souja.js_jibun}">
+								<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun"
+									th:value="${souja.js_jibun}">
 							</li>
 							<li class="content02 content editSpace">
-								<input type="text" class="editingContent" name="soujaName" id="soujaName" th:value="${souja.js_souja_name}">
+								<input type="text" class="editingContent" name="soujaName" id="soujaName"
+									th:value="${souja.js_souja_name}">
 							</li>
 							<li class="content03 content editSpace">
-								<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress" th:value="${souja.js_address}">
+								<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress"
+									th:value="${souja.js_address}">
 							</li>
 							<li class="content04 content editSpace">
-								<input type="text" class="editingContent" name="soujaContact1" id="soujaContact1" th:value="${souja.js_phone_number}"
-									placeholder="ex)000-0000-0000">
+								<input type="text" class="editingContent" name="soujaContact1" id="soujaContact1"
+									th:value="${souja.js_phone_number}" placeholder="ex)000-0000-0000">
 							</li>
 							<li class="content05 content editSpace">
-								<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2" th:value="${souja.js_home_number}">
+								<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2"
+									th:value="${souja.js_home_number}">
 							</li>
 							<li class="content06 content btnBox">
 								<!-- 수정입력할때 -->
@@ -515,8 +517,7 @@
 							<!-- 등기일 -->
 							<li class="content05 content">
 								<div class="dateInputWrap">
-									<input type="date" th:value="${#dates.format(resultData.jm_deunggi_date, 'yyyy-MM-dd')}" required
-										aria-required="true" data-placeholder="연/월/일">
+									<input type="date" th:value="${#dates.format(resultData.jm_deunggi_date, 'yyyy-MM-dd')}" data-placeholder="연/월/일">
 								</div>
 							</li>
 							<!--등기번호-->
@@ -616,12 +617,52 @@
 				<button class="backBtn grayBtn finalBtn">이전</button>
 				<button class="saveBtn vividBlueBtn finalBtn">저장</button>
 			</div>
-
-
-
+			</form>
+			
 		</main>
 	</div>
-	<div class="easeModificationResultPopWrapper"></div>
+
+	<!--주소 검색 팝업-->
+	<div class="easeModificationResultPopWrapper" id="searchResultPopDiv">
+		<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+		<div id="searchResultsPopup">
+			<div class="popupWrap" id="popupWrap">
+				<h2>
+					<p>검색결과</p>
+					<span class="topCloseBtn"></span>
+				</h2>
+
+				<div class="popupCont">
+					<ul class="popTitles">
+						<li class="popTitle01">PNU</li>
+						<li class="popTitle02">주소</li>
+						<li class="popTitle03">지번</li>
+						<li class="popTitle04">선택</li>
+					</ul>
+					<div class="popContentBox">
+						<ul class="popContents" th:each="val:${jisangBasicSearchList}">
+							<li class="popContent01"> [[${val.pnu}]]</li>
+							<li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.ri_nm}]]</li>
+							<ii class="popContent0201" hidden>[[${val.sido_nm}]]</ii>
+							<ii class="popContent0202" hidden>[[${val.sgg_nm}]]</ii>
+							<ii class="popContent0203" hidden>[[${val.emd_nm}]]</ii>
+							<ii class="popContent0204" hidden>[[${val.ri_nm}]]</ii>
+							<li class="popContent03">[[${val.jibun}]]</li>
+							<li class="popContent04">
+
+								<button class="resultSelectBtn">선택</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="lastBtnBox btnWrap">
+					<button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+					<button class="saveBtn finalBtn">PNU 없이 선택</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- script -->
 	<script src="/js/jisang/easementModification.js"></script>
