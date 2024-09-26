@@ -268,6 +268,14 @@ $(document).on("click","#addParentBtn",function(){
 			var pyeonibarea=$(inputEles[i]).parent().parent().find("#popupPyeonibArea").val();
 			var jasanno=$(inputEles[i]).parent().parent().find("#popupJasanNo").val();
 			var souja=$(inputEles[i]).parent().parent().find("#popupSouja").val();
+			
+			var sido_nm=$(inputEles[i]).parent().parent().find("#sido_nm").val();
+			var sgg_nm=$(inputEles[i]).parent().parent().find("#sgg_nm").val();
+			var emd_nm=$(inputEles[i]).parent().parent().find("#emd_nm").val();
+			var ri_nm=$(inputEles[i]).parent().parent().find("#ri_nm").val();
+			var jibun=$(inputEles[i]).parent().parent().find("#jibun").val();
+			var addrcode=$(inputEles[i]).parent().parent().find("#addrcode").val();
+			//var sido_nm=$(inputEles[i]).parent().parent().find("#sido_nm").val();
 							console.log("address:"+address);
 							console.log("jimok:"+jimok);
 							console.log("jijukarea:"+jijukarea);
@@ -290,6 +298,13 @@ $(document).on("click","#addParentBtn",function(){
 				openerTargetEle.parent().parent().find("#togiPyeonibArea").val(pyeonibarea);
 				openerTargetEle.parent().parent().find("#togiJasanNo").val(jasanno);
 				openerTargetEle.parent().parent().find("#togiSouja").val(souja);
+				
+				openerTargetEle.parent().parent().find("#sido_nm").val(sido_nm);
+				openerTargetEle.parent().parent().find("#sgg_nm").val(sgg_nm);
+				openerTargetEle.parent().parent().find("#emd_nm").val(emd_nm);
+				openerTargetEle.parent().parent().find("#ri_nm").val(ri_nm);
+				openerTargetEle.parent().parent().find("#jibun").val(jibun);
+				openerTargetEle.parent().parent().find("#addrcode").val(addrcode);
 			}
 			else {
 				console.log("validMangeNoCnt:"+validMangeNoCnt);
@@ -306,6 +321,13 @@ $(document).on("click","#addParentBtn",function(){
 									openerTargetEle.parent().parent().find("#togiPyeonibArea").val(pyeonibarea);
 									openerTargetEle.parent().parent().find("#togiJasanNo").val(jasanno);
 									openerTargetEle.parent().parent().find("#togiSouja").val(souja);
+									
+									openerTargetEle.parent().parent().find("#sido_nm").val(sido_nm);
+									openerTargetEle.parent().parent().find("#sgg_nm").val(sgg_nm);
+									openerTargetEle.parent().parent().find("#emd_nm").val(emd_nm);
+									openerTargetEle.parent().parent().find("#ri_nm").val(ri_nm);
+									openerTargetEle.parent().parent().find("#jibun").val(jibun);
+									openerTargetEle.parent().parent().find("#addrcode").val(addrcode);
 				}
 				else {
 					var orgEle=$("#togiHiddenUl");
@@ -332,6 +354,13 @@ $(document).on("click","#addParentBtn",function(){
 										openerTargetEle.parent().parent().find("#togiPyeonibArea").val(pyeonibarea);
 										openerTargetEle.parent().parent().find("#togiJasanNo").val(jasanno);
 										openerTargetEle.parent().parent().find("#togiSouja").val(souja);
+										
+										openerTargetEle.parent().parent().find("#sido_nm").val(sido_nm);
+										openerTargetEle.parent().parent().find("#sgg_nm").val(sgg_nm);
+										openerTargetEle.parent().parent().find("#emd_nm").val(emd_nm);
+										openerTargetEle.parent().parent().find("#ri_nm").val(ri_nm);
+										openerTargetEle.parent().parent().find("#jibun").val(jibun);
+										openerTargetEle.parent().parent().find("#addrcode").val(addrcode);
 				}
 				
 			}
@@ -981,7 +1010,165 @@ $(document).on("click","#docFileDelBtn",function(){
 	
 })
 
+$(document).on("click","#sangsinBtn",function(){
+	var formSerializeArray = $('#saveForm').serializeArray();
+		console.log("전체양식 array");
+		console.log(formSerializeArray);
+		var dataObj = {}; 
+		for (i=0; i<formSerializeArray.length; i++) { 
+			if (formSerializeArray[i].name=="togiManageNo") continue;
+			else if (formSerializeArray[i].name=="togiaddress") continue;
+			else if (formSerializeArray[i].name=="togiJimokText") continue;
+			else if (formSerializeArray[i].name=="togiJijukArea") continue;
+			else if (formSerializeArray[i].name=="togiPyeonibArea") continue;
+			else if (formSerializeArray[i].name=="togiSetMoney") continue;
+			else if (formSerializeArray[i].name=="togiJasanNo") continue;
+			else if (formSerializeArray[i].name=="togiSouja") continue;
+			else if (formSerializeArray[i].name=="togiUseName") continue;
+			dataObj[formSerializeArray[i].name]=formSerializeArray[i].value;
+		}
+		console.log("------dataObj--------");
+		console.log(dataObj);
+		
+		console.log("대상토지 정보");
+		var togiDatas=[];
+		var togiUls=$("#togiDiv .togiUl");
+		console.log(togiUls);
+		for(var i=0;i<togiUls.length;i++){
+			var togiManageNo=$(togiUls[i]).find("#togiManageNo").val();
+			var togiaddress=$(togiUls[i]).find("#togiaddress").val();
+			var togiJimokText=$(togiUls[i]).find("#togiJimokText").val();
+			var togiJijukArea=$(togiUls[i]).find("#togiJijukArea").val();
+			var togiPyeonibArea=$(togiUls[i]).find("#togiPyeonibArea").val();
+			var togiSetMoney=$(togiUls[i]).find("#togiSetMoney").val();
+			var togiJasanNo=$(togiUls[i]).find("#togiJasanNo").val();
+			var togiSouja=$(togiUls[i]).find("#togiSouja").val();
+			var togiUseName=$(togiUls[i]).find("#togiUseName").val();
+			
+			var sido_nm=$(togiUls[i]).find("#sido_nm").val();
+			var sgg_nm=$(togiUls[i]).find("#sgg_nm").val();
+			var emd_nm=$(togiUls[i]).find("#emd_nm").val();
+			var ri_nm=$(togiUls[i]).find("#ri_nm").val();
+			var jibun=$(togiUls[i]).find("#jibun").val();
+			var addrcode=$(togiUls[i]).find("#addrcode").val();
+			
+			
+			//console.log("togiManageNo:"+togiManageNo);
+			var togiObj={"togiManageNo":togiManageNo
+				,"togiaddress":togiaddress.trim()
+				,"togiJimokText":togiJimokText
+				,"togiJijukArea":togiJijukArea
+				,"togiPyeonibArea":togiPyeonibArea
+				,"togiSetMoney":togiSetMoney
+				,"togiJasanNo":togiJasanNo
+				,"togiSouja":togiSouja
+				,"togiUseName":togiUseName
+				,"sido_nm":sido_nm
+				,"sgg_nm":sgg_nm
+				,"emd_nm":emd_nm
+				,"ri_nm":ri_nm
+				,"jibun":jibun
+				,"addrcode":addrcode
+				
+			}
+			//console.log(togiObj);
+			togiDatas.push(togiObj);
+		}
+		
+		dataObj.desangTogis=togiDatas;
+		dataObj.gubun="insert";
+		dataObj.pmt_status="임시저장";
+		console.log(dataObj);
+		
+		
+		//임시저장 호출
 
+		url="/jisang/usePermitRegisterSave";
+		$.ajax({
+
+			url:url,
+			type:'POST',
+			contentType:"application/json",
+			data:JSON.stringify(dataObj),
+
+			dataType:"json",
+			beforeSend:function(request){
+				console.log("beforesend ........................");
+				loadingShow();
+			},
+			success:function(response){
+				loadingHide();
+				console.log(response);
+				if (response.success="Y"){
+					console.log("response.success Y");
+					//console.log("response.resultData length:"+response.resultData.length);
+					 dataObj.PMT_NO=response.PMT_NO;
+					 console.log(dataObj);
+					 console.log("---------------상신으로 넘겨야함-------------");
+					//alert("정상적으로 등록 되었습니다.");
+					/*$("#popup_bg").show();
+					$("#popup").show(500);
+					//$("#addrPopupLayer tbody td").remove();
+					for(var i=0;i<response.resultData.length;i++){
+						$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+					}*/
+					
+					url="/jisang/usePermitRegisterSave";
+						   	$.ajax({
+
+								url:url,
+								type:'POST',
+								contentType:"application/json",
+								data:JSON.stringify(dataObj),
+
+								dataType:"json",
+								beforeSend:function(request){
+									console.log("beforesend ........................");
+									loadingShow();
+								},
+								success:function(response){
+									loadingHide();
+									console.log(response);
+									if (response.success="Y"){
+										console.log("response.success Y");
+										console.log("response.resultData length:"+response.resultData.length);
+										alert("정상적으로 등록 되었습니다.");
+										/*$("#popup_bg").show();
+										$("#popup").show(500);
+										//$("#addrPopupLayer tbody td").remove();
+										for(var i=0;i<response.resultData.length;i++){
+											$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+										}*/
+									}
+									else {
+										console.log("response.success N");
+									}
+								},
+								error:function(jqXHR,textStatus,errorThrown){
+									alert("sangsin ajax error\n"+textStatus+":"+errorThrown);
+									return false;
+								}
+
+						   	});
+					
+					
+					
+				}
+				else {
+					console.log("response.success N");
+				}
+			},
+			error:function(jqXHR,textStatus,errorThrown){
+				alert("mainSaveBtn ajax error\n"+textStatus+":"+errorThrown);
+				return false;
+			}
+
+		});
+		
+		
+		
+		
+})
 
 $(document).on("click","#mainSaveBtn",function(){
 	console.log("------------------mainSaveBtn----------------------------");
@@ -1019,6 +1206,13 @@ $(document).on("click","#mainSaveBtn",function(){
 		var togiSouja=$(togiUls[i]).find("#togiSouja").val();
 		var togiUseName=$(togiUls[i]).find("#togiUseName").val();
 		
+		var sido_nm=$(togiUls[i]).find("#sido_nm").val();
+		var sgg_nm=$(togiUls[i]).find("#sgg_nm").val();
+		var emd_nm=$(togiUls[i]).find("#emd_nm").val();
+		var ri_nm=$(togiUls[i]).find("#ri_nm").val();
+		var jibun=$(togiUls[i]).find("#jibun").val();
+		var addrcode=$(togiUls[i]).find("#addrcode").val();
+		
 		
 		//console.log("togiManageNo:"+togiManageNo);
 		var togiObj={"togiManageNo":togiManageNo
@@ -1030,6 +1224,12 @@ $(document).on("click","#mainSaveBtn",function(){
 			,"togiJasanNo":togiJasanNo
 			,"togiSouja":togiSouja
 			,"togiUseName":togiUseName
+			,"sido_nm":sido_nm
+			,"sgg_nm":sgg_nm
+			,"emd_nm":emd_nm
+			,"ri_nm":ri_nm
+			,"jibun":jibun
+			,"addrcode":addrcode
 			
 		}
 		//console.log(togiObj);
@@ -1037,6 +1237,8 @@ $(document).on("click","#mainSaveBtn",function(){
 	}
 	
 	dataObj.desangTogis=togiDatas;
+	dataObj.gubun="insert";
+	dataObj.save_status="임시저장";
 	console.log(dataObj);
 	
 	

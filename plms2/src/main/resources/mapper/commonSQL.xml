@@ -178,6 +178,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	</select>
+	<select id="selectJijukFromJisangAddress" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *
+		,(row_number() over()) as NO
+		,j2.PNU,
+       j2.JIBUN,
+       j2.SIDO_NM,
+       j2.SGG_NM,
+       j2.EMD_NM,
+       j2.RI_NM,
+       j2.GOVER_OWN_YN,
+       j2.JISANG_STATUS,
+       j2.JIJUK_AREA,
+       j2.JIBUN_FULL,
+       j2.JIMOK_TEXT,
+       j2.DOSIPLAN,
+       j2.PIPE_OVERLAP_YN,
+       jm.jm_permitted_yn as PERMITTED_YN,
+       jm.jm_comple_yn as COMPLE_YN
+
+	from jijuk_2024 j2 left join jisang_master jm on jm.jm_pnu =j2.pnu  
+	WHERE 1=1
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+	and j2.sido_nm=#{sido_nm}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+	and j2.sgg_nm=#{sgg_nm}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+	and j2.emd_nm=#{emd_nm}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+	and j2.ri_nm=#{ri_nm}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+	and j2.jibun=#{jibun}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+	AND j2.juso LIKE '%${address}%' 
+	
+	
+	</if>
+	
+	
+	</select>
 	
 	
 	

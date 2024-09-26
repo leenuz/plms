@@ -115,6 +115,8 @@
     <!-- 점용 해지등록 -->
     <div class="occupancyEndRegWrappers">
       <main id="occupancyEndReg">
+      <form id="saveForm" onSubmit="return false;">
+      <input type="hidden" name="goverNo" th:value="${resultData.gm_gover_no}">
         <div class="mainTitle">
           <h1>점용 해지등록</h1>
         </div>
@@ -423,6 +425,7 @@
 		
         <!-- 점용 해지 정보 -->
         <section class="occupancyEndInfo">
+        
           <div class="subTitle">
             <div class="subTitleText">점용 해지 정보</div>
           </div>
@@ -436,6 +439,7 @@
                   <div class="dateInputWrap">
                     <input
                       type="date"
+                      name="cancleDate"
                       data-placeholder="24/01/01"
                       required
                       aria-required="true" />
@@ -449,8 +453,9 @@
                   <input
                     type="text"
                     placeholder="박영환"
-                    class="notWriteInput"
-                    readonly />
+                    name="userName"
+                    class="WriteInput"
+                    />
                 </li>
               </ul>
             </div>
@@ -459,11 +464,13 @@
 
         <div class="finalBtnBox btnWrap">
           <button class="backBtn grayBtn finalBtn">이전</button>
-          <button class="vividBlueBtn finalBtn">등록</button>
+          <button class="vividBlueBtn finalBtn" id="saveBtn">등록</button>
         </div>
+        </form>
       </main>
     </div>
     <!-- script -->
+     <script src="/js/gover/occupancyEngReg.js"></script>
     <script type="module" src="/js/module/surfaceMain.js"></script>
   </th:block>
 </html>

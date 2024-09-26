@@ -6,6 +6,29 @@ const getUlCountInContentsBox = (contentsBoxElement) => {
     return ulElements.length;
 }
 
+// 마지막버튼의 id값 가져오기
+//const contentsBox = document.querySelector('#togiInfoDiv .contentsBox');
+//
+//function getLastButtonId() {
+//    // ul.contents 요소 모두 가져오기
+//    const ulElements = contentsBox.querySelectorAll('ul.contents');
+//
+//    // ul 요소가 하나 이상 있는지 확인
+//    if (ulElements.length > 0) {
+//        // 마지막 ul 요소 선택
+//        const lastUl = ulElements[ulElements.length - 1];
+//
+//        // 마지막 ul 내부의 버튼 요소 선택
+//        const button = lastUl.querySelector('button.searchAddressBtn.landEditSearchBtn');
+//
+//        // 버튼이 존재하면 id 값 반환, 존재하지 않으면 null 반환
+//        return button ? button.id : null;
+//    } else {
+//        // ul 요소가 없을 경우 null 반환
+//        return null;
+//    }
+//}
+
 // 토지개발 등록 시행자 관할 부서 click 이벤트
 
 const landEditInfoAddBtnEvent01 = () => {
@@ -15,7 +38,6 @@ const landEditInfoAddBtnEvent01 = () => {
     const infoAddBtn = infoContentsDetailBox.querySelectorAll('.addBtn');
     const infoContents = infoContentsDetailBox.querySelectorAll('.contents');
     const infoTitles = infoContentsDetailBox.querySelector('.titles');
-
 
     infoContentsBox.addEventListener('click', function (event) {
          const contentsBoxElement = document.querySelector('#deptDiv .contentsBox');
@@ -108,6 +130,8 @@ const getInfoIndexForLandEdit = (event) => {
     const infoContents02 = infoContentsDetailBox02.querySelectorAll('.contents');
     const infoTitles02 = infoContentsDetailBox02.querySelector('.titles');
 
+    const contentsBoxElement = document.querySelector('#togiInfoDiv .contentsBox');
+    let index = getUlCountInContentsBox(contentsBoxElement);
 
 const landEditInfoAddBtnEvent02 = () => {
 
@@ -115,8 +139,7 @@ const landEditInfoAddBtnEvent02 = () => {
 
         // 버튼 클릭시 추가되게
         if (event.target.classList.contains('addBtn')) {
-         const contentsBoxElement = document.querySelector('#togiInfoDiv .contentsBox');
-         const index = getUlCountInContentsBox(contentsBoxElement);
+
             // ul 만들기
             const infoUl = document.createElement('ul');
             infoUl.classList.add('contents');
@@ -282,11 +305,13 @@ const landEditInfoAddBtnEvent02 = () => {
                 infoUl.appendChild(infoLi);
                 infoContentsBox02.appendChild(infoUl);
 
+
             }
 
             // 순번
             const contentsNum = infoUl.querySelector('.contentsNum');
             contentsNum.placeholder = getInfoIndexForLandEdit(infoUl) + 1;
+             index++;
 
         }
         // 삭제 버튼 누를 때
@@ -313,101 +338,6 @@ const landEditInfoAddBtnEvent02 = () => {
 
 }
 landEditInfoAddBtnEvent02();
-
-// 파일 첨부시 모습 변경
-
-const landEditFileEvent = () => {
-    const landReg_myPcFiles = document.getElementById('landEdit_myPcFiles');
-    const parcelAttachments = landReg_myPcFiles.closest('.parcelAttachments');
-    const fileContWrap = parcelAttachments.querySelector('.contWrap');
-    const fileTitles = fileContWrap.querySelector('#landEdit .parcelAttachments .depth1 .titles');
-    const contentsBox = fileContWrap.querySelector('.contentsBox');
-    var fileInfoName = '';
-
-    landReg_myPcFiles.addEventListener('change', function () {
-
-        // 기존의 ul 초기화
-
-        const existContents = fileContWrap.querySelectorAll('.contents')
-
-        existContents.forEach((list) => {
-            list.remove();
-        })
-
-
-        fileTitles.classList.remove('active');
-        contentsBox.classList.remove('contentScr');
-        fileTitles.classList.remove('titleScr');
-
-        // 시간 구하기
-
-        const addDate = new Date();
-
-        var year = addDate.getFullYear();
-        var month = ('0' + (addDate.getMonth() + 1)).slice(-2);
-        var day = ('0' + addDate.getDate()).slice(-2);
-        var hours = ('0' + addDate.getHours()).slice(-2);
-        var mins = ('0' + addDate.getMinutes()).slice(-2);
-        var seconds = ('0' + addDate.getSeconds()).slice(-2);
-
-        var dateFommat = year + '-' + month + '-' + day + '\u00A0' + hours + ':' + mins + ':' + seconds;
-
-        console.log('입력 변경 시각:', dateFommat);
-
-        if (landReg_myPcFiles.files.length > 0) {
-            for (let i = 0; i <= landReg_myPcFiles.files.length - 1; i++) {
-
-                const thisFileName = landReg_myPcFiles.files[i].name;
-
-                fileInfoName = thisFileName;
-
-                const checkboxLi = `<li class="content01 content"><input type="checkbox" id="landEditcustomCheckbox${i}"><label for="landEditcustomCheckbox${i}"></label>
-                                    </li>`;
-
-                const dateLi = `<li class="content02 content"><p>${dateFommat}</p></li>`;
-
-                const filenameLi = `<li class="content03 content"><p>${fileInfoName}</p></li>`;
-
-                const viewBtnLi = `<li class="content04 content">
-                                        <button class="viewDetailButton">보기</button>
-                                    </li>`;
-
-                const listBox = checkboxLi + dateLi + filenameLi + viewBtnLi;
-
-                const ContentsUl = document.createElement('ul');
-                ContentsUl.classList.add('contents');
-
-                ContentsUl.innerHTML = listBox;
-
-                contentsBox.appendChild(ContentsUl);
-
-
-                fileInfoName = '';
-
-            }
-
-            // 값 잘 담겼는지 확인
-            console.log(landReg_myPcFiles.value)
-
-            // titles border주기
-            fileTitles.classList.add('active');
-
-            if (landReg_myPcFiles.files.length >= 5) {
-                contentsBox.classList.add('contentScr');
-                fileTitles.classList.add('titleScr');
-            }
-        } else {
-            // titles border 빼기
-            fileTitles.classList.remove('active');
-            contentsBox.classList.remove('contentScr');
-            fileTitles.classList.remove('titleScr');
-        }
-
-    })
-
-}
-//landEditFileEvent()
-
 
 /* 엑셀업로드팝업 */
 
@@ -616,13 +546,23 @@ var fileNo = 1;
 						                        }else{
 						                            sizeStr = sizeKB.toFixed(2)+" KB";
 						                        }
-
+                        var now = new Date();
+                        var formattedDate = now.toLocaleString();
 	                    var row='<ul class="contents" id="fileListUl">';
 						row+='<li class="content01 content checkboxWrap">';
 						row+='<input type="checkbox" id="landEdit_myPcFiles'+no+'" name="landEdit_myPcFiles" >';
 						row+='<label for="landEdit_myPcFiles'+no+'"></label>';
 						row+='</li>';
-						row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
+						row += '<li class="content registDateWidth">';
+                        row += '<input type="text" value="' + formattedDate + '" readonly class="notWriteInput" name="registDateWidth"/>';
+                        row += '</li>';
+                        row += '<li class="content fileNameWidth">';
+                        row += '<input type="text" value="' + name + '" id="filename" readonly class="notWriteInput" />';
+                        row += '</li>';
+                        row += '<li class="content viewBtnBox">';
+                        row += '<button class="viewDetailButton lightBlueBtn">보기</button>';
+                        row += '</li>';
+                        row += '</ul>';
 	                    obj.after(row);
 
 						var radio=$(row).find('input');
@@ -645,6 +585,8 @@ $(document).on("click","#deleteSelectedBtn",function(){
 })
 
 /* 첨부파일 체크박스 전체 선택 */
+const clickedAllinput = document.querySelector('input[name="landEdit_file_select_all"]');
+
 $(document).on("click","#landEdit_file_select_all",function(){
    const attachFiles = document.querySelectorAll('input[name="landEdit_myPcFiles"]');
 
@@ -682,21 +624,27 @@ $(document).on('change', 'input[name="landEditMainParcelChk_Checkbox01"]', funct
         document.querySelector('input[name="daepyoSouja"]').value = souja;
     }
 
-    const checkboxes = document.querySelectorAll('input[name="landEditMainParcelChk_Checkbox01"]');
+ if ($(this).is(':checked')) {
+        // 클릭된 체크박스 외 모든 체크박스를 해제
+        $('input[name="landEditMainParcelChk_Checkbox01"]').not(this).prop('checked', false);
+    }
 
-     checkboxes.forEach((checkbox) => {
-            checkbox.addEventListener('change', function() {
-                // 현재 체크된 체크박스가 어떤 것인지 확인
-                if (this.checked) {
-                    // 모든 체크박스를 순회하며, 현재 체크된 체크박스 외에는 해제
-                  checkboxes.forEach((cb) => {
-                               if (cb !== this) {
-                                   cb.checked = false; // 기존 체크된 체크박스 해제
-                               }
-                           });
-                }
-            });
-     });
+     const checkboxes = document.querySelectorAll('input[name="landEditMainParcelChk_Checkbox01"]');
+//     checkboxes.forEach((checkbox) => {
+//            checkbox.addEventListener('change', function() {
+//                // 현재 체크된 체크박스가 어떤 것인지 확인
+//
+//                if (this.checked) {
+//                    // 모든 체크박스를 순회하며, 현재 체크된 체크박스 외에는 해제
+//                  checkboxes.forEach((cb) => {
+//                               if (cb !== this) {
+//                                   cb.checked = false; // 기존 체크된 체크박스 해제
+//                               }
+//                           });
+//                }
+//            });
+//     });
+
     // 체크 없으면 빈칸으로
     const isAnyChecked = Array.from(checkboxes).some(cb => cb.checked);
     if (!isAnyChecked) {
@@ -797,8 +745,8 @@ $(document).on("click", "#selectBtn", function() {
           $("input[name='jimok_" + id + "']").val(jimok);
 
           }else{
-                 const contentsBoxElement2 = document.querySelector('#togiInfoDiv .contentsBox');
-                const index2 = getUlCountInContentsBox(contentsBoxElement2);
+//                 const contentsBoxElement2 = document.querySelector('#togiInfoDiv .contentsBox');
+//                const index2 = getUlCountInContentsBox(contentsBoxElement2);
 
                       // ul 만들기
                       const infoUl = document.createElement('ul');
@@ -818,9 +766,9 @@ $(document).on("click", "#selectBtn", function() {
                               checkboxInput.type = 'checkbox';
 
                               if (i == 1) {
-                               checkboxInput.id ='landEdit_Checkbox_' + index2;
+                               checkboxInput.id ='landEdit_Checkbox_' + index;
                                }else if (i == 4){
-                               checkboxInput.id ='landEditMainParcelChk_Checkbox_' + index2;
+                               checkboxInput.id ='landEditMainParcelChk_Checkbox_' + index;
                                checkboxInput.name ='landEditMainParcelChk_Checkbox01';
                              }
 
@@ -859,7 +807,7 @@ $(document).on("click", "#selectBtn", function() {
                                   // infoLi에 새 내용을 추가합니다.
                                   infoLi.insertAdjacentHTML('beforeend', newContent);
                                   var selectElement = infoLi.querySelector('#landDevelopmentManageSelectBox01');
-                                  selectElement.setAttribute('name', 'hakbo_' + index2);
+                                  selectElement.setAttribute('name', 'hakbo_' + index);
                              } else if (1<i && i<3 || 4<i && i<7 || 7<i && i<12) {
                               const infoInput = document.createElement('input');
                                  infoInput.type = 'text';
@@ -872,22 +820,22 @@ $(document).on("click", "#selectBtn", function() {
                                  } else if (4 < i && i < 7 || i == 11 ) {
                                      infoLi.classList.add('middleWidth');
                                   if(i == 5){
-                                    infoInput.name = 'jeochok_'+index2;
+                                    infoInput.name = 'jeochok_'+index;
                                   }else if(i == 6){
-                                    infoInput.name = 'jisa_'+index2;
+                                    infoInput.name = 'jisa_'+index;
                                   }else if(i == 11){
-                                    infoInput.name = 'souja_'+index2;
+                                    infoInput.name = 'souja_'+index;
                                   }
                                  }else if(i == 8){
-                                      infoInput.name = 'jimok_'+index2;
+                                      infoInput.name = 'jimok_'+index;
                                      infoInput.readOnly = true;
                                   infoInput.classList.add('jimokData');
                                   infoInput.classList.add('notWriteInput');
                                   infoInput.value=jimok;
                                 } else if(i == 9){
-                                        infoInput.name = 'yeonjang_'+index2;
+                                        infoInput.name = 'yeonjang_'+index;
                                   }else if(i == 10){
-                                    infoInput.name = 'myeonjuk_'+index2;
+                                    infoInput.name = 'myeonjuk_'+index;
                                     infoInput.readOnly = true;
                                     infoInput.classList.add('areaData');
                                     infoInput.classList.add('notWriteInput');
@@ -903,8 +851,8 @@ $(document).on("click", "#selectBtn", function() {
                                  addressDiv.classList.add('addressData');
                                  // input 만들기
                                  const addressInput = document.createElement('input');
-                                 addressInput.id = 'address_'+index2;
-                                 addressInput.name = 'address_'+index2;
+                                 addressInput.id = 'address_'+index;
+                                 addressInput.name = 'address_'+index;
                                  addressInput.type = 'text';
                                  addressInput.value=address;
 
@@ -921,7 +869,7 @@ $(document).on("click", "#selectBtn", function() {
                                  addressBtn.classList.add('landRegSearchBtn');
 
                                  addressBtn.textContent = '검색';
-                                  addressBtn.id= index2;
+                                  addressBtn.id= index;
                                  // li안에 넣기
                                  infoLi.appendChild(addressBtn);
                                  infoLi.classList.add('contentBox');
@@ -967,10 +915,12 @@ $(document).on("click", "#selectBtn", function() {
 
                           infoUl.appendChild(infoLi);
                           infoContentsBox02.appendChild(infoUl);
+
           }
                       // 순번
                       const contentsNum = infoUl.querySelector('.contentsNum');
                       contentsNum.placeholder = getInfoIndexForLandEdit(infoUl) + 1;
+                       index++;
 
         }
     });
@@ -994,3 +944,150 @@ $(document).on("click","#notPNUBtn",function(){
 	$(".popupWrap").removeClass("active");
 
 });
+
+/*위치보기*/
+$(document).on("click","#moveMap",function(){
+	//openMapWindow();
+//	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
+	const x = $(this).attr('x')
+	const y = $(this).attr('y')
+	moveToCityHall(x,y);
+})
+
+function moveToCityHall(x,y) {
+	if (mapWindow) {
+	    var cityHallCoords = {};
+
+        if(x != 'null' && y != 'null'){
+//            cityHallCoords = { lon: 126.9779692, lat: 37.566535, zoom: 16 }; //테스트를 위해 임시로 넣어둠
+            cityHallCoords = { lon: y, lat: x, zoom: 16 };
+            mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송
+        }
+        else{
+            alert("해당 위치에 대한 좌표가 없습니다.");
+        }
+		//mapWindow.postMessage(cityHallCoords, 'http://10.168.0.247:8080/'); // 특정 사이트에 전송
+
+	} else {
+	    alert("지도가 열려 있지 않습니다.");
+
+	}
+}
+
+// 저장버튼
+$(document).on("click",".saveBtn",function(){
+
+var formSerializeArray = $('#saveForm').serializeArray();
+
+       len = formSerializeArray.length;
+       var dataObj = {};
+       for (i=0; i<len; i++) {
+        dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
+       }
+
+        	var togiDatas=[];
+	   	var togiUls=$("#togiInfoDiv .contents");
+	   	for(var i=0;i<togiUls.length;i++){
+			var sido_nm=$(togiUls[i]).find("input[name='sido_nm']").val();
+	   		var sgg_nm=$(togiUls[i]).find("input[name='sgg_nm']").val();
+			var emd_nm=$(togiUls[i]).find("input[name='emd_nm']").val();
+			var ri_nm=$(togiUls[i]).find("input[name='ri_nm']").val();
+			var jibun=$(togiUls[i]).find("input[name='jibun']").val();
+			var jibun_full=$(togiUls[i]).find("input[name='jibun_full']").val();
+			var addrcode=$(togiUls[i]).find("input[name='addrcode']").val();
+			var pnu=$(togiUls[i]).find("input[name='pnu']").val();
+
+//			var toji_type=$(togiUls[i]).find("input[name='hakbo_" + i + "']").val(); //권리확보
+			var toji_type = $(togiUls[i]).find('button.customSelectView')[0].innerText;
+			//var master_yn=$(togiUls[i]).find("input[name='daepyoPilji']").val(); //대표토지
+			var master_yn="N";
+			if ($(togiUls[i]).find("input:checkbox[name='landEditMainParcelChk_Checkbox01']").is(":checked")==true){
+				master_yn="Y";
+			};
+			var pipe_yn=$(togiUls[i]).find("input[name='jeochok_"+ i +"']").val();
+			var jisa=$(togiUls[i]).find("input[name='jisa_"+ i +"']").val();
+			var address=$(togiUls[i]).find("input[name='address_"+ i +"']").val();
+			var length=$(togiUls[i]).find("input[name='yeonjang_"+ i +"']").val();
+			var jimok_text=$(togiUls[i]).find("input[name='jimok_"+ i +"']").val();
+
+			var jijuk_area=$(togiUls[i]).find("input[name='myeonjuk_"+ i +"']").val();
+			var souja=$(togiUls[i]).find("input[name='souja_"+ i +"']").val();
+
+
+	   		var togiObj={
+				"sido_nm":ljsIsNull(sido_nm)?'':sido_nm
+				,"sgg_nm":ljsIsNull(sgg_nm)?'':sgg_nm
+				,"emd_nm":ljsIsNull(emd_nm)?'':emd_nm
+				,"ri_nm":ljsIsNull(ri_nm)?'':ri_nm
+				,"jibun_full":ljsIsNull(jibun_full)?'':jibun_full
+				,"jibun":ljsIsNull(jibun)?'':jibun
+				,"addrcode":ljsIsNull(addrcode)?'':addrcode
+				,"pnu":ljsIsNull(pnu)?'':pnu
+				,"toji_type":ljsIsNull(toji_type)?'':toji_type
+				,"master_yn":ljsIsNull(master_yn)?'':master_yn
+				,"pipe_yn":ljsIsNull(pipe_yn)?'N':pipe_yn
+				,"jisa":ljsIsNull(jisa)?'':jisa
+				,"address":ljsIsNull(address)?'':address
+				,"length":ljsIsNull(length)?'':length
+				,"jimok_text":ljsIsNull(jimok_text)?'':jimok_text
+				,"jijuk_area":ljsIsNull(jijuk_area)?'':jijuk_area
+				,"souja":ljsIsNull(souja)?'':souja
+
+	   		}
+	   		togiDatas.push(togiObj);
+	   	}
+	   	dataObj.togiDatas=togiDatas;
+
+	   	var deptDatas=[];
+	   	var deptUls=$("#deptDiv .contents");
+	   	for(var i=0;i<deptUls.length;i++){
+			var dept_nm=$(deptUls[i]).find("input[name='dept_nm_" + i + "']").val();
+	   		var manager=$(deptUls[i]).find("input[name='manager_" + i + "']").val();
+			var contact_num=$(deptUls[i]).find("input[name='contact_num_" + i + "']").val();
+
+	   		var deptObj={
+				"dept_nm":ljsIsNull(dept_nm)?'':dept_nm
+				,"manager":ljsIsNull(manager)?'':manager
+				,"contact_num":ljsIsNull(contact_num)?'':contact_num
+
+	   		}
+	   		deptDatas.push(deptObj);
+	   	}
+	   	dataObj.deptDatas=deptDatas;
+		dataObj.gubun="modify";
+//		dataObj.dosiNo=""; //수정일때는 들어간다
+       console.log("**dataObj**");
+       console.log(dataObj);
+
+     /*  url="/togi/insertDosiList";
+	   $.ajax({
+
+	   				url:url,
+	   				type:'POST',
+	   				contentType:"application/json",
+	   				data:JSON.stringify(dataObj),
+
+	   				dataType:"json",
+	   				beforeSend:function(request){
+	   					console.log("beforesend ........................");
+	   					loadingShow();
+	   				},
+	   				success:function(response){
+	   					loadingHide();
+	   					console.log(response);
+	   					if (response.success="Y"){
+							alert("정상적으로 등록 되었습니다.");
+	   					}
+	   					else {
+	   						console.log("response.success N");
+	   					}
+	   				},
+	   				error:function(jqXHR,textStatus,errorThrown){
+	   					alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+						return false;
+	   				}
+
+	   		});
+	*/
+
+})

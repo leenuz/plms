@@ -1501,7 +1501,7 @@ public class goverController {
 				ArrayList list = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPnuList", params); //결과대문자로 넘어옴
 				if (list.size() > 0) {
 					for (int i = 0; i < list.size(); i++) {
-
+						
 						String strPNU = "";
 						strPNU = (String) ((HashMap) list.get(i)).get("PNU");
 						params.put("STR_PNU", strPNU);
@@ -1517,7 +1517,8 @@ public class goverController {
 						System.out.println("dataMap :: " + dataMap.toString());
 
 						ArrayList NotsetList = (ArrayList) mainService.selectQuery("goverSQL.selectNotsetNextNo", null);
-						String Next_notsetNo = String.valueOf(Integer.parseInt((String) ((HashMap) NotsetList.get(0)).get("NOW_NOTSETNO")) + 1);
+						int no=Integer.parseInt((((HashMap) NotsetList.get(0)).get("now_notsetno").toString()).toString());
+						String Next_notsetNo =  String.valueOf(no + 1);
 						int n_Next_notsetNo = Next_notsetNo.length();
 
 						String add_Zero = "";
@@ -1526,7 +1527,7 @@ public class goverController {
 						}
 						Next_notsetNo = "N_" + add_Zero + Next_notsetNo;
 
-						dataMap.put("NOTSET_NO", Next_notsetNo);
+						dataMap.put("notset_no", Next_notsetNo);
 						mainService.InsertQuery("songyuSQL.insertNotsetMaster", dataMap);
 						dataMap.put("STATUS", "NOTSET");
 						dataMap.put("JISANGNO", Next_notsetNo);
@@ -2456,6 +2457,55 @@ log.info("params:"+params);
 		    } else {
 		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update approval status");
 		    }
+		}
+		
+		
+		// 점용 상신취소
+		@PostMapping(path = "/updateSangsinCancel")
+		public void updateSangsinCancel(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			
+			ParameterParser parser = new ParameterParser(request);
+			String goverNo = parser.getString("goverNo", "");
+			String str_result = "Y";
+			String str_STATUS = "";
+			log.info("=========상신취소=======");
+			log.info("goverNo=" + goverNo);
+
+			try {
+				HashMap params = new HashMap();
+				params.put("GOVERNO", goverNo);
+
+				ArrayList echolist = (ArrayList) mainService.selectQuery("goverSQL.selectGoverDocInfo", params);
+				if (null != echolist && echolist.size() > 0) {
+					str_STATUS = String.valueOf(((HashMap) echolist.get(0)).get("STATUS"));
+				}
+
+				log.info("str_STATUS=" + str_STATUS);
+				log.info("========================");
+
+				if (str_STATUS == null || str_STATUS.equals(""))
+					mainService.UpdateQuery("goverSQL.updateGoverMasterDockey", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+			HashMap map = new HashMap();
+			map.put("message", str_result);
+			map.put("status", str_STATUS);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
 		}
 
 }

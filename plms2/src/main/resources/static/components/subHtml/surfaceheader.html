@@ -1,28 +1,41 @@
 <script>
-	 var mapWindow;
+  var mapWindow;
 
-	//새 창 열기
-	function openMapWindow() {
-	//1. 지도 샘플 페이지
-	 //mapWindow = window.open('http://10.168.0.247:8080/', 'mapWindow', 'width=2000,height=1000');
-	 mapWindow = window.open('http://211.196.153.235/', 'mapWindow', 'width=2000,height=1000');
-	//2. 송유관 - 2pms 메인
-	//mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
-	//mapWindow = window.open('http://10.168.0.247:8080/sample/map/2pms.html', 'mapWindow', 'width=2048,height=1024');
-	//sessionStorage.setItem("2pmsMap",mapWindow);
-	//window.name=mapWindow;
-	}
+  //새 창 열기
+  function openMapWindow(location) {
+    //1. 지도 샘플 페이지
+    //mapWindow = window.open('http://10.168.0.247:8080/', 'mapWindow', 'width=2000,height=1000');
+    //  mapWindow = window.open('http://211.196.153.235/', 'mapWindow', 'width=2000,height=1000');
+    //2. 송유관 - 2pms 메인
+    //mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
+    //mapWindow = window.open('http://10.168.0.247:8080/sample/map/2pms.html', 'mapWindow', 'width=2048,height=1024');
+    //sessionStorage.setItem("2pmsMap",mapWindow);
+    //window.name=mapWindow;
 
-	
-	 window.addEventListener('message', function(event) {
-<!--	console.log("Received message from map window:", event.data);-->
-	}, false); 
+    // 자식 창에서 부모 창으로 메시지 보내기
+    if (window.opener) {
+      if (location != undefined) {
+        console.log(location);
+        const zoom = location.zoom ?? '16';
+        const message = { type: "setCenter" , lon: location.lon, lat: location.lat, zoom: zoom };
+        window.opener.postMessage(message, '*');  // 부모 창으로 메시지 전송
+      } else {
+        const message = { type: "setMap" };
+        window.opener.postMessage(message, '*');  // 부모 창으로 메시지 전송
+      }
+    }
+  }
 
 
-	</script>
+  window.addEventListener('message', function (event) {
+    <!--	console.log("Received message from map window:", event.data);-->
+  }, false);
+
+
+</script>
 <script>
   const surfaceMenuWrapOpen = () => {
-console.log("------------survaceMenuWrapOpen--start--------------");
+    console.log("------------survaceMenuWrapOpen--start--------------");
     //header 세줄버튼 클릭시, 뜨는 메뉴
     let navOpen = document.querySelector(".navOpen");
     let mainNav = document.querySelector(".navWrap");
@@ -157,9 +170,9 @@ console.log("------------survaceMenuWrapOpen--start--------------");
   };
 
   hiddenMenuOpenEvet();
-  
-  
-  
+
+
+
 </script>
 <!-- header -->
 <header>
@@ -185,34 +198,24 @@ console.log("------------survaceMenuWrapOpen--start--------------");
     <ul class="navMenu">
       <li>
         <button class="surfaceMenuBtn">
-          <span
-            ><img src="/assets/media/nav/surfaceMap.png" alt="mapIcon" onClick="openMapWindow();"/></span
-          >지도
+          <span><img src="/assets/media/nav/surfaceMap.png" alt="mapIcon" onClick="openMapWindow();" /></span>지도
         </button>
       </li>
       <li>
         <button class="surfaceMenuBtn">
-          <span
-            ><img
-              src="/assets/media/nav/surfaceHammer.png"
-              alt="nowDopco" /></span
-          >송유관로 현황
+          <span><img src="/assets/media/nav/surfaceHammer.png" alt="nowDopco" /></span>송유관로 현황
         </button>
         <div class="hiddenMenuBoxs">
           <div class="hiddenMenuList">
             <a href="/songyu/menu01">권리확보현황</a>
-            <a href="/songyu/menu02"
-              >권리제외필지조회</a
-            >
+            <a href="/songyu/menu02">권리제외필지조회</a>
             <a href="/songyu/menu03">권리필지조회</a>
           </div>
         </div>
       </li>
       <li>
         <button class="surfaceMenuBtn">
-          <span
-            ><img src="/assets/media/nav/surfaceMenu.png" alt="surface" /></span
-          >지상권
+          <span><img src="/assets/media/nav/surfaceMenu.png" alt="surface" /></span>지상권
         </button>
         <div class="hiddenMenuBoxs">
           <div class="hiddenMenuList">
@@ -227,11 +230,7 @@ console.log("------------survaceMenuWrapOpen--start--------------");
       </li>
       <li>
         <button class="surfaceMenuBtn">
-          <span
-            ><img
-              src="/assets/media/nav/surfacePrivate.png"
-              alt="private" /></span
-          >점용
+          <span><img src="/assets/media/nav/surfacePrivate.png" alt="private" /></span>점용
         </button>
         <div class="hiddenMenuBoxs">
           <div class="hiddenMenuList">
@@ -244,11 +243,7 @@ console.log("------------survaceMenuWrapOpen--start--------------");
       </li>
       <li>
         <button class="surfaceMenuBtn">
-          <span
-            ><img
-              src="/assets/media/nav/surfaceGround.png"
-              alt="develop" /></span
-          >토지개발
+          <span><img src="/assets/media/nav/surfaceGround.png" alt="develop" /></span>토지개발
         </button>
         <div class="hiddenMenuBoxs">
           <div class="hiddenMenuList">
@@ -259,11 +254,7 @@ console.log("------------survaceMenuWrapOpen--start--------------");
       </li>
       <li>
         <button class="surfaceMenuBtn">
-          <span
-            ><img
-              src="/assets/media/nav/surfaceGround.png"
-              alt="company" /></span
-          >회사토지
+          <span><img src="/assets/media/nav/surfaceGround.png" alt="company" /></span>회사토지
         </button>
         <div class="hiddenMenuBoxs">
           <div class="hiddenMenuList">
@@ -275,9 +266,7 @@ console.log("------------survaceMenuWrapOpen--start--------------");
       </li>
       <li>
         <button class="surfaceMenuBtn">
-          <span
-            ><img src="/assets/media/nav/surfaceIssue.png" alt="issue" /></span
-          >이슈
+          <span><img src="/assets/media/nav/surfaceIssue.png" alt="issue" /></span>이슈
         </button>
         <div class="hiddenMenuBoxs">
           <div class="hiddenMenuList">
@@ -288,8 +277,7 @@ console.log("------------survaceMenuWrapOpen--start--------------");
       </li>
       <li>
         <button class="surfaceMenuBtn">
-          <span><img src="/assets/media/nav/total.png" alt="totalIcon" /></span
-          >통계
+          <span><img src="/assets/media/nav/total.png" alt="totalIcon" /></span>통계
         </button>
         <div class="hiddenMenuBoxs">
           <div class="hiddenMenuList">
@@ -308,9 +296,7 @@ console.log("------------survaceMenuWrapOpen--start--------------");
       </li>
       <li>
         <button>
-          <span
-            ><img src="/assets/media/nav/logout.png" alt="logoutIcon"
-          /></span>
+          <span><img src="/assets/media/nav/logout.png" alt="logoutIcon" /></span>
         </button>
       </li>
     </ul>

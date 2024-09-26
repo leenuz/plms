@@ -2717,5 +2717,60 @@ DELETE PLMS_POTENTIAL_ISSUE
 		,jm_CANCLE_COMMENT = #{CANCLE_COMMENT}
 		WHERE JISANG_NO = #{JISANGNO}
 	</update>
+	<select id="selectJisangPmtNextNo" resultType="HashMap" parameterType="HashMap">
+		SELECT COALESCE(MAX(CAST(SUBSTRING(jpm_PMT_NO, 3) AS INTEGER)), 0) AS NOW_PMT_NO
+		FROM jisang_PERMIT_MASTER
+		
+	</select>
 	
+		<insert id="insertPermitMaster" parameterType="HashMap">
+		Insert into jisang_PERMIT_MASTER
+		( jpm_PMT_NO, jpm_USE_PURPOS, jpm_PMT_STATUS, jpm_USE_ST_DATE, jpm_USE_ED_DATE, jpm_SPOT_RESULT, jpm_review, jpm_CONTRACT)
+		Values
+		( #{PMT_NO}, #{USE_PURPOS}, #{PMT_STATUS}, to_date( #{USE_ST_DATE} , 'yyyy-mm-dd'), to_date( #{USE_ED_DATE} , 'yyyy-mm-dd'), #{POT_RESULT}, #{RIVEW}, #{CONTRACT} )
+	</insert>
+	<update id="updatePermitMaster" parameterType="HashMap">
+		UPDATE jisang_PERMIT_MASTER
+		SET
+		jpm_USE_PURPOS = #{USE_PURPOS}
+		, jpm_PMT_STATUS = #{PMT_STATUS}
+		, jpm_USE_ST_DATE = to_date( #{USE_ST_DATE} , 'yyyy-mm-dd')
+		, jpm_USE_ED_DATE = to_date( #{USE_ED_DATE} , 'yyyy-mm-dd')
+		, jpm_SPOT_RESULT = #{SPOT_RESULT}
+		, jpm_review = #{RIVEW}
+		, jpm_CONTRACT = #{CONTRACT}
+
+		WHERE jpm_PMT_NO = {#PMT_NO}
+
+	</update>
+	<delete id="deletePermitTogiList" parameterType="HashMap">
+		DELETE FROM jisang_PERMIT_TOGI
+		WHERE jpt_PMT_NO = #{PMT_NO}
+	</delete>
+	
+	<insert id="insertPermitTogiList" parameterType="HashMap">
+		Insert into jisang_PERMIT_TOGI
+		( jpt_PMT_NO, jpt_JISANG_NO, jpt_ADDR, jpt_SOYUJA, jpt_PMT_USER, jpt_JIMOK, jpt_ALL_AREA, jpt_SET_AREA
+		, jpt_SET_MONEY, jpt_SIDO_NM, jpt_SGG_NM, jpt_EMD_NM, jpt_RI_NM, jpt_JIBUN, jpt_ADDRCODE, jpt_JASAN_NO )
+		Values
+		( #{PMT_NO}, #{JISANG_NO}, #{ADDRESS}, #{SOUJA}, #{USER}, #{JIMOK}, #{JIJUK}::numeric, #{PYENIB}::numeric
+		, #{MONEY}, #{SIDO_NM}, #{SGG_NM}, #{EMD_NM}, #{RI_NM}, #{JIBUN}, #{ADDRCODE}, #{JASAN_NO} )
+	</insert>
+	
+	<insert id="insertPermitFile" parameterType="HashMap">
+           
+			INSERT INTO jisang_PERMIT_ATCFILE(PMT_NO, SEQ	, FILE_PATH, FILE_NM, FILE_GUBUN)
+			VALUES (#{PMT_NO},nextval('pmt_atc_seq'), #{FILE_PATH}, #{FILE_NM}, #{FILE_GUBUN})
+			
+	</insert>
+	<update id="updatePermitFile" parameterType="HashMap">
+           
+			update jisang_PERMIT_ATCFILE set FILE_PATH=#{FILE_PATH},FILE_NM=#{FILE_NM}
+			where pmt_no=#{PMT_NO} and file_gubun=#{FILE_GUBUN}
+			
+	</update>
+	<select id="selectPermitFileCount" resultType="integer" parameterType="HashMap">
+		select count(*) from jisang_permit_atcfile where pmt_no=#{PMT_NO} and file_gubun = #{FILE_GUBUN}::varchar
+		
+	</select>
 </mapper>

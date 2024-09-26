@@ -132,6 +132,7 @@ margin:10px;
           <h1>토지 개발정보</h1>
         </div>
 
+
         <form id="saveForm" onSubmit="return false;">
         <!-- 기본 정보 -->
         <section class="defaultInfo">
@@ -161,6 +162,8 @@ margin:10px;
                 <li class="content contentBox2">
                   <ul class="secondContents">
                     <li class="secondContent">
+
+                      <input type="hidden" th:value="${resultData.dm_dosi_no}" id="dosi_no" name="dosiNo">
                       <input type="text" placeholder=""
                              readonly class="notWriteInput"
                              th:value="${resultData.di_strdate}">
@@ -186,6 +189,8 @@ margin:10px;
             </div>
           </div>
         </section>
+        </form>
+
         <!-- 시행자 관할 부서 -->
         <section class="adminDept">
           <div class="subTitle">
@@ -193,7 +198,7 @@ margin:10px;
           </div>
 
           <div class="contWrap">
-            <div class="depth1">
+            <div class="depth1"  id="deptDiv">
               <ul class="titles">
                 <li class="title">부서명</li>
                 <li class="title">담당자</li>
@@ -235,7 +240,7 @@ margin:10px;
           </div>
 
           <div class="contWrap">
-            <div class="depth1">
+            <div class="depth1" id="togiInfoDiv">
               <ul class="titles">
                 <li class="title largeWidth">권리확보</li>
                 <li class="title middleWidth">관로저촉</li>
@@ -254,7 +259,10 @@ margin:10px;
                     placeholder=""
                     readonly
                     class="notWriteInput"
-                    th:value="${resultData.dm_toji_type}" />
+                    th:value="${resultData.dm_toji_type == 'JISANG' ? '지상권' :
+                (resultData.dm_toji_type == 'DOPCO' ? '회사토지' :
+                (resultData.dm_toji_type == '' ? '미설정' :
+                (resultData.dm_toji_type == 'GOVER' ? '점용' : resultData.dm_toji_type)))}"/>
                 </li>
                 <li class="content middleWidth">
                   <input
@@ -316,7 +324,7 @@ margin:10px;
           </div>
 
           <div class="contWrap">
-            <div class="depth1">
+            <div class="depth1" id="togiSosokInfoDiv">
               <ul class="titles">
                 <li class="title largeWidth">권리확보</li>
                 <li class="title middleWidth">관로저촉</li>
@@ -331,7 +339,10 @@ margin:10px;
               <ul class="contents" th:each="val:${sosokData}">
                 <li class="content largeWidth">
                   <input type="text" readonly class="notWriteInput"
-                         th:value="${val.dm_toji_type}" />
+                         th:value="${val.dm_toji_type == 'JISANG' ? '지상권' :
+                (val.dm_toji_type == 'DOPCO' ? '회사토지' :
+                (val.dm_toji_type == '' ? '미설정' :
+                (val.dm_toji_type == 'GOVER' ? '점용' : val.dm_toji_type)))}"/>
                 </li>
                 <li class="content middleWidth">
                   <input type="text" readonly class="notWriteInput"
@@ -429,9 +440,10 @@ margin:10px;
             </div>
           </div>
         </section>
-        </form>
+
 
         <!-- 전자결재문서 열람 -->
+
         <section class="eDocView">
           <div class="subTitle">
             <div class="subTitleText">전자결재 문서 열람</div>
@@ -445,16 +457,18 @@ margin:10px;
                 <li class="title">제목</li>
                 <li class="title">승인일</li>
               </ul>
-              <div class="contentsBox">
+              <div class="contentsBox" id="fileList">
               <ul class="contents" id="fileListUl">
                 <li class="content smallWidth checkboxWrap">
                   <input type="checkbox" id="landDevInfo_eDocView_Checkbox_0" name="landDevInfo_eDocFile" />
                   <label for="landDevInfo_eDocView_Checkbox_0"></label>
                 </li>
+
                 <li class="content middleWidth">
                   <input
                     id="docNum_0"
                     type="text"
+                    name="docNum_0"
                     readonly
                     placeholder="현장지원팀"
                     class="notWriteInput" />
@@ -462,6 +476,7 @@ margin:10px;
                 <li class="content">
                   <input
                           id="docTitle_0"
+                          name="docTitle_0"
                     type="text"
                     readonly
                     placeholder="광양노후관 개량구간 공사"
@@ -469,11 +484,13 @@ margin:10px;
                 </li>
                 <li class="content">
                   <input
+                          name="docDate_0"
+                          type="text"
+                          readonly
+                          placeholder="2023-07-05"
                           id="docDate_0"
-                    type="text"
-                    readonly
-                    placeholder="2023-07-05"
                     class="notWriteInput" />
+                  <input type="hidden" id="docURL_0" name="docURL_0">
                 </li>
               </ul>
               </div>
@@ -487,6 +504,7 @@ margin:10px;
           </div>
         </section>
 
+
         <div class="finalBtnBox btnWrap">
           <button class="finalBtn prevBtn"  onclick="history.back();">이전</button>
           <button class="finalBtn deleteBtn">삭제</button>
@@ -497,7 +515,6 @@ margin:10px;
           </button>
         </div>
       </main>
-
 
       <div class="landDevInfoPopWrapper" id="searchResultPopDiv">
 
