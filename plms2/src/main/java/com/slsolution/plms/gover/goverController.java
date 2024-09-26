@@ -2458,5 +2458,54 @@ log.info("params:"+params);
 		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update approval status");
 		    }
 		}
+		
+		
+		// 점용 상신취소
+		@PostMapping(path = "/updateSangsinCancel")
+		public void updateSangsinCancel(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			
+			ParameterParser parser = new ParameterParser(request);
+			String goverNo = parser.getString("goverNo", "");
+			String str_result = "Y";
+			String str_STATUS = "";
+			log.info("=========상신취소=======");
+			log.info("goverNo=" + goverNo);
+
+			try {
+				HashMap params = new HashMap();
+				params.put("GOVERNO", goverNo);
+
+				ArrayList echolist = (ArrayList) mainService.selectQuery("goverSQL.selectGoverDocInfo", params);
+				if (null != echolist && echolist.size() > 0) {
+					str_STATUS = String.valueOf(((HashMap) echolist.get(0)).get("STATUS"));
+				}
+
+				log.info("str_STATUS=" + str_STATUS);
+				log.info("========================");
+
+				if (str_STATUS == null || str_STATUS.equals(""))
+					mainService.UpdateQuery("goverSQL.updateGoverMasterDockey", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+			HashMap map = new HashMap();
+			map.put("message", str_result);
+			map.put("status", str_STATUS);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		}
 
 }
