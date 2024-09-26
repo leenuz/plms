@@ -216,7 +216,7 @@ margin:10px;
                             </li>
                             <li class="content"><input type="text" th:value="${val.soyuList.size() > 0 ? val.soyuList[0].js_souja_name : ''}" readonly class="notWriteInput" id="souja"></li>
                             <li class="content">
-                                <button class="viewDetailButton">위치보기</button>
+                                <button class="viewDetailButton" th:x="${val.x == null ? 'null' : val.x}" th:y="${val.y == null ? 'null' : val.y}" >위치보기</button>
                             </li>
                             <li class="content selectContentArea">
                                 <div class="hiddenSelectBox">

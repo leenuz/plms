@@ -433,6 +433,8 @@ const landRightMergeInfoAddBtnEvent = () => {
                     const viewBtn = document.createElement('button');
                     viewBtn.classList.add('viewDetailButton');
                     viewBtn.textContent = '위치보기';
+                    viewBtn.setAttribute('x', 'null');
+                    viewBtn.setAttribute('y', 'null');
 
                     infoLi.appendChild(viewBtn);
                 } else if (i == 9) {
@@ -852,5 +854,31 @@ $(document).on("click",".temporarySaveBtn",function(){
         }
 
      });
+
+});
+
+$(document).on("click",".viewDetailButton",function(){
+	const x = $(this).attr('x')
+	const y = $(this).attr('y')
+	moveToCityHall(x,y);
+})
+
+function moveToCityHall(x,y) {
+		console.log("--------moveToCityHall-------------");
+	if (mapWindow) {
+	    var cityHallCoords = {};
+
+        if(x != 'null' && y != 'null'){
+            cityHallCoords = { lon: y, lat: x, zoom: 16 };
+            mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송
+        }
+        else{
+            alert("해당 위치에 대한 좌표가 없습니다.");
+        }
+
+	} else {
+	    alert("지도가 열려 있지 않습니다.");
+	}
+}
 
 });
