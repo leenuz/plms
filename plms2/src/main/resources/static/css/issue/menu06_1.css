@@ -1632,3 +1632,111 @@ div.dt-filter-spacer {
   font-weight: 600;
   background-color: #cce0ff99;
 }
+
+/* selectbox 스크롤 */
+#dopcoIssueManage .customSelectBox .customSelectBtns::-webkit-scrollbar {
+  width: 4px;
+}
+#dopcoIssueManage .customSelectBox .customSelectBtns::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+/* custom select */
+#dopcoIssueManage .selectWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+#dopcoIssueManage .selectContentArea {
+  width: 203px;
+  height: 44px;
+  border-radius: 10px;
+}
+#dopcoIssueManage .selectICodeContentArea {
+  width: 203px;
+  height: 44px;
+  border-radius: 10px;
+  margin-right: 8.5px;
+}
+#dopcoIssueManage .customSelectBox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#dopcoIssueManage .customSelectBox .customSelectView {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #cfddf2;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6e7d88;
+  text-align-last: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  box-sizing: border-box;
+  background: url(/assets/media/menu06/images/arrowDown.png) no-repeat right 8px
+    center;
+  background-size: 18px;
+  background-color: #fff;
+}
+
+#dopcoIssueManage .customSelectBox .customSelectView.active {
+  background: url(/assets/media/menu06/images/arrowDownBlue.png) no-repeat right
+    8px center;
+  background-size: 18px;
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+  background-color: #fff;
+}
+
+#dopcoIssueManage .customSelectBox .customSelectBtns {
+  position: absolute;
+  width: 100%;
+  top: calc(100% + 4px);
+  box-sizing: border-box;
+  max-height: 0;
+  overflow-y: hidden;
+  z-index: 10;
+  transition: 500ms;
+  opacity: 0;
+  border: 1px solid #acbdd7;
+}
+
+#dopcoIssueManage .customSelectBox .customSelectBtns.active {
+  padding: 6px 0;
+  border-radius: 10px;
+  background: #fff;
+  max-height: 233px;
+  overflow-y: scroll;
+  transition: 500ms;
+  opacity: 1;
+}
+
+#dopcoIssueManage .customSelectBox .customSelectBtns li {
+  padding: 0;
+  height: 41px;
+}
+#dopcoIssueManage .moreSelectBtn {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4e5871;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  text-align-last: left;
+  padding-left: 12px;
+  box-sizing: border-box;
+}
+#dopcoIssueManage
+  .privateUseSectionBoxs
+  .privateUseSectionCont
+  .privateUseSectionContDevide
+  .selectWrap
+  .selectTitle {
+  margin-bottom: 12px;
+}

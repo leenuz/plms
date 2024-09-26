@@ -359,8 +359,8 @@ function loadDataTable(params){
                    {
                          data: "idx",
                          render: function(data, type, row, meta) {
-                                return `<button class="viewDetailButton" >지도보기</button> `;
-                         }
+							return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
+						}
                      },// 지도보기 데이터 수정필요
                       {
                           data: "idx",
@@ -424,7 +424,7 @@ function loadDataTable(params){
 				   	   	});
                        }else if(target.closest('td').index() === 12){
                        //지도보기 클릭
-                           mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
+                        //    mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
 //                            mapWindow = window.open('http://10.168.0.247:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'mapWindow', 'width=2048,height=1024');
                        }else{
                        // ECHO 문서보기 클릭
@@ -458,4 +458,39 @@ function loadDataTable(params){
 			    .draw();*/
 			
 			      // console.log($('#userTable').DataTable().page.info().recordsTotal);
+}
+
+$(document).on("click","#moveMap",function(){
+	//openMapWindow();
+//	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
+	const x = $(this).attr('x')
+	const y = $(this).attr('y')
+	moveToCityHall(x,y);
+})
+function moveToCityHall(x,y) {
+	console.log("--------moveToCityHall-------------");
+	//console.log(sessionStorage.getItem("2pmsMap"));
+	//var mapW=window.mapWindow;
+	//console.log(window.name);
+	//var mapW=window.name;
+// if (mapWindow) {
+	var cityHallCoords = {};
+
+	if(x != 'null' && y != 'null'){
+//            cityHallCoords = { lon: 126.9779692, lat: 37.566535, zoom: 16 }; //테스트를 위해 임시로 넣어둠
+		cityHallCoords = { lon: y, lat: x, zoom: 16 };
+		openMapWindow(cityHallCoords);
+	}
+	else{
+		alert("해당 위치에 대한 좌표가 없습니다.");
+	}
+	//mapWindow.postMessage(cityHallCoords, 'http://10.168.0.247:8080/'); // 특정 사이트에 전송
+
+// } else {
+//     alert("지도가 열려 있지 않습니다.");
+// /* 	mapWindow = window.open('http://10.168.0.247:8080/', 'mapWindow', 'width=2000,height=1000');
+// 	var cityHallCoords = { lon: 126.9779692, lat: 37.566535, zoom: 16 };
+// 	//mapWindow.postMessage(cityHallCoords, 'http://10.168.0.247:8080/'); // 특정 사이트에 전송
+// 	mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송 */
+// }
 }
