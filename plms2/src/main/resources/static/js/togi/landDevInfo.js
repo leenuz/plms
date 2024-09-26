@@ -18,20 +18,15 @@ $(document).on("click","#moveMap",function(){
 
 function moveToCityHall(x,y) {
 		console.log("--------moveToCityHall-------------");
-	if (mapWindow) {
-	    var cityHallCoords = {};
+    var cityHallCoords = {};
 
-        if(x != 'null' && y != 'null'){
-            cityHallCoords = { lon: y, lat: x, zoom: 16 };
-            mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송
-        }
-        else{
-            alert("해당 위치에 대한 좌표가 없습니다.");
-        }
-
-	} else {
-	    alert("지도가 열려 있지 않습니다.");
-	}
+    if(x != 'null' && y != 'null'){
+        cityHallCoords = { lon: y, lat: x, zoom: 16 };
+        openMapWindow(cityHallCoords);
+    }
+    else{
+        alert("해당 위치에 대한 좌표가 없습니다.");
+    }
 }
 
 /* 전자결재 문서 열람 추가 */
