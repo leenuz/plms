@@ -433,6 +433,8 @@ const landRightMergeInfoAddBtnEvent = () => {
                     const viewBtn = document.createElement('button');
                     viewBtn.classList.add('viewDetailButton');
                     viewBtn.textContent = '위치보기';
+                    viewBtn.setAttribute('x', 'null');
+                    viewBtn.setAttribute('y', 'null');
 
                     infoLi.appendChild(viewBtn);
                 } else if (i == 9) {
@@ -853,4 +855,121 @@ $(document).on("click",".temporarySaveBtn",function(){
 
      });
 
+});
+
+$(document).on("click",".viewDetailButton",function(){
+	const x = $(this).attr('x')
+	const y = $(this).attr('y')
+	moveToCityHall(x,y);
+})
+
+function moveToCityHall(x,y) {
+		console.log("--------moveToCityHall-------------");
+	if (mapWindow) {
+	    var cityHallCoords = {};
+
+        if(x != 'null' && y != 'null'){
+            cityHallCoords = { lon: y, lat: x, zoom: 16 };
+            mapWindow.postMessage(cityHallCoords, '*'); // 모든 출처에 메시지 전송
+        }
+        else{
+            alert("해당 위치에 대한 좌표가 없습니다.");
+        }
+
+	} else {
+	    alert("지도가 열려 있지 않습니다.");
+	}
+}
+
+$(document).ready(function(){
+    $('input[name=landRightMerge_myPcFiles01]').on('change', function(e) {
+	        var files = e.originalEvent.target.files;
+	        handleFileUpload1(files,this,"01");
+	});
+	$('input[name=landRightMerge_myPcFiles02]').on('change', function(e) {
+	       var files = e.originalEvent.target.files;
+	       handleFileUpload1(files,this,"02");
+	});
+	$('input[name=landRightMerge_myPcFiles03]').on('change', function(e) {
+		       var files = e.originalEvent.target.files;
+		       handleFileUpload1(files,this,"03");
+
+	});
+	$('input[name=landRightMerge_myPcFiles04]').on('change', function(e) {
+		       var files = e.originalEvent.target.files;
+		       handleFileUpload1(files,this,"04");
+	});
+	$('input[name=landRightMerge_myPcFiles05]').on('change', function(e) {
+		       var files = e.originalEvent.target.files;
+		       handleFileUpload1(files,this,"05");
+	});
+	$('input[name=landRightMerge_myPcFiles06]').on('change', function(e) {
+		       var files = e.originalEvent.target.files;
+		       handleFileUpload1(files,this,"06");
+	});
+	$('input[name=landRightMerge_myPcFiles07]').on('change', function(e) {
+		       var files = e.originalEvent.target.files;
+		       handleFileUpload1(files,this,"07");
+	});
+	$('input[name=landRightMerge_myPcFiles08]').on('change', function(e) {
+		       var files = e.originalEvent.target.files;
+		       handleFileUpload1(files,this,"08");
+	});
+
+    function handleFileUpload1(files,obj,idx) {
+       for (var i = 0; i < files.length; i++)
+       {
+            var fd = new FormData();
+            fd.append('file', files[i]);
+
+          //  var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
+          //  status.setFileNameSize(files[i].name,files[i].size);
+            console.log($(obj).parent().parent().parent().html());
+            var changeObj=$(obj).parent().parent().find("#req_doc_file"+idx).val(files[i].name);
+            console.log("--------changeObj---------------");
+            console.log(changeObj);
+            sendFileToServer1(fd,status,idx);
+
+       }
+    }
+
+    function sendFileToServer1(formData,status,no) {
+        var idx=$("#hiddenJisangNo").val();
+        console.log($("#hiddenJisangNo").val());
+        var uploadURL = "/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
+        var extraData ={}; //Extra Data.
+        var jqXHR=$.ajax({
+                xhr: function() {
+                var xhrobj = $.ajaxSettings.xhr();
+                if (xhrobj.upload) {
+                        xhrobj.upload.addEventListener('progress', function(event) {
+                            var percent = 0;
+                            var position = event.loaded || event.position;
+                            var total = event.total;
+                            if (event.lengthComputable) {
+                                percent = Math.ceil(position / total * 100);
+                            }
+                            //Set progress
+                          //  status.setProgress(percent);
+                        }, false);
+                    }
+                return xhrobj;
+            },
+            url: uploadURL,
+            type: "POST",
+            contentType:false,
+            processData: false,
+            cache: false,
+            data: formData,
+            success: function(data){
+               // status.setProgress(100);
+                console.log(data);
+                console.log(data.resultData);
+                //$("#status1").append("File upload Done<br>");
+                uploadFiles.push(data.resultData.fpath);
+                //allCheckEventLandRightsRegist();
+            }
+        });
+        //status.setAbort(jqXHR);
+    }
 });
