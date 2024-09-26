@@ -206,9 +206,13 @@ function getPopupJsonData(){
     dataObj.MW_SEQ = mw_seq;
     dataObj.STATUS = findProgStatus(dataObj.STATUS);
 
-    const jsonData = JSON.stringify(dataObj);
-    console.log(jsonData);
-    return jsonData;
+    //첨부파일
+    const complaintRegiPopup_myPcFiles = document.getElementById('complaint_register_Popup_file');
+    const complaintRegiFiles = complaintRegiPopup_myPcFiles.files;
+    dataObj.files = complaintRegiFiles;
+
+    console.log(dataObj);
+    return  JSON.stringify(dataObj);
 }
 
 //협의 추가 저장

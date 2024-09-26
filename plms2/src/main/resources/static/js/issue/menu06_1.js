@@ -180,6 +180,11 @@ function getPopupJsonData() {
         dataObj.userList.push(obj);
     });
 
+    //첨부파일
+    const newComplaintRegiPopup_myPcFiles = document.getElementById("complaint_contents_contents3_Popup_file");
+    const newComplaintRegiFiles = newComplaintRegiPopup_myPcFiles.files;
+    dataObj.files = newComplaintRegiFiles;
+
     console.log(dataObj);
     return JSON.stringify(dataObj);
 }
