@@ -1658,6 +1658,7 @@ div.dt-filter-spacer {
   width: 203px;
   height: 44px;
   border-radius: 10px;
+  margin-right: 8.5px;
 }
 #dopcoIssueManage .customSelectBox {
   width: 100%;
