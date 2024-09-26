@@ -735,7 +735,7 @@ select:focus {
   width: 70%;
 }
 
-#dopcoCompanyLand01 .companyLandMainContentWrapper .companyLandMainContent .dataBoxswrappers .dataBoxCont ul.dataContent li button.btnDesign {
+.btnDesign {
   width: 116px;
   height: 27px;
   border-radius: 20px;
@@ -747,7 +747,6 @@ select:focus {
   justify-content: center;
   background-color: #cce0ff99;
   cursor: default;
-  position: absolute;
   z-index: 999;
 }
 
