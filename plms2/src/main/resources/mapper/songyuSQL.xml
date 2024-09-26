@@ -364,7 +364,7 @@ SELECT   NEWREGREASON,
             ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.GOVER_NO
         ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
         LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
-        WHERE GM.gm_SAVE_STATUS = 'A' AND GM.gm_CANCEL_YN IS NULL
+        WHERE GM.gm_SAVE_STATUS = 'A' AND (GM.gm_CANCEL_YN IS NULL or GM.gm_CANCEL_YN !='Y') 
         
         UNION ALL
         
@@ -930,7 +930,7 @@ SELECT   NEWREGREASON,
             ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.GOVER_NO
         ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
         LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
-        WHERE GM.gm_SAVE_STATUS = 'A' AND GM.gm_CANCEL_YN !='Y'
+        WHERE GM.gm_SAVE_STATUS = 'A' AND (GM.gm_CANCEL_YN !='Y' or GM.gm_CANCEL_YN is null)
         
         UNION ALL
         
