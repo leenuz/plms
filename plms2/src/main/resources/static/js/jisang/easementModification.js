@@ -374,52 +374,92 @@ MoreSelectBtn.forEach((moreBtn) => {
 
 // 소유자 정보 추가 click시 이벤트
 
-const ownerInfoAddBtn = document.querySelectorAll('#easementModification .ownerInfo .addBtn')
-const editBefore = document.querySelectorAll('#easementModification .ownerInfo .contents .content.btnBox .editBefore');
-const editAfter = document.querySelectorAll('#easementModification .ownerInfo .contents .content.btnBox .editAfter');
-const editContent = document.querySelectorAll('#easementModification .editSpace');
-const registBtn = document.querySelectorAll('#easementModification .registBtn');
+// 소유자 정보 추가 click시 이벤트
 
-ownerInfoAddBtn.forEach((btn) => {
-	btn.addEventListener('click', function() {
-		var thisEditContent = btn.closest('.contents');
-		console.log(thisEditContent);
+const ownerInfoAddBtn = document.querySelectorAll('#landRightsRegistration .ownerInfo .addBtn')
+const editBefore = document.querySelectorAll('#landRightsRegistration .ownerInfo .contents .content.btnBox .editBefore');
+const editAfter = document.querySelectorAll('#landRightsRegistration .ownerInfo .contents .content.btnBox .editAfter');
+const editContent = document.querySelectorAll('#landRightsRegistration .editSpace');
+const registBtn = document.querySelectorAll('#landRightsRegistration .registBtn');
 
-		thisEditContent.classList.add('editing');
 
-		const inputs = thisEditContent.querySelectorAll('input');
+$(document).on("click",".addBtn",function(){
+	console.log("---------addBtn click-----------");
 
-		if (thisEditContent.classList.contains('editing')) {
-			inputs.forEach(input => {
-				input.removeAttribute('readonly');
-			});
-		} else {
-			inputs.forEach(input => {
-				input.setAttribute('readonly', 'readonly');
-			});
+	var thisEditContent = this.closest('.contents');
+	        console.log(thisEditContent);
+//			thisEditContent.classList.add('editing');
+			const inputs = thisEditContent.querySelectorAll('input');
+
+			        if (thisEditContent.classList.contains('editing')) {
+			            inputs.forEach(input => {
+			              input.setAttribute('readonly', 'readonly');
+
+
+			            });
+			        } else {
+			            inputs.forEach(input => {
+			            thisEditContent.classList.add('editing');
+			            input.removeAttribute('readonly');
+			            });
+			        }
+});
+$(document).on("click","#completeSoujaBtn",function(){
+		console.log("------------completeSoujaBtn click---------");
+        const soujaDiv = document.getElementById('soujaDiv');
+        const editingElements = soujaDiv.querySelectorAll('.editing');
+        const editingCount = editingElements.length;
+
+		var thisUl=$(this).parent().parent().parent().parent();
+		console.log("editingCount" + editingCount);
+		var addUl=$("#soujaHiddenUl").html();
+
+		var input=$(thisUl).find("input");
+		console.log(input);
+		console.log(input.length);
+		console.log("0:"+$(input).eq(0).val());
+
+		if ($(input).eq(0).val()=="" || $(input).eq(1).val()=="" || $(input).eq(2).val()=="" ||  $(input).eq(3).val()==""){
+			alert("입력사항을 체크하세요! 공유지분,성명,주소는 필수 입력입니다.");
+			return;
 		}
 
 
+		if ($(input).eq(0).val()!="" && $(input).eq(1).val()!="" && $(input).eq(2).val()!="" && $(input).eq(3).val()!="") {
+		//	alert("소유자 정보를 정확하게 입력해주세요!");
+			$(thisUl).removeClass("editing");
+            $(thisUl).find('li input').attr('readonly', true);
+			if(editingCount < 3){
+			    $("#soujaDiv").append('<ul class="contents editing" id="soujaUl">'+addUl+'</ul>');
+			}
 
-	});
+			//return;
+		}
+		//if ($(input).eq(0).html()=="" || )
+
+//		$(thisUl).removeClass("editing");
+		/*for(var i=0;i<input.length;i++) {
+			console.log($(input).eq(i).parent().html());
+		}*/
+
+					            /*$(input).forEach(input => {
+					                input.setAttribute('readonly', 'readonly');
+					            });*/
+
+
 });
 
-// 추가 버튼 click 이벤트
 
-if (registBtn) {
-	registBtn.forEach((regiBtn) => {
-		regiBtn.addEventListener('click', function() {
+$(document).on("click","#deleteSoujaBtn",function(){
+	console.log("------------deleteSoujaBtn click---------");
+	var thisUl=$(this).parent().parent().parent().parent();
+	var thisContents=$(this).parent().parent().parent().parent().parent().find(".contents");
+	console.log($(thisContents).html());
+	console.log($(thisContents).length);
+	if ($(thisContents).length<=2) return;
+	$(thisUl).remove();
 
-			var thisEditContent01 = regiBtn.closest('.contents');
-			thisEditContent01.classList.remove('editing')
-
-			const inputs = thisEditContent01.querySelectorAll('input');
-			inputs.forEach(input => {
-				input.setAttribute('readonly', 'readonly');
-			});
-		})
-	})
-}
+});
 
 // 기본 정보 -> 주소 검색
 

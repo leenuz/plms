@@ -316,9 +316,13 @@
 
 			<!--소유자 정보-->
 			<section class="ownerInfo">
-				<div class="subTitle">소유자 정보*</div>
+				<div class="subTitle">
+					소유자 정보*
+				</div>
+				<input type="hidden" name="mpnu" id="mpnu" />
+				<input type="hidden" name="mjibun" id="mjibun" />
 				<div class="contWrap">
-					<div class="depth1">
+					<div class="depth1" id="soujaDiv">
 						<ul class="titles">
 							<li class="title01">공유지분</li>
 							<li class="title02">성명</li>
@@ -327,76 +331,114 @@
 							<li class="title05">연락처2</li>
 							<li class="title06">추가/삭제</li>
 						</ul>
-						<ul class="contents">
+						<!-- 추가를 위한 ul -->
+						<ul class="contents editing" id="soujaHiddenUl" style="display:none;">
 							<li class="content01 content editSpace">
-								<input type="text" class="editingContent" readonly placeholder="1">
+								<input type="text" class="editingContent" name="soujaJibun" placeholder="ex)1/2">
 							</li>
 							<li class="content02 content editSpace">
-								<input type="text" class="editingContent" readonly placeholder="송기분">
+								<input type="text" class="editingContent" name="soujaName" placeholder="ex)홍길동">
 							</li>
 							<li class="content03 content editSpace">
-								<input type="text" class="editingContent" readonly placeholder="경기도 고양시 덕양구 강매동">
+								<input type="text" class="editingContent" name="soujaAddress" placeholder="ex)주소만입력">
 							</li>
 							<li class="content04 content editSpace">
-								<input type="text" class="editingContent" readonly placeholder="010-5188-5188">
+								<input type="text" class="editingContent" name="soujaContact1" placeholder="ex)000-0000-0000">
 							</li>
-							<li class="content05 content editSpace" readonly>
-								<input type="text" class="editingContent">
+							<li class="content05 content editSpace">
+								<input type="text" class="editingContent" name="soujaContact2">
 							</li>
 							<li class="content06 content btnBox">
-								<!-- 수정하지 않을 때 -->
-
+								<!-- 수정입력할때 -->
 								<div class="editBefore">
 									<div class="btnWrap">
-										<button class="addBtn miniBtn">추가</button>
+										<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
 									</div>
 									<div class="btnWrap">
-										<button class="delBtn miniBtn">삭제</button>
+										<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
 									</div>
 								</div>
 
-								<!-- 수정할 때 -->
-
+								<!-- 수정완료할 때 -->
 								<div class="editAfter">
 									<div class="newBtnWrap">
-										<button class="registBtn miniBtn">추가</button>
+										<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
 									</div>
 								</div>
 							</li>
 						</ul>
-						<ul class="contents">
+						
+						<!-- 데이터가 0개 일 때 -->
+						<ul class="contents editing" th:if="${soujaList.size() == 0}" id="soujaUl">
 							<li class="content01 content editSpace">
-								<input type="text" class="editingContent" readonly placeholder="1">
+								<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun" placeholder="ex)1/2">
 							</li>
 							<li class="content02 content editSpace">
-								<input type="text" class="editingContent" readonly placeholder="송기분">
+								<input type="text" class="editingContent" name="soujaName" id="soujaName" placeholder="ex)홍길동">
 							</li>
 							<li class="content03 content editSpace">
-								<input type="text" class="editingContent" readonly placeholder="경기도 고양시 덕양구 강매동">
+								<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress" placeholder="ex)주소만입력">
 							</li>
 							<li class="content04 content editSpace">
-								<input type="text" class="editingContent" readonly placeholder="010-5188-5188">
+								<input type="text" class="editingContent" name="soujaContact1" id="soujaContact1"
+									placeholder="ex)000-0000-0000">
 							</li>
-							<li class="content05 content editSpace" readonly>
-								<input type="text" class="editingContent">
+							<li class="content05 content editSpace">
+								<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2">
 							</li>
 							<li class="content06 content btnBox">
-								<!-- 수정하지 않을 때 -->
-
+								<!-- 수정입력할때 -->
 								<div class="editBefore">
 									<div class="btnWrap">
-										<button class="addBtn miniBtn">추가</button>
+										<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
 									</div>
 									<div class="btnWrap">
-										<button class="delBtn miniBtn">삭제</button>
+										<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
 									</div>
 								</div>
 
-								<!-- 수정할 때 -->
-
+								<!-- 수정완료할 때 -->
 								<div class="editAfter">
 									<div class="newBtnWrap">
-										<button class="registBtn miniBtn">추가</button>
+										<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
+									</div>
+								</div>
+							</li>
+						</ul>
+
+						<!--데이터가 1개 이상일 때-->
+						<ul class="contents editing" th:if="${soujaList.size() > 0}" th:each="souja : ${soujaList}" id="soujaUl">
+							<li class="content01 content editSpace">
+								<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun" th:value="${souja.js_jibun}">
+							</li>
+							<li class="content02 content editSpace">
+								<input type="text" class="editingContent" name="soujaName" id="soujaName" th:value="${souja.js_souja_name}">
+							</li>
+							<li class="content03 content editSpace">
+								<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress" th:value="${souja.js_address}">
+							</li>
+							<li class="content04 content editSpace">
+								<input type="text" class="editingContent" name="soujaContact1" id="soujaContact1" th:value="${souja.js_phone_number}"
+									placeholder="ex)000-0000-0000">
+							</li>
+							<li class="content05 content editSpace">
+								<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2" th:value="${souja.js_home_number}">
+							</li>
+							<li class="content06 content btnBox">
+								<!-- 수정입력할때 -->
+								<div class="editBefore">
+									<div class="btnWrap">
+										<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
+									</div>
+									<div class="btnWrap">
+										<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
+									</div>
+								</div>
+
+								<!-- 수정완료할 때 -->
+								<div class="editAfter">
+									<div class="newBtnWrap">
+										<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
 									</div>
 								</div>
 							</li>
