@@ -200,10 +200,10 @@ function getSigunMaster(sidoValue) {
 
 			for (let i = 0; i < data.length; i++) {
 				const gugun = data[i].sm_gugun;
-				
+
 				// 실제 <select> 태그에 옵션 추가
 				selectBox.append("<option value='" + gugun + "'>" + gugun + "</option>");
-				
+
 				// 해당 커스텀 UI에 <li> 항목 추가
 				customSelectBtns.append("<li><button type='button' class='moreSelectBtn'>" + gugun + "</button></li>");
 			}
@@ -244,10 +244,10 @@ function getDongMaster(sidoValue, sigunguValue) {
 
 			for (let i = 0; i < data.length; i++) {
 				const dong = data[i].bm_dong;
-				
+
 				// 실제 <select> 태그에 옵션 추가
 				selectBox.append("<option value='" + dong + "'>" + dong + "</option>");
-				
+
 				// 해당 커스텀 UI에 <li> 항목 추가
 				customSelectBtns.append("<li><button type='button' class='moreSelectBtn'>" + dong + "</button></li>");
 			}
@@ -288,10 +288,10 @@ function getRiMaster(sidoValue, sigunguValue, dongValue) {
 
 			for (let i = 0; i < data.length; i++) {
 				const ri = data[i].rm_ri;
-				
+
 				// 실제 <select> 태그에 옵션 추가
 				selectBox.append("<option value='" + ri + "'>" + ri + "</option>");
-				
+
 				// 해당 커스텀 UI에 <li> 항목 추가
 				customSelectBtns.append("<li><button type='button' class='moreSelectBtn'>" + ri + "</button></li>");
 			}
@@ -308,6 +308,32 @@ function getRiMaster(sidoValue, sigunguValue, dongValue) {
 		}
 	});
 }
+
+// 주소 검색 버튼 클릭 시
+$(document).on("click", "#basicSearchBtn", function() {
+	console.log("-----basicSearchBtn click------------");
+	console.log("-------검색버튼 클릭-----------");
+	console.log($("#saveForm").serialize());
+	var formSerializeArray = $('#saveForm').serializeArray();
+	console.log(formSerializeArray);
+	/* console.log($("#searchResultPopDiv").html());*/
+	//searchResultPopDiv 화면뿌릴 DIV
+	$.ajax({
+		url: "/jisang/getBasicSearchData",
+		type: "POST",
+		data: formSerializeArray,
+	})
+		.done(function(fragment) {
+			//runScriptsInElement(landRightSearchResultPop); // 삽입된 html내 스크립트 실행 함수 호출
+			//console.log($("#searchResultPopDiv").html());
+			$('#searchResultPopDiv').replaceWith(fragment);
+			const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+			console.log($(popupOpen).html());
+			//			   		              landRightsSearchBtn.classList.add("open");
+			$(popupOpen).addClass("open");
+			popupOpen.classList.add("active");
+		});
+});
 
 
 // 첨부파일 전체 선택 체크박스
@@ -696,7 +722,7 @@ AllCheckEventEasementModification();
 
 
 /* js추가 검색팝업오픈 */
-
+/*
 const easeModificationOpenPopUp = () => {
 
 	const easeModificationBtn = document.querySelector(".easeModificationBtn");
@@ -735,5 +761,5 @@ const easeModificationOpenPopUp = () => {
 
 	}
 }
-
 easeModificationOpenPopUp();
+*/

@@ -1430,7 +1430,7 @@ public class jisangController {
 			return mav;
 		}
 		
-		//아이디를 기준으로 해당 영역만 리플래쉬 되도록 하는 로직
+		//지상권 내역 등록 - 아이디를 기준으로 해당 영역만 리플래쉬 되도록 하는 로직
 		@PostMapping(path="/getBasicSearchData") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView getBasicSearchData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 			ModelAndView mav=new ModelAndView();
@@ -1466,6 +1466,43 @@ public class jisangController {
 			mav.setViewName("content/jisang/landRightsRegistration :: #searchResultPopDiv");
 			return mav;
 		}
+	
+	//지상권 내역 수정 - 아이디를 기준으로 해당 영역만 리플래쉬 되도록 하는 로직
+	@PostMapping(path="/getBasicSearchDataForEdit") //http://localhost:8080/api/get/dbTest
+    public ModelAndView getBasicSearchDataForEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		//log.info("httpRequest:"+Arrays.toString(httpRequest));
+		String jisa = httpRequest.getParameter("jisa");
+		String pnu = httpRequest.getParameter("pnu");
+		String sido_nm = httpRequest.getParameter("sido");
+		String sgg_nm=httpRequest.getParameter("gugun");
+		String emd_nm=httpRequest.getParameter("landRightsRegistSelectBox11");
+		String ri_nm=httpRequest.getParameter("landRightsRegistSelectBox12");
+		String jibun=httpRequest.getParameter("mjibun");
+		String address=httpRequest.getParameter("address");
+		
+		String addressRadioValue=httpRequest.getParameter("landRightsRegistration_addressInput");
+		params.put("jisa",jisa);
+		
+		params.put("jibun", jibun);
+		if (addressRadioValue.equals("0")) params.put("address", address);
+		else {
+			params.put("sido_nm",sido_nm);
+			params.put("sgg_nm",sgg_nm);
+			params.put("emd_nm",emd_nm);
+			params.put("ri_nm",ri_nm);
+		}
+		params.put("addressRadioValue", addressRadioValue);
+		//params.put("pnu",pnu);
+		log.info("params:"+params);
+		ArrayList<HashMap> jisangBasicSearchList = mainService.selectQuery("jisangSQL.selectBasicSearchList",params);
+		log.info("jisangBasicSearchList:"+jisangBasicSearchList);
+		mav.addObject("jisangBasicSearchList",jisangBasicSearchList);
+		mav.setViewName("content/jisang/landRightsRegistration :: #searchResultPopDiv");
+		return mav;
+	}
 
 	@PostMapping(path="/getJibunListData") //http://localhost:8080/api/get/dbTest
 	public ModelAndView getJibunListData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {

@@ -22,6 +22,7 @@
 				<h1>지상권 내역 수정</h1>
 			</div>
 
+			<form name="saveForm"  id="saveForm" onSubmit="return false;">
 			<section class="defaultInfo">
 				<div class="subTitle">기본 정보</div>
 
@@ -218,7 +219,7 @@
 							                        resultData.jm_emd_nm != null ? resultData.jm_emd_nm + ' ' : '', 
 							                        resultData.jm_ri_nm != null ? resultData.jm_ri_nm + ' ' : '', 
 							                        resultData.jm_jibun != null ? resultData.jm_jibun : ''
-							                      )}" placeholder="경기도 고양시 덕양구 강매동 1">
+							                      )}">
 							</li>
 							<!--주소 입력 선택 방식-->
 							<li class="content02">
@@ -240,7 +241,8 @@
 										<div class="selectContentArea">
 											<div class="hiddenSelectBox">
 												<select name="easementModifySelectBox09" id="easementModifySelectBox09" hidden>
-													<option th:each="sido : ${sidoList}" th:value="${sido.sm_name}" th:text="${sido.sm_name}"></option>
+													<option th:each="sido : ${sidoList}" th:value="${sido.sm_name}" th:text="${sido.sm_name}">
+													</option>
 												</select>
 											</div>
 											<section class="customSelectBox">
@@ -302,7 +304,7 @@
 									</li>
 								</ul>
 								<div class="inputBtnArea">
-									<button class="SearchAddressBtn active easeModificationBtn">검색</button>
+									<button class="SearchAddressBtn active easeModificationBtn" id="basicSearchBtn">검색</button>
 								</div>
 							</li>
 						</ul>
@@ -515,8 +517,7 @@
 							<!-- 등기일 -->
 							<li class="content05 content">
 								<div class="dateInputWrap">
-									<input type="date" th:value="${#dates.format(resultData.jm_deunggi_date, 'yyyy-MM-dd')}" required
-										aria-required="true" data-placeholder="연/월/일">
+									<input type="date" th:value="${#dates.format(resultData.jm_deunggi_date, 'yyyy-MM-dd')}" data-placeholder="연/월/일">
 								</div>
 							</li>
 							<!--등기번호-->
@@ -616,12 +617,11 @@
 				<button class="backBtn grayBtn finalBtn">이전</button>
 				<button class="saveBtn vividBlueBtn finalBtn">저장</button>
 			</div>
-
-
-
+			</form>
+			
 		</main>
 	</div>
-	
+
 	<!--주소 검색 팝업-->
 	<div class="easeModificationResultPopWrapper" id="searchResultPopDiv">
 		<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
