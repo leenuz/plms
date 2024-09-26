@@ -132,7 +132,7 @@ margin:10px;
         <h1>토지개발 수정</h1>
       </div>
 
-      <form id="searchForm" onSubmit="return false;">
+      <form id="saveForm" onSubmit="return false;">
         <!-- 기본 정보 -->
         <section class="defaultInfo">
           <div class="subTitle">
@@ -154,6 +154,7 @@ margin:10px;
               </ul>
               <ul class="contents lastContents" >
                 <li class="content contentBox">
+                  <input type="hidden" th:value="${daepyodata.dm_dosi_no}" id="dosi_no" name="dosiNo">
                   <input type="text" placeholder=""
                          name="business_nm"
                          th:value="${daepyodata.di_business_nm}" >
@@ -186,6 +187,8 @@ margin:10px;
             </div>
           </div>
         </section>
+      </form>
+
         <!-- 시행자 관할 부서 -->
         <section class="adminDept">
           <div class="subTitle">
@@ -425,7 +428,7 @@ margin:10px;
             </div>
           </div>
         </section>
-      </form>
+
 
       <!-- 첨부파일 -->
       <section class="attachFileInfo">
@@ -454,7 +457,10 @@ margin:10px;
                 <input type="checkbox" id="landEdit_file_select_all" name="landEdit_file_select_all">
                 <label for="landEdit_file_select_all"></label>
               </li>
-              <li class="title02">파일명</li>
+<!--              <li class="title02">파일명</li>-->
+              <li class="title">등록일</li>
+              <li class="title fileNameWidth">파일명</li>
+              <li class="title">파일보기</li>
             </ul>
 
           </div>
