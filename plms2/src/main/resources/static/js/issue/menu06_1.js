@@ -199,20 +199,19 @@ $(document).on("click", ".landinfo .landStatusPopOpenBtn", function () {
     const idx = $(this).closest("li").siblings(".landinfo_content_2").text()
     var addr = $(this).parent().find("input").val().trim();
     console.log(addr);
-    var datas = { draw: 1, start: 0, length: 20, "saddr": addr }
     if (addr == null || addr == "" || addr == undefined) {
         alert("주소를 입력해주세요.");
         return;
     }
     const popupLayout = $('#landStatusPopup')
     $.ajax({
-        url: "/togi/menu04_1DataTableList",
+        url: "/issue/getMinwonJijukSelectNotModel",
         type: "GET",
-        data: datas,
+        data: { "address": addr },
         dataType: "json",
         success: function (response) {
             console.log(response);
-            const datas = response.data;
+            const datas = response.result;
             togiDataList = datas;
             const popContentBox = popupLayout.find('.popContentBox');
             if (datas.length > 0) {
@@ -224,7 +223,7 @@ $(document).on("click", ".landinfo .landStatusPopOpenBtn", function () {
                                     <p>${item.pnu}</p>
                                 </li>
                                 <li class="popContent02">
-                                    <p>${item.address}</p>
+                                    <p>${item.juso}</p>
                                 </li>
                                 <li class="popContent03">
                                     <p>${item.jibun}</p>
@@ -233,7 +232,7 @@ $(document).on("click", ".landinfo .landStatusPopOpenBtn", function () {
                                     <button class="resultSelectBtn" onclick="resultSelectBtnClick(this, ${idx-1}, ${index})">선택</button>
                                 </li>
                                 <li class="popContent05">
-                                    <p>${item.toji_type}</p>
+                                    <p></p>
                                 </li>
                             </ul>`;
                     popContentBox.append(newItem);
@@ -259,20 +258,22 @@ function setReqLand(addr= "", reg_yn = "", contract_yn = ""){
 
 //신규민원 -> 검색 -> 선택 버튼
 const resultSelectBtnClick = function (view, ulIdx, dataIdx) {
-    const address = togiDataList[dataIdx].address;
+    const address = togiDataList[dataIdx].juso;
     const master_yn = togiDataList[dataIdx].master_yn;
+    const registed_yn = togiDataList[dataIdx].registed_yn;
+    const permitted_yn = togiDataList[dataIdx].permitted_yn;
 
     //체크박스
     if(master_yn == "Y"){
         $('.approve_checkbox').prop('checked', false);
         $(".landinfo_content_3 input[type='checkbox']").eq(ulIdx).prop('checked', true);
         //대표 필지 정보 입력
-        setReqLand(addr = address)
+        setReqLand(address, registed_yn, permitted_yn)
     }
-    //주소
-    $(".landinfo_content_4 input[type='text']").eq(ulIdx).val(address);
-    //등기여부
-    //계약여부
+   
+    $(".landinfo_content_4 input[type='text']").eq(ulIdx).val(address);  //주소
+    $('.landinfo_content_5 input[type="text"]').eq(ulIdx).val(registed_yn);  //등기여부
+    $('.landinfo_content_6 input[type="text"]').eq(ulIdx).val(permitted_yn); //계약여부
 
     $('#landStatusPopup').removeClass('active');
 }
