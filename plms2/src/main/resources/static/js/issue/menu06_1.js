@@ -628,3 +628,200 @@ $(function () {
     loadDataTable(object);
     console.log("-----------------------");
 })
+
+
+
+
+
+
+
+
+
+
+
+// ***** 콤보박스 *****************
+// 커스텀 selectbox
+const initComboBox = () => {
+    const createCustomLiIssueCodeMgmt = () => {
+        const contentItems = document.querySelectorAll('.selectICodeContentArea');
+        $('.selectICodeContentArea .customSelectBtns').html('');
+    
+        contentItems.forEach(contentItem => {
+            const notsetAddSelectBox = contentItem.querySelector('select');
+            // select가 없으면 return
+            if (!notsetAddSelectBox) return;
+    
+            const customSelectBox = contentItem.querySelector('.customSelectBox');
+            const customSelectBtns = customSelectBox.querySelector('.customSelectBtns');
+    
+            for (let i = 0; i < notsetAddSelectBox.length; i++) {
+                const optionValue = notsetAddSelectBox.options[i].value;
+                const optionText = notsetAddSelectBox.options[i].text;
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.classList.add('moreSelectBtn');
+                button.type = 'button';
+                button.textContent = optionText;
+                button.setAttribute('data', optionValue)
+                li.appendChild(button);
+                customSelectBtns.appendChild(li);
+            }
+        });
+    }
+    createCustomLiIssueCodeMgmt();
+    
+    // customSelectBtns 리스트 click 했을 때 해당 내용으로 바뀌게하기
+    const MoreSelectBtn = document.querySelectorAll('.moreSelectBtn')
+
+    MoreSelectBtn.forEach((moreBtn) => {
+        moreBtn.addEventListener('click', function () {
+            var moreSelectBtnText = moreBtn.innerText;
+            console.log(moreSelectBtnText);
+            const parentMoreSelectBtn = moreBtn.closest('.customSelectBtns')
+            const EditCustomViewBtn = parentMoreSelectBtn.previousElementSibling;
+    
+            while (EditCustomViewBtn.firstChild) {
+                EditCustomViewBtn.removeChild(EditCustomViewBtn.firstChild);
+            }
+            const textNode = document.createTextNode(moreSelectBtnText);
+            EditCustomViewBtn.appendChild(textNode);
+    
+            EditCustomViewBtn.classList.remove('active')
+            parentMoreSelectBtn.classList.remove('active')
+    
+    
+            // 선택한 걸 select의 value값으로 변경하기
+            const nearByContent = moreBtn.closest('.selectICodeContentArea');
+            const nearBySelectBox = nearByContent.querySelector('select');
+            nearBySelectBox.value = moreBtn.getAttribute("data");
+            console.log(`Selected value: ${nearBySelectBox.value}`);
+            if(nearBySelectBox.getAttribute('id') == 'issueCodeMgmtSelectBox01_1') {
+                loadDepth2Codes();
+            } else if (nearBySelectBox.getAttribute('id') == 'issueCodeMgmtSelectBox01_2') {
+                loadDepth3Codes();
+            };
+        })
+    })
+};
+
+initComboBox();
+
+const customSelectView = document.querySelectorAll('.customSelectView')
+    
+customSelectView.forEach((btn) => {
+    btn.addEventListener('click', function () {
+        btn.classList.toggle('active');
+
+        if (btn.nextElementSibling) {
+            btn.nextElementSibling.classList.toggle('active');
+
+        }
+    })
+});
+
+// 분류 데이터 가져오기
+// 대분류 selectIssueCodeListDepth1
+(() => {
+	$.ajax({
+		url: "/issue/selectIssueCodeListDepth1",
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: 'application/json; charset=utf-8',
+		success: function (response) {
+			console.log(response);
+            if (response.message="success"){
+                const resultData = response.result;
+
+                var optionsStr = '<option value="" selected>전체</option>';
+                for (row of resultData) {
+                    optionsStr += '<option value="' + row.code + '">' + row.code_name + '</option>'
+                }
+                $('#issueCodeMgmtSelectBox01_1').html(optionsStr);
+                $('#issueCodeMgmtSelectBox01_2').html('<option value="" selected>전체</option>');
+                $('#issueCodeMgmtSelectBox01_3').html('<option value="" selected>전체</option>');
+
+                initComboBox();
+            }
+		},
+		error: function () {
+		}
+	});
+})();
+
+// 중분류 selectIssueCodeListDepth2
+const loadDepth2Codes = () => {
+    var depth1Code = $('#issueCodeMgmtSelectBox01_1').val();
+    if (depth1Code == '') {
+        $('#issueCodeMgmtSelectBox01_2').html('<option value="">전체</option>');
+        $('#issueCodeMgmtSelectBox01_3').html('<option value="">전체</option>');
+        initComboBox();
+        $($('#depth2Codes button')[0]).trigger('click')
+        $($('#depth3Codes button')[0]).trigger('click')
+        return;
+    }
+
+	$.ajax({
+		url: "/issue/selectIssueCodeListDepth2?DEPTH1=" + depth1Code,
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: 'application/json; charset=utf-8',
+		success: function (response) {
+			console.log(response);
+            if (response.message="success"){
+                const resultData = response.result;
+
+                var optionsStr = '<option value="">전체</option>';
+                for (row of resultData) {
+                    optionsStr += '<option value="' + row.code + '">' + row.code_name + '</option>'
+                }
+                $('#issueCodeMgmtSelectBox01_2').html(optionsStr);
+                $('#issueCodeMgmtSelectBox01_3').html('<option value="">전체</option>');
+
+                initComboBox();
+                $($('#depth2Codes button')[0]).trigger('click')
+                $($('#depth3Codes button')[0]).trigger('click')
+            }
+		},
+		error: function () {
+		}
+	});
+};
+
+// 세분류 selectIssueCodeListDepth2
+const loadDepth3Codes = () => {
+    var depth1Code = $('#issueCodeMgmtSelectBox01_1').val();
+    var depth2Code = $('#issueCodeMgmtSelectBox01_2').val();
+    if (depth2Code == '') {
+        $('#issueCodeMgmtSelectBox01_3').html('<option value="">전체</option>');
+        initComboBox();
+        $($('#depth3Codes button')[0]).trigger('click');
+        return;
+    }
+
+	$.ajax({
+		url: "/issue/selectIssueCodeListDepth3?DEPTH1=" + depth1Code + '&DEPTH2=' + depth2Code,
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: 'application/json; charset=utf-8',
+		success: function (response) {
+			console.log(response);
+            if (response.message="success"){
+                const resultData = response.result;
+
+                var optionsStr = '<option value="">전체</option>';
+                for (row of resultData) {
+                    optionsStr += '<option value="' + row.code + '">' + row.code_name + '</option>'
+                }
+                $('#issueCodeMgmtSelectBox01_3').html(optionsStr);
+
+                initComboBox();
+                $($('#depth3Codes button')[0]).trigger('click')
+            }
+		},
+		error: function () {
+		}
+	});
+};
