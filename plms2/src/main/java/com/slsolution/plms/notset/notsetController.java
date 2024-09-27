@@ -32,8 +32,8 @@ public class notsetController {
 	@Autowired
 	private MainService mainService;
 	
-	 @Autowired
-	 private GlobalConfig GC;
+	@Autowired
+	private GlobalConfig GC;
 	
 	//권리확보현황-데이터테이블-미설정/미점용
 	@GetMapping(path="/unsetOccupationDetails") //http://localhost:8080/api/get/dbTest
@@ -86,79 +86,119 @@ public class notsetController {
 		return mav;
     }
 	
-	//권리확보현황-데이터테이블-미설정/미점용 상세보기 - 미설정/미점용 수정
+	// 미설정/미점용 내역 수정
 	@GetMapping(path="/notsetaddRevise") //http://localhost:8080/api/get/dbTest
     public ModelAndView notsetaddRevise(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
 
 		HashMap params = new HashMap();
 		
+		String idx = httpRequest.getParameter("idx");
+		String index = httpRequest.getParameter("index");
+
+		params.put("idx",idx);
+		params.put("index",index);
+		params.put("manage_no",idx);
+		log.info("idx:"+idx);
+		log.info("index:"+index);
+		
+		// commonSQL - UI 구성 목적
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> yongdolist = mainService.selectQuery("commonSQL.selectYongdoList",params);
 		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
-      
+		// notsetSQL - DB 조회,화면 출력 목적
+		ArrayList<HashMap> data = mainService.selectQuery("notsetSQL.selectAllData",params);
+		ArrayList<HashMap> soujaList = mainService.selectQuery("notsetSQL.selectSoyujaData",params);
+		ArrayList<HashMap> atcFileList = mainService.selectQuery("notsetSQL.selectAtcFileList",params);
+		ArrayList<HashMap> notsetModifyList = mainService.selectQuery("notsetSQL.selectModifyList",params);
+//			ArrayList<HashMap> notsetMergeList = mainService.selectQuery("notsetSQL.selectMergeList",params);
+		params.put("pnu", data.get(0).get("nm_pnu"));
+		ArrayList<HashMap> notsetIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
+		if (notsetIssueList.size()>0) {
+			params.put("issueManualCode1", notsetIssueList.get(0).get("pi_code_depth1"));
+			params.put("issueManualCode2", notsetIssueList.get(0).get("pi_code_depth2"));
+			params.put("issueManualCode3", notsetIssueList.get(0).get("pi_code_depth3"));
+		}
+		ArrayList<HashMap> notsetIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
+		ArrayList<HashMap> notsetIssueHistoryList = mainService.selectQuery("notsetSQL.selectIssueHistoryList",params);
+		ArrayList<HashMap> notsetPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+		ArrayList<HashMap> notsetMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+		
 		mav.addObject("jisaList",jisalist);
 		mav.addObject("resultYongdoList",yongdolist);
 		mav.addObject("resultJimokList",jimoklist);
 		mav.addObject("sidoList",sidolist);
+		
+		mav.addObject("resultData",data.get(0));
+		mav.addObject("soujaList",soujaList);
+		mav.addObject("atcFileList",atcFileList);
+//			mav.addObject("notsetPermitList",notsetPermitList);
+		mav.addObject("notsetModifyList",notsetModifyList);
+//			mav.addObject("notsetMergeList",notsetMergeList);
+		mav.addObject("notsetIssueList",notsetIssueList);
+		mav.addObject("jisangIssueCodeAtcFileList",notsetIssueCodeAtcFileList);
+		mav.addObject("notsetIssueHistoryList",notsetIssueHistoryList);
+		mav.addObject("notsetPnuAtcFileList",notsetPnuAtcFileList);
+		mav.addObject("memoList",notsetMemoList);
+		mav.setViewName("content/notset/unsetOccupationDetails");
 		log.info("jisalist:"+jisalist);
 	
 		mav.setViewName("content/songyu/notsetaddRevise");
 		return mav;
     }
-		
-		
-		@RequestMapping(value = "/fileUpload/post") //ajax에서 호출하는 부분
-	    @ResponseBody
-	    public HashMap upload(MultipartHttpServletRequest multipartRequest) { //Multipart로 받는다.
-	         
-	        Iterator<String> itr =  multipartRequest.getFileNames();
-	        
-	        String filePath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
-	        HashMap<String,Object> resultmap=new HashMap();
-	        ArrayList<HashMap> resultdataarr=new ArrayList<HashMap>();
-	        HashMap resultdata=new HashMap();
-	        String resultCode="0000";
-	        String resultMessage="success";
-	        while (itr.hasNext()) { //받은 파일들을 모두 돌린다.
-	            
-	            /* 기존 주석처리
-	            MultipartFile mpf = multipartRequest.getFile(itr.next());
-	            String originFileName = mpf.getOriginalFilename();
-	            System.out.println("FILE_INFO: "+originFileName); //받은 파일 리스트 출력'
-	            */
-	            
-	            MultipartFile mpf = multipartRequest.getFile(itr.next());
-	     
-	            String originalFilename = mpf.getOriginalFilename(); //파일명
-	     
-	            String fileFullPath = filePath+"/"+originalFilename; //파일 전체 경로
-	          
-	           
-	            try {
-	                //파일 저장
-	                mpf.transferTo(new File(fileFullPath)); //파일저장 실제로는 service에서 처리
-	                
-	                resultdata.put("fname",originalFilename);
-	                resultdata.put("fpath",fileFullPath);
-	                System.out.println("originalFilename => "+originalFilename);
-	                System.out.println("fileFullPath => "+fileFullPath);
-	               // resultdataarr.add(resultdata);
-	            } catch (Exception e) {
-	            	resultCode="4001";
-	            	resultdata.put("fname","");
-	                resultdata.put("fpath","");
-	                resultMessage="error";
-	               // resultdataarr.add(resultdata);
-	                System.out.println("postTempFile_ERROR======>"+fileFullPath);
-	                e.printStackTrace();
-	            }
-	           
-	          
+	
+	
+	@RequestMapping(value = "/fileUpload/post") //ajax에서 호출하는 부분
+    @ResponseBody
+    public HashMap upload(MultipartHttpServletRequest multipartRequest) { //Multipart로 받는다.
+         
+        Iterator<String> itr =  multipartRequest.getFileNames();
+        
+        String filePath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+        HashMap<String,Object> resultmap=new HashMap();
+        ArrayList<HashMap> resultdataarr=new ArrayList<HashMap>();
+        HashMap resultdata=new HashMap();
+        String resultCode="0000";
+        String resultMessage="success";
+        while (itr.hasNext()) { //받은 파일들을 모두 돌린다.
+            
+            /* 기존 주석처리
+            MultipartFile mpf = multipartRequest.getFile(itr.next());
+            String originFileName = mpf.getOriginalFilename();
+            System.out.println("FILE_INFO: "+originFileName); //받은 파일 리스트 출력'
+            */
+            
+            MultipartFile mpf = multipartRequest.getFile(itr.next());
+     
+            String originalFilename = mpf.getOriginalFilename(); //파일명
+     
+            String fileFullPath = filePath+"/"+originalFilename; //파일 전체 경로
+          
+           
+            try {
+                //파일 저장
+                mpf.transferTo(new File(fileFullPath)); //파일저장 실제로는 service에서 처리
+                
+                resultdata.put("fname",originalFilename);
+                resultdata.put("fpath",fileFullPath);
+                System.out.println("originalFilename => "+originalFilename);
+                System.out.println("fileFullPath => "+fileFullPath);
+               // resultdataarr.add(resultdata);
+            } catch (Exception e) {
+            	resultCode="4001";
+            	resultdata.put("fname","");
+                resultdata.put("fpath","");
+                resultMessage="error";
+               // resultdataarr.add(resultdata);
+                System.out.println("postTempFile_ERROR======>"+fileFullPath);
+                e.printStackTrace();
+            }
+           
+          
 //	            System.out.println(obj);
-	           
-	          //log.info("jo:"+jo);
+           
+          //log.info("jo:"+jo);
 //	          			response.setCharacterEncoding("UTF-8");
 //	          			response.setHeader("Access-Control-Allow-Origin", "*");
 //	          			response.setHeader("Cache-Control", "no-cache");
@@ -167,14 +207,14 @@ public class notsetController {
 //	          			//response.getOutputStream().write(jo);
 //	          			response.getWriter().print(obj);
 //	          			response.getWriter().flush();
-	                         
-	       }
-	        resultmap.put("resultCode",resultCode);
-	        resultmap.put("resultData",resultdata);
-	        resultmap.put("resultMessage",resultMessage);
-	        JSONObject obj =new JSONObject(resultmap);
-	         
-	        return resultmap;
-	    }
+                         
+       }
+        resultmap.put("resultCode",resultCode);
+        resultmap.put("resultData",resultdata);
+        resultmap.put("resultMessage",resultMessage);
+        JSONObject obj =new JSONObject(resultmap);
+         
+        return resultmap;
+    }
 
 }

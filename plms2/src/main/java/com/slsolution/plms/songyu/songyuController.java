@@ -152,53 +152,29 @@ public class songyuController {
     }
 	
 	
-	
-	
+	// 미설정/미점용 내역 등록
 	@GetMapping(path="/notsetAdd") //http://localhost:8080/api/get/dbTest
     public ModelAndView notsetAdd(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
 
-//      List<TestDTO> list = new ArrayList<TestDTO>();
-//      list = dbService.getList();
 		HashMap params = new HashMap();
-		ArrayList<HashMap>  list=new ArrayList<HashMap>();
 		
-		//List<CountryModel> list = masterDataBaseService.getCountry();
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> yongdolist = mainService.selectQuery("commonSQL.selectYongdoList",params);
 		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
-//		list=mainService.selectQuery("jisangSQL.selectAllList", params);
-//      log.info("jisang /list:"+list.toString());
-      //nhServ1.test();
-      //ts.Test1();
-//      HashMap<String,Object> resultmap=new HashMap();
-//      resultmap.put("resultCode","0000");
-//      resultmap.put("resultData",list);
-//      resultmap.put("resultMessage","success");
-//      JSONObject obj =new JSONObject(resultmap);
-////      System.out.println(obj);
-//     
-//    //log.info("jo:"+jo);
-//    			response.setCharacterEncoding("UTF-8");
-//    			response.setHeader("Access-Control-Allow-Origin", "*");
-//    			response.setHeader("Cache-Control", "no-cache");
-//    			response.resetBuffer();
-//    			response.setContentType("application/json");
-//    			//response.getOutputStream().write(jo);
-//    			response.getWriter().print(obj);
-//    			response.getWriter().flush();
-//     // return new ModelAndView("dbTest", "list", list);
       
-    			mav.addObject("jisaList",jisalist);
-    			mav.addObject("resultYongdoList",yongdolist);
-    			mav.addObject("resultJimokList",jimoklist);
-    			mav.addObject("sidoList",sidolist);
-    			log.info("jisalist:"+jisalist);
-    		
-				mav.setViewName("content/songyu/notsetAdd");
-      			return mav;
+		mav.addObject("jisaList",jisalist);
+		mav.addObject("resultYongdoList",yongdolist);
+		mav.addObject("resultJimokList",jimoklist);
+		mav.addObject("sidoList",sidolist);
+		log.info("jisalist:"+jisalist);
+	
+		mav.setViewName("content/songyu/notsetAdd");
+		
+		return mav;
     }
+	
 	
 	@GetMapping(path="/searchResultsPopup") //http://localhost:8080/api/get/dbTest
     public ModelAndView searchResultsPopup(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
