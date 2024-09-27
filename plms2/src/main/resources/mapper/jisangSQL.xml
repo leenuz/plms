@@ -502,11 +502,11 @@ SELECT *
 		<if test="ADDRESSCODE != null and ADDRESSCODE != ''">
 			AND JM.jm_ADDRCODE LIKE '$ADDRESSCODE$%'
 		</if>
-		<if test="JIBEON != null and JIBEON != ''">
+		<if test="jibeon != null and jibeon != ''">
 			AND JM.jm_JIBUN LIKE '${JIBEON}%'
 		</if>
-		<if test="JISA != null and JISA != ''">
-			AND JM.jm_JISA = #{JISA}
+		<if test="jisa != null and jisa != ''">
+			AND JM.jm_JISA = #{jisa}
 		</if>
 		<if test="DG_STARTDAY != null and DG_STARTDAY != ''">
 			AND JM.jm_DEUNGGI_DATE >=to_date( #{DG_STARTDAY} , 'yyyy-mm-dd')
@@ -520,8 +520,8 @@ SELECT *
 		<if test="CD_ENDDAY != null and CD_ENDDAY != ''">
 			AND JM.jm_CHUIDEUK_DATE &lt;= 	to_date( #{CD_ENDDAY} , 'yyyy-mm-dd')
 		</if>
-		<if test="SOYU != null and SOYU != ''">
-			AND JS.js_SOUJA_NAME LIKE '%${SOYU}%'
+		<if test="souja!= null and souja != ''">
+			AND JS.js_SOUJA_NAME LIKE '%${souja}%'
 		</if>
 		<if test="JISANGNO != null and JISANGNO != ''">
 			AND JM.jm_JISANG_NO = #{JISANGNO}

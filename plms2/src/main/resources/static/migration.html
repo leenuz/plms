@@ -680,7 +680,61 @@ $(document).on("change","#my_file_input",function(e){
 					} */
 					
 				} //end for
-            }else if ($("#dbname").val()=="dosi_info"){
+            }else if ($("#dbname").val()=="jisang_permit_master"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					
+					
+					var pmt_st_date=EXCEL_JSON[j].USE_ST_DATE;
+					var pmt_ed_date=EXCEL_JSON[j].USE_ED_DATE;
+					
+					
+					
+					
+					var pmt_st_date_arr=pmt_st_date.split("/");
+					var pmt_ed_date_arr=pmt_ed_date.split("/");
+					
+					
+					
+					
+					/* if (j>130 && j<140){
+						console.log(EXCEL_JSON[j]);
+						console.log(EXCEL_JSON[j].PMT_FIRST_DATE);
+						console.log(pmt_first_date_arr.length);
+						console.log(pmt_first_date_arr);
+						console.log("pmt_st_date_arr:"+pmt_st_date_arr);
+						
+						if (isArrayEmpty(pmt_first_date_arr)) {
+							console.log(pmt_first_date_arr.length);
+							
+						}
+						console.log("0:"+pmt_first_date_arr[0]);
+						console.log("1:"+pmt_first_date_arr[1]);
+						console.log("2:"+pmt_first_date_arr[2]);
+					} */
+					
+					
+					if (pmt_st_date_arr[0]>12 ) EXCEL_JSON[j].USE_ST_DATE=pmt_st_date_arr[1]+"/"+pmt_st_date_arr[2]+"/"+pmt_st_date_arr[0];
+					if (pmt_ed_date_arr[0]>12) EXCEL_JSON[j].USE_ED_DATE=pmt_ed_date_arr[1]+"/"+pmt_ed_date_arr[2]+"/"+pmt_ed_date_arr[0];
+					
+					/* if (j>130 && j<140){
+						
+						console.log(EXCEL_JSON[j].PMT_FIRST_DATE);
+						
+					} */
+					/* if (j>70 && j<80){
+						
+						console.log(EXCEL_JSON[j]);
+						console.log(arr);
+						if (isDate(txt)) {
+							
+							console.log(j+":"+"true"+":"+txt);
+						}
+						else console.log(j+":"+"false"+":"+txt);
+					} */
+					
+				} //end for
+            }
+            else if ($("#dbname").val()=="dosi_info"){
 				for(j=0;j<EXCEL_JSON.length;j++){
 					
 					

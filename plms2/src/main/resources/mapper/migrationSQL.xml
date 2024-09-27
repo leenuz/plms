@@ -523,6 +523,8 @@
 		 </if>
 		 ,jm_udate
 		 ,jm_pnu
+		 ,jm_jimok_text
+		 ,jm_permitted_yn
 		 
 		 ) 
 		 VALUES (
@@ -555,6 +557,8 @@
 		  </if>
 		  ,Now()
 		  ,#{PNU}
+		  ,nullif(#{JIMOK_TEXT},'')
+		  ,#{PERMITTED_YN}
 		 
 		   )
 	
@@ -569,7 +573,7 @@
 		 , js_address
 		 </if>
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PONE_NUMBER)" >
-		 , js_pone_number
+		 , js_phone_number
 		 </if>
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(HOME_NUMBER)" >
 		 ,js_home_number
@@ -1268,8 +1272,9 @@
 		  #{PMT_NO}
 		  ,#{USE_PURPOS}
 		  ,#{ECHO_NO}
-		  ,date '1899-12-30'+#{USE_ST_DATE}::int
-		  ,date '1899-12-30'+#{USE_ED_DATE}::int
+		  ,TO_DATE(#{USE_ST_DATE},'MM/DD/YY')
+		  ,TO_DATE(#{USE_ED_DATE},'MM/DD/YY')
+		  
 		  
 		  ,#{SPOT_RESULT}
 		  ,#{RIVEW}
