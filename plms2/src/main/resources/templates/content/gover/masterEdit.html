@@ -503,6 +503,8 @@
 				<input type="hidden" id="jibun" name="jibun" >
 				<input type="hidden" id="jibun_full" name="jibun_full" >
 				<input type="hidden" id="addrcode" name="addrcode" >
+				<input type="hidden" name="x"/>
+				<input type="hidden" name="y"/>
 			    <input type="text" class="notWriteInput" readonly placeholder="1" />
 			    </li>
 				
@@ -586,7 +588,7 @@
 			    </li>
 			    <!-- 보기 -->
 			    <li class="content btnBox">
-			      <button class="miniBtn lightBlueBtn viewDetailButton">위치보기</button>
+			      <button class="miniBtn lightBlueBtn viewDetailButton" onclick="openMap(this)">위치보기</button>
 			    </li>
 			    <!-- 추가 버튼 -->
 			    <li class="middleWidth content btnBox">
@@ -701,7 +703,7 @@
 				</li>
   		        <!-- 보기 -->
   		        <li class="content btnBox">
-  		          <button class="miniBtn lightBlueBtn viewDetailButton">위치보기</button>
+  		          <button class="miniBtn lightBlueBtn viewDetailButton" onclick="openMap(this)">위치보기</button>
   		        </li>
   		        <!-- 추가 버튼 -->
   		        <li class="middleWidth content btnBox">
@@ -814,7 +816,7 @@
 				</li>
   		        <!-- 보기 -->
   		        <li class="content btnBox">
-  		          <button class="miniBtn lightBlueBtn viewDetailButton">위치보기</button>
+  		          <button class="miniBtn lightBlueBtn viewDetailButton" onclick="openMap(this)">위치보기</button>
   		        </li>
   		        <li class="middleWidth content btnBox">
   		          <div class="btnWrap">
@@ -849,7 +851,9 @@
 					<input type="hidden" id="jibun_full" name="jibun_full" >
 					<input type="hidden" id="addrcode" name="addrcode" >
   		        	<input type="text" class="notWriteInput" readonly placeholder="1" />
-  		        </li>
+					  <input type="hidden" name="x"/>
+					  <input type="hidden" name="y"/>
+				</li>
 				
 				<!-- 관리기관 -->
   		        <li class="content largeWidth selectContentArea">
@@ -931,7 +935,7 @@
   		        </li>
   		        <!-- 보기 -->
   		        <li class="content btnBox">
-  		          <button class="miniBtn lightBlueBtn viewDetailButton">위치보기</button>
+  		          <button class="miniBtn lightBlueBtn viewDetailButton" onclick="openMap(this)">위치보기</button>
   		        </li>
   		        <li class="middleWidth content btnBox">
   		          <div class="btnWrap">

@@ -8,20 +8,6 @@ $(document).on("click","#moveMap",function(){
 	openMapWindow({'lon':mapCoordLng, 'lat':mapCoordLat});
 })
 
-function moveToCityHall(x, y) {
-    console.log("--------moveToCityHall-------------");
-    var cityHallCoords = {};
-
-    var x = parseFloat(x);
-    var y = parseFloat(y);
-    if (x != 0 && y != 0 && !isNaN(x) && !isNaN(y)) {
-        cityHallCoords = { lon: y, lat: x, zoom: 16 };
-        openMapWindow(cityHallCoords);
-    } else {
-        alert("해당 위치에 대한 좌표가 없습니다.");
-    }
-}
-
 $(document).ready(function () {
 	// 드래그 앤 드롭 영역 파일 첨부 관련 코드 시작
 	var objDragAndDrop = $(".fileUploadBox");

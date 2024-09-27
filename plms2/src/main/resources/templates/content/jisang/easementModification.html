@@ -23,6 +23,7 @@
 			</div>
 
 			<form name="saveForm"  id="saveForm" onSubmit="return false;">
+			<input type="hidden" name="mod_jisangNo" th:value="${resultData.jm_jisang_no}">
 			<section class="defaultInfo">
 				<div class="subTitle">기본 정보</div>
 
@@ -333,8 +334,8 @@
 				<div class="subTitle">
 					소유자 정보*
 				</div>
-				<input type="hidden" name="mpnu" id="mpnu" />
-				<input type="hidden" name="mjibun" id="mjibun" />
+				
+				
 				<div class="contWrap">
 					<div class="depth1" id="soujaDiv">
 						<ul class="titles">

@@ -430,7 +430,7 @@ SELECT *
                        , TO_CHAR(JM.jm_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE
                        , JM.jm_chuideuk_money as CHUIDEUK_MONEY
                        , TO_CHAR(JM.jm_DEUNGGI_DATE, 'YYYY-MM-DD') AS DEUNGGI_DATE
-                       , JM.jm_pnu as PNU
+                       , trim(JM.jm_pnu) as PNU
                        , JM.jm_jimok_text as JIMOK_TEXT
                        , JM.jm_JIJUK_AREA + COALESCE((SELECT SUM(S.jm_JIJUK_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS JIJUK_AREA
                        , JM.jm_PYEONIB_AREA + COALESCE((SELECT SUM(S.jm_PYEONIB_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS PYEONIB_AREA
@@ -1853,7 +1853,7 @@ SELECT count(*)
 		jm_gover_own_yn = #{GOVEROWNYN},
 		jm_jasan_no = #{JASANNO},
 		jm_chuideuk_date = TO_DATE(#{CD_STARTDAY}, 'YYYY-MM-DD'),
-		jm_pyeonib_area = #{PYEONIBAREA},
+		jm_pyeonib_area = #{PYEONIBAREA}::numeric,
 		jm_use_state = #{USESTATE},
 		jm_deunggi_date = TO_DATE(#{DGSTARTDAY}, 'YYYY-MM-DD'),
 		jm_deunggi_no = #{DEUNGGINO},
@@ -1867,9 +1867,10 @@ SELECT count(*)
 		jm_cancel_bosang_money = #{jm_cancel_bosang_money}, <!--?-->
 		jm_cancel_reason = #{jm_cancel_reason}, <!--?-->
 		jm_cancel_comment = #{jm_cancel_comment}, <!--?-->
-		jm_cancel_yn = 'Y'
+		jm_cancel_yn = 'Y',
+		jm_special_cont=#{SPECIALCONT}
 		WHERE jm_jisang_no = #{JISANGNO} <!--지상권번호-->
-		AND jm_idx = cast(#{jm_idx} as integer) <!--?-->
+		
 	</update>
 	
 	<delete id="deleteJisangMasterTmp" parameterType="map">
@@ -2639,13 +2640,13 @@ WHERE
 		Values
 		(#{JISANGNO}, #{SINM}, #{GUNGUNM}, #{DONGNM}, #{RINM}, #{JIBUN}, #{JISANM}, #{GOVEROWNYN},
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CD_STARTDAY)" >
-			TO_DATE(#{CD_STARTDAY} || '00:00:00', 'YYYYMMDDHH24:MI:SS'),
+			TO_DATE(#{CD_STARTDAY} || '00:00:00', 'YYYYMMDD'),
 		</if>
 
 		nullif(#{JIJUKAREA},'')::numeric,
 		#{ZONE}, #{SUNGUBUN}, #{YONGDO}, #{DOSIPLAN}, #{COMPLEYN}, nullif(#{PYEONIBAREA},'')::numeric,
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DGSTARTDAY)" >
-			TO_DATE(#{DGSTARTDAY#} || '00:00:00', 'YYYYMMDDHH24:MI:SS') ,
+			TO_DATE(#{DGSTARTDAY} || '00:00:00', 'YYYYMMDD') ,
 		</if>
 		#{DEUNGGINO}, #{DEUNGGISO},
 		#{JASANNO}, #{ADDRCODE}, #{PNU} ,#{USESTATE} , #{SPECIALCONT} , #{LOCATION}, #{JIMOK}, #{SAVE_STATUS}, #{PERMITTED_YN})
@@ -2974,7 +2975,7 @@ SELECT T.PNU
 	</select>
 	<delete id="deletePnuIssueHistory" parameterType="HashMap">
 	
-DELETE PLMS_ISSUE_HISTORY
+DELETE from PLMS_ISSUE_HISTORY
  WHERE ( PNU = #{PNU}
     OR (PNU = '99999'
        AND ADDRCODE = #{ADDRCODE}
@@ -2983,11 +2984,11 @@ DELETE PLMS_ISSUE_HISTORY
 	</delete>
 		<delete id="deletePnuIssueForPnuReal" parameterType="HashMap">
 
-DELETE PLMS_POTENTIAL_ISSUE
- WHERE ( PNU = #{PNU}
-    OR (PNU = '99999'
-       AND ADDRCODE = #{ADDRCODE}
-       AND JIBUN = #{JIBUN}) )
+DELETE from POTENTIAL_ISSUE
+ WHERE ( pi_PNU = #{PNU}
+    OR (pi_PNU = '99999'
+       AND pi_address_code = #{ADDRCODE}
+       AND pi_JIBUN = #{JIBUN}) )
 
 	</delete>
 	
@@ -3072,4 +3073,22 @@ DELETE PLMS_POTENTIAL_ISSUE
 		select count(*) from jisang_permit_atcfile where pmt_no=#{PMT_NO} and file_gubun = #{FILE_GUBUN}::varchar
 		
 	</select>
+	
+	<insert id="insertCancelFile" parameterType="HashMap">
+           
+			INSERT INTO jisang_cancel_ATCFILE(manage_no, SEQ	, FILE_PATH, FILE_NM, FILE_GUBUN)
+			VALUES (#{MANAGE_NO},nextval('jisang_cancel_atcfile_seq'), #{FILE_PATH}, #{FILE_NM}, #{FILE_GUBUN})
+			
+	</insert>
+	<update id="updateCancelFile" parameterType="HashMap">
+           
+			update jisang_cancel_ATCFILE set FILE_PATH=#{FILE_PATH},FILE_NM=#{FILE_NM}
+			where manage_no=#{MANAGE_NO} and file_gubun=#{FILE_GUBUN}
+			
+	</update>
+	<select id="selectCancelFileCount" resultType="integer" parameterType="HashMap">
+		select count(*) from jisang_cancel_ATCFILE where manage_no=#{MANAGE_NO} and file_gubun = #{FILE_GUBUN}::varchar
+		
+	</select>
+	
 </mapper>

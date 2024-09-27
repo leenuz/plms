@@ -948,12 +948,13 @@ WHERE 1=1
 		    WHEN JKM.jisa IS NOT NULL  THEN JKM.jisa 
 		    ELSE GM.gm_jisa 
 		 END AS JISA
-		
+		,JKM.x as x
+		,jKM.y as Y
 		FROM GOVER_PNU GP
-                LEFT JOIN JIJUK_2024 JKM ON GP.gp_pnu = JKM.PNU
+                LEFT JOIN JIJUK_2024 JKM ON trim(GP.gp_pnu) = JKM.PNU
                 LEFT JOIN GOVER_MASTER  GM ON GM.gm_gover_no = GP.gp_gover_no
 		WHERE 1=1
-		and GP.gp_gover_no ='G_000914'
+		and GP.gp_gover_no =#{GOVER_NO}
 		ORDER BY GP.gp_rep_flag DESC, GP.gp_seq ASC
 		) T
 	</select>
