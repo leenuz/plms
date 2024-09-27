@@ -153,7 +153,7 @@ public class dopcoController {
 		return mav;
 	}
 	
-	// 권리 확보 - 데이터테이블 - 회사토지
+	// 권리 확보 - 데이터테이블 - 회사토지 상세정보
 	@GetMapping(path="/companyLandDetails") //http://localhost:8080/api/get/dbTest
     public ModelAndView companyLandDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		HashMap params = new HashMap();
@@ -270,10 +270,9 @@ public class dopcoController {
 		return mav;
 	}
 
+	// 송유관로 권리현황 - 회사토지 상세정보
 	@GetMapping(path="/compLandInfo") //http://localhost:8080/api/get/dbTest
 	public ModelAndView compLandInfo(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 		ModelAndView mav=new ModelAndView();
 		HashMap params = new HashMap();
 		ArrayList<HashMap>  list=new ArrayList<HashMap>();
@@ -290,11 +289,13 @@ public class dopcoController {
 	//	params.put("index",index);
 		log.info("params:"+params);
 		list = (ArrayList) mainService.selectQuery("dopcoSQL.selectAllData", params); // 기본정보
+		
+		//ArrayList<HashMap> dopcoIssueList = mainService.selectQuery("commonSQL.selectPnuIssue",params);
+		//ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
 		ArrayList toja_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Toja", params); // 투자오더
 		ArrayList right_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Right", params); // 권리내역
 		ArrayList modify_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Modify", params); // 변경이력
 		//params.put("dopco_no", modify_list)
-		
 		ArrayList file_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Files", params); // 첨부파일
 		//ArrayList<HashMap> data = mainService.selectQuery("dopcoSQL.selectAllData",params);
 		HashMap resultData = new HashMap<>();
@@ -367,7 +368,8 @@ public class dopcoController {
 		mav.addObject("file_list", file_list);
 		mav.addObject("memo_list", new ArrayList<>());
 		mav.addObject("jijuk", jijuk);
-log.info("resultData:"+resultData);
+		log.info("resultData:"+resultData);
+		// mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
 		mav.setViewName("content/dopco/compLandInfo");
 		return mav;
 	}
