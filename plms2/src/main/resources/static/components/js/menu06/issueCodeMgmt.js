@@ -199,7 +199,7 @@ const loadDepth3Codes = () => {
 // 목록 조회
 function loadData() {
     var allData = {};
-    allData.TYPE = $('input[name="issueCodeMgmt_rightsSecured"]:checked').val().substr(0, 1);
+    allData.TYPE = $('input[name="issueCodeMgmt_rightsSecured"]:checked').val();
     allData.REGISTED_YN = $('input[name="issueCodeMgmt_contractStatus"]:checked').val();
     allData.PERMITTED_YN = $('input[name="issueCodeMgmt_contractStatus"]:checked').val();
     allData.DEPTH1 = $('#issueCodeMgmtSelectBox01_1').val();
@@ -255,7 +255,7 @@ function loadData() {
 
                 // ### 지상권 설정 테이블
                 for (var i = 0; i < table1Data.length; i++) {
-                    var row = table2Data[i];
+                    var row = table1Data[i];
                     
                     var trStr = '<tr>';
                     if (i == 0) {

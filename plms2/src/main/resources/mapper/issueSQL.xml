@@ -897,7 +897,7 @@ WHERE 1 = 1
 
      
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(TYPE)" >
-			AND SUBSTR(TTT.DEPTH1_CODE, 1, 1) = #{TYPE}
+			AND SUBSTR(TTT.DEPTH1_CODE, 1, 2) = #{TYPE}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(REGISTED_YN)" >
 			AND TTT.REGISTED_YN = #{REGISTED_YN}

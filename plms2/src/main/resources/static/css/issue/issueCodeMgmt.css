@@ -449,7 +449,7 @@ button {
 #issueCodeMgmt .tableArea .contWrap {
   border: 1px solid #cddbf0;
   border-radius: 5px;
-  height: 660px;
+  /* height: 660px; */
   overflow-y: scroll;
 }
 #issueCodeMgmt .tableArea table {
