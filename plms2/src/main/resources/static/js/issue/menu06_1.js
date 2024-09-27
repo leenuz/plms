@@ -94,7 +94,7 @@ const newIssueRegisterOpenEvet = () => {
         }
     }
 }
-// newIssueRegisterOpenEvet()
+newIssueRegisterOpenEvet()
 
 
 // /* 현황통계 팝업 오픈 */
