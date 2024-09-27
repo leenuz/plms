@@ -387,7 +387,7 @@ select {
 .issueTotalPopWrap .issueTotalDataWrapper{
 
  width: 100%;
- height: 420px;
+ height: auto;
  margin:0 auto;
  border: 1px solid #dfe7f4;
  border-radius: 20px;
@@ -401,7 +401,7 @@ select {
 .issueTotalPopWrap .issueTotalDataWrapper .issueTotalDataScrollBoxs{
   width: 100%;
   height: 98%;
-  margin:0 auto;
+  margin:20px;
   border-radius: 20px;
   overflow-x: scroll;
   overflow-y: scroll;
@@ -505,7 +505,6 @@ select {
 }
 
 .issueTotalPopWrap .issueDataTextContent{
-  
   width: 100%;
   height: 204px;
   border: 1px solid #CDDBF0;

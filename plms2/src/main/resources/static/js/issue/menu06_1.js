@@ -40,7 +40,7 @@ const IssuePopupOpenEvet = () => {
     }
 
 }
-IssuePopupOpenEvet();
+// IssuePopupOpenEvet();
 
 /* 신규민원등록 팝업 */
 const newIssueRegisterOpenEvet = () => {
@@ -94,48 +94,258 @@ const newIssueRegisterOpenEvet = () => {
         }
     }
 }
-newIssueRegisterOpenEvet()
+// newIssueRegisterOpenEvet()
 
 
-/* 현황통계 팝업 오픈 */
-const issueTotalPopOpenEvet = () => {
-    const issueManageTotalBtn = document.querySelector("#dopcoIssueManage .issueManageTotalBtn");
-    const issueManageIssueTotalPopWrap = document.querySelector(".issueManageIssueTotalWrapper");
-    let issueTotalPopFilePath = '/components/popuphtml/issueTotalPop.html'; // 삽입할 html 파일 경로
+// /* 현황통계 팝업 오픈 */
+// const issueTotalPopOpenEvet = () => {
+//     const issueManageTotalBtn = document.querySelector("#dopcoIssueManage .issueManageTotalBtn");
+//     const issueManageIssueTotalPopWrap = document.querySelector(".issueManageIssueTotalWrapper");
+//     let issueTotalPopFilePath = '/components/popuphtml/issueTotalPop.html'; // 삽입할 html 파일 경로
 
-    if (issueManageTotalBtn) {
-        // let xhr = new XMLHttpRequest();
-        // xhr.open('GET', issueTotalPopFilePath, true);
-        // xhr.onreadystatechange = function () {
-        //     if (xhr.readyState == 4 && xhr.status == 200) {
-        //         issueManageIssueTotalPopWrap.innerHTML = xhr.responseText;
-        //         runScriptsInElement(issueManageIssueTotalPopWrap); // 삽입된 html내 스크립트 실행 함수 호출
-        //     }
-        // };
-        // xhr.send();
-        // console.log('issueManageIssueTotalPopWrap 작동');
+//     if (issueManageTotalBtn) {
+//         // let xhr = new XMLHttpRequest();
+//         // xhr.open('GET', issueTotalPopFilePath, true);
+//         // xhr.onreadystatechange = function () {
+//         //     if (xhr.readyState == 4 && xhr.status == 200) {
+//         //         issueManageIssueTotalPopWrap.innerHTML = xhr.responseText;
+//         //         runScriptsInElement(issueManageIssueTotalPopWrap); // 삽입된 html내 스크립트 실행 함수 호출
+//         //     }
+//         // };
+//         // xhr.send();
+//         // console.log('issueManageIssueTotalPopWrap 작동');
 
-        issueManageTotalBtn.addEventListener("click", () => {
+//         issueManageTotalBtn.addEventListener("click", () => {
 
-            const popupOpen = document.getElementById("issueTotalPopContent");
-            if (popupOpen) {
-                popupOpen.classList.add("active");
-            }
-        })
+//             const popupOpen = document.getElementById("issueTotalPopContent");
+//             if (popupOpen) {
+//                 popupOpen.classList.add("active");
+//             }
+//         })
 
-        // 삽입된 html내 스크립트 실행 함수
-        const runScriptsInElement = (element) => {
-            const scripts = element.getElementsByTagName('script');
-            for (let i = 0; i < scripts.length; i++) {
-                const script = document.createElement('script');
-                script.textContent = scripts[i].textContent;
-                document.body.appendChild(script).parentNode.removeChild(script);
-            }
-        }
-    }
+//         // 삽입된 html내 스크립트 실행 함수
+//         const runScriptsInElement = (element) => {
+//             const scripts = element.getElementsByTagName('script');
+//             for (let i = 0; i < scripts.length; i++) {
+//                 const script = document.createElement('script');
+//                 script.textContent = scripts[i].textContent;
+//                 document.body.appendChild(script).parentNode.removeChild(script);
+//             }
+//         }
+//     }
+// }
+
+// issueTotalPopOpenEvet()
+
+/* x표시 클릭시 닫기 */
+
+const issueTotalcloseBtn = document.querySelector(".issueTotalcloseBtn");
+const issueTotalPopContentWrap = document.getElementById("issueTotalPopContent");
+
+if(issueTotalcloseBtn){
+issueTotalcloseBtn.addEventListener("click" , () => {
+  issueTotalPopContentWrap.classList.remove("active");
+})
 }
 
-issueTotalPopOpenEvet()
+/* 셀렉트박스 함수 */
+
+const issueTotalSelectEvet = (reload = false) => {
+
+const issueTotalSelectsTitleBtn = document.querySelectorAll(".issueTotalPopWrap .issueTotalSelectsTitleBtn");
+const issueTotalSelectList = document.querySelectorAll(".issueTotalPopWrap .sufaceSelectList");
+const issueTotalSelectListMember = document.querySelectorAll(".issueTotalPopWrap .sufaceSelectList .surfaceSelectListMember");
+const issueTotalselectWrappers = document.querySelectorAll(".issueTotalHiddenSelect"); //셀렉박스
+
+
+let issueTotalAnswer = "";
+let issueTotalCheckAnswer = "";
+
+//셀렉버튼 최초값 함수
+const initialValues = () => {
+   if(issueTotalselectWrappers.length > 0){
+    for(let d = 0; d <= issueTotalselectWrappers.length - 1; d++){
+
+       let issueTotalselectValuesInitial = issueTotalselectWrappers[d].children;
+       issueTotalSelectsTitleBtn[d].innerText = issueTotalselectValuesInitial[0].value; //셀렉박스의 첫번째 값들이 surfaceSelectsTitleBtn값의 첫 값이 됨
+       issueTotalselectWrappers[d].value = issueTotalSelectsTitleBtn[d].innerText; //셀렉박스의 value값을 surfaceSelectsTitleBtn값으로 설정
+       
+    //    if(issueTotalSelectListMember[d].classList.contains("selectChoice")){ 
+    //       issueTotalSelectsTitleBtn[d].innerText = `전체`;
+    //       }
+   }
+ }
+}
+
+if(issueTotalselectWrappers.length > 0){
+
+initialValues();//최초의값
+
+//체크박스가 아닐 경우, 셀렉박스 값  li p값에 담기 
+for(let i = 0; i <= issueTotalselectWrappers.length - 1; i++){
+
+   const selectValues = issueTotalselectWrappers[i].children; //셀렉박스옵션값 
+
+   for(let x = 0; x <= selectValues.length - 1; x++){
+
+     issueTotalAnswer += `<li><p>${selectValues[x].value}</p></li>`;
+
+       //체크박스가 있는 경우, 셀렉박스 값 li input p 값 이용
+       if(issueTotalSelectListMember[i].classList.contains("checkBoxsContent")){ //체크박스
+         issueTotalCheckAnswer += `<li>
+           <input
+             type="checkbox"
+             id="issueTotalPopCheckBox0${x+1}"
+             name="issueTotalPopCheck" />
+           <label for="issueTotalPopCheckBox0${x+1}"></label><p>${selectValues[x].value}</p></li>`
+       }
+   }
+
+   issueTotalSelectListMember[i].innerHTML = issueTotalSelectListMember[i].classList.contains("checkBoxsContent") ? issueTotalCheckAnswer : issueTotalAnswer;
+   issueTotalAnswer = '';
+   issueTotalCheckAnswer = '';
+}
+}
+
+if(reload){
+    return;
+}
+
+issueTotalSelectsTitleBtn.forEach((btns, index) => {
+     
+  btns.addEventListener("click" , () => {
+    const nextSiblings = btns.nextElementSibling;
+
+    issueTotalSelectsTitleBtn.forEach((otherBtn) => {
+     if (otherBtn !== btns) {
+       otherBtn.classList.remove("active");
+     }
+    });
+    btns.classList.toggle("active");
+    nextSiblings.classList.toggle("active");
+
+     //surfaceSelectList관련 toggle버튼
+    issueTotalSelectList.forEach((box, boxIndex) => {
+     //셀렉버튼의 인덱스와  surfaceSelectList 인덱스번호가 일치하면 메뉴를 오픈하고, btn에 active를 포함
+     if (index === boxIndex) {
+        box.classList.toggle(
+           "active",
+           btns.classList.contains("active")
+        );
+     } else {
+        //그렇지 않으면 메뉴닫기
+        box.classList.remove("active");
+     }
+     });
+
+  });
+ 
+
+});
+
+  issueTotalSelectList.forEach((list) => {
+     list.addEventListener("click" , (event) => {
+      
+       const thisBtns = event.target.parentElement.parentElement.parentElement.previousElementSibling;
+       const selectContent =  event.target.parentElement.parentElement.parentElement.parentElement.previousElementSibling.children[0];//셀렉박스
+       let currentSelect = selectContent.getAttribute("id");//셀렉박스아이디 가져오기
+       
+       if (event.target.nodeName === "P") {
+
+           //빌생지사클릭시
+           if( currentSelect === "issueTotalHiddenSelectBox01"){
+               return issueTotalSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
+               issueTotalSelectList.forEach((lists) => lists.classList.remove("active"));
+           }else{ 
+               let currentSelectValue = document.getElementById(currentSelect); //현재 셀렉박스 가져오기
+
+               return thisBtns.innerText = event.target.innerText,
+               $(currentSelectValue).val(event.target.innerText),//셀렉박스 값에 현재 클릭된 값의 텍스트 담기 
+               console.log(currentSelectValue.value), //셀렉박스값표시
+               selectMinwonStatusStatis(false),
+               issueTotalSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
+               issueTotalSelectList.forEach((lists) => lists.classList.remove("active"));
+           }
+
+       }
+           
+       if(event.target.nodeName === "LABEL" || event.target.nodeName === "INPUT[TYPE='CHECKBOX']" ){ return; }
+
+
+ });
+
+});
+
+}
+
+
+issueTotalSelectEvet();
+
+
+/* 체크박스 함수 */
+
+const issueTatalCheckboxes = (checkboxes) =>  {
+const issueTotalPopCheck = document.getElementsByName("issueTotalPopCheck");
+checkboxes = issueTotalPopCheck;
+
+const valuesArray = []; //셀렉박스 값 저장할 배열
+
+if(checkboxes){
+Array.from(checkboxes).forEach((checkBtn, index) => {
+
+  //버튼 내 p값 가져오기 
+  const values = checkBtn.nextElementSibling.nextElementSibling.innerText;
+
+  checkBtn.addEventListener("change", () => {
+
+      //체크박스를 체크했을 때
+      if (checkBtn.checked) {
+          // 첫 번째 체크박스가 체크되었을 때
+          if (index === 0) {
+              // 나머지 체크박스들의 체크 상태를 해제, 배열에서 제거
+              for (let i = 1; i < checkboxes.length; i++) {
+                  checkboxes[i].checked = false; // 체크 해제
+                  const valueToRemove = checkboxes[i].nextElementSibling.nextElementSibling.innerText;
+                  const indexToRemove = valuesArray.indexOf(valueToRemove);
+                  if (indexToRemove !== -1) {
+                      valuesArray.splice(indexToRemove, 1); // 배열에서 제거
+                  }
+              }
+          } else {
+              // 첫 번째 체크박스가 체크되어 있을 때, 다른 체크박스를 체크하면 첫 번째 체크박스 해제
+              checkboxes[0].checked = false;
+              const valueToRemove = checkboxes[0].nextElementSibling.nextElementSibling.innerText;
+              const indexToRemove = valuesArray.indexOf(valueToRemove);
+              if (indexToRemove !== -1) {
+                  valuesArray.splice(indexToRemove, 1); // 배열에서 제거
+              }
+          }
+          
+          // 배열에 값 추가
+          valuesArray.push(values);
+      } else {
+          // 체크박스가 체크 해제되었을 때 배열에서 값 제거
+          const index = valuesArray.indexOf(values);
+          if (index !== -1) {
+              valuesArray.splice(index, 1);
+          }
+      }
+
+      // 변경된 배열 값을 버튼의 텍스트에 삽입
+      const displayElement = checkboxes[0].parentElement.parentElement.parentElement.previousElementSibling;
+      displayElement.innerText = valuesArray.join(', '); // 배열을 문자열로 변환해서 출력
+
+      selectMinwonStatusStatis(false);
+
+  });
+});
+
+}
+
+}
+
+issueTatalCheckboxes();
+
 
 
 //팝업 숨김
@@ -516,6 +726,7 @@ function loadDataTable(params) {
     });
 }
 
+//리스트 이슈 팝업
 function issuePop(idx) {
     const data = saveJsonData.find(function (obj) { return obj.mm_idx == idx })
     const popupOpen = document.getElementById("issuePopup");
@@ -523,6 +734,216 @@ function issuePop(idx) {
         $("#issuePopup .issue_content").text(`${data.mm_mw_code1} > ${data.mm_mw_code2} > ${data.mm_mw_code3}`)
         popupOpen.classList.add("active");
     }
+}
+
+//현황 팝업
+function hyeonhwangPop() {
+    const popupOpen = document.getElementById("issueTotalPopContent");
+    if (popupOpen) {
+        popupOpen.classList.add("active");
+    }
+}
+
+
+//조회하기 클릭시 상단 정보 출력
+$(document).on("click", "#searchBtn", function () {
+    var formSerializeArray = $('#searchForm').serializeArray();
+    var object = {};
+    for (var i = 0; i < formSerializeArray.length; i++) {
+        if (formSerializeArray[i]['value'] === '전체') {
+            continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
+        }
+        object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+    }
+
+    var json = JSON.stringify(formSerializeArray);
+
+    console.log("----------jsonobj------------");
+    console.log(json);
+    console.log("object issueManageRadio01:" + object.issueManageRadio01);
+
+    loadDataTable(object);
+    console.log("-----------------------");
+})
+
+//민원관리 -> 현황통계
+$(document).on("click", ".issueManageTotalBtn", function () {
+    selectMinwonStatusStatis();
+});
+
+function initChart(containerID, data){
+    Highcharts.chart(containerID, {
+        chart: {
+            type: 'column' // 'bar'로 변경하면 수평 막대 차트가 됩니다.
+        },
+        title: {
+            text: '' // 차트 제목 제거
+        },
+        credits: {
+            enabled: false // Highcharts 로고 제거
+        },
+        legend: {
+            // layout: 'vertical', // 세로 방향으로 표시
+            align: 'left', // 왼쪽 정렬
+            verticalAlign: 'top', // 위쪽 정렬
+            x: 0, // 왼쪽에서의 위치
+            y: 0 // 위쪽에서의 위치
+        },
+        xAxis: {
+            title: "",
+            categories: data.jisaList
+        },
+        yAxis: {
+            title: "",
+            min: 0,
+            stackLabels: {
+                enabled: true,
+                formatter: function () {
+                    return this.total; // 0이 아닐 때만 표시
+                },
+                style: {
+                    fontWeight: 'bold',
+                    color: 'gray'
+                }
+            }
+        },
+        tooltip: {
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal', // 스택 방식 설정
+                dataLabels: {
+                    enabled: true,  // 데이터 레이블을 활성화
+                    formatter: function() {
+                        return this.y !== 0 ? this.y : null;  // 값이 0이 아니면 표시
+                    },
+                    color: '#000000',  // 데이터 레이블 색상
+                    style: {
+                        fontWeight: 'bold'  // 레이블 스타일 설정
+                    }
+                }
+            }
+        },
+        colors: ['#7bb6ff', '#534fc0', '#fc9642', '#49bb59'], // 색상 배열
+        series: data.charData
+    });
+}
+function selectMinwonStatusStatis(isAll = true){
+    var jisa = "";
+    var status =  "";
+    var occur_date =  "";
+    if(!isAll){
+        jisa =  $(".issueTotalSelectsTitleBtn").eq(0).text() == "전체" ? "" : $(".issueTotalSelectsTitleBtn").eq(0).text();
+        status =  $("#issueTotalHiddenSelectBox02").val()[0] == "전체" ? "" : findProgStatus($("#issueTotalHiddenSelectBox02").val()[0]);
+        occur_date =  $("#issueTotalHiddenSelectBox03").val()[0] == "전체" ? "" : $("#issueTotalHiddenSelectBox03").val()[0];
+    }
+    
+    var allData = { "jisa":jisa, "status": status, "occur_date": occur_date};
+    console.log(allData);
+    $.ajax({
+        url: "/statics/selectMinwonStatusStatis",
+        data: JSON.stringify(allData),
+        type: "POST",
+        dataType: "json",
+        success: function (res) {
+            console.log(res);
+            const result = res.result;
+            const data = res.data;
+            if(result != null && result != undefined && result == "success"){
+                const convertData = convetHyeonhwangData(data);
+                console.log("--- convertData");
+                console.log(convertData);
+                
+                //발생지사 리스트 추가
+                if(isAll){
+                    const hiddenBox = $('#issueTotalPopContent #issueTotalHiddenSelectBox01')
+                    hiddenBox.empty();
+                    hiddenBox.append(`<option value="전체">전체</option>`);
+                    $.each(convertData.jisaList, function (index, jisa) {
+                        var newItem = `<option value="${jisa}">${jisa}</option>`;
+                        hiddenBox.append(newItem);
+                    });
+                
+                    $('#issueTotalPopContent #issueTotalPopCheckBox01').prop('checked', true);
+                    //select , check init
+                    issueTotalSelectEvet(true);
+                    issueTatalCheckboxes();
+                }
+
+                //지사 리스트 추가
+                const jisaBox = $('#issueTotalPopContent .issueDataTextScrollBoxs');
+                jisaBox.empty();
+                $.each(convertData.data, function (index, data) {
+                    var newItem = `<ul class="datas">
+                                        <li><p>${data.mm_jisa}</p></li>
+                                        <li><p>${data.status_2_count}</p></li>
+                                        <li><p>${data.status_3_count}</p></li>
+                                        <li><p>${data.status_4_count}</p></li>
+                                        <li><p>${data.status_5_count}</p></li>
+                                    </ul>`;
+                    jisaBox.append(newItem);
+                });
+
+            
+                //차트
+                initChart("container", convertData);
+                
+                hyeonhwangPop();
+            }else{
+                alert("현황 통계 데이터가 없습니다.");
+            }
+        },
+        beforeSend: function () {
+            //(이미지 보여주기 처리)
+            //$('#load').show();
+        },
+        complete: function () {
+            //(이미지 감추기 처리)
+            //$('#load').hide();
+        },
+        error: function (jqXHR, textStatus, errorThrown, responseText) {
+            //alert("ajax error \n" + textStatus + " : " + errorThrown);
+            console.log(jqXHR);
+            console.log(jqXHR.readyState);
+            console.log(jqXHR.responseText);
+            console.log(jqXHR.responseJSON);
+        }
+    }) //end ajax
+}
+
+
+//현황 데이터를 변환
+function convetHyeonhwangData(data){
+    const returnObj = {};
+    returnObj.data = data;
+    returnObj.jisaList = data.map(item => item.mm_jisa);
+
+    //차트 데이터 만들기
+    returnObj.charData = [];
+    const obj02 = {
+        name: data[0].status_2_title,
+        data: data.map(item => item.status_2_count)
+    };
+    const obj03 = {
+        name: data[0].status_3_title,
+        data: data.map(item => item.status_3_count)
+    };
+    const obj04 = {
+        name: data[0].status_4_title,
+        data: data.map(item => item.status_4_count)
+    };
+    const obj05 = {
+        name: data[0].status_5_title,
+        data: data.map(item => item.status_5_count)
+    };
+   
+    returnObj.charData.push(obj02);
+    returnObj.charData.push(obj03);
+    returnObj.charData.push(obj04);
+    returnObj.charData.push(obj05);
+    return returnObj;
 }
 
 //조회하기 클릭시 상단 정보 출력
@@ -891,3 +1312,4 @@ const loadDepth3Codes = () => {
 		}
 	});
 };
+
