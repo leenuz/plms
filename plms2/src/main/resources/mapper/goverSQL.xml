@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 
-	<select id="selectPermitList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<select id="selectGoverPmtList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *,(row_number() over()) as no
 		from gover_master gm left join gover_permit gp on gp.gp_gover_no=gm.gm_gover_no
 		where 1=1
@@ -31,6 +31,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		AND gm.gm_dockey IS NOT null
 		AND gp.gp_dockey IS NOT null
+	</select>
+	<select id="selectPermitList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT GP.gp_buseo, 
+       GP.gp_dosiplan, 
+       GP.gp_echo_no, 
+       GP.gp_gover_area AS gover_area, 
+       GP.gp_gover_length AS gover_length,
+       GP.gp_gover_no, 
+       GP.gp_next_date::date AS next_date, 
+       GP.gp_nm,
+       GP.gp_pay_date::date AS pay_date, 
+       GP.gp_pay_money, 
+       GP.gp_pay_way, 
+       GP.gp_phone_number,
+       GP.gp_pmt_ed_date::date AS pmt_ed_date, 
+       GP.gp_pmt_first_date::date AS pmt_first_date,
+       GP.gp_pmt_name, 
+       GP.gp_pmt_no, 
+       GP.gp_pmt_office, 
+       GP.gp_adm_office, 
+       GP.gp_pmt_st_date::date AS pmt_st_date,
+       GP.gp_seq AS seq, 
+       GP.gp_siseolname, 
+       GP.gp_update_date::date AS update_date,
+       PA.pa_status, 
+       PA.pa_out_flag, 
+       PA.pa_out_url, 
+       GP.gp_dockey, 
+       GP.gp_seq
+       ,(row_number() over()) as no
+FROM gover_permit GP
+LEFT JOIN plms_approval PA 
+    ON GP.gp_dockey = PA.pa_dockey
+		WHERE GP.gp_GOVER_NO = #{GOVERNO}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(seq)" >
+			AND GP.gp_SEQ = #{SEQ}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pmtno)" >
+			AND GP.gp_SEQ = #{PMTNO}
+		</if>
+		ORDER BY GP.gp_SEQ DESC
 	</select>
 
 	<select id="selectPnuList" parameterType="java.util.HashMap" resultType="java.util.HashMap">

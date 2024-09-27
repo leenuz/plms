@@ -390,7 +390,7 @@ public class issueController {
 			response.getWriter().flush();
 		}
 	
-	//민원신규등록
+	//민원신규등록 (상신)
 	@Transactional
 	@PostMapping(path="/saveMinwonData") 
 	public void saveMinwonData(HttpServletRequest request, HttpServletResponse response) throws Exception {
