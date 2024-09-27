@@ -329,11 +329,18 @@ Array.from(checkboxes).forEach((checkBtn, index) => {
           if (index !== -1) {
               valuesArray.splice(index, 1);
           }
+
+          	//체크박스가 모두 해제시 전체 체크박스 체크
+          if(valuesArray.length <= 0){
+            checkboxes[0].checked = true;
+            valuesArray.push(checkboxes[0].nextElementSibling.nextElementSibling.innerText);
+        }
       }
 
       // 변경된 배열 값을 버튼의 텍스트에 삽입
       const displayElement = checkboxes[0].parentElement.parentElement.parentElement.previousElementSibling;
       displayElement.innerText = valuesArray.join(', '); // 배열을 문자열로 변환해서 출력
+
 
       selectMinwonStatusStatis(false);
 
