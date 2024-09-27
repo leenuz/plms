@@ -684,9 +684,10 @@ $(document).on("click","#radioNo",function(){
 function landTerminationSave(params){
     loadingShow();
     $.ajax({
-          url: "/jisang/landTerminationSave",
+         // url: "/jisang/landTerminationSave",
+		 url:"/jisang/insertJisangTerminationTemp",
           type: "POST",
-          data: params,
+          data: JSON.stringify(params),
      })
      .done(function (fragment) {
         loadingHide();

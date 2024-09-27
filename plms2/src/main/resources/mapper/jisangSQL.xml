@@ -3035,4 +3035,22 @@ DELETE PLMS_POTENTIAL_ISSUE
 		select count(*) from jisang_permit_atcfile where pmt_no=#{PMT_NO} and file_gubun = #{FILE_GUBUN}::varchar
 		
 	</select>
+	
+	<insert id="insertCancelFile" parameterType="HashMap">
+           
+			INSERT INTO jisang_cancel_ATCFILE(manage_no, SEQ	, FILE_PATH, FILE_NM, FILE_GUBUN)
+			VALUES (#{MANAGE_NO},nextval('jisang_cancel_atcfile_seq'), #{FILE_PATH}, #{FILE_NM}, #{FILE_GUBUN})
+			
+	</insert>
+	<update id="updateCancelFile" parameterType="HashMap">
+           
+			update jisang_cancel_ATCFILE set FILE_PATH=#{FILE_PATH},FILE_NM=#{FILE_NM}
+			where manage_no=#{MANAGE_NO} and file_gubun=#{FILE_GUBUN}
+			
+	</update>
+	<select id="selectCancelFileCount" resultType="integer" parameterType="HashMap">
+		select count(*) from jisang_cancel_ATCFILE where manage_no=#{MANAGE_NO} and file_gubun = #{FILE_GUBUN}::varchar
+		
+	</select>
+	
 </mapper>
