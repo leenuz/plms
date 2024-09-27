@@ -1,407 +1,247 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      
-      layout:decorate="~{layout/default_layout}">
- <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
-	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	
- <link rel="stylesheet" href="/css/issue/codeMgmt.css" /> 
-	  
-		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <link th:href="@{/css/common.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/issue/codeMgmt.css" />
+
+  <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
-		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
+  <style>
+    div.dt-top-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+    }
 
-div.dt-center-in-div {
-  margin: 0 auto;
+    div.dt-center-in-div {
+      margin: 0 auto;
       float: right;
-    margin-right: 30px;
-   
-}
-div.dt-center-in-div>div{
+      margin-right: 30px;
+    }
 
-display:inline;
-}
+    div.dt-center-in-div>div {
+      display: inline;
+    }
 
-div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
-}
+    div.dt-filter-spacer {
+      margin: 10px 0;
+      border: 1px solid red;
+    }
 
+    .dt-title {
+      text-align: center;
+      width: 180px;
+      float: left;
+    }
 
-.dt-title{
+    .dt-buttons {
+      display: inline-block;
+      width: 180px;
+    }
 
-text-align:center;
-width:180px;
-float:left;
+    .dt-length {
+      display: inline-block;
+    }
 
-}
-.dt-buttons{
-display:inline-block;
+    .dt-button {
+      color: white;
+      background-color: #4e5871;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 10px;
+      background-image: url(/assets/media/menu01/download.png);
+      background-size: 11px;
+      background-repeat: no-repeat;
+      background-position: 123px center;
+      text-aline: left;
+      margin-right: 10px;
+      width: 159px;
+      height: 38px;
+    }
 
-width:180px;
+    .dt-paging {
+      text-align: center;
+    }
 
-}
-.dt-length{
-display:inline-block;
-}
-.dt-button{
+    .dt-paging-button {
+      box-sizing: border-box;
+      display: inline-block;
+      min-width: 1.5em;
+      padding: 0.5em 1em;
+      margin-left: 2px;
+      text-align: center;
+      text-decoration: none !important;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      background: transparent;
+      color: #007bff !important;
+      font-size: 15px;
+      font-weight: 600;
+    }
 
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
+    .bottom {
+      text-align: center;
+    }
 
-}
+    .top {
+      text-align: right;
+      margin: 10px;
+    }
+  </style>
 
-.dt-paging {
-text-align: center;
-}
-
-.dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-    
-    
-}
-
-.bottom{
-text-align:center;
-
-}
-.top{
-
-text-align:right;
-margin:10px;
-
-}
-
-		</style>
-		
-    <title>코드관리</title>
-  </head>
+  <title>코드관리</title>
+</head>
 <th:block layout:fragment="content">
-    <!-- 코드관리 -->
-    <div class="codeMgmtWrappers">
-      <main id="codeMgmt">
-        <div class="mainTitle">
-          <h1>코드관리</h1>
-        </div>
+  <!-- 코드관리 -->
+  <div class="codeMgmtWrappers">
+    <main id="codeMgmt">
+      <div class="mainTitle">
+        <h1>코드관리</h1>
+      </div>
 
-        <div class="sectionBox">
-          <section class="codeManagement">
-            <div class="subTitle">
-              <div class="subTitleText">이슈 코드 추가/수정</div>
+      <div class="sectionBox">
+        <section class="codeManagement">
+          <div class="subTitle">
+            <div class="subTitleText">이슈 코드 추가/수정</div>
+          </div>
+
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="rowListBox">
+                <li class="title">권리확보</li>
+                <li class="content">
+                  <div class="radioBox">
+                    <div class="radioContent">
+                      <input type="radio" name="codeManagement_radio01" value="DY" checked/>
+                      <p class="radioText">지상권 설정</p>
+                    </div>
+                    <div class="radioContent">
+                      <input type="radio" name="codeManagement_radio01" value="DN" />
+                      <p class="radioText">지상권미설정</p>
+                    </div>
+                    <div class="radioContent">
+                      <input type="radio" name="codeManagement_radio01" value="GY" />
+                      <p class="radioText">점용</p>
+                    </div>
+                    <div class="radioContent">
+                      <input type="radio" name="codeManagement_radio01" value="GN" />
+                      <p class="radioText">미점용</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <ul class="rowListBox">
+                <li class="title">계약여부</li>
+                <li class="content">
+                  <div class="radioBox">
+                    <div class="radioContent">
+                      <input type="radio" name="codeManagement_radio02" value="Y" checked />
+                      <p class="radioText">계약 체결</p>
+                    </div>
+                    <div class="radioContent">
+                      <input type="radio" name="codeManagement_radio02" value="N" />
+                      <p class="radioText">계약 미체결</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <ul class="rowListBox">
+                <li class="title">대분류</li>
+                <li class="content selectPlace">
+                  <div class="selectICodeContentArea">
+                    <div class="hiddenSelectBox">
+                      <select name="depth1Code" id="issueCodeMgmtSelectBox01_1" hidden>
+                        <option value="">전체</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="customSelectBox">
+                      <button class="customSelectView">전체</button>
+                      <ul class="customSelectBtns" id="depth1Codes"></ul>
+                    </div>
+                  </div>
+                  <button class="selectBtn" id="selectDepth1Btn">선택</button>
+                </li>
+              </ul>
+              <ul class="rowListBox">
+                <li class="title">중분류</li>
+                <li class="content selectPlace">
+                  <div class="selectICodeContentArea">
+                    <div class="hiddenSelectBox">
+                      <select name="depth2Code" id="issueCodeMgmtSelectBox01_2" hidden>
+                        <option value="">전체</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="customSelectBox">
+                      <button class="customSelectView">전체</button>
+                      <ul class="customSelectBtns" id="depth2Codes"></ul>
+                    </div>
+                  </div>
+                  <button class="selectBtn" id="selectDepth2Btn">선택</button>
+                </li>
+              </ul>
+              <ul class="rowListBox">
+                <li class="title">세분류</li>
+                <li class="content selectPlace">
+                  <div class="selectICodeContentArea">
+                    <div class="hiddenSelectBox">
+                      <select name="depth3Code" id="issueCodeMgmtSelectBox01_3" hidden>
+                        <option value="">전체</option>
+                      </select>
+                    </div>
+                    <!--보여지는 셀렉박스-->
+                    <div class="customSelectBox">
+                      <button class="customSelectView">전체</button>
+                      <ul class="customSelectBtns" id="depth3Codes"></ul>
+                    </div>
+                  </div>
+                  <button class="selectBtn" id="selectDepth3Btn">선택</button>
+                </li>
+              </ul>
             </div>
+          </div>
+        </section>
 
-            <div class="contWrap">
-              <div class="depth1">
-                <ul class="rowListBox">
-                  <li class="title">권리확보</li>
-                  <li class="content">
-                    <div class="radioBox">
-                      <div class="radioContent">
-                        <input type="radio" name="codeManagement_radio01" />
-                        <p class="radioText">지상권 설정</p>
-                      </div>
-                      <div class="radioContent">
-                        <input type="radio" name="codeManagement_radio01" />
-                        <p class="radioText">지상권미설정</p>
-                      </div>
-                      <div class="radioContent">
-                        <input type="radio" name="codeManagement_radio01" />
-                        <p class="radioText">점용</p>
-                      </div>
-                      <div class="radioContent">
-                        <input type="radio" name="codeManagement_radio01" />
-                        <p class="radioText">미점용</p>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-                <ul class="rowListBox">
-                  <li class="title">계약여부</li>
-                  <li class="content">
-                    <div class="radioBox">
-                      <div class="radioContent">
-                        <input type="radio" name="codeManagement_radio02" />
-                        <p class="radioText">계약 체결</p>
-                      </div>
-                      <div class="radioContent">
-                        <input type="radio" name="codeManagement_radio02" />
-                        <p class="radioText">계약 미체결</p>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-                <ul class="rowListBox">
-                  <li class="title">대분류</li>
-                  <li class="content selectPlace">
-                    <div class="selectContentArea">
-                      <div class="hiddenSelectBox">
-                        <select
-                          name="codeMgmtSelectBox01"
-                          id="codeMgmtSelectBox01"
-                          hidden>
-                          <option value="토지소유자와 계약1">
-                            토지소유자와 계약1
-                          </option>
-                          <option value="토지소유자와 계약2">
-                            토지소유자와 계약2
-                          </option>
-                          <option value="토지소유자와 계약3">
-                            토지소유자와 계약3
-                          </option>
-                          <option value="토지소유자와 계약4">
-                            토지소유자와 계약4
-                          </option>
-                          <option value="토지소유자와 계약5">
-                            토지소유자와 계약5
-                          </option>
-                          <option value="토지소유자와 계약6">
-                            토지소유자와 계약6
-                          </option>
-                          <option value="토지소유자와 계약7">
-                            토지소유자와 계약7
-                          </option>
-                          <option value="토지소유자와 계약8">
-                            토지소유자와 계약8
-                          </option>
-                          <option value="토지소유자와 계약9">
-                            토지소유자와 계약9
-                          </option>
-                          <option value="토지소유자와 계약10">
-                            토지소유자와 계약10
-                          </option>
-                        </select>
-                      </div>
-                      <section class="customSelectBox">
-                        <button class="customSelectView">
-                          토지소유자와 계약
-                        </button>
+        <section class="resultArea">
+          <div class="subTitle">
+            <div class="subTitleText">
+              토지소유자와 계약 >> 소유자 변경 없음 >> 세분류
+            </div>
+          </div>
 
-                        <ul class="customSelectBtns"></ul>
-                      </section>
-                    </div>
-                    <button class="selectBtn">선택</button>
-                  </li>
-                </ul>
-                <ul class="rowListBox">
-                  <li class="title">중분류</li>
-                  <li class="content selectPlace">
-                    <div class="selectContentArea">
-                      <div class="hiddenSelectBox">
-                        <select
-                          name="codeMgmtSelectBox02"
-                          id="codeMgmtSelectBox02"
-                          hidden>
-                          <option value="소유자 변경 없음1">
-                            소유자 변경 없음1
-                          </option>
-                          <option value="소유자 변경 없음2">
-                            소유자 변경 없음2
-                          </option>
-                          <option value="소유자 변경 없음3">
-                            소유자 변경 없음3
-                          </option>
-                          <option value="소유자 변경 없음4">
-                            소유자 변경 없음4
-                          </option>
-                          <option value="소유자 변경 없음5">
-                            소유자 변경 없음5
-                          </option>
-                          <option value="소유자 변경 없음6">
-                            소유자 변경 없음6
-                          </option>
-                          <option value="소유자 변경 없음7">
-                            소유자 변경 없음7
-                          </option>
-                          <option value="소유자 변경 없음8">
-                            소유자 변경 없음8
-                          </option>
-                          <option value="소유자 변경 없음9">
-                            소유자 변경 없음9
-                          </option>
-                          <option value="소유자 변경 없음10">
-                            소유자 변경 없음10
-                          </option>
-                        </select>
-                      </div>
-                      <section class="customSelectBox">
-                        <button class="customSelectView">
-                          소유자 변경 없음
-                        </button>
-
-                        <ul class="customSelectBtns"></ul>
-                      </section>
-                    </div>
-                    <button class="selectBtn">선택</button>
-                  </li>
-                </ul>
-                <ul class="rowListBox">
-                  <li class="title">세분류</li>
-                  <li class="content selectPlace">
-                    <div class="selectContentArea">
-                      <div class="hiddenSelectBox">
-                        <select
-                          name="codeMgmtSelectBox03"
-                          id="codeMgmtSelectBox03"
-                          hidden>
-                          <option value="등기진행 누락1">등기진행 누락1</option>
-                          <option value="등기진행 누락2">등기진행 누락2</option>
-                          <option value="등기진행 누락3">등기진행 누락3</option>
-                          <option value="등기진행 누락4">등기진행 누락4</option>
-                          <option value="등기진행 누락5">등기진행 누락5</option>
-                          <option value="등기진행 누락6">등기진행 누락6</option>
-                          <option value="등기진행 누락7">등기진행 누락7</option>
-                          <option value="등기진행 누락8">등기진행 누락8</option>
-                          <option value="등기진행 누락9">등기진행 누락9</option>
-                          <option value="등기진행 누락10">
-                            등기진행 누락10
-                          </option>
-                        </select>
-                      </div>
-                      <section class="customSelectBox">
-                        <button class="customSelectView">등기진행 누락</button>
-
-                        <ul class="customSelectBtns"></ul>
-                      </section>
-                    </div>
-                    <button class="selectBtn">선택</button>
-                  </li>
-                </ul>
+          <div class="contWrap">
+            <div class="depth1">
+              <ul class="titles">
+                <li class="title">선택</li>
+                <li class="title largeWidth">분류명</li>
+                <li class="title middleWidth">하위코드 수</li>
+              </ul>
+              <div class="contentsBox">
               </div>
             </div>
-          </section>
+          </div>
+          <div class="btnWrap">
+            <button class="resultAreaBtn addBtn">추가</button>
+            <button class="resultAreaBtn delBtn">삭제</button>
+            <button class="resultAreaBtn saveBtn">저장</button>
+          </div>
+        </section>
+      </div>
 
-          <section class="resultArea">
-            <div class="subTitle">
-              <div class="subTitleText">
-                토지소유자와 계약 >> 소유자 변경 없음 >> 세분류
-              </div>
-            </div>
+      <div class="finalBtnBox btnWrap">
+        <button class="backBtn" onclick="history.back()">이전</button>
+      </div>
+    </main>
+  </div>
+  <!-- script -->
+  <script type="module" src="/js/module/surfaceMain.js"></script>
+  <script src="/components/js/menu06/codeMgmt.js"></script>
+</th:block>
 
-            <div class="contWrap">
-              <div class="depth1">
-                <ul class="titles">
-                  <li class="title">선택</li>
-                  <li class="title largeWidth">분류명</li>
-                  <li class="title middleWidth">하위코드 수</li>
-                </ul>
-                <div class="contentsBox">
-                  <ul class="contents">
-                    <li class="content checkboxWrap">
-                      <input type="checkbox" id="codeMgmt_checkBox01" />
-                      <label for="codeMgmt_checkBox01"></label>
-                    </li>
-                    <li class="content largeWidth">
-                      <input
-                        type="text"
-                        placeholder="등기진행 누락"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="content middleWidth">
-                      <input
-                        type="text"
-                        placeholder="0"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                  </ul>
-                  <ul class="contents">
-                    <li class="content checkboxWrap">
-                      <input type="checkbox" id="codeMgmt_checkBox02" />
-                      <label for="codeMgmt_checkBox02"></label>
-                    </li>
-                    <li class="content largeWidth">
-                      <input
-                        type="text"
-                        placeholder="타권리와의 충돌"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="content middleWidth">
-                      <input
-                        type="text"
-                        placeholder="0"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                  </ul>
-                  <ul class="contents">
-                    <li class="content checkboxWrap">
-                      <input type="checkbox" id="codeMgmt_checkBox03" />
-                      <label for="codeMgmt_checkBox03"></label>
-                    </li>
-                    <li class="content largeWidth">
-                      <input
-                        type="text"
-                        placeholder="계약서 미날인"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="content middleWidth">
-                      <input
-                        type="text"
-                        placeholder="0"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="btnWrap">
-              <button class="resultAreaBtn addBtn">추가</button>
-              <button class="resultAreaBtn delBtn">삭제</button>
-              <button class="resultAreaBtn saveBtn">저장</button>
-            </div>
-          </section>
-        </div>
-
-        <div class="finalBtnBox btnWrap">
-          <button class="backBtn" onclick="history.back()">이전</button>
-        </div>
-      </main>
-    </div>
-    <!-- script -->
-    <script type="module" src="/js/module/surfaceMain.js"></script>
-    <script src="/components/js/menu06/codeMgmt.js"></script>
-  </th:block>
 </html>
