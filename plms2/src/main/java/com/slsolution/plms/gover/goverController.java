@@ -862,7 +862,7 @@ public class goverController {
 //			fileList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverRowDetail_Files", params); //첨부파일
 //			modifyList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverModifyHistory", params); //첨부파일
 //
-//			payList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPayList", params); //납부실적목록
+			ArrayList<HashMap> payList = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPayList", params); //납부실적목록
 			
 			
 			
@@ -909,11 +909,12 @@ public class goverController {
 		        mav.addObject("goverPermitListAll", goverPermitList);
 		    }
 		    
-		    if (repFlagPnu == null || repFlagPnu.isEmpty()) {
-		        mav.addObject("repFlagPnu", new HashMap<>());
-		    } else {
-		        mav.addObject("repFlagPnu", repFlagPnu.get(0));
-		    }
+//		    if (repFlagPnu == null || repFlagPnu.isEmpty()) {
+//		        mav.addObject("repFlagPnu", new HashMap<>());
+//		    } else {
+//		        mav.addObject("repFlagPnu", repFlagPnu.get(0));
+//		    }
+		   // mav.addObject("repFlagPnu", repFlagPnu);
 		    
   			mav.setViewName("content/gover/feeDetail");
   			return mav;

@@ -3,12 +3,15 @@ package com.slsolution.plms.statics;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -1055,14 +1058,28 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		 JSONObject requestParamObj=new JSONObject(requestParams);
 		ParameterParser parser = new ParameterParser(request);
 		String jisa = requestParamObj.has("jisa")?requestParamObj.getString("jisa"):"";
+		
 		String status = requestParamObj.has("status")?requestParamObj.getString("status"):"";
 		String occurDate = requestParamObj.has("occur_date")?requestParamObj.getString("occur_date"):"";
+		
+		// jisa 문자열을 ',' 기준으로 배열로 변환
+		// jisa 문자열을 ',' 기준으로 배열로 변환 (null이 아닌 빈 리스트로 초기화)
+		//String[] jisaArray = (jisa != null && !jisa.isEmpty()) ? jisa.split(",") : new String[0];
+		String[] jisaArray = (jisa != null && !jisa.isEmpty()) 
+                ? Arrays.stream(jisa.split(","))      // 쉼표로 분리된 문자열을 스트림으로 변환
+                        .map(String::trim)            // 각 요소의 앞뒤 공백을 제거
+                        .toArray(String[]::new)       // 다시 배열로 변환
+                : new String[0]; 
+
+		// 빈 배열이 아닌 경우에만 MyBatis로 전달 (빈 배열은 무시)
+		List<String> jisaList = Arrays.asList(jisaArray);
+
 //
 		HashMap map = new HashMap<>();
 //
 		try {
 			HashMap param = new HashMap<>();
-			param.put("jisa",jisa);
+			param.put("jisaList",  jisaList != null ? jisaList : new ArrayList<>());
 			param.put("status",status);
 			param.put("occurDate", occurDate);
 			

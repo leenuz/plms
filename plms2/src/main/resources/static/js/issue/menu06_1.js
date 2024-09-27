@@ -684,14 +684,14 @@ function loadDataTable(params) {
         },
         columns: [
             { data: "mm_mw_title", "defaultContent": "" },//0
-            { data: "address", "defaultContent": "" },
+            { data: "address_str", "defaultContent": "" },
             {
                 data: "mm_status", render: function (data, type, row, meta) {
                     return findProgStatus(data)
                 }
             },
             { data: "mm_idx", "defaultContent": "" },
-            { data: "mm_occur_date", "defaultContent": "" },
+            { data: "mw_occur_date", "defaultContent": "" },
             { data: "mm_comple_date", "defaultContent": "" }//5
         ],
 
@@ -738,7 +738,7 @@ function issuePop(idx) {
     const data = saveJsonData.find(function (obj) { return obj.mm_idx == idx })
     const popupOpen = document.getElementById("issuePopup");
     if (popupOpen) {
-        $("#issuePopup .issue_content").text(`${data.mm_mw_code1} > ${data.mm_mw_code2} > ${data.mm_mw_code3}`)
+        $("#issuePopup .issue_content").text(`${data.code_str1} > ${data.code_str2} > ${data.code_str3}`)
         popupOpen.classList.add("active");
     }
 }
