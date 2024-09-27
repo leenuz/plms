@@ -391,19 +391,6 @@ $(document).on("click","#moveMap",function(){
 	moveToCityHall(x,y);
 })
 
-function moveToCityHall(x, y) {
-    console.log("--------moveToCityHall-------------");
-    var cityHallCoords = {};
-
-    var x = parseFloat(x);
-    var y = parseFloat(y);
-    if (x != 0 && y != 0 && !isNaN(x) && !isNaN(y)) {
-        cityHallCoords = { lon: y, lat: x, zoom: 16 };
-        openMapWindow(cityHallCoords);
-    } else {
-        alert("해당 위치에 대한 좌표가 없습니다.");
-    }
-}
 
 /* 첨부파일 */
 var fileNo = 1;
