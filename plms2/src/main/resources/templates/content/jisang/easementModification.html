@@ -102,7 +102,7 @@
 							<!--관로명(구간)-->
 							<li class="content04 content selectContentArea">
 								<div class="hiddenSelectBox">
-									<select name="easementModifySelectBox04" id="easementModifySelectBox04" hidden>
+									<select name="pipe_name" id="easementModifySelectBox04" hidden>
 										<option value="SNP구간1">SNP구간1</option>
 									</select>
 								</div>
@@ -122,7 +122,7 @@
 							<!--단/복선-->
 							<li class="content selectContentArea">
 								<div class="hiddenSelectBox">
-									<select name="easementModifySelectBox05" id="easementModifySelectBox05" hidden>
+									<select name="sun_gubun" id="easementModifySelectBox05" hidden>
 										<option value="단선" th:selected="${resultData.jm_sun_gubun == '단선'}">단선</option>
 										<option value="복선" th:selected="${resultData.jm_sun_gubun == '복선'}">복선</option>
 									</select>
@@ -139,7 +139,7 @@
 							<!--국공유지여부-->
 							<li class="content02 content selectContentArea">
 								<div class="hiddenSelectBox">
-									<select name="easementModifySelectBox06" id="easementModifySelectBox06" hidden>
+									<select name="gover_own_yn" id="easementModifySelectBox06" hidden>
 										<option value="Y" th:selected="${resultData.jm_gover_own_yn == 'Y'}">Y</option>
 										<option value="N" th:selected="${resultData.jm_gover_own_yn == 'N'}">N</option>
 									</select>
@@ -155,13 +155,13 @@
 
 							<!-- 지적면적 -->
 							<li class="content05 content">
-								<input type="text" th:value="${resultData.jm_jijuk_area}">
+								<input type="text" name="jijuk_area" th:value="${resultData.jm_jijuk_area}">
 							</li>
 
 							<!-- 지목 -->
 							<li class="content05 content selectContentArea">
 								<div class="hiddenSelectBox">
-									<select name="easementModifySelectBox07" id="easementModifySelectBox07" hidden>
+									<select name="jimok_text" id="easementModifySelectBox07" hidden>
 										<option th:each="jimok : ${jimoklist}" th:value="${jimok.jm_name}" th:text="${jimok.jm_name}"
 											th:selected="${jimok.jm_name == resultData.jm_jimok_text}">
 										</option>
@@ -179,15 +179,17 @@
 
 							<!--관리제외필지-->
 							<li class="content05 content checkboxWrap">
-								<input type="checkbox" id="easementModification_excluded-parcel"
-									th:checked="${resultData.jm_cancel_yn =='Y'}">
+								<input type="checkbox" 
+								id="easementModification_excluded-parcel"
+								name="cancel_yn"
+								th:checked="${resultData.jm_cancel_yn =='Y'}">
 								<label for="easementModification_excluded-parcel"></label>
 							</li>
 
 							<!--회계처리필요여부-->
 							<li class="content05 content selectContentArea">
 								<div class="hiddenSelectBox">
-									<select name="easementModifySelectBox08" id="easementModifySelectBox08" hidden>
+									<select name="account_yn" id="easementModifySelectBox08" hidden>
 										<option value="Y" th:selected="${resultData.jm_account_yn == 'Y'}">Y</option>
 										<option value="N" th:selected="${resultData.jm_account_yn == 'N'}">N</option>
 									</select>
@@ -488,7 +490,7 @@
 							<!--등기여부-->
 							<li class="content02 content selectContentArea">
 								<div class="hiddenSelectBox">
-									<select name="easementModifySelectBox13" id="easementModifySelectBox13" hidden>
+									<select name="mcomple_yn" id="easementModifySelectBox13" hidden>
 										<option value="Y" th:selected="${resultData.jm_comple_yn == 'Y'}">Y</option>
 										<option value="N" th:selected="${resultData.jm_comple_yn == 'N'}">N</option>
 									</select>
@@ -504,16 +506,16 @@
 
 							<!--편입면적-->
 							<li class="content02 content normalLineHeight">
-								<input type="text" th:value="${resultData.jm_pyeonib_area}">
+								<input type="text" th:value="${resultData.jm_pyeonib_area}" name="mpyeonib_area">
 							</li>
 							<!--위치-->
 							<li class="content03 content">
-								<input type="text" th:value="${resultData.jm_location}">
+								<input type="text" th:value="${resultData.jm_location}" name="mloacation">
 							</li>
 							<!--계약유형-->
 							<li class="content04 content selectContentArea">
 								<div class="hiddenSelectBox">
-									<select name="easementModifySelectBox14" id="easementModifySelectBox14" hidden>
+									<select name="mpermit_yn" id="easementModifySelectBox14" hidden>
 										<option value="계약서" th:selected="${resultData.jm_permitted_yn == '계약서'}">계약서</option>
 										<option value="기공승낙서" th:selected="${resultData.jm_permitted_yn == '기공승낙서'}">기공승낙서</option>
 										<option value="기공&계약" th:selected="${resultData.jm_permitted_yn == '기공&계약'}">기공&계약</option>
@@ -531,21 +533,21 @@
 							<!-- 등기일 -->
 							<li class="content05 content">
 								<div class="dateInputWrap">
-									<input type="date" th:value="${#dates.format(resultData.jm_deunggi_date, 'yyyy-MM-dd')}" data-placeholder="연/월/일">
+									<input type="date" name="mdeunggi_date" th:value="${#dates.format(resultData.jm_deunggi_date, 'yyyy-MM-dd')}" data-placeholder="연/월/일">
 								</div>
 							</li>
 							<!--등기번호-->
 							<li class="content06 content">
-								<input type="text" th:value="${resultData.jm_deunggi_no}">
+								<input type="text" name="mdeunggi_no" th:value="${resultData.jm_deunggi_no}">
 							</li>
 							<!--등기소-->
 							<li class="content06 content">
-								<input type="text" th:value="${resultData.jm_deunggiso}">
+								<input type="text" name="mdeunggiso" th:value="${resultData.jm_deunggiso}">
 							</li>
 							<!--도시계획 결정여부-->
 							<li class="content06 content selectContentArea">
 								<div class="hiddenSelectBox">
-									<select name="easementModifySelectBox15" id="easementModifySelectBox15" hidden>
+									<select name="mdosi_plan" id="easementModifySelectBox15" hidden>
 										<option value="" th:selected="${resultData.jm_dosiplan == null or resultData.jm_dosiplan == ''}">선택
 										</option>
 										<option value="Y" th:selected="${resultData.jm_dosiplan == 'Y'}">Y</option>
@@ -564,13 +566,13 @@
 							<!--취득일-->
 							<li class="content06 content">
 								<div class="dateInputWrap">
-									<input type="date" th:value="${#dates.format(resultData.jm_chuideuk_date, 'yyyy-MM-dd')}"
+									<input type="date" name="mchuideuk_date" th:value="${#dates.format(resultData.jm_chuideuk_date, 'yyyy-MM-dd')}"
 										data-placeholder="연/월/일" required aria-required="true">
 								</div>
 							</li>
 							<!--자산분류번호-->
 							<li class="content06 content">
-								<input type="text" th:value="${resultData.jm_jasan_no}">
+								<input type="text" name="mjasan_no" th:value="${resultData.jm_jasan_no}">
 							</li>
 						</ul>
 					</div>
@@ -582,7 +584,7 @@
 						</ul>
 						<ul class="contents">
 							<li class="content01 content">
-								<input type="text" th:value="${resultData.jm_special_cont}">
+								<input type="text" name="special_cont" th:value="${resultData.jm_special_cont}">
 							</li>
 						</ul>
 					</div>

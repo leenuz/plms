@@ -4588,7 +4588,7 @@ log.info("gubun:"+gubun);
 			String jimok = requestParamsObj.getString("jimok_text"); // 지목
 			String pipeOverlapYn = requestParamsObj.getString("overlap_yn"); // 관로일치여부
 			String permitted_yn = requestParamsObj.getString("mpermit_yn"); // 지목
-			String wmemo=requestParamsObj.getString("jisangMemo");
+			String wmemo=requestParamsObj.has("jisangMemo")?requestParamsObj.getString("jisangMemo"):"";
 
 //			String soyunumber = requestParamsObj.getString("soyunumber", "0"); // 소유자 수
 //			String okaynumber = requestParamsObj.getString("okaynumber", ""); // 승인자 수
@@ -4781,7 +4781,7 @@ log.info(" 3932 params:"+params);
 					}
 					
 
-					mainService.UpdateQuery("jisangSQL.updateJisangMaster", params); // 기본정보 수정
+					mainService.UpdateQuery("jisangSQL.updateJisangMaster1", params); // 기본정보 수정
 
 					// 변경이력 등록
 					if (!modifyReason1.equals("")) {
