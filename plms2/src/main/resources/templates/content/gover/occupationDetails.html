@@ -277,15 +277,17 @@
                                             var lngAll = 0;
                                             var markers = [];
                                             for (var i = 0; i < latArr.length; i++) {
-                                                var lat = latArr[i];
-                                                var lng = lngArr[i];
+                                                var lat = parseFloat(latArr[i]);
+                                                var lng = parseFloat([i]);
+                                                if (isNaN(lat) || isNaN(lng) || lat == 0 || lng == 0)
+                                                    continue;
                                                 latAll += lat;
                                                 lngAll += lng;
                                                 var pos = [lng, lat];
                                                 markers.push(pos);
                                             }
-                                            var centerLat = latAll / latArr.length;
-                                            var centerLng = lngAll / lngArr.length;
+                                            var centerLat = latAll / markers.length;
+                                            var centerLng = lngAll / markers.length;
 
                                             var x = parseFloat(x);
                                             var y = parseFloat(y);
