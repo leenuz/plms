@@ -55,13 +55,10 @@
     </select>
 
     <select id="selectIssueHistoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        select *, (row_number() over()) as NO, to_char(pih_history_date,'YYYY-MM-DD HH:MM:SS') as history_date
-        from potential_issue_history
-        where 1=1
-        and pih_history_seq between 1 and 5 order by pih_history_seq desc
-        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
-<!--            and pih_seq=(select pi_seq from potential_issue where pi_manage_no=#{idx})-->
-        </if>
+    	SELECT *,(row_number() over()) as no 
+    	FROM  potential_issue pi left join potential_issue_history pih on pi.pi_pnu=pih.pih_pnu 
+			WHERE 1=1
+			and pih_pnu=#{pnu}
     </select>
 
     <select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap">

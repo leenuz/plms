@@ -24,42 +24,31 @@
   display: grid;
   grid-template-columns: auto auto auto;
 }
-
 div.dt-center-in-div {
   margin: 0 auto;
       float: right;
     margin-right: 30px;
-   
 }
 div.dt-center-in-div>div{
-
 display:inline;
 }
-
 div.dt-filter-spacer {
   margin: 10px 0;
   border:1px solid red;
 }
-
-
 .dt-title{
-
 text-align:center;
 width:180px;
 float:left;
-
 }
 .dt-buttons{
 display:inline-block;
-
 width:180px;
-
 }
 .dt-length{
 display:inline-block;
 }
 .dt-button{
-
 color:white;
 background-color:#4e5871;
 font-size:15px;
@@ -73,13 +62,10 @@ text-aline:left;
 margin-right:10px;
 width:159px;
 height:38px;
-
 }
-
 .dt-paging {
 text-align: center;
 }
-
 .dt-paging-button {
   box-sizing: border-box;
   display: inline-block;
@@ -89,26 +75,19 @@ text-align: center;
   text-align: center;
   text-decoration: none !important;
   cursor: pointer;
-  
   border: 1px solid transparent;
   border-radius: 2px;
   background: transparent;
   color: #007bff !important;
     font-size: 15px;
     font-weight: 600;
-    
-    
 }
-
 .bottom{
 text-align:center;
-
 }
 .top{
-
 text-align:right;
 margin:10px;
-
 }
     </style>
     <title>지상권</title>
@@ -129,19 +108,16 @@ margin:10px;
                 </div>
 
                 <div class="contWrap">
-
                     <div class="contBox contBoxMini01">
-
                         <div class="thirdTitle">
                             <h2>・참고 지적도</h2>
                         </div>
                         <iframe src="http://211.196.153.235:7070/geoserver/dopcogis/wms?service=WMS&version=1.1.1&request=GetMap&layers=dopcogis%3Adxf_test&bbox=128.48537837663474,35.926544471907825,128.48578475095366,35.927040257710196&width=660&height=214&srs=EPSG%3A4326&styles=&format=application/openlayers" class="contentDetailBox mapFigure"></iframe>
                         <!--<div class="contentDetailBox mapFigure"></div>-->
-
                     </div>
 
+										<!-- 기본 정보 -->
                     <div class="contBox contBoxMini02">
-
                         <div class="thirdTitle">
                             <h2>・기본 정보</h2>
                         </div>
@@ -158,7 +134,6 @@ margin:10px;
                                     <li class="content01 content">
                                         <input type="hidden" name="manage_no" id="manage_no" th:value="${resultData.nm_notset_no}"/>
                                         <input type="hidden" name="pnu" id="pnu" th:value="${resultData.nm_pnu}"/>
-
                                         [[${resultData.nm_notset_no}]]
                                     </li>
                                     <li class="content02 content">
@@ -250,13 +225,10 @@ margin:10px;
                                 </ul>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-
-
             </section>
+						
             <section class="occupationPermitBasicInfo">
                 <div class="subTitle">
                     미설정/미점용 정보
@@ -271,7 +243,6 @@ margin:10px;
                         <div class="thirdTitle">
                             <h2>・첨부파일</h2>
                         </div>
-
 
                         <div class="contentDetailBox">
                             <div class="depth1">
@@ -299,14 +270,10 @@ margin:10px;
                                         <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
                                     </li>
                                 </ul>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-
             </section>
 
             <!-- 변경 이력 -->
@@ -412,9 +379,8 @@ margin:10px;
                         </div>
                     </div>
                 </div>
-
-
             </section>
+						
             <!-- 잠재이슈 -->
             <section class="potentialIssues">
                 <div class="subTitle">
@@ -484,8 +450,6 @@ margin:10px;
                         </div>
                     </div>
                 </div>
-
-
             </section>
 
             <!-- 잠재이슈 변경 이력 -->
@@ -514,31 +478,26 @@ margin:10px;
                                         [[${val.pih_history_type}]]
                                     </li>
                                     <li class="content03 content">
-                                        [[${val.history_date}]]
+                                        [[${val.pih_history_date}]]
                                     </li>
                                     <li class="content04 content">
                                         [[${val.pih_content}]]
                                     </li>
                                     <li class="content03 content">
-                                        사유
+                                        [[${val.pi_issue_comment}]]
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </section>
 
             <!-- 잠재이슈 대응방안 메뉴얼 -->
-
-
             <section class="potentialIssuesResponseManual">
                 <div class="subTitle">
                     잠재이슈 대응방안 메뉴얼
                 </div>
-
 
                 <div class="contWrap">
                     <div class="contBox">
@@ -568,12 +527,9 @@ margin:10px;
                         </div>
                     </div>
                 </div>
-
-
             </section>
 
             <!-- 메모 -->
-
             <section class="memoSection">
                 <div class="subTitle">
                     메모
@@ -612,7 +568,7 @@ margin:10px;
                                         <li class="content05 content btnBox">
 
                                             <!-- 수정하지 않을 때 -->
-
+																						
                                             <div class="editBefore">
                                                 <div class="btnWrap">
                                                     <button class="addBtn miniBtn">추가</button>
@@ -716,10 +672,7 @@ margin:10px;
                         </div>
                     </div>
                 </div>
-
-
             </section>
-
 
             <!-- 참고 -->
 			
@@ -728,8 +681,9 @@ margin:10px;
                 <button class="finalBtn switchBtn">지상권 전환</button>
 <!--                <button class="backBtn finalBtn">이전</button>-->
                 <input class="backBtn finalBtn" type="button" value="이전" onclick="history.back();" />
-                <button class="finalBtn editBtn"><a href="/components/subHtml/menu01/notsetaddRevise.html"
-                                                    class="reviseLink">수정</a></button>
+                <button class="finalBtn editBtn">
+									<a href="/components/subHtml/menu01/notsetaddRevise.html" class="reviseLink">수정</a>
+								</button>
             </div>
         </main>
     </div>
