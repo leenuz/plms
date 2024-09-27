@@ -110,6 +110,67 @@ public class issueController {
 		// 데이터만 JSON 형식으로 반환
 		return addressList;
 	}
+	
+	// 민원관리 목록 조회
+//		public void selectMinwonData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//			ArrayList list = new ArrayList();
+//			ArrayList addlist = new ArrayList();
+//			ParameterParser parser = new ParameterParser(request);
+//
+//			System.out.println(parser.toString());
+//
+//			String SEARCH_START_DATE = parser.getString("SEARCH_START_DATE", "");
+//			String SEARCH_END_DATE = parser.getString("SEARCH_END_DATE", "");
+//			String MINWON_STATUS = parser.getString("MINWON_STATUS", "");
+//			String DEPTH1 = parser.getString("DEPTH1", "");
+//			String DEPTH2 = parser.getString("DEPTH2", "");
+//			String DEPTH3 = parser.getString("DEPTH3", "");
+//			String JISA = parser.getString("JISA", "");
+//			String SEARCH_TEXT = parser.getString("SEARCH_TEXT", "");
+//			String loginKey = String.valueOf(request.getSession().getAttribute("loginKey"));
+//			String pageNum = parser.getString("pageNum", ""); // 페이지 번호
+//			String pageCnt = parser.getString("pageCnt", ""); // 한 페이지 갯수
+//
+//			int listCount = 0;
+//
+//			String str_result = "Y";
+//			try {
+//
+//				Map params = new HashMap();
+//				params.put("SEARCH_START_DATE", SEARCH_START_DATE);
+//				params.put("SEARCH_END_DATE", SEARCH_END_DATE);
+//				params.put("MINWON_STATUS", MINWON_STATUS);
+//				params.put("DEPTH1", DEPTH1);
+//				params.put("DEPTH2", DEPTH2);
+//				params.put("DEPTH3", DEPTH3);
+//				params.put("JISA", JISA);
+//				params.put("SEARCH_TEXT", SEARCH_TEXT);
+//				params.put("PAGE_NUM", pageNum);
+//				params.put("PAGE_CNT", pageCnt);
+//
+//				listCount = (int) Database.getInstance().queryForObject("Json.selectMinwonListCount", params);
+//				list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonList", params);
+//
+//			} catch (Exception e) {
+//				str_result = "N";
+//				e.printStackTrace();
+//			}
+//			HashMap map = new HashMap();
+//
+//			map.put("message", str_result);
+//			map.put("result", list);
+//			map.put("TOTALCNT", listCount);
+//			map.put("loginKey", loginKey);
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//		}
 
 	@RequestMapping(value="/menu06_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> menu06_1DataTableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -190,7 +251,7 @@ public class issueController {
 		Object count= mainService.selectCountQuery("issueSQL.selectMinwonTotalCount", params);
 		int total=(int)count;
 
-		ArrayList<HashMap> list = mainService.selectQuery("issueSQL.selectMinwonList",params);
+		ArrayList<HashMap> list = mainService.selectQuery("issueSQL.selectMinwonListOrg",params);
 		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
 		log.info("list:"+list);
 
@@ -390,7 +451,7 @@ public class issueController {
 			response.getWriter().flush();
 		}
 	
-	//민원신규등록 (상신)
+	//민원신규등록 (상신) sangsin_flag = Y 이면 상신 아니면 저장
 	@Transactional
 	@PostMapping(path="/saveMinwonData") 
 	public void saveMinwonData(HttpServletRequest request, HttpServletResponse response) throws Exception {
