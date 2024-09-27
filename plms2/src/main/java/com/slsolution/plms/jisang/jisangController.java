@@ -1492,6 +1492,7 @@ log.info("PMT_NO:"+PMT_NO);
 		String index = httpRequest.getParameter("index");
 
 		params.put("idx",idx);
+		params.put("JISANG_NO",idx);
 		params.put("manage_no",idx);
 		params.put("index",index);
 		log.info("params:"+params);
@@ -1520,7 +1521,7 @@ log.info("PMT_NO:"+PMT_NO);
 		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
 		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
-
+log.info("data:"+data.get(0));
 		mav.addObject("jisaList",jisalist);
 		mav.addObject("jimoklist",jimoklist);
 		mav.addObject("sidoList",sidolist);
@@ -4603,11 +4604,11 @@ log.info("gubun:"+gubun);
 			String comple_yn = requestParamsObj.getString("mcomple_yn"); // 완결여부
 			String pyeonib_area = requestParamsObj.getString("mpyeonib_area"); // 편입 면적(㎡)
 			String use_state = requestParamsObj.has("use_state")?requestParamsObj.getString("use_state"):""; // 사용현황
-			String dg_startday = requestParamsObj.getString("mdeunggi_date").replace("-", ""); // 등기일
+			String dg_startday = requestParamsObj.getString("mdeunggi_date"); // 등기일
 			String deunggi_no = requestParamsObj.getString("mdeunggi_no"); // 등기번호
 			String deunggiso = requestParamsObj.getString("mdeunggiso"); // 등기소
 			String dosiplan = requestParamsObj.getString("mdosi_plan"); // 도시계획
-			String cd_startday = requestParamsObj.getString("mchuideuk_date").replaceAll("-", ""); // 취득일
+			String cd_startday = requestParamsObj.getString("mchuideuk_date"); // 취득일
 			String toja_no = requestParamsObj.has("toja_no")?requestParamsObj.getString("toja_no"):""; // 투자오더
 			String jasan_no = requestParamsObj.getString("mjasan_no"); // 자산분류번호
 			String special_cont = requestParamsObj.getString("special_cont"); // 특약사항
@@ -4727,19 +4728,22 @@ log.info(" 3932 params:"+params);
 					/***********************
 					 * 행정구역이 변경이 되면, 기존의 행정구역은 미설정으로 바꾸고, 변경된 행정구역을 지상권으로 설정함. <= 안함.
 					 ************************/
-					ArrayList jijanglist = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangList", params);
+					ArrayList jijanglist = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangListOrg", params);
 					String str_BeforePNU = "";
 					String str_BeforeADDRCODE = "";
 					String str_BeforeJIBUN = "";
-
+					log.info("jijanglist:"+jijanglist);
 					if (null != jijanglist && jijanglist.size() > 0) {
 
 						HashMap hm = new HashMap();
-						for (int i = 0; i < list.size(); i++) {
-							str_BeforePNU = (String) ((HashMap) jijanglist.get(i)).get("PNU");
-							str_BeforeADDRCODE = (String) ((HashMap) jijanglist.get(i)).get("ADDRCODE");
-							str_BeforeJIBUN = (String) ((HashMap) jijanglist.get(i)).get("JIBUN");
+						for (int i = 0; i < jijanglist.size(); i++) {
+							//str_BeforePNU = (String) ((HashMap) jijanglist.get(i)).get("pnu");
+							str_BeforePNU = (String) ((HashMap) jijanglist.get(i)).get("pnu");
+							log.info("str_BeforPnu:"+str_BeforePNU);
+							str_BeforeADDRCODE = (String) ((HashMap) jijanglist.get(i)).get("addrcode");
+							str_BeforeJIBUN = (String) ((HashMap) jijanglist.get(i)).get("jibun");
 						}
+						
 					}
 
 					// 행정구역이 같지않다면
@@ -4766,7 +4770,7 @@ log.info(" 3932 params:"+params);
 						issueParams.put("JIBUN", str_BeforeJIBUN);
 						issueParams.put("ADDRCODE", str_BeforeADDRCODE);
 						issueParams.put("PNU", str_BeforePNU);
-						
+						log.info("issueParams:"+issueParams);
 						// 1. 기존 잠재이슈 존재하는지 조회 selectPnuIssue, selectPnuIssueHistoryList
 						ArrayList issuelist = (ArrayList) mainService.selectQuery("commonSQL.selectPnuIssue", issueParams);
 
@@ -4807,7 +4811,7 @@ log.info(" 3932 params:"+params);
 						
 					}
 					
-
+					log.info("------------------aaaaaaaaaaa------------------");
 					mainService.UpdateQuery("jisangSQL.updateJisangMaster1", params); // 기본정보 수정
 
 					// 변경이력 등록

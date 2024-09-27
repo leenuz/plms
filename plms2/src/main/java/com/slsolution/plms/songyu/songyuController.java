@@ -1221,4 +1221,63 @@ public class songyuController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 	
+    
+    
+ // 미설정/미점용 상세 정보
+// 	public void selectRowDetailNotset(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//
+// 		ParameterParser parser = new ParameterParser(request);
+// 		String NOTSET_NO = parser.getString("notsetNo", "");
+//
+// 		Map params = new HashMap();
+// 		params.put("NOTSET_NO", NOTSET_NO);
+//
+// 		ArrayList list1 = (ArrayList) Database.getInstance().queryForList("Json.selectNotsetRowDetail_KibonInfo", params); // 기본
+// 		ArrayList list2 = (ArrayList) Database.getInstance().queryForList("Json.selectNotsetRowDetail_SoujaInfo", params); // 소유자
+// 		System.out.println(" test :: " + params.get("NOTSET_NO"));
+// 		ArrayList list3 = (ArrayList) Database.getInstance().queryForList("Json.selectNotsetRowDetail_Files", params); // 첨부 파일
+// 		ArrayList list4 = (ArrayList) Database.getInstance().queryForList("Json.selectNotsetRowDetail_Modify", params); // 변경이력
+//
+// 		HashMap map = new HashMap();
+//
+// 		if (list1 != null)
+// 			map.put("count", list1.size());
+// 		else
+// 			map.put("count", 0);
+//
+// 		map.put("result1", list1);
+//
+// 		if (list2 != null)
+// 			map.put("count", list2.size());
+// 		else
+// 			map.put("count", 0);
+//
+// 		map.put("result2", list2);
+//
+// 		if (list3 != null)
+// 			map.put("count", list3.size());
+// 		else
+// 			map.put("count", 0);
+//
+// 		map.put("result3", list3);
+//
+// 		if (list4 != null)
+// 			map.put("count", list4.size());
+// 		else
+// 			map.put("count", 0);
+//
+// 		map.put("result4", list4);
+//
+// 		map.put("key", String.valueOf(request.getSession().getAttribute("loginKey")));
+//
+// 		JSONObject jo = new JSONObject(map);
+//
+// 		response.setCharacterEncoding("UTF-8");
+// 		response.setHeader("Access-Control-Allow-Origin", "*");
+// 		response.resetBuffer();
+// 		response.setContentType("application/json");
+// 		response.getWriter().print(jo);
+// 		response.getWriter().flush();
+//
+// 	}
 }

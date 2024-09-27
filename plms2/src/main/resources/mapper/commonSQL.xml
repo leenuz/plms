@@ -342,7 +342,7 @@ SELECT PNU
 		WHERE PNU IN ( SELECT jm_pnu as PNU FROM JISANG_MASTER WHERE jm_JISANG_NO = #{JISANGNO} )
 	</update>
 	<select id="selectPnuIssue" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-	<![CDATA[ 
+ 
 SELECT T.pi_pnu as PNU
        , T.pi_seq as SEQ
        , T.pi_code_depth1 as CODE_DEPTH1
@@ -360,10 +360,10 @@ SELECT T.pi_pnu as PNU
        ,pi_registed_yn as REGISTED_YN
        ,pi_permitted_yn as PERMITTED_YN
   FROM POTENTIAL_ISSUE T
- WHERE ((T.pi_PNU = #{PNU} AND COALESCE(T.PNU, '99999') != '99999')
-    OR  ( T.ADDRCODE = #ADDRCODE# AND T.JIBUN = #JIBUN# ))
-   AND T.DEL_FLAG = 'N'
- ORDER BY T.ISSUE_DATE DESC
-	]]>
+ WHERE ((T.pi_PNU = #{PNU} AND COALESCE(T.pi_PNU, '99999') != '99999')
+    OR  ( T.pi_address_code= #{ADDRCODE} AND T.pi_JIBUN = #{JIBUN} ))
+   AND T.pi_DEL_FLAG = 'N'
+ ORDER BY T.pi_ISSUE_DATE DESC
+
 	</select>
 </mapper>
