@@ -276,10 +276,107 @@ const notsetAddPopEvet = () => {
 
 //notsetAddPopEvet();
 
-$(document).ready(function () {
-    console.log("songyu/netsetadd.js start");
 
+$(document).ready(function() {
+	console.log("songyu/netsetaddRevise.js start");
+
+	// 페이지 로드 시 초기 관로명 목록 업데이트
+	const initialJisa = $("#jisa").val(); // 선택된 지사 값
+	if (initialJisa) {
+		console.log("initialJisa: " + initialJisa);
+		updatePipeNameList(initialJisa); // 초기 관로명 목록 업데이트
+	}
+	
+	// 페이지 로드 시 단/복선에 따라 관경 ui 업데이트
+	const initialSunGubun = $("#sunGubunSelectBox").val();
+	if (initialSunGubun) {
+		console.log("initialJisa: " + initialSunGubun);
+		updatePipeMeterUi(initialSunGubun); // 초기 관경 ui 업데이트
+	}
+	
+	// 커스텀 지사 선택 UI에서 선택했을 때
+	$(".content01 .customSelectItem").on("click", function() {
+		const selectedJisa = $(this).data("value");
+		console.log("지사 선택됨: " + selectedJisa);
+
+		// 선택한 지사를 select box에 반영하고, change 이벤트 트리거
+		$("#easementModifySelectBox01").val(selectedJisa).change();
+
+		// 버튼 텍스트를 변경
+		$(".content01 .customSelectView").text(selectedJisa);
+	});
+
+	// 담당지사 변경 시 이벤트 리스너 추가
+	$("#easementModifySelectBox01").change(function() {
+		const selectedJisa = $(this).val();  // 변경된 지사 값
+		updatePipeNameList(selectedJisa);    // 관로명 목록 업데이트 함수 호출
+	});
+	
 });
+
+// 관경 UI 업데이트 함수
+function updatePipeMeterUi(sunGubunValue){
+    if (sunGubunValue === '복선') {
+        $('#pipe_diameter2').show();
+    } else {
+        $('#pipe_diameter2').hide();
+    }
+}
+
+// 관로명 목록 업데이트 함수
+function updatePipeNameList(jisaValue) {
+	const allData = { jisa: jisaValue };
+
+	// 숨겨진 필드에서 resultData.jm_pipe_name 값을 가져옴
+	const jmPipeName = $("#nm_pipe_name_hidden").val();  // hidden input의 값 읽기
+	console.log("nmPipeName: " + jmPipeName);
+
+	$.ajax({
+		url: "/gover/getPipeName",  // 관로명 목록을 가져오는 API
+		data: JSON.stringify(allData),
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function(rt) {
+			const data = rt.resultData;
+			console.log("관로명 목록 데이터:", data);
+
+			// 기존 셀렉트 박스와 커스텀 UI 초기화
+			$("#pipeNameSelectBox option").remove();  // <select> 내부 옵션 제거
+			$("#pipe_name_ul").empty();  // 커스텀 <ul> 리스트 초기화
+
+			// 받은 데이터로 관로명 목록 업데이트
+			for (let i = 0; i < data.length; i++) {
+				const pipeName = data[i].jzn_zone_name;
+				const isSelected = pipeName === jmPipeName ? "selected" : "";  // 숨겨진 필드의 값과 비교
+
+				console.log("pipeName: "+ pipeName);
+				console.log("isSelected: "+ isSelected);
+				// 실제 <select> 태그에 옵션 추가
+				$("#pipeNameSelectBox").append("<option value='" + pipeName + "' " + isSelected + ">" + pipeName + "</option>");
+				console.log("SelectBox 내용:", $("#pipeNameSelectBox").html());  // 추가된 option들을 출력
+				// 커스텀 드롭다운 UI에 <li> 항목 추가
+				$("#pipe_name_ul").append("<li class='customSelectItem moreSelectBtn' data-value='" + pipeName + "'>" + pipeName + "</li>");
+				console.log("Custom UI 내용:", $("#pipe_name_ul").html());  // 추가된 <li> 항목들을 출력
+			}
+
+			// 관로명 선택값을 커스텀 버튼에 반영
+			$("#pipeNameText").text(jmPipeName || "선택");
+
+			// <li> 항목 클릭 시 <select> 업데이트 및 커스텀 UI 반영
+			$(".customSelectItem").on("click", function() {
+				const selectedPipeName = $(this).data("value");
+				$("#pipeNameSelectBox").val(selectedPipeName).change();  // <select> 값 설정
+				$("#pipeNameText").text(selectedPipeName);  // 버튼 텍스트 업데이트
+			});
+
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.error("관로명 목록 업데이트 실패:", textStatus, errorThrown);
+		}
+	});
+}
+
 
 //조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
 $(document).on("click", "#searchBtn", function () {
@@ -391,6 +488,8 @@ $(document).on("click", ".addBtn", function () {
         });
     }
 });
+
+
 $(document).on("click", "#completeSoujaBtn", function () {
     console.log("------------completeSoujaBtn click---------");
     const soujaDiv = document.getElementById('soujaDiv');
@@ -546,7 +645,7 @@ $(document).ready(function () {
         handleFileUpload(files, objDragAndDrop);
     });
 
-	var rowCount = 0;
+	  var rowCount = document.querySelectorAll("#fileListDiv > ul").length + 1;  // 현재 렌더된 파일 개수 계산
     function handleFileUpload(files, obj) {
         console.log("-------------handleFileUpload---------------");
         console.log(files);

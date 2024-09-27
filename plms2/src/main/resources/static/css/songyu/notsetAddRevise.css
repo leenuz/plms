@@ -950,3 +950,8 @@ button {
         width: 50px;
     }
 }
+#raddress {
+	white-space: normal;
+	width: 100%;
+	text-align: center;
+}

@@ -46,113 +46,117 @@
 											<div class="hiddenSelectBox">
 												<select name="jisa" class="menuHiddenSelect" id="jisa" hidden>
 													<option value="">전체</option>
-													<option th:each="val:${jisaList}" th:text="${val.jm_jisa_name}"
-														th:value="${val.jm_jisa_name}"></option>
+													<option th:each="val:${jisaList}" th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}" th:selected="${val.jm_jisa_name == resultData.nm_jisa}"></option>
 												</select>
 											</div>
 											<section class="customSelectBox">
-												<button class="customSelectView" id="jisaBtn">전체</button>
+												<button class="customSelectView" id="jisaBtn"
+												th:text="${resultData.nm_jisa != null ? resultData.nm_jisa : '선택'}">전체</button>
 												<ul class="customSelectBtns" id="jisaUl"></ul>
 											</section>
 										</div>
 									</li>
+									
 									<!-- 관로 일치 여부 선택 -->
 									<li class="content02 content selectContentArea">
 										<div class="hiddenSelectBox">
-											<!-- name도 추가 -->
 											<select name="overlap_yn" id="overlapYnSelectBox" hidden>
-												<option value="" selected>선택</option>
-												<option value="Y">Y</option>
-												<option value="N">N</option>
+											<option value="Y" th:selected="${resultData.nm_pipe_yn == 'Y'}">Y</option>
+											<option value="N" th:selected="${resultData.nm_pipe_yn == 'N'}">N</option>
 											</select>
 										</div>
 										<section class="customSelectBox">
-											<button class="customSelectView">
-												선택
-											</button>
+											<button class="customSelectView"
+											th:text="${resultData.nm_pipe_yn != null ? resultData.nm_pipe_yn : '선택'}">Y</button>
 											<ul class="customSelectBtns">
 											</ul>
 										</section>
 									</li>
+									
 									<!-- 관로명(구간) 선택 -->
 									<li class="content03 content selectContentArea">
 										<div class="hiddenSelectBox">
-											<!-- name도 추가 -->
 											<select name="pipe_name" id="pipeNameSelectBox" hidden>
 												<option value="" selected>선택</option>
 											</select>
 										</div>
+										
+										<!-- resultData.jm_pipe_name 값을 hidden input으로 저장 -->
+										<input type="hidden" id="nm_pipe_name_hidden" th:value="${resultData.nm_pipe_name}">
+
 										<section class="customSelectBox">
-											<button class="customSelectView" id="pipeNameText">선택</button>
+											<button class="customSelectView" id="pipeNameText"
+											th:text="${resultData.nm_pipe_name != null ? resultData.nm_pipe_name : '선택'}">선택</button>
 											<ul class="customSelectBtns" id="pipe_name_ul">
 											</ul>
 										</section>
 									</li>
+									
 									<!-- 단선 복선 선택 -->
 									<li class="content04 content selectContentArea">
 										<div class="hiddenSelectBox">
-											<!-- name도 추가 -->
 											<select name="sun_gubun" id="sunGubunSelectBox" hidden>
-												<option value="" selected>선택</option>
-												<option value="단선">단선</option>
-												<option value="복선">복선</option>
+											<option value="단선" th:selected="${resultData.nm_sun_gubun == '단선'}">단선</option>
+											<option value="복선" th:selected="${resultData.nm_sun_gubun == '복선'}">복선</option>
 											</select>
 										</div>
 										<section class="customSelectBox">
-											<button class="customSelectView">
-												선택
-											</button>
+											<button class="customSelectView"
+											th:text="${resultData.nm_sun_gubun != null ? resultData.nm_sun_gubun : '선택'}">복선</button>
 											<ul class="customSelectBtns">
 											</ul>
 										</section>
 									</li>
 									<!-- 관경1 입력 -->
-									<li class="content05 content"> <input type="text" id="pipe_diameter1" name="pipe_diameter1" />
+									<li class="content05 content">
+										<input type="text" id="pipe_diameter1" name="pipe_diameter1" th:value="${resultData.nm_pipe_meter}"/>
 									</li>
 									<!-- 관경2 입력 -->
 									<li class="content06 content">
-										<input type="text" id="pipe_diameter2" name="pipe_diameter2" hidden />
+										<input type="text" id="pipe_diameter2" name="pipe_diameter2" th:value="${resultData.nm_pipe_meter2}" hidden />
 									</li>
+									
 									<!-- 국공유지 여부 선택 -->
 									<li class="content07 content selectContentArea">
 										<div class="hiddenSelectBox">
 											<!-- name도 추가 -->
 											<select name="gover_own_yn" id="goverOwnYnSelectBox" hidden>
-												<option value="" selected>선택</option>
-												<option value="Y">Y</option>
-												<option value="N">N</option>
+												<option value="Y" th:selected="${resultData.nm_gover_own_yn == 'Y'}">Y</option>
+												<option value="N" th:selected="${resultData.nm_gover_own_yn == 'N'}">N</option>
 											</select>
 										</div>
 										<section class="customSelectBox">
-											<button class="customSelectView">
-												선택
-											</button>
+											<button class="customSelectView"
+											th:text="${resultData.nm_gover_own_yn != null ? resultData.nm_gover_own_yn : '선택'}">Y</button>
 											<ul class="customSelectBtns">
 											</ul>
 										</section>
 									</li>
+									
 									<!-- 지적면적 입력 -->
 									<li class="content08 content">
-										<input type="text" name="jijuk_area" />
+										<input type="text" name="jijuk_area" th:value="${resultData.nm_jijuk_area}"/>
 									</li>
-									<!-- 지목 선택 -->
+									
+									<!-- 지목 -->
 									<li class="content09 content selectContentArea">
 										<div class="hiddenSelectBox">
 											<!-- name도 추가 -->
 											<select name="jimok_text" id="jimokSelectBox" hidden>
-												<option value="">선택</option>
-												<option th:each="val:${resultJimokList}" th:value="${val?.jm_name}" th:utext="${val?.jm_name}">
+												<option th:each="val:${resultJimokList}" th:value="${val?.jm_name}" th:utext="${val?.jm_name}"
+												th:selected="${val.jm_name == resultData.nm_jimok_text}">
 													지목</option>
 											</select>
 										</div>
 										<section class="customSelectBox">
-											<button class="customSelectView">
-												선택
+											<button class="customSelectView"
+											th:text="${resultData.nm_jimok_text == null or resultData.nm_jimok_text == '' or resultData.nm_jimok_text.trim() == '' ? '선택' : resultData.nm_jimok_text}">
 											</button>
 											<ul class="customSelectBtns">
 											</ul>
 										</section>
 									</li>
+									
 									<!-- 관리제외필지 체크 -->
 									<li class="content10 content checkboxWrap">
 										<input type="checkbox" id="notsetAddCheckbox01" />
@@ -160,6 +164,7 @@
 									</li>
 								</ul>
 							</div>
+							
 							<!-- 주소입력 -->
 							<input type="hidden" name="maddress" id="maddress" />
 							<div class="depth2">
@@ -168,7 +173,29 @@
 									<li class="title02">주소 검색</li>
 								</ul>
 								<ul class="contents">
-									<li class="content01" id="addressSearchResult"></li>
+									<li class="content01" id="addressSearchResult">
+										<input type="hidden" name="maddress" id="maddress" th:value="${#strings.concat(
+																										                        resultData.nm_sido_nm != null ? resultData.nm_sido_nm + ' ' : '', 
+																										                        resultData.nm_sgg_nm != null ? resultData.nm_sgg_nm + ' ' : '', 
+																										                        resultData.nm_emd_nm != null ? resultData.nm_emd_nm + ' ' : '', 
+																										                        resultData.nm_ri_nm != null ? resultData.nm_ri_nm + ' ' : '', 
+																										                        resultData.nm_jibun != null ? resultData.nm_jibun : ''
+																										                      )}" />
+										<input type="hidden" name="mpnu" id="mpnu" th:value="${resultData.nm_pnu}" />
+										<input type="hidden" name="mjibun" id="mjibun" th:value="${resultData.nm_jibun}" />
+										<input type="hidden" name="sido_nm" id="sido_nm" th:value="${resultData.nm_sido_nm}"></input>
+										<input type="hidden" name="sgg_nm" id="sgg_nm" th:value="${resultData.nm_sgg_nm}"></input>
+										<input type="hidden" name="emd_nm" id="emd_nm" th:value="${resultData.nm_emd_nm}"></input>
+										<input type="hidden" name="ri_nm" id="ri_nm" th:value="${resultData.nm_ri_nm}"></input>
+									
+										<input type="text" id="raddress" readonly class="notWriteInput" th:value="${#strings.concat(
+																										                        resultData.nm_sido_nm != null ? resultData.nm_sido_nm + ' ' : '', 
+																										                        resultData.nm_sgg_nm != null ? resultData.nm_sgg_nm + ' ' : '', 
+																										                        resultData.nm_emd_nm != null ? resultData.nm_emd_nm + ' ' : '', 
+																										                        resultData.nm_ri_nm != null ? resultData.nm_ri_nm + ' ' : '', 
+																										                        resultData.nm_jibun != null ? resultData.nm_jibun : ''
+																										                      )}">
+									</li>
 									<li class="content02">
 										<ul class="radioBox">
 											<!-- 입력형 -->
@@ -259,6 +286,7 @@
 						</div>
 					</section>
 
+					<!--소유자 정보-->
 					<section class="ownerInfo">
 						<div class="subTitle">
 							소유자 정보*
@@ -318,7 +346,9 @@
 										</div>
 									</li>
 								</ul>
-								<ul class="contents editing" id="soujaUl">
+								
+								<!-- 데이터가 0개 일 때 -->
+								<ul class="contents editing" th:if="${soujaList.size() == 0}" id="soujaUl">
 									<li class="content01 content editSpace">
 										<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun" placeholder="ex)1/2">
 									</li>
@@ -326,8 +356,7 @@
 										<input type="text" class="editingContent" name="soujaName" id="soujaName" placeholder="ex)홍길동">
 									</li>
 									<li class="content03 content editSpace">
-										<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress"
-											placeholder="ex)주소만입력">
+										<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress" placeholder="ex)주소만입력">
 									</li>
 									<li class="content04 content editSpace">
 										<input type="text" class="editingContent" name="soujaContact1" id="soujaContact1"
@@ -338,7 +367,6 @@
 									</li>
 									<li class="content06 content btnBox">
 										<!-- 수정입력할때 -->
-
 										<div class="editBefore">
 											<div class="btnWrap">
 												<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
@@ -349,7 +377,6 @@
 										</div>
 
 										<!-- 수정완료할 때 -->
-
 										<div class="editAfter">
 											<div class="newBtnWrap">
 												<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
@@ -357,15 +384,54 @@
 										</div>
 									</li>
 								</ul>
+								
+								<!--데이터가 1개 이상일 때-->
+								<ul class="contents editing" th:if="${soujaList.size() > 0}" th:each="souja : ${soujaList}" id="soujaUl">
+									<li class="content01 content editSpace">
+										<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun"
+											th:value="${souja.ns_jibun}">
+									</li>
+									<li class="content02 content editSpace">
+										<input type="text" class="editingContent" name="soujaName" id="soujaName"
+											th:value="${souja.ns_souja_name}">
+									</li>
+									<li class="content03 content editSpace">
+										<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress"
+											th:value="${souja.ns_address}">
+									</li>
+									<li class="content04 content editSpace">
+										<input type="text" class="editingContent" name="soujaContact1" id="soujaContact1"
+											th:value="${souja.ns_phone_number}" placeholder="ex)000-0000-0000">
+									</li>
+									<li class="content05 content editSpace">
+										<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2"
+											th:value="${souja.ns_home_number}">
+									</li>
+									<li class="content06 content btnBox">
+										<!-- 수정입력할때 -->
+										<div class="editBefore">
+											<div class="btnWrap">
+												<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
+											</div>
+											<div class="btnWrap">
+												<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
+											</div>
+										</div>
 
-
+										<!-- 수정완료할 때 -->
+										<div class="editAfter">
+											<div class="newBtnWrap">
+												<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
+											</div>
+										</div>
+									</li>
+								</ul>
 							</div>
 						</div>
 					</section>
 
 					<!-- 첨부파일 -->
 					<section class="attachFileInfo">
-						<!--  <form name="uploadForm" method="post" enctype="multipart/form-data"> -->
 						<div class="subTitle">
 							첨부파일
 							<div class="fileBtnWrap">
@@ -373,14 +439,15 @@
 								<label for="easementModification_myPcFiles">내 PC</label>
 							</div>
 						</div>
+						
 						<div class="fileUploadWrap">
 							<div class="fileUploadBox">
 								<img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
 								<p>파일을 마우스로 끌어오세요.</p>
 							</div>
 						</div>
-						<!-- <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div> -->
-						<!-- </form> -->
+						
+						<!-- 첨부파일 목록 -->
 						<div class="contWrap">
 							<div class="depth1" id="fileListDiv">
 								<ul class="titles" id="fileTitleUl">
@@ -392,6 +459,20 @@
 									</li>
 									<li class="title02">파일명</li>
 								</ul>
+								
+								<!-- 미설정 내역 수정 첨부파일 리스트 -->
+								<div class="contentScr" id="fileListDiv">
+								    <!--첨부파일 목록 반복문-->
+								    <ul class="contents" id="fileListUl" th:each="file, iterStat : ${atcFileList}">
+								        <li class="content01 content checkboxWrap">
+								            <input type="checkbox" th:id="'attachFile' + ${iterStat.index + 1}" name="attachFile" />
+								            <label th:for="'attachFile' + ${iterStat.index + 1}"></label>
+								        </li>
+								        <li class="content02 content">
+								            <input type="text" th:value="${file.na_file_nm}" id="filename" class="notWriteInput" readonly />
+								        </li>
+								    </ul>
+								</div>
 							</div>
 						</div>
 						<div class="btnWrap">
@@ -456,6 +537,7 @@
 		<!-- script -->
 		<script src="/js/common/addressSelect.js"></script>
 		<script src="/js/songyu/notsetaddRevise.js"></script>
+		<script type="module" src="/js/module/surfaceMain.js"></script>
 	</body>
 </th:block>
 
