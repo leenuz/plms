@@ -499,3 +499,16 @@ $(document).on("click",".delBtn",function(){
 
 	  });
 });
+
+// 수정 버튼 클릭 이벤트 리스너
+$(document).ready(function() {
+	$('.editBtn').on('click', function() {
+		const urlParams = new URL(location.href).searchParams;
+		const idx = urlParams.get('idx');
+		const index = urlParams.get('index');
+		const gidx = urlParams.get('gidx');
+		url = "/notset/notsetaddRevise?idx=" + idx + "&index=" + index + "&g_idx=" + gidx;
+		window.location = url;
+	});
+});
+

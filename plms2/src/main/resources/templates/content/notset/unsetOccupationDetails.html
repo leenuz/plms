@@ -535,7 +535,6 @@ margin:10px;
                     메모
                 </div>
 
-
                 <div class="contWrap">
                     <div class="contBox">
                         <div class="contentDetailBox">
@@ -681,9 +680,7 @@ margin:10px;
                 <button class="finalBtn switchBtn">지상권 전환</button>
 <!--                <button class="backBtn finalBtn">이전</button>-->
                 <input class="backBtn finalBtn" type="button" value="이전" onclick="history.back();" />
-                <button class="finalBtn editBtn">
-									<a href="/components/subHtml/menu01/notsetaddRevise.html" class="reviseLink">수정</a>
-								</button>
+                <button class="editBtn finalBtn editBtn" th:data-notset-no="${resultData.nm_notset_no}">수정</button>
             </div>
         </main>
     </div>

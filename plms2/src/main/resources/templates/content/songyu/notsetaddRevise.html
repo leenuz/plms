@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" as="style" crossorigin
+		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+	<link th:href="@{/css/common.css}" rel="stylesheet" />
+
+	<link rel="stylesheet" href="/css/songyu/notsetAddRevise.css" />
+	<title>미설정/미점용 내역 수정</title>
+</head>
+
+<th:block layout:fragment="content">
+	<body>
+		<div class="mainContentWrappers">
+			<!--header삽입-->
+			<div class="surfaceHeader mainContentHeader"></div>
+			<main id="mainContent">
+				<div class="mainTitle">
+					<h1>미설정/미점용 내역 수정</h1>
+				</div>
+				<form name="saveForm" id="saveForm" onSubmit="return false;">
+					<section class="defaultInfo">
+						<div class="subTitle">기본 정보</div>
+						<div class="contWrap">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01">담당지사*</li>
+									<li class="title02">관로일치여부*</li>
+									<li class="title03">관로명(구간)*</li>
+									<li class="title04">단/복선*</li>
+									<li class="title05">관경1</li>
+									<li class="title06">관경2</li>
+									<li class="title07">국공유지여부*</li>
+									<li class="title08">지적면적(㎡)*</li>
+									<li class="title09">지목*</li>
+									<li class="title10">관리제외필지</li>
+								</ul>
+								<ul class="contents">
+									<!-- 담당지사 선택 -->
+									<li class="content01 content">
+										<div class="selectContentArea">
+											<div class="hiddenSelectBox">
+												<select name="jisa" class="menuHiddenSelect" id="jisa" hidden>
+													<option value="">전체</option>
+													<option th:each="val:${jisaList}" th:text="${val.jm_jisa_name}"
+														th:value="${val.jm_jisa_name}"></option>
+												</select>
+											</div>
+											<section class="customSelectBox">
+												<button class="customSelectView" id="jisaBtn">전체</button>
+												<ul class="customSelectBtns" id="jisaUl"></ul>
+											</section>
+										</div>
+									</li>
+									<!-- 관로 일치 여부 선택 -->
+									<li class="content02 content selectContentArea">
+										<div class="hiddenSelectBox">
+											<!-- name도 추가 -->
+											<select name="overlap_yn" id="overlapYnSelectBox" hidden>
+												<option value="" selected>선택</option>
+												<option value="Y">Y</option>
+												<option value="N">N</option>
+											</select>
+										</div>
+										<section class="customSelectBox">
+											<button class="customSelectView">
+												선택
+											</button>
+											<ul class="customSelectBtns">
+											</ul>
+										</section>
+									</li>
+									<!-- 관로명(구간) 선택 -->
+									<li class="content03 content selectContentArea">
+										<div class="hiddenSelectBox">
+											<!-- name도 추가 -->
+											<select name="pipe_name" id="pipeNameSelectBox" hidden>
+												<option value="" selected>선택</option>
+											</select>
+										</div>
+										<section class="customSelectBox">
+											<button class="customSelectView" id="pipeNameText">선택</button>
+											<ul class="customSelectBtns" id="pipe_name_ul">
+											</ul>
+										</section>
+									</li>
+									<!-- 단선 복선 선택 -->
+									<li class="content04 content selectContentArea">
+										<div class="hiddenSelectBox">
+											<!-- name도 추가 -->
+											<select name="sun_gubun" id="sunGubunSelectBox" hidden>
+												<option value="" selected>선택</option>
+												<option value="단선">단선</option>
+												<option value="복선">복선</option>
+											</select>
+										</div>
+										<section class="customSelectBox">
+											<button class="customSelectView">
+												선택
+											</button>
+											<ul class="customSelectBtns">
+											</ul>
+										</section>
+									</li>
+									<!-- 관경1 입력 -->
+									<li class="content05 content"> <input type="text" id="pipe_diameter1" name="pipe_diameter1" />
+									</li>
+									<!-- 관경2 입력 -->
+									<li class="content06 content">
+										<input type="text" id="pipe_diameter2" name="pipe_diameter2" hidden />
+									</li>
+									<!-- 국공유지 여부 선택 -->
+									<li class="content07 content selectContentArea">
+										<div class="hiddenSelectBox">
+											<!-- name도 추가 -->
+											<select name="gover_own_yn" id="goverOwnYnSelectBox" hidden>
+												<option value="" selected>선택</option>
+												<option value="Y">Y</option>
+												<option value="N">N</option>
+											</select>
+										</div>
+										<section class="customSelectBox">
+											<button class="customSelectView">
+												선택
+											</button>
+											<ul class="customSelectBtns">
+											</ul>
+										</section>
+									</li>
+									<!-- 지적면적 입력 -->
+									<li class="content08 content">
+										<input type="text" name="jijuk_area" />
+									</li>
+									<!-- 지목 선택 -->
+									<li class="content09 content selectContentArea">
+										<div class="hiddenSelectBox">
+											<!-- name도 추가 -->
+											<select name="jimok_text" id="jimokSelectBox" hidden>
+												<option value="">선택</option>
+												<option th:each="val:${resultJimokList}" th:value="${val?.jm_name}" th:utext="${val?.jm_name}">
+													지목</option>
+											</select>
+										</div>
+										<section class="customSelectBox">
+											<button class="customSelectView">
+												선택
+											</button>
+											<ul class="customSelectBtns">
+											</ul>
+										</section>
+									</li>
+									<!-- 관리제외필지 체크 -->
+									<li class="content10 content checkboxWrap">
+										<input type="checkbox" id="notsetAddCheckbox01" />
+										<label for="notsetAddCheckbox01" class="customCheckBoxLabel01"></label>
+									</li>
+								</ul>
+							</div>
+							<!-- 주소입력 -->
+							<input type="hidden" name="maddress" id="maddress" />
+							<div class="depth2">
+								<ul class="titles">
+									<li class="title01">주소*</li>
+									<li class="title02">주소 검색</li>
+								</ul>
+								<ul class="contents">
+									<li class="content01" id="addressSearchResult"></li>
+									<li class="content02">
+										<ul class="radioBox">
+											<!-- 입력형 -->
+											<li class="inputArea inputArea01">
+												<div class="inputWrap">
+													<input type="radio" id="writeInput" name="addressInput" value="0" checked />
+													<label for="writeInput">입력형</label>
+												</div>
+												<input type="text" name="address" placeholder="주소 입력" class="addressInputBox01" />
+												<button class="SearchAddressBtn AddPopBtn" id="addressSearchBtn">
+													검색
+												</button>
+											</li>
+											<!-- 선택형 -->
+											<li class="inputArea inputArea02 selectRadioEvet01">
+												<div class="inputWrap">
+													<input type="radio" id="selectInput" name="addressInput" value="1" />
+													<label for="selectInput">선택형</label>
+												</div>
+												<!-- 주소 선택 콤보박스(시도) -->
+												<div class="selectContentArea">
+													<div class="hiddenSelectBox">
+														<select name="sido" id="sidoSelectBox" hidden>
+															<option value="">전체</option>
+															<option th:each="val:${sidoList}" th:value="${val?.sm_name}" th:utext="${val?.sm_name}">지목
+															</option>
+														</select>
+													</div>
+													<section class="customSelectBox">
+														<button class="customSelectView" id="sidoBtn">
+															전체
+														</button>
+														<ul class="customSelectBtns" id="sido_ul">
+														</ul>
+													</section>
+												</div>
+												<!-- 주소 선택 콤보박스(구군) -->
+												<div class="selectContentArea">
+													<div class="hiddenSelectBox">
+														<select name="gugun" id="gugunSelectBox" hidden>
+															<option value="">전체</option>
+														</select>
+													</div>
+													<section class="customSelectBox">
+														<button class="customSelectView" id="gugunBtn">
+															전체
+														</button>
+														<ul class="customSelectBtns" id="gugun_ul">
+														</ul>
+													</section>
+												</div>
+												<!-- 주소 선택 콤보박스(읍면동) -->
+												<div class="selectContentArea">
+													<div class="hiddenSelectBox">
+														<select name="dong" id="dongSelectBox" hidden>
+															<option value="">전체</option>
+														</select>
+													</div>
+													<section class="customSelectBox">
+														<button class="customSelectView" id="dongBtn">
+															전체
+														</button>
+														<ul class="customSelectBtns" id="dong_ul">
+														</ul>
+													</section>
+												</div>
+												<!-- 주소 선택 콤보박스(리) -->
+												<div class="selectContentArea">
+													<div class="hiddenSelectBox">
+														<select name="ri" id="riSelectBox" hidden>
+															<option value="">전제</option>
+														</select>
+													</div>
+													<section class="customSelectBox">
+														<button class="customSelectView" id="riBtn">
+															전체
+														</button>
+														<ul class="customSelectBtns" id="ri_ul">
+														</ul>
+													</section>
+												</div>
+												<input type="text" name="mjibun" placeholder="지번 입력">
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+
+					<section class="ownerInfo">
+						<div class="subTitle">
+							소유자 정보*
+						</div>
+						<input type="hidden" name="mpnu" id="mpnu" />
+						<input type="hidden" name="mjibun" id="mjibun" />
+						<input type="hidden" name="sido_nm" id="sido_nm" />
+						<input type="hidden" name="sgg_nm" id="sgg_nm" />
+						<input type="hidden" name="emd_nm" id="emd_nm" />
+						<input type="hidden" name="ri_nm" id="ri_nm" />
+						<input type="hidden" name="addrcode" id="addrcode" />
+
+						<div class="contWrap">
+							<div class="depth1" id="soujaDiv">
+								<ul class="titles">
+									<li class="title01">공유지분</li>
+									<li class="title02">성명</li>
+									<li class="title03">주소</li>
+									<li class="title04">연락처1</li>
+									<li class="title05">연락처2</li>
+									<li class="title06">추가/삭제</li>
+								</ul>
+								<ul class="contents editing" id="soujaHiddenUl" style="display:none;">
+									<li class="content01 content editSpace">
+										<input type="text" class="editingContent" name="soujaJibun" placeholder="ex)1/2">
+									</li>
+									<li class="content02 content editSpace">
+										<input type="text" class="editingContent" name="soujaName" placeholder="ex)홍길동">
+									</li>
+									<li class="content03 content editSpace">
+										<input type="text" class="editingContent" name="soujaAddress" placeholder="ex)주소만입력">
+									</li>
+									<li class="content04 content editSpace">
+										<input type="text" class="editingContent" name="soujaContact1" placeholder="ex)000-0000-0000">
+									</li>
+									<li class="content05 content editSpace">
+										<input type="text" class="editingContent" name="soujaContact2">
+									</li>
+									<li class="content06 content btnBox">
+										<!-- 수정입력할때 -->
+
+										<div class="editBefore">
+											<div class="btnWrap">
+												<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
+											</div>
+											<div class="btnWrap">
+												<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
+											</div>
+										</div>
+
+										<!-- 수정완료할 때 -->
+
+										<div class="editAfter">
+											<div class="newBtnWrap">
+												<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<ul class="contents editing" id="soujaUl">
+									<li class="content01 content editSpace">
+										<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun" placeholder="ex)1/2">
+									</li>
+									<li class="content02 content editSpace">
+										<input type="text" class="editingContent" name="soujaName" id="soujaName" placeholder="ex)홍길동">
+									</li>
+									<li class="content03 content editSpace">
+										<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress"
+											placeholder="ex)주소만입력">
+									</li>
+									<li class="content04 content editSpace">
+										<input type="text" class="editingContent" name="soujaContact1" id="soujaContact1"
+											placeholder="ex)000-0000-0000">
+									</li>
+									<li class="content05 content editSpace">
+										<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2">
+									</li>
+									<li class="content06 content btnBox">
+										<!-- 수정입력할때 -->
+
+										<div class="editBefore">
+											<div class="btnWrap">
+												<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
+											</div>
+											<div class="btnWrap">
+												<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
+											</div>
+										</div>
+
+										<!-- 수정완료할 때 -->
+
+										<div class="editAfter">
+											<div class="newBtnWrap">
+												<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
+											</div>
+										</div>
+									</li>
+								</ul>
+
+
+							</div>
+						</div>
+					</section>
+
+					<!-- 첨부파일 -->
+					<section class="attachFileInfo">
+						<!--  <form name="uploadForm" method="post" enctype="multipart/form-data"> -->
+						<div class="subTitle">
+							첨부파일
+							<div class="fileBtnWrap">
+								<input type="file" name="fileUpload" id="easementModification_myPcFiles">
+								<label for="easementModification_myPcFiles">내 PC</label>
+							</div>
+						</div>
+						<div class="fileUploadWrap">
+							<div class="fileUploadBox">
+								<img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
+								<p>파일을 마우스로 끌어오세요.</p>
+							</div>
+						</div>
+						<!-- <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div> -->
+						<!-- </form> -->
+						<div class="contWrap">
+							<div class="depth1" id="fileListDiv">
+								<ul class="titles" id="fileTitleUl">
+									<li class="title01 allSelectCheck">
+										<!-- 선택 -->
+										<input type="checkbox" id="landRightsRegistration_file_select_all"
+											name="landRightsRegistration_file_select_all">
+										<label for="landRightsRegistration_file_select_all"></label>
+									</li>
+									<li class="title02">파일명</li>
+								</ul>
+							</div>
+						</div>
+						<div class="btnWrap">
+							<button class="fileDelBtn delBtn" id="deleteFileBtn">선택파일 삭제</button>
+						</div>
+					</section>
+
+					<!-- 메모 -->
+					<section class="memoSection">
+						<div class="subTitle">메모</div>
+
+						<textarea name="memo" id="memo" placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200"></textarea>
+					</section>
+
+					<div class="finalBtnBox btnWrap">
+						<button class="backBtn finalBtn" id="backBtn" onclick="history.back();">이전</button>
+						<button class="saveBtn finalBtn" id="finalBtn">수정</button>
+					</div>
+				</form>
+			</main>
+		</div>
+		<div class="notsetAddResultPop"></div>
+		<!-- 주소검색 결과 팝업 -->
+		<div class="landRightSearchResultPopWrapper" id="searchResultPopDiv">
+			<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+			<div id="searchResultsPopup">
+				<div class="popupWrap" id="popupWrap">
+					<h2>
+						<p>검색결과</p>
+						<span class="topCloseBtn"></span>
+					</h2>
+					<div class="popupCont">
+						<ul class="popTitles">
+							<li class="popTitle01">PNU</li>
+							<li class="popTitle02">주소</li>
+							<li class="popTitle03">지번</li>
+							<li class="popTitle04">선택</li>
+						</ul>
+						<div class="popContentBox">
+							<ul class="popContents" th:each="val:${jisangBasicSearchList}">
+								<li class="popContent01"> [[${val.pnu}]]</li>
+								<li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.ri_nm}]]</li>
+								<ii class="popContent0201" hidden>[[${val.sido_nm}]]</ii>
+								<ii class="popContent0202" hidden>[[${val.sgg_nm}]]</ii>
+								<ii class="popContent0203" hidden>[[${val.emd_nm}]]</ii>
+								<ii class="popContent0204" hidden>[[${val.ri_nm}]]</ii>
+								<ii class="popContent0205" hidden>[[${val.bcode}]]</ii>
+								<li class="popContent03">[[${val.jibun}]]</li>
+								<li class="popContent04">
+									<button class="resultSelectBtn addressResultSelectBtn">선택</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="lastBtnBox btnWrap">
+						<button class="backBtn finalBtn" id="addressPopupCloseBtn">닫기</button>
+						<button class="saveBtn finalBtn">PNU 없이 선택</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- script -->
+		<script src="/js/common/addressSelect.js"></script>
+		<script src="/js/songyu/notsetAddRevise.js"></script>
+	</body>
+</th:block>
+
+</html>

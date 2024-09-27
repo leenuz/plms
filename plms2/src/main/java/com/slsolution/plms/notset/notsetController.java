@@ -84,6 +84,28 @@ public class notsetController {
 		
 		return mav;
     }
+	
+	//권리확보현황-데이터테이블-미설정/미점용 상세보기 - 미설정/미점용 수정
+	@GetMapping(path="/notsetaddRevise") //http://localhost:8080/api/get/dbTest
+    public ModelAndView notsetaddRevise(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+
+		HashMap params = new HashMap();
+		
+		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+		ArrayList<HashMap> yongdolist = mainService.selectQuery("commonSQL.selectYongdoList",params);
+		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
+		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+      
+		mav.addObject("jisaList",jisalist);
+		mav.addObject("resultYongdoList",yongdolist);
+		mav.addObject("resultJimokList",jimoklist);
+		mav.addObject("sidoList",sidolist);
+		log.info("jisalist:"+jisalist);
+	
+		mav.setViewName("content/songyu/notsetaddRevise");
+		return mav;
+    }
 		
 		
 		@RequestMapping(value = "/fileUpload/post") //ajax에서 호출하는 부분
