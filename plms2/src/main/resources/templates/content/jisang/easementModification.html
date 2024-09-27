@@ -45,7 +45,7 @@
 							<!--담당지사-->
 							<li class="content01 content selectContentArea">
 								<div class="hiddenSelectBox">
-									<select name="easementModifySelectBox01" id="easementModifySelectBox01" hidden>
+									<select name="jisa" id="easementModifySelectBox01" hidden>
 										<option th:each="jisa : ${jisaList}" th:value="${jisa.sc_code_name}" th:text="${jisa.sc_code_name}"
 											th:selected="${jisa.sc_code_name == resultData.jm_jisa}">
 										</option>
@@ -64,7 +64,7 @@
 							<li class="content02 content selectContentArea">
 								<div class="hiddenSelectBox">
 									<!-- name도 추가 -->
-									<select name="easementModifySelectBox02" id="easementModifySelectBox02" hidden>
+									<select name="overlap_yn" id="easementModifySelectBox02" hidden>
 										<option value="Y" th:selected="${resultData.jm_pipe_yn == 'Y'}">Y</option>
 										<option value="N" th:selected="${resultData.jm_pipe_yn == 'N'}">N</option>
 									</select>
@@ -81,7 +81,7 @@
 							<!-- 용도 -->
 							<li class="content03 content selectContentArea">
 								<div class="hiddenSelectBox">
-									<select name="easementModifySelectBox03" id="easementModifySelectBox03" hidden>
+									<select name="youngdo" id="easementModifySelectBox03" hidden>
 										<option value="송유관로" th:selected="${resultData.jm_yongdo == '송유관로'}">송유관로</option>
 										<option value="밸브박스" th:selected="${resultData.jm_yongdo == '밸브박스'}">밸브박스</option>
 										<option value="가압소" th:selected="${resultData.jm_yongdo == '가압소'}">가압소</option>
@@ -213,13 +213,19 @@
 						<ul class="contents">
 							<!--주소-->
 							<li class="content01">
-								<input type="hidden" name="maddress" id="maddress"/>
-								<input type="hidden" name="mpnu" id="mpnu"/>
-								<input type="hidden" name="mjibun" id="mjibun"/>
-								<input type="hidden" name="sido_nm" id="sido_nm"></input>
-								<input type="hidden" name="sgg_nm" id="sgg_nm"></input>
-								<input type="hidden" name="emd_nm" id="emd_nm"></input>
-								<input type="hidden" name="ri_nm" id="ri_nm"></input>
+								<input type="hidden" name="maddress" id="maddress" th:value="${#strings.concat(
+							                        resultData.jm_sido_nm != null ? resultData.jm_sido_nm + ' ' : '', 
+							                        resultData.jm_sgg_nm != null ? resultData.jm_sgg_nm + ' ' : '', 
+							                        resultData.jm_emd_nm != null ? resultData.jm_emd_nm + ' ' : '', 
+							                        resultData.jm_ri_nm != null ? resultData.jm_ri_nm + ' ' : '', 
+							                        resultData.jm_jibun != null ? resultData.jm_jibun : ''
+							                      )}"/>
+								<input type="hidden" name="mpnu" id="mpnu" th:value="${resultData.jm_pnu}"/>
+								<input type="hidden" name="mjibun" id="mjibun" th:value="${resultData.jm_jibun}"/>
+								<input type="hidden" name="sido_nm" id="sido_nm" th:value="${resultData.jm_sido_nm}"></input>
+								<input type="hidden" name="sgg_nm" id="sgg_nm" th:value="${resultData.jm_sgg_nm}"></input>
+								<input type="hidden" name="emd_nm" id="emd_nm" th:value="${resultData.jm_emd_nm}"></input>
+								<input type="hidden" name="ri_nm" id="ri_nm" th:value="${resultData.jm_ri_nm}"></input>
 								
 								<input type="text" id="raddress" readonly class="notWriteInput" th:value="${#strings.concat(
 							                        resultData.jm_sido_nm != null ? resultData.jm_sido_nm + ' ' : '', 
