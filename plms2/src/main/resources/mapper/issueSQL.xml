@@ -951,7 +951,7 @@ SELECT A.CODE,
 			AND A.PERMITTED_YN = #{PERMITTED_YN}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(IS_CODE_ADMIN)" >
-			AND SUBSTR(A.CODE, 0, 1) = #{IS_CODE_ADMIN}
+			AND SUBSTR(A.CODE, 1, 2) = #{IS_CODE_ADMIN}
 		</if>
  ORDER BY SUBSTR(A.CODE , 1, 1) ASC
           , A.REGISTED_YN DESC
