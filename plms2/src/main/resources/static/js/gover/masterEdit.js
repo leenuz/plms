@@ -1107,7 +1107,6 @@ $(document).on("click",".resultSelectBtn",function(){
 	
 	console.log("***클릭된 id*** : " + id);
 	console.log($(this).parent().parent().html());
-	
 	var pnu=$(this).parent().parent().find(".popContent01").html();
 	var juso=$(this).parent().parent().find(".popContent02").html();	
 	var jibun=$(this).parent().parent().find(".popContent03").html();
@@ -1118,6 +1117,8 @@ $(document).on("click",".resultSelectBtn",function(){
 	var addrcode=$(this).parent().parent().find(".popContent0205").html();
 	var jibun_full=$(this).parent().parent().find(".popContent0206").html();
 	var jimok=$(this).parent().parent().find(".popContent05").html();
+    var x = $(this).parent().parent().find("input[name=x]").val();
+    var y = $(this).parent().parent().find("input[name=y]").val();
 	
 	console.log("pnu: " + pnu);
 	console.log("juso: " + juso);
@@ -1138,6 +1139,8 @@ $(document).on("click",".resultSelectBtn",function(){
 	openerTargetEle.parent().parent().find("#jibun").val(jibun);
 	openerTargetEle.parent().parent().find("#jibun_full").val(jibun_full);
 	openerTargetEle.parent().parent().find("#addrcode").val(addrcode);
+    openerTargetEle.parent().parent().find("input[name=x]").val(x);
+    openerTargetEle.parent().parent().find("input[name=y").val(y);
 	
 	// 지목 값 select 박스에 반영
 	var jimokSelectBox = openerTargetEle.parent().parent().find("#jimok");
@@ -1194,3 +1197,24 @@ $(document).on("click",".topCloseBtn",function(){
 	$(".popupWrap").removeClass("active");
 //	$(".popupWrap").toggleClass("active");
 });
+
+function openMap(el) {
+    // el.parentElement.parentElement.querySelector('input[name=x]').value
+    var x = el.parentElement.parentElement.querySelector('input[name=x]').value;
+    var y = el.parentElement.parentElement.querySelector('input[name=y]').value;
+    moveToCityHall(x, y);
+}
+
+function moveToCityHall(x, y) {
+    console.log("--------moveToCityHall-------------");
+    var cityHallCoords = {};
+
+    var x = parseFloat(x);
+    var y = parseFloat(y);
+    if (x != 0 && y != 0 && !isNaN(x) && !isNaN(y)) {
+        cityHallCoords = { lon: x, lat: y, zoom: 16 };
+        openMapWindow(cityHallCoords);
+    } else {
+        alert("해당 위치에 대한 좌표가 없습니다.");
+    }
+}
