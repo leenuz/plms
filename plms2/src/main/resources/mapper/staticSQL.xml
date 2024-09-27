@@ -836,8 +836,11 @@ SELECT TTT.TYPE,
 		    '완료' AS status_5_title
 		FROM minwon_master mm
 		where 1=1
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" > 
-		and mm.mm_jisa=#{jisa}
+		 <if test="jisaList != null and jisaList.size > 0">
+			and mm.mm_jisa in 
+			 <foreach item="jisa" index="index" collection="jisaList" open="(" separator="," close=")">
+        		#{jisa}
+    		</foreach>
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(status)" > 
 		and mm.mm_status=#{status}
