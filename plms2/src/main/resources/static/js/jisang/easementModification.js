@@ -725,7 +725,7 @@ const AllCheckEventEasementModification = () => {
 	// checked가 된 첨부파일 리스트
 	const clickedAttachFiles = document.querySelectorAll('input[name="easementModification_attachFile"]:checked');
 	// 전체선택 input
-	const clickedAllinput = document.querySelector('input[name="easementModification_file_select_all"]');
+	const clickedAllinput = document.querySelector('input[name="landRightsRegistration_file_select_all"]');
 
 	// 전체선택되게 하기
 	clickedAllinput.addEventListener('click', function() {
@@ -889,7 +889,7 @@ $(document).on("click", "#finalBtn", function() {
 	console.log("------dataObj--------");
 	console.log(dataObj);
 
-	dataObj.gubun = "insert";
+	dataObj.gubun = "modify";
 
 	url = "/jisang/insertJisangList";
 	$.ajax({

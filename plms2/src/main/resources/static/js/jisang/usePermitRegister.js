@@ -1113,7 +1113,7 @@ $(document).on("click","#sangsinBtn",function(){
 						$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
 					}*/
 					
-					url="/jisang/usePermitRegisterSave";
+					url="/jisang/selectJisangPmtDetailListAppoval";
 						   	$.ajax({
 
 								url:url,
@@ -1131,7 +1131,7 @@ $(document).on("click","#sangsinBtn",function(){
 									console.log(response);
 									if (response.success="Y"){
 										console.log("response.success Y");
-										console.log("response.resultData length:"+response.resultData.length);
+										//console.log("response.resultData length:"+response.resultData.length);
 										alert("정상적으로 등록 되었습니다.");
 										/*$("#popup_bg").show();
 										$("#popup").show(500);

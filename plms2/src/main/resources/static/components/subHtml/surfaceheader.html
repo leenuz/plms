@@ -14,7 +14,7 @@
     //mapWindow = window.open('http://10.168.0.247:8080/sample/map/2pms.html', 'mapWindow', 'width=2048,height=1024');
     //sessionStorage.setItem("2pmsMap",mapWindow);
     //window.name=mapWindow;
-
+console.log("-----------start openMapWindow-----------------");
     // 자식 창에서 부모 창으로 메시지 보내기
     if (window.opener) {
       if (location != undefined) {
@@ -31,7 +31,7 @@
 
 
   window.addEventListener('message', function (event) {
-    <!--	console.log("Received message from map window:", event.data);-->
+    	console.log("Received message from map window:", event.data);
   }, false);
 
 
