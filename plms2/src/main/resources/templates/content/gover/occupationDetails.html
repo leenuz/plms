@@ -289,7 +289,7 @@
                                             var centerLat = latAll / markers.length;
                                             var centerLng = lngAll / markers.length;
 
-                                            if (centerLat != 0 && y != centerLng && !isNaN(centerLat) && !isNaN(centerLng)) {
+                                            if (centerLat != 0 && centerLng != 0 && !isNaN(centerLat) && !isNaN(centerLng)) {
                                                 cityHallCoords = { lon: centerLng, lat: centerLat, zoom: 16 };
                                                 openMapWindow(cityHallCoords);
                                             } else {
