@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이슈 코드 상세 조회</title>
+    <link rel="stylesheet" href="/css/issue/issueCodeDetail.css" />
+</head>
+<th:block layout:fragment="content">
+    <!-- 이슈 코드 상세 조회 -->
+    <div class="issueCodeDetailWrappers">
+        <main id="issueCodeDetail">
+            <div class="mainTitle">
+                <h1>이슈 코드 상세 조회</h1>
+            </div>
+
+            <div class="sectionBox">
+                <input type="hidden" id="code" th:value="${result.code}"/>
+                <section class="basicInfo">
+                    <div class="subTitle">
+                        <div class="subTitleText">기본 정보</div>
+                    </div>
+
+                    <div class="contWrap">
+                        <div class="depth1">
+                            <ul class="rowListBox">
+                                <li class="title">등기여부</li>
+                                <li class="content">
+                                    <input type="text" placeholder="지상권 설정" class="notWriteInput" th:value="${result.deunggi}" readonly>
+                                </li>
+                            </ul>
+                            <ul class="rowListBox">
+                                <li class="title">계약여부</li>
+                                <li class="content">
+                                    <input type="text" placeholder="계약 체결" class="notWriteInput" th:value="${result.registed}" readonly>
+                                </li>
+                            </ul>
+                            <ul class="rowListBox">
+                                <li class="title">이슈세부유형</li>
+                                <li class="content categoryWrap">
+                                    <div class="categoryForIssue categoryMain">
+                                        <p th:text="${result.depth1_name}"></p>
+                                    </div>
+                                    <span>></span>
+                                    <div class="categoryForIssue categorySub">
+                                        <p th:text="${result.depth2_name}"></p>
+                                    </div>
+                                    <span>></span>
+                                    <div class="categoryForIssue categoryDetail">
+                                        <p th:text="${result.code_name}">등기진행 누락</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 발생 가능 사례 -->
+                <section class="casePossible">
+                    <div class="subTitle">
+                        <div class="subTitleText">발생 가능 사례</div>
+                    </div>
+
+                    <div class="contWrap">
+                        <textarea readonly th:text="${result.case_text}"></textarea>
+                    </div>
+                </section>
+
+                <!-- 대응방안 -->
+                <section class="responsePlan">
+                    <div class="subTitle">
+                        <div class="subTitleText">대응방안</div>
+                    </div>
+
+                    <div class="contWrap">
+                        <textarea readonly th:text="${result.etc_text}"></textarea>
+                    </div>
+                </section>
+
+                <!-- 메뉴얼 -->
+
+                <section class="menualFile">
+                    <div class="subTitle">
+                        <div class="subTitleText">메뉴얼</div>
+                    </div>
+
+                    <div class="contWrap">
+                        <div class="depth1">
+                            <ul class="titles">
+                                <li class="title largeWidth">
+                                    <p>메뉴얼명</p>
+                                </li>
+                                <li class="title middleWidth">
+                                    <p>파일명</p>
+                                </li>
+                                <li class="title middleWidth">
+                                    <p>개정일자</p>
+                                </li>
+                                <li class="title">
+                                    <p>파일저장</p>
+                                </li>
+                                <li class="title">
+                                    <p>메뉴얼개정</p>
+                                </li>
+                                <li class="title">
+                                    <p>삭제</p>
+                                </li>
+                            </ul>
+                            <ul class="contents" id="fileListUL">
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="resultArea">
+                        <button class="newAddBtn">신규등록</button>
+                    </div>
+                </section>
+            </div>
+
+            <div class="finalBtnBox">
+                <button class="editBtn"><a href="javascript:goEdit()">수정</a></button>
+                <button class="backBtn" onclick="history.back()">이전</button>
+
+            </div>
+
+        </main>
+    </div>
+
+
+    <div class="newMenualPopupWrapper"></div>
+    <!-- script -->
+    <script>
+        function goEdit() {
+            var code = $('#code').val();
+            location.href = '/issue/issueCodeDetailEdit?CODE=' + code;
+        }
+    </script>
+    <script type="module" src="/js/module/surfaceMain.js"></script>
+    <script src="/components/js/menu06/issueCodeDetail.js"></script>
+</th:block>
+
+</html>

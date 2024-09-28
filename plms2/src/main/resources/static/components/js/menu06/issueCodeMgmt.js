@@ -264,7 +264,7 @@ function loadData() {
                     }
                     trStr += '<td><p>' + row.depth1_name + '</p></td>';
                     trStr += '<td><p>' + row.depth2_name + '</p></td>';
-                    trStr += '<td><p>' + row.depth3_name + '</p></td>';
+                    trStr += '<td><p><a href="/issue/issueCodeDetail?CODE=' + row.depth3_code + '">' + row.depth3_name + '</a></p></td>';
                     trStr += '</tr>';
 
                     tbodyStr += trStr;
@@ -318,7 +318,7 @@ function loadData() {
                         depth2IdxArr.shift();
                         trStr += '<td rowspan="' + (depth2IdxArr[0] - i) + '"><p>' + row.depth2_name + '</p></td>';
                     }
-                    trStr += '<td><p>' + row.depth3_name + '</p></td>';
+                    trStr += '<td><p><a href="/issue/issueCodeDetail?CODE=' + row.depth3_code + '">' + row.depth3_name + '</a></p></td>';
                     trStr += '</tr>';
 
                     tbodyStr += trStr;
@@ -370,7 +370,7 @@ function loadData() {
                         depth2IdxArr.shift();
                         trStr += '<td rowspan="' + (depth2IdxArr[0] - i) + '"><p>' + row.depth2_name + '</p></td>';
                     }
-                    trStr += '<td><p>' + row.depth3_name + '</p></td>';
+                    trStr += '<td><p><a href="/issue/issueCodeDetail?CODE=' + row.depth3_code + '">' + row.depth3_name + '</a></p></td>';
                     trStr += '</tr>';
 
                     tbodyStr += trStr;

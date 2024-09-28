@@ -1,0 +1,391 @@
+@charset "UTF-8";
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body * {
+    font-family: pretendard;
+}
+
+a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+li {
+    list-style: none;
+}
+
+input {
+    border: 0;
+    outline: 0;
+}
+
+input:focus {
+    border: 0;
+}
+textarea {
+    border: 0;
+    outline: 0 ;
+}
+textarea:focus {
+    border: 0;
+    outline: 0;
+}
+
+button {
+    border: 0;
+}
+
+/* 기본 레이아웃 */
+
+.issueCodeDetailWrappers {
+    overflow-y: scroll;
+}
+
+/* 스크롤바 */
+
+.issueCodeDetailWrappers::-webkit-scrollbar {
+    width: 3px;
+}
+
+.issueCodeDetailWrappers::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+
+.issueCodeDetailHeader {
+    width: 100px;
+    height: 100vh;
+    float: left;
+}
+#issueCodeDetail {
+    width: calc(100% - 100px);
+    padding: 0 20px;
+    box-sizing: border-box;
+    float: left;
+}
+#issueCodeDetail .mainTitle {
+    padding: 30px 0;
+    border-bottom: 1px solid rgba(110, 125, 136, 0.2);
+    margin-bottom: 30px;
+}
+
+#issueCodeDetail .mainTitle h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #31394C;
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+#issueCodeDetail .subTitle {
+    margin-bottom: 24px;
+}
+#issueCodeDetail .subTitle .subTitleText {
+    font-weight: 700;
+    font-size: 18px;
+    color: #31394C;
+}
+#issueCodeDetail button {
+    cursor: pointer;
+}
+
+/* 기본정보 */
+#issueCodeDetail .basicInfo {
+    padding-bottom: 40px;
+}
+/*  */
+#issueCodeDetail .contWrap {
+    border: 1px solid #CDDBF0;
+    border-radius: 5px;
+} 
+#issueCodeDetail .contWrap .rowListBox {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-bottom: 1px solid #CDDBF0;
+}
+#issueCodeDetail .contWrap .rowListBox:last-of-type {
+    border-bottom: 0;
+}
+#issueCodeDetail .contWrap .rowListBox:last-of-type .title {
+    border-radius: 0 0 0 5px;
+}
+#issueCodeDetail .contWrap .rowListBox .title {
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px 0 0 0;
+    width: 8.5%;
+    background: #F7F9FC;
+    border-right: 1px solid #CDDBF0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#issueCodeDetail .contWrap .rowListBox .content {
+    width: calc(100% - 8.5%);
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+#issueCodeDetail .contWrap .rowListBox .categoryWrap {
+    gap: 3px;
+}
+#issueCodeDetail .contWrap .rowListBox .categoryWrap span {
+    color: #3C3C3C;
+}
+#issueCodeDetail .contWrap .rowListBox .content .categoryForIssue p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+}
+
+/* sectionBox */
+#issueCodeDetail .sectionBox {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgba(205, 219, 240, 0.6);
+    padding: 20px;
+    box-sizing: border-box;
+}
+/*  */
+#issueCodeDetail .contWrap .titles {
+    height: 45px;
+    display: flex;
+    background: #F7F9FC;
+    border-bottom: 1px solid #CDDBF0;
+    border-radius: 5px 5px 0 0;
+} 
+#issueCodeDetail .contWrap .contents {
+    height: 45px;
+    display: flex;
+    border-bottom: 1px solid #CDDBF0;
+} 
+#issueCodeDetail .contWrap .contents:last-child {
+    border-bottom: 0;
+}
+
+/* resultArea */
+#issueCodeDetail .resultArea .contWrap .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#issueCodeDetail .resultArea .contWrap .title, #issueCodeDetail .resultArea .contWrap .content {
+    width: 8.5%;
+    height: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    border-right: 1px solid #CDDBF0;
+}
+#issueCodeDetail .resultArea .contWrap .title:last-of-type ,
+#issueCodeDetail .resultArea .contWrap .content:last-of-type {
+    border-right: 0;
+} 
+#issueCodeDetail .resultArea .contWrap .largeWidth {
+    width: 77.8%;
+}
+#issueCodeDetail .resultArea .contWrap .middleWidth {
+    width: 14.2%;
+}
+/* input */
+#issueCodeDetail .contWrap input[type=text] {
+    width: 100%;
+    height: 100%;
+    background: #EDF2F9;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+}
+#issueCodeDetail .contWrap input[type=text]::placeholder {
+    color: #6E7D88;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#issueCodeDetail .contWrap input[type=text].notWriteInput {
+    background: transparent;
+}
+
+#issueCodeDetail .contWrap input[type=text].notWriteInput::placeholder {
+    color: #3C3C3C;
+}
+/* textarea */
+
+#issueCodeDetail textarea {
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border-radius: 5px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 26px;
+    color: #3C3C3C;
+    white-space: pre-line;
+}
+#issueCodeDetail textarea::-webkit-scrollbar {
+    width: 4px;
+}
+
+#issueCodeDetail textarea::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background: #d2d2d2;
+}
+#issueCodeDetail textarea::placeholder {
+    color: #3C3C3C;
+}
+/* 발생 가능 사례 */
+#issueCodeDetail .casePossible {
+    padding-bottom: 40px;
+}
+#issueCodeDetail .casePossible .contWrap {
+    height: 118px;
+}
+/* 대응방안 */
+#issueCodeDetail .responsePlan {
+    padding-bottom: 40px;
+}
+#issueCodeDetail .responsePlan .contWrap {
+    height: 342px;
+}
+#issueCodeDetail .btnWrap {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 25px;
+}
+/* 메뉴얼 팝업 버튼 */
+#issueCodeDetail .menualFile .resultArea {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 16px;
+}
+#issueCodeDetail .menualFile .resultArea .newAddBtn {
+    width: 129px;
+    height: 37px;
+    border-radius: 10px;
+    border: 1px solid #2B7DE1;
+    background: #fff;
+    color: #2B7DE1;
+    font-size: 15px;
+}
+#issueCodeDetail .finalBtnBox {
+    padding: 25px 0 30px 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+#issueCodeDetail .finalBtnBox .backBtn {
+    width: 116px;
+    height: 44px;
+    border-radius: 10px;
+    background: #E5EFFF;
+    color: #2B7DE1;
+    font-size: 15px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+#issueCodeDetail .finalBtnBox .editBtn {
+    width: 116px;
+    height: 44px;
+    border-radius: 10px;
+    background: #fff;
+    color: #2B7DE1;
+    border: 1px solid #2B7DE1;
+    font-size: 15px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+#issueCodeEdit .finalBtnBox .saveBtn {
+    width: 116px;
+    height: 44px;
+    border-radius: 10px;
+    background: #2B7DE1;
+    font-size: 15px;
+    font-weight: 600;
+    margin-right: 10px;
+    color: #fff;
+}
+#issueCodeDetail .finalBtnBox .editBtn a {
+    color: #2B7DE1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+#issueCodeDetail .finalBtnBox .editBtn a:visited {
+    color: #2B7DE1;
+}
+/* 메뉴얼 */
+#issueCodeDetail .menualFile .title, #issueCodeDetail .menualFile .content {
+    border-right: 1px solid #CDDBF0;
+    box-sizing: border-box;
+    width: 10.6%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#issueCodeDetail .menualFile .title:last-of-type,
+#issueCodeDetail .menualFile .content:last-of-type {
+    border-right: 0;
+}
+#issueCodeDetail .menualFile .title p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+#issueCodeDetail .menualFile .largeWidth {
+    width: 40.7%;
+}
+#issueCodeDetail .menualFile .middleWidth {
+    width: 14.2%;
+}
+#issueCodeDetail .menualFile input[type=text] {
+    text-align: center;
+}
+#issueCodeDetail .menualFile button {
+    font-size: 13px;
+    font-weight: 600;
+}
+#issueCodeDetail .downloadBtn {
+    width: 116px;
+    height: 27px;
+    border-radius: 20px;
+    background: url(/assets/media/menu06/images/download.png) no-repeat right 26px center;
+    background-size: 12px;
+    background-color: #4E5871;
+    color: #fff;
+    text-align-last: left;
+    padding: 0 26px;
+    box-sizing: border-box;
+}
+#issueCodeDetail .reviseBtn {
+    width: 68px;
+    height: 27px;
+    border-radius: 20px;
+    background: #CCE0FF;
+    color: #2B7DE1;
+}
+#issueCodeDetail .delBtn {
+    width: 68px;
+    height: 27px;
+    border-radius: 20px;
+    background: #636363;
+    color: #fff;
+}

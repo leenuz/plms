@@ -1412,13 +1412,14 @@ log.info("SANGSIN_FLAG:"+SANGSIN_FLAG);
 		}
 	}
 	// 이슈코드 상세조회
-	@PostMapping(path="/selectIssueCodeDetail")	
-	public void selectIssueCodeDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@GetMapping(path="/issueCodeDetail")	
+	public ModelAndView issueCodeDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		log.info("LJS : jsonResultController.java selectIssueCodeDetail()");
 		ParameterParser parser = new ParameterParser(request);
 		String CODE = parser.getString("CODE", "");
 
 		ArrayList list = null;
+		HashMap result = new HashMap<>();
 		ArrayList manualList = null;
 		try {
 
@@ -1427,31 +1428,94 @@ log.info("SANGSIN_FLAG:"+SANGSIN_FLAG);
 
 			list = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeDetail", params);
 
-			manualList = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeManualList", params);
-
-			HashMap map = new HashMap();
+			// manualList = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeManualList", params);
 
 			if (list.size() > 0) {
-				map.put("message", "success");
-			} else {
-				map.put("message", "조회된 데이터가 없습니다.");
+				result = (HashMap) list.get(0);
 			}
-			map.put("result", list);
-			map.put("manualList", manualList);
-
-			JSONObject jo = new JSONObject(map);
-
-			response.setCharacterEncoding("UTF-8");
-			response.setHeader("Access-Control-Allow-Origin", "*");
-			response.resetBuffer();
-			response.setContentType("application/json");
-			response.getWriter().print(jo);
-			response.getWriter().flush();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		String deunggi = "";
+		if (((String)result.get("code")).startsWith("DY"))
+			deunggi = "지상권 설정";
+		else if (((String)result.get("code")).startsWith("DN"))
+			deunggi = "지상권 미설정";
+		else if (((String)result.get("code")).startsWith("GY"))
+			deunggi = "점용";
+		else if (((String)result.get("code")).startsWith("GN"))
+			deunggi = "미점용";
+		result.put("deunggi", deunggi);
+
+		String registed = "계약 미체결";
+		if (result.get("registed_yn") != null && result.get("registed_yn").equals("Y"))
+			deunggi = "계약 체결";
+		result.put("registed", registed);
+		
+		log.info("result : " + result);
+
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("result",result);
+		mav.addObject("manualList",manualList);
+ 
+		mav.setViewName("content/issue/issueCodeDetail");
+		return mav;
+
 	}
+	// 이슈코드 상세edit
+	@GetMapping(path="/issueCodeDetailEdit")	
+	public ModelAndView issueCodeDetailEdit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("LJS : jsonResultController.java selectIssueCodeDetail()");
+		ParameterParser parser = new ParameterParser(request);
+		String CODE = parser.getString("CODE", "");
+
+		ArrayList list = null;
+		HashMap result = new HashMap<>();
+		ArrayList manualList = null;
+		try {
+
+			HashMap params = new HashMap();
+			params.put("CODE", CODE);
+
+			list = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeDetail", params);
+
+			// manualList = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeManualList", params);
+
+			if (list.size() > 0) {
+				result = (HashMap) list.get(0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String deunggi = "";
+		if (((String)result.get("code")).startsWith("DY"))
+			deunggi = "지상권 설정";
+		else if (((String)result.get("code")).startsWith("DN"))
+			deunggi = "지상권 미설정";
+		else if (((String)result.get("code")).startsWith("GY"))
+			deunggi = "점용";
+		else if (((String)result.get("code")).startsWith("GN"))
+			deunggi = "미점용";
+		result.put("deunggi", deunggi);
+
+		String registed = "계약 미체결";
+		if (result.get("registed_yn") != null && result.get("registed_yn").equals("Y"))
+			deunggi = "계약 체결";
+		result.put("registed", registed);
+		
+		log.info("result : " + result);
+
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("result",result);
+		mav.addObject("manualList",manualList);
+ 
+		mav.setViewName("content/issue/issueCodeDetailEdit");
+		return mav;
+
+	}
+
 	// 이슈코드 내용 없데이트
 	@Transactional
 	@PostMapping(path="/updateIssueCodeText")	

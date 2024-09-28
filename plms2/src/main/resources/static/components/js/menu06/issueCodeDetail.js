@@ -24,7 +24,6 @@ const issueDetailNewMenualPopEvent = () => {
             if (largeNewMenualPopup) {
                 largeNewMenualPopup.classList.add("active");
             }
-
         })
 
         // 삽입된 html내 스크립트 실행 함수
@@ -36,10 +35,63 @@ const issueDetailNewMenualPopEvent = () => {
                 document.body.appendChild(script).parentNode.removeChild(script);
             }
         }
-
-
     }
-
 }
 
 issueDetailNewMenualPopEvent();
+
+
+
+
+function loadFileList() {
+    var code = $('#code').val();
+
+    $.ajax({
+        url: '/issue/selectIssueManualFileVersionList?CODE=' + code,
+        type: 'POST',
+        contentType: "application/json",
+        async: false,
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            var result = response.result;
+
+            var contentStr = '';
+
+            for (row of result) {
+                var rowStr = `
+                    < li class="content largeWidth" >
+                    <input type="text" readonly class="notWriteInput" placeholder="계약 후 지상권 등기진행 누락" value="` + row.MANUAL_TITLE + `">
+                    </li>
+                    <li class="content middleWidth">
+                        <input type="text" readonly class="notWriteInput" placeholder="토지사용승락서.docx" value="` + row.FILE_NM + `">
+                    </li>
+                    <li class="content middleWidth">
+                        <input type="text" readonly class="notWriteInput" placeholder="2021-11-05 13:20:80.0" value="` + row.FILE_REGDATE + `">
+                    </li>
+                    <li class="content btnBox">
+                        <button class="downloadBtn">다운로드</button>
+                    </li>
+                    <li class="content btnBox">
+                        <button class="reviseBtn">개정</button>
+                    </li>
+                    <li class="content btnBox">
+                        <button class="delBtn">삭제</button>
+                    </li>
+                `;
+                contentStr += rowStr;
+            }
+            var contentStr = "";
+
+            $('#fileListUL').html(contentStr);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("ajax error\n" + textStatus + ":" + errorThrown);
+        }
+
+    });
+}
+
+function deleteFile() {
+
+}

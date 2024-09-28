@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="/assets/css/popup/newMenualPopup.css">
 <!-- 메뉴얼 신규등록 팝업 -->
 <div id="newMenualPopup">
@@ -22,7 +21,9 @@
                         <h3>파일선택</h3>
                         <div class="popSubtltleBtnBox">
                             <input type="file" id="newMenualPopup_file" multiple>
-                            <label for="newMenualPopup_file"><p>내 PC</p></label>
+                            <label for="newMenualPopup_file">
+                                <p>내 PC</p>
+                            </label>
                         </div>
                     </div>
                     <div class="popfileLargeWrap">
@@ -57,7 +58,7 @@
             </div>
         </div>
         <div class="popFinalBtnBox">
-            <button class="saveBtn finalBtn">저장</button>
+            <button class="saveBtn finalBtn" id="saveBtn">저장</button>
             <button class="closeBtn finalBtn">닫기</button>
         </div>
     </div>
@@ -67,24 +68,29 @@
 
     // 저장, 닫기 버튼 click시 팝업 사라지게
 
-        const PopupFinalBtns = document.querySelectorAll('#newMenualPopup .popupFrame .finalBtn');
+    const PopupFinalBtns = document.querySelectorAll('#newMenualPopup .popupFrame .finalBtn');
 
-        const largeNewMenualPopup = document.getElementById('newMenualPopup');
-        PopupFinalBtns.forEach((button) => {
-            button.addEventListener('click', function () {
-                button.classList.toggle("active");
-                largeNewMenualPopup.classList.toggle('active');
-            })
+    const largeNewMenualPopup = document.getElementById('newMenualPopup');
+    PopupFinalBtns.forEach((button) => {
+        button.addEventListener('click', function () {
+            if(button.getAttribute("id") == 'saveBtn') {
+                alert('save');
+                return;
+            };
+
+            button.classList.toggle("active");
+            largeNewMenualPopup.classList.toggle('active');
         })
+    })
 
-        // x 버튼 click시 팝업 사라지게
+    // x 버튼 click시 팝업 사라지게
 
-        const topCloseBtn = document.querySelector('#newMenualPopup .popupFrame .topCloseBtn');
-        if (topCloseBtn) {
-            topCloseBtn.addEventListener('click', function () {
-                largeNewMenualPopup.classList.remove("active");
-            })
-        }
+    const topCloseBtn = document.querySelector('#newMenualPopup .popupFrame .topCloseBtn');
+    if (topCloseBtn) {
+        topCloseBtn.addEventListener('click', function () {
+            largeNewMenualPopup.classList.remove("active");
+        })
+    }
     // 파일 첨부 기본 모습
 
     const defaultNewMenualFileUploadWrap = document.querySelectorAll('.popfileUploadDisplay');
@@ -137,7 +143,6 @@
                         newMenualpopfileInfoType = thisNewMenualPopFileType;
 
                         // 파일 지우는 버튼용 li
-
                         const popdeleteLi = '<li class="popbtnbox"><button class="popfileDeleteBtn"></button></li>';
 
                         // 파일 아이콘, 파일명 들어가는 li
@@ -156,25 +161,17 @@
                         // ul.contents 만들기
                         const popContentsUl = document.createElement('ul');
                         popContentsUl.classList.add('popcontents');
-
                         popContentsUl.innerHTML = listBox;
-
                         popfileUploadAfterWrap.appendChild(popContentsUl);
 
-
                         // 값 잘 담겼는지 확인
-
                         console.log('담긴 파일 이름:' + thisNewMenualPopFileName);
 
-
                         // 다음 걸 받기 위해 비워주기
-
                         newMenualpopfileInfoName = '';
                         newMenualpopfileInfoSize = '';
                         newMenualpopfileInfoType = '';
-
                     }
-
 
                     defaultNewMenualFileUploadWrap.forEach((wrap) => {
                         wrap.classList.remove('active');
@@ -186,10 +183,7 @@
                     } else {
                         popfileUploadAfterWrap.classList.remove('scroll');
                     }
-
-
                 } else {
-
                     newMenualPopup_file_myPcFiles.value = '';
                     defaultNewMenualFileUploadWrap.forEach((wrap) => {
                         wrap.classList.remove('active');
@@ -229,8 +223,6 @@
                         defaultNewMenualFileUploadWrap[0].classList.add('active');
                     }
                 }
-
-
             })
 
             // 전체 삭제 버튼
@@ -245,10 +237,8 @@
 
                 newMenualPopup_file_myPcFiles.value = '';
 
-
                 // 값 잘 사라졌는지 확인
                 console.log(newMenualPopup_file_myPcFiles.value);
-
 
                 if (newMenualPopup_file_myPcFiles.files.length == 0) {
                     newMenualPopup_file_myPcFiles.value = '';
