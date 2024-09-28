@@ -139,7 +139,7 @@ public class DataMigrationController {
         
         //json으로 넘어올때
         String getRequestBody = ParameterUtil.getRequestBodyToStr(httpRequest);
-        log.info("getRequestBody:"+getRequestBody);
+        //log.info("getRequestBody:"+getRequestBody);
         
         JSONObject object=new JSONObject(getRequestBody);
         JSONArray arr=new JSONArray(object.getString("exceljson"));
@@ -186,6 +186,7 @@ public class DataMigrationController {
           	else if (mapperName.equals("gover_permit2")) mainService.InsertQuery("migrationSQL.gover_permit2", param);
           	else if (mapperName.equals("gover_atcfile")) mainService.InsertQuery("migrationSQL.gover_atcfile", param);
           	else if (mapperName.equals("gover_modify")) mainService.InsertQuery("migrationSQL.goverModify", param);
+          	else if (mapperName.equals("gover_pnu_log")) mainService.InsertQuery("migrationSQL.goverPnuLog", param);
 //          	else if (mapperName.equals("gover_atcfile")) mainService.InsertQuery("migrationSQL.gover_atcfile", param);
           	else if (mapperName.equals("dopco_master")) mainService.InsertQuery("migrationSQL.dopcoMaster", param);
           	else if (mapperName.equals("dopco_right")) mainService.InsertQuery("migrationSQL.dopcoRight", param);
