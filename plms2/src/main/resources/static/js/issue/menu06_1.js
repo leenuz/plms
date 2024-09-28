@@ -548,7 +548,7 @@ function setReqLand(addr= "", reg_yn = "", contract_yn = ""){
 const resultSelectBtnClick = function (view, ulIdx, dataIdx) {
     const address = togiDataList[dataIdx].juso;
     const master_yn = togiDataList[dataIdx].master_yn;
-    const registed_yn = togiDataList[dataIdx].registed_yn;
+    const registed_yn = togiDataList[dataIdx].comple_yn;
     const permitted_yn = togiDataList[dataIdx].permitted_yn;
 
     //체크박스
