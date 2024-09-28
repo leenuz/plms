@@ -169,9 +169,35 @@ public class DataMigrationController {
           	if (mapperName.equals("jisang_souja")) mainService.InsertQuery("migrationSQL.jisang_souja", param);
           	else if (mapperName.equals("jisang_master")) mainService.InsertQuery("migrationSQL.jisangMaster1", param);
           	else if (mapperName.equals("jisang_bunhal")) mainService.InsertQuery("migrationSQL.jisang_bunhal", param);
+          	else if (mapperName.equals("jisang_permit_master")) mainService.InsertQuery("migrationSQL.jisang_permit_master", param);
+          	else if (mapperName.equals("jisang_modify")) mainService.InsertQuery("migrationSQL.jisang_modify", param);
+          	else if (mapperName.equals("jisang_merge")) mainService.InsertQuery("migrationSQL.jisang_merge", param);
+          	else if (mapperName.equals("jisang_atcfile")) mainService.InsertQuery("migrationSQL.jisang_atcfile", param);
+          	else if (mapperName.equals("jisang_potential_issue")) {
+          		param.put("MANAGE_NO","");
+          		mainService.InsertQuery("migrationSQL.potential_issue", param);
+          	}
+          	else if (mapperName.equals("jisang_issue_history")) mainService.InsertQuery("migrationSQL.potential_issue_history", param);
           	else if (mapperName.equals("notset_souja")) mainService.InsertQuery("migrationSQL.notset_souja", param);
           	else if (mapperName.equals("gover_master")) mainService.InsertQuery("migrationSQL.goverMaster", param);
+          	else if (mapperName.equals("gover_pnu")) mainService.InsertQuery("migrationSQL.goverPnu", param);
+          	else if (mapperName.equals("gover_issue_history")) mainService.InsertQuery("migrationSQL.goverIssueHistory", param);
+          	else if (mapperName.equals("gover_permit")) mainService.InsertQuery("migrationSQL.gover_permit", param);
+          	else if (mapperName.equals("gover_permit2")) mainService.InsertQuery("migrationSQL.gover_permit2", param);
+          	else if (mapperName.equals("gover_atcfile")) mainService.InsertQuery("migrationSQL.gover_atcfile", param);
+          	else if (mapperName.equals("gover_modify")) mainService.InsertQuery("migrationSQL.goverModify", param);
+//          	else if (mapperName.equals("gover_atcfile")) mainService.InsertQuery("migrationSQL.gover_atcfile", param);
           	else if (mapperName.equals("dopco_master")) mainService.InsertQuery("migrationSQL.dopcoMaster", param);
+          	else if (mapperName.equals("dopco_right")) mainService.InsertQuery("migrationSQL.dopcoRight", param);
+          	else if (mapperName.equals("dopco_modify")) mainService.InsertQuery("migrationSQL.dopcoModify", param);
+          	else if (mapperName.equals("dopco_atcfile")) mainService.InsertQuery("migrationSQL.dopco_atcfile", param);
+          	
+          	else if (mapperName.equals("dosi_master")) mainService.InsertQuery("migrationSQL.dosi_master", param);
+          	
+          	else if (mapperName.equals("dosi_info")) mainService.InsertQuery("migrationSQL.dosi_info", param);
+          	else if (mapperName.equals("dosi_dept")) mainService.InsertQuery("migrationSQL.dosi_dept", param);
+          	else if (mapperName.equals("dosi_approval")) mainService.InsertQuery("migrationSQL.dosiApproval", param);
+          	else if (mapperName.equals("dosi_atcfile")) mainService.InsertQuery("migrationSQL.dosi_atcfile", param);
           	else if (mapperName.equals("minwon_master")) mainService.InsertQuery("migrationSQL.minwonMaster", param);
           	else if (mapperName.equals("minwon_pnu")) mainService.InsertQuery("migrationSQL.minwonPnu", param);
           	else if (mapperName.equals("minwon_agreement")) mainService.InsertQuery("migrationSQL.minwonAgreement", param);
@@ -179,29 +205,20 @@ public class DataMigrationController {
           	else if (mapperName.equals("minwon_atcfile")) mainService.InsertQuery("migrationSQL.minwon_atcfile", param);
           	else if (mapperName.equals("minwon_agree_atcfile")) mainService.InsertQuery("migrationSQL.minwon_agree_atcfile", param);
           	else if (mapperName.equals("notset_master")) mainService.InsertQuery("migrationSQL.notsetMaster", param);
-          	else if (mapperName.equals("gover_pnu")) mainService.InsertQuery("migrationSQL.goverPnu", param);
-          	else if (mapperName.equals("gover_permit")) mainService.InsertQuery("migrationSQL.gover_permit", param);
-          	else if (mapperName.equals("gover_permit2")) mainService.InsertQuery("migrationSQL.gover_permit2", param);
+          	
           	else if (mapperName.equals("sigun")) mainService.InsertQuery("migrationSQL.sigun", param);
           	else if (mapperName.equals("bdong")) mainService.InsertQuery("migrationSQL.bdong", param);
-          	else if (mapperName.equals("dosi_master")) mainService.InsertQuery("migrationSQL.dosi_master", param);
-          	else if (mapperName.equals("dosi_info")) mainService.InsertQuery("migrationSQL.dosi_info", param);
-          	else if (mapperName.equals("dosi_dept")) mainService.InsertQuery("migrationSQL.dosi_dept", param);
-          	else if (mapperName.equals("jisang_atcfile")) mainService.InsertQuery("migrationSQL.jisang_atcfile", param);
-          	else if (mapperName.equals("gover_atcfile")) mainService.InsertQuery("migrationSQL.gover_atcfile", param);
+          	
+          	
+          	
+          	
           	else if (mapperName.equals("issue_code_atc_file")) mainService.InsertQuery("migrationSQL.issue_code_atc_file", param);
-          	else if (mapperName.equals("jisang_permit_master")) mainService.InsertQuery("migrationSQL.jisang_permit_master", param);
-          	else if (mapperName.equals("jisang_modify")) mainService.InsertQuery("migrationSQL.jisang_modify", param);
-          	else if (mapperName.equals("jisang_merge")) mainService.InsertQuery("migrationSQL.jisang_merge", param);
+          	
           	else if (mapperName.equals("permit_togi")) mainService.InsertQuery("migrationSQL.permit_togi", param);
           	else if (mapperName.equals("plms_approval")) mainService.InsertQuery("migrationSQL.plms_approval", param);
           	else if (mapperName.equals("sys_officemng")) mainService.InsertQuery("migrationSQL.sys_officemng", param);
           	else if (mapperName.equals("sys_code")) mainService.InsertQuery("migrationSQL.sys_code", param);
-          	else if (mapperName.equals("jisang_potential_issue")) {
-          		param.put("MANAGE_NO","");
-          		mainService.InsertQuery("migrationSQL.potential_issue", param);
-          	}
-          	else if (mapperName.equals("jisang_issue_history")) mainService.InsertQuery("migrationSQL.potential_issue_history", param);
+          	
           	else {
           		processCode="0001";
           		break;

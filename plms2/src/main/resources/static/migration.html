@@ -770,6 +770,33 @@ $(document).on("change","#my_file_input",function(e){
 					
 				} //end for
             }
+            else if ($("#dbname").val()=="dopco_modify"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					var complete_date=EXCEL_JSON[j].MODIFY_DATE;
+					var complete_date_arr=complete_date.split("/");
+					if (complete_date_arr[0]>12 ) EXCEL_JSON[j].MODIFY_DATE=complete_date_arr[1]+"/"+complete_date_arr[2]+"/"+complete_date_arr[0];
+				} //end for
+            }
+            else if ($("#dbname").val()=="dopco_right"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					var complete_date=EXCEL_JSON[j].RIGHT_DATE;
+					var complete_date_arr=complete_date.split("/");
+					if (complete_date_arr[0]>12 ) EXCEL_JSON[j].RIGHT_DATE=complete_date_arr[1]+"/"+complete_date_arr[2]+"/"+complete_date_arr[0];
+					
+					var complete_date1=EXCEL_JSON[j].CANCLE_DATE; 
+					var complete_date_arr1=complete_date1.split("/");
+					if (complete_date_arr1[0]>12 ) EXCEL_JSON[j].CANCLE_DATE=complete_date_arr1[1]+"/"+complete_date_arr1[2]+"/"+complete_date_arr1[0];
+					
+				} //end for
+            }
+            else if ($("#dbname").val()=="gover_modify"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					var complete_date=EXCEL_JSON[j].MODIFY_DATE;
+					var complete_date_arr=complete_date.split("/");
+					if (complete_date_arr[0]>12 ) EXCEL_JSON[j].MODIFY_DATE=complete_date_arr[1]+"/"+complete_date_arr[2]+"/"+complete_date_arr[0];
+					
+				} //end for
+            }
            	
            
                 
