@@ -388,7 +388,6 @@
                 name="MW_OCCUR_DATE"
                 type="date"
                 data-placeholder="민원발생일자"
-                required
                 aria-required="true"
               />
             </div>
@@ -468,6 +467,7 @@
               <li class="landinfo_content_6"><input type="text" readonly/></li>
               <li class="landinfo_content_7"><input type="text" /></li>
               <li class="landinfo_content_8">
+                <input type="hidden" name="addrInfoStr"/>
                 <button class="complaint_addition">추가</button>
               </li>
             </ul>
@@ -553,19 +553,19 @@
           <ul class="complaint_contents_content2">
             <li class="com_content_title2">토지이력</li>
             <li class="com_content_title4">
-              <textarea name="land_history" class="auto_textarea"></textarea>
+              <textarea name="MW_HISTORY" class="auto_textarea"></textarea>
             </li>
           </ul>
           <ul class="complaint_contents_content2">
             <li class="com_content_title2">요구사항</li>
             <li class="com_content_title4">
-              <textarea name="land_requirements" class="auto_textarea"></textarea>
+              <textarea name="MW_REQUIREMENTS" class="auto_textarea"></textarea>
             </li>
           </ul>
           <ul class="complaint_contents_content2">
             <li class="com_content_title2">내용</li>
             <li class="com_content_title4">
-              <textarea name="land_contents" class="auto_textarea"></textarea>
+              <textarea name="MW_CONTENTS" class="auto_textarea"></textarea>
             </li>
           </ul>
           <ul class="complaint_contents_content3">

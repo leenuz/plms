@@ -375,13 +375,14 @@ function getPopupJsonData() {
     //토지 정보
     dataObj.tojiList = [];
     $(".landinfo_box .landinfo_content").each(function(index, ul) {
-        var obj = {}; // 각 UL에 대한 개별 객체 생성
-        obj.REP_YN = $(ul).find('.landinfo_content_3 input').is(':checked') ? "Y" : "N"; //대표필지여부
+        var addrInfoStr = $(ul).find('.landinfo_content_8 input').val();
+        var obj = JSON.parse(addrInfoStr); // 각 UL에 대한 개별 객체 생성
         obj.saddr =  $(ul).find('.landinfo_content_4 input').val(); //주소
+        obj.REP_YN = $(ul).find('.landinfo_content_3 input').is(':checked') ? "Y" : "N"; //대표필지여부
         obj.REGISTED_YN = $(ul).find('.landinfo_content_5 input').val(); //등기여부
         obj.PERMITTED_YN = $(ul).find('.landinfo_content_6 input').val(); //계약여부
         obj.AREA = $(ul).find('.landinfo_content_7 input').val(); //실저촉면적
-        dataObj.tojiList.push(obj);
+        dataObj.tojiList.push(JSON.stringify(obj));
     });
 
     //민원인/토지주 정보
@@ -402,83 +403,89 @@ function getPopupJsonData() {
     const newComplaintRegiFiles = newComplaintRegiPopup_myPcFiles.files;
     dataObj.files = newComplaintRegiFiles;
 
-    console.log(dataObj);
-    return JSON.stringify(dataObj);
+    return dataObj;
 }
 
 //신규민원 -> 저장
 $(document).on("click", "#newcomplaint_Popup .approveBtn", function () {
-    getPopupJsonData();
-    // $.ajax({
-	// 	url: "/issue/",
-	// 	data: getPopupJsonData(),
-	// 	async: true,
-	// 	type: "POST",
-	// 	dataType: "json",
-	// 	contentType: 'application/json; charset=utf-8',
-	// 	success: function (data, jqXHR) {
-    //         console.log(data);
-    //         if(data.message != null && data.message != undefined && data.message == "success"){
-    //             closeComplaintregisterPopup();
-    //         }else{
-    //              alert(data.message);
-    //         }
-	// 	},
-	// 	beforeSend: function () {
-	// 		//(이미지 보여주기 처리)
-	// 		//$('#load').show();
-    //         // loadingShow();
-	// 	},
-	// 	complete: function () {
-	// 		//(이미지 감추기 처리)
-	// 		//$('#load').hide();
-    //         // loadingHide();
-	// 	},
-	// 	error: function (jqXHR, textStatus, errorThrown, responseText) {
-	// 		//alert("ajax error \n" + textStatus + " : " + errorThrown);
-	// 		console.log(jqXHR);
-	// 		console.log(jqXHR.readyState);
-	// 		console.log(jqXHR.responseText);
-	// 		console.log(jqXHR.responseJSON);
-	// 	}
-	// }); //end ajax
+    var data = getPopupJsonData();
+    console.log(data);
+
+    $.ajax({
+		url: "/issue/saveMinwonData",
+		data: data,
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: 'application/json; charset=utf-8',
+        processData: false,
+		success: function (data, jqXHR) {
+            console.log(data);
+            if(data.message != null && data.message != undefined && data.message == "success"){
+                closeComplaintregisterPopup();
+            }else{
+                 alert(data.message);
+            }
+		},
+		beforeSend: function () {
+			//(이미지 보여주기 처리)
+			//$('#load').show();
+            // loadingShow();
+		},
+		complete: function () {
+			//(이미지 감추기 처리)
+			//$('#load').hide();
+            // loadingHide();
+		},
+		error: function (jqXHR, textStatus, errorThrown, responseText) {
+			//alert("ajax error \n" + textStatus + " : " + errorThrown);
+			console.log(jqXHR);
+			console.log(jqXHR.readyState);
+			console.log(jqXHR.responseText);
+			console.log(jqXHR.responseJSON);
+		}
+	}); //end ajax
 });
 //신규민원 -> 상신
 $(document).on("click", "#newcomplaint_Popup .sangsinBtn", function () {
-    getPopupJsonData();
-    // $.ajax({
-        // 	url: "/issue/",
-        // 	data: getPopupJsonData(),
-        // 	async: true,
-        // 	type: "POST",
-        // 	dataType: "json",
-        // 	contentType: 'application/json; charset=utf-8',
-        // 	success: function (data, jqXHR) {
-        //         console.log(data);
-        //         if(data.message != null && data.message != undefined && data.message == "success"){
-        //             closeComplaintregisterPopup();
-        //         }else{
-        //              alert(data.message);
-        //         }
-        // 	},
-        // 	beforeSend: function () {
-        // 		//(이미지 보여주기 처리)
-        // 		//$('#load').show();
-        //         // loadingShow();
-        // 	},
-        // 	complete: function () {
-        // 		//(이미지 감추기 처리)
-        // 		//$('#load').hide();
-        //         // loadingHide();
-        // 	},
-        // 	error: function (jqXHR, textStatus, errorThrown, responseText) {
-        // 		//alert("ajax error \n" + textStatus + " : " + errorThrown);
-        // 		console.log(jqXHR);
-        // 		console.log(jqXHR.readyState);
-        // 		console.log(jqXHR.responseText);
-        // 		console.log(jqXHR.responseJSON);
-        // 	}
-        // }); //end ajax
+    var data = getPopupJsonData();
+    data.SANGSIN_FLAG = 'Y';
+    console.log(data);
+
+    $.ajax({
+        	url: "/issue/saveMinwonData",
+        	data: data,
+        	async: true,
+        	type: "POST",
+        	dataType: "json",
+        	contentType: 'application/json; charset=utf-8',
+            processData: false,
+        	success: function (data, jqXHR) {
+                console.log(data);
+                if(data.message != null && data.message != undefined && data.message == "success"){
+                    closeComplaintregisterPopup();
+                }else{
+                     alert(data.message);
+                }
+        	},
+        	beforeSend: function () {
+        		//(이미지 보여주기 처리)
+        		//$('#load').show();
+                // loadingShow();
+        	},
+        	complete: function () {
+        		//(이미지 감추기 처리)
+        		//$('#load').hide();
+                // loadingHide();
+        	},
+        	error: function (jqXHR, textStatus, errorThrown, responseText) {
+        		//alert("ajax error \n" + textStatus + " : " + errorThrown);
+        		console.log(jqXHR);
+        		console.log(jqXHR.readyState);
+        		console.log(jqXHR.responseText);
+        		console.log(jqXHR.responseJSON);
+        	}
+        }); //end ajax
 });
 
 //신규민원 -> 검색
@@ -507,6 +514,7 @@ $(document).on("click", ".landinfo .landStatusPopOpenBtn", function () {
                 $.each(datas, function (index, item) {
                     var newItem = `
                             <ul class="popContents">
+                                <input type="hidden" name="addrInfoStr" value='`+JSON.stringify(item)+`'/>
                                 <li class="popContent01">
                                     <p>${item.pnu}</p>
                                 </li>
@@ -550,7 +558,8 @@ const resultSelectBtnClick = function (view, ulIdx, dataIdx) {
     const master_yn = togiDataList[dataIdx].master_yn;
     const registed_yn = togiDataList[dataIdx].comple_yn;
     const permitted_yn = togiDataList[dataIdx].permitted_yn;
-
+    const addrInfoStr = view.parentElement.parentElement.querySelector('input[name=addrInfoStr]').value;
+    console.log(addrInfoStr);
     //체크박스
     if(master_yn == "Y"){
         $('.approve_checkbox').prop('checked', false);
@@ -558,10 +567,10 @@ const resultSelectBtnClick = function (view, ulIdx, dataIdx) {
         //대표 필지 정보 입력
         setReqLand(address, registed_yn, permitted_yn)
     }
-   
     $(".landinfo_content_4 input[type='text']").eq(ulIdx).val(address);  //주소
     $('.landinfo_content_5 input[type="text"]').eq(ulIdx).val(registed_yn);  //등기여부
     $('.landinfo_content_6 input[type="text"]').eq(ulIdx).val(permitted_yn); //계약여부
+    $('.landinfo_content_8 input[type="hidden"]').eq(ulIdx).val(addrInfoStr); //계약여부
 
     $('#landStatusPopup').removeClass('active');
 }
