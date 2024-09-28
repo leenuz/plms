@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="contWrap">
-                        <textarea th:text="${result.case_text}" style="background: #F7F9FC;"></textarea>
+                        <textarea id="caseText" th:text="${result.case_text}" style="background: #F7F9FC;"></textarea>
                     </div>
                 </section>
 
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="contWrap">
-                        <textarea th:text="${result.etc_text}" style="background: #F7F9FC;"></textarea>
+                        <textarea id="etcText" th:text="${result.etc_text}" style="background: #F7F9FC;"></textarea>
                     </div>
                 </section>
 
@@ -119,8 +119,8 @@
             </div>
 
             <div class="finalBtnBox">
-                <button class="saveBtn"><a href="javascript:doSave()">저장</a></button>
-                <button class="backBtn" onclick="history.back()">이전</button>
+                <button class="saveBtn" onclick="doSave()">저장</button>
+                <button class="backBtn" onclick="goBack()">이전</button>
 
             </div>
 
@@ -130,6 +130,12 @@
 
     <div class="newMenualPopupWrapper"></div>
     <!-- script -->
+     <script>
+        function goBack() {
+            var code = $('#code').val();
+            location.href = '/issue/issueCodeDetail?CODE=' + code;
+        }
+     </script>
     <script type="module" src="/js/module/surfaceMain.js"></script>
     <script src="/components/js/menu06/issueCodeDetail.js"></script>
 </th:block>

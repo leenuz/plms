@@ -120,7 +120,7 @@
 
             <div class="finalBtnBox">
                 <button class="editBtn"><a href="javascript:goEdit()">수정</a></button>
-                <button class="backBtn" onclick="history.back()">이전</button>
+                <button class="backBtn" onclick="goBack()">이전</button>
 
             </div>
 
@@ -134,6 +134,10 @@
         function goEdit() {
             var code = $('#code').val();
             location.href = '/issue/issueCodeDetailEdit?CODE=' + code;
+        }
+
+        function goBack() {
+            location.href = '/issue/issueCodeMgmt';
         }
     </script>
     <script type="module" src="/js/module/surfaceMain.js"></script>

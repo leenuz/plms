@@ -95,3 +95,29 @@ function loadFileList() {
 function deleteFile() {
 
 }
+
+function doSave() {
+    var code = $('#code').val();
+
+    var caseText = $('#caseText').val();
+    var etcText = $('#etcText').val();
+
+    $.ajax({
+        url: '/issue/updateIssueCodeText?CODE=' + code + '&CASE_TEXT=' + caseText + '&ETC_TEXT=' + etcText,
+        type: 'POST',
+        contentType: "application/json",
+        async: false,
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            if (response.message == 'success') {
+                alert('저장되었습니다.');
+                location.href = '/issue/issueCodeDetail?CODE=' + code;
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("ajax error\n" + textStatus + ":" + errorThrown);
+        }
+
+    });
+}
