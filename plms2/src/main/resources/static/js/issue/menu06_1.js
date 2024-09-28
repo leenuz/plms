@@ -705,7 +705,7 @@ function loadDataTable(params) {
                 targets: [3]
                 , width: "50px"
                 , render: function (data, type, row, meta) {
-                    return `<button class="btnDesign issuePopBtn" onclick="issuePop(${data})" >이슈보기</button>`;
+                    return `<button class="btnDesign issuePopBtn" onclick="issuePop(${row.no})" >이슈보기</button>`;
                 }
             },
             { targets: [4], width: "50px" },
@@ -735,7 +735,7 @@ function loadDataTable(params) {
 
 //리스트 이슈 팝업
 function issuePop(idx) {
-    const data = saveJsonData.find(function (obj) { return obj.mm_idx == idx })
+    const data = saveJsonData.find(function (obj) { return obj.no == idx })
     const popupOpen = document.getElementById("issuePopup");
     if (popupOpen) {
         $("#issuePopup .issue_content").text(`${data.code_str1} > ${data.code_str2} > ${data.code_str3}`)
