@@ -149,7 +149,7 @@ public class DataMigrationController {
         String processMessage="success";
         String processText="";
         String processData="";
-        		
+        int processCount=0;		
         for(int i=0;i<arr.length();i++) {
           	//log.info("arr "+i+":"+arr.getString(i));
           	JSONObject obj=new JSONObject(arr.getString(i));
@@ -157,7 +157,7 @@ public class DataMigrationController {
 //          	log.info("obj["+i+"]:"+obj);
           	Iterator keys=obj.keys();
           	HashMap param=new HashMap();
-          	
+          	int affectedRows=0;
           	//System.out.println("keys:"+Arrays.toString(keys));
           	for(int j=0;j<obj.length();j++) {
           		//log.info("keys "+j+":"+keys.next().toString());
@@ -166,8 +166,13 @@ public class DataMigrationController {
           		
           	}
           	log.info("param["+i+"]:"+param);
+          	
           	if (mapperName.equals("jisang_souja")) mainService.InsertQuery("migrationSQL.jisang_souja", param);
           	else if (mapperName.equals("jisang_master")) mainService.InsertQuery("migrationSQL.jisangMaster1", param);
+          	else if (mapperName.equals("jisang_stat")) {
+          		affectedRows=(int)mainService.InsertQuery("migrationSQL.jisangStat", param);
+          		log.info("treturnParam:"+param);
+          	}
           	else if (mapperName.equals("jisang_bunhal")) mainService.InsertQuery("migrationSQL.jisang_bunhal", param);
           	else if (mapperName.equals("jisang_permit_master")) mainService.InsertQuery("migrationSQL.jisang_permit_master", param);
           	else if (mapperName.equals("jisang_modify")) mainService.InsertQuery("migrationSQL.jisang_modify", param);
@@ -224,6 +229,7 @@ public class DataMigrationController {
           		processCode="0001";
           		break;
           	}
+          	processCount++;
           //	mainService.InsertQuery("migrationSQL."+mapperName, param);
           	
           }
@@ -233,6 +239,7 @@ public class DataMigrationController {
              resultmap.put("resultCode","0000");
             // resultmap.put("resultData",object);
              resultmap.put("resultMessage","success");
+             resultmap.put("processCount",processCount);
              JSONObject obj =new JSONObject(resultmap);
 //             System.out.println(obj);
             

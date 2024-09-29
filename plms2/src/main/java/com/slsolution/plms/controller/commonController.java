@@ -1,5 +1,10 @@
 package com.slsolution.plms.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -64,6 +69,81 @@ public class commonController {
 			
 			mav.setViewName("content/gover/masterReg");
 			return mav;
+		}
+		
+		
+		
+		//파일 다운로드 ,패스와 파일 이름 넘김다 parameter
+		//filePath=
+		//fileName=
+		@GetMapping(path="/download")
+		public void download(HttpServletRequest request, HttpServletResponse response){
+
+			String resultStr = "";
+			String path 		= "";
+			String fileOriName  = request.getParameter("fileName");
+			
+//			if (m_strSubPath != null && m_strSubPath != "") {
+//				path = path + m_strSubPath + "/" + filePath;
+//			} else {
+//				path = path + filePath;
+//			}
+			String filePath=request.getParameter("filePath");
+			path = filePath;
+			System.out.println("path="+path);
+			
+			try {
+				File f = new File( path);
+				if(!f.isFile()){
+					resultStr = "파일이 존재하지 않습니다.";
+			        response.setCharacterEncoding( "UTF-8" );
+			        response.setContentType("text/html; charset=UTF-8");
+			        response.getWriter().write( "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><script>alert('파일이 존재하지 않습니다.'); history.back();</script></head></html>" );
+			        				
+				}else{
+					int		filesize	= (int)f.length();
+					byte	b[]			= new byte[1024];
+
+					response.setHeader("Content-Type", "application/octet-stream;");
+					response.setHeader("Content-Disposition", "attachment;filename="+java.net.URLEncoder.encode(fileOriName,"UTF-8")+";");
+
+					response.setHeader("Content-Transfer-Encoding", "binary;");
+					response.setHeader("Content-Length", ""+filesize);
+					response.setHeader("Cache-Control","no-cache");
+					response.setHeader("Pragma", "no-cache;");
+					response.setHeader("Expires", "-1;");  
+					int fsize = filesize;
+
+					if (fsize > 0 ){
+						BufferedInputStream  fin  = new BufferedInputStream(new FileInputStream(f), 1024);
+						BufferedOutputStream outs = new BufferedOutputStream(response.getOutputStream(), 1024);
+
+
+						int readcnt = 0;
+
+						try
+						{
+							while ((readcnt = fin.read(b)) != -1){
+								outs.write(b,0,readcnt);
+							}
+
+							outs.close();
+							fin.close();
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+						} finally {
+							if(outs!=null) outs.close();
+							if(fin!=null) fin.close();
+						}
+					}
+				}
+			}catch(FileNotFoundException e){
+				System.out.println(" FileService FileNotFoundException : " + e.getMessage());
+			}catch(Exception e){
+				System.out.println("FileService exception :" + e.getMessage());
+				resultStr = (e.toString());
+			}
+			
 		}
 
 

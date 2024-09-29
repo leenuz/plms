@@ -794,6 +794,71 @@ $(document).on("click","#deleteSelectedBtn",function(){
     }
 });
 
+$('#openFileWindow').click(function() {
+           // 파일 URL을 텍스트 입력에서 가져옴
+           const fileUrl = $(this).parent().parent().find('#fileUrl').val();
+console.log(fileUrl);
+           if (!fileUrl) {
+               alert('파일 URL을 입력하세요.');
+               return;
+           }
+
+           // 파일 확장자 추출
+           const fileExtension = fileUrl.split('.').pop().toLowerCase();
+
+           // 새 창 열기
+           const newWindow = window.open('', '_blank', 'width=800,height=600');
+
+           // 파일 종류에 따라 처리
+           if (fileExtension === 'pdf') {
+               // PDF 파일을 iframe으로 표시
+               newWindow.document.write(`
+                   <html>
+                   <head>
+                       <title>PDF 파일 보기</title>
+                   </head>
+                   <body>
+                       <h2>PDF 파일</h2>
+                       <iframe src="${fileUrl}" width="100%" height="100%" style="border:none;"></iframe>
+                       <button onclick="window.close();">닫기</button>
+                   </body>
+                   </html>
+               `);
+           } else if (fileExtension === 'jpg' || fileExtension === 'png' || fileExtension === 'gif') {
+               // 이미지 파일을 img 태그로 표시
+               newWindow.document.write(`
+                   <html>
+                   <head>
+                       <title>이미지 보기</title>
+                   </head>
+                   <body>
+                       <h2>이미지 파일</h2>
+                       <img src="${fileUrl}" style="max-width: 100%; height: auto;" />
+                       <button onclick="window.close();">닫기</button>
+                   </body>
+                   </html>
+               `);
+           } else {
+               // PDF, 이미지 외에는 직접 표시하지 않음 (다운로드 유도)
+               newWindow.document.write(`
+                   <html>
+                   <head>
+                       <title>파일 보기</title>
+                   </head>
+                   <body>
+                       <h2>문서 파일 보기</h2>
+                       <p>브라우저에서 이 파일을 표시할 수 없습니다. <a href="${fileUrl}" download>여기를 클릭해 다운로드하세요</a>.</p>
+                       <button onclick="window.close();">닫기</button>
+                   </body>
+                   </html>
+               `);
+           }
+
+           // 새 창의 문서 업데이트 완료 후 리소스 해제 (메모리 누수 방지)
+           newWindow.document.close();
+       });
+
+
 $(function() {
 	$('#jijukNewWindowBtn').click(function() {
 		//window.open('http://202.68.225.158:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'jijukWindow', 'width=1024,height=768');

@@ -807,7 +807,8 @@ SELECT   NEWREGREASON,
         CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3,
         JOIN_MST.idx,
         JOIN_MST.index,
-        JOIN_MST.gidx
+        JOIN_MST.gidx,
+        JIJUK_MST.juso
 	 FROM (	
 		  SELECT
 		   
@@ -1061,7 +1062,8 @@ SELECT   NEWREGREASON,
 	and r.dosiplan=#{dosiplan}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	and r.address like '${address}%'
+	and replace(trim(r.juso),'-','') like replace(trim('${address}%'),'-','')
+	
 	</if>
 	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
 	and r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>

@@ -198,6 +198,7 @@
                                         [[${resultData.jm_account_yn}]]
                                     </li>
                                     <li class="content02 content">
+                                    	
                                         <button class="viewDetailButton">상세보기</button>
                                     </li>
                                 </ul>
@@ -350,7 +351,9 @@
                                         [[${val.ja_file_nm}]]
                                     </li>
                                     <li class="content03 content">
-                                        <button class="viewDetailButton">보기</button>
+                                    	<input type="hidden" id="fileUrl" th:value="${val.ja_file_path}" >
+                                    	 
+                                        <button class="viewDetailButton" id="openFileWindow">보기</button>
                                     </li>
                                     <li class="content04 content btnsWrap">
                                         <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>

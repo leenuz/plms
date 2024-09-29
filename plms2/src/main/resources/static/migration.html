@@ -439,77 +439,26 @@ $(document).on("change","#my_file_input",function(e){
             }
             else if ($("#dbname").val()=="minwon_handling_tmp"){
 				for(j=0;j<EXCEL_JSON.length;j++){
-					
-					
-					
 					var reg_date=EXCEL_JSON[j].REG_DATE;
-					
-					
-					
-					
-					
-					
-					
-					
 					var reg_date_arr=reg_date.split("/");
-					
-					
-					
-					
 					if (reg_date_arr[0]>12) EXCEL_JSON[j].REG_DATE=reg_date_arr[1]+"/"+reg_date_arr[2]+"/"+reg_date_arr[0];
-					
-					
-					
-					/* if (j>70 && j<80){
-						
-						console.log(EXCEL_JSON[j]);
-						console.log(arr);
-						if (isDate(txt)) {
-							
-							console.log(j+":"+"true"+":"+txt);
-						}
-						else console.log(j+":"+"false"+":"+txt);
-					} */
 					
 				}//end for
             }
             else if ($("#dbname").val()=="minwon_master"){
 				for(j=0;j<EXCEL_JSON.length;j++){
-					
-					
 					var mw_occur_date=EXCEL_JSON[j].MW_OCCUR_DATE;
 					var comple_date=EXCEL_JSON[j].COMPLE_DATE;
 					var reg_date=EXCEL_JSON[j].REG_DATE;
 					var del_date=EXCEL_JSON[j].DEL_DATE;
-					
-					
-					
-					
-					
 					var mw_occur_date_arr=mw_occur_date.split("/");
 					var comple_date_arr=comple_date.split("/");
 					var reg_date_arr=reg_date.split("/");
 					var del_date_arr=del_date.split("/");
-					
-					
-					
-					
-					
 					if (mw_occur_date_arr[0]>12) EXCEL_JSON[j].MW_OCCUR_DATE=mw_occur_date_arr[1]+"/"+mw_occur_date_arr[2]+"/"+mw_occur_date_arr[0];
 					if (comple_date_arr[0]>12) EXCEL_JSON[j].COMPLE_DATE=comple_date_arr[1]+"/"+comple_date_arr[2]+"/"+comple_date_arr[0];
 					if (reg_date_arr[0]>12) EXCEL_JSON[j].REG_DATE=reg_date_arr[1]+"/"+reg_date_arr[2]+"/"+reg_date_arr[0];
 					if (del_date_arr[0]>12) EXCEL_JSON[j].DEL_DATE=del_date_arr[1]+"/"+del_date_arr[2]+"/"+del_date_arr[0];
-					
-					/* if (j>70 && j<80){
-						
-						console.log(EXCEL_JSON[j]);
-						console.log(arr);
-						if (isDate(txt)) {
-							
-							console.log(j+":"+"true"+":"+txt);
-						}
-						else console.log(j+":"+"false"+":"+txt);
-					} */
 					
 				}//end for
             }else if ($("#dbname").val()=="minwon_atcfile"){
@@ -731,6 +680,26 @@ $(document).on("change","#my_file_input",function(e){
 						}
 						else console.log(j+":"+"false"+":"+txt);
 					} */
+					
+				} //end for
+            }
+            else if ($("#dbname").val()=="jisang_modify"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					var complete_date=EXCEL_JSON[j].MODIFY_DATE;
+					var complete_date_arr=complete_date.split("/");
+					if (complete_date_arr[0]>12 ) EXCEL_JSON[j].MODIFY_DATE=complete_date_arr[1]+"/"+complete_date_arr[2]+"/"+complete_date_arr[0];
+				} //end for
+            }
+            else if ($("#dbname").val()=="jisang_stat"){
+				for(j=0;j<EXCEL_JSON.length;j++){
+					var complete_date=EXCEL_JSON[j].SAVE_DATE;
+					var complete_date_arr=complete_date.split("/");
+					if (complete_date_arr[0]>12 ) EXCEL_JSON[j].SAVE_DATE=complete_date_arr[1]+"/"+complete_date_arr[2]+"/"+complete_date_arr[0];
+					
+					var complete_date1=EXCEL_JSON[j].PROCESS_DATE; 
+					var complete_date_arr1=complete_date1.split("/");
+					if (complete_date_arr1[0]>12 ) EXCEL_JSON[j].PROCESS_DATE=complete_date_arr1[1]+"/"+complete_date_arr1[2]+"/"+complete_date_arr1[0];
+					
 					
 				} //end for
             }

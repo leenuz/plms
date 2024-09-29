@@ -1304,7 +1304,9 @@
 		 ,jm_user_id
 		 ) 
 		 VALUES (
-		  date '1899-12-30'+#{MODIFY_DATE}::int
+		 
+		 TO_DATE(nullif(#{DEUNGGI_DATE},''),'MM/DD/YY')
+		  
 		  ,#{GUBUN}
 		  ,#{CONT}
 		  ,#{ECHO}
@@ -1314,6 +1316,49 @@
 		  ,#{USER_NAME}
 		  ,#{USER_ID}
 		  	   
+		)
+	
+	</insert>
+	<insert id="jisangStat" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="js_idx" keyProperty="js_idx">
+		
+		INSERT INTO jisang_stat 
+		(
+		
+		 seq
+		 ,save_year
+		 ,save_quarter
+		 ,save_date
+		 ,sayuji_n
+		 ,sayuji_y_y
+		 ,sayuji_y_n
+		 ,sayuji_total
+		 ,gukyuji_y
+		 ,gukyuji_n
+		 ,gukyuji_total
+		 ,process_date
+		 ,file_path
+		 ,file_name
+		 ,gukyuji_j
+		 
+		 ) 
+		 VALUES (
+		 #{SEQ}::numeric
+		 ,#{SAVE_YEAR}
+		 ,#{SAVE_QUARTER}
+		 ,TO_DATE(nullif(#{SAVE_DATE},''),'MM/DD/YY')
+		 ,#{SAYUJI_N}::integer
+		 ,#{SAYUJI_Y_Y}::integer
+		 ,#{SAYUJI_Y_N}::integer
+		 ,#{SAYUJI_TOTAL}::integer
+		 ,#{GUKYUJI_Y}::integer
+		 ,#{GUKYUJI_N}::integer
+		 ,#{GUKYUJI_TOTAL}::integer
+		 ,TO_DATE(nullif(#{PROCESS_DATE},''),'MM/DD/YY')
+		 
+		 ,#{FILE_PATH}
+		 ,#{FILE_NAME}
+		 ,#{GUKYUJI_J}::integer
+		 	  	   
 		)
 	
 	</insert>
