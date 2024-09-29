@@ -198,7 +198,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <select id="selectTotalCount1" parameterType="java.util.HashMap" resultType="Integer">
-	SELECT count(*)
+	
+	select  
+	count(*)
+    
 FROM (
 
 SELECT   NEWREGREASON,
@@ -247,7 +250,16 @@ SELECT   NEWREGREASON,
         CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.PERMITTED_YN ELSE GPI.PERMITTED_YN END AS PERMITTED_YN,
         CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH1 ELSE GPI.CODE_DEPTH1 END AS CODE_DEPTH1,
         CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH2 ELSE GPI.CODE_DEPTH2 END AS CODE_DEPTH2,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3,
+          (SELECT 
+    CASE 
+        WHEN COUNT(*) > 0 THEN 'Y' 
+        ELSE 'N' 
+    END
+FROM dosi_master dm
+LEFT JOIN dosi_info di ON dm.dm_dosi_no = di.di_dosi_no
+LEFT JOIN dosi_dept dd ON dm.dm_dosi_no = dd.dd_dosi_no
+WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 	 FROM (	
 		  SELECT
 		   
@@ -494,9 +506,13 @@ SELECT   NEWREGREASON,
 	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
 	and r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
 	</if> 
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
-	and r.toji_plan=#{toji_plan_type}
-	</if>
+	
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
+   
+    AND r.toji_plan_type =#{toji_plan_type}
+</if>
+		
+	
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
 	and r.gover_own_yn=#{toji_type}
 	</if>
@@ -756,6 +772,7 @@ SELECT   NEWREGREASON,
     , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH3) AS CODE_DEPTH3_NAME
     ,(row_number() over()) as no
     ,trim(concat(r.sido_nm,' ',r.sgg_nm,' ',r.emd_nm,' ',r.ri_nm,' ',r.jibun)) as address
+    
 FROM (
 
 SELECT   NEWREGREASON,
@@ -808,7 +825,16 @@ SELECT   NEWREGREASON,
         JOIN_MST.idx,
         JOIN_MST.index,
         JOIN_MST.gidx,
-        JIJUK_MST.juso
+        JIJUK_MST.juso,
+          (SELECT 
+    CASE 
+        WHEN COUNT(*) > 0 THEN 'Y' 
+        ELSE 'N' 
+    END
+FROM dosi_master dm
+LEFT JOIN dosi_info di ON dm.dm_dosi_no = di.di_dosi_no
+LEFT JOIN dosi_dept dd ON dm.dm_dosi_no = dd.dd_dosi_no
+WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 	 FROM (	
 		  SELECT
 		   
@@ -1068,9 +1094,14 @@ SELECT   NEWREGREASON,
 	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
 	and r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
 	</if> 
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
-	and r.toji_plan=#{toji_plan_type}
+	
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >	
+		
+		    AND r.toji_plan_type = #{toji_plan_type}
 	</if>
+		
+	
+	
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
 	and r.gover_own_yn=#{toji_type}
 	</if>

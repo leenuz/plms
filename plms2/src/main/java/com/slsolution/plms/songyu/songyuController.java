@@ -268,6 +268,149 @@ public class songyuController {
     }
 	
 	@RequestMapping(value="/menu01DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+	    public ResponseEntity<?> datatableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	        
+			//일반웹형식
+					Properties requestParams = CommonUtil.convertToProperties(req);
+			        log.info("requestParams:"+requestParams);
+	//		        JSONObject jobj=new JSONObject(requestParams.toString());
+	//		        log.info("obj:"+jobj);
+			        
+			        
+			        //json으로 넘어올때
+	//		        String getRequestBody = ParameterUtil.getRequestBodyToStr(req);
+	//		        JSONObject object=new JSONObject(requestParams.toString());
+	//		        if (object!=null) {
+	//		        log.info("getRequestBody:"+object.getString("jisa"));
+	//		        }
+			        //log.info("jisa="+getRequestBody.g)
+			        
+			        HashMap<String, String> returnHash = new HashMap<String, String>();
+			        Enumeration<String> obj1 = req.getParameterNames();
+			        int cnt=0;
+			     
+	
+			        while (obj1.hasMoreElements())
+			        {
+			            String paramName = obj1.nextElement();
+			            String paramValue = req.getParameter(paramName);
+			            returnHash.put(paramName, paramValue);
+			        }
+			        
+			        
+			        int draw = Integer.parseInt((req.getParameter("draw")==null)?"0":req.getParameter("draw"));
+					int start = Integer.parseInt((req.getParameter("start")==null)?"0":req.getParameter("start"));
+					int length = Integer.parseInt((req.getParameter("length")==null)?"0":req.getParameter("length"));
+					String orderColumn=req.getParameter("order[0][column]");
+					String orderDirection = req.getParameter("order[0][dir]");
+					String orderColumnName=req.getParameter("columns[" + orderColumn + "][data]");
+					
+					log.info("orderColumn:"+orderColumn);
+					log.info("orderColumnName:"+orderColumnName);
+					log.info("orderDirection:"+orderDirection);
+					String[] order_cols=req.getParameterValues("order");
+	//				List val=new ArrayList();
+	//				int mx=order_cols.length;
+					
+	//				
+					String jisa = req.getParameter("jisa");
+					String manage_no = req.getParameter("manage_no");
+					String right_type=req.getParameter("right_type");
+					String dosiplan=req.getParameter("dosiplan");
+					
+					String address=req.getParameter("saddr");
+					if (address.equals("undefined")) address=null;
+					
+					String toji_plan_type=req.getParameter("toji_plan_type");
+					String toji_type=req.getParameter("toji_type");
+					String right_overlap=req.getParameter("right_overlap");
+					Map map=req.getParameterMap();
+			        log.info("draw:"+draw);
+			        log.info("length:"+length);
+			        
+			        	//log.info("mx:"+mx);
+			        	
+			       
+			        
+			        log.info("jisa:"+jisa);
+			        log.info("manage_no:"+manage_no);
+			        log.info("right_type:"+right_type);
+			        log.info("toji_plan_type:"+toji_plan_type);
+			       
+			        
+					HashMap params = new HashMap();
+					params.put("draw",draw);
+					params.put("start",start);
+					params.put("length",length);
+					params.put("jisa",req.getParameter("jisa"));
+					params.put("idx",manage_no);
+					params.put("dosiplan",dosiplan);
+					params.put("address",address);
+					params.put("toji_plan_type",toji_plan_type);
+					params.put("toji_type",toji_type);
+					params.put("right_overlap",right_overlap);
+					String[] right_arr= {};
+					right_arr=right_type.split(",");
+					params.put("right_type", right_arr);
+	//				String right_type_str=(type_gover!=null && type_gover.equals("on"))?"gover" :""
+	//					+"|"+ (type_jisang!=null && type_jisang.equals("on")) ? "jisang":""+"|";
+	//				//if (type_gover!=null && type_gover.equals("on")) right_type_str= 
+	//				params.put("right_type","gover");
+					if (orderColumn==null || orderColumn.equals("null")) {
+						log.info("----------null--------");
+						orderColumn="0";
+					}
+					if (Integer.parseInt(orderColumn)>0  ) {
+						params.put("orderCol",orderColumnName);
+						params.put("desc",orderDirection);
+					
+					}
+					else {
+						params.put("orderCol","");
+						params.put("desc","");	
+					}
+					log.info("params:"+params);
+	//				ArrayList<HashMap>  list=new ArrayList<HashMap>();
+					Object count= mainService.selectCountQuery("songyuSQL.selectTotalCount1", params);
+		            int total=(int)count;
+					
+					ArrayList<HashMap> list = mainService.selectQuery("songyuSQL.selectAllList3",params);
+				//	log.info("list:"+list);
+	//				for(int i=0;i<List.size();i++) {
+	//					HashMap map=new HashMap();
+	//					map.put("jm_jisa",List.get(i).get("jm_jisa"));
+	//					map.put("fullNmKr","fullnmKr"+i);
+	//					map.put("userStatCd","user"+i);
+	//					map.put("superUser","super"+i);
+	//					list.add(map);
+	//				}
+					
+					
+					//int total=list.size();
+					 HashMap<String,Object> resultmap=new HashMap();
+				        resultmap.put("draw",draw);
+				        resultmap.put("recordsTotal",total);
+				        resultmap.put("recordsFiltered",total);
+				        resultmap.put("data",list);
+				        
+				        JSONObject obj =new JSONObject(resultmap);
+				        log.info("obj:"+obj);
+				    	return ResponseEntity.ok(obj.toString());
+	//			        JSONObject obj =new JSONObject(resultmap);
+	//			        System.out.println(obj);
+	//			       
+	//			      //log.info("jo:"+jo);
+	//			      			res.setCharacterEncoding("UTF-8");
+	//			      			res.setHeader("Access-Control-Allow-Origin", "*");
+	//			      			res.setHeader("Cache-Control", "no-cache");
+	//			      			res.resetBuffer();
+	//			      			res.setContentType("application/json");
+	//			      			//response.getOutputStream().write(jo);
+	//			      			res.getWriter().print(obj);
+	//			      			res.getWriter().flush();
+	    }
+
+	@RequestMapping(value="/menu01DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
     public ResponseEntity<?> datatableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
         
 		//일반웹형식

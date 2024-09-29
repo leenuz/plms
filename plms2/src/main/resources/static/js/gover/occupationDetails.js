@@ -161,6 +161,11 @@ $(document).on("click","#fileSaveBtn",function(){
 		console.log("filename:"+files[i].name);
 	}*/
 	var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val(),"files":uploadFiles};
+	console.log(uploadFiles.length);
+	if (uploadFiles.length<1) {
+		alert("첨부파일이 없습니다.");
+		return;
+	}
 	url="/api/pnuAtcUpload";
 	$.ajax({
 
