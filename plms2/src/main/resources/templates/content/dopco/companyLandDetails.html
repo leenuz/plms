@@ -405,10 +405,10 @@
 									<li class="title03 title">개정일자</li>
 									<li class="title04 title">다운로드</li>
 								</ul>
-								<ul class="contents lastContents" th:if="${modify_list.size() == 0}">
+								<ul class="contents lastContents" th:if="${dopcoIssueCodeAtcFileList.size() == 0}">
 									<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents" th:each="val:${jisangIssueCodeAtcFileList}">
+								<ul class="contents" th:each="val:${dopcoIssueCodeAtcFileList}">
 									<li class="content01 content">
 										[[${val.icaf_manual_title}]]
 									</li>
@@ -419,7 +419,7 @@
 										[[${val.icaf_file_regdate}]]
 									</li>
 									<li class="content04 content btnsWrap">
-										<button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
+											<button class="fileDownloadBtn"  th:onclick="downloadFile([[${val.icaf_file_path}]],[[${val.icaf_file_nm}]])">다운로드 <span class="downloadIcon"></span></button>
 									</li>
 								</ul>
 							</div>

@@ -207,11 +207,16 @@ public class dopcoController {
 				jijuk.put("y", 0);
 			}
 		}
-		params.put("pnu", list.get(0).get("dom_pnu"));
+		params.put("pnu", list.get(0).get("dom_pnu").toString().trim());
+		log.info("pnu: " + list.get(0).get("dom_pnu"));
 		ArrayList<HashMap> dopcoIssueList = mainService.selectQuery("dopcoSQL.selectIssueList",params);
 		log.info("dopcoIssueList size:"+dopcoIssueList.size());
+		log.info("dopcoIssueList: " + dopcoIssueList);
 		if (dopcoIssueList.size()>0) {
-
+			log.info("issueManualCode1: " + dopcoIssueList.get(0).get("pi_code_depth1"));
+			log.info("issueManualCode2: " + dopcoIssueList.get(0).get("pi_code_depth2"));
+			log.info("issueManualCode3: " + dopcoIssueList.get(0).get("pi_code_depth3"));
+			
 			params.put("issueManualCode1", dopcoIssueList.get(0).get("pi_code_depth1"));
 			params.put("issueManualCode2", dopcoIssueList.get(0).get("pi_code_depth2"));
 			params.put("issueManualCode3", dopcoIssueList.get(0).get("pi_code_depth3"));
@@ -219,6 +224,7 @@ public class dopcoController {
 		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
 		ArrayList<HashMap> dopcoIssueHistoryList = mainService.selectQuery("dopcoSQL.selectIssueHistoryList",params);
 		ArrayList<HashMap> dopcoIssueCodeAtcFileList = mainService.selectQuery("dopcoSQL.selectIssueCodeAtcFileList",params);
+		log.info("dopcoIssueCodeAtcFileList: " + dopcoIssueCodeAtcFileList);
 		ArrayList<HashMap> dopcoMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 		log.info("dopcoIssueHistoryList: " + dopcoIssueHistoryList);
 		
