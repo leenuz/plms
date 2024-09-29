@@ -253,13 +253,19 @@ $(document).ready(function(){
     });
     //drag 영역 클릭시 파일 선택창
     objDragAndDrop.on('click',function (e){
+		//$('input[type=file]').trigger('click');
+		console.log("-------------click--------------");
         $('#landTerminationRegistration_myPcFiles').trigger('click');
     });
+	$('#landTerminationRegistration_myPcFiles').on('change', function(e) {
+	        var files = e.originalEvent.target.files;
+	        handleFileUpload(files,objDragAndDrop);
+	    });
 
-    $('input[name=fileupload]').on('change', function(e) {
+    /*$('input[name=fileupload]').on('change', function(e) {
         var files = e.originalEvent.target.files;
         handleFileUpload(files,objDragAndDrop);
-    });
+    });*/
 	
 	$('input[name=landTerminationRegistration_myPcFiles01]').on('change', function(e) {
 	        var files = e.originalEvent.target.files;

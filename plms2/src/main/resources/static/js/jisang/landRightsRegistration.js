@@ -558,6 +558,7 @@ $(document).on("click","#finalBtn",function(){
 				   						console.log("response.success Y");
 				   					//	console.log("response.resultData length:"+response.resultData.length);
 										alert("정상적으로 등록 되었습니다.");
+										window.location.href = "/jisang/menu02_1";
 				   						/*$("#popup_bg").show();
 				   						$("#popup").show(500);
 				   						//$("#addrPopupLayer tbody td").remove();
@@ -982,10 +983,12 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	                });
 	                //drag 영역 클릭시 파일 선택창
 	                objDragAndDrop.on('click',function (e){
+						console.log("--------------click---------------");
 	                    $('input[type=file]').trigger('click');
 	                });
 	 
 	                $('input[type=file]').on('change', function(e) {
+						console.log("--------------change---------------");
 	                    var files = e.originalEvent.target.files;
 	                    handleFileUpload(files,objDragAndDrop);
 	                });
@@ -1119,9 +1122,9 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	                
 	 });
 	 
-	/* 
+	 
 	 $(document).on("click","input:checkbox[name='landRightsRegistration_attachFile']",function(){
 		console.log("check box click");
 	 })
-	*/
+	
 

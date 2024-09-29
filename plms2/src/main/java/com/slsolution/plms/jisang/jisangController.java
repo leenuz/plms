@@ -3404,7 +3404,7 @@ log.info("data:"+data.get(0));
 
 				mainService.UpdateQuery("jisangSQL.mergeJisangTermination", params);
 
-				for(int i=1;i<11;i++) {
+				for(int i=1;i<9;i++) {
 		        	String key=String.format("%02d",i);
 		        	if (requestParamObj.getString("req_doc_file"+key)!=null) {
 		        		log.info("Key:"+key);
