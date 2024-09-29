@@ -17,38 +17,30 @@
       display: grid;
       grid-template-columns: auto auto auto;
     }
-
     div.dt-center-in-div {
       margin: 0 auto;
       float: right;
       margin-right: 30px;
     }
-
     div.dt-center-in-div>div {
       display: inline;
     }
-
     div.dt-filter-spacer {
       margin: 10px 0;
       border: 1px solid red;
     }
-
     .dt-title {
       text-align: center;
       width: 180px;
       float: left;
-
     }
-
     .dt-buttons {
       display: inline-block;
       width: 180px;
     }
-
     .dt-length {
       display: inline-block;
     }
-
     .dt-button {
       color: white;
       background-color: #4e5871;
@@ -64,11 +56,9 @@
       width: 159px;
       height: 38px;
     }
-
     .dt-paging {
       text-align: center;
     }
-
     .dt-paging-button {
       box-sizing: border-box;
       display: inline-block;
@@ -85,11 +75,9 @@
       font-size: 15px;
       font-weight: 600;
     }
-
     .bottom {
       text-align: center;
     }
-
     .top {
       text-align: right;
       margin: 10px;
@@ -112,6 +100,7 @@
         <section class="companyLandSectionBoxs">
           <div class="companyLandSectionCont">
             <div class="companyLandSectionContDevide">
+							<!--지사-->
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle">
                   <p>지사</p>
@@ -142,6 +131,7 @@
                   </div>
                 </div>
               </ul>
+							<!--자산분류번호-->
               <ul class="inputControlBoxs sectionMenuListBoxs">
                 <li class="selectTitle">
                   <p>자산분류번호</p>
@@ -150,6 +140,7 @@
                   <input name="jasan_no" type="text" />
                 </div>
               </ul>
+							<!--취득기간-->
               <ul class="inputControlBoxs sectionMenuListBoxs">
                 <li class="selectTitle">
                   <p>취득기간</p>
@@ -166,7 +157,7 @@
                   <p>처분여부</p>
                 </li>
                 <div class="companyLandSelectWrappers">
-                  <select name="" class="companyLandHiddenSelect02" id="companyLandSelectBox02_2" hidden>
+                  <select name="cancel_yn" class="companyLandHiddenSelect02" id="companyLandSelectBox02_2" hidden>
                     <option value="전체">전체</option>
                     <option value="처분">처분</option>
                     <option value="미처분">미처분</option>

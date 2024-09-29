@@ -241,6 +241,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
 			and dom.dom_chuideuk_date::date between #{start_date}::date and #{end_date}::date
 		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)" >
+			and dom.dom_cancel_yn=#{cancel_yn}
+		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 			ORDER BY ${orderCol} ${desc}
 		</if>

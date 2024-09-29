@@ -586,34 +586,23 @@ log.info("resultData:"+resultData);
 		String[] order_cols=req.getParameterValues("order");
 
 		String jisa = req.getParameter("jisa");
-		
-		
 		String address=req.getParameter("saddr");
-
-		
 		String jasan_no = req.getParameter("jasan_no");
 		String cancel_yn = req.getParameter("cancel_yn");
-
-				
 		String start_date=req.getParameter("start_date"); //취득기간
 		String end_date=req.getParameter("end_date");
 
-		Map map=req.getParameterMap();
+		Map map = req.getParameterMap();
 
 		HashMap params = new HashMap();
 		params.put("draw",draw);
 		params.put("start",start);
-		
 		params.put("jisa",jisa);
-		
 		params.put("address",address);
-
-		
 		params.put("jasan_no",jasan_no);
-
-		
 		params.put("start_date", start_date);
 		params.put("end_date", end_date);
+		params.put("cancel_yn", cancel_yn);
 
 //		String[] right_arr= {};
 //		right_arr=right_type.split(",");

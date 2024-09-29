@@ -199,7 +199,8 @@ function loadDataTable(params) {
 				d.chuideuk_date_date = params.start_date + '~' + params.end_date;
 				d.start_date = params.start_date;
 				d.end_date = params.end_date;
-
+				d.cancel_yn = params.cancel_yn;
+				
 				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
 				if (ask == "0") {
 					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
