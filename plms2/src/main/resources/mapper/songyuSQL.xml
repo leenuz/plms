@@ -428,7 +428,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
                 GROUP BY ns_NOTSET_NO, ns_SOUJA_NAME
             )AS sub2 WHERE ROW_IDX = 1
         ) NS ON NM.nm_NOTSET_NO = NS.NOTSET_NO
-        WHERE NM.nm_DEL_FLAG = 'N'
+        WHERE 1=1  and (NM.nm_DEL_FLAG = 'N' OR NM.nm_DEL_FLAG IS NULL)
         
         UNION ALL
         
@@ -1012,7 +1012,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
                 GROUP BY ns_NOTSET_NO, ns_SOUJA_NAME
             )AS sub2 WHERE ROW_IDX = 1
         ) NS ON NM.nm_NOTSET_NO = NS.NOTSET_NO
-        WHERE NM.nm_DEL_FLAG = 'N'
+        WHERE 1=1 and  (NM.nm_DEL_FLAG = 'N' OR NM.nm_DEL_FLAG IS NULL)
         
         UNION ALL
         
@@ -1211,6 +1211,54 @@ FROM NOTSET_MASTER
 		, nullif(#{pipe_meter},'')::numeric
 		, nullif(#{pipe_meter2},'')::numeric
 		, #{toji_type}
+		)
+	</insert>
+	<insert id="insertNotsetMaster1" parameterType="HashMap">
+		Insert into NOTSET_MASTER
+		(
+		nm_NOTSET_NO
+		, nm_SIDO_NM
+		, nm_SGG_NM
+		, nm_EMD_NM
+		, nm_RI_NM
+		, nm_JIBUN
+		, nm_JISA
+		, nm_JIJUK_AREA
+		, nm_PIPE_NAME
+		, nm_SUN_GUBUN
+		, nm_COMPLE_YN
+		,nm_GOVER_OWN_YN
+		, nm_ADDRCODE
+		, nm_PNU
+		, nm_JIMOK_TEXT
+		, nm_DOCKEY
+		, nm_PIPE_YN
+		, nm_PIPE_METER
+		, nm_PIPE_METER2
+		, nm_TOJI_TYPE
+		)
+		Values
+		(
+		#{NOTSET_NO}
+		, #{SIDO_NM}
+		, #{SGG_NM}
+		, #{EMD_NM}
+		, nullif(#{RI_NM},'')
+		, #{JIBUN}
+		, #{JISA}
+		, #{JIJUK_AREA}::numeric
+		, #{PIPE_NAME}
+		, #{SUN_GUBUN}
+		, #{COMPLE_YN}
+		,#{GOVER_OWN_YN}
+		, #{ADDRCODE}
+		, #{PNU}
+		, #{JIMOK_TEXT}
+		, #{DOCKEY}
+		, #{PIPE_YN}
+		, nullif(#{PIPE_METER},'')::numeric
+		, nullif(#{PIPE_METER2},'')::numeric
+		, #{TOJI_TYPE}
 		)
 	</insert>
 	<update id="updateTogiJisang_Status2Null" parameterType="HashMap">

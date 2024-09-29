@@ -1107,7 +1107,7 @@ public class songyuController {
 
 				if (gubun.equals("insert")) {
 //					Database.getInstance().insert("Json.insertNotsetMaster", params);
-					mainService.InsertQuery("songyuSQL.insertNotsetMaster", params);
+					mainService.InsertQuery("songyuSQL.insertNotsetMaster1", params);
 					
 					//메모등록
 					//메모도 여기서 등록한다.
