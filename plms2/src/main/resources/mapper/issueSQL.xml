@@ -1164,11 +1164,13 @@ WHERE T.CODE LIKE '${CODE}%'
 	
 	</select>
 	<select id="makeIssueNextCodeDepth2"  resultType="String" parameterType="HashMap">
-	 
-SELECT RPAD(#{CODE} || LPAD(COALESCE(MAX(CAST(SUBSTRING(CODE, 5, 2) AS INTEGER)), '0')) + 1, 2, '0')::text, 8, '0') AS CODE
+	 SELECT RPAD(#{CODE} || 
+       LPAD((COALESCE(MAX(CAST(SUBSTRING(CODE, 5, 2) AS INTEGER)), 0) + 1)::text, 2, '0')
+       , 8, '0') AS CODE
   FROM PLMS_ISSUE_CODE T
  WHERE T.CODE LIKE '${CODE}%'
    AND CODE_DEPTH = 2
+
 	
 	</select>
 
@@ -1226,5 +1228,6 @@ SELECT COUNT(*) AS MINWON_CNT
     OR A.MW_CODE3  = #{CODE} )
    AND A.DEL_FLAG != 'Y'
 </select>
-	
+
+
 </mapper>
