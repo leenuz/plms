@@ -13,16 +13,7 @@
             as="style"
             crossorigin
             href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-
-
-
-
-
-
-
-
     <link th:href="@{/css/common.css}" rel="stylesheet" />
-
     <link rel="stylesheet" href="/css/jisang/landTerminationRegistration.css" />
     <link rel="stylesheet" href="/css/jisang/write.css">
     <link rel="stylesheet" href="/assets/css/header.css" />
@@ -232,7 +223,7 @@ margin:10px;
                           </select>
                         </div>
                         <section class="customSelectBox" th:data-selected="${resultData.jm_account_yn}">
-                          <button class="customSelectView">Y</button>
+                          <button class="customSelectView"></button>
                           <ul class="customSelectBtns">
                           </ul>
                         </section>
@@ -241,6 +232,7 @@ margin:10px;
                 </div>
               </div>
             </div>
+						
             <!-- 소유자 정보 -->
             <div class="contBox contBoxMini03">
               <div class="thirdTitle">
@@ -306,6 +298,7 @@ margin:10px;
             </div>
           </div>
         </section>
+				
         <!-- 지상권 정보 -->
         <section class="surfaceRightInfo">
           <div class="subTitle">지상권 정보</div>
