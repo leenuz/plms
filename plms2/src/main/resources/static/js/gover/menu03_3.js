@@ -30,7 +30,6 @@ $(document).on("click","#searchBtn",function(){
 	  
 	  loadDataTable(object);
 	  console.log("-----------------------");
-	   
 })
 
 // 주소 - 선택형 동작하도록 (id 값: sido_nm, sgg, emd, ri)
@@ -215,7 +214,10 @@ function loadDataTable(params) {
                 d.gover_no = params.gover_no;
                 d.use_purpos = params.use_purpos;
                 d.pmt_office = params.pmt_office;
-                d.adm_office = ljsIsNull(params.adm_office) ? '' : params.adm_office;
+                d.adm_office = params.adm_office;
+								console.log(params.adm_office);
+                // d.adm_office = ljsIsNull(params.adm_office) ? '' : params.adm_office;
+								
 				// 해지 여부 조건 추가
 				if (params.cancel_yn === "해지") {
 				    d.cancel_yn = "Y";
@@ -451,7 +453,7 @@ $(document).on("change", "#privateUseSelectBox03_3", function () {
             $("#privateUseSelectBox03_4").append("<option value=''>전체</option>");
             for (let i = 0; i < data.length; i++) {
                 $("#admOfficeUl").append("<li><p>" + data[i].so_adm_office + "</p></li>");
-                $("#privateUseSelectBox023_4").append("<option>" + data[i].so_adm_office + "</option>");
+                $("#privateUseSelectBox03_4").append("<option>" + data[i].so_adm_office + "</option>");
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {

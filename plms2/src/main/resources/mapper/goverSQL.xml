@@ -773,7 +773,7 @@ WHERE 1=1
 	    ) AS r
 	    where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
-			and r.gover_no=#{gover_no}
+			and r.gover_no like '%${gover_no}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(use_purpos)" >
 			and r.use_purpos=#{use_purpos}
@@ -879,7 +879,7 @@ WHERE 1=1
 	    ) AS r
 	    WHERE 1 = 1
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
-	        and r.gover_no=#{gover_no}
+	        and r.gover_no like '%${gover_no}%'
 	    </if>
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(use_purpos)" >
 	        and r.use_purpos=#{use_purpos}

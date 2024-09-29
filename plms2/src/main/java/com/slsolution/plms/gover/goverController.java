@@ -691,7 +691,13 @@ public class goverController {
 			params.put("use_purpos",use_purpos);
 			params.put("pmt_office",pmt_office);
 			params.put("adm_office",adm_office);
-			params.put("cancel_yn",cancel_yn);
+			// params.put("cancel_yn",cancel_yn);
+			if ("N".equals(cancel_yn)) {
+			    params.put("cancel_yn", null);  // null 조건을 추가하기 위해 cancel_yn에 null 값을 전달
+			    params.put("cancel_yn_condition", "N OR r.cancel_yn IS NULL");
+			} else {
+			    params.put("cancel_yn", cancel_yn);
+			}
 			params.put("pay_date_start",pay_date_start);
 			params.put("pay_date_end",pay_date_end);
 			params.put("address", address);
