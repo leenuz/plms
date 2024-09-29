@@ -106,7 +106,83 @@
 			<div class="mainTitle">
 				<h1>관리기관 관리</h1>
 			</div>
+			<form id="searchForm" onSubmit="return false;">
+				<section class="privateUseSectionBoxs">
+				  <div class="privateUseSectionCont">
+					<div class="privateUseSectionContDevide">
+						
+						<!-- 지사 -->
+						<ul class="selectContent sectionMenuListBoxs" style="width:500px;margin-right:20px">
+							<li class="selectTitle"><p>지사</p></li>
+							<div class="privateUseSelectWrappers">
+								<select name="jisa" class="privateUseHiddenSelect01" id="privateUseSelectBox01_1" hidden>
+									<option value="전체">전체</option>
+									<option th:each="jisa : ${jisaList}" th:value="${jisa['jm_jisa_name']}" th:text="${jisa['jm_jisa_name']}"></option>
+								</select>
+							</div>
+							<!-- 보여지는 셀렉박스 -->
+							<div class="privateUseSelects">
+								<button class="privateUseSelectsTitleBtn" id="sjisaText">선택</button>
+								<div class="sufaceSelectList">
+									<ul class="surfaceSelectListMember" id="sjisaUl">
+										<li><p>전체</p></li>
+										<th:block th:each="jisa : ${jisaList}">
+											<li><p th:text="${jisa['jm_jisa_name']}"></p></li>
+										</th:block>
+									</ul>
+								</div>
+							</div>
+						</ul>
+					  
+					  <!-- 허가관청 -->
+					  <ul class="selectContent sectionMenuListBoxs" style="width:500px;margin-right:20px">
+						  <li class="selectTitle"><p>허가관청</p></li>
+						  <div class="privateUseSelectWrappers">
+							  <select name="pmt_office" class="privateUseHiddenSelect01" id="privateUseSelectBox01_3" hidden>
+								  <option value="전체">전체</option>
+							  </select>
+						  </div>
+						  <div class="privateUseSelects">
+							  <button class="privateUseSelectsTitleBtn" id="spmtOfficeText">선택</button>
+							  <div class="sufaceSelectList">
+								  <ul class="surfaceSelectListMember otherDefault01" id="spmtOfficeUl">
+									  <li><p>전체</p></li>
+								  </ul>
+							  </div>
+						  </div>
+					  </ul>
+					  
+					  <!-- 관리기관 -->
+					  <ul class="selectContent sectionMenuListBoxs" style="width:500px;margin-right:20px">
+						  <li class="selectTitle"><p>관리기관</p></li>
+						  <div class="privateUseSelectWrappers">
+							  <select name="adm_office" class="privateUseHiddenSelect01" id="privateUseSelectBox01_4" hidden>
+								  <option value="전체">전체</option>
+							  </select>
+						  </div>
+						  <div class="privateUseSelects">
+							  <button class="privateUseSelectsTitleBtn" id="sadmOfficeText">선택</button>
+							  <div class="sufaceSelectList">
+								  <ul class="surfaceSelectListMember otherDefault02" id="sadmOfficeUl">
+									  <li><p>전체</p></li>
+								  </ul>
+							  </div>
+						  </div>
+					  </ul>
+					  <div class="privateUseSectionBtnBoxs" style="width: inherit;">
+					  </div>
 
+					  <div class="privateUseSectionBtnBoxs" style="margin-top: 20px;">
+						<button class="privateUseRegisterBtn" id="searchBtn">조회하기</button>
+						<a class="queryBtn" id="regBtn" style="cursor: pointer;">신규등록</a>
+					  </div>
+		
+					</div>
+				  </div>
+				  <!--privateUseSectionCont-->
+				</section>
+				</form>
+		
 			<section class="tableArea">
 				<div class="contWrap contentScr">
 					<table id="mainTable">
@@ -123,7 +199,7 @@
 								<th>등록현황</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="resultTbody">
 							<tr th:each="row:${list}">
 								<td class="smallWidth">
 									<input type="hidden" id="idx" placeholder="1" th:value="${row.idx}"
@@ -231,9 +307,9 @@
 				</div>
 			</section>
 
-			<div class="finalBtnBox btnWrap">
+			<div class="finalBtnBox btnWrap" hidden>
 				<!-- 관리기관 등록 팝업 호출 -->
-				<button class="vividBlueBtn finalBtn">등록</button>
+				<button class="vividBlueBtn finalBtn" hidden>등록</button>
 			</div>
 		</main>
 	</div>

@@ -74,7 +74,10 @@ window.addEventListener("load" , () => {
 			else if(pathName === `/gover/menu03_3`){
                   return privateUseSelectEvet("#dopcoPrivateUse03 .privateUseSelectsTitleBtn" ,"#dopcoPrivateUse03 .sufaceSelectList"  ,"#dopcoPrivateUse03 .sufaceSelectList .surfaceSelectListMember" , ".privateUseHiddenSelect03");
             }
-			//토지개발
+			else if(pathName === `/gover/orgAdmin`){
+                return privateUseSelectEvet("#orgAdmin .privateUseSelectsTitleBtn" ,"#orgAdmin .sufaceSelectList"  ,"#orgAdmin .sufaceSelectList .surfaceSelectListMember" , ".privateUseHiddenSelect03");
+          }
+          //토지개발
 			else if(pathName === `/togi/menu04_1`){
 			const dopcoLandDevelopmentManage = document.getElementsByName("dopcoLandDevelopmentManage");
 			 handleCheckboxes(dopcoLandDevelopmentManage);
