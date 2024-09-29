@@ -1649,6 +1649,12 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
 			AND T.so_JISA = #{JISA}
 			</if>
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PMT_OFFICE)" >
+			AND T.so_pmt_office = #{PMT_OFFICE}
+			</if>
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADM_OFFICE)" >
+			AND T.so_adm_office = #{ADM_OFFICE}
+			</if>
 			ORDER BY T.so_JISA ASC, T.so_PMT_OFFICE ASC, T.so_ADM_OFFICE ASC
 			)TT
 	</select>

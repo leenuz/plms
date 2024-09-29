@@ -1292,7 +1292,7 @@ log.info("PMT_NO:"+PMT_NO);
 		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
 
 		params.put("pnu", data.get(0).get("jm_pnu"));
-		
+		log.info("pnu: "+ data.get(0).get("jm_pnu"));
 		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
 		log.info("jisangIssueList size:"+jisangIssueList.size());
 		
@@ -1317,6 +1317,7 @@ log.info("PMT_NO:"+PMT_NO);
 		log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
 		log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
 		log.info("jisangPermitList:"+jisangPermitList);
+		log.info("jisangMergeList:"+jisangMergeList);
 		log.info("jisangIssueList:"+jisangIssueList);
 		log.info("souja count:"+soujaList.size());
 		log.info("soujaList:"+soujaList);

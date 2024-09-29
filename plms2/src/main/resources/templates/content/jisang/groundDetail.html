@@ -528,178 +528,180 @@
                 </div>
             </section>
 		 
-		 <!-- 필지 첨부파일 -->
-         <section class="parcelAttachments">
- 			<div class="subTitle">
-                 필지 첨부파일
-                 <div class="fileBtnWrap">
-                     <input type="file" name="fileUpload" id="easementModification_myPcFiles">
-                     <label for="easementModification_myPcFiles">내 PC</label>
-                 </div>
-             </div>
+		<!-- 필지 첨부파일 -->
+		<section class="parcelAttachments">
+			<div class="subTitle">
+				필지 첨부파일
+				<div class="fileBtnWrap">
+					<input type="file" name="fileUpload" id="easementModification_myPcFiles">
+					<label for="easementModification_myPcFiles">내 PC</label>
+				</div>
+			</div>
+		
+			<div class="fileUploadWrap">
+				<div class="fileUploadBox">
+					<img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
+					<p>파일을 마우스로 끌어오세요.</p>
+				</div>
+			</div>
+		
+			<!-- 첨부파일 목록 -->
+			<div class="contWrap">
+				<div class="depth1" id="fileDiv">
+					<ul class="titles titleScr" id="fileTitleUl">
+						<li class="title selectWidth allSelectCheck">
+							<!-- 선택 -->
+							<input type="checkbox" id="masterEdit_file_select_all" name="masterEdit_file_select_all" />
+							<label for="masterEdit_file_select_all"></label>
+						</li>
+						<li class="title">등록일</li>
+						<li class="title fileNameWidth">파일명</li>
+						<li class="title">파일보기</li>
+					</ul>
+		
+					<!-- 첨부파일 리스트 -->
+					<div class="contentScr" id="fileListDiv">
+						<!--첨부파일 목록 반복문-->
+						<ul class="contents" id="fileListUl" th:each="file, iterStat : ${atcFileList}">
+							<li class="selectWidth content checkboxWrap">
+								<input type="checkbox" th:id="'masterEdit_attachFile' + ${iterStat.index + 1}"
+									name="masterEdit_attachFile" />
+								<label th:for="'masterEdit_attachFile' + ${iterStat.index + 1}"></label>
+							</li>
+							<li class="content registDateWidth">
+								<input type="text" th:value="${#dates.format(file.ja_wdate, 'yyyy-MM-dd HH:mm')}" readonly
+									class="notWriteInput" name="registDateWidth" />
+							</li>
+							<li class="content fileNameWidth">
+								<input type="text" th:value="${file.ja_file_nm}" id="filename" readonly class="notWriteInput" />
+							</li>
+							<li class="content viewBtnBox">
+								<button class="viewDetailButton" th:onclick="openFilePopup([[${file.ja_file_path}]])">보기</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		
+			<div class="btnWrap">
+				<button class="attachFileBtn vividBlueBtn">첨부파일 저장</button>
+				<button class="attachFileBtn grayBtn" id="deleteFileBtn">선택파일 삭제</button>
+			</div>
+		</section>
+		
+		<!-- 잠재이슈 -->
+		<section class="potentialIssues">
+			<div class="subTitle">
+				잠재이슈
+			</div>
+			<div class="contWrap">
+				<div class="contBox">
+					<div class="contentDetailBox">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title01 title">등기여부</li>
+								<li class="title02 title">계약여부</li>
+								<li class="title03 title">이슈유형(대분류)</li>
+								<li class="title03 title">이슈유형(중분류)</li>
+								<li class="title03 title">이슈유형(세분류)</li>
+								<li class="title01 title">등록사유</li>
+								<li class="title04 title">등록일시</li>
+								<li class="title04 title ">편집</li>
+							</ul>
+							<ul class="contents lastContents" th:each="val:${jisangIssueList}">
+								<li class="content01 content">
+									<!-- 등기설정 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="등기설정" th:value="${val.comple_yn}" readonly class="notWriteInput">
+								</li>
+								<li class="content02 content">
+									<!-- 계약체결 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="계약체결" th:value="${val.permitted_yn}" readonly class="notWriteInput">
+								</li>
+								<li class="content03 content">
+									<!-- 이슈없음 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth1}" readonly class="notWriteInput">
+								</li>
+								<li class="content03 content">
+									<!-- 이슈없음 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth2}" readonly class="notWriteInput">
+								</li>
+								<li class="content03 content">
+									<!-- 이슈없음 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth3}" readonly class="notWriteInput">
+								</li>
+								<li class="content01 content">
+									<!-- 신규등록 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="신규등록" th:value="${val.pi_issue_comment}" readonly class="notWriteInput">
+								</li>
+								<li class="content04 content">
+									<!-- 2024-04-01 09:46:01 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="2024-04-01 09:46:01" th:value="${val.issue_date}" readonly
+										class="notWriteInput">
+								</li>
+								<li class="content04 content btnBox">
+									<div class="btnWrap">
+										<button class="editBtn miniBtn groundIssueReviseBtn">수정</button>
+									</div>
+									<div class="btnWrap">
+										<button class="delBtn miniBtn">삭제</button>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 
- 			<div class="fileUploadWrap">
-                 <div class="fileUploadBox">
-                     <img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
-                     <p>파일을 마우스로 끌어오세요.</p>
-                 </div>
-             </div>
- 			
- 		  <!-- 첨부파일 목록 -->
-           <div class="contWrap">
-             <div class="depth1" id="fileDiv">
- 				<ul class="titles titleScr" id="fileTitleUl">
- 				    <li class="title selectWidth allSelectCheck">
- 				        <!-- 선택 -->
- 				        <input type="checkbox" id="masterEdit_file_select_all" name="masterEdit_file_select_all" />
- 				        <label for="masterEdit_file_select_all"></label>
- 				    </li>
- 				    <li class="title">등록일</li>
- 				    <li class="title fileNameWidth">파일명</li>
- 				    <li class="title">파일보기</li>
- 				</ul>
- 				
- 				<!-- 첨부파일 리스트 -->
- 				<div class="contentScr" id="fileListDiv">
- 				      <!--첨부파일 목록 반복문--> 
- 				     <ul class="contents" id="fileListUl" th:each="file, iterStat : ${atcFileList}">
- 				        <li class="selectWidth content checkboxWrap">
- 				           <input type="checkbox" th:id="'masterEdit_attachFile' + ${iterStat.index + 1}" name="masterEdit_attachFile" />
- 				           <label th:for="'masterEdit_attachFile' + ${iterStat.index + 1}"></label>
- 				        </li>
- 				        <li class="content registDateWidth">
- 				           <input type="text" th:value="${#dates.format(file.ja_wdate, 'yyyy-MM-dd HH:mm')}" readonly class="notWriteInput" name="registDateWidth"/>
- 				        </li>
- 				        <li class="content fileNameWidth">
- 				           <input type="text" th:value="${file.ja_file_nm}" id="filename" readonly class="notWriteInput" />
- 				        </li>
- 				        <li class="content viewBtnBox">
- 				           <a th:href="@{${file.ja_file_path}}" class="viewDetailButton lightBlueBtn" target="_blank">보기</a>
- 				        </li>
- 				     </ul>
- 				  </div>
-             </div>
-           </div>
-
-           <div class="btnWrap">
-             <button class="attachFileBtn vividBlueBtn">첨부파일 저장</button>
-             <button class="attachFileBtn grayBtn" id="deleteFileBtn">선택파일 삭제</button>
-           </div>
-         </section>
-			
-            <!-- 잠재이슈 -->
-            <section class="potentialIssues">
-                <div class="subTitle">
-                    잠재이슈
-                </div>
-                <div class="contWrap">
-                    <div class="contBox">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">등기여부</li>
-                                    <li class="title02 title">계약여부</li>
-                                    <li class="title03 title">이슈유형(대분류)</li>
-                                    <li class="title03 title">이슈유형(중분류)</li>
-                                    <li class="title03 title">이슈유형(세분류)</li>
-                                    <li class="title01 title">등록사유</li>
-                                    <li class="title04 title">등록일시</li>
-                                    <li class="title04 title ">편집</li>
-                                </ul>
-                                <ul class="contents lastContents" th:each="val:${jisangIssueList}">
-                                    <li class="content01 content">
-                                        <!-- 등기설정 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="등기설정" th:value="${val.comple_yn}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content02 content">
-                                        <!-- 계약체결 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="계약체결" th:value="${val.permitted_yn}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content03 content">
-                                        <!-- 이슈없음 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth1}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content03 content">
-                                        <!-- 이슈없음 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth2}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content03 content">
-                                        <!-- 이슈없음 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth3}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content01 content">
-                                        <!-- 신규등록 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="신규등록" th:value="${val.pi_issue_comment}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content04 content">
-                                        <!-- 2024-04-01 09:46:01 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="2024-04-01 09:46:01" th:value="${val.issue_date}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content04 content btnBox">
-                                        <div class="btnWrap">
-                                            <button class="editBtn miniBtn groundIssueReviseBtn">수정</button>
-                                        </div>
-                                        <div class="btnWrap">
-                                            <button class="delBtn miniBtn">삭제</button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </section>
-
-            <!-- 잠재이슈 변경 이력 -->
-            <section class="potentialIssuesChangeHistory">
-                <div class="subTitle">
-                    잠재이슈 변경 이력
-                </div>
-
-                <div class="contWrap">
-                    <div class="contBox">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">순번</li>
-                                    <li class="title02 title">구분</li>
-                                    <li class="title03 title">변경일자</li>
-                                    <li class="title04 title">내용</li>
-                                    <li class="title03 title">사유</li>
-                                </ul>
-                                <ul class="contents" th:each="val:${jisangIssueHistoryList}">
-                                    <li class="content01 content">
-                                        [[${val.no}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${val.pih_history_type}]]
-                                    </li>
-                                    <li class="content03 content">
-                                        [[${val.pih_history_date}]]
-                                    </li>
-                                    <li class="content04 content">
-                                        [[${val.pih_content}]]
-                                    </li>
-                                    <li class="content03 content">
-                                        [[${val.pi_issue_comment}]]
-                                    </li>
-                                </ul>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </section>
+		<!-- 잠재이슈 변경 이력 -->
+		<section class="potentialIssuesChangeHistory">
+			<div class="subTitle">
+				잠재이슈 변경 이력
+			</div>
+		
+			<div class="contWrap">
+				<div class="contBox">
+					<div class="contentDetailBox">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title01 title">순번</li>
+								<li class="title02 title">구분</li>
+								<li class="title03 title">변경일자</li>
+								<li class="title04 title">내용</li>
+								<li class="title03 title">사유</li>
+							</ul>
+							<ul class="contents lastContents" th:if="${jisangIssueHistoryList.size() == 0}">
+								<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+							</ul>
+							<ul class="contents" th:each="val:${jisangIssueHistoryList}">
+								<li class="content01 content">
+									[[${val.no}]]
+								</li>
+								<li class="content02 content">
+									[[${val.pih_history_type}]]
+								</li>
+								<li class="content03 content">
+									[[${val.pih_history_date}]]
+								</li>
+								<li class="content04 content">
+									[[${val.pih_content}]]
+								</li>
+								<li class="content03 content">
+									[[${val.pi_issue_comment}]]
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 
             <!-- 잠재이슈 대응방안 메뉴얼 -->
 
@@ -909,7 +911,7 @@
     <div class="groundIssueRevisePopWrappers"></div>
     <!-- script -->
     <script src="/js/jisang/groundDetail.js"></script>
-		<script src="/js/common/upload.js"></script>
+		<!--<script src="/js/common/upload.js"></script>-->
     <!-- <script type="module" src="/js/module/surfaceMain.js"></script> -->
 </th:block>
 
