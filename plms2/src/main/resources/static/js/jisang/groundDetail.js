@@ -1,5 +1,5 @@
 var mapWindow;
-
+var uploadFiles = new Array();
 $(document).on("click","#moveMap",function(){
 	//openMapWindow();
 	// mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
@@ -36,51 +36,49 @@ $(document).ready(function () {
 	// 드래그 앤 드롭 영역을 클릭하면 파일 선택창을 띄움
 	objDragAndDrop.on('click', function(e) {
 		console.log("---------------- 파일 클릭 트리거 ---------------");
-	    if (!e.isTrigger) {  // 이 조건문은 이 이벤트가 수동 트리거된 경우를 방지합니다.
-	        $('input[type=file]').trigger('click'); // 파일 선택 창을 띄우는 트리거
-	    }
+    $('input[type=file]').trigger('click'); // 파일 선택 창을 띄우는 트리거
 	});
 	 
 	$('input[type=file]').on('change', function(e) {
+		console.log("-------------change 이벤트 트리거");
 	    var files = e.originalEvent.target.files; // 파일 선택창에서 선택된 파일들
 	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
 	});
     
 	var rowCount = document.querySelectorAll("#fileListDiv > ul").length + 1;  // 현재 렌더된 파일 개수 계산
-	
-    function handleFileUpload(files,obj) {
+	function handleFileUpload(files, obj) {
 		console.log("-------------handleFileUpload---------------");
 		console.log(files);
-       for (var i = 0; i < files.length; i++) { // 선택된 파일들을 하나씩 처리
-            var fd = new FormData(); // FormData 객체 생성 (파일 업로드를 위한 객체)
-            fd.append('file', files[i]); // 파일 객체를 FormData에 추가
-     		
-            // var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
-			var status = new createStatusbar($("#fileListDiv"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
-            sendFileToServer(fd,status); // 서버로 파일 전송 함수 호출
-			
+		for (var i = 0; i < files.length; i++) { // 선택된 파일들을 하나씩 처리
+			var fd = new FormData(); // FormData 객체 생성 (파일 업로드를 위한 객체)
+			fd.append('file', files[i]); // 파일 객체를 FormData에 추가
+
+			// var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
+			var status = new createStatusbar($("#fileListDiv"), files[i].name, files[i].size, rowCount); // 파일 업로드 상태바 생성
+			sendFileToServer(fd, status); // 서버로 파일 전송 함수 호출
+
 			rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
-       }
-    }
+		}
+	}
 
 	// Status bar 생성 함수
-    function createStatusbar(obj,name,size,no){
+	function createStatusbar(obj, name, size, no) {
 		console.log("----------start createStatusBar------------");
-        console.log(obj.html());
-		
-		var sizeStr="";
-        var sizeKB = size/1024; // 파일 크기를 문자열로 표시하기 위한 변수
-        if(parseInt(sizeKB) > 1024){
-            var sizeMB = sizeKB/1024;
-            sizeStr = sizeMB.toFixed(2)+" MB"; // MB로 변환
-        }else{
-            sizeStr = sizeKB.toFixed(2)+" KB"; // KB로 표시
-        }
-		
-        var row='<ul class="contents" id="fileListUl">';
+		console.log(obj.html());
+
+		var sizeStr = "";
+		var sizeKB = size / 1024; // 파일 크기를 문자열로 표시하기 위한 변수
+		if (parseInt(sizeKB) > 1024) {
+			var sizeMB = sizeKB / 1024;
+			sizeStr = sizeMB.toFixed(2) + " MB"; // MB로 변환
+		} else {
+			sizeStr = sizeKB.toFixed(2) + " KB"; // KB로 표시
+		}
+
+		var row = '<ul class="contents" id="fileListUl">';
 		row += '<li class="selectWidth content checkboxWrap">';
-		row += '<input type="checkbox" id="masterEdit_attachFile'+no+'" name="masterEdit_attachFile" >';
-		row += '<label for="masterEdit_attachFile'+no+'"></label>';
+		row += '<input type="checkbox" id="masterEdit_attachFile' + no + '" name="masterEdit_attachFile" >';
+		row += '<label for="masterEdit_attachFile' + no + '"></label>';
 		row += '</li>';
 		row += '<li class="content registDateWidth">';
 		row += '<input type="text" value="" readonly class="notWriteInput" name="registDateWidth"/>';
@@ -92,53 +90,53 @@ $(document).ready(function () {
 		row += '<button class="viewDetailButton lightBlueBtn">보기</button>';
 		row += '</li>';
 		row += '</ul>';
-		
-        obj.append(row); // 파일 목록이 있는 DOM 요소 뒤에 파일 정보를 추가
-		
-		var radio=$(row).find('input'); // row에서 input 요소를 찾음
+
+		obj.append(row); // 파일 목록이 있는 DOM 요소 뒤에 파일 정보를 추가
+
+		var radio = $(row).find('input'); // row에서 input 요소를 찾음
 		console.log("---------------radio checkbox----------");
-		$(radio).find('input').attr("disabled",false); // 체크박스가 비활성화되지 않도록 설정
-     	console.log($(radio).parent().html());
-    }
+		$(radio).find('input').attr("disabled", false); // 체크박스가 비활성화되지 않도록 설정
+		console.log($(radio).parent().html());
+	}
 	                
-    function sendFileToServer(formData,status) {
-        var uploadURL = "/jisang/fileUpload/post"; //Upload URL
-        var extraData ={}; //Extra Data.
-        var jqXHR = $.ajax({
+	function sendFileToServer(formData, status) {
+		var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+		var extraData = {}; //Extra Data.
+		var jqXHR = $.ajax({
 			xhr: function() {
-			    var xhrobj = $.ajaxSettings.xhr(); // 기본 XMLHttpRequest 객체 생성
-			    if (xhrobj.upload) {
-			        xhrobj.upload.addEventListener('progress', function(event) {
-			            var percent = 0;
-			            var position = event.loaded || event.position;
-			            var total = event.total;
-			            if (event.lengthComputable) {
-			                percent = Math.ceil(position / total * 100); // 파일 업로드의 진행 상황을 계산
-			            }
-			            // status.setProgress(percent);  // 업로드 진행 상황을 status에 반영 (현재 주석 처리됨)
-			        }, false);
-			    }
-			    return xhrobj;
+				var xhrobj = $.ajaxSettings.xhr(); // 기본 XMLHttpRequest 객체 생성
+				if (xhrobj.upload) {
+					xhrobj.upload.addEventListener('progress', function(event) {
+						var percent = 0;
+						var position = event.loaded || event.position;
+						var total = event.total;
+						if (event.lengthComputable) {
+							percent = Math.ceil(position / total * 100); // 파일 업로드의 진행 상황을 계산
+						}
+						// status.setProgress(percent);  // 업로드 진행 상황을 status에 반영 (현재 주석 처리됨)
+					}, false);
+				}
+				return xhrobj;
 			},
-            url: uploadURL,
-            type: "POST",
-            contentType:false,
-            processData: false,
-            cache: false,
-            data: formData,
-            success: function(data){
-               // status.setProgress(100);
-     			console.log(data);
-     			console.log(data.resultData);
+			url: uploadURL,
+			type: "POST",
+			contentType: false,
+			processData: false,
+			cache: false,
+			data: formData,
+			success: function(data) {
+				// status.setProgress(100);
+				console.log(data);
+				console.log(data.resultData);
 				//console.log("-------------sendFileToServer-----------------------");
 				//console.log($(this).parent().parent().parent().parent());
-                //$("#status1").append("File upload Done<br>");    
+				//$("#status1").append("File upload Done<br>");    
 				//uploadFiles.push(data.resultData.fpath);    
 				//allCheckEventLandRightsRegist();   
-            }
-        }); 
-        //status.setAbort(jqXHR);
-    }
+			}
+		});
+		//status.setAbort(jqXHR);
+	}
 });
 
 
