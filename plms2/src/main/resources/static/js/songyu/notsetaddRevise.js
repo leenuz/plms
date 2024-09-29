@@ -140,7 +140,7 @@ const notsetAddRadioEvet = () => {
                             selectRadioEvet01.forEach((btns) => btns.disabled = true);
                     } else if (index === 1) {
                         return addressInputBox01.readOnly = true,
-                            addressInputBox02.readOnly = false,
+                           // addressInputBox02.readOnly = false,
                             selectRadioEvet01.forEach((btns) => btns.disabled = false);
                     } else {
                     }
@@ -596,11 +596,57 @@ $(document).on("click", "#deleteFileBtn", function () {
     const clickedAttachFiles = document.querySelectorAll('input[name="attachFile"]:checked');
     console.log(clickedAttachFiles);
     console.log(uploadFiles);
+	var dids=[];
     for (var i = 0; i < clickedAttachFiles.length; i++) {
         var delEle = $(clickedAttachFiles[i]).closest("#fileListUl");
         console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
+		var ids={"notset_no":$("#notset_no").val(),"idx":$(clickedAttachFiles[i]).closest("#fileListUl").find("#oidx").val(),"filename":$(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val()};
+		//var filename={"idx":$(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val()};
+		console.log("idx:"+ids);
+		dids.push(ids);
+		
+		
         $(delEle).remove();
     }
+	console.log(dids);
+	var param={"fileIds":dids};
+
+	
+	url = "/notset/deleteNotsetAtcFile";
+	         $.ajax({
+	             url: url,
+	             type: 'POST',
+	             contentType: "application/json",
+	             data: JSON.stringify(param),
+
+	             dataType: "json",
+	             beforeSend: function (request) {
+	                 console.log("beforesend ........................");
+	                 loadingShow();
+	             },
+	             success: function (response) {
+	                 loadingHide();
+	                 console.log(response);
+	        //         if (response.success = "Y") {
+	        //             console.log("response.success Y");
+	        //             console.log("response.resultData length:" + response.resultData.length);
+	        //             alert("정상적으로 등록 되었습니다.");
+	        //             /*$("#popup_bg").show();
+	        //             $("#popup").show(500);
+	        //             //$("#addrPopupLayer tbody td").remove();
+	        //             for(var i=0;i<response.resultData.length;i++){
+	        //                 $("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+	        //             }*/
+	        //         }
+	        //         else {
+	        //             console.log("response.success N");
+	        //         }
+	             },
+	             error: function (jqXHR, textStatus, errorThrown) {
+	                 alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
+	                 return false;
+	             }
+	         });
 })
 
 var uploadFiles = new Array();
@@ -653,15 +699,87 @@ $(document).ready(function () {
             var fd = new FormData();
             fd.append('file', files[i]);
 
-            var status = new createStatusbar($("#fileTitleUl"), files[i].name, files[i].size, rowCount); //Using this we can set progress.
+            var status = new createStatusbar1($("#fileTitleUl"), files[i].name, files[i].size, rowCount); //Using this we can set progress.
             //  status.setFileNameSize(files[i].name,files[i].size);
             sendFileToServer(fd, status);
 
 			rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
         }
     }
+	
+	function createStatusbar1(obj, name, size, no) {
+			
+	        console.log("----------start createStatusBar------------");
+	        console.log(obj.html());
+	        /*var uobj=obj.parent().parent().find("#status");	
+	        rowCount++;
+	        var row="";
+	        //if(rowCount %2 ==0) row ="even";
+	        this.statusbar = $('<ul class="contents" id="fileListUl">');
+	        this.filename = $('<div class='filename'></div>').appendTo(this.statusbar);
+	        this.size = $("<div class='filesize'></div>").appendTo(this.statusbar);
+	       // this.progressBar = $("<div class='progressBar'><div></div></div>").appendTo(this.statusbar);
+	        this.abort = $("<div class='abort'>중지</div>").appendTo(this.statusbar);*/
+
+	        var sizeStr = "";
+	        var sizeKB = size / 1024;
+	        if (parseInt(sizeKB) > 1024) {
+	            var sizeMB = sizeKB / 1024;
+	            sizeStr = sizeMB.toFixed(2) + " MB";
+	        } else {
+	            sizeStr = sizeKB.toFixed(2) + " KB";
+	        }
+
+	        var row = '<ul class="contents" id="fileListUl">';
+	        row += '<li class="content01 content checkboxWrap">';
+			row += '<input type="hidden" name="ftype" id="ftype" value="new">';
+	        row += '<input type="checkbox" id="attachFile' + no + '" name="attachFile" >';
+	        row += '<label for="attachFile' + no + '"></label>';
+	        row += '</li>';
+	        row += '<li class="content02 content"><input type="text" id="filename" value="' + name + '" class="notWriteInput" readonly></li></ul>';
+			console.log(row);
+	        obj.after(row);
+	
+	        var radio = $(row).find('input');
+	        console.log("---------------radio checkbox----------");
+	        $(radio).find('input').attr("disabled", false);
+	        console.log($(radio).parent().html());
+
+	        /* this.setFileNameSize = function(name,size){
+	             var sizeStr="";
+	             var sizeKB = size/1024;
+	             if(parseInt(sizeKB) > 1024){
+	                 var sizeMB = sizeKB/1024;
+	                 sizeStr = sizeMB.toFixed(2)+" MB";
+	             }else{
+	                 sizeStr = sizeKB.toFixed(2)+" KB";
+	             }
+	      
+	             $(#)
+	             this.size.html(sizeStr);
+	         }*/
+
+	        /*this.setProgress = function(progress){       
+	            var progressBarWidth =progress*this.progressBar.width()/ 100;  
+	            this.progressBar.find('div').animate({ width: progressBarWidth }, 10).html(progress + "% ");
+	            if(parseInt(progress) >= 100)
+	            {
+	                this.abort.hide();
+	            }
+	        }
+	        
+	        this.setAbort = function(jqxhr){
+	            var sb = this.statusbar;
+	            this.abort.click(function()
+	            {
+	                jqxhr.abort();
+	                sb.hide();
+	            });
+	        }*/
+	    }
 
     function createStatusbar(obj, name, size, no) {
+		
         console.log("----------start createStatusBar------------");
         console.log(obj.html());
         /*var uobj=obj.parent().parent().find("#status");	
@@ -683,12 +801,14 @@ $(document).ready(function () {
             sizeStr = sizeKB.toFixed(2) + " KB";
         }
 
-        var row = '<ul class="contents" id="fileListUl">';
+        var row = '<ul class="contents" id="fileListUl1">';
         row += '<li class="content01 content checkboxWrap">';
+		row += '<input type="hidden" name="ftype" id="new" >';
         row += '<input type="checkbox" id="attachFile' + no + '" name="attachFile" >';
         row += '<label for="attachFile' + no + '"></label>';
         row += '</li>';
-        row += '<li class="content02 content"><input type="text" id="filename" placeholder="' + name + '" class="notWriteInput" readonly></li></ul>';
+        row += '<li class="content02 content"><input type="text" id="filename" value="' + name + '" class="notWriteInput" readonly></li></ul>';
+		console.log(row);
         obj.after(row);
 
         var radio = $(row).find('input');
@@ -791,19 +911,18 @@ $(document).ready(function () {
         console.log(dataObj);
 
         const soujaUls = document.querySelectorAll('#soujaUl');
-        const attachFileUls = document.querySelectorAll('input[name="attachFile"]:checked');
-        console.log(attachFileUls);
+       
 
-        //   console.log(soujaUls);
+           console.log(soujaUls);
         var soujaArr = new Array();
         for (var i = 0; i < soujaUls.length; i++) {
             console.log(soujaUls[i]);
-            console.log($(soujaUls[i]).find("#soujaJibun").val());
-            var soujaJibun = $(soujaUls[i]).find("#soujaJibun").val();
-            var soujaName = $(soujaUls[i]).find("#soujaName").val();
-            var soujaAddress = $(soujaUls[i]).find("#soujaAddress").val();
-            var soujaContact1 = $(soujaUls[i]).find("#soujaContact1").val();
-            var soujaContact2 = $(soujaUls[i]).find("#soujaContact2").val();
+            console.log($(soujaUls[i]).find("input[name='soujaJibun']").val());
+            var soujaJibun = $(soujaUls[i]).find("input[name='soujaJibun']").val();
+            var soujaName = $(soujaUls[i]).find("input[name='soujaName']").val();
+            var soujaAddress = $(soujaUls[i]).find("input[name='soujaAddress']").val();
+            var soujaContact1 = $(soujaUls[i]).find("input[name='soujaContact1']").val();
+            var soujaContact2 = $(soujaUls[i]).find("input[name='soujaContact2']").val();
 
             soujaJibun = (soujaJibun == "undefined" || soujaJibun == "" || soujaJibun == null) ? "" : soujaJibun;
             soujaName = (soujaName == "undefined" || soujaName == "" || soujaName == null) ? "" : soujaName;
@@ -812,20 +931,28 @@ $(document).ready(function () {
             soujaContact2 = (soujaContact2 == "undefined" || soujaContact2 == "" || soujaContact2 == null) ? "" : soujaContact2;
             var soujaInfo = { "jibun": soujaJibun, "soujaName": soujaName, "soujaAddress": soujaAddress, "soujaContact1": soujaContact1, "soujaContact2": soujaContact2 };
             if (soujaJibun != "" && soujaName != "" && soujaAddress != "" && soujaContact1 != "") soujaArr.push(soujaInfo);
+		  //soujaArr.push(soujaInfo);
         }
+
+		console.log("--------soujaArr------");
+		console.log(soujaArr);
+		console.log("--------files---------");
+		const attachFileUls = document.querySelectorAll('input[name="attachFile"]');
+		       console.log(attachFileUls);
         var files = new Array();
         for (var i = 0; i < attachFileUls.length; i++) {
             console.log($(attachFileUls[i]).parent().parent().html());
-            var fname = $(attachFileUls[i]).parent().parent().find("#filename").attr('placeholder');
+			var idx=$(attachFileUls[i]).parent().parent().find("#oidx").val();
+			var ftype=$(attachFileUls[i]).parent().parent().find("#ftype").val();
+            var fname = $(attachFileUls[i]).parent().parent().find("#filename").val();
             console.log(fname);
-            files.push(fname);
+			console.log(ftype);
+			if (ftype=="new") files.push(fname);
         }
 
-        console.log("--------files---------");
+       
         console.log(files);
 
-        console.log("--------soujaArr------");
-        console.log(soujaArr);
         dataObj.soujaInfo = soujaArr;
         dataObj.uploadFiles = files;
 
@@ -854,7 +981,7 @@ $(document).ready(function () {
 		dataObj.goverYN=dataObj.gover_own_yn;
 		dataObj.zone=dataObj.pipe_name;
 		dataObj.sunGubun=dataObj.sun_gubun;
-		dataObj.gubun="insert";
+		dataObj.gubun="modify";
         console.log("------dataObj--------");
         console.log(dataObj);
 

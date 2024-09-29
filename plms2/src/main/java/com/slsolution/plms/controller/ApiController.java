@@ -680,7 +680,7 @@ public class ApiController {
         ModelAndView mav = new ModelAndView();
         HashMap params = new HashMap();
         ArrayList<HashMap> list = new ArrayList<HashMap>();
-        // log.info("httpRequest:"+Arrays.toString(httpRequest));
+         log.info("httpRequest:"+httpRequest);
         String jisa = httpRequest.getParameter("jisa");
         String pnu = httpRequest.getParameter("pnu");
         String sido_nm = httpRequest.getParameter("sido");
