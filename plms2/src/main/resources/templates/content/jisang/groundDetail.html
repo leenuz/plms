@@ -660,48 +660,48 @@
 			</div>
 		</section>
 
-            <!-- 잠재이슈 변경 이력 -->
-            <section class="potentialIssuesChangeHistory">
-                <div class="subTitle">
-                    잠재이슈 변경 이력
-                </div>
-
-                <div class="contWrap">
-                    <div class="contBox">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">순번</li>
-                                    <li class="title02 title">구분</li>
-                                    <li class="title03 title">변경일자</li>
-                                    <li class="title04 title">내용</li>
-                                    <li class="title03 title">사유</li>
-                                </ul>
-                                <ul class="contents" th:each="val:${jisangIssueHistoryList}">
-                                    <li class="content01 content">
-                                        [[${val.no}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${val.pih_history_type}]]
-                                    </li>
-                                    <li class="content03 content">
-                                        [[${val.pih_history_date}]]
-                                    </li>
-                                    <li class="content04 content">
-                                        [[${val.pih_content}]]
-                                    </li>
-                                    <li class="content03 content">
-                                        [[${val.pi_issue_comment}]]
-                                    </li>
-                                </ul>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </section>
+		<!-- 잠재이슈 변경 이력 -->
+		<section class="potentialIssuesChangeHistory">
+			<div class="subTitle">
+				잠재이슈 변경 이력
+			</div>
+		
+			<div class="contWrap">
+				<div class="contBox">
+					<div class="contentDetailBox">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title01 title">순번</li>
+								<li class="title02 title">구분</li>
+								<li class="title03 title">변경일자</li>
+								<li class="title04 title">내용</li>
+								<li class="title03 title">사유</li>
+							</ul>
+							<ul class="contents lastContents" th:if="${jisangIssueHistoryList.size() == 0}">
+								<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+							</ul>
+							<ul class="contents" th:each="val:${jisangIssueHistoryList}">
+								<li class="content01 content">
+									[[${val.no}]]
+								</li>
+								<li class="content02 content">
+									[[${val.pih_history_type}]]
+								</li>
+								<li class="content03 content">
+									[[${val.pih_history_date}]]
+								</li>
+								<li class="content04 content">
+									[[${val.pih_content}]]
+								</li>
+								<li class="content03 content">
+									[[${val.pi_issue_comment}]]
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 
             <!-- 잠재이슈 대응방안 메뉴얼 -->
 
