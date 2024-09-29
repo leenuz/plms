@@ -83,6 +83,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select (row_number() over()) as NO
 		 , to_char(pi_issue_date,'YYYY-MM-DD HH:MM:SS') as issue_date
 		 ,*
+		 ,(SELECT code_name FROM plms_issue_code pic WHERE pic."code"=pi_code_depth1) AS DEPTH1_title
+		 ,(SELECT code_name FROM plms_issue_code pic WHERE pic."code"=pi_code_depth2) AS DEPTH2_title
+		 ,(SELECT code_name FROM plms_issue_code pic WHERE pic."code"=pi_code_depth3) AS DEPTH3_title
 		  FROM potential_issue PI
 		  LEFT JOIN 
 		  (
