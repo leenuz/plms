@@ -1103,6 +1103,46 @@ public class goverController {
 			return mav;
 		}
 		
+		@GetMapping(path="/orgSysCode") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView orgSysCode(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
+////			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+//			String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
+//			JSONObject requestParamsObj=new JSONObject(requestParams);
+//			log.info("requestParams:"+requestParams);
+//			
+			ArrayList list = new ArrayList();
+			ArrayList addlist = new ArrayList();
+			ArrayList<HashMap> jisalist=new ArrayList();
+			ParameterParser parser = new ParameterParser(httpRequest);
+
+			String str_result = "Y";
+			ArrayList returnList = new ArrayList();
+			try {
+
+				HashMap params = new HashMap();
+
+//				String JISA = requestParamsObj.getString("JISA");
+				params.put("JISA", "");
+				// int count=(int)mainService.selectCountQuery("goverSQL.selectOfficeJisaCount", params);
+				// list = (ArrayList) mainService.selectQuery("goverSQL.selectOfficeInfoAll", params);
+				//  jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+			
+			ModelAndView mav=new ModelAndView();
+			mav.addObject("list",list);
+			mav.addObject("jisaList",jisalist);
+			log.info("jisalist:"+jisalist);
+			mav.setViewName("content/gover/orgSysCode");
+			return mav;
+		}
+
 		// 소속 토지 정보를 제공하는 API
 		@GetMapping("/getGoverPnuList")
 		public ResponseEntity<?> getGoverPnuList(HttpServletRequest request, HttpServletResponse response) throws Exception {
