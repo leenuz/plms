@@ -125,8 +125,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 		and  mm_idx=${idx}
 		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
+		and  mm_manage_no=#{manage_no}
+		</if>
 	
 	</insert>
+	
 	
 	<insert id="deleteMemoData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="mm_idx" keyProperty="mm_idx">
 		delete from  memo_master 

@@ -1324,7 +1324,7 @@ FROM NOTSET_MASTER
 		, NM.nm_gover_own_yn as GOVER_OWN_YN
 		, NM.nm_addrcode as ADDRCODE
 		FROM NOTSET_MASTER NM
-		WHERE NM.nm_NOTSET_NO = TO_CHAR(#{NOTSET_NO})
+		WHERE NM.nm_NOTSET_NO = #{NOTSET_NO}
 	</select>
 	
 	<update id="updateNotsetMasterStatus" parameterType="HashMap">
@@ -1335,7 +1335,7 @@ FROM NOTSET_MASTER
 		, DOSIPLAN = ''
 		, GOVER_OWN_YN = 'N'
 		, JISA = ''
-		WHERE PNU IN ( SELECT nm_PNU PNU FROM NOTSET_MASTER WHERE nm_NOTSET_NO = TO_CHAR(#{JISANGNO}) )
+		WHERE PNU IN ( SELECT nm_PNU PNU FROM NOTSET_MASTER WHERE nm_NOTSET_NO = #{JISANGNO} )
 	</update>
 	
 	<update id="updateNotsetMaster" parameterType="HashMap">
@@ -1347,18 +1347,18 @@ FROM NOTSET_MASTER
 		, nm_RI_NM = #{RI_NM}
 		, nm_JIBUN = #{JIBUN}
 		, nm_JISA = #{JISA}
-		, nm_JIJUK_AREA = to_number(#{JIJUK_AREA})
+		, nm_JIJUK_AREA = nullif(#{JIJUK_AREA},'')::numeric
 		, nm_PIPE_NAME = #{PIPE_NAME}
 		, nm_SUN_GUBUN = #{SUN_GUBUN}
 		, nm_ADDRCODE = #{ADDRCODE}
 		, nm_PIPE_YN = #{PIPE_YN}
-		, nm_PIPE_METER = #{PIPE_METER}
-		, nm_PIPE_METER2 = #{PIPE_METER2}
+		, nm_PIPE_METER = nullif(#{PIPE_METER},'')::numeric
+		, nm_PIPE_METER2 = nullif(#{PIPE_METER2},'')::numeric
 		, nm_PNU = #{PNU}
 		, nm_GOVER_OWN_YN = #{GOVER_OWN_YN}
 		, nm_JIMOK_TEXT = #{JIMOK_TEXT}
 
-		WHERE nm_NOTSET_NO = TO_CHAR(#{NOTSET_NO})
+		WHERE nm_NOTSET_NO = #{NOTSET_NO}
 
 	</update>
 	
@@ -1395,13 +1395,13 @@ FROM NOTSET_MASTER
 	
 	<delete id="deleteNotsetSoyu" parameterType="HashMap">
 		DELETE FROM NOTSET_SOUJA
-		WHERE ns_NOTSET_NO = TO_CHAR(#{NOTSET_NO})
+		WHERE ns_NOTSET_NO = #{NOTSET_NO}
 	</delete>
 	<insert id="insertNotsetSoyu" parameterType="HashMap">
 		Insert into NOTSET_SOUJA
-		(ns_NOTSET_NO, ns_JIBUN, ns_SOUJA_NAME, ns_ADDRESS, ns_CONTACT)
+		(ns_NOTSET_NO, ns_JIBUN, ns_SOUJA_NAME, ns_ADDRESS, ns_CONTACT,ns_phone_number,ns_home_number)
 		Values
-		(#{NOTSET_NO}, #{JIBUN}, #{NAME}, #{ADDR}, #{TEL})
+		(#{NOTSET_NO}, #{JIBUN}, #{NAME}, #{ADDR}, #{TEL},#{PHONE},#{TEL})
 	</insert>
 		<select id="selectNotsetRowDetail_Files" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *

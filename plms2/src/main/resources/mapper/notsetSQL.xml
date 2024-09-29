@@ -89,4 +89,30 @@
 		nm_DEL_FLAG ='N'
 
 	</select>
+	<insert id="insertNotsetUploadData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="na_idx" keyProperty="na_idx">
+		
+		INSERT INTO notset_atcfile 
+		(
+		 na_notset_no
+		 ,na_seq
+		 ,na_file_path
+		 ,na_file_nm
+		 ,na_file_seq
+		) 
+		 VALUES (
+		  #{notsetNo}
+		  ,#{seq}::integer
+		  ,#{fpath}
+		  ,#{fname}
+		  ,#{fseq}::numeric
+		  
+		    )
+	
+	</insert>
+	<delete id="deleteNotsetAtcFile" parameterType="java.util.HashMap">
+
+		delete from notset_atcfile
+		where na_idx = #{idx}::int
+
+	</delete>
 </mapper>

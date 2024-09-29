@@ -975,7 +975,7 @@ public class songyuController {
 //			String minwonSeq = parser.getString("minwonSeq", ""); // 민원관리에서 넘어왔을 경우 플래그.
 			
 			
-			String notsetNo = requestParamObj.has("notsetNo")?requestParamObj.getString("notsetNo"):""; // 수정할 미설정/미점용 번호
+			String notsetNo = requestParamObj.has("notset_no")?requestParamObj.getString("notset_no"):""; // 수정할 미설정/미점용 번호
 
 			String sinm = (requestParamObj.getString("sido_nm")).replaceAll("전체", ""); // 시
 			// 네임
@@ -995,7 +995,7 @@ public class songyuController {
 			String sun_gubun = requestParamObj.getString("sunGubun"); // 단/복선
 			String pipeMeter = requestParamObj.getString("pipe_diameter1"); // 관경
 			String pipeMeter2 = requestParamObj.getString("pipe_diameter2"); // 관경2
-			String pnu = requestParamObj.getString("mpnu").trim(); // 검색결과 PNU
+			String pnu = requestParamObj.getString("pnu").trim(); // 검색결과 PNU
 			String jijuk_area = requestParamObj.getString("jijuk_area"); // 지면 면적(㎡)
 			String jimok_text = requestParamObj.getString("jimok_text"); // 지면 면적(㎡)
 
@@ -1026,7 +1026,7 @@ public class songyuController {
 
 			String minwon = requestParamObj.has("minwon")?requestParamObj.getString("minwon"):""; // 민원관리에서 넘어왔을 경우 플래그.
 			String minwonSeq = requestParamObj.has("minwonSeq")?requestParamObj.getString("minwonSeq"):""; // 민원관리에서 넘어왔을 경우 플래그.
-			
+			log.info("notsetNo:"+notsetNo);
 			
 			JSONArray soujaArr=new JSONArray(requestParamObj.getString("soujaInfo"));
 			JSONArray fileArr=new JSONArray(requestParamObj.getString("uploadFiles"));
@@ -1039,6 +1039,7 @@ public class songyuController {
 				HashMap params = new HashMap();
 
 				//params.put("FILESEQ", fileseq);
+				params.put("NOTSET_NO", notsetNo);
 				params.put("SIDO_NM", sinm);
 				params.put("SGG_NM", gungunm);
 				params.put("EMD_NM", dongnm);
@@ -1061,7 +1062,7 @@ public class songyuController {
 				params.put("USER_NAME", USER_NAME);
 				params.put("MINWON_SEQ", minwonSeq);
 				
-
+log.info("params:"+params);
 
 				// 로깅처리를 위하여 기존 지적도 데이터 조회
 				ArrayList tmpList=new ArrayList();
@@ -1071,6 +1072,7 @@ public class songyuController {
 				HashMap logParam=(HashMap)tmpList.get(0);
 
 				if (gubun.equals("modify")) {
+					
 					params.put("NOTSET_NO", notsetNo);
 					notsetNo = (String) params.get("NOTSET_NO");
 
@@ -1130,6 +1132,7 @@ public class songyuController {
 					/***********************
 					 * 행정구역이 변경이 되면, 기존의 행정구역은 미설정으로 바꾸고, 변경된 행정구역을 미설정으로 변경함.
 					 ************************/
+					log.info("params:"+params);
 					ArrayList notsetlist = (ArrayList) mainService.selectQuery("songyuSQL.selectNotsetRowDetail_KibonInfo", params);
 					String str_BeforePNU = "";
 
@@ -1152,6 +1155,15 @@ public class songyuController {
 
 					mainService.UpdateQuery("songyuSQL.updateNotsetMaster", params); // 기본정보
 
+					//메모등록
+					//메모도 여기서 등록한다.
+					HashMap memoParam=new HashMap();
+					memoParam.put("manage_no", params.get("NOTSET_NO"));
+					memoParam.put("wmemo", memo);
+					memoParam.put("wname", (USER_NAME==null || USER_NAME=="null")?"":USER_NAME);
+					mainService.InsertQuery("commonSQL.updateMemoData", memoParam);
+					
+					
 					// 변경이력 등록
 					if (!modifyReason1.equals("")) {
 						params.put("GUBUN", "기본정보");
@@ -1180,11 +1192,13 @@ public class songyuController {
 					String NAME = obj.getString("soujaName");
 					String ADDR = obj.getString("soujaAddress");
 					String TEL = obj.getString("soujaContact1");
+					String PHONE = obj.getString("soujaContact2");
 
 					params.put("JIBUN", JIBUN); // 공유지분
 					params.put("NAME", NAME); // 성명
 					params.put("ADDR", ADDR); // 주소
 					params.put("TEL", TEL); // 연락처(집)
+					params.put("PHONE", TEL); // 연락처(집)
 
 					if (gubun.equals("modify")) {
 						if (i == 0) {
@@ -1199,36 +1213,62 @@ public class songyuController {
 					mainService.InsertQuery("songyuSQL.insertNotsetSoyu", params); // 소유자
 																					// 저장
 				}
-
-				if (gubun.equals("modify")) {
+				
 					for (int i = 0; i < fileArr.length(); i++) {
-						JSONObject jobj=new JSONObject(fileArr.get(i));
-						String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
-						String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
-
-						if (IS_DEL.equals("Y")) {
-							// System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
-
-							// 조회용 parma셋팅
-							params.put("SEQ", "");
-							params.put("FILENO", String.valueOf((params.get("NOTSET_NO"))));
-							params.put("FILE_SEQ", DEL_SEQ);
-							ArrayList File_list = (ArrayList) mainService.selectQuery("songyuSQL.selectNotsetRowDetail_Files", params); // 첨부
-																																				// 파일
-
-							params.put("SEQ", DEL_SEQ);
-							mainService.UpdateQuery("songyuSQL.notsetDeleteFile", params);
-
-							// 변경이력 등록
-							if (null != File_list && File_list.size() > 0) {
-								String str_FileName = String.valueOf(((HashMap) File_list.get(0)).get("FILE_NM"));
-								params.put("GUBUN", "파일정보");
-								params.put("CONT", "파일삭제(" + str_FileName + ")");
-								mainService.InsertQuery("songyuSQL.insertNotsetModifyHistory", params);
-							}
-						}
+						//JSONObject fobj=new JSONObject(fileArr.get(i).toString());
+						String file_name=fileArr.getString(i);
+						log.info("file_name:"+file_name);
+						 HashMap<String, Object> filesMap= new HashMap<>();
+						 //
+//						     			filesMap=CommonUtil.JsonArraytoMap(obj);
+						 //
+						     			filesMap.put("notsetNo",String.valueOf((params.get("NOTSET_NO"))));
+						     			filesMap.put("seq",i);
+						     			filesMap.put("fseq",i);
+						     			filesMap.put("fname",file_name);
+						     			
+//
+						     			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+						     			 String dataPath = GC.getNotsetFileDataDir()+"/"+String.valueOf((params.get("NOTSET_NO"))); //설정파일로 뺀다.
+						     			 filesMap.put("fpath",dataPath+"/"+file_name);
+						     			 CommonUtil.moveFile(file_name, tempPath, dataPath);
+						     			log.info("filesMap:"+filesMap);
+						     			mainService.InsertQuery("notsetSQL.insertNotsetUploadData", filesMap);
+						
 					}
-				}
+				
+//				if (gubun.equals("modify")) {
+//					for (int i = 0; i < fileArr.length(); i++) {
+//						
+//						//JSONObject jobj=new JSONObject(fileArr.get(i).toString());
+//						String fileName=fileArr.getString(i);
+//						log.info("fileName:"+fileName);
+//						String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
+//						String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
+//
+//						if (IS_DEL.equals("Y")) {
+//							// System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
+//
+//							// 조회용 parma셋팅
+//							params.put("SEQ", "");
+//							params.put("FILENO", String.valueOf((params.get("NOTSET_NO"))));
+//							params.put("FILE_SEQ", DEL_SEQ);
+//							ArrayList File_list = (ArrayList) mainService.selectQuery("songyuSQL.selectNotsetRowDetail_Files", params); // 첨부
+//																																				// 파일
+//
+//							params.put("SEQ", DEL_SEQ);
+//							mainService.UpdateQuery("songyuSQL.notsetDeleteFile", params);
+//
+//							// 변경이력 등록
+//							if (null != File_list && File_list.size() > 0) {
+//								String str_FileName = String.valueOf(((HashMap) File_list.get(0)).get("FILE_NM"));
+//								params.put("GUBUN", "파일정보");
+//								params.put("CONT", "파일삭제(" + str_FileName + ")");
+//								mainService.InsertQuery("songyuSQL.insertNotsetModifyHistory", params);
+//							}
+//						}
+//					}
+//				}
 
 				// 추가된 파일이 있으면 변경이력에 등록
 				ArrayList seq_fileList = (ArrayList) mainService.selectQuery("songyuSQL.selectNotset_ATCFILE_NoCheck", params); // 첨부
