@@ -1010,8 +1010,8 @@ public class goverController {
 
 //				String JISA = requestParamsObj.getString("JISA");
 				params.put("JISA", "");
-				int count=(int)mainService.selectCountQuery("goverSQL.selectOfficeJisaCount", params);
-				list = (ArrayList) mainService.selectQuery("goverSQL.selectOfficeInfoAll", params);
+				// int count=(int)mainService.selectCountQuery("goverSQL.selectOfficeJisaCount", params);
+				// list = (ArrayList) mainService.selectQuery("goverSQL.selectOfficeInfoAll", params);
 				 jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 
 			} catch (Exception e) {
@@ -1028,6 +1028,34 @@ public class goverController {
 			mav.setViewName("content/gover/orgAdmin");
 			return mav;
 		}
+
+		@RequestMapping(value="/orgAdminDataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+		public ResponseEntity<?> orgAdminDataTableList(HttpServletRequest req, HttpServletResponse res) throws Exception {			
+			String jisa = req.getParameter("jisa");
+			String pmt_office = req.getParameter("pmt_office");
+			String adm_office = req.getParameter("adm_office");
+
+			HashMap params = new HashMap();
+			params.put("JISA",jisa);
+			params.put("PMT_OFFICE",pmt_office);
+			params.put("ADM_OFFICE",adm_office);
+			
+			log.info("params:"+params);
+			ArrayList list = new ArrayList();
+			try {
+				list = (ArrayList) mainService.selectQuery("goverSQL.selectOfficeInfoAll", params);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			// 결과를 JSON으로 반환
+			HashMap<String, Object> resultMap = new HashMap<>();
+			resultMap.put("data", list);
+			JSONObject obj =new JSONObject(resultMap);
+			log.info("obj:"+obj);
+			return ResponseEntity.ok(obj.toString());
+		}
+		
 
 		@GetMapping(path="/orgAdminPopupAccept") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView orgAdminPopupAccept(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {

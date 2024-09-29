@@ -1,3 +1,91 @@
+
+// 지사 선택 시 허가관청 목록 업데이트를 위한 change 이벤트 트리거
+$(document).on("click", "#sjisaUl li", function () {
+    const selectedJisa = $(this).text().trim();
+    $("#sjisaText").text(selectedJisa);
+    $("#privateUseSelectBox01_1").val(selectedJisa).change(); // change 이벤트 트리거
+});
+
+// 지사 선택 시 허가관청 목록 업데이트
+$(document).on("change", "#privateUseSelectBox01_1", function () {
+    const selectedJisa = $("#privateUseSelectBox01_1").val();
+    console.log("지사 선택에 따라 허가관청 목록 업데이트");
+    if (!selectedJisa) return;
+
+    const allData = { jisa: selectedJisa };
+
+    $.ajax({
+        url: "/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
+        data: JSON.stringify(allData),
+        async: true,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (rt) {
+            const data = rt.resultData;
+
+            // 허가관청 리스트 초기화 및 업데이트
+            $("#spmtOfficeUl li").remove();
+            $("#privateUseSelectBox01_3 option").remove();
+            $("#spmtOfficeUl").append("<li><p>전체</p></li>");
+            $("#privateUseSelectBox01_3").append("<option value=''>전체</option>");
+            for (let i = 0; i < data.length; i++) {
+                $("#spmtOfficeUl").append("<li><p>" + data[i].so_pmt_office + "</p></li>");
+                $("#privateUseSelectBox01_3").append("<option>" + data[i].so_pmt_office + "</option>");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error: ", textStatus, errorThrown);
+        }
+    });
+});
+
+// 허가관청 선택 시 관리기관 목록 업데이트
+$(document).on("click", "#spmtOfficeUl li", function () {
+    const selectedPmtOffice = $(this).text().trim();
+    $("#spmtOfficeText").text(selectedPmtOffice);
+    $("#privateUseSelectBox01_3").val(selectedPmtOffice).change(); // change 이벤트 트리거
+});
+
+$(document).on("change", "#privateUseSelectBox01_3", function () {
+    const selectedPmtOffice = $("#privateUseSelectBox01_3").val();
+    const selectedJisa = $("#privateUseSelectBox01_1").val(); // 지사 선택된 값
+
+    console.log("허가관청 선택에 따라 관리기관 목록 업데이트");
+    if (!selectedPmtOffice || !selectedJisa) return;
+
+    const allData = { 
+        pmt_office: selectedPmtOffice,
+        jisa: selectedJisa 
+    };
+
+    $.ajax({
+        url: "/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
+        data: JSON.stringify(allData),
+        async: true,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (rt) {
+            const data = rt.resultData;
+
+            // 관리기관 리스트 초기화 및 업데이트
+            $("#sadmOfficeUl li").remove();
+            $("#privateUseSelectBox01_4 option").remove();
+            $("#sadmOfficeUl").append("<li><p>전체</p></li>");
+            $("#privateUseSelectBox01_4").append("<option value=''>전체</option>");
+            for (let i = 0; i < data.length; i++) {
+                $("#sadmOfficeUl").append("<li><p>" + data[i].so_adm_office + "</p></li>");
+                $("#privateUseSelectBox01_4").append("<option>" + data[i].so_adm_office + "</option>");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error: ", textStatus, errorThrown);
+        }
+    });
+});
+
+
 // 삽입된 html내 스크립트 실행 함수
 const runScriptsInElement = (element) => {
 	const scripts = element.getElementsByTagName('script');
@@ -177,7 +265,7 @@ $(document).on("click", "#approve_Popup .topCloseBtn, #approve_Popup .closeBtn",
 
 
 // 등록버튼 클릭 이벤트
-$('.vividBlueBtn').on('click', function() {
+$('#regBtn').on('click', function() {
 	//showRegPopup();
 	const popupOpen = document.querySelector("#registerPopup");
 	console.log($(popupOpen).html());
@@ -511,3 +599,112 @@ $(document).on("click", "#pmtOfficeUl li", function () {
     $("#pmtOfficeText").removeClass("active"); // 셀렉 박스를 열고 닫는 클래스 제거
     $("#pmtOfficeUl").removeClass("active"); // 드롭다운 목록 닫기
 });
+
+$('#searchBtn').click(function() {
+	loadData();
+});
+
+function loadData() {
+	// 폼 데이터 직렬화
+    var formSerializeArray = $('#searchForm').serializeArray();
+    len = formSerializeArray.length;
+    var dataObj = {};
+	var paramStr = '';
+    for (i = 0; i < len; i++) {
+		var name = formSerializeArray[i].name;
+		var value = formSerializeArray[i].value == '전체' ? '' : formSerializeArray[i].value;
+        dataObj[name] = value;
+		paramStr += '&' + name + '=' + value;
+    }
+	console.log(dataObj);
+	var object = {};
+	
+	$.ajax({
+		url: "/gover/orgAdminDataTableList?" + paramStr,
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: 'application/json; charset=utf-8',
+		success: function (response) {
+			console.log(response.data);
+			var resultList = response.data;
+			var tbodyStr = '';
+
+			var depth1IdxArr = [];
+			var depth2IdxArr = [];
+			var depth1Comp = '';
+			var depth2Comp = '';
+			for (var i = 0; i < resultList.length; i++) {
+				var row = resultList[i];
+				
+				if (row.jisa != depth1Comp) {
+					depth1IdxArr.push(i);
+					depth1Comp = row.jisa;
+				}
+				if (row.pmt_office != depth2Comp) {
+					depth2IdxArr.push(i);
+					depth2Comp = row.pmt_office;
+				}
+			}
+			depth1IdxArr.push(resultList.length);
+			depth2IdxArr.push(resultList.length);
+
+			for (var i = 0; i < resultList.length; i++) {
+				var row = resultList[i];
+				var trStr = `
+					<tr>
+						<td class="smallWidth">
+							<input type="hidden" id="idx" placeholder="1" value="`+row.idx+`"
+								class="notWriteInput" readonly />
+							<input type="text" placeholder="1" value="`+row.no+`" class="notWriteInput"
+								readonly />
+						</td>`;
+				if (i == depth1IdxArr[0]) {
+					depth1IdxArr.shift();
+					trStr += `<td rowspan="`+(depth1IdxArr[0] - i)+`">
+						<input type="text" placeholder="경인지사" value="`+row.jisa+`" class="notWriteInput"
+							readonly />
+						</td>`;
+				}
+				if (i == depth2IdxArr[0]) {
+					depth2IdxArr.shift();
+					trStr += `<td rowspan="`+(depth2IdxArr[0] - i)+`">
+								<input type="text" placeholder="당진시" value="`+row.pmt_office+`"
+									class="notWriteInput" readonly />
+							</td>`;
+				}
+				trStr += `<td>
+							<input type="text" placeholder="하천계획과" value="`+row.adm_office+`"
+								class="notWriteInput" readonly onclick="showModPopup()" />
+						</td>
+						<td>`;
+				if (row.approve=='N') {
+					trStr += `
+									<div class="btnWrap">
+										<div class="btnBox"">
+											<button class="pendingApprovalBtn">승인대기</button>
+										</div>
+									</div>
+					`;
+				} else {
+					trStr += `
+									<div class="btnWrap">
+										<div class="btnBox">
+											<button class="deleteBtn">삭제</button>
+										</div>
+									</div>
+					`;
+				}
+				trStr += `		</td>
+					</tr>				
+				`;
+				tbodyStr += trStr;
+			}
+			$('#resultTbody').html(tbodyStr);
+		},
+		error: function () {
+		}
+	});
+}
+
+loadData();
