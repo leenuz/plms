@@ -168,7 +168,7 @@ public class dopcoController {
 		String DOPCO_NO = httpRequest.getParameter("idx");
 
 		params.put("idx",idx);
-		params.put("manage_no",idx);
+		params.put("manage_no",dopco_no);
 		params.put("dopco_no",dopco_no);
 		params.put("DOPCO_NO",DOPCO_NO);
 		log.info("params: " + params);
@@ -226,6 +226,7 @@ public class dopcoController {
 		ArrayList<HashMap> dopcoIssueCodeAtcFileList = mainService.selectQuery("dopcoSQL.selectIssueCodeAtcFileList",params);
 		log.info("dopcoIssueCodeAtcFileList: " + dopcoIssueCodeAtcFileList);
 		ArrayList<HashMap> dopcoMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+		log.info("dopcoMemoList.size(): "+ dopcoMemoList.size());
 		log.info("dopcoIssueHistoryList: " + dopcoIssueHistoryList);
 		
 		log.info("data : " + resultData);

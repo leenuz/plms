@@ -52,6 +52,7 @@
 									<li class="title04 title">관로명(구간)</li>
 								</ul>
 								<ul class="contents">
+									<input type="hidden" name="manage_no" id="manage_no" th:value="${data.dom_dopco_no}" />
 									<li class="content01 content">
 										[[${data.dom_dopco_no}]]
 									</li>
@@ -564,7 +565,7 @@
 			
 											<div class="editAfter">
 												<div class="newBtnWrap">
-													<button class="registBtn miniBtn" id="deleteMemoBtn">등록</button>
+													<button class="registBtn miniBtn">등록</button>
 												</div>
 											</div>
 										</li>
