@@ -312,38 +312,38 @@
 										</li>
 										<li class="content02 content">
 											<!-- 문서번호 -->
-											<input type="text" th:value="${permit.jpm_pmt_no}" readonly />
+											<input type="text" th:value="${permit.pmt_no}" readonly />
 										</li>
 										<li class="content03 content">
 											<!-- 사용 목적 -->
-											<input type="text" th:value="${permit.jmp_use_purpos}" readonly />
+											<input type="text" th:value="${permit.use_purpos}" readonly />
 										</li>
 										<li class="content04 content">
 											<!-- 사용 기간 -->
-											<input type="text" th:value="${permit.jpm_use_st_date} + ' ~ ' + ${permit.jpm_use_ed_date}"
+											<input type="text" th:value="${permit.use_st_date} + ' ~ ' + ${permit.use_ed_date}"
 												readonly />
 										</li>
 										<li class="content05 content">
 											<!-- 토지 주소 -->
-											<input type="text" th:value="${permit.jpt_addr}" readonly />
+											<input type="text" th:value="${permit.addr}" readonly />
 										</li>
 										<li class="content06 content">
 											<!-- 소유자 -->
-											<input type="text" th:value="${permit.jpt_soyuja}" readonly />
+											<input type="text" th:value="${permit.soyuja}" readonly />
 										</li>
 										<li class="content06 content">
 											<!-- 사용자 -->
-											<input type="text" th:value="${permit.jpt_pmt_user}" readonly />
+											<input type="text" th:value="${permit.pmt_user}" readonly />
 										</li>
 										<li class="content06 content">
 											<!-- 등록상태 -->
-											<input type="text" th:value="${permit.jpm_pmt_status}" readonly />
+											<input type="text" th:value="${permit.pmt_status}" readonly />
 										</li>
 										<li class="content06 content">
 											<!-- ECHO 문서보기 버튼 -->
 											<button class="viewDetailButton">문서보기</button>
 											<!-- ECHO 문서번호를 저장 -->
-											<input type="hidden" th:value="${permit.jpm_echo_no}" />
+											<input type="hidden" th:value="${permit.echo_no}" />
 										</li>
 									</ul>
 								</div>

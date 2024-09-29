@@ -1524,6 +1524,7 @@ log.info("PMT_NO:"+PMT_NO);
 
 		params.put("idx",idx);
 		params.put("manage_no",idx);
+		params.put("JISANG_NO",idx.trim());
 		params.put("index",index);
 		log.info("params:"+params);
 
@@ -1532,6 +1533,7 @@ log.info("PMT_NO:"+PMT_NO);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
 		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 최신버전
+		log.info("jisangPermitList: " + jisangPermitList);
 		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
 		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
 		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
