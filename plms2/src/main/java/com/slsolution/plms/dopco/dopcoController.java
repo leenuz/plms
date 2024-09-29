@@ -349,9 +349,9 @@ public class dopcoController {
 				jijuk.put("y", 0);
 			}
 		}
+		
 //		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 //		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
-//		
 //		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
 //		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
 //		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
@@ -385,7 +385,6 @@ public class dopcoController {
 //		log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
 //		log.info("jisangMemoList:"+jisangMemoList);
 //		log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
-		
 				
 		mav.addObject("isCancel", isCancel);
 		mav.addObject("data", resultData);
