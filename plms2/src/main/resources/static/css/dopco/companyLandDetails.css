@@ -575,7 +575,9 @@ button {
 
 }
 #companyLandDetails .rightsDetails .contentScr {
-    height: 90px;
+    /*height: 90px;*/
+		max-height: calc(45px * 2);
+		overflow-y: auto; /* 스크롤 활성화 */
 }
 #companyLandDetails .rightsDetails .contBoxMini06 .contentDetailBox .depth1 .titles .title{
     width: 21%;
@@ -625,7 +627,9 @@ button {
     width: 51.2%;
 }
 #companyLandDetails .changeHistory .contentScr {
-    height: 90px;
+    /*height: 90px;*/
+		max-height: calc(45px * 2);
+		overflow-y: auto; /* 스크롤 활성화 */
 }
 
 .fileSaveBtn {

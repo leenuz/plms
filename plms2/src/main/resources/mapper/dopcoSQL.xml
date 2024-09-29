@@ -389,16 +389,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 		<select id="selectDopcoRowDetail_Files" resultType="HashMap" parameterType="HashMap">
-		SELECT *
-		FROM DOPCO_ATCFILE
-		WHERE DOPCO_NO = #{DOPCO_NO}
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
-			AND SEQ = #{SEQ}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(FILE_SEQ)" >
-			AND FILE_SEQ = #{FILE_SEQ}
-		</if>
-		ORDER BY SEQ DESC
+			SELECT *
+			FROM DOPCO_ATCFILE
+			WHERE DOPCO_NO = #{DOPCO_NO}
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+				AND SEQ = #{SEQ}
+			</if>
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(FILE_SEQ)" >
+				AND FILE_SEQ = #{FILE_SEQ}
+			</if>
+			ORDER BY SEQ DESC
 	</select>
 	
 	<!--회사토지 상세정보 - 잠재이슈-->

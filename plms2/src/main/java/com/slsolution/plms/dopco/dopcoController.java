@@ -181,6 +181,7 @@ public class dopcoController {
 		//params.put("dopco_no", modify_list)
 		
 		ArrayList file_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Files", params); // 첨부파일
+		log.info("file_list: " + file_list);
 		//ArrayList<HashMap> data = mainService.selectQuery("dopcoSQL.selectAllData",params);
 		HashMap resultData = new HashMap<>();
 		HashMap jijuk = new HashMap<>();

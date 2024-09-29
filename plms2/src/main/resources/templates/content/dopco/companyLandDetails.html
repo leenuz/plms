@@ -243,12 +243,14 @@
 											[[${val.file_nm}]]
 										</li>
 										<li class="content03 content">
-											<button class="viewDetailButton" th:onclick="'window.open(' + ${val.view_url} + ')'">보기</button>
+											<!--<button class="viewDetailButton" th:onclick="'window.open(' + ${val.view_url} + ')'">보기</button>-->
+											<button class="viewDetailButton" th:onclick="openFilePopup([[${val.file_path}]])">보기</button>
 										</li>
 										<li class="content04 content btnsWrap">
-											<a th:href="@{${val.download_url}}" download>
+<!--											<a th:href="@{${val.download_url}}" download>
 												<button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-											</a>
+											</a>-->
+											<button class="fileDownloadBtn"  th:onclick="downloadFile([[${val.file_path}]],[[${val.file_nm}]])" >다운로드 <span class="downloadIcon"></span></button>
 										</li>
 									</ul>
 								</div>
