@@ -91,3 +91,11 @@ const feeDetailCangehistoryPopEvet = () => {
 }
 
 feeDetailCangehistoryPopEvet();
+
+//첨부파일 - 다운로드 스크립트
+function downloadFile(filePath, fileName) {
+	const url = `/api/download?filePath=${filePath}&fileName=${encodeURIComponent(fileName)}`;
+	//  const url = `/api/download?filePath=${filePath}&fileName=${fileName}`;
+	console.log(url);
+	window.open(url, '_blank');  // 새 창이나 새 탭에서 파일 다운로드
+}
