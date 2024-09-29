@@ -290,9 +290,8 @@ WHERE 1=1
 			AND PMT_ED_DATE &lt;=
 			to_date( #{PMT_ENDDAY} , 'yyyy-mm-dd')
 		</if>
-
-
 	</select>
+	
 	<select id="selectGoverList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	    SELECT *,
 	           (row_number() OVER()) AS no,
@@ -350,7 +349,6 @@ WHERE 1=1
 	               ,gpm.gp_pmt_st_date as pmt_st_date
 	               ,gpm.gp_pmt_ed_date as pmt_ed_date
 	               ,gpm.gp_pay_way as pay_way
-	               
 	        FROM gover_master gm
 	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
 	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
@@ -364,7 +362,7 @@ WHERE 1=1
 	    ) AS r
 	    where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
-			and r.gover_no=#{gover_no}
+			and r.gover_no like '%${gover_no}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(use_purpos)" >
 			and r.use_purpos=#{use_purpos}
@@ -375,9 +373,9 @@ WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(adm_office)" >
 			and r.adm_office=#{adm_office}
 		</if>
-<!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(save_status)" >
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(save_status)" >
 			and r.save_status=#{save_status}
-		</if>-->
+		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and r.idx like '%${idx}%'
 		</if>
@@ -464,7 +462,7 @@ WHERE 1=1
 	    ) AS r
 	    WHERE 1 = 1
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
-	        and r.gover_no=#{gover_no}
+	        and r.gover_no like '%${gover_no}%'
 	    </if>
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(use_purpos)" >
 	        and r.use_purpos=#{use_purpos}
@@ -475,6 +473,9 @@ WHERE 1=1
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(adm_office)" >
 	        and r.adm_office=#{adm_office}
 	    </if>
+  		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(save_status)" >
+				and r.save_status=#{save_status}
+			</if>
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 	        and r.idx like '%${idx}%'
 	    </if>
