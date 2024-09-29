@@ -771,6 +771,7 @@ var uploadFiles=new Array();
 	                    handleFileUpload(files,objDragAndDrop);
 	                });
 
+									var rowCount=0;
 	                function handleFileUpload(files,obj)
 	                {
 						console.log("-------------handleFileUpload---------------");
@@ -780,14 +781,14 @@ var uploadFiles=new Array();
 	                        var fd = new FormData();
 	                        fd.append('file', files[i]);
 
-	                        var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
+	                        var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); //Using this we can set progress.
 	                      //  status.setFileNameSize(files[i].name,files[i].size);
 	                        sendFileToServer(fd,status);
 
+													rowCount++;
 	                   }
 	                }
-
-	                var rowCount=0;
+	                
 	                function createStatusbar(obj,name,size,no){
 						console.log("----------start createStatusBar------------");
 	                        console.log(obj.html());
@@ -851,6 +852,51 @@ var uploadFiles=new Array();
 
 	 });
 
+
+	 // 첨부파일 전체 선택 체크박스
+	 const allCheckEventLandRightsRegist = () => {
+
+	     // 첨부파일 리스트들
+	     const attachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
+	     // checked가 된 첨부파일 리스트
+	     const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+	     // 전체선택 input
+	     const clickedAllinput = document.querySelector('input[name="landRightsRegistration_file_select_all"]');
+
+	     // 전체선택되게 하기
+	     clickedAllinput.addEventListener('click', function () {
+	         clickedSelectAllLandRightsRegist(clickedAllinput);
+	     })
+	     // 개당 선택시 전체 선택되게하기
+	     attachFiles.forEach((checkList) => {
+	         checkList.addEventListener('click', function () {
+
+	             clickCheckBoxEventLandRightsRegist(checkList);
+	         })
+	     })
+
+	     // 개별 리스트 클릭시 전체로 변하기
+	     function clickCheckBoxEventLandRightsRegist() {
+	         // 최신으로 업데이트 해주기
+	         const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+
+	         if (attachFiles.length === clickedAttachFiles.length) {
+	             clickedAllinput.checked = true;
+	         } else {
+	             clickedAllinput.checked = false;
+	         }
+	     }
+
+	     // 전체선택 클릭시
+	     function clickedSelectAllLandRightsRegist(clickedAllinput) {
+	         const attachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
+
+	         attachFiles.forEach((checkbox) => {
+	             checkbox.checked = clickedAllinput.checked;
+	         })
+	     }
+	 }
+	 allCheckEventLandRightsRegist();
 
 	 $(document).on("click","#deleteFileBtn",function(){
 
