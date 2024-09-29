@@ -216,8 +216,8 @@ function loadDataTable(params) {
                 d.use_purpos = params.use_purpos;
                 d.pmt_office = params.pmt_office;
                 d.adm_office = ljsIsNull(params.adm_office) ? '' : params.adm_office;
-				d.pay_date_start = params.pay_date_start;
-				d.pay_date_end = params.pay_date_end;
+								d.pay_date_start = params.pay_date_start;
+								d.pay_date_end = params.pay_date_end;
                 d.idx = params.idx;
 
                 // 주소

@@ -582,7 +582,7 @@ public class goverController {
 			String use_purpos = req.getParameter("use_purpos");
 			String pmt_office = req.getParameter("pmt_office");
 			String adm_office = req.getParameter("adm_office");
-			String pay_date_start=req.getParameter("pay_date_start");
+			String pay_date_start = req.getParameter("pay_date_start");
 			String pay_date_end = req.getParameter("pay_date_end");
 			String address = req.getParameter("saddr");
 			String idx = req.getParameter("idx");
