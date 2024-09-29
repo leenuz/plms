@@ -53,8 +53,6 @@
 		) j ON dm.dm_dosi_no=j.dd_dosi_no AND j.no=1
 
 		WHERE 1 = 1
-
-
 		) AS r
 		where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -72,17 +70,14 @@
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and r.address like '%${address}%'
 		</if>
-
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 			ORDER BY ${orderCol} ${desc}
 		</if>
-
 		<if test="length>0">
 			limit #{length} offset #{start}
 		</if>
-
-
 	</select>
+	
 	<select id="selectDosiListCount" parameterType="java.util.HashMap" resultType="Integer">
 		SELECT count(*)
 

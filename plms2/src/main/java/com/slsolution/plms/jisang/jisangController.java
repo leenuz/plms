@@ -1773,6 +1773,7 @@ log.info("data:"+data.get(0));
 			mav.setViewName("content/jisang/menu02_4");
 			return mav;
 		}
+		
 		@GetMapping(path="/menu02_5") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView menu02_5(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
@@ -2230,19 +2231,15 @@ log.info("data:"+data.get(0));
 		String manage_no = req.getParameter("manage_no");
 		String dosiplan=req.getParameter("dosiplan");
 		String address=req.getParameter("saddr");
-
 		String souja = req.getParameter("souja");
 		String jasan_no = req.getParameter("jasan_no");
-
 		String jimok_text = req.getParameter("jimok_text");
-//		String jimok_text = req.getParameter("jimok_text");
-//		String jimok_text ="전,과수원,목장용지";
 		String[] jimokArray = jimok_text != null && !jimok_text.trim().isEmpty() ? jimok_text.split(",") : new String[0]; // 빈 배열로 초기화
 
 		String comple_yn=req.getParameter("comple_yn");
 		String cancel_yn=req.getParameter("cancel_yn");
 		String deunggi_date=req.getParameter("deunggi_date");
-		String account_yn=req.getParameter("account_yn"); //회계처리 필요여부
+		String account_yn = req.getParameter("account_yn"); //회계처리 필요여부
 		String start_date=req.getParameter("start_date");
 		String end_date=req.getParameter("end_date");
 

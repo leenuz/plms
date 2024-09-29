@@ -149,15 +149,8 @@ public class togiController {
 		String[] order_cols=req.getParameterValues("order");
 
 		String jisa = req.getParameter("jisa");
-		
-		
 		String address=req.getParameter("saddr");
-
-		
 		String complete_yn=req.getParameter("complete_yn");
-		
-		
-		
 		String start_date=req.getParameter("start_date");
 		String end_date=req.getParameter("end_date");
 
@@ -168,13 +161,8 @@ public class togiController {
 		params.put("start",start);
 		params.put("length",length);
 		params.put("jisa",jisa);
-		
-		
 		params.put("address",address);
-
-		
 		params.put("complete_yn", complete_yn);
-	
 		params.put("start_date", start_date);
 		params.put("end_date", end_date);
 
@@ -190,7 +178,6 @@ public class togiController {
 		if (Integer.parseInt(orderColumn)>0  ) {
 			params.put("orderCol",orderColumnName);
 			params.put("desc",orderDirection);
-
 		}
 		else {
 			params.put("orderCol","");

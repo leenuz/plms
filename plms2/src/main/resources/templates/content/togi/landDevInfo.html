@@ -1,567 +1,450 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      
-      layout:decorate="~{layout/default_layout}">
- <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
 
-
-
- 
-  
-   
-  
-	  <link th:href="@{/css/common.css}" rel="stylesheet" />
-	
- <link rel="stylesheet" href="/css/togi/landDevInfo.css" /> 
-	  
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" as="style" crossorigin
+		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+	<link th:href="@{/css/common.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="/css/togi/landDevInfo.css" />
 	<!-- 	<script src="/js/songyu/menu01.js"></script>	 -->
-		<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-		<style>
+	<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+				<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
+	<style>
 		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
+			display: grid;
+			grid-template-columns: auto auto auto;
+		}
+		div.dt-center-in-div {
+			margin: 0 auto;
+			float: right;
+			margin-right: 30px;
+		}
+		div.dt-center-in-div>div {
+			display: inline;
+		}
+		div.dt-filter-spacer {
+			margin: 10px 0;
+			border: 1px solid red;
+		}
+		.dt-title {
+			text-align: center;
+			width: 180px;
+			float: left;
+		}
+		.dt-buttons {
+			display: inline-block;
+			width: 180px;
+		}
+		.dt-length {
+			display: inline-block;
+		}
+		.dt-button {
+			color: white;
+			background-color: #4e5871;
+			font-size: 15px;
+			font-weight: 600;
+			border-radius: 10px;
+			background-image: url(/assets/media/menu01/download.png);
+			background-size: 11px;
+			background-repeat: no-repeat;
+			background-position: 123px center;
+			text-aline: left;
+			margin-right: 10px;
+			width: 159px;
+			height: 38px;
+		}
+		.dt-paging {
+			text-align: center;
+		}
+		.dt-paging-button {
+			box-sizing: border-box;
+			display: inline-block;
+			min-width: 1.5em;
+			padding: 0.5em 1em;
+			margin-left: 2px;
+			text-align: center;
+			text-decoration: none !important;
+			cursor: pointer;
+			border: 1px solid transparent;
+			border-radius: 2px;
+			background: transparent;
+			color: #007bff !important;
+			font-size: 15px;
+			font-weight: 600;
+		}
+		.bottom {
+			text-align: center;
+		}
+		.top {
+			text-align: right;
+			margin: 10px;
+		}
+	</style>
 
-div.dt-center-in-div {
-  margin: 0 auto;
-      float: right;
-    margin-right: 30px;
-   
-}
-div.dt-center-in-div>div{
-
-display:inline;
-}
-
-div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
-}
-
-
-.dt-title{
-
-text-align:center;
-width:180px;
-float:left;
-
-}
-.dt-buttons{
-display:inline-block;
-
-width:180px;
-
-}
-.dt-length{
-display:inline-block;
-}
-.dt-button{
-
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
-
-}
-
-.dt-paging {
-text-align: center;
-}
-
-.dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-    
-    
-}
-
-.bottom{
-text-align:center;
-
-}
-.top{
-
-text-align:right;
-margin:10px;
-
-}
-
-		</style>
-		
-    <title>토지개발 등록</title>
-  </head>
+	<title>토지개발 등록</title>
+</head>
 <th:block layout:fragment="content">
-   <!-- 토지 개발정보 -->
-    <div class="landDevInfoWrappers">
-     
-      <main id="landDevInfo">
-        <div class="mainTitle">
-          <h1>토지 개발정보</h1>
-        </div>
+	<!-- 토지 개발정보 -->
+	<div class="landDevInfoWrappers">
+
+		<main id="landDevInfo">
+			<div class="mainTitle">
+				<h1>토지 개발정보</h1>
+			</div>
 
 
-        <form id="saveForm" onSubmit="return false;">
-        <!-- 기본 정보 -->
-        <section class="defaultInfo">
-          <div class="subTitle">
-            <div class="subTitleText">기본정보</div>
-          </div>
+			<form id="saveForm" onSubmit="return false;">
+				<!-- 기본 정보 -->
+				<section class="defaultInfo">
+					<div class="subTitle">
+						<div class="subTitleText">기본정보</div>
+					</div>
 
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="titles">
-                <li class="title middleWidth2" >사업명</li>
-                <li class="title titleBox" >사업기간
-                  <ul class="secondTitles">
-                    <li class="secondTitle">시작일</li>
-                    <li class="secondTitle">종료일</li>
-                  </ul>
-                </li>
-                <li class="title middleWidth2"  >시행자(발주자)</li>
-                <li class="title middleWidth2" >사업자</li>
-              </ul>
-              <ul class="contents lastContents" >
-                <li class="content contentBox">
-                  <input type="text" placeholder=""
-                         readonly class="notWriteInput" style="text-align:center;"
-                         th:value="${resultData.di_business_nm}" >
-                </li>
-                <li class="content contentBox2">
-                  <ul class="secondContents">
-                    <li class="secondContent">
+					<div class="contWrap">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title middleWidth2">사업명</li>
+								<li class="title titleBox">사업기간
+									<ul class="secondTitles">
+										<li class="secondTitle">시작일</li>
+										<li class="secondTitle">종료일</li>
+									</ul>
+								</li>
+								<li class="title middleWidth2">시행자(발주자)</li>
+								<li class="title middleWidth2">사업자</li>
+							</ul>
+							<ul class="contents lastContents">
+								<li class="content contentBox">
+									<input type="text" placeholder="" readonly class="notWriteInput" style="text-align:center;"
+										th:value="${resultData.di_business_nm}">
+								</li>
+								<li class="content contentBox2">
+									<ul class="secondContents">
+										<li class="secondContent">
 
-                      <input type="hidden" th:value="${resultData.dm_dosi_no}" id="dosi_no" name="dosiNo">
-                      <input type="text" placeholder=""
-                             readonly class="notWriteInput"
-                             th:value="${resultData.di_strdate}">
-                    </li>
-                    <li class="secondContent">
-                      <input type="text" placeholder=""
-                             readonly class="notWriteInput"
-                             th:value="${resultData.di_enddate}">
-                    </li>
-                  </ul>
-                </li>
-                <li class="content contentBox">
-                  <input type="text" placeholder=""
-                         readonly class="notWriteInput" style="text-align:center;"
-                         th:value="${resultData.di_adm_office}" >
-                </li>
-                <li class="content contentBox">
-                  <input type="text" placeholder=""
-                         readonly class="notWriteInput" style="text-align:center;"
-                         th:value="${resultData.di_business_oper}" >
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-        </form>
+											<input type="hidden" th:value="${resultData.dm_dosi_no}" id="dosi_no" name="dosiNo">
+											<input type="text" placeholder="" readonly class="notWriteInput"
+												th:value="${resultData.di_strdate}">
+										</li>
+										<li class="secondContent">
+											<input type="text" placeholder="" readonly class="notWriteInput"
+												th:value="${resultData.di_enddate}">
+										</li>
+									</ul>
+								</li>
+								<li class="content contentBox">
+									<input type="text" placeholder="" readonly class="notWriteInput" style="text-align:center;"
+										th:value="${resultData.di_adm_office}">
+								</li>
+								<li class="content contentBox">
+									<input type="text" placeholder="" readonly class="notWriteInput" style="text-align:center;"
+										th:value="${resultData.di_business_oper}">
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+			</form>
 
-        <!-- 시행자 관할 부서 -->
-        <section class="adminDept">
-          <div class="subTitle">
-            <div class="subTitleText">시행자 관할 부서</div>
-          </div>
+			<!-- 시행자 관할 부서 -->
+			<section class="adminDept">
+				<div class="subTitle">
+					<div class="subTitleText">시행자 관할 부서</div>
+				</div>
 
-          <div class="contWrap">
-            <div class="depth1"  id="deptDiv">
-              <ul class="titles">
-                <li class="title">부서명</li>
-                <li class="title">담당자</li>
-                <li class="title">연락처</li>
-              </ul>
-              <ul class="contents">
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder=""
-                    readonly
-                    class="notWriteInput"
-                    th:value="${resultData.dd_dept_nm}"/>
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder=""
-                    readonly
-                    class="notWriteInput"
-                    th:value="${resultData.dd_manager}" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder=""
-                    readonly class="notWriteInput"
-                    th:value="${resultData.dd_contact_num}"/>
+				<div class="contWrap">
+					<div class="depth1" id="deptDiv">
+						<ul class="titles">
+							<li class="title">부서명</li>
+							<li class="title">담당자</li>
+							<li class="title">연락처</li>
+						</ul>
+						<ul class="contents">
+							<li class="content">
+								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${resultData.dd_dept_nm}" />
+							</li>
+							<li class="content">
+								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${resultData.dd_manager}" />
+							</li>
+							<li class="content">
+								<input type="text" placeholder="" readonly class="notWriteInput"
+									th:value="${resultData.dd_contact_num}" />
 
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-        <!-- 대표토지 정보 -->
-        <section class="mainLandInfo">
-          <div class="subTitle">
-            <div class="subTitleText">대표토지 정보</div>
-          </div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+			<!-- 대표토지 정보 -->
+			<section class="mainLandInfo">
+				<div class="subTitle">
+					<div class="subTitleText">대표토지 정보</div>
+				</div>
 
-          <div class="contWrap">
-            <div class="depth1" id="togiInfoDiv">
-              <ul class="titles">
-                <li class="title largeWidth">권리확보</li>
-                <li class="title middleWidth">관로저촉</li>
-                <li class="title middleWidth">담당지사</li>
-                <li class="title addressWidth">주소</li>
-                <li class="title">지목</li>
-                <li class="title">연장</li>
-                <li class="title">면적</li>
-                <li class="title largeWidth">소유자</li>
-                <li class="title middleWidth">지도</li>
-              </ul>
-              <ul class="contents">
-                <li class="content largeWidth">
-                  <input
-                    type="text"
-                    placeholder=""
-                    readonly
-                    class="notWriteInput"
-                    th:value="${resultData.dm_toji_type == 'JISANG' ? '지상권' :
+				<div class="contWrap">
+					<div class="depth1" id="togiInfoDiv">
+						<ul class="titles">
+							<li class="title largeWidth">권리확보</li>
+							<li class="title middleWidth">관로저촉</li>
+							<li class="title middleWidth">담당지사</li>
+							<li class="title addressWidth">주소</li>
+							<li class="title">지목</li>
+							<li class="title">연장</li>
+							<li class="title">면적</li>
+							<li class="title largeWidth">소유자</li>
+							<li class="title middleWidth">지도</li>
+						</ul>
+						<ul class="contents">
+							<li class="content largeWidth">
+								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${resultData.dm_toji_type == 'JISANG' ? '지상권' :
                 (resultData.dm_toji_type == 'DOPCO' ? '회사토지' :
                 (resultData.dm_toji_type == '' ? '미설정' :
-                (resultData.dm_toji_type == 'GOVER' ? '점용' : resultData.dm_toji_type)))}"/>
-                </li>
-                <li class="content middleWidth">
-                  <input
-                    type="text"
-                    placeholder=""
-                    readonly
-                    class="notWriteInput"
-                    th:value="${resultData.dm_pipe_yn}"/>
-                </li>
-                <li class="content middleWidth">
-                  <input
-                    type="text"
-                    placeholder=""
-                    readonly
-                    class="notWriteInput"
-                    th:value="${resultData.dm_jisa}"/>
-                </li>
-                <li class="content addressWidth">
-                  <input
-                    type="text"
-                    placeholder=""
-                    readonly
-                    class="notWriteInput"
-                    th:value="${resultData.address}"/>
-                </li>
-                <li class="content">
-                  <input type="text" readonly class="notWriteInput"
-                   th:value="${resultData.dm_jimok_text}" />
-                </li>
-                <li class="content">
-                  <input type="text" readonly class="notWriteInput"
-                 th:value="${resultData.dm_length}" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder=""
-                    readonly
-                    class="notWriteInput"
-                   th:value="${resultData.dm_jijuk_area}"/>
-                </li>
-                <li class="content largeWidth">
-                  <input type="text" readonly class="notWriteInput"
-                   th:value="${resultData.dm_soyouja}" />
-                </li>
-                <li class="content middleWidth btnBox">
-                  <button class="viewDetailButton lightBlueBtn" id='moveMap' >
-                    위치보기
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-        <!-- 소속토지 정보 -->
-        <section class="subLandInfo">
-          <div class="subTitle">
-            <div class="subTitleText">소속토지 정보</div>
-          </div>
+                (resultData.dm_toji_type == 'GOVER' ? '점용' : resultData.dm_toji_type)))}" />
+							</li>
+							<li class="content middleWidth">
+								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${resultData.dm_pipe_yn}" />
+							</li>
+							<li class="content middleWidth">
+								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${resultData.dm_jisa}" />
+							</li>
+							<li class="content addressWidth">
+								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${resultData.address}" />
+							</li>
+							<li class="content">
+								<input type="text" readonly class="notWriteInput" th:value="${resultData.dm_jimok_text}" />
+							</li>
+							<li class="content">
+								<input type="text" readonly class="notWriteInput" th:value="${resultData.dm_length}" />
+							</li>
+							<li class="content">
+								<input type="text" placeholder="" readonly class="notWriteInput"
+									th:value="${resultData.dm_jijuk_area}" />
+							</li>
+							<li class="content largeWidth">
+								<input type="text" readonly class="notWriteInput" th:value="${resultData.dm_soyouja}" />
+							</li>
+							<li class="content middleWidth btnBox">
+								<button class="viewDetailButton lightBlueBtn" id='moveMap'>
+									위치보기
+								</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+			<!-- 소속토지 정보 -->
+			<section class="subLandInfo">
+				<div class="subTitle">
+					<div class="subTitleText">소속토지 정보</div>
+				</div>
 
-          <div class="contWrap">
-            <div class="depth1" id="togiSosokInfoDiv">
-              <ul class="titles">
-                <li class="title largeWidth">권리확보</li>
-                <li class="title middleWidth">관로저촉</li>
-                <li class="title middleWidth">담당지사</li>
-                <li class="title addressWidth">주소</li>
-                <li class="title">지목</li>
-                <li class="title">연장</li>
-                <li class="title">면적</li>
-                <li class="title largeWidth">소유자</li>
-                <li class="title middleWidth">지도</li>
-              </ul>
-              <ul class="contents" th:each="val:${sosokData}">
-                <li class="content largeWidth">
-                  <input type="text" readonly class="notWriteInput"
-                         th:value="${val.dm_toji_type == 'JISANG' ? '지상권' :
+				<div class="contWrap">
+					<div class="depth1" id="togiSosokInfoDiv">
+						<ul class="titles">
+							<li class="title largeWidth">권리확보</li>
+							<li class="title middleWidth">관로저촉</li>
+							<li class="title middleWidth">담당지사</li>
+							<li class="title addressWidth">주소</li>
+							<li class="title">지목</li>
+							<li class="title">연장</li>
+							<li class="title">면적</li>
+							<li class="title largeWidth">소유자</li>
+							<li class="title middleWidth">지도</li>
+						</ul>
+						<ul class="contents" th:each="val:${sosokData}">
+							<li class="content largeWidth">
+								<input type="text" readonly class="notWriteInput" th:value="${val.dm_toji_type == 'JISANG' ? '지상권' :
                 (val.dm_toji_type == 'DOPCO' ? '회사토지' :
                 (val.dm_toji_type == '' ? '미설정' :
-                (val.dm_toji_type == 'GOVER' ? '점용' : val.dm_toji_type)))}"/>
-                </li>
-                <li class="content middleWidth">
-                  <input type="text" readonly class="notWriteInput"
-                         th:value="${val.dm_pipe_yn}" />
-                </li>
-                <li class="content middleWidth">
-                  <input type="text" readonly class="notWriteInput"
-                         th:value="${val.dm_jisa}" />
-                </li>
-                <li class="content addressWidth">
-                  <input type="text" readonly class="notWriteInput"
-                         th:value="${val.address}" />
-                </li>
-                <li class="content">
-                  <input type="text" readonly class="notWriteInput"
-                         th:value="${val.dm_jimok_text}" />
-                </li>
-                <li class="content">
-                  <input type="text" readonly class="notWriteInput"
-                         th:value="${val.dm_length}" />
-                </li>
-                <li class="content">
-                  <input type="text" readonly class="notWriteInput"
-                         th:value="${val.dm_jijuk_area}" />
-                </li>
-                <li class="content largeWidth">
-                  <input type="text" readonly class="notWriteInput"
-                         th:value="${val.dm_soyouja}" />
-                </li>
-                <li class="content middleWidth btnBox">
-                  <button class="viewDetailButton lightBlueBtn">
-                    위치보기
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-        <!-- 첨부파일 -->
-        <section class="attachFileInfo">
-          <div class="subTitle">
-            <div class="subTitleText">첨부파일</div>
-          </div>
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="titles">
-                <li class="title">날짜</li>
-                <li class="title fileNameWidth">파일명</li>
-                <li class="title">파일보기</li>
-              </ul>
-<!--              <div class="contentScr">-->
-<!--              <ul class="contents" th:each="val:${togiAtcFileList}">-->
-<!--                <li class="content">-->
-<!--                  <input type="text"-->
-<!--                    readonly-->
-<!--                    class="notWriteInput" th:value="${val.date}"/>-->
-<!--                </li>-->
-<!--                <li class="content fileNameWidth">-->
-<!--                  <input-->
-<!--                    type="text"-->
-<!--                    readonly-->
-<!--                    th:value="${val.da_file_nm}"-->
-<!--                    class="notWriteInput" />-->
-<!--                  &lt;!&ndash;                             th:value="${resultData.da_file_nm}" &ndash;&gt;-->
-<!--                </li>-->
-<!--                <li class="content btnBox">-->
-<!--                  <button class="viewDetailButton lightBlueBtn">-->
-<!--                    상세보기-->
-<!--                  </button>-->
-<!--                </li>-->
-<!--              </ul>-->
-<!--              </div>-->
-              <ul class="contents">
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder="2022-06-21"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content fileNameWidth">
-                  <input
-                    type="text"
-                    placeholder="지적측량 결과 - 평택시 월곡동 산32-6번지.pdf"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content btnBox">
-                  <button class="viewDetailButton lightBlueBtn">
-                    상세보기 <span class="downloadIcon"></span>
-                  </button>
-                </li>
-              </ul>
-
-            </div>
-          </div>
-        </section>
+                (val.dm_toji_type == 'GOVER' ? '점용' : val.dm_toji_type)))}" />
+							</li>
+							<li class="content middleWidth">
+								<input type="text" readonly class="notWriteInput" th:value="${val.dm_pipe_yn}" />
+							</li>
+							<li class="content middleWidth">
+								<input type="text" readonly class="notWriteInput" th:value="${val.dm_jisa}" />
+							</li>
+							<li class="content addressWidth">
+								<input type="text" readonly class="notWriteInput" th:value="${val.address}" />
+							</li>
+							<li class="content">
+								<input type="text" readonly class="notWriteInput" th:value="${val.dm_jimok_text}" />
+							</li>
+							<li class="content">
+								<input type="text" readonly class="notWriteInput" th:value="${val.dm_length}" />
+							</li>
+							<li class="content">
+								<input type="text" readonly class="notWriteInput" th:value="${val.dm_jijuk_area}" />
+							</li>
+							<li class="content largeWidth">
+								<input type="text" readonly class="notWriteInput" th:value="${val.dm_soyouja}" />
+							</li>
+							<li class="content middleWidth btnBox">
+								<button class="viewDetailButton lightBlueBtn">
+									위치보기
+								</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+			
+			<!-- 첨부파일 -->
+			<section class="attachFileInfo">
+				<div class="subTitle">
+					<div class="subTitleText">첨부파일</div>
+				</div>
+				<div class="contWrap">
+					<div class="depth1">
+						<ul class="titles">
+							<li class="title">날짜</li>
+							<li class="title fileNameWidth">파일명</li>
+							<li class="title">파일보기</li>
+						</ul>
+						<!--              <div class="contentScr">-->
+						<!--              <ul class="contents" th:each="val:${togiAtcFileList}">-->
+						<!--                <li class="content">-->
+						<!--                  <input type="text"-->
+						<!--                    readonly-->
+						<!--                    class="notWriteInput" th:value="${val.date}"/>-->
+						<!--                </li>-->
+						<!--                <li class="content fileNameWidth">-->
+						<!--                  <input-->
+						<!--                    type="text"-->
+						<!--                    readonly-->
+						<!--                    th:value="${val.da_file_nm}"-->
+						<!--                    class="notWriteInput" />-->
+						<!--                  &lt;!&ndash;                             th:value="${resultData.da_file_nm}" &ndash;&gt;-->
+						<!--                </li>-->
+						<!--                <li class="content btnBox">-->
+						<!--                  <button class="viewDetailButton lightBlueBtn">-->
+						<!--                    상세보기-->
+						<!--                  </button>-->
+						<!--                </li>-->
+						<!--              </ul>-->
+						<!--              </div>-->
+						<ul class="contents">
+							<li class="content">
+								<input type="text" placeholder="2022-06-21" readonly class="notWriteInput" />
+							</li>
+							<li class="content fileNameWidth">
+								<input type="text" placeholder="지적측량 결과 - 평택시 월곡동 산32-6번지.pdf" readonly class="notWriteInput" />
+							</li>
+							<li class="content btnBox">
+								<button class="viewDetailButton lightBlueBtn">
+									상세보기 <span class="downloadIcon"></span>
+								</button>
+							</li>
+						</ul>
+						
+					</div>
+				</div>
+			</section>
 
 
-        <!-- 전자결재문서 열람 -->
+			<!-- 전자결재문서 열람 -->
 
-        <section class="eDocView">
-          <div class="subTitle">
-            <div class="subTitleText">전자결재 문서 열람</div>
-          </div>
+			<section class="eDocView">
+				<div class="subTitle">
+					<div class="subTitleText">전자결재 문서 열람</div>
+				</div>
 
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="titles">
-                <li class="title smallWidth">선택</li>
-                <li class="title middleWidth">문서번호</li>
-                <li class="title">제목</li>
-                <li class="title">승인일</li>
-              </ul>
-              <div class="contentsBox" id="fileList">
-              <ul class="contents" id="fileListUl">
-                <li class="content smallWidth checkboxWrap">
-                  <input type="checkbox" id="landDevInfo_eDocView_Checkbox_0" name="landDevInfo_eDocFile" />
-                  <label for="landDevInfo_eDocView_Checkbox_0"></label>
-                </li>
+				<div class="contWrap">
+					<div class="depth1">
+						<ul class="titles">
+							<li class="title smallWidth">선택</li>
+							<li class="title middleWidth">문서번호</li>
+							<li class="title">제목</li>
+							<li class="title">승인일</li>
+						</ul>
+						<div class="contentsBox" id="fileList">
+							<ul class="contents" id="fileListUl">
+								<li class="content smallWidth checkboxWrap">
+									<input type="checkbox" id="landDevInfo_eDocView_Checkbox_0" name="landDevInfo_eDocFile" />
+									<label for="landDevInfo_eDocView_Checkbox_0"></label>
+								</li>
 
-                <li class="content middleWidth">
-                  <input
-                    id="docNum_0"
-                    type="text"
-                    name="docNum_0"
-                    readonly
-                    placeholder="현장지원팀"
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                          id="docTitle_0"
-                          name="docTitle_0"
-                    type="text"
-                    readonly
-                    placeholder="광양노후관 개량구간 공사"
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                          name="docDate_0"
-                          type="text"
-                          readonly
-                          placeholder="2023-07-05"
-                          id="docDate_0"
-                    class="notWriteInput" />
-                  <input type="hidden" id="docURL_0" name="docURL_0">
-                </li>
-              </ul>
-              </div>
+								<li class="content middleWidth">
+									<input id="docNum_0" type="text" name="docNum_0" readonly placeholder="현장지원팀" class="notWriteInput" />
+								</li>
+								<li class="content">
+									<input id="docTitle_0" name="docTitle_0" type="text" readonly placeholder="광양노후관 개량구간 공사"
+										class="notWriteInput" />
+								</li>
+								<li class="content">
+									<input name="docDate_0" type="text" readonly placeholder="2023-07-05" id="docDate_0"
+										class="notWriteInput" />
+									<input type="hidden" id="docURL_0" name="docURL_0">
+								</li>
+							</ul>
+						</div>
 
-            </div>
-          </div>
+					</div>
+				</div>
 
-          <div class="btnWrap">
-            <button class="attachFileBtn addBtn approvalBtn">추가</button>
-            <button class="attachFileBtn delBtn">삭제</button>
-          </div>
-        </section>
+				<div class="btnWrap">
+					<button class="attachFileBtn addBtn approvalBtn">추가</button>
+					<button class="attachFileBtn delBtn">삭제</button>
+				</div>
+			</section>
 
 
-        <div class="finalBtnBox btnWrap">
-          <button class="finalBtn prevBtn"  onclick="history.back();">이전</button>
-          <button class="finalBtn deleteBtn">삭제</button>
-          <button class="finalBtn completeBtn">완료처리</button>
-          <button class="finalBtn printBtn">출력</button>
-          <button class="finalBtn editBtn">수정
-<!--            <a href="/togi/landEdit">수정</a>-->
-          </button>
-        </div>
-      </main>
+			<div class="finalBtnBox btnWrap">
+				<button class="finalBtn prevBtn" onclick="history.back();">이전</button>
+				<button class="finalBtn deleteBtn">삭제</button>
+				<button class="finalBtn completeBtn">완료처리</button>
+				<button class="finalBtn printBtn">출력</button>
+				<button class="finalBtn editBtn">수정
+					<!--            <a href="/togi/landEdit">수정</a>-->
+				</button>
+			</div>
+		</main>
 
-      <div class="landDevInfoPopWrapper" id="searchResultPopDiv">
+		<div class="landDevInfoPopWrapper" id="searchResultPopDiv">
 
-        <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
-        <div id="searchResultsPopup">
-          <div class="popupWrap" id="popupWrap">
-            <h2>
-              <p>전자결재 문서 추가</p>
-              <span class="topCloseBtn"></span>
-            </h2>
-            <div class="add_document_wrap">
-              <ul>
-                <li class="add_document_title">문서번호</li>
-                <li class="add_document_content"><input type="text" name="documentNo"/></li>
-              </ul>
-              <ul>
-                <li class="add_document_title">제목</li>
-                <li class="add_document_content"><input type="text" name="documentTitle"/></li>
-              </ul>
-              <ul>
-                <li class="add_document_title">승인일</li>
-                <li class="add_document_calender">
-                  <div class="complaint_calender_wrap">
-                    <input
-                            type="date"
-                            name="documentdate"
-                            data-placeholder="2024-01-01"
-                            required
-                            aria-required="true" />
-                  </div>
-                </li>
-              </ul>
-              <ul>
-                <li class="add_document_title">URL</li>
-                <li class="add_document_content"><input type="text" name="documentURL"/></li>
-              </ul>
-            </div>
+			<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+			<div id="searchResultsPopup">
+				<div class="popupWrap" id="popupWrap">
+					<h2>
+						<p>전자결재 문서 추가</p>
+						<span class="topCloseBtn"></span>
+					</h2>
+					<div class="add_document_wrap">
+						<ul>
+							<li class="add_document_title">문서번호</li>
+							<li class="add_document_content"><input type="text" name="documentNo" /></li>
+						</ul>
+						<ul>
+							<li class="add_document_title">제목</li>
+							<li class="add_document_content"><input type="text" name="documentTitle" /></li>
+						</ul>
+						<ul>
+							<li class="add_document_title">승인일</li>
+							<li class="add_document_calender">
+								<div class="complaint_calender_wrap">
+									<input type="date" name="documentdate" data-placeholder="2024-01-01" required aria-required="true" />
+								</div>
+							</li>
+						</ul>
+						<ul>
+							<li class="add_document_title">URL</li>
+							<li class="add_document_content"><input type="text" name="documentURL" /></li>
+						</ul>
+					</div>
 
-            <div class="lastBtnBox btnWrap">
-              <button class="saveBtn finalBtn" id="saveBtn">저장</button>
-              <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div class="landDevInfoApprovalPopWrapper"></div>
-    <script type="module" src="/js/module/surfaceMain.js"></script>
-    <script src="/js/togi/landDevInfo.js"></script>
- </th:block>
+					<div class="lastBtnBox btnWrap">
+						<button class="saveBtn finalBtn" id="saveBtn">저장</button>
+						<button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="landDevInfoApprovalPopWrapper"></div>
+		<script type="module" src="/js/module/surfaceMain.js"></script>
+		<script src="/js/togi/landDevInfo.js"></script>
+</th:block>
+
 </html>
