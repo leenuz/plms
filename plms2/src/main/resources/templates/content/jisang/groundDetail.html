@@ -588,77 +588,78 @@
 				<button class="attachFileBtn grayBtn" id="deleteFileBtn">선택파일 삭제</button>
 			</div>
 		</section>
-			
-            <!-- 잠재이슈 -->
-            <section class="potentialIssues">
-                <div class="subTitle">
-                    잠재이슈
-                </div>
-                <div class="contWrap">
-                    <div class="contBox">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">등기여부</li>
-                                    <li class="title02 title">계약여부</li>
-                                    <li class="title03 title">이슈유형(대분류)</li>
-                                    <li class="title03 title">이슈유형(중분류)</li>
-                                    <li class="title03 title">이슈유형(세분류)</li>
-                                    <li class="title01 title">등록사유</li>
-                                    <li class="title04 title">등록일시</li>
-                                    <li class="title04 title ">편집</li>
-                                </ul>
-                                <ul class="contents lastContents" th:each="val:${jisangIssueList}">
-                                    <li class="content01 content">
-                                        <!-- 등기설정 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="등기설정" th:value="${val.comple_yn}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content02 content">
-                                        <!-- 계약체결 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="계약체결" th:value="${val.permitted_yn}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content03 content">
-                                        <!-- 이슈없음 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth1}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content03 content">
-                                        <!-- 이슈없음 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth2}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content03 content">
-                                        <!-- 이슈없음 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth3}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content01 content">
-                                        <!-- 신규등록 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="신규등록" th:value="${val.pi_issue_comment}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content04 content">
-                                        <!-- 2024-04-01 09:46:01 -->
-                                        <!-- input 추가 -->
-                                        <input type="text" placeholder="2024-04-01 09:46:01" th:value="${val.issue_date}" readonly class="notWriteInput">
-                                    </li>
-                                    <li class="content04 content btnBox">
-                                        <div class="btnWrap">
-                                            <button class="editBtn miniBtn groundIssueReviseBtn">수정</button>
-                                        </div>
-                                        <div class="btnWrap">
-                                            <button class="delBtn miniBtn">삭제</button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </section>
+		
+		<!-- 잠재이슈 -->
+		<section class="potentialIssues">
+			<div class="subTitle">
+				잠재이슈
+			</div>
+			<div class="contWrap">
+				<div class="contBox">
+					<div class="contentDetailBox">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title01 title">등기여부</li>
+								<li class="title02 title">계약여부</li>
+								<li class="title03 title">이슈유형(대분류)</li>
+								<li class="title03 title">이슈유형(중분류)</li>
+								<li class="title03 title">이슈유형(세분류)</li>
+								<li class="title01 title">등록사유</li>
+								<li class="title04 title">등록일시</li>
+								<li class="title04 title ">편집</li>
+							</ul>
+							<ul class="contents lastContents" th:each="val:${jisangIssueList}">
+								<li class="content01 content">
+									<!-- 등기설정 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="등기설정" th:value="${val.comple_yn}" readonly class="notWriteInput">
+								</li>
+								<li class="content02 content">
+									<!-- 계약체결 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="계약체결" th:value="${val.permitted_yn}" readonly class="notWriteInput">
+								</li>
+								<li class="content03 content">
+									<!-- 이슈없음 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth1}" readonly class="notWriteInput">
+								</li>
+								<li class="content03 content">
+									<!-- 이슈없음 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth2}" readonly class="notWriteInput">
+								</li>
+								<li class="content03 content">
+									<!-- 이슈없음 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="이슈없음" th:value="${val.pi_code_depth3}" readonly class="notWriteInput">
+								</li>
+								<li class="content01 content">
+									<!-- 신규등록 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="신규등록" th:value="${val.pi_issue_comment}" readonly class="notWriteInput">
+								</li>
+								<li class="content04 content">
+									<!-- 2024-04-01 09:46:01 -->
+									<!-- input 추가 -->
+									<input type="text" placeholder="2024-04-01 09:46:01" th:value="${val.issue_date}" readonly
+										class="notWriteInput">
+								</li>
+								<li class="content04 content btnBox">
+									<div class="btnWrap">
+										<button class="editBtn miniBtn groundIssueReviseBtn">수정</button>
+									</div>
+									<div class="btnWrap">
+										<button class="delBtn miniBtn">삭제</button>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</section>
 
             <!-- 잠재이슈 변경 이력 -->
             <section class="potentialIssuesChangeHistory">
