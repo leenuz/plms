@@ -1457,13 +1457,8 @@ log.info("PMT_NO:"+PMT_NO);
 	// 지상권 분할- 지상권 상세정보
 	@GetMapping(path="/forDivisionEasementDetails") //http://localhost:8080/api/get/dbTest
 	public ModelAndView forDivisionEasementDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 		ModelAndView mav=new ModelAndView();
 
-
-//        List<TestDTO> list = new ArrayList<TestDTO>();
-//        list = dbService.getList();
 		HashMap params = new HashMap();
 		ArrayList<HashMap>  list=new ArrayList<HashMap>();
 
@@ -1737,6 +1732,7 @@ log.info("data:"+data.get(0));
 
 			return mav;
 		}
+		
 		@GetMapping(path="/menu02_3") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView menu02_3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
