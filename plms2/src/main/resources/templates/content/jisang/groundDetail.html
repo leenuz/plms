@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="/css/jisang/groundDetail.css">
     <link rel="stylesheet" href="/css/jisang/write.css">
     <!-- <script src="/js/jisang/groundDetail.js"></script> -->
-    <script src="/js/common/upload.js"></script>
     <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
     <style>
@@ -364,123 +363,128 @@
             </section>
 			
 			<!--사용승락-->
-            <section class="usageApproval">
-                <div class="subTitle">
-                    사용승락
-                </div>
-
-                <div class="contWrap">
-                    <div class="contBox">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">순번</li>
-                                    <li class="title02 title">문서번호</li>
-                                    <li class="title03 title">사용 목적</li>
-                                    <li class="title04 title">사용 기간</li>
-                                    <li class="title05 title">토지 주소</li>
-                                    <li class="title06 title">소유자</li>
-                                    <li class="title06 title">사용자</li>
-                                    <li class="title06 title">등록상태</li>
-                                    <li class="title06 title">ECHO 문서보기</li>
-                                </ul>
-                                <ul class="contents lastContents" th:if="${jisangPermitList.size()==0}">
-                                    <li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
-                                </ul>
-								<ul class="contents lastContents" th:each="val, iterStat : ${jisangPermitList}">
-								    <li class="content01 content">
-								        <span th:text="${iterStat.count}"></span> <!-- 순번 -->
-								    </li>
-								    <li class="content02 content">
-								        <span th:text="${val.jpm_pmt_no}"></span> <!-- 문서번호 -->
-								    </li>
-								    <li class="content03 content">
-								        <span th:text="${val.jmp_use_purpos}"></span> <!-- 사용 목적 -->
-								    </li>
-								    <li class="content04 content">
-								        <span th:text="${#dates.format(val.jpm_use_st_date, 'yyyy-MM-dd')} + ' ~ ' + ${#dates.format(val.jpm_use_ed_date, 'yyyy-MM-dd')}"></span> <!-- 사용 기간 -->
-								    </li>
-								    <li class="content05 content">
-								        <span th:text="${val.jpt_addr}"></span> <!-- 토지 주소?? -->
-								    </li>
-								    <li class="content06 content">
-								        <span th:text="${val.jpt_soyuja}"></span> <!-- 소유자?? -->
-								    </li>
-								    <li class="content06 content">
-								        <span th:text="${val.jpt_pmt_user}"></span> <!-- 사용자?? -->
-								    </li>
-								    <li class="content06 content">
-								        <span th:text="${val.jpm_pmt_status}"></span> <!-- 등록상태 -->
-								    </li>
-								    <li class="content06 content">
-								        <button class="viewDetailButton" th:text="'문서보기'" th:attr="data-echo-no=${val.jpm_echo_no}">문서보기</button> <!-- ECHO 문서보기 -->
-								    </li>
+			<section class="usageApproval">
+				<div class="subTitle">
+					사용승락
+				</div>
+			
+				<div class="contWrap">
+					<div class="contBox">
+						<div class="contentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">순번</li>
+									<li class="title02 title">문서번호</li>
+									<li class="title03 title">사용 목적</li>
+									<li class="title04 title">사용 기간</li>
+									<li class="title05 title">토지 주소</li>
+									<li class="title06 title">소유자</li>
+									<li class="title06 title">사용자</li>
+									<li class="title06 title">등록상태</li>
+									<li class="title06 title">ECHO 문서보기</li>
 								</ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+								<ul class="contents lastContents" th:if="${jisangPermitList.size()==0}">
+									<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+								</ul>
+								<ul class="contents lastContents" th:each="val, iterStat : ${jisangPermitList}">
+									<li class="content01 content">
+										<span th:text="${iterStat.count}"></span> <!-- 순번 -->
+									</li>
+									<li class="content02 content">
+										<span th:text="${val.pmt_no}"></span> <!-- 문서번호 -->
+									</li>
+									<li class="content03 content">
+										<span th:text="${val.use_purpos}"></span> <!-- 사용 목적 -->
+									</li>
+									<li class="content04 content">
+										<span th:text="${val.use_st_date}"></span> <!-- 사용 시작일 -->
+										~
+										<span th:text="${val.use_ed_date}"></span> <!-- 사용 종료일 -->
+									</li>
+									<li class="content05 content">
+										<span th:text="${val.addr}"></span> <!-- 토지 주소 -->
+									</li>
+									<li class="content06 content">
+										<span th:text="${val.soyuja}"></span> <!-- 소유자 -->
+									</li>
+									<li class="content06 content">
+										<span th:text="${val.pmt_user}"></span> <!-- 사용자 -->
+									</li>
+									<li class="content06 content">
+										<span th:text="${val.pmt_status}"></span> <!-- 등록상태 -->
+									</li>
+									<li class="content06 content">
+										<button class="viewDetailButton" th:text="'문서보기'" th:attr="data-echo-no=${val.echo_no}">문서보기</button>
+										<!-- ECHO 문서보기 -->
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 			
 			<!--합필 지상권 정보-->
-            <section class="mergedSurfaceInfo">
-                <div class="subTitle">
-                    합필 지상권 정보
-                </div>
-
-                <div class="contWrap">
-                    <div class="contBox">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">기존자산번호</li>
-                                    <li class="title02 title">기존지상권번호</li>
-                                    <li class="title03 title">지사</li>
-                                    <li class="title04 title">주소</li>
-                                    <li class="title05 title">지목</li>
-                                    <li class="title06 title">지적면적</li>
-                                    <li class="title06 title">편입면적</li>
-                                    <li class="title06 title">설정금액</li>
-                                    <li class="title06 title">위치보기</li>
-                                </ul>
-
-                                <ul class="contents " th:if="${jisangMergeList.size()==0}">
-                                    <li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
-                                </ul>
-								<ul class="contents" th:each="val, iterStat : ${jisangMergeList}">
-								    <li class="content01 content">
-								        <span th:text="${val.jm_jasan_no}"></span> <!-- 기존자산번호 -->
-								    </li>
-								    <li class="content02 content">
-								        <span th:text="${val.jm_jisang_no}"></span> <!-- 기존지상권번호 -->
-								    </li>
-								    <li class="content03 content">
-								        <span th:text="${val.jm_jisa}"></span> <!-- 지사 -->
-								    </li>
-								    <li class="content04 content">
-								        <span th:text="|${val.jm_sido_nm != null ? val.jm_sido_nm + ' ' : ''}${val.jm_sgg_nm != null ? val.jm_sgg_nm + ' ' : ''}${val.jm_emd_nm != null ? val.jm_emd_nm + ' ' : ''}${val.jm_ri_nm != null ? val.jm_ri_nm + ' ' : ''}${val.jm_jibun != null ? val.jm_jibun : ''}|"></span> <!-- 주소 -->
-								    </li>
-								    <li class="content05 content">
-								        <span th:text="${val.jm_jimok_text}"></span> <!-- 지목 -->
-								    </li>
-								    <li class="content06 content">
-								        <span th:text="${val.jm_jijuk_area}"></span> <!-- 지적면적 -->
-								    </li>
-								    <li class="content06 content">
-								        <span th:text="${val.jm_pyeonib_area}"></span> <!-- 편입면적 -->
-								    </li>
-								    <li class="content06 content">
-								        <span th:text="${val.jm_set_money}"></span> <!-- 설정금액 -->
-								    </li>
-								    <li class="content06 content">
-								        <button class="viewDetailButton">위치보기</button> <!-- 위치보기 -->
-								    </li>
+			<section class="mergedSurfaceInfo">
+				<div class="subTitle">
+					합필 지상권 정보
+				</div>
+			
+				<div class="contWrap">
+					<div class="contBox">
+						<div class="contentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">기존자산번호</li>
+									<li class="title02 title">기존지상권번호</li>
+									<li class="title03 title">지사</li>
+									<li class="title04 title">주소</li>
+									<li class="title05 title">지목</li>
+									<li class="title06 title">지적면적</li>
+									<li class="title06 title">편입면적</li>
+									<li class="title06 title">설정금액</li>
+									<li class="title06 title">위치보기</li>
 								</ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+			
+								<ul class="contents " th:if="${jisangMergeList.size()==0}">
+									<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
+								</ul>
+								<ul class="contents" th:each="val, iterStat : ${jisangMergeList}">
+									<li class="content01 content">
+										<span th:text="${val.jm_jasan_no}"></span> <!-- 기존자산번호 -->
+									</li>
+									<li class="content02 content">
+										<span th:text="${val.jm_jisang_no}"></span> <!-- 기존지상권번호 -->
+									</li>
+									<li class="content03 content">
+										<span th:text="${val.jm_jisa}"></span> <!-- 지사 -->
+									</li>
+									<li class="content04 content">
+										<span
+											th:text="|${val.jm_sido_nm != null ? val.jm_sido_nm + ' ' : ''}${val.jm_sgg_nm != null ? val.jm_sgg_nm + ' ' : ''}${val.jm_emd_nm != null ? val.jm_emd_nm + ' ' : ''}${val.jm_ri_nm != null ? val.jm_ri_nm + ' ' : ''}${val.jm_jibun != null ? val.jm_jibun : ''}|"></span>
+										<!-- 주소 -->
+									</li>
+									<li class="content05 content">
+										<span th:text="${val.jm_jimok_text}"></span> <!-- 지목 -->
+									</li>
+									<li class="content06 content">
+										<span th:text="${val.jm_jijuk_area}"></span> <!-- 지적면적 -->
+									</li>
+									<li class="content06 content">
+										<span th:text="${val.jm_pyeonib_area}"></span> <!-- 편입면적 -->
+									</li>
+									<li class="content06 content">
+										<span th:text="${val.jm_set_money}"></span> <!-- 설정금액 -->
+									</li>
+									<li class="content06 content">
+										<button class="viewDetailButton">위치보기</button> <!-- 위치보기 -->
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 			
 			<!--변경이력-->
             <section class="changeHistory">
@@ -902,6 +906,7 @@
     <div class="groundIssueRevisePopWrappers"></div>
     <!-- script -->
     <script src="/js/jisang/groundDetail.js"></script>
+		<script src="/js/common/upload.js"></script>
     <!-- <script type="module" src="/js/module/surfaceMain.js"></script> -->
 </th:block>
 

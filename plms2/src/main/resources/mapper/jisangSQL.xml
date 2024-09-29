@@ -2905,57 +2905,53 @@ VALUES (
 	,#{LOCATION}
 	)
 	</insert>
+	
 	<delete id="deleteJisangMergeTmp" parameterType="HashMap">
 		DELETE FROM JISANG_MERGE_TMP
 		WHERE jmt_REP_JISANG_NO = #{REP_JISANG_NO}
 	</delete>
+	
 	<select id="selectJisangRowDetail_Permit" resultType="HashMap" parameterType="HashMap">
-		
-		SELECT AA.PMT_NO, AA.USE_PURPOS, AA.PMT_STATUS, AA.ECHO_NO, AA.JISANG_NO, AA.ADDR, AA.SOYUJA, AA.PMT_USER, AA.USE_ST_DATE, AA.USE_ED_DATE, AA.ROWCNT
-		FROM
-		(
-		SELECT A.PMT_NO, A.USE_PURPOS, A.PMT_STATUS, A.ECHO_NO, A.JISANG_NO, A.ADDR, A.SOYUJA, A.PMT_USER, A.USE_ST_DATE, A.USE_ED_DATE, B.ROWCNT
-		FROM
-		(
-		SELECT PM.PMT_NO, PM.USE_PURPOS, PM.PMT_STATUS, PM.ECHO_NO, PM.USE_ST_DATE, PM.USE_ED_DATE, PT.JISANG_NO, PT.ADDR, PT.SOYUJA, PT.PMT_USER, PT.ADDRCODE
-		FROM
-		(
-		SELECT jpm_pmt_no as PMT_NO
-		, jpm_use_purpos as USE_PURPOS
-		, jpm_pmt_status as PMT_STATUS
-		, jpm_echo_no as ECHO_NO
-		, TO_CHAR(jpm_USE_ST_DATE, 'YYYY-MM-DD') AS USE_ST_DATE 
-		, TO_CHAR(jpm_USE_ED_DATE, 'YYYY-MM-DD') AS USE_ED_DATE
-		FROM jisang_PERMIT_MASTER
-		)PM
-		left join
-		(
-		SELECT jpt_pmt_no as PMT_NO, jpt_jisang_no as JISANG_NO,jpt_addr AS  ADDR,jpt_soyuja AS  SOYUJA,jpt_pmt_user as PMT_USER,jpt_addrcode as ADDRCODE
-		FROM jisang_PERMIT_TOGI
-		)PT
-		ON PM.PMT_NO = PT.PMT_NO
-		WHERE 1=1
-		)A
-		left join
-		(
-		SELECT jpt_pmt_no as PMT_NO, count(*) AS ROWCNT
-		FROM jisang_PERMIT_TOGI
-		WHERE 1=1
-		GROUP BY PMT_NO
-		)B
-		on A.PMT_NO = B.PMT_NO
-		ORDER BY PMT_NO, JISANG_NO
+		SELECT AA.PMT_NO, AA.USE_PURPOS, AA.PMT_STATUS, AA.ECHO_NO, AA.JISANG_NO,
+		AA.ADDR, AA.SOYUJA, AA.PMT_USER, AA.USE_ST_DATE, AA.USE_ED_DATE, AA.ROWCNT
+		FROM (
+			SELECT A.PMT_NO, A.USE_PURPOS, A.PMT_STATUS, A.ECHO_NO, A.JISANG_NO, A.ADDR,
+			A.SOYUJA, A.PMT_USER, A.USE_ST_DATE, A.USE_ED_DATE, B.ROWCNT
+			FROM (
+				SELECT PM.PMT_NO, PM.USE_PURPOS, PM.PMT_STATUS, PM.ECHO_NO, PM.USE_ST_DATE,
+				PM.USE_ED_DATE, PT.JISANG_NO, PT.ADDR, PT.SOYUJA, PT.PMT_USER, PT.ADDRCODE
+				FROM (
+					SELECT jpm_pmt_no as PMT_NO
+					, jpm_use_purpos as USE_PURPOS
+					, jpm_pmt_status as PMT_STATUS
+					, jpm_echo_no as ECHO_NO
+					, TO_CHAR(jpm_USE_ST_DATE, 'YYYY-MM-DD') AS USE_ST_DATE
+					, TO_CHAR(jpm_USE_ED_DATE, 'YYYY-MM-DD') AS USE_ED_DATE
+					FROM jisang_PERMIT_MASTER
+				)PM
+				left join (
+					SELECT jpt_pmt_no as PMT_NO, jpt_jisang_no as JISANG_NO,jpt_addr AS
+					ADDR,jpt_soyuja AS SOYUJA,jpt_pmt_user as PMT_USER,jpt_addrcode as ADDRCODE
+					FROM jisang_PERMIT_TOGI
+				)PT
+				ON PM.PMT_NO = PT.PMT_NO
+				WHERE 1=1
+			)A
+			left join (
+				SELECT jpt_pmt_no as PMT_NO, count(*) AS ROWCNT
+				FROM jisang_PERMIT_TOGI
+				WHERE 1=1
+				GROUP BY PMT_NO
+			)B
+			on A.PMT_NO = B.PMT_NO
+			ORDER BY PMT_NO, JISANG_NO
 		)AA
-		right join
-		(
-		SELECT jpt_pmt_no as PMT_NO
-		FROM jisang_PERMIT_TOGI
-		WHERE jpt_JISANG_NO = #{JISANG_NO}
+		right join (
+			SELECT jpt_pmt_no as PMT_NO
+			FROM jisang_PERMIT_TOGI
+			WHERE jpt_JISANG_NO = #{JISANG_NO}
 		)BB
-
 		on AA.PMT_NO = BB.PMT_NO
-		
-		
 	</select>
 	
 	<select id="selectJisangRowDetail_Merge" resultType="HashMap" parameterType="HashMap">

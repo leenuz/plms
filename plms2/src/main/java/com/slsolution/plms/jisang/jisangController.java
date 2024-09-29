@@ -1238,14 +1238,9 @@ log.info("PMT_NO:"+PMT_NO);
 	//groundDetail  상세 조회
 	@GetMapping(path="/groundDetail") //http://localhost:8080/api/get/dbTest
     public ModelAndView groundDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 		ModelAndView mav=new ModelAndView();
-		
-//        List<TestDTO> list = new ArrayList<TestDTO>();
-//        list = dbService.getList();
 		HashMap params = new HashMap();
-		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		ArrayList<HashMap> list=new ArrayList<HashMap>();
 		
 		String idx = httpRequest.getParameter("idx");
 		String index = httpRequest.getParameter("index");
@@ -1286,7 +1281,8 @@ log.info("PMT_NO:"+PMT_NO);
 
 		
 		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
-		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 최신버전
+		params.put("JISANG_NO", idx);
+		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 신버전
 		
 		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
 		// jisangModifyList를 역순으로 정렬 (변경일시 내림차순 하기 위해서)
