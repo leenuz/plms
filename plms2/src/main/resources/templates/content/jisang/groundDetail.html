@@ -702,48 +702,45 @@
 				</div>
 			</div>
 		</section>
-
-            <!-- 잠재이슈 대응방안 메뉴얼 -->
-
-
-            <section class="potentialIssuesResponseManual">
-                <div class="subTitle">
-                    잠재이슈 대응방안 메뉴얼
-                </div>
-
-
-                <div class="contWrap">
-                    <div class="contBox">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">매뉴얼명</li>
-                                    <li class="title02 title">버전</li>
-                                    <li class="title03 title">개정일자</li>
-                                    <li class="title04 title">다운로드</li>
-                                </ul>
-                                <ul class="contents" th:each="val:${jisangIssueCodeAtcFileList}">
-                                    <li class="content01 content">
-                                        [[${val.icaf_manual_title}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${val.icaf_file_version}]]
-                                    </li>
-                                    <li class="content03 content">
-                                        [[${val.icaf_file_regdate}]]
-                                    </li>
-                                    <li class="content04 content btnsWrap">
-                                        <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                    </li>
-                                </ul>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </section>
+		
+		<!-- 잠재이슈 대응방안 메뉴얼 -->
+		<section class="potentialIssuesResponseManual">
+			<div class="subTitle">
+				잠재이슈 대응방안 메뉴얼
+			</div>
+		
+			<div class="contWrap">
+				<div class="contBox">
+					<div class="contentDetailBox">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title01 title">매뉴얼명</li>
+								<li class="title02 title">버전</li>
+								<li class="title03 title">개정일자</li>
+								<li class="title04 title">다운로드</li>
+							</ul>
+							<ul class="contents lastContents" th:if="${jisangIssueHistoryList.size() == 0}">
+								<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+							</ul>
+							<ul class="contents" th:each="val:${jisangIssueCodeAtcFileList}">
+								<li class="content01 content">
+									[[${val.icaf_manual_title}]]
+								</li>
+								<li class="content02 content">
+									[[${val.icaf_file_version}]]
+								</li>
+								<li class="content03 content">
+									[[${val.icaf_file_regdate}]]
+								</li>
+								<li class="content04 content btnsWrap">
+										<button class="fileDownloadBtn"  th:onclick="downloadFile([[${val.icaf_file_path}]],[[${val.icaf_file_nm}]])">다운로드 <span class="downloadIcon"></span></button>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 
             <!-- 메모 -->
 
