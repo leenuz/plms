@@ -3098,5 +3098,11 @@ DELETE from POTENTIAL_ISSUE
 		select count(*) from jisang_cancel_ATCFILE where manage_no=#{MANAGE_NO} and file_gubun = #{FILE_GUBUN}::varchar
 		
 	</select>
+	<delete id="deleteJisangAtcFile" parameterType="java.util.HashMap">
+
+		delete from jisang_atcfile
+		where ja_idx = #{idx}::int
+
+	</delete>
 	
 </mapper>

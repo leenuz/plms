@@ -23,7 +23,7 @@
 			</div>
 
 			<form name="saveForm" id="saveForm" onSubmit="return false;">
-				<input type="hidden" name="mod_jisangNo" th:value="${resultData.jm_jisang_no}">
+				<input type="hidden" name="mod_jisangNo" id="mod_jisangNo" th:value="${resultData.jm_jisang_no}">
 				<section class="defaultInfo">
 					<div class="subTitle">기본 정보</div>
 
@@ -623,6 +623,18 @@
 								</li>
 								<li class="title02">파일명</li>
 							</ul>
+							 <ul class="contents" id="fileListUl" th:each="file, iterStat : ${atcFileList}">
+								        <li class="content01 content checkboxWrap">
+								        	<input type="hidden" id="ftype" name="ftype" value="old">
+								        	<input type="hidden" id="oidx" name="oidx" th:value="${file.ja_idx}">
+								            <input type="checkbox" th:id="'attachFile' + ${iterStat.index + 1}" name="attachFile" />
+								            <label th:for="'attachFile' + ${iterStat.index + 1}"></label>
+								        </li>
+								        <li class="content02 content">
+								        	
+								            <input type="text" th:value="${file.ja_file_nm}" id="filename" class="notWriteInput" readonly />
+								        </li>
+								    </ul>
 						</div>
 					</div>
 					<div class="btnWrap">

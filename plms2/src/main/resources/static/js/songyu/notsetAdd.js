@@ -691,8 +691,8 @@ $(document).ready(function () {
         console.log(dataObj);
 
         const soujaUls = document.querySelectorAll('#soujaUl');
-        const attachFileUls = document.querySelectorAll('input[name="attachFile"]:checked');
-        console.log(attachFileUls);
+       
+       
 
         //   console.log(soujaUls);
         var soujaArr = new Array();
@@ -713,6 +713,8 @@ $(document).ready(function () {
             var soujaInfo = { "jibun": soujaJibun, "soujaName": soujaName, "soujaAddress": soujaAddress, "soujaContact1": soujaContact1, "soujaContact2": soujaContact2 };
             if (soujaJibun != "" && soujaName != "" && soujaAddress != "" && soujaContact1 != "") soujaArr.push(soujaInfo);
         }
+		const attachFileUls = document.querySelectorAll('input[name="attachFile"]');
+		console.log(attachFileUls);
         var files = new Array();
         for (var i = 0; i < attachFileUls.length; i++) {
             console.log($(attachFileUls[i]).parent().parent().html());

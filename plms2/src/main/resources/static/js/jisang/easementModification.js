@@ -511,15 +511,66 @@ $(document).on("click", "#deleteFileBtn", function() {
 				console.log($(this).val());
 			}
 	})*/
-	const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+	const clickedAttachFiles = document.querySelectorAll('input[name="attachFile"]:checked');
+	console.log("----------------------------------");
 	console.log(clickedAttachFiles);
-	console.log(uploadFiles);
+	//console.log(uploadFiles);
+	var dids=[];
 	for (var i = 0; i < clickedAttachFiles.length; i++) {
 		var delEle = $(clickedAttachFiles[i]).closest("#fileListUl");
 		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
+		
+		var ids={"jisang_no":$("#mod_jisangNo").val(),"idx":$(clickedAttachFiles[i]).closest("#fileListUl").find("#oidx").val(),"filename":$(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val()};
+			//var filename={"idx":$(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val()};
+			console.log("idx:"+ids);
+			dids.push(ids);
 		$(delEle).remove();
 
 	}
+	
+	
+	console.log(dids);
+		var param={"fileIds":dids};
+
+		console.log(param)
+
+		url = "/jisang/deleteJisangAtcFile";
+		         $.ajax({
+		             url: url,
+		             type: 'POST',
+		             contentType: "application/json",
+		             data: JSON.stringify(param),
+
+		             dataType: "json",
+		             beforeSend: function (request) {
+		                 console.log("beforesend ........................");
+		                 loadingShow();
+		             },
+		             success: function (response) {
+		                 loadingHide();
+		                 console.log(response);
+		        //         if (response.success = "Y") {
+		        //             console.log("response.success Y");
+		        //             console.log("response.resultData length:" + response.resultData.length);
+		        //             alert("정상적으로 등록 되었습니다.");
+		        //             /*$("#popup_bg").show();
+		        //             $("#popup").show(500);
+		        //             //$("#addrPopupLayer tbody td").remove();
+		        //             for(var i=0;i<response.resultData.length;i++){
+		        //                 $("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+		        //             }*/
+		        //         }
+		        //         else {
+		        //             console.log("response.success N");
+		        //         }
+		             },
+		             error: function (jqXHR, textStatus, errorThrown) {
+		                 alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
+		                 return false;
+		             }
+		         });
+	
+	
 })
 
 

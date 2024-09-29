@@ -1244,6 +1244,11 @@ log.info("params:"+params);
 						     			 CommonUtil.moveFile(file_name, tempPath, dataPath);
 						     			log.info("filesMap:"+filesMap);
 						     			mainService.InsertQuery("notsetSQL.insertNotsetUploadData", filesMap);
+						     			HashMap historyParam = new HashMap();
+						     			params.put("GUBUN", "파일정보");
+										params.put("CONT", "파일등록(" + file_name + ")");
+										log.info("params:"+params);
+										mainService.InsertQuery("songyuSQL.insertNotsetModifyHistory", params);
 						
 					}
 				

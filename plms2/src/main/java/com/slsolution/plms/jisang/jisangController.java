@@ -1629,6 +1629,7 @@ log.info("PMT_NO:"+PMT_NO);
 		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 log.info("data:"+data.get(0));
+//log.info("atcFileList:"+atcFileList.get(0));
 		mav.addObject("jisaList",jisalist);
 		mav.addObject("jimoklist",jimoklist);
 		mav.addObject("sidoList",sidolist);
@@ -4886,7 +4887,8 @@ log.info("logParam:"+logParam);
 				 **********************/
 				if (gubun.equals("modify")) {
 					params.put("JISANGNO", mod_jisangNo);
-
+					
+					str_manageNo=mod_jisangNo;
 				} else {
 					ArrayList JiSangList = (ArrayList) mainService.selectQuery("jisangSQL.selectJijangNextNo", null);
 					int no=Integer.parseInt((((HashMap) JiSangList.get(0)).get("now_jisangno").toString()).toString());
@@ -6010,6 +6012,70 @@ log.info("map:"+map);
 
 		}
 	
+	@RequestMapping(value = "/deleteJisangAtcFile", method = { RequestMethod.GET, RequestMethod.POST })
+    public void deleteJisangAtcFile(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+
+        // 일반웹형식
+        // Properties requestParams = CommonUtil.convertToProperties(httpRequest);
+        // log.info("requestParams:"+requestParams);
+
+        // //json으로 넘어올때
+        String getRequestBody = ParameterUtil.getRequestBodyToStr(httpRequest);
+        log.info("getRequestBody:" + getRequestBody);
+        JSONObject json = new JSONObject(getRequestBody.toString());
+        JSONArray idxarr = json.getJSONArray("fileIds");
+        log.info("idxarr:" + idxarr);
+        log.info("idxarr0:" + idxarr.get(0));
+
+        int fsize = idxarr.length();
+
+        for (int i = 0; i < fsize; i++) {
+            log.info("delete IDX:" + idxarr.get(i));
+
+            HashMap params = new HashMap();
+            JSONObject jsonObject = (JSONObject) idxarr.get(i);
+            params.put("idx", jsonObject.get("idx"));
+            
+            mainService.DeleteQuery("jisangSQL.deleteJisangAtcFile", params);
+
+            // 파일 삭제 부분.
+            // 파일 경로 생성
+            String filePath = GC.getNotsetFileDataDir()+"/"+jsonObject.get("jisang_no");
+            
+            String originalFilename = jsonObject.get("filename").toString();
+            String fileFullPath = filePath + "/" + originalFilename; // 파일 전체 경로
+            log.info("path:"+fileFullPath);
+            File file = new File(fileFullPath);
+            // 파일이 존재하는지 확인
+            if (file.exists()) {
+                // 파일 삭제
+                if (file.delete()) {
+                    // 파일 삭제 성공
+                } else {
+                    // 파일 삭제 실패시 에러
+                }
+            } else {
+                // 파일 없을때 에러
+            }
+
+        }
+
+        HashMap<String, Object> resultmap = new HashMap();
+        resultmap.put("resultCode", "0000");
+        resultmap.put("resultData", idxarr);
+        resultmap.put("resultMessage", "success");
+        JSONObject obj = new JSONObject(resultmap);
+
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Cache-Control", "no-cache");
+        response.resetBuffer();
+        response.setContentType("application/json");
+        // response.getOutputStream().write(jo);
+        response.getWriter().print(obj);
+        response.getWriter().flush();
+        // return new ModelAndView("dbTest", "list", list);
+    }
 	
 	
 //	@PostMapping(path="/selectRowDetailTab_Merge")

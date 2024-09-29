@@ -57,6 +57,7 @@ public class notsetController {
 		ArrayList<HashMap> data = mainService.selectQuery("notsetSQL.selectAllData",params);
 		ArrayList<HashMap> soujaList = mainService.selectQuery("notsetSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("notsetSQL.selectAtcFileList",params);
+		
 		ArrayList<HashMap> notsetModifyList = mainService.selectQuery("notsetSQL.selectModifyList",params);
 //			ArrayList<HashMap> notsetMergeList = mainService.selectQuery("notsetSQL.selectMergeList",params);
 		params.put("pnu", data.get(0).get("nm_pnu"));

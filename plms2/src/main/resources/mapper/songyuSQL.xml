@@ -1364,7 +1364,7 @@ FROM NOTSET_MASTER
 	
 	<insert id="insertNotsetModifyHistory" parameterType="HashMap">
 		Insert into NOTSET_MODIFY
-		( nn_NOTSET_NO, nn_MODIFY_DATE, nn_GUBUN, nn_CONT, nn_USER_NAME, nn_USER_ID )
+		( nm_NOTSET_NO, nm_MODIFY_DATE, nm_GUBUN, nm_CONT, nm_USER_NAME, nm_USER_ID )
 		Values
 		(#{NOTSET_NO}, CURRENT_TIMESTAMP, #{GUBUN}, #{CONT}, #{USER_NAME}, #{USER_ID})
 	</insert>
