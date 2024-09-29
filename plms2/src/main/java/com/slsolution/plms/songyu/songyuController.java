@@ -1072,7 +1072,7 @@ public class songyuController {
 				params.put("USER_NAME", USER_NAME);
 				params.put("MINWON_SEQ", minwonSeq);
 				
-log.info("params:"+params);
+//log.info("params:"+params);
 
 				// 로깅처리를 위하여 기존 지적도 데이터 조회
 				ArrayList tmpList=new ArrayList();
@@ -1201,14 +1201,14 @@ log.info("params:"+params);
 					String JIBUN = obj.getString("jibun");
 					String NAME = obj.getString("soujaName");
 					String ADDR = obj.getString("soujaAddress");
-					String TEL = obj.getString("soujaContact1");
-					String PHONE = obj.getString("soujaContact2");
+					String TEL = obj.getString("soujaContact2");
+					String PHONE = obj.getString("soujaContact1");
 
 					params.put("JIBUN", JIBUN); // 공유지분
 					params.put("NAME", NAME); // 성명
 					params.put("ADDR", ADDR); // 주소
 					params.put("TEL", TEL); // 연락처(집)
-					params.put("PHONE", TEL); // 연락처(집)
+					params.put("PHONE", PHONE); // 연락처(집)
 
 					if (gubun.equals("modify")) {
 						if (i == 0) {
