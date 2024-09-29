@@ -420,9 +420,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <if test="length>0">
 			limit #{length} offset #{start}
 		</if>
-		
-
 	</select>
+	
 <select id="selectJisangListOrg" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 SELECT *
 		FROM ( SELECT ROW_NUMBER() OVER(
@@ -509,8 +508,6 @@ SELECT *
 				        AND JM.jm_SAVE_STATUS = '승인'
 				    </if>
 				</if>
-				
-
 		<if test="ADDRESSCODE != null and ADDRESSCODE != ''">
 			AND JM.jm_ADDRCODE LIKE '$ADDRESSCODE$%'
 		</if>
@@ -547,16 +544,21 @@ SELECT *
 		<if test="JIMOK_TEXT != null and JIMOK_TEXT != ''">
 			AND JM.jm_JIMOK_TEXT IN ( #{JIMOK_TEXT} )
 		</if>
-		  
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
+			AND JM.jm_comple_yn = #{comple_yn}
+		</if>
 		) AA WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 			ORDER BY ${orderCol} ${desc}
-			</if>
+			</if>	
 		<if test="length>0">
 			limit #{length} offset #{start}
 		</if>
-		
 	</select>
+	
 <select id="selectJisangListCount" parameterType="java.util.HashMap" resultType="integer">
 SELECT count(*)
 		FROM ( SELECT ROW_NUMBER() OVER(

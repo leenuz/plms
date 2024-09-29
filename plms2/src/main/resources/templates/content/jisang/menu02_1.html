@@ -131,11 +131,11 @@
                           <li><p th:text="${val.jm_jisa_name}">Y</p></li>
                           <th:block>
                     </ul>
-                    
                   </div>
-                 
                 </div>
               </ul>
+							
+							<!--소유자-->
               <ul class="inputControlBoxs sectionMenuListBoxs">
                 <li class="selectTitle"><p>소유자</p></li>
                 <div class="inputControlList">
@@ -149,7 +149,7 @@
                 </div>
               </ul>
 
-
+							<!--등기여부-->
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle"><p>등기여부</p></li>
                 <div class="selectWrappers">
@@ -161,7 +161,6 @@
                     <option value="">전체</option>
                     <option value="Y">Y</option>
                     <option value="N">N</option>
-                   
                   </select>
                 </div>
                 <div class="surfaceSelects">
@@ -175,6 +174,8 @@
                   </div>
                 </div>
               </ul>
+							
+							<!--취득기간-->
               <ul class="inputControlBoxs sectionMenuListBoxs">
                 <li class="selectTitle"><p>취득기간</p></li>
                 <div class="inputControlList dateListBox">
@@ -183,85 +184,91 @@
                   <input type="date" name="end_date"/>
                 </div>
               </ul>
-                <ul class="selectContent sectionMenuListBoxs">
-                    <li class="selectTitle"><p>회계처리 필요여부</p></li>
-                    <div class="selectWrappers">
-                        <select
-                                name="account_yn"
-                                class="menuHiddenSelect01"
-                                id="menuHiddenSelectBox01_3"
-                                hidden>
-                            <option value="">전체</option>
-                            <option value="Y">Y</option>
-                            <option value="N">N</option>
-
-                        </select>
-                    </div>
-                    <div class="surfaceSelects">
-                        <button class="surfaceSelectsTitleBtn">전체</button>
-                        <div class="sufaceSelectList smallHeight">
-                            <ul class="surfaceSelectListMember">
-                                <li><p>전체</p></li>
-                                <li><p>Y</p></li>
-                                <li><p>N</p></li>
-                            </ul>
-                        </div>
-                    </div>
-                </ul>
-                <ul class="selectContent sectionMenuListBoxs">
-                    <li class="selectTitle"><p>지목</p></li>
-                    <div class="selectWrappers">
-                        <select
-                                name="jimok_type"
-                                class="menuHiddenSelect01"
-                                id="menuHiddenSelectBox01_4"
-                                multiple="multiple"
-                                hidden>
-                            <th:block th:each="val:${resultJimokList}">
-                                <option th:text="${val.jm_name}" th:value="${val.jm_name}"></option>
-                            </th:block>
-                        </select>
-                    </div>
-                    <!--보여지는 셀렉박스-->
-                    <div class="surfaceSelects widthAdd">
-                        <button class="surfaceSelectsTitleBtn">전체</button>
-                        <div class="sufaceSelectList scrollAdd">
-                            <div class="hiddenBoxs">
-                                <div class="addChoiceBoxs">
-                                    <h5>선택된 항목</h5>
-                                    <button class="resetBtn">초기화</button>
-                                </div>
-                                <div class="addChoiceCont">
-                                    <ul class="choiceCheckWrapper"></ul>
-                                </div>
-                                <div class="addChoiceBoxs">
-                                    <h5>지목선택</h5>
-                                </div>
-                            </div>
-                            <ul class="surfaceSelectListMember checkBoxsContent">
-                                <th:block th:each="val, iterStat : ${resultJimokList}">
-                                <li>
-                                    <input
-                                        type="checkbox"
-                                        th:id="${iterStat.index < 9} ? 'companylandCheckBox0' + ${iterStat.index + 1} : 'companylandCheckBox' + ${iterStat.index + 1}"
-                                        name="inquireCheckCont01"
-                                        />
-                                    <!-- 인덱스를 이용하여 for 속성 값 동적 할당 -->
-                                    <label th:for="${iterStat.index < 9} ? 'companylandCheckBox0' + ${iterStat.index + 1} : 'companylandCheckBox' + ${iterStat.index + 1}"></label>
-                                    <p th:text="${val.jm_name}">지목</p>
-                                </li>
-                                <th:block>
-                            </ul>
-                        </div>
-                        <div class="checkboxRegisterBtnWrap">
-                            <div class="surfaceInquireSelectRegisterBtnBoxs">
-                                <button class="closeSelectCheckBtn">닫기</button>
-                                <button class="completeSelectCheckBtn">선택등록</button>
-                            </div>
-                        </div>
-                    </div>
-                </ul>
+							
+							<!--회계처리 필요여부-->
+							<ul class="selectContent sectionMenuListBoxs">
+								<li class="selectTitle">
+									<p>회계처리 필요여부</p>
+								</li>
+								<div class="selectWrappers">
+									<select name="account_yn" class="menuHiddenSelect01" id="menuHiddenSelectBox01_3" hidden>
+										<option value="">전체</option>
+										<option value="Y">Y</option>
+										<option value="N">N</option>
+							
+									</select>
+								</div>
+								<div class="surfaceSelects">
+									<button class="surfaceSelectsTitleBtn">전체</button>
+									<div class="sufaceSelectList smallHeight">
+										<ul class="surfaceSelectListMember">
+											<li>
+												<p>전체</p>
+											</li>
+											<li>
+												<p>Y</p>
+											</li>
+											<li>
+												<p>N</p>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</ul>
+							
+							<!--지목-->
+							<ul class="selectContent sectionMenuListBoxs">
+									<li class="selectTitle">
+										<p>지목</p>
+									</li>
+									<div class="selectWrappers">
+										<select name="jimok_type" class="menuHiddenSelect01" id="menuHiddenSelectBox01_4" multiple="multiple" hidden>
+											<th:block th:each="val:${resultJimokList}">
+												<option th:text="${val.jm_name}" th:value="${val.jm_name}"></option>
+											</th:block>
+										</select>
+									</div>
+									
+									<!--보여지는 셀렉박스-->
+									<div class="surfaceSelects widthAdd">
+										<button class="surfaceSelectsTitleBtn">전체</button>
+										<div class="sufaceSelectList scrollAdd">
+											<div class="hiddenBoxs">
+												<div class="addChoiceBoxs">
+													<h5>선택된 항목</h5>
+													<button class="resetBtn">초기화</button>
+												</div>
+												<div class="addChoiceCont">
+													<ul class="choiceCheckWrapper"></ul>
+												</div>
+												<div class="addChoiceBoxs">
+													<h5>지목선택</h5>
+												</div>
+											</div>
+											<ul class="surfaceSelectListMember checkBoxsContent">
+												<th:block th:each="val, iterStat : ${resultJimokList}">
+													<li>
+														<input type="checkbox"
+															th:id="${iterStat.index < 9} ? 'companylandCheckBox0' + ${iterStat.index + 1} : 'companylandCheckBox' + ${iterStat.index + 1}"
+															name="inquireCheckCont01" />
+														<!-- 인덱스를 이용하여 for 속성 값 동적 할당 -->
+														<label
+															th:for="${iterStat.index < 9} ? 'companylandCheckBox0' + ${iterStat.index + 1} : 'companylandCheckBox' + ${iterStat.index + 1}"></label>
+														<p th:text="${val.jm_name}">지목</p>
+													</li>
+													<th:block>
+											</ul>
+										</div>
+										<div class="checkboxRegisterBtnWrap">
+											<div class="surfaceInquireSelectRegisterBtnBoxs">
+												<button class="closeSelectCheckBtn">닫기</button>
+												<button class="completeSelectCheckBtn">선택등록</button>
+											</div>
+										</div>
+									</div>
+								</ul>
             </div>
+						
             <!-- 라디오버튼 있는 섹션-->
             <div class="surfacePartSectionContDevide">
               <p class="devideSecondTitles">주소</p>
@@ -299,7 +306,6 @@
                           <th:block th:each="val:${sidoList}">
                           <li><p th:text="${val.sm_name}">Y</p></li>
                           <th:block>
-                        
                         </ul>
                       </div>
                     </div>
