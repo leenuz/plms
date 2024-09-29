@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
-
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -257,13 +256,11 @@
 										</li>
 										<!-- 파일보기 버튼 -->
 										<li class="content03 content">
-											<button class="viewDetailButton">보기</button>
+											<button class="viewDetailButton" th:onclick="openFilePopup([[${file.ja_file_path}]])">보기</button>
 										</li>
 										<!-- 파일다운로드 버튼 -->
 										<li class="content04 content btnsWrap">
-											<button class="fileDownloadBtn">
-												다운로드 <span class="downloadIcon"></span>
-											</button>
+											<button class="fileDownloadBtn" th:onclick="downloadFile([[${file.ja_file_path}]],[[${file.ja_file_nm}]])">다운로드 <span class="downloadIcon"></span></button>
 											<!-- 파일 경로를 숨겨서 저장 -->
 											<input type="hidden" th:value="${file.ja_file_path}" />
 										</li>
@@ -308,38 +305,38 @@
 										</li>
 										<li class="content02 content">
 											<!-- 문서번호 -->
-											<input type="text" th:value="${permit.jpm_pmt_no}" readonly />
+											<input type="text" th:value="${permit.pmt_no}" readonly />
 										</li>
 										<li class="content03 content">
 											<!-- 사용 목적 -->
-											<input type="text" th:value="${permit.jmp_use_purpos}" readonly />
+											<input type="text" th:value="${permit.use_purpos}" readonly />
 										</li>
 										<li class="content04 content">
 											<!-- 사용 기간 -->
-											<input type="text" th:value="${permit.jpm_use_st_date} + ' ~ ' + ${permit.jpm_use_ed_date}"
+											<input type="text" th:value="${permit.use_st_date} + ' ~ ' + ${permit.use_ed_date}"
 												readonly />
 										</li>
 										<li class="content05 content">
 											<!-- 토지 주소 -->
-											<input type="text" th:value="${permit.jpt_addr}" readonly />
+											<input type="text" th:value="${permit.addr}" readonly />
 										</li>
 										<li class="content06 content">
 											<!-- 소유자 -->
-											<input type="text" th:value="${permit.jpt_soyuja}" readonly />
+											<input type="text" th:value="${permit.soyuja}" readonly />
 										</li>
 										<li class="content06 content">
 											<!-- 사용자 -->
-											<input type="text" th:value="${permit.jpt_pmt_user}" readonly />
+											<input type="text" th:value="${permit.pmt_user}" readonly />
 										</li>
 										<li class="content06 content">
 											<!-- 등록상태 -->
-											<input type="text" th:value="${permit.jpm_pmt_status}" readonly />
+											<input type="text" th:value="${permit.pmt_status}" readonly />
 										</li>
 										<li class="content06 content">
 											<!-- ECHO 문서보기 버튼 -->
 											<button class="viewDetailButton">문서보기</button>
 											<!-- ECHO 문서번호를 저장 -->
-											<input type="hidden" th:value="${permit.jpm_echo_no}" />
+											<input type="hidden" th:value="${permit.echo_no}" />
 										</li>
 									</ul>
 								</div>

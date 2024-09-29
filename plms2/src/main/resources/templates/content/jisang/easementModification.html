@@ -22,620 +22,620 @@
 				<h1>지상권 내역 수정</h1>
 			</div>
 
-			<form name="saveForm"  id="saveForm" onSubmit="return false;">
-			<input type="hidden" name="mod_jisangNo" th:value="${resultData.jm_jisang_no}">
-			<section class="defaultInfo">
-				<div class="subTitle">기본 정보</div>
+			<form name="saveForm" id="saveForm" onSubmit="return false;">
+				<input type="hidden" name="mod_jisangNo" th:value="${resultData.jm_jisang_no}">
+				<section class="defaultInfo">
+					<div class="subTitle">기본 정보</div>
 
-				<div class="contWrap">
-					<div class="depth1">
-						<ul class="titles">
-							<li class="title01 title">담당지사*</li>
-							<li class="title02 title">관로일치여부*</li>
-							<li class="title03 title">용도*</li>
-							<li class="title04 title">관로명(구간)*</li>
-							<li class="title">단/복선*</li>
-							<li class="title02 title">국공유지여부*</li>
-							<li class="title05 title">지적면적(㎡)*</li>
-							<li class="title05 title">지목*</li>
-							<li class="title05 title">관리제외필지</li>
-							<li class="title05 title">회계처리필요여부*</li>
-						</ul>
-						<ul class="contents">
+					<div class="contWrap">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title01 title">담당지사*</li>
+								<li class="title02 title">관로일치여부*</li>
+								<li class="title03 title">용도*</li>
+								<li class="title04 title">관로명(구간)*</li>
+								<li class="title">단/복선*</li>
+								<li class="title02 title">국공유지여부*</li>
+								<li class="title05 title">지적면적(㎡)*</li>
+								<li class="title05 title">지목*</li>
+								<li class="title05 title">관리제외필지</li>
+								<li class="title05 title">회계처리필요여부*</li>
+							</ul>
+							<ul class="contents">
 
-							<!--담당지사-->
-							<li class="content01 content selectContentArea">
-								<div class="hiddenSelectBox">
-									<select name="jisa" id="easementModifySelectBox01" hidden>
-										<option th:each="jisa : ${jisaList}" th:value="${jisa.sc_code_name}" th:text="${jisa.sc_code_name}"
-											th:selected="${jisa.sc_code_name == resultData.jm_jisa}">
-										</option>
-									</select>
-								</div>
-								<section class="customSelectBox">
-									<button class="customSelectView"
-										th:text="${resultData.jm_jisa != null ? resultData.jm_jisa : '선택'}">서울지사</button>
-									<ul class="customSelectBtns">
-										<!-- createCustomLiEasementModify() -->
-									</ul>
-								</section>
-							</li>
+								<!--담당지사-->
+								<li class="content01 content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="jisa" id="easementModifySelectBox01" hidden>
+											<option th:each="jisa : ${jisaList}" th:value="${jisa.sc_code_name}"
+												th:text="${jisa.sc_code_name}" th:selected="${jisa.sc_code_name == resultData.jm_jisa}">
+											</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView"
+											th:text="${resultData.jm_jisa != null ? resultData.jm_jisa : '선택'}">서울지사</button>
+										<ul class="customSelectBtns">
+											<!-- createCustomLiEasementModify() -->
+										</ul>
+									</section>
+								</li>
 
-							<!--관로일치여부-->
-							<li class="content02 content selectContentArea">
-								<div class="hiddenSelectBox">
-									<!-- name도 추가 -->
-									<select name="overlap_yn" id="easementModifySelectBox02" hidden>
-										<option value="Y" th:selected="${resultData.jm_pipe_yn == 'Y'}">Y</option>
-										<option value="N" th:selected="${resultData.jm_pipe_yn == 'N'}">N</option>
-									</select>
-								</div>
-								<section class="customSelectBox">
-									<button class="customSelectView"
-										th:text="${resultData.jm_pipe_yn != null ? resultData.jm_pipe_yn : '선택'}">Y</button>
-									<ul class="customSelectBtns">
-										<!-- createCustomLiEasementModify() -->
-									</ul>
-								</section>
-							</li>
+								<!--관로일치여부-->
+								<li class="content02 content selectContentArea">
+									<div class="hiddenSelectBox">
+										<!-- name도 추가 -->
+										<select name="overlap_yn" id="easementModifySelectBox02" hidden>
+											<option value="Y" th:selected="${resultData.jm_pipe_yn == 'Y'}">Y</option>
+											<option value="N" th:selected="${resultData.jm_pipe_yn == 'N'}">N</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView"
+											th:text="${resultData.jm_pipe_yn != null ? resultData.jm_pipe_yn : '선택'}">Y</button>
+										<ul class="customSelectBtns">
+											<!-- createCustomLiEasementModify() -->
+										</ul>
+									</section>
+								</li>
 
-							<!-- 용도 -->
-							<li class="content03 content selectContentArea">
-								<div class="hiddenSelectBox">
-									<select name="youngdo" id="easementModifySelectBox03" hidden>
-										<option value="송유관로" th:selected="${resultData.jm_yongdo == '송유관로'}">송유관로</option>
-										<option value="밸브박스" th:selected="${resultData.jm_yongdo == '밸브박스'}">밸브박스</option>
-										<option value="가압소" th:selected="${resultData.jm_yongdo == '가압소'}">가압소</option>
-										<option value="저유소" th:selected="${resultData.jm_yongdo == '저유소'}">저유소</option>
-										<option value="펌프장" th:selected="${resultData.jm_yongdo == '펌프장'}">펌프장</option>
-										<option value="시설물" th:selected="${resultData.jm_yongdo == '시설물'}">시설물</option>
-									</select>
-								</div>
-								<section class="customSelectBox">
-									<button class="customSelectView"
-										th:text="${resultData.jm_yongdo != null ? resultData.jm_yongdo : '선택'}">선택</button>
-									<ul class="customSelectBtns">
-										<!-- createCustomLiEasementModify() -->
-									</ul>
-								</section>
-							</li>
+								<!-- 용도 -->
+								<li class="content03 content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="youngdo" id="easementModifySelectBox03" hidden>
+											<option value="송유관로" th:selected="${resultData.jm_yongdo == '송유관로'}">송유관로</option>
+											<option value="밸브박스" th:selected="${resultData.jm_yongdo == '밸브박스'}">밸브박스</option>
+											<option value="가압소" th:selected="${resultData.jm_yongdo == '가압소'}">가압소</option>
+											<option value="저유소" th:selected="${resultData.jm_yongdo == '저유소'}">저유소</option>
+											<option value="펌프장" th:selected="${resultData.jm_yongdo == '펌프장'}">펌프장</option>
+											<option value="시설물" th:selected="${resultData.jm_yongdo == '시설물'}">시설물</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView"
+											th:text="${resultData.jm_yongdo != null ? resultData.jm_yongdo : '선택'}">선택</button>
+										<ul class="customSelectBtns">
+											<!-- createCustomLiEasementModify() -->
+										</ul>
+									</section>
+								</li>
 
-							<!--관로명(구간)-->
-							<li class="content04 content selectContentArea">
-								<div class="hiddenSelectBox">
-									<select name="pipe_name" id="easementModifySelectBox04" hidden>
-										<option value="SNP구간1">SNP구간1</option>
-									</select>
-								</div>
+								<!--관로명(구간)-->
+								<li class="content04 content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="pipe_name" id="easementModifySelectBox04" hidden>
+											<option value="SNP구간1">SNP구간1</option>
+										</select>
+									</div>
 
-								<!-- resultData.jm_pipe_name 값을 hidden input으로 저장 -->
-								<input type="hidden" id="jm_pipe_name_hidden" th:value="${resultData.jm_pipe_name}">
+									<!-- resultData.jm_pipe_name 값을 hidden input으로 저장 -->
+									<input type="hidden" id="jm_pipe_name_hidden" th:value="${resultData.jm_pipe_name}">
 
-								<section class="customSelectBox">
-									<button class="customSelectView"
-										th:text="${resultData.jm_pipe_name != null ? resultData.jm_pipe_name : '선택'}"></button>
-									<ul class="customSelectBtns">
-										<!-- createCustomLiEasementModify() -->
-									</ul>
-								</section>
-							</li>
+									<section class="customSelectBox">
+										<button class="customSelectView"
+											th:text="${resultData.jm_pipe_name != null ? resultData.jm_pipe_name : '선택'}"></button>
+										<ul class="customSelectBtns">
+											<!-- createCustomLiEasementModify() -->
+										</ul>
+									</section>
+								</li>
 
-							<!--단/복선-->
-							<li class="content selectContentArea">
-								<div class="hiddenSelectBox">
-									<select name="sun_gubun" id="easementModifySelectBox05" hidden>
-										<option value="단선" th:selected="${resultData.jm_sun_gubun == '단선'}">단선</option>
-										<option value="복선" th:selected="${resultData.jm_sun_gubun == '복선'}">복선</option>
-									</select>
-								</div>
-								<section class="customSelectBox">
-									<button class="customSelectView"
-										th:text="${resultData.jm_sun_gubun != null ? resultData.jm_sun_gubun : '선택'}">복선</button>
-									<ul class="customSelectBtns">
-										<!-- createCustomLiEasementModify() -->
-									</ul>
-								</section>
-							</li>
+								<!--단/복선-->
+								<li class="content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="sun_gubun" id="easementModifySelectBox05" hidden>
+											<option value="단선" th:selected="${resultData.jm_sun_gubun == '단선'}">단선</option>
+											<option value="복선" th:selected="${resultData.jm_sun_gubun == '복선'}">복선</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView"
+											th:text="${resultData.jm_sun_gubun != null ? resultData.jm_sun_gubun : '선택'}">복선</button>
+										<ul class="customSelectBtns">
+											<!-- createCustomLiEasementModify() -->
+										</ul>
+									</section>
+								</li>
 
-							<!--국공유지여부-->
-							<li class="content02 content selectContentArea">
-								<div class="hiddenSelectBox">
-									<select name="gover_own_yn" id="easementModifySelectBox06" hidden>
-										<option value="Y" th:selected="${resultData.jm_gover_own_yn == 'Y'}">Y</option>
-										<option value="N" th:selected="${resultData.jm_gover_own_yn == 'N'}">N</option>
-									</select>
-								</div>
-								<section class="customSelectBox">
-									<button class="customSelectView"
-										th:text="${resultData.jm_gover_own_yn != null ? resultData.jm_gover_own_yn : '선택'}">Y</button>
-									<ul class="customSelectBtns">
-										<!-- createCustomLiEasementModify() -->
-									</ul>
-								</section>
-							</li>
+								<!--국공유지여부-->
+								<li class="content02 content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="gover_own_yn" id="easementModifySelectBox06" hidden>
+											<option value="Y" th:selected="${resultData.jm_gover_own_yn == 'Y'}">Y</option>
+											<option value="N" th:selected="${resultData.jm_gover_own_yn == 'N'}">N</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView"
+											th:text="${resultData.jm_gover_own_yn != null ? resultData.jm_gover_own_yn : '선택'}">Y</button>
+										<ul class="customSelectBtns">
+											<!-- createCustomLiEasementModify() -->
+										</ul>
+									</section>
+								</li>
 
-							<!-- 지적면적 -->
-							<li class="content05 content">
-								<input type="text" name="jijuk_area" th:value="${resultData.jm_jijuk_area}">
-							</li>
+								<!-- 지적면적 -->
+								<li class="content05 content">
+									<input type="text" name="jijuk_area" th:value="${resultData.jm_jijuk_area}">
+								</li>
 
-							<!-- 지목 -->
-							<li class="content05 content selectContentArea">
-								<div class="hiddenSelectBox">
-									<select name="jimok_text" id="easementModifySelectBox07" hidden>
-										<option th:each="jimok : ${jimoklist}" th:value="${jimok.jm_name}" th:text="${jimok.jm_name}"
-											th:selected="${jimok.jm_name == resultData.jm_jimok_text}">
-										</option>
-									</select>
-								</div>
-								<section class="customSelectBox">
-									<button class="customSelectView"
-										th:text="${resultData.jm_jimok_text == null or resultData.jm_jimok_text == '' or resultData.jm_jimok_text.trim() == '' ? '선택' : resultData.jm_jimok_text}">
-									</button>
-									<ul class="customSelectBtns">
-										<!-- createCustomLiEasementModify() -->
-									</ul>
-								</section>
-							</li>
+								<!-- 지목 -->
+								<li class="content05 content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="jimok_text" id="easementModifySelectBox07" hidden>
+											<option th:each="jimok : ${jimoklist}" th:value="${jimok.jm_name}" th:text="${jimok.jm_name}"
+												th:selected="${jimok.jm_name == resultData.jm_jimok_text}">
+											</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView"
+											th:text="${resultData.jm_jimok_text == null or resultData.jm_jimok_text == '' or resultData.jm_jimok_text.trim() == '' ? '선택' : resultData.jm_jimok_text}">
+										</button>
+										<ul class="customSelectBtns">
+											<!-- createCustomLiEasementModify() -->
+										</ul>
+									</section>
+								</li>
 
-							<!--관리제외필지-->
-							<li class="content05 content checkboxWrap">
-								<input type="checkbox" 
-								id="easementModification_excluded-parcel"
-								name="cancel_yn"
-								th:checked="${resultData.jm_cancel_yn =='Y'}">
-								<label for="easementModification_excluded-parcel"></label>
-							</li>
+								<!--관리제외필지-->
+								<li class="content05 content checkboxWrap">
+									<input type="checkbox" id="easementModification_excluded-parcel" name="cancel_yn"
+										th:checked="${resultData.jm_cancel_yn =='Y'}">
+									<label for="easementModification_excluded-parcel"></label>
+								</li>
 
-							<!--회계처리필요여부-->
-							<li class="content05 content selectContentArea">
-								<div class="hiddenSelectBox">
-									<select name="account_yn" id="easementModifySelectBox08" hidden>
-										<option value="Y" th:selected="${resultData.jm_account_yn == 'Y'}">Y</option>
-										<option value="N" th:selected="${resultData.jm_account_yn == 'N'}">N</option>
-									</select>
-								</div>
-								<section class="customSelectBox">
-									<button class="customSelectView"
-										th:text="${resultData.jm_account_yn != null ? resultData.jm_account_yn : '선택'}"></button>
-									<ul class="customSelectBtns">
-										<!-- createCustomLiEasementModify() -->
-									</ul>
-								</section>
-							</li>
+								<!--회계처리필요여부-->
+								<li class="content05 content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="account_yn" id="easementModifySelectBox08" hidden>
+											<option value="Y" th:selected="${resultData.jm_account_yn == 'Y'}">Y</option>
+											<option value="N" th:selected="${resultData.jm_account_yn == 'N'}">N</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView"
+											th:text="${resultData.jm_account_yn != null ? resultData.jm_account_yn : '선택'}"></button>
+										<ul class="customSelectBtns">
+											<!-- createCustomLiEasementModify() -->
+										</ul>
+									</section>
+								</li>
+							</ul>
+						</div>
 
-						</ul>
-					</div>
-
-					<!--주소 전체-->
-					<div class="depth2">
-						<ul class="titles">
-							<li class="title01">주소*</li>
-							<li class="title02">주소 입력 선택 방식</li>
-						</ul>
-						<ul class="contents">
-							<!--주소-->
-							<li class="content01">
-								<input type="hidden" name="maddress" id="maddress" th:value="${#strings.concat(
+						<!--주소 전체-->
+						<div class="depth2">
+							<ul class="titles">
+								<li class="title01">주소*</li>
+								<li class="title02">주소 입력 선택 방식</li>
+							</ul>
+							<ul class="contents">
+								<!--주소-->
+								<li class="content01">
+									<input type="hidden" name="maddress" id="maddress" th:value="${#strings.concat(
 							                        resultData.jm_sido_nm != null ? resultData.jm_sido_nm + ' ' : '', 
 							                        resultData.jm_sgg_nm != null ? resultData.jm_sgg_nm + ' ' : '', 
 							                        resultData.jm_emd_nm != null ? resultData.jm_emd_nm + ' ' : '', 
 							                        resultData.jm_ri_nm != null ? resultData.jm_ri_nm + ' ' : '', 
 							                        resultData.jm_jibun != null ? resultData.jm_jibun : ''
-							                      )}"/>
-								<input type="hidden" name="mpnu" id="mpnu" th:value="${resultData.jm_pnu}"/>
-								<input type="hidden" name="mjibun" id="mjibun" th:value="${resultData.jm_jibun}"/>
-								<input type="hidden" name="sido_nm" id="sido_nm" th:value="${resultData.jm_sido_nm}"></input>
-								<input type="hidden" name="sgg_nm" id="sgg_nm" th:value="${resultData.jm_sgg_nm}"></input>
-								<input type="hidden" name="emd_nm" id="emd_nm" th:value="${resultData.jm_emd_nm}"></input>
-								<input type="hidden" name="ri_nm" id="ri_nm" th:value="${resultData.jm_ri_nm}"></input>
-								
-								<input type="text" id="raddress" readonly class="notWriteInput" th:value="${#strings.concat(
+							                      )}" />
+									<input type="hidden" name="mpnu" id="mpnu" th:value="${resultData.jm_pnu}" />
+									<input type="hidden" name="mjibun" id="mjibun" th:value="${resultData.jm_jibun}" />
+									<input type="hidden" name="sido_nm" id="sido_nm" th:value="${resultData.jm_sido_nm}"></input>
+									<input type="hidden" name="sgg_nm" id="sgg_nm" th:value="${resultData.jm_sgg_nm}"></input>
+									<input type="hidden" name="emd_nm" id="emd_nm" th:value="${resultData.jm_emd_nm}"></input>
+									<input type="hidden" name="ri_nm" id="ri_nm" th:value="${resultData.jm_ri_nm}"></input>
+
+									<input type="text" id="raddress" readonly class="notWriteInput" th:value="${#strings.concat(
 							                        resultData.jm_sido_nm != null ? resultData.jm_sido_nm + ' ' : '', 
 							                        resultData.jm_sgg_nm != null ? resultData.jm_sgg_nm + ' ' : '', 
 							                        resultData.jm_emd_nm != null ? resultData.jm_emd_nm + ' ' : '', 
 							                        resultData.jm_ri_nm != null ? resultData.jm_ri_nm + ' ' : '', 
 							                        resultData.jm_jibun != null ? resultData.jm_jibun : ''
 							                      )}">
-							</li>
-							<!--주소 입력 선택 방식-->
-							<li class="content02">
-								<ul class="radioBox">
-									<li class="inputArea inputArea01">
-										<div class="inputWrap">
-											<input type="radio" name="easementModification_addressInput" value="0" checked>
-											<label>입력형</label>
-										</div>
-										<input type="text" name="address" placeholder="주소 입력" class="largeWidth">
-									</li>
-									<li class="inputArea inputArea02">
-										<div class="inputWrap">
-											<input type="radio" name="easementModification_addressInput" value="1">
-											<label>선택형</label>
-										</div>
-
-										<!--시도-->
-										<div class="selectContentArea">
-											<div class="hiddenSelectBox">
-												<select name="sido" id="easementModifySelectBox09" hidden>
-													<option th:each="sido : ${sidoList}" th:value="${sido.sm_name}" th:text="${sido.sm_name}">
-													</option>
-												</select>
+								</li>
+								<!--주소 입력 선택 방식-->
+								<li class="content02">
+									<ul class="radioBox">
+										<li class="inputArea inputArea01">
+											<div class="inputWrap">
+												<input type="radio" name="easementModification_addressInput" value="0" checked>
+												<label>입력형</label>
 											</div>
-											<section class="customSelectBox">
-												<button class="customSelectView">전체</button>
-												<ul id="customSelectBtns09" class="customSelectBtns">
-													<!-- createCustomLiEasementModify() -->
-												</ul>
-											</section>
-										</div>
-
-										<!--시군구-->
-										<div class="selectContentArea">
-											<div class="hiddenSelectBox">
-												<select name="sgg" id="easementModifySelectBox10" hidden>
-													<option value="">전체</option>
-												</select>
+											<input type="text" name="address" placeholder="주소 입력" class="largeWidth">
+										</li>
+										<li class="inputArea inputArea02">
+											<div class="inputWrap">
+												<input type="radio" name="easementModification_addressInput" value="1">
+												<label>선택형</label>
 											</div>
-											<section class="customSelectBox">
-												<button class="customSelectView">전체</button>
-												<ul id="customSelectBtns10" class="customSelectBtns">
-													<!-- createCustomLiEasementModify() -->
-												</ul>
-											</section>
-										</div>
 
-										<!--읍면동-->
-										<div class="selectContentArea">
-											<div class="hiddenSelectBox">
-												<select name="emd" id="easementModifySelectBox11" hidden>
-													<option value="">전체</option>
-												</select>
+											<!--시도-->
+											<div class="selectContentArea">
+												<div class="hiddenSelectBox">
+													<select name="sido" id="easementModifySelectBox09" hidden>
+														<option th:each="sido : ${sidoList}" th:value="${sido.sm_name}" th:text="${sido.sm_name}">
+														</option>
+													</select>
+												</div>
+												<section class="customSelectBox">
+													<button class="customSelectView">전체</button>
+													<ul id="customSelectBtns09" class="customSelectBtns">
+														<!-- createCustomLiEasementModify() -->
+													</ul>
+												</section>
 											</div>
-											<section class="customSelectBox">
-												<button class="customSelectView">전체</button>
-												<ul id="customSelectBtns11" class="customSelectBtns">
-													<!-- createCustomLiEasementModify() -->
-												</ul>
-											</section>
-										</div>
 
-										<!--리-->
-										<div class="selectContentArea">
-											<div class="hiddenSelectBox">
-												<select name="ri" id="easementModifySelectBox12" hidden>
-													<option value="">전체</option>
-												</select>
+											<!--시군구-->
+											<div class="selectContentArea">
+												<div class="hiddenSelectBox">
+													<select name="sgg" id="easementModifySelectBox10" hidden>
+														<option value="">전체</option>
+													</select>
+												</div>
+												<section class="customSelectBox">
+													<button class="customSelectView">전체</button>
+													<ul id="customSelectBtns10" class="customSelectBtns">
+														<!-- createCustomLiEasementModify() -->
+													</ul>
+												</section>
 											</div>
-											<section class="customSelectBox">
-												<button class="customSelectView">전체</button>
-												<ul id="customSelectBtns12" class="customSelectBtns">
-													<!-- createCustomLiEasementModify() -->
-												</ul>
-											</section>
-										</div>
 
-										<!--지번-->
-										<input type="text" name="jibun" placeholder="지번 입력">
+											<!--읍면동-->
+											<div class="selectContentArea">
+												<div class="hiddenSelectBox">
+													<select name="emd" id="easementModifySelectBox11" hidden>
+														<option value="">전체</option>
+													</select>
+												</div>
+												<section class="customSelectBox">
+													<button class="customSelectView">전체</button>
+													<ul id="customSelectBtns11" class="customSelectBtns">
+														<!-- createCustomLiEasementModify() -->
+													</ul>
+												</section>
+											</div>
 
-									</li>
-								</ul>
-								<div class="inputBtnArea">
-									<button class="SearchAddressBtn active easeModificationBtn" id="basicSearchBtn">검색</button>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</section>
+											<!--리-->
+											<div class="selectContentArea">
+												<div class="hiddenSelectBox">
+													<select name="ri" id="easementModifySelectBox12" hidden>
+														<option value="">전체</option>
+													</select>
+												</div>
+												<section class="customSelectBox">
+													<button class="customSelectView">전체</button>
+													<ul id="customSelectBtns12" class="customSelectBtns">
+														<!-- createCustomLiEasementModify() -->
+													</ul>
+												</section>
+											</div>
 
-			<!--소유자 정보-->
-			<section class="ownerInfo">
-				<div class="subTitle">
-					소유자 정보*
-				</div>
-				
-				
-				<div class="contWrap">
-					<div class="depth1" id="soujaDiv">
-						<ul class="titles">
-							<li class="title01">공유지분</li>
-							<li class="title02">성명</li>
-							<li class="title03">주소</li>
-							<li class="title04">연락처1</li>
-							<li class="title05">연락처2</li>
-							<li class="title06">추가/삭제</li>
-						</ul>
-						<!-- 추가를 위한 ul -->
-						<ul class="contents editing" id="soujaHiddenUl" style="display:none;">
-							<li class="content01 content editSpace">
-								<input type="text" class="editingContent" name="soujaJibun" placeholder="ex)1/2">
-							</li>
-							<li class="content02 content editSpace">
-								<input type="text" class="editingContent" name="soujaName" placeholder="ex)홍길동">
-							</li>
-							<li class="content03 content editSpace">
-								<input type="text" class="editingContent" name="soujaAddress" placeholder="ex)주소만입력">
-							</li>
-							<li class="content04 content editSpace">
-								<input type="text" class="editingContent" name="soujaContact1" placeholder="ex)000-0000-0000">
-							</li>
-							<li class="content05 content editSpace">
-								<input type="text" class="editingContent" name="soujaContact2">
-							</li>
-							<li class="content06 content btnBox">
-								<!-- 수정입력할때 -->
-								<div class="editBefore">
-									<div class="btnWrap">
-										<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
-									</div>
-									<div class="btnWrap">
-										<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
-									</div>
-								</div>
+											<!--지번-->
+											<input type="text" name="jibun" placeholder="지번 입력">
 
-								<!-- 수정완료할 때 -->
-								<div class="editAfter">
-									<div class="newBtnWrap">
-										<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
-									</div>
-								</div>
-							</li>
-						</ul>
-
-						<!-- 데이터가 0개 일 때 -->
-						<ul class="contents editing" th:if="${soujaList.size() == 0}" id="soujaUl">
-							<li class="content01 content editSpace">
-								<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun" placeholder="ex)1/2">
-							</li>
-							<li class="content02 content editSpace">
-								<input type="text" class="editingContent" name="soujaName" id="soujaName" placeholder="ex)홍길동">
-							</li>
-							<li class="content03 content editSpace">
-								<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress" placeholder="ex)주소만입력">
-							</li>
-							<li class="content04 content editSpace">
-								<input type="text" class="editingContent" name="soujaContact1" id="soujaContact1"
-									placeholder="ex)000-0000-0000">
-							</li>
-							<li class="content05 content editSpace">
-								<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2">
-							</li>
-							<li class="content06 content btnBox">
-								<!-- 수정입력할때 -->
-								<div class="editBefore">
-									<div class="btnWrap">
-										<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
-									</div>
-									<div class="btnWrap">
-										<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
-									</div>
-								</div>
-
-								<!-- 수정완료할 때 -->
-								<div class="editAfter">
-									<div class="newBtnWrap">
-										<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
-									</div>
-								</div>
-							</li>
-						</ul>
-
-						<!--데이터가 1개 이상일 때-->
-						<ul class="contents editing" th:if="${soujaList.size() > 0}" th:each="souja : ${soujaList}" id="soujaUl">
-							<li class="content01 content editSpace">
-								<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun"
-									th:value="${souja.js_jibun}">
-							</li>
-							<li class="content02 content editSpace">
-								<input type="text" class="editingContent" name="soujaName" id="soujaName"
-									th:value="${souja.js_souja_name}">
-							</li>
-							<li class="content03 content editSpace">
-								<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress"
-									th:value="${souja.js_address}">
-							</li>
-							<li class="content04 content editSpace">
-								<input type="text" class="editingContent" name="soujaContact1" id="soujaContact1"
-									th:value="${souja.js_phone_number}" placeholder="ex)000-0000-0000">
-							</li>
-							<li class="content05 content editSpace">
-								<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2"
-									th:value="${souja.js_home_number}">
-							</li>
-							<li class="content06 content btnBox">
-								<!-- 수정입력할때 -->
-								<div class="editBefore">
-									<div class="btnWrap">
-										<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
-									</div>
-									<div class="btnWrap">
-										<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
-									</div>
-								</div>
-
-								<!-- 수정완료할 때 -->
-								<div class="editAfter">
-									<div class="newBtnWrap">
-										<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
-									</div>
-								</div>
-							</li>
-						</ul>
-
-					</div>
-				</div>
-			</section>
-
-			<!--지상권 정보 -->
-			<section class="surfaceRightInfo">
-				<div class="subTitle">
-					지상권 정보
-				</div>
-
-				<div class="contWrap">
-					<div class="depth1">
-						<ul class="titles">
-							<li class="title01 title">등기여부*</li>
-							<li class="title02 title">편입면적(m²)*</li>
-							<li class="title03 title">위치</li>
-							<li class="title04 title">계약유형*</li>
-							<li class="title05 title">등기일</li>
-							<li class="title06 title">등기번호</li>
-							<li class="title06 title">등기소</li>
-							<li class="title06 title">도시계획 결정여부</li>
-							<li class="title06 title">취득일</li>
-							<li class="title06 title">자산분류번호</li>
-						</ul>
-						<ul class="contents">
-							<!--등기여부-->
-							<li class="content02 content selectContentArea">
-								<div class="hiddenSelectBox">
-									<select name="mcomple_yn" id="easementModifySelectBox13" hidden>
-										<option value="Y" th:selected="${resultData.jm_comple_yn == 'Y'}">Y</option>
-										<option value="N" th:selected="${resultData.jm_comple_yn == 'N'}">N</option>
-									</select>
-								</div>
-								<section class="customSelectBox">
-									<button class="customSelectView"
-										th:text="${resultData.jm_comple_yn != null ? resultData.jm_comple_yn : '선택'}"></button>
-									<ul class="customSelectBtns">
-										<!-- createCustomLiEasementModify() -->
+										</li>
 									</ul>
-								</section>
-							</li>
+									<div class="inputBtnArea">
+										<button class="SearchAddressBtn active easeModificationBtn" id="basicSearchBtn">검색</button>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
 
-							<!--편입면적-->
-							<li class="content02 content normalLineHeight">
-								<input type="text" th:value="${resultData.jm_pyeonib_area}" name="mpyeonib_area">
-							</li>
-							<!--위치-->
-							<li class="content03 content">
-								<input type="text" th:value="${resultData.jm_location}" name="mloacation">
-							</li>
-							<!--계약유형-->
-							<li class="content04 content selectContentArea">
-								<div class="hiddenSelectBox">
-									<select name="mpermit_yn" id="easementModifySelectBox14" hidden>
-										<option value="계약서" th:selected="${resultData.jm_permitted_yn == '계약서'}">계약서</option>
-										<option value="기공승낙서" th:selected="${resultData.jm_permitted_yn == '기공승낙서'}">기공승낙서</option>
-										<option value="기공&계약" th:selected="${resultData.jm_permitted_yn == '기공&계약'}">기공&계약</option>
-										<option value="없음" th:selected="${resultData.jm_permitted_yn == '없음'}">없음</option>
-									</select>
-								</div>
-								<section class="customSelectBox">
-									<button class="customSelectView"
-										th:text="${resultData.jm_permitted_yn != null ? resultData.jm_permitted_yn : '선택'}"></button>
-									<ul class="customSelectBtns">
-										<!-- createCustomLiEasementModify() -->
-									</ul>
-								</section>
-							</li>
-							<!-- 등기일 -->
-							<li class="content05 content">
-								<div class="dateInputWrap">
-									<input type="date" name="mdeunggi_date" th:value="${#dates.format(resultData.jm_deunggi_date, 'yyyy-MM-dd')}" data-placeholder="연/월/일">
-								</div>
-							</li>
-							<!--등기번호-->
-							<li class="content06 content">
-								<input type="text" name="mdeunggi_no" th:value="${resultData.jm_deunggi_no}">
-							</li>
-							<!--등기소-->
-							<li class="content06 content">
-								<input type="text" name="mdeunggiso" th:value="${resultData.jm_deunggiso}">
-							</li>
-							<!--도시계획 결정여부-->
-							<li class="content06 content selectContentArea">
-								<div class="hiddenSelectBox">
-									<select name="mdosi_plan" id="easementModifySelectBox15" hidden>
-										<option value="" th:selected="${resultData.jm_dosiplan == null or resultData.jm_dosiplan == ''}">선택
-										</option>
-										<option value="Y" th:selected="${resultData.jm_dosiplan == 'Y'}">Y</option>
-										<option value="N" th:selected="${resultData.jm_dosiplan == 'N'}">N</option>
-									</select>
-								</div>
-								<section class="customSelectBox">
-									<button class="customSelectView"
-										th:text="${resultData.jm_dosiplan == null or resultData.jm_dosiplan == '' or resultData.jm_dosiplan.trim() == '' ? '선택' : resultData.jm_dosiplan}">
-									</button>
-									<ul class="customSelectBtns">
-										<!-- createCustomLiEasementModify() -->
-									</ul>
-								</section>
-							</li>
-							<!--취득일-->
-							<li class="content06 content">
-								<div class="dateInputWrap">
-									<input type="date" name="mchuideuk_date" th:value="${#dates.format(resultData.jm_chuideuk_date, 'yyyy-MM-dd')}"
-										data-placeholder="연/월/일" required aria-required="true">
-								</div>
-							</li>
-							<!--자산분류번호-->
-							<li class="content06 content">
-								<input type="text" name="mjasan_no" th:value="${resultData.jm_jasan_no}">
-							</li>
-						</ul>
+				<!--소유자 정보-->
+				<section class="ownerInfo">
+					<div class="subTitle">
+						소유자 정보*
 					</div>
 
-					<!--특약사항-->
-					<div class="depth2">
-						<ul class="titles">
-							<li class="title01 title">특약사항</li>
-						</ul>
-						<ul class="contents">
-							<li class="content01 content">
-								<input type="text" name="special_cont" th:value="${resultData.jm_special_cont}">
-							</li>
-						</ul>
-					</div>
-				</div>
-			</section>
+					<div class="contWrap">
+						<div class="depth1" id="soujaDiv">
+							<ul class="titles">
+								<li class="title01">공유지분</li>
+								<li class="title02">성명</li>
+								<li class="title03">주소</li>
+								<li class="title04">연락처1</li>
+								<li class="title05">연락처2</li>
+								<li class="title06">추가/삭제</li>
+							</ul>
+							<!-- 추가를 위한 ul -->
+							<ul class="contents editing" id="soujaHiddenUl" style="display:none;">
+								<li class="content01 content editSpace">
+									<input type="text" class="editingContent" name="soujaJibun" placeholder="ex)1/2">
+								</li>
+								<li class="content02 content editSpace">
+									<input type="text" class="editingContent" name="soujaName" placeholder="ex)홍길동">
+								</li>
+								<li class="content03 content editSpace">
+									<input type="text" class="editingContent" name="soujaAddress" placeholder="ex)주소만입력">
+								</li>
+								<li class="content04 content editSpace">
+									<input type="text" class="editingContent" name="soujaContact1" placeholder="ex)000-0000-0000">
+								</li>
+								<li class="content05 content editSpace">
+									<input type="text" class="editingContent" name="soujaContact2">
+								</li>
+								<li class="content06 content btnBox">
+									<!-- 수정입력할때 -->
+									<div class="editBefore">
+										<div class="btnWrap">
+											<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
+										</div>
+										<div class="btnWrap">
+											<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
+										</div>
+									</div>
 
-			<!-- 첨부파일 -->
-			<section class="attachFileInfo">
-				<!--  <form name="uploadForm" method="post" enctype="multipart/form-data"> -->
-				<div class="subTitle">
-					첨부파일
-					<div class="fileBtnWrap">
-						<input type="file" name="fileUpload" id="easementModification_myPcFiles">
-						<label for="easementModification_myPcFiles">내 PC</label>
-					</div>
-				</div>
+									<!-- 수정완료할 때 -->
+									<div class="editAfter">
+										<div class="newBtnWrap">
+											<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
+										</div>
+									</div>
+								</li>
+							</ul>
 
-				<div class="fileUploadWrap">
-					<div class="fileUploadBox">
-						<img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
-						<p>파일을 마우스로 끌어오세요.</p>
-					</div>
-				</div>
-				<!-- <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div> -->
-				<!-- </form> -->
-				<div class="contWrap">
-					<div class="depth1" id="fileListDiv">
-						<ul class="titles" id="fileTitleUl">
-							<li class="title01 allSelectCheck">
-								<!-- 선택 -->
+							<!-- 데이터가 0개 일 때 -->
+							<ul class="contents editing" th:if="${soujaList.size() == 0}" id="soujaUl">
+								<li class="content01 content editSpace">
+									<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun" placeholder="ex)1/2">
+								</li>
+								<li class="content02 content editSpace">
+									<input type="text" class="editingContent" name="soujaName" id="soujaName" placeholder="ex)홍길동">
+								</li>
+								<li class="content03 content editSpace">
+									<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress"
+										placeholder="ex)주소만입력">
+								</li>
+								<li class="content04 content editSpace">
+									<input type="text" class="editingContent" name="soujaContact1" id="soujaContact1"
+										placeholder="ex)000-0000-0000">
+								</li>
+								<li class="content05 content editSpace">
+									<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2">
+								</li>
+								<li class="content06 content btnBox">
+									<!-- 수정입력할때 -->
+									<div class="editBefore">
+										<div class="btnWrap">
+											<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
+										</div>
+										<div class="btnWrap">
+											<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
+										</div>
+									</div>
 
-								<input type="checkbox" id="landRightsRegistration_file_select_all"
-									name="landRightsRegistration_file_select_all">
-								<label for="landRightsRegistration_file_select_all"></label>
-							</li>
-							<li class="title02">파일명</li>
-						</ul>
-					</div>
-				</div>
-				<div class="btnWrap">
-					<button class="fileDelBtn delBtn" id="deleteFileBtn">선택파일 삭제</button>
-				</div>
-			</section>
+									<!-- 수정완료할 때 -->
+									<div class="editAfter">
+										<div class="newBtnWrap">
+											<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
+										</div>
+									</div>
+								</li>
+							</ul>
 
-			<div class="finalBtnBox btnWrap">
-				<button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
-				<button class="saveBtn vividBlueBtn finalBtn" id="finalBtn">저장</button>
-			</div>
+							<!--데이터가 1개 이상일 때-->
+							<ul class="contents editing" th:if="${soujaList.size() > 0}" th:each="souja : ${soujaList}" id="soujaUl">
+								<li class="content01 content editSpace">
+									<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun"
+										th:value="${souja.js_jibun}">
+								</li>
+								<li class="content02 content editSpace">
+									<input type="text" class="editingContent" name="soujaName" id="soujaName"
+										th:value="${souja.js_souja_name}">
+								</li>
+								<li class="content03 content editSpace">
+									<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress"
+										th:value="${souja.js_address}">
+								</li>
+								<li class="content04 content editSpace">
+									<input type="text" class="editingContent" name="soujaContact1" id="soujaContact1"
+										th:value="${souja.js_phone_number}" placeholder="ex)000-0000-0000">
+								</li>
+								<li class="content05 content editSpace">
+									<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2"
+										th:value="${souja.js_home_number}">
+								</li>
+								<li class="content06 content btnBox">
+									<!-- 수정입력할때 -->
+									<div class="editBefore">
+										<div class="btnWrap">
+											<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
+										</div>
+										<div class="btnWrap">
+											<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
+										</div>
+									</div>
+
+									<!-- 수정완료할 때 -->
+									<div class="editAfter">
+										<div class="newBtnWrap">
+											<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
+										</div>
+									</div>
+								</li>
+							</ul>
+
+						</div>
+					</div>
+				</section>
+
+				<!--지상권 정보 -->
+				<section class="surfaceRightInfo">
+					<div class="subTitle">
+						지상권 정보
+					</div>
+
+					<div class="contWrap">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title01 title">등기여부*</li>
+								<li class="title02 title">편입면적(m²)*</li>
+								<li class="title03 title">위치</li>
+								<li class="title04 title">계약유형*</li>
+								<li class="title05 title">등기일</li>
+								<li class="title06 title">등기번호</li>
+								<li class="title06 title">등기소</li>
+								<li class="title06 title">도시계획 결정여부</li>
+								<li class="title06 title">취득일</li>
+								<li class="title06 title">자산분류번호</li>
+							</ul>
+							<ul class="contents">
+								<!--등기여부-->
+								<li class="content02 content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="mcomple_yn" id="easementModifySelectBox13" hidden>
+											<option value="Y" th:selected="${resultData.jm_comple_yn == 'Y'}">Y</option>
+											<option value="N" th:selected="${resultData.jm_comple_yn == 'N'}">N</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView"
+											th:text="${resultData.jm_comple_yn != null ? resultData.jm_comple_yn : '선택'}"></button>
+										<ul class="customSelectBtns">
+											<!-- createCustomLiEasementModify() -->
+										</ul>
+									</section>
+								</li>
+
+								<!--편입면적-->
+								<li class="content02 content normalLineHeight">
+									<input type="text" th:value="${resultData.jm_pyeonib_area}" name="mpyeonib_area">
+								</li>
+								<!--위치-->
+								<li class="content03 content">
+									<input type="text" th:value="${resultData.jm_location}" name="mloacation">
+								</li>
+								<!--계약유형-->
+								<li class="content04 content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="mpermit_yn" id="easementModifySelectBox14" hidden>
+											<option value="계약서" th:selected="${resultData.jm_permitted_yn == '계약서'}">계약서</option>
+											<option value="기공승낙서" th:selected="${resultData.jm_permitted_yn == '기공승낙서'}">기공승낙서</option>
+											<option value="기공&계약" th:selected="${resultData.jm_permitted_yn == '기공&계약'}">기공&계약</option>
+											<option value="없음" th:selected="${resultData.jm_permitted_yn == '없음'}">없음</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView"
+											th:text="${resultData.jm_permitted_yn != null ? resultData.jm_permitted_yn : '선택'}"></button>
+										<ul class="customSelectBtns">
+											<!-- createCustomLiEasementModify() -->
+										</ul>
+									</section>
+								</li>
+								<!-- 등기일 -->
+								<li class="content05 content">
+									<div class="dateInputWrap">
+										<input type="date" name="mdeunggi_date"
+											th:value="${#dates.format(resultData.jm_deunggi_date, 'yyyy-MM-dd')}" data-placeholder="연/월/일">
+									</div>
+								</li>
+								<!--등기번호-->
+								<li class="content06 content">
+									<input type="text" name="mdeunggi_no" th:value="${resultData.jm_deunggi_no}">
+								</li>
+								<!--등기소-->
+								<li class="content06 content">
+									<input type="text" name="mdeunggiso" th:value="${resultData.jm_deunggiso}">
+								</li>
+								<!--도시계획 결정여부-->
+								<li class="content06 content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="mdosi_plan" id="easementModifySelectBox15" hidden>
+											<option value="" th:selected="${resultData.jm_dosiplan == null or resultData.jm_dosiplan == ''}">
+												선택
+											</option>
+											<option value="Y" th:selected="${resultData.jm_dosiplan == 'Y'}">Y</option>
+											<option value="N" th:selected="${resultData.jm_dosiplan == 'N'}">N</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView"
+											th:text="${resultData.jm_dosiplan == null or resultData.jm_dosiplan == '' or resultData.jm_dosiplan.trim() == '' ? '선택' : resultData.jm_dosiplan}">
+										</button>
+										<ul class="customSelectBtns">
+											<!-- createCustomLiEasementModify() -->
+										</ul>
+									</section>
+								</li>
+								<!--취득일-->
+								<li class="content06 content">
+									<div class="dateInputWrap">
+										<input type="date" name="mchuideuk_date"
+											th:value="${#dates.format(resultData.jm_chuideuk_date, 'yyyy-MM-dd')}" data-placeholder="연/월/일"
+											required aria-required="true">
+									</div>
+								</li>
+								<!--자산분류번호-->
+								<li class="content06 content">
+									<input type="text" name="mjasan_no" th:value="${resultData.jm_jasan_no}">
+								</li>
+							</ul>
+						</div>
+
+						<!--특약사항-->
+						<div class="depth2">
+							<ul class="titles">
+								<li class="title01 title">특약사항</li>
+							</ul>
+							<ul class="contents">
+								<li class="content01 content">
+									<input type="text" name="special_cont" th:value="${resultData.jm_special_cont}">
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<!-- 첨부파일 -->
+				<section class="attachFileInfo">
+					<!--  <form name="uploadForm" method="post" enctype="multipart/form-data"> -->
+					<div class="subTitle">
+						첨부파일
+						<div class="fileBtnWrap">
+							<input type="file" name="fileUpload" id="easementModification_myPcFiles">
+							<label for="easementModification_myPcFiles">내 PC</label>
+						</div>
+					</div>
+
+					<div class="fileUploadWrap">
+						<div class="fileUploadBox">
+							<img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
+							<p>파일을 마우스로 끌어오세요.</p>
+						</div>
+					</div>
+					<!-- <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div> -->
+					<!-- </form> -->
+					<div class="contWrap">
+						<div class="depth1" id="fileListDiv">
+							<ul class="titles" id="fileTitleUl">
+								<li class="title01 allSelectCheck">
+									<!-- 선택 -->
+
+									<input type="checkbox" id="landRightsRegistration_file_select_all"
+										name="landRightsRegistration_file_select_all">
+									<label for="landRightsRegistration_file_select_all"></label>
+								</li>
+								<li class="title02">파일명</li>
+							</ul>
+						</div>
+					</div>
+					<div class="btnWrap">
+						<button class="fileDelBtn delBtn" id="deleteFileBtn">선택파일 삭제</button>
+					</div>
+				</section>
+
+				<div class="finalBtnBox btnWrap">
+					<button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
+					<button class="saveBtn vividBlueBtn finalBtn" id="finalBtn">저장</button>
+				</div>
 			</form>
-			
+
 		</main>
 	</div>
 

@@ -1,31 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
 
-      layout:decorate="~{layout/default_layout}">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-            rel="stylesheet"
-            as="style"
-            crossorigin
-            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-
-
-
-
-
-
-
-
-    <link th:href="@{/css/common.css}" rel="stylesheet" />
-
-    <link rel="stylesheet" href="/css/jisang/landRightMerge.css" />
-
-    <!-- <script src="/js/songyu/menu01.js"></script> -->
-    <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" as="style" crossorigin
+		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+	<link th:href="@{/css/common.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="/css/jisang/landRightMerge.css" />
+	<!-- <script src="/js/songyu/menu01.js"></script> -->
+	<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
     <style>
         div.dt-top-container {
@@ -104,8 +89,6 @@ text-align: center;
   color: #007bff !important;
     font-size: 15px;
     font-weight: 600;
-    
-    
 }
 
 .bottom{
@@ -166,6 +149,7 @@ margin:10px;
                     <div class="contentsBox">
                         <input type="hidden" id="lastIndex" th:value="${jisangList.size() - 1}">
                         <ul class="contents" id="tojiUl" th:if="${jisangList.size()>0}" th:each="val, stat:${jisangList}">
+													  <!--지상권 번호-->
                             <li class="content">
                                 <input type="hidden" id="mergeIndex" th:value="${stat.index}">
                                 <input type="hidden" id="togisido_nm" th:value="${val.sido_nm}">
@@ -176,16 +160,19 @@ margin:10px;
                                 <input type="hidden" id="togipnu" th:value="${val.pnu}">
                                 <input type="text" th:value="${val.jisang_no}" readonly class="notWriteInput" id="jisang_no">
                             </li>
+														<!--대표지상권-->
                             <li class="content checkboxWrap">
                                 <!-- 주석처리 -->
                                 <!-- <input type="text" placeholder="O" readonly class="notWriteInput"> -->
                                  <input type="checkbox" th:id="'landRightMerge_checkbox_' + ${stat.index}" name="repLandRight" class="single-select-checkbox">
                                  <label th:for="'landRightMerge_checkbox_' + ${stat.index}"></label>
                             </li>
+														<!--주소-->
                             <li class="content addressInfoWidth addressInfoBox">
                                 <div class="addressData"><input type="text" th:value="|${val.sido_nm} ${val.sgg_nm} ${val.emd_nm} ${val.ri_nm} ${val.jibun}|" readonly class="notWriteInput" id="merge_address"></div>
                                 <button class="searchAddressBtn">검색</button>
                             </li>
+														<!--토지유형-->
                             <li class="content selectContentArea">
                                 <div class="hiddenSelectBox">
                                     <!-- name도 추가 -->
@@ -205,6 +192,7 @@ margin:10px;
                                     </ul>
                                 </section>
                             </li>
+														<!--지상권설정-->
                             <li class="content contentBox">
                                 <ul class="secondContents">
                                     <li class="secondContent"><input type="text" th:value="${val.jimok_text}" readonly class="notWriteInput" id="jimok_text"></li>
@@ -214,24 +202,23 @@ margin:10px;
                                     <li class="secondContent"><input type="text" th:value="${val.jasan_no}" readonly class="notWriteInput" id="jasan_no"></li>
                                 </ul>
                             </li>
+														<!--소유자-->
                             <li class="content"><input type="text" th:value="${val.soyuList.size() > 0 ? val.soyuList[0].js_souja_name : ''}" readonly class="notWriteInput" id="souja"></li>
-                            <li class="content">
+                            <!--위치보기-->
+														<li class="content">
                                 <button class="viewDetailButton" th:x="${val.x == null ? 'null' : val.x}" th:y="${val.y == null ? 'null' : val.y}" >위치보기</button>
                             </li>
+														<!--회계처리필요여부-->
                             <li class="content selectContentArea">
                                 <div class="hiddenSelectBox">
                                     <!-- name도 추가 -->
                                     <select name="landMergeSelectBox02" id="landMergeSelectBox02" hidden>
-                                        <option value="Y">Y</option>
-                                        <option value="N">N</option>
+                                        <option value="Y" th:selected="${val.account_yn=='Y'}">Y</option>
+                                        <option value="N" th:selected="${val.account_yn=='N'}">N</option>
                                     </select>
-                                
                                 </div>
                                 <section class="customSelectBox">
-                                    <button class="customSelectView" id="account_yn">
-                                        선택
-                                    </button>
-                                
+                                    <button class="customSelectView" id="account_yn" th:text="${val.account_yn !=null? val.account_yn : '선택'}">선택</button>
                                     <ul class="customSelectBtns">
                                         <!-- createCustomLiLandMerge() -->
                                     </ul>
@@ -673,7 +660,7 @@ margin:10px;
         
 
         <div class="finalBtnBox btnWrap">
-            <button class="backBtn finalBtn">이전</button>
+            <button class="backBtn finalBtn" onclick="history.back();">이전</button>
             <button class="temporarySaveBtn finalBtn">임시저장</button>
             <button class="lightBlueBtn approvalBtn finalBtn">상신</button>
         </div>

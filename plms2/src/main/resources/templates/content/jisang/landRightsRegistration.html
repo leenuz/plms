@@ -12,18 +12,9 @@
             as="style"
             crossorigin
             href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-
-
-
-
-
-
-
-
+						
     <link th:href="@{/css/common.css}" rel="stylesheet" />
-
     <link rel="stylesheet" href="/css/jisang/landRightsRegistration.css" />
-
     <!-- <script src="/js/songyu/menu01.js"></script> -->
     <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
@@ -556,6 +547,8 @@ margin:10px;
                         </div>
                     </div>
                 </section>
+								
+								<!--지상권 정보-->
                 <section class="surfaceRightInfo">
                     <div class="subTitle">
                         지상권 정보
@@ -576,6 +569,7 @@ margin:10px;
                                 <li class="title06 title">자산분류번호</li>
                             </ul>
                             <ul class="contents">
+															  <!--등기여부-->
                                 <li class="content02 content selectContentArea">
                                     <div class="hiddenSelectBox">
                                         <!-- name도 추가 -->
@@ -583,9 +577,7 @@ margin:10px;
                                             <option value="">선택</option>
                                             <option value="Y">Y</option>
                                             <option value="N">N</option>
-
                                         </select>
-
                                     </div>
                                     <section class="customSelectBox">
                                         <button class="customSelectView">
@@ -598,12 +590,15 @@ margin:10px;
                                         </ul>
                                     </section>
                                 </li>
+																<!--편입면적-->
                                 <li class="content02 content normalLineHeight">
-                                    <input type="text" placeholder="75" name="mpyeonib_area">
+                                    <input type="text" name="mpyeonib_area">
                                 </li>
+																<!--위치-->
                                 <li class="content03 content">
-                                    <input type="text" placeholder="북서쪽" name="mloacation">
+                                    <input type="text" name="mloacation">
                                 </li>
+																<!--계약유형-->
                                 <li class="content04 content selectContentArea">
                                     <div class="hiddenSelectBox">
                                         <!-- name도 추가 -->
@@ -613,32 +608,32 @@ margin:10px;
                                             <option value="기공승낙서">기공승낙서</option>
                                             <option value="기공&계약">기공&계약</option>
                                             <option value="없음">없음</option>
-
                                         </select>
-
                                     </div>
                                     <section class="customSelectBox">
                                         <button class="customSelectView">
                                             선택
-
                                         </button>
-
                                         <ul class="customSelectBtns">
                                             <!-- createCustomLiLandRegist() -->
                                         </ul>
                                     </section>
                                 </li>
+																<!--등기일-->
                                 <li class="content05 content">
                                     <div class="dateInputWrap">
                                         <input type="date" name="mdeunggi_date" data-placeholder="24/01/01" required aria-required="true">
                                     </div>
                                 </li>
+																<!--등기번호-->
                                 <li class="content06 content">
-                                    <input type="text" name="mdeunggi_no" placeholder="50000">
+                                    <input type="text" name="mdeunggi_no">
                                 </li>
+																<!--등기소-->
                                 <li class="content06 content">
-                                    <input type="text" name="mdeunggiso" placeholder="한국법원 등기국">
+                                    <input type="text" name="mdeunggiso">
                                 </li>
+																<!--도시계획 결정여부-->
                                 <li class="content06 content selectContentArea">
                                     <div class="hiddenSelectBox">
                                         <!-- name도 추가 -->
@@ -646,28 +641,26 @@ margin:10px;
                                             <option value="">선택</option>
                                             <option value="Y">Y</option>
                                             <option value="N">N</option>
-
                                         </select>
-
                                     </div>
                                     <section class="customSelectBox">
                                         <button class="customSelectView">
                                             선택
-
                                         </button>
-
                                         <ul class="customSelectBtns">
                                             <!-- createCustomLiLandRegist() -->
                                         </ul>
                                     </section>
                                 </li>
+																<!--취득일-->
                                 <li class="content06 content">
                                     <div class="dateInputWrap">
                                         <input type="date" name="mchuideuk_date" data-placeholder="24/01/01" required aria-required="true">
                                     </div>
                                 </li>
+																<!--자산분류번호-->
                                 <li class="content06 content">
-                                    <input type="text" name="mjasan_no" placeholder="90000857">
+                                    <input type="text" name="mjasan_no">
                                 </li>
                             </ul>
                         </div>
@@ -677,7 +670,7 @@ margin:10px;
                             </ul>
                             <ul class="contents">
                                 <li class="content01 content">
-                                    <input type="text" name="special_cont" placeholder="지상권존속기간중 지료는 지급치 아니하고 증액하지 아니한다.">
+                                    <input type="text" name="special_cont">
                                 </li>
                             </ul>
                         </div>
@@ -727,7 +720,7 @@ margin:10px;
                         등록 메모
                     </div>
 
-                    <textarea name="jisangMemo" placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200" >11111</textarea>
+                    <textarea name="jisangMemo" placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200" ></textarea>
 
                 </section>
 

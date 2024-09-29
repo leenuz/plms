@@ -1457,13 +1457,8 @@ log.info("PMT_NO:"+PMT_NO);
 	// 지상권 분할- 지상권 상세정보
 	@GetMapping(path="/forDivisionEasementDetails") //http://localhost:8080/api/get/dbTest
 	public ModelAndView forDivisionEasementDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//		response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 		ModelAndView mav=new ModelAndView();
 
-
-//        List<TestDTO> list = new ArrayList<TestDTO>();
-//        list = dbService.getList();
 		HashMap params = new HashMap();
 		ArrayList<HashMap>  list=new ArrayList<HashMap>();
 
@@ -1472,21 +1467,24 @@ log.info("PMT_NO:"+PMT_NO);
 
 		params.put("idx",idx);
 		params.put("manage_no",idx);
+		params.put("JISANG_NO",idx);
 		params.put("index",index);
 		log.info("params:"+params);
 
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
-
-		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
 		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
-		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
+		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
+		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 최신버전
+		log.info("jisangPermitList: " + jisangPermitList);
+		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
+		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
+		log.info("jisangMergeList: " + jisangMergeList);
 		params.put("pnu", data.get(0).get("jm_pnu"));
 		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
 		log.info("jisangIssueList size:"+jisangIssueList.size());
 		if (jisangIssueList.size()>0) {
-
 			params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
 			params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
 			params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
@@ -1524,6 +1522,7 @@ log.info("PMT_NO:"+PMT_NO);
 
 		params.put("idx",idx);
 		params.put("manage_no",idx);
+		params.put("JISANG_NO",idx.trim());
 		params.put("index",index);
 		log.info("params:"+params);
 
@@ -1532,6 +1531,7 @@ log.info("PMT_NO:"+PMT_NO);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
 		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 최신버전
+		log.info("jisangPermitList: " + jisangPermitList);
 		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
 		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
 		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
@@ -1735,12 +1735,13 @@ log.info("data:"+data.get(0));
 
 			return mav;
 		}
+		
 		@GetMapping(path="/menu02_3") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView menu02_3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			HashMap params = new HashMap();
-			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 
@@ -1750,9 +1751,9 @@ log.info("data:"+data.get(0));
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("sidoList",sidolist);
 
-
 			return mav;
 		}
+		
 		@GetMapping(path="/menu02_4") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView menu02_4(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
