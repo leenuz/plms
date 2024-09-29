@@ -3091,7 +3091,7 @@ DELETE from POTENTIAL_ISSUE
 	<update id="updateCancelFile" parameterType="HashMap">
            
 			update jisang_cancel_ATCFILE set FILE_PATH=#{FILE_PATH},FILE_NM=#{FILE_NM}
-			where manage_no=#{MANAGE_NO} and file_gubun=#{FILE_GUBUN}
+			where manage_no=#{MANAGE_NO} and file_gubun=#{FILE_GUBUN}::varchar
 			
 	</update>
 	<select id="selectCancelFileCount" resultType="integer" parameterType="HashMap">

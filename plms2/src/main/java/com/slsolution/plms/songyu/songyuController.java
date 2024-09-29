@@ -987,7 +987,7 @@ public class songyuController {
 			// 네임
 			String jisanm = requestParamObj.getString("jisa").replaceAll("전체", ""); // 지사
 			// 네임
-			String jibun = requestParamObj.getString("mjibun"); // 지번
+			
 			String addrcode = requestParamObj.getString("addrcode"); // 주소코드
 			String jisa = requestParamObj.getString("jisa"); // 담당지사
 			String goverownyn = requestParamObj.getString("goverYN"); // 국공유지여부
@@ -995,7 +995,8 @@ public class songyuController {
 			String sun_gubun = requestParamObj.getString("sunGubun"); // 단/복선
 			String pipeMeter = requestParamObj.getString("pipe_diameter1"); // 관경
 			String pipeMeter2 = requestParamObj.getString("pipe_diameter2"); // 관경2
-			String pnu = requestParamObj.getString("pnu").trim(); // 검색결과 PNU
+			
+			
 			String jijuk_area = requestParamObj.getString("jijuk_area"); // 지면 면적(㎡)
 			String jimok_text = requestParamObj.getString("jimok_text"); // 지면 면적(㎡)
 
@@ -1012,7 +1013,16 @@ public class songyuController {
 			//String fileseq = requestParamObj.getString("fileSeq"); // 파일 seq
 			// int FILE_CNT = Integer.parseInt(parser.getString("flieCnt", "0")); //
 			// 파일수
-
+			String pnu ="";
+			String jibun ="";  
+			if (gubun.equals("insert")) {
+				pnu=requestParamObj.getString("mpnu").trim(); // 검색결과 PNU
+				jibun=requestParamObj.getString("mjibun"); // 지번
+			}
+			else {
+				pnu=requestParamObj.getString("pnu").trim(); // 검색결과 PNU
+				jibun=requestParamObj.getString("jibun"); // 지번
+			}
 			String modifyReason1 = requestParamObj.has("modifyReason1")?requestParamObj.getString("modifyReason1"):""; // 변경이력-기본정보
 			String modifyReason2 = requestParamObj.has("modifyReason2")?requestParamObj.getString("modifyReason2"):""; // 변경이력-소유자정보
 
