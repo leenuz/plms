@@ -1742,7 +1742,7 @@ log.info("data:"+data.get(0));
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			HashMap params = new HashMap();
-			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 
@@ -1752,9 +1752,9 @@ log.info("data:"+data.get(0));
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("sidoList",sidolist);
 
-
 			return mav;
 		}
+		
 		@GetMapping(path="/menu02_4") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView menu02_4(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
