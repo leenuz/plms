@@ -526,9 +526,9 @@ function loadMemoEditBtn(){
 
 
 /* 잠재이슈 수정 팝업 오픈 */
-
 const groundIssueReviseOpen = () => {
 
+	console.log("---------잠재이슈 수정 버튼 동작 --------");
     const groundIssueReviseBtn = document.querySelectorAll(".groundIssueReviseBtn");
 
       if(groundIssueReviseBtn){
@@ -539,10 +539,10 @@ const groundIssueReviseOpen = () => {
        let xhr = new XMLHttpRequest();
        xhr.open('GET', htmlFilePath, true);
        xhr.onreadystatechange = function() {
-           if (xhr.readyState == 4 && xhr.status == 200) {
-               //groundIssueRevisePop.innerHTML = xhr.responseText;
-              // runScriptsInElement(groundIssueRevisePop); // 삽입된 html내 스크립트 실행 함수 호출
-           }
+				 if (xhr.readyState == 4 && xhr.status == 200) {
+					 groundIssueRevisePop.innerHTML = xhr.responseText;
+					 runScriptsInElement(groundIssueRevisePop); // 삽입된 html내 스크립트 실행 함수 호출
+				 }
        };
        xhr.send();
        console.log('IssueRevisePop작동');
@@ -642,7 +642,8 @@ $(document).on("click",".addBtn",function(){
 	
 });
 
-$(document).on("click",".editBtn",function(){
+// 메모 수정 editBtn
+$(document).on("click",".memoSection .editBtn",function(){
 	console.log("--------editBtn click----------------");
 	var thisContent = this.closest('.contents');
 	console.log(thisContent);
@@ -658,7 +659,6 @@ $(document).on("click",".editBtn",function(){
 	                input.setAttribute('readonly', 'readonly');
 	            });
 	        }
-	
 });
 
 
