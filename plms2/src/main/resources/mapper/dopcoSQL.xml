@@ -46,20 +46,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
 			and dom.dom_chuideuk_date::date between #{start_date}::date and #{end_date}::date
 		</if>
-		
 		) r
 		where 1=1
-		
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and r.address like '%${address}%'
 		</if>
-		
-		
-		
-		
 	</select>
+	
 	<select id="selectDopcoList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		
 		select * from (
 		SELECT
 		(row_number() OVER()) AS RN,
@@ -115,13 +109,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="length>0">
 			limit #{length} offset #{start}
 		</if>
-		
-		
-		
-
 	</select>
+	
 	<select id="selectDopcoDetailList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		
 		select * from (
 		SELECT
 		(row_number() OVER()) AS RN,
@@ -170,16 +160,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 		) r
 		where 1=1
-		
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and r.address like '%${address}%'
 		</if>
-		
-		
-		
-		
-
 	</select>
+	
 	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *
 		,concat(dom_sido_nm,' ',dom_sgg_nm,' ',dom_emd_nm,' ',dom_ri_nm,' ',dom_jibun) as address,
@@ -212,7 +197,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 		and dom_idx=cast(#{idx} as integer)
 		</if>
-		
 	</select>
 	
 	
@@ -221,9 +205,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT *,
 		TRIM(CONCAT(dom.dom_sido_nm, ' ', dom.dom_sgg_nm, ' ',dom.dom_emd_nm,' ',dom.dom_ri_nm, ' ', dom.dom_jibun)) AS address
 		FROM dopco_master dom
-		
 		WHERE 1 = 1
-		
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and dom.dom_jisa=#{jisa}
 		</if>
@@ -238,23 +220,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		) r
 		where 1=1
-		
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and r.address like '%${address}%'
 		</if>
-		
-		
 	</select>
+	
 	<select id="selectDopcoCancelList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		
 		select * from (
 		SELECT *,
 		(row_number() OVER()) AS no,
 		TRIM(CONCAT(dom.dom_sido_nm, ' ', dom.dom_sgg_nm, ' ',dom.dom_emd_nm,' ',dom.dom_ri_nm, ' ', dom.dom_jibun)) AS address
 		FROM dopco_master dom
-		
 		WHERE 1=1
-		
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and dom.dom_jisa=#{jisa}
 		</if>
@@ -269,19 +246,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		) r
 		where 1=1
-		
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and r.address like '%${address}%'
 		</if>
 		<if test="length>0">
 			limit #{length} offset #{start}
 		</if>
-		
-		
-		
-
 	</select>
-	
 	
 	<insert id="insertDopcoMaster" parameterType="HashMap">
 		Insert into DOPCO_MASTER
@@ -295,12 +266,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,#{GOVEROWNYN},#{DOSIPLAN},#{JASANNO},#{COMPLE_YN},to_date(#{DEUNGGI_DATE},'yyyy-mm-dd'),#{DEUNGGI_NO}
 		,#{DEUNGGISO},#{PNU},#{JIMOK_TEXT}, TO_DATE(#{CHUIDEUK_DATE}, 'yyyy-mm-dd') )
 	</insert>
+	
 	<insert id="insertDopcoTojaOrder" parameterType="HashMap">
 		Insert into DOPCO_TOJA
 		( dt_DOPCO_NO, dt_TOJA_NO )
 		Values
 		( #{DOPCO_NO},#{TOJA} )
 	</insert>
+	
 	<insert id="insertDopcoRight" parameterType="HashMap">
 		Insert into DOPCO_RIGHT
 		( DOPCO_NO, RIGHT_NAME, RIGHT_MONEY
@@ -321,16 +294,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		, #{RIGHT_UNAME},#{RIGHT_PHONE},#{RIGHT_ADDR} )
 	</insert>
+	
 		<insert id="insertDopcoFile" parameterType="HashMap">
-            
 			INSERT INTO DOPCO_ATCFILE(da_DOPCO_NO, da_SEQ	, da_FILE_PATH, da_FILE_NM)
 			VALUES (#{DOPCO_NO}, nextVal(dopco_atc_seq), #{FILE_PATH}, #{FILE_NM})
-			
 	</insert>
+	
 	<update id="updateDopcoMaster" parameterType="HashMap">
 		UPDATE DOPCO_MASTER
 		SET
-
 		dom_SIDO_NM = #{SIDO_NM}
 		, dom_SGG_NM = #{SGG_NM}
 		, dom_EMD_NM = #{EMD_NM}
@@ -353,10 +325,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		, dom_PNU = #{IN_PNU}
 		, dom_JIMOK_TEXT = #{JIMOK_TEXT}
 		, dom_CHUIDEUK_DATE = TO_DATE(#{CHUIDEUK_DATE}, 'yyyy-mm-dd')
-
 		WHERE dom_DOPCO_NO = #{DOPCO_NO}
-
 	</update>
+	
 		<insert id="insertDopcoModifyHistory" parameterType="HashMap">
 		Insert into DOPCO_MODIFY
 		( dom_DOPCO_NO, dom_MODIFY_DATE, dom_GUBUN, dom_CONT, dom_USER_NAME, dom_USER_ID)
@@ -367,8 +338,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectDopcoNextNo" resultType="HashMap" parameterType="HashMap">
 		SELECT COALESCE(MAX(CAST(SUBSTRING(dom_DOPCO_NO FROM 3) AS INTEGER)), 0) AS NOW_DOPCONO
 		FROM DOPCO_MASTER;
-
 	</select>
+	
 		<delete id="deleteDopcoRight" parameterType="HashMap">
 		DELETE FROM DOPCO_RIGHT
 		WHERE DOPCO_NO = #{DOPCO_NO}
@@ -387,6 +358,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DOPCO_NO = #{DOPCO_NO}
 		WHERE SEQ = #{FILESEQ}
 	</update>
+	
 	<update id="insertDopcoTerminationAdd" parameterType="HashMap">
 		UPDATE DOPCO_MASTER
 		SET
@@ -402,17 +374,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from DOPCO_TOJA
 		where DOPCO_NO = #{DOPCO_NO}
 	</select>
+	
 	<select id="selectDopcoRowDetail_Right" resultType="HashMap" parameterType="HashMap">
 		select TO_CHAR(CANCLE_DATE, 'yyyy-mm-dd') AS CANCLE_DATE, DOPCO_NO, RIGHT_ADDR, TO_CHAR(RIGHT_DATE, 'yyyy-mm-dd') AS RIGHT_DATE, RIGHT_MONEY, RIGHT_NAME, RIGHT_PHONE, RIGHT_UNAME
 		from DOPCO_RIGHT
 		where DOPCO_NO = #{DOPCO_NO}
 	</select>
+	
 		<select id="selectDopcoRowDetail_Modify" resultType="HashMap" parameterType="HashMap">
 		SELECT *
 		FROM DOPCO_MODIFY
 		WHERE DOPCO_NO = #{DOPCO_NO}
 		ORDER BY MODIFY_DATE
 	</select>
+	
 		<select id="selectDopcoRowDetail_Files" resultType="HashMap" parameterType="HashMap">
 		SELECT *
 		FROM DOPCO_ATCFILE
@@ -426,6 +401,71 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY SEQ DESC
 	</select>
 	
+	<!--회사토지 상세정보 - 잠재이슈-->
+	<select id="selectIssueList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select (row_number() over()) as NO
+		 , to_char(pi_issue_date,'YYYY-MM-DD HH:MM:SS') as issue_date
+		 ,*
+		  FROM potential_issue PI
+		  LEFT JOIN 
+		  (
+		
+				SELECT 
+				jm.jm_jisang_no AS manage_no
+				,COALESCE(jm.jm_comple_yn,'') AS comple_yn
+				,COALESCE(jm.jm_permitted_yn,'') AS permitted_yn
+				,SUBSTRING(jm.jm_jisang_no,1,1) AS rtype
+				 FROM jisang_master jm
+				 
+				 UNION all
+				 
+				 
+					SELECT 
+				gm.gm_gover_no AS manage_no
+				,COALESCE('','') AS comple_yn
+				,COALESCE('','') AS permitted_yn
+				,SUBSTRING(gm.gm_gover_no,1,1) AS rtype
+				
+				 FROM gover_master gm
+				 
+				 UNION all
+				 
+				 	SELECT 
+				nm.nm_notset_no AS manage_no
+				,COALESCE('','') AS comple_yn
+				,COALESCE('','') AS permitted_yn
+				,SUBSTRING(nm.nm_notset_no,1,1) AS rtype
+				 FROM notset_master nm
+				 
+ 				 UNION all
+				 
+				 	SELECT 
+				dom.dom_dopco_no AS manage_no
+				,COALESCE('','') AS comple_yn
+				,COALESCE('','') AS permitted_yn
+				,SUBSTRING(dom.dom_dopco_no,1,1) AS rtype
+				 FROM dopco_master dom
+				 
+		 ) AS u
+		 ON PI.pi_manage_no = u.manage_no
+		 WHERE 1=1
+		and pi_pnu=#{pnu}
+	</select>
 	
+	<!--회사토지 상세정보 - 잠재이슈 변경 이력-->
+	<select id="selectIssueHistoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *,(row_number() over()) as no 
+		 FROM  potential_issue pi left join potential_issue_history pih on pi.pi_pnu=pih.pih_pnu 
+		WHERE 1=1
+		and pih_pnu=#{pnu}
+	</select>
+	
+	<!--회사토지 상세정보 - 잠재이슈 대응방안 메뉴얼-->
+	<select id="selectIssueCodeAtcFileList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as no 
+		from issue_code_atc_file 
+		where 1=1
+		and icaf_code in (#{issueManualCode1},#{issueManualCode2},#{issueManualCode3})
+	</select>
 	
 </mapper>

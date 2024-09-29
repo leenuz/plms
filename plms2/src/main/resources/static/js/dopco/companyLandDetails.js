@@ -131,3 +131,122 @@ const issueRevisePopUpOpenEvet = () => {
 }
 
 issueRevisePopUpOpenEvet();
+
+
+// 메모 추가 버튼
+$(document).on("click", ".addBtn", function() {
+	console.log("--------addBtn click----------------");
+	var thisContent = this.closest('.contents');
+	var wname = $(thisContent).find("#wname").val();
+	var wmemo = $(thisContent).find("#wmemo").val();
+	var idx = $(thisContent).find("#idx").val();
+	if (idx == null || idx == undefined) {
+		alert("현재 필드 부터 작성후 추가를 해주세요.");
+		return;
+	}
+
+	var MainContentDiv = this.closest('.contentScr');
+	var thisNullContent = $(MainContentDiv).find("ul").eq(0).html();
+	console.log(MainContentDiv);
+	console.log("-------------------------");
+	console.log(thisNullContent);
+	$(MainContentDiv).append("<ul class='contents'>" + thisNullContent + "</ul>");
+
+});
+
+// 메모 수정 버튼
+$(document).on("click", ".editBtn", function() {
+	console.log("--------editBtn click----------------");
+	var thisContent = this.closest('.contents');
+	console.log(thisContent);
+	thisContent.classList.add('editing');
+	const inputs = thisContent.querySelectorAll('.editSpace input');
+
+	if (thisContent.classList.contains('editing')) {
+		inputs.forEach(input => {
+			input.removeAttribute('readonly');
+		});
+	} else {
+		inputs.forEach(input => {
+			input.setAttribute('readonly', 'readonly');
+		});
+	}
+
+});
+
+// 메모 등록 버튼
+$(document).on("click", ".registBtn", function() {
+	var thisContent = this.closest('.contents');
+	thisContent.classList.remove('editing')
+
+	const inputs = thisContent.querySelectorAll('input');
+	inputs.forEach(input => {
+		input.setAttribute('readonly', 'readonly');
+	});
+
+	console.log("------------registBtn start-------------");
+	console.log($(thisContent).find("#wname").val());
+	console.log($(thisContent).find("#wmemo").val());
+	console.log($(thisContent).find("#idx").val());
+	var wname = $(thisContent).find("#wname").val();
+	var wmemo = $(thisContent).find("#wmemo").val();
+	var idx = $(thisContent).find("#idx").val();
+	var manage_no = $("#manage_no").val();
+	var mode = "";
+	if (manage_no == "undefined" || manage_no == null || manage_no == "") {
+		alert("입력한 데이터가 없습니다.");
+		return;
+	}
+	if (wname == "undefined" || wname == null || wname == "" || wname == undefined) {
+		alert("내용을 확인해주세요.");
+		return;
+	}
+	if (idx == 0 || idx == "undefined" || idx == null) mode = "insert";
+	else mode = "update";
+	var mparams = { "mode": mode, "idx": idx, "manage_no": $("#manage_no").val(), "wname": $(thisContent).find("#wname").val(), "wmemo": $(thisContent).find("#wmemo").val() };
+	console.log(mparams);
+	$.ajax({
+		url: "/api/putMemoData",
+		type: "POST",
+		data: mparams,
+		success: function(memoList) {
+			$('#memoDiv').replaceWith(memoList);
+			//loadMemoEditBtn();
+
+		}
+	});
+
+});
+
+
+// 메모 삭제 버튼
+$(document).on("click", "#deleteMemoBtn", function() {
+	var thisContent = this.closest('.contents');
+	
+	console.log("------------deleteMemoBtn end-------------");
+
+	console.log($(thisContent).find("#idx").val());
+	var idx = $(thisContent).find("#idx").val();
+	var manage_no = $("#manage_no").val();
+	if (manage_no == "undefined" || manage_no == null || manage_no == "") {
+		alert("입력한 데이터가 없습니다.");
+		return;
+	}
+	var mode = "";
+	if (idx == 0 || idx == "undefined" || idx == null) {
+		return;
+	}
+
+	var mparams = { "idx": $(thisContent).find("#idx").val(), "manage_no": $("#manage_no").val() };
+	console.log(mparams);
+
+	$.ajax({
+		url: "/api/deleteMemoData",
+		type: "POST",
+		data: mparams,
+	})
+		.done(function(fragment) {
+			$('#memoDiv').replaceWith(fragment);
+
+		});
+});

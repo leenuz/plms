@@ -129,13 +129,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="deleteMemoData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="mm_idx" keyProperty="mm_idx">
-		
 		delete from  memo_master 
 		where 1=1
-		
 		and  mm_idx=${idx}
-		
-	
 	</insert>
 	
 	<select id="selectMemoList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -145,9 +141,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
 		and mm_manage_no=#{manage_no}
 		</if>
-		
-		
-			
 	</select>
 	
 	<select id="selectAddressFromJijuk" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -173,11 +166,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 	AND juso LIKE '%${address}%' 
 	limit 100
-	
 	</if>
-	
-	
 	</select>
+	
 	<select id="selectJijukFromJisangAddress" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *
 		,(row_number() over()) as NO
@@ -215,16 +206,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	and j2.jibun=#{jibun}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	AND j2.juso LIKE '%${address}%' 
-	
-	
+	AND j2.juso LIKE '%${address}%' 	
 	</if>
-	
-	
-	</select>
-	
-	
-	
+	</select>	
 	
 	<select id="selectJijuk" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
@@ -287,6 +271,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    ORDER BY sc_sort_order ASC
 	    ]]>
 	</select>
+	
 		<insert id="insertLog" parameterType="HashMap">
             <![CDATA[ 
 			INSERT INTO SYS_LOG
@@ -299,6 +284,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="selectGetPLMSCompforXML" parameterType="java.util.HashMap" resultType="Integer">
 		SELECT count(*) FROM PLMS_APPROVAL where pa_DOCKEY = #{DOCKEY} and (pa_status is null or pa_status not in ('X'))
 	</select>
+	
 	<update id="updateGetPLMSCompforXML" parameterType="HashMap">
 		UPDATE PLMS_APPROVAL SET
 		pa_GUBUN = #{GUBUN}
@@ -313,6 +299,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		, pa_DISPOSE = #{DISPOSE}
 		WHERE DOCKEY = #{DOCKEY}
 	</update>
+	
 	<insert id="insertGetPLMSCompforXML" parameterType="HashMap">
            
 			insert into PLMS_APPROVAL
@@ -321,6 +308,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				( nextval('APPROVAL_CNT_SEQ'),	#{GUBUN}, #{LANG}, #{SDATE}, #{STIME}, #{USERCD}#, #{SEARCHKEY1}, #{DOCKEY}, #{WDID}, #{URL}, #{STATUS})
 			
 	</insert>
+	
 	<select id="selectJijukBefore" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 SELECT PNU
      , JISANG_NO AS JISANG_NO_OLD
@@ -331,6 +319,7 @@ SELECT PNU
   FROM JIJUK_2024
  WHERE PNU IN ( SELECT PNU FROM JISANG_MASTER WHERE jm_JISANG_NO = #{JISANGNO} )
 </select>
+
 <update id="updateJijukMasterStatus" parameterType="HashMap">
 		UPDATE JIJUK_2024 SET
 		JISANG_STATUS = 'N'
@@ -341,29 +330,29 @@ SELECT PNU
 		, JISA = ''
 		WHERE PNU IN ( SELECT jm_pnu as PNU FROM JISANG_MASTER WHERE jm_JISANG_NO = #{JISANGNO} )
 	</update>
+	
 	<select id="selectPnuIssue" parameterType="java.util.HashMap" resultType="java.util.HashMap">
- 
-SELECT T.pi_pnu as PNU
-       , T.pi_seq as SEQ
-       , T.pi_code_depth1 as CODE_DEPTH1
-       , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.pi_CODE_DEPTH1) AS CODE_DEPTH1_NAME
-       , T.pi_code_depth2 as CODE_DEPTH2
-       , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.pi_CODE_DEPTH2) AS CODE_DEPTH2_NAME
-       , T.pi_code_depth3 as CODE_DEPTH3
-       , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.pi_CODE_DEPTH3) AS CODE_DEPTH3_NAME
-       , T.pi_issue_comment as ISSUE_COMMENT
-       , T.pi_del_flag as DEL_FLAG
-       , T.pi_del_comment as DEL_COMMENT
-       , TO_CHAR(T.pi_ISSUE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS ISSUE_DATE
-       , T.pi_address_code as ADDRCODE
-       , T.pi_jibun as JIBUN
-       ,pi_registed_yn as REGISTED_YN
-       ,pi_permitted_yn as PERMITTED_YN
-  FROM POTENTIAL_ISSUE T
- WHERE ((T.pi_PNU = #{PNU} AND COALESCE(T.pi_PNU, '99999') != '99999')
-    OR  ( T.pi_address_code= #{ADDRCODE} AND T.pi_JIBUN = #{JIBUN} ))
-   AND T.pi_DEL_FLAG = 'N'
- ORDER BY T.pi_ISSUE_DATE DESC
-
+		SELECT T.pi_pnu as PNU
+		, T.pi_seq as SEQ
+		, T.pi_code_depth1 as CODE_DEPTH1
+		, (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.pi_CODE_DEPTH1) AS CODE_DEPTH1_NAME
+		, T.pi_code_depth2 as CODE_DEPTH2
+		, (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.pi_CODE_DEPTH2) AS CODE_DEPTH2_NAME
+	  , T.pi_code_depth3 as CODE_DEPTH3
+	  , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.pi_CODE_DEPTH3) AS CODE_DEPTH3_NAME
+	  , T.pi_issue_comment as ISSUE_COMMENT
+	  , T.pi_del_flag as DEL_FLAG
+	  , T.pi_del_comment as DEL_COMMENT
+	  , TO_CHAR(T.pi_ISSUE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS ISSUE_DATE
+	  , T.pi_address_code as ADDRCODE
+	  , T.pi_jibun as JIBUN
+	  ,pi_registed_yn as REGISTED_YN
+	  ,pi_permitted_yn as PERMITTED_YN
+	  FROM POTENTIAL_ISSUE T
+	  WHERE ((T.pi_PNU = #{PNU} AND COALESCE(T.pi_PNU, '99999') != '99999')
+	  OR  ( T.pi_address_code= #{ADDRCODE} AND T.pi_JIBUN = #{JIBUN} ))
+	  AND T.pi_DEL_FLAG = 'N'
+	  ORDER BY T.pi_ISSUE_DATE DESC
 	</select>
+	
 </mapper>

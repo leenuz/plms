@@ -349,7 +349,7 @@
 				<div class="subTitle">
 					잠재이슈 변경 이력
 				</div>
-
+			
 				<div class="contWrap">
 					<div class="contBox">
 						<div class="contentDetailBox">
@@ -361,74 +361,38 @@
 									<li class="title04 title">내용</li>
 									<li class="title03 title">사유</li>
 								</ul>
-								<ul class="contents">
-									<li class="content01 content">
-										3
-									</li>
-									<li class="content02 content">
-										이슈 삭제
-									</li>
-									<li class="content03 content">
-										2024-04-01 11:21:04
-									</li>
-									<li class="content04 content">
-										[기공승낙서 미존재 > 토지소유자 협의없이 매설 > 오류/무단매설]
-									</li>
-									<li class="content03 content">
-										이슈 중복 등록
-									</li>
+								<ul class="contents lastContents" th:if="${modify_list.size() == 0}">
+									<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents">
+								<ul class="contents" th:each="val:${dopcoIssueHistoryList}">
 									<li class="content01 content">
-										2
+										[[${val.no}]]
 									</li>
 									<li class="content02 content">
-										이슈 수정
+										[[${val.pih_history_type}]]
 									</li>
 									<li class="content03 content">
-										2024-06-13 10:48:06
+										[[${val.pih_history_date}]]
 									</li>
 									<li class="content04 content">
-										[이슈없음 > 이슈없음 > 이슈없음] -> [기공승낙서 미존재 > 토지소유자 협의없이 매설 > 오류/무단매설]
+										[[${val.pih_content}]]
 									</li>
 									<li class="content03 content">
-										신규 등록
-									</li>
-								</ul>
-								<ul class="contents lastContents">
-									<li class="content01 content">
-										1
-									</li>
-									<li class="content02 content">
-										신규 등록
-									</li>
-									<li class="content03 content">
-										2024-06-13 10:48:06
-									</li>
-									<li class="content04 content">
-										[이슈없음 > 이슈없음 > 이슈없음]
-									</li>
-									<li class="content03 content">
-										신규 등록
+										[[${val.pi_issue_comment}]]
 									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
-
-
 			</section>
 
 			<!-- 잠재이슈 대응방안 메뉴얼 -->
-
-
 			<section class="potentialIssuesResponseManual">
 				<div class="subTitle">
 					잠재이슈 대응방안 메뉴얼
 				</div>
-
-
+			
 				<div class="contWrap">
 					<div class="contBox">
 						<div class="contentDetailBox">
@@ -439,29 +403,18 @@
 									<li class="title03 title">개정일자</li>
 									<li class="title04 title">다운로드</li>
 								</ul>
-								<ul class="contents">
-									<li class="content01 content">
-										계약자와 현재소유자가 다른 경우 (5년이내)
-									</li>
-									<li class="content02 content">
-										1.0
-									</li>
-									<li class="content03 content">
-										2024-04-02 15:40:01
-									</li>
-									<li class="content04 content btnsWrap">
-										<button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-									</li>
+								<ul class="contents lastContents" th:if="${modify_list.size() == 0}">
+									<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents lastContents">
+								<ul class="contents" th:each="val:${jisangIssueCodeAtcFileList}">
 									<li class="content01 content">
-										토지소유자가 아닌자와 계약 (20년 초과)
+										[[${val.icaf_manual_title}]]
 									</li>
 									<li class="content02 content">
-										1.0
+										[[${val.icaf_file_version}]]
 									</li>
 									<li class="content03 content">
-										2024-04-02 15:40:01
+										[[${val.icaf_file_regdate}]]
 									</li>
 									<li class="content04 content btnsWrap">
 										<button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
@@ -471,17 +424,14 @@
 						</div>
 					</div>
 				</div>
-
-
 			</section>
 
 			<!-- 메모 -->
-
+			
 			<section class="memoSection">
 				<div class="subTitle">
 					메모
 				</div>
-
 
 				<div class="contWrap">
 					<div class="contBox">
@@ -494,18 +444,18 @@
 									<li class="title04 title">수정</li>
 									<li class="title05 title">추가/삭제</li>
 								</ul>
-								<div class="contentScr">
-									<ul class="contents">
+								<div class="contentScr" id="memoDiv">
+									<ul class="contents nullContents" id="nullContents" style="display:none;">
 										<li class="content01 content">
 											<!-- 2022-11-01 -->
 											<!-- input 추가 -->
-											<input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
+											<input type="text" readonly placeholder="" class="notWriteInput">
 										</li>
 										<li class="content02 content editSpace">
-											<input type="text" readonly placeholder="김철수" class="editingContent">
+											<input type="text" readonly placeholder="" id="wname" class="editingContent">
 										</li>
 										<li class="content03 content editSpace">
-											<input type="text" readonly placeholder="협의중" class="editingContent">
+											<input type="text" readonly placeholder="" id="wmemo" class="editingContent">
 										</li>
 										<li class="content04 content editSpace">
 											<div class="btnsWrap">
@@ -513,20 +463,20 @@
 											</div>
 										</li>
 										<li class="content05 content btnBox">
-
+			
 											<!-- 수정하지 않을 때 -->
-
+			
 											<div class="editBefore">
 												<div class="btnWrap">
 													<button class="addBtn miniBtn">추가</button>
 												</div>
 												<div class="btnWrap">
-													<button class="delBtn miniBtn">삭제</button>
+													<button class="delBtn miniBtn" id="deleteMemoBtn">삭제</button>
 												</div>
 											</div>
-
+			
 											<!-- 수정할 때 -->
-
+			
 											<div class="editAfter">
 												<div class="newBtnWrap">
 													<button class="registBtn miniBtn">등록</button>
@@ -534,17 +484,21 @@
 											</div>
 										</li>
 									</ul>
-									<ul class="contents">
+									<ul class="contents" th:each="val:${memoList}">
 										<li class="content01 content">
 											<!-- 2022-11-01 -->
 											<!-- input 추가 -->
-											<input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
+											<input type="hidden" th:value="${val.mm_idx}" id="idx">
+											<input type="text" readonly placeholder="2022-11-01" id="wdate" th:value="${val.mm_wdate}"
+												class="notWriteInput">
 										</li>
 										<li class="content02 content editSpace">
-											<input type="text" readonly placeholder="김철수" class="editingContent">
+											<input type="text" readonly placeholder="김철수" id="wname" th:value="${val.mm_user_name}"
+												class="editingContent">
 										</li>
 										<li class="content03 content editSpace">
-											<input type="text" readonly placeholder="협의중" class="editingContent">
+											<input type="text" readonly placeholder="협의중" id="wmemo" th:value="${val.mm_memo}"
+												class="editingContent">
 										</li>
 										<li class="content04 content editSpace">
 											<div class="btnsWrap">
@@ -552,20 +506,20 @@
 											</div>
 										</li>
 										<li class="content05 content btnBox">
-
+			
 											<!-- 수정하지 않을 때 -->
-
+			
 											<div class="editBefore">
 												<div class="btnWrap">
 													<button class="addBtn miniBtn">추가</button>
 												</div>
 												<div class="btnWrap">
-													<button class="delBtn miniBtn">삭제</button>
+													<button class="delBtn miniBtn" id="deleteMemoBtn">삭제</button>
 												</div>
 											</div>
-
+			
 											<!-- 수정할 때 -->
-
+			
 											<div class="editAfter">
 												<div class="newBtnWrap">
 													<button class="registBtn miniBtn">등록</button>
@@ -573,17 +527,18 @@
 											</div>
 										</li>
 									</ul>
-									<ul class="contents">
+			
+									<ul class="contents" th:if="${memoList.size()==0}">
 										<li class="content01 content">
 											<!-- 2022-11-01 -->
 											<!-- input 추가 -->
-											<input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
+											<input type="text" readonly placeholder="" class="notWriteInput">
 										</li>
 										<li class="content02 content editSpace">
-											<input type="text" readonly placeholder="김철수" class="editingContent">
+											<input type="text" readonly placeholder="" id="wname" class="editingContent">
 										</li>
 										<li class="content03 content editSpace">
-											<input type="text" readonly placeholder="협의중" class="editingContent">
+											<input type="text" readonly placeholder="" id="wmemo" class="editingContent">
 										</li>
 										<li class="content04 content editSpace">
 											<div class="btnsWrap">
@@ -591,9 +546,9 @@
 											</div>
 										</li>
 										<li class="content05 content btnBox">
-
+			
 											<!-- 수정하지 않을 때 -->
-
+			
 											<div class="editBefore">
 												<div class="btnWrap">
 													<button class="addBtn miniBtn">추가</button>
@@ -602,90 +557,12 @@
 													<button class="delBtn miniBtn">삭제</button>
 												</div>
 											</div>
-
+			
 											<!-- 수정할 때 -->
-
+			
 											<div class="editAfter">
 												<div class="newBtnWrap">
-													<button class="registBtn miniBtn">등록</button>
-												</div>
-											</div>
-										</li>
-									</ul>
-									<ul class="contents">
-										<li class="content01 content">
-											<!-- 2022-11-01 -->
-											<!-- input 추가 -->
-											<input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
-										</li>
-										<li class="content02 content editSpace">
-											<input type="text" readonly placeholder="김철수" class="editingContent">
-										</li>
-										<li class="content03 content editSpace">
-											<input type="text" readonly placeholder="협의중" class="editingContent">
-										</li>
-										<li class="content04 content editSpace">
-											<div class="btnsWrap">
-												<button class="editBtn miniBtn">수정</button>
-											</div>
-										</li>
-										<li class="content05 content btnBox">
-
-											<!-- 수정하지 않을 때 -->
-
-											<div class="editBefore">
-												<div class="btnWrap">
-													<button class="addBtn miniBtn">추가</button>
-												</div>
-												<div class="btnWrap">
-													<button class="delBtn miniBtn">삭제</button>
-												</div>
-											</div>
-
-											<!-- 수정할 때 -->
-
-											<div class="editAfter">
-												<div class="newBtnWrap">
-													<button class="registBtn miniBtn">등록</button>
-												</div>
-											</div>
-										</li>
-									</ul>
-									<ul class="contents">
-										<li class="content01 content">
-											<!-- 2022-11-01 -->
-											<!-- input 추가 -->
-											<input type="text" readonly placeholder="2022-11-01" class="notWriteInput">
-										</li>
-										<li class="content02 content editSpace">
-											<input type="text" readonly placeholder="김철수" class="editingContent">
-										</li>
-										<li class="content03 content editSpace">
-											<input type="text" readonly placeholder="협의중" class="editingContent">
-										</li>
-										<li class="content04 content editSpace">
-											<div class="btnsWrap">
-												<button class="editBtn miniBtn">수정</button>
-											</div>
-										</li>
-										<li class="content05 content btnBox">
-
-											<!-- 수정하지 않을 때 -->
-
-											<div class="editBefore">
-												<div class="btnWrap">
-													<button class="addBtn miniBtn">추가</button>
-												</div>
-												<div class="btnWrap">
-													<button class="delBtn miniBtn">삭제</button>
-												</div>
-											</div>
-
-											<!-- 수정할 때 -->
-
-											<div class="editAfter">
-												<div class="newBtnWrap">
-													<button class="registBtn miniBtn">등록</button>
+													<button class="registBtn miniBtn" id="deleteMemoBtn">등록</button>
 												</div>
 											</div>
 										</li>
@@ -696,6 +573,7 @@
 					</div>
 				</div>
 			</section>
+			
 			<!-- 참고 -->
 			<div class="finalBtnBox btnWrap">
 				<!-- 이전 버튼 추가 -->

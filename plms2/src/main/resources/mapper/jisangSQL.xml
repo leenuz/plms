@@ -113,7 +113,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,COALESCE('','') AS permitted_yn
 				,SUBSTRING(nm.nm_notset_no,1,1) AS rtype
 				 FROM notset_master nm
-		 
+<!--				 
+ 				 UNION all
+				 
+				 	SELECT 
+				dom.dom_dopco_no AS manage_no
+				,COALESCE('','') AS comple_yn
+				,COALESCE('','') AS permitted_yn
+				,SUBSTRING(nm.nm_notset_no,1,1) AS rtype
+				 FROM dopco_master dom
+		 -->
 		 ) AS u
 		 ON PI.pi_manage_no = u.manage_no
 		 WHERE 1=1
