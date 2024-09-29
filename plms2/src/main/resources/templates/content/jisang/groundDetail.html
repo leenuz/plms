@@ -562,21 +562,23 @@
 					<!-- 첨부파일 리스트 -->
 					<div class="contentScr" id="fileListDiv">
 						<!--첨부파일 목록 반복문-->
-						<ul class="contents" id="fileListUl" th:each="file, iterStat : ${atcFileList}">
+						<ul class="contents" id="fileListUl" th:each="file, iterStat : ${jisangPnuAtcFileList}">
 							<li class="selectWidth content checkboxWrap">
+								<input type="hidden" id="idx" th:value="${file.pa_idx}">
 								<input type="checkbox" th:id="'masterEdit_attachFile' + ${iterStat.index + 1}"
 									name="masterEdit_attachFile" />
 								<label th:for="'masterEdit_attachFile' + ${iterStat.index + 1}"></label>
 							</li>
 							<li class="content registDateWidth">
-								<input type="text" th:value="${#dates.format(file.ja_wdate, 'yyyy-MM-dd HH:mm')}" readonly
+								<input type="text" th:value="${#dates.format(file.pa_wdate, 'yyyy-MM-dd HH:mm')}" readonly
 									class="notWriteInput" name="registDateWidth" />
 							</li>
 							<li class="content fileNameWidth">
-								<input type="text" th:value="${file.ja_file_nm}" id="filename" readonly class="notWriteInput" />
+								
+								<input type="text" th:value="${file.pa_file_nm}" id="filename" readonly class="notWriteInput" />
 							</li>
 							<li class="content viewBtnBox">
-								<button class="viewDetailButton" th:onclick="openFilePopup([[${file.ja_file_path}]])">보기</button>
+								<button class="viewDetailButton" th:onclick="downloadFile([[${file.pa_file_path}]],[[${file.pa_file_nm}]])">보기</button>
 							</li>
 						</ul>
 					</div>
@@ -584,7 +586,7 @@
 			</div>
 		
 			<div class="btnWrap">
-				<button class="attachFileBtn vividBlueBtn">첨부파일 저장</button>
+				<button class="attachFileBtn vividBlueBtn" id="fileSaveBtn">첨부파일 저장</button>
 				<button class="attachFileBtn grayBtn" id="deleteFileBtn">선택파일 삭제</button>
 			</div>
 		</section>

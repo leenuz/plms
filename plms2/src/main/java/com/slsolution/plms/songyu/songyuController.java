@@ -410,8 +410,8 @@ public class songyuController {
 	//			      			res.getWriter().flush();
 	    }
 
-	@RequestMapping(value="/menu01DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
-    public ResponseEntity<?> datatableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	@RequestMapping(value="/menu01DataTableList_bak", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+    public ResponseEntity<?> datatableList_bak(HttpServletRequest req, HttpServletResponse res) throws Exception {
         
 		//일반웹형식
 				Properties requestParams = CommonUtil.convertToProperties(req);

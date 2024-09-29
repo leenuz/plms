@@ -84,10 +84,11 @@ $(document).ready(function () {
 		row += '<input type="text" value="" readonly class="notWriteInput" name="registDateWidth"/>';
 		row += '</li>';
 		row += '<li class="content fileNameWidth">';
+		row += '<input type="text" value="" id="filepath" readonly class="notWriteInput" hidden />';
 		row += '<input type="text" value="' + name + '" id="filename" readonly class="notWriteInput" />';
 		row += '</li>';
 		row += '<li class="content viewBtnBox">';
-		row += '<button class="viewDetailButton lightBlueBtn">보기</button>';
+		//row += '<button class="viewDetailButton lightBlueBtn">보기</button>';
 		row += '</li>';
 		row += '</ul>';
 
@@ -131,7 +132,7 @@ $(document).ready(function () {
 				//console.log("-------------sendFileToServer-----------------------");
 				//console.log($(this).parent().parent().parent().parent());
 				//$("#status1").append("File upload Done<br>");    
-				//uploadFiles.push(data.resultData.fpath);    
+				uploadFiles.push(data.resultData.fpath);    
 				//allCheckEventLandRightsRegist();   
 			}
 		});
@@ -194,7 +195,7 @@ $(document).on("click","#deleteFileBtn",function(){
 	    	console.log($(this).val());
 	    }
 	})*/
-	const clickedAttachFiles = document.querySelectorAll('input[name="masterEdit_attachFile"]:checked');
+	/*const clickedAttachFiles = document.querySelectorAll('input[name="masterEdit_attachFile"]:checked');
 	console.log(clickedAttachFiles);
 	console.log(uploadFiles);
 	for(var i=0;i<clickedAttachFiles.length;i++){
@@ -202,7 +203,68 @@ $(document).on("click","#deleteFileBtn",function(){
 		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
 		$(delEle).remove();
 
-	}
+	}*/
+	
+	const selectedCheckboxes = document.querySelectorAll('input[name="masterEdit_attachFile"]:checked');
+
+	       // 체크된 체크박스들의 값과 파일 이름을 추출하여 리스트로 만듦
+	       const selectedFiles = Array.from(selectedCheckboxes).map(checkbox => {
+	           const parentLi = checkbox.closest('ul.contents'); // 체크박스가 포함된 ul 요소를 찾음
+			   console.log(parentLi);
+	          // const fileName = parentLi.querySelector('#filename').val().trim(); // 파일 이름 추출
+			  
+			    const fileName=$(parentLi).find("#filename").val();
+				const idx=$(parentLi).find("#idx").val();
+	           return {
+	               value: Number(checkbox.value),   // 체크박스의 value 값
+	               fileName: fileName,       // 파일 이름
+				   idx:idx
+	           };
+	       });
+
+	       console.log(selectedFiles); // 결과 확인용 콘솔 출력
+
+	       if (selectedFiles.length > 0) {
+	           console.log("Deleting files with IDs:", selectedFiles);
+
+	           // 서버로 삭제 요청 보내기 (예: AJAX 요청)
+	           fetch('/api/pnuAtcDeleteIdx', {
+	               method: 'POST',
+	               headers: {
+	                   'Content-Type': 'application/json',
+	               },
+	               body: JSON.stringify({ fileIds: selectedFiles }),
+	           })
+	           .then(response => response.json())
+	           .then(data => {
+	               if (data.resultMessage == "success") {
+	                   // 성공적으로 삭제되었을 경우 체크박스와 관련된 리스트 항목 삭제
+
+	                   alert('선택된 파일이 삭제되었습니다.');
+	                   var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val()};
+	                   $.ajax({
+	                          url: "/jisang/getAtcFileData",
+	                          type: "POST",
+	                          data: params,
+	                      })
+	                      .done(function (fragment) {
+	                          $('#fileListDiv').replaceWith(fragment);
+	                      });
+	               } else {
+	                   alert('파일 삭제에 실패하였습니다.');
+	               }
+	           })
+	           .catch(error => {
+	               console.error('Error:', error);
+	               alert('파일 삭제 중 오류가 발생하였습니다.');
+	           });
+	       } else {
+	           alert('삭제할 파일을 선택해 주세요.');
+	       }
+	
+	
+	
+	
 })
 
 
@@ -224,6 +286,24 @@ $(document).on("click","#fileSaveBtn",function(){
 	for(var i=0;i<files.length;i++){
 		console.log("filename:"+files[i].name);
 	}*/
+	
+	/*const attachFileUls = document.querySelectorAll('input[name="masterEdit_attachFile"]');
+								   console.log(attachFileUls);
+				
+				var files=new Array();
+							   for(var i=0;i<attachFileUls.length;i++){
+								console.log($(attachFileUls[i]).parent().parent().html());
+									var fname=$(attachFileUls[i]).parent().parent().find("#filename").val();
+									var wdate=$(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val();
+									console.log(fname);
+									console.log("wdate:"+wdate);
+									if (wdate==null || wdate=="" || wdate==undefined ) files.push(fname);
+									
+								}*/
+	
+	
+	
+	
 	var manage_no=$("#manage_no").val();
 		if (manage_no==null || manage_no=="undefined"){
 			alert("지상권 관리 번호를 찾을수 없습니다.");
@@ -234,7 +314,8 @@ $(document).on("click","#fileSaveBtn",function(){
 			alert("첨부파일이 없습니다.");
 					return;
 		}
-	var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val(),"files":uploadFiles};
+	var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val(),"files":uploadFiles,"mode":"asave"};
+	console.log(params);
 	url="/api/pnuAtcUpload";
 	$.ajax({
 			
@@ -266,12 +347,12 @@ $(document).on("click","#fileSaveBtn",function(){
 						$("#fileListDiv div").remove();
 						$("#fileListDiv").append("<div id='flist'></div>");
 						$.ajax({
-						       url: "/jisang/getAtcFileData",
+						       url: "/jisang/getPnuAtcFileData",
 						       type: "POST",
 						       data: params,
 						   })
 						   .done(function (fragment) {
-						       $('#pnuAtcFilesDiv').replaceWith(fragment);
+						       $('#fileListDiv').replaceWith(fragment);
 						   });
 					}
 					else {
