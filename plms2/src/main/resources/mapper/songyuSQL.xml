@@ -260,6 +260,7 @@ FROM dosi_master dm
 LEFT JOIN dosi_info di ON dm.dm_dosi_no = di.di_dosi_no
 LEFT JOIN dosi_dept dd ON dm.dm_dosi_no = dd.dd_dosi_no
 WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
+	  ,JIJUK_MST.juso
 	 FROM (	
 		  SELECT
 		   
@@ -489,7 +490,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     
     WHERE 1=1
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-	and r.idx=#{idx}
+	and r.master_no=#{idx}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
 	and r.cancel_yn=#{cancelYn}
@@ -501,7 +502,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 	and r.dosiplan=#{dosiplan}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	and r.address like '${address}%'
+	and replace(trim(r.juso),'  ',' ') like '%${address}%'
 	</if>
 	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
 	and r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
@@ -1076,7 +1077,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     
     WHERE 1=1
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-	and r.idx=#{idx}
+	and r.master_no=#{idx}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
 	and r.cancel_yn=#{cancelYn}
@@ -1088,7 +1089,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 	and r.dosiplan=#{dosiplan}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	and replace(trim(r.juso),'-','') like replace(trim('${address}%'),'-','')
+	and replace(trim(r.juso),'  ',' ') like '%${address}%'
 	
 	</if>
 	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >

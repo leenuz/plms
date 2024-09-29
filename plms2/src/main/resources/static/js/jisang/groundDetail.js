@@ -956,3 +956,42 @@ $(function() {
 });
 
 
+function printPage(width, height) {
+	var popupPage = window.open("/dcl/sub/showPopupPage?dummy=" + Math.random(), "popupPage", "width=" + width + ",height=" + height + ",left=200,top=50,resizable=no,scrollbars=yes");
+}
+
+
+
+function printDivContent(divId) {
+              /*  // 출력할 div의 내용을 가져옴
+                var divContents = $(divId).html();
+                
+                // 새 창 열기
+                var printWindow = window.open('', '', 'width=800,height=600');
+                
+                // 새 창에 내용 작성
+                printWindow.document.write('<html><head><title>프린트 미리보기</title>');
+				printWindow.document.write('<meta charset="UTF-8" />');
+				printWindow.document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+				
+				printWindow.document.write('<link rel="stylesheet" href="/css/common.css" type="text/css" />');
+				printWindow.document.write('<link rel="stylesheet" href="http://localhost:8080/css/jisang/groundDetail.css" type="text/css" />');
+                printWindow.document.write('</head><body>');
+                printWindow.document.write(divContents);  // div 내용 추가
+                printWindow.document.write('</body></html>');
+                
+                // 새 창의 문서 닫기
+                printWindow.document.close();
+                
+                // 프린트 명령 실행
+                printWindow.print();*/
+				var printWindow = window.open('/jisang/groundDetailPrint?idx=J_044662&index=44664&gidx=0', '_blank', 'width=1680,height=960');
+
+				                // 새 창이 열리고 로드된 후 자동으로 프린트 실행
+				                printWindow.onload = function() {
+				                    printWindow.focus(); // 새 창에 포커스
+				                    printWindow.print(); // 프린트 실행
+				                };
+}
+
+

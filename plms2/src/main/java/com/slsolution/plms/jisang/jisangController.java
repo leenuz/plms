@@ -1344,6 +1344,116 @@ log.info("PMT_NO:"+PMT_NO);
 		return mav;
     }
 	
+	
+	//groundDetail  상세 조회
+		@GetMapping(path="/groundDetailPrint") //http://localhost:8080/api/get/dbTest
+	    public ModelAndView groundDetailPrint(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			ModelAndView mav=new ModelAndView();
+			HashMap params = new HashMap();
+			ArrayList<HashMap> list=new ArrayList<HashMap>();
+			
+			String idx = httpRequest.getParameter("idx");
+			String index = httpRequest.getParameter("index");
+			
+			params.put("idx",idx);
+			params.put("manage_no",idx);
+			params.put("index",index);
+			log.info("params:"+params);
+			
+			ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+			
+			HashMap jijuk = new HashMap<>();
+			jijuk.put("x", 0);
+			jijuk.put("y", 0);
+			if (data.size() > 0) {
+				HashMap jijukParam = new HashMap<>();
+				jijukParam.put("sido_nm", data.get(0).get("jm_sido_nm"));
+				jijukParam.put("sgg_nm", data.get(0).get("jm_sgg_nm"));
+				jijukParam.put("emd_nm", data.get(0).get("jm_emd_nm"));
+				jijukParam.put("ri_nm", data.get(0).get("jm_ri_nm"));
+				jijukParam.put("jibun", data.get(0).get("jm_jibun"));
+
+				ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+				if (jijukList.size() > 0) {
+					jijuk = jijukList.get(0);
+				}
+				else {
+					jijuk = new HashMap<>();
+					jijuk.put("x", 0);
+					jijuk.put("y", 0);
+				}
+			}
+			
+			ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+			ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+
+//			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+
+			
+			//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
+			params.put("JISANG_NO", idx);
+			ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 신버전
+			
+			ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
+			// jisangModifyList를 역순으로 정렬 (변경일시 내림차순 하기 위해서)
+			Collections.reverse(jisangModifyList);
+			
+			//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
+			ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
+
+			params.put("pnu", data.get(0).get("jm_pnu"));
+			log.info("pnu: "+ data.get(0).get("jm_pnu"));
+			ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
+			log.info("jisangIssueList size:"+jisangIssueList.size());
+			
+			if (jisangIssueList.size()>0) {
+				log.info("1:"+jisangIssueList.get(0).get("pi_code_depth1"));
+				log.info("2:"+jisangIssueList.get(0).get("pi_code_depth2"));
+				log.info("3:"+jisangIssueList.get(0).get("pi_code_depth3"));
+				params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
+				params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
+				params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
+			}
+			
+			ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+			ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
+			ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
+			ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+			
+			log.info("params:"+params);
+			log.info("data:"+data.get(0));
+			log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
+			log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
+			log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
+			log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+			log.info("jisangPermitList:"+jisangPermitList);
+			log.info("jisangMergeList:"+jisangMergeList);
+			log.info("jisangIssueList:"+jisangIssueList);
+			log.info("souja count:"+soujaList.size());
+			log.info("soujaList:"+soujaList);
+			log.info("atcFileList:"+atcFileList);
+			log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+			log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
+			log.info("jisangMemoList:"+jisangMemoList);
+			log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+			
+			mav.addObject("resultData",data.get(0));
+			mav.addObject("jijuk", jijuk);
+			mav.addObject("soujaList",soujaList);
+			mav.addObject("jisangPermitList",jisangPermitList);
+			mav.addObject("atcFileList",atcFileList);
+			mav.addObject("jisangModifyList",jisangModifyList);
+			mav.addObject("jisangMergeList",jisangMergeList);
+			mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+			mav.addObject("jisangIssueList",jisangIssueList);
+			mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
+			mav.addObject("memoList",jisangMemoList);
+			mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+			mav.setViewName("content/jisang/groundDetailPrint");
+			
+			return mav;
+	    }
+	
 	// 지상권 분할- 지상권 상세정보
 	@GetMapping(path="/forDivisionEasementDetails") //http://localhost:8080/api/get/dbTest
 	public ModelAndView forDivisionEasementDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {

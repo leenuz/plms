@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 
 <head>
     <meta charset="UTF-8" />
@@ -12,7 +12,43 @@
     <!-- <script src="/js/jisang/groundDetail.js"></script> -->
     <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-    
+    <style>
+        /* 화면용 스타일 */
+        #groundDetail {
+            width: 100%;
+            padding: 20px;
+           
+            margin: 20px auto;
+        }
+
+        /* 인쇄할 때의 스타일 */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            /* 인쇄 영역 크기를 A4 사이즈에 맞춤 */
+            #printableArea {
+                width: 21cm;  /* A4 크기: 21cm */
+                height: auto;  /* 높이는 내용에 따라 자동 */
+                padding: 1cm;  /* 여백 설정 */
+                margin: 0 auto;  /* 가운데 정렬 */
+                background-color: white;
+                box-sizing: border-box;  /* 패딩 포함하여 크기 계산 */
+            }
+
+            /* 페이지 매김 설정 */
+            .page-break {
+                page-break-before: always; /* 페이지가 넘어갈 때 강제 페이지 매김 */
+            }
+
+            /* 불필요한 요소 숨기기 */
+            button, header, footer {
+                display: none;  /* 인쇄 시 버튼이나 불필요한 요소 숨김 */
+            }
+        }
+    </style>
 
     <title>지상권</title>
 </head>
