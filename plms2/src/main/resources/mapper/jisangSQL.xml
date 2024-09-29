@@ -652,18 +652,19 @@ SELECT count(*)
                  WHERE 1 = 1
                    AND ( JM.jm_CANCEL_YN IS NULL
                     OR JM.jm_CANCEL_YN != 'Y' )
-				<if test="PAGE_GUBUN != null and PAGE_GUBUN != ''">
-				    <if test="PAGE_GUBUN != '1'">
-				        AND JM.jm_SAVE_STATUS = '승인'
-				    </if>
-				</if>
-				
-
+		<if test="PAGE_GUBUN != null and PAGE_GUBUN != ''">
+		    <if test="PAGE_GUBUN != '1'">
+		        AND JM.jm_SAVE_STATUS = '승인'
+		    </if>
+		</if>
 		<if test="ADDRESSCODE != null and ADDRESSCODE != ''">
 			AND JM.jm_ADDRCODE LIKE '$ADDRESSCODE$%'
 		</if>
 		<if test="JIBEON != null and JIBEON != ''">
 			AND JM.jm_JIBUN LIKE '${JIBEON}%'
+		</if>
+		<if test="jisa != null and jisa != ''">
+			AND JM.jm_JISA = #{jisa}
 		</if>
 		<if test="JISA != null and JISA != ''">
 			AND JM.jm_JISA = #{JISA}
@@ -682,6 +683,9 @@ SELECT count(*)
 		</if>
 		<if test="SOYU != null and SOYU != ''">
 			AND JS.js_SOUJA_NAME LIKE '%${SOYU}%'
+		</if>
+		<if test="souja!= null and souja != ''">
+			AND JS.js_SOUJA_NAME LIKE '%${souja}%'
 		</if>
 		<if test="JISANGNO != null and JISANGNO != ''">
 			AND JM.jm_JISANG_NO = #{JISANGNO}

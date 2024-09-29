@@ -235,243 +235,225 @@ function datatablebasic(){
 // Korean    var lang_kor = {        "decimal" : "",        "emptyTable" : "데이터가 없습니다.",        "info" : "_START_ - _END_ (총 _TOTAL_ 명)",        "infoEmpty" : "0명",        "infoFiltered" : "(전체 _MAX_ 명 중 검색결과)",        "infoPostFix" : "",        "thousands" : ",",        "lengthMenu" : "_MENU_ 개씩 보기",        "loadingRecords" : "로딩중...",        "processing" : "처리중...",        "search" : "검색 : ",        "zeroRecords" : "검색된 데이터가 없습니다.",        "paginate" : {            "first" : "첫 페이지",            "last" : "마지막 페이지",            "next" : "다음",            "previous" : "이전"        },        "aria" : {            "sortAscending" : " :  오름차순 정렬",            "sortDescending" : " :  내림차순 정렬"        }    };
 
 
-function loadDataTable(params){
+function loadDataTable(params) {
 	console.log("-----start loadDataTable----------");
 	console.log(params);
 
 	//var json=JSON.stringify(params);
 
-	table=$('#userTable').DataTable({
-
-		fixedColumns:{
-			start:3,
-
-			},
-		scrollCollapse:true,
-		scrollX:true,
-		scrollY:600,
-		paging:true,
-		"oLanguage":{"sLengthMenu":"_MENU_"},
+	table = $('#userTable').DataTable({
+		fixedColumns: {
+			start: 3,
+		},
+		scrollCollapse: true,
+		scrollX: true,
+		scrollY: 600,
+		paging: true,
+		"oLanguage": { "sLengthMenu": "_MENU_" },
 		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
-		dom:'<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
-		 buttons: [{extend:'excel',text:'엑셀 다운로드'}],
+		dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
+		buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
+		pageLength: 20,
+		bPaginate: true,
+		bLengthChange: true,
+		bInfo: false,
+		lengthMenu: [[10, 20, 50, -1], ["10건", "20건", "50건", "All"]],
+		bAutoWidth: false,
+		processing: true,
+		ordering: true,
+		bServerSide: true,
+		searching: false,
+		destroy: true,
+		rowReorder: {
+			dataSrc: 'b_seq'
+		},
+		//	sAjaxSources:"/songyu/menu01DataTableList",
+		//	sServerMethod:"POST",
+		ajax: {
+			url: "/jisang/menu02_1DataTableList",
+			type: "POST",
+			datatype: "json",
+			data: function(d) {
+				//d=params;
+				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.manage_no = params.manage_no;
+				d.toji_type = params.toji_type;
+				d.toji_plan_type = params.toji_plan_type;
+				d.right_overlap = params.OverlapCheck01;
 
+				d.souja = params.souja;
+				d.jasan_no = params.jasan_no;
+				d.dosiplan = params.dosiplan;
+				d.cancel_yn = params.cancel_yn;
+				d.deunggi_date = params.start_date + '~' + params.end_date;
+				d.account_yn = params.account_yn;
+				d.start_date = params.start_date;
+				d.end_date = params.end_date;
+				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
+				console.log("askmenu:" + ask);
 
-
-				pageLength: 20,
-                bPaginate: true,
-                bLengthChange: true,
-                bInfo:false,
-                lengthMenu : [ [ 10, 20, 50, -1 ], [ "10건","20건","50건", "All" ] ],
-                bAutoWidth: false,
-                processing: true,
-                ordering: true,
-                bServerSide: true,
-                searching: false,
-				destroy:true,
-
-                rowReorder:{
-					dataSrc:'b_seq'
-				},
-			//	sAjaxSources:"/songyu/menu01DataTableList",
-			//	sServerMethod:"POST",
-                ajax : {
-                    url:"/jisang/menu02_1DataTableList",
-                    type:"POST",
-					datatype:"json",
-                    data: function(d){
-						//d=params;
-						d.jisa=ljsIsNull(params.jisa)?'':params.jisa;
-						d.manage_no=params.manage_no;
-						d.toji_type=params.toji_type;
-						d.toji_plan_type=params.toji_plan_type;
-						d.right_overlap=params.OverlapCheck01;
-
-                        d.souja=params.souja;
-                        d.jasan_no=params.jasan_no;
-						d.dosiplan=params.dosiplan;
-						d.cancel_yn=params.cancel_yn;
-                        d.deunggi_date=params.start_date + '~' + params.end_date;
-                        d.account_yn=params.account_yn;
-                        d.start_date = params.start_date;
-                        d.end_date = params.end_date;
-						var ask=(params.askMenu01==undefined || params.askMenu01==null)?'0':params.askMenu01;
-						console.log("askmenu:"+ask);
-
-
-						if (ask=="0") {
-							console.log("---------3--------------");
-							d.saddr=(params.addressFull==undefined || params.addressFull==null)?'':params.addressFull;
-						}
-						else{
-							console.log("----------------------------1--------------");
-							console.log(ljsIsNull(params.sgg));
-							var addrs=params.sido;
-							console.log("addrs:"+addrs);
-							if (ljsIsNull(params.sgg)) addrs=addrs+"";
-							else addrs=addrs+" "+params.sgg;
-							if (ljsIsNull(params.emd)) addrs=addrs+"";
-							else addrs=addrs+" "+params.emd;
-							if (ljsIsNull(params.ri)) addrs=addrs+"";
-							else addrs=addrs+" "+params.ri;
-							//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
-							//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
-							console.log("addrs:"+addrs);
-							d.saddr=(addrs==undefined || addrs==null)?'':addrs;
-							//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
-						}
-
-						console.log("saddr:"+d.saddr);
-						console.log(params);
-						console.log("-----------d-----------");
-						console.log(d);
-					},
-					dataSrc: function(json){
-						console.log("-------------json---------------");
-						console.log(json);
-						$("#dataTableTotalCount").html(json.recordsTotal);
-						//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
-						return json.data;
-					}
-
-
-
-
-
-                },
-				initComplete:function(){
-
-					console.log(this.api().data().length );
-
-				},
-                /*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-				//	console.log(aData);
-        			$('td:eq(0)', nRow).html(iDisplayIndexFull +1);
-					return nRow;
-    			},*/
-  columns : [
-                    {data: "no","orderable":false},
-                    {data: "jisa"},
-                    {data:"address"},
-                    {data:"jasan_no","defaultContent":""},
-                    {data: "jimok_text","defaultContent":""}, //5
-                    {data: "souja_name","defaultContent":""},
-                    {data: "jijuk_area","defaultContent":""},
-                    {data: "pyeonib_area","defaultContent":""},
-                    {data: "chuideuk_date"},
-                     {data: "deunggi_date"},
-                    {
-                        data: "cancel_yn",
-                         render: function(data, type, row, meta) {
-                              return data==="Y" ? "해지" : "미해지";
-                         }
-                        },//해지여부
-                    {data: "cancel_date"},//해지요청일
-
-                     {
-                         data: "cancel_date",
-                         render: function(data, type, row, meta) {
-                        console.log("data : "+ data);
-                         if(data === null){
-                            return ` <button class="regisRemoveBtn">해지등록</button>`;
-                         }else{
-                            return ` <button class="viewDetailButton">상세보기</button>`;
-                         }
-//                            return ` <button class="viewDetailButton">상세보기</button>
-//                                     <button class="regisRemoveBtn">해지등록</button>
-//                            `;
-                         }
-                     }, //상세보기 수정필요
-                   {
-                         data: "idx",
-                         render: function(data, type, row, meta) {
-                                // return `<button class="viewDetailButton" >위치보기</button> `;
-								return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
-							}
-                     },// 지도보기 데이터 수정필요
-                      {
-                          data: "idx",
-                          render: function(data, type, row, meta) {
-                              return `<button class="viewDetailButton">문서보기</button> `;
-                          }
-                      }// ECHO 문서보기 수정필요
-                ],
-                columnDefs:[
-
-					{"className": "dt-head-center", "targets": "_all"},
-					{className: 'dt-center',"targets": "_all"},
-					{targets:[0],width:"50px"},
-					{targets:[1],width:"150px"},
-					{targets:[2],width:"400px"}, //주소
-					{targets:[3],width:"150px"},
-					{targets:[4],width:"100px"},
-					{targets:[5],width:"200px"}, //소유자
-					{targets:[6],width:"150px"},
-					{targets:[7],width:"150px"},
-                    {targets:[8],width:"200px"},
-                    {targets:[9],width:"200px"}, //등기일
-                    {targets:[10],width:"100px"}, //해지여부
-                    {targets:[11],width:"200px"},//해지요청일
-                    {targets:[12],width:"100px"}, // 상세보기
-                    {targets:[13],width:"100px"}, // 지도보기
-                    {targets:[14],width:"100px"}, // 문서보기
-
-				]
-
-            });
-
-			table.on('click','tr',function() {
-			    var target = $(event.target);
-                    var data = table.row(this).data();
-                    var isButtonCell = target.closest('td').index() === 12 ||target.closest('td').index() === 13 || target.closest('td').index() === 14;
-                    var url;
-
-                    if (isButtonCell) {
-                       if(target.closest('td').index() === 12){
-						// 해지등록 클릭
-                            const buttonClass = event.target.className;
-
-                            if(buttonClass=="regisRemoveBtn"){
-                                url= "/jisang/landTerminationRegistration?idx=" + data.idx +"&index=" +data.index;        //해지등록
-                            }else{
-                                url = "/jisang/easementDetails?idx=" + data.idx+"&index=" +data.index;      //상세보기
-                            }
-                             window.location = url;
-                       }else if(target.closest('td').index() === 13){
-                       //지도보기 클릭
-                        //    mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
-//                            mapWindow = window.open('http://10.168.0.247:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'mapWindow', 'width=2048,height=1024');
-                       }else{
-                       // ECHO 문서보기 클릭
-
-                       }
-                    } else {
-                        url = "/jisang/easementDetails?idx=" + data.idx;
-                        window.location = url;
-                    }
-											   
-			    });
-			
-			/*$("table th").resizable({
-				handles:'e',
-				stop:function(e,ui){
-					$(this).width(ui.size.width);
-					table.columns.adjust().draw();
+				if (ask == "0") {
+					console.log("---------3--------------");
+					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
 				}
-			});*/
-			/*table
-			    .on('order.dt search.dt', function () {
-			        let i = 1;
-			 
-			        table
-			            .cells(null, 0, { search: 'applied', order: 'applied' })
-			            .every(function (cell) {
-			                this.data(i++);
-			            });
-			    })
-			    .draw();*/
-			
-			      // console.log($('#userTable').DataTable().page.info().recordsTotal);
+				else {
+					console.log("----------------------------1--------------");
+					console.log(ljsIsNull(params.sgg));
+					var addrs = params.sido;
+					console.log("addrs:" + addrs);
+					if (ljsIsNull(params.sgg)) addrs = addrs + "";
+					else addrs = addrs + " " + params.sgg;
+					if (ljsIsNull(params.emd)) addrs = addrs + "";
+					else addrs = addrs + " " + params.emd;
+					if (ljsIsNull(params.ri)) addrs = addrs + "";
+					else addrs = addrs + " " + params.ri;
+					//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
+					//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
+					console.log("addrs:" + addrs);
+					d.saddr = (addrs == undefined || addrs == null) ? '' : addrs;
+					//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
+				}
+				console.log("saddr:" + d.saddr);
+				console.log(params);
+				console.log("-----------d-----------");
+				console.log(d);
+			},
+			dataSrc: function(json) {
+				console.log("-------------json---------------");
+				console.log(json);
+				$("#dataTableTotalCount").html(json.recordsTotal);
+				//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
+				return json.data;
+			}
+		},
+		initComplete: function() {
+			console.log(this.api().data().length);
+		},
+		/*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+//	console.log(aData);
+	$('td:eq(0)', nRow).html(iDisplayIndexFull +1);
+return nRow;
+},*/
+		columns: [
+			{ data: "no", "orderable": false },
+			{ data: "jisa" },
+			{ data: "address" },
+			{ data: "jasan_no", "defaultContent": "" },
+			{ data: "jimok_text", "defaultContent": "" }, //5
+			{ data: "souja_name", "defaultContent": "" },
+			{ data: "jijuk_area", "defaultContent": "" },
+			{ data: "pyeonib_area", "defaultContent": "" },
+			{ data: "chuideuk_date" },
+			{ data: "deunggi_date" },
+			{
+				data: "cancel_yn",
+				render: function(data, type, row, meta) {
+					return data === "Y" ? "해지" : "미해지";
+				}
+			},//해지여부
+			{ data: "cancel_date" },//해지요청일
+
+			{
+				data: "cancel_date",
+				render: function(data, type, row, meta) {
+					console.log("data : " + data);
+					if (data === null) {
+						return ` <button class="regisRemoveBtn">해지등록</button>`;
+					} else {
+						return ` <button class="viewDetailButton">상세보기</button>`;
+					}
+					//                            return ` <button class="viewDetailButton">상세보기</button>
+					//                                     <button class="regisRemoveBtn">해지등록</button>
+					//                            `;
+				}
+			}, //상세보기 수정필요
+			{
+				data: "idx",
+				render: function(data, type, row, meta) {
+					// return `<button class="viewDetailButton" >위치보기</button> `;
+					return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
+				}
+			},// 지도보기 데이터 수정필요
+			{
+				data: "idx",
+				render: function(data, type, row, meta) {
+					return `<button class="viewDetailButton">문서보기</button> `;
+				}
+			}// ECHO 문서보기 수정필요
+		],
+		columnDefs: [
+			{ "className": "dt-head-center", "targets": "_all" },
+			{ className: 'dt-center', "targets": "_all" },
+			{ targets: [0], width: "50px" },
+			{ targets: [1], width: "150px" },
+			{ targets: [2], width: "400px" }, //주소
+			{ targets: [3], width: "150px" },
+			{ targets: [4], width: "100px" },
+			{ targets: [5], width: "200px" }, //소유자
+			{ targets: [6], width: "150px" },
+			{ targets: [7], width: "150px" },
+			{ targets: [8], width: "200px" },
+			{ targets: [9], width: "200px" }, //등기일
+			{ targets: [10], width: "100px" }, //해지여부
+			{ targets: [11], width: "200px" },//해지요청일
+			{ targets: [12], width: "100px" }, // 상세보기
+			{ targets: [13], width: "100px" }, // 지도보기
+			{ targets: [14], width: "100px" }, // 문서보기
+		]
+	});
+
+	table.on('click', 'tr', function() {
+		var target = $(event.target);
+		var data = table.row(this).data();
+		var isButtonCell = target.closest('td').index() === 12 || target.closest('td').index() === 13 || target.closest('td').index() === 14;
+		var url;
+
+		if (isButtonCell) {
+			if (target.closest('td').index() === 12) {
+				// 해지등록 클릭
+				const buttonClass = event.target.className;
+
+				if (buttonClass == "regisRemoveBtn") {
+					url = "/jisang/landTerminationRegistration?idx=" + data.idx + "&index=" + data.index;        //해지등록
+				} else {
+					url = "/jisang/easementDetails?idx=" + data.idx + "&index=" + data.index;      //상세보기
+				}
+				window.location = url;
+			} else if (target.closest('td').index() === 13) {
+				//지도보기 클릭
+				//    mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
+				//                            mapWindow = window.open('http://10.168.0.247:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'mapWindow', 'width=2048,height=1024');
+			} else {
+				// ECHO 문서보기 클릭
+
+			}
+		} else {
+			url = "/jisang/easementDetails?idx=" + data.idx;
+			window.location = url;
+		}
+
+	});
+
+	/*$("table th").resizable({
+		handles:'e',
+		stop:function(e,ui){
+			$(this).width(ui.size.width);
+			table.columns.adjust().draw();
+		}
+	});*/
+	/*table
+			.on('order.dt search.dt', function () {
+					let i = 1;
+	 
+					table
+							.cells(null, 0, { search: 'applied', order: 'applied' })
+							.every(function (cell) {
+									this.data(i++);
+							});
+			})
+			.draw();*/
+
+	// console.log($('#userTable').DataTable().page.info().recordsTotal);
 }
 
 $(document).on("click","#moveMap",function(){
