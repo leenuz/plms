@@ -270,7 +270,7 @@ function loadDataTable(params) {
 		//	sAjaxSources:"/songyu/menu01DataTableList",
 		//	sServerMethod:"POST",
 		ajax: {
-			url: "/jisang/menu02_1DataTableList",
+			url: "/jisang/menu02_2DataTableList",
 			type: "POST",
 			datatype: "json",
 			data: function(d) {
@@ -348,7 +348,13 @@ return nRow;
 			{
 				data: "cancel_yn",
 				render: function(data, type, row, meta) {
-					return data === "Y" ? "해지" : "미해지";
+				    if (data === "Y") {
+				        return "해지";
+				    } else if (data === "N") {
+				        return "미해지";
+				    } else {
+				        return "미해지"; // cancel_yn이 null일 때의 처리
+				    }
 				}
 			},//해지여부
 			{ data: "cancel_date" },//해지요청일
@@ -357,7 +363,8 @@ return nRow;
 				data: "cancel_date",
 				render: function(data, type, row, meta) {
 					console.log("data : " + data);
-					if (data === null) {
+					console.log("row.cancel_yn : " + row.cancel_yn);
+					if (row.cancel_yn === 'N') {
 						return ` <button class="regisRemoveBtn">해지등록</button>`;
 					} else {
 						return ` <button class="viewDetailButton">상세보기</button>`;

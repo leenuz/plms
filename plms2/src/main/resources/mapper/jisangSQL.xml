@@ -447,6 +447,7 @@ SELECT *
                        , JM.jm_PYEONIB_AREA + COALESCE((SELECT SUM(S.jm_PYEONIB_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS PYEONIB_AREA
                        , JM.jm_permitted_yn as PERMITTED_YN 
                        , JM.jm_addrcode as ADDRCODE 
+                       , JM.jm_cancel_yn as CANCEL_YN
                        , JS.js_souja_name as SOUJA_NAME
                        , (
                     SELECT COUNT(*) - 1
@@ -552,6 +553,9 @@ SELECT *
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
 			AND JM.jm_account_yn = #{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
+		    AND JM.jm_CANCEL_YN = #{cancel_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
 			AND JM.jm_jasan_no LIKE '%${jasan_no}%'
@@ -707,6 +711,311 @@ SELECT count(*)
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
 			AND JM.jm_account_yn = #{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
+		    AND JM.jm_CANCEL_YN = #{cancel_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
+			AND JM.jm_jasan_no LIKE '%${jasan_no}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date)">
+        AND JM.jm_chuideuk_date &gt;= TO_DATE(#{start_date}, 'YYYY-MM-DD')
+    </if>
+    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)">
+        AND JM.jm_chuideuk_date &lt;= TO_DATE(#{end_date}, 'YYYY-MM-DD')
+    </if>
+		) AA WHERE 1=1
+	</select>
+	
+	
+<select id="selectJisangListOrg02_2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+SELECT *
+		FROM ( SELECT ROW_NUMBER() OVER(
+                     ORDER BY JM.jm_JISANG_NO DESC
+                ) as no
+                ,jm.jm_idx AS index
+				,jm.jm_jisang_no AS idx
+				,0 AS gidx
+                       , JM.jm_jisang_no as JISANG_NO
+                       , JM.jm_sido_nm as SIDO_NM
+                       , JM.jm_jasan_no as JASAN_NO
+                       , JM.jm_sgg_nm as SGG_NM
+                       , JM.jm_emd_nm as EMD_NM
+                       , JM.jm_ri_nm as RI_NM
+                       , JM.jm_jibun as JIBUN
+                       , JM.jm_jisa as JISA
+                       , TO_CHAR(JM.jm_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE
+                       , JM.jm_chuideuk_money as CHUIDEUK_MONEY
+                       , TO_CHAR(JM.jm_DEUNGGI_DATE, 'YYYY-MM-DD') AS DEUNGGI_DATE
+                       , trim(JM.jm_pnu) as PNU
+                       , JM.jm_jimok_text as JIMOK_TEXT
+                       , JM.jm_JIJUK_AREA + COALESCE((SELECT SUM(S.jm_JIJUK_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS JIJUK_AREA
+                       , JM.jm_PYEONIB_AREA + COALESCE((SELECT SUM(S.jm_PYEONIB_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS PYEONIB_AREA
+                       , JM.jm_permitted_yn as PERMITTED_YN 
+                       , JM.jm_addrcode as ADDRCODE 
+                       , JM.jm_cancel_yn as CANCEL_YN
+                       , JS.js_souja_name as SOUJA_NAME
+                       , (
+                    SELECT COUNT(*) - 1
+                      FROM JISANG_SOUJA
+                     WHERE js_JISANG_NO = JM.jm_JISANG_NO
+                ) AS SOUJA_CNT
+                       , CASE
+                    WHEN JM.jm_COMPLE_YN IS NULL THEN 'N'
+                    ELSE JM.jm_COMPLE_YN
+                END AS COMPLE_YN
+                       , (
+                    SELECT CASE
+                        WHEN COUNT(*) > 0 THEN 'Y'
+                        ELSE 'N'
+                    END
+                      FROM jisang_PERMIT_TOGI PTD
+                     WHERE JM.jm_JISANG_NO = PTD.jpt_JISANG_NO
+                ) AS PERMIT_YN
+                       , JHT.jmt_rep_jisang_no as REP_JISANG_NO
+                       , JMT.jmt_JISANG_NO AS T_JISANG_NO
+                       , JM.jm_save_status as SAVE_STATUS
+                       , (
+                    SELECT PA.pa_STATUS
+                      FROM PLMS_APPROVAL PA
+                     WHERE PA.pa_DOCKEY = JHT.jmt_DOCKEY
+                ) AS MERGE_STATUS
+                       , (
+                    SELECT PA.pa_STATUS
+                      FROM PLMS_APPROVAL PA
+                     WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
+                ) AS APPROVAL_STATUS
+                  ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
+                  ,jm.jm_cancel_date AS cancel_date
+                  FROM JISANG_MASTER       JM
+                  LEFT OUTER JOIN (
+                    SELECT *
+                      FROM (
+                        SELECT js_JISANG_NO
+                               , js_JIBUN
+                               , js_SOUJA_NAME
+                               , js_ADDRESS
+                               , js_PHONE_NUMBER
+                               , js_HOME_NUMBER
+                               , ROW_NUMBER() OVER(
+                            PARTITION BY js_JISANG_NO
+                             ORDER BY js_JISANG_NO ASC
+                        ) AS ROW_IDX
+                          FROM JISANG_SOUJA
+                    ) sub1
+                     WHERE ROW_IDX = 1
+                ) JS ON JM.jm_JISANG_NO = JS.js_JISANG_NO
+                  LEFT OUTER JOIN JISANG_MASTER_TMP   JMT ON JM.jm_JISANG_NO = JMT.jmt_JISANG_NO
+                  LEFT OUTER JOIN JISANG_MERGE_TMP    JHT ON JM.jm_JISANG_NO = JHT.jmt_JISANG_NO
+                 WHERE 1 = 1
+				<if test="PAGE_GUBUN != null and PAGE_GUBUN != ''">
+				    <if test="PAGE_GUBUN != '1'">
+				        AND JM.jm_SAVE_STATUS = '승인'
+				    </if>
+				</if>
+		<if test="ADDRESSCODE != null and ADDRESSCODE != ''">
+			AND JM.jm_ADDRCODE LIKE '$ADDRESSCODE$%'
+		</if>
+		<if test="jibeon != null and jibeon != ''">
+			AND JM.jm_JIBUN LIKE '${JIBEON}%'
+		</if>
+		<if test="jisa != null and jisa != ''">
+			AND JM.jm_JISA = #{jisa}
+		</if>
+		<if test="DG_STARTDAY != null and DG_STARTDAY != ''">
+			AND JM.jm_DEUNGGI_DATE >=to_date( #{DG_STARTDAY} , 'yyyy-mm-dd')
+		</if>
+		<if test="DG_ENDDAY != null and DG_ENDDAY != ''">
+			AND JM.jm_DEUNGGI_DATE &lt;=to_date( #{DG_ENDDAY} , 'yyyy-mm-dd')
+		</if>
+		<if test="CD_STARTDAY != null and CD_STARTDAY != ''">
+			AND JM.jm_CHUIDEUK_DATE >=	to_date( #{CD_STARTDAY} , 'yyyy-mm-dd')
+		</if>
+		<if test="CD_ENDDAY != null and CD_ENDDAY != ''">
+			AND JM.jm_CHUIDEUK_DATE &lt;= 	to_date( #{CD_ENDDAY} , 'yyyy-mm-dd')
+		</if>
+		<if test="souja!= null and souja != ''">
+			AND JS.js_SOUJA_NAME LIKE '%${souja}%'
+		</if>
+		<if test="JISANGNO != null and JISANGNO != ''">
+			AND JM.jm_JISANG_NO = #{JISANGNO}
+		</if>
+		<if test="JASAN_NO != null and JASAN_NO != ''">
+			AND JM.jm_JASAN_NO LIKE '%'|| #{JASAN_NO}||'%'
+		</if>
+		<if test="COMPLE_YN != null and COMPLE_YN != ''">
+			AND JM.jm_COMPLE_YN = #{COMPLE_YN}
+		</if>
+		<if test="JIMOK_TEXT != null and JIMOK_TEXT != ''">
+			AND JM.jm_JIMOK_TEXT IN ( #{JIMOK_TEXT} )
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
+			AND JM.jm_comple_yn = #{comple_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
+			AND JM.jm_account_yn = #{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
+		    AND JM.jm_CANCEL_YN = #{cancel_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
+			AND JM.jm_jasan_no LIKE '%${jasan_no}%'
+		</if>
+	  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date)">
+        AND JM.jm_chuideuk_date &gt;= TO_DATE(#{start_date}, 'YYYY-MM-DD')
+    </if>
+    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)">
+        AND JM.jm_chuideuk_date &lt;= TO_DATE(#{end_date}, 'YYYY-MM-DD')
+    </if>
+		) AA WHERE 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+			ORDER BY ${orderCol} ${desc}
+			</if>	
+		<if test="length>0">
+			limit #{length} offset #{start}
+		</if>
+	</select>
+	
+<select id="selectJisangListCount02_2" parameterType="java.util.HashMap" resultType="integer">
+SELECT count(*)
+		FROM ( SELECT ROW_NUMBER() OVER(
+                     ORDER BY JM.jm_JISANG_NO DESC
+                ) as no
+                ,jm.jm_idx AS index
+				,jm.jm_jisang_no AS idx
+				,0 AS gidx
+                       , JM.jm_jisang_no as JISANG_NO
+                       , JM.jm_sido_nm as SIDO_NM
+                       , JM.jm_jasan_no as JASAN_NO
+                       , JM.jm_sgg_nm as SGG_NM
+                       , JM.jm_emd_nm as EMD_NM
+                       , JM.jm_ri_nm as RI_NM
+                       , JM.jm_jibun as JIBUN
+                       , JM.jm_jisa as JISA
+                       , TO_CHAR(JM.jm_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE
+                       , JM.jm_chuideuk_money as CHUIDEUK_MONEY
+                       , TO_CHAR(JM.jm_DEUNGGI_DATE, 'YYYY-MM-DD') AS DEUNGGI_DATE
+                       , JM.jm_pnu as PNU
+                       , JM.jm_jimok_text as JIMOK_TEXT
+                       , JM.jm_JIJUK_AREA + COALESCE((SELECT SUM(S.jm_JIJUK_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS JIJUK_AREA
+                       , JM.jm_PYEONIB_AREA + COALESCE((SELECT SUM(S.jm_PYEONIB_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS PYEONIB_AREA
+                       , JM.jm_permitted_yn as PERMITTED_YN 
+                       , JM.jm_addrcode as ADDRCODE 
+                       , JS.js_souja_name as SOUJA_NAME
+                       , (
+                    SELECT COUNT(*) - 1
+                      FROM JISANG_SOUJA
+                     WHERE js_JISANG_NO = JM.jm_JISANG_NO
+                ) AS SOUJA_CNT
+                       , CASE
+                    WHEN JM.jm_COMPLE_YN IS NULL THEN 'N'
+                    ELSE JM.jm_COMPLE_YN
+                END AS COMPLE_YN
+                       , (
+                    SELECT CASE
+                        WHEN COUNT(*) > 0 THEN 'Y'
+                        ELSE 'N'
+                    END
+                      FROM jisang_PERMIT_TOGI PTD
+                     WHERE JM.jm_JISANG_NO = PTD.jpt_JISANG_NO
+                ) AS PERMIT_YN
+                       , JHT.jmt_rep_jisang_no as REP_JISANG_NO
+                       , JMT.jmt_JISANG_NO AS T_JISANG_NO
+                       , JM.jm_save_status as SAVE_STATUS
+                       , (
+                    SELECT PA.pa_STATUS
+                      FROM PLMS_APPROVAL PA
+                     WHERE PA.pa_DOCKEY = JHT.jmt_DOCKEY
+                ) AS MERGE_STATUS
+                       , (
+                    SELECT PA.pa_STATUS
+                      FROM PLMS_APPROVAL PA
+                     WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
+                ) AS APPROVAL_STATUS
+                  ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
+                  ,jm.jm_cancel_date AS cancel_date
+                  FROM JISANG_MASTER       JM
+                  LEFT OUTER JOIN (
+                    SELECT *
+                      FROM (
+                        SELECT js_JISANG_NO
+                               , js_JIBUN
+                               , js_SOUJA_NAME
+                               , js_ADDRESS
+                               , js_PHONE_NUMBER
+                               , js_HOME_NUMBER
+                               , ROW_NUMBER() OVER(
+                            PARTITION BY js_JISANG_NO
+                             ORDER BY js_JISANG_NO ASC
+                        ) AS ROW_IDX
+                          FROM JISANG_SOUJA
+                    ) sub1
+                     WHERE ROW_IDX = 1
+                ) JS ON JM.jm_JISANG_NO = JS.js_JISANG_NO
+                  LEFT OUTER JOIN JISANG_MASTER_TMP   JMT ON JM.jm_JISANG_NO = JMT.jmt_JISANG_NO
+                  LEFT OUTER JOIN JISANG_MERGE_TMP    JHT ON JM.jm_JISANG_NO = JHT.jmt_JISANG_NO
+                 WHERE 1 = 1
+		<if test="PAGE_GUBUN != null and PAGE_GUBUN != ''">
+		    <if test="PAGE_GUBUN != '1'">
+		        AND JM.jm_SAVE_STATUS = '승인'
+		    </if>
+		</if>
+		<if test="ADDRESSCODE != null and ADDRESSCODE != ''">
+			AND JM.jm_ADDRCODE LIKE '$ADDRESSCODE$%'
+		</if>
+		<if test="JIBEON != null and JIBEON != ''">
+			AND JM.jm_JIBUN LIKE '${JIBEON}%'
+		</if>
+		<if test="jisa != null and jisa != ''">
+			AND JM.jm_JISA = #{jisa}
+		</if>
+		<if test="JISA != null and JISA != ''">
+			AND JM.jm_JISA = #{JISA}
+		</if>
+		<if test="DG_STARTDAY != null and DG_STARTDAY != ''">
+			AND JM.jm_DEUNGGI_DATE >=to_date( #{DG_STARTDAY} , 'yyyy-mm-dd')
+		</if>
+		<if test="DG_ENDDAY != null and DG_ENDDAY != ''">
+			AND JM.jm_DEUNGGI_DATE &lt;=to_date( #{DG_ENDDAY} , 'yyyy-mm-dd')
+		</if>
+		<if test="CD_STARTDAY != null and CD_STARTDAY != ''">
+			AND JM.jm_CHUIDEUK_DATE >=	to_date( #{CD_STARTDAY} , 'yyyy-mm-dd')
+		</if>
+		<if test="CD_ENDDAY != null and CD_ENDDAY != ''">
+			AND JM.jm_CHUIDEUK_DATE &lt;= 	to_date( #{CD_ENDDAY} , 'yyyy-mm-dd')
+		</if>
+		<if test="SOYU != null and SOYU != ''">
+			AND JS.js_SOUJA_NAME LIKE '%${SOYU}%'
+		</if>
+		<if test="souja!= null and souja != ''">
+			AND JS.js_SOUJA_NAME LIKE '%${souja}%'
+		</if>
+		<if test="JISANGNO != null and JISANGNO != ''">
+			AND JM.jm_JISANG_NO = #{JISANGNO}
+		</if>
+		<if test="JASAN_NO != null and JASAN_NO != ''">
+			AND JM.jm_JASAN_NO LIKE '%'|| #{JASAN_NO}||'%'
+		</if>
+		<if test="COMPLE_YN != null and COMPLE_YN != ''">
+			AND JM.jm_COMPLE_YN = #{COMPLE_YN}
+		</if>
+		<if test="JIMOK_TEXT != null and JIMOK_TEXT != ''">
+			AND JM.jm_JIMOK_TEXT IN ( #{JIMOK_TEXT} )
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
+			AND JM.jm_comple_yn = #{comple_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
+			AND JM.jm_account_yn = #{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
+		    AND JM.jm_CANCEL_YN = #{cancel_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
 			AND JM.jm_jasan_no LIKE '%${jasan_no}%'
