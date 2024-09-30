@@ -5,7 +5,7 @@ const surfaceInquireCheckboxes = (checkboxes) => {
 
     const valuesArray = []; // 체크된 값들을 저장할 배열
     const choiceCheckWrapper = document.querySelector(".choiceCheckWrapper");
-    let surfaceSelectListMember02 = document.querySelector("#dopcosurfaceInquire .checkBoxsContent"); // 기존 요소들을 선택할 변수 추가
+    let surfaceSelectListMember02 = document.querySelector(".checkBoxsContent"); // 기존 요소들을 선택할 변수 추가
     const resetBtn = document.querySelector(".resetBtn");
   
     
@@ -167,8 +167,8 @@ const surfaceInquireCheckboxes = (checkboxes) => {
             
               // choiceCheckWrapper의 높이를 조정하는 함수
               function adjustWrapperHeight() {
-               /* const heightChange =  choiceCheckWrapper.clientHeight + 100;
-                surfaceSelectListMember02.style.top = `${heightChange}px`;*/
+                const heightChange =  choiceCheckWrapper.clientHeight + 100;
+                surfaceSelectListMember02.style.top = `${heightChange}px`;
               }
         
 
@@ -334,26 +334,24 @@ console.log(selectWrappers);
                     surfaceSelectList.forEach((lists) => lists.classList.remove("active"));
 
                 }
-                else{ 
+                else{
                     let currentSelectValue = document.getElementById(currentSelect); //현재 셀렉박스 가져오기
-					console.log(currentSelectValue);
-                    return thisBtns.innerText = event.target.innerText,
-                    $(currentSelectValue).val(event.target.innerText),//셀렉박스 값에 현재 클릭된 값의 텍스트 담기 
-					$(currentSelectValue).trigger("change");
-					console.log($(this).parent().parent().html());
-                    console.log(currentSelectValue.value), //셀렉박스값표시
+					
+					//console.log(currentSelectValue);
+					//console.log($(this).parent().parent().html());
+                    //console.log(currentSelectValue.value), //셀렉박스값표시
 					
                     surfaceSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
                     surfaceSelectList.forEach((lists) => lists.classList.remove("active"));
+					
+                    return thisBtns.innerText = event.target.innerText,
+                    $(currentSelectValue).val(event.target.innerText),//셀렉박스 값에 현재 클릭된 값의 텍스트 담기 
+					$(currentSelectValue).trigger("change");
+					
                 }
-
-                
-
             }
                 
             if(event.target.nodeName === "LABEL" || event.target.nodeName === "INPUT[TYPE='CHECKBOX']" ){ return; }
-
-
       });
 
     });
