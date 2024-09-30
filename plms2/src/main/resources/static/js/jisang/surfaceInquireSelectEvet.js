@@ -162,7 +162,7 @@ const surfaceInquireCheckboxes = (checkboxes) => {
                 });
             
                 // choiceCheckWrapper에 체크박스 상태 반영
-                choiceCheckWrapper.innerHTML = valuesArray.map((value, indx) => `<li><input type="checkbox" checked id="inqureCheckNew${[indx]}"/><label for="inqureCheckNew${[indx]}"></label><p>${value}</p></li>`).join('');
+                choiceCheckWrapper.innerHTML = valuesArray.map((value, indx) => `<li><input type="checkbox" checked id="inqureCheckNew${[indx]}" name="${value}"/><label for="inqureCheckNew${[indx]}"></label><p>${value}</p></li>`).join('');
               }
             
               // choiceCheckWrapper의 높이를 조정하는 함수
@@ -314,6 +314,17 @@ console.log(selectWrappers);
         closeSelectCheckBtn.addEventListener("click" , (e) => {
             const target = e.target.parentElement.parentElement.previousElementSibling;
             const closestBtn = target.previousElementSibling; 
+            target.classList.remove("active");
+            closestBtn.classList.remove("active");
+        })
+       }
+
+       //지목셀렉박스내의 닫기 버튼 클릭시 이벤트
+       const addSelectCheckBtn = document.querySelector(".checkboxRegisterBtnWrap .completeSelectCheckBtn");
+       if(addSelectCheckBtn){
+       addSelectCheckBtn.addEventListener("click" , (e) => {
+            const target = e.target.parentElement.parentElement.previousElementSibling;
+            const closestBtn = target.previousElementSibling;
             target.classList.remove("active");
             closestBtn.classList.remove("active");
         })
