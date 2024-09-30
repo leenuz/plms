@@ -43,9 +43,13 @@ $(document).on("click","#mergeBtn",function(){
        const checkedCheckboxes = document.querySelectorAll("#userTable input[type='checkbox']:checked");
        let queryParams = [];
 
+       let repIdx = "";
+
        // 선택된 체크박스의 data-idx 값을 수집합니다.
        checkedCheckboxes.forEach((checkbox, index) => {
            const idxValue = checkbox.getAttribute("data-idx");
+           const repIdxValue = checkbox.getAttribute("data-rep-idx");
+           if(repIdxValue) repIdx = repIdxValue;
            queryParams.push(`idx${index + 1}=${idxValue}`);
        });
 
@@ -58,6 +62,7 @@ $(document).on("click","#mergeBtn",function(){
           // 매겨진 파라미터를 사용하여 쿼리 스트링 생성
           const queryString = queryParams.join('&');
           url = `/jisang/landRightMerge?${queryString}&tcount=${queryParams.length}`;
+          if(repIdx) url += `&repIdx=${repIdx}`
           window.location = url;
       }
       else{
@@ -365,7 +370,7 @@ function loadDataTable(params) {
 		columns: [
 			{
 				render: function(data, type, row, meta) {
-					return `<input type="checkbox" id="inquirecombCheck01" data-idx="${row.idx}"/> <label for="inquirecombCheck01"></label>`;
+					return `<input type="checkbox" id="inquirecombCheck01" data-idx="${row.idx}" data-rep-idx="${row.rep_jisang_no}" data-merge-state="${row.merge_status}"/> <label for="inquirecombCheck01"></label>`;
 				},
 				"orderable": false
 			},

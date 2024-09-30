@@ -148,6 +148,7 @@ margin:10px;
                     </ul>
                     <div class="contentsBox">
                         <input type="hidden" id="lastIndex" th:value="${jisangList.size() - 1}">
+                        <input type="hidden" id="repJisangNo" th:value="${repIdx}">
                         <ul class="contents" id="tojiUl" th:if="${jisangList.size()>0}" th:each="val, stat:${jisangList}">
 													  <!--지상권 번호-->
                             <li class="content">
