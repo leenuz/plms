@@ -2285,6 +2285,113 @@ log.info("data:"+data.get(0));
 		int total=(int)count;
 
 		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListOrg",params);
+		log.info("list: " + list);
+		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangList",params);
+		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
+		//log.info("list:"+list);
+
+
+		HashMap<String,Object> resultmap=new HashMap();
+		resultmap.put("draw",draw);
+		resultmap.put("recordsTotal",total);
+		resultmap.put("recordsFiltered",total);
+		resultmap.put("data",list);
+
+		JSONObject obj =new JSONObject(resultmap);
+		//log.info("obj:"+obj);
+		return ResponseEntity.ok(obj.toString());
+
+	}
+	
+	@RequestMapping(value="/menu02_2DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+	public ResponseEntity<?> datatableList02_2(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		//일반웹형식
+		Properties requestParams = CommonUtil.convertToProperties(req);
+
+		HashMap<String, String> returnHash = new HashMap<String, String>();
+		Enumeration<String> obj1 = req.getParameterNames();
+		int cnt=0;
+
+		while (obj1.hasMoreElements())
+		{
+			String paramName = obj1.nextElement();
+			String paramValue = req.getParameter(paramName);
+			returnHash.put(paramName, paramValue);
+		}
+
+		int draw = Integer.parseInt(req.getParameter("draw"));
+		int start = Integer.parseInt(req.getParameter("start"));
+		int length = Integer.parseInt(req.getParameter("length"));
+		String orderColumn=req.getParameter("order[0][column]");
+		String orderDirection = req.getParameter("order[0][dir]");
+		String orderColumnName=req.getParameter("columns[" + orderColumn + "][data]");
+
+		String[] order_cols=req.getParameterValues("order");
+
+		String jisa = req.getParameter("jisa");
+		String manage_no = req.getParameter("manage_no");
+		String dosiplan = req.getParameter("dosiplan");
+		String address = req.getParameter("saddr");
+		String souja = req.getParameter("souja");
+		String jasan_no = req.getParameter("jasan_no");
+		String jimok_text = req.getParameter("jimok_text");
+		String[] jimokArray = jimok_text != null && !jimok_text.trim().isEmpty() ? jimok_text.split(",") : new String[0]; // 빈 배열로 초기화
+
+		String comple_yn = req.getParameter("comple_yn");
+		String cancel_yn = req.getParameter("cancel_yn");
+		String deunggi_date = req.getParameter("deunggi_date");
+		String account_yn = req.getParameter("account_yn"); //회계처리 필요여부
+		String start_date = req.getParameter("start_date");
+		String end_date = req.getParameter("end_date");
+
+		Map map=req.getParameterMap();
+
+		HashMap params = new HashMap();
+		params.put("draw",draw);
+		params.put("start",start);
+		params.put("length",length);
+		params.put("jisa",jisa);
+		params.put("idx",manage_no);
+		params.put("dosiplan",dosiplan);
+		params.put("address",address);
+
+		params.put("souja",souja);
+		params.put("jasan_no",jasan_no);
+
+		params.put("jimokArray", jimokArray);
+		params.put("comple_yn", comple_yn);
+		params.put("cancel_yn", cancel_yn);
+		params.put("deunggi_date", deunggi_date);
+		params.put("account_yn", account_yn);
+		params.put("start_date", start_date);
+		params.put("end_date", end_date);
+
+//		String[] right_arr= {};
+//		right_arr=right_type.split(",");
+//		params.put("right_type", right_arr);
+
+		params.put("manageYn","Y");
+		if (orderColumn==null || orderColumn.equals("null")) {
+			log.info("----------null--------");
+			orderColumn="0";
+		}
+		if (Integer.parseInt(orderColumn)>0  ) {
+			params.put("orderCol",orderColumnName);
+			params.put("desc",orderDirection);
+
+		}
+		else {
+			params.put("orderCol","");
+			params.put("desc","");
+		}
+		log.info("params:"+params);
+
+		Object count= mainService.selectCountQuery("jisangSQL.selectJisangListCount02_2", params);
+		int total=(int)count;
+
+		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListOrg02_2",params);
+		log.info("list: " + list);
 		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangList",params);
 		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
 		//log.info("list:"+list);
@@ -4001,22 +4108,24 @@ log.info("gubun:"+gubun);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 		
 		ArrayList<HashMap> reqDoc2list = mainService.selectQuery("jisangSQL.selectJisangReqDoc2",params);
-//		log.info("params:"+params);
-//		log.info("data:"+data.get(0));
-//		log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
-//		log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
-//		log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
-//		log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
-//		log.info("jisangPermitList:"+jisangPermitList);
-//		log.info("jisangIssueList:"+jisangIssueList);
-//		log.info("souja count:"+soujaList.size());
-//		log.info("soujaList:"+soujaList);
-//		log.info("atcFileList:"+atcFileList);
-//		log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
-//		log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
-//		log.info("jisangMemoList:"+jisangMemoList);
-//		log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
-//		log.info("reqDoc2list:"+reqDoc2list);
+
+		
+		  log.info("params:"+params); log.info("data:"+data.get(0));
+		  log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
+		  log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
+		  log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
+		  log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+		  log.info("jisangPermitList:"+jisangPermitList);
+		  log.info("jisangIssueList:"+jisangIssueList);
+		  log.info("souja count:"+soujaList.size()); log.info("soujaList:"+soujaList);
+		  log.info("atcFileList:"+atcFileList);
+		  log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+		  log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
+		  log.info("jisangMemoList:"+jisangMemoList);
+		  log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+		  log.info("reqDoc2list:"+reqDoc2list);
+		 
+
 		
       			mav.addObject("resultData",data.get(0));
       			mav.addObject("soujaList",soujaList);

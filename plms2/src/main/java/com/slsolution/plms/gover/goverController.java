@@ -470,7 +470,7 @@ public class goverController {
 		}
 		
 		@RequestMapping(value="/menu03_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
-		public ResponseEntity<?> datatableList03_1(HttpServletRequest req, HttpServletResponse res) throws Exception {			
+		public ResponseEntity<?> datatableList03_1(HttpServletRequest req, HttpServletResponse res) throws Exception {	
 			//일반웹형식
 			Properties requestParams = CommonUtil.convertToProperties(req);
 
