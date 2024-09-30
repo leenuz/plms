@@ -1,8 +1,5 @@
 
-
 var table;
-
-
 
 $(document).ready(function() {
   console.log("jisang/menu02_2.js start");
@@ -14,29 +11,27 @@ loadDataTable("");
 });
 
 //조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
-$(document).on("click","#registerBtn",function(){
-       console.log($("#menuHiddenSelectBox01_1").val());
-	   console.log($("#searchForm").serialize());
+$(document).on("click", "#registerBtn", function() {
+	console.log($("#menuHiddenSelectBox01_1").val());
+	console.log($("#searchForm").serialize());
 
-	   var formSerializeArray = $('#searchForm').serializeArray();
-	   console.log(formSerializeArray)
-	   var object = {};
-	   for (var i = 0; i < formSerializeArray.length; i++){
-	       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
-	   }
+	var formSerializeArray = $('#searchForm').serializeArray();
+	console.log(formSerializeArray)
+	var object = {};
+	for (var i = 0; i < formSerializeArray.length; i++) {
+		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+	}
 
-	   var json = JSON.stringify(formSerializeArray);
+	var json = JSON.stringify(formSerializeArray);
 
-	  console.log("----------jsonobj------------");
-	  console.log(json);
-	  console.log("object askMenu01:"+object.askMenu01);
+	console.log("----------jsonobj------------");
+	console.log(json);
+	console.log("object askMenu01:" + object.askMenu01);
 
+	loadDataTable(object);
+	console.log("-----------------------");
 
-
-	   loadDataTable(object);
-	   console.log("-----------------------");
-
-     })
+})
 
 //합필하기 클릭시 이벤트
 $(document).on("click","#mergeBtn",function(){
@@ -291,7 +286,6 @@ function loadDataTable(params) {
 		searching: false,
 		destroy: true,
 		order: [[14, 'desc']],
-
 		rowReorder: {
 			dataSrc: 'b_seq'
 		},
@@ -336,6 +330,8 @@ function loadDataTable(params) {
 					else addrs = addrs + " " + params.emd;
 					if (ljsIsNull(params.ri)) addrs = addrs + "";
 					else addrs = addrs + " " + params.ri;
+					if (ljsIsNull(params.jibun)) addrs = addrs + "";
+					else addrs = addrs + " " + params.jibun;
 					//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
 					//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
 					console.log("addrs:" + addrs);

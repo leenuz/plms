@@ -479,7 +479,7 @@ SELECT *
                       FROM PLMS_APPROVAL PA
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
                 ) AS APPROVAL_STATUS
-                  ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
+                  ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
                   ,jm.jm_cancel_date AS cancel_date
                   FROM JISANG_MASTER       JM
                   LEFT OUTER JOIN (
@@ -546,7 +546,7 @@ SELECT *
 			AND JM.jm_JIMOK_TEXT IN ( #{JIMOK_TEXT} )
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
 			AND JM.jm_comple_yn = #{comple_yn}
@@ -631,7 +631,7 @@ SELECT count(*)
                       FROM PLMS_APPROVAL PA
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
                 ) AS APPROVAL_STATUS
-                  ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
+                  ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
                   ,jm.jm_cancel_date AS cancel_date
                   FROM JISANG_MASTER       JM
                   LEFT OUTER JOIN (
@@ -704,7 +704,7 @@ SELECT count(*)
 			AND JM.jm_JIMOK_TEXT IN ( #{JIMOK_TEXT} )
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
 			AND JM.jm_comple_yn = #{comple_yn}
@@ -785,7 +785,7 @@ SELECT *
                       FROM PLMS_APPROVAL PA
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
                 ) AS APPROVAL_STATUS
-                  ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
+                  ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
                   ,jm.jm_cancel_date AS cancel_date
                   FROM JISANG_MASTER       JM
                   LEFT OUTER JOIN (
@@ -850,7 +850,7 @@ SELECT *
 			AND JM.jm_JIMOK_TEXT IN ( #{JIMOK_TEXT} )
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
 			AND JM.jm_comple_yn = #{comple_yn}
@@ -935,7 +935,7 @@ SELECT count(*)
                       FROM PLMS_APPROVAL PA
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
                 ) AS APPROVAL_STATUS
-                  ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
+                  ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
                   ,jm.jm_cancel_date AS cancel_date
                   FROM JISANG_MASTER       JM
                   LEFT OUTER JOIN (
@@ -1006,7 +1006,7 @@ SELECT count(*)
 			AND JM.jm_JIMOK_TEXT IN ( #{JIMOK_TEXT} )
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
 			AND JM.jm_comple_yn = #{comple_yn}
