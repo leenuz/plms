@@ -14,6 +14,7 @@
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link th:href="@{/css/common.css}" rel="stylesheet" />
 	<link rel="stylesheet" href="/css/gover/masterReg.css" /> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 	<style>
 		div.dt-top-container {
 		  display: grid;
@@ -413,7 +414,7 @@
 		  <div class="subTitle">
 		    <div class="subTitleText">소속 토지 정보*</div>
 		    <div class="subTitleBtnBox">
-		      <button class="middleBtn navyBtn excelDownBtn">엑셀 다운로드</button>
+		      <button class="middleBtn navyBtn excelDownBtn" onClick="downloadExcel()">엑셀 다운로드</button>
 		      <button class="middleBtn whiteBtn excelUpBtn ExcelPopBtn">엑셀 업로드</button>
 		    </div>
 		  </div>
@@ -465,6 +466,7 @@
 		        <li class="content middleWidth selectContentArea">
 		          <div class="hiddenSelectBox">
 		            <select name="gover_own_yn" id="masterRegSelectBox13" hidden>
+		            <option value="선택">선택</option>
 		              <option value="국유지">국유지</option>
 		              <option value="사유지">사유지</option>
 		            </select>
@@ -517,6 +519,7 @@
 		        <li class="content middleWidth selectContentArea">
 		          <div class="hiddenSelectBox">
 		            <select name="pipe_overlap_yn" id="masterRegSelectBox15" hidden>
+		            <option value="선택">선택</option>
 		              <option value="Y">Y</option>
 		              <option value="N">N</option>
 		            </select>
@@ -753,7 +756,42 @@
 		        </div>
 		    </div>
 	</div>
-	
+	<link
+rel="stylesheet"
+as="style"
+crossorigin
+href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+	<link rel="stylesheet" href="/css/popup/occupancy_Popup.css" />
+	<div id="exceluploadPopup">
+    <div class="popupWrap">
+      <h2>
+        <p>엑셀 업로드</p>
+        <span class="topCloseBtn"></span>
+      </h2>
+  
+      <ul class="excel_select">
+        <h3>파일선택</h3>
+         <input type="file" id="excelPopup_file" class="excel_file"></input>
+         <label for="excelPopup_file" class="excel_file_label">
+          <p>내PC</p>
+         </label>
+        </label>  
+      </ul>
+      <ul class="excel_upload">
+        <li class="upload_box">
+            <div class="img_wrap"><img src="/assets/media/popup/images/file-upload-line (1) 1.png" alt=""></div>
+            <div class="excel_font">파일을 마우스로 끌어오세요.</div>
+        </li>
+       
+      </ul>
+  
+      <div class="excelbtnWrap">
+        <button class="excelBtn finalBtn">엑셀파일 양식</button>
+        <button class="sendBtn finalBtn">엑셀파일 전송</button>
+        <button class="closeBtn finalBtn">닫기</button>
+      </div>
+    </div>
+  </div>
     <!-- script -->
     <script type="module" src="/js/module/surfaceMain.js"></script>
     <script src="/js/gover/masterReg.js"></script>

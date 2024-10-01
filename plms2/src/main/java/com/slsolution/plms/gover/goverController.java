@@ -3125,7 +3125,7 @@ log.info("params:"+params);
 			log.info("requestParams:"+requestParams);
 			
 			ParameterParser parser = new ParameterParser(request);
-			String goverNo = parser.getString("goverNo", "");
+			String goverNo = requestParamsObj.getString("goverNo");
 			String str_result = "Y";
 			String str_STATUS = "";
 			log.info("=========상신취소=======");
@@ -3164,5 +3164,270 @@ log.info("params:"+params);
 			response.getWriter().flush();
 
 		}
+		
+		
+		
+		// 점용마스트 > 신규이슈등록버튼 이벤트 - ljs WORKING
+//		public void goverNewIssueNewSave(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//					ArrayList list = new ArrayList();
+//					ArrayList pmlist = new ArrayList();
+//					ParameterParser parser = new ParameterParser(request);
+//					log.info(parser);
+//					String gover_no = parser.getString("gover_no", "");
+//					String newRegReason = parser.getString("newRegReason", "");
+//					String newRegReasonContent = parser.getString("newRegReasonContent", "");
+//					String permPossYn = parser.getString("permPossYn", "");
+//					String occuNonPayReason = parser.getString("occuNonPayReason", "");
+//					String prepayYn=parser.getString("prepayYn", "");
+//					String occuPrePayDate=parser.getString("occuPrePayDate","");
+//					
+//					Map params = new HashMap();
+//					
+//					params.put("GOVER_NO",gover_no);
+//					params.put("NEWREGREASON", newRegReason);
+//					params.put("NEWREGREASONCONTENT", newRegReasonContent);
+//					params.put("PERMPOSSYN",permPossYn);
+//					params.put("OCCUNONPAYREASON", occuNonPayReason);
+//					params.put("PREPAYYN", prepayYn);
+//					params.put("OCCUPREPAYDATE",occuPrePayDate);
+//					log.info("params:"+params);
+//					try {
+//						 Database.getInstance().update("Json.updateGoverMasterNew", params);
+//						list = (ArrayList) Database.getInstance().queryForList("Json.selectNewIssueList", params);
+//					} catch (Exception e) { e.printStackTrace(); }
+//					
+//					System.out.println(list.toString());
+//					log.info(list.toString());
+//					
+//					if (list.size()>0) {
+//						//기존 내용이 있다면 강제로 지우고 다시 등록한다.
+//						try {
+//							//LJSWORK
+//							//params.put("SEQ",))
+//							list.clear();
+//							Database.getInstance().update("Json.deleteNewIssue", params);
+//							list = (ArrayList) Database.getInstance().queryForList("Json.selectNewIssueList", params);
+//						}  catch (Exception e) { e.printStackTrace(); }
+//						
+//					}
+//					
+//					//params.put("CODE_DEPTH1", "DY010000");	// 이슈없음
+//					//params.put("CODE_DEPTH2", "DY010100");	// 이슈없음
+//				//	params.put("CODE_DEPTH3", "DY010101");	// 이슈없음
+////					params.put("CODE_DEPTH1", CODE_DEPTH1);
+////					params.put("CODE_DEPTH2", CODE_DEPTH2);
+////					params.put("CODE_DEPTH3", CODE_DEPTH3);
+////					params.put("ISSUE_COMMENT", ISSUE_COMMENT);
+////					params.put("HISTORY_TYPE", HISTORY_TYPE);
+////					params.put("HISTORY_CONTENT", HISTORY_CONTENT);
+////					params.put("REGISTED_YN", REGISTED_YN);
+////					params.put("PERMITTED_YN", PERMITTED_YN);
+////					params.put("LNEWREG", newRegReason);
+////					params.put("LPERMITIONYN", permPossYn);
+////					params.put("LOCCUP_FEE", LOCCUP_FEE);
+////					params.put("LPREPAY", LPREPAY);
+//					//1 해당 디비에서 gover_no 로 등록된 것이 있는지 확인
+//					String SEQ="";
+//					HashMap map = new HashMap();
+//					log.info("list size:"+list.size());
+//					if (list.size()<=0) {
+//						//신규추가 입력
+//						map.put("message","Y");
+//						pmlist = (ArrayList) Database.getInstance().queryForList("Json.selectgoverpermt", params);
+//						log.info("pmlist size:"+pmlist.size());
+//						if (pmlist.size()>0) {
+//							HashMap pmMapList = (HashMap) pmlist.get(0);
+//							
+//							
+//							
+//							log.info("pay date:"+pmMapList.get("PAY_DATE"));
+//							log.info("pmt_et_date:"+pmMapList.get("PMT_ED_DATE"));
+//							log.info(pmMapList);
+//							log.info(pmlist);
+//							log.info("["+gover_no.substring(0,1)+"]");
+//							log.info("pmlist paydate:"+pmlist.get(0));
+//						
+//							
+//							//납부기한 초과 체크
+////							DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
+////							LocalDate date1 = LocalDate.parse(pmMapList.get("PAY_DATE").toString(),formatter);
+////							LocalDate date2 = LocalDate.now();
+////							LocalDate date3 = LocalDate.parse(pmMapList.get("PMT_ED_DATE").toString(),formatter);
+//							
+//							
+//							Calendar getToday = Calendar.getInstance();
+//							getToday.setTime(new Date());
+//							Date date = new SimpleDateFormat("yyyy-MM-dd").parse(pmMapList.get("PAY_DATE").toString());
+//							Date pmdate = new SimpleDateFormat("yyyy-MM-dd").parse(pmMapList.get("PMT_ED_DATE").toString());
+//							
+//							Calendar toDay=Calendar.getInstance();
+//							toDay.setTime(date);
+//							
+//							Calendar toDay1=Calendar.getInstance();
+//							toDay1.setTime(pmdate);
+//							
+//							
+//							long diffSec = (getToday.getTimeInMillis()-toDay.getTimeInMillis())/1000;
+//							long diffDays=diffSec/(24*60*60);
+//							
+//							long diffSec1 = (toDay1.getTimeInMillis()-getToday.getTimeInMillis())/1000;
+//							long diffDays1=diffSec1/(24*60*60);
+//							
+//							
+//							log.info("diffdays="+diffDays);
+//							log.info("diffdays1="+diffDays1);
+//							
+//							
+//							//카테고리 매칭 시작
+//							//log.info("status:"+pmMapList.get("JISANG_STATUS"));
+//							//String jisanStatus=pmMapList.get("JISANG_STATUS").toString();
+//							//점용 미점용 세팅
+//							if ("G".equals(gover_no.substring(0,1))){ //점용
+//								params.put("REGISTED_YN", "GY");
+//							}
+//							else if("N".equals(gover_no.substring(0,1))) { //미점용
+//								params.put("REGISTED_YN", "GN");
+//							}
+//							
+//							
+//							/*
+//							 * //허가증 보유여부에 따라 납부 미납부로 나뉜다 if ("Y".equals(permPossYn)) { //허가증 보유 //대분류 if
+//							 * (diffDays<365) { params.put("CODE_DEPTH1", "GY010000"); //점용료 납부
+//							 * params.put("CODE_DEPTH2", "GY010100"); //이슈없음 params.put("CODE_DEPTH3",
+//							 * "GY010101"); //이슈없음 } else if (diffDays>365 ||
+//							 * pmMapList.get("PAY_DATE").toString().equals("") ) { params.put("CODE_DEPTH1",
+//							 * "GY020000"); //점용료 미납부 } } else { if (diffDays<365) params.put("CODE_DEPTH1",
+//							 * "GY010000"); else if (diffDays>365 ||
+//							 * pmMapList.get("PAY_DATE").toString().equals("") ) params.put("CODE_DEPTH1",
+//							 * "GY030000"); }
+//							 * 
+//							 * 
+//							 * 
+//							 * //중분류 세팅 if ( "1".equals(occuNonPayReason) || "2".equals(occuNonPayReason) ||
+//							 * "1".equals(prepayYn)) { //점용료 납부이면서 이슈없음 params.put("CODE_DEPTH2",
+//							 * "GY020100"); //이슈없음 } else if ("N".equals(permPossYn) &&
+//							 * ("1".equals(occuNonPayReason) || "2".equals(occuNonPayReason) ||
+//							 * "1".equals(prepayYn))) { //점용료 납부이면서 이슈없음 params.put("CODE_DEPTH2",
+//							 * "GY020100"); //이슈없음 } else if (diffDays>365 || "3".equals(occuNonPayReason))
+//							 * params.put("CODE_DEPTH2", "GY020200"); //관리관청의 미청구 else if
+//							 * ("1".equals(newRegReason)) params.put("CODE_DEPTH2", "GN040300"); //토지소유자 변경
+//							 * 주로 미점용 허가증 미보유시 기존 체크 이나 변경 신규매칭 방법으로 else if ("2".equals(newRegReason))
+//							 * params.put("CODE_DEPTH2", "GN010200"); //신규발견
+//							 * 
+//							 */
+//							
+//							//세분류 를 기준으로 위로 역세팅
+//							if (diffDays<365) {
+//								params.put("CODE_DEPTH3", "GY010101"); //이슈없음
+//								params.put("CODE_DEPTH2", "GY010100"); //이슈없음
+//								params.put("CODE_DEPTH1", "GY010000");//점용료납부
+//								params.put("HISTORY_CONTENT", "신규 등록: [점용료납부 &gt; 이슈없음 &gt; 이슈없음], 사유: [신규등록]");
+//								params.put("PERMITTED_YN", "Y");
+//								
+//							}
+//							
+//							else if ("1".equals(occuNonPayReason)) {
+//								params.put("CODE_DEPTH3", "GY020101"); //영구무상점용
+//								params.put("CODE_DEPTH2", "GY020100"); //이슈없음
+//								params.put("CODE_DEPTH1", "GY020000"); //점용료 미납부
+//								params.put("HISTORY_CONTENT", "신규 등록: [점용료미납부 &gt; 이슈없음 &gt; 영구무상점용], 사유: [신규등록]");
+//								params.put("PERMITTED_YN", "Y");
+//							}
+//							else if ("2".equals(occuNonPayReason)) {
+//								params.put("CODE_DEPTH3", "GY020102"); //소액미청구
+//								params.put("CODE_DEPTH2", "GY020100"); //이슈없음
+//								params.put("CODE_DEPTH1", "GY020000"); //점용료 미납부
+//								params.put("HISTORY_CONTENT", "신규 등록: [점용료미납부 &gt; 이슈없음 &gt; 소액미청구], 사유: [신규등록]");
+//								params.put("PERMITTED_YN", "Y");
+//							}
+//							else if ("1".equals(prepayYn) && diffDays< 365 ) {
+//								params.put("CODE_DEPTH3", "GY020103"); //점용료 선납 기타 조건 검토 해야함
+//								params.put("CODE_DEPTH2", "GY020100"); //이슈없음
+//								params.put("CODE_DEPTH1", "GY020000"); //점용료 미납부
+//								params.put("HISTORY_CONTENT", "신규 등록: [점용료미납부 &gt; 이슈없음 &gt; 점용료 선납], 사유: [신규등록]");
+//								params.put("PERMITTED_YN", "Y");
+//							}
+//							else if ("1".equals(newRegReason)) {
+//								params.put("CODE_DEPTH3", "GN010101"); //사유지의 국유지 편입
+//								params.put("CODE_DEPTH2", "GN010100"); //토지소유자발견
+//								params.put("CODE_DEPTH1", "GN010000"); //점용료 미납부
+//								params.put("HISTORY_CONTENT", "신규 등록: [점용료미납부 &gt; 토지소유자발견 &gt; 사유지의 국육지 편입], 사유: [신규등록]");
+//								params.put("PERMITTED_YN", "N");
+//							}
+//							else if ("2".equals(newRegReason)) {
+//								params.put("CODE_DEPTH3", "GN010201"); //ILI조사결과 확인
+//								params.put("CODE_DEPTH2", "GN010200");//신규발견
+//								params.put("CODE_DEPTH1", "GN010000");//점용료미납부
+//								params.put("HISTORY_CONTENT", "신규 등록: [점용료미납부 &gt; 신규발견 &gt; ILI조사결과 학인], 사유: [신규등록]");
+//								params.put("PERMITTED_YN", "N");
+//								
+//							}
+//							else if ((diffDays>365 || "3".equals(occuNonPayReason))&& diffDays1>0) {
+//								params.put("CODE_DEPTH3", "GY020201"); //점용기간 미경과
+//								params.put("CODE_DEPTH2", "GY020200"); //관리관청의 미청구
+//								params.put("CODE_DEPTH1", "GY020000"); //점용료 미납부
+//								params.put("HISTORY_CONTENT", "신규 등록: [점용료미납부 &gt; 관리관청의 미청구 &gt; 점용기간 미경과], 사유: [신규등록]");
+//								params.put("PERMITTED_YN", "Y");
+//							}
+//							else if ((diffDays>365 || "3".equals(occuNonPayReason))&& diffDays1<0) {
+//								params.put("CODE_DEPTH3", "GY020202"); //점용기간 경과
+//								params.put("CODE_DEPTH2", "GY020200"); //관리관청의 미청구
+//								params.put("CODE_DEPTH1", "GY020000"); //점용료미납부
+//								params.put("HISTORY_CONTENT", "신규 등록: [점용료미납부 &gt; 관리관청의 미청구 &gt; 점용기간 경과], 사유: [신규등록]");
+//								params.put("PERMITTED_YN", "Y");
+//							}
+//							
+//							else if ("N".equals(permPossYn)) {
+//								params.put("CODE_DEPTH3", "GY030101"); //허가재검증
+//								params.put("CODE_DEPTH2", "GY030100"); //관리관청의미청구
+//								params.put("CODE_DEPTH1", "GY030000"); //점용료 미납부
+//								params.put("HISTORY_CONTENT", "신규 등록: [점용료미납부 &gt; 관리관청의 미청구 &gt; 허가재검증], 사유: [신규등록]");
+//								params.put("PERMITTED_YN", "N");
+//							}
+//						}
+//						
+//						//else if ()
+//						params.put("LNEWREG", newRegReason);
+//						params.put("LPERMITIONYN", permPossYn);
+//						params.put("ISSUE_COMMENT", newRegReasonContent);
+//						params.put("HISTORY_TYPE", "신규 등록");
+//						//params.put("HISTORY_CONTENT", "변경되는 모든 내용 변경 ");
+//						
+//						log.info(params);
+//						//만들 마지막 seq를 가져온다.
+//						SEQ = (String) Database.getInstance().queryForObject("Json.makeGoverIssueSeq", params);
+//						map.put("newseq",SEQ);
+//						
+//						
+//						int result = Database.getInstance().update("Json.insertGoverIssue", params);
+//						
+//						log.info("LJS result:"+result);
+//						//Database.getInstance().insert("Json.insertNewIssueItem", params);
+//						if (result > 0) {
+//							//Database.getInstance().update("Json.insertPnuIssueHistory", params);
+//							Database.getInstance().update("Json.insertGoverIssueHistory", params);
+//						}
+//					}
+//					else {
+//						map.put("message","N");
+//					}
+//					
+//					//map.put("result",list);
+//					
+//					/*
+//					 * if (list != null) map.put("count", list.size()); else map.put("count", 0);
+//					 * 
+//					 * map.put("message", str_result); map.put("result", list);
+//					 */
+//
+//					JSONObject jo = new JSONObject(map);
+//
+//					response.setCharacterEncoding("UTF-8");
+//					response.setHeader("Access-Control-Allow-Origin", "*");
+//					response.resetBuffer();
+//					response.setContentType("application/json");
+//					response.getWriter().print(jo);
+//					response.getWriter().flush();
+//				}
 
 }

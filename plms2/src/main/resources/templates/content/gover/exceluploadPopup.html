@@ -1,0 +1,50 @@
+<link
+rel="stylesheet"
+as="style"
+crossorigin
+href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="/css/popup/occupancy_Popup.css" />
+<div id="exceluploadPopup">
+    <div class="popupWrap">
+      <h2>
+        <p>엑셀 업로드</p>
+        <span class="topCloseBtn"></span>
+      </h2>
+  
+      <ul class="excel_select">
+        <h3>파일선택</h3>
+         <input type="file" id="excelPopup_file" class="excel_file"></input>
+         <label for="excelPopup_file" class="excel_file_label">
+          <p>내PC</p>
+         </label>
+        </label>  
+      </ul>
+      <ul class="excel_upload">
+        <li class="upload_box">
+            <div class="img_wrap"><img src="/assets/media/popup/images/file-upload-line (1) 1.png" alt=""></div>
+            <div class="excel_font">파일을 마우스로 끌어오세요.</div>
+        </li>
+       
+      </ul>
+  
+      <div class="excelbtnWrap">
+        <button class="excelBtn finalBtn">엑셀파일 양식</button>
+        <button class="sendBtn finalBtn">엑셀파일 전송</button>
+        <button class="closeBtn finalBtn">닫기</button>
+      </div>
+    </div>
+  </div>
+  <script>
+  //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+ const exceluploadPopupOpen = document.getElementById("exceluploadPopup");
+ if( exceluploadPopupOpen){
+  exceluploadPopupOpen.querySelectorAll(".topCloseBtn, .finalBtn").forEach(function (btn) {
+    btn.addEventListener("click", () => {
+
+      exceluploadPopupOpen.classList.remove("active");
+
+    });
+  });
+ }
+
+  </script>

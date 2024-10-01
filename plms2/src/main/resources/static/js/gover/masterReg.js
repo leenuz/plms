@@ -232,7 +232,7 @@ $(document).ready(function() {
 	    }
 	});
 	 
-	$('input[type=file]').on('change', function(e) {
+	$('input[type=file][name="fileUpload"]').on('change', function(e) {
 	    var files = e.originalEvent.target.files; // 파일 선택창에서 선택된 파일들
 	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
 	});
@@ -1146,7 +1146,7 @@ const ExcelPopOpenEvet = () => {
 
      const ExcelPopBtn = document.querySelector(".ExcelPopBtn");
      const masterRegExcelPopWrapper = document.querySelector(".masterRegExcelPopWrapper");
-     let htmlFilePath = '/components/popuphtml/exceluploadPopup.html'; // 엑셀업로드
+     let htmlFilePath = '/gover/exceluploadPopup'; // 엑셀업로드
 
      if(ExcelPopBtn){
 
@@ -1184,8 +1184,37 @@ const ExcelPopOpenEvet = () => {
      }
 }
 
+
+
 // 활성화 시 첨부파일 드래그 구역 클릭 시 파일 선택 창 두 번 열리는 오류 발생
-// ExcelPopOpenEvet();
+ //ExcelPopOpenEvet();
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ $(document).on("click",".ExcelPopBtn",function(){
+	console.log("-----------ExcelPopBtn------------");
+	const popupOpen1 = document.querySelector("#exceluploadPopup");
+	            console.log($(popupOpen1).html());
+	
+	
+	            if(popupOpen1){
+				console.log("=====================");
+	                //popupOpen1.classList.add("active");
+					$(popupOpen1).addClass("open");
+					  	   popupOpen1.classList.add("active");
+	            }
+	
+ });
+ 
+ 
+ 
+ 
+ 
+ 
 
 // 주소 검색 버튼 클릭 시
 $(document).on("click",".searchAddressBtn",function(){
@@ -1322,3 +1351,71 @@ $(document).on("click",".topCloseBtn",function(){
 	$(".popupWrap").removeClass("active");
 //	$(".popupWrap").toggleClass("active");
 });
+
+
+
+
+function downloadExcel() {
+	
+	
+				var uls=$("#goverUlDiv #goverUl");
+				
+				console.log(uls);
+				var data1=[];
+				
+				 var rowTitle=['관리기관','국공유지여부','대표필지','주소','PNU','지목','점용연장','점용면적','관료일치여부'];
+				 data1.push(rowTitle);
+				for(var i=0;i<uls.length;i++){
+					
+					console.log($(uls).html());
+					var adm_office=uls.find("#goverRegSelectBox03").val();
+					var gover_own_yn=uls.find("#masterRegSelectBox13").val();
+					var rep_flag=uls.find("#masterRegSelectBox_Checkbox02").is(":checked");
+					var addr=uls.find("#addr").val();
+					var pnu=uls.find("#pnu").val();
+					var jimok_text=uls.find("#masterRegSelectBox14").val();
+					var gover_length=uls.find("input[name='gover_length']").val();
+					var gover_area=uls.find("input[name='gover_area']").val();
+					var pipe_overlap_yn=uls.find("#masterRegSelectBox15").val();
+					var rep_text="";
+					if (rep_flag) rep_text="O";
+					else rep_text="X";
+					var rowData=[adm_office,gover_own_yn,rep_text,addr,pnu,jimok_text,gover_length,gover_area,pipe_overlap_yn];
+					 
+					console.log(rowData);
+					data1.push(rowData);
+				}
+	
+            // div의 내용을 가져오기
+			// 1. div 안의 텍스트 내용을 가져옵니다.
+			               var name = $('#data-container p:nth-child(1)').text().replace('Name: ', '');
+			               var age = $('#data-container p:nth-child(2)').text().replace('Age: ', '');
+			               var country = $('#data-container p:nth-child(3)').text().replace('Country: ', '');
+						  // var adm_office=
+			              
+			               // 3. SheetJS에서 워크북 생성
+			               var worksheet = XLSX.utils.aoa_to_sheet(data1);
+			               var workbook = XLSX.utils.book_new();
+			               XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+			               // 4. 엑셀 파일 다운로드
+			               XLSX.writeFile(workbook, '소속토지정보.xlsx');
+        }
+		
+		
+		const exceluploadPopupOpen = document.getElementById("exceluploadPopup");
+		 if( exceluploadPopupOpen){
+		  exceluploadPopupOpen.querySelectorAll(".topCloseBtn, .finalBtn").forEach(function (btn) {
+		    btn.addEventListener("click", () => {
+
+		      exceluploadPopupOpen.classList.remove("active");
+
+		    });
+		  });
+		 }
+		
+	$(document).on("change","#my_file_input",function(e){
+		
+		
+		
+	});

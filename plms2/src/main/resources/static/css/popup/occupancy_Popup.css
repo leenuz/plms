@@ -1,0 +1,1525 @@
+@charset "UTF-8";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body * {
+  font-family: pretendard;
+}
+li {
+  list-style: none;
+}
+input {
+  border: 0;
+  outline: 0;
+}
+button {
+  border: 0;
+}
+
+input:focus {
+  border: 0;
+}
+
+textarea:focus {
+  border: 0;
+  outline: 0;
+}
+
+.popupWrap {
+  background: #fff;
+  box-shadow: 0 1px 20px rgba(181, 187, 194, 0.8);
+  border-radius: 20px;
+  padding: 12px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.popupWrap h2 {
+  height: 44px;
+  background: rgba(247, 249, 252, 1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+.popupWrap h2 p {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4f5871;
+}
+.popupWrap h2 .topCloseBtn {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url(/assets/media/popup/images/back_icon.png) no-repeat center;
+  background-size: 20px;
+  cursor: pointer;
+}
+.popupWrap input[type="text"] {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+}
+.popupWrap input[type="text"]::placeholder {
+  color: #3c3c3c;
+}
+.popupWrap input[type="text"].notWriteInput {
+  background: transparent;
+}
+.popupWrap h3 {
+  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
+  color: #31394c;
+}
+/* 체크박스 */
+.approve_checkbox {
+  display: none;
+}
+.approve_checkbox_label {
+  width: 21px;
+  height: 21px;
+  background: #eff6ff;
+  border-radius: 5px;
+  display: inline-block;
+  position: relative;
+}
+.approve_checkbox:checked ~ label {
+  background: #4e5871;
+}
+.approve_checkbox:checked ~ label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 10px;
+  background: url(/assets/media/popup/images/Vector.png) no-repeat center !important;
+  background-size: contain !important;
+}
+/* 공용 셀렉트 시작 */
+.Popup_Custom_SelectBox {
+  box-sizing: border-box;
+  position: relative;
+  flex-grow: 1;
+  width: 100%;
+  /*css추가*/
+  height: 25px;
+  /**/
+}
+
+.Popup_Custom_SelectView {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+  color: #6e7d88;
+  background-size: 18px !important;
+  background: url(/assets/media/popup/images/arrow-down-s-line_gray.png) no-repeat right 8px center;
+  font-size: 13px;
+  font-weight: 500;
+  background-color: #ffffff;
+}
+
+.Popup_Custom_SelectView.active {
+  border: 1px solid #2b7de1;
+  color: #2b7de1;
+  /* 이미지 경로 수정 */
+  /* background: url(/assets/media/popup/images/arrow-down-s-line_blue.png) no-repeat right 8px center; */
+  background: url(/assets/media/popup/images/arrowDownBlue.png) no-repeat right 8px center;
+  background-color: #ffffff;
+}
+
+.Popup_Custom_SelectBtns {
+  position: absolute;
+  width: 100%;
+  transform: translateZ(0);
+  top: calc(100% + 4px);
+  box-sizing: border-box;
+  max-height: 0;
+  overflow-y: hidden;
+  z-index: 10;
+  transition: 500ms;
+  opacity: 0;
+  border: 1px solid #acbdd7;
+  padding-left: 4px !important;
+}
+
+.Popup_Custom_SelectBtns::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.Popup_Custom_SelectBtns::-webkit-scrollbar-thumb {
+  height: 30% !important;
+  border-radius: 10px !important;
+  background: #d2d2d2 !important;
+}
+
+.Popup_Custom_SelectBtns::-webkit-scrollbar-track {
+  background: #ffffff;
+  margin: 10px 0;
+}
+
+.Popup_Custom_SelectBtns>li {
+  width: calc(100% - 10px);
+  height: 34px;
+  display: flex;
+  padding: 0 5px;
+  color: #4e5871;
+}
+
+.Popup_Custom_SelectBtns>li:hover {
+  background-color: #edf2f9;
+  border-radius: 10px;
+}
+
+.Popup_Custom_SelectBtns>li>button {
+  all: unset;
+  font-size: 13px;
+  width: 100%;
+  font-weight: 500;
+}
+
+.Popup_Custom_SelectBtns.active {
+  padding: 6px 0;
+  border-radius: 8px;
+  background: #ffffff;
+  overflow-y: scroll;
+  transition: 500ms;
+  opacity: 1;
+  max-height: 233px;
+}
+
+/* 공용 셀렉트 끝 */
+/* 달력버튼 시작 */
+.occupancyfeePopup .dateBar {
+  width: 10px;
+  height: 2px;
+  background: #cfddf2;
+}
+.occupancyfeePopup .dateInputBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+}
+.complaint_calender_wrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #cddbf0;
+  position: relative;
+  background: url(/assets/media/popup/images/calendar.png) no-repeat left 8px
+    center;
+  background-size: 18px;
+}
+.occupancyfeePopup input[type="date"] {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+  color: transparent;
+  background: transparent;
+  text-align: right;
+}
+.occupancyfeePopup input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.occupancyfeePopup input[type="date"]::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  color: #6e7d88;
+  pointer-events: none;
+}
+.occupancyfeePopup input[type="date"]:focus,
+.occupancyfeePopup input[type="date"]:valid {
+  color: #6e7d88;
+}
+.occupancyfeePopup input[type="date"]:focus::before,
+.occupancyfeePopup input[type="date"]:valid::before {
+  content: "";
+}
+
+/* css추가 엑셀업로드, 변경이력, 점용료납부, 관리기간 승인, 관리기관 수정, 관리기간등록(등록취소),관리기간등록(승인요청) */
+
+#exceluploadPopup,
+#occupancyfeePopup,
+#changehistoryPopup,
+#approve_Popup,
+#approve_correction_Popup,
+#register_Cancel_Popup,
+#registerPopup {
+  display: none;
+}
+#exceluploadPopup.active,
+#occupancyfeePopup.active,
+#changehistoryPopup.active,
+#approve_Popup.active,
+#approve_correction_Popup.active,
+#register_Cancel_Popup.active,
+#registerPopup.active {
+  display: block;
+
+}
+
+/* popWrap 코드 display:none처리함 */
+
+#exceluploadPopup .popupWrap,
+#occupancyfeePopup .popupWrap,
+#changehistoryPopup .popupWrap,
+#approve_Popup .popupWrap,
+#approve_correction_Popup .popupWrap,
+#register_Cancel_Popup .popupWrap,
+#registerPopup .popupWrap {
+  display: block;
+  z-index:9999;
+}
+
+/**/
+
+/* 달력버튼 끝 */
+/* 점용 엑셀업로드 팝업 시작*/
+
+#exceluploadPopup .popupWrap,
+#land_exceluploadPopup .popupWrap {
+  width: 827px;
+  height: 302px;
+}
+
+#exceluploadPopup .popupWrap .excel_select,
+#land_exceluploadPopup .popupWrap .excel_select {
+  display: flex;
+  gap: 12px;
+  padding-top: 16px;
+  padding-bottom: 13px;
+  align-items: center;
+}
+#exceluploadPopup .popupWrap .excel_select h3,
+#land_exceluploadPopup .popupWrap .excel_select h3 {
+  font-size: 15px;
+  padding-left: 6px;
+  padding-bottom: 3px;
+}
+.excel_file {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+.excel_file_label {
+  width: 81px;
+  height: 27px;
+  background-color: #2b7de1;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  cursor: pointer;
+  /* 추가 */
+  font-size: 13px;
+  font-weight: 600;
+}
+/* 추가 */
+.finalBtn {
+  font-weight: 600;
+}
+.excel_upload {
+  width: 802px;
+  height: 128px;
+  border-radius: 5px;
+  /* border: 1px #cddbf0 dashed; */
+  overflow: hidden;
+}
+.upload_box {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.excel_upload 
+.upload_box 
+.excel_Popup_file_wrap 
+.excel_Popup_file_default {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.excel_upload
+.upload_box
+.excel_Popup_file_wrap
+.excel_Popup_file_default
+.excel_Popup_file_img_wrap{
+width: 35px;
+height: 35px;
+}
+.excel_upload 
+.upload_box 
+.excel_Popup_file_wrap 
+.excel_Popup_file_default 
+.excel_Popup_file_img_wrap img{
+  width: 100%;
+}
+.excel_upload 
+.upload_box 
+.excel_Popup_file_wrap 
+.excel_Popup_file_default p{
+  font-size: 14px;
+  color: #88a2c8;
+  font-weight: 600;
+}
+
+.excel_Popup_file_wrap {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.excel_Popup_file_wrap 
+.excel_Popup_file_default {
+  width: 100%;
+  height: 100%;
+  background-color: #f7f9fc;
+  box-sizing: border-box;
+  display: none;
+}
+
+.excel_Popup_file_wrap 
+.excel_Popup_file_default.active {
+  display: flex;
+}
+
+.excel_Popup_file_wrap .excel_Popup_file_add_contents {
+  width: 100%;
+  height: 128px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: none;
+}
+
+.excel_Popup_file_wrap .excel_Popup_file_add_contents.active {
+  display: block;
+}
+
+.excel_Popup_file_add_contents::-webkit-scrollbar {
+  width: 4px;
+}
+
+.excel_Popup_file_add_contents::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2
+}
+
+.excel_Popup_file_add_contents::-webkit-scrollbar-track {
+  background: #ffffff;
+  margin: 10px 0;
+}
+
+.excel_Popup_file_add_contents>ul {
+  display: grid;
+  grid-template-columns: 1fr 15fr 3fr 3fr;
+  height: 33px;
+}
+
+.excel_Popup_file_add_contents>.excel_Popup_file_add_contents_th {
+  background-color: #F7F9FC;
+}
+
+.excel_Popup_file_add_contents>ul>li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.excel_Popup_file_add_contents>ul>li>p {
+  color: #000000;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.excel_Popup_file_add_contents>ul>.file_add_name {
+  justify-content: start;
+  padding: 0 10px;
+}
+
+.excel_Popup_file_add_contents ul>li>figure {
+  width: 10px;
+  height: 10px;
+}
+
+.excel_Popup_file_add_contents ul>li>figure img {
+  width: 100%;
+}
+
+.excel_Popup_file_add_contents ul>li>button {
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.excel_Popup_file_add_contents ul>li>button img {
+  width: 100%;
+}
+
+.excel_font {
+  padding-top: 12px;
+}
+#exceluploadPopup .excelbtnWrap,
+#land_exceluploadPopup .excelbtnWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding-top: 15px;
+}
+.excelBtn {
+  width: 120px;
+  height: 35px;
+  font-size: 13px;
+  background-color: #cddbf0;
+  border-radius: 10px;
+  color: #2b7de1;
+  cursor: pointer;
+}
+.sendBtn {
+  width: 120px;
+  height: 35px;
+  font-size: 13px;
+  background-color: #2b7de1;
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.closeBtn {
+  width: 120px;
+  height: 35px;
+  font-size: 13px;
+  background-color: #919191;
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* 추가 */
+#exceluploadPopup .popfileLargeWrap {
+  width: 100%;
+  position: relative;
+  height: 128px;
+}
+#exceluploadPopup .popfileLargeWrap .popfileUploadWrap {
+  width: 100%;
+  /* margin-bottom: 18px; */
+  /* overflow-y: scroll; */
+  border-radius: 5px;
+}
+#exceluploadPopup .popfileLargeWrap .popfileUploadDisplay {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#exceluploadPopup .popfileLargeWrap .popfileUploadDisplay.active {
+  display: block;
+}
+#exceluploadPopup .excel_upload .popfileUploadBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #f7f9fc;
+  border: 1px dashed #cddbf0;
+  box-sizing: border-box;
+}
+#exceluploadPopup .excel_upload .popfileUploadBox .fileUploadIcon {
+  width: 35px;
+  height: 35px;
+}
+#exceluploadPopup .excel_upload .popfileUploadBox p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #88a2c8;
+}
+#exceluploadPopup .popfileUploadAfter {
+  border: 1px solid #CDDBF0;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  overflow-y: hidden;
+  background: #fff;
+}
+
+#exceluploadPopup .popfileUploadAfter.scroll {
+  overflow-y: scroll;
+}
+#exceluploadPopup .popfileUploadAfter::-webkit-scrollbar {
+  width: 4px;
+}
+#exceluploadPopup .popfileUploadAfter::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+#exceluploadPopup .popfileUploadAfter .poptitles {
+  display: grid;
+  grid-template-columns: 32fr 1324fr 200fr 200fr ;
+  grid-template-rows: 33px;
+  background: #F7F9FC;
+  border-bottom: 1px solid #CDDBF0;
+  border-radius: 5px 5px 0 0;
+}
+#exceluploadPopup .popfileUploadAfter .poptitle {
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#exceluploadPopup .popfileUploadAfter .popfilenameBox {
+  padding-left: 25px;
+  box-sizing: border-box;
+  position: relative;
+}
+#exceluploadPopup .popfileUploadAfter p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3C3C3C;
+}
+#exceluploadPopup .popfileUploadAfter .popfilenameBox p {
+  width: 100%;
+  text-align: left;
+}
+#exceluploadPopup .popfileUploadAfter .popfilenameBox .poptypeIcon {
+  width: 15px;
+  height: 15px;
+  /* 이미지 경로 수정 */
+  /* background: url(../../media/popup/images/fileextensionIcon.png) no-repeat center; */
+  background: url(/assets/media/popup/images/fileextensionIcon.png) no-repeat center;
+  background-size: 15px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5px;
+}
+#exceluploadPopup .popfileUploadAfter .poptitle .popBtnbox {
+  height: 100%;
+}
+#exceluploadPopup .popfileUploadAfter .popAllDeleteFileBtn,
+#exceluploadPopup .popfileUploadAfter .popfileDeleteBtn {
+  width: 33px;
+  height: 33px;
+  /* 이미지 경로 수정 */
+  /* background: url(../../media/popup/images/back_icon.png) no-repeat center; */
+  background: url(/assets/media/popup/images/back_icon.png) no-repeat center;
+  background-size: 15px;
+}
+#exceluploadPopup .popfileUploadAfter .popcontents {
+  display: grid;
+  grid-template-columns: 32fr 1324fr 200fr 200fr;
+  grid-template-rows: 33px;
+}
+#exceluploadPopup .popfileUploadAfter .popcontent {
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 점용 엑셀업로드 팝업 끝*/
+/* 점용 변경이력 팝업 시작*/
+.changehistoryPopup .popupWrap {
+  width: 1130px;
+  height: 611px;
+  box-sizing: border-box;
+}
+
+.changehistoryPopup .popupWrap .historywrap {
+  border: 1px solid #cddbf0;
+  border-radius: 5px;
+  width: 1106px;
+  height: 462px;
+  overflow: hidden;
+  margin: 19px auto;
+  box-sizing: border-box;
+}
+
+.historywrap .historytitle_wrap {
+  width: 100%;
+  max-height: 34px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #cddbf0;
+  background: #f7f9fc;
+  z-index: 10;
+  position: sticky;
+  top: 0;
+}
+
+.historywrap .historytitle {
+  width: 100%;
+  max-height: 34px;
+  display: grid;
+  grid-template-columns: 175px 208px 723px;
+  box-sizing: border-box;
+}
+
+.historytitle > li {
+  width: 100%;
+  line-height: 34px;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+
+.historywrap > div > ul > li > p {
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.historytitle > li:last-child {
+  border-right: none;
+}
+
+.historycontent {
+  width: 100%;
+  height: 100%;
+  background: #f7f9fc;
+  box-sizing: border-box;
+}
+
+.historycontent .historycontent_td {
+  width: 100%;
+
+  min-height: 83px;
+  display: grid;
+  grid-template-columns: 175px 208px 723px;
+  border-bottom: 1px solid rgba(205, 219, 240, 0.6);
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+.historytitle_td3 {
+  padding: 10px 34px;
+  box-sizing: border-box;
+}
+.historycontent > ul > li {
+  display: flex;
+  min-height: 85px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-right: 1px solid rgba(205, 219, 240, 0.6);
+  color: #3c3c3c;
+  /* 추가 */
+  font-size: 14px;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+/* css추가*/
+
+.historycontent.scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 1102px;
+  height: 428px;
+  background: #ffffff;
+}
+.historycontent.scroll .historycontent_td {
+  width: 1094px;
+  min-height: 83px;
+  display: grid;
+  grid-template-columns: 175px 208px 711px;
+  border-bottom: 1px solid rgba(205, 219, 240, 0.6);
+  font-size: 14px;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+/**/
+
+.historycontent::-webkit-scrollbar {
+  width: 5px;
+}
+
+.historycontent::-webkit-scrollbar-track {
+  height: 30%;
+  background: transparent;
+  margin: 10px 0;
+}
+
+.historycontent::-webkit-scrollbar-thumb {
+  background: #d9d9d9;
+  border-radius: 10px !important;
+}
+
+.historybtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 점용 변경이력 팝업 끝*/
+/* 점용료 납부 팝업 시작*/
+.occupancywrap {
+  width: 1264px;
+  max-height: 900px;
+}
+.whitehall {
+  width: 100%;
+  padding-top: 30px;
+  padding-left: 6px;
+}
+.whitehallwrap {
+  width: 1240px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #cddbf0;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+.whitehallwrap > ul > li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 33px;
+  border-right: 1px solid #cddbf0;
+}
+.whitehallwrap > ul > li:last-child {
+  border: none;
+}
+.whitehalltitle {
+  display: grid;
+  grid-template-columns: 160px 170px 240px 170px 170px 160px 170px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+  border-radius: 5px 5px 0 0;
+}
+.whitehallcontent {
+  display: grid;
+  grid-template-columns: 160px 170px 240px 170px 170px 160px 170px;
+}
+.payinfowrap {
+  width: 1240px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #cddbf0;
+  margin-top: 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.payinfowrap > ul > li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 33px;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+.payinfowrap > ul > li:last-child {
+  border: none;
+}
+.payinfotitle {
+  display: grid;
+  grid-template-columns: 160px 131px 172px 172px 172px 276px 157px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+  border-radius: 5px 5px 0 0;
+}
+.payinfocontent {
+  display: grid;
+  grid-template-columns: 160px 131px 172px 172px 172px 276px 157px;
+  box-sizing: border-box;
+}
+.payinfocontent > li {
+  padding: 3px 5px;
+}
+.payinfocontent input[type="text"] {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  background-color: #edf2f9;
+  border-radius: 8px;
+  padding: 3px 10px 3px 10px;
+  box-sizing: border-box;
+}
+.addresst_wrap {
+  width: 1240px;
+  height: 166px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #cddbf0;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+.addresscontent_wrap {
+  height: 133px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.addresscontent_wrap::-webkit-scrollbar {
+  width: 10px;
+}
+.addresscontent_wrap::-webkit-scrollbar-thumb {
+  border-radius: 10px !important;
+  background: #d9d9d9 !important;
+  width: 5px !important;
+  border: 3px solid #ffffff;
+}
+.addresscontent_wrap::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+.addresst_wrap > ul > li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 33px;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+.addresst_wrap > div > ul {
+  border-bottom: 1px solid #cddbf0;
+}
+.addresst_wrap > div > ul:last-child {
+  border: none;
+}
+.addresst_wrap > div > ul > li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 33px;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+.addresst_wrap > ul > li:last-child {
+  border: none;
+}
+.addresstitle {
+  display: grid;
+  grid-template-columns: 89px 496px 170px 170px 160px 155px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+  border-radius: 5px 5px 0 0;
+}
+.addresscontent {
+  display: grid;
+  grid-template-columns: 89px 496px 170px 170px 160px 150px;
+  box-sizing: border-box;
+}
+.addresscontent > li {
+  padding: 3px 5px;
+}
+.addresscontent input[type="text"] {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  background-color: #edf2f9;
+  border-radius: 8px;
+  padding: 3px 10px 3px 10px;
+  box-sizing: border-box;
+}
+
+.addresscontent {
+  border-bottom: 1px solid #cddbf0;
+}
+.addresscontent button {
+  width: 74px;
+  height: 23px;
+  background-color: #cce0ff;
+  color: #2b7de1;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.file_wrap {
+  width: 1240px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #cddbf0;
+  margin-top: 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.file_wrap > .filetitle_wrap > ul > li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 33px;
+  border-right: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+.file_wrap > .filetitle_wrap > ul > li:last-child {
+  border: none;
+}
+
+.filetitle {
+  display: grid;
+  grid-template-columns: 80px 160px 820px 180px;
+  background: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+  border-radius: 5px 5px 0 0;
+}
+.filecontent {
+  display: grid;
+  grid-template-columns: 80px 160px 820px 180px;
+  box-sizing: border-box;
+  height: 33px;
+  border-bottom: 1px solid #cddbf0;
+}
+.filecontent:last-child {
+  border-bottom: none;
+}
+.filecontent > li {
+  padding: 3px 5px;
+  border-right: 1px solid #cddbf0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.filecontent > li:last-child {
+  border: none;
+}
+.filecontent input[type="text"] {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  background-color: #edf2f9;
+  border-radius: 8px;
+  padding: 3px 10px 3px 10px;
+  box-sizing: border-box;
+}
+.filecontent button {
+  width: 116px;
+  height: 23px;
+  color: #ffffff;
+  background-color: #4e5871;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+}
+.filecontent_wrap {
+  width: 12px;
+  height: 12px;
+}
+.filecontent_wrap img {
+  width: 100%;
+  height: 100%;
+}
+
+/* 점용료 납부 첨부파일 스크롤*/
+
+.filecontents_wrap.scroll {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 164px;
+  width: 1236px;
+}
+.filecontents_wrap.scroll .filecontent {
+  display: grid;
+  width: 1229px;
+  grid-template-columns: 80px 160px 820px 169px;
+  box-sizing: border-box;
+  height: 33px;
+  border-bottom: 1px solid #cddbf0;
+}
+.filecontents_wrap.scroll .filecontent .filetitle_td_4 {
+  padding-left: 25px;
+}
+
+.filecontents_wrap::-webkit-scrollbar {
+  width: 5px;
+}
+
+.filecontents_wrap::-webkit-scrollbar-track {
+  border-radius: 10px !important;
+  background: #d9d9d9 !important;
+  width: 5px !important;
+  margin: 10px 0;
+  height: 30% !important;
+}
+
+.filecontents_wrap::-webkit-scrollbar-thumb {
+  background: #d9d9d9;
+  border-radius: 10px !important;
+}
+.occupancybtn {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.occupancybtn button {
+  width: 116px;
+  height: 44px;
+}
+.sangsinBtn {
+  background-color: #e0edff;
+  color: #2b7de1;
+  border-radius: 10px;
+  cursor: pointer;
+}
+/* 점용료 납부 팝업 끝*/
+
+/* 관리기관 등록 팝업 시작 */
+#registerPopup {
+  width: 1264px;
+  height: 237px;
+}
+
+.register_wrap {
+  width: 100%;
+  height: 44px;
+}
+
+.register_title {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 155px 155px 230px 80px 155px 145px 155px 155px;
+  margin-top: 21px;
+  border: 1px solid #cddbf0;
+  border-radius: 8px;
+}
+
+.register_title > li {
+  border-right: 1px solid #cddbf0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register_title > li:last-child {
+  border-right: none;
+}
+
+.register_title > li > h3 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f9fc;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.register_title input[type="text"] {
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 13px;
+  color: #6e7d88;
+}
+.register_wrap .register_title .popSelectWrap {
+  padding: 0 5px;
+  box-sizing: border-box;
+}
+
+.register_wrap .register_title .popSelectWrap .Popup_Custom_SelectBox {
+  height: 36px;
+  box-sizing: border-box;
+  font-size: 13px;
+}
+
+/* 허가관청 체크박스 값에 따라 다르게 나온는 곳 */
+.register_title_th6 .Popup_Custom_SelectBox {
+  display: none;
+}
+
+.register_title_th6 .Popup_Custom_SelectBox.active {
+  display: block;
+}
+
+.register_title_th6 .register_hidden_text {
+  display: none;
+}
+
+.register_title_th6 .register_hidden_text.active {
+  display: block;
+  background-color: #edf2f9;
+  width: 100%;
+  height: 36px;
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
+.register_title_th8 {
+  padding: 5px 4px;
+}
+
+.register_title_th8 input[type="text"] {
+  background-color: #edf2f9;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
+.registerbtnWrap {
+  margin-top: 50px;
+  padding-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.registerbtnWrap .closeBtn {
+  width: 116px;
+  height: 44px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.registerbtnWrap .approveBtn {
+  width: 116px;
+  height: 44px;
+  color: #ffffff;
+  background-color: #2b7de1;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.registerbtnWrap .cancelBtn {
+  width: 116px;
+  height: 44px;
+  color: #ffffff;
+  background-color: #2b7de1;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.approveBtn {
+  width: 116px;
+  height: 44px;
+  color: #ffffff;
+  background-color: #2b7de1;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* 관리기관 등록 팝업 끝 */
+
+/* 관리기관 승인 팝업 시작 */
+.aprrove_wrap {
+  width: 1240px;
+  min-height: 33px;
+  margin-top: 21px;
+  border: 1px solid #cddbf0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+.aprrove_wrap > .approve_title {
+  width: 100%;
+  height: 33px;
+  display: grid;
+  grid-template-columns: 155px 155px 230px 80px 155px 155px 155px 155px;
+  box-sizing: border-box;
+}
+
+/* css추가 */
+
+#approve_correction_Popup .approve_title > li {
+  border-right: 1px solid #cddbf0;
+}
+
+#approve_correction_Popup .approve_title > li:last-child {
+  border-right: none;
+}
+
+/* 관리기관 승인 허가관청 체크박스 값에 따라 다르게 나온는 곳 */
+.popContent_default {
+  display: none;
+}
+
+.popContent_default.active {
+  display: block;
+}
+
+.approve_hidden_text {
+  display: none;
+}
+
+.approve_hidden_text.active {
+  display: block;
+  background-color: #edf2f9;
+  width: 100%;
+  height: 25px;
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
+/**/
+
+#approve_select,
+.approve_input_1 {
+  padding: 3px 4px;
+}
+.approve_input_1 input[type="text"] {
+  width: 100%;
+  height: 25px;
+  text-align: center;
+  font-size: 14px;
+  background-color: #edf2f9;
+  border-radius: 8px;
+  padding: 3px 10px 3px 10px;
+  box-sizing: border-box;
+}
+.approve_title .approve_title_1 {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.approve_title > li:nth-child(odd) {
+  background-color: #f7f9fc;
+}
+
+.aprrove_wrap > .approve_title > li {
+  display: flex;
+  justify-content: center;
+  align-items: center !important;
+  height: 100% !important;
+  box-sizing: border-box;
+}
+.aprrove_wrap > .approve_title li.popContent {
+  padding: 4px 5px;
+  box-sizing: border-box;
+  border-right: 1px solid #cddbf0;
+  border-left: 1px solid #cddbf0;
+}
+.aprrove_wrap > .approve_title li.popContent:last-child {
+  border-right: 0;
+}
+.aprrove_wrap > .approve_title > li:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.approvehistory_wrap {
+  margin-top: 21px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.approvehistory_wrap h3 {
+  font-size: 16px;
+  padding-left: 9px;
+  font-weight: 500;
+  padding-bottom: 20px;
+}
+
+.approvehistory {
+  width: 1240px;
+  border: 1px solid #cddbf0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.approvehistory_title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  background-color: #f7f9fc;
+  border-bottom: 1px solid #cddbf0;
+  font-size: 14px;
+  font-weight: 500;
+  height: 33px;
+}
+.approvehistory_title > li {
+  border-right: 1px solid #cddbf0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.approve_checkbox {
+  display: none;
+}
+.approve_checkbox_label {
+  width: 21px;
+  height: 21px;
+  background: #eff6ff;
+  border-radius: 5px;
+  display: inline-block;
+  position: relative;
+}
+.approve_checkbox:checked ~ label {
+  background: #4e5871;
+}
+.approve_checkbox:checked ~ label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 10px;
+  background: url(/assets/media/popup/images/Vector.png) no-repeat center;
+  background-size: contain;
+}
+.approvehistory_title {
+  display: grid;
+  grid-template-columns: 155px 200px 885px;
+}
+.approvehistory_content {
+  display: grid;
+  grid-template-columns: 155px 200px 885px;
+  border-bottom: 1px solid #cddbf0;
+  box-sizing: border-box;
+}
+.approvehistory_content:last-child {
+  border: none;
+}
+.approvehistory_content > li {
+  border-right: 1px solid #cddbf0;
+  min-height: 33px !important;
+  padding: 13px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+.approvehistory_content > li:last-child {
+  border-right: none;
+}
+.approvehistory_title_1 {
+  color: #000000;
+}
+.approvehistory_content > .approvehistory_title_2,
+.approvehistory_content > .approvehistory_title_4 {
+  color: #3c3c3c;
+}
+.approvehistory_title > li:last-child {
+  border-right: none;
+}
+
+.approvehistorycontent_wrap {
+  height: 100%;
+}
+
+/* 관리기관 수정 */
+
+.aprrove_wrap
+  .approve_title
+  .popSelectWrap
+  .Popup_Custom_SelectBox
+  .Popup_Custom_SelectBtns.active {
+  max-height: 220px;
+}
+
+.aprrove_wrap
+  .approve_title
+  .popSelectWrap
+  .Popup_Custom_SelectBox
+  .Popup_Custom_SelectBtns
+  > li {
+  height: 36px;
+}
+.approve_select {
+  padding: 4px 5px;
+}
+
+/* 관리기관 수정 허가관청 체크박스 값에 따라 다르게 나온는 곳 */
+.fix_default {
+  display: none;
+}
+
+.fix_default.active {
+  display: block;
+}
+
+.fix_hidden_text {
+  display: none;
+}
+
+.fix_hidden_text.active {
+  display: block;
+  background-color: #edf2f9;
+  width: 100%;
+  height: 25px;
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
+/* 스크롤 이벤트 */
+.approvehistorycontent_wrap.scroll {
+  overflow-y: scroll;
+  max-height: 230px;
+}
+.approvehistorycontent_wrap.scroll .approvehistory_content {
+  grid-template-columns: 155px 200px 875px;
+}
+.approvehistorycontent_wrap.scroll .approvehistory_content > li:last-child {
+  border-right: 1px solid #cddbf0;
+}
+.approvehistorycontent_wrap::-webkit-scrollbar {
+  width: 10px;
+  border: 1px solid #cddbf0;
+}
+
+.approvehistorycontent_wrap::-webkit-scrollbar-thumb {
+  border-radius: 10px !important;
+  background: #d9d9d9 !important;
+  width: 5px !important;
+  border: 3px solid #ffffff;
+}
+.approvehistorycontent_wrap::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* 관리기관 승인 팝업 끝 */
