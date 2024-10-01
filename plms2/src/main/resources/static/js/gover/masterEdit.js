@@ -692,26 +692,11 @@ $(document).on("click", "#draftSaveBtn", function() {
 	}
 
 	
-	// 변경이력 - 허가관청만
-	var modifyReason5 = "";
-	
-	// 허가관청 비교
-	var pmt_office = $("select[name='pmt_office']").val();
-	var pmt_office_org = $("input[name='pmt_office_org']").val();
-	if (pmt_office !== pmt_office_org) {
-		modifyReason5 += "허가관청 변경 ('" + pmt_office_org + "' > '" + pmt_office + "'); ";
-	}
-
-	// 관리기관 비교
-	var adm_office = $("select[name='adm_office']").val();
-	var adm_office_org = $("input[name='adm_office_org']").val();
-	if (adm_office !== adm_office_org) {
-		modifyReason5 += "관리기관 변경 ('" + adm_office_org + "' > '" + adm_office + "'); ";
-	}
-	console.log(modifyReason5);
-
+	// 변경이력 - 허가관청만 처리 (필요 시 별도 함수로 분리 가능)
+	var modifyReason5 = compareChanges($("input[name='pmt_office_org']").val(), $("select[name='pmt_office']").val(), "허가관청") +
+	                    compareChanges($("input[name='adm_office_org']").val(), $("select[name='adm_office']").val(), "관리기관");
 	if (modifyReason5 !== "") {
-		object.modifyReason5 = modifyReason5;
+	    object.modifyReason5 = modifyReason5;
 	}
 	
 	console.log("대상토지 정보");
@@ -855,6 +840,15 @@ $(document).on("click", "#draftSaveBtn", function() {
 		}
 	}); // end ajax
 });
+
+
+// 변경이력 비교 함수
+function compareChanges(orgValue, newValue, fieldName) {
+    if (orgValue !== newValue) {
+        return `${fieldName} 변경 ('${orgValue}' > '${newValue}'); `;
+    }
+    return '';
+}
 
 
 $(document).on("click","#reqApprovalBtn",function(){
