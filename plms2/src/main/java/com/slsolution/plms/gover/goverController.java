@@ -3185,4 +3185,31 @@ log.info("params:"+params);
 
 		}
 
+		// 관리기관 관리 - 수정 팝업
+		@PostMapping(path="/getGoverOfficeMngHistoryList") //http://localhost:8080/api/get/dbTest
+		public ResponseEntity<?> getGoverOfficeMngHistoryList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			ModelAndView mav=new ModelAndView();
+			
+			//log.info("httpRequest:"+Arrays.toString(httpRequest))
+			
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			System.out.println("requestParams:" +requestParams);
+			JSONObject requestParamsObj = new JSONObject(requestParams);
+			System.out.println();
+			log.info("requestParams:"+requestParams);
+			
+			System.out.println("sdjfkljalsjfklasjklfjkladsj :: " + requestParamsObj.getString("adm_seq"));
+			String idx = requestParamsObj.getString("adm_seq");
+			
+			HashMap params = new HashMap();
+			params.put("seq", idx);
+			log.info("params: "+params);
+			
+			ArrayList<HashMap> historyList = mainService.selectQuery("goverSQL.selectOfficeHistoryList",params);
+			//log.info("addressList:"+addressList);
+			mav.addObject("historyList",historyList);
+			log.info("historyList:"+historyList);
+			mav.setViewName("/gover/orgAdmin :: #approve_correction_Popup");
+			return ResponseEntity.ok(historyList);
+		}
 }

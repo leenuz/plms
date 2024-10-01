@@ -481,19 +481,20 @@
 		            <p>관리기관 수정</p>
 		            <span class="topCloseBtn"></span>
 		        </h2>
+		        <form id="approve_correction_form" onSubmit="return false;">
 		        <div class="aprrove_wrap">
 		            <ul class="approve_title">
 		                <li class="approve_title_1">관리지사</li>
 		                <li class="popSelectWrap approve_select">
 		                    <div class="hidden_SelectBox">
-		                        <select name="approve_correction_Popup_Selectbox1" id="approve_correction_Popup_Selectbox1" hidden>
+		                        <select name="jisa" id="mJisaSelectBox" hidden>
 		                            <option value="">전체</option>
 		                            <option th:each="val:${jisaList}" th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
 		                        </select>
 		                    </div>
 		                    <div class="Popup_Custom_SelectBox">
-		                        <button class="Popup_Custom_SelectView">전체</button>
-		                        <ul class="Popup_Custom_SelectBtns"></ul>
+		                        <button class="Popup_Custom_SelectView" id="mJisaText">전체</button>
+		                        <ul class="Popup_Custom_SelectBtns" id="mJisaUl"></ul>
 		                    </div>
 		                </li>
 		                <li>허가관청 신규입력</li>
@@ -517,13 +518,13 @@
 		                        </select>
 		                    </div>
 		                    <div class="Popup_Custom_SelectBox fix_default active">
-		                        <button class="Popup_Custom_SelectView">전체</button>
-		                        <ul class="Popup_Custom_SelectBtns"></ul>
+		                        <button class="Popup_Custom_SelectView" id="mPmtOfficeText">전체</button>
+		                        <ul class="Popup_Custom_SelectBtns" id=mPmtOfficeUl></ul>
 		                    </div>
 		                    <input class="fix_hidden_text" type="text" name="pmt_office"/>
 		                </li>
 		                <li>관리기관</li>
-		                <li class="approve_input_1"><input type="text" /></li>
+		                <li class="approve_input_1"><input type="text" id="pAdm_office" /></li>
 		            </ul>
 		        </div>
 		        <div class="approvehistory_wrap">
@@ -534,7 +535,7 @@
 		                    <li class="approvehistory_title_2">구분</li>
 		                    <li class="approvehistory_title_3">내용</li>
 		                </ul>
-		                <div class="approvehistorycontent_wrap">
+		                <div class="approvehistorycontent_wrap" id="approve_history_content_List">
 		                    <ul class="approvehistory_content">
 		                        <li class="approvehistory_title_1">2024-04-01</li>
 		                        <li class="approvehistory_title_2">수정</li>
@@ -597,7 +598,7 @@
 		            </div>
 		        </div>
 		        <div class="registerbtnWrap">
-		            <button class="closeBtn finalBtn">닫기</button>
+		            <button class="closeBtn finalBtn" onclick="">닫기</button>
 		            <button class="approveBtn finalBtn">승인 요청</button>
 		        </div>
 		    </div>
