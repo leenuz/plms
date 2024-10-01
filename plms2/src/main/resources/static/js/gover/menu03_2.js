@@ -242,7 +242,7 @@ function loadDataTable(params) {
             dataSrc: function(json) {
                 console.log("-------------json---------------");
                 console.log(json);
-                $("#dataTableTotalCount").html(json.recordsTotal);
+                $("#dataTableTotalCount").html(json.recordsTotal.toLocaleString());
                 return json.data;
             }
         },
