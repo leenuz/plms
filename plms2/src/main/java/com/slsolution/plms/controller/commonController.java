@@ -5,14 +5,23 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,120 +40,133 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class commonController {
-	
-	 @Autowired
-	    private MainService mainService;
 
-	    @Autowired
-	    private GlobalConfig GC;
-	    
-	    
-	 // 출력용 팝업페이지 호출
-	    @GetMapping(path="/showPopupPage") 
-		public ModelAndView showPopupPage(HttpServletRequest request, HttpServletResponse response) throws Exception {
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("oontent/common/payPrintPop");
-			//mav.setViewName("content/gover/masterReg");
-			return mav;
-		}
-		
-		@GetMapping(path="/masterReg") //http://localhost:8080/api/get/dbTest
-	    public ModelAndView masterReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+	@Autowired
+	private MainService mainService;
+
+	@Autowired
+	private GlobalConfig GC;
+
+	// 출력용 팝업페이지 호출
+	@GetMapping(path = "/showPopupPage")
+	public ModelAndView showPopupPage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("oontent/common/payPrintPop");
+		// mav.setViewName("content/gover/masterReg");
+		return mav;
+	}
+
+	@GetMapping(path = "/masterReg") // http://localhost:8080/api/get/dbTest
+	public ModelAndView masterReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
-			
-			ModelAndView mav = new ModelAndView();
-			HashMap params = new HashMap();
-			
-			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
-			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
-			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
-			
-			log.info("jisaList:"+jisaList);
-			log.info("jimokList:"+jimokList);
-			
-			mav.addObject("jisaList",jisaList);
-			mav.addObject("jimokList",jimokList);
-			mav.addObject("usePurposlist",usePurposlist);
-			
-			mav.setViewName("content/gover/masterReg");
-			return mav;
-		}
+
+		ModelAndView mav = new ModelAndView();
+		HashMap params = new HashMap();
+
+		ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList", params);
+		ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList", params);
+		ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList", params);
+
+		log.info("jisaList:" + jisaList);
+		log.info("jimokList:" + jimokList);
+
+		mav.addObject("jisaList", jisaList);
+		mav.addObject("jimokList", jimokList);
+		mav.addObject("usePurposlist", usePurposlist);
+
+		mav.setViewName("content/gover/masterReg");
+		return mav;
+	}
+
+	// 파일 다운로드 ,패스와 파일 이름 넘김다 parameter
+	// filePath=
+	// fileName=
+	@GetMapping(path = "/download")
+	public void download(HttpServletRequest request, HttpServletResponse response) {
+
+		String fileOriName = request.getParameter("fileName");
+		String filePath = request.getParameter("filePath");
+
+		System.out.println("fileOriName :: " + fileOriName);
+		System.out.println("filePath :: " + filePath);
 		
+//		CloseableHttpClient httpClient = HttpClients.createDefault();
+//		HttpGet gttpGet = new HttpGet(filePath);
 		
-		
-		//파일 다운로드 ,패스와 파일 이름 넘김다 parameter
-		//filePath=
-		//fileName=
-		@GetMapping(path="/download")
-		public void download(HttpServletRequest request, HttpServletResponse response){
+		try {
+			File f = new File(filePath);
+			if (!f.isFile() || !f.exists()) {
+				response.setCharacterEncoding("UTF-8");
+				response.setContentType("text/html; charset=UTF-8");
+				response.getWriter().write(
+						"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><script>alert('파일이 존재하지 않습니다.'); history.back();</script></head></html>");
+				return;
 
-			String resultStr = "";
-			String path 		= "";
-			String fileOriName  = request.getParameter("fileName");
+			}
+
+			String contentType = "application/octet-stream";
+
+			// 241001 추가
+			if (fileOriName.endsWith(".jpg") || fileOriName.endsWith(".jpeg")) {
+				contentType = "image/jpeg";
+			} else if (fileOriName.endsWith(".png")) {
+				contentType = "image/png";
+			} else if (fileOriName.endsWith(".pdf")) {
+				contentType = "application/pdf";
+			} else if (fileOriName.endsWith(".xls")) {
+				contentType = "application/vnd.ms-excel"; // 엑셀 97-2003 형식
+			} else if (fileOriName.endsWith(".xlsx")) {
+				contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; // 엑셀 2007 이후 형식
+			}
+
+			response.setHeader("Content-Type", contentType);
+			response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileOriName, "UTF-8"));
+//			response.setHeader("Content-Length", "" + String.valueOf(f.length()));
+			response.setContentLengthLong(f.length());
 			
-//			if (m_strSubPath != null && m_strSubPath != "") {
-//				path = path + m_strSubPath + "/" + filePath;
-//			} else {
-//				path = path + filePath;
-//			}
-			String filePath=request.getParameter("filePath");
-			path = filePath;
-			System.out.println("path="+path);
-			
-			try {
-				File f = new File( path);
-				if(!f.isFile()){
-					resultStr = "파일이 존재하지 않습니다.";
-			        response.setCharacterEncoding( "UTF-8" );
-			        response.setContentType("text/html; charset=UTF-8");
-			        response.getWriter().write( "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><script>alert('파일이 존재하지 않습니다.'); history.back();</script></head></html>" );
-			        				
-				}else{
-					int		filesize	= (int)f.length();
-					byte	b[]			= new byte[1024];
-
-					response.setHeader("Content-Type", "application/octet-stream;");
-					response.setHeader("Content-Disposition", "attachment;filename="+java.net.URLEncoder.encode(fileOriName,"UTF-8")+";");
-
-					response.setHeader("Content-Transfer-Encoding", "binary;");
-					response.setHeader("Content-Length", ""+filesize);
-					response.setHeader("Cache-Control","no-cache");
-					response.setHeader("Pragma", "no-cache;");
-					response.setHeader("Expires", "-1;");  
-					int fsize = filesize;
-
-					if (fsize > 0 ){
-						BufferedInputStream  fin  = new BufferedInputStream(new FileInputStream(f), 1024);
-						BufferedOutputStream outs = new BufferedOutputStream(response.getOutputStream(), 1024);
-
-
-						int readcnt = 0;
-
-						try
-						{
-							while ((readcnt = fin.read(b)) != -1){
-								outs.write(b,0,readcnt);
-							}
-
-							outs.close();
-							fin.close();
-						} catch (Exception e) {
-							System.out.println(e.getMessage());
-						} finally {
-							if(outs!=null) outs.close();
-							if(fin!=null) fin.close();
-						}
-					}
+			try (BufferedInputStream fin = new BufferedInputStream(new FileInputStream(f));
+					BufferedOutputStream outs = new BufferedOutputStream(response.getOutputStream())) {
+				byte[] buffer = new byte[8192];
+				int bytesRead;
+				while ((bytesRead = fin.read(buffer)) != -1) {
+					outs.write(buffer, 0, bytesRead);
 				}
-			}catch(FileNotFoundException e){
-				System.out.println(" FileService FileNotFoundException : " + e.getMessage());
-			}catch(Exception e){
-				System.out.println("FileService exception :" + e.getMessage());
-				resultStr = (e.toString());
+				outs.flush();
+			}
+			response.flushBuffer();
+		} catch (FileNotFoundException e) {
+			System.out.println(" FileService FileNotFoundException : " + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("FileService exception :" + e.getMessage());
+		}
+	}
+	
+	/**
+	 * file 다운로드시 사용
+	 * 해당 메소드로 요청시 참고 스크립트 및 메소드 ( masterEdit.js - attachFileDownload() )
+	 * @param filePath
+	 * @param fileName
+	 * @return
+	 */
+	@GetMapping("/downloadfile")
+	public ResponseEntity<FileSystemResource> downloadFile(@RequestParam(name="filePath") String filePath, @RequestParam(name="fileName") String fileName){
+		try {
+			File file = new File(filePath + File.separator + fileName);
+			
+			if(!file.exists()) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 			}
 			
+			FileSystemResource resource = new FileSystemResource(file);
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
+			
+			return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-
-
+	}
 }

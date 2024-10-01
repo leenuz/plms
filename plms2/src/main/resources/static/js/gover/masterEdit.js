@@ -1368,3 +1368,88 @@ function openMap(el) {
     moveToCityHall(x, y);
 }
 
+/***************** */
+//종섭 추가
+function attachFileDownload(obj) {
+	const filePath = $(obj).attr("data-filepath");
+	const lastSlashIndex = filePath.lastIndexOf('/');
+	
+	const path = filePath.substring(0, lastSlashIndex);
+	const fileName = filePath.substring(lastSlashIndex + 1);
+	
+	//console.log(path)
+	//console.log(fileName)
+	
+	const serverFileUrl = `/api/downloadfile?fileName=${encodeURIComponent(fileName)}&filePath=${encodeURIComponent(path)}`;
+	
+	//console.log(serverFileUrl);
+	
+	fetch(serverFileUrl)
+		.then(response =>{
+			if(!response.ok) {
+				throw new Error('파일을 다운로드하는 중 오류가 발생했습니다.')
+			}
+			return response.blob();
+		})
+		.then(blob => {
+			const url = window.URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.setAttribute('download', fileName);
+			document.body.appendChild(link);
+			link.click();
+			link.remove();
+			window.URL.revokeObjectURL(url);
+		})
+		.catch(error =>{
+			console.error('다운로드 오류 : ', error);
+			alet(error.message);
+		});
+}
+
+function selectFilesDownload() {
+	const attachFileCount = $("#fileListDiv").children().length;
+	const listObj = $("#fileListDiv").children();
+	let pathList = [];
+	
+	
+	for(let i = 0 ; i < attachFileCount ; i++) {
+		let checkYn = $(listObj[i].children[0].children).is(':checked');
+		
+		if(checkYn) {
+			pathList.push($(listObj[i].children[3].children).attr('data-filepath'));
+			
+			let filePath = $(listObj[i].children[3].children).attr('data-filepath');
+			let lastSlashIndex = filePath.lastIndexOf('/');
+			
+			let path = filePath.substring(0, lastSlashIndex);
+			let fileName = filePath.substring(lastSlashIndex + 1);
+			
+			let serverFileUrl = `/api/downloadfile?fileName=${encodeURIComponent(fileName)}&filePath=${encodeURIComponent(path)}`;
+			
+			fetch(serverFileUrl)
+				.then(response =>{
+					if(!response.ok) {
+						throw new Error('파일을 다운로드하는 중 오류가 발생했습니다.')
+					}
+					return response.blob();
+				})
+				.then(blob => {
+					const url = window.URL.createObjectURL(blob);
+					const link = document.createElement('a');
+					link.href = url;
+					link.setAttribute('download', fileName);
+					document.body.appendChild(link);
+					link.click();
+					link.remove();
+					window.URL.revokeObjectURL(url);
+				})
+				.catch(error =>{
+					console.error('다운로드 오류 : ', error);
+					alet(error.message);
+				});
+		}
+	}
+}
+
+/***************** */
