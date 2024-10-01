@@ -581,3 +581,10 @@ textarea::placeholder {
   justify-content: center;
   align-items: center;
 }
+
+/* print 관련 */
+@media print {
+	.no-print {
+		display:none;
+	}
+}

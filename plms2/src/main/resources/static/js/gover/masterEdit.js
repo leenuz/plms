@@ -1,4 +1,44 @@
 var uploadFiles=new Array();
+
+$(document).ready(function() {
+  // 허가관청 이력보기 버튼 클릭 시 팝업 열기
+  $('.authHistBtn').on('click', function() {
+    $('#changehistoryPopupDiv').fadeIn();
+    $('#changehistoryPopup').addClass('active');
+  });
+
+  // 닫기 버튼 또는 상단 X 버튼 클릭 시 팝업 닫기
+  $('#changehistoryPopup').on('click', '.closeBtn, .topCloseBtn', function() {
+    $('#changehistoryPopupDiv').fadeOut();
+    $('#changehistoryPopup').removeClass('active');
+  });
+});
+
+
+// 허가관청 이력보기
+// 스크롤이벤트_ 목록이 6개 이상일 경우 스크롤발생
+const scrollLength = document.querySelectorAll(".historycontent ul");
+const historycontent = document.querySelector(".historycontent");
+
+if (scrollLength.length >= 6) {
+  historycontent.classList.add("scroll");
+} else {
+  historycontent.classList.remove("scroll");
+}
+
+// x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+const changehistoryPopupOpen = document.getElementById("changehistoryPopup");
+if (changehistoryPopupOpen) {
+  changehistoryPopupOpen
+    .querySelectorAll(".topCloseBtn, .finalBtn")
+    .forEach(function (btn) {
+      btn.addEventListener("click", () => {
+        changehistoryPopupOpen.classList.remove("active");
+      });
+    });
+}
+
+
 // 초기화 시 모든 줄에 대해 함수 실행
 $(document).ready(function() {
   console.log("gover/masterEdit.js start");
@@ -945,51 +985,46 @@ $(document).on("click","#deleteFileBtn",function(){
 	}
 })
 
-/* 변경이력불러오기 */
-
+/* 손지민 2024-10-01 - 허가관청 이력보기 팝업 -- 상단에 대체 코드 있음. 이 코드 사용 안 함. */
 const masterEditChangeHistoryOpenEvet = () => {
+	const masterEditHistoryBtn = document.querySelector("#masterEdit .masterEditHistoryBtn");
+	const masterEditChangeHistoryWrapper = document.querySelector(".masterEditChangeHistoryWrapper");
+	let masterEditHistoryPath = '/components/popuphtml/changehistoryPopup.html'; //변경이력
 
-    const masterEditHistoryBtn = document.querySelector("#masterEdit .masterEditHistoryBtn");
-    const masterEditChangeHistoryWrapper = document.querySelector(".masterEditChangeHistoryWrapper");
-    let masterEditHistoryPath = '/components/popuphtml/changehistoryPopup.html'; //변경이력
+	if (masterEditHistoryBtn) {
 
-    if(masterEditHistoryBtn){
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET', masterEditHistoryPath, true);
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				masterEditChangeHistoryWrapper.innerHTML = xhr.responseText;
+				runScriptsInElement(masterEditChangeHistoryWrapper); // 삽입된 html내 스크립트 실행 함수 호출
+			}
+		};
+		xhr.send();
+		console.log('masterEditChangeHistoryWrapper 작동');
+		masterEditHistoryBtn.addEventListener("click", () => {
 
-       let xhr = new XMLHttpRequest();
-       xhr.open('GET', masterEditHistoryPath, true);
-       xhr.onreadystatechange = function() {
-           if (xhr.readyState == 4 && xhr.status == 200) {
-               masterEditChangeHistoryWrapper.innerHTML = xhr.responseText;
-               runScriptsInElement(masterEditChangeHistoryWrapper); // 삽입된 html내 스크립트 실행 함수 호출
-           }
-       };
-       xhr.send();
-       console.log('masterEditChangeHistoryWrapper 작동');
-       masterEditHistoryBtn.addEventListener("click" , () => {
-       
-           const popupOpen = document.getElementById("changehistoryPopup");
-           if(popupOpen){
+			const popupOpen = document.getElementById("changehistoryPopup");
+			if (popupOpen) {
 
-               popupOpen.classList.add("active");
-           }
+				popupOpen.classList.add("active");
+			}
 
-       })
+		})
 
-   // 삽입된 html내 스크립트 실행 함수
-   const runScriptsInElement = (element) => {
-       const scripts = element.getElementsByTagName('script');
-       for (let i = 0; i < scripts.length; i++) {
-           const script = document.createElement('script');
-           script.textContent = scripts[i].textContent;
-           document.body.appendChild(script).parentNode.removeChild(script);
-       }
-   }
-
-
-    }
+		// 삽입된 html내 스크립트 실행 함수
+		const runScriptsInElement = (element) => {
+			const scripts = element.getElementsByTagName('script');
+			for (let i = 0; i < scripts.length; i++) {
+				const script = document.createElement('script');
+				script.textContent = scripts[i].textContent;
+				document.body.appendChild(script).parentNode.removeChild(script);
+			}
+		}
+	}
 }
-
-masterEditChangeHistoryOpenEvet();
+// masterEditChangeHistoryOpenEvet();
 
 /* 엑셀팝업불러오기 */
 const masterEditExcelPopOpenEvet = () => {
@@ -1035,7 +1070,6 @@ const masterEditExcelPopOpenEvet = () => {
 
     }
 }
-
 // 주석 풀면 첨부파일 선택창이 한번 더 열리는 오류
 // masterEditExcelPopOpenEvet();
 

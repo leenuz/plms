@@ -490,4 +490,3 @@ $(document).on("click", "#admOfficeUl li", function () {
     $("#admOfficeText").text(selectedAdmOffice);
     $("#privateUseSelectBox03_4").val(selectedAdmOffice).change(); // change 이벤트 트리거
 });
-

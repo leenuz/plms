@@ -1119,7 +1119,7 @@
 		</form>
       </main>
     </div>
-    <div class="masterEditChangeHistoryWrapper"></div>
+		
     <div class="masterEditExcelPopWrapper"></div>
 	
 	<!-- 주소 검색 팝업 -->
@@ -1169,6 +1169,51 @@
 		    </div>
 	</div>
 
+	<!--허가관청 이력보기 팝업-->
+	<div class="masterEditChangeHistoryWrapper" id="changehistoryPopupDiv">
+		<link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
+		<div class="changehistoryPopup" id="changehistoryPopup">
+			<div class="popupWrap" id="popupWrap">
+				<h2>
+					<p>변경이력</p>
+					<span class="topCloseBtn"></span>
+				</h2>
+	
+				<section class="historywrap">
+					<div class="historytitle_wrap">
+						<ul class="historytitle">
+							<li><p>변경일시</p></li>
+							<li><p>구분</p></li>
+							<li><p>내용</p></li>
+						</ul>
+					</div>
+	
+					<div class="historycontent">
+						<!--아래 ul 에 th:each="${추가 예정}"-->
+						<ul class="historycontent_td">
+							<li>
+								<p>2024-04-01.</p>
+							</li>
+							<li>
+								<p>기본정보....</p>
+							</li>
+							<li class="historytitle_td3">
+								<p>
+									57-2, 61-1,58번지가 59-6으로 합병, 용도 변경 (“>’송유관로'), 지적
+									변경(‘성남면 대화리 58’ > ‘성남면 대화리 59-6’), 국공유지 여부
+									변경(‘ > ‘N’), 지면 면적 변경(‘3680’ > ‘4929.97)
+								</p>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<div class="historybtn">
+					<button class="closeBtn finalBtn">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
     <!-- script -->
     <script src="/js/gover/masterEdit.js"></script>
     <script type="module" src="/js/module/surfaceMain.js"></script>

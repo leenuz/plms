@@ -1,468 +1,416 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      
-      layout:decorate="~{layout/default_layout}">
-  <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <link
-       rel="stylesheet"
-       as="style"
-       crossorigin
-       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-   
-  <link th:href="@{/css/common.css}" rel="stylesheet" />
-  <!--   <link rel="stylesheet" href="/css/gover/feeDetail.css" /> -->
-    <title>점용 내역 상세정보</title>
-    <link rel="stylesheet" href="/css/gover/useDetail.css" />
-  </head>
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default_layout}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link th:href="@{/css/common.css}" rel="stylesheet" />
+<!--   <link rel="stylesheet" href="/css/gover/feeDetail.css" /> -->
+<title>점용 내역 상세정보</title>
+<link rel="stylesheet" href="/css/gover/useDetail.css" />
+</head>
 
-  <th:block layout:fragment="content">
-    <!-- 점용 내역 상세정보 -->
-    <div class="useDetailWrappers">
-      <main id="useDetail">
-      <form id="saveForm" onSubmit="return false;">
-        <div class="mainTitle">
-          <h1>점용 내역 상세정보</h1>
-        </div>
-        <!-- 기본 정보 -->
-        <section class="defaultInfo">
-          <div class="subTitle">
-            <div class="subTitleText">기본 정보</div>
+<th:block layout:fragment="content">
+	<!-- 점용 내역 상세정보 -->
+	<div class="useDetailWrappers" id="detailPrintSection">
+		<main id="useDetail">
+			<form id="saveForm" onSubmit="return false;">
+				<div class="mainTitle">
+					<h1>점용 내역 상세정보</h1>
+				</div>
+				<!-- 기본 정보 -->
+				<section class="defaultInfo">
+					<div class="subTitle">
+						<div class="subTitleText">기본 정보</div>
 
-            <div class="btnbox">
-              <button class="authHistBtn vividBlueBtn useDetailHistoryBtn">
-                허가관청 이력보기
-              </button>
-            </div>
-          </div>
+						<div class="btnbox">
+							<button class="authHistBtn vividBlueBtn useDetailHistoryBtn">
+								허가관청 이력보기</button>
+						</div>
+					</div>
 
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="titles">
-                <li class="title">관리번호</li>
-                <li class="title">담당지사</li>
-                <li class="title">용도</li>
-                <li class="title">관로명(구간)</li>
-                <li class="title">관경</li>
-                <li class="title">단/복선</li>
-                <li class="title">점용목적</li>
-                <li class="title largeWidth">점용기간</li>
-              </ul>
-              <ul class="contents">
-				<!-- 관리번호 -->
-                <li class="content">
-                  <input
-                    type="text" name="goverNo" id="goverNo"
-					th:value="${resultData.gm_gover_no}"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-				<!-- 담당지사 -->
-                <li class="content">
-                  <input
-                    type="text"
-					th:value="${resultData.gm_jisa}"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-				<!--용도-->
-                <li class="content">
-                  <input
-                    type="text"
-					th:value="${resultData.gm_yongdo}"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-				<!--관로명(구간)-->
-                <li class="content">
-                  <input
-                    type="text"
-					th:value="${resultData.gm_pipe_name}"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-				<!--관경-->
-                <li class="content">
-                  <input
-                    type="text"
-					th:value="${#strings.equals(resultData.gm_sun_gubun, '단선') ? resultData.gm_pipe_meter : resultData.gm_pipe_meter + '/' + resultData.gm_pipe_meter2}"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-				<!--단/복선-->
-                <li class="content">
-                  <input
-                    type="text"
-					th:value="${resultData.gm_sun_gubun}"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-				<!--점용목적-->
-                <li class="content">
-                  <input
-                    type="text"
-					th:value="${resultData.gm_use_purpos}"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-				<!--점용기간-->
-                <li class="content largeWidth">
-                  <input
-                    type="text"
-					th:value="${resultData.gm_gover_st_date + ' ~ ' + resultData.gm_gover_ed_date}"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-		
-        <!-- 소속 토지 정보 -->
-        <section class="landAdressInfo">
-          <div class="subTitle">
-            <div class="subTitleText">소속 토지 정보</div>
-          </div>
+					<div class="contWrap">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title">관리번호</li>
+								<li class="title">담당지사</li>
+								<li class="title">용도</li>
+								<li class="title">관로명(구간)</li>
+								<li class="title">관경</li>
+								<li class="title">단/복선</li>
+								<li class="title">점용목적</li>
+								<li class="title largeWidth">점용기간</li>
+							</ul>
+							<ul class="contents">
+								<!-- 관리번호 -->
+								<li class="content"><input type="text" name="goverNo"
+									id="goverNo" th:value="${resultData.gm_gover_no}" readonly
+									class="notWriteInput" /></li>
+								<!-- 담당지사 -->
+								<li class="content"><input type="text"
+									th:value="${resultData.gm_jisa}" readonly class="notWriteInput" />
+								</li>
+								<!--용도-->
+								<li class="content"><input type="text"
+									th:value="${resultData.gm_yongdo}" readonly
+									class="notWriteInput" /></li>
+								<!--관로명(구간)-->
+								<li class="content"><input type="text"
+									th:value="${resultData.gm_pipe_name}" readonly
+									class="notWriteInput" /></li>
+								<!--관경-->
+								<li class="content"><input type="text"
+									th:value="${#strings.equals(resultData.gm_sun_gubun, '단선') ? resultData.gm_pipe_meter : resultData.gm_pipe_meter + '/' + resultData.gm_pipe_meter2}"
+									readonly class="notWriteInput" /></li>
+								<!--단/복선-->
+								<li class="content"><input type="text"
+									th:value="${resultData.gm_sun_gubun}" readonly
+									class="notWriteInput" /></li>
+								<!--점용목적-->
+								<li class="content"><input type="text"
+									th:value="${resultData.gm_use_purpos}" readonly
+									class="notWriteInput" /></li>
+								<!--점용기간-->
+								<li class="content largeWidth"><input type="text"
+									th:value="${resultData.gm_gover_st_date + ' ~ ' + resultData.gm_gover_ed_date}"
+									readonly class="notWriteInput" /></li>
+							</ul>
+						</div>
+					</div>
+				</section>
 
-		  <div class="contWrap">
-		        <div class="depth1">
-		            <ul class="titles">
-		                <li class="title smallWidth">순번</li>
-		                <li class="title largeWidth">주소</li>
-		                <li class="title">전체면적</li>
-		                <li class="title">연장</li>
-		                <li class="title">면적</li>
-		                <li class="title">지도</li>
-		            </ul>
-	
-		            <!-- 반복문으로 소속 토지 정보 출력 -->
-		            <ul th:each="pnu, iterStat : ${goverPnuList}" class="contents">
-		                <!-- 순번 -->
-		                <li class="content smallWidth">
-		                    <input type="text"
-		                        class="notWriteInput"
-		                        readonly
-		                        th:value="${iterStat.count}" />
-		                </li>
-		                <!-- 주소 -->
-		                <li class="content largeWidth">
-		                    <input type="text"
-		                        class="notWriteInput"
-		                        readonly
-								th:value="
+				<!-- 소속 토지 정보 -->
+				<section class="landAdressInfo">
+					<div class="subTitle">
+						<div class="subTitleText">소속 토지 정보</div>
+					</div>
+
+					<div class="contWrap">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title smallWidth">순번</li>
+								<li class="title largeWidth">주소</li>
+								<li class="title">전체면적</li>
+								<li class="title">연장</li>
+								<li class="title">면적</li>
+								<li class="title">지도</li>
+							</ul>
+
+							<!-- 반복문으로 소속 토지 정보 출력 -->
+							<ul th:each="pnu, iterStat : ${goverPnuList}" class="contents">
+								<!-- 순번 -->
+								<li class="content smallWidth"><input type="text"
+									class="notWriteInput" readonly th:value="${iterStat.count}" />
+								</li>
+								<!-- 주소 -->
+								<li class="content largeWidth"><input type="text"
+									class="notWriteInput" readonly
+									th:value="
 								    ${(pnu.gp_sido_nm != null ? pnu.gp_sido_nm : '') 
 								    + (pnu.gp_sgg_nm != null ? ' ' + pnu.gp_sgg_nm : '') 
 								    + (pnu.gp_emd_nm != null ? ' ' + pnu.gp_emd_nm : '') 
 								    + (pnu.gp_ri_nm != null ? ' ' + pnu.gp_ri_nm : '') 
 								    + (pnu.gp_jibun != null ? ' ' + pnu.gp_jibun : '')}" />
-		                </li>
-		                <!-- 전체면적 -->
-		                <li class="content">
-	            	        <input type="text"
-		                        class="notWriteInput"
-		                        readonly
-		                        th:value="${pnu.gp_jijuk_area}" />
-		                </li>
-		                <!-- 연장 -->
-		                <li class="content">
-		                    <input type="text"
-		                        class="notWriteInput"
-		                        readonly
-		                        th:value="${pnu.gp_gover_length}" />
-		                </li>
-		                <!-- 면적 -->
-		                <li class="content">
-		                    <input type="text"
-		                        class="notWriteInput"
-		                        readonly
-		                        th:value="${pnu.gp_gover_area}" />
-		                </li>
-		                <!-- 지도 -->
-		                <li class="content btnBox">
-		                    <button class="lightBlueBtn viewDetailButton">
-		                        위치보기
-		                    </button>
-		                </li>
-		            </ul>
-		        </div>
-		    </div>
-        </section>
-		
-        <!-- 점용 허가 정보 -->
-        <section class="permitInfo">
-          <div class="subTitle">
-            <div class="subTitleText">점용 허가 정보</div>
-          </div>
+								</li>
+								<!-- 전체면적 -->
+								<li class="content"><input type="text"
+									class="notWriteInput" readonly th:value="${pnu.gp_jijuk_area}" />
+								</li>
+								<!-- 연장 -->
+								<li class="content"><input type="text"
+									class="notWriteInput" readonly
+									th:value="${pnu.gp_gover_length}" /></li>
+								<!-- 면적 -->
+								<li class="content"><input type="text"
+									class="notWriteInput" readonly th:value="${pnu.gp_gover_area}" />
+								</li>
+								<!-- 지도 -->
+								<li class="content btnBox">
+									<button class="lightBlueBtn viewDetailButton">위치보기</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
 
-		  <div class="contWrap">
-		        <div class="depth1">
-		            <ul class="titles">
-		                <li class="title">순번</li>
-		                <li class="title largeWidth">허가번호</li>
-		                <li class="title largeWidth">허가명</li>
-		                <li class="title middleWidth">시설명칭</li>
-		                <li class="title largeWidth">허가관청</li>
-		                <li class="title middleWidth">관리청</li>
-		                <li class="title">연장</li>
-		                <li class="title">면적</li>
-		                <li class="title middleWidth">도시계획 결정여부</li>
-		                <li class="title middleWidth">결재문서 조회</li>
-		            </ul>
+				<!-- 점용 허가 정보 -->
+				<section class="permitInfo">
+					<div class="subTitle">
+						<div class="subTitleText">점용 허가 정보</div>
+					</div>
+
+					<div class="contWrap">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title">순번</li>
+								<li class="title largeWidth">허가번호</li>
+								<li class="title largeWidth">허가명</li>
+								<li class="title middleWidth">시설명칭</li>
+								<li class="title largeWidth">허가관청</li>
+								<li class="title middleWidth">관리청</li>
+								<li class="title">연장</li>
+								<li class="title">면적</li>
+								<li class="title middleWidth">도시계획 결정여부</li>
+								<li class="title middleWidth">결재문서 조회</li>
+							</ul>
+
+							<!-- 반복문으로 점용 허가 정보 출력 -->
+							<ul th:each="permit, iterStat : ${goverPermitList}"
+								class="contents">
+								<!-- 순번 -->
+								<li class="content"><input type="text"
+									class="notWriteInput" readonly th:value="${iterStat.count}" />
+								</li>
+								<!-- 허가번호 -->
+								<li class="content largeWidth"><input type="text"
+									class="notWriteInput" readonly th:value="${permit.gp_pmt_no}" />
+								</li>
+								<!-- 허가명 -->
+								<li class="content largeWidth"><input type="text"
+									class="notWriteInput" readonly th:value="${permit.gp_pmt_name}" />
+								</li>
+								<!-- 시설명칭 -->
+								<li class="content middleWidth"><input type="text"
+									class="notWriteInput" readonly
+									th:value="${permit.gp_siseolname}" /></li>
+								<!-- 허가관청 -->
+								<li class="content largeWidth"><input type="text"
+									class="notWriteInput" readonly
+									th:value="${permit.gp_pmt_office}" /></li>
+								<!-- 관리청 -->
+								<li class="content middleWidth"><input type="text"
+									class="notWriteInput" readonly
+									th:value="${permit.gp_adm_office}" /></li>
+								<!-- 연장 -->
+								<li class="content"><input type="text"
+									class="notWriteInput" readonly
+									th:value="${permit.gp_gover_length}" /></li>
+								<!-- 면적 -->
+								<li class="content"><input type="text"
+									class="notWriteInput" readonly
+									th:value="${permit.gp_gover_area}" /></li>
+								<!-- 도시계획 결정여부 -->
+								<li class="content middleWidth"><input type="text"
+									class="notWriteInput" readonly th:value="${permit.gp_dosiplan}" />
+								</li>
+								<!-- 결재문서 조회 -->
+								<li class="content middleWidth btnBox">
+									<button class="lightBlueBtn viewDetailButton">상세보기</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<!-- 점용 허가 및 점용료 납부현황 -->
+				<section class="permFeeStat">
+					<div class="subTitle">
+						<div class="subTitleText">점용 허가 및 점용료 납부현황</div>
+					</div>
+
+					<div class="contWrap">
+						<table>
+							<caption class="hiddenCaption">점용 허가 및 점용료 납부현황</caption>
+							<thead>
+								<tr>
+									<th rowspan="2" class="smallWidth">순번</th>
+									<th colspan="3">점용허가 유효기간</th>
+									<th colspan="2">허가기관 담당 부서</th>
+									<th colspan="3">점용료 납부현황</th>
+								</tr>
+								<tr>
+									<th>시작일</th>
+									<th>종료일</th>
+									<th class="largeWidth">부서</th>
+									<th class="middleWidth">담당자</th>
+									<th class="largeWidth">연락처</th>
+									<th>납부방법</th>
+									<th>납부연월일</th>
+									<th>금액</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- Thymeleaf 반복문 -->
+								<tr th:each="permit, iterStat : ${goverPermitList}">
+									<!-- 순번 -->
+									<td class="smallWidth"><input type="text"
+										th:value="${iterStat.count}" class="notWriteInput" readonly />
+									</td>
+									<!-- 시작일 -->
+									<td><input type="text"
+										th:value="${#dates.format(permit.gp_pmt_st_date, 'yyyy-MM-dd')}"
+										class="notWriteInput" readonly /></td>
+									<!-- 종료일 -->
+									<td><input type="text"
+										th:value="${#dates.format(permit.gp_pmt_ed_date, 'yyyy-MM-dd')}"
+										class="notWriteInput" readonly /></td>
+									<!-- 부서 -->
+									<td class="largeWidth"><input type="text"
+										th:value="${permit.gp_buseo}" class="notWriteInput" readonly />
+									</td>
+									<!-- 담당자 -->
+									<td class="middleWidth"><input type="text"
+										th:value="${permit.gp_nm}" class="notWriteInput" readonly />
+									</td>
+									<!-- 연락처 -->
+									<td class="largeWidth"><input type="text"
+										th:value="${permit.gp_phone_number}" class="notWriteInput"
+										readonly /></td>
+									<!-- 납부방법 -->
+									<td><input type="text" th:value="${permit.gp_pay_way}"
+										class="notWriteInput" readonly /></td>
+									<!-- 납부연월일 -->
+									<td><input type="text"
+										th:value="${#dates.format(permit.gp_pay_date, 'yyyy-MM-dd')}"
+										class="notWriteInput" readonly /></td>
+									<!-- 금액 -->
+									<td><input type="text" th:value="${permit.gp_pay_money}"
+										class="notWriteInput" readonly /></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<!-- 첨부파일 -->
+				<section class="attachFileInfo">
+					<div class="subTitle">
+						<div class="subTitleText">첨부파일</div>
+					</div>
+					<div class="contWrap">
+						<div class="depth1">
+							<ul class="titles titleScr">
+								<li class="title">등록일</li>
+								<li class="title fileNameWidth">파일명</li>
+								<li class="title">파일보기</li>
+							</ul>
+							<div class="contentScr">
+								<!-- 첨부파일 목록 반복문 -->
+								<ul class="contents" th:each="file : ${atcFileList}">
+									<!-- 등록일 -->
+									<li class="content"><input type="text"
+										th:value="${#dates.format(file.ga_wdate, 'yyyy-MM-dd')}"
+										readonly class="notWriteInput" /></li>
+									<!-- 파일명 -->
+									<li class="content fileNameWidth"><input type="text"
+										th:value="${file.ga_file_nm}" readonly class="notWriteInput" />
+									</li>
+									<!-- 파일보기 -->
+									<li class="content btnBox">
+										<button class="viewDetailButton lightBlueBtn"
+											th:data-filepath="${file.ga_file_path}">상세보기</button>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- 변경이력 -->
+
+				<section class="changeHistory">
+					<div class="subTitle">
+						<div class="subTitleText">변경이력</div>
+					</div>
+
+					<div class="contWrap">
+						<div class="contBox">
+							<div class="contentDetailBox">
+								<div class="depth1">
+									<ul class="titles titleScr">
+										<li class="title smallWidth">순번</li>
+										<li class="title">변경일시</li>
+										<li class="title">구분</li>
+										<li class="title largeWidth">내용</li>
+									</ul>
+									<div class="contentScr">
+										<!-- 반복문으로 변경이력 출력 -->
+										<ul th:each="modify, iterStat : ${goverModifyList}"
+											class="contents">
+											<!-- 순번 -->
+											<li class="content smallWidth"><input type="text"
+												class="notWriteInput" th:value="${iterStat.count}" readonly />
+											</li>
+											<!-- 변경일시 -->
+											<li class="content"><input type="text"
+												class="notWriteInput"
+												th:value="${#dates.format(modify.gm_modify_date, 'yyyy-MM-dd HH:mm:ss')}"
+												readonly /></li>
+											<!-- 구분 -->
+											<li class="content"><input type="text"
+												class="notWriteInput" th:value="${modify.gm_gubun}" readonly />
+											</li>
+											<!-- 내용 -->
+											<li class="content largeWidth textareaWrap"><textarea
+													readonly th:text="${modify.gm_cont}"></textarea></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<div class="finalBtnBox btnWrap no-print">
+					<button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
+					<button class="vividBlueBtn finalBtn" onclick="printCurrentPage();">출력</button>
+					<button class="finalBtn deepGrayBtn" id="cancelSangsin">상신취소</button>
+				</div>
+			</form>
+		</main>
+	</div>
 	
-		            <!-- 반복문으로 점용 허가 정보 출력 -->
-		            <ul th:each="permit, iterStat : ${goverPermitList}" class="contents">
-		                <!-- 순번 -->
-		                <li class="content">
-		                    <input type="text" 
-		                        class="notWriteInput" 
-		                        readonly 
-		                        th:value="${iterStat.count}" />
-		                </li>
-		                <!-- 허가번호 -->
-		                <li class="content largeWidth">
-		                    <input type="text" 
-		                        class="notWriteInput" 
-		                        readonly 
-		                        th:value="${permit.gp_pmt_no}" />
-		                </li>
-		                <!-- 허가명 -->
-		                <li class="content largeWidth">
-		                    <input type="text" 
-		                        class="notWriteInput" 
-		                        readonly 
-		                        th:value="${permit.gp_pmt_name}" />
-		                </li>
-		                <!-- 시설명칭 -->
-		                <li class="content middleWidth">
-		                    <input type="text" 
-		                        class="notWriteInput" 
-		                        readonly 
-		                        th:value="${permit.gp_siseolname}" />
-		                </li>
-		                <!-- 허가관청 -->
-		                <li class="content largeWidth">
-		                    <input type="text" 
-		                        class="notWriteInput" 
-		                        readonly 
-		                        th:value="${permit.gp_pmt_office}" />
-		                </li>
-		                <!-- 관리청 -->
-		                <li class="content middleWidth">
-		                    <input type="text" 
-		                        class="notWriteInput" 
-		                        readonly 
-		                        th:value="${permit.gp_adm_office}" />
-		                </li>
-		                <!-- 연장 -->
-		                <li class="content">
-		                    <input type="text" 
-		                        class="notWriteInput" 
-		                        readonly 
-		                        th:value="${permit.gp_gover_length}" />
-		                </li>
-		                <!-- 면적 -->
-		                <li class="content">
-		                    <input type="text" 
-		                        class="notWriteInput" 
-		                        readonly 
-		                        th:value="${permit.gp_gover_area}" />
-		                </li>
-		                <!-- 도시계획 결정여부 -->
-		                <li class="content middleWidth">
-		                    <input type="text" 
-		                        class="notWriteInput" 
-		                        readonly 
-		                        th:value="${permit.gp_dosiplan}" />
-		                </li>
-		                <!-- 결재문서 조회 -->
-		                <li class="content middleWidth btnBox">
-		                    <button class="lightBlueBtn viewDetailButton">
-		                        상세보기
-		                    </button>
-		                </li>
-		            </ul>
-		        </div>
-		    </div>
-        </section>
-		
-        <!-- 점용 허가 및 점용료 납부현황 -->
-        <section class="permFeeStat">
-          <div class="subTitle">
-            <div class="subTitleText">점용 허가 및 점용료 납부현황</div>
-          </div>
-
-          <div class="contWrap">
-            <table>
-              <caption class="hiddenCaption">
-                점용 허가 및 점용료 납부현황
-              </caption>
-              <thead>
-                <tr>
-                  <th rowspan="2" class="smallWidth">순번</th>
-                  <th colspan="3">점용허가 유효기간</th>
-                  <th colspan="2">허가기관 담당 부서</th>
-                  <th colspan="3">점용료 납부현황</th>
-                </tr>
-                <tr>
-                  <th>시작일</th>
-                  <th>종료일</th>
-                  <th class="largeWidth">부서</th>
-                  <th class="middleWidth">담당자</th>
-                  <th class="largeWidth">연락처</th>
-                  <th>납부방법</th>
-                  <th>납부연월일</th>
-                  <th>금액</th>
-                </tr>
-              </thead>
-			  <tbody>
-			      <!-- Thymeleaf 반복문 -->
-			      <tr th:each="permit, iterStat : ${goverPermitList}">
-			          <!-- 순번 -->
-			          <td class="smallWidth">
-			              <input type="text" th:value="${iterStat.count}" class="notWriteInput" readonly />
-			          </td>
-			          <!-- 시작일 -->
-			          <td>
-			              <input type="text" th:value="${#dates.format(permit.gp_pmt_st_date, 'yyyy-MM-dd')}" class="notWriteInput" readonly />
-			          </td>
-			          <!-- 종료일 -->
-			          <td>
-			              <input type="text" th:value="${#dates.format(permit.gp_pmt_ed_date, 'yyyy-MM-dd')}" class="notWriteInput" readonly />
-			          </td>
-			          <!-- 부서 -->
-			          <td class="largeWidth">
-			              <input type="text" th:value="${permit.gp_buseo}" class="notWriteInput" readonly />
-			          </td>
-			          <!-- 담당자 -->
-			          <td class="middleWidth">
-			              <input type="text" th:value="${permit.gp_nm}" class="notWriteInput" readonly />
-			          </td>
-			          <!-- 연락처 -->
-			          <td class="largeWidth">
-			              <input type="text" th:value="${permit.gp_phone_number}" class="notWriteInput" readonly />
-			          </td>
-			          <!-- 납부방법 -->
-			          <td>
-			              <input type="text" th:value="${permit.gp_pay_way}" class="notWriteInput" readonly />
-			          </td>
-			          <!-- 납부연월일 -->
-			          <td>
-			              <input type="text" th:value="${#dates.format(permit.gp_pay_date, 'yyyy-MM-dd')}" class="notWriteInput" readonly />
-			          </td>
-			          <!-- 금액 -->
-			          <td>
-			              <input type="text" th:value="${permit.gp_pay_money}" class="notWriteInput" readonly />
-			          </td>
-			      </tr>
-			  </tbody>
-            </table>
-          </div>
-        </section>
-
-		<!-- 첨부파일 -->
-		<section class="attachFileInfo">
-		  <div class="subTitle">
-		    <div class="subTitleText">첨부파일</div>
-		  </div>
-		  <div class="contWrap">
-		    <div class="depth1">
-		      <ul class="titles titleScr">
-		        <li class="title">등록일</li>
-		        <li class="title fileNameWidth">파일명</li>
-		        <li class="title">파일보기</li>
-		      </ul>
-		      <div class="contentScr">
-		        <!-- 첨부파일 목록 반복문 -->
-		        <ul class="contents" th:each="file : ${atcFileList}">
-		          <!-- 등록일 -->
-		          <li class="content">
-		            <input
-		              type="text"
-		              th:value="${#dates.format(file.ga_wdate, 'yyyy-MM-dd')}"
-		              readonly
-		              class="notWriteInput" />
-		          </li>
-		          <!-- 파일명 -->
-		          <li class="content fileNameWidth">
-		            <input
-		              type="text"
-		              th:value="${file.ga_file_nm}"
-		              readonly
-		              class="notWriteInput" />
-		          </li>
-		          <!-- 파일보기 -->
-		          <li class="content btnBox">
-		            <button class="viewDetailButton lightBlueBtn" th:data-filepath="${file.ga_file_path}">
-		              상세보기
-		            </button>
-		          </li>
+	<!--허가관청 이력보기 팝업-->
+	<div class="useDetailChangeHistoryWrapper" id="changehistoryPopupDiv">
+		<link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
+		<div class="changehistoryPopup" id="changehistoryPopup">
+			<div class="popupWrap" id="popupWrap">
+				<h2>
+					<p>변경이력</p>
+					<span class="topCloseBtn"></span>
+				</h2>
+	
+				<section class="historywrap">
+					<div class="historytitle_wrap">
+						<ul class="historytitle">
+		          <li><p>변경일시</p></li>
+		          <li><p>구분</p></li>
+		          <li><p>내용</p></li>
 		        </ul>
-		      </div>
-		    </div>
-		  </div>
-		</section>
+					</div>
+	
+					<div class="historycontent">
+						<!--아래 ul 에 th:each="${추가 예정}"-->
+						<ul class="historycontent_td">
+							<li>
+								<p>2024-04-01.</p>
+							</li>
+							<li>
+								<p>기본정보....</p>
+							</li>
+							<li class="historytitle_td3">
+								<p>
+									57-2, 61-1,58번지가 59-6으로 합병, 용도 변경 (“>’송유관로'), 지적
+									변경(‘성남면 대화리 58’ > ‘성남면 대화리 59-6’), 국공유지 여부
+									변경(‘ > ‘N’), 지면 면적 변경(‘3680’ > ‘4929.97)
+								</p>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<div class="historybtn">
+					<button class="closeBtn finalBtn">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- script -->
+	<script src="/js/gover/useDetail.js"></script>
+	<script type="module" src="/js/module/surfaceMain.js"></script>
 
-        <!-- 변경이력 -->
-
-        <section class="changeHistory">
-          <div class="subTitle">
-            <div class="subTitleText">변경이력</div>
-          </div>
-
-          <div class="contWrap">
-            <div class="contBox">
-              <div class="contentDetailBox">
-                <div class="depth1">
-                  <ul class="titles titleScr">
-                    <li class="title smallWidth">순번</li>
-                    <li class="title">변경일시</li>
-                    <li class="title">구분</li>
-                    <li class="title largeWidth">내용</li>
-                  </ul>
-				  <div class="contentScr">
-		              <!-- 반복문으로 변경이력 출력 -->
-		              <ul th:each="modify, iterStat : ${goverModifyList}" class="contents">
-		                <!-- 순번 -->
-		                <li class="content smallWidth">
-		                  <input type="text" class="notWriteInput" th:value="${iterStat.count}" readonly />
-		                </li>
-		                <!-- 변경일시 -->
-		                <li class="content">
-		                  <input type="text" class="notWriteInput"
-		                         th:value="${#dates.format(modify.gm_modify_date, 'yyyy-MM-dd HH:mm:ss')}" 
-		                         readonly />
-		                </li>
-		                <!-- 구분 -->
-		                <li class="content">
-		                  <input type="text" class="notWriteInput" th:value="${modify.gm_gubun}" readonly />
-		                </li>
-		                <!-- 내용 -->
-		                <li class="content largeWidth textareaWrap">
-		                  <textarea readonly th:text="${modify.gm_cont}"></textarea>
-		                </li>
-		              </ul>
-		            </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div class="finalBtnBox btnWrap">
-          <button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
-          <button class="vividBlueBtn finalBtn">출력</button>
-          <button class="finalBtn deepGrayBtn" id="cancelSangsin">상신취소</button>
-        </div>
-        </form>
-      </main>
-    </div>
-    <div class="useDetailChangeHistoryWrapper"></div>
-    <!-- script -->
-    <script src="/js/gover/useDetail.js"></script>
-    <script type="module" src="/js/module/surfaceMain.js"></script>
-    
- </th:block>
+</th:block>
 </html>

@@ -1,50 +1,85 @@
-const useDetailCangehistoryPopEvet = () => {
-    
-   const useDetailHistoryBtn = document.querySelector("#useDetail .useDetailHistoryBtn");
-   const useDetailChangeHistoryWrapper = document.querySelector(".useDetailChangeHistoryWrapper");
-   let htmlFilePath = '/components/popuphtml/changehistoryPopup.html'; // 삽입할 html 파일 경로
 
-   if(useDetailChangeHistoryWrapper){
+$(document).ready(function() {
+  // 허가관청 이력보기 버튼 클릭 시 팝업 열기
+  $('.authHistBtn').on('click', function() {
+    $('#changehistoryPopupDiv').fadeIn();
+    $('#changehistoryPopup').addClass('active');
+  });
 
-      let xhr = new XMLHttpRequest();
-      xhr.open('GET', htmlFilePath, true);
-      xhr.onreadystatechange = function() {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-              useDetailChangeHistoryWrapper.innerHTML = xhr.responseText;
-              runScriptsInElement(useDetailChangeHistoryWrapper); // 삽입된 html내 스크립트 실행 함수 호출
-          }
-      };
-      xhr.send();
-      console.log('useDetailChangeHistoryWrapper 작동');
+  // 닫기 버튼 또는 상단 X 버튼 클릭 시 팝업 닫기
+  $('#changehistoryPopup').on('click', '.closeBtn, .topCloseBtn', function() {
+    $('#changehistoryPopupDiv').fadeOut();
+    $('#changehistoryPopup').removeClass('active');
+  });
+});
 
 
-      useDetailHistoryBtn.addEventListener("click" , () => {
-        
-         const popupOpen = document.getElementById("changehistoryPopup");
-         if(popupOpen){
+// 허가관청 이력보기
+// 스크롤이벤트_ 목록이 6개 이상일 경우 스크롤발생
+const scrollLength = document.querySelectorAll(".historycontent ul");
+const historycontent = document.querySelector(".historycontent");
 
-             popupOpen.classList.add("active");
-         }
-
-     })
-
-
-  // 삽입된 html내 스크립트 실행 함수
-  const runScriptsInElement = (element) => {
-      const scripts = element.getElementsByTagName('script');
-      for (let i = 0; i < scripts.length; i++) {
-          const script = document.createElement('script');
-          script.textContent = scripts[i].textContent;
-          document.body.appendChild(script).parentNode.removeChild(script);
-      }
-  }
-
-
-   }
-
+if (scrollLength.length >= 6) {
+  historycontent.classList.add("scroll");
+} else {
+  historycontent.classList.remove("scroll");
 }
 
+// x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+const changehistoryPopupOpen = document.getElementById("changehistoryPopup");
+if (changehistoryPopupOpen) {
+  changehistoryPopupOpen
+    .querySelectorAll(".topCloseBtn, .finalBtn")
+    .forEach(function (btn) {
+      btn.addEventListener("click", () => {
+        changehistoryPopupOpen.classList.remove("active");
+      });
+    });
+}
+
+
+/* 손지민 2024-10-01 - 허가관청 이력보기 팝업 -- 상단에 대체 코드 있음. 이 코드 사용 안 함. */
+const useDetailCangehistoryPopEvet = () => {
+
+	const useDetailHistoryBtn = document.querySelector("#useDetail .useDetailHistoryBtn");
+	const useDetailChangeHistoryWrapper = document.querySelector(".useDetailChangeHistoryWrapper");
+	let htmlFilePath = '/components/popuphtml/changehistoryPopup.html'; // 삽입할 html 파일 경로
+
+	if (useDetailChangeHistoryWrapper) {
+
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET', htmlFilePath, true);
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				useDetailChangeHistoryWrapper.innerHTML = xhr.responseText;
+				runScriptsInElement(useDetailChangeHistoryWrapper); // 삽입된 html내 스크립트 실행 함수 호출
+			}
+		};
+		xhr.send();
+		console.log('useDetailChangeHistoryWrapper 작동');
+
+
+		useDetailHistoryBtn.addEventListener("click", () => {
+
+			const popupOpen = document.getElementById("changehistoryPopup");
+			if (popupOpen) {
+				popupOpen.classList.add("active");
+			}
+		})
+
+		// 삽입된 html내 스크립트 실행 함수
+		const runScriptsInElement = (element) => {
+			const scripts = element.getElementsByTagName('script');
+			for (let i = 0; i < scripts.length; i++) {
+				const script = document.createElement('script');
+				script.textContent = scripts[i].textContent;
+				document.body.appendChild(script).parentNode.removeChild(script);
+			}
+		}
+	}
+}
 //useDetailCangehistoryPopEvet();
+
 $(document).ready(function(){
 	console.log("-------ready---useDetail-------------");
 	
@@ -104,3 +139,30 @@ $(document).on("click","#cancelSangsin",function(){
 			
 			}); 
 })
+
+
+
+
+/**********************************/
+/**********************************/
+//종섭작업
+function printCurrentPage(){
+	console.log('인쇄');
+	
+	let prtContent = document.getElementById('detailPrintSection');
+	let initBody; 
+	
+	window.onbeforeprint = function() {
+		initBody = document.body.innerHTML;
+		document.body.innerHTML = prtContent.innerHTML;
+	}
+	
+	window.onafterprint = function() {
+		document.body.innerHTML = initBody;
+	}
+	
+	window.print();
+	
+}
+/**********************************/
+/**********************************/

@@ -857,7 +857,6 @@ public class goverController {
 			//ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
 			ArrayList<HashMap> goverPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
 			ArrayList<HashMap> repFlagPnu = mainService.selectQuery("goverSQL.selectRepFlagPnu",params);
-
 			
 			ArrayList<HashMap> goverList= mainService.selectQuery("goverSQL.selectGoverDetailList",params); //기본정보
 //			goverList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverList", params); //기본정보 //이건 테이블 리스트에서 활용
@@ -868,8 +867,6 @@ public class goverController {
 //			modifyList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverModifyHistory", params); //첨부파일
 //
 			ArrayList<HashMap> payList = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPayList", params); //납부실적목록
-			
-			
 			
 			// 조회 데이터 로그
 			log.info("data:"+goverList.get(0));
