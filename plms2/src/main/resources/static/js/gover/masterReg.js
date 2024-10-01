@@ -661,7 +661,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 
 	console.log(object);
 
-	url="/gover/insertGoverMaster"; 
+	url="/gover/insertGoverMasterDemo"; 
 				   $.ajax({
 				   			
 				   				url:url,

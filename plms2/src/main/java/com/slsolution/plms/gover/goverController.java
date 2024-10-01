@@ -2148,11 +2148,14 @@ public class goverController {
 									     			filesMap.put("fseq",i);
 									     			filesMap.put("fname",file_name);
 		//
-									     			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+									     			 String tempPath = GC.getGoverFileTempDir(); //설정파일로 뺀다.
 									     			 String dataPath = GC.getGoverFileDataDir()+"/"+str_GOVERNO; //설정파일로 뺀다.
 									     			 filesMap.put("fpath",dataPath+"/"+file_name);
+									     			 
 									     			 CommonUtil.moveFile(file_name, tempPath, dataPath);
 									     			log.info("filesMap:"+filesMap);
+									     			log.info("tempPath:"+tempPath);
+									     			log.info("dataPath:"+dataPath);
 									     			mainService.InsertQuery("goverSQL.insertGoverUploadData", filesMap);
 									
 								}
