@@ -205,7 +205,7 @@ function loadDataTable(params) {
         bServerSide: true,
         searching: false,
         destroy: true,
-        order: [[12, 'desc']],
+        order: [[3, 'desc']],
         rowReorder: { dataSrc: 'b_seq' },
         ajax: {
             url: "/gover/menu03_3DataTableList",

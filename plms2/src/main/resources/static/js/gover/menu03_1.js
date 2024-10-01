@@ -239,7 +239,7 @@ function loadDataTable(params) {
 		bServerSide: true,
 		searching: false,
 		destroy: true,
-		order: [[12, 'desc']],
+		order: [[3, 'desc']],
 		rowReorder: {
 			dataSrc: 'b_seq'
 		},
@@ -318,7 +318,7 @@ function loadDataTable(params) {
 },*/
 
 		columns: [
-			{ data: "no", "orderable": false },//0
+			{ data: "rno", "orderable": false },//0
 			{ data: "jisa", "defaultContent": "" },
 			{ data: "address", "defaultContent": "" },
 			{ data: "gover_no", "defaultContent": "" },
