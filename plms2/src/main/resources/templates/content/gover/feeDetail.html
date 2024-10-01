@@ -536,24 +536,20 @@
 			        </ul>
 			      </div>
 						
-			      <div class="historycontent">
+						<div class="historycontent">
 							<!--아래 ul 에 th:each="${추가 예정}"-->
-			        <ul class="historycontent_td">
-			          <li>
-			            <p>2024-04-01.</p>
-			          </li>
-			          <li>
-			            <p>기본정보....</p>
-			          </li>
-			          <li class="historytitle_td3">
-			            <p>
-			              57-2, 61-1,58번지가 59-6으로 합병, 용도 변경 (“>’송유관로'), 지적
-			              변경(‘성남면 대화리 58’ > ‘성남면 대화리 59-6’), 국공유지 여부
-			              변경(‘ > ‘N’), 지면 면적 변경(‘3680’ > ‘4929.97)
-			            </p>
-			          </li>
-			        </ul>			        
-			      </div>
+							<ul class="historycontent_td" th:each="history : ${goverModifyOfficeList}">
+								<li>
+									<p th:text="${#dates.format(history.gm_modify_date, 'yyyy-MM-dd')}"></p>
+								</li>
+								<li>
+									<p th:text="${history.gm_gubun}"></p>
+								</li>
+								<li class="historytitle_td3">
+									<p th:text="${history.gm_cont}"></p>
+								</li>
+							</ul>
+						</div>
 			    </section>
 			    <div class="historybtn">
 			      <button class="closeBtn finalBtn">닫기</button>

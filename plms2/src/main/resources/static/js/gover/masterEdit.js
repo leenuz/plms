@@ -543,156 +543,317 @@ function toggleLineDisplay(value) {
 $(document).on("click", "#draftSaveBtn", function() {
 	console.log("----masterEdit.js 임시저장 버튼 클릭----")
 	console.log($("#saveForm").serialize());
-    var formSerializeArray = $('#saveForm').serializeArray(); // 폼 데이터를 직렬화하여 배열로 저장
-    console.log(formSerializeArray); // 배열 형태로 폼 데이터 출력
-    
-    var object = {}; // 빈 객체 생성
-    for (var i = 0; i < formSerializeArray.length; i++) { 
-        object[formSerializeArray[i]['name']] = formSerializeArray[i]['value']; // 배열의 각 항목을 객체로 변환
-    }
-	console.log("대상토지 정보");
-		   	var togiDatas=[];
-		   	var togiUls=$("#goverUlDiv #goverUl");
-		   	console.log(togiUls);
-			
-			/*String SGG_NM = (parser.getString("SGG_NM" + String.valueOf(i), "")).replaceAll("전체", "");
-								String EMD_NM = (parser.getString("EMD_NM" + String.valueOf(i), "")).replaceAll("전체", "");
-								String RI_NM = (parser.getString("RI_NM" + String.valueOf(i), "")).replaceAll("전체", "");
-								String JIBUN = parser.getString("JIBUN" + String.valueOf(i), "");
-								String JIBUN_FULL = parser.getString("JIBUN_FULL" + String.valueOf(i), "");
-								String ADDRCODE = parser.getString("ADDRCODE" + String.valueOf(i), "");
-								String PNU = parser.getString("ChkPNU" + String.valueOf(i), "");
-								String ORG_PNU = parser.getString("ORG_PNU" + String.valueOf(i), "");
-								String GOVEROWNYN = parser.getString("GOVER_OWN_YN" + String.valueOf(i), "");
-								String JIJUK_AREA = parser.getString("JIJUK_AREA" + String.valueOf(i), "");
-								String JIMOK_TEXT = parser.getString("JIMOK_TEXT" + String.valueOf(i), "");
-								String GOVER_LENGTH = parser.getString("GOVER_LENGTH" + String.valueOf(i), "");
-								String GOVER_AREA = parser.getString("GOVER_AREA" + String.valueOf(i), "");
-								String ADM_OFFICE_PNU = parser.getString("ADM_OFFICE" + String.valueOf(i), "");
-								String USE_PURPOS_PNU = parser.getString("USE_PURPOS" + String.valueOf(i), "");
-								String REP_FLAG = parser.getString("REP_FLAG" + String.valueOf(i), "");
-								String ORG_PNU_NULL = parser.getString("ORG_PNU_NULL" + String.valueOf(i), ""); // pnu값이
-																												// "NULL"도*/
-		   	for(var i=0;i<togiUls.length;i++){
-				var sido_nm=$(togiUls[i]).find("input[name='sido_nm']").val();
-				var addKey=$(togiUls[i]).find("input[name='addKey']").val();
-		   		var sgg_nm=$(togiUls[i]).find("input[name='sgg_nm']").val();
-				var emd_nm=$(togiUls[i]).find("input[name='emd_nm']").val();
-				var ri_nm=$(togiUls[i]).find("input[name='ri_nm']").val();
-				var jibun=$(togiUls[i]).find("input[name='jibun']").val();
-				var jibun_full=$(togiUls[i]).find("input[name='jibun_full']").val();
-				var addrcode=$(togiUls[i]).find("input[name='addrcode']").val();
-				var pnu=$(togiUls[i]).find("input[name='pnu']").val();
-				var org_pnu=$(togiUls[i]).find("input[name='pnu']").val();
-				var gover_own_yn=$(togiUls[i]).find("input[name='gover_own_yn']").val();
-				var jijuk_area=$(togiUls[i]).find("input[name='jijuk_area']").val();
-				var gover_length=$(togiUls[i]).find("input[name='gover_length']").val();
-				var gover_area=$(togiUls[i]).find("input[name='gover_area']").val();
-				var jimok_text=$(togiUls[i]).find("input[name='jimok_text']").val();
-				var adm_office=$(togiUls[i]).find("#admOfficeText01").text();
-				var pipe_overlab_yn=$(togiUls[i]).find("input[name='pipe_overlap_yn']").val();
-				
-				
-		   		
-				var rep_flag="N";
-				if ($(togiUls[i]).find("input:checkbox[name='rep_flag']").is(":checked")==true){
-					rep_flag="Y";
-				};
-				
-		   		//console.log("togiManageNo:"+togiManageNo);
-		   		var togiObj={
-					"sido_nm":ljsIsNull(sido_nm)?'':sido_nm
-					,"sgg_nm":ljsIsNull(sgg_nm)?'':sgg_nm
-					,"emd_nm":ljsIsNull(emd_nm)?'':emd_nm
-					,"ri_nm":ljsIsNull(ri_nm)?'':ri_nm
-					,"jibun_full":ljsIsNull(jibun_full)?'':jibun_full
-					,"jibun":ljsIsNull(jibun)?'':jibun
-					,"addrcode":ljsIsNull(addrcode)?'':addrcode
-					,"pnu":ljsIsNull(pnu)?'':pnu
-					,"org_pnu":ljsIsNull(org_pnu)?'':org_pnu
-					,"gover_own_yn":ljsIsNull(gover_own_yn)?'':gover_own_yn
-					,"jijuk_area":ljsIsNull(jijuk_area)?'':jijuk_area
-					,"gover_length":ljsIsNull(gover_length)?'':gover_length
-					,"jimok_text":ljsIsNull(jimok_text)?'':jimok_text
-					,"adm_office":ljsIsNull(adm_office)?'':adm_office
-					,"pipe_overlab_yn":ljsIsNull(pipe_overlab_yn)?'':pipe_overlab_yn
-					,"rep_flag":ljsIsNull(rep_flag)?'N':rep_flag
-					,"gover_area":ljsIsNull(gover_area)?'':gover_area
-					,"addKey":addKey
-		   			
-		   		}
-		   		console.log(togiObj);
-		   		togiDatas.push(togiObj);
-		   	}
-			
-			//const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
-			const attachFileUls = document.querySelectorAll('input[name="masterEdit_attachFile"]');
-							   console.log(attachFileUls);
-			
-			var files=new Array();
-						   for(var i=0;i<attachFileUls.length;i++){
-							console.log($(attachFileUls[i]).parent().parent().html());
-								var fname=$(attachFileUls[i]).parent().parent().find("#filename").val();
-								var wdate=$(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val();
-								console.log(fname);
-								console.log("wdate:"+wdate);
-								if (wdate==null || wdate=="" || wdate==undefined ) files.push(fname);
-								
-							}
-		   
-		     console.log("----------togiDatas-------------");
-			 console.log(togiDatas);
-			 console.log("----------files-------------");
-			 	 console.log(files);
-				 
-			 object.togiDatas=togiDatas;
-			 object.files=files;
-			 object.fileCnt=files.length;
-			 object.office_mobile="";
-			 object.save_status="Q";//임시저장
-				object.gubun="modify"; //신규등록
-    var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
-    console.log("----------jsonobj------------");
-    console.log(object);
+	var formSerializeArray = $('#saveForm').serializeArray(); // 폼 데이터를 직렬화하여 배열로 저장
+	console.log(formSerializeArray); // 배열 형태로 폼 데이터 출력
+
+	var object = {}; // 빈 객체 생성
+	for (var i = 0; i < formSerializeArray.length; i++) {
+		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value']; // 배열의 각 항목을 객체로 변환
+	}
+
+	// 변경이력 - 기본정보
+	var modifyReason1 = "";
+
+	// 허가관청 비교
+	var pmt_office = $("select[name='pmt_office']").val();
+	var pmt_office_org = $("input[name='pmt_office_org']").val();
+	if (pmt_office !== pmt_office_org) {
+	    modifyReason1 += "허가관청 변경 ('" + pmt_office_org + "' > '" + pmt_office + "'); ";
+	}
+
+	// 관리기관 비교
+	var adm_office = $("select[name='adm_office']").val();
+	var adm_office_org = $("input[name='adm_office_org']").val();
+	if (adm_office !== adm_office_org) {
+	    modifyReason1 += "관리기관 변경 ('" + adm_office_org + "' > '" + adm_office + "'); ";
+	}
+
+	// 부서 비교
+	var office_depart = $("input[name='office_depart']").val();
+	var office_depart_org = $("input[name='office_depart_org']").val();
+	if (office_depart !== office_depart_org) {
+	    modifyReason1 += "부서 변경 ('" + office_depart_org + "' > '" + office_depart + "'); ";
+	}
+
+	// 담당자 비교
+	var office_charege = $("input[name='office_charege']").val();
+	var office_charege_org = $("input[name='office_charege_org']").val();
+	if (office_charege !== office_charege_org) {
+	    modifyReason1 += "담당자 변경 ('" + office_charege_org + "' > '" + office_charege + "'); ";
+	}
+
+	// 연락처 비교
+	var office_contact = $("input[name='office_contact']").val();
+	var office_contact_org = $("input[name='office_contact_org']").val();
+	if (office_contact !== office_contact_org) {
+	    modifyReason1 += "연락처 변경 ('" + office_contact_org + "' > '" + office_contact + "'); ";
+	}
+
+	// 용도 비교
+	var yongdo = $("select[name='yongdo']").val();
+	var yongdo_org = $("input[name='yongdo_org']").val();
+	if (yongdo !== yongdo_org) {
+	    modifyReason1 += "용도 변경 ('" + yongdo_org + "' > '" + yongdo + "'); ";
+	}
+
+	// 관로명 비교
+	var pipe_name = $("select[name='pipe_name']").val();
+	var pipe_name_org = $("input[name='pipe_name_org']").val();
+	if (pipe_name !== pipe_name_org) {
+	    modifyReason1 += "관로명 변경 ('" + pipe_name_org + "' > '" + pipe_name + "'); ";
+	}
+
+	// 단/복선 비교
+	var sun_gubun = $("select[name='sun_gubun']").val();
+	var sun_gubun_org = $("input[name='sun_gubun_org']").val();
+	if (sun_gubun !== sun_gubun_org) {
+	    modifyReason1 += "단/복선 변경 ('" + sun_gubun_org + "' > '" + sun_gubun + "'); ";
+	}
+
+	// 관경 비교
+	var pipe_meter = $("input[name='pipe_meter']").val();
+	var pipe_meter_org = $("input[name='pipe_meter_org']").val();
+	if (pipe_meter !== pipe_meter_org) {
+	    modifyReason1 += "관경 변경 ('" + pipe_meter_org + "' > '" + pipe_meter + "'); ";
+	}
+
+	// 감면 여부 비교
+	var exemptionyn = $("select[name='exemptionyn']").val();
+	var exemptionyn_org = $("input[name='exemptionyn_org']").val();
+	if (exemptionyn !== exemptionyn_org) {
+	    modifyReason1 += "감면 여부 변경 ('" + exemptionyn_org + "' > '" + exemptionyn + "'); ";
+	}
 	
-	url="/gover/insertGoverMaster"; 
-					   $.ajax({
-					   			
-					   				url:url,
-					   				type:'POST',
-					   				contentType:"application/json",
-					   				data:JSON.stringify(object),
-					   				
-					   				dataType:"json",
-					   				beforeSend:function(request){
-					   					console.log("beforesend ........................");
-					   					loadingShow();
-					   				},
-					   				success:function(response){
-					   					loadingHide();
-					   					console.log(response);
-					   					if (response.success="Y"){
-					   						console.log("response.success Y");
-					   						//console.log("response.resultData length:"+response.resultData.length);
-											alert("정상적으로 등록 되었습니다.");
-					   						/*$("#popup_bg").show();
-					   						$("#popup").show(500);
-					   						//$("#addrPopupLayer tbody td").remove();
-					   						for(var i=0;i<response.resultData.length;i++){
-					   							$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-					   						}*/
-					   					}
-					   					else {
-					   						console.log("response.success N");
-					   					}
-					   				},
-					   				error:function(jqXHR,textStatus,errorThrown){
-					   					alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
-										return false;
-					   				}
-					   			
-					   		}); 
-		
+	// 점용 구분 비교
+	var use_purpos = $("select[name='use_purpos']").val();
+	var use_purpos_org = $("input[name='use_purpos_org']").val();
+	if (use_purpos !== use_purpos_org) {
+	    modifyReason1 += "점용 구분 변경 ('" + use_purpos_org + "' > '" + use_purpos + "'); ";
+	}
+
+	// 점용 기간 비교 (시작일)
+	var gover_st_date = $("input[name='gover_st_date']").val();
+	var gover_st_date_org = $("input[name='gover_st_date_org']").val();
+	if (gover_st_date !== gover_st_date_org) {
+	    modifyReason1 += "점용 시작일 변경 ('" + gover_st_date_org + "' > '" + gover_st_date + "'); ";
+	}
+
+	// 점용 기간 비교 (종료일)
+	var gover_ed_date = $("input[name='gover_ed_date']").val();
+	var gover_ed_date_org = $("input[name='gover_ed_date_org']").val();
+	if (gover_ed_date !== gover_ed_date_org) {
+	    modifyReason1 += "점용 종료일 변경 ('" + gover_ed_date_org + "' > '" + gover_ed_date + "'); ";
+	}
+
+	// 점용갱신주기 비교
+	var gover_period = $("input[name='gover_period']").val();
+	var gover_period_org = $("input[name='gover_period_org']").val();
+	if (gover_period !== gover_period_org) {
+	    modifyReason1 += "점용갱신주기 변경 ('" + gover_period_org + "' > '" + gover_period + "'); ";
+	}
+
+	// 신규등록사유 비교
+	var newregreason = $("select[name='newregreason']").val();
+	var newregreason_org = $("input[name='newregreason_org']").val();
+	if (newregreason !== newregreason_org) {
+	    modifyReason1 += "신규등록사유 변경 ('" + newregreason_org + "' > '" + newregreason + "'); ";
+	}
+
+	// 허가증 보유 여부 비교
+	var permpossyn = $("select[name='permpossyn']").val();
+	var permpossyn_org = $("input[name='permpossyn_org']").val();
+	if (permpossyn !== permpossyn_org) {
+	    modifyReason1 += "허가증 보유 여부 변경 ('" + permpossyn_org + "' > '" + permpossyn + "'); ";
+	}
+
+	// 점용료 미납부 사유 비교
+	var occunonpayreason = $("select[name='occunonpayreason']").val();
+	var occunonpayreason_org = $("input[name='occunonpayreason_org']").val();
+	if (occunonpayreason !== occunonpayreason_org) {
+	    modifyReason1 += "점용료 미납부 사유 변경 ('" + occunonpayreason_org + "' > '" + occunonpayreason + "'); ";
+	}
+
+	// 점용료 선납 여부 비교
+	var occuprepayyn = $("input[name='occuprepayyn']").is(':checked') ? "1" : "0";
+	var occuprepayyn_org = $("input[name='occuprepayyn_org']").val();
+	if (occuprepayyn !== occuprepayyn_org) {
+	    modifyReason1 += "점용료 선납 여부 변경 ('" + occuprepayyn_org + "' > '" + occuprepayyn + "'); ";
+	}
+
+	// 선납기한 비교
+	var occuprepaydate = $("input[name='occuprepaydate']").val();
+	var occuprepaydate_org = $("input[name='occuprepaydate_org']").val();
+	if (occuprepaydate !== occuprepaydate_org) {
+	    modifyReason1 += "선납기한 변경 ('" + occuprepaydate_org + "' > '" + occuprepaydate + "'); ";
+	}
+
+	if (modifyReason1 !== "") {
+	    object.modifyReason1 = modifyReason1;
+	}
+
+	
+	// 변경이력 - 허가관청만
+	var modifyReason5 = "";
+	
+	// 허가관청 비교
+	var pmt_office = $("select[name='pmt_office']").val();
+	var pmt_office_org = $("input[name='pmt_office_org']").val();
+	if (pmt_office !== pmt_office_org) {
+		modifyReason5 += "허가관청 변경 ('" + pmt_office_org + "' > '" + pmt_office + "'); ";
+	}
+
+	// 관리기관 비교
+	var adm_office = $("select[name='adm_office']").val();
+	var adm_office_org = $("input[name='adm_office_org']").val();
+	if (adm_office !== adm_office_org) {
+		modifyReason5 += "관리기관 변경 ('" + adm_office_org + "' > '" + adm_office + "'); ";
+	}
+	console.log(modifyReason5);
+
+	if (modifyReason5 !== "") {
+		object.modifyReason5 = modifyReason5;
+	}
+	
+	console.log("대상토지 정보");
+	var togiDatas = [];
+	var togiUls = $("#goverUlDiv #goverUl");
+	console.log(togiUls);
+
+	/*String SGG_NM = (parser.getString("SGG_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+						String EMD_NM = (parser.getString("EMD_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+						String RI_NM = (parser.getString("RI_NM" + String.valueOf(i), "")).replaceAll("전체", "");
+						String JIBUN = parser.getString("JIBUN" + String.valueOf(i), "");
+						String JIBUN_FULL = parser.getString("JIBUN_FULL" + String.valueOf(i), "");
+						String ADDRCODE = parser.getString("ADDRCODE" + String.valueOf(i), "");
+						String PNU = parser.getString("ChkPNU" + String.valueOf(i), "");
+						String ORG_PNU = parser.getString("ORG_PNU" + String.valueOf(i), "");
+						String GOVEROWNYN = parser.getString("GOVER_OWN_YN" + String.valueOf(i), "");
+						String JIJUK_AREA = parser.getString("JIJUK_AREA" + String.valueOf(i), "");
+						String JIMOK_TEXT = parser.getString("JIMOK_TEXT" + String.valueOf(i), "");
+						String GOVER_LENGTH = parser.getString("GOVER_LENGTH" + String.valueOf(i), "");
+						String GOVER_AREA = parser.getString("GOVER_AREA" + String.valueOf(i), "");
+						String ADM_OFFICE_PNU = parser.getString("ADM_OFFICE" + String.valueOf(i), "");
+						String USE_PURPOS_PNU = parser.getString("USE_PURPOS" + String.valueOf(i), "");
+						String REP_FLAG = parser.getString("REP_FLAG" + String.valueOf(i), "");
+						String ORG_PNU_NULL = parser.getString("ORG_PNU_NULL" + String.valueOf(i), ""); // pnu값이
+																										// "NULL"도*/
+	for (var i = 0; i < togiUls.length; i++) {
+		var sido_nm = $(togiUls[i]).find("input[name='sido_nm']").val();
+		var addKey = $(togiUls[i]).find("input[name='addKey']").val();
+		var sgg_nm = $(togiUls[i]).find("input[name='sgg_nm']").val();
+		var emd_nm = $(togiUls[i]).find("input[name='emd_nm']").val();
+		var ri_nm = $(togiUls[i]).find("input[name='ri_nm']").val();
+		var jibun = $(togiUls[i]).find("input[name='jibun']").val();
+		var jibun_full = $(togiUls[i]).find("input[name='jibun_full']").val();
+		var addrcode = $(togiUls[i]).find("input[name='addrcode']").val();
+		var pnu = $(togiUls[i]).find("input[name='pnu']").val();
+		var org_pnu = $(togiUls[i]).find("input[name='pnu']").val();
+		var gover_own_yn = $(togiUls[i]).find("input[name='gover_own_yn']").val();
+		var jijuk_area = $(togiUls[i]).find("input[name='jijuk_area']").val();
+		var gover_length = $(togiUls[i]).find("input[name='gover_length']").val();
+		var gover_area = $(togiUls[i]).find("input[name='gover_area']").val();
+		var jimok_text = $(togiUls[i]).find("input[name='jimok_text']").val();
+		var adm_office = $(togiUls[i]).find("#admOfficeText01").text();
+		var pipe_overlab_yn = $(togiUls[i]).find("input[name='pipe_overlap_yn']").val();
+
+		var rep_flag = "N";
+		if ($(togiUls[i]).find("input:checkbox[name='rep_flag']").is(":checked") == true) {
+			rep_flag = "Y";
+		};
+
+		//console.log("togiManageNo:"+togiManageNo);
+		var togiObj = {
+			"sido_nm": ljsIsNull(sido_nm) ? '' : sido_nm
+			, "sgg_nm": ljsIsNull(sgg_nm) ? '' : sgg_nm
+			, "emd_nm": ljsIsNull(emd_nm) ? '' : emd_nm
+			, "ri_nm": ljsIsNull(ri_nm) ? '' : ri_nm
+			, "jibun_full": ljsIsNull(jibun_full) ? '' : jibun_full
+			, "jibun": ljsIsNull(jibun) ? '' : jibun
+			, "addrcode": ljsIsNull(addrcode) ? '' : addrcode
+			, "pnu": ljsIsNull(pnu) ? '' : pnu
+			, "org_pnu": ljsIsNull(org_pnu) ? '' : org_pnu
+			, "gover_own_yn": ljsIsNull(gover_own_yn) ? '' : gover_own_yn
+			, "jijuk_area": ljsIsNull(jijuk_area) ? '' : jijuk_area
+			, "gover_length": ljsIsNull(gover_length) ? '' : gover_length
+			, "jimok_text": ljsIsNull(jimok_text) ? '' : jimok_text
+			, "adm_office": ljsIsNull(adm_office) ? '' : adm_office
+			, "pipe_overlab_yn": ljsIsNull(pipe_overlab_yn) ? '' : pipe_overlab_yn
+			, "rep_flag": ljsIsNull(rep_flag) ? 'N' : rep_flag
+			, "gover_area": ljsIsNull(gover_area) ? '' : gover_area
+			, "addKey": addKey
+
+		}
+
+		console.log(togiObj);
+		togiDatas.push(togiObj);
+	}
+
+	//const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+	const attachFileUls = document.querySelectorAll('input[name="masterEdit_attachFile"]');
+	console.log(attachFileUls);
+
+	var files = new Array();
+	for (var i = 0; i < attachFileUls.length; i++) {
+		console.log($(attachFileUls[i]).parent().parent().html());
+		var fname = $(attachFileUls[i]).parent().parent().find("#filename").val();
+		var wdate = $(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val();
+		console.log(fname);
+		console.log("wdate:" + wdate);
+		if (wdate == null || wdate == "" || wdate == undefined) files.push(fname);
+
+	}
+
+	console.log("----------togiDatas-------------");
+	console.log(togiDatas);
+	console.log("----------files-------------");
+	console.log(files);
+
+	object.togiDatas = togiDatas;
+	object.files = files;
+	object.fileCnt = files.length;
+	object.office_mobile = "";
+	object.save_status = "Q";//임시저장
+	object.gubun = "modify"; //신규등록
+	var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
+	console.log("----------jsonobj------------");
+	console.log(object);
+
+	url = "/gover/insertGoverMaster";
+	$.ajax({
+
+		url: url,
+		type: 'POST',
+		contentType: "application/json",
+		data: JSON.stringify(object),
+
+		dataType: "json",
+		beforeSend: function(request) {
+			console.log("beforesend ........................");
+			loadingShow();
+		},
+		success: function(response) {
+			loadingHide();
+			console.log(response);
+			if (response.success = "Y") {
+				console.log("response.success Y");
+				//console.log("response.resultData length:"+response.resultData.length);
+				alert("정상적으로 등록 되었습니다.");
+				/*$("#popup_bg").show();
+				$("#popup").show(500);
+				//$("#addrPopupLayer tbody td").remove();
+				for(var i=0;i<response.resultData.length;i++){
+					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+				}*/
+			}
+			else {
+				console.log("response.success N");
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
+			return false;
+		}
+	}); // end ajax
 });
 
 
