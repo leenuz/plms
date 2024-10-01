@@ -2024,6 +2024,11 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 	    where so_adm_seq= #{ADM_SEQ, jdbcType=BIGINT}
 	</update>
 	
+	<delete id="deleteOfficeMng" parameterType="HashMap">
+	    delete from SYS_OFFICEMNG
+	    where so_adm_seq= #{ADM_SEQ, jdbcType=BIGINT}
+	</delete>
+	
 	<select id="selectOfficeInfoAll" resultType="HashMap" parameterType="HashMap">
 		SELECT TT.*,(row_number() over()) as NO
 		FROM (	

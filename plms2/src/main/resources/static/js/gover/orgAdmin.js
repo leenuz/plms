@@ -2,6 +2,8 @@
 let lastSelectedJisa = null;
 let lastSelectedPmtOffice = null;
 let orgAdminTargetInfo = [];
+let selectedOrgAdminInfo = {};
+
 // 지사 선택 시 허가관청 목록 업데이트를 위한 change 이벤트 트리거
 $(document).on("click", "#sjisaUl li", function () {
     const selectedJisa = $(this).text().trim();
@@ -177,8 +179,8 @@ function showModPopup(idx) {
 	$('#saveForm')[0].reset();  // 폼의 모든 값을 초기화
 	$("#jisaText").text("전체");  // 지사 셀렉트 박스 초기화
 	$("#pmtOfficeText").text("전체");  // 허가관청 셀렉트 박스 초기화
-	
-	let object = {'adm_seq': idx};
+	selectedOrgAdminInfo = orgAdminTargetInfo[idx];
+	let object = {'adm_seq': orgAdminTargetInfo[idx].adm_seq};
 	$.ajax({
         url: "/gover/getGoverOfficeMngHistoryList", // 허가관청 목록을 가져오는 API
         data: JSON.stringify(object),
@@ -507,6 +509,8 @@ modApprovePopEvet = () => {
 						return;
 					}
 					object.gubun = "modify";
+					
+					object.adm_seq = selectedOrgAdminInfo.adm_seq;
 					
 					$.ajax({
 						url: "/gover/insertOfficeMng",
@@ -866,6 +870,44 @@ $(document).on("click", "#mPmtOfficeUl li", function () {
     $("#mPmtOfficeUl").removeClass("active"); // 드롭다운 목록 닫기
 });
 
+// 허가관청 관리 삭제
+function deleteOrgAdmin(idx) {
+	
+	let seq = orgAdminTargetInfo[idx].adm_seq; 
+	let object = {'adm_seq': seq, 'jisa': '', 'pmt_office': '', 'adm_office': ''};
+	
+	object.gubun = "delete";
+	if(confirm('삭제하시겠습니까?')) {
+		$.ajax({
+			url: "/gover/insertOfficeMng",
+			type: 'POST',
+			contentType: "application/json",
+			data: JSON.stringify(object),
+			dataType: "json",
+			beforeSend: function(request) {
+				console.log("beforesend ........................");
+				loadingShow();
+			},
+			success: function(response) {
+				loadingHide();
+				
+				if (response.success == "Y") {
+					console.log("response.success Y");
+					alert(response.message);
+					
+				} else {
+					console.log("response.success N");
+					alert(response.message);
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
+				return false;
+			}
+		});
+	}
+	
+}
 $('#searchBtn').click(function() {
 	loadData();
 });
@@ -956,7 +998,7 @@ function loadData() {
 					trStr += `
 									<div class="btnWrap">
 										<div class="btnBox">
-											<button class="deleteBtn">삭제</button>
+											<button class="deleteBtn" onclick="deleteOrgAdmin(`+i+`)">삭제</button>
 										</div>
 									</div>
 					`;
