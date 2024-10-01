@@ -322,11 +322,10 @@ WHERE 1=1
 	               gm.gm_office_mobile AS office_mobile,
 	               gm.gm_gover_period AS gover_period,
 	               gm.gm_pipe_meter2 AS pipe_meter2,
-	               ,CASE 
-					    WHEN gm.gm_save_status = 'A' THEN 'Y'
-					    ELSE 'N'
-					END AS save_status
-	              
+	               CASE 
+					       	WHEN gm.gm_save_status = 'A' THEN 'Y'
+					    		ELSE 'N'
+									END AS save_status,
 	               gm.gm_newregreason AS newregreason,
 	               gm.gm_occunonpayreason AS occunonpayreason,
 	               gm.gm_permpossyn AS permpossyn,
@@ -430,7 +429,10 @@ WHERE 1=1
 	               gm.gm_office_mobile AS office_mobile,
 	               gm.gm_gover_period AS gover_period,
 	               gm.gm_pipe_meter2 AS pipe_meter2,
-	               gm.gm_save_status AS save_status,
+	               CASE 
+					       	WHEN gm.gm_save_status = 'A' THEN 'Y'
+					    		ELSE 'N'
+									END AS save_status,
 	               gm.gm_newregreason AS newregreason,
 	               gm.gm_occunonpayreason AS occunonpayreason,
 	               gm.gm_permpossyn AS permpossyn,

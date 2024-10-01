@@ -2260,6 +2260,8 @@ log.info("data:"+data.get(0));
 		params.put("account_yn", account_yn);
 		params.put("start_date", start_date);
 		params.put("end_date", end_date);
+		
+		params.put("JIMOK_TEXT", jimok_text);	//지목 추가
 
 //		String[] right_arr= {};
 //		right_arr=right_type.split(",");

@@ -23,7 +23,7 @@ $(document).on("click","#searchBtn",function(){
 	
 	var object = {};
 	for (var i = 0; i < formSerializeArray.length; i++){
-		if (formSerializeArray[i]['value'] === '전체') {
+		if (formSerializeArray[i]['value'] === '전체' || formSerializeArray[i]['value'] === '선택') {
 		    continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
 		}
 		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
