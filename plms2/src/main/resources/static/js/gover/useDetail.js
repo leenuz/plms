@@ -104,3 +104,30 @@ $(document).on("click","#cancelSangsin",function(){
 			
 			}); 
 })
+
+
+
+
+/**********************************/
+/**********************************/
+//종섭작업
+function printCurrentPage(){
+	console.log('인쇄');
+	
+	let prtContent = document.getElementById('detailPrintSection');
+	let initBody; 
+	
+	window.onbeforeprint = function() {
+		initBody = document.body.innerHTML;
+		document.body.innerHTML = prtContent.innerHTML;
+	}
+	
+	window.onafterprint = function() {
+		document.body.innerHTML = initBody;
+	}
+	
+	window.print();
+	
+}
+/**********************************/
+/**********************************/
