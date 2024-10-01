@@ -80,13 +80,6 @@ const useDetailCangehistoryPopEvet = () => {
 }
 //useDetailCangehistoryPopEvet();
 
-$(document).ready(function(){
-	console.log("-------ready---useDetail-------------");
-	
-})
-
-
-
 $(document).on("click","#cancelSangsin",function(){
 	console.log($("#saveForm").serialize());
 		    var formSerializeArray = $('#saveForm').serializeArray(); // 폼 데이터를 직렬화하여 배열로 저장
@@ -162,6 +155,21 @@ function printCurrentPage(){
 	}
 	
 	window.print();
+	
+}
+
+//상세보기 다운로드
+function detailFileDownload(obj) {
+	const filePath = $(obj).attr('data-filepath');
+	
+	const link = document.createElement('a');
+	
+	link.href = filePath;
+	link.download = '';
+	
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
 	
 }
 /**********************************/
