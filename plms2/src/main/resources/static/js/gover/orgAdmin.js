@@ -194,8 +194,12 @@ function showModPopup(idx) {
             if (rt.length > 0) {
 				for (let i = 0; i < rt.length; i++) {
 					let info = rt[i];
-					contentHtml += `<ul class="approvehistory_content">`;
-			        contentHtml += `<li class="approvehistory_title_1">2024-04-01</li>`;
+					let infoDate = new Date(info.wdate);
+						let year = infoDate.getFullYear().toString().padStart(2, '0');
+						let month = (infoDate.getMonth() + 1).toString().padStart(2, '0');
+						let date = infoDate.getDate().toString().padStart(2, '0');
+						contentHtml += `<ul class="approvehistory_content">`;
+				        contentHtml += `<li class="approvehistory_title_1">${year}-${month}-${date}</li>`;
 			        contentHtml += `<li class="approvehistory_title_2">${info.gubun}</li>`;
 			        contentHtml += `<li class="approvehistory_title_4">${info.content}</li>`;
 			        contentHtml += `</ul>`;	
@@ -275,8 +279,12 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 	            if (rt.length > 0) {
 					for (let i = 0; i < rt.length; i++) {
 						let info = rt[i];
+						let infoDate = new Date(info.wdate);
+						let year = infoDate.getFullYear().toString().padStart(2, '0');
+						let month = (infoDate.getMonth() + 1).toString().padStart(2, '0');
+						let date = infoDate.getDate().toString().padStart(2, '0');
 						contentHtml += `<ul class="approvehistory_content">`;
-				        contentHtml += `<li class="approvehistory_title_1">2024-04-01</li>`;
+				        contentHtml += `<li class="approvehistory_title_1">${year}-${month}-${date}</li>`;
 				        contentHtml += `<li class="approvehistory_title_2">${info.gubun}</li>`;
 				        contentHtml += `<li class="approvehistory_title_4">${info.content}</li>`;
 				        contentHtml += `</ul>`;	
