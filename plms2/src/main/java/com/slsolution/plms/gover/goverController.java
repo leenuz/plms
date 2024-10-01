@@ -2314,10 +2314,11 @@ public class goverController {
 			String fileseq = requestParamsObj.has("fileseq")?requestParamsObj.getString("fileseq"):""; // 파일 seq
 			
 			//String modifyReason1 = requestParamsObj.has("modifyReason1")?requestParamsObj.getString("modifyReason1"):""; // 변경이력-기본정보
-			String modifyReason2 = requestParamsObj.has("modifyReason2")?requestParamsObj.getString("modifyReason2"):""; // 변경이력-소속토지정보
+			//String modifyReason2 = requestParamsObj.has("modifyReason2")?requestParamsObj.getString("modifyReason2"):""; // 변경이력-소속토지정보
 			String modifyReason3 = requestParamsObj.has("modifyReason3")?requestParamsObj.getString("modifyReason3"):""; // 변경이력-허가기본정보
 			String modifyReason4 = requestParamsObj.has("modifyReason4")?requestParamsObj.getString("modifyReason4"):""; // 변경이력-허가관리
 			String modifyReason1 = requestParamsObj.optString("modifyReason1", ""); // 변경이력 - 기본정보
+			String modifyReason2 = requestParamsObj.optString("modifyReason2", ""); // 변경이력 - 소속토지정보
 			String modifyReason5 = requestParamsObj.optString("modifyReason5", ""); // 변경이력 - 허가관청
 									// 및
 									// 납부현황
@@ -2440,7 +2441,7 @@ public class goverController {
 					if (!modifyReason2.equals("")) {
 						params.put("GUBUN", "소속 토지정보");
 						params.put("CONT", modifyReason2);
-						mainService.InsertQuery("goversQL.insertGoverModifyHistory", params);
+						mainService.InsertQuery("goverSQL.insertGoverModifyHistory", params);
 					}
 					if (!modifyReason3.equals("")) {
 						params.put("GUBUN", "허가 정보 및 납부 현황");

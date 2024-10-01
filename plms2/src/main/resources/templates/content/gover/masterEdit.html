@@ -498,8 +498,8 @@
 				</li>-->
 								<!-- 순번 -->
 								<li class="content smallWidth">
-									<input type="hidden" id="goverIndex" value="0">
-									<input type="hidden" id="addKey" value="new">
+									<input type="hidden" id="goverIndex" name="goverIndex" value="0">
+									<input type="hidden" id="addKey" name="addKey" value="new">
 									<input type="hidden" id="sido_nm" name="sido_nm">
 									<input type="hidden" id="sgg_nm" name="sgg_nm">
 									<input type="hidden" id="emd_nm" name="emd_nm">
@@ -621,6 +621,18 @@
 									<input type="hidden" id="jibun" name="jibun">
 									<input type="hidden" id="jibun_full" name="jibun_full">
 									<input type="hidden" id="addrcode" name="addrcode">
+									
+									<!-- 소속 토지 정보에 기존 값을 hidden 필드로 추가 -->
+									<input type="hidden" name="adm_office_org" th:value="${pnuList[0].adm_office}">
+									<input type="hidden" name="gover_own_yn_org" th:value="${pnuList[0].gover_own_yn}">
+									<input type="hidden" name="rep_flag_org" th:value="${pnuList[0].rep_flag}">
+									<input type="hidden" name="addr_org" th:value="${pnuList[0].sido_nm + ' ' + pnuList[0].sgg_nm + ' ' + pnuList[0].emd_nm + ' ' + pnuList[0].ri_nm + ' ' + pnuList[0].jibun}">
+									<input type="hidden" name="pnu_org" th:value="${pnuList[0].pnu}">
+									<input type="hidden" name="jimok_text_org" th:value="${pnuList[0].jimok_text}">
+									<input type="hidden" name="gover_length_org" th:value="${pnuList[0].gover_length}">
+									<input type="hidden" name="gover_area_org" th:value="${pnuList[0].gover_area}">
+									<input type="hidden" name="pipe_overlap_yn_org" th:value="${pnuList[0].pipe_overlap_yn}">
+
 									<input type="text" class="notWriteInput" readonly placeholder="1" />
 								</li>
 
@@ -738,6 +750,18 @@
 									<input type="hidden" id="jibun" name="jibun">
 									<input type="hidden" id="jibun_full" name="jibun_full">
 									<input type="hidden" id="addrcode" name="addrcode">
+									
+									<!-- 기존 값들을 hidden 필드로 추가 -->
+									<input type="hidden" name="adm_office_org_${iterStat.index}" th:value="${pnu.adm_office}">
+									<input type="hidden" name="gover_own_yn_org_${iterStat.index}" th:value="${pnu.gover_own_yn}">
+									<input type="hidden" name="rep_flag_org_${iterStat.index}" th:value="${pnu.rep_flag}">
+									<input type="hidden" name="addr_org_${iterStat.index}" th:value="${pnu.sido_nm + ' ' + pnu.sgg_nm + ' ' + pnu.emd_nm + ' ' + pnu.ri_nm + ' ' + pnu.jibun}">
+									<input type="hidden" name="pnu_org_${iterStat.index}" th:value="${pnu.pnu}">
+									<input type="hidden" name="jimok_text_org_${iterStat.index}" th:value="${pnu.jimok_text}">
+									<input type="hidden" name="gover_length_org_${iterStat.index}" th:value="${pnu.gover_length}">
+									<input type="hidden" name="gover_area_org_${iterStat.index}" th:value="${pnu.gover_area}">
+									<input type="hidden" name="pipe_overlap_yn_org_${iterStat.index}" th:value="${pnu.pipe_overlap_yn}">
+
 									<input type="text" class="notWriteInput" readonly th:placeholder="${pnu.no}" />
 								</li>
 
@@ -847,8 +871,7 @@
 								<!-- 순번 -->
 								<li class="content smallWidth">
 									<input type="hidden" id="goverIndex" value="0">
-									<input type="hidden" id="addKey" name="addKey" value="new">
-
+									<input type="hidden" id="addKey" name="addKey">
 									<input type="hidden" id="sido_nm" name="sido_nm">
 									<input type="hidden" id="sgg_nm" name="sgg_nm">
 									<input type="hidden" id="emd_nm" name="emd_nm">
@@ -1040,7 +1063,7 @@
 										<ul class="contents" th:each="history, iterStat : ${goverModifyList}">
 											<li class="content smallWidth">
 												<!-- 순번 -->
-												<input type="text" class="notWriteInput" th:value="${iterStat.index + 1}" readonly />
+<!--												<input type="text" class="notWriteInput" th:value="${iterStat.index + 1}" readonly />-->
 											</li>
 											<li class="content">
 												<!-- 변경일시 -->

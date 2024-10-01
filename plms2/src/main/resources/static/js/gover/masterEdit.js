@@ -435,6 +435,10 @@ function addRow() {
 
 	var addDiv = $('<ul class="contents" id="goverUl">'+addUl+'</ul>');
 	addDiv.find("#goverIndex").val(index);
+	
+	// addKey 값을 'new'로 설정
+	addDiv.find("input[name='addKey']").val("new");
+	
 	console.log($(addDiv).html());
 	
 	//멀티체크박스 클릭을 위한 조치
@@ -564,6 +568,14 @@ $(document).on("click", "#draftSaveBtn", function() {
 	if (modifyReason5 !== "") {
 		object.modifyReason5 = modifyReason5;
 	}
+	
+	// 소속 토지 정보 변경 이력 처리
+	var modifyReason2 = getModifyReasonForLand();
+	if (modifyReason2 !== "") {
+		console.log("소속토지정보 변경이력 있음: "+ modifyReason2);
+    object.modifyReason2 = modifyReason2;
+	}
+
 
 	console.log("대상토지 정보");
 	var togiDatas = [];
@@ -710,77 +722,107 @@ $(document).on("click", "#draftSaveBtn", function() {
 
 // 변경이력 비교 함수
 function compareChanges(orgValue, newValue, fieldName) {
+    // null과 undefined를 빈 문자열로 처리
+    orgValue = orgValue === undefined || orgValue === null ? '' : orgValue;
+    newValue = newValue === undefined || newValue === null ? '' : newValue;
+    
     if (orgValue !== newValue) {
         return `${fieldName} 변경 ('${orgValue}' > '${newValue}'); `;
     }
     return '';
 }
 
+
 // 기본정보 변경이력 처리 함수
 function getModifyReasonForBasicInfo() {
     var modifyReason = '';
 
-    // 허가관청 비교
     modifyReason += compareChanges($("input[name='pmt_office_org']").val(), $("select[name='pmt_office']").val(), "허가관청");
-
-    // 관리기관 비교
     modifyReason += compareChanges($("input[name='adm_office_org']").val(), $("select[name='adm_office']").val(), "관리기관");
-
-    // 부서 비교
     modifyReason += compareChanges($("input[name='office_depart_org']").val(), $("input[name='office_depart']").val(), "부서");
-
-    // 담당자 비교
     modifyReason += compareChanges($("input[name='office_charege_org']").val(), $("input[name='office_charege']").val(), "담당자");
-
-    // 연락처 비교
     modifyReason += compareChanges($("input[name='office_contact_org']").val(), $("input[name='office_contact']").val(), "연락처");
-
-    // 용도 비교
     modifyReason += compareChanges($("input[name='yongdo_org']").val(), $("select[name='yongdo']").val(), "용도");
-
-    // 관로명 비교
     modifyReason += compareChanges($("input[name='pipe_name_org']").val(), $("select[name='pipe_name']").val(), "관로명");
-
-    // 단/복선 비교
     modifyReason += compareChanges($("input[name='sun_gubun_org']").val(), $("select[name='sun_gubun']").val(), "단/복선");
-
-    // 관경 비교
     modifyReason += compareChanges($("input[name='pipe_meter_org']").val(), $("input[name='pipe_meter']").val(), "관경");
-
-    // 감면 여부 비교
     modifyReason += compareChanges($("input[name='exemptionyn_org']").val(), $("select[name='exemptionyn']").val(), "감면 여부");
-
-    // 점용 구분 비교
     modifyReason += compareChanges($("input[name='use_purpos_org']").val(), $("select[name='use_purpos']").val(), "점용 구분");
-
-    // 점용 기간 비교 (시작일)
     modifyReason += compareChanges($("input[name='gover_st_date_org']").val(), $("input[name='gover_st_date']").val(), "점용 시작일");
-
-    // 점용 기간 비교 (종료일)
     modifyReason += compareChanges($("input[name='gover_ed_date_org']").val(), $("input[name='gover_ed_date']").val(), "점용 종료일");
-
-    // 점용갱신주기 비교
     modifyReason += compareChanges($("input[name='gover_period_org']").val(), $("input[name='gover_period']").val(), "점용갱신주기");
-
-    // 신규등록사유 비교
     modifyReason += compareChanges($("input[name='newregreason_org']").val(), $("select[name='newregreason']").val(), "신규등록사유");
-
-    // 허가증 보유 여부 비교
     modifyReason += compareChanges($("input[name='permpossyn_org']").val(), $("select[name='permpossyn']").val(), "허가증 보유 여부");
-
-    // 점용료 미납부 사유 비교
     modifyReason += compareChanges($("input[name='occunonpayreason_org']").val(), $("select[name='occunonpayreason']").val(), "점용료 미납부 사유");
-
-    // 점용료 선납 여부 비교
     var occuprepayyn = $("input[name='occuprepayyn']").is(':checked') ? "1" : "0";
     modifyReason += compareChanges($("input[name='occuprepayyn_org']").val(), occuprepayyn, "점용료 선납 여부");
-
-    // 선납기한 비교
     modifyReason += compareChanges($("input[name='occuprepaydate_org']").val(), $("input[name='occuprepaydate']").val(), "선납기한");
 
     return modifyReason;
 }
 
+
+// 소속 토지 정보 변경 이력 처리 함수
+function getModifyReasonForLand() {
+    console.log("-------------소속토지 변경이력 처리 함수 --------------");
+    var modifyReason = ''; // 최종적으로 누적된 변경 이력
+    
+    // 소속 토지 정보에 해당하는 UL 리스트를 가져옴
+    const togiUls = $("#goverUlDiv ul.contents");
+
+    console.log(togiUls.html());
+
+    // 각 UL마다 값을 비교하거나 새로운 항목을 추가
+    togiUls.each(function(index, ul) {
+        const addKey = $(ul).find("input[name='addKey']").val();  // addKey 값을 확인
+        const goverIndex = $(ul).find("input[name='goverIndex']").val();  // addKey 값을 확인
+				console.log("addKey: " + addKey); // addKey 값이 제대로 들어오는지 확인
+				console.log("goverIndex: " + goverIndex); // goverIndex 값이 제대로 들어오는지 확인
+				
+        if (addKey === 'new') {
+					if (goverIndex === '0' && $(ul).find("input[name='pnu']").val().length == 0) {
+						
+					}else {
+						// 새로운 항목일 경우 변경 이력에 추가
+						            var newModifyReason = ''; // 새로운 항목에 대한 변경 이력
+						            newModifyReason += "소속 토지 정보 추가: ";
+						            newModifyReason += `관리기관: '${$(ul).find("select[name='adm_office']").val() || ''}', `;
+						            newModifyReason += `국공유지 여부: '${$(ul).find("select[name='gover_own_yn']").val() || ''}', `;
+						            newModifyReason += `대표필지: '${$(ul).find("input[name='rep_flag']").is(":checked") ? 'Y' : 'N'}', `;
+						            newModifyReason += `주소: '${$(ul).find("input[name='addr']").val() || ''}', `;
+						            newModifyReason += `PNU: '${$(ul).find("input[name='pnu']").val() || ''}', `;
+						            newModifyReason += `지목: '${$(ul).find("select[name='jimok_text']").val() || ''}', `;
+						            newModifyReason += `점용연장: '${$(ul).find("input[name='gover_length']").val() || ''}', `;
+						            newModifyReason += `점용면적: '${$(ul).find("input[name='gover_area']").val() || ''}', `;
+						            newModifyReason += `관로일치 여부: '${$(ul).find("select[name='pipe_overlap_yn']").val() || ''}'; `;
+						            console.log("newModifyReason: " + newModifyReason);
+
+						            // 기존 modifyReason에 누적
+						            modifyReason += newModifyReason;
+					}
+					
+        } else if (addKey === 'add') {
+            // 기존 값과 새 값을 비교하여 변경 이력 기록
+            var addModifyReason = ''; // 기존 항목에 대한 변경 이력
+            addModifyReason += compareChanges($(ul).find("input[name='adm_office_org']").val() || '', $(ul).find("select[name='adm_office']").val() || '', "관리기관");
+            addModifyReason += compareChanges($(ul).find("input[name='gover_own_yn_org']").val() || '', $(ul).find("select[name='gover_own_yn']").val() || '', "국공유지 여부");
+            addModifyReason += compareChanges($(ul).find("input[name='rep_flag_org']").val() || '', $(ul).find("input[name='rep_flag']").is(":checked") ? 'Y' : 'N', "대표필지");
+            addModifyReason += compareChanges($(ul).find("input[name='addr_org']").val() || '', $(ul).find("input[name='addr']").val() || '', "주소");
+            addModifyReason += compareChanges($(ul).find("input[name='pnu_org']").val() || '', $(ul).find("input[name='pnu']").val() || '', "PNU");
+            addModifyReason += compareChanges($(ul).find("input[name='jimok_text_org']").val() || '', $(ul).find("select[name='jimok_text']").val() || '', "지목");
+            addModifyReason += compareChanges($(ul).find("input[name='gover_length_org']").val() || '', $(ul).find("input[name='gover_length']").val() || '', "점용연장");
+            addModifyReason += compareChanges($(ul).find("input[name='gover_area_org']").val() || '', $(ul).find("input[name='gover_area']").val() || '', "점용면적");
+            addModifyReason += compareChanges($(ul).find("input[name='pipe_overlap_yn_org']").val() || '', $(ul).find("select[name='pipe_overlap_yn']").val() || '', "관로일치 여부");
+            console.log("addModifyReason: " + addModifyReason);
+
+            // 기존 modifyReason에 누적
+            modifyReason += addModifyReason;
+        }
+    });
+
+    console.log("최종 modifyReason: " + modifyReason); // 최종 누적된 변경 이력
+    return modifyReason;
+}
 
 
 $(document).on("click","#reqApprovalBtn",function(){
