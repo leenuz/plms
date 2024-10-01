@@ -62,11 +62,11 @@
 			and r.complete_yn=#{complete_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date)">
-			and r.strdate::date = #{start_date}::date
+			and r.strdate::date >= #{start_date}::date
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
-			and r.enddate::date=#{end_date}::date
-		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" ><![CDATA[
+			and r.enddate::date <= #{end_date}::date
+		]]></if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and r.address like '%${address}%'
 		</if>
