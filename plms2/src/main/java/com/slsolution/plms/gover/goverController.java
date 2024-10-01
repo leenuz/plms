@@ -786,6 +786,7 @@ public class goverController {
 			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
 			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
 			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
+			ArrayList<HashMap> goverModifyOfficeList = mainService.selectQuery("goverSQL.selectModifyOfficeList",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
 			ArrayList<HashMap> goverMemoList = mainService.selectQuery("goverSQL.selectMemoList",params);
 			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
@@ -805,6 +806,7 @@ public class goverController {
 			log.info("data:"+data.get(0));
 			log.info("jisaList:"+jisaList);
 			log.info("goverModifyList:"+goverModifyList);
+			log.info("goverModifyOfficeList:"+goverModifyOfficeList);
 			log.info("atcFileList:"+atcFileList);
 			log.info("goverMemoList:"+goverMemoList);
 			log.info("jimokList:"+jimokList);
@@ -815,6 +817,7 @@ public class goverController {
 			mav.addObject("resultData",data.get(0));
 			mav.addObject("jisaList",jisaList);
 	  		mav.addObject("goverModifyList",goverModifyList);
+	  		mav.addObject("goverModifyOfficeList",goverModifyOfficeList);
 	  		mav.addObject("atcFileList",atcFileList);
 	  		mav.addObject("memoList",goverMemoList);
 	  		mav.addObject("jimokList",jimokList);
@@ -851,6 +854,7 @@ public class goverController {
 			
 			
 			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
+			ArrayList<HashMap> goverModifyOfficeList = mainService.selectQuery("goverSQL.selectModifyOfficeList",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
 			ArrayList<HashMap> goverPnuList = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPnuList", params); //소속토지정보
 			//ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
@@ -870,6 +874,7 @@ public class goverController {
 			// 조회 데이터 로그
 			log.info("data:"+goverList.get(0));
 			log.info("goverModifyList:"+goverModifyList);
+			log.info("goverModifyOfficeList:"+goverModifyOfficeList);
 			log.info("atcFileList:"+atcFileList);
 			log.info("goverPnuList:"+goverPnuList);
 			log.info("goverPermitList:"+goverPermitList);
@@ -888,6 +893,13 @@ public class goverController {
 		        mav.addObject("goverModifyList", new ArrayList<>());
 		    } else {
 		        mav.addObject("goverModifyList", goverModifyList);
+		    }
+		    
+		    // 각 리스트가 null 또는 비어있는 경우 처리
+		    if (goverModifyOfficeList == null || goverModifyOfficeList.isEmpty()) {
+		        mav.addObject("goverModifyOfficeList", new ArrayList<>());
+		    } else {
+		        mav.addObject("goverModifyOfficeList", goverModifyOfficeList);
 		    }
 		    
 		    if (atcFileList == null || atcFileList.isEmpty()) {
@@ -942,12 +954,14 @@ public class goverController {
 
 			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
 			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
+			ArrayList<HashMap> goverModifyOfficeList = mainService.selectQuery("goverSQL.selectModifyOfficeList",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList",params);
 			ArrayList<HashMap> goverPnuList = mainService.selectQuery("goverSQL.selectPnuList",params);
 			ArrayList<HashMap> goverPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
 
 			mav.addObject("resultData",data.get(0));
 	  		mav.addObject("goverModifyList",goverModifyList);
+	  		mav.addObject("goverModifyOfficeList",goverModifyOfficeList);
 	  		mav.addObject("atcFileList",atcFileList);
 	  		mav.addObject("goverPnuList",goverPnuList);
 	  		mav.addObject("goverPermitList",goverPermitList);
@@ -1690,8 +1704,7 @@ public class goverController {
 //			String PERMPOSSYN=parser.getString("permPossYn","");
 //			String OCCUPREPAYYN=parser.getString("occuPrePayYn","");
 //			String OCCUPREPAYDATE=parser.getString("occuPrePayDate","");
-			
-			
+		    
 			String PAGETYPE = requestParamsObj.has("pagetype")?requestParamsObj.getString("PAGETYPE"):""; // 수정화면에서 상신을 눌렀는지
 			// 확인
 			String JISA = requestParamsObj.getString("jisa"); // 지사
@@ -1714,7 +1727,7 @@ public class goverController {
 			String gubun = requestParamsObj.getString("gubun"); // 구분( modify : 수정, insert
 					// : 등록 )
 			String memo=requestParamsObj.has("memo")?requestParamsObj.getString("memo"):"";
-			 String ori_GOVER_NO =requestParamsObj.has("gover_no")?requestParamsObj.getString("gover_no"):"";
+			String ori_GOVER_NO =requestParamsObj.has("gover_no")?requestParamsObj.getString("gover_no"):"";
 			
 			String PNU_CNT = requestParamsObj.has("pnuCnt")?requestParamsObj.getString("pnuCnt"):"0"; // 소속토지 수
 			String PMT_CNT = requestParamsObj.has("pmtCnt")?requestParamsObj.getString("pmtCnt"):"0"; // 허가정보 수
@@ -1725,6 +1738,7 @@ public class goverController {
 			String modifyReason2 = requestParamsObj.has("modifyReason2")?requestParamsObj.getString("modifyReason2"):""; // 변경이력-소속토지정보
 			String modifyReason3 = requestParamsObj.has("modifyReason3")?requestParamsObj.getString("modifyReason3"):""; // 변경이력-허가기본정보
 			String modifyReason4 = requestParamsObj.has("modifyReason4")?requestParamsObj.getString("modifyReason4"):""; // 변경이력-허가관리
+			String modifyReason5 = requestParamsObj.optString("modifyReason5", ""); // 변경이력 - 허가관청
 									// 및
 									// 납부현황
 			
@@ -1743,13 +1757,11 @@ public class goverController {
 			System.out.println("modifyReason2=" + modifyReason2);
 			System.out.println("modifyReason3=" + modifyReason3);
 			System.out.println("modifyReason4=" + modifyReason4);
+			System.out.println("modifyReason5=" + modifyReason5);
 			
 			
 			JSONArray togiArr=new JSONArray(requestParamsObj.getString("togiDatas"));
 			JSONArray fileArr=new JSONArray(requestParamsObj.getString("files"));
-			
-			
-			
 
 			String str_GUBUN = "";
 			String str_GOVERNO = "";
@@ -1758,13 +1770,16 @@ public class goverController {
 			try {
 
 				HashMap params = new HashMap();
+			    // 허가관청, 관리기관 등의 데이터 처리
+			    params.put("PMT_OFFICE", requestParamsObj.optString("pmt_office", ""));
+			    params.put("ADM_OFFICE", requestParamsObj.optString("adm_office", ""));
+			    
 				//ljs 이슈 부분 추가
 				params.put("NEWREGREASON",NEWREGREASON);
 				params.put("OCCUNONPAYREASON",OCCUNONPAYREASON);
 				params.put("PERMPOSSYN",PERMPOSSYN);
 				params.put("OCCUPREPAYYN",OCCUPREPAYYN);
 				params.put("OCCUPREPAYDATE",OCCUPREPAYDATE);
-				
 				
 				params.put("JISA", JISA);
 				params.put("YONGDO", YONGDO);
@@ -1852,10 +1867,14 @@ public class goverController {
 						params.put("CONT", modifyReason3);
 						mainService.InsertQuery("goverSQL.insertGoverModifyHistory", params);
 					}
+					if (!modifyReason5.equals("")) {
+						params.put("GUBUN", "허가 관청");
+						params.put("CONT", modifyReason5);
+						mainService.InsertQuery("goverSQL.insertGoverModifyHistory", params);
+					}
 					System.out.println("updateGoverMaster = " + params);
 					mainService.UpdateQuery("goverSQL.updateGoverMaster", params); // 기본정보
 																						// 수정
-
 				}
 				
 				// 소속토지

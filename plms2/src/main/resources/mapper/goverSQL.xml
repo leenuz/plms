@@ -121,6 +121,17 @@ LEFT JOIN plms_approval PA
 		order by gm_modify_date desc
 	</select>
 	
+	<select id="selectModifyOfficeList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as no 
+		from gover_modify 
+		where 1=1
+		and gm_gubun = '허가 관청'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+		and gm_gover_no=#{idx}
+		</if>
+		order by gm_modify_date desc
+	</select>
+	
 	<select id="selectMemoList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *,(row_number() over()) as no 
 		from memo_master 
