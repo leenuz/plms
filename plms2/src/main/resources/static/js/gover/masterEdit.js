@@ -551,154 +551,20 @@ $(document).on("click", "#draftSaveBtn", function() {
 		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value']; // 배열의 각 항목을 객체로 변환
 	}
 
-	// 변경이력 - 기본정보
-	var modifyReason1 = "";
-
-	// 허가관청 비교
-	var pmt_office = $("select[name='pmt_office']").val();
-	var pmt_office_org = $("input[name='pmt_office_org']").val();
-	if (pmt_office !== pmt_office_org) {
-	    modifyReason1 += "허가관청 변경 ('" + pmt_office_org + "' > '" + pmt_office + "'); ";
-	}
-
-	// 관리기관 비교
-	var adm_office = $("select[name='adm_office']").val();
-	var adm_office_org = $("input[name='adm_office_org']").val();
-	if (adm_office !== adm_office_org) {
-	    modifyReason1 += "관리기관 변경 ('" + adm_office_org + "' > '" + adm_office + "'); ";
-	}
-
-	// 부서 비교
-	var office_depart = $("input[name='office_depart']").val();
-	var office_depart_org = $("input[name='office_depart_org']").val();
-	if (office_depart !== office_depart_org) {
-	    modifyReason1 += "부서 변경 ('" + office_depart_org + "' > '" + office_depart + "'); ";
-	}
-
-	// 담당자 비교
-	var office_charege = $("input[name='office_charege']").val();
-	var office_charege_org = $("input[name='office_charege_org']").val();
-	if (office_charege !== office_charege_org) {
-	    modifyReason1 += "담당자 변경 ('" + office_charege_org + "' > '" + office_charege + "'); ";
-	}
-
-	// 연락처 비교
-	var office_contact = $("input[name='office_contact']").val();
-	var office_contact_org = $("input[name='office_contact_org']").val();
-	if (office_contact !== office_contact_org) {
-	    modifyReason1 += "연락처 변경 ('" + office_contact_org + "' > '" + office_contact + "'); ";
-	}
-
-	// 용도 비교
-	var yongdo = $("select[name='yongdo']").val();
-	var yongdo_org = $("input[name='yongdo_org']").val();
-	if (yongdo !== yongdo_org) {
-	    modifyReason1 += "용도 변경 ('" + yongdo_org + "' > '" + yongdo + "'); ";
-	}
-
-	// 관로명 비교
-	var pipe_name = $("select[name='pipe_name']").val();
-	var pipe_name_org = $("input[name='pipe_name_org']").val();
-	if (pipe_name !== pipe_name_org) {
-	    modifyReason1 += "관로명 변경 ('" + pipe_name_org + "' > '" + pipe_name + "'); ";
-	}
-
-	// 단/복선 비교
-	var sun_gubun = $("select[name='sun_gubun']").val();
-	var sun_gubun_org = $("input[name='sun_gubun_org']").val();
-	if (sun_gubun !== sun_gubun_org) {
-	    modifyReason1 += "단/복선 변경 ('" + sun_gubun_org + "' > '" + sun_gubun + "'); ";
-	}
-
-	// 관경 비교
-	var pipe_meter = $("input[name='pipe_meter']").val();
-	var pipe_meter_org = $("input[name='pipe_meter_org']").val();
-	if (pipe_meter !== pipe_meter_org) {
-	    modifyReason1 += "관경 변경 ('" + pipe_meter_org + "' > '" + pipe_meter + "'); ";
-	}
-
-	// 감면 여부 비교
-	var exemptionyn = $("select[name='exemptionyn']").val();
-	var exemptionyn_org = $("input[name='exemptionyn_org']").val();
-	if (exemptionyn !== exemptionyn_org) {
-	    modifyReason1 += "감면 여부 변경 ('" + exemptionyn_org + "' > '" + exemptionyn + "'); ";
-	}
-	
-	// 점용 구분 비교
-	var use_purpos = $("select[name='use_purpos']").val();
-	var use_purpos_org = $("input[name='use_purpos_org']").val();
-	if (use_purpos !== use_purpos_org) {
-	    modifyReason1 += "점용 구분 변경 ('" + use_purpos_org + "' > '" + use_purpos + "'); ";
-	}
-
-	// 점용 기간 비교 (시작일)
-	var gover_st_date = $("input[name='gover_st_date']").val();
-	var gover_st_date_org = $("input[name='gover_st_date_org']").val();
-	if (gover_st_date !== gover_st_date_org) {
-	    modifyReason1 += "점용 시작일 변경 ('" + gover_st_date_org + "' > '" + gover_st_date + "'); ";
-	}
-
-	// 점용 기간 비교 (종료일)
-	var gover_ed_date = $("input[name='gover_ed_date']").val();
-	var gover_ed_date_org = $("input[name='gover_ed_date_org']").val();
-	if (gover_ed_date !== gover_ed_date_org) {
-	    modifyReason1 += "점용 종료일 변경 ('" + gover_ed_date_org + "' > '" + gover_ed_date + "'); ";
-	}
-
-	// 점용갱신주기 비교
-	var gover_period = $("input[name='gover_period']").val();
-	var gover_period_org = $("input[name='gover_period_org']").val();
-	if (gover_period !== gover_period_org) {
-	    modifyReason1 += "점용갱신주기 변경 ('" + gover_period_org + "' > '" + gover_period + "'); ";
-	}
-
-	// 신규등록사유 비교
-	var newregreason = $("select[name='newregreason']").val();
-	var newregreason_org = $("input[name='newregreason_org']").val();
-	if (newregreason !== newregreason_org) {
-	    modifyReason1 += "신규등록사유 변경 ('" + newregreason_org + "' > '" + newregreason + "'); ";
-	}
-
-	// 허가증 보유 여부 비교
-	var permpossyn = $("select[name='permpossyn']").val();
-	var permpossyn_org = $("input[name='permpossyn_org']").val();
-	if (permpossyn !== permpossyn_org) {
-	    modifyReason1 += "허가증 보유 여부 변경 ('" + permpossyn_org + "' > '" + permpossyn + "'); ";
-	}
-
-	// 점용료 미납부 사유 비교
-	var occunonpayreason = $("select[name='occunonpayreason']").val();
-	var occunonpayreason_org = $("input[name='occunonpayreason_org']").val();
-	if (occunonpayreason !== occunonpayreason_org) {
-	    modifyReason1 += "점용료 미납부 사유 변경 ('" + occunonpayreason_org + "' > '" + occunonpayreason + "'); ";
-	}
-
-	// 점용료 선납 여부 비교
-	var occuprepayyn = $("input[name='occuprepayyn']").is(':checked') ? "1" : "0";
-	var occuprepayyn_org = $("input[name='occuprepayyn_org']").val();
-	if (occuprepayyn !== occuprepayyn_org) {
-	    modifyReason1 += "점용료 선납 여부 변경 ('" + occuprepayyn_org + "' > '" + occuprepayyn + "'); ";
-	}
-
-	// 선납기한 비교
-	var occuprepaydate = $("input[name='occuprepaydate']").val();
-	var occuprepaydate_org = $("input[name='occuprepaydate_org']").val();
-	if (occuprepaydate !== occuprepaydate_org) {
-	    modifyReason1 += "선납기한 변경 ('" + occuprepaydate_org + "' > '" + occuprepaydate + "'); ";
-	}
-
+	// 변경이력 - 기본정보 처리
+	var modifyReason1 = getModifyReasonForBasicInfo();
 	if (modifyReason1 !== "") {
-	    object.modifyReason1 = modifyReason1;
+		object.modifyReason1 = modifyReason1;
 	}
 
-	
+
 	// 변경이력 - 허가관청만 처리 (필요 시 별도 함수로 분리 가능)
 	var modifyReason5 = compareChanges($("input[name='pmt_office_org']").val(), $("select[name='pmt_office']").val(), "허가관청") +
-	                    compareChanges($("input[name='adm_office_org']").val(), $("select[name='adm_office']").val(), "관리기관");
+		compareChanges($("input[name='adm_office_org']").val(), $("select[name='adm_office']").val(), "관리기관");
 	if (modifyReason5 !== "") {
-	    object.modifyReason5 = modifyReason5;
+		object.modifyReason5 = modifyReason5;
 	}
-	
+
 	console.log("대상토지 정보");
 	var togiDatas = [];
 	var togiUls = $("#goverUlDiv #goverUl");
@@ -849,6 +715,72 @@ function compareChanges(orgValue, newValue, fieldName) {
     }
     return '';
 }
+
+// 기본정보 변경이력 처리 함수
+function getModifyReasonForBasicInfo() {
+    var modifyReason = '';
+
+    // 허가관청 비교
+    modifyReason += compareChanges($("input[name='pmt_office_org']").val(), $("select[name='pmt_office']").val(), "허가관청");
+
+    // 관리기관 비교
+    modifyReason += compareChanges($("input[name='adm_office_org']").val(), $("select[name='adm_office']").val(), "관리기관");
+
+    // 부서 비교
+    modifyReason += compareChanges($("input[name='office_depart_org']").val(), $("input[name='office_depart']").val(), "부서");
+
+    // 담당자 비교
+    modifyReason += compareChanges($("input[name='office_charege_org']").val(), $("input[name='office_charege']").val(), "담당자");
+
+    // 연락처 비교
+    modifyReason += compareChanges($("input[name='office_contact_org']").val(), $("input[name='office_contact']").val(), "연락처");
+
+    // 용도 비교
+    modifyReason += compareChanges($("input[name='yongdo_org']").val(), $("select[name='yongdo']").val(), "용도");
+
+    // 관로명 비교
+    modifyReason += compareChanges($("input[name='pipe_name_org']").val(), $("select[name='pipe_name']").val(), "관로명");
+
+    // 단/복선 비교
+    modifyReason += compareChanges($("input[name='sun_gubun_org']").val(), $("select[name='sun_gubun']").val(), "단/복선");
+
+    // 관경 비교
+    modifyReason += compareChanges($("input[name='pipe_meter_org']").val(), $("input[name='pipe_meter']").val(), "관경");
+
+    // 감면 여부 비교
+    modifyReason += compareChanges($("input[name='exemptionyn_org']").val(), $("select[name='exemptionyn']").val(), "감면 여부");
+
+    // 점용 구분 비교
+    modifyReason += compareChanges($("input[name='use_purpos_org']").val(), $("select[name='use_purpos']").val(), "점용 구분");
+
+    // 점용 기간 비교 (시작일)
+    modifyReason += compareChanges($("input[name='gover_st_date_org']").val(), $("input[name='gover_st_date']").val(), "점용 시작일");
+
+    // 점용 기간 비교 (종료일)
+    modifyReason += compareChanges($("input[name='gover_ed_date_org']").val(), $("input[name='gover_ed_date']").val(), "점용 종료일");
+
+    // 점용갱신주기 비교
+    modifyReason += compareChanges($("input[name='gover_period_org']").val(), $("input[name='gover_period']").val(), "점용갱신주기");
+
+    // 신규등록사유 비교
+    modifyReason += compareChanges($("input[name='newregreason_org']").val(), $("select[name='newregreason']").val(), "신규등록사유");
+
+    // 허가증 보유 여부 비교
+    modifyReason += compareChanges($("input[name='permpossyn_org']").val(), $("select[name='permpossyn']").val(), "허가증 보유 여부");
+
+    // 점용료 미납부 사유 비교
+    modifyReason += compareChanges($("input[name='occunonpayreason_org']").val(), $("select[name='occunonpayreason']").val(), "점용료 미납부 사유");
+
+    // 점용료 선납 여부 비교
+    var occuprepayyn = $("input[name='occuprepayyn']").is(':checked') ? "1" : "0";
+    modifyReason += compareChanges($("input[name='occuprepayyn_org']").val(), occuprepayyn, "점용료 선납 여부");
+
+    // 선납기한 비교
+    modifyReason += compareChanges($("input[name='occuprepaydate_org']").val(), $("input[name='occuprepaydate']").val(), "선납기한");
+
+    return modifyReason;
+}
+
 
 
 $(document).on("click","#reqApprovalBtn",function(){
