@@ -661,7 +661,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 
 	console.log(object);
 
-	url="/gover/insertGoverMaster"; 
+	url="/gover/insertGoverMasterDemo"; 
 				   $.ajax({
 				   			
 				   				url:url,
@@ -1397,10 +1397,19 @@ function downloadExcel() {
 	});
 
 
+	$(document).on("click","#excelUpload",function(){
+		
+		
+		
+		
+	})
+	
+	
+	
 	  //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
 	 const exceluploadPopupOpen = document.getElementById("exceluploadPopup");
 	 if( exceluploadPopupOpen){
-	  exceluploadPopupOpen.querySelectorAll(".topCloseBtn, .finalBtn").forEach(function (btn) {
+	  exceluploadPopupOpen.querySelectorAll(".topCloseBtn").forEach(function (btn) {
 	    btn.addEventListener("click", () => {
 
 	      exceluploadPopupOpen.classList.remove("active");
@@ -1433,8 +1442,81 @@ function downloadExcel() {
 	      var excelpopfileInfoSize = '';
 	      var excelpopfileInfoType = '';
 
-	      excelPopup_myPcFiles.addEventListener('change', function () {
+	      excelPopup_myPcFiles.addEventListener('change', function (e) {
 
+			
+			console.log("start my_file_input");
+				 var files = excelPopup_myPcFiles.files; //input file 객체를 가져온다.
+				 console.log(files);
+			    var i,f;
+			    var headers;
+			    var EXCEL_JSON;
+				console.log("files length:"+files.length);
+			    for (i = 0; i != files.length; ++i) {
+			        f = files[i];
+					console.log(f);
+			        var reader = new FileReader(); //FileReader를 생성한다.         
+			        
+			        //성공적으로 읽기 동작이 완료된 경우 실행되는 이벤트 핸들러를 설정한다.
+			        reader.onload = function(e) {
+			             
+			          // ...엑셀파일을 읽어서 처리하는 로직...
+			           var data = e.target.result; //FileReader 결과 데이터(컨텐츠)를 가져온다.
+			 
+			           //바이너리 형태로 엑셀파일을 읽는다.
+			           var workbook = XLSX.read(data, {type: 'binary'});
+			           var worksheet=workbook.Sheets[workbook.SheetNames[0]];
+			           /* var i=0;
+			           for (var cell in worksheet) {
+			        	    if (worksheet.hasOwnProperty(cell) && cell[0] !== '!') { // 메타데이터 제외
+			        	        worksheet[cell].t = 's'; // 셀 타입을 무조건 텍스트('s')로 설정
+			        		}
+			           } */
+			           
+			           EXCEL_JSON = XLSX.utils.sheet_to_json(worksheet,{raw:false,cellDates:false});
+			           //엑셀파일의 시트 정보를 읽어서 JSON 형태로 변환한다.
+			            workbook.SheetNames.forEach(function(item, index, array) {
+						    headers=get_header_row(workbook.Sheets[item]);
+						   console.log(headers);
+						   /* console.log(item);
+						   console.log(index);
+						   console.log(array);
+						   
+			               EXCEL_JSON = XLSX.utils.sheet_to_json(workbook.Sheets[item]);
+			              console.log(EXCEL_JSON); */
+			              	
+			           });//end. forEach */
+			           
+			           //excel 내용 header와 비교해서 공백이라 안넘어온 header 빈정보 삽입
+			            for(j=0;j<headers.length;j++){
+						  		for(jj=0;jj<EXCEL_JSON.length;jj++){
+									  
+									  if (!EXCEL_JSON[jj].hasOwnProperty(headers[j])){
+										  
+									//	console.log(jj+"="+headers[j]);
+										/* 
+										if (!isDate(EXCEL_JSON[jj].JIBUN)){
+											console.log(jj+":"+EXCEL_JSON[jj].JIBUN);
+										} */
+										EXCEL_JSON[jj][headers[j]]="";  
+									  }
+								  }	
+					   		}
+			           console.log(EXCEL_JSON);
+			
+			
+			}
+		}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 	        // 기존의 ul 초기화
 	        const popExistContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
 

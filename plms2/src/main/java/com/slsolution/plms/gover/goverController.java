@@ -2148,11 +2148,14 @@ public class goverController {
 									     			filesMap.put("fseq",i);
 									     			filesMap.put("fname",file_name);
 		//
-									     			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+									     			 String tempPath = GC.getGoverFileTempDir(); //설정파일로 뺀다.
 									     			 String dataPath = GC.getGoverFileDataDir()+"/"+str_GOVERNO; //설정파일로 뺀다.
 									     			 filesMap.put("fpath",dataPath+"/"+file_name);
+									     			 
 									     			 CommonUtil.moveFile(file_name, tempPath, dataPath);
 									     			log.info("filesMap:"+filesMap);
+									     			log.info("tempPath:"+tempPath);
+									     			log.info("dataPath:"+dataPath);
 									     			mainService.InsertQuery("goverSQL.insertGoverUploadData", filesMap);
 									
 								}
@@ -2936,7 +2939,7 @@ log.info("params:"+params);
 		public HashMap<String, Object> insertOfficeMng(HttpServletRequest request) {
 		    HashMap<String, Object> responseMap = new HashMap<>();
 		    String str_result = "Y";
-
+		    String msgType = "";
 		    try {
 		        String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		        JSONObject requestParamsObj = new JSONObject(requestParams);
@@ -2948,20 +2951,35 @@ log.info("params:"+params);
 		        String ADM_OFFICE = requestParamsObj.getString("adm_office");
 		        String GUBUN = requestParamsObj.getString("gubun");
 
-		        // so_adm_seq 가져오기
-		        ArrayList<HashMap<String, Object>> tmp = (ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params);
-		        String mx_adm_seq = tmp.get(0).get("mx_adm_seq").toString();
-		        log.info("mx_adm_seq:" + mx_adm_seq);
-
+		        String str_adm_seq="";
+		       
+		        if ("modify".equals(GUBUN))  str_adm_seq=requestParamsObj.getString("adm_seq");
+		        else {
+		        	// so_adm_seq 가져오기
+			        ArrayList<HashMap<String, Object>> tmp = (ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params);
+			        String mx_adm_seq = tmp.get(0).get("mx_adm_seq").toString();
+			        log.info("mx_adm_seq:" + mx_adm_seq);
+			        str_adm_seq=mx_adm_seq;
+		        }
 		        // Insert params
-		        params.put("ADM_SEQ", Long.parseLong(mx_adm_seq));
+		        params.put("ADM_SEQ", Long.parseLong(str_adm_seq));
 		        params.put("JISA", JISA);
 		        params.put("PMT_OFFICE", PMT_OFFICE);
 		        params.put("ADM_OFFICE", ADM_OFFICE);
 		        params.put("APPROVE", "N");
 
 		        log.info("insertOfficeMng params=" + params);
-		        mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보 저장
+		        if ("modify".equals(GUBUN)) {
+		        	mainService.UpdateQuery("goverSQL.updateOfficeMng", params); // 기본정보 저장
+		        	msgType = "수정";
+		        }
+		        else {
+		        	mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보 저장
+		        	msgType = "등록";
+		        }
+
+		       
+
 
 		        if ("modify".equals(GUBUN)) {
 		            params.put("history_gubun", "수정");
@@ -2978,12 +2996,12 @@ log.info("params:"+params);
 		        // mainService.InsertQuery("goverSQL.insertOfficeMngHistory", params);
 
 		        responseMap.put("success", "Y");
-		        responseMap.put("message", "등록 성공");
+		        responseMap.put("message", msgType + " 성공");
 		    } catch (Exception e) {
 		        log.error("Error during insertOfficeMng", e);
 		        str_result = "N";
 		        responseMap.put("success", "N");
-		        responseMap.put("message", "등록 실패");
+		        responseMap.put("message", msgType + " 실패");
 		    }
 
 		    return responseMap;
@@ -3477,5 +3495,35 @@ log.info("params:"+params);
 			log.info("historyList:"+historyList);
 			mav.setViewName("/gover/orgAdmin :: #approve_correction_Popup");
 			return ResponseEntity.ok(historyList);
+		}
+		
+		
+		@PostMapping(path = "/deleteOfficeMng")
+		@ResponseBody  // JSON 응답을 위해 추가
+		public HashMap<String, Object> deleteOfficeMng(HttpServletRequest request) {
+			HashMap<String, Object> responseMap = new HashMap<>();
+		    String msgType = "";
+		    String str_result = "";
+		    try {
+		        String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		        JSONObject requestParamsObj = new JSONObject(requestParams);
+		        log.info("requestParams:" + requestParams);
+
+		        HashMap<String, Object> params = new HashMap<>();
+		        String ADM_SEQ = requestParamsObj.getString("adm_seq");
+
+		        params.put("ADM_SEQ", Long.parseLong(ADM_SEQ));
+	        	mainService.UpdateQuery("goverSQL.deleteOfficeMng", params); // 기본정보 저장
+
+		        responseMap.put("success", "Y");
+		        responseMap.put("message", "삭제 성공");
+		    } catch (Exception e) {
+		        log.error("Error during insertOfficeMng", e);
+		        str_result = "N";
+		        responseMap.put("success", "N");
+		        responseMap.put("message", "삭제 실패");
+		    }
+
+		    return responseMap; 
 		}
 }

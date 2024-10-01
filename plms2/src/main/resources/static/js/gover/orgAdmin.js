@@ -2,6 +2,8 @@
 let lastSelectedJisa = null;
 let lastSelectedPmtOffice = null;
 let orgAdminTargetInfo = [];
+let selectedOrgAdminInfo = {};
+
 // 지사 선택 시 허가관청 목록 업데이트를 위한 change 이벤트 트리거
 $(document).on("click", "#sjisaUl li", function () {
     const selectedJisa = $(this).text().trim();
@@ -177,8 +179,8 @@ function showModPopup(idx) {
 	$('#saveForm')[0].reset();  // 폼의 모든 값을 초기화
 	$("#jisaText").text("전체");  // 지사 셀렉트 박스 초기화
 	$("#pmtOfficeText").text("전체");  // 허가관청 셀렉트 박스 초기화
-	
-	let object = {'adm_seq': idx};
+	selectedOrgAdminInfo = orgAdminTargetInfo[idx];
+	let object = {'adm_seq': orgAdminTargetInfo[idx].adm_seq};
 	$.ajax({
         url: "/gover/getGoverOfficeMngHistoryList", // 허가관청 목록을 가져오는 API
         data: JSON.stringify(object),
@@ -192,8 +194,12 @@ function showModPopup(idx) {
             if (rt.length > 0) {
 				for (let i = 0; i < rt.length; i++) {
 					let info = rt[i];
-					contentHtml += `<ul class="approvehistory_content">`;
-			        contentHtml += `<li class="approvehistory_title_1">2024-04-01</li>`;
+					let infoDate = new Date(info.wdate);
+						let year = infoDate.getFullYear().toString().padStart(2, '0');
+						let month = (infoDate.getMonth() + 1).toString().padStart(2, '0');
+						let date = infoDate.getDate().toString().padStart(2, '0');
+						contentHtml += `<ul class="approvehistory_content">`;
+				        contentHtml += `<li class="approvehistory_title_1">${year}-${month}-${date}</li>`;
 			        contentHtml += `<li class="approvehistory_title_2">${info.gubun}</li>`;
 			        contentHtml += `<li class="approvehistory_title_4">${info.content}</li>`;
 			        contentHtml += `</ul>`;	
@@ -221,7 +227,7 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 	
 	var idx = $(this).parent().parent().parent().parent().find("#idx").val();
 	console.log("idx:" + idx);
-	
+	let row = $(this).parent().parent().parent().parent().index();
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
 
 	/* let orgAdminRegisterPath = '/gover/orgAdminPopupAccept';
@@ -258,6 +264,43 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 		const popupOpen = document.querySelector("#approve_Popup");
 		console.log($(popupOpen).html());
 		$(popupOpen).addClass("active");
+		
+		let object = {'adm_seq': orgAdminTargetInfo[row].adm_seq};
+		$.ajax({
+	        url: "/gover/getGoverOfficeMngHistoryList", // 허가관청 목록을 가져오는 API
+	        data: JSON.stringify(object),
+	        type: "POST",
+	        dataType: "json",
+	        contentType: "application/json;",
+	        success: function (rt) {
+	            console.log(rt.length);
+	            let contentHtml = '';
+	            $('#approve_popup_wrap').empty();
+	            if (rt.length > 0) {
+					for (let i = 0; i < rt.length; i++) {
+						let info = rt[i];
+						let infoDate = new Date(info.wdate);
+						let year = infoDate.getFullYear().toString().padStart(2, '0');
+						let month = (infoDate.getMonth() + 1).toString().padStart(2, '0');
+						let date = infoDate.getDate().toString().padStart(2, '0');
+						contentHtml += `<ul class="approvehistory_content">`;
+				        contentHtml += `<li class="approvehistory_title_1">${year}-${month}-${date}</li>`;
+				        contentHtml += `<li class="approvehistory_title_2">${info.gubun}</li>`;
+				        contentHtml += `<li class="approvehistory_title_4">${info.content}</li>`;
+				        contentHtml += `</ul>`;	
+					}
+				} else {
+					contentHtml += `<ul class="approvehistory_content" style="grid-template-columns: auto">`;
+			        contentHtml += `<li style="text-align: center;">조회된 데이터가 없습니다.</li>`;
+			        contentHtml += `</ul>`;	
+				}
+	            $('#approve_popup_wrap').empty().html(contentHtml);
+			        
+	        },
+	        error: function (jqXHR, textStatus, errorThrown) {
+	            console.error("Error: ", textStatus, errorThrown);
+	        }
+	    });
 		// popupOpen.classList.add("active");
 	});
 })
@@ -279,6 +322,7 @@ $(document).on("click", "#approve_Popup .approveBtn", function() {
         type: 'POST',
         data: { idx: parseInt(idx, 10) },  // 정수로 변환
         success: function(result) {
+			loadData();
             if (result === "Success") {
                 alert("승인이 완료되었습니다.");
                 $("#approve_Popup").removeClass("active");
@@ -426,7 +470,7 @@ registerApprovePopEvet = () => {
 					if (object.newCheck == "on") {
 						object.gubun = "insert";
 					} else {
-						object.gubun = "modify";
+						object.gubun = "smodify";
 					}
 					$.ajax({
 						url: "/gover/insertOfficeMng",
@@ -441,6 +485,7 @@ registerApprovePopEvet = () => {
 						success: function(response) {
 							loadingHide();
 							console.log(response);
+							loadData();
 							if (response.success == "Y") {
 								console.log("response.success Y");
 								alert(response.message);
@@ -508,6 +553,8 @@ modApprovePopEvet = () => {
 					}
 					object.gubun = "modify";
 					
+					object.adm_seq = selectedOrgAdminInfo.adm_seq;
+					
 					$.ajax({
 						url: "/gover/insertOfficeMng",
 						type: 'POST',
@@ -521,6 +568,7 @@ modApprovePopEvet = () => {
 						success: function(response) {
 							loadingHide();
 							console.log(response);
+							loadData();
 							if (response.success == "Y") {
 								console.log("response.success Y");
 								alert(response.message);
@@ -866,6 +914,43 @@ $(document).on("click", "#mPmtOfficeUl li", function () {
     $("#mPmtOfficeUl").removeClass("active"); // 드롭다운 목록 닫기
 });
 
+// 허가관청 관리 삭제
+function deleteOrgAdmin(idx) {
+	
+	let seq = orgAdminTargetInfo[idx].adm_seq; 
+	let object = {'adm_seq': seq};
+	
+	object.gubun = "delete";
+	if(confirm('삭제하시겠습니까?')) {
+		$.ajax({
+			url: "/gover/deleteOfficeMng",
+			type: 'POST',
+			contentType: "application/json",
+			data: JSON.stringify(object),
+			dataType: "json",
+			beforeSend: function(request) {
+				console.log("beforesend ........................");
+				loadingShow();
+			},
+			success: function(response) {
+				loadingHide();
+				loadData();
+				if (response.success == "Y") {
+					console.log("response.success Y");
+					alert(response.message);
+				} else {
+					console.log("response.success N");
+					alert(response.message);
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
+				return false;
+			}
+		});
+	}
+	
+}
 $('#searchBtn').click(function() {
 	loadData();
 });
@@ -956,7 +1041,7 @@ function loadData() {
 					trStr += `
 									<div class="btnWrap">
 										<div class="btnBox">
-											<button class="deleteBtn">삭제</button>
+											<button class="deleteBtn" onclick="deleteOrgAdmin(`+i+`)">삭제</button>
 										</div>
 									</div>
 					`;

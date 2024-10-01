@@ -237,7 +237,7 @@ $(document).on("change","#my_file_input",function(e){
              
           // ...엑셀파일을 읽어서 처리하는 로직...
            var data = e.target.result; //FileReader 결과 데이터(컨텐츠)를 가져온다.
- 
+ console.log(data);
            //바이너리 형태로 엑셀파일을 읽는다.
            var workbook = XLSX.read(data, {type: 'binary'});
            var worksheet=workbook.Sheets[workbook.SheetNames[0]];

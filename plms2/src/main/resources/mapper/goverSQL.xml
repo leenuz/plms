@@ -2013,6 +2013,18 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 	        , #{APPROVE}
 	    )
 	</insert>
+	<update id="updateOfficeMng" parameterType="HashMap">
+	    update SYS_OFFICEMNG set 
+	      
+	         so_JISA = #{JISA}
+	        , so_PMT_OFFICE = #{PMT_OFFICE}
+	        , so_ADM_OFFICE = #{ADM_OFFICE}
+	        
+	        , so_approve = 'N'
+	    where so_adm_seq= #{ADM_SEQ, jdbcType=BIGINT}
+	</update>
+	
+
 	
 	<select id="selectOfficeInfoAll" resultType="HashMap" parameterType="HashMap">
 		SELECT TT.*,(row_number() over()) as NO
@@ -2142,5 +2154,8 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 		where gp_DOCKEY in (select max(gp_dockey) from GOVER_PERMIT where gp_GOVER_NO = #{GOVERNO} )
 	</update>
 	
-
+	<delete id="deleteOfficeMng" parameterType="HashMap">
+	    delete from SYS_OFFICEMNG  
+	    where so_adm_seq= #{ADM_SEQ, jdbcType=BIGINT}
+	</delete>
 </mapper>
