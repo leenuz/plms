@@ -865,6 +865,32 @@ $(document).on("click",".viewDetailButton",function(){
 
 
 $(document).ready(function(){
+    //체크 박스 중 대표 지상권 번호 체크 하기
+    let repJisangNo = document.getElementById('repJisangNo').value;
+    // value 속성이 repJisangNo과 같은 <input> 태그 찾기
+    const targetInputs = document.querySelectorAll(`input[value="${repJisangNo}"]`);
+
+    if(targetInputs.length > 1){
+        const targetInput = targetInputs[1];
+        if (targetInput) {
+            // 해당 <input>을 감싸는 <li> 태그 찾기
+            const parentUl = targetInput.closest('ul');
+
+            if (parentUl) {
+                // <li> 내에서 체크박스 찾기
+                const checkbox = parentUl.querySelector('input[type="checkbox"]');
+
+                if (checkbox) {
+                    // 체크박스를 클릭
+                    checkbox.click();
+                }
+            }
+        }
+    }
+
+
+
+
     $('input[name=landRightMerge_myPcFiles01]').on('change', function(e) {
 	        var files = e.originalEvent.target.files;
 	        handleFileUpload1(files,this,"01");

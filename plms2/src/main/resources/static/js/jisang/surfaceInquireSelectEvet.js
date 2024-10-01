@@ -5,7 +5,7 @@ const surfaceInquireCheckboxes = (checkboxes) => {
 
     const valuesArray = []; // 체크된 값들을 저장할 배열
     const choiceCheckWrapper = document.querySelector(".choiceCheckWrapper");
-    let surfaceSelectListMember02 = document.querySelector("#dopcosurfaceInquire .checkBoxsContent"); // 기존 요소들을 선택할 변수 추가
+    let surfaceSelectListMember02 = document.querySelector(".checkBoxsContent"); // 기존 요소들을 선택할 변수 추가
     const resetBtn = document.querySelector(".resetBtn");
   
     
@@ -162,13 +162,13 @@ const surfaceInquireCheckboxes = (checkboxes) => {
                 });
             
                 // choiceCheckWrapper에 체크박스 상태 반영
-                choiceCheckWrapper.innerHTML = valuesArray.map((value, indx) => `<li><input type="checkbox" checked id="inqureCheckNew${[indx]}"/><label for="inqureCheckNew${[indx]}"></label><p>${value}</p></li>`).join('');
+                choiceCheckWrapper.innerHTML = valuesArray.map((value, indx) => `<li><input type="checkbox" checked id="inqureCheckNew${[indx]}" name="${value}"/><label for="inqureCheckNew${[indx]}"></label><p>${value}</p></li>`).join('');
               }
             
               // choiceCheckWrapper의 높이를 조정하는 함수
               function adjustWrapperHeight() {
-               /* const heightChange =  choiceCheckWrapper.clientHeight + 100;
-                surfaceSelectListMember02.style.top = `${heightChange}px`;*/
+                const heightChange =  choiceCheckWrapper.clientHeight + 100;
+                surfaceSelectListMember02.style.top = `${heightChange}px`;
               }
         
 
@@ -318,6 +318,17 @@ console.log(selectWrappers);
             closestBtn.classList.remove("active");
         })
        }
+
+       //지목셀렉박스내의 닫기 버튼 클릭시 이벤트
+       const addSelectCheckBtn = document.querySelector(".checkboxRegisterBtnWrap .completeSelectCheckBtn");
+       if(addSelectCheckBtn){
+       addSelectCheckBtn.addEventListener("click" , (e) => {
+            const target = e.target.parentElement.parentElement.previousElementSibling;
+            const closestBtn = target.previousElementSibling;
+            target.classList.remove("active");
+            closestBtn.classList.remove("active");
+        })
+       }
  
        surfaceSelectList.forEach((list) => {
           list.addEventListener("click" , (event) => {
@@ -334,26 +345,24 @@ console.log(selectWrappers);
                     surfaceSelectList.forEach((lists) => lists.classList.remove("active"));
 
                 }
-                else{ 
+                else{
                     let currentSelectValue = document.getElementById(currentSelect); //현재 셀렉박스 가져오기
-					console.log(currentSelectValue);
-                    return thisBtns.innerText = event.target.innerText,
-                    $(currentSelectValue).val(event.target.innerText),//셀렉박스 값에 현재 클릭된 값의 텍스트 담기 
-					$(currentSelectValue).trigger("change");
-					console.log($(this).parent().parent().html());
-                    console.log(currentSelectValue.value), //셀렉박스값표시
+					
+					//console.log(currentSelectValue);
+					//console.log($(this).parent().parent().html());
+                    //console.log(currentSelectValue.value), //셀렉박스값표시
 					
                     surfaceSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
                     surfaceSelectList.forEach((lists) => lists.classList.remove("active"));
+					
+                    return thisBtns.innerText = event.target.innerText,
+                    $(currentSelectValue).val(event.target.innerText),//셀렉박스 값에 현재 클릭된 값의 텍스트 담기 
+					$(currentSelectValue).trigger("change");
+					
                 }
-
-                
-
             }
                 
             if(event.target.nodeName === "LABEL" || event.target.nodeName === "INPUT[TYPE='CHECKBOX']" ){ return; }
-
-
       });
 
     });

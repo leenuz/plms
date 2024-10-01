@@ -4320,6 +4320,7 @@ log.info("gubun:"+gubun);
 		String idx = httpRequest.getParameter("idx");
 		String index = httpRequest.getParameter("index");
 		String tcount = httpRequest.getParameter("tcount");
+		String repIdx = httpRequest.getParameter("repIdx");
 		List<HashMap<String, String>> jisangList = new ArrayList<HashMap<String, String>>();
 		String jisangCnt = "";
 		for(int i=1;i<Integer.parseInt(tcount)+1;i++) {
@@ -4402,6 +4403,7 @@ log.info("gubun:"+gubun);
 		mav.addObject("CommonUtil", new CommonUtil());
 		mav.addObject("loginKey", String.valueOf(httpRequest.getSession().getAttribute("loginKey")));
 		mav.addObject("reqDoc1list", reqDoc1list);
+		mav.addObject("repIdx", repIdx);
 		mav.setViewName("content/jisang/landRightMerge");
 		return mav;
 	}

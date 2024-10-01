@@ -1,9 +1,17 @@
+// 20240930 jyoh 허가신청 관리 > 셀렉트 박스 선택시 초기화 처리를 위한 선언
+let lastSelectedJisa = null;
+let lastSelectedPmtOffice = null;
 
 // 지사 선택 시 허가관청 목록 업데이트를 위한 change 이벤트 트리거
 $(document).on("click", "#sjisaUl li", function () {
     const selectedJisa = $(this).text().trim();
     $("#sjisaText").text(selectedJisa);
-    $("#privateUseSelectBox01_1").val(selectedJisa).change(); // change 이벤트 트리거
+    // 20240930 jyoh 마지막으로 선택한 지사랑 같으면 change이벤트 스킵
+    if (lastSelectedJisa != selectedJisa) {
+		$("#privateUseSelectBox01_1").val(selectedJisa).change(); // change 이벤트 트리거
+        $('.privateUseSectionContDevide button.privateUseSelectsTitleBtn:not(:first)').text('전체');	
+	}
+    lastSelectedJisa = selectedJisa;
 });
 
 // 지사 선택 시 허가관청 목록 업데이트
@@ -11,7 +19,7 @@ $(document).on("change", "#privateUseSelectBox01_1", function () {
     const selectedJisa = $("#privateUseSelectBox01_1").val();
     console.log("지사 선택에 따라 허가관청 목록 업데이트");
     if (!selectedJisa) return;
-
+    
     const allData = { jisa: selectedJisa };
 
     $.ajax({
@@ -29,10 +37,12 @@ $(document).on("change", "#privateUseSelectBox01_1", function () {
             $("#privateUseSelectBox01_3 option").remove();
             $("#spmtOfficeUl").append("<li><p>전체</p></li>");
             $("#privateUseSelectBox01_3").append("<option value=''>전체</option>");
+            
             for (let i = 0; i < data.length; i++) {
                 $("#spmtOfficeUl").append("<li><p>" + data[i].so_pmt_office + "</p></li>");
                 $("#privateUseSelectBox01_3").append("<option>" + data[i].so_pmt_office + "</option>");
             }
+            
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.error("Error: ", textStatus, errorThrown);
@@ -44,7 +54,13 @@ $(document).on("change", "#privateUseSelectBox01_1", function () {
 $(document).on("click", "#spmtOfficeUl li", function () {
     const selectedPmtOffice = $(this).text().trim();
     $("#spmtOfficeText").text(selectedPmtOffice);
-    $("#privateUseSelectBox01_3").val(selectedPmtOffice).change(); // change 이벤트 트리거
+    
+    // 20240930 jyoh 허가관청 선택시 관리기관 전체 처리
+    if (lastSelectedPmtOffice != selectedPmtOffice){
+		$("#privateUseSelectBox01_3").val(selectedPmtOffice).change(); // change 이벤트 트리거
+		$('.privateUseSectionContDevide button.privateUseSelectsTitleBtn:last').text('전체');	
+	}
+    lastSelectedPmtOffice = selectedPmtOffice;
 });
 
 $(document).on("change", "#privateUseSelectBox01_3", function () {
@@ -324,7 +340,9 @@ registerApprovePopEvet = () => {
 				});
 			});
 		registerApprovePopupOpen
-			.querySelectorAll(".topCloseBtn, .approveBtn")
+			// .querySelectorAll(".topCloseBtn, .approveBtn")
+			// 20240930 jyoh 왜 x 누르면 데이터 검증을 하는지
+			.querySelectorAll(".approveBtn")
 			.forEach(function(btn) {
 				btn.addEventListener("click", () => {
 					console.log("----------------approveBtn----------------");
@@ -539,7 +557,7 @@ function toggleElements03() {
 	}
 }
 
-// 지사 선택 시 허가관청 목록 업데이트
+// 지사 선택 시 허가관청 목록 업데이트 (신규등록 팝업)
 $(document).on("click", "#jisaUl li", function () {
     const selectedJisa = $(this).text().trim(); // 선택한 지사 텍스트
     $("#jisaText").text(selectedJisa); // 버튼 텍스트 변경

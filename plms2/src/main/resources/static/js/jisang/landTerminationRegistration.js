@@ -253,19 +253,13 @@ $(document).ready(function(){
     });
     //drag 영역 클릭시 파일 선택창
     objDragAndDrop.on('click',function (e){
-		//$('input[type=file]').trigger('click');
-		console.log("-------------click--------------");
         $('#landTerminationRegistration_myPcFiles').trigger('click');
     });
-	$('#landTerminationRegistration_myPcFiles').on('change', function(e) {
-	        var files = e.originalEvent.target.files;
-	        handleFileUpload(files,objDragAndDrop);
-	    });
 
-    /*$('input[name=fileupload]').on('change', function(e) {
+    $('#landTerminationRegistration_myPcFiles').on('change', function(e) {
         var files = e.originalEvent.target.files;
         handleFileUpload(files,objDragAndDrop);
-    });*/
+    });
 	
 	$('input[name=landTerminationRegistration_myPcFiles01]').on('change', function(e) {
 	        var files = e.originalEvent.target.files;
@@ -307,9 +301,10 @@ $(document).ready(function(){
             var fd = new FormData();
             fd.append('file', files[i]);
 
-            var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
+//            var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
+            var status = "";
           //  status.setFileNameSize(files[i].name,files[i].size);
-            sendFileToServer(fd,status);
+            sendFileToServer(fd,status,files[i],i);
 
        }
     }
@@ -335,7 +330,7 @@ $(document).ready(function(){
 	    }
 
     var rowCount=0;
-    function createStatusbar(obj,name,size,no){
+    function createStatusbar(obj,name,size,no, fpath){
         console.log("----------start createStatusBar------------");
             console.log(obj.html());
 
@@ -348,6 +343,7 @@ $(document).ready(function(){
                                     sizeStr = sizeKB.toFixed(2)+" KB";
                                 }
 
+        var formattedPath = fpath.replaceAll('/','\\\\/');
         var row='<ul class="contents" id="fileListUl">';
         row+='<li class="selectWidth content checkboxWrap">';
         row+='<input type="checkbox" id="landRightsRegistration_attachFile'+no+'" name="landRightsRegistration_attachFile" >';
@@ -355,7 +351,7 @@ $(document).ready(function(){
         row+='</li>';
         row+='<li class="content registDateWidth"><input type="text" id="filename" th:placeholder="'+'[[${val.pa_file_path}]]'+'" class="notWriteInput" readonly></li>';
         row+='<li class="content fileNameWidth"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li>';
-        row+='<li class="content"><button class="viewDetailButton" th:onclick="openFilePopup([[${val.pa_file_path}]])">보기</button></li></ul>';
+        row+=`<li class="content"><button class="viewDetailButton" onclick="openFilePopup('${formattedPath}')">보기</button></li></ul>`;
         obj.after(row);
 
         var radio=$(row).find('input');
@@ -364,7 +360,7 @@ $(document).ready(function(){
         console.log($(radio).parent().html());
     }
 
-    function sendFileToServer(formData,status)
+    function sendFileToServer(formData,status,file,no)
     {
         var uploadURL = "/jisang/fileUpload/post"; //Upload URL
         var extraData ={}; //Extra Data.
@@ -397,6 +393,8 @@ $(document).ready(function(){
                 console.log(data.resultData);
                 //$("#status1").append("File upload Done<br>");
                 uploadFiles.push(data.resultData.fpath);
+                const fpath = data.resultData.fpath.trim();
+                createStatusbar($("#fileTitleUl"),file.name,file.size,no, fpath); //Using this we can set progress.
                 //allCheckEventLandRightsRegist();
             }
         });
@@ -505,7 +503,8 @@ $(document).on("click","#save_btn",function(){
 		req_doc_file05:$("#req_doc_file05").val() || '',
 		req_doc_file06:$("#req_doc_file06").val() || '',
 		req_doc_file07:$("#req_doc_file07").val() || '',
-		req_doc_file08:$("#req_doc_file08").val() || ''
+		req_doc_file08:$("#req_doc_file08").val() || '',
+		uploadFiles : uploadFiles
 		
     };
 	//해지의 필수 첨부파일은 jisang_req_doc1디비에 담는다
@@ -750,3 +749,14 @@ $(document).on("click","#docFileDelBtn",function(){
 	//console.log($(this).parent().parent().find(".notWriteInput").val(""));
 	
 })
+
+//보기 클릭 시 팝업 기능
+function openFilePopup(filePath) {
+    // 절대 경로를 사용하도록 file:// 스킴을 추가
+    const serverUrl = `/api/downloadFile?filePath=` + encodeURIComponent(filePath);
+
+    // 새 창의 옵션 설정 (예: 너비 600px, 높이 400px, 스크롤바 허용 등)
+    const popupOptions = "width=800,height=600,scrollbars=yes,resizable=yes";
+    // 새 창 열기
+    window.open(serverUrl, '파일 보기', popupOptions);
+}
