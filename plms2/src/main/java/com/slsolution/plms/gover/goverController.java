@@ -2947,20 +2947,27 @@ log.info("params:"+params);
 		        String ADM_OFFICE = requestParamsObj.getString("adm_office");
 		        String GUBUN = requestParamsObj.getString("gubun");
 
+		        String str_adm_seq="";
+		        if ("insert".equals(GUBUN)) {
 		        // so_adm_seq 가져오기
 		        ArrayList<HashMap<String, Object>> tmp = (ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params);
 		        String mx_adm_seq = tmp.get(0).get("mx_adm_seq").toString();
 		        log.info("mx_adm_seq:" + mx_adm_seq);
-
+		        str_adm_seq=mx_adm_seq;
+		        }
+		        else str_adm_seq=requestParamsObj.getString("adm_seq");
 		        // Insert params
-		        params.put("ADM_SEQ", Long.parseLong(mx_adm_seq));
+		        params.put("ADM_SEQ", Long.parseLong(str_adm_seq));
 		        params.put("JISA", JISA);
 		        params.put("PMT_OFFICE", PMT_OFFICE);
 		        params.put("ADM_OFFICE", ADM_OFFICE);
 		        params.put("APPROVE", "N");
 
 		        log.info("insertOfficeMng params=" + params);
-		        mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보 저장
+		        if ("modify".equals(GUBUN)) {
+		        	mainService.UpdateQuery("goverSQL.updateOfficeMng", params); // 기본정보 저장
+		        }
+		        else mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보 저장
 
 		        if ("modify".equals(GUBUN)) {
 		            params.put("history_gubun", "수정");
