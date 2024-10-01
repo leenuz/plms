@@ -170,8 +170,8 @@ function showModPopup(idx) {
 		$("#mJisaSelectBox").val(targetInfo.jisa).change(); // select box 값 설정 후 change 이벤트 트리거
 		$("#mPmtOfficeText").text(targetInfo.pmt_office); // 화면에 선택된 허가관청 표시
     
-    	$("input[name='pmt_office']").val(targetInfo.pmt_office); // pmt_office input에 값 설정
-		$('#pAdm_office').val(targetInfo.adm_office);
+    	$("#approve_correction_Popup input[name='pmt_office']").val(targetInfo.pmt_office); // pmt_office input에 값 설정
+		$("#approve_correction_Popup input[name='adm_office']").val(targetInfo.adm_office);
 	}
 	// 폼 초기화
 	$('#saveForm')[0].reset();  // 폼의 모든 값을 초기화
@@ -491,9 +491,8 @@ modApprovePopEvet = () => {
 					// 선택된 epmt_office 값 수동 추가
 					object.epmt_office = document.getElementById("epmt_office").value;
 					object.pmt_office = $("#approve_correction_form input[name='pmt_office']").val(); // pmt_office 값 추가
-
-					console.log(object);
-					return;
+					object.adm_office = $("#approve_correction_form input[name='adm_office']").val();
+					
 					// 입력값 검증: 지사, 허가관청, 관리기관이 비어있는지 확인
 					if (!object.jisa) {
 						alert("지사를 입력해주세요.");
@@ -507,12 +506,8 @@ modApprovePopEvet = () => {
 						alert("관리기관을 입력해주세요.");
 						return;
 					}
+					object.gubun = "modify";
 					
-					if (object.newCheck == "on") {
-						object.gubun = "insert";
-					} else {
-						object.gubun = "modify";
-					}
 					$.ajax({
 						url: "/gover/insertOfficeMng",
 						type: 'POST',
@@ -529,7 +524,7 @@ modApprovePopEvet = () => {
 							if (response.success == "Y") {
 								console.log("response.success Y");
 								alert(response.message);
-								registerApprovePopupOpen.classList.remove("active"); // 팝업 닫기
+								modApprovePopupOpen.classList.remove("active"); // 팝업 닫기
 							} else {
 								console.log("response.success N");
 								alert(response.message);
