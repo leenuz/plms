@@ -2972,10 +2972,7 @@ log.info("params:"+params);
 		        	mainService.UpdateQuery("goverSQL.updateOfficeMng", params); // 기본정보 저장
 		        	msgType = "수정";
 		        }
-		        else if ("delete".equals(GUBUN)) {
-		        	mainService.UpdateQuery("goverSQL.deleteOfficeMng", params); // 기본정보 저장
-		        	msgType = "삭제";
-		        } else {
+		        else {
 		        	mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보 저장
 		        	msgType = "등록";
 		        }
@@ -2987,8 +2984,6 @@ log.info("params:"+params);
 		            params.put("history_gubun", "수정");
 		            String reason="";
 		            params.put("CONT", reason);
-		        } else if ("delete".equals(GUBUN)) {
-		        	
 		        } else {
 		            params.put("history_gubun", "신규등록");
 		            String reason="관리지사 = "+JISA+", 허가관청 = "+PMT_OFFICE+", 관리기관 = "+ADM_OFFICE;
@@ -3499,5 +3494,35 @@ log.info("params:"+params);
 			log.info("historyList:"+historyList);
 			mav.setViewName("/gover/orgAdmin :: #approve_correction_Popup");
 			return ResponseEntity.ok(historyList);
+		}
+		
+		
+		@PostMapping(path = "/deleteOfficeMng")
+		@ResponseBody  // JSON 응답을 위해 추가
+		public HashMap<String, Object> deleteOfficeMng(HttpServletRequest request) {
+			HashMap<String, Object> responseMap = new HashMap<>();
+		    String msgType = "";
+		    String str_result = "";
+		    try {
+		        String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		        JSONObject requestParamsObj = new JSONObject(requestParams);
+		        log.info("requestParams:" + requestParams);
+
+		        HashMap<String, Object> params = new HashMap<>();
+		        String ADM_SEQ = requestParamsObj.getString("adm_seq");
+
+		        params.put("ADM_SEQ", Long.parseLong(ADM_SEQ));
+	        	mainService.UpdateQuery("goverSQL.deleteOfficeMng", params); // 기본정보 저장
+
+		        responseMap.put("success", "Y");
+		        responseMap.put("message", "삭제 성공");
+		    } catch (Exception e) {
+		        log.error("Error during insertOfficeMng", e);
+		        str_result = "N";
+		        responseMap.put("success", "N");
+		        responseMap.put("message", "삭제 실패");
+		    }
+
+		    return responseMap; 
 		}
 }
