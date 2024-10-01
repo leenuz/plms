@@ -2938,7 +2938,7 @@ log.info("params:"+params);
 		public HashMap<String, Object> insertOfficeMng(HttpServletRequest request) {
 		    HashMap<String, Object> responseMap = new HashMap<>();
 		    String str_result = "Y";
-
+		    String msgType = "";
 		    try {
 		        String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		        JSONObject requestParamsObj = new JSONObject(requestParams);
@@ -2970,16 +2970,25 @@ log.info("params:"+params);
 		        log.info("insertOfficeMng params=" + params);
 		        if ("modify".equals(GUBUN)) {
 		        	mainService.UpdateQuery("goverSQL.updateOfficeMng", params); // 기본정보 저장
+		        	msgType = "수정";
 		        }
-		        else if ("smodify".equals(GUBUN)) {
+		        else if ("delete".equals(GUBUN)) {
+		        	mainService.UpdateQuery("goverSQL.deleteOfficeMng", params); // 기본정보 저장
+		        	msgType = "삭제";
+		        } else {
 		        	mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보 저장
+		        	msgType = "등록";
 		        }
-		        else mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보 저장
+
+		       
+
 
 		        if ("modify".equals(GUBUN)) {
 		            params.put("history_gubun", "수정");
 		            String reason="";
 		            params.put("CONT", reason);
+		        } else if ("delete".equals(GUBUN)) {
+		        	
 		        } else {
 		            params.put("history_gubun", "신규등록");
 		            String reason="관리지사 = "+JISA+", 허가관청 = "+PMT_OFFICE+", 관리기관 = "+ADM_OFFICE;
@@ -2991,12 +3000,12 @@ log.info("params:"+params);
 		        // mainService.InsertQuery("goverSQL.insertOfficeMngHistory", params);
 
 		        responseMap.put("success", "Y");
-		        responseMap.put("message", "등록 성공");
+		        responseMap.put("message", msgType + " 성공");
 		    } catch (Exception e) {
 		        log.error("Error during insertOfficeMng", e);
 		        str_result = "N";
 		        responseMap.put("success", "N");
-		        responseMap.put("message", "등록 실패");
+		        responseMap.put("message", msgType + " 실패");
 		    }
 
 		    return responseMap;
