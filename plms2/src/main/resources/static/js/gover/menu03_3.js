@@ -1,4 +1,6 @@
 var table;
+let lastSelectedjisa = null;
+let lastPmtOffice = null;
      
 $(document).ready(function() {
   console.log("gover/menu03_3.js start");
@@ -381,7 +383,19 @@ $(document).on("click","#moveMap",function(){
 $(document).on("click", "#jisaUl li", function () {
     const selectedJisa = $(this).text().trim();
     $("#jisaText").text(selectedJisa);
-    $("#privateUseSelectBox03_1").val(selectedJisa).change(); // change 이벤트 트리거
+    
+    // 20240930 jyoh 지사 선택시 허가관청 전체 표기
+    if (selectedJisa != lastSelectedjisa) {
+		$("#privateUseSelectBox03_1").val(selectedJisa).change(); // change 이벤트 트리거
+		// 20241001 jyoh 지사 선택시 허가관청, 관리기간 "전체"로 초기화
+		$('.privateUseSectionContDevide:first .sectionMenuListBoxs .privateUseSelects button.privateUseSelectsTitleBtn')
+			.not(':first')
+			.not(':eq(0)')
+			.not(':last')
+			.text('전체')
+	}
+    
+    lastSelectedjisa = selectedJisa;
 });
 
 $(document).on("change", "#privateUseSelectBox03_1", function () {
@@ -421,7 +435,15 @@ $(document).on("change", "#privateUseSelectBox03_1", function () {
 $(document).on("click", "#pmtOfficeUl li", function () {
     const selectedPmtOffice = $(this).text().trim();
     $("#pmtOfficeText").text(selectedPmtOffice);
-    $("#privateUseSelectBox03_3").val(selectedPmtOffice).change(); // change 이벤트 트리거
+    if (lastPmtOffice != selectedPmtOffice) {
+		$("#privateUseSelectBox03_3").val(selectedPmtOffice).change(); // change 이벤트 트리거
+		// 20241001 jyoh 허가관청 선택시 관리기관 "전체"로 초기화
+		$('.privateUseSectionContDevide:first .sectionMenuListBoxs .privateUseSelects button.privateUseSelectsTitleBtn')
+		.not(':lt(3)')
+		.not(':last')
+		.text('전체');
+	}
+    lastPmtOffice = selectedPmtOffice;
 });
 
 $(document).on("change", "#privateUseSelectBox03_3", function () {
