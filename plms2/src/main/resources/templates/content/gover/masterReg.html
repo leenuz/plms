@@ -466,7 +466,6 @@
 		        <li class="content middleWidth selectContentArea">
 		          <div class="hiddenSelectBox">
 		            <select name="gover_own_yn" id="masterRegSelectBox13" hidden>
-		            <option value="선택">선택</option>
 		              <option value="국유지">국유지</option>
 		              <option value="사유지">사유지</option>
 		            </select>
@@ -519,7 +518,6 @@
 		        <li class="content middleWidth selectContentArea">
 		          <div class="hiddenSelectBox">
 		            <select name="pipe_overlap_yn" id="masterRegSelectBox15" hidden>
-		            <option value="선택">선택</option>
 		              <option value="Y">Y</option>
 		              <option value="N">N</option>
 		            </select>
@@ -762,37 +760,94 @@ crossorigin
 href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 	<link rel="stylesheet" href="/css/popup/occupancy_Popup.css" />
 	<div id="exceluploadPopup">
-    <div class="popupWrap">
-      <h2>
-        <p>엑셀 업로드</p>
-        <span class="topCloseBtn"></span>
-      </h2>
-  
-      <ul class="excel_select">
-        <h3>파일선택</h3>
-         <input type="file" id="excelPopup_file" class="excel_file"></input>
-         <label for="excelPopup_file" class="excel_file_label">
-          <p>내PC</p>
-         </label>
-        </label>  
-      </ul>
-      <ul class="excel_upload">
-        <li class="upload_box">
-            <div class="img_wrap"><img src="/assets/media/popup/images/file-upload-line (1) 1.png" alt=""></div>
-            <div class="excel_font">파일을 마우스로 끌어오세요.</div>
-        </li>
-       
-      </ul>
-  
-      <div class="excelbtnWrap">
-        <button class="excelBtn finalBtn">엑셀파일 양식</button>
-        <button class="sendBtn finalBtn">엑셀파일 전송</button>
-        <button class="closeBtn finalBtn">닫기</button>
-      </div>
-    </div>
-  </div>
-	</div> <!-- - pupup main div -->
-	
+
+	    <div class="popupWrap">
+	      <h2>
+	        <p>엑셀 업로드</p>
+	        <span class="topCloseBtn"></span>
+	      </h2>
+	  
+	      <div class="excelFileInfo">
+	        <!-- <ul class="excel_select"> -->
+	          <div class="excel_select">
+	            <h3>파일선택</h3>
+	            <!-- multiple 추가 -->
+	            <input type="file" id="excelPopup_file" multiple class="excel_file"></input>
+	            <label for="excelPopup_file" class="excel_file_label">
+	              <p>내PC</p>
+	            </label>
+	          </div>
+	          <!-- </label>   -->
+	        <!-- </ul> -->
+	        <ul class="excel_upload">
+	          <li class="upload_box popfileLargeWrap">
+	            <!-- <label for="excelPopup_file" class="excel_Popup_file_wrap">
+	              첨부파일 기본값
+	              <div class="excel_Popup_file_default active">
+	                  <figure class="excel_Popup_file_img_wrap"><img
+	                      src="/assets/media/popup/images/file-upload-line (1) 1.png" alt="upload"></figure>
+	                  <p>파일을 마우스로 끌어오세요.</p>
+	              </div>
+	              파일 추가시 나오는 곳
+	              <div class="excel_Popup_file_add_contents">
+	                <ul class="excel_Popup_file_add_contents_th">
+	                  <li>
+	                    <figure><img src="/assets/media/popup/images/back_icon.png" alt=""></figure>
+	                  </li>
+	                  <li class="excel_Popup_file_add_name">
+	                    <p>파일명</p>
+	                  </li>
+	                  <li>
+	                    <p>업로드 상태</p>
+	                  </li>
+	                  <li>
+	                    <p>용량</p>
+	                  </li>
+	                </ul>
+	              </div>
+	            </label> -->
+	  
+	            <!-- 파일이 첨부되지 않았을 때 모습 -->
+	            <div class="popfileUploadWrap popfileUploadDisplay">
+	              <label for="excelPopup_file" class="popfileUploadBox">
+	                <img src="/assets/media/popup/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
+	                <p>파일을 마우스로 끌어오세요.</p>
+	              </label>
+	            </div>
+	            <div class="popfileUploadAfterWrap popfileUploadDisplay">
+	              <!-- 추가, 업로드시 나오는 거 -->
+	              <div class="popfileUploadAfter">
+	                <ul class="poptitles">
+	                  <li class="popBtnbox">
+	                    <button class="popAllDeleteFileBtn"></button>
+	                  </li>
+	                  <li class="poptitle popfilenameBox">
+	                    <p>파일명</p>
+	                  </li>
+	                  <li class="poptitle">
+	                    <p>업로드 상태</p>
+	                  </li>
+	                  <li class="poptitle">
+	                    <p>용량</p>
+	                  </li>
+	                </ul>
+	              </div>
+	            </div>
+	  
+	  
+	          </li>
+	         
+	        </ul>
+	      </div>
+	  
+	      <div class="excelbtnWrap">
+	        <button class="excelBtn finalBtn">엑셀파일 양식</button>
+	        <button class="sendBtn finalBtn">엑셀파일 전송</button>
+	        <button class="closeBtn finalBtn">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+
     <!-- script -->
     <script type="module" src="/js/module/surfaceMain.js"></script>
     <script src="/js/gover/masterReg.js"></script>
