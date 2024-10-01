@@ -407,10 +407,8 @@ public class goverController {
 		
 		@GetMapping(path="/menu03_1") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView menu03_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			
 			HashMap params = new HashMap();
-			ArrayList<HashMap>  list=new ArrayList<HashMap>();
 			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
@@ -499,9 +497,9 @@ public class goverController {
 			String use_purpos=req.getParameter("use_purpos");
 			String pmt_office = req.getParameter("pmt_office");
 			String adm_office = req.getParameter("adm_office");
-			String save_status=req.getParameter("save_status");
-			String idx=req.getParameter("idx");
-			String address=req.getParameter("saddr");
+			String save_status = req.getParameter("save_status");
+			String address = req.getParameter("saddr");
+			String idx = req.getParameter("idx");
 
 			Map map = req.getParameterMap();
 
@@ -539,9 +537,9 @@ public class goverController {
 			int total=(int)count;
 
 			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList",params);
-			log.info("list:"+list);
+			log.info("list:" + list);
 
-			HashMap<String,Object> resultmap=new HashMap();
+			HashMap<String,Object> resultmap = new HashMap();
 			resultmap.put("draw",draw);
 			resultmap.put("recordsTotal",total);
 			resultmap.put("recordsFiltered",total);
