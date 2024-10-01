@@ -426,7 +426,7 @@ registerApprovePopEvet = () => {
 					if (object.newCheck == "on") {
 						object.gubun = "insert";
 					} else {
-						object.gubun = "modify";
+						object.gubun = "smodify";
 					}
 					$.ajax({
 						url: "/gover/insertOfficeMng",
