@@ -322,7 +322,11 @@ WHERE 1=1
 	               gm.gm_office_mobile AS office_mobile,
 	               gm.gm_gover_period AS gover_period,
 	               gm.gm_pipe_meter2 AS pipe_meter2,
-	               gm.gm_save_status AS save_status,
+	               ,CASE 
+					    WHEN gm.gm_save_status = 'A' THEN 'Y'
+					    ELSE 'N'
+					END AS save_status
+	              
 	               gm.gm_newregreason AS newregreason,
 	               gm.gm_occunonpayreason AS occunonpayreason,
 	               gm.gm_permpossyn AS permpossyn,
@@ -494,6 +498,168 @@ WHERE 1=1
 	        ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
 	    </if>
 	</select>
+
+
+<!-- <select id="selectGoverMasterSearchList" resultType="HashMap" parameterType="HashMap">
+SELECT AA.RN
+     , AA.RNO
+     , TO_CHAR(AA.TOTALCNT)                    AS TOTALCNT
+     , AA.GOVER_NO
+     , AA.PNU
+     , AA.JISA
+     , AA.YONGDO
+     , AA.JUSO
+     , AA.JIMOK_TEXT
+     , AA.USE_PURPOS
+     , AA.PMT_OFFICE
+     , AA.ADM_OFFICE
+     , AA.OFFICE_DEPART
+     , AA.OFFICE_CHARGE
+     , AA.OFFICE_CONTACT
+     , AA.GOVER_LENGTH
+     , AA.GOVER_AREA
+     , AA.SAVE_STATUS
+     , AA.USE_PURPOS_PNU
+     , TO_CHAR(AA.GOVER_ST_DATE, 'YYYY-MM-DD') AS GOVER_ST_DATE
+     , TO_CHAR(AA.GOVER_ED_DATE, 'YYYY-MM-DD') AS GOVER_ED_DATE
+     , BB.PAY_MONEY
+     , BB.PAY_WAY
+     , TO_CHAR(BB.PAY_DATE, 'YYYY-MM-DD')      AS PAY_DATE
+     , BB.DOCKEY
+     , BB.URL                                  AS OUT_URL
+     , BB.UPDEPTCD
+     , BB.DEPTCD
+  FROM (SELECT ROW_NUMBER() OVER (ORDER BY GM.GOVER_NO ASC, GP.PNU DESC) AS RN
+             , ROW_NUMBER() OVER (ORDER BY GM.GOVER_NO DESC, GP.PNU ASC) AS RNO
+             , COUNT(*) OVER ()                                          AS TOTALCNT
+             , GM.GOVER_NO
+             , GM.JISA
+             , GM.YONGDO
+             , GP.JUSO
+             , GM.PMT_STATUS
+             , GP.PNU
+             , GP.JIMOK_TEXT
+             , GM.USE_PURPOS
+             , GM.PMT_OFFICE
+             , GM.ADM_OFFICE
+             , GM.OFFICE_DEPART
+             , GM.OFFICE_CHARGE
+             , GM.OFFICE_CONTACT
+             , GP.LENGTH                                                 AS GOVER_LENGTH
+             , GP.AREA                                                   AS GOVER_AREA
+             , GM.SAVE_STATUS
+             , GP.USE_PURPOS_PNU
+             , GM.GOVER_ST_DATE
+             , GM.GOVER_ED_DATE
+          FROM GOVER_MASTER GM
+                   LEFT OUTER JOIN (SELECT C.GOVER_NO
+                                         , C.PNU
+                                         , C.JIMOK_TEXT
+                                         , D.LENGTH
+                                         , D.AREA
+                                         , CASE
+                                               WHEN D.CNT = 1
+                                                   THEN C.SIDO_NM || ' ' || SGG_NM || ' ' || EMD_NM || ' ' || RI_NM || ' ' || JIBUN
+                                               WHEN D.CNT > 1 THEN C.SIDO_NM || ' ' || SGG_NM || ' ' || EMD_NM || ' ' ||
+                                                                   RI_NM || ' ' || JIBUN || ' 외 ' ||
+                                                                   TO_CHAR(D.CNT - 1) || '필지'
+                                               ELSE TO_CHAR(D.CNT) END AS JUSO
+                                         , C.USE_PURPOS_PNU
+                                      FROM (SELECT GOVER_NO
+                                                 , SIDO_NM
+                                                 , SGG_NM
+                                                 , EMD_NM
+                                                 , RI_NM
+                                                 , JIBUN
+                                                 , TO_CHAR(PNU) AS PNU
+                                                 , JIMOK_TEXT
+                                                 , USE_PURPOS   AS USE_PURPOS_PNU
+                                              FROM GOVER_PNU
+                                             WHERE ROWID IN (SELECT RID
+                                                               FROM (SELECT ROWID                                                                            AS RID
+                                                                          , ROW_NUMBER() OVER (PARTITION BY S.GOVER_NO ORDER BY S.REP_FLAG DESC, ROWID ASC ) AS RNK
+                                                                       FROM GOVER_PNU S)
+                                                              WHERE RNK = 1)
+                                               AND GOVER_NO IN (SELECT GOVER_NO
+                                                                  FROM GOVER_PNU
+                                                                 WHERE 1 = 1
+		<isNotEmpty property="ADDRESSCODE">
+			AND ADDRCODE LIKE '$ADDRESSCODE$%'
+		</isNotEmpty>
+		<isNotEmpty property="JIBEON">
+			AND JIBUN LIKE '%$JIBEON$%'
+		</isNotEmpty>
+		)
+		) C
+		INNER JOIN (SELECT GOVER_NO, COUNT(*) AS CNT, SUM(GOVER_LENGTH) AS LENGTH, SUM(GOVER_AREA) AS AREA FROM GOVER_PNU GROUP BY GOVER_NO) D
+		ON C.GOVER_NO = D.GOVER_NO )GP
+		ON GM.GOVER_NO = GP.GOVER_NO
+		WHERE 1=1
+		/* 주소코드 또는 지번이 입력되었을 경우 토지가 있는 점용건만 조회하도록 쿼리 수정. */
+		<isNotEmpty property="ADDRESSCODE">
+			AND GM.GOVER_NO = GP.GOVER_NO
+		</isNotEmpty>
+		<isNotEmpty property="JIBEON">
+			AND GM.GOVER_NO = GP.GOVER_NO
+		</isNotEmpty>
+/*		AND GM.GOVER_NO = GP.GOVER_NO */
+
+		AND (GM.CANCLE_YN = 'N' OR GM.CANCLE_YN is null)
+		<isNotEmpty property="GOVER_NO">
+			AND GM.GOVER_NO LIKE '%'||#GOVER_NO#||'%'
+		</isNotEmpty>
+		<isNotEmpty property="USE_PURPOS">
+			AND GP.USE_PURPOS_PNU = #USE_PURPOS#
+		</isNotEmpty>
+		<isNotEmpty property="PMT_OFFICE">
+			AND GM.PMT_OFFICE = #PMT_OFFICE#
+		</isNotEmpty>
+		<isNotEmpty property="ADM_OFFICE">
+			AND GM.ADM_OFFICE = #ADM_OFFICE#
+		</isNotEmpty>
+		<isNotEmpty property="PAY_ST_DATE">
+			AND GM.GOVER_NO IN
+			(SELECT S.GOVER_NO
+			FROM GOVER_PERMIT S
+			WHERE S.SEQ IN (SELECT MAX(SS.SEQ) FROM GOVER_PERMIT SS GROUP BY SS.GOVER_NO )
+			AND TO_CHAR(S.PAY_DATE, 'YYYY-MM-DD') <![CDATA[ >= ]]>
+			#PAY_ST_DATE#)
+		</isNotEmpty>
+		<isNotEmpty property="PAY_ED_DATE">
+			AND GM.GOVER_NO IN
+			(SELECT S.GOVER_NO
+			FROM GOVER_PERMIT S
+			WHERE S.SEQ IN (SELECT MAX(SS.SEQ) FROM GOVER_PERMIT SS GROUP BY SS.GOVER_NO )
+			AND TO_CHAR(S.PAY_DATE, 'YYYY-MM-DD') <![CDATA[ <= ]]>
+			#PAY_ED_DATE# )
+		</isNotEmpty>
+
+		<isNotEmpty property="SAVE_STATUS">
+			AND GM.SAVE_STATUS = #SAVE_STATUS#
+		</isNotEmpty>
+		<isNotEmpty property="JISA">
+			AND GM.JISA = TO_CHAR(#JISA#)
+		</isNotEmpty>
+		) AA
+		, (SELECT S.GOVER_NO, S.PAY_MONEY, S.PAY_VAT, S.PAY_DATE, S.PAY_WAY, PA.DOCKEY, PA.OUT_URL, PA.UPDEPTCD, PA.DEPTCD, PA.URL
+		FROM GOVER_PERMIT S,
+		(SELECT
+		MAX(SS.SEQ) AS SEQ,
+		SS.GOVER_NO
+		FROM
+		GOVER_PERMIT SS LEFT OUTER JOIN PLMS_APPROVAL SSS ON SS.DOCKEY = SSS.DOCKEY AND SSS.STATUS IS NOT NULL AND SSS.STATUS != 'X' AND SS.PMT_NO IS NOT NULL
+
+		GROUP BY
+		SS.GOVER_NO) SS , PLMS_APPROVAL PA
+		WHERE S.SEQ = SS.SEQ AND S.GOVER_NO = SS.GOVER_NO AND S.DOCKEY = PA.DOCKEY) BB
+		WHERE AA.GOVER_NO = BB.GOVER_NO(+)
+		<isNotEmpty property="PAGE_NUM">
+			AND AA.RN BETWEEN (TO_NUMBER(#PAGE_CNT#)*(TO_NUMBER(#PAGE_NUM#)-1) + 1) AND (TO_NUMBER(#PAGE_CNT#)*TO_NUMBER(#PAGE_NUM#))
+		</isNotEmpty>
+		ORDER BY AA.GOVER_NO, AA.PNU DESC
+	</select> -->
+
+
 
 	<select id="selectGoverList03_2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 	    SELECT *,

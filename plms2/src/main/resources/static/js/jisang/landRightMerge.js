@@ -25,7 +25,7 @@
 //         };
 //     });
 // };
-
+var uploadFiles=[];
 const createCustomLiLandMerge = () => {
     const contentItems = document.querySelectorAll('.selectContentArea');
 
@@ -818,7 +818,7 @@ $(document).on("click",".temporarySaveBtn",function(){
      console.log(togiDatas);
 
      object.mergeList=togiDatas;
-
+console.log(object);
      url="/jisang/saveJisangMerge";
      $.ajax({
         url:url,
