@@ -160,6 +160,7 @@ function showRegCancelPopup() {
 // 수정 팝업
 function showModPopup() {
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
+	/*
 	let orgAdminRegisterPath = '/gover/orgAdminPopupMod';
 
 	if (orgAdminRegisterPopWrapper) {
@@ -174,6 +175,16 @@ function showModPopup() {
 		xhr.send();
 		console.log('orgAdminRegisterPopWrapper작동');
 	}
+	*/
+	const popupOpen = document.querySelector("#approve_correction_Popup");
+	console.log($(popupOpen).html());
+	$(popupOpen).addClass("active");
+	
+	// 폼 초기화
+	$('#saveForm')[0].reset();  // 폼의 모든 값을 초기화
+	$("#jisaText").text("전체");  // 지사 셀렉트 박스 초기화
+	$("#pmtOfficeText").text("전체");  // 허가관청 셀렉트 박스 초기화
+	console.log('orgAdminRegisterPopWrapper작동');
 }
 
 // 승인대기 버튼 클릭 시 팝업
@@ -424,6 +435,93 @@ registerApprovePopEvet = () => {
 
 registerApprovePopEvet();
 
+// 수정 팝업 이벤트
+modApprovePopEvet = () => {
+	const modApprovePopupOpen = document.getElementById("approve_correction_Popup");
+	if (modApprovePopupOpen) {
+		modApprovePopupOpen
+			.querySelectorAll(".topCloseBtn, .closeBtn")
+			.forEach(function(btn) {
+				btn.addEventListener("click", () => {
+					modApprovePopupOpen.classList.remove("active");
+				});
+			});
+		modApprovePopupOpen
+			// .querySelectorAll(".topCloseBtn, .approveBtn")
+			// 20240930 jyoh 왜 x 누르면 데이터 검증을 하는지
+			.querySelectorAll(".approveBtn")
+			.forEach(function(btn) {
+				btn.addEventListener("click", () => {
+					console.log("----------------approveBtn----------------");
+					
+					// 폼 데이터 직렬화
+					var formSerializeArray = $('#saveForm').serializeArray();
+					var object = {};
+					
+					// 직렬화된 데이터를 object로 변환
+					for (var i = 0; i < formSerializeArray.length; i++) {
+						object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+					}
+					
+					// 선택된 epmt_office 값 수동 추가
+					object.epmt_office = document.getElementById("epmt_office").value;
+					object.pmt_office = $("input[name='pmt_office']").val(); // pmt_office 값 추가
+
+					console.log(object);
+					
+					// 입력값 검증: 지사, 허가관청, 관리기관이 비어있는지 확인
+					if (!object.jisa) {
+						alert("지사를 입력해주세요.");
+						return;
+					}
+					if (!object.pmt_office) {
+						alert("허가관청을 입력해주세요.");
+						return;
+					}
+					if (!object.adm_office) {
+						alert("관리기관을 입력해주세요.");
+						return;
+					}
+					
+					if (object.newCheck == "on") {
+						object.gubun = "insert";
+					} else {
+						object.gubun = "modify";
+					}
+					$.ajax({
+						url: "/gover/insertOfficeMng",
+						type: 'POST',
+						contentType: "application/json",
+						data: JSON.stringify(object),
+						dataType: "json",
+						beforeSend: function(request) {
+							console.log("beforesend ........................");
+							loadingShow();
+						},
+						success: function(response) {
+							loadingHide();
+							console.log(response);
+							if (response.success == "Y") {
+								console.log("response.success Y");
+								alert(response.message);
+								registerApprovePopupOpen.classList.remove("active"); // 팝업 닫기
+							} else {
+								console.log("response.success N");
+								alert(response.message);
+							}
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
+							return false;
+						}
+					});
+				});
+			});
+	}
+};
+
+modApprovePopEvet();
+
 //셀렉박스 이벤트
 function newcomplaintSelect01() {
 	const registerApproveSelectWrapitems = document.querySelectorAll(
@@ -552,10 +650,17 @@ if (PopupMoreSelectBtn01) {
 // 체크박스 선택 이벤트
 function toggleElements03() {
 	const checkbox03 = document.getElementById("registerPopup_checkbox02");
+	const checkbox04 = document.getElementById("approve_correction_Popup_checkbox");
 	const inputContainer03 = document.querySelector("#registerPopup .register_hidden_text");
+	const inputContainer04 = document.querySelector("#approve_correction_Popup .fix_hidden_text");
 	const selectContainer03 = document.querySelector(
 		"#registerPopup .register_title_th6 .Popup_Custom_SelectBox"
 	);
+	const selectContainer04 = document.querySelector(
+		"#approve_correction_Popup .approve_select_title_th6 .Popup_Custom_SelectBox"
+	);
+	console.log(inputContainer04);
+	console.log(selectContainer04);
 
 	if (checkbox03.checked) {
 		inputContainer03.classList.add("active");
@@ -563,6 +668,14 @@ function toggleElements03() {
 	} else {
 		inputContainer03.classList.remove("active");
 		selectContainer03.classList.add("active");
+	}
+
+	if (checkbox04.checked) {
+		inputContainer04.classList.add("active");
+		selectContainer04.classList.remove("active");
+	} else {
+		inputContainer04.classList.remove("active");
+		selectContainer04.classList.add("active");
 	}
 }
 
