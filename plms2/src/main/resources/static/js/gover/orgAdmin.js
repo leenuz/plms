@@ -38,6 +38,13 @@ $(document).on("change", "#privateUseSelectBox01_1", function () {
             $("#spmtOfficeUl").append("<li><p>전체</p></li>");
             $("#privateUseSelectBox01_3").append("<option value=''>전체</option>");
             
+            // 관리기관 리스트 초기화 및 업데이트
+            // 20241001 jyoh 초기화 안해주면 계속 남아있음
+            $("#sadmOfficeUl li").remove();
+            $("#privateUseSelectBox01_4 option").remove();
+            $("#sadmOfficeUl").append("<li><p>전체</p></li>");
+            $("#privateUseSelectBox01_4").append("<option value=''>전체</option>");
+            
             for (let i = 0; i < data.length; i++) {
                 $("#spmtOfficeUl").append("<li><p>" + data[i].so_pmt_office + "</p></li>");
                 $("#privateUseSelectBox01_3").append("<option>" + data[i].so_pmt_office + "</option>");
