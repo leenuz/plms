@@ -221,12 +221,14 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 // 승인 버튼 클릭 이벤트
 $(document).on("click", "#approve_Popup .approveBtn", function() {
     const idx = $("#approve_Popup").find("input[name='idx']").val(); // idx 값을 가져옴
-
+	
     if (!idx) {
         alert("Invalid data");
         return;
     }
 
+	
+	
     $.ajax({
         url: '/gover/approveGoverOffice',
         type: 'POST',

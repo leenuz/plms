@@ -2370,8 +2370,13 @@ log.info("params:"+params);
 
 		        if ("modify".equals(GUBUN)) {
 		            params.put("history_gubun", "수정");
+		            String reason="";
+		            params.put("CONT", reason);
 		        } else {
 		            params.put("history_gubun", "신규등록");
+		            String reason="관리지사 = "+JISA+", 허가관청 = "+PMT_OFFICE+", 관리기관 = "+ADM_OFFICE;
+		            params.put("CONT", reason);
+		            mainService.InsertQuery("goverSQL.insertOfficeHistory", params);
 		        }
 
 		        // History 저장 (필요 시)

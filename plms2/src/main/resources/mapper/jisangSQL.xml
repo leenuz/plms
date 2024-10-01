@@ -182,8 +182,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and regexp_replace(jm2.juso,'[\"]','','g') like '%${address}%'
 		</if>
 		AND jm2.pnu IS NOT null
-
-		limit 10
+		limit 100
+		
 		
 
 			

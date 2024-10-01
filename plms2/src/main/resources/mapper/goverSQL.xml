@@ -1848,7 +1848,16 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 		WHERE 1 = 1
 		and adm_seq=#{seq}::varchar
 	</select>
+<insert id="insertOfficeHistory" parameterType="HashMap">
+	insert into sys_office_history (gubun,content,adm_seq)
+	values (#{GUBUN},#{CONT},#{ADM_SEQ}) 
+</insert>
 
+<update id="updateOfficeHistory" parameterType="HashMap">
+	update sys_office_history set  gubun=#{GUBUN},content=#{CONT} where adm_seq=#{ADM_SEQ}
+	 
+</update>
+	
 	
 	<select id="selectOfficeJisaCount" resultType="integer" parameterType="HashMap">
 		SELECT count(*)
