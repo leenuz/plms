@@ -41,10 +41,10 @@ const feeDetailPayPopEvet = () => {
     
     const feeDetailPayBtn = document.querySelector("#feeDetail .payBtn");
     const feeDetailPayPopWrappers = document.querySelector(".feeDetailPayPopWrappers");
-    let htmlFilePath = '/components/popuphtml/occupancyfeePopup.html'; // 삽입할 html 파일 경로
+    //let htmlFilePath = '/components/popuphtml/occupancyfeePopup.html'; // 삽입할 html 파일 경로
 
-    if(feeDetailPayBtn){
-
+	if(feeDetailPayBtn){
+/*
        let xhr = new XMLHttpRequest();
        xhr.open('GET', htmlFilePath, true);
        xhr.onreadystatechange = function() {
@@ -54,18 +54,28 @@ const feeDetailPayPopEvet = () => {
            }
        };
        xhr.send();
-       console.log('masterRegExcelPopWrapper 작동');
-       feeDetailPayBtn.addEventListener("click" , () => {
-       
-           const popupOpen = document.getElementById("occupancyfeePopup");
-           if(popupOpen){
-
-               popupOpen.classList.add("active");
-           }
-
-       })
+       */
+		console.log('masterRegExcelPopWrapper 작동');
+		feeDetailPayBtn.addEventListener("click" , () => {
+			const popupOpen = document.getElementById("occupancyfeePopup");
+			if(popupOpen){
+				popupOpen.classList.add("active");
+			}
+		})
+		//x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+	  const occupancyfeePopupOpen = document.getElementById("occupancyfeePopup");
+	  if (occupancyfeePopupOpen) {
+	    occupancyfeePopupOpen
+	      .querySelectorAll(".topCloseBtn, .finalBtn")
+	      .forEach(function (btn) {
+	        btn.addEventListener("click", () => {
+	          occupancyfeePopupOpen.classList.remove("active");
+	        });
+	      });
+	  }
 
    // 삽입된 html내 스크립트 실행 함수
+/*
    const runScriptsInElement = (element) => {
        const scripts = element.getElementsByTagName('script');
        for (let i = 0; i < scripts.length; i++) {
@@ -74,7 +84,7 @@ const feeDetailPayPopEvet = () => {
            document.body.appendChild(script).parentNode.removeChild(script);
        }
    }
-
+*/
 
     }
 

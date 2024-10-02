@@ -1047,6 +1047,7 @@ height: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
+  vertical-align: middle;
   gap: 3px;
   cursor: pointer;
 }

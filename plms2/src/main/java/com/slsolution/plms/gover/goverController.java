@@ -2968,6 +2968,7 @@ log.info("params:"+params);
 		        params.put("PMT_OFFICE", PMT_OFFICE);
 		        params.put("ADM_OFFICE", ADM_OFFICE);
 		        params.put("APPROVE", "N");
+//		        params.put("GUBUN", GUBUN);
 
 		        log.info("insertOfficeMng params=" + params);
 		        if ("modify".equals(GUBUN)) {

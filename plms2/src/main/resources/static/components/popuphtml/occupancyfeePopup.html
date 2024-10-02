@@ -4,358 +4,358 @@
   crossorigin
   href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
-<div id="occupancyfeePopup">
-  <div class="popupWrap">
-    <h2>
-      <p>점용료 납부</p>
-      <span class="topCloseBtn"></span>
-    </h2>
-    <div class="occupancywrap">
-      <div class="whitehall">
-        <h3>관할관청</h3>
-        <div class="whitehallwrap">
-          <ul class="whitehalltitle">
-            <li class="whitehalltitle_th_1">관리번호</li>
-            <li class="whitehalltitle_th_2">관리지사</li>
-            <li class="whitehalltitle_th_3">허가관청</li>
-            <li class="whitehalltitle_th_4">관리기관</li>
-            <li class="whitehalltitle_th_5">부서</li>
-            <li class="whitehalltitle_th_6">담당자</li>
-            <li class="whitehalltitle_th_7">연락처</li>
-          </ul>
-          <ul class="whitehallcontent">
-            <li class="whitehalltitle_td_1">
-              <input
-                type="text"
-                placeholder="G_000119"
-                readonly
-                class="notWriteInput" />
-            </li>
-            <li class="whitehalltitle_td_2">
-              <input
-                type="text"
-                placeholder="경인지사"
-                readonly
-                class="notWriteInput" />
-            </li>
-            <li class="whitehalltitle_td_3">
-              <input
-                type="text"
-                placeholder="한국농어촌공사"
-                readonly
-                class="notWriteInput" />
-            </li>
-            <li class="whitehalltitle_td_4">
-              <input
-                type="text"
-                placeholder="고양지사"
-                readonly
-                class="notWriteInput" />
-            </li>
-            <li class="whitehalltitle_td_5">
-              <input
-                type="text"
-                placeholder="파주고양지사"
-                readonly
-                class="notWriteInput" />
-            </li>
-            <li class="whitehalltitle_td_6">
-              <input
-                type="text"
-                placeholder="김기훈"
-                readonly
-                class="notWriteInput" />
-            </li>
-            <li class="whitehalltitle_td_7">
-              <input
-                type="text"
-                placeholder="031-950-3274"
-                readonly
-                class="notWriteInput" />
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="whitehall">
-        <h3>납부정보</h3>
-        <div class="payinfowrap">
-          <ul class="payinfotitle">
-            <li class="payinfotitle_th_1">허가번호</li>
-            <li class="payinfotitle_th_2">납부일</li>
-            <li class="payinfotitle_th_3">금액</li>
-            <li class="payinfotitle_th_4">VAT.</li>
-            <li class="payinfotitle_th_5">합계금액</li>
-            <li class="payinfotitle_th_6">유효기간</li>
-            <li class="payinfotitle_th_7">납부방법</li>
-          </ul>
-          <ul class="payinfocontent">
-            <li class="payinfotitle_td_1"><input type="text" /></li>
-            <li class="date_around" id="payinfotitle_td_2">
-              <div class="complaint_calender_wrap">
-                <input
-                  type="date"
-                  data-placeholder="날짜선택"
-                  required
-                  aria-required="true" />
-              </div>
-            </li>
-            <li class="payinfotitle_td_3"><input type="text" /></li>
-            <li class="payinfotitle_td_4"><input type="text" /></li>
-            <li class="payinfotitle_td_5"><input type="text" /></li>
-            <li class="date_around" id="payinfotitle_td_6">
-              <div class="dateInputBox">
-                <div class="complaint_calender_wrap">
-                  <input
-                    type="date"
-                    data-placeholder="22/01/01"
-                    required
-                    aria-required="true" />
-                </div>
-                <span class="dateBar"></span>
-                <div class="complaint_calender_wrap">
-                  <input
-                    type="date"
-                    data-placeholder="22/12/31"
-                    required
-                    aria-required="true" />
-                </div>
-              </div>
-            </li>
-            <li class="payinfotitle_td_7"><input type="text" /></li>
-          </ul>
-        </div>
-      </div>
-      <div class="whitehall">
-        <h3>소속토지정보</h3>
-
-        <div class="addresst_wrap">
-          <ul class="addresstitle">
-            <li class="addresstitle_th_1">순번</li>
-            <li class="addresstitle_th_2">주소</li>
-            <li class="addresstitle_th_3">전체 면적</li>
-            <li class="addresstitle_th_4">연장(m)</li>
-            <li class="addresstitle_th_5">면적(㎡)</li>
-            <li class="addresstitle_th_6">위치보기</li>
-          </ul>
-          <div class="addresscontent_wrap">
-            <ul class="addresscontent">
-              <li class="addresstitle_td_1">
-                <input
-                  type="text"
-                  placeholder="1"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_2">
-                <input
-                  type="text"
-                  placeholder="경기도 평택시 월곡동 140-7"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_3">
-                <input
-                  type="text"
-                  placeholder="45.98"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_4">
-                <input
-                  type="text"
-                  placeholder="1"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_5">
-                <input
-                  type="text"
-                  placeholder="3"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_6">
-                <button>지도</button>
-              </li>
-            </ul>
-            <ul class="addresscontent">
-              <li class="addresstitle_td_1">
-                <input
-                  type="text"
-                  placeholder="2"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_2">
-                <input
-                  type="text"
-                  placeholder="경기도 평택시 월곡동 140-7"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_3">
-                <input
-                  type="text"
-                  placeholder="435.28"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_4">
-                <input
-                  type="text"
-                  placeholder="14.9"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_5">
-                <input
-                  type="text"
-                  placeholder="5.2"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_6">
-                <button>지도</button>
-              </li>
-            </ul>
-            <ul class="addresscontent">
-              <li class="addresstitle_td_1">
-                <input
-                  type="text"
-                  placeholder="3"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_2">
-                <input
-                  type="text"
-                  placeholder="경기도 평택시 월곡동 140-7"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_3">
-                <input
-                  type="text"
-                  placeholder="45.98"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_4">
-                <input
-                  type="text"
-                  placeholder="4"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_5">
-                <input
-                  type="text"
-                  placeholder="3"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_6">
-                <button>지도</button>
-              </li>
-            </ul>
-            <ul class="addresscontent">
-              <li class="addresstitle_td_1">
-                <input
-                  type="text"
-                  placeholder="4"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_2">
-                <input
-                  type="text"
-                  placeholder="경기도 평택시 월곡동 140-7"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_3">
-                <input
-                  type="text"
-                  placeholder="45.98"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_4">
-                <input
-                  type="text"
-                  placeholder="8"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_5">
-                <input
-                  type="text"
-                  placeholder="3"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="addresstitle_td_6">
-                <button>지도</button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="whitehall">
-        <h3>첨부 파일</h3>
-        <div class="file_wrap">
-          <ul class="filetitle">
-            <li class="filetitle_th_1">선택</li>
-            <li class="filetitle_th_2">날짜</li>
-            <li class="filetitle_th_3">파일명</li>
-            <li class="filetitle_th_4">다운로드</li>
-          </ul>
-          <div class="filecontents_wrap">
-            <ul class="filecontent">
-              <li class="filetitle_td_1">
-                <input
-                  type="checkbox"
-                  id="occupancy_Popup_checkbox"
-                  class="approve_checkbox" />
-                <label
-                  for="occupancy_Popup_checkbox"
-                  class="approve_checkbox_label">
-                </label>
-              </li>
-              <li class="filetitle_td_2">
-                <input
-                  type="text"
-                  placeholder="2020-04-17"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="filetitle_td_3">
-                <input
-                  type="text"
-                  placeholder="허가 알림문서(농어촌공사파주고양지사).tif"
-                  readonly
-                  class="notWriteInput" />
-              </li>
-              <li class="filetitle_td_4">
-                <button>
-                  다운로드
-                  <div class="filecontent_wrap">
-                    <img src="/assets/media/popup/images/download.png" alt="" />
-                  </div>
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="occupancybtn">
-      <button class="sangsinBtn finalBtn">상신</button>
-      <button class="closeBtn finalBtn">닫기</button>
-    </div>
-  </div>
+<div id="occupancyfeePopup123">
+	<div class="popupWrap">
+		<h2>
+			<p>점용료 납부1111</p>
+			<span class="topCloseBtn"></span>
+		</h2>
+		<div class="occupancywrap">
+			<div class="whitehall">
+				<h3>관할관청</h3>
+				<div class="whitehallwrap">
+					<ul class="whitehalltitle">
+						<li class="whitehalltitle_th_1">관리번호</li>
+						<li class="whitehalltitle_th_2">관리지사</li>
+						<li class="whitehalltitle_th_3">허가관청</li>
+						<li class="whitehalltitle_th_4">관리기관</li>
+						<li class="whitehalltitle_th_5">부서</li>
+						<li class="whitehalltitle_th_6">담당자</li>
+						<li class="whitehalltitle_th_7">연락처</li>
+					</ul>
+					<ul class="whitehallcontent">
+						<li class="whitehalltitle_td_1">
+							<input
+							  type="text"
+							  placeholder="G_000119"
+							  readonly
+							  class="notWriteInput" />
+						</li>
+						<li class="whitehalltitle_td_2">
+							<input
+							  type="text"
+							  placeholder="경인지사"
+							  readonly
+							  class="notWriteInput" />
+						</li>
+						<li class="whitehalltitle_td_3">
+							<input
+							  type="text"
+							  placeholder="한국농어촌공사"
+							  readonly
+							  class="notWriteInput" />
+						</li>
+						<li class="whitehalltitle_td_4">
+							<input
+							  type="text"
+							  placeholder="고양지사"
+							  readonly
+							  class="notWriteInput" />
+						</li>
+						<li class="whitehalltitle_td_5">
+							<input
+							  type="text"
+							  placeholder="파주고양지사"
+							  readonly
+							  class="notWriteInput" />
+						</li>
+						<li class="whitehalltitle_td_6">
+							<input
+							  type="text"
+							  placeholder="김기훈"
+							  readonly
+							  class="notWriteInput" />
+						</li>
+						<li class="whitehalltitle_td_7">
+							<input
+							  type="text"
+							  placeholder="031-950-3274"
+							  readonly
+							  class="notWriteInput" />
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="whitehall">
+				<h3>납부정보</h3>
+				<div class="payinfowrap">
+					<ul class="payinfotitle">
+						<li class="payinfotitle_th_1">허가번호</li>
+						<li class="payinfotitle_th_2">납부일</li>
+						<li class="payinfotitle_th_3">금액</li>
+						<li class="payinfotitle_th_4">VAT.</li>
+						<li class="payinfotitle_th_5">합계금액</li>
+						<li class="payinfotitle_th_6">유효기간</li>
+						<li class="payinfotitle_th_7">납부방법</li>
+					</ul>
+					<ul class="payinfocontent">
+						<li class="payinfotitle_td_1"><input type="text" /></li>
+						<li class="date_around" id="payinfotitle_td_2">
+							<div class="complaint_calender_wrap">
+								<input
+								  type="date"
+								  data-placeholder="날짜선택"
+								  required
+								  aria-required="true" />
+							</div>
+						</li>
+						<li class="payinfotitle_td_3"><input type="text" /></li>
+						<li class="payinfotitle_td_4"><input type="text" /></li>
+						<li class="payinfotitle_td_5"><input type="text" /></li>
+					  	<li class="date_around" id="payinfotitle_td_6">
+							<div class="dateInputBox">
+								<div class="complaint_calender_wrap">
+									<input
+									  type="date"
+									  data-placeholder="22/01/01"
+									  required
+									  aria-required="true" />
+								</div>
+								<span class="dateBar"></span>
+								<div class="complaint_calender_wrap">
+									<input
+									  type="date"
+									  data-placeholder="22/12/31"
+									  required
+									  aria-required="true" />
+								</div>
+							</div>
+						</li>
+						<li class="payinfotitle_td_7"><input type="text" /></li>
+					</ul>
+				</div>
+			</div>
+			<div class="whitehall">
+				<h3>소속토지정보</h3>
+				<div class="addresst_wrap">
+					<ul class="addresstitle">
+						<li class="addresstitle_th_1">순번</li>
+						<li class="addresstitle_th_2">주소</li>
+						<li class="addresstitle_th_3">전체 면적</li>
+						<li class="addresstitle_th_4">연장(m)</li>
+						<li class="addresstitle_th_5">면적(㎡)</li>
+						<li class="addresstitle_th_6">위치보기</li>
+					</ul>
+					<div class="addresscontent_wrap">
+						<ul class="addresscontent">
+							<li class="addresstitle_td_1">
+								<input
+								  type="text"
+								  placeholder="1"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_2">
+								<input
+								  type="text"
+								  placeholder="경기도 평택시 월곡동 140-7"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_3">
+								<input
+								  type="text"
+								  placeholder="45.98"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_4">
+								<input
+								  type="text"
+								  placeholder="1"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_5">
+								<input
+								  type="text"
+								  placeholder="3"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_6">
+								<button>지도</button>
+							</li>
+						</ul>
+						<ul class="addresscontent">
+							<li class="addresstitle_td_1">
+								<input
+								  type="text"
+								  placeholder="2"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_2">
+								<input
+								  type="text"
+								  placeholder="경기도 평택시 월곡동 140-7"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_3">
+								<input
+								  type="text"
+								  placeholder="435.28"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_4">
+								<input
+								  type="text"
+								  placeholder="14.9"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_5">
+								<input
+								  type="text"
+								  placeholder="5.2"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_6">
+								<button>지도</button>
+							</li>
+						</ul>
+						<ul class="addresscontent">
+							<li class="addresstitle_td_1">
+								<input
+								  type="text"
+								  placeholder="3"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_2">
+								<input
+								  type="text"
+								  placeholder="경기도 평택시 월곡동 140-7"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_3">
+								<input
+								  type="text"
+								  placeholder="45.98"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_4">
+								<input
+								  type="text"
+								  placeholder="4"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_5">
+								<input
+								  type="text"
+								  placeholder="3"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_6">
+								<button>지도</button>
+							</li>
+						</ul>
+						<ul class="addresscontent">
+							<li class="addresstitle_td_1">
+								<input
+								  type="text"
+								  placeholder="4"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_2">
+								<input
+								  type="text"
+								  placeholder="경기도 평택시 월곡동 140-7"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_3">
+								<input
+								  type="text"
+								  placeholder="45.98"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_4">
+								<input
+								  type="text"
+								  placeholder="8"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_5">
+								<input
+								  type="text"
+								  placeholder="3"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="addresstitle_td_6">
+								<button>지도</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="whitehall">
+				<h3>첨부 파일</h3>
+				<div class="file_wrap">
+					<ul class="filetitle">
+						<li class="filetitle_th_1">선택</li>
+						<li class="filetitle_th_2">날짜</li>
+						<li class="filetitle_th_3">파일명</li>
+						<li class="filetitle_th_4">다운로드</li>
+					</ul>
+					<div class="filecontents_wrap">
+						<ul class="filecontent">
+							<li class="filetitle_td_1">
+								<input
+								  type="checkbox"
+								  id="occupancy_Popup_checkbox"
+								  class="approve_checkbox" />
+								<label
+								  for="occupancy_Popup_checkbox"
+								  class="approve_checkbox_label">
+								</label>
+							</li>
+							<li class="filetitle_td_2">
+								<input
+								  type="text"
+								  placeholder="2020-04-17"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="filetitle_td_3">
+								<input
+								  type="text"
+								  placeholder="허가 알림문서(농어촌공사파주고양지사).tif"
+								  readonly
+								  class="notWriteInput" />
+							</li>
+							<li class="filetitle_td_4">
+								<button>
+									다운로드
+									<div class="filecontent_wrap">
+										<img src="/assets/media/popup/images/download.png" alt="" />
+									</div>
+								</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="occupancybtn">
+			<button class="sangsinBtn finalBtn">상신</button>
+			<button class="closeBtn finalBtn">닫기</button>
+		</div>
+	</div>
 </div>
 <script>
+/*
   //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
   const occupancyfeePopupOpen = document.getElementById("occupancyfeePopup");
   if (occupancyfeePopupOpen) {
@@ -367,4 +367,5 @@
         });
       });
   }
+  */
 </script>

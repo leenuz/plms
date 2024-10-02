@@ -15,6 +15,7 @@
    
   <link th:href="@{/css/common.css}" rel="stylesheet" />
     <link rel="stylesheet" href="/css/gover/feeDetail.css" />
+    <link rel="stylesheet" href="/assets/css/popup/occupancy_Popup.css" />
 	<title>점용료 납부/전자결재 상세정보</title>
   </head>
 
@@ -558,6 +559,253 @@
 			</div>
 		</div>
 		
+		<!-- 납부 팝업 -->
+		<div id="occupancyfeePopup">
+			<div class="popupWrap">
+				<h2>
+					<p>점용료 납부</p>
+					<span class="topCloseBtn"></span>
+				</h2>
+				<div class="occupancywrap">
+					<div class="whitehall">
+						<h3>관할관청</h3>
+						<div class="whitehallwrap">
+							<ul class="whitehalltitle">
+								<li class="whitehalltitle_th_1">관리번호</li>
+								<li class="whitehalltitle_th_2">관리지사</li>
+								<li class="whitehalltitle_th_3">허가관청</li>
+								<li class="whitehalltitle_th_4">관리기관</li>
+								<li class="whitehalltitle_th_5">부서</li>
+								<li class="whitehalltitle_th_6">담당자</li>
+								<li class="whitehalltitle_th_7">연락처</li>
+							</ul>
+							<ul class="whitehallcontent">
+								<li class="whitehalltitle_td_1">
+									<input
+									  type="text"
+									  placeholder="G_000119"
+									  readonly
+									  class="notWriteInput"
+									  th:value="${resultData.gover_no}" />
+								</li>
+								<li class="whitehalltitle_td_2">
+									<input
+									  type="text"
+									  placeholder="경인지사"
+									  readonly
+									  class="notWriteInput"
+									  th:value="${resultData.jisa}" />
+								</li>
+								<li class="whitehalltitle_td_3">
+									<input
+									  type="text"
+									  placeholder="한국농어촌공사"
+									  readonly
+									  class="notWriteInput"
+									  th:value="${resultData.pmt_office}" />
+								</li>
+								<li class="whitehalltitle_td_4">
+									<input
+									  type="text"
+									  placeholder="고양지사"
+									  readonly
+									  class="notWriteInput"
+									  th:value="${resultData.adm_office}" />
+								</li>
+								<li class="whitehalltitle_td_5">
+									<input
+									  type="text"
+									  placeholder="파주고양지사"
+									  readonly
+									  class="notWriteInput"
+									  th:value="${resultData.office_depart}" />
+								</li>
+								<li class="whitehalltitle_td_6">
+									<input
+									  type="text"
+									  placeholder="김기훈"
+									  readonly
+									  class="notWriteInput"
+									  th:value="${resultData.office_charege}" />
+								</li>
+								<li class="whitehalltitle_td_7">
+									<input
+									  type="text"
+									  placeholder="031-950-3274"
+									  readonly
+									  class="notWriteInput"
+									  th:value="${resultData.office_contact}" />
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="whitehall">
+						<h3>납부정보</h3>
+						<div class="payinfowrap">
+							<ul class="payinfotitle">
+								<li class="payinfotitle_th_1">허가번호</li>
+								<li class="payinfotitle_th_2">납부일</li>
+								<li class="payinfotitle_th_3">금액</li>
+								<li class="payinfotitle_th_4">VAT.</li>
+								<li class="payinfotitle_th_5">합계금액</li>
+								<li class="payinfotitle_th_6">유효기간</li>
+								<li class="payinfotitle_th_7">납부방법</li>
+							</ul>
+							<ul class="payinfocontent">
+								<li class="payinfotitle_td_1"><input type="text" /></li>
+								<li class="date_around" id="payinfotitle_td_2">
+									<div class="complaint_calender_wrap">
+										<input
+										  type="date"
+										  data-placeholder="날짜선택"
+										  required
+										  aria-required="true" />
+									</div>
+								</li>
+								<li class="payinfotitle_td_3"><input type="text" /></li>
+								<li class="payinfotitle_td_4"><input type="text" /></li>
+								<li class="payinfotitle_td_5"><input type="text" /></li>
+							  	<li class="date_around" id="payinfotitle_td_6">
+									<div class="dateInputBox">
+										<div class="complaint_calender_wrap">
+											<input
+											  type="date"
+											  data-placeholder="22/01/01"
+											  required
+											  aria-required="true" />
+										</div>
+										<span class="dateBar"></span>
+										<div class="complaint_calender_wrap">
+											<input
+											  type="date"
+											  data-placeholder="22/12/31"
+											  required
+											  aria-required="true" />
+										</div>
+									</div>
+								</li>
+								<li class="payinfotitle_td_7"><input type="text" /></li>
+							</ul>
+						</div>
+					</div>
+					<div class="whitehall">
+						<h3>소속토지정보</h3>
+						<div class="addresst_wrap">
+							<ul class="addresstitle">
+								<li class="addresstitle_th_1">순번</li>
+								<li class="addresstitle_th_2">주소</li>
+								<li class="addresstitle_th_3">전체 면적</li>
+								<li class="addresstitle_th_4">연장(m)</li>
+								<li class="addresstitle_th_5">면적(㎡)</li>
+								<li class="addresstitle_th_6">위치보기</li>
+							</ul>
+							<div class="addresscontent_wrap">
+								<ul th:each="pnu, iterStat : ${goverPnuList}" class="addresscontent">
+					                <!-- 순번 -->
+					                <li class="content smallWidth">
+					                    <input type="text"
+					                        class="notWriteInput"
+					                        readonly
+					                        th:value="${iterStat.count}" />
+					                </li>
+					                <!-- 주소 -->
+					                <li class="content largeWidth">
+					                    <input type="text"
+					                        class="notWriteInput"
+					                        readonly
+											th:value="${
+											    (pnu.sido_nm != null ? pnu.sido_nm + ' ' : '') + 
+											    (pnu.sgg_nm != null ? pnu.sgg_nm + ' ' : '') + 
+											    (pnu.emd_nm != null ? pnu.emd_nm + ' ' : '') + 
+											    (pnu.ri_nm != null ? pnu.ri_nm + ' ' : '') + 
+											    (pnu.jibun != null ? pnu.jibun : '')
+											}" />
+					                </li>
+					                <!-- 전체면적 -->
+					                <li class="content">
+					        	        <input type="text"
+					                        class="notWriteInput"
+					                        readonly
+					                        th:value="${pnu.jijuk_area}" />
+					                </li>
+					                <!-- 연장 -->
+					                <li class="content">
+					                    <input type="text"
+					                        class="notWriteInput"
+					                        readonly
+					                        th:value="${pnu.gover_length}" />
+					                </li>
+					                <!-- 면적 -->
+					                <li class="content">
+					                    <input type="text"
+					                        class="notWriteInput"
+					                        readonly
+					                        th:value="${pnu.gover_area}" />
+					                </li>
+					                <!-- 지도 -->
+					                <li class="content btnBox">
+					                    <button class="lightBlueBtn viewDetailButton">
+					                        위치보기
+					                    </button>
+					                </li>
+					            </ul>
+							</div>
+						</div>
+					</div>
+					<div class="whitehall">
+						<h3>첨부 파일</h3>
+						<div class="file_wrap">
+							<div class="filetitle_wrap">
+								<ul class="filetitle">
+									<li class="filetitle_th_1">선택</li>
+									<li class="filetitle_th_2">날짜</li>
+									<li class="filetitle_th_3">파일명</li>
+									<li class="filetitle_th_4">다운로드</li>
+								</ul>
+							</div>
+							<div class="filecontents_wrap">
+								<ul class="filecontent" th:each="file : ${atcFileList}">
+									<li class="filetitle_td_1">
+										<input
+										  type="checkbox"
+										  id="occupancy_Popup_checkbox"
+										  class="approve_checkbox" />
+										<label
+										  for="occupancy_Popup_checkbox"
+										  class="approve_checkbox_label">
+										</label>
+									</li>
+									<!-- 등록일 -->
+									<li class="filetitle_td_2">
+										<input
+										  type="text"
+										  th:value="${#dates.format(file.ga_wdate, 'yyyy-MM-dd')}"
+										  readonly
+										  class="notWriteInput" />
+									</li>
+									<!-- 파일명 -->
+									<li class="filetitle_td_3">
+										<input
+										  type="text"
+										  th:value="${file.ga_file_nm}"
+										  readonly
+										  class="notWriteInput" />
+									</li>
+									<!-- 파일저장 -->
+									<li class="filetitle_td_4">
+										<button class="fileDownloadBtn" th:onclick="downloadFile([[${file.ga_file_path}]],[[${file.ga_file_nm}]])">다운로드 <span class="downloadIcon"></span></button>
+									</li>
+						        </ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="occupancybtn">
+					<button class="sangsinBtn finalBtn">상신</button>
+					<button class="closeBtn finalBtn">닫기</button>
+				</div>
+			</div>
+		</div>
 		<!-- script -->
     <script type="module" src="/js/module/surfaceMain.js"></script>
     <script src="/js/gover/feeDetail.js"></script>
