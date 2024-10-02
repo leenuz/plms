@@ -4083,14 +4083,14 @@ log.info("gubun:"+gubun);
 		params.put("idx",idx);
 		params.put("manage_no",idx);
 		params.put("index",index);
-		log.info("params:"+params);
+//		log.info("params:"+params);
 		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 		
-		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
 		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
 		ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params);
 		params.put("pnu", data.get(0).get("jm_pnu"));
@@ -4112,26 +4112,26 @@ log.info("gubun:"+gubun);
 		ArrayList<HashMap> reqDoc2list = mainService.selectQuery("jisangSQL.selectJisangReqDoc2",params);
 
 		
-		  log.info("params:"+params); log.info("data:"+data.get(0));
-		  log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
-		  log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
-		  log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
-		  log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
-		  log.info("jisangPermitList:"+jisangPermitList);
-		  log.info("jisangIssueList:"+jisangIssueList);
-		  log.info("souja count:"+soujaList.size()); log.info("soujaList:"+soujaList);
-		  log.info("atcFileList:"+atcFileList);
-		  log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
-		  log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
-		  log.info("jisangMemoList:"+jisangMemoList);
-		  log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
-		  log.info("reqDoc2list:"+reqDoc2list);
+//		  log.info("params:"+params); log.info("data:"+data.get(0));
+//		  log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
+//		  log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
+//		  log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
+//		  log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+//		  log.info("jisangPermitList:"+jisangPermitList);
+//		  log.info("jisangIssueList:"+jisangIssueList);
+//		  log.info("souja count:"+soujaList.size()); log.info("soujaList:"+soujaList);
+//		  log.info("atcFileList:"+atcFileList);
+//		  log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+//		  log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
+//		  log.info("jisangMemoList:"+jisangMemoList);
+//		  log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+//		  log.info("reqDoc2list:"+reqDoc2list);
 		 
 
 		
       			mav.addObject("resultData",data.get(0));
       			mav.addObject("soujaList",soujaList);
-      			mav.addObject("jisangPermitList",jisangPermitList);
+      		//	mav.addObject("jisangPermitList",jisangPermitList);
       			mav.addObject("atcFileList",atcFileList);
       			mav.addObject("jisangModifyList",jisangModifyList);
       			mav.addObject("jisangMergeList",jisangMergeList);
