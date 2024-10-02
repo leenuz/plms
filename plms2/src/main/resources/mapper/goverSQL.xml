@@ -196,9 +196,9 @@ FROM (
              , GM.gm_SUN_GUBUN AS SUN_GUBUN
              , GM.gm_PIPE_METER::numeric AS PIPE_METER
              , GM.gm_CANCLE_YN AS CANCLE_YN
-             , TO_CHAR(GM.gm_CANCEL_DATE, 'YYYY-MM-DD') AS CANCLE_DATE
-             , GM.gm_CANCEL_NAME AS CANCLE_NAME
-             , GM.gm_CANCEL_EMPCD AS CANCLE_EMPCD
+             , TO_CHAR(GM.gm_CANCLE_DATE, 'YYYY-MM-DD') AS CANCLE_DATE
+             , GM.gm_CANCLE_NAME AS CANCLE_NAME
+             , GM.gm_CANCLE_EMPCD AS CANCLE_EMPCD
              , GP.gp_PNU AS PNU
              , GP.gp_ADDRCODE AS ADDRCODE
              , GP.gp_SIDO_NM AS SIDO_NM
@@ -422,10 +422,10 @@ WHERE 1=1
 	               gm.gm_pipe_name AS pipename,
 	               gm.gm_sun_gubun AS sun_gubun,
 	               gm.gm_pipe_meter AS pipe_meter,
-	               gm.gm_cancel_yn AS cancel_yn,
-	               gm.gm_cancel_date AS cancel_date,
-	               gm.gm_cancel_name AS cancel_name,
-	               gm.gm_cancel_empcd AS cancel_empcd,
+	               gm.gm_cancle_yn AS cancel_yn,
+	               gm.gm_cancle_date AS cancel_date,
+	               gm.gm_cancle_name AS cancel_name,
+	               gm.gm_cancle_empcd AS cancel_empcd,
 	               gm.gm_use_purpos AS use_purpos,
 	               gm.gm_gover_st_date AS gover_st_date,
 	               gm.gm_gover_ed_date AS gover_ed_date,
@@ -1102,10 +1102,10 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 	               gm.gm_pipe_name AS pipename,
 	               gm.gm_sun_gubun AS sun_gubun,
 	               gm.gm_pipe_meter AS pipe_meter,
-	               gm.gm_cancel_yn AS cancel_yn,
-	               gm.gm_cancel_date AS cancel_date,
-	               gm.gm_cancel_name AS cancel_name,
-	               gm.gm_cancel_empcd AS cancel_empcd,
+	               gm.gm_cancle_yn AS cancel_yn,
+	               gm.gm_cancle_date AS cancel_date,
+	               gm.gm_cancle_name AS cancel_name,
+	               gm.gm_cancle_empcd AS cancel_empcd,
 	               gm.gm_use_purpos AS use_purpos,
 	               gm.gm_gover_st_date AS gover_st_date,
 	               gm.gm_gover_ed_date AS gover_ed_date,
@@ -1180,7 +1180,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 			and r.address like '%${address}%'
 		</if>
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
-	        and r.cancel_yn = #{cancel_yn}
+	        and r.cancle_yn = #{cancel_yn}
 	    </if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
 			and (SELECT COUNT(o.address) AS overlap
@@ -1208,10 +1208,10 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 	               gm.gm_pipe_name AS pipename,
 	               gm.gm_sun_gubun AS sun_gubun,
 	               gm.gm_pipe_meter AS pipe_meter,
-	               gm.gm_cancel_yn AS cancel_yn,
-	               gm.gm_cancel_date AS cancel_date,
-	               gm.gm_cancel_name AS cancel_name,
-	               gm.gm_cancel_empcd AS cancel_empcd,
+	               gm.gm_cancle_yn AS cancel_yn,
+	               gm.gm_cancle_date AS cancel_date,
+	               gm.gm_cancle_name AS cancel_name,
+	               gm.gm_cancle_empcd AS cancel_empcd,
 	               gm.gm_use_purpos AS use_purpos,
 	               gm.gm_gover_st_date AS gover_st_date,
 	               gm.gm_gover_ed_date AS gover_ed_date,
@@ -1286,7 +1286,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 	        and r.address like '%${address}%'
 	    </if>
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
-	        and r.cancel_yn = #{cancel_yn}
+	        and r.cancle_yn = #{cancel_yn}
 	    </if>
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
 	        and (SELECT COUNT(o.address) AS overlap
@@ -1663,9 +1663,9 @@ FROM NOTSET_MASTER
 		UPDATE GOVER_MASTER
 		SET
 		gm_CANCLE_YN = 'Y'
-		,gm_CANCEL_DATE = TO_DATE(#{CANCLEDATE},'yyyy-mm-dd')
-		,gm_CANCEL_NAME = #{USERNAME}
-		,gm_CANCEL_EMPCD = nullif(#{EMPCD},'')
+		,gm_CANCLE_DATE = TO_DATE(#{CANCLEDATE},'yyyy-mm-dd')
+		,gm_CANCLE_NAME = #{USERNAME}
+		,gm_CANCLE_EMPCD = nullif(#{EMPCD},'')
 		WHERE gm_GOVER_NO = #{GOVERNO}
 
 	</update>
@@ -1879,7 +1879,7 @@ FROM (
         ) AS js_inner
         WHERE ROW_IDX = 1
     ) JS ON JM.jm_JISANG_NO = JS.js_JISANG_NO
-    WHERE (JM.jm_CANCEL_YN IS NULL OR JM.jm_CANCEL_YN != 'Y')
+    WHERE (JM.jm_CANCLE_YN IS NULL OR JM.jm_CANCLE_YN != 'Y')
 
     UNION ALL
 

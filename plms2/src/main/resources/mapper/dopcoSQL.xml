@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DOPCO_MASTER
 		WHERE
 		1 = 1
-		AND dom_CANCEL_YN !='Y'
+		AND dom_CANCLE_YN !='Y'
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and dom.dom_jisa=#{jisa}
 		</if>
@@ -87,7 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DOPCO_MASTER
 		WHERE
 		1 = 1
-		and (dom_CANCEL_YN !='Y' or dom_cancel_yn IS NULL)
+		and (dom_CANCLE_YN !='Y' or dom_cancle_yn IS NULL)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and dom.dom_jisa=#{jisa}
 		</if>
@@ -144,7 +144,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DOPCO_MASTER
 		WHERE
 		1 = 1
-		and (dom_CANCEL_YN !='Y' or dom_cancel_yn IS NULL)
+		and (dom_CANCLE_YN !='Y' or dom_cancle_yn IS NULL)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and dom.dom_jisa=#{jisa}
 		</if>
@@ -213,7 +213,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and dom.dom_jasan_no like '%${jasan_no}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)" >
-			and dom.dom_cancel_yn =#{cancel_yn}
+			and dom.dom_cancle_yn =#{cancel_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
 			and dom.dom_chuideuk_date::date between #{start_date}::date and #{end_date}::date
@@ -242,7 +242,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and dom.dom_chuideuk_date::date between #{start_date}::date and #{end_date}::date
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)" >
-			and dom.dom_cancel_yn=#{cancel_yn}
+			and dom.dom_cancle_yn=#{cancel_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 			ORDER BY ${orderCol} ${desc}
@@ -365,10 +365,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="insertDopcoTerminationAdd" parameterType="HashMap">
 		UPDATE DOPCO_MASTER
 		SET
-		dom_CANCEL_YN = 'Y'
-		,dom_CANCEL_DATE = TO_DATE(#{CANCLEDATE},'yyyy-mm-dd')
-		,dom_CANCEL_NAME = #{USERNAME}
-		,dom_CANCEL_EMPCD = #{EMPCD}
+		dom_CANCLE_YN = 'Y'
+		,dom_CANCLE_DATE = TO_DATE(#{CANCLEDATE},'yyyy-mm-dd')
+		,dom_CANCLE_NAME = #{USERNAME}
+		,dom_CANCLE_EMPCD = #{EMPCD}
 		WHERE dom_DOPCO_NO = #{DOPCO_NO}
 
 	</update>

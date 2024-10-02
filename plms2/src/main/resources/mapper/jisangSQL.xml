@@ -244,7 +244,7 @@ ON PI.pnu = u.pnu
 			and r.idx=#{idx}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)" >
-			and r.cancel_yn=#{cancel_yn}
+			and r.cancle_yn=#{cancel_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
 			and r.manage_yn=#{manageYn}
@@ -271,7 +271,7 @@ ON PI.pnu = u.pnu
 			and r.comple_yn=#{comple_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)" >
-			and r.cancel_yn=#{cancel_yn}
+			and r.cancle_yn=#{cancel_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
 			and r.account_yn=#{account_yn}
@@ -360,7 +360,7 @@ ON PI.pnu = u.pnu
 			and r.idx=#{idx}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)" >
-			and r.cancel_yn=#{cancel_yn}
+			and r.cancle_yn=#{cancel_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
 			and r.manage_yn=#{manageYn}
@@ -387,7 +387,7 @@ ON PI.pnu = u.pnu
 			and r.comple_yn=#{comple_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)" >
-			and r.cancel_yn=#{cancel_yn}
+			and r.cancle_yn=#{cancel_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
 			and r.account_yn=#{account_yn}
@@ -1072,7 +1072,7 @@ SELECT count(*)
 			and r.idx=#{idx}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
-			and r.cancel_yn=#{cancelYn}
+			and r.cancle_yn=#{cancelYn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
 			and r.manage_yn=#{manageYn}
