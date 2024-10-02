@@ -3051,7 +3051,7 @@ WHERE
 	</delete>
 		<insert id="insertJisangSoyuTmp" parameterType="HashMap">
 		Insert into JISANG_SOUJA_TMP
-		(jst_JISANG_NO, jst_JIBUN, jst_SOUJA_NAME, jst_ADDRESS, jst_HOME_NUMBER ,jst_PHONE_NUMBER)
+		(jst_JISANG_NO, jst_JIBUN, jst_SOUJA_NAME, jst_ADDRESS, jst_HOME_NUMBER ,jst_PONE_NUMBER)
 		Values
 		(#{JISANGNO}, #{JIBUN}, #{NAME}, #{ADDR}, #{TEL} , #{HP})
 	</insert>
