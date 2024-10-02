@@ -187,11 +187,11 @@
 								<!-- 연장 -->
 								<li class="content"><input type="text"
 									class="notWriteInput" readonly
-									th:value="${permit.gp_gover_length}" /></li>
+									th:value="${permit.gover_length}" /></li>
 								<!-- 면적 -->
 								<li class="content"><input type="text"
 									class="notWriteInput" readonly
-									th:value="${permit.gp_gover_area}" /></li>
+									th:value="${permit.gover_area}" /></li>
 								<!-- 도시계획 결정여부 -->
 								<li class="content middleWidth"><input type="text"
 									class="notWriteInput" readonly th:value="${permit.gp_dosiplan}" />
@@ -241,11 +241,11 @@
 									</td>
 									<!-- 시작일 -->
 									<td><input type="text"
-										th:value="${#dates.format(permit.gp_pmt_st_date, 'yyyy-MM-dd')}"
+										th:value="${#dates.format(permit.pmt_st_date, 'yyyy-MM-dd')}"
 										class="notWriteInput" readonly /></td>
 									<!-- 종료일 -->
 									<td><input type="text"
-										th:value="${#dates.format(permit.gp_pmt_ed_date, 'yyyy-MM-dd')}"
+										th:value="${#dates.format(permit.pmt_ed_date, 'yyyy-MM-dd')}"
 										class="notWriteInput" readonly /></td>
 									<!-- 부서 -->
 									<td class="largeWidth"><input type="text"

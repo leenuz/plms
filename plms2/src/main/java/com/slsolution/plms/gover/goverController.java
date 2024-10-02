@@ -949,6 +949,7 @@ public class goverController {
 			
 			params.put("idx",idx);
 			params.put("gover_no",idx);
+			params.put("GOVERNO",idx);
 			params.put("index",index);
 			
 			log.info("params:"+params);
@@ -1140,8 +1141,8 @@ public class goverController {
 
 //				String JISA = requestParamsObj.getString("JISA");
 				params.put("JISA", "");
-				// int count=(int)mainService.selectCountQuery("goverSQL.selectOfficeJisaCount", params);
-				// list = (ArrayList) mainService.selectQuery("goverSQL.selectOfficeInfoAll", params);
+				// int count=(int)mainService.selectCountQuery("goverSQL.selectSysGroupCodeList", params);
+				 list = (ArrayList) mainService.selectQuery("goverSQL.selectSysGroupCodeList", params);
 				//  jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 
 			} catch (Exception e) {
@@ -1153,8 +1154,8 @@ public class goverController {
 			
 			ModelAndView mav=new ModelAndView();
 			mav.addObject("list",list);
-			mav.addObject("jisaList",jisalist);
-			log.info("jisalist:"+jisalist);
+			//mav.addObject("jisaList",jisalist);
+			//log.info("jisalist:"+jisalist);
 			mav.setViewName("content/gover/orgSysCode");
 			return mav;
 		}
@@ -2736,7 +2737,7 @@ log.info("params:"+params);
 							     			filesMap.put("fseq",i);
 							     			filesMap.put("fname",file_name);
 //
-							     			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+							     			 String tempPath = GC.getGoverFileTempDir(); //설정파일로 뺀다.
 							     			 String dataPath = GC.getGoverFileDataDir()+"/"+str_GOVERNO; //설정파일로 뺀다.
 							     			 filesMap.put("fpath",dataPath+"/"+file_name);
 							     			 CommonUtil.moveFile(file_name, tempPath, dataPath);
@@ -3499,5 +3500,165 @@ log.info("params:"+params);
 			log.info("historyList:"+historyList);
 			mav.setViewName("/gover/orgAdmin :: #approve_correction_Popup");
 			return ResponseEntity.ok(historyList);
+		}
+		
+		@PostMapping(path="/selectSysCodeList")
+		public void selectSysCodeList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			ArrayList list = new ArrayList();
+			ArrayList addlist = new ArrayList();
+
+			ParameterParser parser = new ParameterParser(request);
+
+			String groupCode = parser.getString("groupCode", "");
+			String useYn = parser.getString("useYn", "Y");
+
+			String str_result = "Y";
+			ArrayList returnList = new ArrayList();
+			try {
+
+				HashMap params = new HashMap();
+				params.put("GROUP_CODE", groupCode);
+				params.put("USE_YN", useYn);
+
+				list = (ArrayList) mainService.selectQuery("goverSQL.selectSysCodeList", params);
+
+				if (list.size() > 0) {
+					for (int i = 0; i < list.size(); i++) {
+						HashMap hm = new HashMap();
+						hm.put("CODE", (String) ((HashMap) list.get(i)).get("CODE"));
+						hm.put("CODE_NAME", (String) ((HashMap) list.get(i)).get("CODE_NAME"));
+						hm.put("GROUP_CODE", (String) ((HashMap) list.get(i)).get("GROUP_CODE"));
+						hm.put("SORT_ORDER", String.valueOf(((HashMap) list.get(i)).get("SORT_ORDER")));
+						hm.put("USE_YN", (String) ((HashMap) list.get(i)).get("USE_YN"));
+						returnList.add(hm);
+					}
+				}
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", returnList);
+			map.put("loginKey", String.valueOf(request.getSession().getAttribute("loginKey")));
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
+		
+		
+		@PostMapping(path="/insertSysCode")
+		public void insertSysCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+			ParameterParser parser = new ParameterParser(request);
+
+			String CODE = parser.getString("CODE", "");
+			String GROUP_CODE = parser.getString("GROUP_CODE", "");
+			String CODE_NAME = parser.getString("CODE_NAME", "");
+			String SORT_ORDER = parser.getString("SORT_ORDER", "");
+			String UPPER_CODE0 = parser.getString("UPPER_CODE0", "");
+			String UPPER_CODE = parser.getString("UPPER_CODE", "");
+			String USE_YN = parser.getString("USE_YN", "Y");
+
+			String str_result = "Y";
+			try {
+
+				HashMap params = new HashMap();
+				params.put("GROUP_CODE", GROUP_CODE);
+				params.put("CODE", CODE);
+				params.put("CODE_NAME", CODE_NAME);
+				params.put("SORT_ORDER", SORT_ORDER);
+				params.put("UPPER_CODE0", UPPER_CODE0);
+				params.put("UPPER_CODE", UPPER_CODE);
+				params.put("USE_YN", USE_YN);
+
+				System.out.println("insertSysCode params=" + params);
+				mainService.InsertQuery("goverSQL.updateSysCodeSortOrder", params);
+				mainService.InsertQuery("goverSQL.insertSysCode", params); // 기본정보
+																				// 저장
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+			map.put("message", str_result);
+			map.put("loginKey", String.valueOf(request.getSession().getAttribute("loginKey")));
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
+		
+		
+		@PostMapping(path="/updateSysCode")
+		public void updateSysCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+			ParameterParser parser = new ParameterParser(request);
+			String CODE = parser.getString("CODE", "");
+			String GROUP_CODE = parser.getString("GROUP_CODE", "");
+			String CODE_NAME = parser.getString("CODE_NAME", "");
+			String SORT_ORDER = parser.getString("SORT_ORDER", "");
+			String UPPER_CODE0 = parser.getString("UPPER_CODE0", "");
+			String UPPER_CODE = parser.getString("UPPER_CODE", "");
+			String USE_YN = parser.getString("USE_YN", "Y");
+
+			String str_result = "Y";
+			try {
+
+				HashMap params = new HashMap();
+				params.put("GROUP_CODE", GROUP_CODE);
+				params.put("CODE", CODE);
+				params.put("CODE_NAME", CODE_NAME);
+				params.put("SORT_ORDER", SORT_ORDER);
+				params.put("UPPER_CODE0", UPPER_CODE0);
+				params.put("UPPER_CODE", UPPER_CODE);
+				params.put("USE_YN", USE_YN);
+
+				System.out.println("updateSysCode params=" + params);
+				mainService.InsertQuery("goverSQL.updateSysCodeSortOrder", params); // 기본정보
+																						// 저장
+				mainService.InsertQuery("goverSQL.updateSysCode", params); // 기본정보
+																				// 저장
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+			map.put("message", str_result);
+			map.put("loginKey", String.valueOf(request.getSession().getAttribute("loginKey")));
+
+			
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
 		}
 }

@@ -440,6 +440,52 @@ function addRow() {
 	}
 }
 
+function addRowExcel(obj) {
+	console.log("-------------addrowExcel-----------");
+		console.log(obj);
+	
+	var thisUl=$(this).parent().parent().parent().parent();
+	//console.log(thisUl);
+	var addUl=$("#row-template").html();
+	
+    
+	//addUl.find()
+	
+	
+	
+	
+	var addDiv = $('<ul class="contents" id="goverUl">'+addUl+'</ul>');
+	
+	console.log(addDiv.find("#admOfficeBtn").text());
+	addDiv.find("#admOfficeBtn").text(obj["관리기관"]);
+	
+	addDiv.find("#goverIndex").val(index);
+	//console.log($(addDiv).html());
+	
+	//멀티체크박스 클릭을 위한 조치
+	var pipe = addDiv.find('#masterRegSelectBox_');
+	pipe.attr({'class':'masterRegSelectBox_'+index,'name' : 'masterRegSelectBox_'+index,'id': 'masterRegSelectBox_'+index});
+	var label1 = pipe.closest('li').find('label').first();
+	label1.attr({'for': 'masterRegSelectBox_'+index,'name' : 'masterRegSelectBox_'+index});
+
+	// 순번 적용
+	addDiv.find('input[readonly]').attr('placeholder', index); // 순번 적용
+	index++; // index 값을 증가시켜 다음 버튼에 적용
+
+	
+	$("#goverUlDiv").append(addDiv);
+
+	// 추가된 모든 행에 대해 순번 재할당
+	updateRowNumbers();
+	
+	// 추가된 행에도 관리기관 목록을 동기화
+	const selectedPmtOffice = $("#masterRegSelectBox02").val();  // 현재 허가관청의 값
+	if (selectedPmtOffice) {
+	    updateGoverAdmOfficeForRow(addDiv, selectedPmtOffice);  // 추가된 행에도 관리기관 목록을 적용
+	}
+}
+
+
 // 특정 행에 대해 관리기관 목록 동기화 함수
 function updateGoverAdmOfficeForRow(row, selectedPmtOffice) {
     const selectedJisa = $("#masterRegSelectBox01").val();  // 지사 선택된 값
@@ -1353,31 +1399,31 @@ function downloadExcel() {
 				 data1.push(rowTitle);
 				for(var i=0;i<uls.length;i++){
 					
-					console.log($(uls).html());
-					var adm_office=uls.find("#goverRegSelectBox03").val();
-					var gover_own_yn=uls.find("#masterRegSelectBox13").val();
-					var rep_flag=uls.find("#masterRegSelectBox_Checkbox02").is(":checked");
-					var addr=uls.find("#addr").val();
-					var pnu=uls.find("#pnu").val();
-					var jimok_text=uls.find("#masterRegSelectBox14").val();
-					var gover_length=uls.find("input[name='gover_length']").val();
-					var gover_area=uls.find("input[name='gover_area']").val();
-					var pipe_overlap_yn=uls.find("#masterRegSelectBox15").val();
+					console.log($(uls[i]).html());
+					var adm_office=$(uls[i]).find("#admOfficeBtn").text();
+					var gover_own_yn=$(uls[i]).find("#goverOwnYnBtn").text();
+					var rep_flag=$(uls[i]).find("input[type='checkbox']").is(":checked");
+					console.log($(uls[i]).find("input[type='checkbox']").parent().html());
+					var addr=$(uls[i]).find("#addr").val();
+					var pnu=$(uls[i]).find("#pnu").val();
+					var jimok_text=$(uls[i]).find("#jimok").val();
+					var gover_length=$(uls[i]).find("input[name='gover_length']").val();
+					var gover_area=$(uls[i]).find("input[name='gover_area']").val();
+					var pipe_overlap_yn=$(uls[i]).find("#pipeOverlapYnBtn").text();
 					var rep_text="";
 					if (rep_flag) rep_text="O";
 					else rep_text="X";
+					console.log(rep_flag);
 					var rowData=[adm_office,gover_own_yn,rep_text,addr,pnu,jimok_text,gover_length,gover_area,pipe_overlap_yn];
 					 
 					console.log(rowData);
 					data1.push(rowData);
 				}
-	
+	console.log(data1);
             // div의 내용을 가져오기
 			// 1. div 안의 텍스트 내용을 가져옵니다.
-			               var name = $('#data-container p:nth-child(1)').text().replace('Name: ', '');
-			               var age = $('#data-container p:nth-child(2)').text().replace('Age: ', '');
-			               var country = $('#data-container p:nth-child(3)').text().replace('Country: ', '');
-						  // var adm_office=
+			
+			             
 			              
 			               // 3. SheetJS에서 워크북 생성
 			               var worksheet = XLSX.utils.aoa_to_sheet(data1);
@@ -1399,12 +1445,105 @@ function downloadExcel() {
 
 	$(document).on("click","#excelUpload",function(){
 		
+		console.log("----------------excelUpload click-------------");
 		
 		
+						 var fileInput = $("#excelPopup_file")[0]; //input file 객체를 가져온다.
+						 var file=fileInput.files[0]
+						console.log(file);
+						if (!file) {
+						                    alert("Please select an Excel file first.");
+						                    return;
+						                }
+					    var i,f;
+					    var headers;
+					    var EXCEL_JSON;
+					
+					  
+					        f = file;
+							
+					        var reader = new FileReader(); //FileReader를 생성한다.         
+					        
+					        //성공적으로 읽기 동작이 완료된 경우 실행되는 이벤트 핸들러를 설정한다.
+					        reader.onload = function(e) {
+					             
+					          // ...엑셀파일을 읽어서 처리하는 로직...
+					           var data = e.target.result; //FileReader 결과 데이터(컨텐츠)를 가져온다.
+					 
+					           //바이너리 형태로 엑셀파일을 읽는다.
+					           var workbook = XLSX.read(data, {type: 'binary'});
+					           var worksheet=workbook.Sheets[workbook.SheetNames[0]];
+					           /* var i=0;
+					           for (var cell in worksheet) {
+					        	    if (worksheet.hasOwnProperty(cell) && cell[0] !== '!') { // 메타데이터 제외
+					        	        worksheet[cell].t = 's'; // 셀 타입을 무조건 텍스트('s')로 설정
+					        		}
+					           } */
+					           
+					           EXCEL_JSON = XLSX.utils.sheet_to_json(worksheet,{raw:false,cellDates:false});
+					           //엑셀파일의 시트 정보를 읽어서 JSON 형태로 변환한다.
+					            workbook.SheetNames.forEach(function(item, index, array) {
+								    headers=get_header_row(workbook.Sheets[item]);
+								   console.log(headers);
+								   /* console.log(item);
+								   console.log(index);
+								   console.log(array);
+								   
+					               EXCEL_JSON = XLSX.utils.sheet_to_json(workbook.Sheets[item]);
+					              console.log(EXCEL_JSON); */
+					              	
+					           });//end. forEach */
+					           
+					           //excel 내용 header와 비교해서 공백이라 안넘어온 header 빈정보 삽입
+					            for(j=0;j<headers.length;j++){
+								  		for(jj=0;jj<EXCEL_JSON.length;jj++){
+											  
+											  if (!EXCEL_JSON[jj].hasOwnProperty(headers[j])){
+												  
+											//	console.log(jj+"="+headers[j]);
+												/* 
+												if (!isDate(EXCEL_JSON[jj].JIBUN)){
+													console.log(jj+":"+EXCEL_JSON[jj].JIBUN);
+												} */
+												EXCEL_JSON[jj][headers[j]]="";  
+											  }
+										  }	
+							   		}
+					           console.log(EXCEL_JSON);
+					
+							   for(var i=0;i<EXCEL_JSON.length;i++){
+							   						
+							   						addRowExcel(EXCEL_JSON[i]);
+							   	}
+					}
+					
+					
+					reader.readAsBinaryString(f);
+					
+					
+					
+					
+				
 		
 	})
 	
-	
+
+	function get_header_row(sheet) {
+	    var headers = [];
+	    var range = XLSX.utils.decode_range(sheet['!ref']);
+	    var C, R = range.s.r; /* start in the first row */
+	    /* walk every column in the range */
+	    for(C = range.s.c; C <= range.e.c; ++C) {
+	        var cell = sheet[XLSX.utils.encode_cell({c:C, r:R})] /* find the cell in the first row */
+
+	        var hdr = "UNKNOWN " + C; // <-- replace with your desired default 
+	        if(cell && cell.t) hdr = XLSX.utils.format_cell(cell);
+
+	        headers.push(hdr);
+	    }
+	    return headers;
+	}
+
 	
 	  //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
 	 const exceluploadPopupOpen = document.getElementById("exceluploadPopup");
@@ -1445,68 +1584,7 @@ function downloadExcel() {
 	      excelPopup_myPcFiles.addEventListener('change', function (e) {
 
 			
-			console.log("start my_file_input");
-				 var files = excelPopup_myPcFiles.files; //input file 객체를 가져온다.
-				 console.log(files);
-			    var i,f;
-			    var headers;
-			    var EXCEL_JSON;
-				console.log("files length:"+files.length);
-			    for (i = 0; i != files.length; ++i) {
-			        f = files[i];
-					console.log(f);
-			        var reader = new FileReader(); //FileReader를 생성한다.         
-			        
-			        //성공적으로 읽기 동작이 완료된 경우 실행되는 이벤트 핸들러를 설정한다.
-			        reader.onload = function(e) {
-			             
-			          // ...엑셀파일을 읽어서 처리하는 로직...
-			           var data = e.target.result; //FileReader 결과 데이터(컨텐츠)를 가져온다.
-			 
-			           //바이너리 형태로 엑셀파일을 읽는다.
-			           var workbook = XLSX.read(data, {type: 'binary'});
-			           var worksheet=workbook.Sheets[workbook.SheetNames[0]];
-			           /* var i=0;
-			           for (var cell in worksheet) {
-			        	    if (worksheet.hasOwnProperty(cell) && cell[0] !== '!') { // 메타데이터 제외
-			        	        worksheet[cell].t = 's'; // 셀 타입을 무조건 텍스트('s')로 설정
-			        		}
-			           } */
-			           
-			           EXCEL_JSON = XLSX.utils.sheet_to_json(worksheet,{raw:false,cellDates:false});
-			           //엑셀파일의 시트 정보를 읽어서 JSON 형태로 변환한다.
-			            workbook.SheetNames.forEach(function(item, index, array) {
-						    headers=get_header_row(workbook.Sheets[item]);
-						   console.log(headers);
-						   /* console.log(item);
-						   console.log(index);
-						   console.log(array);
-						   
-			               EXCEL_JSON = XLSX.utils.sheet_to_json(workbook.Sheets[item]);
-			              console.log(EXCEL_JSON); */
-			              	
-			           });//end. forEach */
-			           
-			           //excel 내용 header와 비교해서 공백이라 안넘어온 header 빈정보 삽입
-			            for(j=0;j<headers.length;j++){
-						  		for(jj=0;jj<EXCEL_JSON.length;jj++){
-									  
-									  if (!EXCEL_JSON[jj].hasOwnProperty(headers[j])){
-										  
-									//	console.log(jj+"="+headers[j]);
-										/* 
-										if (!isDate(EXCEL_JSON[jj].JIBUN)){
-											console.log(jj+":"+EXCEL_JSON[jj].JIBUN);
-										} */
-										EXCEL_JSON[jj][headers[j]]="";  
-									  }
-								  }	
-					   		}
-			           console.log(EXCEL_JSON);
 			
-			
-			}
-		}
 			
 			
 			

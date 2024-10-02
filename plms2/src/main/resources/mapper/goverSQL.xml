@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        GP.gp_gover_no, 
        GP.gp_next_date::date AS next_date, 
        GP.gp_nm,
-       GP.gp_pay_date::date AS pay_date, 
+       GP.gp_pay_date::date AS gp_pay_date, 
        GP.gp_pay_money, 
        GP.gp_pay_way, 
        GP.gp_phone_number,
@@ -594,7 +594,7 @@ SELECT count(*)
 		</if>
 
 
-		AND GM.gm_CANCEL_YN = 'N' OR GM.gm_CANCEL_YN IS NULL
+		AND GM.gm_CANCEL_YN = 'N' OR GM.gm_CANCEL_YN =''
 		
 
 		
@@ -668,7 +668,6 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 		</if>
 		 
 	</select>
-
 
 
 <select id="selectGoverMasterSearchList" resultType="HashMap" parameterType="HashMap">
@@ -785,7 +784,7 @@ SELECT AA.RN AS no
 		</if>
 
 
-		AND GM.gm_CANCEL_YN = 'N' OR GM.gm_CANCEL_YN IS NULL
+		AND GM.gm_CANCEL_YN = 'N' OR GM.gm_CANCEL_YN =''
 					) AA
 LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
                  , S.gp_pay_money as PAY_MONEY
@@ -835,7 +834,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 			AND AA.GOVER_NO LIKE '%${gover_no}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(use_purpos)" >
-			AND aA.USE_PURPOS_PNU = #{use_purpos}
+			AND AA.USE_PURPOS_PNU = #{use_purpos}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pmt_office)" >
 			AND AA.PMT_OFFICE = #{pmt_office}
@@ -861,6 +860,17 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 		</if>
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and AA.juso like '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
+			and (SELECT COUNT(o.address) AS overlap
+			FROM(
+				(
+				SELECT trim(concat(gm.gm_sido_nm,' ',gm.gm_sgg_nm,' ',gm.gm_ri_nm,' ',gm.gm_jibun)) as address
+				FROM gover_master gm 
+				LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
+				where 1=1
+				)
+			) as o  WHERE o.address = r.address GROUP BY o.address ) >1
 		</if>
 	
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
@@ -2152,6 +2162,72 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 		update GOVER_PERMIT
 		set gp_DOCKEY = ''
 		where gp_DOCKEY in (select max(gp_dockey) from GOVER_PERMIT where gp_GOVER_NO = #{GOVERNO} )
+	</update>
+	
+	
+	<select id="selectSysGroupCodeList" resultType="HashMap" parameterType="HashMap">
+		SELECT sc_CODE, sc_CODE_NAME, sc_GROUP_CODE, sc_SORT_ORDER, sc_USE_YN FROM SYS_CODE
+		WHERE sc_GROUP_CODE = sc_CODE
+		ORDER BY sc_GROUP_CODE ASC, sc_SORT_ORDER ASC
+	</select>
+	<select id="selectSysCodeList" resultType="HashMap" parameterType="HashMap">
+			<![CDATA[
+		SELECT sc_CODE, sc_CODE_NAME, sc_GROUP_CODE, sc_SORT_ORDER, sc_USE_YN FROM SYS_CODE 
+		WHERE sc_GROUP_CODE <> sc_CODE
+	 		]]>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(USE_YN)" >
+			AND sc_USE_YN = #{USE_YN}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(GROUP_CODE)" >
+			AND sc_GROUP_CODE = #{GROUP_CODE}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE_NAME)" >
+			AND sc_CODE_NAME LIKE '%'||${CODE_NAME}||'%'
+		</if>
+		ORDER BY sc_GROUP_CODE ASC, sc_SORT_ORDER ASC
+	</select>
+
+	<insert id="insertSysCode" parameterType="HashMap">
+		INSERT INTO SYS_CODE (
+		sc_CODE
+		, sc_GROUP_CODE
+		, sc_CODE_NAME
+		, sc_SORT_ORDER
+		, sc_UPPER_CODE0
+		, sc_UPPER_CODE
+		, sc_USE_YN
+		) VALUES (
+		#{CODE}
+		, #{GROUP_CODE}
+		, #{CODE_NAME}
+		, #{SORT_ORDER}
+		, #{UPPER_CODE0}
+		, #{UPPER_CODE}
+		, 'Y'
+		)
+	</insert>
+
+	<update id="updateSysCode" parameterType="HashMap">
+		<![CDATA[
+UPDATE SYS_CODE 
+   SET sc_CODE = #{CODE}
+     , sc_GROUP_CODE = #{GROUP_CODE}
+     , sc_CODE_NAME = #{CODE_NAME}
+     , sc_SORT_ORDER = #{SORT_ORDER}
+     , sc_UPPER_CODE0 = #{UPPER_CODE0}
+     , sc_UPPER_CODE = #{UPPER_CODE}
+     , sc_USE_YN = #{USE_YN}
+ WHERE sc_CODE = #{CODE} AND sc_GROUP_CODE = #{GROUP_CODE}
+ 		]]>
+	</update>
+
+	<update id="updateSysCodeSortOrder" parameterType="HashMap">
+		<![CDATA[
+UPDATE SYS_CODE 
+   SET sc_SORT_ORDER = sc_SORT_ORDER + 1
+ WHERE sc_GROUP_CODE = #{GROUP_CODE} AND sc_SORT_ORDER >= #{SORT_ORDER}
+   AND sc_SORT_ORDER <> 999
+ 		]]>
 	</update>
 	
 
