@@ -510,7 +510,7 @@
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<button class="customSelectView">선택</button>
+										<button class="customSelectView" id="goverOwnYnBtn">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
@@ -563,7 +563,7 @@
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<button class="customSelectView">선택</button>
+										<button class="customSelectView" id="pipeOverlapYnBtn">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
@@ -637,7 +637,8 @@
 									<section class="customSelectBox">
 										<!-- 버튼에 선택된 값을 표시 -->
 										<button class="customSelectView"
-											th:text="${pnuList[0].gover_own_yn == 'Y' ? '국유지' : '사유지'}">선택</button>
+											th:text="${pnuList[0].gover_own_yn == 'Y' ? '국유지' : '사유지'}"
+											id="goverOwnYnBtn">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
@@ -669,7 +670,7 @@
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<button class="customSelectView" th:text="${pnuList[0].jimok_text}" id="jimok">선택</button>
+										<button class="customSelectView" th:value="${pnuList[0].jimok_text}" th:text="${pnuList[0].jimok_text}" id="jimok">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
@@ -692,7 +693,8 @@
 									<section class="customSelectBox">
 										<!-- 버튼에 선택된 값을 표시 -->
 										<button class="customSelectView"
-											th:text="${pnuList[0].pipe_overlap_yn == 'Y' ? 'Y' : 'N'}">선택</button>
+											th:text="${pnuList[0].pipe_overlap_yn == 'Y' ? 'Y' : 'N'}"
+											id="pipeOverlapYnBtn">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
@@ -764,7 +766,7 @@
 									</div>
 									<section class="customSelectBox">
 										<!-- 버튼에 선택된 값을 표시 -->
-										<button class="customSelectView" th:text="${pnu.gover_own_yn == 'Y' ? '국유지' : '사유지'}">선택</button>
+										<button class="customSelectView" th:text="${pnu.gover_own_yn == 'Y' ? '국유지' : '사유지'}" id="goverOwnYnBtn">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
@@ -796,7 +798,7 @@
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<button class="customSelectView" th:text="${pnu.jimok_text}" id="jimok">선택</button>
+										<button class="customSelectView" th:value="${pnu.jimok_text}" th:text="${pnu.jimok_text}" id="jimok">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
@@ -818,7 +820,7 @@
 									</div>
 									<section class="customSelectBox">
 										<!-- 버튼에 선택된 값을 표시 -->
-										<button class="customSelectView" th:text="${pnu.pipe_overlap_yn == 'Y' ? 'Y' : 'N'}">선택</button>
+										<button class="customSelectView" th:text="${pnu.pipe_overlap_yn == 'Y' ? 'Y' : 'N'}" id="pipeOverlapYnBtn">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
@@ -837,7 +839,7 @@
 							</ul>
 
 							<!-- 숨겨진 템플릿 줄 -->
-							<ul class="contents" id="row-template" style="display: none;">
+							<ul class="contentsHidden" id="row-template" style="display: none;">
 								<!-- 선택 -->
 								<!--<li class="content smallWidth checkboxWrap">
                   <input
@@ -884,7 +886,7 @@
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<button class="customSelectView">선택</button>
+										<button class="customSelectView" id="goverOwnYnBtn">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
@@ -937,7 +939,7 @@
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<button class="customSelectView">선택</button>
+										<button class="customSelectView" id="pipeOverlapYnBtn">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
