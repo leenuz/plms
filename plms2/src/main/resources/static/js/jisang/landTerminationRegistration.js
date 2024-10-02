@@ -445,107 +445,107 @@ $(document).ready(function(){
 });
 
 //저장 버튼 클릭 시 동작 이벤트
-$(document).on("click","#save_btn",function(){
-    console.log($("#menuHiddenSelectBox01_1").val());
-    console.log($("#searchForm").serialize());
+$(document).on("click", "#save_btn", function() {
+	console.log($("#menuHiddenSelectBox01_1").val());
+	console.log($("#searchForm").serialize());
 
-    const jmJisangNo = $(this).attr('idx');
-    const jmIdx = $(this).attr('index');
+	const jmJisangNo = $(this).attr('idx');
+	const jmIdx = $(this).attr('index');
 
-    // 'landTerminationRegistrationCompensation'이라는 name을 가진 라디오 버튼 중에서
-    // 체크된 요소를 선택
-    const selectedRadio = document.querySelector('input[name="landTerminationRegistrationCompensation"]:checked');
-    // 선택된 라디오 버튼이 있으면 그 값을 반환하고, 없으면 null 반환
-    selectedRadio ? selectedRadio.value : null;
+	// 'landTerminationRegistrationCompensation'이라는 name을 가진 라디오 버튼 중에서
+	// 체크된 요소를 선택
+	const selectedRadio = document.querySelector('input[name="landTerminationRegistrationCompensation"]:checked');
+	// 선택된 라디오 버튼이 있으면 그 값을 반환하고, 없으면 null 반환
+	selectedRadio ? selectedRadio.value : null;
 
-    //첨부 서류'
+	//첨부 서류'
 
-    const address = $('#address').attr('placeholder');
-    const address_list = address.split(' ');
+	const address = $('#address').attr('placeholder');
+	const address_list = address.split(' ');
 
-    const formData = {
-        jisa: $('#jisa').attr('placeholder') || '',  // 담당지사
-        yongdo: $('#yongdo').attr('placeholder') || '',  // 용도
-        pipe_name: $('#pipe_name').attr('placeholder') || '',  // 관로명(구간)
-        sun_gubun: $('#sun_gubun').attr('placeholder') || '',  // 단/복선
-        sido_nm: address_list[0] || '',  // 주소1
-        sgg_nm: address_list[1] || '',  // 주소2
-        ri_nm: address_list[2] || '',  // 주소3
-        jibun: address_list[3] || '',  // 주소4
+	const formData = {
+		jisa: $('#jisa').attr('placeholder') || '',  // 담당지사
+		yongdo: $('#yongdo').attr('placeholder') || '',  // 용도
+		pipe_name: $('#pipe_name').attr('placeholder') || '',  // 관로명(구간)
+		sun_gubun: $('#sun_gubun').attr('placeholder') || '',  // 단/복선
+		sido_nm: address_list[0] || '',  // 주소1
+		sgg_nm: address_list[1] || '',  // 주소2
+		ri_nm: address_list[2] || '',  // 주소3
+		jibun: address_list[3] || '',  // 주소4
 
-        jijuk_area: $('#jijuk_area').attr('placeholder') || '',  // 지적면적(m²)
-        gover_own_yn: $('#gover_own_yn').attr('placeholder') || '',  // 국공유지여부
+		jijuk_area: $('#jijuk_area').attr('placeholder') || '',  // 지적면적(m²)
+		gover_own_yn: $('#gover_own_yn').attr('placeholder') || '',  // 국공유지여부
 
-        jasan_no: $('#jasan_no').attr('placeholder') || '',  // 자산분류번호
-        chuideuk_date: $('#chuideuk_date').attr('placeholder') || '',  // 취득일자
-        pyeonib_area: $('#pyeonib_area').attr('placeholder') || '',  // 편입면적(m²)
-        use_state: $('#use_state').attr('placeholder') || '',  // 사용현황
-        deunggi_date: $('#deunggi_date').attr('placeholder') || '',  // 등기일
-        deunggi_no: $('#deunggi_no').attr('placeholder') || '',  // 등기번호
-        deunggiso: $('#deunggiso').attr('placeholder') || '',  // 등기소
-        dosiplan: $('#dosiplan').attr('placeholder') || '',  // 도시계획 결정여부
+		jasan_no: $('#jasan_no').attr('placeholder') || '',  // 자산분류번호
+		chuideuk_date: $('#chuideuk_date').attr('placeholder') || '',  // 취득일자
+		pyeonib_area: $('#pyeonib_area').attr('placeholder') || '',  // 편입면적(m²)
+		use_state: $('#use_state').attr('placeholder') || '',  // 사용현황
+		deunggi_date: $('#deunggi_date').attr('placeholder') || '',  // 등기일
+		deunggi_no: $('#deunggi_no').attr('placeholder') || '',  // 등기번호
+		deunggiso: $('#deunggiso').attr('placeholder') || '',  // 등기소
+		dosiplan: $('#dosiplan').attr('placeholder') || '',  // 도시계획 결정여부
 
-        account_yn: $('.customSelectView').text() || '',  // 회계처리 필요여부
-        cancel_date: $('#cancel_date').val() || '',  // 해지일자
-        chuideuk_money: $('#chuideuk_money').val() || '',  // 취득금액
-        gammoney: $('#gammoney').val() || '',  // 감가삼각충당금
-        remainder_money: $('#remainder_money').val() || '',  // 잔존가액
-        cancel_bosang_yn: selectedRadio ? selectedRadio.value : '',  // 해지보상유무
-        cancel_bosang_money: $('#cancel_bosang_money').val() || '',  // 보상금액
-        cancel_reason: $('#cancel_reason').val() || '',  // 해지사유
-        cancel_comment: $('#cancel_comment').val() || '',  // 검토의견
-        jisang_no: jmJisangNo || '',  // 지상번호
-        jIdx: jmIdx || '',  // 지상 인덱스
-		req_doc_file01:$("#req_doc_file01").val() || '',
-		req_doc_file02:$("#req_doc_file02").val() || '',
-		req_doc_file03:$("#req_doc_file03").val() || '',
-		req_doc_file04:$("#req_doc_file04").val() || '',
-		req_doc_file05:$("#req_doc_file05").val() || '',
-		req_doc_file06:$("#req_doc_file06").val() || '',
-		req_doc_file07:$("#req_doc_file07").val() || '',
-		req_doc_file08:$("#req_doc_file08").val() || '',
-		uploadFiles : uploadFiles
-		
-    };
+		account_yn: $('.customSelectView').text() || '',  // 회계처리 필요여부
+		cancel_date: $('#cancle_date').val() || '',  // 해지일자
+		chuideuk_money: $('#chuideuk_money').val() || '',  // 취득금액
+		gammoney: $('#gammoney').val() || '',  // 감가삼각충당금
+		remainder_money: $('#remainder_money').val() || '',  // 잔존가액
+		cancel_bosang_yn: selectedRadio ? selectedRadio.value : '',  // 해지보상유무
+		cancel_bosang_money: $('#cancle_bosang_money').val() || '',  // 보상금액
+		cancel_reason: $('#cancle_reason').val() || '',  // 해지사유
+		cancel_comment: $('#cancle_comment').val() || '',  // 검토의견
+		jisang_no: jmJisangNo || '',  // 지상번호
+		jIdx: jmIdx || '',  // 지상 인덱스
+		req_doc_file01: $("#req_doc_file01").val() || '',
+		req_doc_file02: $("#req_doc_file02").val() || '',
+		req_doc_file03: $("#req_doc_file03").val() || '',
+		req_doc_file04: $("#req_doc_file04").val() || '',
+		req_doc_file05: $("#req_doc_file05").val() || '',
+		req_doc_file06: $("#req_doc_file06").val() || '',
+		req_doc_file07: $("#req_doc_file07").val() || '',
+		req_doc_file08: $("#req_doc_file08").val() || '',
+		uploadFiles: uploadFiles
+
+	};
 	//해지의 필수 첨부파일은 jisang_req_doc1디비에 담는다
-    // 필수 값 체크
-    let errors = [];
+	// 필수 값 체크
+	let errors = [];
 
-    if (!formData.account_yn) {
-        errors.push('회계처리 필요 여부는 필수입니다.');
-    }
-    if (!formData.cancel_date) {
-        errors.push('해지일자는 필수입니다.');
-    }
-    if (!formData.cancel_bosang_yn) {
-        errors.push('해지보상유무는 필수입니다.');
-    }
-    if (!formData.cancel_bosang_money) {
-        errors.push('보상금액은 필수입니다.');
-    }
-    if (!formData.cancel_reason) {
-        errors.push('해지사유는 필수입니다.');
-    } else if (formData.cancel_reason.length < 10) {
-        errors.push('해지사유는 최소 10자 이상이어야 합니다.');
-    }
-    if (!formData.cancel_comment) {
-        errors.push('검토의견은 필수입니다.');
-    } else if (formData.cancel_comment.length < 10) {
-        errors.push('검토의견은 최소 10자 이상이어야 합니다.');
-    }
+	if (!formData.account_yn) {
+		errors.push('회계처리 필요 여부는 필수입니다.');
+	}
+	if (!formData.cancel_date) {
+		errors.push('해지일자는 필수입니다.');
+	}
+	if (!formData.cancel_bosang_yn) {
+		errors.push('해지보상유무는 필수입니다.');
+	}
+	if (!formData.cancel_bosang_money) {
+		errors.push('보상금액은 필수입니다.');
+	}
+	if (!formData.cancel_reason) {
+		errors.push('해지사유는 필수입니다.');
+	} else if (formData.cancel_reason.length < 10) {
+		errors.push('해지사유는 최소 10자 이상이어야 합니다.');
+	}
+	if (!formData.cancel_comment) {
+		errors.push('검토의견은 필수입니다.');
+	} else if (formData.cancel_comment.length < 10) {
+		errors.push('검토의견은 최소 10자 이상이어야 합니다.');
+	}
 
-    // 에러가 있을 경우 처리 (예: 에러 메시지 출력)
-    if (errors.length > 0) {
-        alert(errors.join('\n')); // 에러 메시지들을 알림창으로 표시
-        return null; // 필수 값이 누락된 경우 null 반환
-    }
+	// 에러가 있을 경우 처리 (예: 에러 메시지 출력)
+	if (errors.length > 0) {
+		alert(errors.join('\n')); // 에러 메시지들을 알림창으로 표시
+		return null; // 필수 값이 누락된 경우 null 반환
+	}
 
-    console.log("----------저장 Object------------");
-    console.log(formData);
+	console.log("----------저장 Object------------");
+	console.log(formData);
 
-    landTerminationSave(formData)
-    console.log("-----------------------");
-    })
+	landTerminationSave(formData)
+	console.log("-----------------------");
+})
 
 //상신 버튼 클릭 시 동작 이벤트
 $(document).on("click","#submit_btn",function(){
