@@ -826,19 +826,21 @@ $(document).on('change', 'input[name="togiBunhalCancelYn"]', function(event) {
 
         if (checkbox.checked) {
             // 체크박스가 선택된 경우
-            var bunhalAddress = cancelInfoUl.querySelector('input#bunhalAddres').value;
-            const tojiSelect = cancelInfoUl.querySelector('button#hiddenBtn').textContent.trim();
+            //var bunhalAddress = cancelInfoUl.querySelector('input#bunhalAddres').value;
+            //const tojiSelect = cancelInfoUl.querySelector('button#hiddenBtn').textContent.trim();
+            
+			let bunhalAddress = $(this).parent().parent().find('input[name="togiBunhalAddr"]').val();
+			//let tojiSelect = $(this).parent().parent().find('#hiddenBtn').val();
+			let tojiType = $(this).parent().parent().find('select[name="togiBunhalTogiType"]').val();
+            let addUl=$("#cancelInfoHiddenUl").html();
 
-            var addUl=$("#cancelInfoHiddenUl").html();
-
-            var addDiv = $('<ul class="contents" id="cancelInfoUl">'+addUl+'</ul>');
+            let addDiv = $('<ul class="contents" id="cancelInfoUl">'+addUl+'</ul>');
             addDiv.attr('id', 'terminateIndex__' + terminateIndex); // ul 태그에 전역 변수 terminateIndex id 부여
 
             // 체크박스에도 terminateIndex 저장
             $(checkbox).attr('data-terminate-index', terminateIndex);
 
             addDiv.find("bunhalIndex").val(index);
-            console.log($(addDiv).html());
 
             if(!bunhalAddress){
                 bunhalAddress = cancelInfoUl.querySelector('input#bunhalAddres').getAttribute('placeholder')
@@ -847,7 +849,7 @@ $(document).on('change', 'input[name="togiBunhalCancelYn"]', function(event) {
             //해지 여부 체크된 주소 입력
             addDiv.find('input#cancelAddress').val(bunhalAddress);
             //해지 여부 체크된 토지유형 입력
-//            addDiv.find('input#cancelTojiType').val(tojiSelect);
+            addDiv.find('input#cancelTojiType').val(tojiType);
 
             $("#cancelInfoDiv").append(addDiv);
             terminateIndex++;  // 다음에 추가될 요소의 id가 고유하게 증가
