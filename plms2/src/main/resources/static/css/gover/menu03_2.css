@@ -901,7 +901,7 @@ div.dt-filter-spacer {
   background-size: 11px;
   background-repeat: no-repeat;
   background-position: 123px center;
-  text-align: left;
+  /*text-align: left;*/
   margin-right: 10px;
   width: 159px;
   height: 38px;

@@ -194,8 +194,12 @@ function showModPopup(idx) {
             if (rt.length > 0) {
 				for (let i = 0; i < rt.length; i++) {
 					let info = rt[i];
-					contentHtml += `<ul class="approvehistory_content">`;
-			        contentHtml += `<li class="approvehistory_title_1">2024-04-01</li>`;
+					let infoDate = new Date(info.wdate);
+						let year = infoDate.getFullYear().toString().padStart(2, '0');
+						let month = (infoDate.getMonth() + 1).toString().padStart(2, '0');
+						let date = infoDate.getDate().toString().padStart(2, '0');
+						contentHtml += `<ul class="approvehistory_content">`;
+				        contentHtml += `<li class="approvehistory_title_1">${year}-${month}-${date}</li>`;
 			        contentHtml += `<li class="approvehistory_title_2">${info.gubun}</li>`;
 			        contentHtml += `<li class="approvehistory_title_4">${info.content}</li>`;
 			        contentHtml += `</ul>`;	
@@ -223,7 +227,7 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 	
 	var idx = $(this).parent().parent().parent().parent().find("#idx").val();
 	console.log("idx:" + idx);
-	
+	let row = $(this).parent().parent().parent().parent().index();
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
 
 	/* let orgAdminRegisterPath = '/gover/orgAdminPopupAccept';
@@ -260,6 +264,43 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 		const popupOpen = document.querySelector("#approve_Popup");
 		console.log($(popupOpen).html());
 		$(popupOpen).addClass("active");
+		
+		let object = {'adm_seq': orgAdminTargetInfo[row].adm_seq};
+		$.ajax({
+	        url: "/gover/getGoverOfficeMngHistoryList", // 허가관청 목록을 가져오는 API
+	        data: JSON.stringify(object),
+	        type: "POST",
+	        dataType: "json",
+	        contentType: "application/json;",
+	        success: function (rt) {
+	            console.log(rt.length);
+	            let contentHtml = '';
+	            $('#approve_popup_wrap').empty();
+	            if (rt.length > 0) {
+					for (let i = 0; i < rt.length; i++) {
+						let info = rt[i];
+						let infoDate = new Date(info.wdate);
+						let year = infoDate.getFullYear().toString().padStart(2, '0');
+						let month = (infoDate.getMonth() + 1).toString().padStart(2, '0');
+						let date = infoDate.getDate().toString().padStart(2, '0');
+						contentHtml += `<ul class="approvehistory_content">`;
+				        contentHtml += `<li class="approvehistory_title_1">${year}-${month}-${date}</li>`;
+				        contentHtml += `<li class="approvehistory_title_2">${info.gubun}</li>`;
+				        contentHtml += `<li class="approvehistory_title_4">${info.content}</li>`;
+				        contentHtml += `</ul>`;	
+					}
+				} else {
+					contentHtml += `<ul class="approvehistory_content" style="grid-template-columns: auto">`;
+			        contentHtml += `<li style="text-align: center;">조회된 데이터가 없습니다.</li>`;
+			        contentHtml += `</ul>`;	
+				}
+	            $('#approve_popup_wrap').empty().html(contentHtml);
+			        
+	        },
+	        error: function (jqXHR, textStatus, errorThrown) {
+	            console.error("Error: ", textStatus, errorThrown);
+	        }
+	    });
 		// popupOpen.classList.add("active");
 	});
 })
@@ -281,6 +322,7 @@ $(document).on("click", "#approve_Popup .approveBtn", function() {
         type: 'POST',
         data: { idx: parseInt(idx, 10) },  // 정수로 변환
         success: function(result) {
+			loadData();
             if (result === "Success") {
                 alert("승인이 완료되었습니다.");
                 $("#approve_Popup").removeClass("active");
@@ -443,6 +485,7 @@ registerApprovePopEvet = () => {
 						success: function(response) {
 							loadingHide();
 							console.log(response);
+							loadData();
 							if (response.success == "Y") {
 								console.log("response.success Y");
 								alert(response.message);
@@ -525,6 +568,7 @@ modApprovePopEvet = () => {
 						success: function(response) {
 							loadingHide();
 							console.log(response);
+							loadData();
 							if (response.success == "Y") {
 								console.log("response.success Y");
 								alert(response.message);
@@ -874,12 +918,12 @@ $(document).on("click", "#mPmtOfficeUl li", function () {
 function deleteOrgAdmin(idx) {
 	
 	let seq = orgAdminTargetInfo[idx].adm_seq; 
-	let object = {'adm_seq': seq, 'jisa': '', 'pmt_office': '', 'adm_office': ''};
+	let object = {'adm_seq': seq};
 	
 	object.gubun = "delete";
 	if(confirm('삭제하시겠습니까?')) {
 		$.ajax({
-			url: "/gover/insertOfficeMng",
+			url: "/gover/deleteOfficeMng",
 			type: 'POST',
 			contentType: "application/json",
 			data: JSON.stringify(object),
@@ -890,11 +934,10 @@ function deleteOrgAdmin(idx) {
 			},
 			success: function(response) {
 				loadingHide();
-				
+				loadData();
 				if (response.success == "Y") {
 					console.log("response.success Y");
 					alert(response.message);
-					
 				} else {
 					console.log("response.success N");
 					alert(response.message);

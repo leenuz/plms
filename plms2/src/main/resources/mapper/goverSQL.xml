@@ -2164,6 +2164,7 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 		where gp_DOCKEY in (select max(gp_dockey) from GOVER_PERMIT where gp_GOVER_NO = #{GOVERNO} )
 	</update>
 	
+
 	
 	<select id="selectSysGroupCodeList" resultType="HashMap" parameterType="HashMap">
 		SELECT sc_CODE, sc_CODE_NAME, sc_GROUP_CODE, sc_SORT_ORDER, sc_USE_YN FROM SYS_CODE
@@ -2230,5 +2231,11 @@ UPDATE SYS_CODE
  		]]>
 	</update>
 	
+
+
+	<delete id="deleteOfficeMng" parameterType="HashMap">
+	    delete from SYS_OFFICEMNG  
+	    where so_adm_seq= #{ADM_SEQ, jdbcType=BIGINT}
+	</delete>
 
 </mapper>

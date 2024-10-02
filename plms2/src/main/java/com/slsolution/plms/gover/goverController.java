@@ -2318,10 +2318,11 @@ public class goverController {
 			String fileseq = requestParamsObj.has("fileseq")?requestParamsObj.getString("fileseq"):""; // 파일 seq
 			
 			//String modifyReason1 = requestParamsObj.has("modifyReason1")?requestParamsObj.getString("modifyReason1"):""; // 변경이력-기본정보
-			String modifyReason2 = requestParamsObj.has("modifyReason2")?requestParamsObj.getString("modifyReason2"):""; // 변경이력-소속토지정보
+			//String modifyReason2 = requestParamsObj.has("modifyReason2")?requestParamsObj.getString("modifyReason2"):""; // 변경이력-소속토지정보
 			String modifyReason3 = requestParamsObj.has("modifyReason3")?requestParamsObj.getString("modifyReason3"):""; // 변경이력-허가기본정보
 			String modifyReason4 = requestParamsObj.has("modifyReason4")?requestParamsObj.getString("modifyReason4"):""; // 변경이력-허가관리
 			String modifyReason1 = requestParamsObj.optString("modifyReason1", ""); // 변경이력 - 기본정보
+			String modifyReason2 = requestParamsObj.optString("modifyReason2", ""); // 변경이력 - 소속토지정보
 			String modifyReason5 = requestParamsObj.optString("modifyReason5", ""); // 변경이력 - 허가관청
 									// 및
 									// 납부현황
@@ -2444,7 +2445,7 @@ public class goverController {
 					if (!modifyReason2.equals("")) {
 						params.put("GUBUN", "소속 토지정보");
 						params.put("CONT", modifyReason2);
-						mainService.InsertQuery("goversQL.insertGoverModifyHistory", params);
+						mainService.InsertQuery("goverSQL.insertGoverModifyHistory", params);
 					}
 					if (!modifyReason3.equals("")) {
 						params.put("GUBUN", "허가 정보 및 납부 현황");
@@ -2973,10 +2974,7 @@ log.info("params:"+params);
 		        	mainService.UpdateQuery("goverSQL.updateOfficeMng", params); // 기본정보 저장
 		        	msgType = "수정";
 		        }
-		        else if ("delete".equals(GUBUN)) {
-		        	mainService.UpdateQuery("goverSQL.deleteOfficeMng", params); // 기본정보 저장
-		        	msgType = "삭제";
-		        } else {
+		        else {
 		        	mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보 저장
 		        	msgType = "등록";
 		        }
@@ -2988,8 +2986,6 @@ log.info("params:"+params);
 		            params.put("history_gubun", "수정");
 		            String reason="";
 		            params.put("CONT", reason);
-		        } else if ("delete".equals(GUBUN)) {
-		        	
 		        } else {
 		            params.put("history_gubun", "신규등록");
 		            String reason="관리지사 = "+JISA+", 허가관청 = "+PMT_OFFICE+", 관리기관 = "+ADM_OFFICE;
@@ -3502,6 +3498,7 @@ log.info("params:"+params);
 			return ResponseEntity.ok(historyList);
 		}
 		
+
 		@PostMapping(path="/selectSysCodeList")
 		public void selectSysCodeList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			ArrayList list = new ArrayList();
@@ -3660,5 +3657,35 @@ log.info("params:"+params);
 			response.setContentType("application/json");
 			response.getWriter().print(jo);
 			response.getWriter().flush();
+
+		
+		@PostMapping(path = "/deleteOfficeMng")
+		@ResponseBody  // JSON 응답을 위해 추가
+		public HashMap<String, Object> deleteOfficeMng(HttpServletRequest request) {
+			HashMap<String, Object> responseMap = new HashMap<>();
+		    String msgType = "";
+		    String str_result = "";
+		    try {
+		        String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		        JSONObject requestParamsObj = new JSONObject(requestParams);
+		        log.info("requestParams:" + requestParams);
+
+		        HashMap<String, Object> params = new HashMap<>();
+		        String ADM_SEQ = requestParamsObj.getString("adm_seq");
+
+		        params.put("ADM_SEQ", Long.parseLong(ADM_SEQ));
+	        	mainService.UpdateQuery("goverSQL.deleteOfficeMng", params); // 기본정보 저장
+
+		        responseMap.put("success", "Y");
+		        responseMap.put("message", "삭제 성공");
+		    } catch (Exception e) {
+		        log.error("Error during insertOfficeMng", e);
+		        str_result = "N";
+		        responseMap.put("success", "N");
+		        responseMap.put("message", "삭제 실패");
+		    }
+
+		    return responseMap; 
+
 		}
 }

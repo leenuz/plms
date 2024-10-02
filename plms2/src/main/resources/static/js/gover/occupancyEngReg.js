@@ -13,8 +13,17 @@ $(document).on("click","#saveBtn",function(){
 	    for (var i = 0; i < formSerializeArray.length; i++) { 
 	        object[formSerializeArray[i]['name']] = formSerializeArray[i]['value']; // 배열의 각 항목을 객체로 변환
 	    }
+	    
+		if(!object.cancleDate.trim()) {
+			alert('해지일을 선택해주세요.');
+			return;
+		}
 		
-		
+		if(!object.userName.trim()) {
+			alert('담당자를 입력해주세요.');
+			$('#saveForm input[name="userName"]').val('').focus();
+			return;
+		}
 		
 		console.log(object);
 		
@@ -39,6 +48,7 @@ $(document).on("click","#saveBtn",function(){
 						console.log("response.success Y");
 						//console.log("response.resultData length:"+response.resultData.length);
 						alert("정상적으로 등록 되었습니다.");
+						history.back();
 						/*$("#popup_bg").show();
 						$("#popup").show(500);
 						//$("#addrPopupLayer tbody td").remove();
@@ -46,6 +56,7 @@ $(document).on("click","#saveBtn",function(){
 							$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
 						}*/
 					}
+					
 					else {
 						console.log("response.success N");
 					}
