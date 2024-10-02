@@ -447,7 +447,7 @@ SELECT *
                        , JM.jm_PYEONIB_AREA + COALESCE((SELECT SUM(S.jm_PYEONIB_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS PYEONIB_AREA
                        , JM.jm_permitted_yn as PERMITTED_YN 
                        , JM.jm_addrcode as ADDRCODE 
-                       , JM.jm_cancle_yn as CANCEL_YN
+                       , JM.jm_cancel_yn as CANCEL_YN
                        , JS.js_souja_name as SOUJA_NAME
                        , (
                     SELECT COUNT(*) - 1
@@ -480,7 +480,7 @@ SELECT *
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
                 ) AS APPROVAL_STATUS
                   ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
-                  ,jm.jm_cancle_date AS cancel_date
+                  ,jm.jm_cancel_date AS cancel_date
                   FROM JISANG_MASTER       JM
                   LEFT OUTER JOIN (
                     SELECT *
@@ -502,8 +502,8 @@ SELECT *
                   LEFT OUTER JOIN JISANG_MASTER_TMP   JMT ON JM.jm_JISANG_NO = JMT.jmt_JISANG_NO
                   LEFT OUTER JOIN JISANG_MERGE_TMP    JHT ON JM.jm_JISANG_NO = JHT.jmt_JISANG_NO
                  WHERE 1 = 1
-                   AND ( JM.jm_CANCLE_YN =''
-                    OR JM.jm_CANCLE_YN = 'N' )
+                   AND ( JM.jm_CANCEL_YN =''
+                    OR JM.jm_CANCEL_YN = 'N' )
 				<if test="PAGE_GUBUN != null and PAGE_GUBUN != ''">
 				    <if test="PAGE_GUBUN != '1'">
 				        AND JM.jm_SAVE_STATUS = '승인'
@@ -632,7 +632,7 @@ SELECT count(*)
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
                 ) AS APPROVAL_STATUS
                   ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
-                  ,jm.jm_cancle_date AS cancle_date
+                  ,jm.jm_cancel_date AS cancle_date
                   FROM JISANG_MASTER       JM
                   LEFT OUTER JOIN (
                     SELECT *
@@ -654,8 +654,8 @@ SELECT count(*)
                   LEFT OUTER JOIN JISANG_MASTER_TMP   JMT ON JM.jm_JISANG_NO = JMT.jmt_JISANG_NO
                   LEFT OUTER JOIN JISANG_MERGE_TMP    JHT ON JM.jm_JISANG_NO = JHT.jmt_JISANG_NO
                  WHERE 1 = 1
-                   AND ( JM.jm_CANCLE_YN IS NULL
-                    OR JM.jm_CANCLE_YN != 'Y' )
+                   AND ( JM.jm_CANCEL_YN IS NULL
+                    OR JM.jm_CANCEL_YN != 'Y' )
 		<if test="PAGE_GUBUN != null and PAGE_GUBUN != ''">
 		    <if test="PAGE_GUBUN != '1'">
 		        AND JM.jm_SAVE_STATUS = '승인'
@@ -753,7 +753,7 @@ SELECT *
                        , JM.jm_PYEONIB_AREA + COALESCE((SELECT SUM(S.jm_PYEONIB_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS PYEONIB_AREA
                        , JM.jm_permitted_yn as PERMITTED_YN 
                        , JM.jm_addrcode as ADDRCODE 
-                       , JM.jm_cancle_yn as CANCEL_YN
+                       , JM.jm_cancel_yn as CANCEL_YN
                        , JS.js_souja_name as SOUJA_NAME
                        , (
                     SELECT COUNT(*) - 1
@@ -786,7 +786,7 @@ SELECT *
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
                 ) AS APPROVAL_STATUS
                   ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
-                  ,jm.jm_cancle_date AS cancel_date
+                  ,jm.jm_cancel_date AS cancel_date
                   FROM JISANG_MASTER       JM
                   LEFT OUTER JOIN (
                     SELECT *
@@ -936,7 +936,7 @@ SELECT count(*)
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
                 ) AS APPROVAL_STATUS
                   ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
-                  ,jm.jm_cancle_date AS cancel_date
+                  ,jm.jm_cancel_date AS cancel_date
                   FROM JISANG_MASTER       JM
                   LEFT OUTER JOIN (
                     SELECT *
@@ -1547,7 +1547,7 @@ SELECT count(*)
 		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
 		COALESCE('', '') AS gover_date,
 		jm.jm_jasan_money AS jasan_money,
-		jm.jm_cancle_yn AS cancel_yn,
+		jm.jm_cancel_yn AS cancel_yn,
 		jm.jm_manage_yn AS manage_yn,
 		jm.jm_dosiplan AS dosiplan,
 		jb.jb_yongdo AS yongdo,
@@ -2755,16 +2755,16 @@ FROM jisang_permit_master
 	
 	<update id="insertJisangTerminationAdd" parameterType="HashMap">
 		UPDATE jisang_master SET
-		jm_cancle_bosang_money = #{CANCLE_BOSANG_MONEY}
-		,jm_cancle_bosang_yn = #{CANCLE_YES}
-		,jm_cancle_date = TO_DATE(#{STARTDAY},'YYYYMMDDHH24MISS')
+		jm_cancel_bosang_money = #{CANCLE_BOSANG_MONEY}
+		,jm_cancel_bosang_yn = #{CANCLE_YES}
+		,jm_cancel_date = TO_DATE(#{STARTDAY},'YYYYMMDDHH24MISS')
 		,jm_chuideuk_money = #{CHUIDEUKMONEY}
 		,jm_gammoney = #{GAMMONEY}
 		,jm_remainder_money = #{REMAINDERMONEY}
-		,jm_cancle_empcd = #{EMPCD}
-		,jm_cancle_name = #{NAME}
-		,jm_cancle_reason = #{CANCLE_REASON}
-		,jm_cancle_comment = #{CANCLE_COMMENT}
+		,jm_cancel_empcd = #{EMPCD}
+		,jm_cancel_name = #{NAME}
+		,jm_cancel_reason = #{CANCLE_REASON}
+		,jm_cancel_comment = #{CANCLE_COMMENT}
 		WHERE jm_jisang_no = #{JISANGNO}
 	</update>
 	
@@ -3354,16 +3354,16 @@ DELETE from POTENTIAL_ISSUE
 	
 	<update id="insertJisangTerminationTemp" parameterType="HashMap">
 		UPDATE JISANG_MASTER SET
-		jm_CANCLE_BOSANG_MONEY = #{CANCLE_BOSANG_MONEY}
-		,jm_CANCLE_BOSANG_YN = #{CANCLE_YES}
-		,jm_CANCLE_DATE = TO_DATE(#{STARTDAY},'YYYYMMDDHH24MISS')
+		jm_CANCEL_BOSANG_MONEY = #{CANCLE_BOSANG_MONEY}
+		,jm_CANCEL_BOSANG_YN = #{CANCLE_YES}
+		,jm_CANCEL_DATE = TO_DATE(#{STARTDAY},'YYYYMMDDHH24MISS')
 		,jm_CHUIDEUK_MONEY = #{CHUIDEUKMONEY}
 		,jm_GAMMONEY = #{GAMMONEY}
 		,jm_REMAINDER_MONEY = #{REMAINDERMONEY}
-		,jm_CANCLE_EMPCD = #{EMPCD}
-		,jm_CANCLE_NAME = #{NAME}
-		,jm_CANCLE_REASON = #{CANCLE_REASON}
-		,jm_CANCLE_COMMENT = #{CANCLE_COMMENT}
+		,jm_CANCEL_EMPCD = #{EMPCD}
+		,jm_CANCEL_NAME = #{NAME}
+		,jm_CANCEL_REASON = #{CANCLE_REASON}
+		,jm_CANCEL_COMMENT = #{CANCLE_COMMENT}
 		WHERE JISANG_NO = #{JISANGNO}
 	</update>
 	<select id="selectJisangPmtNextNo" resultType="HashMap" parameterType="HashMap">
