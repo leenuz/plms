@@ -1336,6 +1336,9 @@ SELECT count(*)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
 		and jm.jm_emd_nm=#{emd_nm}
 		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			and jm.jm_jibun=#{jibun}
+		</if>
 		
 		
 		

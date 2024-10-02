@@ -8,17 +8,22 @@ const getUlCountInContentsBox = (contentsBoxElement) => {
 }
 
 // 대상토지 click 이벤트
-const usePermitEditInfoAddBtnEvent01 = () => {
 
-    const infoContentsDetailBox = document.querySelector('#usePermitEdit .targetLand .contWrap');
+ const infoContentsDetailBox = document.querySelector('#usePermitEdit .targetLand .contWrap');
     const infoContentsBox = infoContentsDetailBox.querySelector('.contentsBox');
     const infoAddBtn = infoContentsDetailBox.querySelectorAll('.addBtn');
     const infoContents = infoContentsDetailBox.querySelectorAll('.contents');
     const infoTitles = infoContentsDetailBox.querySelector('.titles');
 
+const contentsBoxElement = document.querySelector('#togiDiv .contentsBox');
+let index = getUlCountInContentsBox(contentsBoxElement);
+
+const usePermitEditInfoAddBtnEvent01 = () => {
+
+
+
     infoContentsBox.addEventListener('click', function (event) {
-         const contentsBoxElement = document.querySelector('#togiDiv .contentsBox');
-         const index = getUlCountInContentsBox(contentsBoxElement);
+
 
         // 버튼 클릭시 추가되게
         if (event.target.classList.contains('addBtn')) {
@@ -43,6 +48,8 @@ const usePermitEditInfoAddBtnEvent01 = () => {
                    addressInput.id = 'address_'+index;
                    addressInput.name = 'address_'+index;
                    addressInput.type = 'text';
+                   addressInput.readOnly = true;
+                   addressInput.classList.add('notWriteInput');
 
                    // div에 input 넣기
 
@@ -53,6 +60,7 @@ const usePermitEditInfoAddBtnEvent01 = () => {
 
                    const addressBtn = document.createElement('button');
                    addressBtn.classList.add('searchAddressBtn');
+                    addressBtn.classList.add('addrSearchBtn');
 
                    addressBtn.textContent = '검색';
                     addressBtn.id= index;
@@ -81,7 +89,7 @@ const usePermitEditInfoAddBtnEvent01 = () => {
                        infoInput.readOnly = true;
                         infoInput.classList.add('notWriteInput');
                     }else if(i==4){
-                        infoInput.name="serArea_" + index;
+                        infoInput.name="setArea_" + index;
                        infoInput.readOnly = true;
                         infoInput.classList.add('notWriteInput');
                     }else if(i==5){
@@ -103,10 +111,11 @@ const usePermitEditInfoAddBtnEvent01 = () => {
                     const infoInput = document.createElement('input');
                     infoInput.type = 'text';
                     infoLi.appendChild(infoInput);
-                    infoInput.readOnly = true;
-                    infoInput.classList.add('notWriteInput');
+
                     if(i==7){
                         infoInput.name="soyuja_" + index;
+                         infoInput.readOnly = true;
+                    infoInput.classList.add('notWriteInput');
                     }else{
                         infoInput.name="pmtUser_" + index;
                     }
@@ -138,7 +147,7 @@ const usePermitEditInfoAddBtnEvent01 = () => {
                 infoUl.appendChild(infoLi);
                 infoContentsBox.appendChild(infoUl);
             }
-
+            index++;
         }
         // 삭제 버튼 누를 때
         if (event.target.classList.contains('delBtn')) {
@@ -154,25 +163,15 @@ usePermitEditInfoAddBtnEvent01();
 
 
 /* 주소 검색 */
-$(document).on("click",".searchAddressBtn",function(){
-                          const clickedButtonId = $(this).attr('id');
-//                          var address = $('#address_'+clickedButtonId).val().trim();
-
-//   $.ajax({
-//				   	   	  url: "/togi/getTogiJIjukSelect",
-//				   	   	  type: "POST",
-//				   	   	  data: formSerializeArray,
-//				   	   })
-//				   	   .done(function (fragment) {
-//				   	      $('#searchResultPopDiv').replaceWith(fragment);
-						  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
-						  	   $(popupOpen).addClass("open");
-						  	   popupOpen.classList.add("active");
-                                $('.resultSelectBtn').attr('data-index', clickedButtonId);
-                           	    $('.saveBtn').attr('data-index', clickedButtonId);
-
-// 	                       });
-	});
+//   주소 검색
+$(document).on("click",".addrSearchBtn",function(){
+		 const popupOpen = document.querySelector("#land_searchResultsPopup .popupWrap");
+         const clickedButtonId = $(this).attr('id');
+		 $(popupOpen).addClass("open");
+		 $(popupOpen).addClass("active");
+		   $('.addParentBtn').attr('data-index', clickedButtonId);
+								  	  // popupOpen.classList.add("active");
+})
 
 $(document).on("click",".topCloseBtn",function(){
 
@@ -185,3 +184,542 @@ $(document).on("click","#popupCloseBtn",function(){
 	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
 	$(".popupWrap").removeClass("active");
 });
+
+
+const landcreatePopCustomLiResult = () => {
+        // hiddenSelectBox와 PopupCustomSelectBox를 묶는 큰 wrap
+        const popSelectWrapItems = document.querySelectorAll(
+          "#land_searchResultsPopup .popSelectWrap"
+        );
+
+        popSelectWrapItems.forEach((contentItem) => {
+          // 그 안에 있는 select를 선택
+          const nowIssueSelectBox = contentItem.querySelector("select");
+          // select가 없으면 return
+          if (!nowIssueSelectBox) return;
+
+          const popCustomSelectBox = contentItem.querySelector(
+            ".PopupCustomSelectBox"
+          );
+          const popCustomSelectBtns = popCustomSelectBox.querySelector(
+            ".PopupCustomSelectBtns"
+          );
+
+          for (let i = 0; i < nowIssueSelectBox.length; i++) {
+            const optionValue = nowIssueSelectBox.options[i].text;
+            const li = document.createElement("li");
+            const button = document.createElement("button");
+            button.classList.add("PopupMoreSelectBtn");
+            button.type = "button";
+            button.textContent = optionValue;
+            li.appendChild(button);
+            popCustomSelectBtns.appendChild(li);
+          }
+        });
+      };
+
+     landcreatePopCustomLiResult();
+
+      // 팝업 select click 시 .PopupCustomSelectBtns 나오게
+
+      const customSelectView = document.querySelectorAll(
+        "#land_searchResultsPopup .PopupCustomSelectView"
+      );
+
+      customSelectView.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          btn.classList.toggle("active");
+          if (btn.nextElementSibling) {
+            btn.nextElementSibling.classList.toggle("active");
+          }
+        });
+      });
+
+      // 대분류, 중분류, 소분류 안에 button click 했을 때 해당 내용으로 바뀌게하기
+/*
+      const PopupMoreSelectBtn = document.querySelectorAll(
+        "#land_searchResultsPopup .PopupMoreSelectBtn"
+      );
+
+      PopupMoreSelectBtn.forEach((moreBtn) => {
+        moreBtn.addEventListener("click", function () {
+          var moreBtnText = moreBtn.innerText;
+          console.log(moreBtnText);
+          const parentMoreBtn = moreBtn.closest(".PopupCustomSelectBtns");
+          const editViewBtn = parentMoreBtn.previousElementSibling;
+
+          while (editViewBtn.firstChild) {
+            editViewBtn.removeChild(editViewBtn.firstChild);
+          }
+
+          const textNode = document.createTextNode(moreBtnText);
+          editViewBtn.appendChild(textNode);
+
+          editViewBtn.classList.remove("active");
+          parentMoreBtn.classList.remove("active");
+
+          // 선택한 걸 select의 value값으로 변경하기
+
+          // 팝업은 popSelectWrap로 묶는다
+          const nearByContent = moreBtn.closest(".popSelectWrap");
+          const nearBySelectBox = nearByContent.querySelector("select");
+		  console.log("----------nearBySelectBox---------------");
+		  console.log(nearBySelectBox);
+		  console.log(moreBtn.textContent);
+		  $(nearBySelectBox).val(moreBtn.textContent);
+          nearBySelectBox.value = moreBtn.textContent;
+
+		  $(nearBySelectBox).trigger("change");
+		  console.log($("#sido").val());
+		 // nearBySelectBox.value = moreBtn.textContent;
+          console.log(`Selected value: ${nearBySelectBox.value}`);
+        });
+      });
+*/
+
+function loadCustomLiLandRegist(ele) {
+
+
+	var thisContent = ele.parent().parent().find('select');
+
+	const customSelectBox = ele.closest('.PopupCustomSelectBox');
+
+	$(customSelectBox).find("li").remove();
+	var customSelectBtns = customSelectBox.find('.PopupCustomSelectBtns');
+
+	var optList=thisContent[0];
+
+	for (let i = 0; i < optList.length; i++) {
+		const optionValue = optList.options[i].value;
+
+		const li = document.createElement('li');
+
+		            const button = document.createElement('button');
+		            button.classList.add('PopupMoreSelectBtn');
+		            button.type = 'button';
+					if (optionValue=="") button.textContent="전체";
+		            else button.textContent = optionValue;
+
+		            li.appendChild(button);
+		            $(customSelectBtns).append(li);
+
+	}
+}
+
+
+$(document).on("click",".PopupMoreSelectBtn",function(){
+	var moreSelectBtnText = this.innerText;
+	const parentMoreSelectBtn = this.closest('.PopupCustomSelectBtns')
+	       const EditCustomViewBtn = parentMoreSelectBtn.previousElementSibling;
+
+	       while (EditCustomViewBtn.firstChild) {
+	           EditCustomViewBtn.removeChild(EditCustomViewBtn.firstChild);
+	       }
+
+	       // 새로운 텍스트 노드를 추가합니다.
+	       const textNode = document.createTextNode(moreSelectBtnText);
+	       EditCustomViewBtn.appendChild(textNode);
+
+	       EditCustomViewBtn.classList.remove('active')
+	       parentMoreSelectBtn.classList.remove('active')
+
+	       // 선택한 걸 select의 value값으로 변경하기
+	       const nearByContent = this.closest('.selectContentArea');
+	       const nearBySelectBox = nearByContent.querySelector('select');
+		   		$(nearBySelectBox).val(this.textContent);
+		   		$(nearBySelectBox).trigger("change");
+		   	       nearBySelectBox.value = this.textContent;
+
+});
+
+$(document).on("click",".addParentBtn",function(){
+
+  const checkboxes = document.querySelectorAll('input[name="chk"]:checked'); // 체크된 체크박스만 선택
+
+    var id = $(this).attr('data-index');
+    console.log(id);
+    checkboxes.forEach((checkbox,checkno) => {
+            var jusoInfo = checkbox.parentNode.parentNode;
+             const address = jusoInfo.querySelector('input#popupAddress').value + " " +  jusoInfo.querySelector('input#jibun').value ;
+             const jimok = jusoInfo.querySelector('input#popupJimokText').value;
+             const jijukArea = jusoInfo.querySelector('input#popupJijukArea').value;
+             const pyeonibArea = jusoInfo.querySelector('input#popupPyeonibArea').value;
+             const jasanNo = jusoInfo.querySelector('input#popupJasanNo').value;
+             const souja = jusoInfo.querySelector('input#popupSouja').value;
+             const setMoney = jusoInfo.querySelector('input#popupSetMoney').value;
+      if (checkno === 0) {
+             // 선택된 칸에 데이터 넣기
+               $("input[name='address_" + id + "']").val(address);
+               $("input[name='jimok_" + id + "']").val(jimok);
+               $("input[name='fullArea_" + id + "']").val(jijukArea);
+               $("input[name='setArea_" + id + "']").val(pyeonibArea);
+               $("input[name='jasan_" + id + "']").val(jasanNo);
+               $("input[name='soyuja_" + id + "']").val(souja);
+               $("input[name='setMoney_" + id + "']").val(setMoney);
+               }else{
+	 // ul 만들기
+                const infoUl = document.createElement('ul');
+                infoUl.classList.add('contents');
+
+                for (let i = 1; i <= 9; i++) {
+                    // li 만들기
+                    const infoLi = document.createElement('li');
+                    infoLi.classList.add('content');
+
+                    if(i ==1){
+                       infoLi.classList.add('content');
+                        infoLi.classList.add('addressInfoWidth');
+                         infoLi.classList.add('addressInfoBox');
+                       // div 만들기
+                       const addressDiv = document.createElement('div');
+                       addressDiv.classList.add('addressData');
+
+
+                       // input 만들기
+                       const addressInput = document.createElement('input');
+                       addressInput.id = 'address_'+index;
+                       addressInput.name = 'address_'+index;
+                       addressInput.type = 'text';
+                       addressInput.readOnly = true;
+                       addressInput.classList.add('notWriteInput');
+                       addressInput.value=address;
+
+                       // div에 input 넣기
+                       addressDiv.appendChild(addressInput);
+                       infoLi.appendChild(addressDiv);
+
+                       // 검색버튼 만들기
+
+                       const addressBtn = document.createElement('button');
+                       addressBtn.classList.add('searchAddressBtn');
+                        addressBtn.classList.add('addrSearchBtn');
+                       addressBtn.textContent = '검색';
+                        addressBtn.id= index;
+                       // li안에 넣기
+                       infoLi.appendChild(addressBtn);
+
+                    }else if (2<= i && i <= 6) {
+                        // input 만들기
+
+                         const secondUl = document.createElement('ul');
+                          const secondContent = document.createElement('li');
+                          const infoInput = document.createElement('input');
+
+                         secondUl.classList.add('secondContents');
+                         infoLi.classList.add('contentBox');
+                         secondContent.classList.add('secondContent');
+                        infoInput.type = 'text';
+
+
+                        if(i==2){
+                            infoInput.name="jimok_" + index;
+                           infoInput.readOnly = true;
+                            infoInput.classList.add('notWriteInput');
+                             infoInput.value=jimok;
+                        }else if(i==3){
+                            infoInput.name="fullArea_" + index;
+                           infoInput.readOnly = true;
+                            infoInput.classList.add('notWriteInput');
+                             infoInput.value=jijukArea;
+                        }else if(i==4){
+                            infoInput.name="setArea_" + index;
+                           infoInput.readOnly = true;
+                            infoInput.classList.add('notWriteInput');
+                             infoInput.value=pyeonibArea;
+                        }else if(i==5){
+                            secondContent.classList.add('largeSecondTitle');
+                            infoInput.name="setMoney_" + index;
+                             infoInput.value=setMoney;
+
+                        }else if(i==6){
+                            infoInput.name="jasan_" + index;
+                           infoInput.readOnly = true;
+                            infoInput.classList.add('notWriteInput');
+                             infoInput.value=jasanNo;
+                        }
+
+                        secondContent.appendChild(infoInput);
+                        secondUl.appendChild(secondContent);
+                         infoLi.appendChild(secondUl);
+
+                    }else if(7<= i && i<=8) {
+                        infoLi.classList.add('content');
+                        const infoInput = document.createElement('input');
+                        infoInput.type = 'text';
+                        infoLi.appendChild(infoInput);
+
+                        if(i==7){
+                            infoInput.name="soyuja_" + index;
+                             infoInput.value=souja;
+                             infoInput.readOnly = true;
+                             infoInput.classList.add('notWriteInput');
+                        }else{
+                            infoInput.name="pmtUser_" + index;
+                        }
+                    }else if (i == 9) {
+                        infoLi.classList.add('titleBtnWrap');
+                        infoLi.classList.add('btnBox');
+
+                        for (let w = 0; w < 2; w++) {
+                            const btnWrapDiv = document.createElement('div');
+                            btnWrapDiv.classList.add('btnWrap');
+
+                            const miniBtn = document.createElement('button');
+                            miniBtn.classList.add('miniBtn');
+
+                            if (w == 0) {
+                                miniBtn.classList.add('addBtn');
+                                miniBtn.textContent = '추가';
+                            } else if (w == 1) {
+                                miniBtn.classList.add('delBtn');
+                                miniBtn.textContent = '삭제';
+                            }
+
+                            btnWrapDiv.appendChild(miniBtn);
+                            infoLi.appendChild(btnWrapDiv);
+                        }
+
+                    }
+
+                    infoUl.appendChild(infoLi);
+                    infoContentsBox.appendChild(infoUl);
+                }
+                index++;
+                }
+                });
+
+ $(".popupWrap").removeClass("active");
+})
+
+
+
+$(document).on("change","#landRightsRegistSelectBox09",function(){
+		getSigunMaster($("#landRightsRegistSelectBox09 option:selected").val());
+	})
+
+
+
+	$(document).on("change","#landRightsRegistSelectBox10",function(){
+		getDongMaster($("#landRightsRegistSelectBox09 option:selected").val(),$("#landRightsRegistSelectBox10 option:selected").val());
+	})
+
+	$(document).on("change","#landRightsRegistSelectBox11",function(){
+			getRiMaster($("#landRightsRegistSelectBox09 option:selected").val(),$("#landRightsRegistSelectBox10 option:selected").val(),$("#landRightsRegistSelectBox11 option:selected").val());
+		})
+
+function getSigunMaster(key){
+					 var url="/api/getSigunMaster";
+
+			var requestData={"key":key};
+				 $.ajax({
+
+						url:url,
+						type:'POST',
+						contentType:"application/json",
+						data:JSON.stringify(requestData),
+						async:false,
+						dataType:"json",
+						success:function(response){
+							if (response.success="Y"){
+								$("#landRightsRegistSelectBox10 option").remove();
+								$("#landRightsRegistSelectBox10").append('<option value="">전체</option>');
+								for(var i=0;i<response.resultData.length;i++){
+									$("#landRightsRegistSelectBox10").append('<option value="'+response.resultData[i].sm_gugun+'">'+response.resultData[i].sm_gugun+'</option>');
+								}
+								//loadCustomLiLandRegist($("#gugun_ul"));
+								loadCustomLiLandRegist($("#gugun_ul"));
+							}
+							else {
+								console.log("response.success N");
+							}
+						},
+						error:function(jqXHR,textStatus,errorThrown){
+							alert("getSidoMaster ajax error\n"+textStatus+":"+errorThrown);
+						}
+
+				});
+		}
+
+
+
+function getDongMaster(sidoKey,gugunKey){
+			 var url="/api/getDongMaster";
+
+	var requestData={"sidoKey":sidoKey,"gugunKey":gugunKey};
+		 $.ajax({
+
+				url:url,
+				type:'POST',
+				contentType:"application/json",
+				data:JSON.stringify(requestData),
+				async:false,
+				dataType:"json",
+				success:function(response){
+					if (response.success="Y"){
+						$("#landRightsRegistSelectBox11 option").remove();
+						$("#landRightsRegistSelectBox11").append('<option value="">전체</option>');
+						for(var i=0;i<response.resultData.length;i++){
+							$("#landRightsRegistSelectBox11").append('<option value="'+response.resultData[i].bm_dong+'">'+response.resultData[i].bm_dong+'</option>');
+						}
+						loadCustomLiLandRegist($("#dong_ul"));
+					}
+					else {
+						console.log("response.success N");
+					}
+				},
+				error:function(jqXHR,textStatus,errorThrown){
+					alert("getDongMaster ajax error\n"+textStatus+":"+errorThrown);
+				}
+
+		});
+}
+
+
+function getRiMaster(sidoKey,gugunKey,dongKey){
+				 var url="/api/getRiMaster";
+
+		var requestData={"sidoKey":sidoKey,"gugunKey":gugunKey,"dongKey":dongKey};
+			 $.ajax({
+
+					url:url,
+					type:'POST',
+					contentType:"application/json",
+					data:JSON.stringify(requestData),
+					async:false,
+					dataType:"json",
+					success:function(response){
+						if (response.success="Y"){
+							$("#landRightsRegistSelectBox12 option").remove();
+							$("#landRightsRegistSelectBox12").append('<option value="">전체</option>');
+							for(var i=0;i<response.resultData.length;i++){
+								$("#landRightsRegistSelectBox12").append('<option value="'+response.resultData[i].rm_ri+'">'+response.resultData[i].rm_ri+'</option>');
+							}
+							loadCustomLiLandRegist($("#ri_ul"));
+						}
+						else {
+							console.log("response.success N");
+						}
+					},
+					error:function(jqXHR,textStatus,errorThrown){
+						alert("getDongMaster ajax error\n"+textStatus+":"+errorThrown);
+					}
+
+			});
+	}
+
+
+$(document).on("change","#sigunmaster",function(){
+	getDongMaster($("#sigunmaster option:selected").val());
+})
+
+
+$(document).on("click","#popupSearchBtn",function(){
+
+	var formSerializeArray = $('#searchForm').serializeArray();
+
+
+	 $.ajax({
+					   	   	  url: "/jisang/getPermitEditJisangSelect",
+					   	   	  type: "POST",
+					   	   	  data: formSerializeArray,
+
+					   	   })
+					   	   .done(function (fragment) {
+							 console.log("***fragment***");
+							 //console.log(fragment);
+					   	      $('#searchResultPopDiv').replaceWith(fragment);
+
+
+							  const popupOpen = document.querySelector("#land_searchResultsPopup .popupWrap");
+							  							  	   //			   		              landRightsSearchBtn.classList.add("open");
+							  							  	   $(popupOpen).addClass("open");
+							  								   $(popupOpen).addClass("active");
+
+					   	   	});
+})
+
+//저장
+$(document).on("click",".saveBtn ",function(){
+	var formSerializeArray = $('#saveForm').serializeArray();
+         len = formSerializeArray.length;
+       var dataObj = {};
+       for (i=0; i<len; i++) {
+        dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
+       }
+
+        var st_date = $('input[name="st_date"]').data('placeholder');
+        dataObj['st_date'] = st_date;
+        var ed_date = $('input[name="ed_date"]').data('placeholder');
+        dataObj['ed_date'] = ed_date;
+
+        var togiDatas=[];
+	   	var togiUls=$("#togiDiv .contents");
+	   	for(var i=0;i<togiUls.length;i++){
+			var address=$(togiUls[i]).find("input[name='address_"+ i +"']").val();
+			var jimok_text=$(togiUls[i]).find("input[name='jimok_"+ i +"']").val();
+			var fullArea=$(togiUls[i]).find("input[name='fullArea_"+ i +"']").val();
+			var setArea=$(togiUls[i]).find("input[name='setArea_"+ i +"']").val();
+			var setMoney=$(togiUls[i]).find("input[name='setMoney_"+ i +"']").val();
+			var jasan=$(togiUls[i]).find("input[name='jasan_"+ i +"']").val();
+			var soyuja=$(togiUls[i]).find("input[name='soyuja_"+ i +"']").val();
+			var pmtUser=$(togiUls[i]).find("input[name='pmtUser_"+ i +"']").val();
+
+	   		var togiObj={
+				"address":ljsIsNull(address)?'':address
+				,"jimok_text":ljsIsNull(jimok_text)?'':jimok_text
+				,"fullArea":ljsIsNull(fullArea)?'':fullArea
+				,"setArea":ljsIsNull(setArea)?'':setArea
+				,"setMoney":ljsIsNull(setMoney)?'':setMoney
+				,"jasan":ljsIsNull(jasan)?'':jasan
+				,"soyuja":ljsIsNull(soyuja)?'':soyuja
+				,"pmtUser":ljsIsNull(pmtUser)?'':pmtUser
+
+	   		}
+	   		togiDatas.push(togiObj);
+	   	}
+	   	dataObj.togiDatas=togiDatas;
+    	 console.log(dataObj);
+})
+
+//상신
+$(document).on("click",".approvalBtn ",function(){
+	var formSerializeArray = $('#saveForm').serializeArray();
+  len = formSerializeArray.length;
+       var dataObj = {};
+       for (i=0; i<len; i++) {
+        dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
+       }
+
+         var st_date = $('input[name="st_date"]').data('placeholder');
+        dataObj['st_date'] = st_date;
+        var ed_date = $('input[name="ed_date"]').data('placeholder');
+        dataObj['ed_date'] = ed_date;
+
+        var togiDatas=[];
+	   	var togiUls=$("#togiDiv .contents");
+	   	for(var i=0;i<togiUls.length;i++){
+			var address=$(togiUls[i]).find("input[name='address_"+ i +"']").val();
+			var jimok_text=$(togiUls[i]).find("input[name='jimok_"+ i +"']").val();
+			var fullArea=$(togiUls[i]).find("input[name='fullArea_"+ i +"']").val();
+			var setArea=$(togiUls[i]).find("input[name='setArea_"+ i +"']").val();
+			var setMoney=$(togiUls[i]).find("input[name='setMoney_"+ i +"']").val();
+			var jasan=$(togiUls[i]).find("input[name='jasan_"+ i +"']").val();
+			var soyuja=$(togiUls[i]).find("input[name='soyuja_"+ i +"']").val();
+			var pmtUser=$(togiUls[i]).find("input[name='pmtUser_"+ i +"']").val();
+
+	   		var togiObj={
+				"address":ljsIsNull(address)?'':address
+				,"jimok_text":ljsIsNull(jimok_text)?'':jimok_text
+				,"fullArea":ljsIsNull(fullArea)?'':fullArea
+				,"setArea":ljsIsNull(setArea)?'':setArea
+				,"setMoney":ljsIsNull(setMoney)?'':setMoney
+				,"jasan":ljsIsNull(jasan)?'':jasan
+				,"soyuja":ljsIsNull(soyuja)?'':soyuja
+				,"pmtUser":ljsIsNull(pmtUser)?'':pmtUser
+
+	   		}
+	   		togiDatas.push(togiObj);
+	   	}
+	   	dataObj.togiDatas=togiDatas;
+    	 console.log(dataObj);
+})

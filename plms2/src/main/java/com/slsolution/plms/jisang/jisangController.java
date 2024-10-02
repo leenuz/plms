@@ -4391,14 +4391,48 @@ log.info("gubun:"+gubun);
 		
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("tojiList", data);
 		mav.addObject("jisaList", jisalist);
+		mav.addObject("sidoList",sidolist);
 		mav.setViewName("content/jisang/usePermitEdit");
 
 		return mav;
     }
+	@PostMapping(path="/getPermitEditJisangSelect") //http://localhost:8080/api/get/dbTest
+	public ModelAndView getPermitEditJisangSelect(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		//log.info("httpRequest:"+Arrays.toString(httpRequest));
+
+
+		String sido_nm=httpRequest.getParameter("sido");
+		String sgg_nm=httpRequest.getParameter("gugun");
+		String emd_nm=httpRequest.getParameter("dong");
+		String ri_nm=httpRequest.getParameter("ri");
+		String jibun=httpRequest.getParameter("jibun");
+		String jisa=httpRequest.getParameter("jisa");
+
+
+
+		params.put("address", sido_nm+' '+sgg_nm+' '+emd_nm+' '+ri_nm+' '+jibun);
+		params.put("sido_nm", sido_nm);
+		params.put("sgg_nm", sgg_nm);
+		params.put("emd_nm", emd_nm);
+		params.put("ri_nm", ri_nm);
+		params.put("jibun", jibun);
+		params.put("jisa", jisa);
+
+		log.info("params:"+params);
+		ArrayList<HashMap> jisangList = mainService.selectQuery("jisangSQL.selectJisangJijukList",params);
+		//log.info("jisangList:"+jisangList);
+		mav.addObject("jisangList",jisangList);
+		mav.setViewName("content/jisang/usePermitEdit :: #searchResultPopDiv");
+		return mav;
+	}
 
 	//지상권합필하기 눌렀을때 나오는 페이지
 	@GetMapping(path="/landRightMerge") //http://localhost:8080/api/get/dbTest

@@ -174,7 +174,7 @@ margin:10px;
                   <div class="addressData">
                     <input type="text" th:value="${val.addr}" th:name="'address_'+${iterStat.index}" th:id="'address_'+${iterStat.index}" readonly class="notWriteInput" />
                   </div>
-                  <button class="searchAddressBtn" id="0">검색</button>
+                  <button class="searchAddressBtn addrSearchBtn" th:id="${iterStat.index}">검색</button>
                 </li>
                 <li class="content contentBox">
                   <ul class="secondContents">
@@ -199,7 +199,7 @@ margin:10px;
                   <input type="text" th:value="${val.soyuja}" th:name="'soyuja_'+${iterStat.index}"  readonly class="notWriteInput" />
                 </li>
                 <li class="content">
-                  <input type="text" th:value="${val.pmt_user}" th:name="'pmtUser_'+${iterStat.index}"  readonly class="notWriteInput" />
+                  <input type="text" th:value="${val.pmt_user}" th:name="'pmtUser_'+${iterStat.index}"  />
                 </li>
                 <li class="content titleBtnWrap btnBox">
                   <!-- 맨 윗줄 기본값 -->
@@ -214,6 +214,7 @@ margin:10px;
         </section>
 
         <!-- 합병사유 및 검토의견 -->
+        <form name="saveForm"  id="saveForm" onSubmit="return false;">
         <section class="mergeTermination">
           <div class="subTitle">상세내용</div>
 
@@ -231,9 +232,9 @@ margin:10px;
                 <ul class="rowListContents">
                   <li class="content inputWrap">
                     <div class="dateInputWrap">
-                      <input type="date" th:data-placeholder="${resultData.use_st_date}" required aria-required="true" />
+                      <input type="date" th:data-placeholder="${resultData.use_st_date}" name="st_date" required aria-required="true" />
                       <span>~</span>
-                      <input type="date" th:data-placeholder="${resultData.use_ed_date}" required aria-required="true" />
+                      <input type="date" th:data-placeholder="${resultData.use_ed_date}" name="ed_date" required aria-required="true" />
                     </div>
                   </li>
                 </ul>
@@ -248,7 +249,7 @@ margin:10px;
                       <p>관로 위치 및 송유관 이격거리 현장 확인 결과</p>
                     </div>
                     <div class="rowListArea">
-                      <textarea th:text="${resultData.spot_result}"></textarea>
+                      <textarea th:text="${resultData.spot_result}" name="spot_result"></textarea>
                     </div>
                   </li>
                   <li class="content inputWrap fullContent">
@@ -256,7 +257,7 @@ margin:10px;
                       <p>검토 의견</p>
                     </div>
                     <div class="rowListArea">
-                      <textarea th:text="${resultData.review}"></textarea>
+                      <textarea th:text="${resultData.review}" name="review"></textarea>
                     </div>
                   </li>
                   <li class="content inputWrap fullContent lastContents">
@@ -264,7 +265,7 @@ margin:10px;
                       <p>약정 사항</p>
                     </div>
                     <div class="rowListArea">
-                      <textarea th:text="${resultData.contract}"></textarea>
+                      <textarea th:text="${resultData.contract}" name="contract"></textarea>
                     </div>
                   </li>
                 </ul>
@@ -272,9 +273,10 @@ margin:10px;
             </div>
           </div>
         </section>
+        </form>
 
         <section class="attachDocuments">
-          <div class="subTitle">첨부 서류</div>
+         <br> <div class="subTitle">첨부 서류</div>
 
           <div class="contWrap">
             <div class="depth1">
@@ -546,255 +548,209 @@ margin:10px;
       </main>
     </div>
 
-  <div class="usePermitEditPopWrapper" id="searchResultPopDiv">
+  <div class="usePermitEditLandSearchWrapper open"  >
 
-    <link rel="stylesheet" href="/assets/css/popup/popupEasementModification.css">
-    <div id="searchResultsPopup">
-      <div class="popupWrap" id="popupWrap">
+    <link
+            rel="stylesheet"
+            href="/css/jisang/popupEasementModification.css" />
+    <!-- 사용승락 팝업 -->
+    <div id="land_searchResultsPopup">
+      <div class="popupWrap">
         <h2>
           <p>토지 추가 검색</p>
           <span class="topCloseBtn"></span>
         </h2>
-        <form id="searchForm" onSubmit="return false;">
-        <div class="selectInfo">
-          <div class="depth1">
-            <div class="selectContBox">
-              <div class="selectCont">
-                <ul class="titles">
-                  <li class="title">지사</li>
-                </ul>
-                <ul class="contents">
-                  <li class="content popSelectWrap">
-                    <div class="hiddenSelectBox">
-                      <!-- name도 추가 -->
-<!--                      <select-->
-<!--                              name="jisa"-->
-<!--                              class="surfaceInquireHiddenSelect05"-->
-<!--                              id="surfaceInquireSelectBox05_1"-->
-<!--                              hidden>-->
-<!--                        <option value="">전체</option>-->
-<!--                        <th:block th:each="val:${jisaList}">-->
-<!--                          <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>-->
-<!--                        </th:block>-->
-<!--                      </select>-->
-                      <select
-                              name="landSearchSelectBox01"
-                              id="landSearchSelectBox01"
-                              hidden>
-                        <option value="충청지사1">충청지사1</option>
-                        <option value="충청지사2">충청지사2</option>
-                        <option value="충청지사3">충청지사3</option>
-                        <option value="충청지사4">충청지사4</option>
-                        <option value="충청지사5">충청지사5</option>
-                        <option value="충청지사6">충청지사6</option>
-                        <option value="충청지사7">충청지사7</option>
-                        <option value="충청지사8">충청지사8</option>
-                        <option value="충청지사9">충청지사9</option>
-                        <option value="충청지사10">충청지사10</option>
-                      </select>
-                    </div>
-                    <section class="PopupCustomSelectBox">
-                      <button class="PopupCustomSelectView">충청지사</button>
+        <form name="searchForm"  id="searchForm" onSubmit="return false;">
+          <div class="selectInfo">
+            <div class="depth1">
+              <div class="selectContBox">
+                <div class="selectCont">
+                  <ul class="titles">
+                    <li class="title">지사</li>
+                  </ul>
+                  <ul class="contents">
+                    <li class="content popSelectWrap selectContentArea">
+                      <div class="hiddenSelectBox">
+                        <input type="hidden" id="openerIndex">
+                        <!-- name도 추가 -->
+                        <select
+                                name="jisa"
+                                id="jisa"
+                                hidden>
+                          <option value="" selected>전체</option>
+                          <th:block th:each="val:${jisaList}">
 
-                      <ul class="PopupCustomSelectBtns">
-                      </ul>
-                    </section>
-<!--                    <div class="surfaceInquireSelects">-->
-<!--                      <button class="surfaceInquireSelectsTitleBtn">전체</button>-->
-<!--                      <div class="sufaceSelectList">-->
-<!--                        <ul class="surfaceSelectListMember"></ul>-->
-<!--                      </div>-->
-<!--                    </div>-->
+                            <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+                          </th:block>
+                        </select>
+                      </div>
+                      <section class="PopupCustomSelectBox">
+                        <button class="PopupCustomSelectView">전체</button>
 
-
-                  </li>
-                </ul>
+                        <ul class="PopupCustomSelectBtns">
+                          <!-- <li><button class="PopupMoreSelectBtn">충청지사1</button></li>
+                                              <li><button class="PopupMoreSelectBtn">충청지사2</button></li>
+                                              <li><button class="PopupMoreSelectBtn">충청지사3</button></li> -->
+                        </ul>
+                      </section>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="depth2">
-            <div class="selectContBox">
-              <div class="selectCont">
-                <ul class="titles">
-                  <li class="title">주소</li>
-                </ul>
-                <ul class="contents">
-                  <li class="content popSelectWrap">
-                    <div class="hiddenSelectBox">
-                      <!-- name도 추가 -->
-                      <select name="sido" id="sido" hidden>
-                        <option value="">전체</option>
-                        <th:block th:each="val:${sidoList}">
-                          <option th:text="${val.sm_name}" th:value="${val.sm_name}"></option>
-                        </th:block>
-                      </select>
-                    </div>
-                    <section class="PopupCustomSelectBox">
-                      <button class="PopupCustomSelectView">선택</button>
+            <div class="depth2">
+              <div class="selectContBox">
+                <div class="selectCont">
+                  <ul class="titles">
+                    <li class="title">주소</li>
+                  </ul>
+                  <ul class="contents">
+                    <li class="content popSelectWrap selectContentArea">
+                      <div class="hiddenSelectBox">
+                        <!-- name도 추가 -->
+                        <select name="sido" id="landRightsRegistSelectBox09" hidden>
+                          <option value="">전체</option>
+                          <option th:each="val:${sidoList}" th:value="${val?.sm_name}" th:utext="${val?.sm_name}">지목</option>
+                        </select>
+                      </div>
+                      <section class="PopupCustomSelectBox">
+                        <button class="PopupCustomSelectView">선택</button>
 
-                      <ul class="PopupCustomSelectBtns">
-                        <!-- <li><button class="PopupMoreSelectBtn">선택1</button></li>
-                                            <li><button class="PopupMoreSelectBtn">선택2</button></li>
-                                            <li><button class="PopupMoreSelectBtn">선택3</button></li> -->
-                      </ul>
-                    </section>
-                  </li>
-                  <li class="content popSelectWrap">
-                    <div class="hiddenSelectBox">
-                      <!-- name도 추가 -->
-                      <select
-                              name="landSearchSelectBox03"
-                              id="landSearchSelectBox03"
-                              hidden>
-                        <option value="선택1">선택1</option>
-                        <option value="선택2">선택2</option>
-                        <option value="선택3">선택3</option>
-                        <option value="선택4">선택4</option>
-                        <option value="선택5">선택5</option>
-                        <option value="선택6">선택6</option>
-                        <option value="선택7">선택7</option>
-                        <option value="선택8">선택8</option>
-                        <option value="선택9">선택9</option>
-                        <option value="선택10">선택10</option>
-                      </select>
-                    </div>
-                    <section class="PopupCustomSelectBox">
-                      <button class="PopupCustomSelectView">선택</button>
+                        <ul class="PopupCustomSelectBtns" id="sido_ul">
+                          <!-- <li><button class="PopupMoreSelectBtn">선택1</button></li>
+                                              <li><button class="PopupMoreSelectBtn">선택2</button></li>
+                                              <li><button class="PopupMoreSelectBtn">선택3</button></li> -->
+                        </ul>
+                      </section>
+                    </li>
+                    <li class="content popSelectWrap selectContentArea">
+                      <div class="hiddenSelectBox">
+                        <!-- name도 추가 -->
+                        <select name="gugun" id="landRightsRegistSelectBox10" hidden>
+                          <option value="">전체</option>
 
-                      <ul class="PopupCustomSelectBtns">
-                        <li>
-                          <button class="PopupMoreSelectBtn">선택1</button>
-                        </li>
-                        <li>
-                          <button class="PopupMoreSelectBtn">선택2</button>
-                        </li>
-                        <li>
-                          <button class="PopupMoreSelectBtn">선택3</button>
-                        </li>
-                      </ul>
-                    </section>
-                  </li>
-                  <li class="content popSelectWrap">
-                    <div class="hiddenSelectBox">
-                      <!-- name도 추가 -->
-                      <select
-                              name="landSearchSelectBox04"
-                              id="landSearchSelectBox04"
-                              hidden>
-                        <option value="선택1">선택1</option>
-                        <option value="선택2">선택2</option>
-                        <option value="선택3">선택3</option>
-                        <option value="선택4">선택4</option>
-                        <option value="선택5">선택5</option>
-                        <option value="선택6">선택6</option>
-                        <option value="선택7">선택7</option>
-                        <option value="선택8">선택8</option>
-                        <option value="선택9">선택9</option>
-                        <option value="선택10">선택10</option>
-                      </select>
-                    </div>
-                    <section class="PopupCustomSelectBox">
-                      <button class="PopupCustomSelectView">선택</button>
+                        </select>
+                      </div>
+                      <section class="PopupCustomSelectBox">
+                        <button class="PopupCustomSelectView">선택</button>
 
-                      <ul class="PopupCustomSelectBtns">
-                        <!-- <li><button class="PopupMoreSelectBtn">선택1</button></li>
-                                            <li><button class="PopupMoreSelectBtn">선택2</button></li>
-                                            <li><button class="PopupMoreSelectBtn">선택3</button></li> -->
-                      </ul>
-                    </section>
-                  </li>
-                  <li class="content popSelectWrap">
-                    <div class="hiddenSelectBox">
-                      <!-- name도 추가 -->
-                      <select
-                              name="landSearchSelectBox05"
-                              id="landSearchSelectBox05"
-                              hidden>
-                        <option value="선택1">선택1</option>
-                        <option value="선택2">선택2</option>
-                        <option value="선택3">선택3</option>
-                        <option value="선택4">선택4</option>
-                        <option value="선택5">선택5</option>
-                        <option value="선택6">선택6</option>
-                        <option value="선택7">선택7</option>
-                        <option value="선택8">선택8</option>
-                        <option value="선택9">선택9</option>
-                        <option value="선택10">선택10</option>
-                      </select>
-                    </div>
-                    <section class="PopupCustomSelectBox">
-                      <button class="PopupCustomSelectView">선택</button>
+                        <ul class="PopupCustomSelectBtns" id="gugun_ul">
+                        </ul>
+                      </section>
+                    </li>
+                    <li class="content popSelectWrap selectContentArea">
+                      <div class="hiddenSelectBox">
+                        <!-- name도 추가 -->
+                        <select name="dong" id="landRightsRegistSelectBox11" hidden>
+                          <option value="">전체</option>
 
-                      <ul class="PopupCustomSelectBtns">
-                        <!-- <li><button class="PopupMoreSelectBtn">선택1</button></li>
-                                            <li><button class="PopupMoreSelectBtn">선택2</button></li>
-                                            <li><button class="PopupMoreSelectBtn">선택3</button></li> -->
-                      </ul>
-                    </section>
-                  </li>
-                </ul>
+                        </select>
+                      </div>
+                      <section class="PopupCustomSelectBox">
+                        <button class="PopupCustomSelectView">선택</button>
+
+                        <ul class="PopupCustomSelectBtns" id="dong_ul">
+                          <!-- <li><button class="PopupMoreSelectBtn">선택1</button></li>
+                                              <li><button class="PopupMoreSelectBtn">선택2</button></li>
+                                              <li><button class="PopupMoreSelectBtn">선택3</button></li> -->
+                        </ul>
+                      </section>
+                    </li>
+                    <li class="content popSelectWrap selectContentArea">
+                      <div class="hiddenSelectBox">
+                        <!-- name도 추가 -->
+                        <select name="ri" id="landRightsRegistSelectBox12" hidden>
+                          <option value="">전제</option>
+
+                        </select>
+                      </div>
+                      <section class="PopupCustomSelectBox">
+                        <button class="PopupCustomSelectView">선택</button>
+
+                        <ul class="PopupCustomSelectBtns" id="ri_ul">
+                          <!-- <li><button class="PopupMoreSelectBtn">선택1</button></li>
+                                              <li><button class="PopupMoreSelectBtn">선택2</button></li>
+                                              <li><button class="PopupMoreSelectBtn">선택3</button></li> -->
+                        </ul>
+                      </section>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="depth3">
-            <div class="selectContBox">
-              <div class="selectCont">
-                <ul class="titles">
-                  <li class="title">지번</li>
-                </ul>
-                <ul class="contents">
-                  <li class="content">
-                    <input type="text" placeholder="지번입력" />
-                  </li>
-                </ul>
+            <div class="depth3">
+              <div class="selectContBox">
+                <div class="selectCont">
+                  <ul class="titles">
+                    <li class="title">지번</li>
+                  </ul>
+                  <ul class="contents">
+                    <li class="content">
+                      <input name="jibun" type="text" placeholder="지번입력" />
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
+            <button class="searchBtn finalBtn vividBlueBtn" id="popupSearchBtn">조회하기</button>
           </div>
-          <button class="searchBtn finalBtn vividBlueBtn">조회하기</button>
-        </div>
         </form>
-
-        <div class="popupCont">
+        <div class="popupCont" id="searchResultPopDiv">
           <ul class="popTitles">
-            <li class="popTitle05"></li>
-            <li class="popTitle01">PNU</li>
-            <li class="popTitle02">주소</li>
-            <li class="popTitle03">지번</li>
-            <li class="popTitle04">선택</li>
-
+            <li class="selectLabel">선택</li>
+            <li class="popTitle_num">지상권 번호</li>
+            <li class="popTitle_address">주소</li>
+            <li class="popTitle_num">지번</li>
           </ul>
-          <div class="popContentBox" >
-            <ul class="popContents" th:each="val:${addressList}">
-              <li class="popContent05">
-                <input type="checkbox" id="chkResultPop_Checkbox01">
-                <label for="chkResultPop_Checkbox01"></label>
+          <div class="popContentBox">
+            <ul class="popContents" th:each="val:${jisangList}">
+              <li class="popContent selectLabel">
+                <input type="hidden" name="sido_nm" id="sido_nm" th:value="${val.jm_sido_nm}">
+                <input type="hidden" name="sgg_nm" id="sgg_nm" th:value="${val.jm_sgg_nm}">
+                <input type="hidden" name="emd_nm" id="emd_nm" th:value="${val.jm_emd_nm}">
+                <input type="hidden" name="ri_nm" id="ri_nm" th:value="${val.jm_ri_nm}">
+                <input type="hidden" name="jibun" id="jibun" th:value="${val.jm_jibun}">
+                <input type="hidden" name="addrcode" id="addrcode" th:value="${val.bcode}">
+                <input type="checkbox" name="chk" th:attr="id='input-' + ${val.no}"/>
+
+                <label th:attr="for='input-' + ${val.no}"></label>
+                <input type="hidden" name="popupManageNo" id="popupManageNo" th:value="${val.jm_jisang_no}">
+<!--                <input type="hidden" name="popupAddress" id="popupAddress" th:value="${val.js_address}">-->
+                <input type="hidden" name="popupAddress" id="popupAddress" th:value="${val.jm_sido_nm + ' ' + val.jm_sgg_nm + ' ' + val.jm_emd_nm}">
+                <input type="hidden" name="popupJimokText" id="popupJimokText" th:value="${val.jm_jimok_text}">
+                <input type="hidden" name="popupJijukArea" id="popupJijukArea" th:value="${val.jm_jijuk_area}">
+                <input type="hidden" name="popupPyeonibArea" id="popupPyeonibArea" th:value="${val.jm_pyeonib_area}">
+                <input type="hidden" name="popupSetMoney" id="popupSetMoney" th:value="${val.jm_set_money}">
+                <input type="hidden" name="popupJasanNo" id="popupJasanNo" th:value="${val.jm_jasan_no}">
+                <input type="hidden" name="popupSouja" id="popupSouja" th:value="${val.js_souja_name}">
+                <input type="hidden" name="popupUseName" id="popupUseName">
               </li>
-              <li class="popContent01"> [[${val.pnu}]]</li>
-              <li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.ri_nm}]]</li>
-              <li class="popContent0201" hidden>[[${val.sido_nm}]]</li>
-              <li class="popContent0202" hidden>[[${val.sgg_nm}]]</li>
-              <li class="popContent0203" hidden>[[${val.emd_nm}]]</li>
-              <li class="popContent0204" hidden>[[${val.ri_nm}]]</li>
-              <li class="popContent03">[[${val.jibun}]]</li>
-              <li class="popContent04">
-                <button class="resultSelectBtn">선택</button>
+              <li class="popContent popTitle_num">[[${val.jm_jisang_no}]]</li>
+              <li class="popContent popTitle_address">
+                [[${val.jm_sido_nm +" "+val.jm_sgg_nm+" "+val.jm_emd_nm}]]
               </li>
-              <li class="popContent07" hidden>[[${val.jijuk_area}]]</li>
-              <li class="popContent06" hidden>[[${val.jimok_text}]]</li>
+              <li class="popContent popTitle_num">[[${val.jm_jibun}]]</li>
+            </ul>
+            <ul class="popContents" th:if="${#lists.isEmpty(jisangList)}">
+
+
+              <li style="text-align:center;width:100%;">
+                검색 결과가 없습니다.
+              </li>
 
             </ul>
-
 
           </div>
         </div>
 
         <div class="lastBtnBox btnWrap">
-          <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
-          <button class="saveBtn finalBtn" id="selectBtn">선택 등록</button>
+          <button class="backBtn grayBtn finalBtn" id="popupCloseBtn">닫기</button>
+          <button class="vividBlueBtn finalBtn addParentBtn" id="addParentBtn">선택등록</button>
         </div>
       </div>
     </div>
 
+  </div>
     <div class="usePermitEditLandSearchWrapper"></div>
     <script src="/js/jisang/usePermitEdit.js"></script>
     <script type="module" src="/js/module/surfaceMain.js"></script>
