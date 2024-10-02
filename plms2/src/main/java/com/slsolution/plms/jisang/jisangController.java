@@ -538,7 +538,7 @@ public class jisangController {
 			String USE_ST_DATE = requestJsonObj.getString("useStartDate"); // 사용기간 시작
 			String USE_ED_DATE = requestJsonObj.getString("useEndDate"); // 사용기간 끝
 			String SPOT_RESULT = requestJsonObj.getString("spot_result"); // 현장확인결과
-			String RIVEW = requestJsonObj.getString("review"); // 검토의견
+			String REVIEW = requestJsonObj.getString("review"); // 검토의견
 			String CONTRACT = requestJsonObj.getString("contract"); // 약정사항
 			String PMT_STATUS = requestJsonObj.getString("pmt_status"); // 등록상태
 			String str_result = "Y";
@@ -549,7 +549,7 @@ public class jisangController {
 				params.put("USE_ST_DATE", USE_ST_DATE);
 				params.put("USE_ED_DATE", USE_ED_DATE);
 				params.put("SPOT_RESULT", SPOT_RESULT);
-				params.put("RIVEW", RIVEW);
+				params.put("REVIEW", REVIEW);
 				params.put("CONTRACT", CONTRACT);
 				params.put("PMT_STATUS", PMT_STATUS);
 
@@ -4392,11 +4392,13 @@ log.info("gubun:"+gubun);
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+		ArrayList<HashMap> reqDoc2list = mainService.selectQuery("jisangSQL.selectJisangReqDoc2",params);
 
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("tojiList", data);
 		mav.addObject("jisaList", jisalist);
 		mav.addObject("sidoList",sidolist);
+		mav.addObject("reqDoc2list",reqDoc2list);
 		mav.setViewName("content/jisang/usePermitEdit");
 
 		return mav;
