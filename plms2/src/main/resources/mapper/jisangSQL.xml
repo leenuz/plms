@@ -202,7 +202,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		jm.jm_jisa AS jisa,
 		jm.jm_save_status AS save_status,
 		jm.jm_account_yn AS account_yn,
-		jm.jm_cancel_date AS cancel_date,
+		jm.jm_cancle_date AS cancel_date,
 		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
 		jm.jm_toji_type AS toji_type,
 		jm.jm_pipe_meter AS pipe_meter,
@@ -228,7 +228,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		NULL AS gover_length,
 		jm.jm_jasan_money AS jasan_money,
 		NULL AS pay_money,
-		jm.jm_cancel_yn AS cancel_yn,
+		jm.jm_cancle_yn AS cancel_yn,
 		jm.jm_manage_yn AS manage_yn,
 		jm.jm_dosiplan AS dosiplan,
 		jjm.x AS x,
@@ -318,7 +318,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		jm.jm_jisa AS jisa,
 		jm.jm_save_status AS save_status,
 		jm.jm_account_yn AS account_yn,
-		jm.jm_cancel_date AS cancel_date,
+		jm.jm_cancle_date AS cancel_date,
 		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
 		jm.jm_toji_type AS toji_type,
 		jm.jm_pipe_meter AS pipe_meter,
@@ -344,7 +344,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		NULL AS gover_length,
 		jm.jm_jasan_money AS jasan_money,
 		NULL AS pay_money,
-		jm.jm_cancel_yn AS cancel_yn,
+		jm.jm_cancle_yn AS cancel_yn,
 		jm.jm_manage_yn AS manage_yn,
 		jm.jm_dosiplan AS dosiplan,
 		'126.613134733938' AS x,
@@ -447,7 +447,7 @@ SELECT *
                        , JM.jm_PYEONIB_AREA + COALESCE((SELECT SUM(S.jm_PYEONIB_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS PYEONIB_AREA
                        , JM.jm_permitted_yn as PERMITTED_YN 
                        , JM.jm_addrcode as ADDRCODE 
-                       , JM.jm_cancel_yn as CANCEL_YN
+                       , JM.jm_cancle_yn as CANCEL_YN
                        , JS.js_souja_name as SOUJA_NAME
                        , (
                     SELECT COUNT(*) - 1
@@ -480,7 +480,7 @@ SELECT *
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
                 ) AS APPROVAL_STATUS
                   ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
-                  ,jm.jm_cancel_date AS cancel_date
+                  ,jm.jm_cancle_date AS cancel_date
                   FROM JISANG_MASTER       JM
                   LEFT OUTER JOIN (
                     SELECT *
@@ -502,8 +502,8 @@ SELECT *
                   LEFT OUTER JOIN JISANG_MASTER_TMP   JMT ON JM.jm_JISANG_NO = JMT.jmt_JISANG_NO
                   LEFT OUTER JOIN JISANG_MERGE_TMP    JHT ON JM.jm_JISANG_NO = JHT.jmt_JISANG_NO
                  WHERE 1 = 1
-                   AND ( JM.jm_CANCEL_YN =''
-                    OR JM.jm_CANCEL_YN = 'N' )
+                   AND ( JM.jm_CANCLE_YN =''
+                    OR JM.jm_cancle_YN = 'N' )
 				<if test="PAGE_GUBUN != null and PAGE_GUBUN != ''">
 				    <if test="PAGE_GUBUN != '1'">
 				        AND JM.jm_SAVE_STATUS = '승인'
@@ -555,7 +555,7 @@ SELECT *
 			AND JM.jm_account_yn = #{account_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
-		    AND JM.jm_CANCEL_YN = #{cancel_yn}
+		    AND JM.jm_CANCLE_YN = #{cancel_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
 			AND JM.jm_jasan_no LIKE '%${jasan_no}%'
@@ -632,7 +632,7 @@ SELECT count(*)
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
                 ) AS APPROVAL_STATUS
                   ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
-                  ,jm.jm_cancel_date AS cancle_date
+                  ,jm.jm_cancle_date AS cancle_date
                   FROM JISANG_MASTER       JM
                   LEFT OUTER JOIN (
                     SELECT *
@@ -654,8 +654,8 @@ SELECT count(*)
                   LEFT OUTER JOIN JISANG_MASTER_TMP   JMT ON JM.jm_JISANG_NO = JMT.jmt_JISANG_NO
                   LEFT OUTER JOIN JISANG_MERGE_TMP    JHT ON JM.jm_JISANG_NO = JHT.jmt_JISANG_NO
                  WHERE 1 = 1
-                   AND ( JM.jm_CANCEL_YN IS NULL
-                    OR JM.jm_CANCEL_YN != 'Y' )
+                   AND ( JM.jm_CANCLE_YN IS NULL
+                    OR JM.jm_cancle_YN != 'Y' )
 		<if test="PAGE_GUBUN != null and PAGE_GUBUN != ''">
 		    <if test="PAGE_GUBUN != '1'">
 		        AND JM.jm_SAVE_STATUS = '승인'
@@ -713,7 +713,7 @@ SELECT count(*)
 			AND JM.jm_account_yn = #{account_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
-		    AND JM.jm_CANCEL_YN = #{cancel_yn}
+		    AND JM.jm_CANCLE_YN = #{cancel_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
 			AND JM.jm_jasan_no LIKE '%${jasan_no}%'
@@ -753,7 +753,7 @@ SELECT *
                        , JM.jm_PYEONIB_AREA + COALESCE((SELECT SUM(S.jm_PYEONIB_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS PYEONIB_AREA
                        , JM.jm_permitted_yn as PERMITTED_YN 
                        , JM.jm_addrcode as ADDRCODE 
-                       , JM.jm_cancel_yn as CANCEL_YN
+                       , JM.jm_cancle_yn as CANCEL_YN
                        , JS.js_souja_name as SOUJA_NAME
                        , (
                     SELECT COUNT(*) - 1
@@ -786,7 +786,7 @@ SELECT *
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
                 ) AS APPROVAL_STATUS
                   ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
-                  ,jm.jm_cancel_date AS cancel_date
+                  ,jm.jm_cancle_date AS cancel_date
                   FROM JISANG_MASTER       JM
                   LEFT OUTER JOIN (
                     SELECT *
@@ -859,7 +859,7 @@ SELECT *
 			AND JM.jm_account_yn = #{account_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
-		    AND JM.jm_CANCEL_YN = #{cancel_yn}
+		    AND JM.jm_CANCLE_YN = #{cancel_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
 			AND JM.jm_jasan_no LIKE '%${jasan_no}%'
@@ -936,7 +936,7 @@ SELECT count(*)
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
                 ) AS APPROVAL_STATUS
                   ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
-                  ,jm.jm_cancel_date AS cancel_date
+                  ,jm.jm_cancle_date AS cancel_date
                   FROM JISANG_MASTER       JM
                   LEFT OUTER JOIN (
                     SELECT *
@@ -1015,7 +1015,7 @@ SELECT count(*)
 			AND JM.jm_account_yn = #{account_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
-		    AND JM.jm_CANCEL_YN = #{cancel_yn}
+		    AND JM.jm_CANCLE_YN = #{cancel_yn}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
 			AND JM.jm_jasan_no LIKE '%${jasan_no}%'
@@ -1037,7 +1037,7 @@ SELECT count(*)
 		jm.jm_jisa AS jisa,
 		jm.jm_save_status AS save_status,
 		jm.jm_account_yn AS account_yn,
-		jm.jm_cancel_date AS cancel_date,
+		jm.jm_cancle_date AS cancel_date,
 		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
 		jm.jm_toji_type AS toji_type,
 		jm.jm_pipe_meter AS pipe_meter,
@@ -1063,7 +1063,7 @@ SELECT count(*)
 		NULL AS gover_length,
 		jm.jm_jasan_money AS jasan_money,
 		NULL AS pay_money,
-		jm.jm_cancel_yn AS cancel_yn,
+		jm.jm_cancle_yn AS cancel_yn,
 		jm.jm_manage_yn AS manage_yn,
 		jm.jm_dosiplan AS dosiplan,
 		CASE
@@ -1405,7 +1405,7 @@ SELECT count(*)
 		jm.jm_jisa AS jisa,
 		jm.jm_save_status AS save_status,
 		jm.jm_account_yn AS account_yn,
-		jm.jm_cancel_date AS cancel_date,
+		jm.jm_cancle_date AS cancel_date,
 		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
 		jm.jm_toji_type AS toji_type,
 		jm.jm_pipe_meter AS pipe_meter,
@@ -1426,7 +1426,7 @@ SELECT count(*)
 		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
 		COALESCE('', '') AS gover_date,
 		jm.jm_jasan_money AS jasan_money,
-		jm.jm_cancel_yn AS cancel_yn,
+		jm.jm_cancle_yn AS cancel_yn,
 		jm.jm_manage_yn AS manage_yn,
 		jm.jm_dosiplan AS dosiplan,
 		jb.jb_yongdo AS yongdo,
@@ -1526,7 +1526,7 @@ SELECT count(*)
 		jm.jm_jisa AS jisa,
 		jm.jm_save_status AS save_status,
 		jm.jm_account_yn AS account_yn,
-		jm.jm_cancel_date AS cancel_date,
+		jm.jm_cancle_date AS cancel_date,
 		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
 		jm.jm_toji_type AS toji_type,
 		jm.jm_pipe_meter AS pipe_meter,
@@ -1547,7 +1547,7 @@ SELECT count(*)
 		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
 		COALESCE('', '') AS gover_date,
 		jm.jm_jasan_money AS jasan_money,
-		jm.jm_cancel_yn AS cancel_yn,
+		jm.jm_cancle_yn AS cancel_yn,
 		jm.jm_manage_yn AS manage_yn,
 		jm.jm_dosiplan AS dosiplan,
 		jb.jb_yongdo AS yongdo,
@@ -1649,7 +1649,7 @@ SELECT count(*)
 		row_number() OVER() AS no,
 		TRIM(CONCAT(jb_sido_nm, ' ', jb_sgg_nm, ' ', jb_ri_nm, ' ', jb_jibun)) AS address,
 		jb_jibun AS jibun,
-		jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancel_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_bunhal_org_no, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
+		jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancle_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_bunhal_org_no, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
 		FROM
 		jisang_bunhal
 		where 1 = 1
@@ -1657,7 +1657,7 @@ SELECT count(*)
 		AND jb_bunhal_org_no = #{idx}
 		</if>
 		GROUP BY
-		jibun,  jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancel_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
+		jibun,  jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancle_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			,jb_bunhal_org_no
 		</if>
@@ -1678,7 +1678,7 @@ SELECT count(*)
 		row_number() OVER() AS no,
 		TRIM(CONCAT(jb_sido_nm, ' ', jb_sgg_nm, ' ',jb_emd_nm,' ', jb_ri_nm, ' ', jb_jibun)) AS address,
 		jb_jibun AS jibun,
-		jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancel_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_bunhal_org_no, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
+		jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancle_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_bunhal_org_no, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
 		FROM
 		jisang_bunhal
 		where 1 = 1
@@ -1686,7 +1686,7 @@ SELECT count(*)
 		AND jb_bunhal_org_no = #{idx}
 		</if>
 		GROUP BY
-		jibun,  jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancel_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
+		jibun,  jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancle_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			,jb_bunhal_org_no
 		</if>
@@ -1761,7 +1761,7 @@ SELECT count(*)
 		jmt_deunggiso,
 		jmt_dosiplan,
 		jmt_account_yn,
-		jmt_cancel_date,
+		jmt_cancle_date,
 		jmt_chuideuk_money,
 		jmt_gammoney,
 		jmt_remainder_money,
@@ -1823,14 +1823,14 @@ SELECT count(*)
 		jmt_deunggiso = EXCLUDED.jmt_deunggiso,
 		jmt_dosiplan = EXCLUDED.jmt_dosiplan,
 		jmt_account_yn = EXCLUDED.jmt_account_yn,
-		jmt_cancel_date = EXCLUDED.jmt_cancel_date,
+		jmt_cancle_date = EXCLUDED.jmt_cancle_date,
 		jmt_chuideuk_money = EXCLUDED.jmt_chuideuk_money,
 		jmt_gammoney = EXCLUDED.jmt_gammoney,
 		jmt_remainder_money = EXCLUDED.jmt_remainder_money,
-		jmt_cancel_bosang_yn = EXCLUDED.jmt_cancel_bosang_yn,
-		jmt_cancel_bosang_money = EXCLUDED.jmt_cancel_bosang_money,
-		jmt_cancel_reason = EXCLUDED.jmt_cancel_reason,
-		jmt_cancel_comment = EXCLUDED.jmt_cancel_comment;
+		jmt_cancle_bosang_yn = EXCLUDED.jmt_cancle_bosang_yn,
+		jmt_cancle_bosang_money = EXCLUDED.jmt_cancle_bosang_money,
+		jmt_cancle_reason = EXCLUDED.jmt_cancle_reason,
+		jmt_cancle_comment = EXCLUDED.jmt_cancle_comment;
 	</insert>
 	
 	<!-- 해지부분필수첨부파일 -->
@@ -1941,7 +1941,7 @@ SELECT count(*)
 		 ,jb_jasan_no
 		 </if>
 		 ,jb_gover_own_yn
-		 ,jb_cancel_yn
+		 ,jb_cancle_yn
 		 ,jb_bunhal_yn
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(bunhalDate)" >
 		 ,jb_bunhal_date
@@ -2043,7 +2043,7 @@ SELECT count(*)
 		 ,jb_jasan_no=#{togiJasanNo}
 		 </if>
 		 ,jb_gover_own_yn=#{togiGoverOwnYn}
-		 ,jb_cancel_yn=#{togiCancelYn}
+		 ,jb_cancle_yn=#{togiCancelYn}
 		 ,jb_bunhal_yn=#{bunhal_yn}
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(bunhalDate)" >
 		 ,jb_bunhal_date=#{bunhalDate}::date
@@ -2077,7 +2077,7 @@ SELECT count(*)
 
 		update  jisang_master set
 		 
-		 jm_cancel_yn=#{togiCancelYn}
+		 jm_cancle_yn=#{togiCancelYn}
 		 ,jm_bunhal_yn=#{bunhal_yn}
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(bunhalDate)" >
 		 ,jm_bunhal_date=#{bunhalDate}::date
@@ -2176,15 +2176,15 @@ SELECT count(*)
 		jm_deunggi_no = #{jm_deunggi_no},
 		jm_deunggiso = #{jm_deunggiso},
 		jm_dosiplan = #{jm_dosiplan},
-		jm_cancel_date = TO_DATE(#{jm_cancel_date}, 'YYYY-MM-DD'),
+		jm_cancle_date = TO_DATE(#{jm_cancel_date}, 'YYYY-MM-DD'),
 		jm_chuideuk_money = #{jm_chuideuk_money},
 		jm_gammoney = #{jm_gammoney},
 		jm_remainder_money = #{jm_remainder_money},
-		jm_cancel_bosang_yn = #{jm_cancel_bosang_yn},
-		jm_cancel_bosang_money = #{jm_cancel_bosang_money},
-		jm_cancel_reason = #{jm_cancel_reason},
-		jm_cancel_comment = #{jm_cancel_comment},
-		jm_cancel_yn = 'Y'
+		jm_cancle_bosang_yn = #{jm_cancel_bosang_yn},
+		jm_cancle_bosang_money = #{jm_cancel_bosang_money},
+		jm_cancle_reason = #{jm_cancel_reason},
+		jm_cancle_comment = #{jm_cancel_comment},
+		jm_cancle_yn = 'Y'
 		WHERE jm_jisang_no = #{jm_jisang_no}
 		AND jm_idx = cast(#{jm_idx} as integer)
 	</update>
@@ -2212,15 +2212,15 @@ SELECT count(*)
 		jm_deunggi_no = #{DEUNGGINO},
 		jm_deunggiso = #{DEUNGGISO},
 		jm_dosiplan = #{DOSIPLAN},
-		jm_cancel_date = TO_DATE(#{jm_cancel_date}, 'YYYY-MM-DD'), <!--해지일자-->
+		jm_cancle_date = TO_DATE(#{jm_cancel_date}, 'YYYY-MM-DD'), <!--해지일자-->
 		jm_chuideuk_money = #{jm_chuideuk_money}, <!--취득금액-->
 		jm_gammoney = #{jm_gammoney}, <!--감가삼각충당금-->
 		jm_remainder_money = #{jm_remainder_money}, <!--?-->
-		jm_cancel_bosang_yn = #{jm_cancel_bosang_yn}, <!--?-->
-		jm_cancel_bosang_money = #{jm_cancel_bosang_money}, <!--?-->
-		jm_cancel_reason = #{jm_cancel_reason}, <!--?-->
-		jm_cancel_comment = #{jm_cancel_comment}, <!--?-->
-		jm_cancel_yn = 'Y',
+		jm_cancle_bosang_yn = #{jm_cancel_bosang_yn}, <!--?-->
+		jm_cancle_bosang_money = #{jm_cancel_bosang_money}, <!--?-->
+		jm_cancle_reason = #{jm_cancel_reason}, <!--?-->
+		jm_cancle_comment = #{jm_cancel_comment}, <!--?-->
+		jm_cancle_yn = 'Y',
 		jm_special_cont=#{SPECIALCONT}
 		WHERE jm_jisang_no = #{JISANGNO} <!--지상권번호-->
 		
@@ -2435,7 +2435,7 @@ SELECT count(*)
 		 ,jb_pyeonib_area
 		 ,jb_jasan_no
 		 ,jb_gover_own_yn
-		 ,jb_cancel_yn
+		 ,jb_cancle_yn
 		 ,jb_bunhal_yn
 		 ,jb_bunhal_date
 		 ,jb_bunhal_reason
@@ -2498,10 +2498,10 @@ SELECT count(*)
 	<select id="selectJisangDetailList" parameterType="HashMap" resultType="java.util.HashMap">
 		SELECT * FROM jisang_master jm 
 LEFT JOIN jisang_toja_order jto ON jto.jto_jisang_no=jm.jm_jisang_no
-LEFT JOIN plms_approval ja ON ja.pa_dockey=jm.jm_dockey
+
 LEFT JOIN jijuk_2024 j2 ON j2.pnu=jm.jm_pnu
 WHERE 1=1
-		AND (JM.BUNHAL_YN IS NULL OR JM.BUNHAL_YN != 'Y' OR JM.BUNHAL_ORG_NO IS NOT NULL)
+		AND (JM.jm_BUNHAL_YN IS NULL OR JM.jm_BUNHAL_YN != 'Y' OR JM.jm_BUNHAL_ORG_NO IS NOT NULL)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)" >
 			AND jm.jm_jisang_no =#{JISANGNO}
 		</if>
@@ -2549,25 +2549,25 @@ WHERE 1=1
        JM.jm_deunggi_no as DEUNGGI_NO,
        JM.jm_deunggiso as DEUNGGISO,
        JM.jm_jasan_no as JASAN_NO,
-       JM.jm_cancel_yn as CANCLE_YN,
+       JM.jm_cancle_yn as CANCLE_YN,
        (CASE
-            WHEN JM.jm_CANCEL_DATE IS NOT NULL THEN TO_CHAR(JM.jm_CANCEL_DATE, 'YYYY-MM-DD')
+            WHEN JM.jm_CANCLE_DATE IS NOT NULL THEN TO_CHAR(JM.jm_cancle_DATE, 'YYYY-MM-DD')
             ELSE TO_CHAR(JT.CANCLE_DATE, 'YYYY-MM-DD')
         END) AS CANCLE_DATE,
        (CASE
-            WHEN JM.jm_CANCEL_EMPCD IS NOT NULL THEN JM.jm_CANCEL_EMPCD
+            WHEN JM.jm_CANCLE_EMPCD IS NOT NULL THEN JM.jm_cancle_EMPCD
             ELSE JT.CANCLE_EMPCD
         END) AS CANCLE_EMPCD,
        (CASE
-            WHEN JM.jm_CANCEL_NAME IS NOT NULL THEN JM.jm_CANCEL_NAME
+            WHEN JM.jm_CANCLE_NAME IS NOT NULL THEN JM.jm_cancle_NAME
             ELSE JT.CANCLE_NAME
         END) AS CANCLE_NAME,
        (CASE
-            WHEN JM.jm_CANCEL_BOSANG_YN IS NOT NULL THEN JM.jm_CANCEL_BOSANG_YN
+            WHEN JM.jm_CANCLE_BOSANG_YN IS NOT NULL THEN JM.jm_cancle_BOSANG_YN
             ELSE JT.CANCLE_BOSANG_YN
         END) AS CANCLE_BOSANG_YN,
        (CASE
-            WHEN JM.jm_CANCEL_BOSANG_MONEY IS NOT NULL THEN TRIM(TO_CHAR(JM.jm_CANCEL_BOSANG_MONEY, '999,999,999,999,999'))
+            WHEN JM.jm_CANCLE_BOSANG_MONEY IS NOT NULL THEN TRIM(TO_CHAR(JM.jm_cancle_BOSANG_MONEY, '999,999,999,999,999'))
             ELSE TRIM(TO_CHAR(JT.CANCLE_BOSANG_MONEY, '999,999,999,999,999'))
         END) AS CANCLE_BOSANG_MONEY,
        JIJUK_MST.GOVER_OWN_YN,
@@ -2643,7 +2643,7 @@ LEFT JOIN JIJUK_2024 JIJUK_MST ON JM.jm_PNU = JIJUK_MST.PNU
 		JB.jb_PYEONIB_AREA,
 		JB.jb_JASAN_NO,
 		
-		JB.jb_CANCEL_YN,
+		JB.jb_CANCLE_YN,
 		JB.jb_GOVER_OWN_YN,
 		JB.jb_BUNHAL_YN,
 		TO_CHAR(JB.jb_BUNHAL_DATE, 'YYYY-MM-DD') as BUNHAL_DATE,
@@ -2755,16 +2755,16 @@ FROM jisang_permit_master
 	
 	<update id="insertJisangTerminationAdd" parameterType="HashMap">
 		UPDATE jisang_master SET
-		jm_cancel_bosang_money = #{CANCLE_BOSANG_MONEY}
-		,jm_cancel_bosang_yn = #{CANCLE_YES}
-		,jm_cancel_date = TO_DATE(#{STARTDAY},'YYYYMMDDHH24MISS')
+		jm_cancle_bosang_money = #{CANCLE_BOSANG_MONEY}
+		,jm_cancle_bosang_yn = #{CANCLE_YES}
+		,jm_cancle_date = TO_DATE(#{STARTDAY},'YYYYMMDDHH24MISS')
 		,jm_chuideuk_money = #{CHUIDEUKMONEY}
 		,jm_gammoney = #{GAMMONEY}
 		,jm_remainder_money = #{REMAINDERMONEY}
-		,jm_cancel_empcd = #{EMPCD}
-		,jm_cancel_name = #{NAME}
-		,jm_cancel_reason = #{CANCLE_REASON}
-		,jm_cancel_comment = #{CANCLE_COMMENT}
+		,jm_cancle_empcd = #{EMPCD}
+		,jm_cancle_name = #{NAME}
+		,jm_cancle_reason = #{CANCLE_REASON}
+		,jm_cancle_comment = #{CANCLE_COMMENT}
 		WHERE jm_jisang_no = #{JISANGNO}
 	</update>
 	
@@ -3354,16 +3354,16 @@ DELETE from POTENTIAL_ISSUE
 	
 	<update id="insertJisangTerminationTemp" parameterType="HashMap">
 		UPDATE JISANG_MASTER SET
-		jm_CANCEL_BOSANG_MONEY = #{CANCLE_BOSANG_MONEY}
-		,jm_CANCEL_BOSANG_YN = #{CANCLE_YES}
-		,jm_CANCEL_DATE = TO_DATE(#{STARTDAY},'YYYYMMDDHH24MISS')
+		jm_CANCLE_BOSANG_MONEY = #{CANCLE_BOSANG_MONEY}
+		,jm_cancle_BOSANG_YN = #{CANCLE_YES}
+		,jm_CANCLE_DATE = TO_DATE(#{STARTDAY},'YYYYMMDDHH24MISS')
 		,jm_CHUIDEUK_MONEY = #{CHUIDEUKMONEY}
 		,jm_GAMMONEY = #{GAMMONEY}
 		,jm_REMAINDER_MONEY = #{REMAINDERMONEY}
-		,jm_CANCEL_EMPCD = #{EMPCD}
-		,jm_CANCEL_NAME = #{NAME}
-		,jm_CANCEL_REASON = #{CANCLE_REASON}
-		,jm_CANCEL_COMMENT = #{CANCLE_COMMENT}
+		,jm_cancle_EMPCD = #{EMPCD}
+		,jm_CANCle_NAME = #{NAME}
+		,jm_cancle_REASON = #{CANCLE_REASON}
+		,jm_CANCLE_COMMENT = #{CANCLE_COMMENT}
 		WHERE JISANG_NO = #{JISANGNO}
 	</update>
 	<select id="selectJisangPmtNextNo" resultType="HashMap" parameterType="HashMap">
@@ -3425,18 +3425,18 @@ DELETE from POTENTIAL_ISSUE
 	
 	<insert id="insertCancelFile" parameterType="HashMap">
            
-			INSERT INTO jisang_cancel_ATCFILE(manage_no, SEQ	, FILE_PATH, FILE_NM, FILE_GUBUN)
-			VALUES (#{MANAGE_NO},nextval('jisang_cancel_atcfile_seq'), #{FILE_PATH}, #{FILE_NM}, #{FILE_GUBUN})
+			INSERT INTO jisang_cancle_ATCFILE(manage_no, SEQ	, FILE_PATH, FILE_NM, FILE_GUBUN)
+			VALUES (#{MANAGE_NO},nextval('jisang_cancle_atcfile_seq'), #{FILE_PATH}, #{FILE_NM}, #{FILE_GUBUN})
 			
 	</insert>
 	<update id="updateCancelFile" parameterType="HashMap">
            
-			update jisang_cancel_ATCFILE set FILE_PATH=#{FILE_PATH},FILE_NM=#{FILE_NM}
+			update jisang_cancle_ATCFILE set FILE_PATH=#{FILE_PATH},FILE_NM=#{FILE_NM}
 			where manage_no=#{MANAGE_NO} and file_gubun=#{FILE_GUBUN}::varchar
 			
 	</update>
 	<select id="selectCancelFileCount" resultType="integer" parameterType="HashMap">
-		select count(*) from jisang_cancel_ATCFILE where manage_no=#{MANAGE_NO} and file_gubun = #{FILE_GUBUN}::varchar
+		select count(*) from jisang_cancle_ATCFILE where manage_no=#{MANAGE_NO} and file_gubun = #{FILE_GUBUN}::varchar
 		
 	</select>
 	<delete id="deleteJisangAtcFile" parameterType="java.util.HashMap">

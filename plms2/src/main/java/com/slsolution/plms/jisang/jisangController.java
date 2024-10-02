@@ -735,6 +735,81 @@ public class jisangController {
 		}
 	
 	
+	
+
+	// 지상권 사용승락 상세조회
+	@RequestMapping(value="/selectJisangPmtDetailList", method = {RequestMethod.GET, RequestMethod.POST}) 
+	public void selectJisangPmtDetailList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ArrayList list = new ArrayList();
+		ArrayList togiList = new ArrayList();
+		ArrayList fileList = new ArrayList();
+
+		ParameterParser parser = new ParameterParser(request);
+		String PMT_NO = parser.getString("PMT_NO", "");
+		String loginKey = String.valueOf(request.getSession().getAttribute("loginKey"));
+		String str_UserGroup = String.valueOf(request.getSession().getAttribute("user_rights_GROUP"));
+
+		String str_result = "Y";
+		HashMap map = new HashMap();
+
+		try {
+
+			HashMap params = new HashMap();
+			params.put("PMT_NO", PMT_NO);
+
+			list = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_MASTER", params);
+			togiList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_TOGI", params);
+			fileList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_FILE", params);
+
+			// 문서 URL조회
+			ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectDocInfo", params);
+			// System.out.println(" echolist.size()=" + echolist.size());
+			if (null != echolist && echolist.size() > 0) {
+				String str_STATUS = String.valueOf(((HashMap) echolist.get(0)).get("STATUS"));
+				String str_OUT_FLAG = String.valueOf(((HashMap) echolist.get(0)).get("OUT_FLAG"));
+				String str_OUT_URL = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+				map.put("STATUS", str_STATUS);
+				map.put("OUT_FLAG", str_OUT_FLAG);
+				map.put("OUT_URL", str_OUT_URL);
+			}
+		} catch (Exception e) {
+			str_result = "N";
+			e.printStackTrace();
+		}
+
+		if (list != null)
+			map.put("count", list.size());
+		else
+			map.put("count", 0);
+
+		if (togiList != null)
+			map.put("togiCount", togiList.size());
+		else
+			map.put("togiCount", 0);
+
+		if (fileList != null)
+			map.put("fileCount", fileList.size());
+		else
+			map.put("fileCount", 0);
+
+		map.put("message", str_result);
+		map.put("list", list);
+		map.put("togiList", togiList);
+		map.put("fileList", fileList);
+		map.put("loginKey", loginKey);
+		map.put("userGroup", str_UserGroup);
+
+		JSONObject jo = new JSONObject(map);
+
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+	
 	// 지상권 사용승락 상신
 	@Transactional
 	@RequestMapping(value="/selectJisangPmtDetailListAppoval", method = {RequestMethod.GET, RequestMethod.POST}) 
@@ -4258,24 +4333,33 @@ log.info("gubun:"+gubun);
 //		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 		ModelAndView mav=new ModelAndView();
-		
+		ArrayList list = new ArrayList();
+		ArrayList togiList = new ArrayList();
+		ArrayList fileList = new ArrayList();
 		
 //        List<TestDTO> list = new ArrayList<TestDTO>();
 //        list = dbService.getList();
 		HashMap params = new HashMap();
-		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		//ArrayList<HashMap>  list=new ArrayList<HashMap>();
 		
 		String idx = httpRequest.getParameter("idx");
 		String index = httpRequest.getParameter("index");
 		
 		params.put("idx",idx);
 		params.put("manage_no",idx);
+		params.put("PMT_NO",idx);
 		params.put("index",index);
 		log.info("params:"+params);
 		
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
 		//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
 		
+		 list = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_MASTER", params);
+		togiList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_TOGI", params);
+		fileList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_FILE", params);
+		log.info("list:"+list);
+		log.info("togiList:"+togiList);
+		log.info("fileList:"+fileList);
 		//log.info("data:"+data);
 
       	mav.addObject("resultData", data.get(0));
@@ -4330,7 +4414,7 @@ log.info("gubun:"+gubun);
 		
 			params.put("JISANGNO", jisangNo);
 			log.info("params:"+params);
-			ArrayList<HashMap<String, String>> List =(ArrayList) mainService.selectQuery("jisangSQL.selectJisangDetailListNew", params);
+			ArrayList<HashMap<String, String>> List =(ArrayList) mainService.selectQuery("jisangSQL.selectJisangDetailList", params);
 			ArrayList<HashMap<String, String>> soyuList =(ArrayList) mainService.selectQuery("jisangSQL.selectJisangDetailSoyu", params);
 			for (HashMap tmpMap : List) {
 				tmpMap.put("soyuList", soyuList);
