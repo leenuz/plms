@@ -3696,4 +3696,38 @@ log.info("params:"+params);
 		    return responseMap; 
 
 		}
+		
+		// 점용 마스터 수정 - 소속 토지 정보 - 필지 정보 버튼 - 엑셀 다운로드용
+		@PostMapping("/selectPnuExcelDownload")
+		public ResponseEntity<Map<String, Object>> selectPnuExcelDownload(@RequestBody Map<String, Object> requestData) throws Exception {
+		    // 요청 데이터에서 pnu 리스트 추출
+		    ArrayList<String> pnuList = (ArrayList<String>) requestData.get("pnuData");
+		    log.info("pnuList: " + pnuList);
+
+		    // 결과 데이터를 저장할 리스트
+		    ArrayList<HashMap> resultData = new ArrayList<>();
+
+		    // 각 pnu에 대해 반복문을 돌면서 데이터를 가져옴
+		    for (String pnu : pnuList) {
+		        HashMap<String, Object> params = new HashMap<>();
+		        params.put("pnu", pnu);
+
+		        // SQL 쿼리 실행하여 pnu에 해당하는 데이터 가져오기
+		        ArrayList<HashMap> singlePnuData = mainService.selectQuery("goverSQL.selectPnuData", params);
+		        log.info("singlePnuData: " + singlePnuData);
+		        
+		        // 해당 pnu의 데이터를 resultData에 추가
+		        if (singlePnuData != null && !singlePnuData.isEmpty()) {
+		            resultData.addAll(singlePnuData);
+		        }
+		    }
+
+		    // 결과를 담은 Map 객체 생성
+		    Map<String, Object> response = new HashMap<>();
+		    response.put("resultData", resultData);
+
+		    // 결과 반환
+		    return new ResponseEntity<>(response, HttpStatus.OK);
+		}
+
 }

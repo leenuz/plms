@@ -386,6 +386,85 @@ function updateAdmOfficeList(jisaValue, pmtOfficeValue) {
     });
 }
 
+
+// 소속토지정보 - 필지 정보 - 엑셀 다운로드 팝업열기
+$('#landInfoLabel').on('click', function() {
+	downloadExcelForLand();
+});
+
+
+// 소속토지정보 - 필지 정보 엑셀 다운로드 함수
+function downloadExcelForLand() {
+
+	var uls = $("#goverUlDiv .contents");
+	console.log(uls);
+
+	var goverNo = $('#gover_no').val();
+	console.log(goverNo);
+
+	var pnuArr = [];
+	for (var i = 0; i < uls.length; i++) {
+		var pnu = $(uls[i]).find('#pnu').val(); // 각 ul 내부의 pnu 값을 가져오기
+		pnuArr.push(pnu);
+	}
+	
+	var allData = {"pnuData": pnuArr };
+	console.log(allData);
+	
+	$.ajax({
+		url: "/gover/selectPnuExcelDownload",  // PNU 기준으로 데이터를 가져오는 API
+		data: JSON.stringify(allData),
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function(rt) {
+			const data = rt.resultData;
+			console.log(data); // 서버에서 받아온 데이터 확인
+			
+			// 엑셀에 담을 데이터 준비
+			var data1 = [];
+			var rowTitle = ['관리기관', '주소', 'PNU', '점용길이 (m)', '관로면적 (㎡)'];
+			data1.push(rowTitle);
+			
+			// 서버에서 받아온 데이터를 이용해 행 생성
+			for (var i = 0; i < uls.length; i++) {
+				var addr = $(uls[i]).find("#addr").val(); // 주소 값
+				var pnuNo = $(uls[i]).find("#pnu").val(); // PNU 값
+				
+				// 서버에서 받아온 데이터를 pnuNo에 맞춰 매칭
+				var matchingData = data.find(function(item) {
+					return item.pnu === pnuNo; // pnu가 일치하는지 확인
+				});
+
+				// 매칭되는 데이터가 있으면 해당 데이터를 사용, 없으면 빈값 처리
+				var contact_length = matchingData ? matchingData.contact_length : "";
+				var contact_area = matchingData ? matchingData.contact_area : "";
+
+				// 행 데이터 추가
+				var rowData = [goverNo, addr, pnuNo, contact_length, contact_area];
+				data1.push(rowData);
+			}
+			
+			// 엑셀 파일 생성
+			console.log(data1);
+			var worksheet = XLSX.utils.aoa_to_sheet(data1);
+			var workbook = XLSX.utils.book_new();
+			XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+			// goverNo를 활용해 파일 이름 동적으로 생성
+			var fileName = goverNo + '_필지정보.xlsx';
+
+			// 엑셀 파일 다운로드
+			XLSX.writeFile(workbook, fileName);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.error("Error: ", textStatus, errorThrown);
+		}
+	});
+}
+
+
 // 소속토지정보 - 엑셀 다운로드
 function downloadExcel() {
 
@@ -430,6 +509,402 @@ function downloadExcel() {
 	// 4. 엑셀 파일 다운로드
 	XLSX.writeFile(workbook, '소속토지정보.xlsx');
 }
+
+
+// 엑셀 업로드 열기, 닫기
+$(document).ready(function() {
+	// 허가관청 이력보기 버튼 클릭 시 팝업 열기
+	$('.excelUpBtn').on('click', function() {
+		$('#exceluploadPopDiv').fadeIn();
+		$('#exceluploadPopup').addClass('active');
+	});
+
+	// 닫기 버튼 또는 상단 X 버튼 클릭 시 팝업 닫기
+	$('#changehistoryPopup').on('click', '.closeBtn, .topCloseBtn', function() {
+		$('#exceluploadPopDiv').fadeOut();
+		$('#exceluploadPopup').removeClass('active');
+	});
+});
+
+
+// 엑셀파일 전송 버튼 동작
+$(document).ready(function() {
+	$(document).on("click", "#excelUpload", function() {
+		console.log("----------------excelUpload click-------------");
+
+		var fileInput = $("#excelPopup_file")[0]; //input file 객체를 가져온다.
+		var file = fileInput.files[0]
+		console.log(file);
+		if (!file) {
+			alert("Please select an Excel file first.");
+			return;
+		}
+
+		var i, f;
+		var headers;
+		var EXCEL_JSON;
+
+		f = file;
+
+		var reader = new FileReader(); //FileReader를 생성한다.         
+
+		//성공적으로 읽기 동작이 완료된 경우 실행되는 이벤트 핸들러를 설정한다.
+		reader.onload = function(e) {
+
+			// ...엑셀파일을 읽어서 처리하는 로직...
+			var data = e.target.result; //FileReader 결과 데이터(컨텐츠)를 가져온다.
+
+			//바이너리 형태로 엑셀파일을 읽는다.
+			var workbook = XLSX.read(data, { type: 'binary' });
+			var worksheet = workbook.Sheets[workbook.SheetNames[0]];
+			/* var i=0;
+			for (var cell in worksheet) {
+				 if (worksheet.hasOwnProperty(cell) && cell[0] !== '!') { // 메타데이터 제외
+						 worksheet[cell].t = 's'; // 셀 타입을 무조건 텍스트('s')로 설정
+			 }
+			} */
+
+			EXCEL_JSON = XLSX.utils.sheet_to_json(worksheet, { raw: false, cellDates: false });
+			//엑셀파일의 시트 정보를 읽어서 JSON 형태로 변환한다.
+			workbook.SheetNames.forEach(function(item, index, array) {
+				headers = get_header_row(workbook.Sheets[item]);
+				console.log(headers);
+				/* console.log(item);
+				console.log(index);
+				console.log(array);
+			  
+							EXCEL_JSON = XLSX.utils.sheet_to_json(workbook.Sheets[item]);
+						 console.log(EXCEL_JSON); */
+
+			});//end. forEach */
+
+			//excel 내용 header와 비교해서 공백이라 안넘어온 header 빈정보 삽입
+			for (j = 0; j < headers.length; j++) {
+				for (jj = 0; jj < EXCEL_JSON.length; jj++) {
+
+					if (!EXCEL_JSON[jj].hasOwnProperty(headers[j])) {
+
+						//	console.log(jj+"="+headers[j]);
+						/* 
+						if (!isDate(EXCEL_JSON[jj].JIBUN)){
+							console.log(jj+":"+EXCEL_JSON[jj].JIBUN);
+						} */
+						EXCEL_JSON[jj][headers[j]] = "";
+					}
+				}
+			}
+			console.log(EXCEL_JSON);
+
+			for (var i = 0; i < EXCEL_JSON.length; i++) {
+				//if (i == 0) {
+				var openerEle = $("#goverUlDiv");
+				var openerTargetEle = openerEle.find('input[id="goverIndex"][value="0"]');
+				//console.log(openerTargetEle.parent().parent().html());
+				console.log(EXCEL_JSON[i]["관리기관"]);
+				openerTargetEle.parent().parent().find("#admOfficeBtn").text(EXCEL_JSON[i]["관리기관"]);
+				openerTargetEle.parent().parent().find("#goverOwnYnBtn").text(EXCEL_JSON[i]["국공유지여부"]);
+				openerTargetEle.parent().parent().find("#addr").val(EXCEL_JSON[i]["주소"]);
+				openerTargetEle.parent().parent().find("#pnu").val(EXCEL_JSON[i]["PNU"]);
+				openerTargetEle.parent().parent().find("#jimok").text(EXCEL_JSON[i]["지목"]);
+				openerTargetEle.parent().parent().find("input[name='gover_length']").val(EXCEL_JSON[i]["점용연장"]);
+				openerTargetEle.parent().parent().find("input[name='gover_area']").val(EXCEL_JSON[i]["점용면적"]);
+				openerTargetEle.parent().parent().find("#pipeOverlapYnBtn").text(EXCEL_JSON[i]["관로일치여부"]);
+
+				//}
+				//else addRowExcel(EXCEL_JSON[i]);
+				addRowExcel(EXCEL_JSON[i])
+			}
+		}
+
+		reader.readAsBinaryString(f);
+
+	})
+
+	function get_header_row(sheet) {
+		var headers = [];
+		var range = XLSX.utils.decode_range(sheet['!ref']);
+		var C, R = range.s.r; /* start in the first row */
+		/* walk every column in the range */
+		for (C = range.s.c; C <= range.e.c; ++C) {
+			var cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })] /* find the cell in the first row */
+
+			var hdr = "UNKNOWN " + C; // <-- replace with your desired default 
+			if (cell && cell.t) hdr = XLSX.utils.format_cell(cell);
+
+			headers.push(hdr);
+		}
+		return headers;
+	}
+
+
+	function addRowExcel(obj) {
+		console.log("-------------addrowExcel-----------");
+		console.log(obj);
+
+		var thisUl = $(this).parent().parent().parent().parent();
+		//console.log(thisUl);
+		var addUl = $("#row-template").html();
+
+		//addUl.find()
+
+		var addDiv = $('<ul class="contents" id="goverUl">' + addUl + '</ul>');
+
+		console.log(addDiv.find("#admOfficeBtn").text());
+		addDiv.find("#admOfficeBtn").text(obj["관리기관"]);
+		addDiv.find("#goverOwnYnBtn").text(obj["국공유지여부"]);
+		addDiv.find("#addr").val(obj["주소"]);
+		addDiv.find("#pnu").val(obj["PNU"]);
+		addDiv.find("#jimok").text(obj["지목"]);
+		addDiv.find("input[name='gover_length']").val(obj["점용연장"]);
+		addDiv.find("input[name='gover_area']").val(obj["점용면적"]);
+		addDiv.find("#pipeOverlapYnBtn").text(obj["관로일치여부"]);
+
+		addDiv.find("#goverIndex").val(index);
+		//console.log($(addDiv).html());
+
+		//멀티체크박스 클릭을 위한 조치
+		var pipe = addDiv.find('#masterRegSelectBox_');
+		pipe.attr({ 'class': 'masterRegSelectBox_' + index, 'name': 'masterRegSelectBox_' + index, 'id': 'masterRegSelectBox_' + index });
+		var label1 = pipe.closest('li').find('label').first();
+		label1.attr({ 'for': 'masterRegSelectBox_' + index, 'name': 'masterRegSelectBox_' + index });
+
+		// 순번 적용
+		addDiv.find('input[readonly]').attr('placeholder', index); // 순번 적용
+		index++; // index 값을 증가시켜 다음 버튼에 적용
+
+
+		$("#goverUlDiv").append(addDiv);
+
+		// 추가된 모든 행에 대해 순번 재할당
+		updateRowNumbers();
+
+		// 추가된 행에도 관리기관 목록을 동기화
+		const selectedPmtOffice = $("#masterRegSelectBox02").val();  // 현재 허가관청의 값
+		if (selectedPmtOffice) {
+			updateGoverAdmOfficeForRow(addDiv, selectedPmtOffice);  // 추가된 행에도 관리기관 목록을 적용
+		}
+	}
+
+});
+
+/*******엑세 업로드 팝업 스크립트 시작********/
+//x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+const exceluploadPopupOpen = document.getElementById("exceluploadPopup");
+if (exceluploadPopupOpen) {
+	exceluploadPopupOpen.querySelectorAll(".topCloseBtn, .finalBtn").forEach(function(btn) {
+		btn.addEventListener("click", () => {
+
+			exceluploadPopupOpen.classList.remove("active");
+
+		});
+	});
+}
+
+// 파일 첨부 기본 모습
+
+const defaultExcelFileUploadWrap = document.querySelectorAll('.popfileUploadDisplay');
+
+defaultExcelFileUploadWrap[0].classList.add('active');
+
+// 파일 첨부시 모습 변경, x버튼 클릭시 비우기
+
+const excelFileEvent = () => {
+
+	if (document.getElementById('excelPopup_file')) {
+
+		const excelPopup_myPcFiles = document.getElementById('excelPopup_file');
+		const excelFiles = excelPopup_myPcFiles.files;
+		// input[type file]을 가진 제일 큰 부모
+		const excelFileInfo = excelPopup_myPcFiles.closest('.excelFileInfo');
+		// 업로드시 보이는 영역
+		const popfileUploadAfterWrap = excelFileInfo.querySelector('.popfileUploadAfter');
+		const allPopupExcelContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+
+		var excelpopfileInfoName = '';
+		var excelpopfileInfoSize = '';
+		var excelpopfileInfoType = '';
+
+		excelPopup_myPcFiles.addEventListener('change', function() {
+
+			// 기존의 ul 초기화
+			const popExistContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+
+			popExistContents.forEach((list) => {
+				list.remove();
+			})
+
+			// 삭제 잘 되었는지 확인
+			const newPopExistContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+			console.log(newPopExistContents.length);
+
+			if (excelPopup_myPcFiles.files.length > 0) {
+
+				for (let i = 0; i <= excelPopup_myPcFiles.files.length - 1; i++) {
+					const thisExcelPopFileName = excelPopup_myPcFiles.files[i].name;
+					const thisExcelPopFileSize = excelPopup_myPcFiles.files[i].size;
+					const thisExcelPopFileType = excelPopup_myPcFiles.files[i].type;
+
+					// 사이즈를 바꾸자
+					const excelformattedSize = byteTransformForPop(thisExcelPopFileSize);
+
+					// 문자열에 변수를 담자
+					excelpopfileInfoName = thisExcelPopFileName;
+					excelpopfileInfoSize = excelformattedSize;
+					excelpopfileInfoType = thisExcelPopFileType;
+
+					// 파일 지우는 버튼용 li
+
+					const popdeleteLi = '<li class="popbtnbox"><button class="popfileDeleteBtn"></button></li>';
+
+					// 파일 아이콘, 파일명 들어가는 li
+					const popfilenameBoxLi = `<li class="popcontent popfilenameBox"><figure class="poptypeIcon ${excelpopfileInfoName}"></figure><p class="popfileNameText">${excelpopfileInfoName}</p></li >`;
+
+					// 업로드 상태
+					const popuploadStatusLi = '<li class="popcontent"><p>-</p></li>';
+
+					// 파일 크기 들어가는 li
+					const popfileSizeLi = `<li class="popcontent">
+                    <p class="popfileSizeText"> ${excelpopfileInfoSize} </p>
+                </li>`;
+
+					const listBox = popdeleteLi + popfilenameBoxLi + popuploadStatusLi + popfileSizeLi;
+
+					// ul.contents 만들기
+					const popContentsUl = document.createElement('ul');
+					popContentsUl.classList.add('popcontents');
+
+					popContentsUl.innerHTML = listBox;
+
+					popfileUploadAfterWrap.appendChild(popContentsUl);
+
+
+					// 값 잘 담겼는지 확인
+
+					console.log('담긴 파일 이름:' + thisExcelPopFileName);
+
+
+					// 다음 걸 받기 위해 비워주기
+
+					excelpopfileInfoName = '';
+					excelpopfileInfoSize = '';
+					excelpopfileInfoType = '';
+
+				}
+
+
+				defaultExcelFileUploadWrap.forEach((wrap) => {
+					wrap.classList.remove('active');
+				})
+				defaultExcelFileUploadWrap[1].classList.add('active');
+
+				if (excelPopup_myPcFiles.files.length > 2) {
+					popfileUploadAfterWrap.classList.add('scroll');
+				} else {
+					popfileUploadAfterWrap.classList.remove('scroll');
+				}
+
+
+			} else {
+
+				excelPopup_myPcFiles.value = '';
+				defaultExcelFileUploadWrap.forEach((wrap) => {
+					wrap.classList.remove('active');
+				})
+				defaultExcelFileUploadWrap[0].classList.add('active');
+			}
+		})
+
+		// 개별 delbtn 누르면 생기는 이벤트
+		popfileUploadAfterWrap.addEventListener('click', function(event) {
+			if (event.target.classList.contains('popfileDeleteBtn')) {
+				const popfileDeleteBtns = popfileUploadAfterWrap.querySelectorAll('.popfileDeleteBtn');
+				const popfileDelBtn = event.target;
+				const popnearbyContents = event.target.closest('.popcontents');
+				const popfileNameToRemove = popnearbyContents.querySelector('.popfileNameText').textContent;
+
+				// 파일명이랑 틀린 것만 저장하는 함수
+				removeFileforPop(popfileNameToRemove);
+				popnearbyContents.remove();
+
+				for (let b = 0; b < excelPopup_myPcFiles.files.length; b++) {
+					console.log('현재 input[type=file]의 files name: ' + excelPopup_myPcFiles.files[b].name);
+				}
+
+				console.log('남은 파일의 개수:' + excelPopup_myPcFiles.files.length);
+
+				if (excelPopup_myPcFiles.files.length < 3) {
+					popfileUploadAfterWrap.classList.remove('scroll');
+				}
+
+				// 현재 선택된 파일이 없으면 input 값 비우기
+				if (excelPopup_myPcFiles.files.length === 0) {
+					excelPopup_myPcFiles.value = '';
+					defaultExcelFileUploadWrap.forEach((wrap) => {
+						wrap.classList.remove('active');
+					});
+					defaultExcelFileUploadWrap[0].classList.add('active');
+				}
+			}
+
+
+		})
+
+		// 전체 삭제 버튼
+		const popallDeleteFileBtn = popfileUploadAfterWrap.querySelector('.popAllDeleteFileBtn');
+
+		popallDeleteFileBtn.addEventListener('click', function() {
+
+			const nowAllPopcontents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+			nowAllPopcontents.forEach((contents) => {
+				contents.remove();
+			})
+
+			excelPopup_myPcFiles.value = '';
+
+
+			// 값 잘 사라졌는지 확인
+			console.log(excelPopup_myPcFiles.value);
+
+
+			if (excelPopup_myPcFiles.files.length == 0) {
+				excelPopup_myPcFiles.value = '';
+				defaultExcelFileUploadWrap.forEach((wrap) => {
+					wrap.classList.remove('active');
+				})
+				defaultExcelFileUploadWrap[0].classList.add('active');
+				popfileUploadAfterWrap.classList.remove('scroll');
+			}
+		})
+
+		// 용량 크기 변환하는 함수
+		function byteTransformForPop(bytes) {
+			const dataSizeforPop = ['Bytes', 'KB', 'MB', 'GB', 'TB']
+
+			if (bytes === 0) return 'not available';
+
+			const d = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+			if (d === 0) return `${bytes} ${dataSizeforPop[d]}`;
+			return `${(bytes / (1024 ** d)).toFixed(1)} ${dataSizeforPop[d]}`;
+		}
+
+		// 파일 삭제처리 하는 함수
+		const removeFileforPop = (popfileNameToRemove) => {
+			const filesArrayforPop = Array.from(excelPopup_myPcFiles.files);
+			const popNewDataTransfer = new DataTransfer();
+			filesArrayforPop.forEach(file => {
+				if (file.name !== popfileNameToRemove) {
+					popNewDataTransfer.items.add(file);
+				}
+			});
+			excelPopup_myPcFiles.files = popNewDataTransfer.files; // 새로운 files 설정
+		};
+	}
+
+}
+
+excelFileEvent();
+/*******엑세 업로드 팝업 스크립트 끝********/
+
 
 // 행 추가 시 관리기관 셀렉트 박스 동기화
 function updateGoverAdmOffice(data) {

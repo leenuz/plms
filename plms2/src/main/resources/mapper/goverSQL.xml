@@ -2237,5 +2237,11 @@ UPDATE SYS_CODE
 	    delete from SYS_OFFICEMNG  
 	    where so_adm_seq= #{ADM_SEQ, jdbcType=BIGINT}
 	</delete>
+	
+	<select id="selectPnuData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    SELECT pnu, contact_length, contact_area
+    FROM jijuk_2024
+    WHERE pnu = #{pnu}
+	</select>
 
 </mapper>

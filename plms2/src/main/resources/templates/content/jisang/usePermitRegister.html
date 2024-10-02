@@ -192,21 +192,18 @@ margin:10px;
                     <li class="secondContent">
                       <input name="togiJimokText" id="togiJimokText"
                         type="text"
-                        placeholder="답"
                         readonly
                         class="notWriteInput" />
                     </li>
                     <li class="secondContent">
                       <input name="togiJijukArea" id="togiJijukArea"
                         type="text"
-                        placeholder="182"
                         readonly
                         class="notWriteInput" />
                     </li>
                     <li class="secondContent">
                       <input name="togiPyeonibArea" id="togiPyeonibArea"
                         type="text"
-                        placeholder="181"
                         readonly
                         class="notWriteInput" />
                     </li>
@@ -216,7 +213,6 @@ margin:10px;
                     <li class="secondContent">
                       <input
                         type="text" name="togiJasanNo" id="togiJasanNo"
-                        placeholder="9010237"
                         readonly
                         class="notWriteInput" />
                     </li>
@@ -225,14 +221,14 @@ margin:10px;
                 <li class="content">
                   <input
                     type="text" name="togiSouja" id="togiSouja"
-                    placeholder="홍길동"
+
                     readonly
                     class="notWriteInput" />
                 </li>
                 <li class="content">
                   <input name="togiUseName" id="togiUseName"
                     type="text"
-                    placeholder="김순애"
+
                     
                     class="" />
                 </li>
@@ -948,7 +944,8 @@ margin:10px;
               </li>
               <li class="popContent popTitle_num">[[${val.jm_jisang_no}]]</li>
               <li class="popContent popTitle_address">
-                [[${val.juso}]]
+<!--                [[${val.juso}]]-->
+                [[${val.jm_sido_nm +" "+val.jm_sgg_nm+" "+val.jm_emd_nm}]]
               </li>
               <li class="popContent popTitle_num">[[${val.jm_jibun}]]</li>
             </ul>

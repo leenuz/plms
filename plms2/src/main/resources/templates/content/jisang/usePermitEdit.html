@@ -150,7 +150,7 @@ margin:10px;
           <div class="subTitle">대상토지</div>
 
           <div class="contWrap">
-            <div class="depth1">
+             <div class="depth1" id="togiDiv">
               <ul class="titles">
                 <li class="title addressInfoWidth">주소</li>
                 <li class="title titleBox">
@@ -168,148 +168,53 @@ margin:10px;
                 <li class="title titleBtnWrap">추가/삭제</li>
               </ul>
 
-              <ul class="contents">
+              <div class="contentsBox">
+              <ul class="contents" th:each="val, iterStat:${tojiList}">
                 <li class="content addressInfoWidth addressInfoBox">
                   <div class="addressData">
-                    <input
-                      type="text"
-                      placeholder="경기도 평택시 진위면 동천리 606-132"
-                      readonly
-                      class="notWriteInput" />
+                    <input type="text" th:value="${val.addr}" th:name="'address_'+${iterStat.index}" th:id="'address_'+${iterStat.index}" readonly class="notWriteInput" />
                   </div>
-                  <button class="searchAddressBtn">검색</button>
+                  <button class="searchAddressBtn addrSearchBtn" th:id="${iterStat.index}">검색</button>
                 </li>
                 <li class="content contentBox">
                   <ul class="secondContents">
                     <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="답"
-                        readonly
-                        class="notWriteInput" />
+                      <input type="text" th:value="${val.jimok}" th:name="'jimok_'+${iterStat.index}" readonly class="notWriteInput" />
                     </li>
                     <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="182"
-                        readonly
-                        class="notWriteInput" />
+                      <input type="text" th:value="${val.all_area}" th:name="'fullArea_'+${iterStat.index}"  readonly class="notWriteInput" />
                     </li>
                     <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="181"
-                        readonly
-                        class="notWriteInput" />
+                      <input type="text" th:value="${val.set_area}" th:name="'setArea_'+${iterStat.index}"  readonly class="notWriteInput" />
                     </li>
                     <li class="secondContent largeSecondTitle">
-                      <input type="text" />
+                      <input type="text"  th:value="${val.set_money}" th:name="'setMoney_'+${iterStat.index}"/>
                     </li>
                     <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="9010237"
-                        readonly
-                        class="notWriteInput" />
+                      <input type="text" th:value="${val.jasan_no}" th:name="'jasan_'+${iterStat.index}"  readonly class="notWriteInput" />
                     </li>
                   </ul>
                 </li>
                 <li class="content">
-                  <input
-                    type="text"
-                    placeholder="홍길동"
-                    readonly
-                    class="notWriteInput" />
+                  <input type="text" th:value="${val.soyuja}" th:name="'soyuja_'+${iterStat.index}"  readonly class="notWriteInput" />
                 </li>
                 <li class="content">
-                  <input
-                    type="text"
-                    placeholder="김순애"
-                    readonly
-                    class="notWriteInput" />
+                  <input type="text" th:value="${val.pmt_user}" th:name="'pmtUser_'+${iterStat.index}"  />
                 </li>
                 <li class="content titleBtnWrap btnBox">
                   <!-- 맨 윗줄 기본값 -->
                   <div class="newBtnWrap">
-                    <button class="createBtn miniBtn">추가</button>
-                  </div>
-                </li>
-              </ul>
-              <!--추가,삭제버튼 들어간 ul-->
-              <ul class="contents">
-                <li class="content addressInfoWidth addressInfoBox">
-                  <div class="addressData">
-                    <input
-                      type="text"
-                      placeholder="경기도 평택시 진위면 동천리 606-132"
-                      readonly
-                      class="notWriteInput" />
-                  </div>
-                  <button class="searchAddressBtn">검색</button>
-                </li>
-                <li class="content contentBox">
-                  <ul class="secondContents">
-                    <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="전"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="1544"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="20"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="secondContent largeSecondTitle">
-                      <input type="text" />
-                    </li>
-                    <li class="secondContent">
-                      <input
-                        type="text"
-                        placeholder="9010238"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                  </ul>
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder="김순자"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    placeholder="이미자"
-                    readonly
-                    class="notWriteInput" />
-                </li>
-                <li class="content titleBtnWrap btnBox">
-                  <div class="btnWrap">
                     <button class="addBtn miniBtn">추가</button>
                   </div>
-                  <div class="btnWrap">
-                    <button class="delBtn miniBtn">삭제</button>
-                  </div>
                 </li>
               </ul>
+              </div>
             </div>
           </div>
         </section>
 
         <!-- 합병사유 및 검토의견 -->
+        <form name="saveForm"  id="saveForm" onSubmit="return false;">
         <section class="mergeTermination">
           <div class="subTitle">상세내용</div>
 
@@ -319,11 +224,7 @@ margin:10px;
                 <div class="title">사용목적</div>
                 <ul class="rowListContents">
                   <li class="rowListContent">
-                    <input
-                      type="text"
-                      readonly
-                      placeholder="건축물 신축 및 부지 정리작업" />
-                  </li>
+                    <input type="text" readonly th:value="${resultData.use_purpos}" />
                 </ul>
               </div>
               <div class="rowListBox">
@@ -331,17 +232,9 @@ margin:10px;
                 <ul class="rowListContents">
                   <li class="content inputWrap">
                     <div class="dateInputWrap">
-                      <input
-                        type="date"
-                        data-placeholder="24/01/01"
-                        required
-                        aria-required="true" />
-                      <span>-</span>
-                      <input
-                        type="date"
-                        data-placeholder="30/03/31"
-                        required
-                        aria-required="true" />
+                      <input type="date" th:data-placeholder="${resultData.use_st_date}" name="st_date" required aria-required="true" />
+                      <span>~</span>
+                      <input type="date" th:data-placeholder="${resultData.use_ed_date}" name="ed_date" required aria-required="true" />
                     </div>
                   </li>
                 </ul>
@@ -356,8 +249,7 @@ margin:10px;
                       <p>관로 위치 및 송유관 이격거리 현장 확인 결과</p>
                     </div>
                     <div class="rowListArea">
-                      <textarea
-                        placeholder="송유관과 신축건물 예정지와의 이격거리 : 4.5m"></textarea>
+                      <textarea th:text="${resultData.spot_result}" name="spot_result"></textarea>
                     </div>
                   </li>
                   <li class="content inputWrap fullContent">
@@ -365,8 +257,7 @@ margin:10px;
                       <p>검토 의견</p>
                     </div>
                     <div class="rowListArea">
-                      <textarea
-                        placeholder="송유관과 신축건물 예정지와의 이격거리 4.5m로 송유관 안전에는 문제 없음"></textarea>
+                      <textarea th:text="${resultData.review}" name="review"></textarea>
                     </div>
                   </li>
                   <li class="content inputWrap fullContent lastContents">
@@ -374,8 +265,7 @@ margin:10px;
                       <p>약정 사항</p>
                     </div>
                     <div class="rowListArea">
-                      <textarea
-                        placeholder="송유관 매설지역에는 일체의 터파기를 하지 않기로 협의함"></textarea>
+                      <textarea th:text="${resultData.contract}" name="contract"></textarea>
                     </div>
                   </li>
                 </ul>
@@ -383,9 +273,10 @@ margin:10px;
             </div>
           </div>
         </section>
+        </form>
 
         <section class="attachDocuments">
-          <div class="subTitle">첨부 서류</div>
+         <br> <div class="subTitle">첨부 서류</div>
 
           <div class="contWrap">
             <div class="depth1">
@@ -650,12 +541,216 @@ margin:10px;
         </section>
 
         <div class="finalBtnBox btnWrap">
-          <button class="backBtn finalBtn grayBtn">이전</button>
+          <button class="backBtn finalBtn grayBtn" onclick="history.back();">이전</button>
           <button class="saveBtn finalBtn vividBlueBtn">저장</button>
           <button class="approvalBtn finalBtn lightBlueBtn">상신</button>
         </div>
       </main>
     </div>
+
+  <div class="usePermitEditLandSearchWrapper open"  >
+
+    <link
+            rel="stylesheet"
+            href="/css/jisang/popupEasementModification.css" />
+    <!-- 사용승락 팝업 -->
+    <div id="land_searchResultsPopup">
+      <div class="popupWrap">
+        <h2>
+          <p>토지 추가 검색</p>
+          <span class="topCloseBtn"></span>
+        </h2>
+        <form name="searchForm"  id="searchForm" onSubmit="return false;">
+          <div class="selectInfo">
+            <div class="depth1">
+              <div class="selectContBox">
+                <div class="selectCont">
+                  <ul class="titles">
+                    <li class="title">지사</li>
+                  </ul>
+                  <ul class="contents">
+                    <li class="content popSelectWrap selectContentArea">
+                      <div class="hiddenSelectBox">
+                        <input type="hidden" id="openerIndex">
+                        <!-- name도 추가 -->
+                        <select
+                                name="jisa"
+                                id="jisa"
+                                hidden>
+                          <option value="" selected>전체</option>
+                          <th:block th:each="val:${jisaList}">
+
+                            <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+                          </th:block>
+                        </select>
+                      </div>
+                      <section class="PopupCustomSelectBox">
+                        <button class="PopupCustomSelectView">전체</button>
+
+                        <ul class="PopupCustomSelectBtns">
+                          <!-- <li><button class="PopupMoreSelectBtn">충청지사1</button></li>
+                                              <li><button class="PopupMoreSelectBtn">충청지사2</button></li>
+                                              <li><button class="PopupMoreSelectBtn">충청지사3</button></li> -->
+                        </ul>
+                      </section>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="depth2">
+              <div class="selectContBox">
+                <div class="selectCont">
+                  <ul class="titles">
+                    <li class="title">주소</li>
+                  </ul>
+                  <ul class="contents">
+                    <li class="content popSelectWrap selectContentArea">
+                      <div class="hiddenSelectBox">
+                        <!-- name도 추가 -->
+                        <select name="sido" id="landRightsRegistSelectBox09" hidden>
+                          <option value="">전체</option>
+                          <option th:each="val:${sidoList}" th:value="${val?.sm_name}" th:utext="${val?.sm_name}">지목</option>
+                        </select>
+                      </div>
+                      <section class="PopupCustomSelectBox">
+                        <button class="PopupCustomSelectView">선택</button>
+
+                        <ul class="PopupCustomSelectBtns" id="sido_ul">
+                          <!-- <li><button class="PopupMoreSelectBtn">선택1</button></li>
+                                              <li><button class="PopupMoreSelectBtn">선택2</button></li>
+                                              <li><button class="PopupMoreSelectBtn">선택3</button></li> -->
+                        </ul>
+                      </section>
+                    </li>
+                    <li class="content popSelectWrap selectContentArea">
+                      <div class="hiddenSelectBox">
+                        <!-- name도 추가 -->
+                        <select name="gugun" id="landRightsRegistSelectBox10" hidden>
+                          <option value="">전체</option>
+
+                        </select>
+                      </div>
+                      <section class="PopupCustomSelectBox">
+                        <button class="PopupCustomSelectView">선택</button>
+
+                        <ul class="PopupCustomSelectBtns" id="gugun_ul">
+                        </ul>
+                      </section>
+                    </li>
+                    <li class="content popSelectWrap selectContentArea">
+                      <div class="hiddenSelectBox">
+                        <!-- name도 추가 -->
+                        <select name="dong" id="landRightsRegistSelectBox11" hidden>
+                          <option value="">전체</option>
+
+                        </select>
+                      </div>
+                      <section class="PopupCustomSelectBox">
+                        <button class="PopupCustomSelectView">선택</button>
+
+                        <ul class="PopupCustomSelectBtns" id="dong_ul">
+                          <!-- <li><button class="PopupMoreSelectBtn">선택1</button></li>
+                                              <li><button class="PopupMoreSelectBtn">선택2</button></li>
+                                              <li><button class="PopupMoreSelectBtn">선택3</button></li> -->
+                        </ul>
+                      </section>
+                    </li>
+                    <li class="content popSelectWrap selectContentArea">
+                      <div class="hiddenSelectBox">
+                        <!-- name도 추가 -->
+                        <select name="ri" id="landRightsRegistSelectBox12" hidden>
+                          <option value="">전제</option>
+
+                        </select>
+                      </div>
+                      <section class="PopupCustomSelectBox">
+                        <button class="PopupCustomSelectView">선택</button>
+
+                        <ul class="PopupCustomSelectBtns" id="ri_ul">
+                          <!-- <li><button class="PopupMoreSelectBtn">선택1</button></li>
+                                              <li><button class="PopupMoreSelectBtn">선택2</button></li>
+                                              <li><button class="PopupMoreSelectBtn">선택3</button></li> -->
+                        </ul>
+                      </section>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="depth3">
+              <div class="selectContBox">
+                <div class="selectCont">
+                  <ul class="titles">
+                    <li class="title">지번</li>
+                  </ul>
+                  <ul class="contents">
+                    <li class="content">
+                      <input name="jibun" type="text" placeholder="지번입력" />
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <button class="searchBtn finalBtn vividBlueBtn" id="popupSearchBtn">조회하기</button>
+          </div>
+        </form>
+        <div class="popupCont" id="searchResultPopDiv">
+          <ul class="popTitles">
+            <li class="selectLabel">선택</li>
+            <li class="popTitle_num">지상권 번호</li>
+            <li class="popTitle_address">주소</li>
+            <li class="popTitle_num">지번</li>
+          </ul>
+          <div class="popContentBox">
+            <ul class="popContents" th:each="val:${jisangList}">
+              <li class="popContent selectLabel">
+                <input type="hidden" name="sido_nm" id="sido_nm" th:value="${val.jm_sido_nm}">
+                <input type="hidden" name="sgg_nm" id="sgg_nm" th:value="${val.jm_sgg_nm}">
+                <input type="hidden" name="emd_nm" id="emd_nm" th:value="${val.jm_emd_nm}">
+                <input type="hidden" name="ri_nm" id="ri_nm" th:value="${val.jm_ri_nm}">
+                <input type="hidden" name="jibun" id="jibun" th:value="${val.jm_jibun}">
+                <input type="hidden" name="addrcode" id="addrcode" th:value="${val.bcode}">
+                <input type="checkbox" name="chk" th:attr="id='input-' + ${val.no}"/>
+
+                <label th:attr="for='input-' + ${val.no}"></label>
+                <input type="hidden" name="popupManageNo" id="popupManageNo" th:value="${val.jm_jisang_no}">
+<!--                <input type="hidden" name="popupAddress" id="popupAddress" th:value="${val.js_address}">-->
+                <input type="hidden" name="popupAddress" id="popupAddress" th:value="${val.jm_sido_nm + ' ' + val.jm_sgg_nm + ' ' + val.jm_emd_nm}">
+                <input type="hidden" name="popupJimokText" id="popupJimokText" th:value="${val.jm_jimok_text}">
+                <input type="hidden" name="popupJijukArea" id="popupJijukArea" th:value="${val.jm_jijuk_area}">
+                <input type="hidden" name="popupPyeonibArea" id="popupPyeonibArea" th:value="${val.jm_pyeonib_area}">
+                <input type="hidden" name="popupSetMoney" id="popupSetMoney" th:value="${val.jm_set_money}">
+                <input type="hidden" name="popupJasanNo" id="popupJasanNo" th:value="${val.jm_jasan_no}">
+                <input type="hidden" name="popupSouja" id="popupSouja" th:value="${val.js_souja_name}">
+                <input type="hidden" name="popupUseName" id="popupUseName">
+              </li>
+              <li class="popContent popTitle_num">[[${val.jm_jisang_no}]]</li>
+              <li class="popContent popTitle_address">
+                [[${val.jm_sido_nm +" "+val.jm_sgg_nm+" "+val.jm_emd_nm}]]
+              </li>
+              <li class="popContent popTitle_num">[[${val.jm_jibun}]]</li>
+            </ul>
+            <ul class="popContents" th:if="${#lists.isEmpty(jisangList)}">
+
+
+              <li style="text-align:center;width:100%;">
+                검색 결과가 없습니다.
+              </li>
+
+            </ul>
+
+          </div>
+        </div>
+
+        <div class="lastBtnBox btnWrap">
+          <button class="backBtn grayBtn finalBtn" id="popupCloseBtn">닫기</button>
+          <button class="vividBlueBtn finalBtn addParentBtn" id="addParentBtn">선택등록</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
     <div class="usePermitEditLandSearchWrapper"></div>
     <script src="/js/jisang/usePermitEdit.js"></script>
     <script type="module" src="/js/module/surfaceMain.js"></script>

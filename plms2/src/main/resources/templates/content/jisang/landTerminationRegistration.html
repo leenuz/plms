@@ -388,7 +388,8 @@ margin:10px;
                         type="date"
                         th:data-placeholder="${resultData.jm_cancle_date}"
                         th:value="${resultData.jm_cancle_date}"
-                        id="cancel_date"
+                        id="cancle_date"
+
                         required
                         aria-required="true" />
                     </div>
@@ -450,7 +451,9 @@ margin:10px;
               <ul class="rowListBox">
                 <li class="title">보상금액</li>
                 <li class="content lastRowList">
-                  <input type="text" placeholder="직접입력" th:value="${resultData.jm_cancle_bosang_money}" id="cancel_bosang_money" />
+
+                  <input type="text" placeholder="직접입력" th:value="${resultData.jm_cancle_bosang_money}" id="cancle_bosang_money" />
+
                 </li>
               </ul>
             </div>
@@ -530,7 +533,9 @@ margin:10px;
               <ul class="rowListBox">
                 <li class="title">해지사유</li>
                 <li class="content inputWrap">
-                  <input type="text" placeholder="직접입력 (최소 10자 이상)" th:value="${resultData.jm_cancle_reason}" id="cancel_reason"/>
+
+                  <input type="text" placeholder="직접입력 (최소 10자 이상)" th:value="${resultData.jm_cancle_reason}" id="jm_cancle_reason"/>
+
                 </li>
               </ul>
             </div>
@@ -538,7 +543,8 @@ margin:10px;
               <ul class="rowListBox">
                 <li class="title">검토의견</li>
                 <li class="content lastRowList">
-                  <textarea placeholder="직접입력 (최소 10자 이상)" th:text="${resultData.jm_cancle_comment}" id="cancel_comment"></textarea>
+                  <textarea placeholder="직접입력 (최소 10자 이상)" th:text="${resultData.jm_cancle_comment}" id="cancle_comment"></textarea>
+
                 </li>
               </ul>
             </div>

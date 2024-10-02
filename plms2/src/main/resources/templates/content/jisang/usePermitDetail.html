@@ -154,13 +154,13 @@
                     <input type="text" th:value="${val.jimok}" readonly class="notWriteInput" />
                   </li>
                   <li class="secondContent">
-                    <input type="text" th:value="${val.jimok}" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.all_area}" readonly class="notWriteInput" />
                   </li>
                   <li class="secondContent">
-                    <input type="text" th:value="${val.jimok}" readonly class="notWriteInput" />
+                    <input type="text" th:value="${val.set_area}" readonly class="notWriteInput" />
                   </li>
                   <li class="secondContent largeSecondTitle">
-                    <input type="text" readonly th:value="${val.jimok}" />
+                    <input type="text" readonly th:value="${val.set_money}" class="notWriteInput" />
                   </li>
                   <li class="secondContent">
                     <input type="text" th:value="${val.jasan_no}" readonly class="notWriteInput" />
@@ -295,103 +295,115 @@
               <li class="title selectFileWidth">파일보기</li>
             </ul>
 
-            <ul class="contents">
+<!--            <ul class="contents">-->
+<!--              <li class="content">-->
+<!--                <input type="text" placeholder="토지사용승락서.docx" readonly class="notWriteInput" />-->
+<!--              </li>-->
+<!--              <li class="content selectFileWidth">-->
+<!--                <button class="viewDetailButton">파일보기</button>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--            <ul class="contents">-->
+<!--              <li class="content">-->
+<!--                <input type="text" placeholder="등기부등본2.tif" readonly class="notWriteInput" />-->
+<!--              </li>-->
+<!--              <li class="content selectFileWidth">-->
+<!--                <button class="viewDetailButton">파일보기</button>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--            <ul class="contents">-->
+<!--              <li class="content">-->
+<!--                <input type="text" placeholder="지적도.tif" readonly class="notWriteInput" />-->
+<!--              </li>-->
+<!--              <li class="content selectFileWidth">-->
+<!--                <button class="viewDetailButton">파일보기</button>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--            <ul class="contents">-->
+<!--              <li class="content">-->
+<!--                <input type="text" placeholder="현장사진.jpg" readonly class="notWriteInput" />-->
+<!--              </li>-->
+<!--              <li class="content selectFileWidth">-->
+<!--                <button class="viewDetailButton">파일보기</button>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--            <ul class="contents">-->
+<!--              <li class="content">-->
+<!--                <input type="text" placeholder="검토의견서.tif" readonly class="notWriteInput" />-->
+<!--              </li>-->
+<!--              <li class="content selectFileWidth">-->
+<!--                <button class="viewDetailButton">파일보기</button>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--            <ul class="contents">-->
+<!--              <li class="content">-->
+<!--                <input type="text" placeholder="토지대장.docx" readonly class="notWriteInput" />-->
+<!--              </li>-->
+<!--              <li class="content selectFileWidth">-->
+<!--                <button class="viewDetailButton">파일보기</button>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--            <ul class="contents">-->
+<!--              <li class="content">-->
+<!--                <input type="text" placeholder="지적도.jpg" readonly class="notWriteInput" />-->
+<!--              </li>-->
+<!--              <li class="content selectFileWidth">-->
+<!--                <button class="viewDetailButton">파일보기</button>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--            <ul class="contents">-->
+<!--              <li class="content">-->
+<!--                <input type="text" placeholder="현장사진.jpg" readonly class="notWriteInput" />-->
+<!--              </li>-->
+<!--              <li class="content selectFileWidth">-->
+<!--                <button class="viewDetailButton">파일보기</button>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--            <ul class="contents">-->
+<!--              <li class="content">-->
+<!--                <input type="text" placeholder="현장사진.jpg" readonly class="notWriteInput" />-->
+<!--              </li>-->
+<!--              <li class="content selectFileWidth">-->
+<!--                <button class="viewDetailButton">파일보기</button>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--            <ul class="contents">-->
+<!--              <li class="content">-->
+<!--                <input type="text" placeholder="관계서류.docx" readonly class="notWriteInput" />-->
+<!--              </li>-->
+<!--              <li class="content selectFileWidth">-->
+<!--                <button class="viewDetailButton">파일보기</button>-->
+<!--              </li>-->
+<!--            </ul>-->
+            <!-- 첨부 서류 파일명 및 파일보기 -->
+            <ul class="contents" th:each="file : ${fileList}">
+              <!-- 파일명 -->
               <li class="content">
-                <input type="text" placeholder="토지사용승락서.docx" readonly class="notWriteInput" />
+                <input type="text" th:value="${file.ja_file_nm}" readonly class="notWriteInput" />
               </li>
+              <!-- 파일보기 버튼 -->
               <li class="content selectFileWidth">
-                <button class="viewDetailButton">파일보기</button>
+                <button class="viewDetailButton"  th:onclick="openFilePopup([[${file.ja_file_path}]])">보기</button>
               </li>
             </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="등기부등본2.tif" readonly class="notWriteInput" />
-              </li>
-              <li class="content selectFileWidth">
-                <button class="viewDetailButton">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="지적도.tif" readonly class="notWriteInput" />
-              </li>
-              <li class="content selectFileWidth">
-                <button class="viewDetailButton">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="현장사진.jpg" readonly class="notWriteInput" />
-              </li>
-              <li class="content selectFileWidth">
-                <button class="viewDetailButton">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="검토의견서.tif" readonly class="notWriteInput" />
-              </li>
-              <li class="content selectFileWidth">
-                <button class="viewDetailButton">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="토지대장.docx" readonly class="notWriteInput" />
-              </li>
-              <li class="content selectFileWidth">
-                <button class="viewDetailButton">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="지적도.jpg" readonly class="notWriteInput" />
-              </li>
-              <li class="content selectFileWidth">
-                <button class="viewDetailButton">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="현장사진.jpg" readonly class="notWriteInput" />
-              </li>
-              <li class="content selectFileWidth">
-                <button class="viewDetailButton">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="현장사진.jpg" readonly class="notWriteInput" />
-              </li>
-              <li class="content selectFileWidth">
-                <button class="viewDetailButton">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="text" placeholder="관계서류.docx" readonly class="notWriteInput" />
-              </li>
-              <li class="content selectFileWidth">
-                <button class="viewDetailButton">파일보기</button>
-              </li>
-            </ul>
+
           </div>
         </div>
       </section>
 
       <div class="finalBtnBox btnWrap">
-        <button class="backBtn finalBtn grayBtn">이전</button>
+        <button class="backBtn finalBtn grayBtn" onclick="history.back()">이전</button>
         <button class="cancelBtn finalBtn vividBlueBtn">결재취소</button>
         <button class="deleteBtn finalBtn grayBtn">삭제</button>
         <button class="approvalBtn finalBtn vividBlueBtn">상신</button>
-        <button class="saveBtn finalBtn lightBlueBtn">
-          <a href="/jisang/usePermitEdit">수정</a>
+        <button class="saveBtn finalBtn lightBlueBtn editBtn">수정
+<!--          <a href="/jisang/usePermitEdit">수정</a>-->
         </button>
       </div>
     </main>
   </div>
   <!-- script -->
-  <script src="/js/jisang/usePermitEdit.js"></script>
+  <script src="/js/jisang/usePermitDetail.js"></script>
   <script type="module" src="/js/module/surfaceMain.js"></script>
 </th:block>
 

@@ -1326,6 +1326,9 @@ SELECT count(*)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
 		and jm.jm_emd_nm=#{emd_nm}
 		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			and jm.jm_jibun=#{jibun}
+		</if>
 		
 		
 		
@@ -1360,6 +1363,9 @@ SELECT count(*)
 		,jpt.addr as addr
 		,jpt.jibun as jibun
 		,jm.jm_jisa as jisa
+		,jpt.jpt_all_area as all_area
+		,jpt.jpt_set_area as set_area
+		,jpt.jpt_set_money as set_money
 		 
 		FROM permit_master jpm
 			LEFT JOIN permit_togi jpt ON jpt.pmt_no=jpm.pmt_no
@@ -3038,7 +3044,7 @@ WHERE
 	</delete>
 		<insert id="insertJisangSoyuTmp" parameterType="HashMap">
 		Insert into JISANG_SOUJA_TMP
-		(jst_JISANG_NO, jst_JIBUN, jst_SOUJA_NAME, jst_ADDRESS, jst_HOME_NUMBER ,jst_PHONE_NUMBER)
+		(jst_JISANG_NO, jst_JIBUN, jst_SOUJA_NAME, jst_ADDRESS, jst_HOME_NUMBER ,jst_PONE_NUMBER)
 		Values
 		(#{JISANGNO}, #{JIBUN}, #{NAME}, #{ADDR}, #{TEL} , #{HP})
 	</insert>
