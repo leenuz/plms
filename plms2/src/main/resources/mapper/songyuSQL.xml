@@ -476,12 +476,12 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     LEFT JOIN (
         SELECT S.*
         FROM (
-            SELECT RANK() OVER(PARTITION BY RPAD(PPI.pi_address_code, 10, '0'), PPI.pi_JIBUN ORDER BY PPI.pi_ISSUE_DATE DESC) AS RANK,
-                RPAD(PPI.pi_address_code, 10, '0') AS ADDRCODE, PPI.pi_jibun as JIBUN,
-                PPI.pi_code_depth1 as CODE_DEPTH1, PPI.pi_code_depth2 as CODE_DEPTH2, PPI.pi_code_depth3 as CODE_DEPTH3,
-                PPI.pi_registed_yn as REGISTED_YN, PPI.pi_permitted_yn as PERMITTED_YN, PPI.pi_pnu as PNU, PPI.pi_del_flag as DEL_FLAG
+            SELECT RANK() OVER(PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
+                RPAD(PPI.addrcode, 10, '0') AS ADDRCODE, PPI.jibun as JIBUN,
+                PPI.code_depth1 as CODE_DEPTH1, PPI.code_depth2 as CODE_DEPTH2, PPI.code_depth3 as CODE_DEPTH3,
+                PPI.registed_yn as REGISTED_YN, PPI.permitted_yn as PERMITTED_YN, PPI.pnu as PNU, PPI.del_flag as DEL_FLAG
             FROM POTENTIAL_ISSUE PPI
-            WHERE PPI.pi_DEL_FLAG != 'Y'
+            WHERE PPI.DEL_FLAG != 'Y'
             LIMIT 1
         ) S WHERE S.RANK = 1
     ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
@@ -1063,12 +1063,12 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     LEFT JOIN (
         SELECT S.*
         FROM (
-            SELECT RANK() OVER(PARTITION BY RPAD(PPI.pi_address_code, 10, '0'), PPI.pi_JIBUN ORDER BY PPI.pi_ISSUE_DATE DESC) AS RANK,
-                RPAD(PPI.pi_address_code, 10, '0') AS ADDRCODE, PPI.pi_jibun as JIBUN,
-                PPI.pi_code_depth1 as CODE_DEPTH1, PPI.pi_code_depth2 as CODE_DEPTH2, PPI.pi_code_depth3 as CODE_DEPTH3,
-                PPI.pi_registed_yn as REGISTED_YN, PPI.pi_permitted_yn as PERMITTED_YN, PPI.pi_pnu as PNU, PPI.pi_del_flag as DEL_FLAG
+            SELECT RANK() OVER(PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
+                RPAD(PPI.addrcode, 10, '0') AS ADDRCODE, PPI.jibun as JIBUN,
+                PPI.code_depth1 as CODE_DEPTH1, PPI.code_depth2 as CODE_DEPTH2, PPI.code_depth3 as CODE_DEPTH3,
+                PPI.registed_yn as REGISTED_YN, PPI.permitted_yn as PERMITTED_YN, PPI.pnu as PNU, PPI.del_flag as DEL_FLAG
             FROM POTENTIAL_ISSUE PPI
-            WHERE PPI.pi_DEL_FLAG != 'Y'
+            WHERE PPI.DEL_FLAG != 'Y'
             LIMIT 1
         ) S WHERE S.RANK = 1
     ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
@@ -1433,24 +1433,24 @@ FROM NOTSET_MASTER
 	</update>
 	<select id="makePnuIssueSeq" resultType="String" parameterType="HashMap">
  
-			SELECT COALESCE(MAX(S.pi_SEQ), 0) + 1 AS SEQ FROM POTENTIAL_ISSUE S
+			SELECT COALESCE(MAX(S.SEQ), 0) + 1 AS SEQ FROM POTENTIAL_ISSUE S
 
 	</select>
 	<insert id="insertPnuIssue" parameterType="HashMap">
 	 
 		INSERT INTO POTENTIAL_ISSUE (
-		        pi_PNU
-		        , pi_SEQ
-		        , pi_CODE_DEPTH1
-		        , pi_CODE_DEPTH2
-		        , pi_CODE_DEPTH3
-		        , pi_ISSUE_COMMENT
-		        , pi_DEL_FLAG
-		        , pi_ISSUE_DATE
-		        , pi_REGISTED_YN
-		        , pi_PERMITTED_YN
-		        , pi_address_code
-		        , pi_JIBUN
+		        PNU
+		        , SEQ
+		        , CODE_DEPTH1
+		        , CODE_DEPTH2
+		        , CODE_DEPTH3
+		        , ISSUE_COMMENT
+		        , DEL_FLAG
+		        , ISSUE_DATE
+		        , REGISTED_YN
+		        , PERMITTED_YN
+		        , addrcode
+		        , JIBUN
 		) VALUES (
 		        #{PNU}
 		        , #{SEQ}::bigint
@@ -1599,11 +1599,11 @@ FROM (
         JOIN_MST.SOUJA_NAME,
         JOIN_MST.SOUJA_CNT,
         JOIN_MST.JASAN_MONEY,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.pi_REGISTED_YN ELSE GPI.REGISTED_YN END AS REGISTED_YN,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.pi_PERMITTED_YN ELSE GPI.PERMITTED_YN END AS PERMITTED_YN,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.pi_CODE_DEPTH1 ELSE GPI.CODE_DEPTH1 END AS CODE_DEPTH1,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.pi_CODE_DEPTH2 ELSE GPI.CODE_DEPTH2 END AS CODE_DEPTH2,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.pi_CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.REGISTED_YN ELSE GPI.REGISTED_YN END AS REGISTED_YN,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.PERMITTED_YN ELSE GPI.PERMITTED_YN END AS PERMITTED_YN,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH1 ELSE GPI.CODE_DEPTH1 END AS CODE_DEPTH1,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH2 ELSE GPI.CODE_DEPTH2 END AS CODE_DEPTH2,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3,
         GPI.LNEWREG,
         GPI.LPERMITIONYN,
         GPI.LOCCUP_FEE,
@@ -1793,21 +1793,21 @@ FROM (
     LEFT JOIN (
         SELECT S.*
         FROM (
-            SELECT RANK() OVER (PARTITION BY RPAD(PPI.pi_address_code, 10, '0'), PPI.pi_JIBUN ORDER BY PPI.pi_ISSUE_DATE DESC) AS RANK,
-                   RPAD(PPI.pi_address_code, 10, '0') AS ADDRCODE,
-                   PPI.pi_JIBUN,
-                   PPI.pi_CODE_DEPTH1,
-                   PPI.pi_CODE_DEPTH2,
-                   PPI.pi_CODE_DEPTH3,
-                   PPI.pi_REGISTED_YN,
-                   PPI.pi_PERMITTED_YN,
-                   PPI.pi_PNU,
-                   PPI.pi_DEL_FLAG
+            SELECT RANK() OVER (PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
+                   RPAD(PPI.addrcode, 10, '0') AS ADDRCODE,
+                   PPI.JIBUN,
+                   PPI.CODE_DEPTH1,
+                   PPI.CODE_DEPTH2,
+                   PPI.CODE_DEPTH3,
+                   PPI.REGISTED_YN,
+                   PPI.PERMITTED_YN,
+                   PPI.PNU,
+                   PPI.DEL_FLAG
             FROM POTENTIAL_ISSUE PPI
-            WHERE PPI.pi_DEL_FLAG != 'Y'
+            WHERE PPI.DEL_FLAG != 'Y'
         ) S
         WHERE S.RANK = 1
-    ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.pi_JIBUN
+    ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
     LEFT JOIN GOVER_POTENTIAL_ISSUE GPI ON JOIN_MST.MASTER_NO = GPI.GOVER_NO AND GPI.DEL_FLAG != 'Y'
     
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRCODE)" >

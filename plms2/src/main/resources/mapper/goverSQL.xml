@@ -195,7 +195,7 @@ FROM (
              , GM.gm_PIPE_NAME AS PIPE_NAME
              , GM.gm_SUN_GUBUN AS SUN_GUBUN
              , GM.gm_PIPE_METER::numeric AS PIPE_METER
-             , GM.gm_CANCEL_YN AS CANCLE_YN
+             , GM.gm_CANCLE_YN AS CANCLE_YN
              , TO_CHAR(GM.gm_CANCEL_DATE, 'YYYY-MM-DD') AS CANCLE_DATE
              , GM.gm_CANCEL_NAME AS CANCLE_NAME
              , GM.gm_CANCEL_EMPCD AS CANCLE_EMPCD
@@ -315,10 +315,10 @@ WHERE 1=1
 	               gm.gm_pipe_name AS pipename,
 	               gm.gm_sun_gubun AS sun_gubun,
 	               gm.gm_pipe_meter AS pipe_meter,
-	               gm.gm_cancel_yn AS cancel_yn,
-	               gm.gm_cancel_date AS cancel_date,
-	               gm.gm_cancel_name AS cancel_name,
-	               gm.gm_cancel_empcd AS cancel_empcd,
+	               gm.gm_cancle_yn AS cancel_yn,
+	               gm.gm_cancle_date AS cancel_date,
+	               gm.gm_cancle_name AS cancel_name,
+	               gm.gm_cancle_empcd AS cancel_empcd,
 	               gm.gm_use_purpos AS use_purpos,
 	               gm.gm_gover_st_date AS gover_st_date,
 	               gm.gm_gover_ed_date AS gover_ed_date,
@@ -594,7 +594,7 @@ SELECT count(*)
 		</if>
 
 
-		AND GM.gm_CANCEL_YN = 'N' OR GM.gm_CANCEL_YN =''
+		AND GM.gm_CANCLE_YN = 'N' OR GM.gm_CANCLE_YN =''
 		
 
 		
@@ -784,7 +784,7 @@ SELECT AA.RN AS no
 		</if>
 
 
-		AND GM.gm_CANCEL_YN = 'N' OR GM.gm_CANCEL_YN =''
+		AND GM.gm_CANCLE_YN = 'N' OR GM.gm_CANCLE_YN =''
 					) AA
 LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
                  , S.gp_pay_money as PAY_MONEY
@@ -896,10 +896,10 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 	               gm.gm_pipe_name AS pipename,
 	               gm.gm_sun_gubun AS sun_gubun,
 	               gm.gm_pipe_meter AS pipe_meter,
-	               gm.gm_cancel_yn AS cancel_yn,
-	               gm.gm_cancel_date AS cancel_date,
-	               gm.gm_cancel_name AS cancel_name,
-	               gm.gm_cancel_empcd AS cancel_empcd,
+	               gm.gm_cancle_yn AS cancel_yn,
+	               gm.gm_cancle_date AS cancel_date,
+	               gm.gm_cancle_name AS cancel_name,
+	               gm.gm_cancle_empcd AS cancel_empcd,
 	               gm.gm_use_purpos AS use_purpos,
 	               gm.gm_gover_st_date AS gover_st_date,
 	               gm.gm_gover_ed_date AS gover_ed_date,
@@ -938,7 +938,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 	               gpm.gp_echo_no AS echo_no,
 	               (SELECT COUNT(*) FROM gover_pnu WHERE gover_pnu.gp_gover_no = gm.gm_gover_no) AS pnu_count  <!-- 필지수 계산 -->
 	        FROM gover_master gm
-	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
+	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no and gp.gp_rep_flag='Y'
 	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
 	        WHERE 1 = 1
 	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -999,10 +999,10 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 	               gm.gm_pipe_name AS pipename,
 	               gm.gm_sun_gubun AS sun_gubun,
 	               gm.gm_pipe_meter AS pipe_meter,
-	               gm.gm_cancel_yn AS cancel_yn,
-	               gm.gm_cancel_date AS cancel_date,
-	               gm.gm_cancel_name AS cancel_name,
-	               gm.gm_cancel_empcd AS cancel_empcd,
+	               gm.gm_cancle_yn AS cancel_yn,
+	               gm.gm_cancle_date AS cancel_date,
+	               gm.gm_cancle_name AS cancel_name,
+	               gm.gm_cancle_empcd AS cancel_empcd,
 	               gm.gm_use_purpos AS use_purpos,
 	               gm.gm_gover_st_date AS gover_st_date,
 	               gm.gm_gover_ed_date AS gover_ed_date,
@@ -1041,7 +1041,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 	               gpm.gp_echo_no AS echo_no,
 	               (SELECT COUNT(*) FROM gover_pnu WHERE gover_pnu.gp_gover_no = gm.gm_gover_no) AS pnu_count  <!-- 필지수 계산 -->
 	        FROM gover_master gm
-	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
+	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no and gp.gp_rep_flag='Y'
 	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no
 	        WHERE 1 = 1
 	        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -1662,7 +1662,7 @@ FROM NOTSET_MASTER
 	<update id="insertGoverTerminationAdd" parameterType="HashMap">
 		UPDATE GOVER_MASTER
 		SET
-		gm_CANCEL_YN = 'Y'
+		gm_CANCLE_YN = 'Y'
 		,gm_CANCEL_DATE = TO_DATE(#{CANCLEDATE},'yyyy-mm-dd')
 		,gm_CANCEL_NAME = #{USERNAME}
 		,gm_CANCEL_EMPCD = nullif(#{EMPCD},'')
@@ -1944,7 +1944,7 @@ FROM (
     ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
     LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
     WHERE GM.gm_SAVE_STATUS = 'A'
-    AND GM.gm_CANCEL_YN IS NULL
+    AND GM.gm_CANCLE_YN IS NULL
 
     UNION ALL
 

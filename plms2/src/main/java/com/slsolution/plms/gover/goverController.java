@@ -625,11 +625,18 @@ public class goverController {
 			}
 			log.info("params:"+params);
 
-			Object count= mainService.selectCountQuery("goverSQL.selectTotalCount03_2", params);
+			
+			Object count= mainService.selectCountQuery("goverSQL.selectGoverMasterSearchCount", params);
 			int total=(int)count;
 
-			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList03_2",params);
-			log.info("list:"+list);
+			//ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList",params);
+			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverMasterSearchList",params);
+			log.info("list:" + list);
+//			Object count= mainService.selectCountQuery("goverSQL.selectTotalCount03_2", params);
+//			int total=(int)count;
+//
+//			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList03_2",params);
+//			log.info("list:"+list);
 
 			HashMap<String,Object> resultmap=new HashMap();
 			resultmap.put("draw",draw);

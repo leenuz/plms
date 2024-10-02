@@ -407,9 +407,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--회사토지 상세정보 - 잠재이슈-->
 	<select id="selectIssueList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select (row_number() over()) as NO
-		 , to_char(pi_issue_date,'YYYY-MM-DD HH:MM:SS') as issue_date
+		 , to_char(issue_date,'YYYY-MM-DD HH:MM:SS') as issue_date
 		 ,*
-		  FROM potential_issue PI
+		  FROM plms_potential_issue PI
 		  LEFT JOIN 
 		  (
 		
@@ -418,6 +418,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,COALESCE(jm.jm_comple_yn,'') AS comple_yn
 				,COALESCE(jm.jm_permitted_yn,'') AS permitted_yn
 				,SUBSTRING(jm.jm_jisang_no,1,1) AS rtype
+				,jm.jm_pnu
 				 FROM jisang_master jm
 				 
 				 UNION all
@@ -428,8 +429,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,COALESCE('','') AS comple_yn
 				,COALESCE('','') AS permitted_yn
 				,SUBSTRING(gm.gm_gover_no,1,1) AS rtype
-				
+				,gp.gp_pnu
 				 FROM gover_master gm
+				 LEFT JOIN gover_pnu gp on gp.gp_gover_no=gm.gm_gover_no
 				 
 				 UNION all
 				 
@@ -438,6 +440,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,COALESCE('','') AS comple_yn
 				,COALESCE('','') AS permitted_yn
 				,SUBSTRING(nm.nm_notset_no,1,1) AS rtype
+				,nm.nm_pnu
 				 FROM notset_master nm
 				 
  				 UNION all
@@ -447,18 +450,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,COALESCE('','') AS comple_yn
 				,COALESCE('','') AS permitted_yn
 				,SUBSTRING(dom.dom_dopco_no,1,1) AS rtype
+				,dom.dom_pnu
 				 FROM dopco_master dom
 				 
 		 ) AS u
-		 ON PI.pi_manage_no = u.manage_no
+		 ON PI.pnu = u.pnu
 		 WHERE 1=1
-		and pi_pnu=#{pnu}
+		and pnu=#{pnu}
 	</select>
 	
 	<!--회사토지 상세정보 - 잠재이슈 변경 이력-->
 	<select id="selectIssueHistoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *,(row_number() over()) as no 
-		 FROM  potential_issue pi left join potential_issue_history pih on pi.pi_pnu=pih.pih_pnu 
+		 FROM  plms_potential_issue pi left join plms_potential_issue_history pih on pi.pnu=pih.pih_pnu 
 		WHERE 1=1
 		and pih_pnu=#{pnu}
 	</select>

@@ -1214,7 +1214,7 @@ UPDATE PLMS_ISSUE_CODE
 		<!-- 이슈코드 삭제전 상태확인 -->
 	<select id="checkIssueCodeStatus" parameterType="HashMap" resultType="HashMap"> 
 SELECT COUNT(*) AS ISSUE_CNT
-  FROM POTENTIAL_ISSUE A
+  FROM plms_POTENTIAL_ISSUE A
  WHERE ( A.CODE_DEPTH1 = #{CODE}
     OR A.CODE_DEPTH2  = #{CODE}
     OR A.CODE_DEPTH3  = #{CODE} )

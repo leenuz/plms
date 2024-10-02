@@ -56,7 +56,7 @@
 
     <select id="selectIssueHistoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
     	SELECT *,(row_number() over()) as no 
-    	FROM  potential_issue pi left join potential_issue_history pih on pi.pi_pnu=pih.pih_pnu 
+    	FROM  plms_potential_issue pi left join plms_potential_issue_history pih on pi.pnu=pih.pih_pnu 
 			WHERE 1=1
 			and pih_pnu=#{pnu}
     </select>

@@ -12,9 +12,9 @@ SELECT SUM(TT.CNT) AS CNT,
        TT.TYPE
 FROM (
     SELECT COUNT(*) AS CNT,
-           SUBSTRING(PPI.pi_CODE_DEPTH1, 1, 1) AS GUBUN,  -- SUBSTRING 사용, 인덱스 1부터 시작
+           SUBSTRING(PPI.CODE_DEPTH1, 1, 1) AS GUBUN,  -- SUBSTRING 사용, 인덱스 1부터 시작
            'ISSUE' AS TYPE
-    FROM POTENTIAL_ISSUE PPI
+    FROM plms_POTENTIAL_ISSUE PPI
     LEFT JOIN (
         SELECT S.jm_pnu as PNU,
                S.jm_jisa as JISA,
@@ -45,14 +45,14 @@ FROM (
                S3.nm_jibun as JIBUN
         FROM NOTSET_MASTER S3
         WHERE S3.nm_DEL_FLAG != 'Y'
-    ) T ON PPI.pi_address_code = T.ADDRCODE AND PPI.pi_JIBUN = T.JIBUN
-    WHERE PPI.pi_DEL_FLAG != 'Y'
-      AND PPI.pi_CODE_DEPTH3 != 'DY010101'
-      AND PPI.pi_CODE_DEPTH2 NOT IN ('GY010100', 'GY020100')
+    ) T ON PPI.addrcode = T.ADDRCODE AND PPI.JIBUN = T.JIBUN
+    WHERE PPI.DEL_FLAG != 'Y'
+      AND PPI.CODE_DEPTH3 != 'DY010101'
+      AND PPI.CODE_DEPTH2 NOT IN ('GY010100', 'GY020100')
       <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
    		AND T.JISA = #{JISA}
 	  </if> 
-    GROUP BY SUBSTRING(PPI.pi_CODE_DEPTH1, 1, 1)
+    GROUP BY SUBSTRING(PPI.CODE_DEPTH1, 1, 1)
 
     UNION ALL
 
@@ -436,18 +436,18 @@ FROM (
         LEFT JOIN (
             SELECT S.*
             FROM (
-                SELECT RANK() OVER (PARTITION BY RPAD(PPI.pi_address_code, 10, '0'), PPI.pi_JIBUN ORDER BY PPI.pi_ISSUE_DATE DESC) AS RANK
-                    , RPAD(PPI.pi_address_code, 10, '0') AS ADDRCODE
-                    , PPI.pi_jibun as JIBUN
-                    , PPI.pi_code_depth1 as CODE_DEPTH1
-                    , PPI.pi_code_depth2 as CODE_DEPTH2
-                    , PPI.pi_code_depth3 as CODE_DEPTH3
-                    , PPI.pi_registed_yn as REGISTED_YN
-                    , PPI.pi_permitted_yn as PERMITTED_YN
-                    , PPI.pi_pnu as PNU
-                    , PPI.pi_del_flag as DEL_FLAG
-                FROM POTENTIAL_ISSUE PPI
-                WHERE PPI.pi_DEL_FLAG != 'Y'
+                SELECT RANK() OVER (PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK
+                    , RPAD(PPI.addrcode, 10, '0') AS ADDRCODE
+                    , PPI.jibun as JIBUN
+                    , PPI.code_depth1 as CODE_DEPTH1
+                    , PPI.code_depth2 as CODE_DEPTH2
+                    , PPI.code_depth3 as CODE_DEPTH3
+                    , PPI.registed_yn as REGISTED_YN
+                    , PPI.permitted_yn as PERMITTED_YN
+                    , PPI.pnu as PNU
+                    , PPI.del_flag as DEL_FLAG
+                FROM plms_POTENTIAL_ISSUE PPI
+                WHERE PPI.DEL_FLAG != 'Y'
             ) S WHERE S.RANK = 1
         ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
         LEFT JOIN GOVER_POTENTIAL_ISSUE GPI ON JOIN_MST.MASTER_NO = GPI.GOVER_NO AND GPI.DEL_FLAG != 'Y'
@@ -752,18 +752,18 @@ SELECT TTT.TYPE,
               LEFT JOIN (
                 SELECT S.*
                   FROM (
-                    SELECT RANK() OVER (PARTITION BY RPAD(PPI.pi_address_code, 10, '0'), PPI.pi_JIBUN ORDER BY PPI.pi_ISSUE_DATE DESC) AS RANK,
-                           RPAD(PPI.pi_address_code, 10, '0') AS ADDRCODE,
-                           PPI.pi_jibun as JIBUN,
-                           PPI.pi_code_depth1 as CODE_DEPTH1,
-                           PPI.pi_code_depth2 as CODE_DEPTH2,
-                           PPI.pi_code_depth3 as CODE_DEPTH3,
-                           PPI.pi_registed_yn as REGISTED_YN,
-                           PPI.pi_permitted_yn as PERMITTED_YN,
-                           PPI.pi_pnu as PNU,
-                           PPI.pi_del_flag as DEL_FLAG
-                      FROM POTENTIAL_ISSUE PPI
-                     WHERE PPI.pi_DEL_FLAG != 'Y'
+                    SELECT RANK() OVER (PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
+                           RPAD(PPI.addrcodeaddress_code, 10, '0') AS ADDRCODE,
+                           PPI.jibun as JIBUN,
+                           PPI.code_depth1 as CODE_DEPTH1,
+                           PPI.code_depth2 as CODE_DEPTH2,
+                           PPI.code_depth3 as CODE_DEPTH3,
+                           PPI.registed_yn as REGISTED_YN,
+                           PPI.permitted_yn as PERMITTED_YN,
+                           PPI.pnu as PNU,
+                           PPI.del_flag as DEL_FLAG
+                      FROM plms_POTENTIAL_ISSUE PPI
+                     WHERE PPI.DEL_FLAG != 'Y'
                   ) S WHERE S.RANK = 1
               ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE
               

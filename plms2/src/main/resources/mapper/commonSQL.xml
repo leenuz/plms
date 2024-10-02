@@ -336,27 +336,27 @@ SELECT PNU
 	</update>
 	
 	<select id="selectPnuIssue" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT T.pi_pnu as PNU
-		, T.pi_seq as SEQ
-		, T.pi_code_depth1 as CODE_DEPTH1
-		, (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.pi_CODE_DEPTH1) AS CODE_DEPTH1_NAME
-		, T.pi_code_depth2 as CODE_DEPTH2
-		, (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.pi_CODE_DEPTH2) AS CODE_DEPTH2_NAME
-	  , T.pi_code_depth3 as CODE_DEPTH3
-	  , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.pi_CODE_DEPTH3) AS CODE_DEPTH3_NAME
-	  , T.pi_issue_comment as ISSUE_COMMENT
-	  , T.pi_del_flag as DEL_FLAG
-	  , T.pi_del_comment as DEL_COMMENT
-	  , TO_CHAR(T.pi_ISSUE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS ISSUE_DATE
-	  , T.pi_address_code as ADDRCODE
-	  , T.pi_jibun as JIBUN
-	  ,pi_registed_yn as REGISTED_YN
-	  ,pi_permitted_yn as PERMITTED_YN
-	  FROM POTENTIAL_ISSUE T
-	  WHERE ((T.pi_PNU = #{PNU} AND COALESCE(T.pi_PNU, '99999') != '99999')
-	  OR  ( T.pi_address_code= #{ADDRCODE} AND T.pi_JIBUN = #{JIBUN} ))
-	  AND T.pi_DEL_FLAG = 'N'
-	  ORDER BY T.pi_ISSUE_DATE DESC
+		SELECT T.pnu as PNU
+		, T.seq as SEQ
+		, T.code_depth1 as CODE_DEPTH1
+		, (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.CODE_DEPTH1) AS CODE_DEPTH1_NAME
+		, T.code_depth2 as CODE_DEPTH2
+		, (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.CODE_DEPTH2) AS CODE_DEPTH2_NAME
+	  , T.code_depth3 as CODE_DEPTH3
+	  , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = T.CODE_DEPTH3) AS CODE_DEPTH3_NAME
+	  , T.issue_comment as ISSUE_COMMENT
+	  , T.del_flag as DEL_FLAG
+	  , T.del_comment as DEL_COMMENT
+	  , TO_CHAR(T.ISSUE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS ISSUE_DATE
+	  , T.addrcode as ADDRCODE
+	  , T.jibun as JIBUN
+	  ,registed_yn as REGISTED_YN
+	  ,permitted_yn as PERMITTED_YN
+	  FROM plms_POTENTIAL_ISSUE T
+	  WHERE ((T.PNU = #{PNU} AND COALESCE(T.PNU, '99999') != '99999')
+	  OR  ( T.addrcode= #{ADDRCODE} AND T.JIBUN = #{JIBUN} ))
+	  AND T.DEL_FLAG = 'N'
+	  ORDER BY T.ISSUE_DATE DESC
 	</select>
 	
 </mapper>

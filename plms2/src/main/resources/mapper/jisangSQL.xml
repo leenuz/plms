@@ -42,14 +42,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectPermitList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *,(row_number() over()) as no 
 		from jisang_master jm 
-		left join jisang_permit_master jpm on jpm.jpm_dockey=jm.jm_dockey
-		left join jisang_permit_togi jpt on jpt.jpt_jisang_no=jm.jm_jisang_no
+		left join permit_master jpm on jpm.dockey=jm.jm_dockey
+		left join permit_togi jpt on jpt.jisang_no=jm.jm_jisang_no
 		where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 		and jm.jm_jisang_no=#{idx}
 		</if>
 		AND jm.jm_dockey IS NOT null
-		AND jpm.jpm_dockey IS NOT null		
+		AND jpm.dockey IS NOT null		
 	</select>	
 	
 	<select id="selectAtcFileList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -80,63 +80,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectIssueList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select (row_number() over()) as NO
-		 , to_char(pi_issue_date,'YYYY-MM-DD HH:MM:SS') as issue_date
-		 ,*
-		 ,(SELECT code_name FROM plms_issue_code pic WHERE pic."code"=pi_code_depth1) AS DEPTH1_title
-		 ,(SELECT code_name FROM plms_issue_code pic WHERE pic."code"=pi_code_depth2) AS DEPTH2_title
-		 ,(SELECT code_name FROM plms_issue_code pic WHERE pic."code"=pi_code_depth3) AS DEPTH3_title
-		  FROM potential_issue PI
-		  LEFT JOIN 
-		  (
-		
-				SELECT 
-				jm.jm_jisang_no AS manage_no
-				,COALESCE(jm.jm_comple_yn,'') AS comple_yn
-				,COALESCE(jm.jm_permitted_yn,'') AS permitted_yn
-				,SUBSTRING(jm.jm_jisang_no,1,1) AS rtype
-				 FROM jisang_master jm
-				 
-				 UNION all
-				 
-				 
-					SELECT 
-				gm.gm_gover_no AS manage_no
-				,COALESCE('','') AS comple_yn
-				,COALESCE('','') AS permitted_yn
-				,SUBSTRING(gm.gm_gover_no,1,1) AS rtype
-				
-				 FROM gover_master gm
-				 
-				 UNION all
-				 
-				 	SELECT 
-				nm.nm_notset_no AS manage_no
-				,COALESCE('','') AS comple_yn
-				,COALESCE('','') AS permitted_yn
-				,SUBSTRING(nm.nm_notset_no,1,1) AS rtype
-				 FROM notset_master nm
-<!--				 
- 				 UNION all
-				 
-				 	SELECT 
-				dom.dom_dopco_no AS manage_no
-				,COALESCE('','') AS comple_yn
-				,COALESCE('','') AS permitted_yn
-				,SUBSTRING(nm.nm_notset_no,1,1) AS rtype
-				 FROM dopco_master dom
-		 -->
-		 ) AS u
-		 ON PI.pi_manage_no = u.manage_no
-		 WHERE 1=1
-		and pi_pnu=#{pnu}
+		SELECT (ROW_NUMBER() OVER()) AS NO
+     , TO_CHAR(PI.issue_date, 'YYYY-MM-DD HH:MI:SS') AS issue_date  -- HH:MM:SS -> HH:MI:SS 수정
+     , PI.*
+     , (SELECT code_name FROM plms_issue_code pic WHERE pic."code" = PI.code_depth1) AS DEPTH1_title
+     , (SELECT code_name FROM plms_issue_code pic WHERE pic."code" = PI.code_depth2) AS DEPTH2_title
+     , (SELECT code_name FROM plms_issue_code pic WHERE pic."code" = PI.code_depth3) AS DEPTH3_title
+FROM plms_potential_issue PI
+LEFT JOIN (
+    SELECT 
+        jm.jm_jisang_no AS manage_no,
+        COALESCE(jm.jm_comple_yn, '') AS comple_yn,
+        COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
+        SUBSTRING(jm.jm_jisang_no, 1, 1) AS rtype,
+        jm.jm_pnu AS pnu
+    FROM jisang_master jm
+
+    UNION ALL
+
+    SELECT 
+        gm.gm_gover_no AS manage_no,
+        COALESCE('', '') AS comple_yn,
+        COALESCE('', '') AS permitted_yn,
+        SUBSTRING(gm.gm_gover_no, 1, 1) AS rtype,
+        gp.gp_pnu AS pnu
+    FROM gover_master gm
+    LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
+
+    UNION ALL
+
+    SELECT 
+        nm.nm_notset_no AS manage_no,
+        COALESCE('', '') AS comple_yn,
+        COALESCE('', '') AS permitted_yn,
+        SUBSTRING(nm.nm_notset_no, 1, 1) AS rtype,
+        nm.nm_pnu AS pnu
+    FROM notset_master nm
+) AS u
+ON PI.pnu = u.pnu  
+		 
+	where 1=1 	and PI.pnu=#{pnu}
 	</select>
 	
 	<select id="selectIssueHistoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *,(row_number() over()) as no 
-		 FROM  potential_issue pi left join potential_issue_history pih on pi.pi_pnu=pih.pih_pnu 
+		 FROM  plms_potential_issue pi left join plms_issue_history pih on pi.pnu=pih.pnu 
 		WHERE 1=1
-		and pih_pnu=#{pnu}
+		and pi.pnu=#{pnu}
 	</select>
 	
 	<select id="selectPnuAtcFileList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -463,8 +453,8 @@ SELECT *
                         WHEN COUNT(*) > 0 THEN 'Y'
                         ELSE 'N'
                     END
-                      FROM jisang_PERMIT_TOGI PTD
-                     WHERE JM.jm_JISANG_NO = PTD.jpt_JISANG_NO
+                      FROM PERMIT_TOGI PTD
+                     WHERE JM.jm_JISANG_NO = PTD.JISANG_NO
                 ) AS PERMIT_YN
                        , JHT.jmt_rep_jisang_no as REP_JISANG_NO
                        , JMT.jmt_JISANG_NO AS T_JISANG_NO
@@ -489,7 +479,7 @@ SELECT *
                                , js_JIBUN
                                , js_SOUJA_NAME
                                , js_ADDRESS
-                               , js_PHONE_NUMBER
+                               , js_PONE_NUMBER
                                , js_HOME_NUMBER
                                , ROW_NUMBER() OVER(
                             PARTITION BY js_JISANG_NO
@@ -615,8 +605,8 @@ SELECT count(*)
                         WHEN COUNT(*) > 0 THEN 'Y'
                         ELSE 'N'
                     END
-                      FROM jisang_PERMIT_TOGI PTD
-                     WHERE JM.jm_JISANG_NO = PTD.jpt_JISANG_NO
+                      FROM PERMIT_TOGI PTD
+                     WHERE JM.jm_JISANG_NO = PTD.JISANG_NO
                 ) AS PERMIT_YN
                        , JHT.jmt_rep_jisang_no as REP_JISANG_NO
                        , JMT.jmt_JISANG_NO AS T_JISANG_NO
@@ -641,7 +631,7 @@ SELECT count(*)
                                , js_JIBUN
                                , js_SOUJA_NAME
                                , js_ADDRESS
-                               , js_PHONE_NUMBER
+                               , js_PONE_NUMBER
                                , js_HOME_NUMBER
                                , ROW_NUMBER() OVER(
                             PARTITION BY js_JISANG_NO
@@ -769,8 +759,8 @@ SELECT *
                         WHEN COUNT(*) > 0 THEN 'Y'
                         ELSE 'N'
                     END
-                      FROM jisang_PERMIT_TOGI PTD
-                     WHERE JM.jm_JISANG_NO = PTD.jpt_JISANG_NO
+                      FROM PERMIT_TOGI PTD
+                     WHERE JM.jm_JISANG_NO = PTD.JISANG_NO
                 ) AS PERMIT_YN
                        , JHT.jmt_rep_jisang_no as REP_JISANG_NO
                        , JMT.jmt_JISANG_NO AS T_JISANG_NO
@@ -795,7 +785,7 @@ SELECT *
                                , js_JIBUN
                                , js_SOUJA_NAME
                                , js_ADDRESS
-                               , js_PHONE_NUMBER
+                               , js_PONE_NUMBER
                                , js_HOME_NUMBER
                                , ROW_NUMBER() OVER(
                             PARTITION BY js_JISANG_NO
@@ -919,8 +909,8 @@ SELECT count(*)
                         WHEN COUNT(*) > 0 THEN 'Y'
                         ELSE 'N'
                     END
-                      FROM jisang_PERMIT_TOGI PTD
-                     WHERE JM.jm_JISANG_NO = PTD.jpt_JISANG_NO
+                      FROM PERMIT_TOGI PTD
+                     WHERE JM.jm_JISANG_NO = PTD.JISANG_NO
                 ) AS PERMIT_YN
                        , JHT.jmt_rep_jisang_no as REP_JISANG_NO
                        , JMT.jmt_JISANG_NO AS T_JISANG_NO
@@ -945,7 +935,7 @@ SELECT count(*)
                                , js_JIBUN
                                , js_SOUJA_NAME
                                , js_ADDRESS
-                               , js_PHONE_NUMBER
+                               , js_PONE_NUMBER
                                , js_HOME_NUMBER
                                , ROW_NUMBER() OVER(
                             PARTITION BY js_JISANG_NO
@@ -1134,22 +1124,22 @@ SELECT count(*)
 	
 	<!-- 지상권 사용승락 기본정보 seq 가져오기 -->
 	<select id="selectJisangPermitNextval" parameterType="java.util.HashMap" resultType="Integer">
-		SELECT jpm_idx+1 FROM jisang_permit_master ORDER BY jpm_idx DESC LIMIT 1;
+		SELECT idx+1 FROM permit_master ORDER BY idx DESC LIMIT 1;
 	</select>
 	<!-- 지상권 사용승락 기본정보 저장 -->
-	<insert id="insertJisangPermitMaster" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jpm_idx" keyProperty="jpm_idx">
+	<insert id="insertJisangPermitMaster" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="idx" keyProperty="idx">
 
-		INSERT INTO jisang_permit_master
+		INSERT INTO permit_master
 		(
-		 jpm_pmt_no
-		 ,jpm_use_purpos
-		 ,jpm_use_st_date
-		 ,jpm_use_ed_date
-		 ,jpm_spot_result
-		 ,jpm_review
-		 ,jpm_contract
-		 ,jpm_pmt_status
-		 ,jpm_wdate
+		 pmt_no
+		 ,use_purpos
+		 ,use_st_date
+		 ,use_ed_date
+		 ,spot_result
+		 ,review
+		 ,contract
+		 ,pmt_status
+		 ,wdate
 		 
 
 		 )
@@ -1169,26 +1159,26 @@ SELECT count(*)
 
 	<!-- 지상기본정보 --></insert>
 	<!-- 지상권 사용승락 기본정보 저장 -->
-	<insert id="insertJisangPermitTogi" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="jpt_idx" keyProperty="jpt_idx">
+	<insert id="insertJisangPermitTogi" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="idx" keyProperty="idx">
 
-		INSERT INTO jisang_permit_togi 
+		INSERT INTO permit_togi 
 		(
-		 jpt_pmt_no
-		 ,jpt_jisang_no
-		 ,jpt_addrcode
-		 ,jpt_soyuja
-		 ,jpt_pmt_user
-		 ,jpt_jimok
-		 ,jpt_all_area
-		 ,jpt_set_area
-		 ,jpt_set_money
-		 ,jpt_sido_nm
-		 ,jpt_sgg_nm
-		 ,jpt_emd_nm
-		 ,jpt_ri_nm
-		 ,jpt_jibun
-		 ,jpt_addr
-		 ,jpt_jasan_no
+		 pmt_no
+		 ,jisang_no
+		 ,addrcode
+		 ,soyuja
+		 ,pmt_user
+		 ,jimok
+		 ,all_area
+		 ,set_area
+		 ,set_money
+		 ,sido_nm
+		 ,sgg_nm
+		 ,emd_nm
+		 ,ri_nm
+		 ,jibun
+		 ,addr
+		 ,jasan_no
 		 
 		 ) 
 		 VALUES (
@@ -1218,29 +1208,29 @@ SELECT count(*)
 	
 	<select id="selectJisangPermitTotalCount" parameterType="java.util.HashMap" resultType="Integer">
 		SELECT count(*) as count FROM (
-		SELECT jpm.jpm_idx AS index,
-		jpm.jpm_pmt_no AS idx,
-		jpm.jpm_echo_no as echo_no,
-		jpm.jpm_use_purpos as use_purpos,
-		jpm.jpm_use_st_date as use_st_date,
-		jpm.jpm_use_ed_date as use_ed_date,
-		jpm.jpm_spot_result as spot_result,
-		jpm.jpm_review as review,
-		jpm.jpm_contract as contract,
-		jpm.jpm_pmt_status as pmt_status,
-		jpm.jpm_dockey as dockey,
-		jpt.jpt_jisang_no AS jisang_no,
-		jpt.jpt_pmt_user as pmt_user
-		,jpt.jpt_soyuja as soyuja
-		,jpt.jpt_jimok as jimok
-		,jpt.jpt_jasan_no as jasan_no
-		,jpt.jpt_addr as addr
-		,jpt.jpt_jibun as jibun
+		SELECT jpm.idx AS index,
+		jpm.pmt_no AS idx,
+		jpm.echo_no as echo_no,
+		jpm.use_purpos as use_purpos,
+		jpm.use_st_date as use_st_date,
+		jpm.use_ed_date as use_ed_date,
+		jpm.spot_result as spot_result,
+		jpm.review as review,
+		jpm.contract as contract,
+		jpm.pmt_status as pmt_status,
+		jpm.dockey as dockey,
+		jpt.jisang_no AS jisang_no,
+		jpt.pmt_user as pmt_user
+		,jpt.soyuja as soyuja
+		,jpt.jimok as jimok
+		,jpt.jasan_no as jasan_no
+		,jpt.addr as addr
+		,jpt.jibun as jibun
 		,jm.jm_jisa as jisa
 		 
-		FROM jisang_permit_master jpm
-			LEFT JOIN jisang_permit_togi jpt ON jpt.jpt_pmt_no=jpm.jpm_pmt_no
-			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jpt_jisang_no
+		FROM permit_master jpm
+			LEFT JOIN permit_togi jpt ON jpt.pmt_no=jpm.pmt_no
+			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jisang_no
 		) as r
 		WHERE 1 = 1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
@@ -1264,29 +1254,29 @@ SELECT count(*)
 		SELECT *,
 		(row_number() OVER()) AS no
 		FROM (
-		SELECT jpm.jpm_idx AS index,
-		jpm.jpm_pmt_no AS idx,
-		jpm.jpm_echo_no as echo_no,
-		jpm.jpm_use_purpos as use_purpos,
-		jpm.jpm_use_st_date as use_st_date,
-		jpm.jpm_use_ed_date as use_ed_date,
-		jpm.jpm_spot_result as spot_result,
-		jpm.jpm_review as review,
-		jpm.jpm_contract as contract,
-		jpm.jpm_pmt_status as pmt_status,
-		jpm.jpm_dockey as dockey,
-		jpt.jpt_jisang_no AS jisang_no,
-		jpt.jpt_pmt_user as pmt_user
-		,jpt.jpt_soyuja as soyuja
-		,jpt.jpt_jimok as jimok
-		,jpt.jpt_jasan_no as jasan_no
-		,jpt.jpt_addr as addr
-		,jpt.jpt_jibun as jibun
+		SELECT jpm.idx AS index,
+		jpm.pmt_no AS idx,
+		jpm.echo_no as echo_no,
+		jpm.use_purpos as use_purpos,
+		jpm.use_st_date as use_st_date,
+		jpm.use_ed_date as use_ed_date,
+		jpm.spot_result as spot_result,
+		jpm.review as review,
+		jpm.contract as contract,
+		jpm.pmt_status as pmt_status,
+		jpm.dockey as dockey,
+		jpt.jisang_no AS jisang_no,
+		jpt.pmt_user as pmt_user
+		,jpt.soyuja as soyuja
+		,jpt.jimok as jimok
+		,jpt.jasan_no as jasan_no
+		,jpt.addr as addr
+		,jpt.jibun as jibun
 		,jm.jm_jisa as jisa
 		 
-		FROM jisang_permit_master jpm
-			LEFT JOIN jisang_permit_togi jpt ON jpt.jpt_pmt_no=jpm.jpm_pmt_no
-			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jpt_jisang_no
+		FROM permit_master jpm
+			LEFT JOIN jisang_permit_togi jpt ON jpt.pmt_no=jpm.pmt_no
+			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jisang_no
 		WHERE 1 = 1
 		
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
@@ -1351,29 +1341,29 @@ SELECT count(*)
 		SELECT *,
 		(row_number() OVER()) AS no
 		FROM (
-		SELECT jpm.jpm_idx AS index,
-		jpm.jpm_pmt_no AS idx,
-		jpm.jpm_echo_no as echo_no,
-		jpm.jpm_use_purpos as use_purpos,
-		jpm.jpm_use_st_date as use_st_date,
-		jpm.jpm_use_ed_date as use_ed_date,
-		jpm.jpm_spot_result as spot_result,
-		jpm.jpm_review as review,
-		jpm.jpm_contract as contract,
-		jpm.jpm_pmt_status as pmt_status,
-		jpm.jpm_dockey as dockey,
-		jpt.jpt_jisang_no AS jisang_no,
-		jpt.jpt_pmt_user as pmt_user
-		,jpt.jpt_soyuja as soyuja
-		,jpt.jpt_jimok as jimok
-		,jpt.jpt_jasan_no as jasan_no
-		,jpt.jpt_addr as addr
-		,jpt.jpt_jibun as jibun
+		SELECT jpm.idx AS index,
+		jpm.pmt_no AS idx,
+		jpm.echo_no as echo_no,
+		jpm.use_purpos as use_purpos,
+		jpm.use_st_date as use_st_date,
+		jpm.use_ed_date as use_ed_date,
+		jpm.spot_result as spot_result,
+		jpm.review as review,
+		jpm.contract as contract,
+		jpm.pmt_status as pmt_status,
+		jpm.dockey as dockey,
+		jpt.jisang_no AS jisang_no,
+		jpt.pmt_user as pmt_user
+		,jpt.soyuja as soyuja
+		,jpt.jimok as jimok
+		,jpt.jasan_no as jasan_no
+		,jpt.addr as addr
+		,jpt.jibun as jibun
 		,jm.jm_jisa as jisa
 		 
-		FROM jisang_permit_master jpm
-			LEFT JOIN jisang_permit_togi jpt ON jpt.jpt_pmt_no=jpm.jpm_pmt_no
-			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jpt_jisang_no
+		FROM permit_master jpm
+			LEFT JOIN permit_togi jpt ON jpt.pmt_no=jpm.pmt_no
+			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jisang_no
 		WHERE 1 = 1
 		
 		
@@ -2341,7 +2331,7 @@ SELECT count(*)
 		 ,js_jibun
 		 ,js_souja_name
 		 ,js_address
-		 ,js_phone_number
+		 ,js_pone_number
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(soujaContact2)" >
 		 ,js_home_number
 		 </if>
@@ -2675,7 +2665,7 @@ LEFT JOIN JIJUK_2024 JIJUK_MST ON JM.jm_PNU = JIJUK_MST.PNU
 	</select>
 	
 	<select id="selectJisangDetailSoyu" parameterType="HashMap" resultType="java.util.HashMap">
-		SELECT JS_JISANG_NO, JS_JIBUN, JS_SOUJA_NAME, JS_ADDRESS, JS_PHONE_NUMBER, JS_HOME_NUMBER
+		SELECT JS_JISANG_NO, JS_JIBUN, JS_SOUJA_NAME, JS_ADDRESS, JS_PONE_NUMBER, JS_HOME_NUMBER
 		FROM JISANG_SOUJA
 		WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)" >
@@ -2686,38 +2676,38 @@ LEFT JOIN JIJUK_2024 JIJUK_MST ON JM.jm_PNU = JIJUK_MST.PNU
 	</select>
 	
 	<select id="selectJisangPmtDetail_MASTER"  parameterType="HashMap" resultType="java.util.HashMap">
-		SELECT jpm_PMT_NO AS PMT_NO
-, jpm_USE_PURPOS AS USE_PURPOS
-, jpm_ECHO_NO AS ECHO_NO
-, TO_CHAR(jpm_USE_ST_DATE , 'YYYY-MM-DD') AS USE_ST_DATE
-, TO_CHAR(jpm_USE_ED_DATE, 'YYYY-MM-DD') AS USE_ED_DATE
-, jpm_SPOT_RESULT AS SPOT_RESULT
-, jpm_review AS RIVEW
-, jpm_CONTRACT AS CONTRACT
-, jpm_PMT_STATUS AS PMT_STATUS
-, jpm_DOCKEY AS DOCKEY
-FROM jisang_permit_master
-		WHERE jpm_pmt_no = #{PMT_NO}
+		SELECT PMT_NO AS PMT_NO
+, USE_PURPOS AS USE_PURPOS
+, ECHO_NO AS ECHO_NO
+, TO_CHAR(USE_ST_DATE , 'YYYY-MM-DD') AS USE_ST_DATE
+, TO_CHAR(USE_ED_DATE, 'YYYY-MM-DD') AS USE_ED_DATE
+, SPOT_RESULT AS SPOT_RESULT
+, review AS RIVEW
+, CONTRACT AS CONTRACT
+, PMT_STATUS AS PMT_STATUS
+, DOCKEY AS DOCKEY
+FROM permit_master
+		WHERE pmt_no = #{PMT_NO}
 	</select>
 	<select id="selectJisangPmtDetail_TOGI"  parameterType="HashMap" resultType="java.util.HashMap">
-		SELECT jpt_PMT_NO as PMT_NO
-		,jpt_jisang_no as JISANG_NO
-		,jpt_addrcode as ADDRCODE
-		,jpt_soyuja as SOYUJA
-		,jpt_pmt_user as  PMT_USER
-		,jpt_jimok as  JIMOK
-		,jpt_ALL_AREA AS ALL_AREA
-		, jpt_SET_AREA AS SET_AREA
-		, jpt_set_money as SET_MONEY
-		, jpt_sido_nm as SIDO_NM
-		, jpt_sgg_nm as SGG_NM
-		, jpt_emd_nm as EMD_NM
-		, jpt_ri_nm as RI_NM
-		, jpt_jibun as JIBUN
-		, jpt_addr as ADDR
-		, jpt_jasan_no as JASAN_NO
-		FROM jisang_permit_togi
-		WHERE jpt_pmt_no = #{PMT_NO}
+		SELECT PMT_NO as PMT_NO
+		,jisang_no as JISANG_NO
+		,addrcode as ADDRCODE
+		,soyuja as SOYUJA
+		,pmt_user as  PMT_USER
+		,jimok as  JIMOK
+		,ALL_AREA AS ALL_AREA
+		, SET_AREA AS SET_AREA
+		, set_money as SET_MONEY
+		, sido_nm as SIDO_NM
+		, sgg_nm as SGG_NM
+		, emd_nm as EMD_NM
+		, ri_nm as RI_NM
+		, jibun as JIBUN
+		, addr as ADDR
+		, jasan_no as JASAN_NO
+		FROM permit_togi
+		WHERE pmt_no = #{PMT_NO}
 		ORDER BY JISANG_NO
 	</select>
 	
@@ -2741,15 +2731,15 @@ FROM jisang_permit_master
 		WHERE jb_bunhal_org_no = #{JISANGNO}
 	</update>
 	<update id="updateJisangPmtDetailEchoNo"  parameterType="HashMap" >
-		UPDATE jisang_permit_master SET
-		jpm_dockey = #{DOCKEY}
-		WHERE jpm_pmt_no = #{PMT_NO}
+		UPDATE permit_master SET
+		dockey = #{DOCKEY}
+		WHERE pmt_no = #{PMT_NO}
 	</update>
 	<select id="selectDocInfo" parameterType="HashMap" resultType="java.util.HashMap">
 		SELECT *
 			,pa_out_flag AS OUT_FLAG
 		,pa_out_url AS OUT_URL
-		 FROM plms_approval where pa_dockey in (select jpm_dockey from jisang_permit_master where jpm_pmt_no = #{PMT_NO}) and (pa_status is null or pa_status not in ('X'))
+		 FROM plms_approval where pa_dockey in (select dockey from permit_master where pmt_no = #{PMT_NO}) and (pa_status is null or pa_status not in ('X'))
 	</select>
 	
 	
@@ -2989,20 +2979,20 @@ WHERE
 			jm_DEUNGGI_DATE,
 		</if>
 		jm_DEUNGGI_NO, jm_DEUNGGISO, jm_JASAN_NO, jm_ADDRCODE, jm_PNU, jm_USE_STATE, jm_SPECIAL_CONT, jm_LOCATION, jm_JIMOK_TEXT
-		, jm_SAVE_STATUS, jm_PERMITTED_YN)
+		, jm_SAVE_STATUS, jm_PERMITTED_YN,jm_PIPE_YN)
 		Values
 		(#{JISANGNO}, #{SINM}, #{GUNGUNM}, #{DONGNM}, #{RINM}, #{JIBUN}, #{JISANM}, #{GOVEROWNYN},
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CD_STARTDAY)" >
-			TO_DATE(#{CD_STARTDAY} || '00:00:00', 'YYYYMMDD'),
+			TO_DATE(#{CD_STARTDAY}, 'YYYY-MM-DD'),
 		</if>
 
 		nullif(#{JIJUKAREA},'')::numeric,
 		#{ZONE}, #{SUNGUBUN}, #{YONGDO}, #{DOSIPLAN}, #{COMPLEYN}, nullif(#{PYEONIBAREA},'')::numeric,
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DGSTARTDAY)" >
-			TO_DATE(#{DGSTARTDAY} || '00:00:00', 'YYYYMMDD') ,
+			TO_DATE(#{DGSTARTDAY}, 'YYYY-MM-DD') ,
 		</if>
 		#{DEUNGGINO}, #{DEUNGGISO},
-		#{JASANNO}, #{ADDRCODE}, #{PNU} ,#{USESTATE} , #{SPECIALCONT} , #{LOCATION}, #{JIMOK}, #{SAVE_STATUS}, #{PERMITTED_YN})
+		#{JASANNO}, #{ADDRCODE}, #{PNU} ,#{USESTATE} , #{SPECIALCONT} , #{LOCATION}, #{JIMOK}, #{SAVE_STATUS}, #{PERMITTED_YN},#{PIPE_YN})
 	</insert>
 	
 	<insert id="insertJisangMasterTmp" parameterType="HashMap">
@@ -3022,13 +3012,13 @@ WHERE
 		Values
 		({JISANGNO}, {SINM}, {GUNGUNM}, {DONGNM}, {RINM}, {JIBUN}, {JISANM}, {GOVEROWNYN},
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CD_STARTDAY)" >
-			TO_DATE({CD_STARTDAY} || '00:00:00', 'YYYYMMDDHH24:MI:SS'),
+			TO_DATE({CD_STARTDAY}, 'YYYYMMDD'),
 		</if>
 
 		{JIJUKAREA},
 		{ZONE}, {SUNGUBUN}, {YONGDO}, {DOSIPLAN}, {COMPLEYN}, to_number({PYEONIBAREA}),
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DGSTARTDAY)" >
-			TO_DATE({DGSTARTDAY} || '00:00:00', 'YYYYMMDDHH24:MI:SS') ,
+			TO_DATE({DGSTARTDAY}, 'YYYYMMDD') ,
 		</if>
 		{DEUNGGINO}, {DEUNGGISO},
 		{JASANNO}, {ADDRCODE}, {PNU} ,{USESTATE} , {SPECIALCONT} , {LOCATION}, {JIMOK})
@@ -3054,7 +3044,7 @@ WHERE
 	</insert>
 		<insert id="insertJisangSoyu" parameterType="HashMap">
 		Insert into JISANG_SOUJA
-		(js_JISANG_NO, js_JIBUN, js_SOUJA_NAME, js_ADDRESS, js_HOME_NUMBER ,js_PHONE_NUMBER)
+		(js_JISANG_NO, js_JIBUN, js_SOUJA_NAME, js_ADDRESS, js_HOME_NUMBER ,js_PONE_NUMBER)
 		Values
 		(#{JISANGNO}, #{JIBUN}, #{NAME}, #{ADDR}, #{TEL} , #{HP})
 	</insert>
@@ -3155,7 +3145,7 @@ WHERE
 	</select>
 	
 	<select id="selectJisangDetailSoyuTmp" parameterType="HashMap" resultType="java.util.HashMap">
-		SELECT js_JISANG_NO, js_JIBUN, js_SOUJA_NAME, js_ADDRESS, js_PHONE_NUMBER, js_HOME_NUMBER
+		SELECT js_JISANG_NO, js_JIBUN, js_SOUJA_NAME, js_ADDRESS, js_PONE_NUMBER, js_HOME_NUMBER
 		FROM JISANG_SOUJA_TMP
 		WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)">
@@ -3265,25 +3255,25 @@ VALUES (
 				SELECT PM.PMT_NO, PM.USE_PURPOS, PM.PMT_STATUS, PM.ECHO_NO, PM.USE_ST_DATE,
 				PM.USE_ED_DATE, PT.JISANG_NO, PT.ADDR, PT.SOYUJA, PT.PMT_USER, PT.ADDRCODE
 				FROM (
-					SELECT jpm_pmt_no as PMT_NO
-					, jpm_use_purpos as USE_PURPOS
-					, jpm_pmt_status as PMT_STATUS
-					, jpm_echo_no as ECHO_NO
-					, TO_CHAR(jpm_USE_ST_DATE, 'YYYY-MM-DD') AS USE_ST_DATE
-					, TO_CHAR(jpm_USE_ED_DATE, 'YYYY-MM-DD') AS USE_ED_DATE
-					FROM jisang_PERMIT_MASTER
+					SELECT pmt_no as PMT_NO
+					, use_purpos as USE_PURPOS
+					, pmt_status as PMT_STATUS
+					, echo_no as ECHO_NO
+					, TO_CHAR(USE_ST_DATE, 'YYYY-MM-DD') AS USE_ST_DATE
+					, TO_CHAR(USE_ED_DATE, 'YYYY-MM-DD') AS USE_ED_DATE
+					FROM PERMIT_MASTER
 				)PM
 				left join (
-					SELECT jpt_pmt_no as PMT_NO, jpt_jisang_no as JISANG_NO,jpt_addr AS
-					ADDR,jpt_soyuja AS SOYUJA,jpt_pmt_user as PMT_USER,jpt_addrcode as ADDRCODE
-					FROM jisang_PERMIT_TOGI
+					SELECT pmt_no as PMT_NO, jisang_no as JISANG_NO,addr AS
+					ADDR,soyuja AS SOYUJA,pmt_user as PMT_USER,addrcode as ADDRCODE
+					FROM PERMIT_TOGI
 				)PT
 				ON PM.PMT_NO = PT.PMT_NO
 				WHERE 1=1
 			)A
 			left join (
-				SELECT jpt_pmt_no as PMT_NO, count(*) AS ROWCNT
-				FROM jisang_PERMIT_TOGI
+				SELECT pmt_no as PMT_NO, count(*) AS ROWCNT
+				FROM PERMIT_TOGI
 				WHERE 1=1
 				GROUP BY PMT_NO
 			)B
@@ -3291,9 +3281,9 @@ VALUES (
 			ORDER BY PMT_NO, JISANG_NO
 		)AA
 		right join (
-			SELECT jpt_pmt_no as PMT_NO
-			FROM jisang_PERMIT_TOGI
-			WHERE jpt_JISANG_NO = #{JISANG_NO}
+			SELECT pmt_no as PMT_NO
+			FROM PERMIT_TOGI
+			WHERE JISANG_NO = #{JISANG_NO}
 		)BB
 		on AA.PMT_NO = BB.PMT_NO
 	</select>
@@ -3333,11 +3323,11 @@ DELETE from PLMS_ISSUE_HISTORY
 	</delete>
 		<delete id="deletePnuIssueForPnuReal" parameterType="HashMap">
 
-DELETE from POTENTIAL_ISSUE
- WHERE ( pi_PNU = #{PNU}
-    OR (pi_PNU = '99999'
-       AND pi_address_code = #{ADDRCODE}
-       AND pi_JIBUN = #{JIBUN}) )
+DELETE from plms_POTENTIAL_ISSUE
+ WHERE ( PNU = #{PNU}
+    OR (PNU = '99999'
+       AND addrcode = #{ADDRCODE}
+       AND JIBUN = #{JIBUN}) )
 
 	</delete>
 	
@@ -3367,40 +3357,40 @@ DELETE from POTENTIAL_ISSUE
 		WHERE JISANG_NO = #{JISANGNO}
 	</update>
 	<select id="selectJisangPmtNextNo" resultType="HashMap" parameterType="HashMap">
-		SELECT COALESCE(MAX(CAST(SUBSTRING(jpm_PMT_NO, 3) AS INTEGER)), 0) AS NOW_PMT_NO
-		FROM jisang_PERMIT_MASTER
+		SELECT COALESCE(MAX(CAST(SUBSTRING(PMT_NO, 3) AS INTEGER)), 0) AS NOW_PMT_NO
+		FROM PERMIT_MASTER
 		
 	</select>
 	
 		<insert id="insertPermitMaster" parameterType="HashMap">
-		Insert into jisang_PERMIT_MASTER
-		( jpm_PMT_NO, jpm_USE_PURPOS, jpm_PMT_STATUS, jpm_USE_ST_DATE, jpm_USE_ED_DATE, jpm_SPOT_RESULT, jpm_review, jpm_CONTRACT)
+		Insert into PERMIT_MASTER
+		( PMT_NO, USE_PURPOS, PMT_STATUS, USE_ST_DATE, USE_ED_DATE, SPOT_RESULT, review, CONTRACT)
 		Values
 		( #{PMT_NO}, #{USE_PURPOS}, #{PMT_STATUS}, to_date( #{USE_ST_DATE} , 'yyyy-mm-dd'), to_date( #{USE_ED_DATE} , 'yyyy-mm-dd'), #{POT_RESULT}, #{RIVEW}, #{CONTRACT} )
 	</insert>
 	<update id="updatePermitMaster" parameterType="HashMap">
-		UPDATE jisang_PERMIT_MASTER
+		UPDATE PERMIT_MASTER
 		SET
-		jpm_USE_PURPOS = #{USE_PURPOS}
-		, jpm_PMT_STATUS = #{PMT_STATUS}
-		, jpm_USE_ST_DATE = to_date( #{USE_ST_DATE} , 'yyyy-mm-dd')
-		, jpm_USE_ED_DATE = to_date( #{USE_ED_DATE} , 'yyyy-mm-dd')
-		, jpm_SPOT_RESULT = #{SPOT_RESULT}
-		, jpm_review = #{RIVEW}
-		, jpm_CONTRACT = #{CONTRACT}
+		USE_PURPOS = #{USE_PURPOS}
+		, PMT_STATUS = #{PMT_STATUS}
+		, USE_ST_DATE = to_date( #{USE_ST_DATE} , 'yyyy-mm-dd')
+		, USE_ED_DATE = to_date( #{USE_ED_DATE} , 'yyyy-mm-dd')
+		, SPOT_RESULT = #{SPOT_RESULT}
+		, review = #{RIVEW}
+		, CONTRACT = #{CONTRACT}
 
-		WHERE jpm_PMT_NO = {#PMT_NO}
+		WHERE PMT_NO = {#PMT_NO}
 
 	</update>
 	<delete id="deletePermitTogiList" parameterType="HashMap">
-		DELETE FROM jisang_PERMIT_TOGI
-		WHERE jpt_PMT_NO = #{PMT_NO}
+		DELETE FROM PERMIT_TOGI
+		WHERE PMT_NO = #{PMT_NO}
 	</delete>
 	
 	<insert id="insertPermitTogiList" parameterType="HashMap">
-		Insert into jisang_PERMIT_TOGI
-		( jpt_PMT_NO, jpt_JISANG_NO, jpt_ADDR, jpt_SOYUJA, jpt_PMT_USER, jpt_JIMOK, jpt_ALL_AREA, jpt_SET_AREA
-		, jpt_SET_MONEY, jpt_SIDO_NM, jpt_SGG_NM, jpt_EMD_NM, jpt_RI_NM, jpt_JIBUN, jpt_ADDRCODE, jpt_JASAN_NO )
+		Insert into PERMIT_TOGI
+		( PMT_NO, JISANG_NO, ADDR, SOYUJA, PMT_USER, JIMOK, ALL_AREA, SET_AREA
+		, SET_MONEY, SIDO_NM, SGG_NM, EMD_NM, RI_NM, JIBUN, ADDRCODE, JASAN_NO )
 		Values
 		( #{PMT_NO}, #{JISANG_NO}, #{ADDRESS}, #{SOUJA}, #{USER}, #{JIMOK}, #{JIJUK}::numeric, #{PYENIB}::numeric
 		, #{MONEY}, #{SIDO_NM}, #{SGG_NM}, #{EMD_NM}, #{RI_NM}, #{JIBUN}, #{ADDRCODE}, #{JASAN_NO} )
@@ -3425,18 +3415,18 @@ DELETE from POTENTIAL_ISSUE
 	
 	<insert id="insertCancelFile" parameterType="HashMap">
            
-			INSERT INTO jisang_cancle_ATCFILE(manage_no, SEQ	, FILE_PATH, FILE_NM, FILE_GUBUN)
-			VALUES (#{MANAGE_NO},nextval('jisang_cancle_atcfile_seq'), #{FILE_PATH}, #{FILE_NM}, #{FILE_GUBUN})
+			INSERT INTO jisang_cancel_ATCFILE(manage_no, SEQ	, FILE_PATH, FILE_NM, FILE_GUBUN)
+			VALUES (#{MANAGE_NO},nextval('jisang_cancel_atcfile_seq'), #{FILE_PATH}, #{FILE_NM}, #{FILE_GUBUN})
 			
 	</insert>
 	<update id="updateCancelFile" parameterType="HashMap">
            
-			update jisang_cancle_ATCFILE set FILE_PATH=#{FILE_PATH},FILE_NM=#{FILE_NM}
+			update jisang_cancel_ATCFILE set FILE_PATH=#{FILE_PATH},FILE_NM=#{FILE_NM}
 			where manage_no=#{MANAGE_NO} and file_gubun=#{FILE_GUBUN}::varchar
 			
 	</update>
 	<select id="selectCancelFileCount" resultType="integer" parameterType="HashMap">
-		select count(*) from jisang_cancle_ATCFILE where manage_no=#{MANAGE_NO} and file_gubun = #{FILE_GUBUN}::varchar
+		select count(*) from jisang_cancel_ATCFILE where manage_no=#{MANAGE_NO} and file_gubun = #{FILE_GUBUN}::varchar
 		
 	</select>
 	<delete id="deleteJisangAtcFile" parameterType="java.util.HashMap">
