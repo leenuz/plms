@@ -2996,13 +2996,13 @@ WHERE
 		Values
 		(#{JISANGNO}, #{SINM}, #{GUNGUNM}, #{DONGNM}, #{RINM}, #{JIBUN}, #{JISANM}, #{GOVEROWNYN},
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CD_STARTDAY)" >
-			TO_DATE(#{CD_STARTDAY} || '00:00:00', 'YYYYMMDD'),
+			TO_DATE(#{CD_STARTDAY}, 'YYYY-MM-DD'),
 		</if>
 
 		nullif(#{JIJUKAREA},'')::numeric,
 		#{ZONE}, #{SUNGUBUN}, #{YONGDO}, #{DOSIPLAN}, #{COMPLEYN}, nullif(#{PYEONIBAREA},'')::numeric,
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(DGSTARTDAY)" >
-			TO_DATE(#{DGSTARTDAY} || '00:00:00', 'YYYYMMDD') ,
+			TO_DATE(#{DGSTARTDAY}, 'YYYY-MM-DD') ,
 		</if>
 		#{DEUNGGINO}, #{DEUNGGISO},
 		#{JASANNO}, #{ADDRCODE}, #{PNU} ,#{USESTATE} , #{SPECIALCONT} , #{LOCATION}, #{JIMOK}, #{SAVE_STATUS}, #{PERMITTED_YN})
