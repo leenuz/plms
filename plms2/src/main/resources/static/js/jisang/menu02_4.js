@@ -427,7 +427,12 @@ function loadDataTable(params) {
 			{ targets: [12], width: "200px" },//합필요청일
 			{ targets: [13], width: "150px" }, // 위치보기
 			{ targets: [14], width: "150px" }, // 문서보기
-		]
+		],
+		headerCallback: function(thead, data, start, end, display) { //순번 헤더에 스타일 적용
+            $(thead).find('th').eq(1).css('background-color', '#f7f9fc'); // 스타일 추가
+            $(thead).find('th').eq(1).css('border-top', '1px solid #cddbf0'); // 스타일 추가
+            $(thead).find('th').eq(1).css('border-right', '1px solid #cddbf0'); // 스타일 추가
+        }
 	});
 
 	table.on('click', 'tr', function() {
