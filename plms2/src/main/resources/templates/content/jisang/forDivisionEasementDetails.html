@@ -14,7 +14,7 @@
 
 <!--easementDetails.html 그대로 복붙함. 수정, 분할 버튼 하나 차이남.-->
 <th:block layout:fragment="content">
-	<div class="easementDetailsWrappers">
+	<div class="easementDetailsWrappers" id="easementDetailPrintSection">
 		<!-- 지상권 상세정보 -->
 		<main id="easementDetails">
 			<div class="mainTitle">
@@ -515,9 +515,9 @@
 
 			<!-- 참고 -->
 
-			<div class="finalBtnBox btnWrap">
+			<div class="finalBtnBox btnWrap no-print">
 				<button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
-				<button class="printBtn vividBlueBtn finalBtn">출력</button>
+				<button class="printBtn vividBlueBtn finalBtn" onclick="commonCurrentPagePrint('easementDetailPrintSection')">출력</button>
 				<button class="divideBtn lightBlueBtn finalBtn" th:data-jisang-no="${resultData.jm_jisang_no}">분할</button>
 			</div>
 		</main>

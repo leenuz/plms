@@ -17,7 +17,7 @@
 		var mapCoordLng = '[[${jijuk.x}]]';
 		var mapCoordLat = '[[${jijuk.y}]]';
 	</script>
-	<div class="easementDetailsWrappers">
+	<div class="easementDetailsWrappers" id="jisanDetailPrintSection">
 		<!-- 지상권 상세정보 -->
 		<main id="easementDetails">
 			<div class="mainTitle">
@@ -522,9 +522,9 @@
 
 			<!-- 참고 -->
 
-			<div class="finalBtnBox btnWrap">
+			<div class="finalBtnBox btnWrap no-print">
 				<button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
-				<button class="printBtn vividBlueBtn finalBtn">출력</button>
+				<button class="printBtn vividBlueBtn finalBtn" onclick="commonCurrentPagePrint('jisanDetailPrintSection')">출력</button>
 				<button class="editBtn lightBlueBtn finalBtn" th:data-jisang-no="${resultData.jm_jisang_no}">수정</button>
 			</div>
 		</main>
