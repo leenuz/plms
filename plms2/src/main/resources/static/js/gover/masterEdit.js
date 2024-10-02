@@ -386,6 +386,83 @@ function updateAdmOfficeList(jisaValue, pmtOfficeValue) {
     });
 }
 
+
+// 소속토지정보 - 필지 정보 - 엑셀 다운로드 팝업열기
+$('#landInfoLabel').on('click', function() {
+	downloadExcelForLand();
+});
+
+// 소속토지정보 - 필지 정보 엑셀 다운로드 함수
+// 소속토지정보 - 필지 정보 엑셀 다운로드 함수
+function downloadExcelForLand() {
+
+	var uls = $("#goverUlDiv .contents");
+	console.log(uls);
+
+	var goverNo = $('#gover_no').val();
+	console.log(goverNo);
+
+	var pnuArr = [];
+	for (var i = 0; i < uls.length; i++) {
+		var pnu = $(uls[i]).find('#pnu').val(); // 각 ul 내부의 pnu 값을 가져오기
+		pnuArr.push(pnu);
+	}
+	
+	var allData = {"pnuData": pnuArr };
+	console.log(allData);
+	
+	$.ajax({
+		url: "/gover/selectPnuExcelDownload",  // PNU 기준으로 데이터를 가져오는 API
+		data: JSON.stringify(allData),
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function(rt) {
+			const data = rt.resultData;
+			console.log(data); // 서버에서 받아온 데이터 확인
+			
+			// 엑셀에 담을 데이터 준비
+			var data1 = [];
+			var rowTitle = ['관리기관', '주소', 'PNU', '점용길이', '관로면적'];
+			data1.push(rowTitle);
+			
+			// 서버에서 받아온 데이터를 이용해 행 생성
+			for (var i = 0; i < uls.length; i++) {
+				var addr = $(uls[i]).find("#addr").val(); // 주소 값
+				var pnuNo = $(uls[i]).find("#pnu").val(); // PNU 값
+				
+				// 서버에서 받아온 데이터를 pnuNo에 맞춰 매칭
+				var matchingData = data.find(function(item) {
+					return item.pnu === pnuNo; // pnu가 일치하는지 확인
+				});
+
+				// 매칭되는 데이터가 있으면 해당 데이터를 사용, 없으면 빈값 처리
+				var contact_length = matchingData ? matchingData.contact_length : "";
+				var contact_area = matchingData ? matchingData.contact_area : "";
+
+				// 행 데이터 추가
+				var rowData = [goverNo, addr, pnuNo, contact_length, contact_area];
+				data1.push(rowData);
+			}
+			
+			// 엑셀 파일 생성
+			console.log(data1);
+			var worksheet = XLSX.utils.aoa_to_sheet(data1);
+			var workbook = XLSX.utils.book_new();
+			XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+			// 엑셀 파일 다운로드
+			XLSX.writeFile(workbook, '소속토지정보.xlsx');
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.error("Error: ", textStatus, errorThrown);
+		}
+	});
+}
+
+
+
 // 소속토지정보 - 엑셀 다운로드
 function downloadExcel() {
 
@@ -432,22 +509,22 @@ function downloadExcel() {
 }
 
 
-// 엑셀 업로드
+// 엑셀 업로드 열기, 닫기
 $(document).ready(function() {
-  // 허가관청 이력보기 버튼 클릭 시 팝업 열기
-  $('.excelUpBtn').on('click', function() {
-    $('#exceluploadPopDiv').fadeIn();
-    $('#exceluploadPopup').addClass('active');
-  });
+	// 허가관청 이력보기 버튼 클릭 시 팝업 열기
+	$('.excelUpBtn').on('click', function() {
+		$('#exceluploadPopDiv').fadeIn();
+		$('#exceluploadPopup').addClass('active');
+	});
 
-  // 닫기 버튼 또는 상단 X 버튼 클릭 시 팝업 닫기
-  $('#changehistoryPopup').on('click', '.closeBtn, .topCloseBtn', function() {
-    $('#exceluploadPopDiv').fadeOut();
-    $('#exceluploadPopup').removeClass('active');
-  });
+	// 닫기 버튼 또는 상단 X 버튼 클릭 시 팝업 닫기
+	$('#changehistoryPopup').on('click', '.closeBtn, .topCloseBtn', function() {
+		$('#exceluploadPopDiv').fadeOut();
+		$('#exceluploadPopup').removeClass('active');
+	});
 });
 
-// 엑셀 업로드 스크립트
+/*******엑세 업로드 팝업 스크립트 시작********/
 //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
 const exceluploadPopupOpen = document.getElementById("exceluploadPopup");
 if (exceluploadPopupOpen) {
@@ -663,7 +740,7 @@ const excelFileEvent = () => {
 }
 
 excelFileEvent();
-
+/*******엑세 업로드 팝업 스크립트 끝********/
 
 
 // 행 추가 시 관리기관 셀렉트 박스 동기화
