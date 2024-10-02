@@ -458,6 +458,15 @@ function addRowExcel(obj) {
 	
 	console.log(addDiv.find("#admOfficeBtn").text());
 	addDiv.find("#admOfficeBtn").text(obj["관리기관"]);
+	addDiv.find("#goverOwnYnBtn").text(obj["국공유지여부"]);
+	addDiv.find("#addr").val(obj["주소"]);
+	addDiv.find("#pnu").val(obj["PNU"]);
+	addDiv.find("#jimok").text(obj["지목"]);
+	addDiv.find("input[name='gover_length']").val(obj["점용연장"]);
+	addDiv.find("input[name='gover_area']").val(obj["점용면적"]);
+	addDiv.find("#pipeOverlapYnBtn").text(obj["관로일치여부"]);
+	
+												
 	
 	addDiv.find("#goverIndex").val(index);
 	//console.log($(addDiv).html());
@@ -1512,8 +1521,22 @@ function downloadExcel() {
 					           console.log(EXCEL_JSON);
 					
 							   for(var i=0;i<EXCEL_JSON.length;i++){
-							   						
-							   						addRowExcel(EXCEL_JSON[i]);
+							   			if (i==0){
+											var openerEle=$("#goverUlDiv");
+											var openerTargetEle=openerEle.find('input[id="goverIndex"][value="0"]');
+											//console.log(openerTargetEle.parent().parent().html());
+											console.log(EXCEL_JSON[i]["관리기관"]);
+											openerTargetEle.parent().parent().find("#admOfficeBtn").text(EXCEL_JSON[i]["관리기관"]);
+											openerTargetEle.parent().parent().find("#goverOwnYnBtn").text(EXCEL_JSON[i]["국공유지여부"]);
+											openerTargetEle.parent().parent().find("#addr").val(EXCEL_JSON[i]["주소"]);
+											openerTargetEle.parent().parent().find("#pnu").val(EXCEL_JSON[i]["PNU"]);
+											openerTargetEle.parent().parent().find("#jimok").text(EXCEL_JSON[i]["지목"]);
+											openerTargetEle.parent().parent().find("input[name='gover_length']").val(EXCEL_JSON[i]["점용연장"]);
+											openerTargetEle.parent().parent().find("input[name='gover_area']").val(EXCEL_JSON[i]["점용면적"]);
+											openerTargetEle.parent().parent().find("#pipeOverlapYnBtn").text(EXCEL_JSON[i]["관로일치여부"]);
+											
+										}
+							   			else addRowExcel(EXCEL_JSON[i]);
 							   	}
 					}
 					
