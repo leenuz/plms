@@ -527,6 +527,165 @@ $(document).ready(function() {
 });
 
 
+// 엑셀파일 전송 버튼 동작
+$(document).ready(function() {
+	$(document).on("click", "#excelUpload", function() {
+		console.log("----------------excelUpload click-------------");
+
+		var fileInput = $("#excelPopup_file")[0]; //input file 객체를 가져온다.
+		var file = fileInput.files[0]
+		console.log(file);
+		if (!file) {
+			alert("Please select an Excel file first.");
+			return;
+		}
+
+		var i, f;
+		var headers;
+		var EXCEL_JSON;
+
+		f = file;
+
+		var reader = new FileReader(); //FileReader를 생성한다.         
+
+		//성공적으로 읽기 동작이 완료된 경우 실행되는 이벤트 핸들러를 설정한다.
+		reader.onload = function(e) {
+
+			// ...엑셀파일을 읽어서 처리하는 로직...
+			var data = e.target.result; //FileReader 결과 데이터(컨텐츠)를 가져온다.
+
+			//바이너리 형태로 엑셀파일을 읽는다.
+			var workbook = XLSX.read(data, { type: 'binary' });
+			var worksheet = workbook.Sheets[workbook.SheetNames[0]];
+			/* var i=0;
+			for (var cell in worksheet) {
+				 if (worksheet.hasOwnProperty(cell) && cell[0] !== '!') { // 메타데이터 제외
+						 worksheet[cell].t = 's'; // 셀 타입을 무조건 텍스트('s')로 설정
+			 }
+			} */
+
+			EXCEL_JSON = XLSX.utils.sheet_to_json(worksheet, { raw: false, cellDates: false });
+			//엑셀파일의 시트 정보를 읽어서 JSON 형태로 변환한다.
+			workbook.SheetNames.forEach(function(item, index, array) {
+				headers = get_header_row(workbook.Sheets[item]);
+				console.log(headers);
+				/* console.log(item);
+				console.log(index);
+				console.log(array);
+			  
+							EXCEL_JSON = XLSX.utils.sheet_to_json(workbook.Sheets[item]);
+						 console.log(EXCEL_JSON); */
+
+			});//end. forEach */
+
+			//excel 내용 header와 비교해서 공백이라 안넘어온 header 빈정보 삽입
+			for (j = 0; j < headers.length; j++) {
+				for (jj = 0; jj < EXCEL_JSON.length; jj++) {
+
+					if (!EXCEL_JSON[jj].hasOwnProperty(headers[j])) {
+
+						//	console.log(jj+"="+headers[j]);
+						/* 
+						if (!isDate(EXCEL_JSON[jj].JIBUN)){
+							console.log(jj+":"+EXCEL_JSON[jj].JIBUN);
+						} */
+						EXCEL_JSON[jj][headers[j]] = "";
+					}
+				}
+			}
+			console.log(EXCEL_JSON);
+
+			for (var i = 0; i < EXCEL_JSON.length; i++) {
+				//if (i == 0) {
+				var openerEle = $("#goverUlDiv");
+				var openerTargetEle = openerEle.find('input[id="goverIndex"][value="0"]');
+				//console.log(openerTargetEle.parent().parent().html());
+				console.log(EXCEL_JSON[i]["관리기관"]);
+				openerTargetEle.parent().parent().find("#admOfficeBtn").text(EXCEL_JSON[i]["관리기관"]);
+				openerTargetEle.parent().parent().find("#goverOwnYnBtn").text(EXCEL_JSON[i]["국공유지여부"]);
+				openerTargetEle.parent().parent().find("#addr").val(EXCEL_JSON[i]["주소"]);
+				openerTargetEle.parent().parent().find("#pnu").val(EXCEL_JSON[i]["PNU"]);
+				openerTargetEle.parent().parent().find("#jimok").text(EXCEL_JSON[i]["지목"]);
+				openerTargetEle.parent().parent().find("input[name='gover_length']").val(EXCEL_JSON[i]["점용연장"]);
+				openerTargetEle.parent().parent().find("input[name='gover_area']").val(EXCEL_JSON[i]["점용면적"]);
+				openerTargetEle.parent().parent().find("#pipeOverlapYnBtn").text(EXCEL_JSON[i]["관로일치여부"]);
+
+				//}
+				//else addRowExcel(EXCEL_JSON[i]);
+				addRowExcel(EXCEL_JSON[i])
+			}
+		}
+
+		reader.readAsBinaryString(f);
+
+	})
+
+	function get_header_row(sheet) {
+		var headers = [];
+		var range = XLSX.utils.decode_range(sheet['!ref']);
+		var C, R = range.s.r; /* start in the first row */
+		/* walk every column in the range */
+		for (C = range.s.c; C <= range.e.c; ++C) {
+			var cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })] /* find the cell in the first row */
+
+			var hdr = "UNKNOWN " + C; // <-- replace with your desired default 
+			if (cell && cell.t) hdr = XLSX.utils.format_cell(cell);
+
+			headers.push(hdr);
+		}
+		return headers;
+	}
+
+
+	function addRowExcel(obj) {
+		console.log("-------------addrowExcel-----------");
+		console.log(obj);
+
+		var thisUl = $(this).parent().parent().parent().parent();
+		//console.log(thisUl);
+		var addUl = $("#row-template").html();
+
+		//addUl.find()
+
+		var addDiv = $('<ul class="contents" id="goverUl">' + addUl + '</ul>');
+
+		console.log(addDiv.find("#admOfficeBtn").text());
+		addDiv.find("#admOfficeBtn").text(obj["관리기관"]);
+		addDiv.find("#goverOwnYnBtn").text(obj["국공유지여부"]);
+		addDiv.find("#addr").val(obj["주소"]);
+		addDiv.find("#pnu").val(obj["PNU"]);
+		addDiv.find("#jimok").text(obj["지목"]);
+		addDiv.find("input[name='gover_length']").val(obj["점용연장"]);
+		addDiv.find("input[name='gover_area']").val(obj["점용면적"]);
+		addDiv.find("#pipeOverlapYnBtn").text(obj["관로일치여부"]);
+
+		addDiv.find("#goverIndex").val(index);
+		//console.log($(addDiv).html());
+
+		//멀티체크박스 클릭을 위한 조치
+		var pipe = addDiv.find('#masterRegSelectBox_');
+		pipe.attr({ 'class': 'masterRegSelectBox_' + index, 'name': 'masterRegSelectBox_' + index, 'id': 'masterRegSelectBox_' + index });
+		var label1 = pipe.closest('li').find('label').first();
+		label1.attr({ 'for': 'masterRegSelectBox_' + index, 'name': 'masterRegSelectBox_' + index });
+
+		// 순번 적용
+		addDiv.find('input[readonly]').attr('placeholder', index); // 순번 적용
+		index++; // index 값을 증가시켜 다음 버튼에 적용
+
+
+		$("#goverUlDiv").append(addDiv);
+
+		// 추가된 모든 행에 대해 순번 재할당
+		updateRowNumbers();
+
+		// 추가된 행에도 관리기관 목록을 동기화
+		const selectedPmtOffice = $("#masterRegSelectBox02").val();  // 현재 허가관청의 값
+		if (selectedPmtOffice) {
+			updateGoverAdmOfficeForRow(addDiv, selectedPmtOffice);  // 추가된 행에도 관리기관 목록을 적용
+		}
+	}
+
+});
 
 /*******엑세 업로드 팝업 스크립트 시작********/
 //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
