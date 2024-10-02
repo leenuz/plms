@@ -4271,8 +4271,6 @@ log.info("gubun:"+gubun);
 		String emd_nm=httpRequest.getParameter("emd_nm");
 		String ri_nm=httpRequest.getParameter("ri_nm");
 		String jibun=httpRequest.getParameter("jibun");
-		
-
 
 		params.put("address", address);
 		params.put("sido_nm", sido_nm);
@@ -4280,8 +4278,6 @@ log.info("gubun:"+gubun);
 		params.put("emd_nm", emd_nm);
 		params.put("ri_nm", ri_nm);
 		params.put("jibun", jibun);
-		
-		
 
 		log.info("params:"+params);
 		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectAddressFromJijuk",params);

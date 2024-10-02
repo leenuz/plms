@@ -96,6 +96,39 @@ const landRightMergeSelectEvent01 = () => {
 landRightMergeSelectEvent01();
 
 
+$(document).on("click","#docFileDelBtn",function(){
+	console.log("---------------docFileDelBtn---------------");
+	var $currentElement = $(this);
+	console.log($(this).parent().parent().html());
+	var inputFseq=$(this).parent().parent().find("#fseq").val();
+	var inputValue=$(this).parent().parent().find(".notWriteInput").val();
+	console.log(inputValue);
+	if (inputValue!=null || inputValue!=""){
+		var params={"dfile_name":inputValue,"jisang_no":$("#hiddenJisangNo").val(),"fseq":inputFseq,"docNo":"2"}
+
+		console.log(params);
+
+
+		//임시파일 삭제
+		$.ajax({
+		          url: "/jisang/deleteJisangTmpFile",
+		          type: "POST",
+		          data: params,
+
+		})
+		.done(function (fragment) {
+		       /*loadingHide();
+		       alert("저장이 완료 되었습니다.");*/
+			   //$(this).parent().parent().find(".notWriteInput").val("");
+			   $currentElement.parent().parent().find(".notWriteInput").val("");
+			   $currentElement.parent().parent().find(".notWriteInput").attr('placeholder','');
+		    });
+
+	}
+	//console.log($(this).parent().parent().find(".notWriteInput").val(""));
+
+})
+
 // customSelectBtns 리스트 click 했을 때 해당 내용으로 바뀌게하기
 
 // const MoreSelectBtn = document.querySelectorAll('.moreSelectBtn')
