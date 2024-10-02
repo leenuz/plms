@@ -386,6 +386,51 @@ function updateAdmOfficeList(jisaValue, pmtOfficeValue) {
     });
 }
 
+// 소속토지정보 - 엑셀 다운로드
+function downloadExcel() {
+
+	var uls = $("#goverUlDiv #goverUl");
+
+	console.log(uls);
+	var data1 = [];
+
+	var rowTitle = ['관리기관', '국공유지여부', '대표필지', '주소', 'PNU', '지목', '점용연장', '점용면적', '관료일치여부'];
+	data1.push(rowTitle);
+	for (var i = 0; i < uls.length; i++) {
+
+		console.log($(uls[i]).html());
+		var adm_office = $(uls[i]).find("#admOfficeBtn").text();
+		var gover_own_yn = $(uls[i]).find("#goverOwnYnBtn").text();
+		var rep_flag = $(uls[i]).find("input[type='checkbox']").is(":checked");
+		console.log($(uls[i]).find("input[type='checkbox']").parent().html());
+		var addr = $(uls[i]).find("#addr").val();
+		var pnu = $(uls[i]).find("#pnu").val();
+		var jimok_text = $(uls[i]).find("#jimok").val();
+		var gover_length = $(uls[i]).find("input[name='gover_length']").val();
+		var gover_area = $(uls[i]).find("input[name='gover_area']").val();
+		var pipe_overlap_yn = $(uls[i]).find("#pipeOverlapYnBtn").text();
+		var rep_text = "";
+		if (rep_flag) rep_text = "O";
+		else rep_text = "X";
+		console.log(rep_flag);
+		var rowData = [adm_office, gover_own_yn, rep_text, addr, pnu, jimok_text, gover_length, gover_area, pipe_overlap_yn];
+
+		console.log(rowData);
+		data1.push(rowData);
+	}
+	console.log(data1);
+	// div의 내용을 가져오기
+	// 1. div 안의 텍스트 내용을 가져옵니다.
+
+	// 3. SheetJS에서 워크북 생성
+	var worksheet = XLSX.utils.aoa_to_sheet(data1);
+	var workbook = XLSX.utils.book_new();
+	XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+	// 4. 엑셀 파일 다운로드
+	XLSX.writeFile(workbook, '소속토지정보.xlsx');
+}
+
 // 행 추가 시 관리기관 셀렉트 박스 동기화
  function updateGoverAdmOffice(data) {
 	console.log("updateGoverAdmOffice 함수 실행 ");
