@@ -153,13 +153,13 @@ margin:10px;
 													  <!--지상권 번호-->
                             <li class="content">
                                 <input type="hidden" id="mergeIndex" th:value="${stat.index}">
-                                <input type="hidden" id="togisido_nm" th:value="${val.sido_nm}">
-                                <input type="hidden" id="togisgg_nm" th:value="${val.sgg_nm}">
-                                <input type="hidden" id="togiemd_nm" th:value="${val.emd_nm}">
-                                <input type="hidden" id="togiri_nm" th:value="${val.ri_nm}">
-                                <input type="hidden" id="togijibun" th:value="${val.jibun}">
-                                <input type="hidden" id="togipnu" th:value="${val.pnu}">
-                                <input type="text" th:value="${val.jisang_no}" readonly class="notWriteInput" id="jisang_no">
+                                <input type="hidden" id="togisido_nm" th:value="${val.jm_sido_nm}">
+                                <input type="hidden" id="togisgg_nm" th:value="${val.jm_sgg_nm}">
+                                <input type="hidden" id="togiemd_nm" th:value="${val.jm_emd_nm}">
+                                <input type="hidden" id="togiri_nm" th:value="${val.jm_ri_nm}">
+                                <input type="hidden" id="togijibun" th:value="${val.jm_jibun}">
+                                <input type="hidden" id="togipnu" th:value="${val.jm_pnu}">
+                                <input type="text" th:value="${val.jm_jisang_no}" readonly class="notWriteInput" id="jisang_no">
                             </li>
 														<!--대표지상권-->
                             <li class="content checkboxWrap">
@@ -170,7 +170,7 @@ margin:10px;
                             </li>
 														<!--주소-->
                             <li class="content addressInfoWidth addressInfoBox">
-                                <div class="addressData"><input type="text" th:value="|${val.sido_nm} ${val.sgg_nm} ${val.emd_nm} ${val.ri_nm} ${val.jibun}|" readonly class="notWriteInput" id="merge_address"></div>
+                                <div class="addressData"><input type="text" th:value="|${val.jm_sido_nm} ${val.jm_sgg_nm} ${val.jm_emd_nm} ${val.jm_ri_nm} ${val.jm_jibun}|" readonly class="notWriteInput" id="merge_address"></div>
                                 <button class="searchAddressBtn">검색</button>
                             </li>
 														<!--토지유형-->
@@ -185,7 +185,7 @@ margin:10px;
                                 </div>
                                 <section class="customSelectBox">
                                     <button class="customSelectView" id="toji_type">
-                                        [[${val.toji_type} == null ? '선택' : ${val.toji_type}]]
+                                        [[${val.jm_toji_type} == null or ${val.jm_toji_type} == '' ? '선택' : ${val.jm_toji_type}]]
                                     </button>
                             
                                     <ul class="customSelectBtns">
@@ -196,11 +196,11 @@ margin:10px;
 														<!--지상권설정-->
                             <li class="content contentBox">
                                 <ul class="secondContents">
-                                    <li class="secondContent"><input type="text" th:value="${val.jimok_text}" readonly class="notWriteInput" id="jimok_text"></li>
-                                    <li class="secondContent"><input type="text" th:value="${val.jijuk_area}" readonly class="notWriteInput" id="jijuk_area"></li>
-                                    <li class="secondContent"><input type="text" th:value="${val.pyeonib_area}" readonly class="notWriteInput" id="pyeonib_area"></li>
-                                    <li class="secondContent largeSecondTitle"><input type="text" th:value="${val.set_money}" readonly class="notWriteInput" id="set_money"></li>
-                                    <li class="secondContent"><input type="text" th:value="${val.jasan_no}" readonly class="notWriteInput" id="jasan_no"></li>
+                                    <li class="secondContent"><input type="text" th:value="${val.jm_jimok_text}" readonly class="notWriteInput" id="jimok_text"></li>
+                                    <li class="secondContent"><input type="text" th:value="${val.jm_jijuk_area}" readonly class="notWriteInput" id="jijuk_area"></li>
+                                    <li class="secondContent"><input type="text" th:value="${val.jm_pyeonib_area}" readonly class="notWriteInput" id="pyeonib_area"></li>
+                                    <li class="secondContent largeSecondTitle"><input type="text" th:value="${val.jm_set_money}" readonly class="notWriteInput" id="set_money"></li>
+                                    <li class="secondContent"><input type="text" th:value="${val.jm_jasan_no}" readonly class="notWriteInput" id="jasan_no"></li>
                                 </ul>
                             </li>
 														<!--소유자-->
@@ -214,12 +214,12 @@ margin:10px;
                                 <div class="hiddenSelectBox">
                                     <!-- name도 추가 -->
                                     <select name="landMergeSelectBox02" id="landMergeSelectBox02" hidden>
-                                        <option value="Y" th:selected="${val.account_yn=='Y'}">Y</option>
-                                        <option value="N" th:selected="${val.account_yn=='N'}">N</option>
+                                        <option value="Y" th:selected="${val.jm_account_yn=='Y'}">Y</option>
+                                        <option value="N" th:selected="${val.jm_account_yn=='N'}">N</option>
                                     </select>
                                 </div>
                                 <section class="customSelectBox">
-                                    <button class="customSelectView" id="account_yn" th:text="${val.account_yn !=null? val.account_yn : '선택'}">선택</button>
+                                    <button class="customSelectView" id="account_yn" th:text="${val.jm_account_yn !=null? val.jm_account_yn : '선택'}">선택</button>
                                     <ul class="customSelectBtns">
                                         <!-- createCustomLiLandMerge() -->
                                     </ul>
@@ -690,19 +690,19 @@ margin:10px;
                     </ul>
                     <div class="popContentBox" >
                         <ul class="popContents" th:each="val:${addressList}">
-                            <li class="popContent01"> [[${val.pnu}]]</li>
-                            <li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.jibun}]]</li>
-                            <ii class="popContent0201" hidden>[[${val.sido_nm}]]</ii>
-                            <ii class="popContent0202" hidden>[[${val.sgg_nm}]]</ii>
-                            <ii class="popContent0203" hidden>[[${val.emd_nm}]]</ii>
-                            <ii class="popContent0204" hidden>[[${val.ri_nm}]]</ii>
-                            <ii class="popContent0205" hidden>[[${val.bcode}]]</ii>
-                            <ii class="popContent0206" hidden>[[${val.jibun_full}]]</ii>
-                            <li class="popContent03">[[${val.jibun}]]</li>
+                            <li class="popContent01"> [[${val.jm_pnu}]]</li>
+                            <li class="popContent02"> [[${val.jm_sido_nm +" "+val.jm_sgg_nm+" "+val.jm_emd_nm+" "+val.jm_jibun}]]</li>
+                            <ii class="popContent0201" hidden>[[${val.jm_sido_nm}]]</ii>
+                            <ii class="popContent0202" hidden>[[${val.jm_sgg_nm}]]</ii>
+                            <ii class="popContent0203" hidden>[[${val.jm_emd_nm}]]</ii>
+                            <ii class="popContent0204" hidden>[[${val.jm_ri_nm}]]</ii>
+                            <ii class="popContent0205" hidden>[[${val.jm_bcode}]]</ii>
+                            <ii class="popContent0206" hidden>[[${val.jm_jibun_full}]]</ii>
+                            <li class="popContent03">[[${val.jm_jibun}]]</li>
                             <li class="popContent04">
                                 <button class="resultSelectBtn" >선택</button>
                             </li>
-                            <ii class="popContent05" hidden>[[${val.jimok_text}]]</ii>
+                            <ii class="popContent05" hidden>[[${val.jm_jimok_text}]]</ii>
                         </ul>
 
 
