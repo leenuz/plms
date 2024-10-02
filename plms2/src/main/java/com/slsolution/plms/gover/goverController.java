@@ -1,6 +1,8 @@
 package com.slsolution.plms.gover;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -1129,29 +1131,22 @@ public class goverController {
 		
 		@GetMapping(path="/orgSysCode") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView orgSysCode(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
-////			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
-//			String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
-//			JSONObject requestParamsObj=new JSONObject(requestParams);
-//			log.info("requestParams:"+requestParams);
-//			
+			
 			ArrayList list = new ArrayList();
 			ArrayList addlist = new ArrayList();
-			ArrayList<HashMap> jisalist=new ArrayList();
+			ArrayList<HashMap> codelist = new ArrayList();
 			ParameterParser parser = new ParameterParser(httpRequest);
 
 			String str_result = "Y";
 			ArrayList returnList = new ArrayList();
+			
 			try {
-
-				HashMap params = new HashMap();
-
-//				String JISA = requestParamsObj.getString("JISA");
+				HashMap params = new HashMap();				
 				params.put("JISA", "");
-				// int count=(int)mainService.selectCountQuery("goverSQL.selectSysGroupCodeList", params);
-				 list = (ArrayList) mainService.selectQuery("goverSQL.selectSysGroupCodeList", params);
-				//  jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
-
+				//코드 그룹만 조회<?>
+				list = (ArrayList) mainService.selectQuery("goverSQL.selectSysGroupCodeList", params);
+				//전체 코드리스트 조회
+				codelist = (ArrayList) mainService.selectQuery("goverSQL.selectSysCodeList", params);
 			} catch (Exception e) {
 				str_result = "N";
 				e.printStackTrace();
@@ -1160,10 +1155,10 @@ public class goverController {
 			HashMap map = new HashMap();
 			
 			ModelAndView mav=new ModelAndView();
-			mav.addObject("list",list);
-			//mav.addObject("jisaList",jisalist);
-			//log.info("jisalist:"+jisalist);
+			mav.addObject("list",codelist);
+			mav.addObject("codegroupList", list);
 			mav.setViewName("content/gover/orgSysCode");
+			
 			return mav;
 		}
 
@@ -3509,13 +3504,21 @@ log.info("params:"+params);
 
 		@PostMapping(path="/selectSysCodeList")
 		public void selectSysCodeList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			
+			//여기임
+			Map<String, String> requestMap = CommonUtil.requestConvertMap(request);
+			
+			JSONObject paramObject = new JSONObject(requestMap.toString());
+			
 			ArrayList list = new ArrayList();
 			ArrayList addlist = new ArrayList();
 
 			ParameterParser parser = new ParameterParser(request);
 
-			String groupCode = parser.getString("groupCode", "");
+			String groupCode = paramObject.optString("CODE_GROUP", "");
 			String useYn = parser.getString("useYn", "Y");
+			
+			System.out.println(paramObject.toString());
 
 			String str_result = "Y";
 			ArrayList returnList = new ArrayList();
@@ -3530,11 +3533,11 @@ log.info("params:"+params);
 				if (list.size() > 0) {
 					for (int i = 0; i < list.size(); i++) {
 						HashMap hm = new HashMap();
-						hm.put("CODE", (String) ((HashMap) list.get(i)).get("CODE"));
-						hm.put("CODE_NAME", (String) ((HashMap) list.get(i)).get("CODE_NAME"));
-						hm.put("GROUP_CODE", (String) ((HashMap) list.get(i)).get("GROUP_CODE"));
-						hm.put("SORT_ORDER", String.valueOf(((HashMap) list.get(i)).get("SORT_ORDER")));
-						hm.put("USE_YN", (String) ((HashMap) list.get(i)).get("USE_YN"));
+						hm.put("sc_code", (String) ((HashMap) list.get(i)).get("sc_code"));
+						hm.put("sc_code_name", (String) ((HashMap) list.get(i)).get("sc_code_name"));
+						hm.put("sc_group_code", (String) ((HashMap) list.get(i)).get("sc_group_code"));
+						hm.put("sc_sort_order", String.valueOf(((HashMap) list.get(i)).get("sc_sort_order")));
+						hm.put("sc_use_yn", (String) ((HashMap) list.get(i)).get("sc_use_yn"));
 						returnList.add(hm);
 					}
 				}
@@ -3568,18 +3571,19 @@ log.info("params:"+params);
 		
 		@PostMapping(path="/insertSysCode")
 		public void insertSysCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			
+			Map<String, String> requestMap = CommonUtil.requestConvertMap(request);
+			
+			JSONObject jsonRequest = new JSONObject(requestMap.toString());
 
-			ParameterParser parser = new ParameterParser(request);
-
-			String CODE = parser.getString("CODE", "");
-			String GROUP_CODE = parser.getString("GROUP_CODE", "");
-			String CODE_NAME = parser.getString("CODE_NAME", "");
-			String SORT_ORDER = parser.getString("SORT_ORDER", "");
-			String UPPER_CODE0 = parser.getString("UPPER_CODE0", "");
-			String UPPER_CODE = parser.getString("UPPER_CODE", "");
-			String USE_YN = parser.getString("USE_YN", "Y");
+			String CODE = jsonRequest.optString("NEW_CODE", "");
+			String GROUP_CODE = jsonRequest.optString("NEW_GROUP_CODE", "");
+			String CODE_NAME = URLDecoder.decode(jsonRequest.optString("NEW_CODE_NAME", ""));
+			Integer SORT_ORDER =jsonRequest.optInt("NEW_SORT_ORDER", 99);
+			String USE_YN = jsonRequest.optString("USE_YN", "Y");
 
 			String str_result = "Y";
+			
 			try {
 
 				HashMap params = new HashMap();
@@ -3587,14 +3591,15 @@ log.info("params:"+params);
 				params.put("CODE", CODE);
 				params.put("CODE_NAME", CODE_NAME);
 				params.put("SORT_ORDER", SORT_ORDER);
-				params.put("UPPER_CODE0", UPPER_CODE0);
-				params.put("UPPER_CODE", UPPER_CODE);
 				params.put("USE_YN", USE_YN);
 
 				System.out.println("insertSysCode params=" + params);
-				mainService.InsertQuery("goverSQL.updateSysCodeSortOrder", params);
+				
+				//SORT_ORDER만 UPDATE함으로 생략
+//				mainService.InsertQuery("goverSQL.updateSysCodeSortOrder", params);
+				
+				//신규 시스템 코드 등록
 				mainService.InsertQuery("goverSQL.insertSysCode", params); // 기본정보
-																				// 저장
 
 			} catch (Exception e) {
 				str_result = "N";
@@ -3618,33 +3623,57 @@ log.info("params:"+params);
 		
 		@PostMapping(path="/updateSysCode")
 		public void updateSysCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-			ParameterParser parser = new ParameterParser(request);
-			String CODE = parser.getString("CODE", "");
-			String GROUP_CODE = parser.getString("GROUP_CODE", "");
-			String CODE_NAME = parser.getString("CODE_NAME", "");
-			String SORT_ORDER = parser.getString("SORT_ORDER", "");
-			String UPPER_CODE0 = parser.getString("UPPER_CODE0", "");
-			String UPPER_CODE = parser.getString("UPPER_CODE", "");
-			String USE_YN = parser.getString("USE_YN", "Y");
+			
+			StringBuilder sb = new StringBuilder();
+			String line;
+			
+			try(BufferedReader reader = request.getReader()) {
+				while((line = reader.readLine()) != null) {
+					sb.append(line);
+				}
+			}
+			
+			//POST형식으로 넘어온 param을 Map 타입으로 변형
+			Map<String, String> testMap = CommonUtil.convertQueryStringToJson(sb.toString());
+			
+			JSONObject jsonRequest = new JSONObject(testMap.toString());
+			
+			String NEW_GROUP_CODE = jsonRequest.optString("NEW_GROUP_CODE", "");
+			String NEW_CODE = jsonRequest.optString("NEW_CODE", "");
+			String NEW_CODE_NAME = URLDecoder.decode(jsonRequest.optString("NEW_CODE_NAME", ""));
+			String NEW_SORT_ORDER = jsonRequest.optString("NEW_SORT_ORDER", "");
+			String USE_YN = jsonRequest.optString("USE_YN", "Y");
+			
+			String ORIGIN_NEW_GROUP_CODE = jsonRequest.optString("ORIGIN_NEW_GROUP_CODE", "");
+			String ORIGIN_CODE = jsonRequest.optString("ORIGIN_CODE", "");
+			String ORIGIN_CODE_NAME = URLDecoder.decode(jsonRequest.optString("ORIGIN_CODE_NAME", ""));
+			String ORIGIN_SORT_ORDER = jsonRequest.optString("ORIGIN_SORT_ORDER", "");
 
 			String str_result = "Y";
+			
 			try {
 
 				HashMap params = new HashMap();
-				params.put("GROUP_CODE", GROUP_CODE);
-				params.put("CODE", CODE);
-				params.put("CODE_NAME", CODE_NAME);
-				params.put("SORT_ORDER", SORT_ORDER);
-				params.put("UPPER_CODE0", UPPER_CODE0);
-				params.put("UPPER_CODE", UPPER_CODE);
+				//새로 갱신될 시스템 코드의 정보
+				params.put("NEW_GROUP_CODE", NEW_GROUP_CODE);
+				params.put("NEW_CODE", NEW_CODE);
+				params.put("NEW_CODE_NAME", NEW_CODE_NAME);
+				params.put("NEW_SORT_ORDER", Integer.parseInt(NEW_SORT_ORDER));
 				params.put("USE_YN", USE_YN);
+				
+				//갱신될 시스템 코드의 원래 정보
+				params.put("ORIGIN_NEW_GROUP_CODE", ORIGIN_NEW_GROUP_CODE);
+				params.put("ORIGIN_CODE", ORIGIN_CODE);
+				params.put("ORIGIN_CODE_NAME", ORIGIN_CODE_NAME);
+				params.put("ORIGIN_SORT_ORDER", Integer.parseInt(ORIGIN_SORT_ORDER));
 
-				System.out.println("updateSysCode params=" + params);
-				mainService.InsertQuery("goverSQL.updateSysCodeSortOrder", params); // 기본정보
-																						// 저장
+//				System.out.println("updateSysCode params=" + params);
+				
+				//241002 :: SORT_ORDER만 갱신하는 쿼리 - SORT_ORDER만 갱신하는 기능이 아니기 때문에 주석 처리 
+//				mainService.InsertQuery("goverSQL.updateSysCodeSortOrder", params); // 기본정보
+				
+				//시스템코드 정보 갱신 쿼리
 				mainService.InsertQuery("goverSQL.updateSysCode", params); // 기본정보
-																				// 저장
 
 			} catch (Exception e) {
 				str_result = "N";
@@ -3654,8 +3683,6 @@ log.info("params:"+params);
 			HashMap map = new HashMap();
 			map.put("message", str_result);
 			map.put("loginKey", String.valueOf(request.getSession().getAttribute("loginKey")));
-
-			
 
 			JSONObject jo = new JSONObject(map);
 

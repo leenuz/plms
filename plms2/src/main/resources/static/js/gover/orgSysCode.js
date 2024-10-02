@@ -1,3 +1,5 @@
+var loadSysCodeList = [];
+var selectIndex;
 
 // 지사 선택 시 허가관청 목록 업데이트를 위한 change 이벤트 트리거
 $(document).on("click", "#sjisaUl li", function () {
@@ -282,7 +284,33 @@ $(document).ready(function() {
 	console.log("-------------orgAdmin load--------------");
 	mergeTableCells("#mainTable", 1);
 	//mergeTableCells("#mainTable",2);
-})
+	
+	
+	/********* 241002 ************/
+	//초이초이초이초이
+	//코드그룹 선택시 script
+	$("#codegroupTextUl li").on("click", function(){
+		const selectedCodeGroup = $(this).text().trim();
+		$("#selectCodeGroupText").text(selectedCodeGroup);
+		showgrouplist();
+		systemCodeListLoad(selectedCodeGroup);
+	});
+	
+	//팝업 코드그룹 선택시 script
+	$("#popupCodeGroupUl li").on("click", function(){
+		const selectedCodeGroup = $(this).text().trim();
+		$("#popupCodeGroupText").text(selectedCodeGroup);
+		popupGroupList();
+	});
+	
+	//팝업 사용여부 선택시 script
+	$("#popup_useYnUl li").on("click", function(){
+		const selectYn = $(this).text().trim();
+		$("#popup_useYnText").text(selectYn);
+		popupUseYnView();
+	});
+	
+});
 
 
 // 체크박스 선택 이벤트
@@ -694,3 +722,251 @@ function loadData() {
 		}
 	});
 }
+
+/**********************/
+function systemCodeEdit(obj) {
+	//console.log($(obj).attr('data-row'));
+	
+	let originCodeJson = JSON.parse(convertToJSON($(obj).attr('data-row')));
+	selectIndex = $(obj).attr('data-idx');
+	//console.log(originCodeJson);
+	//console.log(param);
+	
+	$("#systemcoderegisterPopup").show();
+	
+	//팝업에 세팅
+	$("#popupCodeGroupText").text(originCodeJson.sc_group_code);
+	$("#popup_codeVal").val(originCodeJson.sc_code);
+	$("#popup_codeNameVal").val(originCodeJson.sc_code_name);
+	$("#popup_sortOrderVal").val(originCodeJson.sc_sort_order);
+	$("#popup_useYnVal").val(originCodeJson.sc_use_yn);
+	$("#popup_useYnText").text(originCodeJson.sc_use_yn)
+}
+
+function systemCodeEdit2(obj) {
+	$("#systemcoderegisterPopup").show();
+	let pickIdx = $(obj).attr('data-index');
+	
+	console.log(loadSysCodeList[pickIdx]);
+	
+	let targetCodeInfo = loadSysCodeList[pickIdx];
+	
+	$("#popupCodeGroupText").text(targetCodeInfo.sc_group_code);
+	$("#popup_codeVal").val(targetCodeInfo.sc_code);
+	$("#popup_codeNameVal").val(targetCodeInfo.sc_code_name);
+	$("#popup_sortOrderVal").val(targetCodeInfo.sc_sort_order);
+	$("#popup_useYnVal").val(targetCodeInfo.sc_use_yn);
+	$("#popup_useYnText").text(targetCodeInfo.sc_use_yn);
+}
+
+//시스템 코드 수정, 변경
+function popupInfoSave() {
+	let targetOriginInfo;
+	
+	if($("#editBtn_" + selectIndex).is('[data-row]')) {
+		targetOriginInfo = JSON.parse(convertToJSON($("#editBtn_" + selectIndex).attr('data-row')));
+	} else {
+		targetOriginInfo = loadSysCodeList[selectIndex]
+	}
+	
+	console.log(targetOriginInfo);
+	
+	let param = {
+		"NEW_GROUP_CODE" : $("#popupCodeGroupText").text(),
+		"NEW_CODE" : $("#popup_codeVal").val(), 
+		"NEW_CODE_NAME" : $("#popup_codeNameVal").val(),
+		"NEW_SORT_ORDER" : $("#popup_sortOrderVal").val(),
+		"USE_YN" : $("#popup_useYnText").text(),
+		"ORIGIN_NEW_GROUP_CODE" : targetOriginInfo.sc_group_code,
+		"ORIGIN_CODE" : targetOriginInfo.sc_code,
+		"ORIGIN_CODE_NAME" : targetOriginInfo.sc_code_name,
+		"ORIGIN_SORT_ORDER" : targetOriginInfo.sc_sort_order,
+	}
+	
+	console.log(param);
+	
+	$.ajax({
+		url : "/gover/updateSysCode",
+		data: param,
+		type: "POST",
+		dataType: "JSON",
+		contentType: "application/json; charset=UTF-8",
+		success: function(response) {
+			console.log(response);
+			if(response.message == 'Y') {
+				alert('시스템 코드를 수정했습니다.');
+				window.location.reload();
+			} else {
+				alert('시스템 코드를 수정에 실패했습니다.');
+			}
+		},
+		error : function(error) {
+			console.log(error);
+			alert('코드 수정에 실패했습니다.');
+		}
+	});
+}
+
+//시스템 코드 등록
+function newSystemCodePopup() {
+	console.log('신규등록');
+	
+	//기존에 세팅된 값이 있을수 있으므로 초기화
+	$("#popupCodeGroupText").text('전체');
+	$("#popup_codeVal").val('');
+	$("#popup_codeNameVal").val('');
+	$("#popup_sortOrderVal").val('');
+	$("#popup_useYnVal").val('');
+	$("#popup_useYnText").text('Y');
+	
+	$("#systemcoderegisterPopup").show();
+	
+	$("#popup_saveBtn").attr('onclick', 'newSystemCodeInsert()');
+}
+
+function newSystemCodeInsert() {
+	let param = {
+		"NEW_GROUP_CODE" : $("#popupCodeGroupText").text(),
+		"NEW_CODE" : $("#popup_codeVal").val(), 
+		"NEW_CODE_NAME" : $("#popup_codeNameVal").val(),
+		"NEW_SORT_ORDER" : $("#popup_sortOrderVal").val(),
+		"USE_YN" : $("#popup_useYnText").text(),
+	}
+	
+	console.log('신규등록 정보');
+	console.log(param);
+	
+	$.ajax({
+		url : "/gover/insertSysCode",
+		data: param,
+		type: "POST",
+		dataType: "JSON",
+		contentType: "application/json; charset=UTF-8",
+		success: function(response) {
+			console.log(response);
+			if(response.message == 'Y') {
+				alert('시스템 코드가 신규등록 되었습니다.');
+				window.location.reload();
+			} else {
+				alert('시스템 코드를 등록에 실패했습니다.');
+			}
+		},
+		error : function(error) {
+			console.log(error);
+			alert('코드 수정에 실패했습니다.');
+		}
+	});
+	
+}
+
+
+function convertToJSON(input) {
+	input = input.substring(1, input.length, - 1);
+	
+	const keyValuePairs = input.split(', ');
+	
+	const result = {};
+	
+	keyValuePairs.forEach(pair => {
+		const [key, value] = pair.split('=');
+		result[key] = value.endsWith('}') ? value.slice(0, -1) : value;
+	});
+	
+	return JSON.stringify(result, null , 2);
+}
+
+//시스템 코드 불러오기 
+function systemCodeListLoad(selectCodeGroup) {
+	// /gover/orgSysCode
+	
+	let param = {
+		"CODE_GROUP" : selectCodeGroup
+	}
+	
+	$.ajax({
+		url : "/gover/selectSysCodeList",
+		data : param,
+		type : "POST",
+		dataType : "JSON",
+		success : function(res) {
+			console.log(res);
+			if(res.message == 'Y') {
+				codeListLoadTbody(res.result);
+			} else {
+				
+			}
+		},
+		error : function(error) {
+			console.log(error);
+			alert('코드 조회에 실패했습니다.');
+		}
+	});
+	
+}
+
+function codeListLoadTbody(codeList) {
+	let innerHtml = '';
+	
+	loadSysCodeList = codeList;
+	
+	for(let i = 0 ; i < codeList.length ; i++) {
+		
+		let codeInfo = codeList[i];
+		
+		innerHtml += '<tr>';
+		
+		innerHtml += '<td><input type="text" value="'+codeInfo.sc_group_code+'" id="codeGroupVal_'+i+'"></td>';
+		innerHtml += '<td><input type="text" value="'+codeInfo.sc_code+'" id="codeVal_'+i+'"></td>';
+		innerHtml += '<td><input type="text" value="'+codeInfo.sc_code_name+'" id="codeNameVal_'+i+'"></td>';
+		innerHtml += '<td><input type="text" value="'+codeInfo.sc_sort_order+'" id="sortOrderVal_'+i+'"></td>';
+		innerHtml += '<td><input type="text" value="'+codeInfo.sc_use_yn+'" id="useYnVal_'+i+'"></td>';
+		
+		innerHtml += '<td><div class="btnWrap"><div class="btnBox">';
+		innerHtml += '<button class="pendingApprovalBtn2" data-index="'+i+'" id="editBtn_'+i+'" onclick="systemCodeEdit2(this)">수정</button>';
+		innerHtml += '</div></div></td>';
+		
+		innerHtml += '</tr>';
+	}
+	
+	$("#orgsyscodeTbody").empty();
+	$("#orgsyscodeTbody").html(innerHtml);
+	console.log(loadSysCodeList);
+}
+
+//상단 코드그룹 셀렉트박스 클릭시 작동 - 단순 화면 작동 function
+function showgrouplist() {
+	let boxViewYn = $("#codegroupTextUl").parent().hasClass('active');
+	
+	if(boxViewYn) {
+		$("#codegroupTextUl").parent().removeClass('active');
+	} else {
+		$("#codegroupTextUl").parent().addClass('active');
+	}
+}
+
+function popupEditClose() {
+	$("#systemcoderegisterPopup").hide();
+	$("#popup_saveBtn").attr('onclick', 'popupInfoSave()');
+}
+
+function popupGroupList() {
+	let boxViewYn = $("#popupCodeGroupUl").hasClass('active');
+	
+	if(boxViewYn) {
+		$("#popupCodeGroupUl").removeClass('active');
+	} else {
+		$("#popupCodeGroupUl").addClass('active');
+	}
+}
+
+function popupUseYnView() {
+	let boxViewYn = $("#popup_useYnUl").hasClass('active');
+	
+	if(boxViewYn) {
+		$("#popup_useYnUl").removeClass('active');
+	} else {
+		$("#popup_useYnUl").addClass('active');
+	}
+}
+
+/**********************/

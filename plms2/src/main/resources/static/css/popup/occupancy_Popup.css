@@ -273,7 +273,8 @@ textarea:focus {
 #approve_Popup,
 #approve_correction_Popup,
 #register_Cancel_Popup,
-#registerPopup {
+#registerPopup,
+#systemcoderegisterPopup {
   display: none;
 }
 #exceluploadPopup.active,
@@ -282,7 +283,8 @@ textarea:focus {
 #approve_Popup.active,
 #approve_correction_Popup.active,
 #register_Cancel_Popup.active,
-#registerPopup.active {
+#registerPopup.active,
+#systemcoderegisterPopup.active {
   display: block;
 
 }
@@ -295,7 +297,8 @@ textarea:focus {
 #approve_Popup .popupWrap,
 #approve_correction_Popup .popupWrap,
 #register_Cancel_Popup .popupWrap,
-#registerPopup .popupWrap {
+#registerPopup .popupWrap
+#systemcoderegisterPopup .popupWrap {
   display: block;
   z-index:9999;
 }
@@ -1120,6 +1123,11 @@ height: 35px;
 #registerPopup {
   width: 1264px;
   height: 237px;
+}
+
+#systemcoderegisterPopup {
+	width: 1264px;
+  	height: 237px;
 }
 
 .register_wrap {

@@ -59,6 +59,17 @@ table {
   font-weight: 600;
 }
 
+#orgAdmin .pendingApprovalBtn2 {
+  color: #2b7de1;
+  background: rgba(204, 224, 255, 0.6);
+  width: 116px;
+  height: 27px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
 #orgAdmin .deleteBtn {
   background: #8a8a8a;
   color: #fff;
@@ -912,3 +923,15 @@ div.dt-filter-spacer {
   white-space: nowrap;
 }
 
+.orgsyscodeThead th {
+	border-right: 1px solid #cddbf0;
+}
+
+.orgsyscodeTbody td{
+	border-right: 1px solid #cddbf0;
+}
+
+.orgsyscodeTbody input[type="text"]:focus {
+	background-color: #f0f8ff; /* 입력 중일 때 배경색 변경 */
+    border-color: #4a90e2;		/* 입력 중일 때 테두리 색 변경 */
+}

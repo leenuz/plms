@@ -2,6 +2,7 @@ package com.slsolution.plms;
 
 
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -245,4 +246,60 @@ public class CommonUtil implements ApplicationContextAware{
 			return str_AppovSEQ;
 		}
 
+	/**
+	 * POST로 전달된 Object형식의 param Map으로 전환
+	 * 이거 사용후 JSONObject로 변환가능
+	 * @param targetString
+	 * @return
+	 */
+	public static Map<String, String> convertQueryStringToJson(String targetString) {
+		Map<String, String> jsonMap = new HashMap<>();
+		
+		//&로 분리
+		String[] pairs = targetString.split("&");
+		
+		for(String pair : pairs) {
+			// '='로 키와 값 분리
+			String[] keyValue = pair.split("=", 2);	//최대 2개로 나누기
+			
+			//키와 값을 맵에 추가
+			if(keyValue.length == 2) {
+				String key = keyValue[0];
+				String value = keyValue[1];
+				
+				//value값이 '}'로 끝나면 그걸 제거
+				if(value.endsWith("}")) {
+					value = value.substring(0, value.length()-1); 
+				}
+				
+				jsonMap.put(key, value);
+			}
+			
+		}
+		return jsonMap;
+	}
+	
+	/**
+	 * request를 던지면 JSONObject변환 할수있는 Map으로 return
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static Map<String, String> requestConvertMap(HttpServletRequest request) throws Exception {
+		
+		Map<String, String> resultMap = new HashMap<>();
+		
+		StringBuilder sb = new StringBuilder();
+		String line;
+		
+		try(BufferedReader reader = request.getReader()){
+			while((line = reader.readLine()) != null) {
+				sb.append(line);
+			}
+		}
+		
+		resultMap = convertQueryStringToJson(sb.toString());
+		
+		return resultMap;
+	}
 }

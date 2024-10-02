@@ -2194,33 +2194,25 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 		, sc_GROUP_CODE
 		, sc_CODE_NAME
 		, sc_SORT_ORDER
-		, sc_UPPER_CODE0
-		, sc_UPPER_CODE
 		, sc_USE_YN
 		) VALUES (
 		#{CODE}
 		, #{GROUP_CODE}
 		, #{CODE_NAME}
 		, #{SORT_ORDER}
-		, #{UPPER_CODE0}
-		, #{UPPER_CODE}
 		, 'Y'
 		)
 	</insert>
 
-	<update id="updateSysCode" parameterType="HashMap">
-		<![CDATA[
+	<update id="updateSysCode" parameterType="HashMap"><![CDATA[
 UPDATE SYS_CODE 
-   SET sc_CODE = #{CODE}
-     , sc_GROUP_CODE = #{GROUP_CODE}
-     , sc_CODE_NAME = #{CODE_NAME}
-     , sc_SORT_ORDER = #{SORT_ORDER}
-     , sc_UPPER_CODE0 = #{UPPER_CODE0}
-     , sc_UPPER_CODE = #{UPPER_CODE}
+   SET sc_CODE = #{NEW_CODE}
+     , sc_GROUP_CODE = #{NEW_GROUP_CODE}
+     , sc_CODE_NAME = #{NEW_CODE_NAME}
+     , sc_SORT_ORDER = #{NEW_SORT_ORDER}
      , sc_USE_YN = #{USE_YN}
- WHERE sc_CODE = #{CODE} AND sc_GROUP_CODE = #{GROUP_CODE}
- 		]]>
-	</update>
+ WHERE sc_CODE = #{ORIGIN_CODE} AND sc_GROUP_CODE = #{ORIGIN_NEW_GROUP_CODE}
+	]]></update>
 
 	<update id="updateSysCodeSortOrder" parameterType="HashMap">
 		<![CDATA[
