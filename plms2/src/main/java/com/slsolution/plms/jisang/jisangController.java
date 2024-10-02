@@ -4352,7 +4352,7 @@ log.info("gubun:"+gubun);
 		log.info("params:"+params);
 		
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
-		//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
+		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 		
 		 list = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_MASTER", params);
 		togiList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_TOGI", params);
@@ -4364,6 +4364,7 @@ log.info("gubun:"+gubun);
 
       	mav.addObject("resultData", data.get(0));
       	mav.addObject("tojiList", data);
+		mav.addObject("fileList", jisangPnuAtcFileList);
 		mav.setViewName("content/jisang/usePermitDetail");
 		return mav;
     }
@@ -4389,12 +4390,14 @@ log.info("gubun:"+gubun);
 		log.info("params:"+params);
 		
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
-		
-		
-      			mav.addObject("resultData",data.get(0));
-      			
-      			mav.setViewName("content/jisang/usePermitEdit");
-      			return mav;
+		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
+
+		mav.addObject("resultData",data.get(0));
+		mav.addObject("tojiList", data);
+		mav.addObject("jisaList", jisalist);
+		mav.setViewName("content/jisang/usePermitEdit");
+
+		return mav;
     }
 
 	//지상권합필하기 눌렀을때 나오는 페이지

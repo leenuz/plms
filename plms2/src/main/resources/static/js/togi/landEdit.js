@@ -1039,6 +1039,7 @@ var formSerializeArray = $('#saveForm').serializeArray();
 //		dataObj.dosiNo=""; //수정일때는 들어간다
        console.log("**dataObj**");
        console.log(dataObj);
+//       location.href = "/togi/landDevInfo?idx=" + dataObj.dosiNo;
 
      /*  url="/togi/insertDosiList";
 	   $.ajax({
@@ -1056,8 +1057,9 @@ var formSerializeArray = $('#saveForm').serializeArray();
 	   				success:function(response){
 	   					loadingHide();
 	   					console.log(response);
-	   					if (response.success="Y"){
+	   					if (response.success==="Y"){
 							alert("정상적으로 등록 되었습니다.");
+//                            location.href = "/togi/landDevInfo?idx=" + dataObj.dosiNo;
 	   					}
 	   					else {
 	   						console.log("response.success N");

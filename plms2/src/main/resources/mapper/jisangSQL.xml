@@ -1370,6 +1370,9 @@ SELECT count(*)
 		,jpt.jpt_addr as addr
 		,jpt.jpt_jibun as jibun
 		,jm.jm_jisa as jisa
+		,jpt.jpt_all_area as all_area
+		,jpt.jpt_set_area as set_area
+		,jpt.jpt_set_money as set_money
 		 
 		FROM jisang_permit_master jpm
 			LEFT JOIN jisang_permit_togi jpt ON jpt.jpt_pmt_no=jpm.jpm_pmt_no
