@@ -389,9 +389,9 @@ function updateAdmOfficeList(jisaValue, pmtOfficeValue) {
 // 소속토지정보 - 엑셀 다운로드
 function downloadExcel() {
 
-	var uls = $("#goverUlDiv #goverUl");
-
+	var uls = $("#goverUlDiv .contents");
 	console.log(uls);
+	
 	var data1 = [];
 
 	var rowTitle = ['관리기관', '국공유지여부', '대표필지', '주소', 'PNU', '지목', '점용연장', '점용면적', '관료일치여부'];
@@ -399,7 +399,7 @@ function downloadExcel() {
 	for (var i = 0; i < uls.length; i++) {
 
 		console.log($(uls[i]).html());
-		var adm_office = $(uls[i]).find("#admOfficeBtn").text();
+		var adm_office = $(uls[i]).find("#admOfficeText01").text();
 		var gover_own_yn = $(uls[i]).find("#goverOwnYnBtn").text();
 		var rep_flag = $(uls[i]).find("input[type='checkbox']").is(":checked");
 		console.log($(uls[i]).find("input[type='checkbox']").parent().html());
@@ -432,27 +432,27 @@ function downloadExcel() {
 }
 
 // 행 추가 시 관리기관 셀렉트 박스 동기화
- function updateGoverAdmOffice(data) {
+function updateGoverAdmOffice(data) {
 	console.log("updateGoverAdmOffice 함수 실행 ");
-     $("#goverEditSelectBox03 option").remove();
-     for (let i = 0; i < data.length; i++) {
-         $("#goverEditSelectBox03").append("<option>" + data[i].so_adm_office + "</option>");
-     }
+	$("#goverEditSelectBox03 option").remove();
+	for (let i = 0; i < data.length; i++) {
+		$("#goverEditSelectBox03").append("<option>" + data[i].so_adm_office + "</option>");
+	}
 
-     // 커스텀 셀렉트 박스의 버튼들 업데이트(첫 줄)
-     const customSelectBtns = $("#goverUl #admOfficeUl01");
-     customSelectBtns.empty();
-     for (let i = 0; i < data.length; i++) {
-         customSelectBtns.append("<li><p>" + data[i].so_adm_office + "</p></li>");
-     }
-	 
-	 // 커스텀 셀렉트 박스의 버튼들 업데이트(2개 이상 줄)
-      const customSelectBtns02 = $("#goverUl02 #admOfficeUl01");
-      customSelectBtns02.empty();
-      for (let i = 0; i < data.length; i++) {
-          customSelectBtns02.append("<li><p>" + data[i].so_adm_office + "</p></li>");
-      }
- }
+	// 커스텀 셀렉트 박스의 버튼들 업데이트(첫 줄)
+	const customSelectBtns = $("#goverUl #admOfficeUl01");
+	customSelectBtns.empty();
+	for (let i = 0; i < data.length; i++) {
+		customSelectBtns.append("<li><p>" + data[i].so_adm_office + "</p></li>");
+	}
+
+	// 커스텀 셀렉트 박스의 버튼들 업데이트(2개 이상 줄)
+	const customSelectBtns02 = $("#goverUl02 #admOfficeUl01");
+	customSelectBtns02.empty();
+	for (let i = 0; i < data.length; i++) {
+		customSelectBtns02.append("<li><p>" + data[i].so_adm_office + "</p></li>");
+	}
+}
 
 // '소속 토지 정보' 내의 체크박스 클릭 시 다른 체크박스 비활성화
 $(document).on("click", ".landAdressInfo input[type=checkbox]", function() {
