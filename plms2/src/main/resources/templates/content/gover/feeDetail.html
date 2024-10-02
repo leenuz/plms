@@ -21,7 +21,7 @@
 
   <th:block layout:fragment="content">
     <!-- 점용료 납부/전자결재  상세정보 -->
-    <div class="feeDetailWrappers">
+    <div class="feeDetailWrappers" id="feeDetailPrintSection">
       <main id="feeDetail">
         <div class="mainTitle">
           <h1>점용료 납부/전자결재 상세정보</h1>
@@ -507,9 +507,9 @@
 		  </div>
 		</section>
 
-        <div class="finalBtnBox btnWrap">
+        <div class="finalBtnBox btnWrap no-print">
           <button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
-          <button class="vividBlueBtn finalBtn">출력</button>
+          <button class="vividBlueBtn finalBtn" onclick="commonCurrentPagePrint('feeDetailPrintSection')">출력</button>
           <!-- 점용료 납부 팝업 -->
           <button class="navyBtn finalBtn payBtn">납부</button>
         </div>

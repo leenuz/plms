@@ -18,3 +18,13 @@ body, html {
 
 
 
+/* print 관련 */
+@media print {
+	.no-print {
+		display: none;
+	}
+	
+	header {
+		display: none;
+	}
+}

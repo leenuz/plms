@@ -585,6 +585,10 @@ textarea::placeholder {
 /* print 관련 */
 @media print {
 	.no-print {
-		display:none;
+		display: none;
+	}
+	
+	header {
+		display: none;
 	}
 }

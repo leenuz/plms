@@ -236,3 +236,21 @@ function findProgStatus(input) {
 
 
 
+function commonCurrentPagePrint(id) {
+	let prtContent = document.getElementById('id');
+	let initBody; 
+	
+	console.log('common print gd');
+	
+	
+	window.onbeforeprint = function() {
+		initBody = document.body.innerHTML;
+		document.body.innerHTML = prtContent.innerHTML;
+	}
+	
+	window.onafterprint = function() {
+		document.body.innerHTML = initBody;
+	}
+	
+	window.print();
+}
