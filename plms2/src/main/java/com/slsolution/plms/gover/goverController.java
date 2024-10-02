@@ -3690,6 +3690,7 @@ log.info("params:"+params);
 
 		}
 		
+		// 점용 마스터 수정 - 소속 토지 정보 - 필지 정보 버튼 - 엑셀 다운로드용
 		@PostMapping("/selectPnuExcelDownload")
 		public ResponseEntity<Map<String, Object>> selectPnuExcelDownload(@RequestBody Map<String, Object> requestData) throws Exception {
 		    // 요청 데이터에서 pnu 리스트 추출
@@ -3706,8 +3707,8 @@ log.info("params:"+params);
 
 		        // SQL 쿼리 실행하여 pnu에 해당하는 데이터 가져오기
 		        ArrayList<HashMap> singlePnuData = mainService.selectQuery("goverSQL.selectPnuData", params);
-
 		        log.info("singlePnuData: " + singlePnuData);
+		        
 		        // 해당 pnu의 데이터를 resultData에 추가
 		        if (singlePnuData != null && !singlePnuData.isEmpty()) {
 		            resultData.addAll(singlePnuData);

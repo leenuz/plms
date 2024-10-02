@@ -392,7 +392,7 @@ $('#landInfoLabel').on('click', function() {
 	downloadExcelForLand();
 });
 
-// 소속토지정보 - 필지 정보 엑셀 다운로드 함수
+
 // 소속토지정보 - 필지 정보 엑셀 다운로드 함수
 function downloadExcelForLand() {
 
@@ -424,7 +424,7 @@ function downloadExcelForLand() {
 			
 			// 엑셀에 담을 데이터 준비
 			var data1 = [];
-			var rowTitle = ['관리기관', '주소', 'PNU', '점용길이', '관로면적'];
+			var rowTitle = ['관리기관', '주소', 'PNU', '점용길이 (m)', '관로면적 (㎡)'];
 			data1.push(rowTitle);
 			
 			// 서버에서 받아온 데이터를 이용해 행 생성
@@ -452,15 +452,17 @@ function downloadExcelForLand() {
 			var workbook = XLSX.utils.book_new();
 			XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
+			// goverNo를 활용해 파일 이름 동적으로 생성
+			var fileName = goverNo + '_필지정보.xlsx';
+
 			// 엑셀 파일 다운로드
-			XLSX.writeFile(workbook, '소속토지정보.xlsx');
+			XLSX.writeFile(workbook, fileName);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.error("Error: ", textStatus, errorThrown);
 		}
 	});
 }
-
 
 
 // 소속토지정보 - 엑셀 다운로드
@@ -523,6 +525,8 @@ $(document).ready(function() {
 		$('#exceluploadPopup').removeClass('active');
 	});
 });
+
+
 
 /*******엑세 업로드 팝업 스크립트 시작********/
 //x버튼, 닫기, 승인요청 클릭시 팝업클로즈
