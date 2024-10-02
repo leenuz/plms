@@ -489,7 +489,7 @@ SELECT *
                                , js_JIBUN
                                , js_SOUJA_NAME
                                , js_ADDRESS
-                               , js_PHONE_NUMBER
+                               , js_PONE_NUMBER
                                , js_HOME_NUMBER
                                , ROW_NUMBER() OVER(
                             PARTITION BY js_JISANG_NO
@@ -641,7 +641,7 @@ SELECT count(*)
                                , js_JIBUN
                                , js_SOUJA_NAME
                                , js_ADDRESS
-                               , js_PHONE_NUMBER
+                               , js_PONE_NUMBER
                                , js_HOME_NUMBER
                                , ROW_NUMBER() OVER(
                             PARTITION BY js_JISANG_NO
@@ -795,7 +795,7 @@ SELECT *
                                , js_JIBUN
                                , js_SOUJA_NAME
                                , js_ADDRESS
-                               , js_PHONE_NUMBER
+                               , js_PONE_NUMBER
                                , js_HOME_NUMBER
                                , ROW_NUMBER() OVER(
                             PARTITION BY js_JISANG_NO
@@ -945,7 +945,7 @@ SELECT count(*)
                                , js_JIBUN
                                , js_SOUJA_NAME
                                , js_ADDRESS
-                               , js_PHONE_NUMBER
+                               , js_PONE_NUMBER
                                , js_HOME_NUMBER
                                , ROW_NUMBER() OVER(
                             PARTITION BY js_JISANG_NO
@@ -2344,7 +2344,7 @@ SELECT count(*)
 		 ,js_jibun
 		 ,js_souja_name
 		 ,js_address
-		 ,js_phone_number
+		 ,js_pone_number
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(soujaContact2)" >
 		 ,js_home_number
 		 </if>
@@ -2678,7 +2678,7 @@ LEFT JOIN JIJUK_2024 JIJUK_MST ON JM.jm_PNU = JIJUK_MST.PNU
 	</select>
 	
 	<select id="selectJisangDetailSoyu" parameterType="HashMap" resultType="java.util.HashMap">
-		SELECT JS_JISANG_NO, JS_JIBUN, JS_SOUJA_NAME, JS_ADDRESS, JS_PHONE_NUMBER, JS_HOME_NUMBER
+		SELECT JS_JISANG_NO, JS_JIBUN, JS_SOUJA_NAME, JS_ADDRESS, JS_PONE_NUMBER, JS_HOME_NUMBER
 		FROM JISANG_SOUJA
 		WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)" >
@@ -3057,7 +3057,7 @@ WHERE
 	</insert>
 		<insert id="insertJisangSoyu" parameterType="HashMap">
 		Insert into JISANG_SOUJA
-		(js_JISANG_NO, js_JIBUN, js_SOUJA_NAME, js_ADDRESS, js_HOME_NUMBER ,js_PHONE_NUMBER)
+		(js_JISANG_NO, js_JIBUN, js_SOUJA_NAME, js_ADDRESS, js_HOME_NUMBER ,js_PONE_NUMBER)
 		Values
 		(#{JISANGNO}, #{JIBUN}, #{NAME}, #{ADDR}, #{TEL} , #{HP})
 	</insert>
@@ -3158,7 +3158,7 @@ WHERE
 	</select>
 	
 	<select id="selectJisangDetailSoyuTmp" parameterType="HashMap" resultType="java.util.HashMap">
-		SELECT js_JISANG_NO, js_JIBUN, js_SOUJA_NAME, js_ADDRESS, js_PHONE_NUMBER, js_HOME_NUMBER
+		SELECT js_JISANG_NO, js_JIBUN, js_SOUJA_NAME, js_ADDRESS, js_PONE_NUMBER, js_HOME_NUMBER
 		FROM JISANG_SOUJA_TMP
 		WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANGNO)">
