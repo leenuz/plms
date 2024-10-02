@@ -332,6 +332,39 @@
   </main>
       </div>
     </div>
+
+  <div class="menu02_3JibunPopWrapper" id="searchResultPopDiv">
+
+    <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+    <div id="searchResultsPopup">
+      <div class="popupWrap" id="popupWrap">
+        <h2>
+          <p>지번 보기</p>
+          <span class="topCloseBtn"></span>
+        </h2>
+
+        <div class="popupCont">
+          <ul class="popTitles">
+            <li class="popTitle01">주소</li>
+            <li class="popTitle02">지번</li>
+          </ul>
+
+          <div class="popContentBox" >
+            <ul class="popContents" th:each="val:${jibunList}">
+              <li class="popContent01" th:text="${val.address}"></li>
+              <li class="popContent02" th:text="${val.jibun}"></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lastBtnBox btnWrap">
+          <button class="backBtn finalBtn">닫기</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
     <div class="inquirePositionPopWrapper02"></div>
 
     <script type="module" src="/js/module/surfaceMain.js"></script>

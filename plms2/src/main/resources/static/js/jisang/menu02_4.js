@@ -10,6 +10,22 @@ loadDataTable("");
 
 });
 
+$(document).on("click",".finalBtn",function(){
+
+	console.log($("#searchResultPopDiv").html());
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	//console.log($(targetDiv).html());
+	$("#popupWrap").toggleClass("active");
+});
+
+$(document).on("click",".topCloseBtn",function(){
+
+	console.log($("#searchResultPopDiv").html());
+	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	//console.log($(targetDiv).html());
+	$("#popupWrap").toggleClass("active");
+});
+
 //조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
 $(document).on("click", "#registerBtn", function() {
 	console.log($("#menuHiddenSelectBox01_1").val());
@@ -446,13 +462,25 @@ function loadDataTable(params) {
 				// 지상권 해지등록 복붙한 코드라 수정 필요 - 폐쇄된 지번 - 지번 보기로 변경 필요
 				const buttonClass = event.target.className;
 
-				if (buttonClass == "regisRemoveBtn") {
-					url = "/jisang/landTerminationRegistration?idx=" + data.idx + "&index=" + data.index; //해지등록(x) 지번보기로 수정 필요
-				} else {
-					url = "/jisang/easementDetails?idx=" + data.idx + "&index=" + data.index; //상세보기
-				}
-
-				window.location = url;
+				var clickData = {
+                    idx: data.idx
+                };
+                $.ajax({
+                  url: "/jisang/getJibunListData",
+                  type: "POST",
+                  data: clickData,
+               })
+               .done(function (fragment) {
+               console.log("##################");
+               console.log(fragment);
+                //runScriptsInElement(landRightSearchResultPop); // 삽입된 html내 스크립트 실행 함수 호출
+                //console.log($("#searchResultPopDiv").html());
+                $(".popContents li").remove();
+                  $('.menu02_3JibunPopWrapper').replaceWith(fragment);
+                  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+                       $(popupOpen).addClass("open");
+                       popupOpen.classList.add("active");
+                });
 			} else if (target.closest('td').index() === 13) {
 				//지도보기 클릭
 				//    mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
