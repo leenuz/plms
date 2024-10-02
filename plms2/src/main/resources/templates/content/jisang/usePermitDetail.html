@@ -294,98 +294,195 @@
               </li>
               <li class="title selectFileWidth">파일보기</li>
             </ul>
-
-<!--            <ul class="contents">-->
-<!--              <li class="content">-->
-<!--                <input type="text" placeholder="토지사용승락서.docx" readonly class="notWriteInput" />-->
-<!--              </li>-->
-<!--              <li class="content selectFileWidth">-->
-<!--                <button class="viewDetailButton">파일보기</button>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--            <ul class="contents">-->
-<!--              <li class="content">-->
-<!--                <input type="text" placeholder="등기부등본2.tif" readonly class="notWriteInput" />-->
-<!--              </li>-->
-<!--              <li class="content selectFileWidth">-->
-<!--                <button class="viewDetailButton">파일보기</button>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--            <ul class="contents">-->
-<!--              <li class="content">-->
-<!--                <input type="text" placeholder="지적도.tif" readonly class="notWriteInput" />-->
-<!--              </li>-->
-<!--              <li class="content selectFileWidth">-->
-<!--                <button class="viewDetailButton">파일보기</button>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--            <ul class="contents">-->
-<!--              <li class="content">-->
-<!--                <input type="text" placeholder="현장사진.jpg" readonly class="notWriteInput" />-->
-<!--              </li>-->
-<!--              <li class="content selectFileWidth">-->
-<!--                <button class="viewDetailButton">파일보기</button>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--            <ul class="contents">-->
-<!--              <li class="content">-->
-<!--                <input type="text" placeholder="검토의견서.tif" readonly class="notWriteInput" />-->
-<!--              </li>-->
-<!--              <li class="content selectFileWidth">-->
-<!--                <button class="viewDetailButton">파일보기</button>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--            <ul class="contents">-->
-<!--              <li class="content">-->
-<!--                <input type="text" placeholder="토지대장.docx" readonly class="notWriteInput" />-->
-<!--              </li>-->
-<!--              <li class="content selectFileWidth">-->
-<!--                <button class="viewDetailButton">파일보기</button>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--            <ul class="contents">-->
-<!--              <li class="content">-->
-<!--                <input type="text" placeholder="지적도.jpg" readonly class="notWriteInput" />-->
-<!--              </li>-->
-<!--              <li class="content selectFileWidth">-->
-<!--                <button class="viewDetailButton">파일보기</button>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--            <ul class="contents">-->
-<!--              <li class="content">-->
-<!--                <input type="text" placeholder="현장사진.jpg" readonly class="notWriteInput" />-->
-<!--              </li>-->
-<!--              <li class="content selectFileWidth">-->
-<!--                <button class="viewDetailButton">파일보기</button>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--            <ul class="contents">-->
-<!--              <li class="content">-->
-<!--                <input type="text" placeholder="현장사진.jpg" readonly class="notWriteInput" />-->
-<!--              </li>-->
-<!--              <li class="content selectFileWidth">-->
-<!--                <button class="viewDetailButton">파일보기</button>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--            <ul class="contents">-->
-<!--              <li class="content">-->
-<!--                <input type="text" placeholder="관계서류.docx" readonly class="notWriteInput" />-->
-<!--              </li>-->
-<!--              <li class="content selectFileWidth">-->
-<!--                <button class="viewDetailButton">파일보기</button>-->
-<!--              </li>-->
-<!--            </ul>-->
-            <!-- 첨부 서류 파일명 및 파일보기 -->
-            <ul class="contents" th:each="file : ${fileList}">
-              <!-- 파일명 -->
+            <ul class="contents">
               <li class="content">
-                <input type="text" th:value="${file.ja_file_nm}" readonly class="notWriteInput" />
+                <input type="hidden" id="fseq" value="1">
+                <input name="req_doc_file01" id="req_doc_file01"
+                       type="text"
+                       th:if="${#lists.size(reqDoc2list)>=1}" th:value="${reqDoc2list[0].jrd_fname}"
+                       readonly
+                       class="notWriteInput" style="text-align:center"/>
+                <input name="req_doc_file01" id="req_doc_file01"
+                       type="text"
+                       th:if="${#lists.size(reqDoc2list)<1}" placeholder=""
+                       readonly
+                       class="notWriteInput" style="text-align:center"/>
               </li>
-              <!-- 파일보기 버튼 -->
+
               <li class="content selectFileWidth">
-                <button class="viewDetailButton"  th:onclick="openFilePopup([[${file.ja_file_path}]])">보기</button>
+                <button class="viewDetailButton">파일보기</button>
               </li>
             </ul>
+            <ul class="contents">
+              <li class="content">
+                <input type="hidden" id="fseq" value="2">
+                <input  name="req_doc_file02" id="req_doc_file02"
+                        type="text"
+                        th:if="${#lists.size(reqDoc2list)>=2}" th:value="${reqDoc2list[1].jrd_fname!=null?reqDoc2list[1].jrd_fname:''}"
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+                <input  name="req_doc_file02" id="req_doc_file02"
+                        type="text"
+                        th:if="${#lists.size(reqDoc2list)<2}" placeholder=""
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+              </li>
+
+              <li class="content selectFileWidth">
+                <button class="viewDetailButton">파일보기</button>
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content"  >
+                <input type="hidden" id="fseq" value="3">
+                <input  name="req_doc_file03" id="req_doc_file03"
+                        type="text"
+                        th:if="${#lists.size(reqDoc2list)>=3}" th:value="${reqDoc2list[2].jrd_fname!=null?reqDoc2list[2].jrd_fname:''}"
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+                <input  name="req_doc_file03" id="req_doc_file03"
+                        type="text"
+                        th:if="${#lists.size(reqDoc2list)<3}" placeholder=""
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+              </li>
+
+              <li class="content selectFileWidth">
+                <button class="viewDetailButton">파일보기</button>
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input type="hidden" id="fseq" value="4">
+                <input type="text"  name="req_doc_file04" id="req_doc_file04"
+                       th:if="${#lists.size(reqDoc2list)>=4}" th:value="${reqDoc2list[3].jrd_fname!=null?reqDoc2list[3].jrd_fname:''}"
+                       readonly class="notWriteInput" style="text-align:center"/>
+                <input type="text"  name="req_doc_file04" id="req_doc_file04"
+                       th:if="${#lists.size(reqDoc2list)<4}" placeholder=""
+                       readonly class="notWriteInput" style="text-align:center"/>
+              </li>
+
+              <li class="content selectFileWidth">
+                <button class="viewDetailButton">파일보기</button>
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input type="hidden" id="fseq" value="5">
+                <input
+                        type="text"  name="req_doc_file05" id="req_doc_file05"
+                        th:if="${#lists.size(reqDoc2list)>=5}" th:value="${reqDoc2list[4].jrd_fname!=null?reqDoc2list[4].jrd_fname:''}"
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+                <input
+                        type="text"  name="req_doc_file05" id="req_doc_file05"
+                        th:if="${#lists.size(reqDoc2list)<5}" placeholder=""
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+              </li>
+
+              <li class="content selectFileWidth">
+                <button class="viewDetailButton">파일보기</button>
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input type="hidden" id="fseq" value="6">
+                <input
+                        type="text"  name="req_doc_file06" id="req_doc_file06"
+                        th:if="${#lists.size(reqDoc2list)>=6}" th:value="${reqDoc2list[5].jrd_fname!=null?reqDoc2list[5].jrd_fname:''}"
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+                <input
+                        type="text"  name="req_doc_file06" id="req_doc_file06"
+                        th:if="${#lists.size(reqDoc2list)<6}" placeholder=""
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+              </li>
+
+              <li class="content selectFileWidth">
+                <button class="viewDetailButton">파일보기</button>
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input type="hidden" id="fseq" value="7">
+                <input
+                        type="text"  name="req_doc_file07" id="req_doc_file07"
+                        th:if="${#lists.size(reqDoc2list)>=7}" th:value="${reqDoc2list[6].jrd_fname!=null?reqDoc2list[6].jrd_fname:''}"
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+                <input
+                        type="text"  name="req_doc_file07" id="req_doc_file07"
+                        th:if="${#lists.size(reqDoc2list)<7}" placeholder=""
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+              </li>
+
+              <li class="content selectFileWidth">
+                <button class="viewDetailButton">파일보기</button>
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input type="hidden" id="fseq" value="8">
+                <input
+                        type="text"  name="req_doc_file08" id="req_doc_file08"
+                        th:if="${#lists.size(reqDoc2list)>=8}" th:value="${reqDoc2list[7].jrd_fname!=null?reqDoc2list[7].jrd_fname:''}"
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+                <input
+                        type="text"  name="req_doc_file08" id="req_doc_file08"
+                        th:if="${#lists.size(reqDoc2list)<8}" placeholder=""
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+              </li>
+
+              <li class="content selectFileWidth">
+                <button class="viewDetailButton">파일보기</button>
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input type="hidden" id="fseq" value="9">
+                <input
+                        type="text"  name="req_doc_file09" id="req_doc_file09"
+                        th:if="${#lists.size(reqDoc2list)>=9}" th:value="${reqDoc2list[8].jrd_fname!=null?reqDoc2list[8].jrd_fname:''}"
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+                <input
+                        type="text"  name="req_doc_file09" id="req_doc_file09"
+                        th:if="${#lists.size(reqDoc2list)<9}" placeholder=""
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+              </li>
+
+              <li class="content selectFileWidth">
+                <button class="viewDetailButton">파일보기</button>
+              </li>
+            </ul>
+            <ul class="contents">
+              <li class="content">
+                <input type="hidden" id="fseq" value="10">
+                <input
+                        type="text"  name="req_doc_file10" id="req_doc_file10"
+                        th:if="${#lists.size(reqDoc2list)>=10}" th:value="${reqDoc2list[9].jrd_fname!=null?reqDoc2list[9].jrd_fname:''}"
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+                <input
+                        type="text"  name="req_doc_file10" id="req_doc_file10"
+                        th:if="${#lists.size(reqDoc2list)<10}" placeholder=""
+                        readonly
+                        class="notWriteInput" style="text-align:center"/>
+              </li>
+
+              <li class="content selectFileWidth">
+                <button class="viewDetailButton">파일보기</button>
+              </li>
+            </ul>
+
+
+
 
           </div>
         </div>

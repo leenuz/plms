@@ -4352,7 +4352,8 @@ log.info("gubun:"+gubun);
 		log.info("params:"+params);
 		
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
-		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+//		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+		ArrayList<HashMap> reqDoc2list = mainService.selectQuery("jisangSQL.selectJisangReqDoc2",params);
 		
 		 list = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_MASTER", params);
 		togiList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_TOGI", params);
@@ -4364,7 +4365,8 @@ log.info("gubun:"+gubun);
 
       	mav.addObject("resultData", data.get(0));
       	mav.addObject("tojiList", data);
-		mav.addObject("fileList", jisangPnuAtcFileList);
+//		mav.addObject("fileList", jisangPnuAtcFileList);
+		mav.addObject("reqDoc2list", reqDoc2list);
 		mav.setViewName("content/jisang/usePermitDetail");
 		return mav;
     }
