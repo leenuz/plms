@@ -160,11 +160,11 @@ $(document).ready(function() {
 	objDragAndDrop.on('click', function(e) {
 		console.log("---------------- 파일 클릭 트리거 ---------------");
 	    if (!e.isTrigger) {  // 이 조건문은 이 이벤트가 수동 트리거된 경우를 방지합니다.
-	        $('input[type=file]').trigger('click'); // 파일 선택 창을 띄우는 트리거
+	        $('input[type=file][name="fileUpload"]').trigger('click'); // 파일 선택 창을 띄우는 트리거
 	    }
 	});
 	 
-	$('input[type=file]').on('change', function(e) {
+	$('input[type=file][name="fileUpload"]').on('change', function(e) {
 	    var files = e.originalEvent.target.files; // 파일 선택창에서 선택된 파일들
 	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
 	});
@@ -1077,6 +1077,8 @@ $(document).on("click", "#draftSaveBtn", function() {
 
 	// 변경이력 - 기본정보 처리
 	var modifyReason1 = getModifyReasonForBasicInfo();
+	console.log("----------------modifyReason1--------------");
+	console.log(modifyReason1);
 	if (modifyReason1 !== "") {
 		object.modifyReason1 = modifyReason1;
 	}
@@ -1200,7 +1202,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 	var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
 	console.log("----------jsonobj------------");
 	console.log(object);
-
+return;
 	url = "/gover/insertGoverMaster";
 	$.ajax({
 
@@ -1245,8 +1247,9 @@ function compareChanges(orgValue, newValue, fieldName) {
     // null과 undefined를 빈 문자열로 처리
     orgValue = orgValue === undefined || orgValue === null ? '' : orgValue;
     newValue = newValue === undefined || newValue === null ? '' : newValue;
-    
-    if (orgValue !== newValue) {
+    console.log("orgValue:"+orgValue);
+	console.log("newValue:"+newValue);
+    if (orgValue !== newValue || newValue!='') {
         return `${fieldName} 변경 ('${orgValue}' > '${newValue}'); `;
     }
     return '';
@@ -1256,7 +1259,7 @@ function compareChanges(orgValue, newValue, fieldName) {
 // 기본정보 변경이력 처리 함수
 function getModifyReasonForBasicInfo() {
     var modifyReason = '';
-
+console.log("----------------getModifyReasonForBasicInfo--------------------");
     modifyReason += compareChanges($("input[name='pmt_office_org']").val(), $("select[name='pmt_office']").val(), "허가관청");
     modifyReason += compareChanges($("input[name='adm_office_org']").val(), $("select[name='adm_office']").val(), "관리기관");
     modifyReason += compareChanges($("input[name='office_depart_org']").val(), $("input[name='office_depart']").val(), "부서");
@@ -1277,7 +1280,7 @@ function getModifyReasonForBasicInfo() {
     var occuprepayyn = $("input[name='occuprepayyn']").is(':checked') ? "1" : "0";
     modifyReason += compareChanges($("input[name='occuprepayyn_org']").val(), occuprepayyn, "점용료 선납 여부");
     modifyReason += compareChanges($("input[name='occuprepaydate_org']").val(), $("input[name='occuprepaydate']").val(), "선납기한");
-
+	console.log(modifyReason);
     return modifyReason;
 }
 
@@ -1623,15 +1626,42 @@ $(document).on("click","#deleteFileBtn",function(){
 	    	console.log($(this).val());
 	    }
 	})*/
+	var delFiles=[];
 	const clickedAttachFiles = document.querySelectorAll('input[name="masterEdit_attachFile"]:checked');
 	console.log(clickedAttachFiles);
 	console.log(uploadFiles);
 	for(var i=0;i<clickedAttachFiles.length;i++){
 		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
 		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
+		var delfileName=$(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val();
+		var idx=$(clickedAttachFiles[i]).closest("#fileListUl").find("#idx").val();
+		console.log(delfileName);
+		console.log(idx);
+		/*var data={"delfile":delFileName,"idx":idx}
+				delFiles.push(data);*/
 		$(delEle).remove();
+		
+				
 
 	}
+	
+	
+	console.log(delFiles);
+	
+	
+	
+	
+	$('#searchResultPopDiv').replaceWith();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 })
 
 /* 손지민 2024-10-01 - 허가관청 이력보기 팝업 -- 상단에 대체 코드 있음. 이 코드 사용 안 함. */

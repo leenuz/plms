@@ -594,7 +594,7 @@ SELECT count(*)
 		</if>
 
 
-		AND GM.gm_CANCLE_YN = 'N' OR GM.gm_CANCLE_YN =''
+		AND GM.gm_CANCLE_YN = 'N' OR GM.gm_CANCLE_YN ='' OR GM.gm_CANCLE_YN is null 
 		
 
 		
@@ -784,7 +784,7 @@ SELECT AA.RN AS no
 		</if>
 
 
-		AND GM.gm_CANCLE_YN = 'N' OR GM.gm_CANCLE_YN =''
+		AND GM.gm_CANCLE_YN = 'N' OR GM.gm_CANCLE_YN ='' OR GM.gm_CANCLE_YN is null 
 					) AA
 LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
                  , S.gp_pay_money as PAY_MONEY
@@ -1821,6 +1821,11 @@ FROM NOTSET_MASTER
 			AND ga_FILE_SEQ =#{SEQ}
 		</if>
 	</delete>
+	<delete id="deleteGoverAtcFile" parameterType="HashMap">
+		DELETE FROM GOVER_ATCFILE
+		WHERE ga_idx=#{idx}
+		
+	</delete>
 	<delete id="deleteGoverPNUObject" parameterType="HashMap">
 		DELETE FROM GOVER_PNU
 		WHERE gp_GOVER_NO = #{GOVER_NO}
@@ -2150,7 +2155,7 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 	</insert>
 	
 	<select id="getGoverAtcFileSeq" parameterType="java.util.HashMap" resultType="integer">
-		SELECT MAX(ga_file_seq) FROM gover_atcfile ga WHERE ga.ga_gover_no=#{GOVER_NO};
+		SELECT COALESCE(MAX(ga_file_seq), 0)  FROM gover_atcfile ga WHERE ga.ga_gover_no=#{GOVER_NO};
 	
 	</select>
 	<select id="selectGoverDocInfo" resultType="HashMap" parameterType="HashMap">

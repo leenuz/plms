@@ -3756,5 +3756,48 @@ log.info("params:"+params);
 		    // 결과 반환
 		    return new ResponseEntity<>(response, HttpStatus.OK);
 		}
+		
+		
+		@PostMapping(path="/deleteGoverAtcfile") //http://localhost:8080/api/get/dbTest
+		public void deleteGoverAtcfile(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			
+			HashMap params = new HashMap();
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			//log.info("httpRequest:"+Arrays.toString(httpRequest));
+
+			String fname=request.getParameter("delfile");
+			String idx=request.getParameter("idx");
+			
+
+
+
+			params.put("fname", fname);
+			params.put("idx", idx);
+
+			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+			 String dataPath = GC.getJisangFileDataDir(); //설정파일로 뺀다.
+			 CommonUtil.delFile(fname,dataPath);
+
+			log.info("params:"+params);
+			mainService.DeleteQuery("goverSQL.deleteGoverAtcFile",params);
+			
+			
+			
+			HashMap map = new HashMap();
+			map.put("message", "");
+			map.put("loginKey", String.valueOf(request.getSession().getAttribute("loginKey")));
+
+			
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+			
+		}
 
 }
