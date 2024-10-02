@@ -723,3 +723,264 @@ $(document).on("click",".approvalBtn ",function(){
 	   	dataObj.togiDatas=togiDatas;
     	 console.log(dataObj);
 })
+
+
+		//파일 업로드 핸들러
+		var uploadFiles=new Array();
+
+$(document).ready(function(){
+			var objDragAndDrop = $(".fileUploadBox");
+		        $(document).on("dragenter",".fileUploadBox",function(e){
+		        e.stopPropagation();
+		        e.preventDefault();
+		        $(this).css('border', '2px solid #0B85A1');
+		    });
+		    $(document).on("dragover",".fileUploadBox",function(e){
+		        e.stopPropagation();
+		        e.preventDefault();
+		    });
+		    $(document).on("drop",".fileUploadBox",function(e){
+
+		        $(this).css('border', '2px dotted #0B85A1');
+		        e.preventDefault();
+		        var files = e.originalEvent.dataTransfer.files;
+
+		        handleFileUpload(files,objDragAndDrop);
+		    });
+
+		    $(document).on('dragenter', function (e){
+		        e.stopPropagation();
+		        e.preventDefault();
+		    });
+		    $(document).on('dragover', function (e){
+		      e.stopPropagation();
+		      e.preventDefault();
+		      objDragAndDrop.css('border', '2px dotted #0B85A1');
+		    });
+		    $(document).on('drop', function (e){
+		        e.stopPropagation();
+		        e.preventDefault();
+		    });
+		    //drag 영역 클릭시 파일 선택창
+		    objDragAndDrop.on('click',function (e){
+		        $('#landTerminationRegistration_myPcFiles').trigger('click');
+		    });
+
+		    $('input[name=fileupload]').on('change', function(e) {
+		        var files = e.originalEvent.target.files;
+		        handleFileUpload(files,objDragAndDrop);
+		    });
+
+			$('input[name=landTerminationRegistration_myPcFiles01]').on('change', function(e) {
+			        var files = e.originalEvent.target.files;
+			        handleFileUpload1(files,this,"01");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles02]').on('change', function(e) {
+			       var files = e.originalEvent.target.files;
+			       handleFileUpload1(files,this,"02");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles03]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"03");
+
+			});
+			$('input[name=landTerminationRegistration_myPcFiles04]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"04");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles05]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"05");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles06]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"06");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles07]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"07");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles08]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"08");
+			});
+		    function handleFileUpload(files,obj)
+		    {
+		       for (var i = 0; i < files.length; i++)
+		       {
+		            var fd = new FormData();
+		            fd.append('file', files[i]);
+
+		            var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
+		          //  status.setFileNameSize(files[i].name,files[i].size);
+		            sendFileToServer(fd,status);
+
+		       }
+		    }
+
+
+
+			function handleFileUpload1(files,obj,idx)
+			    {
+			       for (var i = 0; i < files.length; i++)
+			       {
+			            var fd = new FormData();
+			            fd.append('file', files[i]);
+
+			          //  var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
+			          //  status.setFileNameSize(files[i].name,files[i].size);
+					    console.log($(obj).parent().parent().parent().html());
+						var changeObj=$(obj).parent().parent().find("#req_doc_file"+idx).val(files[i].name);
+						console.log("--------changeObj---------------");
+						console.log(changeObj);
+			            sendFileToServer1(fd,status,idx);
+
+			       }
+			    }
+
+		    var rowCount=0;
+		    function createStatusbar(obj,name,size,no){
+		        console.log("----------start createStatusBar------------");
+		            console.log(obj.html());
+
+		        var sizeStr="";
+		                                var sizeKB = size/1024;
+		                                if(parseInt(sizeKB) > 1024){
+		                                    var sizeMB = sizeKB/1024;
+		                                    sizeStr = sizeMB.toFixed(2)+" MB";
+		                                }else{
+		                                    sizeStr = sizeKB.toFixed(2)+" KB";
+		                                }
+
+		        var row='<ul class="contents" id="fileListUl">';
+		        row+='<li class="selectWidth content checkboxWrap">';
+		        row+='<input type="checkbox" id="landRightsRegistration_attachFile'+no+'" name="landRightsRegistration_attachFile" >';
+		        row+='<label for="landRightsRegistration_attachFile'+no+'"></label>';
+		        row+='</li>';
+		        row+='<li class="content registDateWidth"><input type="text" id="filename" th:placeholder="'+'[[${val.pa_file_path}]]'+'" class="notWriteInput" readonly></li>';
+		        row+='<li class="content fileNameWidth"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li>';
+		        row+='<li class="content"><button class="viewDetailButton" th:onclick="openFilePopup([[${val.pa_file_path}]])">보기</button></li></ul>';
+		        obj.after(row);
+
+		        var radio=$(row).find('input');
+		        console.log("---------------radio checkbox----------");
+		        $(radio).find('input').attr("disabled",false);
+		        console.log($(radio).parent().html());
+		    }
+
+		    function sendFileToServer(formData,status)
+		    {
+		        var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+		        var extraData ={}; //Extra Data.
+		        var jqXHR=$.ajax({
+		                xhr: function() {
+		                var xhrobj = $.ajaxSettings.xhr();
+		                if (xhrobj.upload) {
+		                        xhrobj.upload.addEventListener('progress', function(event) {
+		                            var percent = 0;
+		                            var position = event.loaded || event.position;
+		                            var total = event.total;
+		                            if (event.lengthComputable) {
+		                                percent = Math.ceil(position / total * 100);
+		                            }
+		                            //Set progress
+		                          //  status.setProgress(percent);
+		                        }, false);
+		                    }
+		                return xhrobj;
+		            },
+		            url: uploadURL,
+		            type: "POST",
+		            contentType:false,
+		            processData: false,
+		            cache: false,
+		            data: formData,
+		            success: function(data){
+		               // status.setProgress(100);
+		                console.log(data);
+		                console.log(data.resultData);
+		                //$("#status1").append("File upload Done<br>");
+		                uploadFiles.push(data.resultData.fpath);
+		                //allCheckEventLandRightsRegist();
+		            }
+		        });
+		        //status.setAbort(jqXHR);
+		    }
+
+
+			function sendFileToServer1(formData,status,no)
+			    {
+					var idx=$("#hiddenJisangNo").val();
+					console.log($("#hiddenJisangNo").val());
+			        var uploadURL = "/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
+			        var extraData ={}; //Extra Data.
+			        var jqXHR=$.ajax({
+			                xhr: function() {
+			                var xhrobj = $.ajaxSettings.xhr();
+			                if (xhrobj.upload) {
+			                        xhrobj.upload.addEventListener('progress', function(event) {
+			                            var percent = 0;
+			                            var position = event.loaded || event.position;
+			                            var total = event.total;
+			                            if (event.lengthComputable) {
+			                                percent = Math.ceil(position / total * 100);
+			                            }
+			                            //Set progress
+			                          //  status.setProgress(percent);
+			                        }, false);
+			                    }
+			                return xhrobj;
+			            },
+			            url: uploadURL,
+			            type: "POST",
+			            contentType:false,
+			            processData: false,
+			            cache: false,
+			            data: formData,
+			            success: function(data){
+			               // status.setProgress(100);
+			                console.log(data);
+			                console.log(data.resultData);
+			                //$("#status1").append("File upload Done<br>");
+			                uploadFiles.push(data.resultData.fpath);
+			                //allCheckEventLandRightsRegist();
+			            }
+			        });
+			        //status.setAbort(jqXHR);
+			    }
+}); //end ready
+
+
+
+$(document).on("click","#docFileDelBtn",function(){
+	console.log("---------------docFileDelBtn---------------");
+	var $currentElement = $(this);
+	console.log($(this).parent().parent().html());
+	var inputFseq=$(this).parent().parent().find("#fseq").val();
+	var inputValue=$(this).parent().parent().find(".notWriteInput").val();
+	console.log(inputValue);
+	if (inputValue!=null || inputValue!=""){
+		var params={"dfile_name":inputValue,"jisang_no":$("#hiddenJisangNo").val(),"fseq":inputFseq,"docNo":"2"}
+
+		console.log(params);
+
+
+		//임시파일 삭제
+		$.ajax({
+		          url: "/jisang/deleteJisangTmpFile",
+		          type: "POST",
+		          data: params,
+
+		})
+		.done(function (fragment) {
+		       /*loadingHide();
+		       alert("저장이 완료 되었습니다.");*/
+			   //$(this).parent().parent().find(".notWriteInput").val("");
+			   $currentElement.parent().parent().find(".notWriteInput").val("");
+			   $currentElement.parent().parent().find(".notWriteInput").attr('placeholder','');
+		    });
+
+	}
+	//console.log($(this).parent().parent().find(".notWriteInput").val(""));
+
+})

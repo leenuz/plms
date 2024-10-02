@@ -4271,8 +4271,6 @@ log.info("gubun:"+gubun);
 		String emd_nm=httpRequest.getParameter("emd_nm");
 		String ri_nm=httpRequest.getParameter("ri_nm");
 		String jibun=httpRequest.getParameter("jibun");
-		
-
 
 		params.put("address", address);
 		params.put("sido_nm", sido_nm);
@@ -4280,8 +4278,6 @@ log.info("gubun:"+gubun);
 		params.put("emd_nm", emd_nm);
 		params.put("ri_nm", ri_nm);
 		params.put("jibun", jibun);
-		
-		
 
 		log.info("params:"+params);
 		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectAddressFromJijuk",params);
@@ -4352,7 +4348,8 @@ log.info("gubun:"+gubun);
 		log.info("params:"+params);
 		
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
-		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+//		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+		ArrayList<HashMap> reqDoc2list = mainService.selectQuery("jisangSQL.selectJisangReqDoc2",params);
 		
 		 list = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_MASTER", params);
 		togiList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_TOGI", params);
@@ -4364,7 +4361,8 @@ log.info("gubun:"+gubun);
 
       	mav.addObject("resultData", data.get(0));
       	mav.addObject("tojiList", data);
-		mav.addObject("fileList", jisangPnuAtcFileList);
+//		mav.addObject("fileList", jisangPnuAtcFileList);
+		mav.addObject("reqDoc2list", reqDoc2list);
 		mav.setViewName("content/jisang/usePermitDetail");
 		return mav;
     }
