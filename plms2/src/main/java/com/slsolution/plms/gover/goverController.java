@@ -409,7 +409,8 @@ public class goverController {
 	    public ModelAndView menu03_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 			
 			HashMap params = new HashMap();
-			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
+			
+			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
@@ -429,8 +430,8 @@ public class goverController {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			HashMap params = new HashMap();
-			ArrayList<HashMap>  list=new ArrayList<HashMap>();
-			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
+			
+			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
@@ -445,19 +446,20 @@ public class goverController {
 			
 			return mav;
 		}
+		
 		@GetMapping(path="/menu03_3") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView menu03_3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			HashMap params = new HashMap();
-			ArrayList<HashMap>  list=new ArrayList<HashMap>();
-			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
+			
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
 			ModelAndView mav=new ModelAndView();
-			mav.addObject("jisaList",jisaList);
+			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);
 			mav.addObject("usePurposlist",usePurposlist);
@@ -748,7 +750,7 @@ public class goverController {
 			ModelAndView mav = new ModelAndView();
 			HashMap params = new HashMap();
 			
-			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
+			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimokList = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> usePurposlist = mainService.selectQuery("commonSQL.selectUsePurposList",params);
 			
@@ -762,8 +764,6 @@ public class goverController {
 			mav.setViewName("content/gover/masterReg");
 			return mav;
 		}
-		
-		
 		
 		
 		// masterEdit 상세 조회
@@ -784,7 +784,7 @@ public class goverController {
 			params.put("index",index);
 			log.info("params:"+params);
 
-			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectJisaList",params);
+			ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData",params);
 			ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
 			ArrayList<HashMap> goverModifyOfficeList = mainService.selectQuery("goverSQL.selectModifyOfficeList",params);

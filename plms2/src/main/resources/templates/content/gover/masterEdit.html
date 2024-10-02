@@ -17,45 +17,31 @@
 			display: grid;
 			grid-template-columns: auto auto auto;
 		}
-
 		div.dt-center-in-div {
 			margin: 0 auto;
 			float: right;
 			margin-right: 30px;
-
 		}
-
 		div.dt-center-in-div>div {
-
 			display: inline;
 		}
-
 		div.dt-filter-spacer {
 			margin: 10px 0;
 			border: 1px solid red;
 		}
-
 		.dt-title {
-
 			text-align: center;
 			width: 180px;
 			float: left;
-
 		}
-
 		.dt-buttons {
 			display: inline-block;
-
 			width: 180px;
-
 		}
-
 		.dt-length {
 			display: inline-block;
 		}
-
 		.dt-button {
-
 			color: white;
 			background-color: #4e5871;
 			font-size: 15px;
@@ -69,13 +55,10 @@
 			margin-right: 10px;
 			width: 159px;
 			height: 38px;
-
 		}
-
 		.dt-paging {
 			text-align: center;
 		}
-
 		.dt-paging-button {
 			box-sizing: border-box;
 			display: inline-block;
@@ -85,27 +68,19 @@
 			text-align: center;
 			text-decoration: none !important;
 			cursor: pointer;
-
 			border: 1px solid transparent;
 			border-radius: 2px;
 			background: transparent;
 			color: #007bff !important;
 			font-size: 15px;
 			font-weight: 600;
-
-
 		}
-
 		.bottom {
 			text-align: center;
-
 		}
-
 		.top {
-
 			text-align: right;
 			margin: 10px;
-
 		}
 	</style>
 	<title>점용 마스터</title>
@@ -182,8 +157,8 @@
 								<li class="content selectContentArea">
 									<div class="hiddenSelectBox">
 										<select name="jisa" id="masterEditSelectBox01" hidden>
-											<option th:each="jisa : ${jisaList}" th:value="${jisa['sc_code_name']}"
-												th:text="${jisa['sc_code_name']}" th:selected="${resultData.gm_jisa == jisa['sc_code_name']}">
+											<option th:each="jisa : ${jisaList}" th:value="${jisa.jm_jisa_name}"
+												th:text="${jisa.jm_jisa_name}" th:selected="${resultData.gm_jisa == jisa.jm_jisa_name}">
 											</option>
 										</select>
 									</div>
@@ -192,7 +167,7 @@
 										<ul class="customSelectBtns" id="jisaUl">
 											<th:block th:each="jisa : ${jisaList}">
 												<li>
-													<p th:text="${jisa['sc_code_name']}"></p>
+													<p th:text="${jisa.jm_jisa_name}"></p>
 												</li>
 											</th:block>
 										</ul>
@@ -621,12 +596,13 @@
 									<input type="hidden" id="jibun" name="jibun">
 									<input type="hidden" id="jibun_full" name="jibun_full">
 									<input type="hidden" id="addrcode" name="addrcode">
-									
+
 									<!-- 소속 토지 정보에 기존 값을 hidden 필드로 추가 -->
 									<input type="hidden" name="adm_office_org" th:value="${pnuList[0].adm_office}">
 									<input type="hidden" name="gover_own_yn_org" th:value="${pnuList[0].gover_own_yn}">
 									<input type="hidden" name="rep_flag_org" th:value="${pnuList[0].rep_flag}">
-									<input type="hidden" name="addr_org" th:value="${pnuList[0].sido_nm + ' ' + pnuList[0].sgg_nm + ' ' + pnuList[0].emd_nm + ' ' + pnuList[0].ri_nm + ' ' + pnuList[0].jibun}">
+									<input type="hidden" name="addr_org"
+										th:value="${pnuList[0].sido_nm + ' ' + pnuList[0].sgg_nm + ' ' + pnuList[0].emd_nm + ' ' + pnuList[0].ri_nm + ' ' + pnuList[0].jibun}">
 									<input type="hidden" name="pnu_org" th:value="${pnuList[0].pnu}">
 									<input type="hidden" name="jimok_text_org" th:value="${pnuList[0].jimok_text}">
 									<input type="hidden" name="gover_length_org" th:value="${pnuList[0].gover_length}">
@@ -750,12 +726,13 @@
 									<input type="hidden" id="jibun" name="jibun">
 									<input type="hidden" id="jibun_full" name="jibun_full">
 									<input type="hidden" id="addrcode" name="addrcode">
-									
+
 									<!-- 기존 값들을 hidden 필드로 추가 -->
 									<input type="hidden" name="adm_office_org_${iterStat.index}" th:value="${pnu.adm_office}">
 									<input type="hidden" name="gover_own_yn_org_${iterStat.index}" th:value="${pnu.gover_own_yn}">
 									<input type="hidden" name="rep_flag_org_${iterStat.index}" th:value="${pnu.rep_flag}">
-									<input type="hidden" name="addr_org_${iterStat.index}" th:value="${pnu.sido_nm + ' ' + pnu.sgg_nm + ' ' + pnu.emd_nm + ' ' + pnu.ri_nm + ' ' + pnu.jibun}">
+									<input type="hidden" name="addr_org_${iterStat.index}"
+										th:value="${pnu.sido_nm + ' ' + pnu.sgg_nm + ' ' + pnu.emd_nm + ' ' + pnu.ri_nm + ' ' + pnu.jibun}">
 									<input type="hidden" name="pnu_org_${iterStat.index}" th:value="${pnu.pnu}">
 									<input type="hidden" name="jimok_text_org_${iterStat.index}" th:value="${pnu.jimok_text}">
 									<input type="hidden" name="gover_length_org_${iterStat.index}" th:value="${pnu.gover_length}">
@@ -1030,7 +1007,8 @@
 									</li>
 									<li class="content viewBtnBox">
 										<!-- <a th:href="@{${file.ga_file_path}}" class="viewDetailButton lightBlueBtn" th:data-filepath="${file.ga_file_path}" target="_blank" onclick="attachFileDownload(this)">보기</a> -->
-										<a href="javascript:void(0);" class="viewDetailButton lightBlueBtn" th:data-filepath="${file.ga_file_path}" target="_blank" onclick="attachFileDownload(this)">보기</a>
+										<a href="javascript:void(0);" class="viewDetailButton lightBlueBtn"
+											th:data-filepath="${file.ga_file_path}" target="_blank" onclick="attachFileDownload(this)">보기</a>
 									</li>
 								</ul>
 							</div>
@@ -1064,7 +1042,7 @@
 										<ul class="contents" th:each="history, iterStat : ${goverModifyList}">
 											<li class="content smallWidth">
 												<!-- 순번 -->
-<!--												<input type="text" class="notWriteInput" th:value="${iterStat.index + 1}" readonly />-->
+												<!--												<input type="text" class="notWriteInput" th:value="${iterStat.index + 1}" readonly />-->
 											</li>
 											<li class="content">
 												<!-- 변경일시 -->

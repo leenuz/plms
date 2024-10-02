@@ -1,784 +1,767 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      
-      layout:decorate="~{layout/default_layout}">
- <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link th:href="@{/css/common.css}" rel="stylesheet" />
-	<link rel="stylesheet" href="/css/gover/masterReg.css" /> 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" as="style" crossorigin
+		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+	<link th:href="@{/css/common.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="/css/gover/masterReg.css" />
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script> -->
 	<script src="/vendor/xlsx.min.js"></script>
 	<style>
 		div.dt-top-container {
-		  display: grid;
-		  grid-template-columns: auto auto auto;
+			display: grid;
+			grid-template-columns: auto auto auto;
 		}
-		
+
 		div.dt-center-in-div {
-		  margin: 0 auto;
-		      float: right;
-		    margin-right: 30px;
-		   
+			margin: 0 auto;
+			float: right;
+			margin-right: 30px;
+
 		}
-		div.dt-center-in-div>div{
-		
-		display:inline;
+
+		div.dt-center-in-div>div {
+
+			display: inline;
 		}
-		
+
 		div.dt-filter-spacer {
-		  margin: 10px 0;
-		  border:1px solid red;
+			margin: 10px 0;
+			border: 1px solid red;
 		}
-		
-		
-		.dt-title{
-		
-		text-align:center;
-		width:180px;
-		float:left;
-		
+
+
+		.dt-title {
+
+			text-align: center;
+			width: 180px;
+			float: left;
+
 		}
-		.dt-buttons{
-		display:inline-block;
-		
-		width:180px;
-		
+
+		.dt-buttons {
+			display: inline-block;
+
+			width: 180px;
+
 		}
-		.dt-length{
-		display:inline-block;
+
+		.dt-length {
+			display: inline-block;
 		}
-		.dt-button{
-		
-		color:white;
-		background-color:#4e5871;
-		font-size:15px;
-		font-weight:600;
-		border-radius:10px;
-		background-image:url(/assets/media/menu01/download.png);
-		background-size:11px;
-		background-repeat:no-repeat;
-		background-position:123px center;
-		text-aline:left;
-		margin-right:10px;
-		width:159px;
-		height:38px;
-		
+
+		.dt-button {
+
+			color: white;
+			background-color: #4e5871;
+			font-size: 15px;
+			font-weight: 600;
+			border-radius: 10px;
+			background-image: url(/assets/media/menu01/download.png);
+			background-size: 11px;
+			background-repeat: no-repeat;
+			background-position: 123px center;
+			text-aline: left;
+			margin-right: 10px;
+			width: 159px;
+			height: 38px;
+
 		}
-		
+
 		.dt-paging {
-		text-align: center;
+			text-align: center;
 		}
-		
+
 		.dt-paging-button {
-		  box-sizing: border-box;
-		  display: inline-block;
-		  min-width: 1.5em;
-		  padding: 0.5em 1em;
-		  margin-left: 2px;
-		  text-align: center;
-		  text-decoration: none !important;
-		  cursor: pointer;
-		  
-		  border: 1px solid transparent;
-		  border-radius: 2px;
-		  background: transparent;
-		  color: #007bff !important;
-		    font-size: 15px;
-		    font-weight: 600;
-		    
-		    
+			box-sizing: border-box;
+			display: inline-block;
+			min-width: 1.5em;
+			padding: 0.5em 1em;
+			margin-left: 2px;
+			text-align: center;
+			text-decoration: none !important;
+			cursor: pointer;
+
+			border: 1px solid transparent;
+			border-radius: 2px;
+			background: transparent;
+			color: #007bff !important;
+			font-size: 15px;
+			font-weight: 600;
+
+
 		}
-		
-		.bottom{
-		text-align:center;
-		
+
+		.bottom {
+			text-align: center;
+
 		}
-		.top{
-		
-		text-align:right;
-		margin:10px;
-		
+
+		.top {
+
+			text-align: right;
+			margin: 10px;
+
 		}
 	</style>
-    <title>점용 마스터</title>
-  </head>
+	<title>점용 마스터</title>
+</head>
 <th:block layout:fragment="content">
-    <!-- 점용 마스터 등록 -->
-    <div class="masterRegWrappers">
-     
-      <main id="masterReg">
-		<form id="saveForm" onSubmit="return false;">
-        <div class="mainTitle">
-          <h1>점용 마스터 등록</h1>
-        </div>
+	<!-- 점용 마스터 등록 -->
+	<div class="masterRegWrappers">
 
-        <section class="defaultInfo">
-          <div class="subTitle">
-            <div class="subTitleText">기본 정보</div>
-          </div>
+		<main id="masterReg">
+			<form id="saveForm" onSubmit="return false;">
+				<div class="mainTitle">
+					<h1>점용 마스터 등록</h1>
+				</div>
 
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="titles">
-                <li class="title">담당지사*</li>
-                <li class="title largeTitle">허가관청*</li>
-                <li class="title largeTitle">관리기관*</li>
-                <li class="title largeTitle">부서*</li>
-                <li class="title">담당자*</li>
-                <li class="title largeTitle">연락처*</li>
-                <li class="title">용도*</li>
-                <li class="title largeTitle">관로명(구간)*</li>
-                <li class="title">단/복선*</li>
-                <li class="title">관경*</li>
-                <li class="title">감면여부*</li>
-              </ul>
-              <ul class="contents">
-				
-				<!-- 담당지사 -->
-                <li class="content selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <select name="jisa" id="masterRegSelectBox01" hidden>
-					  <option th:each="jisa : ${jisaList}" 
-					  th:value="${jisa['sc_code_name']}" 
-					  th:text="${jisa['sc_code_name']}">
-			  		  </option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView" id="jisaText">선택</button>
-                    <ul class="customSelectBtns" id="jisaUl">
-		                <th:block th:each="jisa : ${jisaList}">
-		                    <li><p th:text="${jisa['sc_code_name']}"></p></li>
-		                </th:block>
-					</ul>
-                  </section>
-                </li>
-				
-				<!-- 허가관청 -->
-                <li class="content largeTitle selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <select name="pmt_office" id="masterRegSelectBox02" hidden></select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView" id="pmtOfficeText">선택</button>
-                    <ul class="customSelectBtns" id="pmtOfficeUl"></ul>
-                  </section>
-                </li>
-				
-				<!-- 관리기관 -->
-                <li class="content largeTitle selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <select name="adm_office" id="masterRegSelectBox03" hidden>
-                      <option value="전체">전체</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView" id="admOfficeText">선택</button>
-                    <ul class="customSelectBtns" id="admOfficeUl">
-						<li><p>전체</p></li>
-					</ul>
-                  </section>
-                </li>
-				
-				<!-- 부서 -->
-                <li class="content largeTitle">
-                  <input type="text" name="office_depart" />
-                </li>
-				<!-- 담당자 -->
-                <li class="content">
-                  <input type="text" name="office_charege"/>
-                </li>
-				<!-- 연락처 -->
-                <li class="content largeTitle">
-                  <input type="text" name="office_contact"/>
-                </li>
-				<!-- 용도 -->
-                <li class="content selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="yongdo"
-                      id="masterRegSelectBox04"
-                      hidden>
-                      <option value="선택">선택</option>
-                      <option value="송유관로">송유관로</option>
-                      <option value="밸브박스">밸브박스</option>
-                      <option value="가압소">가압소</option>
-                      <option value="저유소">저유소</option>
-                      <option value="펌프장">펌프장</option>
-                      <option value="시설물">시설물</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">선택</button>
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-				
-				<!-- 관로명 -->
-                <li class="content largeTitle selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <select name="pipe_name" id="masterRegSelectBox05" hidden>
-                      <option value="전체">전체</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView" id="pipeNameText">선택</button>
-                    <ul class="customSelectBtns" id="pipeNameUl"></ul>
-                  </section>
-                </li>
-				
-				<!-- 단/복선 -->
-				<li class="content selectContentArea">
-				  <div class="hiddenSelectBox">
-				    <select name="sun_gubun" id="masterRegSelectBox06" hidden>
-				      <option value="단선" selected>단선</option>
-				      <option value="복선">복선</option>
-				    </select>
-				  </div>
-				  <section class="customSelectBox">
-				    <button class="customSelectView">선택</button>
-				    <ul class="customSelectBtns"></ul>
-				  </section>
-				</li>
-				
-                <!-- 관경 -->
-                <li class="content lineWrap inputArea">
-                  <div class="doubleLine">
-                    <div class="inputWrap">
-                      <input type="text" name="pipe_meter"/>
-                    </div>
-                    <div class="inputWrap">
-                      <input type="text" name="pipe_meter2"/>
-                    </div>
-                  </div>
-                  <div class="singleLine">
-                    <div class="inputWrap">
-                      <input type="text" name="pipe_meter_single"/>
-                    </div>
-                  </div>
-                </li>
-				
-				<!-- 감면여부 -->
-                <li class="content selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="exemptionyn"
-                      id="masterRegSelectBox07"
-                      hidden>
-                      <option value="Y">Y</option>
-                      <option value="N">N</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">Y/N</button>
+				<section class="defaultInfo">
+					<div class="subTitle">
+						<div class="subTitleText">기본 정보</div>
+					</div>
 
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-              </ul>
-            </div>
-            <div class="depth2">
-              <ul class="titles">
-                <li class="title">점용 구분*</li>
-                <li class="title dateLargeTitle">점용 기간*</li>
-                <li class="title">점용갱신주기</li>
-                <li class="title">신규등록사유*</li>
-                <li class="title">허가증보유여부*</li>
-                <li class="title">점용료미납부사유</li>
-                <li class="title">점용료 선납 여부</li>
-                <li class="title">선납기한</li>
-              </ul>
-              <ul class="contents">
-				<!-- 점용구분 -->
-                <li class="content selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <select name="use_purpos" id="masterRegSelectBox08" hidden>
-					  <option value="전체">전체</option>
-                      <option th:each="usePurpos : ${usePurposlist}" th:value="${usePurpos['sc_code_name']}" th:text="${usePurpos['sc_code_name']}"></option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">선택</button>
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-				<!-- 점용기간 -->
-                <li class="content inputWrap dateLargeTitle">
-                  <div class="dateInputBox">
-                    <div class="dateInputWrap">
-                      <input name="gover_st_date"
-                        type="date"
-                        aria-required="true" />
-                    </div>
-                    <span class="dateBar"></span>
-                    <div class="dateInputWrap">
-                      <input name="gover_ed_date"
-                        type="date"
-                        aria-required="true" />
-                    </div>
-                  </div>
-                </li>
-				<!-- 점용갱신주기 -->
-                <li class="content">
-                  <input type="text" name="gover_period"/>
-                </li>
-				<!-- 신규등록사유 -->
-                <li class="content selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="newregreason"
-                      id="masterRegSelectBox09"
-                      hidden>
-                      <option value="선택">선택</option>
-                      <option value="사유지의 국유지 편입">
-                        사유지의 국유지 편입
-                      </option>
-                      <option value="ILI결과 발견지번">ILI결과 발견지번</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">선택</button>
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-				<!-- 허가증보유여부 -->
-                <li class="content selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="permpossyn"
-                      id="masterRegSelectBox10"
-                      hidden>
-                      <option value="Y">Y</option>
-                      <option value="N">N</option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">Y/N</button>
+					<div class="contWrap">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title">담당지사*</li>
+								<li class="title largeTitle">허가관청*</li>
+								<li class="title largeTitle">관리기관*</li>
+								<li class="title largeTitle">부서*</li>
+								<li class="title">담당자*</li>
+								<li class="title largeTitle">연락처*</li>
+								<li class="title">용도*</li>
+								<li class="title largeTitle">관로명(구간)*</li>
+								<li class="title">단/복선*</li>
+								<li class="title">관경*</li>
+								<li class="title">감면여부*</li>
+							</ul>
+							<ul class="contents">
 
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-				<!-- 점용료미납부사유 -->
-                <li class="content selectContentArea">
-                  <div class="hiddenSelectBox">
-                    <!-- name도 추가 -->
-                    <select
-                      name="occunonpayreason"
-                      id="masterRegSelectBox11"
-                      hidden>
-                      <option value="선택">선택</option>
-                      <option value="영구 무상점용">영구 무상점용</option>
-                      <option value="소액 미청구">소액 미청구</option>
-                      <option value="관할관청의 미청구">
-                        관할관청의 미청구
-                      </option>
-                    </select>
-                  </div>
-                  <section class="customSelectBox">
-                    <button class="customSelectView">선택</button>
-                    <ul class="customSelectBtns"></ul>
-                  </section>
-                </li>
-				<!-- 점용료 선납 여부 -->
-                <li class="content checkboxWrap">
-                  <input type="checkbox" id="masterRegSelectBox_Checkbox01" name="occuprepayyn"/>
-                  <label for="masterRegSelectBox_Checkbox01"></label>
-                </li>
-				<!-- 선납기한 -->
-                <li class="content">
-                  <div class="dateInputWrap">
-                    <input name="occuprepaydate"
-                      type="date"
-                      aria-required="true" />
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-		
-		<!-- 소속 토지 정보 -->
-		
-		<section class="landAdressInfo">
-		  <div class="subTitle">
-		    <div class="subTitleText">소속 토지 정보*</div>
-		    <div class="subTitleBtnBox">
-		      <button class="middleBtn navyBtn excelDownBtn" onClick="downloadExcel()">엑셀 다운로드</button>
-		      <button class="middleBtn whiteBtn excelUpBtn ExcelPopBtn">엑셀 업로드</button>
-		    </div>
-		  </div>
+								<!-- 담당지사 -->
+								<li class="content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="jisa" id="masterRegSelectBox01" hidden>
+											<option th:each="jisa : ${jisaList}" th:value="${jisa.jm_jisa_name}"
+												th:text="${jisa.jm_jisa_name}">
+											</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView" id="jisaText">선택</button>
+										<ul class="customSelectBtns" id="jisaUl">
+											<th:block th:each="jisa : ${jisaList}">
+												<li>
+													<p th:text="${jisa.jm_jisa_name}"></p>
+												</li>
+											</th:block>
+										</ul>
+									</section>
+								</li>
 
-		  <div class="contWrap">
-		    <div class="depth1" id="goverUlDiv">
-		      <ul class="titles">
-		        <li class="title smallWidth">순번</li>
-		        <li class="title largeWidth">관리기관</li>
-		        <li class="title middleWidth">국공유지 여부</li>
-		        <li class="title">대표필지</li>
-		        <li class="title addressInfoWidth">주소</li>
-		        <li class="title middleWidth">PNU</li>
-		        <li class="title">지목</li>
-		        <li class="title">점용연장</li>
-		        <li class="title">점용면적</li>
-		        <li class="title middleWidth">관로일치 여부</li>
-		        <li class="title">보기</li>
-		        <li class="title middleWidth">추가/삭제</li>
-		      </ul>
+								<!-- 허가관청 -->
+								<li class="content largeTitle selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="pmt_office" id="masterRegSelectBox02" hidden></select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView" id="pmtOfficeText">선택</button>
+										<ul class="customSelectBtns" id="pmtOfficeUl"></ul>
+									</section>
+								</li>
 
-		      <!-- 첫 번째 고정된 줄 -->
-		      <ul class="contents" id="goverUl">
-		        <!-- 순번 -->
-		        <li class="content smallWidth">
-				  <input type="hidden" id="goverIndex" value="0">
-				  <input type="hidden" id="sido_nm" name="sido_nm" >
-				  <input type="hidden" id="sgg_nm" name="sgg_nm" >
-				  <input type="hidden" id="emd_nm" name="emd_nm" >
-				  <input type="hidden" id="ri_nm" name="ri_nm" >
-				  <input type="hidden" id="jibun" name="jibun" >
-				  <input type="hidden" id="jibun_full" name="jibun_full" >
-  				  <input type="hidden" id="addrcode" name="addrcode" >
-		          <input type="text" class="notWriteInput" readonly placeholder="1" />
-		        </li>
-		        <!-- 관리기관 -->
-		        <li class="content largeWidth selectContentArea">
-		          <div class="hiddenSelectBox">
-		            <select name="adm_office" id="goverRegSelectBox03" hidden>
-		              <option value="전체">전체</option>
-		            </select>
-		          </div>
-		          <section class="customSelectBox">
-					<button class="customSelectView" id="admOfficeBtn">선택</button>
-                    <ul class="customSelectBtns" id="admOfficeUl01">
-		          </section>
-		        </li>
-		        <!-- 국공유지 여부 -->
-		        <li class="content middleWidth selectContentArea">
-		          <div class="hiddenSelectBox">
-		            <select name="gover_own_yn" id="masterRegSelectBox13" hidden>
-		              <option value="국유지">국유지</option>
-		              <option value="사유지">사유지</option>
-		            </select>
-		          </div>
-		          <section class="customSelectBox">
-		            <button class="customSelectView" id="goverOwnYnBtn">선택</button>
-		            <ul class="customSelectBtns"></ul>
-		          </section>
-		        </li>
-		        <!-- 대표필지 -->
-		        <li class="content checkboxWrap">
-		          <input type="checkbox" id="masterRegSelectBox_Checkbox02" name="rep_flag" />
-		          <label for="masterRegSelectBox_Checkbox02"></label>
-		        </li>
-		        <!-- 주소 -->
-		        <li class="content addressInfoWidth">
-		          <!--<div class="addressData">-->
-					<!-- text 창 높이를 위해 주석처리 -->
-		            <input type="text" name="addr" id="addr"/>
-		          <!--</div>-->
-		          <button class="searchAddressBtn">검색</button>
-		        </li>
-		        <!-- PNU -->
-		        <li class="content middleWidth">
-		          <input type="text" name="pnu" id="pnu"/>
-		        </li>
-		        <!-- 지목 -->
-		        <li class="content selectContentArea">
-		          <div class="hiddenSelectBox">
-					<!-- 지목 -->
-					<select name="jimok_text" id="masterRegSelectBox14" hidden>
-					    <!-- Thymeleaf 반복문을 사용하여 jimoklist에서 데이터를 출력 -->
-					    <option th:each="jimok : ${jimokList}" th:value="${jimok['jm_name']}" th:text="${jimok['jm_name']}"></option>
-					</select>
-		          </div>
-		          <section class="customSelectBox">
-		            <button class="customSelectView" id="jimok">선택</button>
-		            <ul class="customSelectBtns"></ul>
-		          </section>
-		        </li>
-		        <!-- 점용연장 -->
-		        <li class="content">
-		          <input type="text" name="gover_length" />
-		        </li>
-		        <!-- 점용면적 -->
-		        <li class="content">
-		          <input type="text" name="gover_area" />
-		        </li>
-		        <!-- 관로일치 여부 -->
-		        <li class="content middleWidth selectContentArea">
-		          <div class="hiddenSelectBox">
-		            <select name="pipe_overlap_yn" id="masterRegSelectBox15" hidden>
-		              <option value="Y">Y</option>
-		              <option value="N">N</option>
-		            </select>
-		          </div>
-		          <section class="customSelectBox">
-		            <button class="customSelectView" id="pipeOverlapYnBtn">선택</button>
-		            <ul class="customSelectBtns"></ul>
-		          </section>
-		        </li>
-		        <!-- 보기 -->
-		        <li class="content btnBox">
-		          <button class="miniBtn lightBlueBtn viewDetailButton">위치보기</button>
-		        </li>
-		        <!-- 추가 버튼 -->
-		        <li class="middleWidth content btnBox">
-		          <div class="newBtnWrap">
-		            <button class="addBtn miniBtn" onclick="addRow()">추가</button>
-		          </div>
-		        </li>
-		      </ul>
+								<!-- 관리기관 -->
+								<li class="content largeTitle selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="adm_office" id="masterRegSelectBox03" hidden>
+											<option value="전체">전체</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView" id="admOfficeText">선택</button>
+										<ul class="customSelectBtns" id="admOfficeUl">
+											<li>
+												<p>전체</p>
+											</li>
+										</ul>
+									</section>
+								</li>
 
-		      <!-- 숨겨진 템플릿 줄 -->
-		      <ul class="contents" id="row-template" style="display: none;">
-				<!-- 순번 -->
-		        <li class="content smallWidth">
-				  <input type="hidden" id="goverIndex" value="">
-				  <input type="hidden" id="sido_nm" name="sido_nm" >
-				  <input type="hidden" id="sgg_nm" name="sgg_nm" >
-				  <input type="hidden" id="emd_nm" name="emd_nm" >
-				  <input type="hidden" id="ri_nm" name="ri_nm" >
-				  <input type="hidden" id="jibun" name="jibun" >
-				  <input type="hidden" id="jibun_full" name="jibun_full" >
-				  <input type="hidden" id="addrcode" name="addrcode" >
-		          <input type="text" class="notWriteInput" readonly placeholder="1" />
-		        </li>
-				<!-- 관리기관 -->
-		        <li class="content largeWidth selectContentArea">
-		          <div class="hiddenSelectBox">
-		            <select name="adm_office" id="masterRegSelectBox16" hidden>
-		              <option value="전체">전체</option>
-		            </select>
-		          </div>
-		          <section class="customSelectBox">
-		            <button class="customSelectView" id="admOfficeBtn">전체</button>
-		            <ul class="customSelectBtns" id="admOfficeUl01"></ul>
-		          </section>
-		        </li>
-		        <!-- 국공유지 여부 -->
-		        <li class="content middleWidth selectContentArea">
-		          <div class="hiddenSelectBox">
-		            <select name="gover_own_yn" id="masterRegSelectBox17" hidden>
-		              <option value="국유지">국유지</option>
-		              <option value="사유지">사유지</option>
-		            </select>
-		          </div>
-		          <section class="customSelectBox">
-		            <button class="customSelectView"  id="goverOwnYnBtn">선택</button>
-		            <ul class="customSelectBtns"></ul>
-		          </section>
-		        </li>
-		        <!-- 대표필지 -->
-		        <li class="content checkboxWrap">
-		          <input type="checkbox" id="masterRegSelectBox_" name="rep_flag" />
-		          <label for="masterRegSelectBox_"></label>
-		        </li>
-		        <!-- 주소 -->
-		        <li class="content addressInfoWidth">
-		          <!--<div class="addressData">-->
-		            <input type="text" id="addr" name="addr"/>
-		          <!--</div>-->
-		          <button class="searchAddressBtn">검색</button>
-		        </li>
-		        <!-- PNU -->
-		        <li class="content middleWidth">
-		          <input type="text" name="pnu" id="pnu"/>
-		        </li>
-		        <!-- 지목 -->
-		        <li class="content selectContentArea">
-		          <div class="hiddenSelectBox">
-					<select name="jimok_text" id="masterRegSelectBox14" hidden>
-					    <!-- Thymeleaf 반복문을 사용하여 jimoklist에서 데이터를 출력 -->
-					    <option th:each="jimok : ${jimokList}" th:value="${jimok['jm_name']}" th:text="${jimok['jm_name']}"></option>
-					</select>
-		          </div>
-		          <section class="customSelectBox">
-		            <button class="customSelectView" id="jimok" >선택</button>
-		            <ul class="customSelectBtns"></ul>
-		          </section>
-		        </li>
-		        <!-- 점용연장 -->
-		        <li class="content">
-		          <input type="text" name="gover_length" />
-		        </li>
-		        <!-- 점용면적 -->
-		        <li class="content">
-		          <input type="text" name="gover_area" />
-		        </li>
-		        <!-- 관로일치 여부 -->
-		        <li class="content middleWidth selectContentArea">
-		          <div class="hiddenSelectBox">
-		            <select name="pipe_overlap_yn" id="masterRegSelectBox19" hidden>
-		              <option value="Y">Y</option>
-		              <option value="N">N</option>
-		            </select>
-		          </div>
-		          <section class="customSelectBox">
-		            <button class="customSelectView"  id="pipeOverlapYnBtn">선택</button>
-		            <ul class="customSelectBtns"></ul>
-		          </section>
-		        </li>
-		        <!-- 보기 -->
-		        <li class="content btnBox">
-		          <button class="miniBtn lightBlueBtn viewDetailButton">위치보기</button>
-		        </li>
-		        <li class="middleWidth content btnBox">
-		          <div class="btnWrap">
-		            <button class="addBtn miniBtn" onclick="addRow()">추가</button>
-		          </div>
-		          <div class="btnWrap">
-		            <button class="delBtn miniBtn" onclick="deleteRow(this)">삭제</button>
-		          </div>
-		        </li>
-		      </ul>
-		    </div>
-		  </div>
-		</section>
+								<!-- 부서 -->
+								<li class="content largeTitle">
+									<input type="text" name="office_depart" />
+								</li>
+								<!-- 담당자 -->
+								<li class="content">
+									<input type="text" name="office_charege" />
+								</li>
+								<!-- 연락처 -->
+								<li class="content largeTitle">
+									<input type="text" name="office_contact" />
+								</li>
+								<!-- 용도 -->
+								<li class="content selectContentArea">
+									<div class="hiddenSelectBox">
+										<!-- name도 추가 -->
+										<select name="yongdo" id="masterRegSelectBox04" hidden>
+											<option value="선택">선택</option>
+											<option value="송유관로">송유관로</option>
+											<option value="밸브박스">밸브박스</option>
+											<option value="가압소">가압소</option>
+											<option value="저유소">저유소</option>
+											<option value="펌프장">펌프장</option>
+											<option value="시설물">시설물</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView">선택</button>
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
 
-		<!-- 첨부파일 -->
-		
-		<section class="attachFileInfo">
-            <!--  <form name="uploadForm" method="post" enctype="multipart/form-data"> -->
-            <div class="subTitle">
-                첨부파일
-                <div class="fileBtnWrap">
-                    <input type="file" name="fileUpload" id="easementModification_myPcFiles">
-                    <label for="easementModification_myPcFiles">내 PC</label>
-                </div>
-            </div>
+								<!-- 관로명 -->
+								<li class="content largeTitle selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="pipe_name" id="masterRegSelectBox05" hidden>
+											<option value="전체">전체</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView" id="pipeNameText">선택</button>
+										<ul class="customSelectBtns" id="pipeNameUl"></ul>
+									</section>
+								</li>
 
-            <div class="fileUploadWrap">
-                <div class="fileUploadBox">
-                    <img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
-                    <p>파일을 마우스로 끌어오세요.</p>
-                </div>
-            </div>
-            <!-- <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div> -->
-            <!-- </form> -->
-            <div class="contWrap">
-                <div class="depth1" id="fileListDiv">
-                    <ul class="titles" id="fileTitleUl">
-                        <li class="title01 allSelectCheck">
-                            <!-- 선택 -->
+								<!-- 단/복선 -->
+								<li class="content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="sun_gubun" id="masterRegSelectBox06" hidden>
+											<option value="단선" selected>단선</option>
+											<option value="복선">복선</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView">선택</button>
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
 
-                            <input type="checkbox" id="landRightsRegistration_file_select_all" name="landRightsRegistration_file_select_all">
-                            <label for="landRightsRegistration_file_select_all"></label>
-                        </li>
-                        <li class="title02">파일명</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="btnWrap">
-                <button class="fileDelBtn delBtn" id="deleteFileBtn">선택파일 삭제</button>
-            </div>
-        </section>
+								<!-- 관경 -->
+								<li class="content lineWrap inputArea">
+									<div class="doubleLine">
+										<div class="inputWrap">
+											<input type="text" name="pipe_meter" />
+										</div>
+										<div class="inputWrap">
+											<input type="text" name="pipe_meter2" />
+										</div>
+									</div>
+									<div class="singleLine">
+										<div class="inputWrap">
+											<input type="text" name="pipe_meter_single" />
+										</div>
+									</div>
+								</li>
 
-		<!-- 메모 -->
-		
-        <section class="memoSection">
-          <div class="subTitle">
-            <div class="subTitleText">등록 메모</div>
-          </div>
+								<!-- 감면여부 -->
+								<li class="content selectContentArea">
+									<div class="hiddenSelectBox">
+										<!-- name도 추가 -->
+										<select name="exemptionyn" id="masterRegSelectBox07" hidden>
+											<option value="Y">Y</option>
+											<option value="N">N</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView">Y/N</button>
 
-          <textarea
-		    name="memo"
-            placeholder="내용을 입력해주세요. (200자 이내)"
-            maxlength="200"></textarea>
-        </section>
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
+							</ul>
+						</div>
+						<div class="depth2">
+							<ul class="titles">
+								<li class="title">점용 구분*</li>
+								<li class="title dateLargeTitle">점용 기간*</li>
+								<li class="title">점용갱신주기</li>
+								<li class="title">신규등록사유*</li>
+								<li class="title">허가증보유여부*</li>
+								<li class="title">점용료미납부사유</li>
+								<li class="title">점용료 선납 여부</li>
+								<li class="title">선납기한</li>
+							</ul>
+							<ul class="contents">
+								<!-- 점용구분 -->
+								<li class="content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="use_purpos" id="masterRegSelectBox08" hidden>
+											<option value="전체">전체</option>
+											<option th:each="usePurpos : ${usePurposlist}" th:value="${usePurpos['sc_code_name']}"
+												th:text="${usePurpos['sc_code_name']}"></option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView">선택</button>
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
+								<!-- 점용기간 -->
+								<li class="content inputWrap dateLargeTitle">
+									<div class="dateInputBox">
+										<div class="dateInputWrap">
+											<input name="gover_st_date" type="date" aria-required="true" />
+										</div>
+										<span class="dateBar"></span>
+										<div class="dateInputWrap">
+											<input name="gover_ed_date" type="date" aria-required="true" />
+										</div>
+									</div>
+								</li>
+								<!-- 점용갱신주기 -->
+								<li class="content">
+									<input type="text" name="gover_period" />
+								</li>
+								<!-- 신규등록사유 -->
+								<li class="content selectContentArea">
+									<div class="hiddenSelectBox">
+										<!-- name도 추가 -->
+										<select name="newregreason" id="masterRegSelectBox09" hidden>
+											<option value="선택">선택</option>
+											<option value="사유지의 국유지 편입">
+												사유지의 국유지 편입
+											</option>
+											<option value="ILI결과 발견지번">ILI결과 발견지번</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView">선택</button>
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
+								<!-- 허가증보유여부 -->
+								<li class="content selectContentArea">
+									<div class="hiddenSelectBox">
+										<!-- name도 추가 -->
+										<select name="permpossyn" id="masterRegSelectBox10" hidden>
+											<option value="Y">Y</option>
+											<option value="N">N</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView">Y/N</button>
 
-        <div class="finalBtnBox btnWrap">
-          <button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
-          <button class="newIssueBtn blueBorderBtn finalBtn">
-            이슈신규생성
-          </button>
-          <button class="draftSaveBtn lightBlueBtn finalBtn" id="draftSaveBtn">임시저장</button>
-          <button class="requestBtn vividBlueBtn finalBtn" id="requestBtn">승인요청</button>
-        </div>
-		</form>
-      </main>
-    </div>
-	
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
+								<!-- 점용료미납부사유 -->
+								<li class="content selectContentArea">
+									<div class="hiddenSelectBox">
+										<!-- name도 추가 -->
+										<select name="occunonpayreason" id="masterRegSelectBox11" hidden>
+											<option value="선택">선택</option>
+											<option value="영구 무상점용">영구 무상점용</option>
+											<option value="소액 미청구">소액 미청구</option>
+											<option value="관할관청의 미청구">
+												관할관청의 미청구
+											</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView">선택</button>
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
+								<!-- 점용료 선납 여부 -->
+								<li class="content checkboxWrap">
+									<input type="checkbox" id="masterRegSelectBox_Checkbox01" name="occuprepayyn" />
+									<label for="masterRegSelectBox_Checkbox01"></label>
+								</li>
+								<!-- 선납기한 -->
+								<li class="content">
+									<div class="dateInputWrap">
+										<input name="occuprepaydate" type="date" aria-required="true" />
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<!-- 소속 토지 정보 -->
+
+				<section class="landAdressInfo">
+					<div class="subTitle">
+						<div class="subTitleText">소속 토지 정보*</div>
+						<div class="subTitleBtnBox">
+							<button class="middleBtn navyBtn excelDownBtn" onClick="downloadExcel()">엑셀 다운로드</button>
+							<button class="middleBtn whiteBtn excelUpBtn ExcelPopBtn">엑셀 업로드</button>
+						</div>
+					</div>
+
+					<div class="contWrap">
+						<div class="depth1" id="goverUlDiv">
+							<ul class="titles">
+								<li class="title smallWidth">순번</li>
+								<li class="title largeWidth">관리기관</li>
+								<li class="title middleWidth">국공유지 여부</li>
+								<li class="title">대표필지</li>
+								<li class="title addressInfoWidth">주소</li>
+								<li class="title middleWidth">PNU</li>
+								<li class="title">지목</li>
+								<li class="title">점용연장</li>
+								<li class="title">점용면적</li>
+								<li class="title middleWidth">관로일치 여부</li>
+								<li class="title">보기</li>
+								<li class="title middleWidth">추가/삭제</li>
+							</ul>
+
+							<!-- 첫 번째 고정된 줄 -->
+							<ul class="contents" id="goverUl">
+								<!-- 순번 -->
+								<li class="content smallWidth">
+									<input type="hidden" id="goverIndex" value="0">
+									<input type="hidden" id="sido_nm" name="sido_nm">
+									<input type="hidden" id="sgg_nm" name="sgg_nm">
+									<input type="hidden" id="emd_nm" name="emd_nm">
+									<input type="hidden" id="ri_nm" name="ri_nm">
+									<input type="hidden" id="jibun" name="jibun">
+									<input type="hidden" id="jibun_full" name="jibun_full">
+									<input type="hidden" id="addrcode" name="addrcode">
+									<input type="text" class="notWriteInput" readonly placeholder="1" />
+								</li>
+								<!-- 관리기관 -->
+								<li class="content largeWidth selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="adm_office" id="goverRegSelectBox03" hidden>
+											<option value="전체">전체</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView" id="admOfficeBtn">선택</button>
+										<ul class="customSelectBtns" id="admOfficeUl01">
+									</section>
+								</li>
+								<!-- 국공유지 여부 -->
+								<li class="content middleWidth selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="gover_own_yn" id="masterRegSelectBox13" hidden>
+											<option value="국유지">국유지</option>
+											<option value="사유지">사유지</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView" id="goverOwnYnBtn">선택</button>
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
+								<!-- 대표필지 -->
+								<li class="content checkboxWrap">
+									<input type="checkbox" id="masterRegSelectBox_Checkbox02" name="rep_flag" />
+									<label for="masterRegSelectBox_Checkbox02"></label>
+								</li>
+								<!-- 주소 -->
+								<li class="content addressInfoWidth">
+									<!--<div class="addressData">-->
+									<!-- text 창 높이를 위해 주석처리 -->
+									<input type="text" name="addr" id="addr" />
+									<!--</div>-->
+									<button class="searchAddressBtn">검색</button>
+								</li>
+								<!-- PNU -->
+								<li class="content middleWidth">
+									<input type="text" name="pnu" id="pnu" />
+								</li>
+								<!-- 지목 -->
+								<li class="content selectContentArea">
+									<div class="hiddenSelectBox">
+										<!-- 지목 -->
+										<select name="jimok_text" id="masterRegSelectBox14" hidden>
+											<!-- Thymeleaf 반복문을 사용하여 jimoklist에서 데이터를 출력 -->
+											<option th:each="jimok : ${jimokList}" th:value="${jimok['jm_name']}"
+												th:text="${jimok['jm_name']}"></option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView" id="jimok">선택</button>
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
+								<!-- 점용연장 -->
+								<li class="content">
+									<input type="text" name="gover_length" />
+								</li>
+								<!-- 점용면적 -->
+								<li class="content">
+									<input type="text" name="gover_area" />
+								</li>
+								<!-- 관로일치 여부 -->
+								<li class="content middleWidth selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="pipe_overlap_yn" id="masterRegSelectBox15" hidden>
+											<option value="Y">Y</option>
+											<option value="N">N</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView" id="pipeOverlapYnBtn">선택</button>
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
+								<!-- 보기 -->
+								<li class="content btnBox">
+									<button class="miniBtn lightBlueBtn viewDetailButton">위치보기</button>
+								</li>
+								<!-- 추가 버튼 -->
+								<li class="middleWidth content btnBox">
+									<div class="newBtnWrap">
+										<button class="addBtn miniBtn" onclick="addRow()">추가</button>
+									</div>
+								</li>
+							</ul>
+
+							<!-- 숨겨진 템플릿 줄 -->
+							<ul class="contents" id="row-template" style="display: none;">
+								<!-- 순번 -->
+								<li class="content smallWidth">
+									<input type="hidden" id="goverIndex" value="">
+									<input type="hidden" id="sido_nm" name="sido_nm">
+									<input type="hidden" id="sgg_nm" name="sgg_nm">
+									<input type="hidden" id="emd_nm" name="emd_nm">
+									<input type="hidden" id="ri_nm" name="ri_nm">
+									<input type="hidden" id="jibun" name="jibun">
+									<input type="hidden" id="jibun_full" name="jibun_full">
+									<input type="hidden" id="addrcode" name="addrcode">
+									<input type="text" class="notWriteInput" readonly placeholder="1" />
+								</li>
+								<!-- 관리기관 -->
+								<li class="content largeWidth selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="adm_office" id="masterRegSelectBox16" hidden>
+											<option value="전체">전체</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView" id="admOfficeBtn">전체</button>
+										<ul class="customSelectBtns" id="admOfficeUl01"></ul>
+									</section>
+								</li>
+								<!-- 국공유지 여부 -->
+								<li class="content middleWidth selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="gover_own_yn" id="masterRegSelectBox17" hidden>
+											<option value="국유지">국유지</option>
+											<option value="사유지">사유지</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView" id="goverOwnYnBtn">선택</button>
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
+								<!-- 대표필지 -->
+								<li class="content checkboxWrap">
+									<input type="checkbox" id="masterRegSelectBox_" name="rep_flag" />
+									<label for="masterRegSelectBox_"></label>
+								</li>
+								<!-- 주소 -->
+								<li class="content addressInfoWidth">
+									<!--<div class="addressData">-->
+									<input type="text" id="addr" name="addr" />
+									<!--</div>-->
+									<button class="searchAddressBtn">검색</button>
+								</li>
+								<!-- PNU -->
+								<li class="content middleWidth">
+									<input type="text" name="pnu" id="pnu" />
+								</li>
+								<!-- 지목 -->
+								<li class="content selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="jimok_text" id="masterRegSelectBox14" hidden>
+											<!-- Thymeleaf 반복문을 사용하여 jimoklist에서 데이터를 출력 -->
+											<option th:each="jimok : ${jimokList}" th:value="${jimok['jm_name']}"
+												th:text="${jimok['jm_name']}"></option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView" id="jimok">선택</button>
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
+								<!-- 점용연장 -->
+								<li class="content">
+									<input type="text" name="gover_length" />
+								</li>
+								<!-- 점용면적 -->
+								<li class="content">
+									<input type="text" name="gover_area" />
+								</li>
+								<!-- 관로일치 여부 -->
+								<li class="content middleWidth selectContentArea">
+									<div class="hiddenSelectBox">
+										<select name="pipe_overlap_yn" id="masterRegSelectBox19" hidden>
+											<option value="Y">Y</option>
+											<option value="N">N</option>
+										</select>
+									</div>
+									<section class="customSelectBox">
+										<button class="customSelectView" id="pipeOverlapYnBtn">선택</button>
+										<ul class="customSelectBtns"></ul>
+									</section>
+								</li>
+								<!-- 보기 -->
+								<li class="content btnBox">
+									<button class="miniBtn lightBlueBtn viewDetailButton">위치보기</button>
+								</li>
+								<li class="middleWidth content btnBox">
+									<div class="btnWrap">
+										<button class="addBtn miniBtn" onclick="addRow()">추가</button>
+									</div>
+									<div class="btnWrap">
+										<button class="delBtn miniBtn" onclick="deleteRow(this)">삭제</button>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<!-- 첨부파일 -->
+
+				<section class="attachFileInfo">
+					<!--  <form name="uploadForm" method="post" enctype="multipart/form-data"> -->
+					<div class="subTitle">
+						첨부파일
+						<div class="fileBtnWrap">
+							<input type="file" name="fileUpload" id="easementModification_myPcFiles">
+							<label for="easementModification_myPcFiles">내 PC</label>
+						</div>
+					</div>
+
+					<div class="fileUploadWrap">
+						<div class="fileUploadBox">
+							<img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
+							<p>파일을 마우스로 끌어오세요.</p>
+						</div>
+					</div>
+					<!-- <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div> -->
+					<!-- </form> -->
+					<div class="contWrap">
+						<div class="depth1" id="fileListDiv">
+							<ul class="titles" id="fileTitleUl">
+								<li class="title01 allSelectCheck">
+									<!-- 선택 -->
+
+									<input type="checkbox" id="landRightsRegistration_file_select_all"
+										name="landRightsRegistration_file_select_all">
+									<label for="landRightsRegistration_file_select_all"></label>
+								</li>
+								<li class="title02">파일명</li>
+							</ul>
+						</div>
+					</div>
+					<div class="btnWrap">
+						<button class="fileDelBtn delBtn" id="deleteFileBtn">선택파일 삭제</button>
+					</div>
+				</section>
+
+				<!-- 메모 -->
+
+				<section class="memoSection">
+					<div class="subTitle">
+						<div class="subTitleText">등록 메모</div>
+					</div>
+
+					<textarea name="memo" placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200"></textarea>
+				</section>
+
+				<div class="finalBtnBox btnWrap">
+					<button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
+					<button class="newIssueBtn blueBorderBtn finalBtn">
+						이슈신규생성
+					</button>
+					<button class="draftSaveBtn lightBlueBtn finalBtn" id="draftSaveBtn">임시저장</button>
+					<button class="requestBtn vividBlueBtn finalBtn" id="requestBtn">승인요청</button>
+				</div>
+			</form>
+		</main>
+	</div>
+
 	<!-- 주소 검색 팝업 -->
-	
-    <div class="masterRegExcelPopWrapper" id="searchResultPopDiv">
+
+	<div class="masterRegExcelPopWrapper" id="searchResultPopDiv">
 		<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
-		    <div id="searchResultsPopup">
-		        <div class="popupWrap">
-		            <h2>
-		                <p>검색결과</p>
-		                <span class="topCloseBtn"></span>
-		            </h2>
+		<div id="searchResultsPopup">
+			<div class="popupWrap">
+				<h2>
+					<p>검색결과</p>
+					<span class="topCloseBtn"></span>
+				</h2>
 
-					<!-- 검색 결과 grid 헤더 -->
-		            <div class="popupCont">
-		                <ul class="popTitles">
-		                    <li class="popTitle01">PNU</li>
-		                    <li class="popTitle02">주소</li>
-		                    <li class="popTitle03">지번</li>
-		                    <li class="popTitle04">선택</li>
-		                </ul>
-		                <div class="popContentBox" >
-		                    <ul class="popContents" th:each="val:${jisangBasicSearchList}">
-		                        <li class="popContent01">115001100010010001</li>
-		                        <li class="popContent02">서울특별시 강서구 개화동</li>
-		                        <li class="popContent03">1-1</li>
-		                        <li class="popContent04">
-		                            <button class="resultSelectBtn">선택</button>
-		                        </li>
-		                    </ul>
-		                    <ul class="popContents">
-		                        <li class="popContent01">115001100010010001</li>
-		                        <li class="popContent02">서울특별시 강서구 개화동</li>
-		                        <li class="popContent03">1-1</li>
-		                        <li class="popContent04">
-		                            <button class="resultSelectBtn">선택</button>
-		                        </li>
-		                    </ul>
-		                </div>
-		            </div>
+				<!-- 검색 결과 grid 헤더 -->
+				<div class="popupCont">
+					<ul class="popTitles">
+						<li class="popTitle01">PNU</li>
+						<li class="popTitle02">주소</li>
+						<li class="popTitle03">지번</li>
+						<li class="popTitle04">선택</li>
+					</ul>
+					<div class="popContentBox">
+						<ul class="popContents" th:each="val:${jisangBasicSearchList}">
+							<li class="popContent01">115001100010010001</li>
+							<li class="popContent02">서울특별시 강서구 개화동</li>
+							<li class="popContent03">1-1</li>
+							<li class="popContent04">
+								<button class="resultSelectBtn">선택</button>
+							</li>
+						</ul>
+						<ul class="popContents">
+							<li class="popContent01">115001100010010001</li>
+							<li class="popContent02">서울특별시 강서구 개화동</li>
+							<li class="popContent03">1-1</li>
+							<li class="popContent04">
+								<button class="resultSelectBtn">선택</button>
+							</li>
+						</ul>
+					</div>
+				</div>
 
-		            <div class="lastBtnBox btnWrap">
-		                <button class="backBtn finalBtn">닫기</button>
-		                <button class="saveBtn finalBtn">PNU 없이 선택</button>
-		            </div>
-		        </div>
-		    </div>
-		   
-	<link rel="stylesheet" href="/css/popup/occupancy_Popup.css" />
-	<div id="exceluploadPopup">
+				<div class="lastBtnBox btnWrap">
+					<button class="backBtn finalBtn">닫기</button>
+					<button class="saveBtn finalBtn">PNU 없이 선택</button>
+				</div>
+			</div>
+		</div>
 
-	    <div class="popupWrap">
-	      <h2>
-	        <p>엑셀 업로드</p>
-	        <span class="topCloseBtn"></span>
-	      </h2>
-	  
-	      <div class="excelFileInfo">
-	        <!-- <ul class="excel_select"> -->
-	          <div class="excel_select">
-	            <h3>파일선택</h3>
-	            <!-- multiple 추가 -->
-	            <input type="file" id="excelPopup_file" multiple class="excel_file"></input>
-	            <label for="excelPopup_file" class="excel_file_label">
-	              <p>내PC</p>
-	            </label>
-	          </div>
-	          <!-- </label>   -->
-	        <!-- </ul> -->
-	        <ul class="excel_upload">
-	          <li class="upload_box popfileLargeWrap">
-	            <!-- <label for="excelPopup_file" class="excel_Popup_file_wrap">
+		<link rel="stylesheet" href="/css/popup/occupancy_Popup.css" />
+		<div id="exceluploadPopup">
+
+			<div class="popupWrap">
+				<h2>
+					<p>엑셀 업로드</p>
+					<span class="topCloseBtn"></span>
+				</h2>
+
+				<div class="excelFileInfo">
+					<!-- <ul class="excel_select"> -->
+					<div class="excel_select">
+						<h3>파일선택</h3>
+						<!-- multiple 추가 -->
+						<input type="file" id="excelPopup_file" multiple class="excel_file"></input>
+						<label for="excelPopup_file" class="excel_file_label">
+							<p>내PC</p>
+						</label>
+					</div>
+					<!-- </label>   -->
+					<!-- </ul> -->
+					<ul class="excel_upload">
+						<li class="upload_box popfileLargeWrap">
+							<!-- <label for="excelPopup_file" class="excel_Popup_file_wrap">
 	              첨부파일 기본값
 	              <div class="excel_Popup_file_default active">
 	                  <figure class="excel_Popup_file_img_wrap"><img
@@ -803,50 +786,51 @@
 	                </ul>
 	              </div>
 	            </label> -->
-	  
-	            <!-- 파일이 첨부되지 않았을 때 모습 -->
-	            <div class="popfileUploadWrap popfileUploadDisplay">
-	              <label for="excelPopup_file" class="popfileUploadBox">
-	                <img src="/assets/media/popup/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
-	                <p>파일을 마우스로 끌어오세요.</p>
-	              </label>
-	            </div>
-	            <div class="popfileUploadAfterWrap popfileUploadDisplay">
-	              <!-- 추가, 업로드시 나오는 거 -->
-	              <div class="popfileUploadAfter">
-	                <ul class="poptitles">
-	                  <li class="popBtnbox">
-	                    <button class="popAllDeleteFileBtn"></button>
-	                  </li>
-	                  <li class="poptitle popfilenameBox">
-	                    <p>파일명</p>
-	                  </li>
-	                  <li class="poptitle">
-	                    <p>업로드 상태</p>
-	                  </li>
-	                  <li class="poptitle">
-	                    <p>용량</p>
-	                  </li>
-	                </ul>
-	              </div>
-	            </div>
-	  
-	  
-	          </li>
-	         
-	        </ul>
-	      </div>
-	  
-	      <div class="excelbtnWrap">
-	        <button class="excelBtn finalBtn">엑셀파일 양식</button>
-	        <button class="sendBtn finalBtn" id="excelUpload">엑셀파일 전송</button>
-	        <button class="closeBtn finalBtn">닫기</button>
-	      </div>
-	    </div>
-	  </div>
 
-    <!-- script -->
-    <script type="module" src="/js/module/surfaceMain.js"></script>
-    <script src="/js/gover/masterReg.js"></script>
- </th:block>
+							<!-- 파일이 첨부되지 않았을 때 모습 -->
+							<div class="popfileUploadWrap popfileUploadDisplay">
+								<label for="excelPopup_file" class="popfileUploadBox">
+									<img src="/assets/media/popup/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
+									<p>파일을 마우스로 끌어오세요.</p>
+								</label>
+							</div>
+							<div class="popfileUploadAfterWrap popfileUploadDisplay">
+								<!-- 추가, 업로드시 나오는 거 -->
+								<div class="popfileUploadAfter">
+									<ul class="poptitles">
+										<li class="popBtnbox">
+											<button class="popAllDeleteFileBtn"></button>
+										</li>
+										<li class="poptitle popfilenameBox">
+											<p>파일명</p>
+										</li>
+										<li class="poptitle">
+											<p>업로드 상태</p>
+										</li>
+										<li class="poptitle">
+											<p>용량</p>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+
+						</li>
+
+					</ul>
+				</div>
+
+				<div class="excelbtnWrap">
+					<button class="excelBtn finalBtn">엑셀파일 양식</button>
+					<button class="sendBtn finalBtn" id="excelUpload">엑셀파일 전송</button>
+					<button class="closeBtn finalBtn">닫기</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- script -->
+		<script type="module" src="/js/module/surfaceMain.js"></script>
+		<script src="/js/gover/masterReg.js"></script>
+</th:block>
+
 </html>

@@ -47,8 +47,8 @@
 								<li class="content01 content selectContentArea">
 									<div class="hiddenSelectBox">
 										<select name="jisa" id="easementModifySelectBox01" hidden>
-											<option th:each="jisa : ${jisaList}" th:value="${jisa.sc_code_name}"
-												th:text="${jisa.sc_code_name}" th:selected="${jisa.sc_code_name == resultData.jm_jisa}">
+											<option th:each="jisa : ${jisaList}" th:value="${jisa.jm_jisa_name}"
+												th:text="${jisa.jm_jisa_name}" th:selected="${jisa.jm_jisa_name == resultData.jm_jisa}">
 											</option>
 										</select>
 									</div>

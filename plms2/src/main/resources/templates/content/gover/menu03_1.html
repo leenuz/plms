@@ -109,8 +109,7 @@
 								<div class="privateUseSelectWrappers">
 									<select name="jisa" class="privateUseHiddenSelect01" id="privateUseSelectBox01_1" hidden>
 										<option value="전체">전체</option>
-										<option th:each="jisa : ${jisaList}" th:value="${jisa['sc_code_name']}"
-											th:text="${jisa['sc_code_name']}"></option>
+										<option th:each="jisa : ${jisaList}" th:value="${jisa.jm_jisa_name}" th:text="${jisa.jm_jisa_name}"></option>
 									</select>
 								</div>
 								<!-- 보여지는 셀렉박스 -->
@@ -123,7 +122,7 @@
 											</li>
 											<th:block th:each="jisa : ${jisaList}">
 												<li>
-													<p th:text="${jisa['sc_code_name']}"></p>
+													<p th:text="${jisa.jm_jisa_name}"></p>
 												</li>
 											</th:block>
 										</ul>

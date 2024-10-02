@@ -99,7 +99,6 @@
           <h5>지상권 내역 조회</h5>
         </div>
        <form id="searchForm" onSubmit="return false;">
-       
       
         <section class="surfaceSectionBoxs">
           <div class="surfacePartSectionCont">
@@ -126,7 +125,7 @@
                       <li><p>전체</p></li>
                       <th:block th:each="val:${jisaList}">
                           <li><p th:text="${val.jm_jisa_name}">Y</p></li>
-                          <th:block>
+                      </th:block>
                     </ul>
                   </div>
                 </div>

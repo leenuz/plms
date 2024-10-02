@@ -1601,7 +1601,7 @@ log.info("PMT_NO:"+PMT_NO);
 		params.put("index",index);
 		log.info("params:"+params);
 
-		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectJisaList",params);
+		ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 		
@@ -1627,7 +1627,7 @@ log.info("PMT_NO:"+PMT_NO);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 log.info("data:"+data.get(0));
 //log.info("atcFileList:"+atcFileList.get(0));
-		mav.addObject("jisaList",jisalist);
+		mav.addObject("jisaList",jisaList);
 		mav.addObject("jimoklist",jimoklist);
 		mav.addObject("sidoList",sidolist);
 		mav.addObject("resultData",data.get(0));
