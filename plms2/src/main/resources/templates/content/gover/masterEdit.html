@@ -324,7 +324,7 @@
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<button class="customSelectView">[[${resultData.gm_use_purpos}]]</button>
+										<button class="customSelectView" id="usePurposBtn">[[${resultData.gm_use_purpos}]]</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
@@ -354,14 +354,22 @@
 									<div class="hiddenSelectBox">
 										<!-- name도 추가 -->
 										<select name="newregreason" id="masterEditSelectBox09" hidden>
-											<option value="사유지의 국유지 편입" th:selected="${resultData.gm_newregreason == '사유지의 국유지 편입'}">사유지의 국유지
+											<option value="0" th:selected="${resultData.gm_newregreason == '선택'}">선택</option>
+											<option value="1" th:selected="${resultData.gm_newregreason == '사유지의 국유지 편입'}">사유지의 국유지
 												편입</option>
-											<option value="ILI결과 발견지번" th:selected="${resultData.gm_newregreason == 'ILI결과 발견지번'}">ILI결과 발견지번
+											<option value="2" th:selected="${resultData.gm_newregreason == 'ILI결과 발견지번'}">ILI결과 발견지번
 											</option>
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<button class="customSelectView">[[${resultData.gm_newregreason}]]</button>
+										
+										<button class="customSelectView" th:switch="${resultData.gm_newregreason}" id="newregreasonBtn">
+									        <!-- gm_occunonpayreason 값에 따른 출력 -->
+									        <span th:case="'0'">선택</span>
+									        <span th:case="'1'">사유지의 국유지 편입</span>
+									        <span th:case="'2'">ILI결과 발견지번</span>
+									        <span th:case="*">선택</span> <!-- 값이 없는 경우 기본값 -->
+									    </button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
@@ -389,16 +397,23 @@
 									<div class="hiddenSelectBox">
 										<!-- name도 추가 -->
 										<select name="occunonpayreason" id="masterEditSelectBox11" hidden>
-											<option value="선택" th:selected="${resultData.gm_occunonpayreason == '선택'}">선택</option>
-											<option value="영구 무상점용" th:selected="${resultData.gm_occunonpayreason == '영구 무상점용'}">영구 무상점용
+											<option value="0" th:selected="${resultData.gm_occunonpayreason == '선택'}">선택</option>
+											<option value="1" th:selected="${resultData.gm_occunonpayreason == '영구 무상점용'}">영구 무상점용
 											</option>
-											<option value="소액 미청구" th:selected="${resultData.gm_occunonpayreason == '소액 미청구'}">소액 미청구</option>
-											<option value="관할관청의 미청구" th:selected="${resultData.gm_occunonpayreason == '관할관청의 미청구'}">관할관청의 미청구
+											<option value="2" th:selected="${resultData.gm_occunonpayreason == '소액 미청구'}">소액 미청구</option>
+											<option value="3" th:selected="${resultData.gm_occunonpayreason == '관할관청의 미청구'}">관할관청의 미청구
 											</option>
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<button class="customSelectView">[[${resultData.gm_occunonpayreason}]]</button>
+										 <button class="customSelectView" th:switch="${resultData.gm_occunonpayreason}" id="occunonpayreasonBtn">
+									        
+									        <span th:case="'0'">선택</span>
+									        <span th:case="'1'">영구 무상점용</span>
+									        <span th:case="'2'">소액 미청구</span>
+									        <span th:case="'3'">관할관청의 미청구</span>
+									        <span th:case="*">선택</span> 
+									    </button>
 										<ul class="customSelectBtns">
 											<li><button type="button" class="moreSelectBtn">선택</button></li>
 											<li><button type="button" class="moreSelectBtn">영구 무상점용</button></li>
@@ -410,10 +425,12 @@
 
 								<!-- 점용료 선납 여부 -->
 								<li class="content checkboxWrap">
-									<input name="occuprepayyn" type="checkbox" id="masterEditSelectBox_Checkbox01" value="1"
-										th:checked="${resultData.gm_occuprepayyn != null and (resultData.gm_occuprepayyn == 1 or resultData.gm_occuprepayyn == '1')}"
+									<input name="occuprepayyn" type="checkbox" value='1' id="masterEditSelectBox_Checkbox01" 
+										th:checked="${resultData.gm_occuprepayyn != null and #strings.trim(resultData.gm_occuprepayyn) == 'Y'}"
 										onchange="updateOccuprepayynValue(this)" />
 									<label for="masterEditSelectBox_Checkbox01"></label>
+									
+									
 								</li>
 
 								<!-- 선납기한 -->
@@ -599,16 +616,16 @@
 									<input type="hidden" id="addrcode" name="addrcode">
 
 									<!-- 소속 토지 정보에 기존 값을 hidden 필드로 추가 -->
-									<input type="hidden" name="adm_office_org" th:value="${pnuList[0].adm_office}">
-									<input type="hidden" name="gover_own_yn_org" th:value="${pnuList[0].gover_own_yn}">
-									<input type="hidden" name="rep_flag_org" th:value="${pnuList[0].rep_flag}">
-									<input type="hidden" name="addr_org"
+									<input type="hidden" name="tadm_office_org" th:value="${pnuList[0].adm_office}">
+									<input type="hidden" name="tgover_own_yn_org" th:value="${pnuList[0].gover_own_yn=='Y'?'국유지':'사유지'}">
+									<input type="hidden" name="trep_flag_org" th:value="${pnuList[0].rep_flag}">
+									<input type="hidden" name="taddr_org"
 										th:value="${pnuList[0].sido_nm + ' ' + pnuList[0].sgg_nm + ' ' + pnuList[0].emd_nm + ' ' + pnuList[0].ri_nm + ' ' + pnuList[0].jibun}">
-									<input type="hidden" name="pnu_org" th:value="${pnuList[0].pnu}">
-									<input type="hidden" name="jimok_text_org" th:value="${pnuList[0].jimok_text}">
-									<input type="hidden" name="gover_length_org" th:value="${pnuList[0].gover_length}">
-									<input type="hidden" name="gover_area_org" th:value="${pnuList[0].gover_area}">
-									<input type="hidden" name="pipe_overlap_yn_org" th:value="${pnuList[0].pipe_overlap_yn}">
+									<input type="hidden" name="tpnu_org" th:value="${pnuList[0].pnu}">
+									<input type="hidden" name="tjimok_text_org" th:value="${pnuList[0].jimok_text}">
+									<input type="hidden" name="tgover_length_org" th:value="${pnuList[0].gover_length}">
+									<input type="hidden" name="tgover_area_org" th:value="${pnuList[0].gover_area}">
+									<input type="hidden" name="tpipe_overlap_yn_org" th:value="${pnuList[0].pipe_overlap_yn}">
 
 									<input type="text" class="notWriteInput" readonly placeholder="1" />
 								</li>
@@ -644,8 +661,13 @@
 								</li>
 								<!-- 대표필지 -->
 								<li class="content checkboxWrap">
-									<input type="checkbox" id="masterRegSelectBox_Checkbox02" name="rep_flag" />
+									<input type="checkbox" id="masterRegSelectBox_Checkbox02" name="rep_flag"
+									th:checked="${pnuList[0].rep_flag != null and #strings.trim(pnuList[0].rep_flag) == 'Y'}" 
+									/>
 									<label for="masterRegSelectBox_Checkbox02"></label>
+									
+									
+									
 								</li>
 								<!-- 주소 -->
 								<li class="content addressInfoWidth">

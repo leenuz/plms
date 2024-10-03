@@ -648,8 +648,11 @@ $(document).on("click", "#draftSaveBtn", function() {
 			var gover_length=$(togiUls[i]).find("input[name='gover_length']").val();
 			var gover_area=$(togiUls[i]).find("input[name='gover_area']").val();
 			var jimok_text=$(togiUls[i]).find("input[name='jimok_text']").val();
+			if (jimok_text==null || jimok_text=="" ) jimok_text=$(togiUls[i]).find("#jimok").text();
 			var adm_office=$(togiUls[i]).find("input[name='adm_office']").val();
+			if (adm_office==null || adm_office=="" ) adm_office=$(togiUls[i]).find("#admOfficeBtn").text();
 			var pipe_overlab_yn=$(togiUls[i]).find("input[name='pipe_overlap_yn']").val();
+			if (pipe_overlab_yn==null || pipe_overlab_yn=="" ) pipe_overlab_yn=$(togiUls[i]).find("#pipeOverlapYnBtn").text();
 			
 			
 	   		
@@ -700,10 +703,29 @@ $(document).on("click", "#draftSaveBtn", function() {
 		 console.log(togiDatas);
 		 console.log("----------files-------------");
 		 	 console.log(files);
-			 
+		 //pipe_name이 안들어와서 한번더 체크
+		 if (!object.hasOwnProperty("pipe_name")) {
+		     object.pipe_name = $("#pipeNameText").text();
+		 }
+		 if (!object.hasOwnProperty("newregreason")) {
+		 		 		     var tobj = $("#newregreasonBtn").text();
+		 					 if (tobj=="선택") object.newregreason="0";
+		 					 else if (tobj.trim()=="사유지의 국유지 편입") object.newregreason="1";
+		 					 else if (tobj.trim()=="ILI결과 발견지번") object.newregreason="2";
+		 					
+		 		 }
+		 if (!object.hasOwnProperty("occunonpayreason")) {
+		 		     var tobj = $("#occunonpayreasonBtn").text();
+					 if (tobj=="선택") object.occunonpayreason="0";
+					 else if (tobj.trim()=="영구 무상점용") object.occunonpayreason="1";
+					 else if (tobj.trim()=="소액 미청구") object.occunonpayreason="2";
+					 else if (tobj.trim()=="관할관청의 미청구") object.occunonpayreason="3";
+		 }
+	 	  object.occuprepayyn=$('input[name="occuprepayyn"]').is(':checked') ? 'Y' : 'N';
 		 object.togiDatas=togiDatas;
 		 object.files=files;
 		 object.fileCnt=files.length;
+		 
 		 object.office_mobile="";
 		 object.save_status="Q";
 			object.gubun="insert"; //신규등록
@@ -935,7 +957,7 @@ const createCustomLimasterReg = (parentElement = document) => {
         customSelectBtns.innerHTML = '';
 
         for (let i = 0; i < notsetAddSelectBox.length; i++) {
-            const optionValue = notsetAddSelectBox.options[i].value;
+            const optionValue = notsetAddSelectBox.options[i].text;
             const li = document.createElement('li');
             const button = document.createElement('button');
             button.classList.add('moreSelectBtn');
@@ -960,6 +982,7 @@ const createCustomLimasterReg = (parentElement = document) => {
                 // 선택한 값으로 셀렉트 박스의 텍스트 변경
                 parentSelectBox.textContent = selectedValue;
                 notsetAddSelectBox.value = selectedValue;
+				$(notsetAddSelectBox).val(selectedValue);
 
                 // 선택한 후 셀렉트 박스 비활성화
                 customSelectBox.querySelector('.customSelectBtns').classList.remove('active');

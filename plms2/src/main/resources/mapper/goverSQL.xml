@@ -1698,6 +1698,14 @@ FROM NOTSET_MASTER
 		, gm_ADM_OFFICE
 		, gm_SAVE_STATUS
 		, gm_PIPE_METER2 
+		,gm_exemptionyn
+		,gm_use_purpos
+		,gm_NEWREGREASON
+		,gm_OCCUNONPAYREASON
+		,gm_PERMPOSSYN
+		,gm_OCCUPREPAYYN
+		,gm_OCCUPREPAYDATE
+		
 		)
 		Values
 		( 
@@ -1719,6 +1727,14 @@ FROM NOTSET_MASTER
 		, #{ADM_OFFICE}
 		, #{SAVE_STATUS}
 		, nullif(#{PIPE_METER2},'')::numeric
+		,#{EXEMPTIONYN}
+		,#{USE_PURPOS}
+		,#{NEWREGREASON}
+		,#{OCCUNONPAYREASON}
+		,#{PERMPOSSYN}
+		,#{OCCUPREPAYYN}
+		,to_date(#{OCCUPREPAYDATE}, 'yyyy-mm-dd')
+		
 		 )
 	</insert>
 	<update id="updateGoverMaster" parameterType="HashMap">
@@ -1766,7 +1782,7 @@ FROM NOTSET_MASTER
 			, gm_OCCUPREPAYYN = #{OCCUPREPAYYN}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(OCCUPREPAYDATE)" >
-			, gm_OCCUPREPAYDATE = #{OCCUPREPAYDATE}
+			, gm_OCCUPREPAYDATE = #{OCCUPREPAYDATE}::date
 		</if>
 		, gm_SAVE_STATUS = #{SAVE_STATUS}
 		

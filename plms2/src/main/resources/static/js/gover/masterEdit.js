@@ -1072,6 +1072,9 @@ $(document).on("click", "#draftSaveBtn", function() {
 
 	var object = {}; // 빈 객체 생성
 	for (var i = 0; i < formSerializeArray.length; i++) {
+		if (formSerializeArray[i]['value'] === '전체' || formSerializeArray[i]['value'] ==='') {
+				    continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
+				}
 		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value']; // 배열의 각 항목을 객체로 변환
 	}
 
@@ -1192,7 +1195,28 @@ $(document).on("click", "#draftSaveBtn", function() {
 	console.log(togiDatas);
 	console.log("----------files-------------");
 	console.log(files);
-
+	object.occuprepayyn=$('input[name="occuprepayyn"]').is(':checked') ? 'Y' : 'N';
+	
+	     object.pipe_name = $("#pipeNameText").text();
+	
+	 
+	 		 		     var tobj = $("#newregreasonBtn").text();
+	 					 if (tobj=="선택") object.newregreason="0";
+	 					 else if (tobj.trim()=="사유지의 국유지 편입") object.newregreason="1";
+	 					 else if (tobj.trim()=="ILI결과 발견지번") object.newregreason="2";
+	 					
+	 
+	 
+	 		     var tobj = $("#occunonpayreasonBtn").text();
+				 if (tobj=="선택") object.occunonpayreason="0";
+				 else if (tobj.trim()=="영구 무상점용") object.occunonpayreason="1";
+				 else if (tobj.trim()=="소액 미청구") object.occunonpayreason="2";
+				 else if (tobj.trim()=="관할관청의 미청구") object.occunonpayreason="3";
+	 
+	
+	
+	object.adm_office=$("#admOfficeText").text();
+	object.use_purpos=$("#usePurposBtn").text();
 	object.togiDatas = togiDatas;
 	object.files = files;
 	object.fileCnt = files.length;
@@ -1202,8 +1226,8 @@ $(document).on("click", "#draftSaveBtn", function() {
 	var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
 	console.log("----------jsonobj------------");
 	console.log(object);
-return;
-	url = "/gover/insertGoverMaster";
+
+	url = "/gover/insertGoverMasterDemo";
 	$.ajax({
 
 		url: url,
@@ -1249,9 +1273,10 @@ function compareChanges(orgValue, newValue, fieldName) {
     newValue = newValue === undefined || newValue === null ? '' : newValue;
     console.log("orgValue:"+orgValue);
 	console.log("newValue:"+newValue);
-    if (orgValue !== newValue || newValue!='') {
-        return `${fieldName} 변경 ('${orgValue}' > '${newValue}'); `;
-    }
+	if (orgValue.trim() != newValue.trim() && newValue.trim() != '') {
+	    return `${fieldName} 변경 ('${orgValue.trim()}' > '${newValue.trim()}'); `;
+	}
+
     return '';
 }
 
@@ -1260,8 +1285,24 @@ function compareChanges(orgValue, newValue, fieldName) {
 function getModifyReasonForBasicInfo() {
     var modifyReason = '';
 console.log("----------------getModifyReasonForBasicInfo--------------------");
+var tobj=$("input[name='newregreason_org']").val();
+var newregreasonOldValue="";
+if (tobj=="0") newregreasonOldValue="";
+else if (tobj=="1") newregreasonOldValue="사유지의 국유지 편입";
+else if (tobj=="2") newregreasonOldValue="ILI결과 발견지번";
+
+var tobj=$("input[name='occunonpayreason_org']").val();
+var occunonpayreasonOldValue="";
+if (tobj=="0") occunonpayreasonOldValue="";
+else if (tobj=="1") occunonpayreasonOldValue="영구 무상점용";
+else if (tobj=="2") occunonpayreasonOldValue="소액 미청구";
+else if (tobj=="3") occunonpayreasonOldValue="관할관청의 미청구";
+var newregreasonNewValue=$("#newregreasonBtn").text();
+var occunonpayreasonNewValue=$("#occunonpayreasonBtn").text();
+
+console.log(newregreasonNewValue);
     modifyReason += compareChanges($("input[name='pmt_office_org']").val(), $("select[name='pmt_office']").val(), "허가관청");
-    modifyReason += compareChanges($("input[name='adm_office_org']").val(), $("select[name='adm_office']").val(), "관리기관");
+    modifyReason += compareChanges($("input[name='adm_office_org']").val(), $("#admOfficeText").text(), "관리기관");
     modifyReason += compareChanges($("input[name='office_depart_org']").val(), $("input[name='office_depart']").val(), "부서");
     modifyReason += compareChanges($("input[name='office_charege_org']").val(), $("input[name='office_charege']").val(), "담당자");
     modifyReason += compareChanges($("input[name='office_contact_org']").val(), $("input[name='office_contact']").val(), "연락처");
@@ -1274,10 +1315,10 @@ console.log("----------------getModifyReasonForBasicInfo--------------------");
     modifyReason += compareChanges($("input[name='gover_st_date_org']").val(), $("input[name='gover_st_date']").val(), "점용 시작일");
     modifyReason += compareChanges($("input[name='gover_ed_date_org']").val(), $("input[name='gover_ed_date']").val(), "점용 종료일");
     modifyReason += compareChanges($("input[name='gover_period_org']").val(), $("input[name='gover_period']").val(), "점용갱신주기");
-    modifyReason += compareChanges($("input[name='newregreason_org']").val(), $("select[name='newregreason']").val(), "신규등록사유");
+    modifyReason += compareChanges(newregreasonOldValue, newregreasonNewValue, "신규등록사유");
     modifyReason += compareChanges($("input[name='permpossyn_org']").val(), $("select[name='permpossyn']").val(), "허가증 보유 여부");
-    modifyReason += compareChanges($("input[name='occunonpayreason_org']").val(), $("select[name='occunonpayreason']").val(), "점용료 미납부 사유");
-    var occuprepayyn = $("input[name='occuprepayyn']").is(':checked') ? "1" : "0";
+    modifyReason += compareChanges(occunonpayreasonOldValue, occunonpayreasonNewValue, "점용료 미납부 사유");
+    var occuprepayyn = $("input[name='occuprepayyn']").is(':checked') ? "Y" : "N";
     modifyReason += compareChanges($("input[name='occuprepayyn_org']").val(), occuprepayyn, "점용료 선납 여부");
     modifyReason += compareChanges($("input[name='occuprepaydate_org']").val(), $("input[name='occuprepaydate']").val(), "선납기한");
 	console.log(modifyReason);
@@ -1302,10 +1343,11 @@ function getModifyReasonForLand() {
 				console.log("addKey: " + addKey); // addKey 값이 제대로 들어오는지 확인
 				console.log("goverIndex: " + goverIndex); // goverIndex 값이 제대로 들어오는지 확인
 				
-        if (addKey === 'new') {
+        /*if (addKey === 'new') {
 					if (goverIndex === '0' && $(ul).find("input[name='pnu']").val().length == 0) {
 						
 					}else {
+						
 						// 새로운 항목일 경우 변경 이력에 추가
 						            var newModifyReason = ''; // 새로운 항목에 대한 변경 이력
 						            newModifyReason += "소속 토지 정보 추가: ";
@@ -1324,23 +1366,25 @@ function getModifyReasonForLand() {
 						            modifyReason += newModifyReason;
 					}
 					
-        } else if (addKey === 'add') {
+        } else if (addKey === 'add') {*/
             // 기존 값과 새 값을 비교하여 변경 이력 기록
             var addModifyReason = ''; // 기존 항목에 대한 변경 이력
-            addModifyReason += compareChanges($(ul).find("input[name='adm_office_org']").val() || '', $(ul).find("select[name='adm_office']").val() || '', "관리기관");
-            addModifyReason += compareChanges($(ul).find("input[name='gover_own_yn_org']").val() || '', $(ul).find("select[name='gover_own_yn']").val() || '', "국공유지 여부");
-            addModifyReason += compareChanges($(ul).find("input[name='rep_flag_org']").val() || '', $(ul).find("input[name='rep_flag']").is(":checked") ? 'Y' : 'N', "대표필지");
-            addModifyReason += compareChanges($(ul).find("input[name='addr_org']").val() || '', $(ul).find("input[name='addr']").val() || '', "주소");
-            addModifyReason += compareChanges($(ul).find("input[name='pnu_org']").val() || '', $(ul).find("input[name='pnu']").val() || '', "PNU");
-            addModifyReason += compareChanges($(ul).find("input[name='jimok_text_org']").val() || '', $(ul).find("select[name='jimok_text']").val() || '', "지목");
-            addModifyReason += compareChanges($(ul).find("input[name='gover_length_org']").val() || '', $(ul).find("input[name='gover_length']").val() || '', "점용연장");
-            addModifyReason += compareChanges($(ul).find("input[name='gover_area_org']").val() || '', $(ul).find("input[name='gover_area']").val() || '', "점용면적");
-            addModifyReason += compareChanges($(ul).find("input[name='pipe_overlap_yn_org']").val() || '', $(ul).find("select[name='pipe_overlap_yn']").val() || '', "관로일치 여부");
+			var admOfficeNewValue=$(ul).find("#admOfficeText01").text();
+			var goverOwnYnNewValue=$(ul).find("#goverOwnYnBtn").text();
+            addModifyReason += compareChanges($(ul).find("input[name='tadm_office_org']").val() || '', admOfficeNewValue || '', "관리기관");
+            addModifyReason += compareChanges($(ul).find("input[name='tgover_own_yn_org']").val() || '', goverOwnYnNewValue || '', "국공유지 여부");
+            addModifyReason += compareChanges($(ul).find("input[name='trep_flag_org']").val() || '', $(ul).find("input[name='rep_flag']").is(":checked") ? 'Y' : 'N', "대표필지");
+            addModifyReason += compareChanges($(ul).find("input[name='taddr_org']").val() || '', $(ul).find("input[name='addr']").val() || '', "주소");
+            addModifyReason += compareChanges($(ul).find("input[name='tpnu_org']").val() || '', $(ul).find("input[name='pnu']").val() || '', "PNU");
+            addModifyReason += compareChanges($(ul).find("input[name='tjimok_text_org']").val() || '', $(ul).find("select[name='jimok_text']").val() || '', "지목");
+            addModifyReason += compareChanges($(ul).find("input[name='tgover_length_org']").val() || '', $(ul).find("input[name='gover_length']").val() || '', "점용연장");
+            addModifyReason += compareChanges($(ul).find("input[name='tgover_area_org']").val() || '', $(ul).find("input[name='gover_area']").val() || '', "점용면적");
+            addModifyReason += compareChanges($(ul).find("input[name='tpipe_overlap_yn_org']").val() || '', $(ul).find("select[name='pipe_overlap_yn']").val() || '', "관로일치 여부");
             console.log("addModifyReason: " + addModifyReason);
 
             // 기존 modifyReason에 누적
             modifyReason += addModifyReason;
-        }
+        //}
     });
 
     console.log("최종 modifyReason: " + modifyReason); // 최종 누적된 변경 이력
@@ -1404,6 +1448,8 @@ $(document).on("click","#reqApprovalBtn",function(){
 
 // 체크박스 상태 변경 시 점용료 선납 여부 처리
 function updateOccuprepayynValue(checkbox) {
+	var isChecked = checkbox.checked ? 'Y' : 'N';
+	        console.log("Check status:", isChecked);
     const form = checkbox.form;
     
     if (checkbox.checked) {
@@ -1433,7 +1479,7 @@ const createCustomLimasterReg = (parentElement = document) => {
         customSelectBtns.innerHTML = '';
 
         for (let i = 0; i < notsetAddSelectBox.length; i++) {
-            const optionValue = notsetAddSelectBox.options[i].value;
+            const optionValue = notsetAddSelectBox.options[i].text;
             const li = document.createElement('li');
             const button = document.createElement('button');
             button.classList.add('moreSelectBtn');
@@ -1505,6 +1551,7 @@ $(document).on('click', '.moreSelectBtn', function() {
     const nearByContent = $(this).closest('.selectContentArea');
     const nearBySelectBox = nearByContent.find('select');
     nearBySelectBox.val(moreSelectBtnText);
+	//$(nearBySelectBox).val()
     console.log(`Selected value: ${nearBySelectBox.val()}`);
 });
 

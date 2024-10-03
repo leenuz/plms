@@ -1714,19 +1714,21 @@ public class goverController {
 					String JISA = requestParamsObj.getString("jisa"); // 지사
 					String YONGDO = requestParamsObj.getString("yongdo"); // 용도
 					String PIPE_NAME = requestParamsObj.has("pipe_name")?requestParamsObj.getString("pipe_name"):""; // 관로명
-					String PIPE_METER = requestParamsObj.getString("pipe_meter"); // 관경
-					String PIPE_METER2 = requestParamsObj.getString("pipe_meter2"); // 관경
+					String PIPE_METER = requestParamsObj.has("pipe_meter_single")?requestParamsObj.getString("pipe_meter_single"):requestParamsObj.getString("pipe_meter"); // 관경
+					String PIPE_METER2 = requestParamsObj.has("pipe_meter2")?requestParamsObj.getString("pipe_meter2"):""; // 관경
 					String SUN_GUBUN = requestParamsObj.getString("sun_gubun"); // 단/복선
-					// String USE_PURPOS = parser.getString("USE_PURPOS", ""); // 점용 목록
+					 String USE_PURPOS = requestParamsObj.getString("use_purpos"); // 점용 목록
 					String GOVER_ST_DATE = requestParamsObj.getString("gover_st_date"); // 점용기간 시작
 					String GOVER_ED_DATE = requestParamsObj.getString("gover_ed_date"); // 점용기간 끝
 					String PMT_OFFICE = requestParamsObj.has("pmt_office")?requestParamsObj.getString("pmt_office"):""; // 허가관청
 					String ADM_OFFICE = requestParamsObj.has("adm_office")?requestParamsObj.getString("adm_office"):""; // 관리기관
 					String OFFICE_DEPART = requestParamsObj.getString("office_depart"); // 관리부서
-					String OFFICE_CHARGE = requestParamsObj.getString("office_charege"); // 부서담당자
+					String OFFICE_CHARGE = requestParamsObj.has("office_charege")?requestParamsObj.getString("office_charege"):""; // 부서담당자
 					String OFFICE_CONTACT = requestParamsObj.getString("office_contact"); // 담당자연락처
 					String OFFICE_MOBILE = requestParamsObj.getString("office_mobile"); // 담당자연락처
 					String GOVER_PERIOD = requestParamsObj.getString("gover_period"); // 담당자연락처
+					String EXEMPTIONYN = requestParamsObj.getString("exemptionyn"); // 감면여부
+					
 					String SAVE_STATUS = requestParamsObj.getString("save_status"); // 저장 코드  T:승인대기 R:반려 Q:임시저장
 					String gubun = requestParamsObj.getString("gubun"); // 구분( modify : 수정, insert
 							// : 등록 )
@@ -1750,11 +1752,11 @@ public class goverController {
 					
 					
 					//ljs 이슈정보 추가
-					String NEWREGREASON=requestParamsObj.has("newRegReason")?requestParamsObj.getString("newRegReason"):"";
-					String OCCUNONPAYREASON=requestParamsObj.has("occuNonPayReason")?requestParamsObj.getString("occuNonPayReason"):"";
-					String PERMPOSSYN=requestParamsObj.has("permPossYn")?requestParamsObj.getString("permPossYn"):"";
-					String OCCUPREPAYYN=requestParamsObj.has("occuPrePayYn")?requestParamsObj.getString("occuPrePayYn"):"";
-					String OCCUPREPAYDATE=requestParamsObj.has("occuPrePayDate")?requestParamsObj.getString("occuPrePayDate"):"";
+					String NEWREGREASON=requestParamsObj.has("newregreason")?requestParamsObj.getString("newregreason"):"";
+					String OCCUNONPAYREASON=requestParamsObj.has("occunonpayreason")?requestParamsObj.getString("occunonpayreason"):"";
+					String PERMPOSSYN=requestParamsObj.has("permpossyn")?requestParamsObj.getString("permpossyn"):"";
+					String OCCUPREPAYYN=requestParamsObj.has("occuprepayyn")?requestParamsObj.getString("occuprepayyn"):"";
+					String OCCUPREPAYDATE=requestParamsObj.has("occuprepaydate")?requestParamsObj.getString("occuprepaydate"):"";
 
 					System.out.println("modifyReason1=" + modifyReason1);
 					System.out.println("modifyReason2=" + modifyReason2);
@@ -1791,7 +1793,7 @@ public class goverController {
 						params.put("SUN_GUBUN", SUN_GUBUN);
 						params.put("STATUS", "GOVER");
 						params.put("FILESEQ", fileseq);
-						// params.put("USE_PURPOS", USE_PURPOS);
+						 params.put("USE_PURPOS", USE_PURPOS);
 						params.put("GOVER_ST_DATE", GOVER_ST_DATE);
 						params.put("GOVER_ED_DATE", GOVER_ED_DATE);
 						params.put("PMT_OFFICE", PMT_OFFICE);
@@ -1800,6 +1802,7 @@ public class goverController {
 						params.put("OFFICE_CHARGE", OFFICE_CHARGE);
 						params.put("OFFICE_CONTACT", OFFICE_CONTACT);
 						params.put("OFFICE_MOBILE", OFFICE_MOBILE);
+						params.put("EXEMPTIONYN", EXEMPTIONYN);
 						params.put("GOVER_PERIOD", GOVER_PERIOD);
 						params.put("PMT_STATUS", "임시저장"); // 등록상태
 						params.put("USER_ID", USER_ID);
@@ -1862,7 +1865,7 @@ public class goverController {
 							if (!modifyReason2.equals("")) {
 								params.put("GUBUN", "소속 토지정보");
 								params.put("CONT", modifyReason2);
-								mainService.InsertQuery("goversQL.insertGoverModifyHistory", params);
+								mainService.InsertQuery("goverSQL.insertGoverModifyHistory", params);
 							}
 							if (!modifyReason3.equals("")) {
 								params.put("GUBUN", "허가 정보 및 납부 현황");
@@ -2334,12 +2337,12 @@ public class goverController {
 			
 			
 			//ljs 이슈정보 추가
-			String NEWREGREASON=requestParamsObj.has("newRegReason")?requestParamsObj.getString("newRegReason"):"";
-			String OCCUNONPAYREASON=requestParamsObj.has("occuNonPayReason")?requestParamsObj.getString("occuNonPayReason"):"";
-			String PERMPOSSYN=requestParamsObj.has("permPossYn")?requestParamsObj.getString("permPossYn"):"";
-			String OCCUPREPAYYN=requestParamsObj.has("occuPrePayYn")?requestParamsObj.getString("occuPrePayYn"):"";
-			String OCCUPREPAYDATE=requestParamsObj.has("occuPrePayDate")?requestParamsObj.getString("occuPrePayDate"):"";
-
+			String NEWREGREASON=requestParamsObj.has("newregreason")?requestParamsObj.getString("newregreason"):"";
+			String OCCUNONPAYREASON=requestParamsObj.has("occunonpayreason")?requestParamsObj.getString("occunonpayreason"):"";
+			String PERMPOSSYN=requestParamsObj.has("permpossyn")?requestParamsObj.getString("permpossyn"):"";
+			String OCCUPREPAYYN=requestParamsObj.has("occuprepayyn")?requestParamsObj.getString("occuprepayyn"):"";
+			String OCCUPREPAYDATE=requestParamsObj.has("occuprepaydate")?requestParamsObj.getString("occuprepaydate"):"";
+			
 			System.out.println("modifyReason1=" + modifyReason1);
 			System.out.println("modifyReason2=" + modifyReason2);
 			System.out.println("modifyReason3=" + modifyReason3);

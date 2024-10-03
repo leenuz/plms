@@ -1433,12 +1433,12 @@ FROM NOTSET_MASTER
 	</update>
 	<select id="makePnuIssueSeq" resultType="String" parameterType="HashMap">
  
-			SELECT COALESCE(MAX(S.SEQ), 0) + 1 AS SEQ FROM POTENTIAL_ISSUE S
+			SELECT COALESCE(MAX(S.SEQ), 0) + 1 AS SEQ FROM plms_POTENTIAL_ISSUE S
 
 	</select>
 	<insert id="insertPnuIssue" parameterType="HashMap">
 	 
-		INSERT INTO POTENTIAL_ISSUE (
+		INSERT INTO plms_POTENTIAL_ISSUE (
 		        PNU
 		        , SEQ
 		        , CODE_DEPTH1
