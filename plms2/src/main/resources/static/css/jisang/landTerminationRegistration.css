@@ -155,7 +155,9 @@ button {
   background: #d2d2d2;
 }
 #landTerminationRegistration .attachFileInfo .contentScr {
-  height: 90px;
+  /* height: 90px; */
+  max-height: calc(45px * 2);
+  overflow-y: auto; /* 스크롤 활성화 */
 }
 .SearchAddressBtn {
   display: inline-block;
