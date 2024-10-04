@@ -684,6 +684,7 @@ public class goverController {
 			String pmt_office = req.getParameter("pmt_office");
 			String adm_office = req.getParameter("adm_office");
 			String cancel_yn = req.getParameter("cancel_yn");
+			
 			String pay_date_start = req.getParameter("pay_date_start");
 			String pay_date_end = req.getParameter("pay_date_end");
 			String address = req.getParameter("saddr");
@@ -704,10 +705,12 @@ public class goverController {
 			// params.put("cancel_yn",cancel_yn);
 			if ("N".equals(cancel_yn)) {
 			    params.put("cancel_yn", null);  // null 조건을 추가하기 위해 cancel_yn에 null 값을 전달
-			    params.put("cancel_yn_condition", "N OR r.cancel_yn IS NULL");
+			    params.put("cancel_yn_condition", "'N'  OR GM.gm_cancle_yn IS NULL or GM.gm_cancle_yn = ''");
 			} else {
 			    params.put("cancel_yn", cancel_yn);
 			}
+			//params.put("cancel_yn","N");
+			params.put("TEST","Y");
 			params.put("pay_date_start",pay_date_start);
 			params.put("pay_date_end",pay_date_end);
 			params.put("address", address);
@@ -732,12 +735,20 @@ public class goverController {
 				params.put("desc","");
 			}
 			log.info("params:"+params);
+			
 
-			Object count= mainService.selectCountQuery("goverSQL.selectTotalCount03_3", params);
+			Object count= mainService.selectCountQuery("goverSQL.selectGoverMasterCancelSearchCount", params);
 			int total=(int)count;
 
-			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList03_3",params);
-			log.info("list:"+list);
+			//ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList",params);
+			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverMasterCancelSearchList",params);
+			log.info("list:" + list);
+
+//			Object count= mainService.selectCountQuery("goverSQL.selectTotalCount03_3", params);
+//			int total=(int)count;
+//
+//			ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverList03_3",params);
+//			log.info("list:"+list);
 
 			HashMap<String,Object> resultmap=new HashMap();
 			resultmap.put("draw",draw);
@@ -1438,9 +1449,11 @@ public class goverController {
 					HashMap logParams = new HashMap(); // 맵 객체 선언
 
 					for (int i = 0; i < pnuList.size(); i++) {
+					
+						log.info("obj:"+pnuList.get(i));
 						logParams = new HashMap(); // 맵 객체 초기화
 
-						logParams.put("GOVER_NO", GOVER_NO);
+						logParams.put("GOVER_NO", ((HashMap) pnuList.get(i)).get("gover_no"));
 						logParams.put("PMT_SEQ", nNextSeq);
 
 						// 소속 토지정보 로깅용 seq 조회(생성)
@@ -1453,23 +1466,23 @@ public class goverController {
 						String logSeq=logSeqList.get(0).toString();
 						System.out.println("logSeq = " + logSeq);
 						logParams.put("LOG_SEQ", logSeq);
-						logParams.put("PNU", ((HashMap) pnuList.get(i)).get("PNU"));
-						logParams.put("ADDRCODE", ((HashMap) pnuList.get(i)).get("PNU"));
-						logParams.put("ECHO_NO", ((HashMap) pnuList.get(i)).get("ECHO_NO"));
-						logParams.put("SIDO_NM", ((HashMap) pnuList.get(i)).get("SIDO_NM"));
-						logParams.put("SGG_NM", ((HashMap) pnuList.get(i)).get("SGG_NM"));
-						logParams.put("EMD_NM", ((HashMap) pnuList.get(i)).get("EMD_NM"));
-						logParams.put("RI_NM", ((HashMap) pnuList.get(i)).get("RI_NM"));
-						logParams.put("JIBUN", ((HashMap) pnuList.get(i)).get("JIBUN"));
-						logParams.put("JIBUN_FULL", ((HashMap) pnuList.get(i)).get("JIBUN_FULL"));
-						logParams.put("JIJUK_AREA", ((HashMap) pnuList.get(i)).get("JIJUK_AREA"));
-						logParams.put("JIMOK_TEXT", ((HashMap) pnuList.get(i)).get("JIMOK_TEXT"));
-						logParams.put("DOSIPLAN", ((HashMap) pnuList.get(i)).get("DOSIPLAN"));
-						logParams.put("GOVER_OWN_YN", ((HashMap) pnuList.get(i)).get("GOVER_OWN_YN"));
-						logParams.put("GOVER_LENGTH", ((HashMap) pnuList.get(i)).get("GOVER_LENGTH"));
-						logParams.put("GOVER_AREA", ((HashMap) pnuList.get(i)).get("GOVER_AREA"));
-						logParams.put("ADM_OFFICE", ((HashMap) pnuList.get(i)).get("ADM_OFFICE"));
-						logParams.put("USE_PURPOS", ((HashMap) pnuList.get(i)).get("USE_PURPOS"));
+						logParams.put("PNU", ((HashMap) pnuList.get(i)).get("pnu"));
+						logParams.put("ADDRCODE", ((HashMap) pnuList.get(i)).get("addrcode"));
+						logParams.put("ECHO_NO", ((HashMap) pnuList.get(i)).get("echo_no"));
+						logParams.put("SIDO_NM", ((HashMap) pnuList.get(i)).get("sido_nm"));
+						logParams.put("SGG_NM", ((HashMap) pnuList.get(i)).get("sgg_nm"));
+						logParams.put("EMD_NM", ((HashMap) pnuList.get(i)).get("emd_nm"));
+						logParams.put("RI_NM", ((HashMap) pnuList.get(i)).get("ri_nm"));
+						logParams.put("JIBUN", ((HashMap) pnuList.get(i)).get("jibun"));
+						logParams.put("JIBUN_FULL", ((HashMap) pnuList.get(i)).get("jibun_full"));
+						logParams.put("JIJUK_AREA", ((HashMap) pnuList.get(i)).get("jijuk_area"));
+						logParams.put("JIMOK_TEXT", ((HashMap) pnuList.get(i)).get("jimok_text"));
+						logParams.put("DOSIPLAN", ((HashMap) pnuList.get(i)).get("dosiplan"));
+						logParams.put("GOVER_OWN_YN", ((HashMap) pnuList.get(i)).get("gover_own_yn"));
+						logParams.put("GOVER_LENGTH", ((HashMap) pnuList.get(i)).get("gover_length"));
+						logParams.put("GOVER_AREA", ((HashMap) pnuList.get(i)).get("gover_area"));
+						logParams.put("ADM_OFFICE", ((HashMap) pnuList.get(i)).get("adm_office"));
+						logParams.put("USE_PURPOS", ((HashMap) pnuList.get(i)).get("use_purpos"));
 //
 //						// 소속 토지정보 저장처리
 						System.out.println("소속 토지정보 params = " + logParams);

@@ -250,6 +250,7 @@ function loadDataTable(params) {
                     d.saddr = (addrs == undefined || addrs == null || addrs == "undefined") ? '' : addrs;
                 }
                 console.log("saddr:" + d.saddr);
+				console.log(d);
             },
             dataSrc: function(json) {
                 console.log("-------------json---------------");
