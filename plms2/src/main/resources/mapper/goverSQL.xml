@@ -664,7 +664,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
       CAST(#{pay_date_end} AS DATE))
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			and AA.juso like '%${address}%'
+			AND regexp_replace(AA.juso,'\s+',' ') LIKE '%${address}%' 
 		</if>
 		 
 	</select>
@@ -859,7 +859,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
       CAST(#{pay_date_end} AS DATE))
 		</if>
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			and AA.juso like '%${address}%'
+			AND regexp_replace(AA.juso,'\s+',' ') LIKE '%${address}%' 
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
 			and (SELECT COUNT(o.address) AS overlap
@@ -1042,7 +1042,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 			#{pay_ed_date} )
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			and AA.juso like '%${address}%'
+			AND regexp_replace(AA.juso,'\s+',' ') LIKE '%${address}%' 
 		</if>
 		 
 	</select>
@@ -1249,7 +1249,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 			 AND S.gp_PAY_DATE::date <![CDATA[ <= ]]> #{pay_date_end}::date )
 		</if>
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			and AA.juso like '%${address}%'
+			AND regexp_replace(AA.juso,'\s+',' ') LIKE '%${address}%' 
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
 			and (SELECT COUNT(o.address) AS overlap

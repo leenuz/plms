@@ -3,10 +3,11 @@ package com.slsolution.plms.controller;
 
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -18,13 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.MainService;
-
-
+import com.slsolution.plms.json.JSONArray;
 import com.slsolution.plms.json.JSONObject;
 import com.slsolution.plms.model.CountryModel;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -40,12 +41,56 @@ public class MainController {
 		
 		ModelAndView mav=new ModelAndView();
 		List<String> resultList=new ArrayList<String>();
-		resultList.add("AAA");
-		resultList.add("BBB");
-		resultList.add("CCC");
 		
-		mav.addObject("resultList",resultList);
-		mav.setViewName("content/home");
+		try {
+			
+			resultList.add("AAA");
+			resultList.add("BBB");
+			resultList.add("CCC");
+			
+			HttpSession session = request.getSession();
+			
+			Object checkId = request.getSession().getAttribute("userId");
+			System.out.println("TEST - checkId :: " + checkId);
+			
+			Enumeration<String> attributeNames = session.getAttributeNames();
+			
+			ArrayList<String> attrNames = new ArrayList<>();
+			Map<String, Object> attrArray =  new HashMap<String, Object>();
+			
+			while(attributeNames.hasMoreElements()) {
+				String attributeName = attributeNames.nextElement();
+				System.out.println("Session Attribute name : " + attributeName);
+				attrNames.add(attributeName);
+			}
+			
+			for(int i = 0 ; i < attrNames.size() ; i++ ) {
+				Object valueCheck = session.getAttribute(attrNames.get(i));
+//				System.out.println("att :: " + attrNames.get(i) + " || " + valueCheck);
+				attrArray.put(attrNames.get(i), valueCheck);
+			}
+			
+			JSONObject menuCheck = new JSONObject(attrArray);
+			JSONObject menu2pmsResultList = new JSONObject(menuCheck.get("plmsMenu").toString());
+			JSONArray menuResultList = menu2pmsResultList.getJSONArray("resultList");
+			
+			System.out.println("plmsMenu :: " + menuCheck.get("plmsMenu").toString());
+			System.out.println("2pmsMenu :: " + menuCheck.get("2pmsMenu").toString());
+			
+//			System.out.println(menu2pmsResultList.getJSONArray("resultList"));
+			
+			for(int k = 0 ; k < menuResultList.length() ; k++ ) {
+				System.out.println(menuResultList.get(k).toString());
+			}
+			
+			System.out.println("========================================");
+			
+			mav.addObject("resultList",resultList);
+			mav.setViewName("content/home");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		return mav;
 	}
 	@RequestMapping("/index")

@@ -5085,7 +5085,7 @@ log.info("gubun:"+gubun);
 			String pipeOverlapYn = requestParamsObj.getString("overlap_yn"); // 관로일치여부
 			String permitted_yn = requestParamsObj.getString("mpermit_yn"); // 지목
 			String wmemo=requestParamsObj.has("jisangMemo")?requestParamsObj.getString("jisangMemo"):"";
-
+			String account_yn = requestParamsObj.getString("account_yn");
 //			String soyunumber = requestParamsObj.getString("soyunumber", "0"); // 소유자 수
 //			String okaynumber = requestParamsObj.getString("okaynumber", ""); // 승인자 수
 //			String filenumber = requestParamsObj.getString("filenumber", ""); // 파일 수
@@ -5146,6 +5146,7 @@ log.info("gubun:"+gubun);
 				params.put("USER_NAME", USER_NAME);
 				params.put("PERMITTED_YN", permitted_yn);				
 				params.put("PIPEYN", pipeOverlapYn);
+				params.put("ACCOUNTYN", account_yn);
 
 				System.out.println(params);
 				

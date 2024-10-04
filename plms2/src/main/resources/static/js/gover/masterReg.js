@@ -202,9 +202,17 @@ $(document).ready(function() {
 	 
 	// 드래그 앤 드롭 영역 파일 첨부 관련 코드 시작
 	var objDragAndDrop = $(".fileUploadBox");
+	var objDragAndDropExcel = $(".popfileUploadBox");
 	
 	// 드래그 앤 드롭 영역에 파일이 들어왔을 때
 	$(".fileUploadBox").on("dragenter", function(e) {
+	    e.stopPropagation();
+	    e.preventDefault();
+	    $(this).css('border', '2px solid #0B85A1');
+	});
+	
+	// 드래그 앤 드롭 영역에 파일이 들어왔을 때
+	$(".popfileUploadBox").on("dragenter", function(e) {
 	    e.stopPropagation();
 	    e.preventDefault();
 	    $(this).css('border', '2px solid #0B85A1');
@@ -215,6 +223,12 @@ $(document).ready(function() {
 	    e.stopPropagation();
 	    e.preventDefault();
 	});
+	
+	// 드래그 앤 드롭 영역에서 파일을 드래그할 때
+		$(".popfileUploadBox").on("dragover", function(e) {
+		    e.stopPropagation();
+		    e.preventDefault();
+		});
 
 	// 파일을 드롭할 때
 	$(".fileUploadBox").on("drop", function(e) {
@@ -223,14 +237,31 @@ $(document).ready(function() {
 	    var files = e.originalEvent.dataTransfer.files; // 드래그한 파일 객체를 가져옴
 	    handleFileUpload(files, $(this));  // 파일 처리 함수 호출
 	});
+	// 파일을 드롭할 때
+		$(".popfileUploadBox").on("drop", function(e) {
+		    e.preventDefault();
+		    $(this).css('border', '2px dotted #0B85A1');
+		
+		    var files = e.originalEvent.dataTransfer.files; // 드래그한 파일 객체를 가져옴
+		    handleFileUploadExcel(files, $(this));  // 파일 처리 함수 호출*/
+		});
 
 	// 드래그 앤 드롭 영역을 클릭하면 파일 선택창을 띄움
 	objDragAndDrop.on('click', function(e) {
 		console.log("---------------- 파일 클릭 트리거 ---------------");
 	    if (!e.isTrigger) {  // 이 조건문은 이 이벤트가 수동 트리거된 경우를 방지합니다.
-	        $('input[type=file]').trigger('click'); // 파일 선택 창을 띄우는 트리거
+	        $('input[type=file][name=fileUpload]').trigger('click'); // 파일 선택 창을 띄우는 트리거
 	    }
 	});
+	
+	// 드래그 앤 드롭 영역을 클릭하면 파일 선택창을 띄움
+		objDragAndDropExcel.on('click', function(e) {
+			console.log("---------------- 파일 클릭 트리거 ---------------");
+		    if (!e.isTrigger) {  // 이 조건문은 이 이벤트가 수동 트리거된 경우를 방지합니다.
+		        $('input[type=file][name=excelPopup_file]').trigger('click'); // 파일 선택 창을 띄우는 트리거
+		    }
+		});
+	
 	 
 	$('input[type=file][name="fileUpload"]').on('change', function(e) {
 	    var files = e.originalEvent.target.files; // 파일 선택창에서 선택된 파일들
@@ -251,6 +282,124 @@ $(document).ready(function() {
 			rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
        }
     }
+	
+	/*function handleFileUploadExcel(files,obj) {
+			console.log("-------------handleExcelFileUpload---------------");
+			console.log(files);
+	       for (var i = 0; i < files.length; i++) { // 선택된 파일들을 하나씩 처리
+	            var fd = new FormData(); // FormData 객체 생성 (파일 업로드를 위한 객체)
+	            fd.append('file', files[i]); // 파일 객체를 FormData에 추가
+	     		
+	            var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
+	            sendFileToServer(fd,status); // 서버로 파일 전송 함수 호출
+				for (let i = 0; i <= excelPopup_myPcFiles.files.length - 1; i++) {
+					
+				}
+				rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
+	       }
+	    }*/
+	
+		/*excelPopup_myPcFiles.addEventListener('change', function (e) {
+
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+			        // 기존의 ul 초기화
+			        const popExistContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+
+			        popExistContents.forEach((list) => {
+			          list.remove();
+			        })
+
+			        // 삭제 잘 되었는지 확인
+			        const newPopExistContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+			        console.log(newPopExistContents.length);
+
+			        if (excelPopup_myPcFiles.files.length > 0) {
+
+			          for (let i = 0; i <= excelPopup_myPcFiles.files.length - 1; i++) {
+			            const thisExcelPopFileName = excelPopup_myPcFiles.files[i].name;
+			            const thisExcelPopFileSize = excelPopup_myPcFiles.files[i].size;
+			            const thisExcelPopFileType = excelPopup_myPcFiles.files[i].type;
+
+			            // 사이즈를 바꾸자
+			            const excelformattedSize = byteTransformForPop(thisExcelPopFileSize);
+
+			            // 문자열에 변수를 담자
+			            excelpopfileInfoName = thisExcelPopFileName;
+			            excelpopfileInfoSize = excelformattedSize;
+			            excelpopfileInfoType = thisExcelPopFileType;
+
+			            // 파일 지우는 버튼용 li
+
+			            const popdeleteLi = '<li class="popbtnbox"><button class="popfileDeleteBtn"></button></li>';
+
+			            // 파일 아이콘, 파일명 들어가는 li
+			            const popfilenameBoxLi = `<li class="popcontent popfilenameBox"><figure class="poptypeIcon ${excelpopfileInfoName}"></figure><p class="popfileNameText">${excelpopfileInfoName}</p></li >`;
+
+			            // 업로드 상태
+			            const popuploadStatusLi = '<li class="popcontent"><p>-</p></li>';
+
+			            // 파일 크기 들어가는 li
+			            const popfileSizeLi = `<li class="popcontent">
+			                    <p class="popfileSizeText"> ${excelpopfileInfoSize} </p>
+			                </li>`;
+
+			            const listBox = popdeleteLi + popfilenameBoxLi + popuploadStatusLi + popfileSizeLi;
+
+			            // ul.contents 만들기
+			            const popContentsUl = document.createElement('ul');
+			            popContentsUl.classList.add('popcontents');
+
+			            popContentsUl.innerHTML = listBox;
+
+			            popfileUploadAfterWrap.appendChild(popContentsUl);
+
+			            
+			            // 값 잘 담겼는지 확인
+
+			            console.log('담긴 파일 이름:' + thisExcelPopFileName);
+
+
+			            // 다음 걸 받기 위해 비워주기
+
+			            excelpopfileInfoName = '';
+			            excelpopfileInfoSize = '';
+			            excelpopfileInfoType = '';
+
+			          }
+
+
+			          defaultExcelFileUploadWrap.forEach((wrap) => {
+			            wrap.classList.remove('active');
+			          })
+			          defaultExcelFileUploadWrap[1].classList.add('active');
+			          
+			          if (excelPopup_myPcFiles.files.length > 2) {
+			            popfileUploadAfterWrap.classList.add('scroll');
+			          } else {
+			            popfileUploadAfterWrap.classList.remove('scroll');
+			          }
+
+
+			        } else {
+
+			          excelPopup_myPcFiles.value = '';
+			          defaultExcelFileUploadWrap.forEach((wrap) => {
+			            wrap.classList.remove('active');
+			          })
+			          defaultExcelFileUploadWrap[0].classList.add('active');
+			        }
+			      })*/
 
 	// Status bar 생성 함수
     function createStatusbar(obj,name,size,no){
@@ -1425,6 +1574,13 @@ $(document).on("click",".topCloseBtn",function(){
 //	$(".popupWrap").toggleClass("active");
 });
 
+//첨부파일 - 다운로드 스크립트
+function downloadFile(filePath, fileName) {
+	const url = `/api/download?filePath=${filePath}&fileName=${encodeURIComponent(fileName)}`;
+	//  const url = `/api/download?filePath=${filePath}&fileName=${fileName}`;
+	console.log(url);
+	window.open(url, '_blank');  // 새 창이나 새 탭에서 파일 다운로드
+}
 
 
 
