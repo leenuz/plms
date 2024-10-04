@@ -5082,6 +5082,7 @@ log.info("gubun:"+gubun);
 			String special_cont = requestParamsObj.getString("special_cont"); // 특약사항
 			String location = requestParamsObj.getString("mloacation"); // 위치
 			String jimok = requestParamsObj.getString("jimok_text"); // 지목
+			String manage_yn = requestParamsObj.has("manage_yn") ? "Y" : "N"; // 체크박스 값이 있으면 Y, 없으면 N // 관리제외필지
 			String pipeOverlapYn = requestParamsObj.getString("overlap_yn"); // 관로일치여부
 			String permitted_yn = requestParamsObj.getString("mpermit_yn"); // 지목
 			String wmemo=requestParamsObj.has("jisangMemo")?requestParamsObj.getString("jisangMemo"):"";
@@ -5142,17 +5143,19 @@ log.info("gubun:"+gubun);
 				params.put("LOCATION", location);
 				params.put("STATUS", "JISANG");
 				params.put("JIMOK", jimok);
+				params.put("MANAGE_YN", manage_yn);
 				params.put("USER_ID", USER_ID);
 				params.put("USER_NAME", USER_NAME);
 				params.put("PERMITTED_YN", permitted_yn);				
 				params.put("PIPEYN", pipeOverlapYn);
 				params.put("ACCOUNTYN", account_yn);
 
-				System.out.println(params);
+				log.info("params: "+params);
 				
 				// 로깅처리를 위하여 기존 지적도 데이터 조회
 				HashMap logParam = (HashMap) mainService.selectHashmapQuery("songyuSQL.selectJijukBeforePNU", params);
-log.info("logParam:"+logParam);
+				log.info("logParam:"+logParam);
+				
 				/**********************
 				 * 다음 지상권 번호 조회 시작
 				 **********************/

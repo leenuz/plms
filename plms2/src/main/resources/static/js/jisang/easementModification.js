@@ -863,14 +863,10 @@ easeModificationOpenPopUp();
 */
 
 
-
 // 저장버튼 (개발 필요 - 지상권 등록 landRightsRegistration 참고, 현재 클릭 이벤트 x)
 $(document).on("click", "#finalBtn", function() {
 	console.log("---------finalBtn class click------------");
-	
-	
-	
-	
+
 	console.log($("#saveForm").serialize());
 
 	//데이터를 가공해서 넘김다
@@ -890,9 +886,9 @@ $(document).on("click", "#finalBtn", function() {
 	const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
 	console.log(attachFileUls);
 
-	   console.log(soujaUls);
+	console.log(soujaUls);
 	var soujaArr = new Array();
-	var modifyReason2 = ''; 
+	var modifyReason2 = '';
 	for (var i = 0; i < soujaUls.length; i++) {
 		console.log(soujaUls[i]);
 		console.log($(soujaUls[i]).find("#soujaJibun").val());
@@ -901,15 +897,14 @@ $(document).on("click", "#finalBtn", function() {
 		var soujaAddress = $(soujaUls[i]).find("input[name='soujaAddress']").val();
 		var soujaContact1 = $(soujaUls[i]).find("input[name='soujaContact1']").val();
 		var soujaContact2 = $(soujaUls[i]).find("input[name='soujaContact2']").val();
-		
+
 		var soujaJibunOrg = $(soujaUls[i]).find("input[name='soujaJibunOrg']").val();
-				var soujaNameOrg = $(soujaUls[i]).find("input[name='soujaNameOrg']").val();
-				var soujaAddressOrg = $(soujaUls[i]).find("input[name='soujaAddressOrg']").val();
-				var soujaContact1Org = $(soujaUls[i]).find("input[name='soujaContact1Org']").val();
-				var soujaContact2Org = $(soujaUls[i]).find("input[name='soujaContact2Org']").val();
-				
-				
-		var addKey= $(soujaUls[i]).find("input[name='addKey']").val();
+		var soujaNameOrg = $(soujaUls[i]).find("input[name='soujaNameOrg']").val();
+		var soujaAddressOrg = $(soujaUls[i]).find("input[name='soujaAddressOrg']").val();
+		var soujaContact1Org = $(soujaUls[i]).find("input[name='soujaContact1Org']").val();
+		var soujaContact2Org = $(soujaUls[i]).find("input[name='soujaContact2Org']").val();
+
+		var addKey = $(soujaUls[i]).find("input[name='addKey']").val();
 
 		soujaJibun = (soujaJibun == "undefined" || soujaJibun == "" || soujaJibun == null) ? "" : soujaJibun;
 		soujaName = (soujaName == "undefined" || soujaName == "" || soujaName == null) ? "" : soujaName;
@@ -917,38 +912,36 @@ $(document).on("click", "#finalBtn", function() {
 		soujaContact1 = (soujaContact1 == "undefined" || soujaContact1 == "" || soujaContact1 == null) ? "" : soujaContact1;
 		soujaContact2 = (soujaContact2 == "undefined" || soujaContact2 == "" || soujaContact2 == null) ? "" : soujaContact2;
 		var soujaInfo = { "jibun": soujaJibun, "soujaName": soujaName, "soujaAddress": soujaAddress, "soujaContact1": soujaContact1, "soujaContact2": soujaContact2 };
-		console.log("soujaJibun:"+soujaJibun);
-		console.log("soujaName:"+soujaName);
-		console.log("soujaAddress:"+soujaAddress);
-		console.log("soujaContact1:"+soujaContact1);
+		console.log("soujaJibun:" + soujaJibun);
+		console.log("soujaName:" + soujaName);
+		console.log("soujaAddress:" + soujaAddress);
+		console.log("soujaContact1:" + soujaContact1);
 		if (soujaJibun != "" && soujaName != "" && soujaAddress != "" && soujaContact1 != "") {
 			soujaArr.push(soujaInfo);
 			console.log("--------souja 변경이력--------");
 			console.log(oldSoujaArray[i]);
-			
-			console.log("addKey:"+addKey);
-			if (addKey=="new"){
+
+			console.log("addKey:" + addKey);
+			if (addKey == "new") {
 				console.log("-----------------------new-----------------");
 				// 새로운 항목에 대한 변경 이력
 				modifyReason2 += "소유자 정보 추가: ";
-							
-								modifyReason2 += compareChanges('', soujaName || '', ",성명");
-								modifyReason2 += compareChanges('', soujaAddress || '', "주소");
-								modifyReason2 += compareChanges('', soujaContact1 || '', "연락처1");
-								modifyReason2 += compareChanges('', soujaContact2 || '', "연락처2");	
+
+				modifyReason2 += compareChanges('', soujaName || '', ",성명");
+				modifyReason2 += compareChanges('', soujaAddress || '', "주소");
+				modifyReason2 += compareChanges('', soujaContact1 || '', "연락처1");
+				modifyReason2 += compareChanges('', soujaContact2 || '', "연락처2");
 			}
 			else {
-			
-				
 				modifyReason2 += compareChanges(soujaNameOrg || '', soujaName || '', ",성명");
 				modifyReason2 += compareChanges(soujaAddressOrg || '', soujaAddress || '', "주소");
 				modifyReason2 += compareChanges(soujaContact1Org || '', soujaContact1 || '', "연락처1");
-				modifyReason2 += compareChanges(soujaContact2Org || '', soujaContact2 || '', "연락처2");	
+				modifyReason2 += compareChanges(soujaContact2Org || '', soujaContact2 || '', "연락처2");
 			}
 			
 		}
 	}
-    console.log(modifyReason2);
+	console.log(modifyReason2);
 	var files = new Array();
 	for (var i = 0; i < attachFileUls.length; i++) {
 		console.log($(attachFileUls[i]).parent().parent().html());
@@ -989,33 +982,27 @@ $(document).on("click", "#finalBtn", function() {
 	console.log(dataObj);
 
 	console.log("------------------변경정보 ------------------------");
-	
+
 	console.log(oldData);
 	var modifyReason1 = getModifyReasonForBasicInfo(oldData);
-		console.log("----------------modifyReason1--------------");
-		console.log(modifyReason1);
-		if (modifyReason1 !== "") {
-			dataObj.modifyReason1 = modifyReason1;
-		}
-		console.log(modifyReason2);
-		if (modifyReason2 !== "") {
-			dataObj.modifyReason2 = modifyReason2;
-		}
+	console.log("----------------modifyReason1--------------");
+	console.log(modifyReason1);
+	if (modifyReason1 !== "") {
+		dataObj.modifyReason1 = modifyReason1;
+	}
+	console.log(modifyReason2);
+	if (modifyReason2 !== "") {
+		dataObj.modifyReason2 = modifyReason2;
+	}
 
-		
-		var modifyReason3 = getModifyReasonForJisangInfo(oldData);
-		if (modifyReason3 !== "") {
-					dataObj.modifyReason3 = modifyReason3;
-				}
+	var modifyReason3 = getModifyReasonForJisangInfo(oldData);
+	if (modifyReason3 !== "") {
+		dataObj.modifyReason3 = modifyReason3;
+	}
 	console.log(dataObj);
-	
 
 	dataObj.gubun = "modify";
 
-	
-	
-	
-	
 	url = "/jisang/insertJisangList";
 	$.ajax({
 		url: url,
@@ -1052,7 +1039,6 @@ $(document).on("click", "#finalBtn", function() {
 		}
 	});
 });
-
 
 
 // 기본정보 변경이력 처리 함수
