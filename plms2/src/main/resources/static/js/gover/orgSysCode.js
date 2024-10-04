@@ -883,6 +883,10 @@ function systemCodeListLoad(selectCodeGroup) {
 		"CODE_GROUP" : selectCodeGroup
 	}
 	
+	if(param.CODE_GROUP == '전체') {
+		param.CODE_GROUP = '-';
+	}
+	
 	$.ajax({
 		url : "/gover/selectSysCodeList",
 		data : param,
@@ -893,7 +897,7 @@ function systemCodeListLoad(selectCodeGroup) {
 			if(res.message == 'Y') {
 				codeListLoadTbody(res.result);
 			} else {
-				
+				alert('코드 조회중 오류가 발생했습니다.');
 			}
 		},
 		error : function(error) {
