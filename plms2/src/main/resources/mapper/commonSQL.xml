@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectAllJisaList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<![CDATA[
-		select * from jisa_master
+		select sc_code_name as jm_jisa_name from sys_code where sc_group_code='JSA000' and sc_sort_order > 0
 		]]>
 	</select>
 	<select id="selectYongdoList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
