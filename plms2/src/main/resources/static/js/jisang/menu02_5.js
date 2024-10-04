@@ -1,10 +1,6 @@
-
-
     
 var table;
      
-
-
 $(document).ready(function() {
   console.log("jisang/menu02_5.js start");
   /*$('#jisa').niceSelect();*/
@@ -239,212 +235,204 @@ function datatablebasic(){
 
 // Korean    var lang_kor = {        "decimal" : "",        "emptyTable" : "데이터가 없습니다.",        "info" : "_START_ - _END_ (총 _TOTAL_ 명)",        "infoEmpty" : "0명",        "infoFiltered" : "(전체 _MAX_ 명 중 검색결과)",        "infoPostFix" : "",        "thousands" : ",",        "lengthMenu" : "_MENU_ 개씩 보기",        "loadingRecords" : "로딩중...",        "processing" : "처리중...",        "search" : "검색 : ",        "zeroRecords" : "검색된 데이터가 없습니다.",        "paginate" : {            "first" : "첫 페이지",            "last" : "마지막 페이지",            "next" : "다음",            "previous" : "이전"        },        "aria" : {            "sortAscending" : " :  오름차순 정렬",            "sortDescending" : " :  내림차순 정렬"        }    };
 
-
-function loadDataTable(params){
+function loadDataTable(params) {
 	console.log("-----start loadDataTable----------");
 	console.log(params);
 
-	table=$('#userTable').DataTable({
-		fixedColumns:{
-			start:3,
-			
-			},
-		scrollCollapse:true,
-		scrollX:true,
-		scrollY:600,
-		paging:true,
-		"oLanguage":{"sLengthMenu":"_MENU_"},
+	table = $('#userTable').DataTable({
+		fixedColumns: {
+			start: 3,
+		},
+		scrollCollapse: true,
+		scrollX: true,
+		scrollY: 600,
+		paging: true,
+		"oLanguage": { "sLengthMenu": "_MENU_" },
 		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
-		dom:'<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
-		buttons: [{extend:'excel',text:'엑셀 다운로드'}],
-        pageLength: 20,
-        bPaginate: true,
-        bLengthChange: true,
-        bInfo:false,
-        lengthMenu : [ [ 10, 20, 50, -1 ], [ "10건","20건","50건", "All" ] ],
-        bAutoWidth: false,
-        processing: true,
-        ordering: true,
-        bServerSide: true,
-//        "serverSide":true,
-        searching: false,
-        destroy:true,
-        //"aaSorting": [[0, 'asc']],
-        //order:[[0,'desc']],
-        //rowsGroup: [9],
-        rowReorder:{
-            dataSrc:'b_seq'
-        },
-    //	sAjaxSources:"/songyu/menu01DataTableList",
-    //	sServerMethod:"POST",
-        ajax : {
-            url:"/jisang/menu02_5DataTableList",
-            type:"POST",
-            datatype:"json",
-            data: function(d){
-                //d=params;
+		dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
+		buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
+		pageLength: 20,
+		bPaginate: true,
+		bLengthChange: true,
+		bInfo: false,
+		lengthMenu: [[10, 20, 50, -1], ["10건", "20건", "50건", "All"]],
+		bAutoWidth: false,
+		processing: true,
+		ordering: true,
+		bServerSide: true,
+		//        "serverSide":true,
+		searching: false,
+		destroy: true,
+		//"aaSorting": [[0, 'asc']],
+		//order:[[0,'desc']],
+		//rowsGroup: [9],
+		rowReorder: {
+			dataSrc: 'b_seq'
+		},
+		//	sAjaxSources:"/songyu/menu01DataTableList",
+		//	sServerMethod:"POST",
+		ajax: {
+			url: "/jisang/menu02_5DataTableList",
+			type: "POST",
+			datatype: "json",
+			data: function(d) {
+				//d=params;
 
-                d.jisa=ljsIsNull(params.jisa)?'':params.jisa;
-                d.status=ljsIsNull(params.status)?'':params.status;
-                d.jibun=ljsIsNull(params.jibun)?'':params.jibun;
+				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.status = ljsIsNull(params.status) ? '' : params.status;
+				d.jibun = ljsIsNull(params.jibun) ? '' : params.jibun;
 
-                var ask=(params.askMenu01==undefined || params.askMenu01==null)?'0':params.askMenu01;
-                console.log("askmenu:"+ask);
-
-
-                if (ask=="0") {
-                    console.log("---------3--------------");
-                    d.saddr=(params.addressFull==undefined || params.addressFull==null)?'':params.addressFull;
-                }
-                else{
-                    console.log("----------------------------1--------------");
-                    console.log(ljsIsNull(params.sgg));
-                    var addrs=params.sido_nm;
-                    console.log("addrs:"+addrs);
-                    if (ljsIsNull(params.sgg)) addrs=addrs+"";
-                    else addrs=addrs+" "+params.sgg;
-                    if (ljsIsNull(params.emd)) addrs=addrs+"";
-                    else addrs=addrs+" "+params.emd;
-                    if (ljsIsNull(params.ri)) addrs=addrs+"";
-                    else addrs=addrs+" "+params.ri;
-                    //var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
-                    //console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
-                    console.log("addrs:"+addrs);
-                    d.saddr=(addrs==undefined || addrs==null || addrs=="undefined")?'':addrs;
-                    //params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
-                }
-
-                console.log("saddr:"+d.saddr);
-                console.log(params);
-                console.log("-----------d-----------");
-                console.log(d);
-            },
-            dataSrc: function(json){
-                console.log("-------------json---------------");
-                console.log(json);
-                $("#dataTableTotalCount").html(json.recordsTotal);
-                //$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
-                //table.rowsgroup.update();
-                return json.data;
-            }
-        },
-        initComplete:function(){
-
-            console.log(this.api().data().length );
-
-        },
-        drwaCallback:function(settings){
-            console.log("--------------데이터가 로드되고 테이블이 다시 그려졌습니다.----------------");
-
-                    MergeGridCells1("userTable",rCols);
-
-        },
-//        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-//        //	console.log(aData);
-//        //table.rowsgroup.update();
-//            $('td:eq(0)', nRow).html(iDisplayIndexFull +1);
-//            return nRow;
-//        },
-
-           columns : [
-                      {data: "no","orderable":false},//0
-                      {data: "jisa","defaultContent":"",name:"jisa"},
-                      {data:"addr","defaultContent":""},
-                      {data:"jasan_no","defaultContent":""},
-                      {data: "jimok","defaultContent":""},
-                      {data: "soyuja","defaultContent":""},//5
-                      {data: "pmt_user","defaultContent":""},
-                      {data: "use_purpos","defaultContent":""},
-                      {data: "idx","defaultContent":""},
-                      {data: "idx","defaultContent":""},
-                      {data: "idx","defaultContent":""},//10
-                      {data: "idx",},//0
-                      {data: "idx","defaultContent":""},
-                      {data: "idx"}
-                      ],
-                      columnDefs:[
-
-                        {"className": "dt-head-center", "targets": "_all"},
-                        {className: 'dt-center',"targets": "_all"},
-                        {targets:[0],width:"50px"},
-                        {targets:[1],width:"150px"},
-                        {targets:[2],width:"400px"}, //주소
-                        {targets:[3],width:"150px"},
-                        {targets:[4],width:"100px"},
-                        {targets:[5],width:"200px"}, //소유자
-                        {targets:[6],width:"150px"},
-                        {targets:[7],width:"150px"},
-                          {targets:[8]
-                            ,width:"200px"
-                            ,render:function(data,type,row,meta){
-                                var rtn=row.use_st_date+"~"+row.use_ed_date;
-                                return rtn;
-                            }
-                        },
-                          {targets:[9],width:"100px"}, //등기여부
-                          {targets:[10],width:"200px"}, //등기일
-                          {targets:[11],width:"150px"},
-                          {targets:[12],width:"100px"
-                            ,render:function(data,type,row,meta){
-                                return "<button class='btnDesign'>위치보기</button> ";
-                            }
-                          },
-                          {targets:[13]
-                            ,width:"100px"
-                            ,render: function(data, type, row, meta) {
-
-                                 return "<button class='btnDesign'>문서보기</button> ";
-                             }
-                        }, //지도보기
+				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
+				console.log("askmenu:" + ask);
 
 
-				]
-
-            });
-			
-
-			table.on('click','tr',function() {
-
-					var target = $(event.target);
-
-                        var isButtonCell = target.closest('td').index() === 12 ;
-
-                        if (isButtonCell) {
-                            return;
-                        } else {
-                            // 다른 열을 클릭했을 때만 상세 페이지로 이동
-                            console.log("--------------tr click---------------------");
-
-                            var data = table.row(this).data();
-                            console.log(data);
-                            console.log(data.idx);
-
-                            var url = "/jisang/usePermitDetail?idx=" + data.idx;
-                            window.location = url;
-                        }
-											   
-			    });
-			
-			/*$("table th").resizable({
-				handles:'e',
-				stop:function(e,ui){
-					$(this).width(ui.size.width);
-					table.columns.adjust().draw();
+				if (ask == "0") {
+					console.log("---------3--------------");
+					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
 				}
-			});*/
-			/*table
-			    .on('order.dt search.dt', function () {
-			        let i = 1;
-			 
-			        table
-			            .cells(null, 0, { search: 'applied', order: 'applied' })
-			            .every(function (cell) {
-			                this.data(i++);
-			            });
-			    })
-			    .draw();*/
-			
-			      // console.log($('#userTable').DataTable().page.info().recordsTotal);
+				else {
+					console.log("----------------------------1--------------");
+					d.sido_nm = params.sido_nm;
+					d.sgg_nm = params.sgg;
+					d.emd_nm = params.emd;
+					d.ri_nm = params.ri;
+					d.jibun = params.jibun;
+				}
+
+				console.log("saddr:" + d.saddr);
+				console.log(params);
+				console.log("-----------d-----------");
+				console.log(d);
+			},
+			dataSrc: function(json) {
+				console.log("-------------json---------------");
+				console.log(json);
+				$("#dataTableTotalCount").html(json.recordsTotal);
+				//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
+				//table.rowsgroup.update();
+				return json.data;
+			}
+		},
+		initComplete: function() {
+
+			console.log(this.api().data().length);
+
+		},
+		drwaCallback: function(settings) {
+			console.log("--------------데이터가 로드되고 테이블이 다시 그려졌습니다.----------------");
+
+			MergeGridCells1("userTable", rCols);
+
+		},
+		//        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+		//        //	console.log(aData);
+		//        //table.rowsgroup.update();
+		//            $('td:eq(0)', nRow).html(iDisplayIndexFull +1);
+		//            return nRow;
+		//        },
+
+		columns: [
+			{ data: "no", "orderable": false },//0
+			{ data: "jisa", "defaultContent": "", name: "jisa" },
+			{ data: "addr", "defaultContent": "" },
+			{ data: "jasan_no", "defaultContent": "" },
+			{ data: "jimok", "defaultContent": "" },
+			{ data: "soyuja", "defaultContent": "" },//5
+			{ data: "pmt_user", "defaultContent": "" },
+			{ data: "use_purpos", "defaultContent": "" },
+			{ data: "idx", "defaultContent": "" },
+			{ data: "idx", "defaultContent": "" },
+			{ data: "idx", "defaultContent": "" },//10
+			{ data: "idx", },//0
+			{ data: "idx", "defaultContent": "" },
+			{ data: "idx" }
+		],
+		columnDefs: [
+
+			{ "className": "dt-head-center", "targets": "_all" },
+			{ className: 'dt-center', "targets": "_all" },
+			{ targets: [0], width: "50px" },
+			{ targets: [1], width: "150px" },
+			{ targets: [2], width: "400px" }, //주소
+			{ targets: [3], width: "150px" },
+			{ targets: [4], width: "100px" },
+			{ targets: [5], width: "200px" }, //소유자
+			{ targets: [6], width: "150px" },
+			{ targets: [7], width: "150px" },
+			{
+				targets: [8]
+				, width: "200px"
+				, render: function(data, type, row, meta) {
+					var rtn = row.use_st_date + "~" + row.use_ed_date;
+					return rtn;
+				}
+			},
+			{ targets: [9], width: "100px" }, //등기여부
+			{ targets: [10], width: "200px" }, //등기일
+			{ targets: [11], width: "150px" },
+			{
+				targets: [12], width: "100px"
+				, render: function(data, type, row, meta) {
+					return "<button class='btnDesign'>위치보기</button> ";
+				}
+			},
+			{
+				targets: [13]
+				, width: "100px"
+				, render: function(data, type, row, meta) {
+
+					return "<button class='btnDesign'>문서보기</button> ";
+				}
+			}, //지도보기
+
+
+		]
+
+	});
+
+
+	table.on('click', 'tr', function() {
+
+		var target = $(event.target);
+
+		var isButtonCell = target.closest('td').index() === 12;
+
+		if (isButtonCell) {
+			return;
+		} else {
+			// 다른 열을 클릭했을 때만 상세 페이지로 이동
+			console.log("--------------tr click---------------------");
+
+			var data = table.row(this).data();
+			console.log(data);
+			console.log(data.idx);
+
+			var url = "/jisang/usePermitDetail?idx=" + data.idx;
+			window.location = url;
+		}
+
+	});
+
+	/*$("table th").resizable({
+		handles:'e',
+		stop:function(e,ui){
+			$(this).width(ui.size.width);
+			table.columns.adjust().draw();
+		}
+	});*/
+	/*table
+			.on('order.dt search.dt', function () {
+					let i = 1;
+	 
+					table
+							.cells(null, 0, { search: 'applied', order: 'applied' })
+							.every(function (cell) {
+									this.data(i++);
+							});
+			})
+			.draw();*/
+
+	// console.log($('#userTable').DataTable().page.info().recordsTotal);
 }
 
 

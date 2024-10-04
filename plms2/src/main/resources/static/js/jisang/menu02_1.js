@@ -304,20 +304,11 @@ function loadDataTable(params) {
 				}
 				else {
 					console.log("----------------------------1--------------");
-					console.log(ljsIsNull(params.sgg));
-					var addrs = params.sido;
-					console.log("addrs:" + addrs);
-					if (ljsIsNull(params.sgg)) addrs = addrs + "";
-					else addrs = addrs + " " + params.sgg;
-					if (ljsIsNull(params.emd)) addrs = addrs + "";
-					else addrs = addrs + " " + params.emd;
-					if (ljsIsNull(params.ri)) addrs = addrs + "";
-					else addrs = addrs + " " + params.ri;
-					//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
-					//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
-					console.log("addrs:" + addrs);
-					d.saddr = (addrs == undefined || addrs == null) ? '' : addrs;
-					//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
+					d.sido_nm = params.sido;
+					d.sgg_nm = params.sgg;
+					d.emd_nm = params.emd;
+					d.ri_nm = params.ri;
+					d.jibun = params.jibun;
 				}
 				console.log("saddr:" + d.saddr);
 				console.log(params);

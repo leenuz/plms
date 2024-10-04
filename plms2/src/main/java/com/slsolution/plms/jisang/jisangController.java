@@ -1796,16 +1796,17 @@ log.info("data:"+data.get(0));
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 			HashMap params = new HashMap();
-			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			//ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectJisangListDemo",params); //demo
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+			
 			ModelAndView mav=new ModelAndView();
-			mav.setViewName("content/jisang/menu02_2");
-
+			
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("sidoList",sidolist);
-
+			
+			mav.setViewName("content/jisang/menu02_2");
 			return mav;
 		}
 		
@@ -2302,6 +2303,13 @@ log.info("data:"+data.get(0));
 		String manage_no = req.getParameter("manage_no");
 		String dosiplan = req.getParameter("dosiplan");
 		String address = req.getParameter("saddr");
+		
+		String sido_nm = req.getParameter("sido_nm");
+		String sgg_nm = req.getParameter("sgg_nm");
+		String emd_nm = req.getParameter("emd_nm");
+		String ri_nm = req.getParameter("ri_nm");
+		String jibun = req.getParameter("jibun");
+
 		String souja = req.getParameter("souja");
 		String jasan_no = req.getParameter("jasan_no");
 		String jimok_text = req.getParameter("jimok_text");
@@ -2324,6 +2332,11 @@ log.info("data:"+data.get(0));
 		params.put("idx",manage_no);
 		params.put("dosiplan",dosiplan);
 		params.put("address",address);
+		params.put("sido_nm",sido_nm);
+		params.put("sgg_nm",sgg_nm);
+		params.put("emd_nm",emd_nm);
+		params.put("ri_nm",ri_nm);
+		params.put("jibun",jibun);
 
 		params.put("souja",souja);
 		params.put("jasan_no",jasan_no);
@@ -2410,6 +2423,13 @@ log.info("data:"+data.get(0));
 		String manage_no = req.getParameter("manage_no");
 		String dosiplan = req.getParameter("dosiplan");
 		String address = req.getParameter("saddr");
+		
+		String sido_nm = req.getParameter("sido_nm");
+		String sgg_nm = req.getParameter("sgg_nm");
+		String emd_nm = req.getParameter("emd_nm");
+		String ri_nm = req.getParameter("ri_nm");
+		String jibun = req.getParameter("jibun");
+		
 		String souja = req.getParameter("souja");
 		String jasan_no = req.getParameter("jasan_no");
 		String jimok_text = req.getParameter("jimok_text");
@@ -2433,6 +2453,12 @@ log.info("data:"+data.get(0));
 		params.put("dosiplan",dosiplan);
 		params.put("address",address);
 
+		params.put("sido_nm",sido_nm);
+		params.put("sgg_nm",sgg_nm);
+		params.put("emd_nm",emd_nm);
+		params.put("ri_nm",ri_nm);
+		params.put("jibun",jibun);
+		
 		params.put("souja",souja);
 		params.put("jasan_no",jasan_no);
 
@@ -2515,6 +2541,10 @@ log.info("data:"+data.get(0));
 		String jisa = req.getParameter("jisa");
 
 		String address=req.getParameter("saddr");
+		String sido_nm = req.getParameter("sido_nm");
+		String sgg_nm = req.getParameter("sgg_nm");
+		String emd_nm = req.getParameter("emd_nm");
+		String ri_nm = req.getParameter("ri_nm");
 		String jibun = req.getParameter("jibun");
 		String souja = req.getParameter("souja");
 		String jasan_no = req.getParameter("jasan_no");
@@ -2529,8 +2559,12 @@ log.info("data:"+data.get(0));
 		params.put("length",length);
 		params.put("jisa",jisa);
 		params.put("status",status);
-		params.put("jibun",jibun);
 		params.put("address",address);
+		params.put("sido_nm",sido_nm);
+		params.put("sgg_nm",sgg_nm);
+		params.put("emd_nm",emd_nm);
+		params.put("ri_nm",ri_nm);
+		params.put("jibun",jibun);
 
 		if (orderColumn==null || orderColumn.equals("null")) {
 			log.info("----------null--------");
@@ -2595,6 +2629,11 @@ log.info("data:"+data.get(0));
 		String jisa = req.getParameter("jisa");
 		String manage_no = req.getParameter("manage_no");
 		String address=req.getParameter("saddr");
+		String sido_nm = req.getParameter("sido_nm");
+		String sgg_nm = req.getParameter("sgg_nm");
+		String emd_nm = req.getParameter("emd_nm");
+		String ri_nm = req.getParameter("ri_nm");
+		String jibun = req.getParameter("jibun");
 		String souja = req.getParameter("souja");
 		String jasan_no = req.getParameter("jasan_no");
 		String account_yn=req.getParameter("account_yn"); //회계처리 필요여부
@@ -2608,7 +2647,11 @@ log.info("data:"+data.get(0));
 		params.put("jisa",jisa);
 		params.put("idx",manage_no);
 		params.put("address",address);
-
+		params.put("sido_nm",sido_nm);
+		params.put("sgg_nm",sgg_nm);
+		params.put("emd_nm",emd_nm);
+		params.put("ri_nm",ri_nm);
+		params.put("jibun",jibun);
 		params.put("souja",souja);
 		params.put("jasan_no",jasan_no);
 		params.put("account_yn", account_yn);

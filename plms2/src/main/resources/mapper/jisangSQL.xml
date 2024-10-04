@@ -492,8 +492,8 @@ SELECT *
                   LEFT OUTER JOIN JISANG_MASTER_TMP   JMT ON JM.jm_JISANG_NO = JMT.jmt_JISANG_NO
                   LEFT OUTER JOIN JISANG_MERGE_TMP    JHT ON JM.jm_JISANG_NO = JHT.jmt_JISANG_NO
                  WHERE 1 = 1
-                   AND ( JM.jm_CANCLE_YN =''
-                    OR JM.jm_cancle_YN = 'N' )
+                   AND ( JM.jm_CANCLE_YN IS NULL
+                    OR JM.jm_cancle_YN != 'Y' )
 				<if test="PAGE_GUBUN != null and PAGE_GUBUN != ''">
 				    <if test="PAGE_GUBUN != '1'">
 				        AND JM.jm_SAVE_STATUS = '승인'
@@ -537,6 +537,21 @@ SELECT *
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND JM.jm_sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND JM.jm_sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND JM.jm_emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND JM.jm_ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			AND JM.jm_jibun LIKE '%${jibun}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
 			AND JM.jm_comple_yn = #{comple_yn}
@@ -696,6 +711,21 @@ SELECT count(*)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
 		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND JM.jm_sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND JM.jm_sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND JM.jm_emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND JM.jm_ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			AND JM.jm_jibun LIKE '%${jibun}%'
+		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
 			AND JM.jm_comple_yn = #{comple_yn}
 		</if>
@@ -841,6 +871,21 @@ SELECT *
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND JM.jm_sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND JM.jm_sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND JM.jm_emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND JM.jm_ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			AND JM.jm_jibun LIKE '%${jibun}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
 			AND JM.jm_comple_yn = #{comple_yn}
@@ -998,8 +1043,20 @@ SELECT count(*)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(comple_yn)" >
-			AND JM.jm_comple_yn = #{comple_yn}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND JM.jm_sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND JM.jm_sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND JM.jm_emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND JM.jm_ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			AND JM.jm_jibun LIKE '%${jibun}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
 			AND JM.jm_account_yn = #{account_yn}
@@ -1227,6 +1284,10 @@ SELECT count(*)
 		,jpt.addr as addr
 		,jpt.jibun as jibun
 		,jm.jm_jisa as jisa
+		,jm.jm_sido_nm as sido_nm
+		,jm.jm_sgg_nm as sgg_nm
+		,jm.jm_emd_nm as emd_nm
+		,jm.jm_ri_nm as ri_nm
 
 		FROM permit_master jpm
 			LEFT JOIN permit_togi jpt ON jpt.pmt_no=jpm.pmt_no
@@ -1243,13 +1304,24 @@ SELECT count(*)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 		and r.addr like '%${address}%'
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
-		and r.jibun = #{jibun}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND r.sido_nm = #{sido_nm}
 		</if>
-
-
-
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND r.sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND r.emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND r.ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			AND r.jibun LIKE '%${jibun}%'
+		</if>
 	</select>
+	
+	
 	 <select id="selectJisangPermitList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *,
 		(row_number() OVER()) AS no
@@ -1273,6 +1345,10 @@ SELECT count(*)
 		,jpt.jpt_addr as addr
 		,jpt.jpt_jibun as jibun
 		,jm.jm_jisa as jisa
+		,jm.jm_sido_nm as sido_nm
+		,jm.jm_sgg_nm as sgg_nm
+		,jm.jm_emd_nm as emd_nm
+		,jm.jm_ri_nm as ri_nm
 
 		FROM permit_master jpm
 			LEFT JOIN jisang_permit_togi jpt ON jpt.jpt_pmt_no=jpm.pmt_no
@@ -1291,15 +1367,25 @@ SELECT count(*)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(status)" >
 		and r.pmt_status=#{status}
 		</if>
-
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 		and r.addr like '%${address}%'
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
-		and r.jibun = #{jibun}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND r.sido_nm = #{sido_nm}
 		</if>
-
-
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND r.sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND r.emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND r.ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			AND r.jibun LIKE '%${jibun}%'
+		</if>
+		
 		<if test="length>0">
 			limit #{length} offset #{start}
 		</if>
@@ -1591,6 +1677,21 @@ SELECT count(*)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and r.address like '%${address}%'
 		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND r.sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND r.sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND r.emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND r.ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			AND r.jibun LIKE '%${jibun}%'
+		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jimokArray) and jimokArray.length > 0">
 			and r.jimok_text IN
 			<foreach item="item" index="index" collection="jimokArray" open="(" separator="," close=")">
@@ -1681,12 +1782,31 @@ SELECT count(*)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 		AND jb_bunhal_org_no = #{idx}
 		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND jb_sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND jb_sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND jb_emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND jb_ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			AND jb_jibun LIKE '%${jibun}%'
+		</if>
 		GROUP BY
 		jibun,  jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancle_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			,jb_bunhal_org_no
 		</if>
 	</select>
+	
 	<!--  지상 분할 첨부파일 카운터 -->
 <select id="selectJisangBunhalAtcFileCount" parameterType="map" resultType="Integer">
 		select count(*) as count from jisang_bunhal_atcfile
