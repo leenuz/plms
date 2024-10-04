@@ -64,9 +64,9 @@
 							</li>
 							<!-- 관로저촉여부 -->
 							<li class="content">
-								<input type="text"
-									th:value="${repFlagPnu != null && repFlagPnu.pipe_overlap_yn != null ? repFlagPnu.pipe_overlap_yn : ''}"
-									readonly class="notWriteInput" />
+							    <input type="text"
+							        th:value="${repFlagPnu != null && !repFlagPnu.isEmpty() && repFlagPnu[0]['pipe_overlap_yn'] != null ? repFlagPnu[0]['pipe_overlap_yn'] : ''}"
+							        readonly class="notWriteInput" />
 							</li>
 							<!-- 용도 -->
 							<li class="content">
@@ -100,30 +100,31 @@
 							<li class="title middleWidth">토지이용계획</li>
 						</ul>
 						<ul class="contents">
-							<!-- 주소 -->
-							<li class="content largeWidth">
-								<input type="text" th:if="${repFlagPnu!=null}" th:value="
-					    ${(repFlagPnu.sido_nm != null ? repFlagPnu.sido_nm : '') 
-					    + (repFlagPnu.sgg_nm != null ? ' ' + repFlagPnu.sgg_nm : '') 
-					    + (repFlagPnu.emd_nm != null ? ' ' + repFlagPnu.emd_nm : '') 
-					    + (repFlagPnu.ri_nm != null ? ' ' + repFlagPnu.ri_nm : '') 
-					    + (repFlagPnu.jibun != null ? ' ' + repFlagPnu.jibun : '')}" class="notWriteInput" readonly />
-							</li>
-							<!-- 지목 -->
-							<li class="content">
-								<input type="text" th:if="${repFlagPnu!=null}" th:value="${repFlagPnu.jimok_text}" class="notWriteInput"
-									readonly />
-							</li>
-							<!-- 지적면적 -->
-							<li class="content middleWidth">
-								<input type="text" th:if="${repFlagPnu!=null}" th:value="${repFlagPnu.jijuk_area}" readonly
-									class="notWriteInput" />
-							</li>
-							<!-- 토지이용계획 -->
-							<li class="content middleWidth">
-								<input type="text" th:if="${repFlagPnu!=null}" th:value="${repFlagPnu.dosiplan}" class="notWriteInput"
-									readonly />
-							</li>
+						    <!-- 주소 -->
+						    <li class="content largeWidth">
+						        <input type="text" th:if="${repFlagPnu != null && !repFlagPnu.isEmpty()}" 
+						               th:value="${(repFlagPnu[0].sido_nm != null ? repFlagPnu[0].sido_nm : '') 
+						                         + (repFlagPnu[0].sgg_nm != null ? ' ' + repFlagPnu[0].sgg_nm : '') 
+						                         + (repFlagPnu[0].emd_nm != null ? ' ' + repFlagPnu[0].emd_nm : '') 
+						                         + (repFlagPnu[0].ri_nm != null ? ' ' + repFlagPnu[0].ri_nm : '') 
+						                         + (repFlagPnu[0].jibun != null ? ' ' + repFlagPnu[0].jibun : '')}"
+						               class="notWriteInput" readonly />
+						    </li>
+						    <!-- 지목 -->
+						    <li class="content">
+						        <input type="text" th:if="${repFlagPnu != null && !repFlagPnu.isEmpty()}" 
+						               th:value="${repFlagPnu[0].jimok_text}" class="notWriteInput" readonly />
+						    </li>
+						    <!-- 지적면적 -->
+						    <li class="content middleWidth">
+						        <input type="text" th:if="${repFlagPnu != null && !repFlagPnu.isEmpty()}" 
+						               th:value="${repFlagPnu[0].jijuk_area}" readonly class="notWriteInput" />
+						    </li>
+						    <!-- 토지이용계획 -->
+						    <li class="content middleWidth">
+						        <input type="text" th:if="${repFlagPnu != null && !repFlagPnu.isEmpty()}" 
+						               th:value="${repFlagPnu[0].dosiplan}" class="notWriteInput" readonly />
+						    </li>
 						</ul>
 					</div>
 				</div>

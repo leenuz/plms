@@ -909,13 +909,8 @@ public class goverController {
 		        mav.addObject("resultData", goverList.get(0));
 		    }
 			
-			// 각 리스트가 null 또는 비어있는 경우 처리
-			if (repFlagPnu == null || repFlagPnu.isEmpty()) {
-		        mav.addObject("repFlagPnu", new HashMap<>());
-		    } else {
-		        mav.addObject("repFlagPnu", repFlagPnu.get(0));
-		    }
-		    
+			mav.addObject("repFlagPnu", repFlagPnu);
+
 		    // 각 리스트가 null 또는 비어있는 경우 처리
 		    if (goverModifyList == null || goverModifyList.isEmpty()) {
 		        mav.addObject("goverModifyList", new ArrayList<>());
