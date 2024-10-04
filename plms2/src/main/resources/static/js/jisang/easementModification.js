@@ -197,6 +197,8 @@ function updatePipeNameList(jisaValue) {
 
 			// 기존 셀렉트 박스와 커스텀 UI 초기화
 			$("#easementModifySelectBox04 option").remove();  // <select> 내부 옵션 제거
+			//$("#easementModifySelectBox04").append("<option>선택</option>");  // <select> 내부 옵션 제거
+			
 			$(".defaultInfo .depth1 .content04 .customSelectBtns").empty();  // 커스텀 <ul> 리스트 초기화
 
 			// 받은 데이터로 관로명 목록 업데이트
@@ -210,9 +212,11 @@ function updatePipeNameList(jisaValue) {
 				// 커스텀 드롭다운 UI에 <li> 항목 추가
 				$(".defaultInfo .depth1 .content04 .customSelectBtns").append("<li class='customSelectItem' data-value='" + pipeName + "'>" + pipeName + "</li>");
 			}
-
+			console.log("jmPipeName:"+jmPipeName);
+			
 			// 관로명 선택값을 커스텀 버튼에 반영
-			$(".defaultInfo .depth1 .content04 .customSelectView").text(jmPipeName || "선택");
+			if (data.length==0) $(".defaultInfo .depth1 .content04 .customSelectView").text("선택");
+			else $(".defaultInfo .depth1 .content04 .customSelectView").text(jmPipeName || "선택");
 
 			// <li> 항목 클릭 시 <select> 업데이트 및 커스텀 UI 반영
 			$(".customSelectItem").on("click", function() {
@@ -859,9 +863,14 @@ easeModificationOpenPopUp();
 */
 
 
+
 // 저장버튼 (개발 필요 - 지상권 등록 landRightsRegistration 참고, 현재 클릭 이벤트 x)
 $(document).on("click", "#finalBtn", function() {
 	console.log("---------finalBtn class click------------");
+	
+	
+	
+	
 	console.log($("#saveForm").serialize());
 
 	//데이터를 가공해서 넘김다
@@ -881,16 +890,26 @@ $(document).on("click", "#finalBtn", function() {
 	const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
 	console.log(attachFileUls);
 
-	//   console.log(soujaUls);
+	   console.log(soujaUls);
 	var soujaArr = new Array();
+	var modifyReason2 = ''; 
 	for (var i = 0; i < soujaUls.length; i++) {
 		console.log(soujaUls[i]);
 		console.log($(soujaUls[i]).find("#soujaJibun").val());
-		var soujaJibun = $(soujaUls[i]).find("#soujaJibun").val();
-		var soujaName = $(soujaUls[i]).find("#soujaName").val();
-		var soujaAddress = $(soujaUls[i]).find("#soujaAddress").val();
-		var soujaContact1 = $(soujaUls[i]).find("#soujaContact1").val();
-		var soujaContact2 = $(soujaUls[i]).find("#soujaContact2").val();
+		var soujaJibun = $(soujaUls[i]).find("input[name='soujaJibun']").val();
+		var soujaName = $(soujaUls[i]).find("input[name='soujaName']").val();
+		var soujaAddress = $(soujaUls[i]).find("input[name='soujaAddress']").val();
+		var soujaContact1 = $(soujaUls[i]).find("input[name='soujaContact1']").val();
+		var soujaContact2 = $(soujaUls[i]).find("input[name='soujaContact2']").val();
+		
+		var soujaJibunOrg = $(soujaUls[i]).find("input[name='soujaJibunOrg']").val();
+				var soujaNameOrg = $(soujaUls[i]).find("input[name='soujaNameOrg']").val();
+				var soujaAddressOrg = $(soujaUls[i]).find("input[name='soujaAddressOrg']").val();
+				var soujaContact1Org = $(soujaUls[i]).find("input[name='soujaContact1Org']").val();
+				var soujaContact2Org = $(soujaUls[i]).find("input[name='soujaContact2Org']").val();
+				
+				
+		var addKey= $(soujaUls[i]).find("input[name='addKey']").val();
 
 		soujaJibun = (soujaJibun == "undefined" || soujaJibun == "" || soujaJibun == null) ? "" : soujaJibun;
 		soujaName = (soujaName == "undefined" || soujaName == "" || soujaName == null) ? "" : soujaName;
@@ -898,9 +917,38 @@ $(document).on("click", "#finalBtn", function() {
 		soujaContact1 = (soujaContact1 == "undefined" || soujaContact1 == "" || soujaContact1 == null) ? "" : soujaContact1;
 		soujaContact2 = (soujaContact2 == "undefined" || soujaContact2 == "" || soujaContact2 == null) ? "" : soujaContact2;
 		var soujaInfo = { "jibun": soujaJibun, "soujaName": soujaName, "soujaAddress": soujaAddress, "soujaContact1": soujaContact1, "soujaContact2": soujaContact2 };
-		if (soujaJibun != "" && soujaName != "" && soujaAddress != "" && soujaContact1 != "") soujaArr.push(soujaInfo);
+		console.log("soujaJibun:"+soujaJibun);
+		console.log("soujaName:"+soujaName);
+		console.log("soujaAddress:"+soujaAddress);
+		console.log("soujaContact1:"+soujaContact1);
+		if (soujaJibun != "" && soujaName != "" && soujaAddress != "" && soujaContact1 != "") {
+			soujaArr.push(soujaInfo);
+			console.log("--------souja 변경이력--------");
+			console.log(oldSoujaArray[i]);
+			
+			console.log("addKey:"+addKey);
+			if (addKey=="new"){
+				console.log("-----------------------new-----------------");
+				// 새로운 항목에 대한 변경 이력
+				modifyReason2 += "소유자 정보 추가: ";
+							
+								modifyReason2 += compareChanges('', soujaName || '', ",성명");
+								modifyReason2 += compareChanges('', soujaAddress || '', "주소");
+								modifyReason2 += compareChanges('', soujaContact1 || '', "연락처1");
+								modifyReason2 += compareChanges('', soujaContact2 || '', "연락처2");	
+			}
+			else {
+			
+				
+				modifyReason2 += compareChanges(soujaNameOrg || '', soujaName || '', ",성명");
+				modifyReason2 += compareChanges(soujaAddressOrg || '', soujaAddress || '', "주소");
+				modifyReason2 += compareChanges(soujaContact1Org || '', soujaContact1 || '', "연락처1");
+				modifyReason2 += compareChanges(soujaContact2Org || '', soujaContact2 || '', "연락처2");	
+			}
+			
+		}
 	}
-
+    console.log(modifyReason2);
 	var files = new Array();
 	for (var i = 0; i < attachFileUls.length; i++) {
 		console.log($(attachFileUls[i]).parent().parent().html());
@@ -940,8 +988,34 @@ $(document).on("click", "#finalBtn", function() {
 	console.log("------dataObj--------");
 	console.log(dataObj);
 
+	console.log("------------------변경정보 ------------------------");
+	
+	console.log(oldData);
+	var modifyReason1 = getModifyReasonForBasicInfo(oldData);
+		console.log("----------------modifyReason1--------------");
+		console.log(modifyReason1);
+		if (modifyReason1 !== "") {
+			dataObj.modifyReason1 = modifyReason1;
+		}
+		console.log(modifyReason2);
+		if (modifyReason2 !== "") {
+			dataObj.modifyReason2 = modifyReason2;
+		}
+
+		
+		var modifyReason3 = getModifyReasonForJisangInfo(oldData);
+		if (modifyReason3 !== "") {
+					dataObj.modifyReason3 = modifyReason3;
+				}
+	console.log(dataObj);
+	
+
 	dataObj.gubun = "modify";
 
+	
+	
+	
+	
 	url = "/jisang/insertJisangList";
 	$.ajax({
 		url: url,
@@ -978,3 +1052,105 @@ $(document).on("click", "#finalBtn", function() {
 		}
 	});
 });
+
+
+
+// 기본정보 변경이력 처리 함수
+function getModifyReasonForBasicInfo(oldData) {
+	
+	
+	console.log("---------------oldData--------------------");
+	console.log(oldData);
+    var modifyReason = '';
+console.log("----------------getModifyReasonForBasicInfo--------------------");
+/*var tobj=$("input[name='newregreason_org']").val();
+var newregreasonOldValue="";
+if (tobj=="0") newregreasonOldValue="";
+else if (tobj=="1") newregreasonOldValue="사유지의 국유지 편입";
+else if (tobj=="2") newregreasonOldValue="ILI결과 발견지번";
+
+var tobj=$("input[name='occunonpayreason_org']").val();
+var occunonpayreasonOldValue="";
+if (tobj=="0") occunonpayreasonOldValue="";
+else if (tobj=="1") occunonpayreasonOldValue="영구 무상점용";
+else if (tobj=="2") occunonpayreasonOldValue="소액 미청구";
+else if (tobj=="3") occunonpayreasonOldValue="관할관청의 미청구";
+var newregreasonNewValue=$("#newregreasonBtn").text();
+var occunonpayreasonNewValue=$("#occunonpayreasonBtn").text();*/
+
+//console.log(newregreasonNewValue);
+    modifyReason += compareChanges(oldData.jm_jisa, $("select[name='jisa']").val(), "담당지사");
+	modifyReason += compareChanges(oldData.jm_pipe_yn, $("select[name='overlap_yn']").val(), "관로일치여부");
+	modifyReason += compareChanges(oldData.jm_yongdo, $("select[name='youngdo']").val(), "용도");
+	modifyReason += compareChanges(oldData.jm_pipe_name, $("select[name='pipe_name']").val(), "관로명");
+	modifyReason += compareChanges(oldData.jm_sun_gubun, $("select[name='sun_gubun']").val(), "선구분");
+	modifyReason += compareChanges(oldData.jm_gover_own_yn, $("select[name='gover_own_yn']").val(), "국공유지여부");
+	modifyReason += compareChanges(oldData.jm_jijuk_area, $("input[name='jijuk_area']").val(), "지적면적");
+	modifyReason += compareChanges(oldData.jm_jimok_text, $("#jimok_text_btn").text(), "지목");
+	var manageyn = $("input[name='manage_yn']").is(':checked') ? "Y" : "N";
+	var oldManageYn=(oldData.jm_manage_yn=="" || oldData.jm_manage_yn==null)?"N":"Y";
+	modifyReason += compareChanges(oldManageYn, manageyn, "관리제외필지");
+	modifyReason += compareChanges(oldData.jm_pipe_yn, $("input[name='raddress']").val(), "주소");
+    /*modifyReason += compareChanges($("input[name='adm_office_org']").val(), $("#admOfficeText").text(), "관리기관");
+    modifyReason += compareChanges($("input[name='office_depart_org']").val(), $("input[name='office_depart']").val(), "부서");
+    modifyReason += compareChanges($("input[name='office_charege_org']").val(), $("input[name='office_charege']").val(), "담당자");
+    modifyReason += compareChanges($("input[name='office_contact_org']").val(), $("input[name='office_contact']").val(), "연락처");
+    modifyReason += compareChanges($("input[name='yongdo_org']").val(), $("select[name='yongdo']").val(), "용도");
+    modifyReason += compareChanges($("input[name='pipe_name_org']").val(), $("select[name='pipe_name']").val(), "관로명");
+    modifyReason += compareChanges($("input[name='sun_gubun_org']").val(), $("select[name='sun_gubun']").val(), "단/복선");
+    modifyReason += compareChanges($("input[name='pipe_meter_org']").val(), $("input[name='pipe_meter']").val(), "관경");
+    modifyReason += compareChanges($("input[name='exemptionyn_org']").val(), $("select[name='exemptionyn']").val(), "감면 여부");
+    modifyReason += compareChanges($("input[name='use_purpos_org']").val(), $("select[name='use_purpos']").val(), "점용 구분");
+    modifyReason += compareChanges($("input[name='gover_st_date_org']").val(), $("input[name='gover_st_date']").val(), "점용 시작일");
+    modifyReason += compareChanges($("input[name='gover_ed_date_org']").val(), $("input[name='gover_ed_date']").val(), "점용 종료일");
+    modifyReason += compareChanges($("input[name='gover_period_org']").val(), $("input[name='gover_period']").val(), "점용갱신주기");
+    modifyReason += compareChanges(newregreasonOldValue, newregreasonNewValue, "신규등록사유");
+    modifyReason += compareChanges($("input[name='permpossyn_org']").val(), $("select[name='permpossyn']").val(), "허가증 보유 여부");
+    modifyReason += compareChanges(occunonpayreasonOldValue, occunonpayreasonNewValue, "점용료 미납부 사유");
+    var occuprepayyn = $("input[name='occuprepayyn']").is(':checked') ? "Y" : "N";
+    modifyReason += compareChanges($("input[name='occuprepayyn_org']").val(), occuprepayyn, "점용료 선납 여부");
+    modifyReason += compareChanges($("input[name='occuprepaydate_org']").val(), $("input[name='occuprepaydate']").val(), "선납기한");*/
+	console.log(modifyReason);
+    return modifyReason;
+}
+
+function getModifyReasonForJisangInfo(oldData) {
+	
+	
+	console.log("---------------oldData--------------------");
+	console.log(oldData);
+    var modifyReason = '';
+console.log("----------------getModifyReasonForJisangInfo--------------------");
+
+    modifyReason += compareChanges(oldData.jm_comple_yn, $("select[name='mcomple_yn']").val(), "등기여부");
+	modifyReason += compareChanges(oldData.jm_pyeonib_area, $("input[name='mpyeonib_area']").val(), "편입면적");
+	modifyReason += compareChanges(oldData.jm_location, $("input[name='mloacation']").val(), "위치");
+	modifyReason += compareChanges(oldData.jm_permitted_yn, $("select[name='mpermit_yn']").val(), "계약유형");
+	modifyReason += compareChanges(oldData.jm_deunggi_date, $("input[name='mdeunggi_date']").val(), "등기일");
+	modifyReason += compareChanges(oldData.jm_deunggi_no, $("input[name='mdeunggi_no']").val(), "등기번호");
+	modifyReason += compareChanges(oldData.jm_deunggiso, $("input[name='mdeunggiso']").val(), "등기소");
+	modifyReason += compareChanges(oldData.jm_dosiplan, $("select[name='mdosi_plan']").val(), "도시계획 결정여부");
+	modifyReason += compareChanges(oldData.jm_chuideuk_date, $("input[name='mchuideuk_date']").val(), "취득일");
+	modifyReason += compareChanges(oldData.jm_jasan_no, $("input[name='mjasan_no']").val(), "자산분류번호");
+	
+	console.log(modifyReason);
+    return modifyReason;
+}
+
+
+
+// 변경이력 비교 함수
+function compareChanges(orgValue, newValue, fieldName) {
+    // null과 undefined를 빈 문자열로 처리
+    orgValue = orgValue === undefined || orgValue === null ? '' : orgValue;
+    newValue = newValue === undefined || newValue === null ? '' : newValue;
+    console.log("orgValue:"+orgValue);
+	console.log("newValue:"+newValue);
+	orgValue=(orgValue || '').toString().trim();
+	if (orgValue != newValue.trim() && newValue.trim() != '') {
+	    return `${fieldName} 변경 ('${orgValue.trim()}' > '${newValue.trim()}'); `;
+	}
+
+    return '';
+}
+
