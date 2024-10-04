@@ -633,7 +633,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 			AND AA.JISA = #{jisa}
 		</if>
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
-	        and AA.gover_no= #{gover_no}
+	        AND AA.GOVER_NO LIKE '%${gover_no}%'
 	    </if>
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
 			AND AA.GOVER_NO LIKE '%${gover_no}%'
@@ -819,7 +819,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 			AND AA.JISA = #{jisa}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
-	        and AA.gover_no= #{gover_no}
+	        and AA.gover_no LIKE '%${gover_no}%'
 	    </if>
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(save_status)" >
 			AND AA.SAVE_STATUS = #{save_status}
@@ -828,7 +828,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 			AND AA.JISA = #{jisa}
 		</if>
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
-	        and AA.gover_no= #{gover_no}
+	        and AA.gover_no LIKE '%${gover_no}%'
 	    </if>
 	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
 			AND AA.GOVER_NO LIKE '%${gover_no}%'

@@ -3516,10 +3516,11 @@ log.info("params:"+params);
 			ArrayList list = new ArrayList();
 			ArrayList addlist = new ArrayList();
 
-			ParameterParser parser = new ParameterParser(request);
-
 			String groupCode = paramObject.optString("CODE_GROUP", "");
-			String useYn = parser.getString("useYn", "Y");
+			
+			if("-".equals(groupCode)) {
+				groupCode = "";
+			}
 			
 			System.out.println(paramObject.toString());
 
@@ -3529,7 +3530,6 @@ log.info("params:"+params);
 
 				HashMap params = new HashMap();
 				params.put("GROUP_CODE", groupCode);
-				params.put("USE_YN", useYn);
 
 				list = (ArrayList) mainService.selectQuery("goverSQL.selectSysCodeList", params);
 
