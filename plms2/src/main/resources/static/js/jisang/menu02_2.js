@@ -349,8 +349,10 @@ return nRow;
 					console.log("row.cancel_yn : " + row.cancel_yn);
 					if (row.cancel_yn === 'N') {
 						return ` <button class="regisRemoveBtn">해지등록</button>`;
-					} else {
+					} else if (row.cancel_yn === 'Y') {
 						return ` <button class="viewDetailButton">상세보기</button>`;
+					} else {
+						return ` <button class="regisRemoveBtn">해지등록</button>`;
 					}
 					//                            return ` <button class="viewDetailButton">상세보기</button>
 					//                                     <button class="regisRemoveBtn">해지등록</button>
