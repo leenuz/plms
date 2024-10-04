@@ -534,7 +534,6 @@ $(document).on("click", "#save_btn", function() {
 		errors.push('검토의견은 최소 10자 이상이어야 합니다.');
 	}
 	// 필수 첨부파일 체크
-	/*
   if (!formData.req_doc_file01) {
       errors.push('필수 첨부파일 1번이 누락되었습니다.');
   }
@@ -559,7 +558,6 @@ $(document).on("click", "#save_btn", function() {
   if (!formData.req_doc_file08) {
       errors.push('필수 첨부파일 8번이 누락되었습니다.');
   }
-*/
 	// 에러가 있을 경우 처리 (예: 에러 메시지 출력)
 	if (errors.length > 0) {
 		alert(errors.join('\n')); // 에러 메시지들을 알림창으로 표시
