@@ -425,7 +425,7 @@ $(document).on("click","#basicSearchBtn",function(){
 
 				   //searchResultPopDiv 화면뿌릴 DIV
 				   	   $.ajax({
-				   	   	  url: "/jisang/getBasicSearchData",
+				   	   	  url: "/land/jisang/getBasicSearchData",
 				   	   	  type: "POST",
 				   	   	  data: formSerializeArray,
 				   	   })
@@ -538,7 +538,7 @@ $(document).on("click","#finalBtn",function(){
 
 		
 return;
-				   url="/jisang/insertJisangList";
+				   url="/land/jisang/insertJisangList";
 				   $.ajax({
 
 				   				url:url,
@@ -558,7 +558,7 @@ return;
 				   						console.log("response.success Y");
 				   					//	console.log("response.resultData length:"+response.resultData.length);
 										alert("정상적으로 등록 되었습니다.");
-										window.location.href = "/jisang/menu02_1";
+										window.location.href = "/land/jisang/menu02_1";
 				   						/*$("#popup_bg").show();
 				   						$("#popup").show(500);
 				   						//$("#addrPopupLayer tbody td").remove();
@@ -686,7 +686,7 @@ const landRightSearchOpenPopUp = () => {
 		   console.log($("#searchResultPopDiv").html());
 		   //searchResultPopDiv 화면뿌릴 DIV
 		   $.ajax({
-		   	  url: "/jisang/getBasicSearchData",
+		   	  url: "/land/jisang/getBasicSearchData",
 		   	  type: "POST",
 		   	  data: formSerializeArray,
 		   })
@@ -1080,7 +1080,7 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	                
 	                function sendFileToServer(formData,status)
 	                {
-	                    var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+	                    var uploadURL = "/land/jisang/fileUpload/post"; //Upload URL
 	                    var extraData ={}; //Extra Data.
 	                    var jqXHR=$.ajax({
 	                            xhr: function() {

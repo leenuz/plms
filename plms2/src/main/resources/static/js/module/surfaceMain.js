@@ -39,27 +39,27 @@ window.addEventListener("load", () => {
 			return surfaceSelectEvet("#dopcoSurfacePart03 .surfaceSelectsTitleBtn", "#dopcoSurfacePart03 .sufaceSelectList"),
 				handleCheckboxes(companyland03);
 		}
-		else if (pathName === `/jisang/menu02_1`) {
+		else if (pathName === `/land/jisang/menu02_1`) {
 			const inquireCheckCont01 = document.getElementsByName("inquireCheckCont01");
 			return surfaceInquireSelectEvet("#dopcoSurfacePart .surfaceSelectsTitleBtn", "#dopcoSurfacePart .sufaceSelectList", "#dopcosurfaceInquire .sufaceSelectList .surfaceSelectListMember", ".surfaceInquireHiddenSelect01", "inquireCheckCont01"),
 				surfaceInquireCheckboxes(inquireCheckCont01);
 		}
-		else if (pathName === `/jisang/menu02_2`) {
+		else if (pathName === `/land/jisang/menu02_2`) {
 			const dopcosurfaceInquire02 = document.getElementsByName("dopcosurfaceInquire02");
 			return surfaceSelectEvet("#dopcosurfaceInquire02 .surfaceInquireSelectsTitleBtn", "#dopcosurfaceInquire02 .sufaceSelectList"),
 				handleCheckboxes(dopcosurfaceInquire02);
 		}
-		else if (pathName === `/jisang/menu02_3`) {
+		else if (pathName === `/land/jisang/menu02_3`) {
 			const dopcosurfaceInquire03 = document.getElementsByName("dopcosurfaceInquire03");
 			return surfaceSelectEvet("#dopcosurfaceInquire03 .surfaceInquireSelectsTitleBtn", "#dopcosurfaceInquire03 .sufaceSelectList"),
 				handleCheckboxes(dopcosurfaceInquire03);
 		}
-		else if (pathName === `/jisang/menu02_4`) {
+		else if (pathName === `/land/jisang/menu02_4`) {
 			const dopcosurfaceInquire04 = document.getElementsByName("dopcosurfaceInquire04");
 			return surfaceSelectEvet("#dopcosurfaceInquire04 .surfaceInquireSelectsTitleBtn", "#dopcosurfaceInquire04 .sufaceSelectList"),
 				handleCheckboxes(dopcosurfaceInquire04);
 		}
-		else if (pathName === `/jisang/menu02_5`) {
+		else if (pathName === `/land/jisang/menu02_5`) {
 			const dopcosurfaceInquire05 = document.getElementsByName("dopcosurfaceInquire05");
 			return surfaceInquireSelectEvet("#dopcosurfaceInquire05 .surfaceInquireSelectsTitleBtn", "#dopcosurfaceInquire05 .sufaceSelectList", "#dopcosurfaceInquire05 .sufaceSelectList .surfaceSelectListMember", ".surfaceInquireHiddenSelect05");
 			handleCheckboxes(dopcosurfaceInquire05);

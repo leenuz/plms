@@ -72,12 +72,12 @@ $(document).on("click","#mergeBtn",function(){
        // 선택된 인덱스 값을 확인
        console.log("Query parameters:", queryParams);
 
-       url= "/jisang/landRightMerge?idx=";    //합필등록
+       url= "/land/jisang/landRightMerge?idx=";    //합필등록
 
        if (queryParams.length > 0) {
           // 매겨진 파라미터를 사용하여 쿼리 스트링 생성
           const queryString = queryParams.join('&');
-          url = `/jisang/landRightMerge?${queryString}&tcount=${queryParams.length}`;
+          url = `/land/jisang/landRightMerge?${queryString}&tcount=${queryParams.length}`;
           if(repIdx) url += `&repIdx=${repIdx}`
           window.location = url;
       }
@@ -313,7 +313,7 @@ function loadDataTable(params) {
 		//	sAjaxSources:"/songyu/menu01DataTableList",
 		//	sServerMethod:"POST",
 		ajax: {
-			url: "/jisang/menu02_1DataTableList",
+			url: "/land/jisang/menu02_1DataTableList",
 			type: "POST",
 			datatype: "json",
 			data: function(d) {
@@ -455,7 +455,7 @@ function loadDataTable(params) {
                     idx: data.idx
                 };
                 $.ajax({
-                  url: "/jisang/getJibunListData",
+                  url: "/land/jisang/getJibunListData",
                   type: "POST",
                   data: clickData,
                })
@@ -478,7 +478,7 @@ function loadDataTable(params) {
 				// ECHO 문서보기 클릭
 			}
 		} else {
-			url = "/jisang/easementDetails?idx=" + data.idx;
+			url = "/land/jisang/easementDetails?idx=" + data.idx;
 			console.log(url);
 			window.location = url;
 		}

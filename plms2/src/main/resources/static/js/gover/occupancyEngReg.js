@@ -28,7 +28,7 @@ $(document).on("click","#saveBtn",function(){
 		console.log(object);
 		
 		
-		url="/gover/insertGoverTerminationAdd"; 
+		url="/land/gover/insertGoverTerminationAdd"; 
 		   $.ajax({
 		   			
 				url:url,

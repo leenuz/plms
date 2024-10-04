@@ -9,7 +9,7 @@ $(document).ready(function () {
 			  const idx = urlParams.get('idx');
 			  const index = urlParams.get('index');
 			   const js_idx = urlParams.get('js_idx');
-			url = "/jisang/divisionRegister?idx=" + idx + "&index=" + index + "&js_idx=" + js_idx ;
+			url = "/land/jisang/divisionRegister?idx=" + idx + "&index=" + index + "&js_idx=" + js_idx ;
 			  window.location = url;
     });
 

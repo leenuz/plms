@@ -278,7 +278,7 @@ function loadDataTable(params) {
 		//	sAjaxSources:"/songyu/menu01DataTableList",
 		//	sServerMethod:"POST",
 		ajax: {
-			url: "/jisang/menu02_1DataTableList",
+			url: "/land/jisang/menu02_1DataTableList",
 			type: "POST",
 			datatype: "json",
 			data: function(d) {
@@ -397,7 +397,7 @@ return nRow;
 			console.log(data);
 			console.log(data.idx);
 
-			var url = "/jisang/easementDetails?idx=" + data.idx;
+			var url = "/land/jisang/easementDetails?idx=" + data.idx;
 			window.location = url;
 		}
 

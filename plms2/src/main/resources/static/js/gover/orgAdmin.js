@@ -25,7 +25,7 @@ $(document).on("change", "#privateUseSelectBox01_1", function () {
     const allData = { jisa: selectedJisa };
 
     $.ajax({
-        url: "/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
+        url: "/land/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -85,7 +85,7 @@ $(document).on("change", "#privateUseSelectBox01_3", function () {
     };
 
     $.ajax({
-        url: "/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
+        url: "/land/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -124,7 +124,7 @@ const runScriptsInElement = (element) => {
 // 신규등록 팝업
 function showRegPopup() {
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
-	let orgAdminRegisterPath = '/gover/orgAdminPopupReg';
+	let orgAdminRegisterPath = '/land/gover/orgAdminPopupReg';
 
 	if (orgAdminRegisterPopWrapper) {
 		let xhr = new XMLHttpRequest();
@@ -143,7 +143,7 @@ function showRegPopup() {
 // 신규취소 팝업
 function showRegCancelPopup() {
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
-	let orgAdminRegisterPath = '/gover/orgAdminPopupRegCancel';
+	let orgAdminRegisterPath = '/land/gover/orgAdminPopupRegCancel';
 
 	if (orgAdminRegisterPopWrapper) {
 		let xhr = new XMLHttpRequest();
@@ -182,7 +182,7 @@ function showModPopup(idx) {
 	selectedOrgAdminInfo = orgAdminTargetInfo[idx];
 	let object = {'adm_seq': orgAdminTargetInfo[idx].adm_seq};
 	$.ajax({
-        url: "/gover/getGoverOfficeMngHistoryList", // 허가관청 목록을 가져오는 API
+        url: "/land/gover/getGoverOfficeMngHistoryList", // 허가관청 목록을 가져오는 API
         data: JSON.stringify(object),
         type: "POST",
         dataType: "json",
@@ -230,7 +230,7 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 	let row = $(this).parent().parent().parent().parent().index();
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
 
-	/* let orgAdminRegisterPath = '/gover/orgAdminPopupAccept';
+	/* let orgAdminRegisterPath = '/land/gover/orgAdminPopupAccept';
 	 var buttonElement = this;  // 일반 JavaScript로 접근
 	   console.log(buttonElement);  // 현재 버튼 element를 확인
 	   var buttonHtml = $(this).html();  // jQuery를 사용하여 HTML 내용 가져오기
@@ -253,7 +253,7 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 	 }*/
 	var datas = { "idx": idx }
 	$.ajax({
-		url: "/gover/getGoverOfficeMngEditPage",
+		url: "/land/gover/getGoverOfficeMngEditPage",
 		type: "POST",
 		data: datas,
 	})
@@ -267,7 +267,7 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 		
 		let object = {'adm_seq': orgAdminTargetInfo[row].adm_seq};
 		$.ajax({
-	        url: "/gover/getGoverOfficeMngHistoryList", // 허가관청 목록을 가져오는 API
+	        url: "/land/gover/getGoverOfficeMngHistoryList", // 허가관청 목록을 가져오는 API
 	        data: JSON.stringify(object),
 	        type: "POST",
 	        dataType: "json",
@@ -318,7 +318,7 @@ $(document).on("click", "#approve_Popup .approveBtn", function() {
 	
 	
     $.ajax({
-        url: '/gover/approveGoverOffice',
+        url: '/land/gover/approveGoverOffice',
         type: 'POST',
         data: { idx: parseInt(idx, 10) },  // 정수로 변환
         success: function(result) {
@@ -342,7 +342,7 @@ $(document).on("click", "#approve_Popup .approveBtn", function() {
 function showAcceptPopup() {
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
 
-	let orgAdminRegisterPath = '/gover/orgAdminPopupAccept';
+	let orgAdminRegisterPath = '/land/gover/orgAdminPopupAccept';
 	var buttonElement = this;  // 일반 JavaScript로 접근
 	console.log(buttonElement);  // 현재 버튼 element를 확인
 	var buttonHtml = $(this).html();  // jQuery를 사용하여 HTML 내용 가져오기
@@ -473,7 +473,7 @@ registerApprovePopEvet = () => {
 						object.gubun = "smodify";
 					}
 					$.ajax({
-						url: "/gover/insertOfficeMng",
+						url: "/land/gover/insertOfficeMng",
 						type: 'POST',
 						contentType: "application/json",
 						data: JSON.stringify(object),
@@ -557,7 +557,7 @@ modApprovePopEvet = () => {
 					object.adm_seq = selectedOrgAdminInfo.adm_seq;
 					
 					$.ajax({
-						url: "/gover/insertOfficeMng",
+						url: "/land/gover/insertOfficeMng",
 						type: 'POST',
 						contentType: "application/json",
 						data: JSON.stringify(object),
@@ -718,7 +718,7 @@ if (PopupMoreSelectBtn01) {
 			console.log(object);
 			// registerApprovePopupOpen.classList.remove("active");
 
-			url = "/gover/getselectOfficeMng";
+			url = "/land/gover/getselectOfficeMng";
 			$.ajax({
 				url: url,
 				type: 'POST',
@@ -832,7 +832,7 @@ $(document).on("change", "#jisaSelectBox", function () {
     const allData = { jisa: selectedJisa };
 
     $.ajax({
-        url: "/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
+        url: "/land/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -864,7 +864,7 @@ $(document).on("change", "#mJisaSelectBox", function () {
     const allData = { jisa: selectedJisa };
 
     $.ajax({
-        url: "/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
+        url: "/land/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -924,7 +924,7 @@ function deleteOrgAdmin(idx) {
 	object.gubun = "delete";
 	if(confirm('삭제하시겠습니까?')) {
 		$.ajax({
-			url: "/gover/deleteOfficeMng",
+			url: "/land/gover/deleteOfficeMng",
 			type: 'POST',
 			contentType: "application/json",
 			data: JSON.stringify(object),
@@ -972,7 +972,7 @@ function loadData() {
 	var object = {};
 	
 	$.ajax({
-		url: "/gover/orgAdminDataTableList?" + paramStr,
+		url: "/land/gover/orgAdminDataTableList?" + paramStr,
 		async: true,
 		type: "POST",
 		dataType: "json",

@@ -101,7 +101,7 @@ $(document).ready(function () {
 	}
 	                
 	function sendFileToServer(formData, status) {
-		var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+		var uploadURL = "/land/jisang/fileUpload/post"; //Upload URL
 		var extraData = {}; //Extra Data.
 		var jqXHR = $.ajax({
 			xhr: function() {
@@ -243,7 +243,7 @@ $(document).on("click","#deleteFileBtn",function(){
 	                   alert('선택된 파일이 삭제되었습니다.');
 	                   var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val()};
 	                   $.ajax({
-	                          url: "/jisang/getAtcFileData",
+	                          url: "/land/jisang/getAtcFileData",
 	                          type: "POST",
 	                          data: params,
 	                      })
@@ -273,7 +273,7 @@ $(document).on("click",".bunhalBtn",function(){
       const idx = urlParams.get('idx');
       const index = urlParams.get('index');
        const js_idx = urlParams.get('js_idx');
-	  url = "/jisang/divisionRegister?idx=" + idx + "&index=" + index + "&js_idx=" + js_idx ;
+	  url = "/land/jisang/divisionRegister?idx=" + idx + "&index=" + index + "&js_idx=" + js_idx ;
       window.location = url;
 });
 
@@ -347,7 +347,7 @@ $(document).on("click","#fileSaveBtn",function(){
 						$("#fileListDiv div").remove();
 						$("#fileListDiv").append("<div id='flist'></div>");
 						$.ajax({
-						       url: "/jisang/getPnuAtcFileData",
+						       url: "/land/jisang/getPnuAtcFileData",
 						       type: "POST",
 						       data: params,
 						   })
@@ -416,7 +416,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     alert('선택된 파일이 삭제되었습니다.');
                     var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val()};
                     $.ajax({
-                           url: "/jisang/getAtcFileData",
+                           url: "/land/jisang/getAtcFileData",
                            type: "POST",
                            data: params,
                        })
@@ -596,7 +596,7 @@ function loadMemoEditBtn(){
 			 })
 			 .done(function (fragment) {
 				$('#memoDiv').replaceWith(fragment);
-				scrFn_loadScript('/js/jisang/groundDetail.js');
+				scrFn_loadScript('/js/land/jisang/groundDetail.js');
 			  });
         })
     })
@@ -861,7 +861,7 @@ $(document).on("click","#deleteSelectedBtn",function(){
                 alert('선택된 파일이 삭제되었습니다.');
                 var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val()};
                 $.ajax({
-                       url: "/jisang/getAtcFileData",
+                       url: "/land/jisang/getAtcFileData",
                        type: "POST",
                        data: params,
                    })
@@ -985,7 +985,7 @@ function printDivContent(divId) {
                 
                 // 프린트 명령 실행
                 printWindow.print();*/
-				var printWindow = window.open('/jisang/groundDetailPrint?idx=J_044662&index=44664&gidx=0', '_blank', 'width=1680,height=960');
+				var printWindow = window.open('/land/jisang/groundDetailPrint?idx=J_044662&index=44664&gidx=0', '_blank', 'width=1680,height=960');
 
 				                // 새 창이 열리고 로드된 후 자동으로 프린트 실행
 				                printWindow.onload = function() {

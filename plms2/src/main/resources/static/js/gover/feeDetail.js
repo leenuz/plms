@@ -240,7 +240,7 @@ $(document).on("click","#sangsinBtn",function(){
 				};
 		console.log(jsonData);
 		
-		var url="/gover/insertGoverPaySangsin";
+		var url="/land/gover/insertGoverPaySangsin";
 		//	var jsonDatas=encodeURIComponent(JSON.stringify(data));
 			
 				$.ajax({

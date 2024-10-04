@@ -52,7 +52,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableAsync
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/gover")
+@RequestMapping("/land/gover")
 @CrossOrigin(origins="*",allowedHeaders="*")
 public class goverController {
 	

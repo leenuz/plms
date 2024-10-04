@@ -272,7 +272,7 @@ function loadDataTable(params) {
 		//	sAjaxSources:"/songyu/menu01DataTableList",
 		//	sServerMethod:"POST",
 		ajax: {
-			url: "/jisang/menu02_5DataTableList",
+			url: "/land/jisang/menu02_5DataTableList",
 			type: "POST",
 			datatype: "json",
 			data: function(d) {
@@ -407,7 +407,7 @@ function loadDataTable(params) {
 			console.log(data);
 			console.log(data.idx);
 
-			var url = "/jisang/usePermitDetail?idx=" + data.idx;
+			var url = "/land/jisang/usePermitDetail?idx=" + data.idx;
 			window.location = url;
 		}
 

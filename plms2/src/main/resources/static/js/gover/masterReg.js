@@ -34,7 +34,7 @@ $(document).ready(function() {
          const allData = { jisa: selectedJisa };
 
          $.ajax({
-             url: "/gover/getPipeName", // 허가관청 목록을 가져오는 API
+             url: "/land/gover/getPipeName", // 허가관청 목록을 가져오는 API
              data: JSON.stringify(allData),
              async: true,
              type: "POST",
@@ -73,7 +73,7 @@ $(document).ready(function() {
           const allData = { jisa: selectedJisa };
 
           $.ajax({
-              url: "/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
+              url: "/land/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
               data: JSON.stringify(allData),
               async: true,
               type: "POST",
@@ -121,7 +121,7 @@ $(document).ready(function() {
          };
 
          $.ajax({
-             url: "/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
+             url: "/land/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
              data: JSON.stringify(allData),
              async: true,
              type: "POST",
@@ -431,7 +431,7 @@ $(document).ready(function() {
 	                
     function sendFileToServer(formData,status)
     {
-        var uploadURL = "/gover/fileUpload/post"; //Upload URL
+        var uploadURL = "/land/gover/fileUpload/post"; //Upload URL
         var extraData ={}; //Extra Data.
         var jqXHR = $.ajax({
 			xhr: function() {
@@ -656,7 +656,7 @@ function updateGoverAdmOfficeForRow(row, selectedPmtOffice) {
     };
 
     $.ajax({
-        url: "/gover/getAdmOffice",  // 관리기관 목록을 가져오는 API
+        url: "/land/gover/getAdmOffice",  // 관리기관 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -887,7 +887,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 
 	console.log(object);
 
-	url="/gover/insertGoverMasterDemo"; 
+	url="/land/gover/insertGoverMasterDemo"; 
 				   $.ajax({
 				   			
 				   				url:url,
@@ -1050,7 +1050,7 @@ $(document).on("click", "#requestBtn", function() {
 
 	console.log(object);
 	//url="/gover/insertGoverMaster"; //실제 임시저장
-	url="/gover/insertGoverMasterDemo";  //상신완료 된걸로 저장 테스트용
+	url="/land/gover/insertGoverMasterDemo";  //상신완료 된걸로 저장 테스트용
 				   $.ajax({
 				   			
 				   				url:url,
@@ -1373,7 +1373,7 @@ const ExcelPopOpenEvet = () => {
 
      const ExcelPopBtn = document.querySelector(".ExcelPopBtn");
      const masterRegExcelPopWrapper = document.querySelector(".masterRegExcelPopWrapper");
-     let htmlFilePath = '/gover/exceluploadPopup'; // 엑셀업로드
+     let htmlFilePath = '/land/gover/exceluploadPopup'; // 엑셀업로드
 
      if(ExcelPopBtn){
 

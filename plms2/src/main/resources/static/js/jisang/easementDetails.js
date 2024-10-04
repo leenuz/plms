@@ -5,7 +5,7 @@ $(document).ready(function () {
         const jmJisangNo = $(this).data('jisang-no');
         
         // API 요청 경로 설정 (jm_jisang_no를 포함)
-        const url = `/jisang/easementModification?idx=${jmJisangNo}`;
+        const url = `/land/jisang/easementModification?idx=${jmJisangNo}`;
 
         // 페이지 이동을 통한 API 호출
         window.location.href = url;

@@ -9,7 +9,7 @@ test2();
 
 function init_Table(){
   $("#mainTable").DataTable().destroy();
-  var url="/jisang/api/list";
+  var url="/land/jisang/api/list";
 	 $("#mainTable").DataTable({
      "responsive": {
          "details": {
@@ -61,7 +61,7 @@ function init_Table(){
 }
 
  function testAjax(){
-			 var url="/jisang/api/list";
+			 var url="/land/jisang/api/list";
 	var jsonData={"allocation":"aaa"};
 	
 			 $.ajax({

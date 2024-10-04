@@ -261,7 +261,7 @@ function loadDataTable(params) {
 		//	sAjaxSources:"/songyu/menu01DataTableList",
 		//	sServerMethod:"POST",
 		ajax: {
-			url: "/jisang/menu02_2DataTableList",
+			url: "/land/jisang/menu02_2DataTableList",
 			type: "POST",
 			datatype: "json",
 			data: function(d) {
@@ -406,9 +406,9 @@ return nRow;
 				const buttonClass = event.target.className;
 
 				if (buttonClass == "regisRemoveBtn") {
-					url = "/jisang/landTerminationRegistration?idx=" + data.idx + "&index=" + data.index;        //해지등록
+					url = "/land/jisang/landTerminationRegistration?idx=" + data.idx + "&index=" + data.index;        //해지등록
 				} else {
-					url = "/jisang/easementDetails?idx=" + data.idx + "&index=" + data.index;      //상세보기
+					url = "/land/jisang/easementDetails?idx=" + data.idx + "&index=" + data.index;      //상세보기
 				}
 				window.location = url;
 			} else if (target.closest('td').index() === 13) {
@@ -420,7 +420,7 @@ return nRow;
 
 			}
 		} else {
-			url = "/jisang/easementDetails?idx=" + data.idx;
+			url = "/land/jisang/easementDetails?idx=" + data.idx;
 			window.location = url;
 		}
 

@@ -20,8 +20,8 @@
 minwonCompleteSave
 <script>
 $(document).on("click","#bunhalSangsin",function(){
-	//http://localhost:8080/jisang/divisionRegisterSangsin?idx=J_008873
-	var url="/jisang/divisionRegisterSangsin";
+	//http://localhost:8080/land/jisang/divisionRegisterSangsin?idx=J_008873
+	var url="/land/jisang/divisionRegisterSangsin";
 	var jsonData={"idx":"J_008873"};
 	
 	
@@ -53,8 +53,8 @@ $(document).on("click","#bunhalSangsin",function(){
 
 
 $(document).on("click","#selectJisangPmtDetailListAppoval",function(){
-	//http://localhost:8080/jisang/divisionRegisterSangsin?idx=J_008873
-	var url="/jisang/selectJisangPmtDetailListAppoval";
+	//http://localhost:8080/land/jisang/divisionRegisterSangsin?idx=J_008873
+	var url="/land/jisang/selectJisangPmtDetailListAppoval";
 	var pmt_no="P_000029";
 	//"P_000507"
 /* 	String str_UserId = "105681";
@@ -95,7 +95,7 @@ $(document).on("click","#selectJisangPmtDetailListAppoval",function(){
 
 
 $(document).on("click","#insertJisangTerminationAdd",function(){
-	//http://localhost:8080/jisang/divisionRegisterSangsin?idx=J_008873
+	//http://localhost:8080/land/jisang/divisionRegisterSangsin?idx=J_008873
 	
 	
 	//"P_000507"
@@ -148,7 +148,7 @@ $(document).on("click","#insertJisangTerminationAdd",function(){
 
 	String fileseq = parser.getString("fileseq", ""); // 파일 seq */
 	
-	var url="/jisang/insertJisangTerminationAdd";
+	var url="/land/jisang/insertJisangTerminationAdd";
 //	var jsonDatas=encodeURIComponent(JSON.stringify(data));
 	console.log(jsonData);
 		$.ajax({
@@ -178,7 +178,7 @@ $(document).on("click","#insertJisangTerminationAdd",function(){
 
 //지상합필 저장 후 상신
 $(document).on("click","#saveJisangMerge",function(){
-	//http://localhost:8080/jisang/divisionRegisterSangsin?idx=J_008873
+	//http://localhost:8080/land/jisang/divisionRegisterSangsin?idx=J_008873
 	
 	
 	//"P_000507"
@@ -212,7 +212,7 @@ $(document).on("click","#saveJisangMerge",function(){
 	//두개의 지상권 정보를 가져와
 	   var data=[{"jisang_no":"J_010246"},{"jisang_no":"J_010247"}];
 	console.log(data);
-	    var turl="/jisang/getSaveJisangMergeData";
+	    var turl="/land/jisang/getSaveJisangMergeData";
 	   $.ajax({
 			
 			url:turl,
@@ -262,7 +262,7 @@ $(document).on("click","#saveJisangMerge",function(){
 			};
 	console.log(jsonData);
 	
-	var url="/jisang/saveJisangMerge";
+	var url="/land/jisang/saveJisangMerge";
 //	var jsonDatas=encodeURIComponent(JSON.stringify(data));
 	console.log(jsonData);
 		$.ajax({
@@ -294,7 +294,7 @@ $(document).on("click","#saveJisangMerge",function(){
 
 //점용전자결재 상신
 $(document).on("click","#insertGoverPaySangsin",function(){
-	//http://localhost:8080/jisang/divisionRegisterSangsin?idx=J_008873
+	//http://localhost:8080/land/jisang/divisionRegisterSangsin?idx=J_008873
 	
 	
 	//"P_000507"
@@ -490,7 +490,7 @@ $(document).on("click","#insertGoverPaySangsin",function(){
 //신규민원상신
 
 $(document).on("click","#saveMinwonData",function(){
-	//http://localhost:8080/jisang/divisionRegisterSangsin?idx=J_008873
+	//http://localhost:8080/land/jisang/divisionRegisterSangsin?idx=J_008873
 	
 	
 	//"P_000507"
@@ -626,7 +626,7 @@ $(document).on("click","#saveMinwonData",function(){
 //대응방안수립
 
 $(document).on("click","#saveMinwonHandling",function(){
-	//http://localhost:8080/jisang/divisionRegisterSangsin?idx=J_008873
+	//http://localhost:8080/land/jisang/divisionRegisterSangsin?idx=J_008873
 	
 	
 	//"P_000507"
@@ -758,7 +758,7 @@ $(document).on("click","#saveMinwonHandling",function(){
 //내용협의 추가저장 상신
 
 $(document).on("click","#saveMinwonAgreeData",function(){
-	//http://localhost:8080/jisang/divisionRegisterSangsin?idx=J_008873
+	//http://localhost:8080/land/jisang/divisionRegisterSangsin?idx=J_008873
 	
 	
 	//"P_000507"
@@ -897,7 +897,7 @@ $(document).on("click","#saveMinwonAgreeData",function(){
 //민원 완료 처리 상신
 
 $(document).on("click","#minwonCompleteSave",function(){
-	//http://localhost:8080/jisang/divisionRegisterSangsin?idx=J_008873
+	//http://localhost:8080/land/jisang/divisionRegisterSangsin?idx=J_008873
 	
 	
 	//"P_000507"

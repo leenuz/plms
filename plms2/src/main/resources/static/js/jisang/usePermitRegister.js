@@ -576,7 +576,7 @@ $(document).ready(function(){
 
 		    function sendFileToServer(formData,status)
 		    {
-		        var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+		        var uploadURL = "/land/jisang/fileUpload/post"; //Upload URL
 		        var extraData ={}; //Extra Data.
 		        var jqXHR=$.ajax({
 		                xhr: function() {
@@ -618,7 +618,7 @@ $(document).ready(function(){
 			    {
 					var idx=$("#hiddenJisangNo").val();
 					console.log($("#hiddenJisangNo").val());
-			        var uploadURL = "/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
+			        var uploadURL = "/land/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
 			        var extraData ={}; //Extra Data.
 			        var jqXHR=$.ajax({
 			                xhr: function() {
@@ -901,7 +901,7 @@ console.log($(this).parent().parent().html());
 				   
 				   
 				   	   $.ajax({
-				   	   	  url: "/jisang/getBunhalJIjukSelect",
+				   	   	  url: "/land/jisang/getBunhalJIjukSelect",
 				   	   	  type: "POST",
 				   	   	  data: datas,
 				   	   })
@@ -947,7 +947,7 @@ $(document).on("click","#popupSearchBtn",function(){
 	console.log(formSerializeArray);
 	
 	 $.ajax({
-					   	   	  url: "/jisang/getPermitJisangSelect",
+					   	   	  url: "/land/jisang/getPermitJisangSelect",
 					   	   	  type: "POST",
 					   	   	  data: formSerializeArray,
 							  
@@ -992,7 +992,7 @@ $(document).on("click","#docFileDelBtn",function(){
 		
 		//임시파일 삭제
 		$.ajax({
-		          url: "/jisang/deleteJisangTmpFile",
+		          url: "/land/jisang/deleteJisangTmpFile",
 		          type: "POST",
 		          data: params,
 				  
@@ -1083,7 +1083,7 @@ $(document).on("click","#sangsinBtn",function(){
 		
 		//임시저장 호출
 
-		url="/jisang/usePermitRegisterSave";
+		url="/land/jisang/usePermitRegisterSave";
 		$.ajax({
 
 			url:url,
@@ -1113,7 +1113,7 @@ $(document).on("click","#sangsinBtn",function(){
 						$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
 					}*/
 					
-					url="/jisang/selectJisangPmtDetailListAppoval";
+					url="/land/jisang/selectJisangPmtDetailListAppoval";
 						   	$.ajax({
 
 								url:url,
@@ -1242,7 +1242,7 @@ $(document).on("click","#mainSaveBtn",function(){
 	console.log(dataObj);
 	
 	
-	url="/jisang/usePermitRegisterSave";
+	url="/land/jisang/usePermitRegisterSave";
    	$.ajax({
 
 		url:url,

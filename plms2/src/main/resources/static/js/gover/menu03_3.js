@@ -208,7 +208,7 @@ function loadDataTable(params) {
         order: [[3, 'desc']],
         rowReorder: { dataSrc: 'b_seq' },
         ajax: {
-            url: "/gover/menu03_3DataTableList",
+            url: "/land/gover/menu03_3DataTableList",
             type: "POST",
             datatype: "json",
             data: function(d) {
@@ -358,7 +358,7 @@ function loadDataTable(params) {
             console.log(data);
             console.log(data.idx);
 
-            var url = "/gover/useDetail?idx=" + data.idx;
+            var url = "/land/gover/useDetail?idx=" + data.idx;
             window.location = url;
         }
     });
@@ -374,7 +374,7 @@ $(document).on('click', '#cancelBtn', function(event) {
     console.log(data);
 
     // 해당 idx를 이용해 페이지로 이동
-    var url = "/gover/occupancyEndReg?idx=" + data.idx;
+    var url = "/land/gover/occupancyEndReg?idx=" + data.idx;
     window.location = url;
 });
 
@@ -415,7 +415,7 @@ $(document).on("change", "#privateUseSelectBox03_1", function () {
     const allData = { jisa: selectedJisa };
 
     $.ajax({
-        url: "/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
+        url: "/land/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -468,7 +468,7 @@ $(document).on("change", "#privateUseSelectBox03_3", function () {
     };
 
     $.ajax({
-        url: "/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
+        url: "/land/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",

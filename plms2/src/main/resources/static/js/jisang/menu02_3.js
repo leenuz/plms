@@ -269,7 +269,7 @@ function loadDataTable(params) {
 			dataSrc: 'b_seq'
 		},
 		ajax: {
-			url: "/jisang/menu02BunhalDataTableList",
+			url: "/land/jisang/menu02BunhalDataTableList",
 			type: "POST",
 			datatype: "json",
 			data: function(d) {
@@ -386,7 +386,7 @@ return nRow;
 					idx: data.idx
 				};
 				$.ajax({
-					url: "/jisang/getJibunListData",
+					url: "/land/jisang/getJibunListData",
 					type: "POST",
 					data: clickData,
 				})
@@ -413,7 +413,7 @@ return nRow;
 			}
 		} else {
 			js_idx = data.js_idx != null ? data.js_idx : "";
-			url = "/jisang/forDivisionEasementDetails?idx=" + data.idx + "&index=" + data.index + "&js_idx=" + js_idx;
+			url = "/land/jisang/forDivisionEasementDetails?idx=" + data.idx + "&index=" + data.index + "&js_idx=" + js_idx;
 			window.location = url;
 		}
 

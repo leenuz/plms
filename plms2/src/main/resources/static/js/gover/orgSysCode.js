@@ -17,7 +17,7 @@ $(document).on("change", "#privateUseSelectBox01_1", function () {
     const allData = { jisa: selectedJisa };
 
     $.ajax({
-        url: "/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
+        url: "/land/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -62,7 +62,7 @@ $(document).on("change", "#privateUseSelectBox01_3", function () {
     };
 
     $.ajax({
-        url: "/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
+        url: "/land/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -101,7 +101,7 @@ const runScriptsInElement = (element) => {
 // 신규등록 팝업
 function showRegPopup() {
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
-	let orgAdminRegisterPath = '/gover/orgAdminPopupReg';
+	let orgAdminRegisterPath = '/land/gover/orgAdminPopupReg';
 
 	if (orgAdminRegisterPopWrapper) {
 		let xhr = new XMLHttpRequest();
@@ -120,7 +120,7 @@ function showRegPopup() {
 // 신규취소 팝업
 function showRegCancelPopup() {
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
-	let orgAdminRegisterPath = '/gover/orgAdminPopupRegCancel';
+	let orgAdminRegisterPath = '/land/gover/orgAdminPopupRegCancel';
 
 	if (orgAdminRegisterPopWrapper) {
 		let xhr = new XMLHttpRequest();
@@ -139,7 +139,7 @@ function showRegCancelPopup() {
 // 수정 팝업
 function showModPopup() {
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
-	let orgAdminRegisterPath = '/gover/orgAdminPopupMod';
+	let orgAdminRegisterPath = '/land/gover/orgAdminPopupMod';
 
 	if (orgAdminRegisterPopWrapper) {
 		let xhr = new XMLHttpRequest();
@@ -165,7 +165,7 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 	
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
 
-	/* let orgAdminRegisterPath = '/gover/orgAdminPopupAccept';
+	/* let orgAdminRegisterPath = '/land/gover/orgAdminPopupAccept';
 	 var buttonElement = this;  // 일반 JavaScript로 접근
 	   console.log(buttonElement);  // 현재 버튼 element를 확인
 	   var buttonHtml = $(this).html();  // jQuery를 사용하여 HTML 내용 가져오기
@@ -188,7 +188,7 @@ $(document).on("click", ".pendingApprovalBtn", function() {
 	 }*/
 	var datas = { "idx": idx }
 	$.ajax({
-		url: "/gover/getGoverOfficeMngEditPage",
+		url: "/land/gover/getGoverOfficeMngEditPage",
 		type: "POST",
 		data: datas,
 	})
@@ -214,7 +214,7 @@ $(document).on("click", "#approve_Popup .approveBtn", function() {
     }
 
     $.ajax({
-        url: '/gover/approveGoverOffice',
+        url: '/land/gover/approveGoverOffice',
         type: 'POST',
         data: { idx: parseInt(idx, 10) },  // 정수로 변환
         success: function(result) {
@@ -237,7 +237,7 @@ $(document).on("click", "#approve_Popup .approveBtn", function() {
 function showAcceptPopup() {
 	const orgAdminRegisterPopWrapper = document.querySelector(".popupWrapper");
 
-	let orgAdminRegisterPath = '/gover/orgAdminPopupAccept';
+	let orgAdminRegisterPath = '/land/gover/orgAdminPopupAccept';
 	var buttonElement = this;  // 일반 JavaScript로 접근
 	console.log(buttonElement);  // 현재 버튼 element를 확인
 	var buttonHtml = $(this).html();  // jQuery를 사용하여 HTML 내용 가져오기
@@ -380,7 +380,7 @@ registerApprovePopEvet = () => {
 						object.gubun = "modify";
 					}
 					$.ajax({
-						url: "/gover/insertOfficeMng",
+						url: "/land/gover/insertOfficeMng",
 						type: 'POST',
 						contentType: "application/json",
 						data: JSON.stringify(object),
@@ -495,7 +495,7 @@ if (PopupMoreSelectBtn01) {
 			console.log(object);
 			// registerApprovePopupOpen.classList.remove("active");
 
-			url = "/gover/getselectOfficeMng";
+			url = "/land/gover/getselectOfficeMng";
 			$.ajax({
 				url: url,
 				type: 'POST',
@@ -579,7 +579,7 @@ $(document).on("change", "#jisaSelectBox", function () {
     const allData = { jisa: selectedJisa };
 
     $.ajax({
-        url: "/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
+        url: "/land/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -636,7 +636,7 @@ function loadData() {
 	var object = {};
 	
 	$.ajax({
-		url: "/gover/orgAdminDataTableList?" + paramStr,
+		url: "/land/gover/orgAdminDataTableList?" + paramStr,
 		async: true,
 		type: "POST",
 		dataType: "json",
@@ -786,7 +786,7 @@ function popupInfoSave() {
 	console.log(param);
 	
 	$.ajax({
-		url : "/gover/updateSysCode",
+		url : "/land/gover/updateSysCode",
 		data: param,
 		type: "POST",
 		dataType: "JSON",
@@ -837,7 +837,7 @@ function newSystemCodeInsert() {
 	console.log(param);
 	
 	$.ajax({
-		url : "/gover/insertSysCode",
+		url : "/land/gover/insertSysCode",
 		data: param,
 		type: "POST",
 		dataType: "JSON",
@@ -877,7 +877,7 @@ function convertToJSON(input) {
 
 //시스템 코드 불러오기 
 function systemCodeListLoad(selectCodeGroup) {
-	// /gover/orgSysCode
+	// /land/gover/orgSysCode
 	
 	let param = {
 		"CODE_GROUP" : selectCodeGroup
@@ -888,7 +888,7 @@ function systemCodeListLoad(selectCodeGroup) {
 	}
 	
 	$.ajax({
-		url : "/gover/selectSysCodeList",
+		url : "/land/gover/selectSysCodeList",
 		data : param,
 		type : "POST",
 		dataType : "JSON",

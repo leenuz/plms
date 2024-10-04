@@ -94,7 +94,7 @@ $(document).on("click","#cancelSangsin",function(){
 			
 			console.log(object);
 			
-			url="/gover/updateSangsinCancel"; 
+			url="/land/gover/updateSangsinCancel"; 
 			   $.ajax({
 			   			
 					url:url,

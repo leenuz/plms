@@ -362,7 +362,7 @@ $(document).ready(function(){
 
     function sendFileToServer(formData,status,file,no)
     {
-        var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+        var uploadURL = "/land/jisang/fileUpload/post"; //Upload URL
         var extraData ={}; //Extra Data.
         var jqXHR=$.ajax({
                 xhr: function() {
@@ -406,7 +406,7 @@ $(document).ready(function(){
 	    {
 			var idx=$("#hiddenJisangNo").val();
 			console.log($("#hiddenJisangNo").val());
-	        var uploadURL = "/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
+	        var uploadURL = "/land/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
 	        var extraData ={}; //Extra Data.
 	        var jqXHR=$.ajax({
 	                xhr: function() {
@@ -689,7 +689,7 @@ $(document).on("click","#commit",function(){
         };
 
     $.ajax({
-          url: "/jisang/commitJisangTmp",
+          url: "/land/jisang/commitJisangTmp",
           type: "POST",
           data: formData,
      })
@@ -713,8 +713,8 @@ $(document).on("click","#radioNo",function(){
 function landTerminationSave(params){
     loadingShow();
     $.ajax({
-         // url: "/jisang/landTerminationSave",
-		 url:"/jisang/insertJisangTerminationTemp",
+         // url: "/land/jisang/landTerminationSave",
+		 url:"/land/jisang/insertJisangTerminationTemp",
           type: "POST",
           data: JSON.stringify(params),
      })
@@ -728,7 +728,7 @@ function landTerminationSave(params){
 function landTerminationSangsinSave(params){
     loadingShow();
     $.ajax({
-          url: "/jisang/insertJisangTerminationAdd",
+          url: "/land/jisang/insertJisangTerminationAdd",
           type: "POST",
           data: params,
      })
@@ -756,7 +756,7 @@ $(document).on("click","#docFileDelBtn",function(){
 		
 		//임시파일 삭제
 		$.ajax({
-		          url: "/jisang/deleteJisangTmpFile",
+		          url: "/land/jisang/deleteJisangTmpFile",
 		          type: "POST",
 		          data: params,
 				  

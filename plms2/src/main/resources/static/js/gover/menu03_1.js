@@ -247,7 +247,7 @@ function loadDataTable(params) {
 		//	sAjaxSources:"/songyu/menu01DataTableList",
 		//	sServerMethod:"POST",
 		ajax: {
-			url: "/gover/menu03_1DataTableList",
+			url: "/land/gover/menu03_1DataTableList",
 			type: "POST",
 			datatype: "json",
 			data: function(d) {
@@ -389,7 +389,7 @@ function loadDataTable(params) {
 			console.log(data);
 			console.log(data.idx);
 
-			var url = "/gover/masterEdit?idx=" + data.idx;
+			var url = "/land/gover/masterEdit?idx=" + data.idx;
 			window.location = url;
 		}
 	});
@@ -441,7 +441,7 @@ $(document).on("change", "#privateUseSelectBox01_1", function () {
     const allData = { jisa: selectedJisa };
 
     $.ajax({
-        url: "/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
+        url: "/land/gover/getPmtOffice", // 허가관청 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -486,7 +486,7 @@ $(document).on("change", "#privateUseSelectBox01_3", function () {
     };
 
     $.ajax({
-        url: "/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
+        url: "/land/gover/getAdmOffice", // 관리기관 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",

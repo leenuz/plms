@@ -88,7 +88,7 @@ $(document).on("click","#docFileDelBtn",function(){
 		
 		//임시파일 삭제
 		$.ajax({
-		          url: "/jisang/deleteJisangTmpFile",
+		          url: "/land/jisang/deleteJisangTmpFile",
 		          type: "POST",
 		          data: params,
 				  
@@ -254,7 +254,7 @@ $(document).ready(function(){
 
 		    function sendFileToServer(formData,status)
 		    {
-		        var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+		        var uploadURL = "/land/jisang/fileUpload/post"; //Upload URL
 		        var extraData ={}; //Extra Data.
 		        var jqXHR=$.ajax({
 		                xhr: function() {
@@ -296,7 +296,7 @@ $(document).ready(function(){
 			    {
 					var idx=$("#hiddenJisangNo").val();
 					console.log($("#hiddenJisangNo").val());
-			        var uploadURL = "/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
+			        var uploadURL = "/land/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
 			        var extraData ={}; //Extra Data.
 			        var jqXHR=$.ajax({
 			                xhr: function() {
@@ -581,7 +581,7 @@ $(document).on("click",".temporarySaveBtn",function(){
    		}
 */
 
-			url="/jisang/divisionRegisterSave"; 
+			url="/land/jisang/divisionRegisterSave"; 
 			   $.ajax({
 			   			
 			   				url:url,
@@ -671,7 +671,7 @@ console.log($(this).parent().parent().html());
 				   
 				   
 				   	   $.ajax({
-				   	   	  url: "/jisang/getBunhalJIjukSelect",
+				   	   	  url: "/land/jisang/getBunhalJIjukSelect",
 				   	   	  type: "POST",
 				   	   	  data: datas,
 				   	   })
@@ -866,7 +866,7 @@ $(document).on('change', 'input[name="togiBunhalCancelYn"]', function(event) {
 
 $(document).on("click","#sangsinBtn",function(){
 	
-	var url="/jisang/divisionRegisterSangsin?idx="+$("#idx").val()+"&index="+$("#index").val();
+	var url="/land/jisang/divisionRegisterSangsin?idx="+$("#idx").val()+"&index="+$("#index").val();
 	var newWindow = window.open(url, "sangsin", "width=1500,height=800");
 	
 

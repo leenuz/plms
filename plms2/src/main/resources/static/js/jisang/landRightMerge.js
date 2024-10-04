@@ -111,7 +111,7 @@ $(document).on("click","#docFileDelBtn",function(){
 
 		//임시파일 삭제
 		$.ajax({
-		          url: "/jisang/deleteJisangTmpFile",
+		          url: "/land/jisang/deleteJisangTmpFile",
 		          type: "POST",
 		          data: params,
 
@@ -654,7 +654,7 @@ $(document).on("click",".searchAddressBtn",function(){
             return;
         }
         $.ajax({
-            url: "/jisang/getBunhalJIjukSelect",
+            url: "/land/jisang/getBunhalJIjukSelect",
             type: "POST",
             data: datas,
         })
@@ -852,7 +852,7 @@ $(document).on("click",".temporarySaveBtn",function(){
 
      object.mergeList=togiDatas;
 console.log(object);
-     url="/jisang/saveJisangMerge";
+     url="/land/jisang/saveJisangMerge";
      $.ajax({
         url:url,
         type:'POST',
@@ -978,7 +978,7 @@ $(document).ready(function(){
     function sendFileToServer1(formData,status,no) {
         var idx=$("#hiddenJisangNo").val();
         console.log($("#hiddenJisangNo").val());
-        var uploadURL = "/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
+        var uploadURL = "/land/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
         var extraData ={}; //Extra Data.
         var jqXHR=$.ajax({
                 xhr: function() {

@@ -225,7 +225,7 @@ $(document).ready(function() {
     }
 	                
     function sendFileToServer(formData,status) {
-        var uploadURL = "/gover/fileUpload/post"; //Upload URL
+        var uploadURL = "/land/gover/fileUpload/post"; //Upload URL
         var extraData ={}; //Extra Data.
         var jqXHR = $.ajax({
 			xhr: function() {
@@ -293,7 +293,7 @@ function updatePmtOfficeList(jisaValue) {
     const allData = { jisa: jisaValue };
 
     $.ajax({
-        url: "/gover/getPmtOffice",
+        url: "/land/gover/getPmtOffice",
         data: JSON.stringify(allData),
         type: "POST",
         dataType: "json",
@@ -324,7 +324,7 @@ function updatePipeNameList(jisaValue) {
     const allData = { jisa: jisaValue };
 
     $.ajax({
-        url: "/gover/getPipeName",  // 관로명 목록을 가져오는 API
+        url: "/land/gover/getPipeName",  // 관로명 목록을 가져오는 API
         data: JSON.stringify(allData),
         type: "POST",
         dataType: "json",
@@ -357,7 +357,7 @@ function updateAdmOfficeList(jisaValue, pmtOfficeValue) {
     const allData = { jisa: jisaValue, pmt_office: pmtOfficeValue };
 
     $.ajax({
-        url: "/gover/getAdmOffice",
+        url: "/land/gover/getAdmOffice",
         data: JSON.stringify(allData),
         type: "POST",
         dataType: "json",
@@ -412,7 +412,7 @@ function downloadExcelForLand() {
 	console.log(allData);
 	
 	$.ajax({
-		url: "/gover/selectPnuExcelDownload",  // PNU 기준으로 데이터를 가져오는 API
+		url: "/land/gover/selectPnuExcelDownload",  // PNU 기준으로 데이터를 가져오는 API
 		data: JSON.stringify(allData),
 		async: true,
 		type: "POST",
@@ -997,7 +997,7 @@ function updateGoverAdmOfficeForRow(row, selectedPmtOffice) {
     };
 
     $.ajax({
-        url: "/gover/getAdmOffice",  // 관리기관 목록을 가져오는 API
+        url: "/land/gover/getAdmOffice",  // 관리기관 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -1225,7 +1225,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 	console.log(object);
 	
 
-	url = "/gover/insertGoverMasterDemo";
+	url = "/land/gover/insertGoverMasterDemo";
 	$.ajax({
 
 		url: url,
@@ -1404,7 +1404,7 @@ $(document).on("click","#reqApprovalBtn",function(){
 		object.goverNo=object.gover_no;
 		console.log(object);
 		
-		   url="/gover/updateGoverSaveStatus"; 
+		   url="/land/gover/updateGoverSaveStatus"; 
 		   $.ajax({
 		   			
 		   				url:url,
@@ -1698,7 +1698,7 @@ $(document).on("click","#deleteFileBtn",function(){
 	console.log(param);
 	
 	if (delFiles.length>0){
-		url = "/gover/deleteGoverAtcfile1";
+		url = "/land/gover/deleteGoverAtcfile1";
 				         $.ajax({
 				             url: url,
 				             type: 'POST',

@@ -619,7 +619,7 @@ $(document).on("click","#popupSearchBtn",function(){
 
 
 	 $.ajax({
-					   	   	  url: "/jisang/getPermitEditJisangSelect",
+					   	   	  url: "/land/jisang/getPermitEditJisangSelect",
 					   	   	  type: "POST",
 					   	   	  data: formSerializeArray,
 
@@ -870,7 +870,7 @@ $(document).ready(function(){
 
 		    function sendFileToServer(formData,status)
 		    {
-		        var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+		        var uploadURL = "/land/jisang/fileUpload/post"; //Upload URL
 		        var extraData ={}; //Extra Data.
 		        var jqXHR=$.ajax({
 		                xhr: function() {
@@ -912,7 +912,7 @@ $(document).ready(function(){
 			    {
 					var idx=$("#hiddenJisangNo").val();
 					console.log($("#hiddenJisangNo").val());
-			        var uploadURL = "/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
+			        var uploadURL = "/land/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
 			        var extraData ={}; //Extra Data.
 			        var jqXHR=$.ajax({
 			                xhr: function() {
@@ -967,7 +967,7 @@ $(document).on("click","#docFileDelBtn",function(){
 
 		//임시파일 삭제
 		$.ajax({
-		          url: "/jisang/deleteJisangTmpFile",
+		          url: "/land/jisang/deleteJisangTmpFile",
 		          type: "POST",
 		          data: params,
 

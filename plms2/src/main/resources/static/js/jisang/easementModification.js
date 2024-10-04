@@ -108,7 +108,7 @@ $(document).ready(function() {
 	}
 
 	function sendFileToServer(formData, status) {
-		var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+		var uploadURL = "/land/jisang/fileUpload/post"; //Upload URL
 		var extraData = {}; //Extra Data.
 		var jqXHR = $.ajax({
 			xhr: function() {
@@ -402,7 +402,7 @@ $(document).on("click", "#basicSearchBtn", function() {
 	/* console.log($("#searchResultPopDiv").html());*/
 	//searchResultPopDiv 화면뿌릴 DIV
 	$.ajax({
-		url: "/jisang/getBasicSearchDataForEdit",
+		url: "/land/jisang/getBasicSearchDataForEdit",
 		type: "POST",
 		data: formSerializeArray,
 	})
@@ -542,7 +542,7 @@ $(document).on("click", "#deleteFileBtn", function() {
 
 		console.log(param)
 
-		url = "/jisang/deleteJisangAtcFile";
+		url = "/land/jisang/deleteJisangAtcFile";
 		         $.ajax({
 		             url: url,
 		             type: 'POST',
@@ -1007,7 +1007,7 @@ $(document).on("click", "#finalBtn", function() {
 
 	dataObj.gubun = "modify";
 
-	url = "/jisang/insertJisangList";
+	url = "/land/jisang/insertJisangList";
 	$.ajax({
 		url: url,
 		type: 'POST',
