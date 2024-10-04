@@ -44,6 +44,7 @@ import com.slsolution.plms.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -3555,6 +3556,17 @@ log.info("params:"+params);
 			}
 			
 			System.out.println(paramObject.toString());
+			
+			/*******************
+			 * 
+			 * 세션 테스트 241004
+			 *  
+			 *******************/
+			Object checkId = request.getSession().getAttribute("userId");
+			System.out.println("checkId :: " + checkId);
+			System.out.println("checkId :: " + checkId);
+			System.out.println("checkId :: " + checkId);
+			System.out.println("checkId :: " + checkId);
 
 			String str_result = "Y";
 			ArrayList returnList = new ArrayList();

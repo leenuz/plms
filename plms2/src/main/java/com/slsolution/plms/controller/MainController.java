@@ -25,6 +25,7 @@ import com.slsolution.plms.model.CountryModel;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -43,6 +44,13 @@ public class MainController {
 		resultList.add("AAA");
 		resultList.add("BBB");
 		resultList.add("CCC");
+		
+		HttpSession session = request.getSession();
+		
+		Object checkId = request.getSession().getAttribute("userId");
+		System.out.println("TEST - checkId :: " + checkId);
+		
+		System.out.println("여기 아니냐?");
 		
 		mav.addObject("resultList",resultList);
 		mav.setViewName("content/home");
