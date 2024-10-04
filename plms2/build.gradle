@@ -41,23 +41,18 @@ dependencies {
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 	
 	//log4jdbc 
-	 implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16' 
-
-	
-	
+	 implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16'
+	 
+	//redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'	
+	implementation 'org.springframework.session:spring-session-data-redis'  
+	implementation 'redis.clients:jedis:5.0.0'
 	
 	//#jsp 사용
 	//implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
   	///implementation 'jakarta.servlet:jakarta.servlet-api' //스프링부트 3.0 이상
   // implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api' //스프링부트 3.0 이상
   // implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl' //스프링부트 3.0 이상
-   
-
-
-   
-
-   
-   
    
    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
 	implementation 'org.apache.httpcomponents:httpclient:4.5'
