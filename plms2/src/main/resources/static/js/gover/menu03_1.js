@@ -289,6 +289,14 @@ function loadDataTable(params) {
 					console.log("addrs:" + addrs);
 					d.saddr = (addrs == undefined || addrs == null || addrs == "undefined") ? '' : addrs;
 					//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
+					
+					/*
+					d.sido_nm = params.sido;
+					d.sgg_nm = params.sgg;
+					d.emd_nm = params.emd;
+					d.ri_nm = params.ri;
+					d.jibun = params.jibun;
+					*/
 				}
 
 				console.log("saddr:" + d.saddr);

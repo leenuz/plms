@@ -720,8 +720,8 @@ SELECT AA.RN AS no
              , GM.gm_office_depart as OFFICE_DEPART
              , GM.gm_office_charege as OFFICE_CHARGE
              , GM.gm_office_contact as OFFICE_CONTACT
-             , GP.LENGTH                                                 AS GOVER_LENGTH
-             , GP.AREA                                                   AS GOVER_AREA
+             , GP.LENGTH AS GOVER_LENGTH
+             , GP.AREA AS GOVER_AREA
              
              , GP.USE_PURPOS_PNU
              , GM.gm_gover_st_date as GOVER_ST_DATE
@@ -782,7 +782,6 @@ SELECT AA.RN AS no
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
 			AND GM.GOVER_NO = GP.GOVER_NO
 		</if>
-
 
 		AND GM.gm_CANCLE_YN = 'N' OR GM.gm_CANCLE_YN ='' OR GM.gm_CANCLE_YN is null 
 					) AA

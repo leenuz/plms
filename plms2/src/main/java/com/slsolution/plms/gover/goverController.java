@@ -504,6 +504,12 @@ public class goverController {
 			String adm_office = req.getParameter("adm_office");
 			String save_status = req.getParameter("save_status");
 			String address = req.getParameter("saddr");
+			String sido_nm = req.getParameter("sido_nm");
+			String sgg_nm = req.getParameter("sgg_nm");
+			String emd_nm = req.getParameter("emd_nm");
+			String ri_nm = req.getParameter("ri_nm");
+			String jibun = req.getParameter("jibun");
+
 			String idx = req.getParameter("idx");
 
 			Map map = req.getParameterMap();
@@ -521,7 +527,12 @@ public class goverController {
 			params.put("save_status",save_status);
 			params.put("idx", idx);
 			params.put("address", address);
-			
+			params.put("sido_nm",sido_nm);
+			params.put("sgg_nm",sgg_nm);
+			params.put("emd_nm",emd_nm);
+			params.put("ri_nm",ri_nm);
+			params.put("jibun",jibun);
+
 			params.put("manageYn","Y");
 			if (orderColumn==null || orderColumn.equals("null")) {
 				log.info("----------null--------");

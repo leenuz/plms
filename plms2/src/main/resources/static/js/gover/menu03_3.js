@@ -248,6 +248,14 @@ function loadDataTable(params) {
                     if (!ljsIsNull(params.ri)) addrs += " " + params.ri;
                     if (!ljsIsNull(params.jibun)) addrs += " " + params.jibun;
                     d.saddr = (addrs == undefined || addrs == null || addrs == "undefined") ? '' : addrs;
+										
+										/* 2024.10.04 손지민 - 선택행 주소 검색 시 시도/시군구/읍면동/리/지번 분리 검색
+										d.sido_nm = params.sido_nm;
+										d.sgg_nm = params.sgg;
+										d.emd_nm = params.emd;
+										d.ri_nm = params.ri;
+										d.jibun = params.jibun;
+										*/
                 }
                 console.log("saddr:" + d.saddr);
 				console.log(d);
