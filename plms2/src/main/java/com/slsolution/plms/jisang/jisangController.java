@@ -2272,17 +2272,20 @@ log.info("data:"+data.get(0));
 		
 		//일반웹형식
 		Properties requestParams = CommonUtil.convertToProperties(req);
-
+		log.info("req:"+req);
 		HashMap<String, String> returnHash = new HashMap<String, String>();
 		Enumeration<String> obj1 = req.getParameterNames();
 		int cnt=0;
-
+		 
 		while (obj1.hasMoreElements())
 		{
 			String paramName = obj1.nextElement();
 			String paramValue = req.getParameter(paramName);
 			returnHash.put(paramName, paramValue);
+			log.info("paramName:"+paramName);
+			log.info("paramValue:"+paramValue);
 		}
+		
 
 		int draw = Integer.parseInt(req.getParameter("draw"));
 		int start = Integer.parseInt(req.getParameter("start"));
@@ -2306,8 +2309,11 @@ log.info("data:"+data.get(0));
 
 		String souja = req.getParameter("souja");
 		String jasan_no = req.getParameter("jasan_no");
-		String jimok_text = req.getParameter("jimok_text");
-		String[] jimokArray = jimok_text != null && !jimok_text.trim().isEmpty() ? jimok_text.split(",") : new String[0]; // 빈 배열로 초기화
+		String jimok_text = req.getParameter("jimok_text")==null?"":req.getParameter("jimok_text");
+		List<String> jimokTexts=new ArrayList<String>();
+		if (jimok_text!=null && !jimok_text.trim().isEmpty())	 jimokTexts = Arrays.asList(jimok_text.split(","));
+		
+		//String[] jimokArray = jimok_text != null && !jimok_text.trim().isEmpty() ? jimok_text.split(",") : new String[0]; // 빈 배열로 초기화
 
 		String comple_yn = req.getParameter("comple_yn");
 		String cancel_yn = req.getParameter("cancel_yn");
@@ -2335,15 +2341,16 @@ log.info("data:"+data.get(0));
 		params.put("souja",souja);
 		params.put("jasan_no",jasan_no);
 
-		params.put("jimokArray", jimokArray);
+		//params.put("jimokArray", jimokArray);
 		params.put("comple_yn", comple_yn);
 		params.put("cancel_yn", cancel_yn);
 		params.put("deunggi_date", deunggi_date);
 		params.put("account_yn", account_yn);
 		params.put("start_date", start_date);
 		params.put("end_date", end_date);
-		
-		params.put("JIMOK_TEXT", jimok_text);	//지목 추가
+		log.info("jimokTexts.size:"+jimokTexts.size());
+		if (jimokTexts.size()>0) params.put("JIMOK_TEXT", jimokTexts);	//지목 추가
+		else params.put("JIMOK_TEXT", null);	
 
 //		String[] right_arr= {};
 //		right_arr=right_type.split(",");

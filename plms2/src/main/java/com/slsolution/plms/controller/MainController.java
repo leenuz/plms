@@ -66,11 +66,12 @@ public class MainController {
 			
 			for(int i = 0 ; i < attrNames.size() ; i++ ) {
 				Object valueCheck = session.getAttribute(attrNames.get(i));
-//				System.out.println("att :: " + attrNames.get(i) + " || " + valueCheck);
+				System.out.println("att :: " + attrNames.get(i) + " || " + valueCheck);
 				attrArray.put(attrNames.get(i), valueCheck);
 			}
 			
 			JSONObject menuCheck = new JSONObject(attrArray);
+			log.info("menuCheck:"+menuCheck);
 			JSONObject menu2pmsResultList = new JSONObject(menuCheck.get("plmsMenu").toString());
 			JSONArray menuResultList = menu2pmsResultList.getJSONArray("resultList");
 			

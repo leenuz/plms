@@ -532,8 +532,13 @@ SELECT *
 		<if test="COMPLE_YN != null and COMPLE_YN != ''">
 			AND JM.jm_COMPLE_YN = #{COMPLE_YN}
 		</if>
-		<if test="JIMOK_TEXT != null and JIMOK_TEXT != ''">
-			AND JM.jm_JIMOK_TEXT IN ( #{JIMOK_TEXT} )
+		<if test="JIMOK_TEXT != null and JIMOK_TEXT != ''"> 
+		
+			AND JM.jm_JIMOK_TEXT IN 
+		    <foreach item="item" index="index" collection="JIMOK_TEXT" open="(" separator="," close=")">
+		        #{item}
+		    </foreach>
+
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
@@ -706,7 +711,11 @@ SELECT count(*)
 			AND JM.jm_COMPLE_YN = #{COMPLE_YN}
 		</if>
 		<if test="JIMOK_TEXT != null and JIMOK_TEXT != ''">
-			AND JM.jm_JIMOK_TEXT IN ( #{JIMOK_TEXT} )
+			AND JM.jm_JIMOK_TEXT IN 
+		    <foreach item="item" index="index" collection="JIMOK_TEXT" open="(" separator="," close=")">
+		        #{item}
+		    </foreach>
+
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
