@@ -893,14 +893,14 @@ public class goverController {
 			ArrayList<HashMap> payList = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPayList", params); //납부실적목록
 			
 			// 조회 데이터 로그
-			log.info("data:"+goverList.get(0));
-			log.info("goverModifyList:"+goverModifyList);
-			log.info("goverModifyOfficeList:"+goverModifyOfficeList);
-			log.info("atcFileList:"+atcFileList);
-			log.info("goverPnuList:"+goverPnuList);
-			log.info("goverPermitList:"+goverPermitList);
-			log.info("repFlagPnu:"+repFlagPnu);
-
+			/*
+			 * log.info("data:"+goverList.get(0));
+			 * log.info("goverModifyList:"+goverModifyList);
+			 * log.info("goverModifyOfficeList:"+goverModifyOfficeList);
+			 * log.info("atcFileList:"+atcFileList); log.info("goverPnuList:"+goverPnuList);
+			 * log.info("goverPermitList:"+goverPermitList);
+			 * log.info("repFlagPnu:"+repFlagPnu);
+			 */
 			// 각 리스트가 null 또는 비어있는 경우 처리
 			if (goverList == null || goverList.isEmpty()) {
 		        log.error("No data found for idx: " + idx);
@@ -909,7 +909,7 @@ public class goverController {
 		        mav.addObject("resultData", goverList.get(0));
 		    }
 			
-			mav.addObject("repFlagPnu", repFlagPnu);
+			mav.addObject("repFlagPnu", repFlagPnu); // 점용 대표필지 정보
 
 		    // 각 리스트가 null 또는 비어있는 경우 처리
 		    if (goverModifyList == null || goverModifyList.isEmpty()) {
@@ -938,19 +938,10 @@ public class goverController {
 		    }
 		    
 		    if (goverPermitList == null || goverPermitList.isEmpty()) {
-		        mav.addObject("goverPermitList", new HashMap<>());
 		        mav.addObject("goverPermitListAll", new ArrayList<>());
 		    } else {
-		        mav.addObject("goverPermitList", goverPermitList.get(0));
 		        mav.addObject("goverPermitListAll", goverPermitList);
 		    }
-		    
-//		    if (repFlagPnu == null || repFlagPnu.isEmpty()) {
-//		        mav.addObject("repFlagPnu", new HashMap<>());
-//		    } else {
-//		        mav.addObject("repFlagPnu", repFlagPnu.get(0));
-//		    }
-		   // mav.addObject("repFlagPnu", repFlagPnu);
 		    
   			mav.setViewName("content/gover/feeDetail");
   			return mav;

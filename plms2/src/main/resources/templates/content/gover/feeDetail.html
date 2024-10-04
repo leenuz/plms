@@ -206,7 +206,7 @@
 							</li>
 							<!-- 점용허가기간 -->
 							<li class="content">
-								<input type="text" th:value="${permit.pmt_st_date + ' ~ ' + goverPermitList.pmt_ed_date}"
+								<input type="text" th:value="${permit.pmt_st_date + ' ~ ' + permit.pmt_ed_date}"
 									class="notWriteInput" readonly />
 							</li>
 							<!-- 연장 -->
@@ -335,7 +335,7 @@
 								</ul>
 
 								<div class="contentScr">
-									<!-- goverPermitList를 반복문으로 순회 -->
+									<!-- goverPermitListAll를 반복문으로 순회 -->
 									<ul th:each="permitData : ${goverPermitListAll}" class="contents">
 										<!-- 납부년도 -->
 										<li class="content smallWidth">
