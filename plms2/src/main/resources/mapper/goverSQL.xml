@@ -647,21 +647,21 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(adm_office)" >
 			AND AA.ADM_OFFICE = #{adm_office}
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_st_date)" >
-			AND AA.GOVER_NO IN
-			(SELECT S.gp_gover_no as GOVER_NO
-			FROM GOVER_PERMIT S
-			WHERE S.sp_SEQ IN (SELECT MAX(SS.gp_SEQ) FROM GOVER_PERMIT SS GROUP BY SS.gp_GOVER_NO )
-			AND TO_DATE(S.gp_PAY_DATE, 'YYYY-MM-DD') <![CDATA[ >= ]]>
-			#{pay_st_date})
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_ed_date)" >
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_start)" >
 			AND AA.GOVER_NO IN
 			(SELECT S.gp_gover_no as GOVER_NO
 			FROM GOVER_PERMIT S
 			WHERE S.gp_SEQ IN (SELECT MAX(SS.gp_SEQ) FROM GOVER_PERMIT SS GROUP BY SS.gp_GOVER_NO )
-			AND TO_DATE(S.gp_PAY_DATE, 'YYYY-MM-DD') <![CDATA[ <= ]]>
-			#{pay_ed_date} )
+			AND S.gp_PAY_DATE <![CDATA[ >= ]]>
+      CAST(#{pay_date_start} AS DATE))
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_end)" >
+			AND AA.GOVER_NO IN
+			(SELECT S.gp_gover_no as GOVER_NO
+			FROM GOVER_PERMIT S
+			WHERE S.gp_SEQ IN (SELECT MAX(SS.gp_SEQ) FROM GOVER_PERMIT SS GROUP BY SS.gp_GOVER_NO )
+			AND S.gp_PAY_DATE <![CDATA[ <= ]]>
+      CAST(#{pay_date_end} AS DATE))
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and AA.juso like '%${address}%'
@@ -842,21 +842,21 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(adm_office)" >
 			AND AA.ADM_OFFICE = #{adm_office}
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_st_date)" >
-			AND AA.GOVER_NO IN
-			(SELECT S.gp_gover_no as GOVER_NO
-			FROM GOVER_PERMIT S
-			WHERE S.sp_SEQ IN (SELECT MAX(SS.gp_SEQ) FROM GOVER_PERMIT SS GROUP BY SS.gp_GOVER_NO )
-			AND TO_DATE(S.gp_PAY_DATE, 'YYYY-MM-DD') <![CDATA[ >= ]]>
-			#{pay_st_date})
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_ed_date)" >
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_start)" >
 			AND AA.GOVER_NO IN
 			(SELECT S.gp_gover_no as GOVER_NO
 			FROM GOVER_PERMIT S
 			WHERE S.gp_SEQ IN (SELECT MAX(SS.gp_SEQ) FROM GOVER_PERMIT SS GROUP BY SS.gp_GOVER_NO )
-			AND TO_DATE(S.gp_PAY_DATE, 'YYYY-MM-DD') <![CDATA[ <= ]]>
-			#{pay_ed_date} )
+      AND S.gp_PAY_DATE <![CDATA[ >= ]]>
+      CAST(#{pay_date_start} AS DATE))
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_end)" >
+			AND AA.GOVER_NO IN
+			(SELECT S.gp_gover_no as GOVER_NO
+			FROM GOVER_PERMIT S
+			WHERE S.gp_SEQ IN (SELECT MAX(SS.gp_SEQ) FROM GOVER_PERMIT SS GROUP BY SS.gp_GOVER_NO )
+	    AND S.gp_PAY_DATE <![CDATA[ <= ]]>
+      CAST(#{pay_date_end} AS DATE))
 		</if>
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 			and AA.juso like '%${address}%'

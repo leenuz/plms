@@ -1086,7 +1086,6 @@ $(document).on("click", "#draftSaveBtn", function() {
 		object.modifyReason1 = modifyReason1;
 	}
 
-
 	// 변경이력 - 허가관청만 처리 (필요 시 별도 함수로 분리 가능)
 	var modifyReason5 = compareChanges($("input[name='pmt_office_org']").val(), $("select[name='pmt_office']").val(), "허가관청") +
 		compareChanges($("input[name='adm_office_org']").val(), $("select[name='adm_office']").val(), "관리기관");
@@ -1100,7 +1099,6 @@ $(document).on("click", "#draftSaveBtn", function() {
 		console.log("소속토지정보 변경이력 있음: "+ modifyReason2);
     object.modifyReason2 = modifyReason2;
 	}
-
 
 	console.log("대상토지 정보");
 	var togiDatas = [];
@@ -1209,7 +1207,6 @@ $(document).on("click", "#draftSaveBtn", function() {
 	else if (tobj.trim() == "영구 무상점용") object.occunonpayreason = "1";
 	else if (tobj.trim() == "소액 미청구") object.occunonpayreason = "2";
 	else if (tobj.trim() == "관할관청의 미청구") object.occunonpayreason = "3";
-
 
 
 	object.adm_office = $("#admOfficeText").text();
