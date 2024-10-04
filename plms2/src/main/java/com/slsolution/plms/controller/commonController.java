@@ -7,7 +7,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -27,9 +30,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.MainService;
 import com.slsolution.plms.config.GlobalConfig;
+import com.slsolution.plms.json.JSONArray;
+import com.slsolution.plms.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -167,6 +173,83 @@ public class commonController {
 		} catch(Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	
+	@GetMapping("/menusetting")
+	public void menuListSetting(HttpServletRequest request, HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
+		List<String> menuList = new ArrayList<String>();
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		JSONObject resultObj = new JSONObject();
+		
+		try {
+			
+			Enumeration<String> attributeNames = session.getAttributeNames();
+			
+			ArrayList<String> attrNames = new ArrayList<>();
+			Map<String, Object> attrArray =  new HashMap<String, Object>();
+			
+			while(attributeNames.hasMoreElements()) {
+				String attributeName = attributeNames.nextElement();
+				System.out.println("Session Attribute name : " + attributeName + " || " + request.getSession().getAttribute(attributeName));
+				attrNames.add(attributeName);
+			}
+			
+			for(int i = 0 ; i < attrNames.size() ; i++ ) {
+				Object valueCheck = session.getAttribute(attrNames.get(i));
+//				System.out.println("att :: " + attrNames.get(i) + " || " + valueCheck);
+				attrArray.put(attrNames.get(i), valueCheck);
+			}
+			
+			JSONObject menuCheck = new JSONObject(attrArray);
+			JSONObject menu2pmsResultList = new JSONObject(menuCheck.get("plmsMenu").toString());
+			JSONArray menuResultList = menu2pmsResultList.getJSONArray("resultList");
+			
+			System.out.println("================================================================================");
+			
+			System.out.println("plmsMenu :: " + menuCheck.get("plmsMenu").toString());
+//			System.out.println("2pmsMenu :: " + menuCheck.get("2pmsMenu").toString());
+//			System.out.println(menu2pmsResultList.getJSONArray("resultList"));
+			
+			System.out.println("================================================================================");
+			
+			for(int k = 0 ; k < menuResultList.length() ; k++ ) {
+				System.out.println(menuResultList.get(k).toString());
+				menuList.add(menuResultList.get(k).toString());
+			}
+			
+			System.out.println("================================================================================");
+			
+			resultObj.put("result", "Y");
+			resultObj.put("menuList", menuList);
+			
+			response.setCharacterEncoding("UTF-8");
+	        response.setHeader("Access-Control-Allow-Origin", "*");
+	        response.setHeader("Cache-Control", "no-cache");
+	        response.resetBuffer();
+	        response.setContentType("application/json");
+	        response.getWriter().print(resultObj);
+	        response.getWriter().flush();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+			try {
+				resultObj.put("result", "Y");
+				
+				response.setCharacterEncoding("UTF-8");
+		        response.setHeader("Access-Control-Allow-Origin", "*");
+		        response.setHeader("Cache-Control", "no-cache");
+		        response.resetBuffer();
+		        response.setContentType("application/json");
+		        response.getWriter().print(resultObj);
+		        response.getWriter().flush();
+			} catch(Exception ee) {
+				ee.printStackTrace();
+			}
 		}
 	}
 }
