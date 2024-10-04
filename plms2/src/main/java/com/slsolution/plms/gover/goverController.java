@@ -1717,7 +1717,7 @@ public class goverController {
 					String PIPE_METER = requestParamsObj.has("pipe_meter_single")?requestParamsObj.getString("pipe_meter_single"):requestParamsObj.getString("pipe_meter"); // 관경
 					String PIPE_METER2 = requestParamsObj.has("pipe_meter2")?requestParamsObj.getString("pipe_meter2"):""; // 관경
 					String SUN_GUBUN = requestParamsObj.getString("sun_gubun"); // 단/복선
-					 String USE_PURPOS = requestParamsObj.getString("use_purpos"); // 점용 목록
+					String USE_PURPOS = requestParamsObj.getString("use_purpos"); // 점용 목록
 					String GOVER_ST_DATE = requestParamsObj.getString("gover_st_date"); // 점용기간 시작
 					String GOVER_ED_DATE = requestParamsObj.getString("gover_ed_date"); // 점용기간 끝
 					String PMT_OFFICE = requestParamsObj.has("pmt_office")?requestParamsObj.getString("pmt_office"):""; // 허가관청

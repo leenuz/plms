@@ -1188,34 +1188,31 @@ $(document).on("click", "#draftSaveBtn", function() {
 		console.log(fname);
 		console.log("wdate:" + wdate);
 		if (wdate == null || wdate == "" || wdate == undefined) files.push(fname);
-
 	}
 
 	console.log("----------togiDatas-------------");
 	console.log(togiDatas);
 	console.log("----------files-------------");
 	console.log(files);
-	object.occuprepayyn=$('input[name="occuprepayyn"]').is(':checked') ? 'Y' : 'N';
-	
-	     object.pipe_name = $("#pipeNameText").text();
-	
-	 
-	 		 		     var tobj = $("#newregreasonBtn").text();
-	 					 if (tobj=="선택") object.newregreason="0";
-	 					 else if (tobj.trim()=="사유지의 국유지 편입") object.newregreason="1";
-	 					 else if (tobj.trim()=="ILI결과 발견지번") object.newregreason="2";
-	 					
-	 
-	 
-	 		     var tobj = $("#occunonpayreasonBtn").text();
-				 if (tobj=="선택") object.occunonpayreason="0";
-				 else if (tobj.trim()=="영구 무상점용") object.occunonpayreason="1";
-				 else if (tobj.trim()=="소액 미청구") object.occunonpayreason="2";
-				 else if (tobj.trim()=="관할관청의 미청구") object.occunonpayreason="3";
-	 
-	
-	
-	object.adm_office=$("#admOfficeText").text();
+	object.occuprepayyn = $('input[name="occuprepayyn"]').is(':checked') ? 'Y' : 'N';
+
+	object.pipe_name = $("#pipeNameText").text();
+
+
+	var tobj = $("#newregreasonBtn").text();
+	if (tobj == "선택") object.newregreason = "0";
+	else if (tobj.trim() == "사유지의 국유지 편입") object.newregreason = "1";
+	else if (tobj.trim() == "ILI결과 발견지번") object.newregreason = "2";
+
+	var tobj = $("#occunonpayreasonBtn").text();
+	if (tobj == "선택") object.occunonpayreason = "0";
+	else if (tobj.trim() == "영구 무상점용") object.occunonpayreason = "1";
+	else if (tobj.trim() == "소액 미청구") object.occunonpayreason = "2";
+	else if (tobj.trim() == "관할관청의 미청구") object.occunonpayreason = "3";
+
+
+
+	object.adm_office = $("#admOfficeText").text();
 	object.use_purpos=$("#usePurposBtn").text();
 	object.togiDatas = togiDatas;
 	object.files = files;
