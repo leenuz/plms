@@ -1340,13 +1340,13 @@ SELECT count(*)
 		jpm.contract as contract,
 		jpm.pmt_status as pmt_status,
 		jpm.dockey as dockey,
-		jpt.jpt_jisang_no AS jisang_no,
-		jpt.jpt_pmt_user as pmt_user
-		,jpt.jpt_soyuja as soyuja
-		,jpt.jpt_jimok as jimok
-		,jpt.jpt_jasan_no as jasan_no
-		,jpt.jpt_addr as addr
-		,jpt.jpt_jibun as jibun
+		jpt.jisang_no AS jisang_no,
+		jpt.pmt_user as pmt_user
+		,jpt.soyuja as soyuja
+		,jpt.jimok as jimok
+		,jpt.jasan_no as jasan_no
+		,jpt.addr as addr
+		,jpt.jibun as jibun
 		,jm.jm_jisa as jisa
 		,jm.jm_sido_nm as sido_nm
 		,jm.jm_sgg_nm as sgg_nm
@@ -1354,8 +1354,8 @@ SELECT count(*)
 		,jm.jm_ri_nm as ri_nm
 
 		FROM permit_master jpm
-			LEFT JOIN jisang_permit_togi jpt ON jpt.jpt_pmt_no=jpm.pmt_no
-			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jpt_jisang_no
+			LEFT JOIN permit_togi jpt ON jpt.pmt_no=jpm.pmt_no
+			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jisang_no
 		WHERE 1 = 1
 
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
@@ -3520,7 +3520,7 @@ DELETE from plms_POTENTIAL_ISSUE
 		Insert into PERMIT_MASTER
 		( PMT_NO, USE_PURPOS, PMT_STATUS, USE_ST_DATE, USE_ED_DATE, SPOT_RESULT, rivew, CONTRACT)
 		Values
-		( #{PMT_NO}, #{USE_PURPOS}, #{PMT_STATUS}, to_date( #{USE_ST_DATE} , 'yyyy-mm-dd'), to_date( #{USE_ED_DATE} , 'yyyy-mm-dd'), #{POT_RESULT}, #{rivew}, #{CONTRACT} )
+		( #{PMT_NO}, #{USE_PURPOS}, #{PMT_STATUS}, to_date( #{USE_ST_DATE} , 'yyyy-mm-dd'), to_date( #{USE_ED_DATE} , 'yyyy-mm-dd'), #{SPOT_RESULT}, #{REVIEW}, #{CONTRACT} )
 	</insert>
 	<update id="updatePermitMaster" parameterType="HashMap">
 		UPDATE PERMIT_MASTER

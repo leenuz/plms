@@ -1238,7 +1238,7 @@ $(document).on("click","#mainSaveBtn",function(){
 	
 	dataObj.desangTogis=togiDatas;
 	dataObj.gubun="insert";
-	dataObj.save_status="임시저장";
+	dataObj.pmt_status="임시저장";
 	console.log(dataObj);
 	
 	
