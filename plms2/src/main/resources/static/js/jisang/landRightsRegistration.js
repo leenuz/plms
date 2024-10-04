@@ -532,12 +532,12 @@ $(document).on("click","#finalBtn",function(){
 
 
 
-
+				   dataObj.gubun="insert";
 				   console.log("------dataObj--------");
 				   			   console.log(dataObj);
 
-					dataObj.gubun="insert";
-
+		
+return;
 				   url="/jisang/insertJisangList";
 				   $.ajax({
 

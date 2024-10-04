@@ -2217,7 +2217,11 @@ SELECT count(*)
 		jm_cancle_reason = #{jm_cancel_reason}, <!--?-->
 		jm_cancle_comment = #{jm_cancel_comment}, <!--?-->
 		jm_cancle_yn = 'Y',
-		jm_special_cont=#{SPECIALCONT}
+		jm_special_cont=#{SPECIALCONT},
+		jm_pipe_yn=#{PIPEYN},
+		jm_account_yn=#{ACCOUNTYN},
+		jm_location=#{LOCATION},
+		jm_permitted_yn=#{PERMITTED_YN}
 		WHERE jm_jisang_no = #{JISANGNO} <!--지상권번호-->
 		
 	</update>
@@ -2985,7 +2989,7 @@ WHERE
 			jm_DEUNGGI_DATE,
 		</if>
 		jm_DEUNGGI_NO, jm_DEUNGGISO, jm_JASAN_NO, jm_ADDRCODE, jm_PNU, jm_USE_STATE, jm_SPECIAL_CONT, jm_LOCATION, jm_JIMOK_TEXT
-		, jm_SAVE_STATUS, jm_PERMITTED_YN,jm_PIPE_YN)
+		, jm_SAVE_STATUS, jm_PERMITTED_YN,jm_PIPE_YN,jm_account_yn)
 		Values
 		(#{JISANGNO}, #{SINM}, #{GUNGUNM}, #{DONGNM}, #{RINM}, #{JIBUN}, #{JISANM}, #{GOVEROWNYN},
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CD_STARTDAY)" >
@@ -2998,7 +3002,7 @@ WHERE
 			TO_DATE(#{DGSTARTDAY}, 'YYYY-MM-DD') ,
 		</if>
 		#{DEUNGGINO}, #{DEUNGGISO},
-		#{JASANNO}, #{ADDRCODE}, #{PNU} ,#{USESTATE} , #{SPECIALCONT} , #{LOCATION}, #{JIMOK}, #{SAVE_STATUS}, #{PERMITTED_YN},#{PIPE_YN})
+		#{JASANNO}, #{ADDRCODE}, #{PNU} ,#{USESTATE} , #{SPECIALCONT} , #{LOCATION}, #{JIMOK}, #{SAVE_STATUS}, #{PERMITTED_YN},#{PIPEYN},#{ACCOUNTYN})
 	</insert>
 	
 	<insert id="insertJisangMasterTmp" parameterType="HashMap">
