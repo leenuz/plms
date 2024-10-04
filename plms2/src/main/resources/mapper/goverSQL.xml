@@ -2231,7 +2231,7 @@ FROM NOTSET_MASTER
 	</delete>
 	<delete id="deleteGoverAtcFile" parameterType="HashMap">
 		DELETE FROM GOVER_ATCFILE
-		WHERE ga_idx=#{idx}
+		WHERE ga_idx=#{idx}::int
 		
 	</delete>
 	<delete id="deleteGoverPNUObject" parameterType="HashMap">

@@ -1102,7 +1102,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 
 	console.log("대상토지 정보");
 	var togiDatas = [];
-	var togiUls = $("#goverUlDiv #goverUl");
+	var togiUls = $("#goverUlDiv #goverUl,#goverUl02");
 	console.log(togiUls);
 
 	/*String SGG_NM = (parser.getString("SGG_NM" + String.valueOf(i), "")).replaceAll("전체", "");
@@ -1123,6 +1123,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 						String REP_FLAG = parser.getString("REP_FLAG" + String.valueOf(i), "");
 						String ORG_PNU_NULL = parser.getString("ORG_PNU_NULL" + String.valueOf(i), ""); // pnu값이
 																										// "NULL"도*/
+	console.log("-----------------togiuls-----------------");
 	for (var i = 0; i < togiUls.length; i++) {
 		var sido_nm = $(togiUls[i]).find("input[name='sido_nm']").val();
 		var addKey = $(togiUls[i]).find("input[name='addKey']").val();
@@ -1134,14 +1135,16 @@ $(document).on("click", "#draftSaveBtn", function() {
 		var addrcode = $(togiUls[i]).find("input[name='addrcode']").val();
 		var pnu = $(togiUls[i]).find("input[name='pnu']").val();
 		var org_pnu = $(togiUls[i]).find("input[name='pnu']").val();
-		var gover_own_yn = $(togiUls[i]).find("input[name='gover_own_yn']").val();
+		var gover_own_yn = $(togiUls[i]).find("#goverOwnYnBtn").text();
 		var jijuk_area = $(togiUls[i]).find("input[name='jijuk_area']").val();
 		var gover_length = $(togiUls[i]).find("input[name='gover_length']").val();
 		var gover_area = $(togiUls[i]).find("input[name='gover_area']").val();
-		var jimok_text = $(togiUls[i]).find("input[name='jimok_text']").val();
+		var jimok_text = $(togiUls[i]).find("#jimok").text();
 		var adm_office = $(togiUls[i]).find("#admOfficeText01").text();
-		var pipe_overlab_yn = $(togiUls[i]).find("input[name='pipe_overlap_yn']").val();
-
+		var pipe_overlab_yn = $(togiUls[i]).find("#pipeOverlapYnBtn").text();
+		/*console.log("jimok:"+jimok_text);
+					console.log($(togiUls[i]).find("#jimok").parent().html());
+		*/
 		var rep_flag = "N";
 		if ($(togiUls[i]).find("input:checkbox[name='rep_flag']").is(":checked") == true) {
 			rep_flag = "Y";
@@ -1220,6 +1223,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 	var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
 	console.log("----------jsonobj------------");
 	console.log(object);
+	
 
 	url = "/gover/insertGoverMasterDemo";
 	$.ajax({
@@ -1675,24 +1679,67 @@ $(document).on("click","#deleteFileBtn",function(){
 		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
 		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
 		var delfileName=$(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val();
+		
 		var idx=$(clickedAttachFiles[i]).closest("#fileListUl").find("#idx").val();
+		var ids={"gover_no":$("#gover_no").val(),"idx":$(clickedAttachFiles[i]).closest("#fileListUl").find("#idx").val(),"filename":$(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val()};
 		console.log(delfileName);
 		console.log(idx);
 		/*var data={"delfile":delFileName,"idx":idx}
 				delFiles.push(data);*/
+				if (idx!=null && idx!="" && idx!=undefined) delFiles.push(ids);
 		$(delEle).remove();
 		
 				
 
 	}
 	
-	
 	console.log(delFiles);
+		var param={"fileIds":delFiles};
+	console.log(param);
+	
+	if (delFiles.length>0){
+		url = "/gover/deleteGoverAtcfile1";
+				         $.ajax({
+				             url: url,
+				             type: 'POST',
+				             contentType: "application/json",
+				             data: JSON.stringify(param),
+
+				             dataType: "json",
+				             beforeSend: function (request) {
+				                 console.log("beforesend ........................");
+				                 loadingShow();
+				             },
+				             success: function (response) {
+				               
+				                 console.log(response);
+								 alert("파일이 삭제 되었습니다.");
+				        //         if (response.success = "Y") {
+				        //             console.log("response.success Y");
+				        //             console.log("response.resultData length:" + response.resultData.length);
+				        //             alert("정상적으로 등록 되었습니다.");
+				        //             /*$("#popup_bg").show();
+				        //             $("#popup").show(500);
+				        //             //$("#addrPopupLayer tbody td").remove();
+				        //             for(var i=0;i<response.resultData.length;i++){
+				        //                 $("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+				        //             }*/
+				        //         }
+				        //         else {
+				        //             console.log("response.success N");
+				        //         }
+				             },
+				             error: function (jqXHR, textStatus, errorThrown) {
+				                 alert("deleteFileBtn ajax error\n" + textStatus + ":" + errorThrown);
+				                 return false;
+				             }
+				         });
+			
+	}
 	
 	
 	
-	
-	$('#searchResultPopDiv').replaceWith();
+	//$('#searchResultPopDiv').replaceWith();
 	
 	
 	
