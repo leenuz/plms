@@ -1396,6 +1396,15 @@ if(topCloseBtn){
     })
 }
 
+
+// 엑셀 팝업 닫기 버튼 클릭 시 팝업 닫기
+$(document).ready(function () {
+  $('.excelbtnWrap .closeBtn').on('click', function () {
+    $('#exceluploadPopup').removeClass('active'); // 팝업을 닫음
+  });
+});
+
+
 // pnu없이 선택
 $(document).on("click",".saveBtn",function(){
     var id =  $('.saveBtn').data('index');
