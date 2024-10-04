@@ -752,7 +752,7 @@
 					<div class="excel_select">
 						<h3>파일선택</h3>
 						<!-- multiple 추가 -->
-						<input type="file" id="excelPopup_file" multiple class="excel_file"></input>
+						<input type="file" id="excelPopup_file" name="excelPopup_file" multiple class="excel_file"></input>
 						<label for="excelPopup_file" class="excel_file_label">
 							<p>내PC</p>
 						</label>
@@ -821,7 +821,7 @@
 				</div>
 
 				<div class="excelbtnWrap">
-					<button class="excelBtn finalBtn">엑셀파일 양식</button>
+					<button class="excelBtn finalBtn" onclick="downloadFile('D:plms2_data/sampleData/SAMPLE_EXCEL.xlsx','SAMPLE_EXCEL.xlsx')">엑셀파일 양식</button>
 					<button class="sendBtn finalBtn" id="excelUpload">엑셀파일 전송</button>
 					<button class="closeBtn finalBtn">닫기</button>
 				</div>

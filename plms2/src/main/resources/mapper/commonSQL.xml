@@ -168,7 +168,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	and jibun=#{jibun}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	AND juso LIKE '%${address}%' 
+	AND regexp_replace(juso,'\s+',' ') LIKE '%${address}%' 
 	limit 100
 	</if>
 	</select>
@@ -210,7 +210,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	and j2.jibun=#{jibun}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	AND j2.juso LIKE '%${address}%' 	
+	AND regexp_replace(j2.juso,'\s+',' ') LIKE '%${address}%' 	
 	</if>
 	</select>	
 	

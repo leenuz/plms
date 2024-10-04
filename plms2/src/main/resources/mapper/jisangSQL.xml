@@ -169,7 +169,7 @@ ON PI.pnu = u.pnu
 			and jm2.jibun like '%${jibun}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			and regexp_replace(jm2.juso,'[\"]','','g') like '%${address}%'
+			AND regexp_replace(jm2.juso,'\s+',' ') LIKE '%${address}%' 
 		</if>
 		AND jm2.pnu IS NOT null
 		limit 100
