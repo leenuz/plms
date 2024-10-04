@@ -2245,9 +2245,6 @@ UPDATE SYS_CODE
    AND sc_SORT_ORDER <> 999
  		]]>
 	</update>
-	
-
-
 	<delete id="deleteOfficeMng" parameterType="HashMap">
 	    delete from SYS_OFFICEMNG  
 	    where so_adm_seq= #{ADM_SEQ, jdbcType=BIGINT}
@@ -2258,5 +2255,20 @@ UPDATE SYS_CODE
     FROM jijuk_2024
     WHERE pnu = #{pnu}
 	</select>
-
+	
+	<select id="selectOfficeTargetInfo" resultType="HashMap" parameterType="HashMap">
+		SELECT TT.*
+		FROM (	
+			SELECT 
+			T.so_idx as idx,
+			T.so_adm_seq as ADM_SEQ, 
+			T.so_jisa as JISA, 
+			T.so_pmt_office as PMT_OFFICE, 
+			T.so_adm_office as ADM_OFFICE,
+			T.so_approve as APPROVE
+			FROM SYS_OFFICEMNG T
+			WHERE 1 = 1
+			and T.so_adm_seq=${seq}		
+			)TT
+	</select>
 </mapper>

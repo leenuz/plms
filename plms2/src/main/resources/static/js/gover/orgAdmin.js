@@ -372,16 +372,15 @@ $(document).on("click", "#approve_Popup .topCloseBtn, #approve_Popup .closeBtn",
 
 
 // 등록버튼 클릭 이벤트
-$('#regBtn').on('click', function() {
+$(document).on('click', '#regBtn', function() {
 	//showRegPopup();
-	const popupOpen = document.querySelector("#registerPopup");
-	console.log($(popupOpen).html());
-	$(popupOpen).addClass("active");
-	
+	$('#registerPopup').show();
 	// 폼 초기화
+	
 	$('#saveForm')[0].reset();  // 폼의 모든 값을 초기화
 	$("#jisaText").text("전체");  // 지사 셀렉트 박스 초기화
 	$("#pmtOfficeText").text("전체");  // 허가관청 셀렉트 박스 초기화
+	
 });
 
 
@@ -428,6 +427,7 @@ registerApprovePopEvet = () => {
 			.forEach(function(btn) {
 				btn.addEventListener("click", () => {
 					registerApprovePopupOpen.classList.remove("active");
+					$(registerApprovePopupOpen).hide();
 				});
 			});
 		registerApprovePopupOpen
@@ -490,6 +490,7 @@ registerApprovePopEvet = () => {
 								console.log("response.success Y");
 								alert(response.message);
 								registerApprovePopupOpen.classList.remove("active"); // 팝업 닫기
+								$(registerApprovePopupOpen).hide();
 							} else {
 								console.log("response.success N");
 								alert(response.message);

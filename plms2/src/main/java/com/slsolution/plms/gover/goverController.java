@@ -2944,8 +2944,10 @@ log.info("params:"+params);
 		@ResponseBody  // JSON 응답을 위해 추가
 		public HashMap<String, Object> insertOfficeMng(HttpServletRequest request) {
 		    HashMap<String, Object> responseMap = new HashMap<>();
+		    List<HashMap<String, Object>> targetInfo = new ArrayList<>();
 		    String str_result = "Y";
 		    String msgType = "";
+		    
 		    try {
 		        String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		        JSONObject requestParamsObj = new JSONObject(requestParams);
@@ -2959,8 +2961,14 @@ log.info("params:"+params);
 
 		        String str_adm_seq="";
 		       
-		        if ("modify".equals(GUBUN))  str_adm_seq=requestParamsObj.getString("adm_seq");
+		        if ("modify".equals(GUBUN)) {
+		        	str_adm_seq=requestParamsObj.getString("adm_seq");
+		        	params.put("seq", str_adm_seq);
+		        	targetInfo = (ArrayList) mainService.selectQuery("goverSQL.selectOfficeTargetInfo", params);
+		        	log.info("targetInfo:" + targetInfo.toString());
+		        }
 		        else {
+		        	
 		        	// so_adm_seq 가져오기
 			        ArrayList<HashMap<String, Object>> tmp = (ArrayList) mainService.selectQuery("goverSQL.selectMaxOfficeMng", params);
 			        String mx_adm_seq = tmp.get(0).get("mx_adm_seq").toString();
@@ -2973,34 +2981,45 @@ log.info("params:"+params);
 		        params.put("PMT_OFFICE", PMT_OFFICE);
 		        params.put("ADM_OFFICE", ADM_OFFICE);
 		        params.put("APPROVE", "N");
-//		        params.put("GUBUN", GUBUN);
 
 		        log.info("insertOfficeMng params=" + params);
 		        if ("modify".equals(GUBUN)) {
 		        	mainService.UpdateQuery("goverSQL.updateOfficeMng", params); // 기본정보 저장
 		        	msgType = "수정";
+		        	
 		        }
 		        else {
 		        	mainService.InsertQuery("goverSQL.insertOfficeMng", params); // 기본정보 저장
 		        	msgType = "등록";
 		        }
 
-		       
-
-
 		        if ("modify".equals(GUBUN)) {
-		            params.put("history_gubun", "수정");
-		            String reason="";
-		            params.put("CONT", reason);
+		            params.put("GUBUN", "수정");
+		            StringBuilder reason = new StringBuilder();
+		            
+		            if (!JISA.equals(targetInfo.get(0).get("jisa"))) {
+		            	reason.append("관리지사 = ").append(targetInfo.get(0).get("jisa")).append(" -> ").append(JISA).append("<br />");
+		            }
+		            if (!PMT_OFFICE.equals(targetInfo.get(0).get("pmt_office"))) {
+		            	reason.append("허가관청 = ").append(targetInfo.get(0).get("pmt_office")).append(" -> ").append(PMT_OFFICE).append("<br />");
+		            }
+		            if (!ADM_OFFICE.equals(targetInfo.get(0).get("adm_office"))) {
+		            	reason.append("관리기관 = ").append(targetInfo.get(0).get("adm_office")).append(" -> ").append(ADM_OFFICE).append("<br />");
+		            }
+		            String brTag = "<br />";
+		            if (reason.length() >= brTag.length() && reason.substring(reason.length() - brTag.length()).equals(brTag)) {
+		                reason.delete(reason.length() - brTag.length(), reason.length());
+		            }
+		            params.put("CONT", reason.toString());
 		        } else {
-		            params.put("history_gubun", "신규등록");
+		            params.put("GUBUN", "신규등록");
 		            String reason="관리지사 = "+JISA+", 허가관청 = "+PMT_OFFICE+", 관리기관 = "+ADM_OFFICE;
 		            params.put("CONT", reason);
-		            mainService.InsertQuery("goverSQL.insertOfficeHistory", params);
+//		            mainService.InsertQuery("goverSQL.insertOfficeHistory", params);
 		        }
 
 		        // History 저장 (필요 시)
-		        // mainService.InsertQuery("goverSQL.insertOfficeMngHistory", params);
+		        mainService.InsertQuery("goverSQL.insertOfficeHistory", params);
 
 		        responseMap.put("success", "Y");
 		        responseMap.put("message", msgType + " 성공");
