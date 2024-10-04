@@ -607,13 +607,13 @@
 								<li class="content smallWidth">
 									<input type="hidden" id="goverIndex" value="0">
 									<input type="hidden" id="addKey" name="addKey" value="add">
-									<input type="hidden" id="sido_nm" name="sido_nm">
-									<input type="hidden" id="sgg_nm" name="sgg_nm">
-									<input type="hidden" id="emd_nm" name="emd_nm">
-									<input type="hidden" id="ri_nm" name="ri_nm">
-									<input type="hidden" id="jibun" name="jibun">
-									<input type="hidden" id="jibun_full" name="jibun_full">
-									<input type="hidden" id="addrcode" name="addrcode">
+									<input type="hidden" id="sido_nm" name="sido_nm" th:value="${pnuList[0].sido_nm}">
+									<input type="hidden" id="sgg_nm" name="sgg_nm" th:value="${pnuList[0].sgg_nm}">
+									<input type="hidden" id="emd_nm" name="emd_nm" th:value="${pnuList[0].emd_nm}">
+									<input type="hidden" id="ri_nm" name="ri_nm" th:value="${pnuList[0].ri_nm}">
+									<input type="hidden" id="jibun" name="jibun" th:value="${pnuList[0].jibun}">
+									<input type="hidden" id="jibun_full" name="jibun_full" th:value="${pnuList[0].jibun_full}">
+									<input type="hidden" id="addrcode" name="addrcode" th:value="${pnuList[0].addrcode}">
 
 									<!-- 소속 토지 정보에 기존 값을 hidden 필드로 추가 -->
 									<input type="hidden" name="tadm_office_org" th:value="${pnuList[0].adm_office}">
@@ -744,13 +744,13 @@
 								<li class="content smallWidth">
 									<input type="hidden" id="goverIndex" value="0">
 									<input type="hidden" id="addKey" name="addKey" value="add">
-									<input type="hidden" id="sido_nm" name="sido_nm">
-									<input type="hidden" id="sgg_nm" name="sgg_nm">
-									<input type="hidden" id="emd_nm" name="emd_nm">
-									<input type="hidden" id="ri_nm" name="ri_nm">
-									<input type="hidden" id="jibun" name="jibun">
-									<input type="hidden" id="jibun_full" name="jibun_full">
-									<input type="hidden" id="addrcode" name="addrcode">
+									<input type="hidden" id="sido_nm" name="sido_nm" th:value="${pnuList[0].sido_nm}">
+									<input type="hidden" id="sgg_nm" name="sgg_nm" th:value="${pnuList[0].sgg_nm}">
+									<input type="hidden" id="emd_nm" name="emd_nm" th:value="${pnuList[0].emd_nm}">
+									<input type="hidden" id="ri_nm" name="ri_nm" th:value="${pnuList[0].ri_nm}">
+									<input type="hidden" id="jibun" name="jibun" th:value="${pnuList[0].jibun}">
+									<input type="hidden" id="jibun_full" name="jibun_full" th:value="${pnuList[0].jibun_full}">
+									<input type="hidden" id="addrcode" name="addrcode" th:value="${pnuList[0].addrcode}">
 
 									<!-- 기존 값들을 hidden 필드로 추가 -->
 									<input type="hidden" name="adm_office_org_${iterStat.index}" th:value="${pnu.adm_office}">
@@ -820,7 +820,7 @@
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<button class="customSelectView" th:value="${pnu.jimok_text}" th:text="${pnu.jimok_text}" id="jimok">선택</button>
+										<button class="customSelectView"  th:text="${pnu.jimok_text}" id="jimok">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
