@@ -188,3 +188,84 @@ $(document).on("click",".historyBtn",function(){
 
 });
 */
+
+$(document).on("click","#sangsinBtn",function(){
+	
+	console.log("sangsin");
+	
+	var gover_no=$("#p_gover_no").val();
+	var jisa=$("#p_jisa").val();
+	var pmt_office=$("#p_pmt_office").val();
+	var adm_office=$("#p_adm_office").val();
+	var office_depart=$("#p_office_depart").val();
+	var office_charege=$("#p_office_charege").val();
+	var office_contact=$("#p_office_contact").val();
+	var pmt_no=$("#pmt_no").val();
+	var pay_date=$("#pay_date").val();
+	var pay_money=$("#pay_money").val();
+	var pay_vat=$("#pay_vat").val();
+	var pmt_st_date=$("#pmt_st_date").val();
+	var pmt_ed_date=$("#pmt_ed_date").val();
+	var pmt_no=$("#p_office_contact").val();
+	var pmt_no=$("#p_office_contact").val();
+	var pay_way=$("#pay_way").val();
+	var use_purpos="";
+	var pmt_gover_length="";
+	var pmt_gover_area="";
+	
+	//pnulist 
+	console.log("----------javascript array test-----------");
+								
+								   console.log(pnuArray);  // JavaScript 배열로 출력
+	
+	
+	
+	var jsonData={"GOVER_NO":gover_no,"loginKey":"","JISA":jisa
+				,"PMT_OFFICE":pmt_office,"ADM_OFFICE":adm_office
+				,"OFFICE_DEPART":office_depart,"OFFICE_CHARGE":office_charege
+				,"OFFICE_CONTACT":office_contact
+				,"PMT_NO":pmt_no
+				,"PAY_DATE":pay_date
+				,"PAY_MONEY":pay_money
+				,"PAY_VAT":pay_vat
+				,"PMT_ST_DATE":pmt_st_date
+				,"PMT_ED_DATE":pmt_ed_date
+				,"PAY_WAY":pay_way
+				,"USE_PURPOS":use_purpos
+				,"PMT_GOVER_LENGTH":pmt_gover_length
+				,"PMT_GOVER_AREA":pmt_gover_area
+				,"PAGETYPE":"" //update=수정에서 
+				,"OFFICE_MOBILE":""
+				,"pnuList":pnuArray
+				};
+		console.log(jsonData);
+		
+		var url="/gover/insertGoverPaySangsin";
+		//	var jsonDatas=encodeURIComponent(JSON.stringify(data));
+			
+				$.ajax({
+					
+					url:url,
+					type:'POST',
+					contentType:"application/json",
+					data:JSON.stringify(jsonData),
+					async:false,
+					dataType:"json",
+					
+					success:function(response){
+						console.log(response);
+						if (response.success="Y"){
+							console.log("response.success Y");
+							alert("상신이 완료 되었습니다.");
+						}
+						else {
+							console.log("response.success N");
+						}
+					},
+					error:function(jqXHR,textStatus,errorThrown){
+						alert("ajax error\n"+textStatus+":"+errorThrown);
+					}
+					
+				});
+	
+})

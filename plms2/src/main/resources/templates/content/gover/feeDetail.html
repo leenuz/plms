@@ -581,7 +581,7 @@
 							</ul>
 							<ul class="whitehallcontent">
 								<li class="whitehalltitle_td_1">
-									<input
+									<input id="p_gover_no" name="p_gover_no"
 									  type="text"
 									  placeholder="G_000119"
 									  readonly
@@ -589,7 +589,7 @@
 									  th:value="${resultData.gover_no}" />
 								</li>
 								<li class="whitehalltitle_td_2">
-									<input
+									<input id="p_jisa"
 									  type="text"
 									  placeholder="경인지사"
 									  readonly
@@ -597,7 +597,7 @@
 									  th:value="${resultData.jisa}" />
 								</li>
 								<li class="whitehalltitle_td_3">
-									<input
+									<input id="p_pmt_office"
 									  type="text"
 									  placeholder="한국농어촌공사"
 									  readonly
@@ -605,7 +605,7 @@
 									  th:value="${resultData.pmt_office}" />
 								</li>
 								<li class="whitehalltitle_td_4">
-									<input
+									<input id="p_adm_office"
 									  type="text"
 									  placeholder="고양지사"
 									  readonly
@@ -613,7 +613,7 @@
 									  th:value="${resultData.adm_office}" />
 								</li>
 								<li class="whitehalltitle_td_5">
-									<input
+									<input id="p_office_depart"
 									  type="text"
 									  placeholder="파주고양지사"
 									  readonly
@@ -621,7 +621,7 @@
 									  th:value="${resultData.office_depart}" />
 								</li>
 								<li class="whitehalltitle_td_6">
-									<input
+									<input id="p_office_charege"
 									  type="text"
 									  placeholder="김기훈"
 									  readonly
@@ -629,7 +629,7 @@
 									  th:value="${resultData.office_charege}" />
 								</li>
 								<li class="whitehalltitle_td_7">
-									<input
+									<input id="p_office_contact"
 									  type="text"
 									  placeholder="031-950-3274"
 									  readonly
@@ -652,23 +652,23 @@
 								<li class="payinfotitle_th_7">납부방법</li>
 							</ul>
 							<ul class="payinfocontent">
-								<li class="payinfotitle_td_1"><input type="text" /></li>
+								<li class="payinfotitle_td_1"><input type="text"  name="pmt_no" id="pmt_no"/></li>
 								<li class="date_around" id="payinfotitle_td_2">
 									<div class="complaint_calender_wrap">
-										<input
+										<input id="pay_date"
 										  type="date"
 										  data-placeholder="날짜선택"
 										  required
 										  aria-required="true" />
 									</div>
 								</li>
-								<li class="payinfotitle_td_3"><input type="text" /></li>
-								<li class="payinfotitle_td_4"><input type="text" /></li>
+								<li class="payinfotitle_td_3"><input type="text" id="pay_money"/></li>
+								<li class="payinfotitle_td_4"><input type="text" id="pay_vat"/></li>
 								<li class="payinfotitle_td_5"><input type="text" /></li>
 							  	<li class="date_around" id="payinfotitle_td_6">
 									<div class="dateInputBox">
 										<div class="complaint_calender_wrap">
-											<input
+											<input id="pmt_st_date"
 											  type="date"
 											  data-placeholder="22/01/01"
 											  required
@@ -676,7 +676,7 @@
 										</div>
 										<span class="dateBar"></span>
 										<div class="complaint_calender_wrap">
-											<input
+											<input id="pmt_ed_date"
 											  type="date"
 											  data-placeholder="22/12/31"
 											  required
@@ -684,11 +684,11 @@
 										</div>
 									</div>
 								</li>
-								<li class="payinfotitle_td_7"><input type="text" /></li>
+								<li class="payinfotitle_td_7"><input type="text" id="pay_way" /></li>
 							</ul>
 						</div>
 					</div>
-					<div class="whitehall">
+					<div class="whitehall" id="pTojiDiv">
 						<h3>소속토지정보</h3>
 						<div class="addresst_wrap">
 							<ul class="addresstitle">
@@ -699,6 +699,7 @@
 								<li class="addresstitle_th_5">면적(㎡)</li>
 								<li class="addresstitle_th_6">위치보기</li>
 							</ul>
+							
 							<div class="addresscontent_wrap">
 								<ul th:each="pnu, iterStat : ${goverPnuList}" class="addresscontent">
 					                <!-- 순번 -->
@@ -801,13 +802,17 @@
 					</div>
 				</div>
 				<div class="occupancybtn">
-					<button class="sangsinBtn finalBtn">상신</button>
+					<button class="sangsinBtn " id="sangsinBtn">상신</button>
 					<button class="closeBtn finalBtn">닫기</button>
 				</div>
 			</div>
 		</div>
+		<script th:inline="javascript">
+		var pnuArray = /*[[${goverPnuList}]]*/ [];
+		
+		</script>
 		<!-- script -->
     <script type="module" src="/js/module/surfaceMain.js"></script>
-    <script src="/js/gover/feeDetail.js"></script>
+    <script src="/js/gover/feeDetail.js" th:inline="javascript"></script>
  </th:block>
 </html>
