@@ -2465,6 +2465,12 @@ log.info("data:"+data.get(0));
 		params.put("jimokArray", jimokArray);
 		params.put("comple_yn", comple_yn);
 		params.put("cancel_yn", cancel_yn);
+		if ("N".equals(cancel_yn)) {
+		    params.put("cancel_yn", null);  // null 조건을 추가하기 위해 cancel_yn에 null 값을 전달
+		    params.put("cancel_yn_condition", "'N'  OR JM.jm_cancle_yn IS NULL or JM.jm_cancle_yn = ''");
+		} else {
+		    params.put("cancel_yn", cancel_yn);
+		}
 		params.put("deunggi_date", deunggi_date);
 		params.put("account_yn", account_yn);
 		params.put("start_date", start_date);

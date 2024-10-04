@@ -1064,6 +1064,9 @@ SELECT count(*)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
 		    AND JM.jm_CANCLE_YN = #{cancel_yn}
 		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn_condition)" >
+			AND JM.jm_CANCLE_YN = ${cancel_yn_condition}
+		</if>	
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
 			AND JM.jm_jasan_no LIKE '%${jasan_no}%'
 		</if>
