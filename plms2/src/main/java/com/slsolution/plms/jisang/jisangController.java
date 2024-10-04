@@ -2472,8 +2472,14 @@ log.info("data:"+data.get(0));
 		} else {
 		    params.put("cancel_yn", cancel_yn);
 		}
+		if ("N".equals(account_yn)) {
+		    params.put("account_yn", null);  // null 조건을 추가하기 위해 cancel_yn에 null 값을 전달
+		    params.put("account_yn_condition", "'N'  OR JM.jm_account_yn IS NULL or JM.jm_account_yn = ''");
+		} else {
+		    params.put("account_yn", account_yn);
+		}
 		params.put("deunggi_date", deunggi_date);
-		params.put("account_yn", account_yn);
+		//params.put("account_yn", account_yn);
 		params.put("start_date", start_date);
 		params.put("end_date", end_date);
 
