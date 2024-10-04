@@ -1,863 +1,640 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default_layout}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      layout:decorate="~{layout/default_layout}">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link
-            rel="stylesheet"
-            as="style"
-            crossorigin
-            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link th:href="@{/css/common.css}" rel="stylesheet" />
-    <link rel="stylesheet" href="/css/jisang/landTerminationRegistration.css" />
-    <link rel="stylesheet" href="/css/jisang/write.css">
-    <link rel="stylesheet" href="/assets/css/header.css" />
-    <!--<script src="/js/common/upload.js"></script>-->
-    <style>
-		div.dt-top-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link th:href="@{/css/common.css}" rel="stylesheet" />
+<link rel="stylesheet"
+	href="/css/jisang/landTerminationRegistration.css" />
+<link rel="stylesheet" href="/css/jisang/write.css">
+<link rel="stylesheet" href="/assets/css/header.css" />
+<!--<script src="/js/common/upload.js"></script>-->
+<style>
+div.dt-top-container {
+	display: grid;
+	grid-template-columns: auto auto auto;
 }
-
 div.dt-center-in-div {
-  margin: 0 auto;
-      float: right;
-    margin-right: 30px;
-
+	margin: 0 auto;
+	float: right;
+	margin-right: 30px;
 }
-div.dt-center-in-div>div{
-
-display:inline;
+div.dt-center-in-div>div {
+	display: inline;
 }
-
 div.dt-filter-spacer {
-  margin: 10px 0;
-  border:1px solid red;
+	margin: 10px 0;
+	border: 1px solid red;
 }
-
-
-.dt-title{
-
-text-align:center;
-width:180px;
-float:left;
-
+.dt-title {
+	text-align: center;
+	width: 180px;
+	float: left;
 }
-.dt-buttons{
-display:inline-block;
-
-width:180px;
-
+.dt-buttons {
+	display: inline-block;
+	width: 180px;
 }
-.dt-length{
-display:inline-block;
+.dt-length {
+	display: inline-block;
 }
-.dt-button{
-
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
-
+.dt-button {
+	color: white;
+	background-color: #4e5871;
+	font-size: 15px;
+	font-weight: 600;
+	border-radius: 10px;
+	background-image: url(/assets/media/menu01/download.png);
+	background-size: 11px;
+	background-repeat: no-repeat;
+	background-position: 123px center;
+	text-aline: left;
+	margin-right: 10px;
+	width: 159px;
+	height: 38px;
 }
-
 .dt-paging {
-text-align: center;
+	text-align: center;
 }
-
 .dt-paging-button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: transparent;
-  color: #007bff !important;
-    font-size: 15px;
-    font-weight: 600;
-
-
+	box-sizing: border-box;
+	display: inline-block;
+	min-width: 1.5em;
+	padding: 0.5em 1em;
+	margin-left: 2px;
+	text-align: center;
+	text-decoration: none !important;
+	cursor: pointer;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	background: transparent;
+	color: #007bff !important;
+	font-size: 15px;
+	font-weight: 600;
 }
-
-.bottom{
-text-align:center;
-
+.bottom {
+	text-align: center;
 }
-.top{
-
-text-align:right;
-margin:10px;
-
+.top {
+	text-align: right;
+	margin: 10px;
 }
-
-
-.ol-unselectable{
- border:1px solid red;
+.ol-unselectable {
+	border: 1px solid red;
 }
 #map {
-    clear: both;
-    position: relative;
-    width: 100% !important;
-    height: 214px;
-    border: 1px solid black;
+	clear: both;
+	position: relative;
+	width: 100% !important;
+	height: 214px;
+	border: 1px solid black;
 }
-		</style>
-    <title>지상권 해지 등록</title>
-  </head>
-  <th:block layout:fragment="content">
-    <!-- 지상권 해지 등록 -->
-    <div class="landTerminationRegistrationWrapper">
-      <main id="landTerminationRegistration">
-        <div class="mainTitle">
-          <h1>지상권 해지 등록</h1>
-        </div>
-        <!-- 기본/소유자 정보 -->
-        <section class="basicOwnerInfo">
-          <div class="subTitle">기본/소유자 정보</div>
+</style>
+<title>지상권 해지 등록</title>
+</head>
+<th:block layout:fragment="content">
+	<!-- 지상권 해지 등록 -->
+	<div class="landTerminationRegistrationWrapper">
+		<main id="landTerminationRegistration">
+			<div class="mainTitle">
+				<h1>지상권 해지 등록</h1>
+			</div>
+			<!-- 기본/소유자 정보 -->
+			<section class="basicOwnerInfo">
+				<div class="subTitle">기본/소유자 정보</div>
 
-          <div class="contWrap">
-            <!-- 기본 정보 -->
-            <div class="contBox">
-              <div class="thirdTitle">
-                <h2>・기본 정보</h2>
-              </div>
-				<input type="hidden" name="jisangNo" id="hiddenJisangNo" th:value="${resultData.jm_jisang_no}"/>
-              <div class="contentDetailBox basicContentDetailBox">
-                <div class="depth1">
-                  <ul class="titles">
-                    <li class="title">담당지사</li>
-                    <li class="title">용도</li>
-                    <li class="title">관로명(구간)</li>
-                    <li class="title">단/복선</li>
-                    <li class="addressInfoWidth title">주소</li>
-                    <li class="title">지적면적(m²)</li>
-                    <li class="title">국공유지여부</li>
-                    <li class="title">회계처리 필요여부*</li>
-                  </ul>
-                    <ul class="contents lastContents">
-                      <li class="content">
-                        <input
-                          type="text"
-                          th:placeholder="${resultData.jm_jisa}"
-                          readonly
-                          id="jisa"
-                          class="notWriteInput"
-                          />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          th:placeholder="${resultData.jm_yongdo}"
-                          readonly
-                          id="yongdo"
-                          class="notWriteInput"/>
-                      </li>
-                      <li class="content">
-                        <input type="text"
-                           th:placeholder="${resultData.jm_pipe_name}"
-                           readonly
-                           id="pipe_name"
-                           class="notWriteInput"/>
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          th:placeholder="${resultData.jm_sun_gubun}"
-                          readonly
-                          id="sun_gubun"
-                          class="notWriteInput" />
-                      </li>
-                      <li class="addressInfoWidth content">
-                        <input
-                          type="text"
-                          th:placeholder="${resultData.address}"
-                          readonly
-                          id="address"
-                          class="notWriteInput" />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          th:placeholder="${resultData.jm_jijuk_area}"
-                          readonly
-                          id="jijuk_area"
-                          class="notWriteInput" />
-                      </li>
-                      <li class="content">
-                        <input
-                          type="text"
-                          th:placeholder="${resultData.jm_gover_own_yn}"
-                          readonly
-                          id="gover_own_yn"
-                          class="notWriteInput" />
-                      </li>
-                      <li class="content selectContentArea">
-                        <div class="hiddenSelectBox">
-                          <!-- name도 추가 -->
-                          <select
-                            name="landTerminateSelectBox01"
-                            id="landTerminateSelectBox01"
-                            hidden>
-                            <option value="Y">Y</option>
-                            <option value="N">N</option>
-                          </select>
-                        </div>
-                        <section class="customSelectBox" th:data-selected="${resultData.jm_account_yn}">
-                          <button class="customSelectView"></button>
-                          <ul class="customSelectBtns">
-                          </ul>
-                        </section>
-                      </li>
-                    </ul>
-                </div>
-              </div>
-            </div>
-						
-            <!-- 소유자 정보 -->
-            <div class="contBox contBoxMini03">
-              <div class="thirdTitle">
-                <h2>・소유자 정보</h2>
-              </div>
+				<div class="contWrap">
+					<!-- 기본 정보 -->
+					<div class="contBox">
+						<div class="thirdTitle">
+							<h2>・기본 정보</h2>
+						</div>
+						<input type="hidden" name="jisangNo" id="hiddenJisangNo"
+							th:value="${resultData.jm_jisang_no}" />
+						<div class="contentDetailBox basicContentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title">담당지사</li>
+									<li class="title">용도</li>
+									<li class="title">관로명(구간)</li>
+									<li class="title">단/복선</li>
+									<li class="addressInfoWidth title">주소</li>
+									<li class="title">지적면적(m²)</li>
+									<li class="title">국공유지여부</li>
+									<li class="title">회계처리 필요여부*</li>
+								</ul>
+								<ul class="contents lastContents">
+									<li class="content"><input type="text"
+										th:placeholder="${resultData.jm_jisa}" readonly id="jisa"
+										class="notWriteInput" /></li>
+									<li class="content"><input type="text"
+										th:placeholder="${resultData.jm_yongdo}" readonly id="yongdo"
+										class="notWriteInput" /></li>
+									<li class="content"><input type="text"
+										th:placeholder="${resultData.jm_pipe_name}" readonly
+										id="pipe_name" class="notWriteInput" /></li>
+									<li class="content"><input type="text"
+										th:placeholder="${resultData.jm_sun_gubun}" readonly
+										id="sun_gubun" class="notWriteInput" /></li>
+									<li class="addressInfoWidth content"><input type="text"
+										th:placeholder="${resultData.address}" readonly id="address"
+										class="notWriteInput" /></li>
+									<li class="content"><input type="text"
+										th:placeholder="${resultData.jm_jijuk_area}" readonly
+										id="jijuk_area" class="notWriteInput" /></li>
+									<li class="content"><input type="text"
+										th:placeholder="${resultData.jm_gover_own_yn}" readonly
+										id="gover_own_yn" class="notWriteInput" /></li>
+									<!-- 회계처리 필요여부 -->
+									<li class="content selectContentArea">
+										<div class="hiddenSelectBox">
+											<!-- name도 추가 -->
+											<select name="landTerminateSelectBox01"
+												id="landTerminateSelectBox01" hidden>
+												<option value="Y">Y</option>
+												<option value="N">N</option>
+											</select>
+										</div>
+										<section class="customSelectBox"
+											th:data-selected="${resultData.jm_account_yn}">
+											<button class="customSelectView"></button>
+											<ul class="customSelectBtns">
+											</ul>
+										</section>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
 
-              <div class="contentDetailBox ownerContentDetailBox">
-                <div class="depth1">
-                  <ul class="titles">
-                    <li class="numInfoWidth title">순번</li>
-                    <li class="title">공유지분</li>
-                    <li class="title">성명</li>
-                    <li class="addressInfoWidth title">주소</li>
-                    <li class="contactInfoWidth title">연락처 1</li>
-                    <li class="contactInfoWidth title">연락처 2</li>
-                  </ul>
-                  <ul class="contents" th:each="val:${soujaList}">
-                    <li class="numInfoWidth content">
-                      <input
-                        type="text"
-                        th:placeholder="${val.no}"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="content">
-                      <input
-                        type="text"
-                        th:placeholder="${val.js_jibun}"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="content">
-                      <input
-                        type="text"
-                        th:placeholder="${val.js_souja_name}"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="addressInfoWidth content">
-                      <input
-                        type="text"
-                        th:placeholder="${val.js_address}"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="contactInfoWidth content">
-                      <input
-                        type="text"
-                        th:placeholder="${val.js_home_number}"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                    <li class="contactInfoWidth content">
-                      <input
-                        type="text"
-                        th:placeholder="${val.js_pone_number}"
-                        readonly
-                        class="notWriteInput" />
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-				
-        <!-- 지상권 정보 -->
-        <section class="surfaceRightInfo">
-          <div class="subTitle">지상권 정보</div>
+					<!-- 소유자 정보 -->
+					<div class="contBox contBoxMini03">
+						<div class="thirdTitle">
+							<h2>・소유자 정보</h2>
+						</div>
 
-          <div class="contWrap">
-            <div class="contentDetailBox contBoxMini07">
-              <div class="depth1">
-                <ul class="titles">
-                  <li class="title">자산분류번호</li>
-                  <li class="title">취득일자</li>
-                  <li class="title">편입면적(m2)</li>
-                  <li class="title">사용현황</li>
-                  <li class="title">등기일</li>
-                  <li class="title">등기번호</li>
-                  <li class="title">등기소</li>
-                  <li class="title">도시계획 결정여부</li>
-                  <li class="title">해지일자*</li>
-                </ul>
-                <ul class="contents">
-                  <li class="content">
-                    <input
-                      type="text"
-                      th:placeholder="${resultData.jm_jasan_no}"
-                      readonly
-                      id="jasan_no"
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      th:placeholder="${resultData.jm_chuideuk_date}"
-                      readonly
-                      id="chuideuk_date"
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      th:placeholder="${resultData.jm_pyeonib_area}"
-                      readonly
-                      id="pyeonib_area"
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      th:placeholder="${resultData.jm_use_state}"
-                      readonly
-                      id="use_state"
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      th:placeholder="${resultData.jm_deunggi_date}"
-                      readonly
-                      id="deunggi_date"
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      th:placeholder="${resultData.jm_deunggi_no}"
-                      readonly
-                      id="deunggi_no"
-                      class="notWriteInput"/>
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      th:placeholder="${resultData.jm_deunggiso}"
-                      readonly
-                      id="deunggiso"
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      th:placeholder="${resultData.jm_dosiplan}"
-                      readonly
-                      id="dosiplan"
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <div class="dateInputWrap">
-                      <input
-                        type="date"
-                        th:data-placeholder="${resultData.jm_cancle_date}"
-                        th:value="${resultData.jm_cancle_date}"
-                        id="cancle_date"
+						<div class="contentDetailBox ownerContentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="numInfoWidth title">순번</li>
+									<li class="title">공유지분</li>
+									<li class="title">성명</li>
+									<li class="addressInfoWidth title">주소</li>
+									<li class="contactInfoWidth title">연락처 1</li>
+									<li class="contactInfoWidth title">연락처 2</li>
+								</ul>
+								<ul class="contents" th:each="val:${soujaList}">
+									<li class="numInfoWidth content"><input type="text"
+										th:placeholder="${val.no}" readonly class="notWriteInput" />
+									</li>
+									<li class="content"><input type="text"
+										th:placeholder="${val.js_jibun}" readonly
+										class="notWriteInput" /></li>
+									<li class="content"><input type="text"
+										th:placeholder="${val.js_souja_name}" readonly
+										class="notWriteInput" /></li>
+									<li class="addressInfoWidth content"><input type="text"
+										th:placeholder="${val.js_address}" readonly
+										class="notWriteInput" /></li>
+									<li class="contactInfoWidth content"><input type="text"
+										th:placeholder="${val.js_home_number}" readonly
+										class="notWriteInput" /></li>
+									<li class="contactInfoWidth content"><input type="text"
+										th:placeholder="${val.js_pone_number}" readonly
+										class="notWriteInput" /></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 
-                        required
-                        aria-required="true" />
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="depth2">
-                <ul class="rowListBox">
-                  <li class="title">취득금액</li>
-                  <li class="content">
-                    <input type="text" placeholder="직접입력" th:value="${resultData.jm_chuideuk_money}" id="chuideuk_money" />
-                  </li>
-                </ul>
-                <ul class="rowListBox">
-                  <li class="title">감가삼각충당금</li>
-                  <li class="content">
-                    <input type="text" placeholder="직접입력" th:value="${resultData.jm_gammoney}" id="gammoney" />
-                  </li>
-                </ul>
-                <ul class="rowListBox">
-                  <li class="title">잔존가액</li>
-                  <li class="content lastRowList">
-                    <input type="text" placeholder="직접입력" th:value="${resultData.jm_remainder_money}" id="remainder_money" />
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+			<!-- 지상권 정보 -->
+			<section class="surfaceRightInfo">
+				<div class="subTitle">지상권 정보</div>
 
-        <!-- 지상권 해지관련 보상정보 -->
+				<div class="contWrap">
+					<div class="contentDetailBox contBoxMini07">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title">자산분류번호</li>
+								<li class="title">취득일자</li>
+								<li class="title">편입면적(m2)</li>
+								<li class="title">사용현황</li>
+								<li class="title">등기일</li>
+								<li class="title">등기번호</li>
+								<li class="title">등기소</li>
+								<li class="title">도시계획 결정여부</li>
+								<li class="title">해지일자*</li>
+							</ul>
+							<ul class="contents">
+								<li class="content"><input type="text"
+									th:placeholder="${resultData.jm_jasan_no}" readonly
+									id="jasan_no" class="notWriteInput" /></li>
+								<li class="content"><input type="text"
+									th:placeholder="${resultData.jm_chuideuk_date}" readonly
+									id="chuideuk_date" class="notWriteInput" /></li>
+								<li class="content"><input type="text"
+									th:placeholder="${resultData.jm_pyeonib_area}" readonly
+									id="pyeonib_area" class="notWriteInput" /></li>
+								<li class="content"><input type="text"
+									th:placeholder="${resultData.jm_use_state}" readonly
+									id="use_state" class="notWriteInput" /></li>
+								<li class="content"><input type="text"
+									th:placeholder="${resultData.jm_deunggi_date}" readonly
+									id="deunggi_date" class="notWriteInput" /></li>
+								<li class="content"><input type="text"
+									th:placeholder="${resultData.jm_deunggi_no}" readonly
+									id="deunggi_no" class="notWriteInput" /></li>
+								<li class="content"><input type="text"
+									th:placeholder="${resultData.jm_deunggiso}" readonly
+									id="deunggiso" class="notWriteInput" /></li>
+								<li class="content"><input type="text"
+									th:placeholder="${resultData.jm_dosiplan}" readonly
+									id="dosiplan" class="notWriteInput" /></li>
+								<li class="content">
+									<div class="dateInputWrap">
+										<input type="date"
+											th:data-placeholder="${resultData.jm_cancle_date}"
+											th:value="${resultData.jm_cancle_date}" id="cancle_date"
+											required aria-required="true" />
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="depth2">
+							<ul class="rowListBox">
+								<li class="title">취득금액</li>
+								<li class="content"><input type="text" placeholder="직접입력"
+									th:value="${resultData.jm_chuideuk_money}" id="chuideuk_money" />
+								</li>
+							</ul>
+							<ul class="rowListBox">
+								<li class="title">감가삼각충당금</li>
+								<li class="content"><input type="text" placeholder="직접입력"
+									th:value="${resultData.jm_gammoney}" id="gammoney" /></li>
+							</ul>
+							<ul class="rowListBox">
+								<li class="title">잔존가액</li>
+								<li class="content lastRowList"><input type="text"
+									placeholder="직접입력" th:value="${resultData.jm_remainder_money}"
+									id="remainder_money" /></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
 
-        <section class="compensationInfo">
-          <div class="subTitle">지상권 해지관련 보상정보*</div>
+			<!-- 지상권 해지관련 보상정보 -->
 
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="rowListBox">
-                <li class="title">해지보상유무</li>
-                <li class="content inputWrap">
-                  <div class="inputBox">
-                    <input
-                      type="radio"
-                      name="landTerminationRegistrationCompensation"
-                      value="Y"
-                      id="radioYes"
-                      th:checked="${resultData.jm_cancle_bosang_yn == 'Y'}"/>유
-                  </div>
-                  <div class="inputBox">
-                    <input
-                      type="radio"
-                      name="landTerminationRegistrationCompensation"
-                      id="radioNo"
-                      value="N"
-                      th:checked="${resultData.jm_cancle_bosang_yn == 'N'}"/>무
-                  </div>
-                </li>
-              </ul>
-              <ul class="rowListBox">
-                <li class="title">보상금액</li>
-                <li class="content lastRowList">
+			<section class="compensationInfo">
+				<div class="subTitle">지상권 해지관련 보상정보*</div>
 
-                  <input type="text" placeholder="직접입력" th:value="${resultData.jm_cancle_bosang_money}" id="cancle_bosang_money" />
+				<div class="contWrap">
+					<div class="depth1">
+						<ul class="rowListBox">
+							<li class="title">해지보상유무</li>
+							<li class="content inputWrap">
+								<div class="inputBox">
+									<input type="radio"
+										name="landTerminationRegistrationCompensation" value="Y"
+										id="radioYes"
+										th:checked="${resultData.jm_cancle_bosang_yn == 'Y'}" />유
+								</div>
+								<div class="inputBox">
+									<input type="radio"
+										name="landTerminationRegistrationCompensation" id="radioNo"
+										value="N"
+										th:checked="${resultData.jm_cancle_bosang_yn == 'N'}" />무
+								</div>
+							</li>
+						</ul>
+						<ul class="rowListBox">
+							<li class="title">보상금액</li>
+							<li class="content lastRowList"><input type="text"
+								placeholder="직접입력"
+								th:value="${resultData.jm_cancle_bosang_money}"
+								id="cancle_bosang_money" /></li>
+						</ul>
+					</div>
+				</div>
+			</section>
 
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+			<!-- 첨부파일 -->
+			<section class="attachFileInfo">
+				<form name="uploadForm" method="post" enctype="multipart/form-data">
+					<div class="subTitle">
+						첨부파일
+						<div class="fileBtnWrap">
+							<input type="file" name="fileUpload"
+								id="landTerminationRegistration_myPcFiles"> <label
+								for="landTerminationRegistration_myPcFiles">내 PC</label>
+						</div>
+					</div>
 
-        <!-- 첨부파일 -->
-        <section class="attachFileInfo">
-        <form name="uploadForm" method="post" enctype="multipart/form-data">
-          <div class="subTitle">
-            첨부파일
-            <div class="fileBtnWrap">
-              <input type="file" name="fileUpload" id="landTerminationRegistration_myPcFiles">
-              <label for="landTerminationRegistration_myPcFiles">내 PC</label>
-            </div>
-          </div>
+					<div class="fileUploadWrap">
+						<div class="fileUploadBox">
+							<img src="/assets/media/menu02/images/file-upload.png"
+								alt="파일 업로드 아이콘" class="fileUploadIcon" />
+							<p>파일을 마우스로 끌어오세요.</p>
+						</div>
+					</div>
+					<!--<div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>-->
+					<!--<div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>-->
+				</form>
 
-          <div class="fileUploadWrap">
-            <div class="fileUploadBox">
-              <img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
-              <p>파일을 마우스로 끌어오세요.</p>
-            </div>
-          </div>
-          <!--<div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>-->
-          <!--<div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>-->
-        </form>
+				<div class="contWrap">
+					<div class="depth1" id="fileListDiv">
+						<ul class="titles titleScr" id="fileTitleUl">
+							<li class="title selectWidth allSelectCheck"><input
+								type="checkbox" id="landRightsRegistration_file_select_all"
+								name="landTerminationRegistration_file_select_all"> <label
+								for="landRightsRegistration_file_select_all"></label></li>
+							<li class="title">등록일</li>
+							<li class="title fileNameWidth">파일명</li>
+							<li class="title">파일보기</li>
+						</ul>
+						<div class="contentScr">
+							<ul class="contents" th:each="val:${atcFileList}">
+								<li class="selectWidth content checkboxWrap"><input
+									type="checkbox" th:id="'checkbox_' + ${val.ja_idx}"
+									class="file-checkbox" th:value="${val.ja_idx}"> <label
+									th:for="'checkbox_' + ${val.ja_idx}"></label></li>
+								<li class="content registDateWidth"><input type="text"
+									th:placeholder="${val.ja_wdate}" readonly class="notWriteInput" />
+								</li>
+								<li class="content fileNameWidth"><input type="text"
+									th:placeholder="${val.ja_file_nm}" readonly
+									class="notWriteInput" /></li>
+								<li class="content">
+									<button class="viewDetailButton"
+										th:onclick="openFilePopup([[${val.ja_file_path}]])">보기</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 
-          <div class="contWrap">
-                <div class="depth1" id="fileListDiv">
-                  <ul class="titles titleScr" id="fileTitleUl">
-                    <li class="title selectWidth allSelectCheck">
-                      <input type="checkbox" id="landRightsRegistration_file_select_all" name="landTerminationRegistration_file_select_all">
-                      <label for="landRightsRegistration_file_select_all"></label>
-                    </li>
-                    <li class="title">등록일</li>
-                    <li class="title fileNameWidth">파일명</li>
-                    <li class="title">파일보기</li>
-                  </ul>
-                  <div class="contentScr">
-                    <ul class="contents" th:each="val:${atcFileList}">
-                      <li class="selectWidth content checkboxWrap">
-                        <input type="checkbox" th:id="'checkbox_' + ${val.ja_idx}" class="file-checkbox" th:value="${val.ja_idx}">
-                        <label th:for="'checkbox_' + ${val.ja_idx}"></label>
-                      </li>
-                      <li class="content registDateWidth">
-                        <input
-                          type="text"
-                          th:placeholder="${val.ja_wdate}"
-                          readonly
-                          class="notWriteInput" />
-                      </li>
-                      <li class="content fileNameWidth">
-                        <input
-                          type="text"
-                          th:placeholder="${val.ja_file_nm}"
-                          readonly
-                          class="notWriteInput" />
-                      </li>
-                      <li class="content">
-                        <button class="viewDetailButton" th:onclick="openFilePopup([[${val.ja_file_path}]])">보기</button>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+				<div class="btnWrap">
+					<button class="fileDelBtn delBtn" id="deleteSelectedBtn">선택파일
+						삭제</button>
+				</div>
+			</section>
 
-              <div class="btnWrap">
-                <button class="fileDelBtn delBtn" id="deleteSelectedBtn">선택파일 삭제</button>
-              </div>
-        </section>
+			<section class="reasonTermination">
+				<div class="subTitle">해지사유 및 검토의견*</div>
 
-        <section class="reasonTermination">
-          <div class="subTitle">해지사유 및 검토의견*</div>
+				<div class="contWrap">
+					<div class="depth1">
+						<ul class="rowListBox">
+							<li class="title">해지사유</li>
+							<li class="content inputWrap"><input type="text"
+								placeholder="직접입력 (최소 10자 이상)"
+								th:value="${resultData.jm_cancle_reason}" id="cancle_reason" />
+							</li>
+						</ul>
+					</div>
+					<div class="depth2">
+						<ul class="rowListBox">
+							<li class="title">검토의견</li>
+							<li class="content lastRowList"><textarea
+									placeholder="직접입력 (최소 10자 이상)"
+									th:text="${resultData.jm_cancle_comment}" id="cancle_comment"></textarea>
 
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="rowListBox">
-                <li class="title">해지사유</li>
-                <li class="content inputWrap">
-                  <input type="text" placeholder="직접입력 (최소 10자 이상)" th:value="${resultData.jm_cancle_reason}" id="cancle_reason"/>
-                </li>
-              </ul>
-            </div>
-            <div class="depth2">
-              <ul class="rowListBox">
-                <li class="title">검토의견</li>
-                <li class="content lastRowList">
-                  <textarea placeholder="직접입력 (최소 10자 이상)" th:text="${resultData.jm_cancle_comment}" id="cancle_comment"></textarea>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
 
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+			<section class="attachDocuments">
+				<div class="subTitle">첨부 서류*</div>
 
-        <section class="attachDocuments">
-          <div class="subTitle">첨부 서류*</div>
+				<div class="contWrap">
+					<div class="depth1">
+						<ul class="titles">
+							<li class="title">파일내용</li>
+						</ul>
 
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="titles">
-                <li class="title">파일내용</li>
-              </ul>
+						<div class="contentListBox">
+							<div class="essentialDocument">
+								<p>필수 증빙서류</p>
+							</div>
 
-              <div class="contentListBox">
-                <div class="essentialDocument">
-                  <p>필수 증빙서류</p>
-                </div>
+							<ul class="essentialDocuList">
+								<li class="content"><input type="text"
+									placeholder="1. 등기사항 전부 증명서" readonly class="notWriteInput" />
+								</li>
+								<li class="content"><input type="text"
+									placeholder="2. 토지대장" readonly class="notWriteInput" /></li>
+								<li class="content"><input type="text"
+									placeholder="3. 지적도 (관로표기)" readonly class="notWriteInput" />
+								</li>
+								<li class="content"><input type="text"
+									placeholder="4. 현장사진" readonly class="notWriteInput" /></li>
+								<li class="content"><input type="text"
+									placeholder="5. 검토의견서" readonly class="notWriteInput" /></li>
+								<li class="content"><input type="text"
+									placeholder="6. 도면, 민원인 관계서류 등" readonly class="notWriteInput" />
+								</li>
+								<li class="content"><input type="text"
+									placeholder="7. 지상권해지 승낙서/위임장" readonly class="notWriteInput" />
+								</li>
+								<li class="content"><input type="text"
+									placeholder="8. 지상권 해지요청 공문서(신청서)" readonly
+									class="notWriteInput" /></li>
+							</ul>
+						</div>
+					</div>
+					<div class="depth2" id="req_Doc_Div">
+						<ul class="titles">
+							<li class="title">파일명</li>
+							<li class="title delContWidth">삭제</li>
+							<li class="title selectFileWidth">파일선택</li>
+						</ul>
 
-                <ul class="essentialDocuList">
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="1. 등기사항 전부 증명서"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="2. 토지대장"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="3. 지적도 (관로표기)"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="4. 현장사진"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="5. 검토의견서"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="6. 도면, 민원인 관계서류 등"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="7. 지상권해지 승낙서/위임장"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                  <li class="content">
-                    <input
-                      type="text"
-                      placeholder="8. 지상권 해지요청 공문서(신청서)"
-                      readonly
-                      class="notWriteInput" />
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="depth2" id="req_Doc_Div">
-              <ul class="titles">
-                <li class="title">파일명</li>
-                <li class="title delContWidth">삭제</li>
-                <li class="title selectFileWidth">파일선택</li>
-              </ul>
+						<ul class="contents">
+							<li class="content"><input type="hidden" id="fseq" value="1">
+								<input name="req_doc_file01" id="req_doc_file01" type="text"
+								th:if="${#lists.size(reqDoc1list)>=1}"
+								th:value="${reqDoc1list[0].jrd_fname}" readonly
+								class="notWriteInput" style="text-align: center" /> <input
+								name="req_doc_file01" id="req_doc_file01" type="text"
+								th:if="${#lists.size(reqDoc1list)<1}" placeholder="" readonly
+								class="notWriteInput" style="text-align: center" /></li>
+							<li class="content delContWidth">
+								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							</li>
+							<li class="content selectFileWidth lightfileBtnWrap">
+								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								name="landTerminationRegistration_myPcFiles01"
+								id="landTerminationRegistration_myPcFiles01" /> <label
+								for="landTerminationRegistration_myPcFiles01">파일선택</label>
+							</li>
+						</ul>
+						<ul class="contents">
+							<li class="content"><input type="hidden" id="fseq" value="2">
+								<input name="req_doc_file02" id="req_doc_file02" type="text"
+								th:if="${#lists.size(reqDoc1list)>=2}"
+								th:value="${reqDoc1list[1].jrd_fname!=null?reqDoc1list[1].jrd_fname:''}"
+								readonly class="notWriteInput" style="text-align: center" /> <input
+								name="req_doc_file02" id="req_doc_file02" type="text"
+								th:if="${#lists.size(reqDoc1list)<2}" placeholder="" readonly
+								class="notWriteInput" style="text-align: center" /></li>
+							<li class="content delContWidth">
+								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							</li>
+							<li class="content selectFileWidth lightfileBtnWrap">
+								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								name="landTerminationRegistration_myPcFiles02"
+								id="landTerminationRegistration_myPcFiles02" /> <label
+								for="landTerminationRegistration_myPcFiles02">파일선택</label>
+							</li>
+						</ul>
+						<ul class="contents">
+							<li class="content"><input type="hidden" id="fseq"
+								value="3"> <input name="req_doc_file03"
+								id="req_doc_file03" type="text"
+								th:if="${#lists.size(reqDoc1list)>=3}"
+								th:value="${reqDoc1list[2].jrd_fname!=null?reqDoc1list[2].jrd_fname:''}"
+								readonly class="notWriteInput" style="text-align: center" /> <input
+								name="req_doc_file03" id="req_doc_file03" type="text"
+								th:if="${#lists.size(reqDoc1list)<3}" placeholder="" readonly
+								class="notWriteInput" style="text-align: center" /></li>
+							<li class="content delContWidth">
+								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							</li>
+							<li class="content selectFileWidth lightfileBtnWrap">
+								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								name="landTerminationRegistration_myPcFiles03"
+								id="landTerminationRegistration_myPcFiles03" /> <label
+								for="landTerminationRegistration_myPcFiles03">파일선택</label>
+							</li>
+						</ul>
+						<ul class="contents">
+							<li class="content"><input type="hidden" id="fseq" value="4">
+								<input type="text" name="req_doc_file04" id="req_doc_file04"
+								th:if="${#lists.size(reqDoc1list)>=4}"
+								th:value="${reqDoc1list[3].jrd_fname!=null?reqDoc1list[3].jrd_fname:''}"
+								readonly class="notWriteInput" style="text-align: center" /> <input
+								type="text" name="req_doc_file04" id="req_doc_file04"
+								th:if="${#lists.size(reqDoc1list)<4}" placeholder="" readonly
+								class="notWriteInput" style="text-align: center" /></li>
+							<li class="content delContWidth">
+								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							</li>
+							<li class="content selectFileWidth lightfileBtnWrap">
+								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								name="landTerminationRegistration_myPcFiles04"
+								id="landTerminationRegistration_myPcFiles04" /> <label
+								for="landTerminationRegistration_myPcFiles04">파일선택</label>
+							</li>
+						</ul>
+						<ul class="contents">
+							<li class="content"><input type="hidden" id="fseq" value="5">
+								<input type="text" name="req_doc_file05" id="req_doc_file05"
+								th:if="${#lists.size(reqDoc1list)>=5}"
+								th:value="${reqDoc1list[4].jrd_fname!=null?reqDoc1list[4].jrd_fname:''}"
+								readonly class="notWriteInput" style="text-align: center" /> <input
+								type="text" name="req_doc_file05" id="req_doc_file05"
+								th:if="${#lists.size(reqDoc1list)<5}" placeholder="" readonly
+								class="notWriteInput" style="text-align: center" /></li>
+							<li class="content delContWidth">
+								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							</li>
+							<li class="content selectFileWidth lightfileBtnWrap">
+								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								name="landTerminationRegistration_myPcFiles05"
+								id="landTerminationRegistration_myPcFiles05" /> <label
+								for="landTerminationRegistration_myPcFiles05">파일선택</label>
+							</li>
+						</ul>
+						<ul class="contents">
+							<li class="content"><input type="hidden" id="fseq" value="6">
+								<input type="text" name="req_doc_file06" id="req_doc_file06"
+								th:if="${#lists.size(reqDoc1list)>=6}"
+								th:value="${reqDoc1list[5].jrd_fname!=null?reqDoc1list[5].jrd_fname:''}"
+								readonly class="notWriteInput" style="text-align: center" /> <input
+								type="text" name="req_doc_file06" id="req_doc_file06"
+								th:if="${#lists.size(reqDoc1list)<6}" placeholder="" readonly
+								class="notWriteInput" style="text-align: center" /></li>
+							<li class="content delContWidth">
+								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							</li>
+							<li class="content selectFileWidth lightfileBtnWrap">
+								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								name="landTerminationRegistration_myPcFiles06"
+								id="landTerminationRegistration_myPcFiles06" /> <label
+								for="landTerminationRegistration_myPcFiles06">파일선택</label>
+							</li>
+						</ul>
+						<ul class="contents">
+							<li class="content"><input type="hidden" id="fseq" value="7">
+								<input type="text" name="req_doc_file07" id="req_doc_file07"
+								th:if="${#lists.size(reqDoc1list)>=7}"
+								th:value="${reqDoc1list[6].jrd_fname!=null?reqDoc1list[6].jrd_fname:''}"
+								readonly class="notWriteInput" style="text-align: center" /> <input
+								type="text" name="req_doc_file07" id="req_doc_file07"
+								th:if="${#lists.size(reqDoc1list)<7}" placeholder="" readonly
+								class="notWriteInput" style="text-align: center" /></li>
+							<li class="content delContWidth">
+								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							</li>
+							<li class="content selectFileWidth lightfileBtnWrap">
+								<!-- 파일보기 -> 파일선택으로 text 변경 --> <!-- 파일보기 -> 파일선택으로 text 변경 -->
+								<input type="file"
+								name="landTerminationRegistration_myPcFiles07"
+								id="landTerminationRegistration_myPcFiles07" /> <label
+								for="landTerminationRegistration_myPcFiles07">파일선택</label>
+							</li>
+						</ul>
+						<ul class="contents">
+							<li class="content"><input type="hidden" id="fseq" value="8">
+								<input type="text" name="req_doc_file08" id="req_doc_file08"
+								th:if="${#lists.size(reqDoc1list)>=8}"
+								th:value="${reqDoc1list[7].jrd_fname!=null?reqDoc1list[7].jrd_fname:''}"
+								readonly class="notWriteInput" style="text-align: center" /> <input
+								type="text" name="req_doc_file08" id="req_doc_file08"
+								th:if="${#lists.size(reqDoc1list)<8}" placeholder="" readonly
+								class="notWriteInput" style="text-align: center" /></li>
+							<li class="content delContWidth">
+								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							</li>
+							<li class="content selectFileWidth lightfileBtnWrap">
+								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								name="landTerminationRegistration_myPcFiles08"
+								id="landTerminationRegistration_myPcFiles08" /> <label
+								for="landTerminationRegistration_myPcFiles08">파일선택</label>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
 
-              <ul class="contents">
-                <li class="content">
-                <input type="hidden" id="fseq" value="1">
-                  <input name="req_doc_file01" id="req_doc_file01"
-                    type="text"
-                    th:if="${#lists.size(reqDoc1list)>=1}" th:value="${reqDoc1list[0].jrd_fname}"
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                    <input name="req_doc_file01" id="req_doc_file01"
-                    type="text"
-                    th:if="${#lists.size(reqDoc1list)<1}" placeholder=""
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <!-- 파일보기 -> 파일선택으로 text 변경 -->
-                  <input type="file" name="landTerminationRegistration_myPcFiles01"
-                    id="landTerminationRegistration_myPcFiles01" />
-                  <label for="landTerminationRegistration_myPcFiles01">파일선택</label>
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content">
-                <input type="hidden" id="fseq" value="2">
-                  <input  name="req_doc_file02" id="req_doc_file02"
-                    type="text"
-                    th:if="${#lists.size(reqDoc1list)>=2}" th:value="${reqDoc1list[1].jrd_fname!=null?reqDoc1list[1].jrd_fname:''}"
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                    <input  name="req_doc_file02" id="req_doc_file02"
-                    type="text"
-                    th:if="${#lists.size(reqDoc1list)<2}" placeholder=""
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                 <!-- 파일보기 -> 파일선택으로 text 변경 -->
-                  <input type="file" name="landTerminationRegistration_myPcFiles02"
-                    id="landTerminationRegistration_myPcFiles02" />
-                  <label for="landTerminationRegistration_myPcFiles02">파일선택</label>
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content"  >
-                <input type="hidden" id="fseq" value="3">
-                  <input  name="req_doc_file03" id="req_doc_file03"
-                    type="text"
-                    th:if="${#lists.size(reqDoc1list)>=3}" th:value="${reqDoc1list[2].jrd_fname!=null?reqDoc1list[2].jrd_fname:''}"
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                    <input  name="req_doc_file03" id="req_doc_file03"
-                    type="text"
-                    th:if="${#lists.size(reqDoc1list)<3}" placeholder=""
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <!-- 파일보기 -> 파일선택으로 text 변경 -->
-                  <input type="file" name="landTerminationRegistration_myPcFiles03"
-                    id="landTerminationRegistration_myPcFiles03" />
-                  <label for="landTerminationRegistration_myPcFiles03">파일선택</label>
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content">
-                <input type="hidden" id="fseq" value="4">
-                  <input type="text"  name="req_doc_file04" id="req_doc_file04"
-                    th:if="${#lists.size(reqDoc1list)>=4}" th:value="${reqDoc1list[3].jrd_fname!=null?reqDoc1list[3].jrd_fname:''}"
-                    readonly class="notWriteInput" style="text-align:center"/>
-                    <input type="text"  name="req_doc_file04" id="req_doc_file04"
-                    th:if="${#lists.size(reqDoc1list)<4}" placeholder=""
-                    readonly class="notWriteInput" style="text-align:center"/>
-                </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <!-- 파일보기 -> 파일선택으로 text 변경 -->
-                  <input type="file" name="landTerminationRegistration_myPcFiles04"
-                    id="landTerminationRegistration_myPcFiles04" />
-                  <label for="landTerminationRegistration_myPcFiles04">파일선택</label>
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content">
-                <input type="hidden" id="fseq" value="5">
-                  <input
-                    type="text"  name="req_doc_file05" id="req_doc_file05"
-                    th:if="${#lists.size(reqDoc1list)>=5}" th:value="${reqDoc1list[4].jrd_fname!=null?reqDoc1list[4].jrd_fname:''}"
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                    <input
-                    type="text"  name="req_doc_file05" id="req_doc_file05"
-                    th:if="${#lists.size(reqDoc1list)<5}" placeholder=""
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                 <!-- 파일보기 -> 파일선택으로 text 변경 -->
-                  <input type="file" name="landTerminationRegistration_myPcFiles05"
-                    id="landTerminationRegistration_myPcFiles05" />
-                  <label for="landTerminationRegistration_myPcFiles05">파일선택</label>
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content">
-                <input type="hidden" id="fseq" value="6">
-                  <input
-                    type="text"  name="req_doc_file06" id="req_doc_file06"
-                    th:if="${#lists.size(reqDoc1list)>=6}" th:value="${reqDoc1list[5].jrd_fname!=null?reqDoc1list[5].jrd_fname:''}"
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                    <input
-                    type="text"  name="req_doc_file06" id="req_doc_file06"
-                    th:if="${#lists.size(reqDoc1list)<6}" placeholder=""
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                 <!-- 파일보기 -> 파일선택으로 text 변경 -->
-                  <input type="file" name="landTerminationRegistration_myPcFiles06"
-                    id="landTerminationRegistration_myPcFiles06" />
-                  <label for="landTerminationRegistration_myPcFiles06">파일선택</label>
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content">
-                <input type="hidden" id="fseq" value="7">
-                  <input
-                    type="text"  name="req_doc_file07" id="req_doc_file07"
-                    th:if="${#lists.size(reqDoc1list)>=7}" th:value="${reqDoc1list[6].jrd_fname!=null?reqDoc1list[6].jrd_fname:''}"
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                    <input
-                    type="text"  name="req_doc_file07" id="req_doc_file07"
-                    th:if="${#lists.size(reqDoc1list)<7}" placeholder=""
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                 <!-- 파일보기 -> 파일선택으로 text 변경 -->
-                 <!-- 파일보기 -> 파일선택으로 text 변경 -->
-                  <input
-                    type="file" name="landTerminationRegistration_myPcFiles07"
-                    id="landTerminationRegistration_myPcFiles07" />
-                  <label for="landTerminationRegistration_myPcFiles07"
-                    >파일선택</label
-                  >
-                </li>
-              </ul>
-              <ul class="contents">
-                <li class="content">
-                  <input type="hidden" id="fseq" value="8">
-                  <input
-                    type="text"  name="req_doc_file08" id="req_doc_file08"
-                    th:if="${#lists.size(reqDoc1list)>=8}" th:value="${reqDoc1list[7].jrd_fname!=null?reqDoc1list[7].jrd_fname:''}"
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                    <input
-                    type="text"  name="req_doc_file08" id="req_doc_file08"
-                    th:if="${#lists.size(reqDoc1list)<8}" placeholder=""
-                    readonly
-                    class="notWriteInput" style="text-align:center"/>
-                </li>
-                <li class="content delContWidth">
-                  <button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-                </li>
-                <li class="content selectFileWidth lightfileBtnWrap">
-                  <!-- 파일보기 -> 파일선택으로 text 변경 -->
-                  <input
-                    type="file" name="landTerminationRegistration_myPcFiles08"
-                    id="landTerminationRegistration_myPcFiles08" />
-                  <label for="landTerminationRegistration_myPcFiles08"
-                    >파일선택</label
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+			<div class="finalBtnBox btnWrap">
+				<button class="saveBtn vividBlueBtn finalBtn" id="commit"
+					style="display: none" th:idx="${resultData.jm_jisang_no}"
+					th:index="${resultData.jm_idx}">상신 수락</button>
+				<button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
+				<button class="saveBtn vividBlueBtn finalBtn" id="save_btn"
+					th:idx="${resultData.jm_jisang_no}" th:index="${resultData.jm_idx}">
+					저장</button>
+				<button class="lightBlueBtn approvalBtn finalBtn" type="submit"
+					id="submit_btn" th:idx="${resultData.jm_jisang_no}"
+					th:index="${resultData.jm_idx}">상신</button>
+			</div>
+		</main>
+	</div>
 
-        <div class="finalBtnBox btnWrap">
-          <button
-            class="saveBtn vividBlueBtn finalBtn"
-            id="commit"
-            style="display:none"
-            th:idx="${resultData.jm_jisang_no}" th:index="${resultData.jm_idx}">
-            상신 수락
-          </button>
-          <button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
-          <button
-            class="saveBtn vividBlueBtn finalBtn"
-            id="save_btn"
-            th:idx="${resultData.jm_jisang_no}" th:index="${resultData.jm_idx}">
-            저장
-          </button>
-          <button
-            class="lightBlueBtn approvalBtn finalBtn"
-            type="submit"
-            id="submit_btn"
-            th:idx="${resultData.jm_jisang_no}" th:index="${resultData.jm_idx}"
-            >
-            상신
-          </button>
-        </div>
-      </main>
-    </div>
-
-    <!-- script -->
-    <script src="../../js/jisang/landTerminationRegistration.js"></script>
-    <!--<script type="module" src="/components/surfaceMain.js"></script>-->
-  </th:block>>
+	<!-- script -->
+	<script src="../../js/jisang/landTerminationRegistration.js"></script>
+	<!--<script type="module" src="/components/surfaceMain.js"></script>-->
+</th:block>
+>
 </html>

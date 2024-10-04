@@ -1883,10 +1883,11 @@ log.info("data:"+data.get(0));
 			mav.setViewName("content/jisang/landRightsRegistration");
 			return mav;
 		}
+		
 		@GetMapping(path="/landTerminationRegistration") //http://localhost:8080/api/get/dbTest
 		public ModelAndView landTerminationRegistration(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 			HashMap params = new HashMap();
-			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			ArrayList<HashMap> list=new ArrayList<HashMap>();
 
 			String idx = httpRequest.getParameter("idx");
 			String index = httpRequest.getParameter("index");
@@ -1930,7 +1931,6 @@ log.info("data:"+data.get(0));
 			
 			//필수첨부파일
 			ArrayList<HashMap> reqDoc1list = mainService.selectQuery("jisangSQL.selectJisangReqDoc1",params);
-			
 
 			log.info("params:"+params);
 			log.info("sidolist:"+sidolist);
@@ -1946,10 +1946,6 @@ log.info("data:"+data.get(0));
 			log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
 			log.info("jisangDoc1list:"+reqDoc1list);
 			
-			
-			
-			
-			
 			ModelAndView mav=new ModelAndView();
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);
@@ -1961,8 +1957,6 @@ log.info("data:"+data.get(0));
 			mav.addObject("atcFileList",atcFileList);
 			mav.addObject("jisangModifyList",jisangModifyList);
 			mav.addObject("jisangMergeList",jisangMergeList);
-
-			
 			
 			mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
 			
@@ -3590,76 +3584,76 @@ log.info("data:"+data.get(0));
 	// 지상권 해지 저장 - 해지사유 및 검토 의견만 임시 저장처리
 	@Transactional
 	@PostMapping(path="/insertJisangTerminationTemp")
-		public void insertJisangTerminationTemp(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String requestParams = ParameterUtil.getRequestBodyToStr(request);
-		 log.info("requestParams:"+requestParams);
-		 JSONObject requestParamObj=new JSONObject(requestParams);
-			ParameterParser parser = new ParameterParser(request);
-			String jisangNo = requestParamObj.getString("jisang_no");
-			String startDay = requestParamObj.getString("cancel_date").replace("-", "");
-			String cancle_yes = requestParamObj.has("cancle_yes")?requestParamObj.getString("cancle_yes"):""; //해지여부
-			String cancle_bosang_money = requestParamObj.getString("cancel_bosang_money");
-			String empCd = String.valueOf(request.getSession().getAttribute("userId"));
-			String empName = String.valueOf(request.getSession().getAttribute("userName"));
-			String cancle_chuideuk_money = requestParamObj.getString("chuideuk_money");
-			String cancle_chuideuk_gammoney = requestParamObj.getString("gammoney");
-			String cancle_chuideuk_remainder_money = requestParamObj.getString("remainder_money");
-			String cancle_reason = requestParamObj.getString("cancel_reason");
-			String cancle_comment = requestParamObj.getString("cancel_comment");
-			//String filenumber = requestParamObj.getString("filenumber");
-			//String fileseq = requestParamObj.getString("fileseq"); // 파일 seq
+	public void insertJisangTerminationTemp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	String requestParams = ParameterUtil.getRequestBodyToStr(request);
+	 log.info("requestParams:"+requestParams);
+	 JSONObject requestParamObj=new JSONObject(requestParams);
+		ParameterParser parser = new ParameterParser(request);
+		String jisangNo = requestParamObj.getString("jisang_no");
+		String startDay = requestParamObj.getString("cancel_date").replace("-", "");
+		String cancle_yes = requestParamObj.has("cancle_yes")?requestParamObj.getString("cancle_yes"):""; //해지여부
+		String cancle_bosang_money = requestParamObj.getString("cancel_bosang_money");
+		String empCd = String.valueOf(request.getSession().getAttribute("userId"));
+		String empName = String.valueOf(request.getSession().getAttribute("userName"));
+		String cancle_chuideuk_money = requestParamObj.getString("chuideuk_money");
+		String cancle_chuideuk_gammoney = requestParamObj.getString("gammoney");
+		String cancle_chuideuk_remainder_money = requestParamObj.getString("remainder_money");
+		String cancle_reason = requestParamObj.getString("cancel_reason");
+		String cancle_comment = requestParamObj.getString("cancel_comment");
+		//String filenumber = requestParamObj.getString("filenumber");
+		//String fileseq = requestParamObj.getString("fileseq"); // 파일 seq
 
-			String str_result = "Y";
-			try {
+		String str_result = "Y";
+		try {
 
-				HashMap params = new HashMap();
-				params.put("JISANGNO", jisangNo);
-				params.put("STARTDAY", startDay);
-				params.put("CANCLE_YES", cancle_yes);
-				params.put("CANCLE_BOSANG_MONEY", cancle_bosang_money);
-				params.put("CHUIDEUKMONEY", cancle_chuideuk_money);
-				params.put("GAMMONEY", cancle_chuideuk_gammoney);
-				params.put("REMAINDERMONEY", cancle_chuideuk_remainder_money);
-				params.put("EMPCD", empCd);
-				params.put("NAME", empName);
-				params.put("CANCLE_REASON", cancle_reason);
-				params.put("CANCLE_COMMENT", cancle_comment);
-				//params.put("FILESEQ", fileseq);
-				params.put("CANCLE_STATUS", "임시저장");
+			HashMap params = new HashMap();
+			params.put("JISANGNO", jisangNo);
+			params.put("STARTDAY", startDay);
+			params.put("CANCLE_YES", cancle_yes);
+			params.put("CANCLE_BOSANG_MONEY", cancle_bosang_money);
+			params.put("CHUIDEUKMONEY", cancle_chuideuk_money);
+			params.put("GAMMONEY", cancle_chuideuk_gammoney);
+			params.put("REMAINDERMONEY", cancle_chuideuk_remainder_money);
+			params.put("EMPCD", empCd);
+			params.put("NAME", empName);
+			params.put("CANCLE_REASON", cancle_reason);
+			params.put("CANCLE_COMMENT", cancle_comment);
+			//params.put("FILESEQ", fileseq);
+			params.put("CANCLE_STATUS", "임시저장");
 
-				 //////mainService.UpdateQuery("jisangSQL.insertJisangTerminationTemp", params);
+			 //////mainService.UpdateQuery("jisangSQL.insertJisangTerminationTemp", params);
 
-				mainService.UpdateQuery("jisangSQL.mergeJisangTermination", params);
+			mainService.UpdateQuery("jisangSQL.mergeJisangTermination", params);
 
-				for(int i=1;i<9;i++) {
-		        	String key=String.format("%02d",i);
-		        	if (requestParamObj.getString("req_doc_file"+key)!=null) {
-		        		log.info("Key:"+key);
-		        		String fname=requestParamObj.getString("req_doc_file"+key);
-		        		log.info("fname:"+fname);
-		        		if (fname.equals("") || fname==null ) continue;
-		        		
-		        		
-		        		HashMap<String, Object> filesMap= new HashMap<>();
-		        		filesMap.put("MANAGE_NO",jisangNo);
-		    			//filesMap.put("seq",String.format("%06d",i));
-		    			filesMap.put("fseq",i);
-		    			filesMap.put("FILE_GUBUN",i);
-		    			filesMap.put("FILE_NM",fname);
-		    			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
-		     			 String dataPath = GC.getJisangFileDataDir()+"/jisangCancel/"+jisangNo; //설정파일로 뺀다.
-		     			 filesMap.put("FILE_PATH",dataPath+"/"+fname);
-		     			 CommonUtil.moveFile(fname, tempPath, dataPath);
-		     			log.info("filesMap:"+filesMap);
-		     			
-		     			
-		     			//해당파일있는지체크 
-		     			int fcount=(int)mainService.selectCountQuery("jisangSQL.selectCancelFileCount", filesMap);
-		     			log.info("fcount:"+fcount);
-		     			if (fcount>0) mainService.InsertQuery("jisangSQL.updateCancelFile", filesMap);
-		     			else mainService.InsertQuery("jisangSQL.insertCancelFile", filesMap);
-		        	}
-		        }
+			for(int i=1;i<9;i++) {
+	        	String key=String.format("%02d",i);
+	        	if (requestParamObj.getString("req_doc_file"+key)!=null) {
+	        		log.info("Key:"+key);
+	        		String fname=requestParamObj.getString("req_doc_file"+key);
+	        		log.info("fname:"+fname);
+	        		if (fname.equals("") || fname==null ) continue;
+	        		
+	        		
+	        		HashMap<String, Object> filesMap= new HashMap<>();
+	        		filesMap.put("MANAGE_NO",jisangNo);
+	    			//filesMap.put("seq",String.format("%06d",i));
+	    			filesMap.put("fseq",i);
+	    			filesMap.put("FILE_GUBUN",i);
+	    			filesMap.put("FILE_NM",fname);
+	    			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+	     			 String dataPath = GC.getJisangFileDataDir()+"/jisangCancel/"+jisangNo; //설정파일로 뺀다.
+	     			 filesMap.put("FILE_PATH",dataPath+"/"+fname);
+	     			 CommonUtil.moveFile(fname, tempPath, dataPath);
+	     			log.info("filesMap:"+filesMap);
+	     			
+	     			
+	     			//해당파일있는지체크 
+	     			int fcount=(int)mainService.selectCountQuery("jisangSQL.selectCancelFileCount", filesMap);
+	     			log.info("fcount:"+fcount);
+	     			if (fcount>0) mainService.InsertQuery("jisangSQL.updateCancelFile", filesMap);
+	     			else mainService.InsertQuery("jisangSQL.insertCancelFile", filesMap);
+	        	}
+	        }
 //				for (int i = 0; i < Integer.parseInt(filenumber); i++) {
 //					String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
 //					String DEL_SEQ = parser.getString("fileseq" + String.valueOf(i), "");
@@ -3686,31 +3680,31 @@ log.info("data:"+data.get(0));
 //					}
 //				}
 
-				// System.out.println("params=" + params);
-				/** codecanyon에서 파일업로드 **/
-				//Database.getInstance().update("Json.updateSeqFile", params); // 파일테이블에 지상권번호 업데이트
+			// System.out.println("params=" + params);
+			/** codecanyon에서 파일업로드 **/
+			//Database.getInstance().update("Json.updateSeqFile", params); // 파일테이블에 지상권번호 업데이트
 
-			} catch (Exception e) {
-				str_result = "N";
-				e.printStackTrace();
-			}
-			HashMap map = new HashMap();
-
-			map.put("message", str_result);
-			 JSONObject obj = new JSONObject(map);
-	    	 // log.info("jo:"+jo);
-	        response.setCharacterEncoding("UTF-8");
-	        response.setHeader("Access-Control-Allow-Origin", "*");
-	        response.setHeader("Cache-Control", "no-cache");
-	        response.resetBuffer();
-	        response.setContentType("application/json");
-	        // response.getOutputStream().write(jo);
-	        response.getWriter().print(obj);
-	        response.getWriter().flush();
-
-
-			//this.mapToJsonResponse(response, map);
+		} catch (Exception e) {
+			str_result = "N";
+			e.printStackTrace();
 		}
+		HashMap map = new HashMap();
+
+		map.put("message", str_result);
+		 JSONObject obj = new JSONObject(map);
+    	 // log.info("jo:"+jo);
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Cache-Control", "no-cache");
+        response.resetBuffer();
+        response.setContentType("application/json");
+        // response.getOutputStream().write(jo);
+        response.getWriter().print(obj);
+        response.getWriter().flush();
+
+
+		//this.mapToJsonResponse(response, map);
+	}
 	
 	// 지상권 해지 등록 임시저장후 > 상신
 	@Transactional
