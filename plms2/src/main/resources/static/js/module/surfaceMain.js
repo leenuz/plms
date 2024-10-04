@@ -110,7 +110,7 @@ window.addEventListener("load", () => {
 
 	//241005
 	console.log('메뉴 불러와봐');
-	menuListLoad();
+	//menuListLoad();
 })
 
 
