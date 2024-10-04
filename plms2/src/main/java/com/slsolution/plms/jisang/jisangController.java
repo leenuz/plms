@@ -5288,17 +5288,17 @@ log.info(" 3932 params:"+params);
 					if (!modifyReason1.equals("")) {
 						params.put("GUBUN", "기본정보");
 						params.put("CONT", modifyReason1);
-						mainService.InsertQuery("jisangsQL.insertJisangModifyHistory", params);
+						mainService.InsertQuery("jisangSQL.insertJisangModifyHistory", params);
 					}
 					if (!modifyReason2.equals("")) {
 						params.put("GUBUN", "소유자 정보");
 						params.put("CONT", modifyReason2);
-						mainService.InsertQuery("jisangsQL.insertJisangModifyHistory", params);
+						mainService.InsertQuery("jisangSQL.insertJisangModifyHistory", params);
 					}
 					if (!modifyReason3.equals("")) {
 						params.put("GUBUN", "지상권 정보");
 						params.put("CONT", modifyReason3);
-						mainService.InsertQuery("jisangsQL.insertJisangModifyHistory", params);
+						mainService.InsertQuery("jisangSQL.insertJisangModifyHistory", params);
 					}
 
 				}

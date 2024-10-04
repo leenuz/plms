@@ -14,6 +14,7 @@
 </head>
 
 <th:block layout:fragment="content">
+
 	<!-- 지상권 내역 수정 -->
 	<div class="easementModificationWrappers">
 
@@ -46,6 +47,7 @@
 								<!--담당지사-->
 								<li class="content01 content selectContentArea">
 									<div class="hiddenSelectBox">
+									
 										<select name="jisa" id="easementModifySelectBox01" hidden>
 											<option th:each="jisa : ${jisaList}" th:value="${jisa.jm_jisa_name}"
 												th:text="${jisa.jm_jisa_name}" th:selected="${jisa.jm_jisa_name == resultData.jm_jisa}">
@@ -64,6 +66,7 @@
 								<!--관로일치여부-->
 								<li class="content02 content selectContentArea">
 									<div class="hiddenSelectBox">
+									
 										<!-- name도 추가 -->
 										<select name="overlap_yn" id="easementModifySelectBox02" hidden>
 											<option value="Y" th:selected="${resultData.jm_pipe_yn == 'Y'}">Y</option>
@@ -82,6 +85,7 @@
 								<!-- 용도 -->
 								<li class="content03 content selectContentArea">
 									<div class="hiddenSelectBox">
+									
 										<select name="youngdo" id="easementModifySelectBox03" hidden>
 											<option value="송유관로" th:selected="${resultData.jm_yongdo == '송유관로'}">송유관로</option>
 											<option value="밸브박스" th:selected="${resultData.jm_yongdo == '밸브박스'}">밸브박스</option>
@@ -169,7 +173,7 @@
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<button class="customSelectView"
+										<button class="customSelectView" id="jimok_text_btn"
 											th:text="${resultData.jm_jimok_text == null or resultData.jm_jimok_text == '' or resultData.jm_jimok_text.trim() == '' ? '선택' : resultData.jm_jimok_text}">
 										</button>
 										<ul class="customSelectBtns">
@@ -180,8 +184,8 @@
 
 								<!--관리제외필지-->
 								<li class="content05 content checkboxWrap">
-									<input type="checkbox" id="easementModification_excluded-parcel" name="cancel_yn"
-										th:checked="${resultData.jm_cancle_yn =='Y'}">
+									<input type="checkbox" id="easementModification_excluded-parcel" name="manage_yn"
+										th:checked="${resultData.jm_manage_yn =='Y'}">
 									<label for="easementModification_excluded-parcel"></label>
 								</li>
 
@@ -345,6 +349,7 @@
 							<!-- 추가를 위한 ul -->
 							<ul class="contents editing" id="soujaHiddenUl" style="display:none;">
 								<li class="content01 content editSpace">
+								<input type="hidden" name="addKey" value="new">
 									<input type="text" class="editingContent" name="soujaJibun" placeholder="ex)1/2">
 								</li>
 								<li class="content02 content editSpace">
@@ -382,6 +387,7 @@
 							<!-- 데이터가 0개 일 때 -->
 							<ul class="contents editing" th:if="${soujaList.size() == 0}" id="soujaUl">
 								<li class="content01 content editSpace">
+								<input type="hidden" name="addKey" value="new">
 									<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun" placeholder="ex)1/2">
 								</li>
 								<li class="content02 content editSpace">
@@ -421,22 +427,28 @@
 							<!--데이터가 1개 이상일 때-->
 							<ul class="contents editing" th:if="${soujaList.size() > 0}" th:each="souja : ${soujaList}" id="soujaUl">
 								<li class="content01 content editSpace">
+									<input type="hidden" name="addKey" value="add">
+									<input type="hidden" name="soujaJibunOrg" th:value="${souja.js_jibun}">
 									<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun"
 										th:value="${souja.js_jibun}">
 								</li>
 								<li class="content02 content editSpace">
+								<input type="hidden" name="soujaNameOrg" th:value="${souja.js_souja_name}">
 									<input type="text" class="editingContent" name="soujaName" id="soujaName"
 										th:value="${souja.js_souja_name}">
 								</li>
 								<li class="content03 content editSpace">
+								<input type="hidden" name="soujaAddressOrg" th:value="${souja.js_address}">
 									<input type="text" class="editingContent" name="soujaAddress" id="soujaAddress"
 										th:value="${souja.js_address}">
 								</li>
 								<li class="content04 content editSpace">
+								<input type="hidden" name="soujaContact1Org" th:value="${souja.js_pone_number}">
 									<input type="text" class="editingContent" name="soujaContact1" id="soujaContact1"
 										th:value="${souja.js_pone_number}" placeholder="ex)000-0000-0000">
 								</li>
 								<li class="content05 content editSpace">
+								<input type="hidden" name="soujaContact2Org" th:value="${souja.js_home_number}">
 									<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2"
 										th:value="${souja.js_home_number}">
 								</li>
@@ -692,9 +704,15 @@
 			</div>
 		</div>
 	</div>
+<script th:inline="javascript">
+var oldData= /*[[${resultData}]]*/[];
+var oldSoujaArray= /*[[${soujaList}]]*/[];
+console.log("------------first oldData----------------");
+console.log(oldData);
+	</script>
 
 	<!-- script -->
-	<script src="/js/jisang/easementModification.js"></script>
+	<script th:inline="javascript" src="/js/jisang/easementModification.js"></script>
 	<script type="module" src="/js/module/surfaceMain.js"></script>
 </th:block>
 

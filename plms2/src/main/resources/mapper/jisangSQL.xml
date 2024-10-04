@@ -3238,7 +3238,10 @@ WHERE
 		Insert into JISANG_MODIFY
 		( jm_JISANG_NO, jm_MODIFY_DATE, jm_GUBUN, jm_CONT, jm_USER_NAME, jm_USER_ID )
 		Values
-		(#{JISANGNO}, Now(), #{GUBUN}, #{CONT}, #{USER_NAME}, #{USER_ID})
+		(#{JISANGNO}, Now(), #{GUBUN}, #{CONT}
+		, #{USER_NAME}
+		, #{USER_ID}
+		)
 	</insert>
 	<insert id="DelFileTmp" parameterType="HashMap">
 		UPDATE
