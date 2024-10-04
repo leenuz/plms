@@ -499,10 +499,14 @@ const allCheckEventLandRightsRegist = () => {
 	// 전체선택 클릭시
 	function clickedSelectAllLandRightsRegist(clickedAllinput) {
 		const attachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]');
+		const attachFiles1 = document.querySelectorAll('input[name="attachFile"]');
 
 		attachFiles.forEach((checkbox) => {
 			checkbox.checked = clickedAllinput.checked;
 		})
+		attachFiles1.forEach((checkbox) => {
+					checkbox.checked = clickedAllinput.checked;
+				})
 	}
 }
 allCheckEventLandRightsRegist();
