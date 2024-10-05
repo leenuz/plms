@@ -36,8 +36,8 @@ function createCustomLiLandRegist() {
 function loadCustomLiLandRegist(ele) {
 	console.log("---------ele---------------");
 	console.log($(ele).html());
-    
-    console.log("---------loadCustomLiLandRegist---------------");
+	
+  console.log("---------loadCustomLiLandRegist---------------");
 	
 	var thisContent = ele.parent().parent().find('select');
 	console.log("---------thisContent---------------");
@@ -698,6 +698,7 @@ const runScriptsInElement = (element) => {
 
 //landRightSearchOpenPopUp();
 
+// 지사 선택 시 
 $(document).on("change","#landRightsRegistSelectBox01",function(){
 	
 	console.log("----landRightsRegistSelectBox01-----------");	
@@ -706,43 +707,50 @@ $(document).on("change","#landRightsRegistSelectBox01",function(){
 	loadCustomLiLandRegist($("#pipe_name_ul"));
 });
 
-function changPipeName(){
-			 var url="/api/getPipeName";
-	console.log("----changePipeName()-----------");		 
-	var requestData={"jisaIdx":$("#landRightsRegistSelectBox01").val()};
+function changPipeName() {
+	var url = "/api/getPipeName";
+	console.log("----changePipeName()-----------");
+	var requestData = { "jisaIdx": $("#landRightsRegistSelectBox01").val() };
 	
+	// select 박스 값 가져오기
+	var jisaIdx = $("#landRightsRegistSelectBox01").val();
+	if (!jisaIdx) {
+	    alert("지사를 선택해주세요.");
+	    return;
+	}
+
 	console.log(requestData);
-		 $.ajax({
-			
-				url:url,
-				type:'POST',
-				contentType:"application/json",
-				data:JSON.stringify(requestData),
-				async:false,
-				dataType:"json",
-				success:function(response){
-					console.log(response);
-					if (response.success="Y"){
-						console.log("response.success Y");
-						console.log("response.resultData length:"+response.resultData.length);
-						console.log(response.resultData[0]);
-						$("#landRightsRegistSelectBox04 option").remove();
-						$("#landRightsRegistSelectBox04").append('<option value="">선택</option>');
-						for(var i=0;i<response.resultData.length;i++){
-							$("#landRightsRegistSelectBox04").append('<option>'+response.resultData[i].jzn_zone_name+'</option>');
-						}
-						
-					}
-					else {
-						console.log("response.success N");
-					}
-				},
-				error:function(jqXHR,textStatus,errorThrown){
-					alert("landRightsRegistSelectBox04 ajax error\n"+textStatus+":"+errorThrown);
+	$.ajax({
+		url: url,
+		type: 'POST',
+		contentType: "application/json",
+		data: JSON.stringify(requestData),
+		async: false,
+		dataType: "json",
+		success: function(response) {
+			console.log(response);
+			if (response.success = "Y") {
+				console.log("response.success Y");
+				console.log("response.resultData length:" + response.resultData.length);
+				console.log(response.resultData[0]);
+				$("#landRightsRegistSelectBox04 option").remove();
+				$("#landRightsRegistSelectBox04").append('<option value="">선택</option>');
+				for (var i = 0; i < response.resultData.length; i++) {
+					$("#landRightsRegistSelectBox04").append('<option>' + response.resultData[i].jzn_zone_name + '</option>');
 				}
-			
-		});
+
+			}
+			else {
+				console.log("response.success N");
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert("landRightsRegistSelectBox04 ajax error\n" + textStatus + ":" + errorThrown);
+		}
+
+	});
 }
+
 $(document).ready(function(){
 	//getSidoMaster();	
 });
