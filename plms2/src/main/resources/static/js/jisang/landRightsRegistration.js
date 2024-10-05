@@ -712,7 +712,7 @@ function changPipeName() {
 	console.log("----changePipeName()-----------");
 	var requestData = { "jisaIdx": $("#landRightsRegistSelectBox01").val() };
 	
-	// select 박스 값 가져오기
+	// 지사-전체 클릭 시 alert
 	var jisaIdx = $("#landRightsRegistSelectBox01").val();
 	if (!jisaIdx) {
 	    alert("지사를 선택해주세요.");

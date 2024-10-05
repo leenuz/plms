@@ -5218,13 +5218,16 @@ log.info(" 3932 params:"+params);
 					mainService.InsertQuery("jisangSQL.insertJisangMaster", params); // 기본정보
 																						// 저장
 					
-					HashMap memoParam=new HashMap();
-					memoParam.put("manage_no", str_manageNo);
-					memoParam.put("wname", USER_NAME);
-					memoParam.put("wid", USER_ID);
-					memoParam.put("wmemo", wmemo);
-					
-					mainService.InsertQuery("commonSQL.putMemoData", memoParam);
+				    // 메모가 비어 있지 않은 경우에만 commonSQL.putMemoData 실행
+				    if (wmemo != null && !wmemo.trim().isEmpty()) {
+				        HashMap memoParam = new HashMap();
+				        memoParam.put("manage_no", str_manageNo);
+				        memoParam.put("wname", USER_NAME);
+				        memoParam.put("wid", USER_ID);
+				        memoParam.put("wmemo", wmemo);
+				        
+				        mainService.InsertQuery("commonSQL.putMemoData", memoParam);
+				    }
 				} else if (gubun.equals("modify")) {
 
 					/***********************
