@@ -460,7 +460,7 @@ $(document).on("click", "#save_btn", function() {
 
 	//첨부 서류'
 
-	const address = $('#address').attr('placeholder');
+	const address = $('#address').val();
 	const address_list = address.split(' ');
 
 	const formData = {

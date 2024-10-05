@@ -2688,6 +2688,7 @@ WHERE 1=1
 	
 	<select id="selectJisangDetailListNew" parameterType="HashMap" resultType="java.util.HashMap">
 		SELECT JM.jm_jisang_no as JISANG_NO,
+		JM.jm_idx as idx,
        JM.jm_sido_nm as SIDO_NM,
        JM.jm_sgg_nm as SGG_NM,
        JM.jm_emd_nm as EMD_NM,
@@ -2762,6 +2763,7 @@ WHERE 1=1
        JM.jm_special_cont as SPECIAL_CONT,
        JM.jm_permitted_yn as PERMITTED_YN,
        JM.jm_account_yn AS ACCOUNT_YN,
+       JIJUK_MST.juso,
        JIJUK_MST.x,
        JIJUK_MST.y
 FROM JISANG_MASTER JM
@@ -2972,8 +2974,8 @@ SET
     cancle_name = #{NAME},
     cancle_empcd = #{EMPCD},
     chuideuk_money = nullif(#{CHUIDEUKMONEY},'')::numeric,
-    gammoney = nullif(#{gammoney},'')::numeric,
-    remainder_money = nullif(#{remainder_money},'')::numeric,
+    gammoney = nullif(#{GAMMONEY},'')::numeric,
+    remainder_money = nullif(#{REMAINDERMONEY},'')::numeric,
     cancle_status = #{CANCLE_STATUS};
 	</update>
 	
@@ -3604,6 +3606,10 @@ DELETE from plms_POTENTIAL_ISSUE
 	</update>
 	<select id="selectCancelFileCount" resultType="integer" parameterType="HashMap">
 		select count(*) from jisang_cancel_ATCFILE where manage_no=#{MANAGE_NO} and file_gubun = #{FILE_GUBUN}::varchar
+		
+	</select>
+	<select id="selectCancelFile" resultType="integer" parameterType="HashMap">
+		select * from jisang_cancel_ATCFILE where manage_no=#{MANAGE_NO} and file_gubun = #{FILE_GUBUN}::varchar
 		
 	</select>
 	<delete id="deleteJisangAtcFile" parameterType="java.util.HashMap">

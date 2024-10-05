@@ -116,7 +116,7 @@ div.dt-filter-spacer {
 							<h2>・기본 정보</h2>
 						</div>
 						<input type="hidden" name="jisangNo" id="hiddenJisangNo"
-							th:value="${resultData.jm_jisang_no}" />
+							th:value="${resultData.jisang_no}" />
 						<div class="contentDetailBox basicContentDetailBox">
 							<div class="depth1">
 								<ul class="titles">
@@ -131,25 +131,25 @@ div.dt-filter-spacer {
 								</ul>
 								<ul class="contents lastContents">
 									<li class="content"><input type="text"
-										th:placeholder="${resultData.jm_jisa}" readonly id="jisa"
+										th:placeholder="${resultData.jisa}" readonly id="jisa"
 										class="notWriteInput" /></li>
 									<li class="content"><input type="text"
-										th:placeholder="${resultData.jm_yongdo}" readonly id="yongdo"
+										th:placeholder="${resultData.yongdo}" readonly id="yongdo"
 										class="notWriteInput" /></li>
 									<li class="content"><input type="text"
-										th:placeholder="${resultData.jm_pipe_name}" readonly
+										th:placeholder="${resultData.pipe_name}" readonly
 										id="pipe_name" class="notWriteInput" /></li>
 									<li class="content"><input type="text"
-										th:placeholder="${resultData.jm_sun_gubun}" readonly
+										th:placeholder="${resultData.sun_gubun}" readonly
 										id="sun_gubun" class="notWriteInput" /></li>
 									<li class="addressInfoWidth content"><input type="text"
-										th:placeholder="${resultData.address}" readonly id="address"
+										th:placeholder="${resultData.juso}" readonly id="address"
 										class="notWriteInput" /></li>
 									<li class="content"><input type="text"
-										th:placeholder="${resultData.jm_jijuk_area}" readonly
+										th:placeholder="${resultData.jijuk_area}" readonly
 										id="jijuk_area" class="notWriteInput" /></li>
 									<li class="content"><input type="text"
-										th:placeholder="${resultData.jm_gover_own_yn}" readonly
+										th:placeholder="${resultData.gover_own_yn}" readonly
 										id="gover_own_yn" class="notWriteInput" /></li>
 									<!-- 회계처리 필요여부 -->
 									<li class="content selectContentArea">
@@ -162,7 +162,7 @@ div.dt-filter-spacer {
 											</select>
 										</div>
 										<section class="customSelectBox"
-											th:data-selected="${resultData.jm_account_yn}">
+											th:data-selected="${resultData.account_yn}">
 											<button class="customSelectView"></button>
 											<ul class="customSelectBtns">
 											</ul>
@@ -235,34 +235,34 @@ div.dt-filter-spacer {
 							</ul>
 							<ul class="contents">
 								<li class="content"><input type="text"
-									th:placeholder="${resultData.jm_jasan_no}" readonly
+									th:placeholder="${resultData.jasan_no}" readonly
 									id="jasan_no" class="notWriteInput" /></li>
 								<li class="content"><input type="text"
-									th:placeholder="${resultData.jm_chuideuk_date}" readonly
+									th:placeholder="${resultData.chuideuk_date}" readonly
 									id="chuideuk_date" class="notWriteInput" /></li>
 								<li class="content"><input type="text"
-									th:placeholder="${resultData.jm_pyeonib_area}" readonly
+									th:placeholder="${resultData.pyeonib_area}" readonly
 									id="pyeonib_area" class="notWriteInput" /></li>
 								<li class="content"><input type="text"
-									th:placeholder="${resultData.jm_use_state}" readonly
+									th:placeholder="${resultData.use_state}" readonly
 									id="use_state" class="notWriteInput" /></li>
 								<li class="content"><input type="text"
-									th:placeholder="${resultData.jm_deunggi_date}" readonly
+									th:placeholder="${resultData.deunggi_date}" readonly
 									id="deunggi_date" class="notWriteInput" /></li>
 								<li class="content"><input type="text"
-									th:placeholder="${resultData.jm_deunggi_no}" readonly
+									th:placeholder="${resultData.deunggi_no}" readonly
 									id="deunggi_no" class="notWriteInput" /></li>
 								<li class="content"><input type="text"
-									th:placeholder="${resultData.jm_deunggiso}" readonly
+									th:placeholder="${resultData.deunggiso}" readonly
 									id="deunggiso" class="notWriteInput" /></li>
 								<li class="content"><input type="text"
-									th:placeholder="${resultData.jm_dosiplan}" readonly
+									th:placeholder="${resultData.dosiplan}" readonly
 									id="dosiplan" class="notWriteInput" /></li>
 								<li class="content">
 									<div class="dateInputWrap">
 										<input type="date"
-											th:data-placeholder="${resultData.jm_cancle_date}"
-											th:value="${resultData.jm_cancle_date}" id="cancle_date"
+											th:data-placeholder="${resultData.cancle_date}"
+											th:value="${resultData.cancle_date}" id="cancle_date"
 											required aria-required="true" />
 									</div>
 								</li>
@@ -272,18 +272,18 @@ div.dt-filter-spacer {
 							<ul class="rowListBox">
 								<li class="title">취득금액</li>
 								<li class="content"><input type="text" placeholder="직접입력"
-									th:value="${resultData.jm_chuideuk_money}" id="chuideuk_money" />
+									th:value="${resultData.chuideuk_money}" id="chuideuk_money" />
 								</li>
 							</ul>
 							<ul class="rowListBox">
 								<li class="title">감가삼각충당금</li>
 								<li class="content"><input type="text" placeholder="직접입력"
-									th:value="${resultData.jm_gammoney}" id="gammoney" /></li>
+									th:value="${resultData.gammoney}" id="gammoney" /></li>
 							</ul>
 							<ul class="rowListBox">
 								<li class="title">잔존가액</li>
 								<li class="content lastRowList"><input type="text"
-									placeholder="직접입력" th:value="${resultData.jm_remainder_money}"
+									placeholder="직접입력" th:value="${resultData.remainder_money}"
 									id="remainder_money" /></li>
 							</ul>
 						</div>
@@ -305,13 +305,13 @@ div.dt-filter-spacer {
 									<input type="radio"
 										name="landTerminationRegistrationCompensation" value="Y"
 										id="radioYes"
-										th:checked="${resultData.jm_cancle_bosang_yn == 'Y'}" />유
+										th:checked="${resultData.cancle_bosang_yn == 'Y'}" />유
 								</div>
 								<div class="inputBox">
 									<input type="radio"
 										name="landTerminationRegistrationCompensation" id="radioNo"
 										value="N"
-										th:checked="${resultData.jm_cancle_bosang_yn == 'N'}" />무
+										th:checked="${resultData.cancle_bosang_yn == 'N'}" />무
 								</div>
 							</li>
 						</ul>
@@ -319,7 +319,7 @@ div.dt-filter-spacer {
 							<li class="title">보상금액</li>
 							<li class="content lastRowList"><input type="text"
 								placeholder="직접입력"
-								th:value="${resultData.jm_cancle_bosang_money}"
+								th:value="${resultData.cancle_bosang_money}"
 								id="cancle_bosang_money" /></li>
 						</ul>
 					</div>
@@ -396,7 +396,7 @@ div.dt-filter-spacer {
 							<li class="title">해지사유</li>
 							<li class="content inputWrap"><input type="text"
 								placeholder="직접입력 (최소 10자 이상)"
-								th:value="${resultData.jm_cancle_reason}" id="cancle_reason" />
+								th:value="${resultData.cancle_reason}" id="cancle_reason" />
 							</li>
 						</ul>
 					</div>
@@ -405,7 +405,7 @@ div.dt-filter-spacer {
 							<li class="title">검토의견</li>
 							<li class="content lastRowList"><textarea
 									placeholder="직접입력 (최소 10자 이상)"
-									th:text="${resultData.jm_cancle_comment}" id="cancle_comment"></textarea>
+									th:text="${resultData.cancle_comment}" id="cancle_comment"></textarea>
 
 							</li>
 						</ul>
@@ -463,7 +463,7 @@ div.dt-filter-spacer {
 							<li class="content"><input type="hidden" id="fseq" value="1">
 								<input name="req_doc_file01" id="req_doc_file01" type="text"
 								th:if="${#lists.size(reqDoc1list)>=1}"
-								th:value="${reqDoc1list[0].jrd_fname}" readonly
+								th:value="${reqDoc1list[0].file_nm}" readonly
 								class="notWriteInput" style="text-align: center" /> <input
 								name="req_doc_file01" id="req_doc_file01" type="text"
 								th:if="${#lists.size(reqDoc1list)<1}" placeholder="" readonly
@@ -482,7 +482,7 @@ div.dt-filter-spacer {
 							<li class="content"><input type="hidden" id="fseq" value="2">
 								<input name="req_doc_file02" id="req_doc_file02" type="text"
 								th:if="${#lists.size(reqDoc1list)>=2}"
-								th:value="${reqDoc1list[1].jrd_fname!=null?reqDoc1list[1].jrd_fname:''}"
+								th:value="${reqDoc1list[1].file_nm!=null?reqDoc1list[1].file_nm:''}"
 								readonly class="notWriteInput" style="text-align: center" /> <input
 								name="req_doc_file02" id="req_doc_file02" type="text"
 								th:if="${#lists.size(reqDoc1list)<2}" placeholder="" readonly
@@ -502,7 +502,7 @@ div.dt-filter-spacer {
 								value="3"> <input name="req_doc_file03"
 								id="req_doc_file03" type="text"
 								th:if="${#lists.size(reqDoc1list)>=3}"
-								th:value="${reqDoc1list[2].jrd_fname!=null?reqDoc1list[2].jrd_fname:''}"
+								th:value="${reqDoc1list[2].file_nm!=null?reqDoc1list[2].file_nm:''}"
 								readonly class="notWriteInput" style="text-align: center" /> <input
 								name="req_doc_file03" id="req_doc_file03" type="text"
 								th:if="${#lists.size(reqDoc1list)<3}" placeholder="" readonly
@@ -521,7 +521,7 @@ div.dt-filter-spacer {
 							<li class="content"><input type="hidden" id="fseq" value="4">
 								<input type="text" name="req_doc_file04" id="req_doc_file04"
 								th:if="${#lists.size(reqDoc1list)>=4}"
-								th:value="${reqDoc1list[3].jrd_fname!=null?reqDoc1list[3].jrd_fname:''}"
+								th:value="${reqDoc1list[3].file_nm!=null?reqDoc1list[3].file_nm:''}"
 								readonly class="notWriteInput" style="text-align: center" /> <input
 								type="text" name="req_doc_file04" id="req_doc_file04"
 								th:if="${#lists.size(reqDoc1list)<4}" placeholder="" readonly
@@ -540,7 +540,7 @@ div.dt-filter-spacer {
 							<li class="content"><input type="hidden" id="fseq" value="5">
 								<input type="text" name="req_doc_file05" id="req_doc_file05"
 								th:if="${#lists.size(reqDoc1list)>=5}"
-								th:value="${reqDoc1list[4].jrd_fname!=null?reqDoc1list[4].jrd_fname:''}"
+								th:value="${reqDoc1list[4].file_nm!=null?reqDoc1list[4].file_nm:''}"
 								readonly class="notWriteInput" style="text-align: center" /> <input
 								type="text" name="req_doc_file05" id="req_doc_file05"
 								th:if="${#lists.size(reqDoc1list)<5}" placeholder="" readonly
@@ -559,7 +559,7 @@ div.dt-filter-spacer {
 							<li class="content"><input type="hidden" id="fseq" value="6">
 								<input type="text" name="req_doc_file06" id="req_doc_file06"
 								th:if="${#lists.size(reqDoc1list)>=6}"
-								th:value="${reqDoc1list[5].jrd_fname!=null?reqDoc1list[5].jrd_fname:''}"
+								th:value="${reqDoc1list[5].file_nm!=null?reqDoc1list[5].file_nm:''}"
 								readonly class="notWriteInput" style="text-align: center" /> <input
 								type="text" name="req_doc_file06" id="req_doc_file06"
 								th:if="${#lists.size(reqDoc1list)<6}" placeholder="" readonly
@@ -578,7 +578,7 @@ div.dt-filter-spacer {
 							<li class="content"><input type="hidden" id="fseq" value="7">
 								<input type="text" name="req_doc_file07" id="req_doc_file07"
 								th:if="${#lists.size(reqDoc1list)>=7}"
-								th:value="${reqDoc1list[6].jrd_fname!=null?reqDoc1list[6].jrd_fname:''}"
+								th:value="${reqDoc1list[6].file_nm!=null?reqDoc1list[6].file_nm:''}"
 								readonly class="notWriteInput" style="text-align: center" /> <input
 								type="text" name="req_doc_file07" id="req_doc_file07"
 								th:if="${#lists.size(reqDoc1list)<7}" placeholder="" readonly
@@ -598,7 +598,7 @@ div.dt-filter-spacer {
 							<li class="content"><input type="hidden" id="fseq" value="8">
 								<input type="text" name="req_doc_file08" id="req_doc_file08"
 								th:if="${#lists.size(reqDoc1list)>=8}"
-								th:value="${reqDoc1list[7].jrd_fname!=null?reqDoc1list[7].jrd_fname:''}"
+								th:value="${reqDoc1list[7].file_nm!=null?reqDoc1list[7].file_nm:''}"
 								readonly class="notWriteInput" style="text-align: center" /> <input
 								type="text" name="req_doc_file08" id="req_doc_file08"
 								th:if="${#lists.size(reqDoc1list)<8}" placeholder="" readonly
@@ -619,15 +619,15 @@ div.dt-filter-spacer {
 
 			<div class="finalBtnBox btnWrap">
 				<button class="saveBtn vividBlueBtn finalBtn" id="commit"
-					style="display: none" th:idx="${resultData.jm_jisang_no}"
-					th:index="${resultData.jm_idx}">상신 수락</button>
+					style="display: none" th:idx="${resultData.jisang_no}"
+					th:index="${resultData.idx}">상신 수락</button>
 				<button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
 				<button class="saveBtn vividBlueBtn finalBtn" id="save_btn"
-					th:idx="${resultData.jm_jisang_no}" th:index="${resultData.jm_idx}">
+					th:idx="${resultData.jisang_no}" th:index="${resultData.idx}">
 					저장</button>
 				<button class="lightBlueBtn approvalBtn finalBtn" type="submit"
-					id="submit_btn" th:idx="${resultData.jm_jisang_no}"
-					th:index="${resultData.jm_idx}">상신</button>
+					id="submit_btn" th:idx="${resultData.jisang_no}"
+					th:index="${resultData.idx}">상신</button>
 			</div>
 		</main>
 	</div>

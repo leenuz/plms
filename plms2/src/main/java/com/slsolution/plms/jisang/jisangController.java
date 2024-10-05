@@ -1896,16 +1896,14 @@ log.info("data:"+data.get(0));
 
 			params.put("idx",idx);
 			params.put("manage_no",idx);
+			params.put("JISANGNO",idx);
 			params.put("index",index);
 			log.info("params:"+params);
 
-<<<<<<< Updated upstream
+
 			//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 			ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectJisangDetailListNew",params);
-=======
-			ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
-			//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectJisangDetailListNew",params);
->>>>>>> Stashed changes
+
 			ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 
@@ -1938,7 +1936,8 @@ log.info("data:"+data.get(0));
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			
 			//필수첨부파일
-			ArrayList<HashMap> reqDoc1list = mainService.selectQuery("jisangSQL.selectJisangReqDoc1",params);
+			//ArrayList<HashMap> reqDoc1list = mainService.selectQuery("jisangSQL.selectJisangReqDoc1",params);
+			ArrayList<HashMap> reqDoc1list = mainService.selectQuery("jisangSQL.selectCancelFile",params);
 
 			log.info("params:"+params);
 			log.info("sidolist:"+sidolist);
@@ -3622,6 +3621,7 @@ log.info("data:"+data.get(0));
 		String cancle_chuideuk_remainder_money = requestParamObj.optString("remainder_money").isEmpty() ? "" : requestParamObj.getString("remainder_money");
 		String cancle_reason = requestParamObj.getString("cancel_reason");
 		String cancle_comment = requestParamObj.getString("cancel_comment");
+		String cancel_bosang_yn = requestParamObj.getString("cancel_bosang_yn");
 		//String filenumber = requestParamObj.getString("filenumber");
 		//String fileseq = requestParamObj.getString("fileseq"); // 파일 seq
 
@@ -3632,14 +3632,15 @@ log.info("data:"+data.get(0));
 			params.put("JISANGNO", jisangNo);
 			params.put("STARTDAY", startDay);
 			params.put("CANCLE_YES", cancle_yes);
-			params.put("CANCLE_BOSANG_MONEY", cancle_bosang_money);
-			params.put("CHUIDEUKMONEY", cancle_chuideuk_money);
-			params.put("GAMMONEY", cancle_chuideuk_gammoney);
-			params.put("REMAINDERMONEY", cancle_chuideuk_remainder_money);
+			params.put("CANCLE_BOSANG_MONEY", cancle_bosang_money.replace(",",""));
+			params.put("CHUIDEUKMONEY", cancle_chuideuk_money.replace(",",""));
+			params.put("GAMMONEY", cancle_chuideuk_gammoney.replace(",",""));
+			params.put("REMAINDERMONEY", cancle_chuideuk_remainder_money.replace(",",""));
 			params.put("EMPCD", empCd);
 			params.put("NAME", empName);
 			params.put("CANCLE_REASON", cancle_reason);
 			params.put("CANCLE_COMMENT", cancle_comment);
+			params.put("CANCLE_BOSANG_YN", cancel_bosang_yn);
 			//params.put("FILESEQ", fileseq);
 			params.put("CANCLE_STATUS", "임시저장");
 
