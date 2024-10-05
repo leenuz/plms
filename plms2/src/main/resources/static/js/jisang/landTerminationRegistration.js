@@ -673,7 +673,7 @@ $(document).on("click","#submit_btn",function(){
     console.log("----------저장 Object------------");
     console.log(formData);
 
-   // landTerminationSangsinSave(formData)
+    landTerminationSangsinSave(formData)
     console.log("-----------------------");
 })
 

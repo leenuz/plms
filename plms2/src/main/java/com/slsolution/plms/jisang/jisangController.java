@@ -3744,6 +3744,7 @@ log.info("data:"+data.get(0));
 //			String empName = String.valueOf(request.getSession().getAttribute("userName"));
 			String empCd=parser.getString("empCd","");
 			String empName=parser.getString("empName","");
+			String account_yn = parser.getString("account_yn"); // 회계처리 필요여부
 			String cancle_chuideuk_money = parser.getString("cancle_chuideuk_money", "");
 			String cancle_chuideuk_gammoney = parser.getString("cancle_chuideuk_gammoney", "");
 			String cancle_chuideuk_remainder_money = parser.getString("cancle_chuideuk_remainder_money", "");
@@ -3769,6 +3770,7 @@ log.info("data:"+data.get(0));
 				params.put("REMAINDERMONEY", cancle_chuideuk_remainder_money);
 				params.put("EMPCD", empCd);
 				params.put("NAME", empName);
+				params.put("account_yn", account_yn);
 				params.put("CANCLE_REASON", cancle_reason);
 				params.put("CANCLE_COMMENT", cancle_comment);
 				params.put("FILESEQ", fileseq);
