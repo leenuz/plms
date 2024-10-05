@@ -412,14 +412,14 @@ ON PI.pnu = u.pnu
 		</if>
 	</select>
 
-<select id="selectJisangListOrg" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-SELECT *
+  <select id="selectJisangListOrg" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    SELECT *
 		FROM ( SELECT ROW_NUMBER() OVER(
                      ORDER BY JM.jm_JISANG_NO DESC
                 ) as no
-                ,jm.jm_idx AS index
-				,jm.jm_jisang_no AS idx
-				,0 AS gidx
+                			 ,jm.jm_idx AS index
+											 ,jm.jm_jisang_no AS idx
+											 ,0 AS gidx
                        , JM.jm_jisang_no as JISANG_NO
                        , JM.jm_sido_nm as SIDO_NM
                        , JM.jm_jasan_no as JASAN_NO

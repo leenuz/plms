@@ -1783,7 +1783,6 @@ log.info("data:"+data.get(0));
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			ModelAndView mav=new ModelAndView();
-			
 
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);
@@ -2270,6 +2269,7 @@ log.info("data:"+data.get(0));
 	        return resultmap;
 	    }
 
+		
 	@RequestMapping(value="/menu02_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> datatableList02_1(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
@@ -2288,7 +2288,6 @@ log.info("data:"+data.get(0));
 			log.info("paramName:"+paramName);
 			log.info("paramValue:"+paramValue);
 		}
-		
 
 		int draw = Integer.parseInt(req.getParameter("draw"));
 		int start = Integer.parseInt(req.getParameter("start"));
@@ -5131,7 +5130,6 @@ log.info("gubun:"+gubun);
 			String str_result = "Y";
 			String str_manageNo="";
 			try {
-
 				HashMap params = new HashMap();
 				//params.put("FILESEQ", fileseq);
 				params.put("SINM", sinm);

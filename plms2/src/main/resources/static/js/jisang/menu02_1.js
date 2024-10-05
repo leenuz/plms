@@ -297,7 +297,7 @@ function loadDataTable(params) {
 
 				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
 				console.log("askmenu:" + ask);
-				
+
 				if (ask == "0") {
 					console.log("---------3--------------");
 					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
@@ -372,17 +372,11 @@ return nRow;
 					return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
 				}
 			}, //지도보기
-
-
 		]
-
 	});
 
 
-
-
 	table.on('click', 'tr', function() {
-
 		var target = $(event.target);
 
 		var isButtonCell = target.closest('td').index() === 12;
