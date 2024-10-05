@@ -182,7 +182,8 @@ public class commonController {
 		
 		HttpSession session = request.getSession();
 		List<String> menuList = new ArrayList<String>();
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<String> menu2pmsList = new ArrayList<String>();
+		
 		JSONObject resultObj = new JSONObject();
 		
 		try {
@@ -205,14 +206,15 @@ public class commonController {
 			}
 			
 			JSONObject menuCheck = new JSONObject(attrArray);
-			JSONObject menu2pmsResultList = new JSONObject(menuCheck.get("plmsMenu").toString());
-			JSONArray menuResultList = menu2pmsResultList.getJSONArray("resultList");
+			JSONObject menuPlmsResultList = new JSONObject(menuCheck.get("plmsMenu").toString());
+			JSONArray menuResultList = menuPlmsResultList.getJSONArray("resultList");
+			
+			JSONObject menu2PmsResultList = new JSONObject(menuCheck.get("2pmsMenu").toString());
+			JSONArray menu2PmsResult = menu2PmsResultList.getJSONArray("resultList");
 			
 			System.out.println("================================================================================");
 			
 			System.out.println("plmsMenu :: " + menuCheck.get("plmsMenu").toString());
-//			System.out.println("2pmsMenu :: " + menuCheck.get("2pmsMenu").toString());
-//			System.out.println(menu2pmsResultList.getJSONArray("resultList"));
 			
 			System.out.println("================================================================================");
 			
@@ -221,10 +223,16 @@ public class commonController {
 				menuList.add(menuResultList.get(k).toString());
 			}
 			
+			for(int k = 0 ; k < menu2PmsResult.length() ; k++ ) {
+				System.out.println(menu2PmsResult.get(k).toString());
+				menu2pmsList.add(menu2PmsResult.get(k).toString());
+			}
+			
 			System.out.println("================================================================================");
 			
 			resultObj.put("result", "Y");
 			resultObj.put("menuList", menuList);
+			resultObj.put("menu2pms", menu2pmsList);
 			
 			response.setCharacterEncoding("UTF-8");
 	        response.setHeader("Access-Control-Allow-Origin", "*");

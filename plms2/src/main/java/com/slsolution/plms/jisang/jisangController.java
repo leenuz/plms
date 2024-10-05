@@ -1895,11 +1895,14 @@ log.info("data:"+data.get(0));
 
 			params.put("idx",idx);
 			params.put("manage_no",idx);
+			params.put("JISANGNO",idx);
 			params.put("index",index);
 			log.info("params:"+params);
 
+
 			//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 			ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectJisangDetailListNew",params);
+
 			ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 
@@ -1932,7 +1935,8 @@ log.info("data:"+data.get(0));
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			
 			//필수첨부파일
-			ArrayList<HashMap> reqDoc1list = mainService.selectQuery("jisangSQL.selectJisangReqDoc1",params);
+			//ArrayList<HashMap> reqDoc1list = mainService.selectQuery("jisangSQL.selectJisangReqDoc1",params);
+			ArrayList<HashMap> reqDoc1list = mainService.selectQuery("jisangSQL.selectCancelFile",params);
 
 			log.info("params:"+params);
 			log.info("sidolist:"+sidolist);
@@ -3616,6 +3620,7 @@ log.info("data:"+data.get(0));
 		String cancle_chuideuk_remainder_money = requestParamObj.optString("remainder_money").isEmpty() ? "" : requestParamObj.getString("remainder_money");
 		String cancle_reason = requestParamObj.getString("cancel_reason");
 		String cancle_comment = requestParamObj.getString("cancel_comment");
+		String cancel_bosang_yn = requestParamObj.getString("cancel_bosang_yn");
 		//String filenumber = requestParamObj.getString("filenumber");
 		//String fileseq = requestParamObj.getString("fileseq"); // 파일 seq
 
@@ -3626,14 +3631,15 @@ log.info("data:"+data.get(0));
 			params.put("JISANGNO", jisangNo);
 			params.put("STARTDAY", startDay);
 			params.put("CANCLE_YES", cancle_yes);
-			params.put("CANCLE_BOSANG_MONEY", cancle_bosang_money);
-			params.put("CHUIDEUKMONEY", cancle_chuideuk_money);
-			params.put("GAMMONEY", cancle_chuideuk_gammoney);
-			params.put("REMAINDERMONEY", cancle_chuideuk_remainder_money);
+			params.put("CANCLE_BOSANG_MONEY", cancle_bosang_money.replace(",",""));
+			params.put("CHUIDEUKMONEY", cancle_chuideuk_money.replace(",",""));
+			params.put("GAMMONEY", cancle_chuideuk_gammoney.replace(",",""));
+			params.put("REMAINDERMONEY", cancle_chuideuk_remainder_money.replace(",",""));
 			params.put("EMPCD", empCd);
 			params.put("NAME", empName);
 			params.put("CANCLE_REASON", cancle_reason);
 			params.put("CANCLE_COMMENT", cancle_comment);
+			params.put("CANCLE_BOSANG_YN", cancel_bosang_yn);
 			//params.put("FILESEQ", fileseq);
 			params.put("CANCLE_STATUS", "임시저장");
 
@@ -5302,7 +5308,7 @@ log.info(" 3932 params:"+params);
 					}
 					
 					log.info("------------------aaaaaaaaaaa------------------");
-					mainService.UpdateQuery("jisangSQL.updateJisangMaster1", params); // 기본정보 수정
+					mainService.UpdateQuery("jisangSQL.updateJisangMasterNoCancel", params); // 기본정보 수정
 
 					// 변경이력 등록
 					if (!modifyReason1.equals("")) {
@@ -6516,6 +6522,80 @@ log.info("map:"+map);
 			response.getWriter().flush();
 
 		}
+		
+		//지상권합필 폐쇄된 지번보기
+//		@RequestMapping(value = "/getJisangCancelListData", method = { RequestMethod.GET, RequestMethod.POST })
+//		public void getJisangCancelListData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//			ParameterParser parser = new ParameterParser(request);
+//			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+//			JSONObject requestParamsObj=new JSONObject(requestParams);
+//			log.info("requestParams:"+requestParams);
+//			String idx = requestParamsObj.getString("idx");
+//			
+//			String str_result = "Y";
+//			String str_STATUS = "";
+//			 System.out.println("=========폐쇄된지번보기=======");
+//			 System.out.println("idx=" + idx);
+//
+//			try {
+//				HashMap params = new HashMap();
+//				params.put("idx", idx);
+//				mainService.DeleteQuery("jisangSQL.selectJisangCancelData", params);
+//
+//			} catch (Exception e) {
+//				str_result = "N";
+//				e.printStackTrace();
+//			}
+//			HashMap map = new HashMap();
+//			map.put("message", str_result);
+//			map.put("status", str_STATUS);
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//
+//		}
+		
+		//지상권합필 폐쇄된 지번보기
+		@RequestMapping(value = "/getJisangCancelListData", method = { RequestMethod.GET, RequestMethod.POST })
+		public ModelAndView getJisangCancelListData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			ModelAndView mav=new ModelAndView();
+		
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			//log.info("httpRequest:"+Arrays.toString(httpRequest));
+
+			ParameterParser parser = new ParameterParser(httpRequest);
+			String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			String idx = requestParamsObj.getString("idx");
+			
+			String str_result = "Y";
+			String str_STATUS = "";
+			 System.out.println("=========폐쇄된지번보기=======");
+			 System.out.println("idx=" + idx);
+			 
+		
+
+			try {
+				HashMap params = new HashMap();
+				params.put("idx", idx);
+				list=mainService.selectQuery("jisangSQL.selectJisangCancelData", params);
+
+			} catch (Exception e) {
+				
+			}
+			log.info("list:"+list);
+			mav.addObject("list",list);
+			mav.setViewName("content/jisang/menu02_4 :: #searchResultsPopup");
+			return mav;
+		}
+
 
 
 }

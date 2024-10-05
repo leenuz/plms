@@ -397,7 +397,7 @@ function loadDataTable(params) {
 					//                              }else{
 					//                                 return ``;
 					//                              }
-					return `<button class="btnDesign positionPopBtn">지번보기</button>`; //테스트를 위해서 버튼으로 남겨둠
+					return `<button class="btnDesign positionPopBtn" >지번보기</button>`; //테스트를 위해서 버튼으로 남겨둠
 				}
 			},//해지여부
 			{ data: "cancel_date" },//합필요청일
@@ -455,9 +455,9 @@ function loadDataTable(params) {
                     idx: data.idx
                 };
                 $.ajax({
-                  url: "/land/jisang/getJibunListData",
+                  url: "/land/jisang/getJisangCancelListData",
                   type: "POST",
-                  data: clickData,
+                  data: JSON.stringify(clickData),
                })
                .done(function (fragment) {
                console.log("##################");
@@ -465,7 +465,7 @@ function loadDataTable(params) {
                 //runScriptsInElement(landRightSearchResultPop); // 삽입된 html내 스크립트 실행 함수 호출
                 //console.log($("#searchResultPopDiv").html());
                 $(".popContents li").remove();
-                  $('.menu02_3JibunPopWrapper').replaceWith(fragment);
+                  $('#searchResultsPopup').replaceWith(fragment);
                   const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
                        $(popupOpen).addClass("open");
                        popupOpen.classList.add("active");

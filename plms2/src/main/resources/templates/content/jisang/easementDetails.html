@@ -312,7 +312,7 @@
 										</li>
 										<li class="content02 content">
 											<!-- 문서번호 -->
-											<input type="text" th:value="${permit.pmt_no}" readonly />
+											<input type="text" th:if="${permit.pmt_no!=null}" th:value="${permit.pmt_no}" readonly />
 										</li>
 										<li class="content03 content">
 											<!-- 사용 목적 -->

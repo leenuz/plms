@@ -65,16 +65,16 @@ window.addEventListener("load", () => {
 			handleCheckboxes(dopcosurfaceInquire05);
 		}
 		//점용
-		else if (pathName === `/gover/menu03_1`) {
+		else if (pathName === `/land/gover/menu03_1`) {
 			return privateUseSelectEvet("#dopcoPrivateUse01 .privateUseSelectsTitleBtn", "#dopcoPrivateUse01 .sufaceSelectList", "#dopcoPrivateUse01 .sufaceSelectList .surfaceSelectListMember", ".privateUseHiddenSelect01");
 		}
-		else if (pathName === `/gover/menu03_2`) {
+		else if (pathName === `/land/gover/menu03_2`) {
 			return privateUseSelectEvet("#dopcoPrivateUse02 .privateUseSelectsTitleBtn", "#dopcoPrivateUse02 .sufaceSelectList", "#dopcoPrivateUse02 .sufaceSelectList .surfaceSelectListMember", ".privateUseHiddenSelect02");
 		}
-		else if (pathName === `/gover/menu03_3`) {
+		else if (pathName === `/land/gover/menu03_3`) {
 			return privateUseSelectEvet("#dopcoPrivateUse03 .privateUseSelectsTitleBtn", "#dopcoPrivateUse03 .sufaceSelectList", "#dopcoPrivateUse03 .sufaceSelectList .surfaceSelectListMember", ".privateUseHiddenSelect03");
 		}
-		else if (pathName === `/gover/orgAdmin`) {
+		else if (pathName === `/land/gover/orgAdmin`) {
 			return privateUseSelectEvet("#orgAdmin .privateUseSelectsTitleBtn", "#orgAdmin .sufaceSelectList", "#orgAdmin .sufaceSelectList .surfaceSelectListMember", ".privateUseHiddenSelect03");
 		}
 		//토지개발
@@ -110,7 +110,7 @@ window.addEventListener("load", () => {
 
 	//241005
 	console.log('메뉴 불러와봐');
-	//menuListLoad();
+	menuListLoad();
 })
 
 
@@ -120,12 +120,12 @@ window.addEventListener("load", () => {
 function menuListLoad() {
 	
 	$.ajax({
-		url : '/api/menusetting',
+		url : '/common/menusetting',
 		type : "GET",
 		success : function(res) {
 			console.log(res);
 			if(res.result == 'Y') {
-				menuListSet(res.menuList);
+				menuListSet(res.menuList, res.menu2pms);
 			} else {
 				alert('메뉴 조회중 오류가 발생했습니다.');
 			}
@@ -138,32 +138,105 @@ function menuListLoad() {
 	
 } 
 
-//메뉴
-function menuListSet(result) {
+//메뉴 HTML 작성
+function menuListSet(result, result2) {
+	
+	//송유관로현황
+	let songyuImg = ['/assets/media/nav/surfaceHammer.png', 'nowDopco', 'songyuLargeMenuBox'];
+	let songyuUrl = ['/songyu/menu01', '/songyu/menu02', '/songyu/menu03'];
+	//지상권
+	let jisangImg = ['/assets/media/nav/surfaceMenu.png', 'surface', 'jisangLargeMenuBox']
+	let jisangUrl = ['/land/jisang/menu02_1', '/land/jisang/landRightsRegistration', '/land/jisang/menu02_2', '/land/jisang/menu02_3', '/land/jisang/menu02_4', '/land/jisang/menu02_5'];
+	//점용
+	let goverImg = ['/assets/media/nav/surfacePrivate.png', 'private', 'goverLargeMenuBox']
+	let goverUrl = ['/land/gover/menu03_1', '/land/gover/menu03_2', '/land/gover/menu03_3', '/land/gover/orgAdmin', '/land/gover/orgSysCode'];
+	//토지개발
+	let togiImg = ['/assets/media/nav/surfaceGround.png', 'develop', 'togiLargeMenuBox'];
+	let togiUrl = ['/togi/menu04_1', '/togi/landReg'];
+	//회사토지
+	let dopcoImg = ['/assets/media/nav/surfaceGround.png', 'company', 'dopcoLargeMenuBox']
+	let dopcoUrl = ['/dopco/menu05_1', '/dopco/compLandReg', '/dopco/menu05_2'];
+	//이슈
+	let issueImg = ['/assets/media/nav/surfaceIssue.png', 'issue', 'issueLargeMenuBox'];
+	let issueUrl = ['/issue/issueCodeMgmt', '/issue/menu06_1'];
+	//통계
+	let statsImg = ['/assets/media/nav/total.png', 'totalIcon', 'statsLargeMenuBox'];
+	let statsUrl = ['/stats/rightCloseMng', '/stats/rightStatus', '/stats/issueStatus' , '/stats/rightChangeStat', '/stats/parcelChangeStat'];
+	
+	/********************/
+	//2pms지도메뉴 권한
+	let menu2PmsList = JSON.parse(result2[0]);
+	let map2PmsCheck = menu2PmsList;	//0번째가 지도 검색 메뉴
+	console.log(map2PmsCheck);
+	/********************/
 	
 	let innerHtml = '';
-	innerHtml += '<li>'; 
-	innerHtml += '	<button class="surfaceMenuBtn">';
-	innerHtml += '		<span><img src="/assets/media/nav/surfaceMap.png" alt="mapIcon" onClick="openMapWindow();" /></span>지도';
-	innerHtml += '	</button>';
-	innerHtml += '</li>';
+	
+	if(map2PmsCheck.mnLargeYn == 'Y') {
+		innerHtml += '<li>'; 
+		innerHtml += '	<button class="surfaceMenuBtn">';
+		innerHtml += '		<span><img src="/assets/media/nav/surfaceMap.png" alt="mapIcon" onclick="openMapGo();"/></span>지도';
+		innerHtml += '	</button>';
+		innerHtml += '</li>';
+	}
 	
 	for(let i = 0 ; i < result.length ; i++) {
 		let menuInfo = JSON.parse(result[i]);
-		//console.log(menuInfo);
+		console.log(menuInfo);
 		
-		innerHtml += '<li>';
-		innerHtml += '	<button class="surfaceMenuBtn">';
-		innerHtml += '		<span><img src="/assets/media/nav/surfaceHammer.png" alt="nowDopco" /></span><p th:text="${row.mnName}">메뉴</p>';
-		innerHtml += '	</button>';
-		innerHtml += '	<div class="hiddenMenuBoxs">';
-		innerHtml += '		<div class="hiddenMenuList">';
-		innerHtml += '			<a href="/songyu/menu01">권리확보현황</a>';
-		innerHtml += '			<a href="/songyu/menu02">권리제외필지조회</a>';
-		innerHtml += '			<a href="/songyu/menu03">권리필지조회</a>';
-		innerHtml += '		</div>';
-		innerHtml += '	</div>';
-		innerHtml += '</li>';
+		//소메뉴 img & URL 정보 pick
+		let targetImgArr = [];
+		let targetMenuUrlArr = [];
+		
+		if(menuInfo.mnLargeName == '송유관로 현황'){
+			targetImgArr = songyuImg;
+			targetMenuUrlArr = songyuUrl;
+		} else if(menuInfo.mnLargeName == '지상권') {
+			targetImgArr = jisangImg;
+			targetMenuUrlArr = jisangUrl;
+		} else if(menuInfo.mnLargeName == '점용') {
+			targetImgArr = goverImg;
+			targetMenuUrlArr = goverUrl;
+		} else if(menuInfo.mnLargeName == '토지개발') {
+			targetImgArr = togiImg;
+			targetMenuUrlArr = togiUrl;
+		} else if(menuInfo.mnLargeName == '회사토지') {
+			targetImgArr = dopcoImg;
+			targetMenuUrlArr = dopcoUrl;
+		} else if(menuInfo.mnLargeName == '이슈') {
+			targetImgArr = issueImg;
+			targetMenuUrlArr = issueUrl;
+		} else { //통계
+			targetImgArr = statsImg;		
+			targetMenuUrlArr = statsUrl;
+		}
+		
+		
+		//사이드바 큰메뉴 사용여부
+		if(menuInfo.mnLargeYn == 'Y') {
+			
+			innerHtml += '<li>';
+			innerHtml += '	<button class="surfaceMenuBtn" onclick="largeMenuClick(this, \''+ targetImgArr[2] +'\')">';
+			innerHtml += '		<span><img src="'+targetImgArr[0]+'" alt="'+targetImgArr[1]+'" /></span>' + menuInfo.mnLargeName;
+			innerHtml += '	</button>';
+			innerHtml += '	<div class="hiddenMenuBoxs" id="'+targetImgArr[2]+'" >';
+			innerHtml += '		<div class="hiddenMenuList">';
+			
+			//소메뉴 사용여부
+			for(let k = 0 ; k < menuInfo.mnList.length ; k++) {
+				let mnInfo = menuInfo.mnList[k];
+				
+				if(mnInfo.mnYN == 'Y') {
+					innerHtml += '<a href="'+targetMenuUrlArr[k]+'">' + mnInfo.mnName + '</a>';
+				}
+			}
+			
+			innerHtml += '		</div>';
+			innerHtml += '	</div>';
+			innerHtml += '</li>';
+			
+		}
+		
 	}
 	
 	$("#naviMenuBar").html(innerHtml);
