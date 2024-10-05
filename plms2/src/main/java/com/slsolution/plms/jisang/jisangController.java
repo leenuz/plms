@@ -1899,7 +1899,8 @@ log.info("data:"+data.get(0));
 			params.put("index",index);
 			log.info("params:"+params);
 
-			ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+			//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+			ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectJisangDetailListNew",params);
 			ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 
@@ -3596,6 +3597,7 @@ log.info("data:"+data.get(0));
 			
 			
 		}
+	
 	// 지상권 해지 저장 - 해지사유 및 검토 의견만 임시 저장처리
 	@Transactional
 	@PostMapping(path="/insertJisangTerminationTemp")
@@ -3610,9 +3612,9 @@ log.info("data:"+data.get(0));
 		String cancle_bosang_money = requestParamObj.getString("cancel_bosang_money");
 		String empCd = String.valueOf(request.getSession().getAttribute("userId"));
 		String empName = String.valueOf(request.getSession().getAttribute("userName"));
-		String cancle_chuideuk_money = requestParamObj.getString("chuideuk_money");
-		String cancle_chuideuk_gammoney = requestParamObj.getString("gammoney");
-		String cancle_chuideuk_remainder_money = requestParamObj.getString("remainder_money");
+		String cancle_chuideuk_money = requestParamObj.optString("chuideuk_money").isEmpty() ? "" : requestParamObj.getString("chuideuk_money");
+		String cancle_chuideuk_gammoney = requestParamObj.optString("gammoney").isEmpty() ? "" : requestParamObj.getString("gammoney");
+		String cancle_chuideuk_remainder_money = requestParamObj.optString("remainder_money").isEmpty() ? "" : requestParamObj.getString("remainder_money");
 		String cancle_reason = requestParamObj.getString("cancel_reason");
 		String cancle_comment = requestParamObj.getString("cancel_comment");
 		//String filenumber = requestParamObj.getString("filenumber");

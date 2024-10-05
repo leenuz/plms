@@ -2956,9 +2956,9 @@ VALUES (
     #{CANCLE_BOSANG_MONEY}::numeric,
     #{NAME},
     #{EMPCD},
-    #{CHUIDEUKMONEY}::numeric,
-    #{GAMMONEY}::numeric,
-    #{REMAINDERMONEY}::numeric,
+    nullif(#{CHUIDEUKMONEY},'')::numeric,
+    nullif(#{GAMMONEY},'')::numeric,
+    nullif(#{REMAINDERMONEY},'')::numeric,
     #{CANCLE_STATUS}
 )
 ON CONFLICT (jisang_no)
@@ -2971,9 +2971,9 @@ SET
     cancle_bosang_money = #{CANCLE_BOSANG_MONEY}::numeric,
     cancle_name = #{NAME},
     cancle_empcd = #{EMPCD},
-    chuideuk_money = #{CHUIDEUKMONEY}::numeric,
-    gammoney = #{GAMMONEY}::numeric,
-    remainder_money = #{REMAINDERMONEY}::numeric,
+    chuideuk_money = nullif(#{CHUIDEUKMONEY},'')::numeric,
+    gammoney = nullif(#{gammoney},'')::numeric,
+    remainder_money = nullif(#{remainder_money},'')::numeric,
     cancle_status = #{CANCLE_STATUS};
 	</update>
 	
