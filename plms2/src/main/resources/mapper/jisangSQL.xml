@@ -2390,6 +2390,51 @@ SELECT count(*)
 		
 	</update>
 	
+	
+	<!-- 지상권 내역 수정에서 사용 (/jisang/insertJisangList) -->
+	<update id="updateJisangMasterNoCancel" parameterType="map">
+		UPDATE jisang_master
+		SET
+		jm_jisa = #{JISA},
+		jm_yongdo = #{YONGDO},
+		jm_pipe_name = #{ZONE},
+		jm_sun_gubun = #{SUNGUBUN},
+		jm_sido_nm = #{SINM},
+		jm_sgg_nm = #{GUNGUNM},
+		jm_emd_nm = #{DONGNM},
+		jm_ri_nm = #{RINM},
+		jm_jibun = #{JIBUN},
+		jm_jijuk_area = nullif(#{JIJUKAREA},'')::numeric,
+		jm_jimok_text = #{JIMOK},
+		jm_manage_yn = #{MANAGE_YN},
+		jm_gover_own_yn = #{GOVEROWNYN},
+		jm_jasan_no = #{JASANNO},
+		jm_chuideuk_date = TO_DATE(#{CD_STARTDAY}, 'YYYY-MM-DD'),
+		jm_comple_yn = #{COMPLEYN},
+		jm_pyeonib_area = #{PYEONIBAREA}::numeric,
+		jm_use_state = #{USESTATE},
+		jm_deunggi_date = TO_DATE(#{DGSTARTDAY}, 'YYYY-MM-DD'),
+		jm_deunggi_no = #{DEUNGGINO},
+		jm_deunggiso = #{DEUNGGISO},
+		jm_dosiplan = #{DOSIPLAN},
+		jm_cancle_date = TO_DATE(#{jm_cancel_date}, 'YYYY-MM-DD'), <!--해지일자-->
+		jm_chuideuk_money = #{jm_chuideuk_money}, <!--취득금액-->
+		jm_gammoney = #{jm_gammoney}, <!--감가삼각충당금-->
+		jm_remainder_money = #{jm_remainder_money}, <!--?-->
+		jm_cancle_bosang_yn = #{jm_cancel_bosang_yn}, <!--?-->
+		jm_cancle_bosang_money = #{jm_cancel_bosang_money}, <!--?-->
+		jm_cancle_reason = #{jm_cancel_reason}, <!--?-->
+		jm_cancle_comment = #{jm_cancel_comment}, <!--?-->
+		
+		jm_special_cont=#{SPECIALCONT},
+		jm_pipe_yn=#{PIPEYN},
+		jm_account_yn=#{ACCOUNTYN},
+		jm_location=#{LOCATION},
+		jm_permitted_yn=#{PERMITTED_YN}
+		WHERE jm_jisang_no = #{JISANGNO} <!--지상권번호-->
+		
+	</update>
+	
 	<delete id="deleteJisangMasterTmp" parameterType="map">
 		DELETE FROM jisang_master_tmp
 		WHERE jmt_jisang_no = #{idx}
@@ -2954,7 +2999,7 @@ VALUES (
     #{STARTDAY}::date,
     #{CANCLE_REASON},
     #{CANCLE_COMMENT},
-    #{CANCLE_YES},
+    #{CANCLE_BOSANG_YN},
     #{CANCLE_BOSANG_MONEY}::numeric,
     #{NAME},
     #{EMPCD},
@@ -2969,7 +3014,7 @@ SET
     cancle_date = #{STARTDAY}::date,
     cancle_reason = #{CANCLE_REASON},
     cancle_comment = #{CANCLE_COMMENT},
-    cancle_bosang_yn = #{CANCLE_YES},
+    cancle_bosang_yn = #{CANCLE_BOSANG_YN},
     cancle_bosang_money = #{CANCLE_BOSANG_MONEY}::numeric,
     cancle_name = #{NAME},
     cancle_empcd = #{EMPCD},
@@ -3465,6 +3510,7 @@ VALUES (
 			WHERE JISANG_NO = #{JISANG_NO}
 		)BB
 		on AA.PMT_NO = BB.PMT_NO
+		where AA.PMT_NO is not null
 	</select>
 	
 	<select id="selectJisangRowDetail_Merge" resultType="HashMap" parameterType="HashMap">

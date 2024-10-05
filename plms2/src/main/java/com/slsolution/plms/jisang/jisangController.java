@@ -5310,7 +5310,7 @@ log.info(" 3932 params:"+params);
 					}
 					
 					log.info("------------------aaaaaaaaaaa------------------");
-					mainService.UpdateQuery("jisangSQL.updateJisangMaster1", params); // 기본정보 수정
+					mainService.UpdateQuery("jisangSQL.updateJisangMasterNoCancel", params); // 기본정보 수정
 
 					// 변경이력 등록
 					if (!modifyReason1.equals("")) {
