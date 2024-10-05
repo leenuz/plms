@@ -2793,6 +2793,7 @@ WHERE 1=1
        TRIM(TO_CHAR(JT.GAMMONEY, '999,999,999,999,999')) AS GAMMONEY,
        TRIM(TO_CHAR(JT.REMAINDER_MONEY, '999,999,999,999,999')) AS REMAINDER_MONEY,
        JT.CANCLE_STATUS,
+       JT.account_yn,
        JM.jm_dockey as DOCKEY,
        JM.jm_toji_type as TOJI_TYPE,
        JM.jm_bunhal_comment as BUNHAL_COMMENT,
@@ -2992,7 +2993,8 @@ FROM permit_master
     chuideuk_money,
     gammoney,
     remainder_money,
-    cancle_status
+    cancle_status,
+    account_yn
 )
 VALUES (
     #{JISANGNO},
@@ -3006,7 +3008,8 @@ VALUES (
     nullif(#{CHUIDEUKMONEY},'')::numeric,
     nullif(#{GAMMONEY},'')::numeric,
     nullif(#{REMAINDERMONEY},'')::numeric,
-    #{CANCLE_STATUS}
+    #{CANCLE_STATUS},
+    #{ACCOUNT_YN}
 )
 ON CONFLICT (jisang_no)
 DO UPDATE
@@ -3021,7 +3024,8 @@ SET
     chuideuk_money = nullif(#{CHUIDEUKMONEY},'')::numeric,
     gammoney = nullif(#{GAMMONEY},'')::numeric,
     remainder_money = nullif(#{REMAINDERMONEY},'')::numeric,
-    cancle_status = #{CANCLE_STATUS};
+    cancle_status = #{CANCLE_STATUS},
+    account_yn=#{ACCOUNT_YN}
 	</update>
 	
 	

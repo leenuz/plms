@@ -3621,6 +3621,7 @@ log.info("data:"+data.get(0));
 		String cancle_reason = requestParamObj.getString("cancel_reason");
 		String cancle_comment = requestParamObj.getString("cancel_comment");
 		String cancel_bosang_yn = requestParamObj.getString("cancel_bosang_yn");
+		String account_yn=requestParamObj.getString("account_yn");
 		//String filenumber = requestParamObj.getString("filenumber");
 		//String fileseq = requestParamObj.getString("fileseq"); // 파일 seq
 
@@ -3640,6 +3641,7 @@ log.info("data:"+data.get(0));
 			params.put("CANCLE_REASON", cancle_reason);
 			params.put("CANCLE_COMMENT", cancle_comment);
 			params.put("CANCLE_BOSANG_YN", cancel_bosang_yn);
+			params.put("ACCOUNT_YN", account_yn);
 			//params.put("FILESEQ", fileseq);
 			params.put("CANCLE_STATUS", "임시저장");
 
