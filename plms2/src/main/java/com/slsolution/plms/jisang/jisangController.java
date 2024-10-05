@@ -1556,7 +1556,9 @@ log.info("PMT_NO:"+PMT_NO);
 		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
 		log.info("jisangMergeList: " + jisangMergeList);
 		params.put("pnu", data.get(0).get("jm_pnu"));
-		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
+		ArrayList<HashMap> jisangIssueList = new  ArrayList<HashMap>();
+		log.info("jmPNU:"+data.get(0).get("jm_pnu"));
+		if (data.get(0).get("jm_pnu")!=null || data.get(0).get("jm_pnu")!="" || data.get(0).get("jm_pnu").equals("")) 	jisangIssueList=mainService.selectQuery("jisangSQL.selectIssueList",params);
 		log.info("jisangIssueList size:"+jisangIssueList.size());
 		if (jisangIssueList.size()>0) {
 			params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
@@ -1564,7 +1566,7 @@ log.info("PMT_NO:"+PMT_NO);
 			params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
 		}
 		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
-		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
+		//ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
 		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 
@@ -1577,7 +1579,7 @@ log.info("PMT_NO:"+PMT_NO);
 
 		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
 		mav.addObject("jisangIssueList",jisangIssueList);
-		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
+		//mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
 		mav.addObject("memoList",jisangMemoList);
 		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
 		mav.setViewName("content/jisang/forDivisionEasementDetails");

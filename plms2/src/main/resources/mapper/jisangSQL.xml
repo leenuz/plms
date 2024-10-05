@@ -1570,6 +1570,7 @@ SELECT count(*)
 		</if>
 		) AS r
 		where 1=1
+		and r.cancel_yn!='Y'
 		and r.idx !=''
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and r.idx=#{idx}
