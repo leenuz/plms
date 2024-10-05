@@ -42,11 +42,9 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		List<String> resultList = new ArrayList<String>();
 		List<String> menuList = new ArrayList<String>();
+		List<String> menu2pmsList = new ArrayList<String>();
+		
 		try {
-			
-			resultList.add("AAA");
-			resultList.add("BBB");
-			resultList.add("CCC");
 			
 			HttpSession session = request.getSession();
 			
@@ -72,14 +70,16 @@ public class MainController {
 			
 			JSONObject menuCheck = new JSONObject(attrArray);
 			log.info("menuCheck:"+menuCheck);
-			JSONObject menu2pmsResultList = new JSONObject(menuCheck.get("plmsMenu").toString());
-			JSONArray menuResultList = menu2pmsResultList.getJSONArray("resultList");
+			
+			JSONObject menuPlmsResultList = new JSONObject(menuCheck.get("plmsMenu").toString());
+			JSONArray menuResultList = menuPlmsResultList.getJSONArray("resultList");
+			
+			JSONObject menu2pmsResultList = new JSONObject(menuCheck.get("2pmsMenu").toString());
+			JSONArray menu2pmsResult = menu2pmsResultList.getJSONArray("resultList");
 			
 			System.out.println("================================================================================");
 			
 			System.out.println("plmsMenu :: " + menuCheck.get("plmsMenu").toString());
-//			System.out.println("2pmsMenu :: " + menuCheck.get("2pmsMenu").toString());
-//			System.out.println(menu2pmsResultList.getJSONArray("resultList"));
 			
 			System.out.println("================================================================================");
 			
@@ -92,6 +92,7 @@ public class MainController {
 			
 			mav.addObject("resultList",resultList);
 			mav.addObject("menuList", menuList);
+			
 			mav.setViewName("content/home");
 		} catch(Exception e) {
 			e.printStackTrace();

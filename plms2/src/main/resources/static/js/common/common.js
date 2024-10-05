@@ -4,8 +4,8 @@ console.log("----------------common.js start----------------");
  
  
 
-
-
+//241005
+var selectDivId;
 
 /*function EmptyToStr(str,mode){
 	//mode string s , number n
@@ -254,3 +254,32 @@ function commonCurrentPagePrint(id) {
 	
 	window.print();
 }
+
+
+/******************************/
+//좌측 사이드바 메뉴 동작 script
+function openMapGo() {
+	console.log('2PMS 지도 연결할것');
+}
+
+//
+function largeMenuClick(obj, id){
+	
+	if(selectDivId != id) {
+		$('.surfaceMenuBtn').removeClass('addClick active');
+		$('.hiddenMenuBoxs').removeClass('surfacemunuOpen');
+		selectDivId = id;
+	} else {
+		selectDivId = id;
+	}
+	
+	if($(obj).hasClass('addClick active')) {
+		$(obj).removeClass('addClick active')
+		$("#"+id).removeClass('surfacemunuOpen');
+	} else {
+		$(obj).addClass('addClick active');
+		$("#"+id).addClass('surfacemunuOpen');
+	}
+}
+
+/******************************/
