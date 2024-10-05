@@ -186,7 +186,7 @@ function updatePipeNameList(jisaValue) {
 	console.log("jmPipeName: " + jmPipeName);
 
 	$.ajax({
-		url: "/gover/getPipeName",  // 관로명 목록을 가져오는 API
+		url: "/land/gover/getPipeName",  // 관로명 목록을 가져오는 API
 		data: JSON.stringify(allData),
 		type: "POST",
 		dataType: "json",
