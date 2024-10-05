@@ -656,6 +656,8 @@ public class jisangController {
 		    			filesMap.put("FILE_NM",fname);
 		    			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
 		     			 String dataPath = GC.getJisangFileDataDir()+"/jisangPermit/"+resp_PMT_NO; //설정파일로 뺀다.
+		     			 log.info("tepPath:"+tempPath);
+		     			log.info("dataPath:"+dataPath);
 		     			 filesMap.put("FILE_PATH",dataPath+"/"+fname);
 		     			 CommonUtil.moveFile(fname, tempPath, dataPath);
 		     			log.info("filesMap:"+filesMap);
@@ -4415,10 +4417,10 @@ log.info("gubun:"+gubun);
 		log.info("fileList:"+fileList);
 		//log.info("data:"+data);
 
-      	mav.addObject("resultData", data.get(0));
+      	mav.addObject("resultData",list.get(0));
       	mav.addObject("tojiList", data);
 //		mav.addObject("fileList", jisangPnuAtcFileList);
-		mav.addObject("reqDoc2list", reqDoc2list);
+		mav.addObject("reqDoc2list", fileList);
 		mav.setViewName("content/jisang/usePermitDetail");
 		return mav;
     }
@@ -4440,6 +4442,7 @@ log.info("gubun:"+gubun);
 		
 		params.put("idx",idx);
 		params.put("manage_no",idx);
+		params.put("PMT_NO",idx);
 		params.put("index",index);
 		log.info("params:"+params);
 		
@@ -4447,12 +4450,13 @@ log.info("gubun:"+gubun);
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 		ArrayList<HashMap> reqDoc2list = mainService.selectQuery("jisangSQL.selectJisangReqDoc2",params);
+		ArrayList<HashMap> fileList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_FILE", params);
 
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("tojiList", data);
 		mav.addObject("jisaList", jisalist);
 		mav.addObject("sidoList",sidolist);
-		mav.addObject("reqDoc2list",reqDoc2list);
+		mav.addObject("reqDoc2list",fileList);
 		mav.setViewName("content/jisang/usePermitEdit");
 
 		return mav;
@@ -6422,6 +6426,96 @@ log.info("map:"+map);
 //			response.getWriter().flush();
 //
 //		}
+	
+	
+	
+	// 지상권 사용승락 상신취소
+		@RequestMapping(value = "/updateJisangPmtSangsinCancel", method = { RequestMethod.GET, RequestMethod.POST })
+		public void updateJisangPmtSangsinCancel(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			ParameterParser parser = new ParameterParser(request);
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			String PMT_NO = requestParamsObj.getString("pmt_no");
+			String str_result = "Y";
+			String str_STATUS = "";
+			// System.out.println("=========상신취소=======");
+			// System.out.println("PMT_NO=" + PMT_NO);
+
+			try {
+				HashMap params = new HashMap();
+				params.put("PMT_NO", PMT_NO);
+
+				// ArrayList echolist =
+				// (ArrayList)Database.getInstance().queryForList("Json.selectGoverDocInfo",params);
+				// if(null != echolist && echolist.size() > 0){
+				// str_STATUS = String.valueOf(
+				// ((HashMap)echolist.get(0)).get("STATUS") );
+				// }
+				//
+				// System.out.println("str_STATUS="+str_STATUS);
+				// System.out.println("========================");
+				//
+				// if(str_STATUS == null || str_STATUS.equals(""))
+				mainService.UpdateQuery("jisangSQL.updateJisangPmtDockey", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+			HashMap map = new HashMap();
+			map.put("message", str_result);
+			map.put("status", str_STATUS);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		}
+		
+		
+		// 지상권 사용승락 삭제
+		@RequestMapping(value = "/updateJisangPmtSangsinDel", method = { RequestMethod.GET, RequestMethod.POST })
+		public void updateJisangPmtSangsinDel(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			ParameterParser parser = new ParameterParser(request);
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			String PMT_NO = requestParamsObj.getString("pmt_no");
+			
+			String str_result = "Y";
+			String str_STATUS = "";
+			// System.out.println("=========사용승락삭제=======");
+			// System.out.println("PMT_NO=" + PMT_NO);
+
+			try {
+				HashMap params = new HashMap();
+				params.put("PMT_NO", PMT_NO);
+				mainService.DeleteQuery("jisangSQL.deleteJisangPmtDockey", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+			HashMap map = new HashMap();
+			map.put("message", str_result);
+			map.put("status", str_STATUS);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		}
 
 
 }

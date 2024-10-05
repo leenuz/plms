@@ -663,22 +663,78 @@ $(document).on("click",".saveBtn ",function(){
 			var jasan=$(togiUls[i]).find("input[name='jasan_"+ i +"']").val();
 			var soyuja=$(togiUls[i]).find("input[name='soyuja_"+ i +"']").val();
 			var pmtUser=$(togiUls[i]).find("input[name='pmtUser_"+ i +"']").val();
+			var togiManageNo=$(togiUls[i]).find("input[name='togiManageNo']").val();
+			
+			var sido_nm=$(togiUls[i]).find("input[name='sido_nm']").val();
+			var sgg_nm=$(togiUls[i]).find("input[name='sgg_nm']").val();
+			var emd_nm=$(togiUls[i]).find("input[name='emd_nm']").val();
+			var ri_nm=$(togiUls[i]).find("input[name='ri_nm']").val();
+			var jibun=$(togiUls[i]).find("input[name='jibun']").val();
+			var addrcode=$(togiUls[i]).find("input[name='addrcode']").val();
 
 	   		var togiObj={
 				"address":ljsIsNull(address)?'':address
-				,"jimok_text":ljsIsNull(jimok_text)?'':jimok_text
-				,"fullArea":ljsIsNull(fullArea)?'':fullArea
-				,"setArea":ljsIsNull(setArea)?'':setArea
-				,"setMoney":ljsIsNull(setMoney)?'':setMoney
-				,"jasan":ljsIsNull(jasan)?'':jasan
-				,"soyuja":ljsIsNull(soyuja)?'':soyuja
-				,"pmtUser":ljsIsNull(pmtUser)?'':pmtUser
+				,"togiaddress":ljsIsNull(address)?'':address
+				,"togiJimokText":ljsIsNull(jimok_text)?'':jimok_text
+				,"togiJijukArea":ljsIsNull(fullArea)?'':fullArea
+				,"togiPyeonibArea":ljsIsNull(setArea)?'':setArea
+				,"togiSetMoney":ljsIsNull(setMoney)?'':setMoney
+				,"togiJasanNo":ljsIsNull(jasan)?'':jasan
+				,"togiSouja":ljsIsNull(soyuja)?'':soyuja
+				,"togiUseName":ljsIsNull(pmtUser)?'':pmtUser
+				,"togiManageNo":ljsIsNull(togiManageNo)?'':togiManageNo
+				,"sido_nm":ljsIsNull(sido_nm)?'':sido_nm
+				,"sgg_nm":ljsIsNull(sgg_nm)?'':sgg_nm
+				,"emd_nm":ljsIsNull(emd_nm)?'':emd_nm
+				,"ri_nm":ljsIsNull(ri_nm)?'':ri_nm
+				,"jibun":ljsIsNull(jibun)?'':jibun
+				,"addrcode":ljsIsNull(addrcode)?'':addrcode
 
 	   		}
 	   		togiDatas.push(togiObj);
 	   	}
-	   	dataObj.togiDatas=togiDatas;
+	   	dataObj.desangTogis=togiDatas;
+		dataObj.gubun="modify";
+			dataObj.pmt_status="임시저장";
     	 console.log(dataObj);
+		 url="/land/jisang/usePermitRegisterSave";
+		    	$.ajax({
+
+		 		url:url,
+		 		type:'POST',
+		 		contentType:"application/json",
+		 		data:JSON.stringify(dataObj),
+
+		 		dataType:"json",
+		 		beforeSend:function(request){
+		 			console.log("beforesend ........................");
+		 			loadingShow();
+		 		},
+		 		success:function(response){
+		 			loadingHide();
+		 			console.log(response);
+		 			if (response.success="Y"){
+		 				console.log("response.success Y");
+		 				//console.log("response.resultData length:"+response.resultData.length);
+		 				alert("정상적으로 등록 되었습니다.");
+		 				/*$("#popup_bg").show();
+		 				$("#popup").show(500);
+		 				//$("#addrPopupLayer tbody td").remove();
+		 				for(var i=0;i<response.resultData.length;i++){
+		 					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+		 				}*/
+		 			}
+		 			else {
+		 				console.log("response.success N");
+		 			}
+		 		},
+		 		error:function(jqXHR,textStatus,errorThrown){
+		 			alert("mainSaveBtn ajax error\n"+textStatus+":"+errorThrown);
+		 			return false;
+		 		}
+
+		    	});
+		 	
 })
 
 //상신
@@ -720,8 +776,93 @@ $(document).on("click",".approvalBtn ",function(){
 	   		}
 	   		togiDatas.push(togiObj);
 	   	}
-	   	dataObj.togiDatas=togiDatas;
+	   	dataObj.desangTogis=togiDatas;
+		dataObj.gubun="modify";
+				dataObj.pmt_status="임시저장";
     	 console.log(dataObj);
+		 //임시저장 호출
+
+		 		url="/land/jisang/usePermitRegisterSave";
+		 		$.ajax({
+
+		 			url:url,
+		 			type:'POST',
+		 			contentType:"application/json",
+		 			data:JSON.stringify(dataObj),
+
+		 			dataType:"json",
+		 			beforeSend:function(request){
+		 				console.log("beforesend ........................");
+		 				loadingShow();
+		 			},
+		 			success:function(response){
+		 				loadingHide();
+		 				console.log(response);
+		 				if (response.success="Y"){
+		 					console.log("response.success Y");
+		 					//console.log("response.resultData length:"+response.resultData.length);
+		 					 dataObj.PMT_NO=response.PMT_NO;
+		 					 console.log(dataObj);
+		 					 console.log("---------------상신으로 넘겨야함-------------");
+		 					//alert("정상적으로 등록 되었습니다.");
+		 					/*$("#popup_bg").show();
+		 					$("#popup").show(500);
+		 					//$("#addrPopupLayer tbody td").remove();
+		 					for(var i=0;i<response.resultData.length;i++){
+		 						$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+		 					}*/
+		 					
+		 					url="/land/jisang/selectJisangPmtDetailListAppoval";
+		 						   	$.ajax({
+
+		 								url:url,
+		 								type:'POST',
+		 								contentType:"application/json",
+		 								data:JSON.stringify(dataObj),
+
+		 								dataType:"json",
+		 								beforeSend:function(request){
+		 									console.log("beforesend ........................");
+		 									loadingShow();
+		 								},
+		 								success:function(response){
+		 									loadingHide();
+		 									console.log(response);
+		 									if (response.success="Y"){
+		 										console.log("response.success Y");
+		 										//console.log("response.resultData length:"+response.resultData.length);
+		 										alert("정상적으로 상신 되었습니다.");
+		 										/*$("#popup_bg").show();
+		 										$("#popup").show(500);
+		 										//$("#addrPopupLayer tbody td").remove();
+		 										for(var i=0;i<response.resultData.length;i++){
+		 											$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+		 										}*/
+		 									}
+		 									else {
+		 										console.log("response.success N");
+		 									}
+		 								},
+		 								error:function(jqXHR,textStatus,errorThrown){
+		 									alert("sangsin ajax error\n"+textStatus+":"+errorThrown);
+		 									return false;
+		 								}
+
+		 						   	});
+		 					
+		 					
+		 					
+		 				}
+		 				else {
+		 					console.log("response.success N");
+		 				}
+		 			},
+		 			error:function(jqXHR,textStatus,errorThrown){
+		 				alert("mainSaveBtn ajax error\n"+textStatus+":"+errorThrown);
+		 				return false;
+		 			}
+
+		 		});
 })
 
 

@@ -1370,10 +1370,11 @@ SELECT count(*)
 		,jm.jm_sgg_nm as sgg_nm
 		,jm.jm_emd_nm as emd_nm
 		,jm.jm_ri_nm as ri_nm
-
+		,CC.*
 		FROM permit_master jpm
 			LEFT JOIN permit_togi jpt ON jpt.pmt_no=jpm.pmt_no
 			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jisang_no
+				left outer join PLMS_APPROVAL CC on jm.jm_DOCKEY = CC.pa_DOCKEY and (CC.pa_status is null or CC.pa_status not in ('X'))
 		WHERE 1 = 1
 
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
@@ -1473,7 +1474,11 @@ SELECT count(*)
 		,jpt.all_area as all_area
 		,jpt.set_area as set_area
 		,jpt.set_money as set_money
-
+			,jm.jm_sido_nm AS sido_nm
+		,jm.jm_sgg_nm AS sgg_nm
+		,jm.jm_emd_nm AS emd_nm
+		,jm.jm_ri_nm AS ri_nm
+		,jm.jm_addrcode AS addrcode
 		FROM permit_master jpm
 			LEFT JOIN permit_togi jpt ON jpt.pmt_no=jpm.pmt_no
 			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jisang_no
@@ -2882,14 +2887,14 @@ FROM permit_master
 	
 	
 		<select id="selectJisangPmtDetail_FILE" parameterType="HashMap" resultType="java.util.HashMap">
-		SELECT jrd_manage_no as PMT_NO, jrd_fseq AS SEQ, jrd_fpath as FILE_PATH,jrd_fname AS FILE_NM,jrd_fseq as FILE_GUBUN
-		FROM jisang_req_doc1
-		WHERE jrd_manage_no = #{PMT_NO}
+		SELECT PMT_NO, seq , FILE_PATH,FILE_NM,FILE_GUBUN
+		FROM permit_atcfile
+		WHERE pmt_no = #{PMT_NO}
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
-			AND jrd_fseq = #{SEQ}
+			AND seq = #{SEQ}
 		</if>
 		
-		ORDER BY jrd_fseq
+		ORDER BY seq
 	</select>
 	
 	
@@ -3551,7 +3556,7 @@ DELETE from plms_POTENTIAL_ISSUE
 		, rivew = #{review}
 		, CONTRACT = #{CONTRACT}
 
-		WHERE PMT_NO = {#PMT_NO}
+		WHERE PMT_NO = #{PMT_NO}
 
 	</update>
 	<delete id="deletePermitTogiList" parameterType="HashMap">
@@ -3570,18 +3575,18 @@ DELETE from plms_POTENTIAL_ISSUE
 	
 	<insert id="insertPermitFile" parameterType="HashMap">
            
-			INSERT INTO jisang_PERMIT_ATCFILE(PMT_NO, SEQ	, FILE_PATH, FILE_NM, FILE_GUBUN)
+			INSERT INTO PERMIT_ATCFILE(PMT_NO, SEQ	, FILE_PATH, FILE_NM, FILE_GUBUN)
 			VALUES (#{PMT_NO},nextval('pmt_atc_seq'), #{FILE_PATH}, #{FILE_NM}, #{FILE_GUBUN})
 			
 	</insert>
 	<update id="updatePermitFile" parameterType="HashMap">
            
-			update jisang_PERMIT_ATCFILE set FILE_PATH=#{FILE_PATH},FILE_NM=#{FILE_NM}
-			where pmt_no=#{PMT_NO} and file_gubun=#{FILE_GUBUN}
+			update PERMIT_ATCFILE set FILE_PATH=#{FILE_PATH},FILE_NM=#{FILE_NM}
+			where pmt_no=#{PMT_NO} and file_gubun=#{FILE_GUBUN}::text
 			
 	</update>
 	<select id="selectPermitFileCount" resultType="integer" parameterType="HashMap">
-		select count(*) from jisang_permit_atcfile where pmt_no=#{PMT_NO} and file_gubun = #{FILE_GUBUN}::varchar
+		select count(*) from permit_atcfile where pmt_no=#{PMT_NO} and file_gubun = #{FILE_GUBUN}::varchar
 		
 	</select>
 	
@@ -3606,6 +3611,82 @@ DELETE from plms_POTENTIAL_ISSUE
 		delete from jisang_atcfile
 		where ja_idx = #{idx}::int
 
+	</delete>
+	
+	
+	
+	<select id="selectJisangPmtList" resultType="HashMap" parameterType="HashMap">
+		SELECT AAA.PMT_NO, AAA.DOCKEY, AAA.USE_PURPOS, AAA.PMT_STATUS, AAA.ECHO_NO, AAA.JISANG_NO, AAA.ADDR, AAA.SOYUJA, AAA.PMT_USER, AAA.USE_ST_DATE, AAA.USE_ED_DATE, AAA.ROWCNT, AAA.jm_JISA, AAA.jm_PNU, AAA.jm_JASAN_NO ,CC.pa_STATUS,CC.pa_OUT_FLAG,CC.pa_OUT_URL,CC.pa_URL,CC.pa_USERNM,CC.pa_DEPTCD,CC.pa_DEPTNM,CC.pa_UPDEPTCD
+		FROM
+		(
+		SELECT AA.PMT_NO, AA.DOCKEY, AA.USE_PURPOS, AA.PMT_STATUS, AA.ECHO_NO, AA.JISANG_NO, AA.ADDR, AA.SOYUJA, AA.PMT_USER, AA.USE_ST_DATE, AA.USE_ED_DATE, AA.jm_JISA, AA.jm_PNU, AA.jm_JASAN_NO, AA.ROWCNT
+		FROM
+		(
+		SELECT A.PMT_NO, A.DOCKEY, A.USE_PURPOS, A.PMT_STATUS, A.ECHO_NO, A.JISANG_NO, A.ADDR, A.SOYUJA, A.PMT_USER, A.USE_ST_DATE, A.USE_ED_DATE, A.jm_JISA, A.jm_PNU, A.jm_JASAN_NO, B.ROWCNT
+		FROM
+		(
+		SELECT PM.PMT_NO, PM.DOCKEY, PM.USE_PURPOS, PM.PMT_STATUS, PM.ECHO_NO, PM.USE_ST_DATE, PM.USE_ED_DATE, PT.JISANG_NO, PT.ADDR, PT.SOYUJA, PT.PMT_USER, PT.ADDRCODE, PT.jm_JISA, PT.jm_PNU, PT.jm_JASAN_NO
+		FROM
+		(
+		SELECT PMT_NO, DOCKEY, USE_PURPOS, PMT_STATUS, ECHO_NO, TO_CHAR(USE_ST_DATE, 'YYYY-MM-DD') AS USE_ST_DATE , TO_CHAR(USE_ED_DATE, 'YYYY-MM-DD') AS USE_ED_DATE
+		FROM PERMIT_MASTER
+		)PM
+		left join
+		(
+		SELECT PET.PMT_NO, PET.JISANG_NO, PET.ADDR, PET.SOYUJA, PET.PMT_USER, PET.ADDRCODE, JM.jm_JISA, JM.jm_PNU, JM.jm_JASAN_NO
+		FROM PERMIT_TOGI PET
+		left join JISANG_MASTER JM on PET.JISANG_NO = JM.jm_JISANG_NO
+		)PT
+		ON PM.PMT_NO = PT.PMT_NO
+		WHERE 1=1
+		)A
+		left join
+		(
+		SELECT PMT_NO, count(*) AS ROWCNT
+		FROM PERMIT_TOGI
+		WHERE 1=1
+		GROUP BY PMT_NO
+		)B
+		on A.PMT_NO = B.PMT_NO
+		ORDER BY PMT_NO, JISANG_NO
+		)AA
+		right join
+		(
+		SELECT PMT_NO
+		FROM PERMIT_TOGI
+		WHERE 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRCODE)">
+			AND ADDRCODE LIKE '${ADDRCODE}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JIBUN)">
+			AND JIBUN LIKE '${JIBUN}%'
+		</if>
+			GROUP BY PMT_NO
+		)BB
+		on AA.PMT_NO = BB.PMT_NO
+		WHERE 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STATUS)">
+			AND PMT_STATUS = #{STATUS}
+		</if>
+			)AAA
+		left outer join PLMS_APPROVAL CC on AAA.DOCKEY = CC.pa_DOCKEY and (CC.pa_status is null or CC.pa_status not in ('X'))  
+		WHERE 1=1
+		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)">
+			AND AAA.jm_JISA = #{JISA}
+		</if>
+	</select>
+	
+	
+		<update id="updateJisangPmtDockey" parameterType="HashMap">
+		update PERMIT_MASTER
+		set DOCKEY = ''
+		where pmt_no = #{PMT_NO}
+	</update>
+	
+		<delete id="deleteJisangPmtDockey" parameterType="HashMap">
+		delete from PERMIT_MASTER
+		where pmt_no = #{PMT_NO}
 	</delete>
 	
 </mapper>

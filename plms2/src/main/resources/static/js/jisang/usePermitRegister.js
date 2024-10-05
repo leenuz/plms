@@ -1132,7 +1132,7 @@ $(document).on("click","#sangsinBtn",function(){
 									if (response.success="Y"){
 										console.log("response.success Y");
 										//console.log("response.resultData length:"+response.resultData.length);
-										alert("정상적으로 등록 되었습니다.");
+										alert("정상적으로 상신 되었습니다.");
 										/*$("#popup_bg").show();
 										$("#popup").show(500);
 										//$("#addrPopupLayer tbody td").remove();
@@ -1260,7 +1260,7 @@ $(document).on("click","#mainSaveBtn",function(){
 			console.log(response);
 			if (response.success="Y"){
 				console.log("response.success Y");
-				console.log("response.resultData length:"+response.resultData.length);
+				//console.log("response.resultData length:"+response.resultData.length);
 				alert("정상적으로 등록 되었습니다.");
 				/*$("#popup_bg").show();
 				$("#popup").show(500);

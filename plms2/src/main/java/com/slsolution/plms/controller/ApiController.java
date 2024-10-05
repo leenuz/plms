@@ -1,13 +1,18 @@
 package com.slsolution.plms.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -914,6 +919,7 @@ public class ApiController {
     // 파일 읽기 전용 API
     @GetMapping("/downloadFile")
     public ResponseEntity<Resource> downloadFile(@RequestParam String filePath) throws IOException {
+    	log.info("filedownload");
         File file = new File(filePath);
         if (!file.exists()) {
             throw new RuntimeException("File not found");
@@ -931,6 +937,68 @@ public class ApiController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getName() + "\"")
                 .body(resource);
     }
+ // 파일 다운로드 ,패스와 파일 이름 넘김다 parameter
+ 	// filePath=
+ 	// fileName=
+ 	@GetMapping(path = "/download")
+ 	public void download(HttpServletRequest request, HttpServletResponse response) {
+
+ 		String fileOriName = request.getParameter("fileName");
+ 		String filePath = request.getParameter("filePath");
+
+ 		System.out.println("fileOriName :: " + fileOriName);
+ 		System.out.println("filePath :: " + filePath);
+ 		
+// 		CloseableHttpClient httpClient = HttpClients.createDefault();
+// 		HttpGet gttpGet = new HttpGet(filePath);
+ 		
+ 		try {
+ 			File f = new File(filePath);
+ 			if (!f.isFile() || !f.exists()) {
+ 				response.setCharacterEncoding("UTF-8");
+ 				response.setContentType("text/html; charset=UTF-8");
+ 				response.getWriter().write(
+ 						"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><script>alert('파일이 존재하지 않습니다.'); history.back();</script></head></html>");
+ 				return;
+
+ 			}
+
+ 			String contentType = "application/octet-stream";
+
+ 			// 241001 추가
+ 			if (fileOriName.endsWith(".jpg") || fileOriName.endsWith(".jpeg")) {
+ 				contentType = "image/jpeg";
+ 			} else if (fileOriName.endsWith(".png")) {
+ 				contentType = "image/png";
+ 			} else if (fileOriName.endsWith(".pdf")) {
+ 				contentType = "application/pdf";
+ 			} else if (fileOriName.endsWith(".xls")) {
+ 				contentType = "application/vnd.ms-excel"; // 엑셀 97-2003 형식
+ 			} else if (fileOriName.endsWith(".xlsx")) {
+ 				contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; // 엑셀 2007 이후 형식
+ 			}
+
+ 			response.setHeader("Content-Type", contentType);
+ 			response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileOriName, "UTF-8"));
+// 			response.setHeader("Content-Length", "" + String.valueOf(f.length()));
+ 			response.setContentLengthLong(f.length());
+ 			
+ 			try (BufferedInputStream fin = new BufferedInputStream(new FileInputStream(f));
+ 					BufferedOutputStream outs = new BufferedOutputStream(response.getOutputStream())) {
+ 				byte[] buffer = new byte[8192];
+ 				int bytesRead;
+ 				while ((bytesRead = fin.read(buffer)) != -1) {
+ 					outs.write(buffer, 0, bytesRead);
+ 				}
+ 				outs.flush();
+ 			}
+ 			response.flushBuffer();
+ 		} catch (FileNotFoundException e) {
+ 			System.out.println(" FileService FileNotFoundException : " + e.getMessage());
+ 		} catch (Exception e) {
+ 			System.out.println("FileService exception :" + e.getMessage());
+ 		}
+ 	}
 
     @PostMapping(path = "/putMemoData") // http://localhost:8080/api/get/dbTest
     public ModelAndView putMemoData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {

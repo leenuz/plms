@@ -170,6 +170,14 @@ margin:10px;
 
               <div class="contentsBox">
               <ul class="contents" th:each="val, iterStat:${tojiList}">
+                <input type="hidden" id="permitIndex" th:if="${val.no!=null}" th:value="${val.no}">
+                <input type="hidden" id="togiManageNo"  th:if="${val.idx!=null}" th:value="${val.idx}">
+                <input type="hidden" name="sido_nm" id="sido_nm" th:if="${val.sido_nm!=null}" th:value="${val.sido_nm}">
+              	<input type="hidden" name="sgg_nm" id="sgg_nm" th:if="${val.sgg_nm!=null}" th:value="${val.sgg_nm}">
+              	<input type="hidden" name="emd_nm" id="emd_nm" th:if="${val.emd_nm!=null}" th:value="${val.emd_nm}">
+              	<input type="hidden" name="ri_nm" id="ri_nm" th:if="${val.ri_nm!=null}" th:value="${val.ri_nm}">
+              	<input type="hidden" name="jibun" id="jibun" th:if="${val.jibun!=null}" th:value="${val.jibun}">
+              	<input type="hidden" name="addrcode" id="addrcode" th:if="${val.addrcode!=null}" th:value="${val.addrcode}">
                 <li class="content addressInfoWidth addressInfoBox">
                   <div class="addressData">
                     <input type="text" th:value="${val.addr}" th:name="'address_'+${iterStat.index}" th:id="'address_'+${iterStat.index}" readonly class="notWriteInput" />
@@ -215,6 +223,7 @@ margin:10px;
 
         <!-- 합병사유 및 검토의견 -->
         <form name="saveForm"  id="saveForm" onSubmit="return false;">
+        <input type="hidden" name="pmt_no" th:value="${resultData.idx}">
         <section class="mergeTermination">
           <div class="subTitle">상세내용</div>
 
@@ -224,7 +233,7 @@ margin:10px;
                 <div class="title">사용목적</div>
                 <ul class="rowListContents">
                   <li class="rowListContent">
-                    <input type="text" readonly th:value="${resultData.use_purpos}" />
+                    <input type="text" name="purpose" readonly th:value="${resultData.use_purpos}" />
                 </ul>
               </div>
               <div class="rowListBox">
@@ -232,9 +241,9 @@ margin:10px;
                 <ul class="rowListContents">
                   <li class="content inputWrap">
                     <div class="dateInputWrap">
-                      <input type="date" th:data-placeholder="${resultData.use_st_date}" name="st_date" required aria-required="true" />
+                      <input type="date" th:data-placeholder="${resultData.use_st_date}" name="useStartDate" required aria-required="true" />
                       <span>~</span>
-                      <input type="date" th:data-placeholder="${resultData.use_ed_date}" name="ed_date" required aria-required="true" />
+                      <input type="date" th:data-placeholder="${resultData.use_ed_date}" name="useEndDate" required aria-required="true" />
                     </div>
                   </li>
                 </ul>
@@ -381,7 +390,7 @@ margin:10px;
                   <input type="hidden" id="fseq" value="1">
                   <input name="req_doc_file01" id="req_doc_file01"
                          type="text"
-                         th:if="${#lists.size(reqDoc2list)>=1}" th:value="${reqDoc2list[0].jrd_fname}"
+                         th:if="${#lists.size(reqDoc2list)>=1}" th:value="${reqDoc2list[0].file_nm}"
                          readonly
                          class="notWriteInput" style="text-align:center"/>
                   <input name="req_doc_file01" id="req_doc_file01"
@@ -405,7 +414,7 @@ margin:10px;
                   <input type="hidden" id="fseq" value="2">
                   <input  name="req_doc_file02" id="req_doc_file02"
                           type="text"
-                          th:if="${#lists.size(reqDoc2list)>=2}" th:value="${reqDoc2list[1].jrd_fname!=null?reqDoc2list[1].jrd_fname:''}"
+                          th:if="${#lists.size(reqDoc2list)>=2}" th:value="${reqDoc2list[1].file_nm!=null?reqDoc2list[1].file_nm:''}"
                           readonly
                           class="notWriteInput" style="text-align:center"/>
                   <input  name="req_doc_file02" id="req_doc_file02"
@@ -429,7 +438,7 @@ margin:10px;
                   <input type="hidden" id="fseq" value="3">
                   <input  name="req_doc_file03" id="req_doc_file03"
                           type="text"
-                          th:if="${#lists.size(reqDoc2list)>=3}" th:value="${reqDoc2list[2].jrd_fname!=null?reqDoc2list[2].jrd_fname:''}"
+                          th:if="${#lists.size(reqDoc2list)>=3}" th:value="${reqDoc2list[2].file_nm!=null?reqDoc2list[2].file_nm:''}"
                           readonly
                           class="notWriteInput" style="text-align:center"/>
                   <input  name="req_doc_file03" id="req_doc_file03"
@@ -452,7 +461,7 @@ margin:10px;
                 <li class="content">
                   <input type="hidden" id="fseq" value="4">
                   <input type="text"  name="req_doc_file04" id="req_doc_file04"
-                         th:if="${#lists.size(reqDoc2list)>=4}" th:value="${reqDoc2list[3].jrd_fname!=null?reqDoc2list[3].jrd_fname:''}"
+                         th:if="${#lists.size(reqDoc2list)>=4}" th:value="${reqDoc2list[3].file_nm!=null?reqDoc2list[3].file_nm:''}"
                          readonly class="notWriteInput" style="text-align:center"/>
                   <input type="text"  name="req_doc_file04" id="req_doc_file04"
                          th:if="${#lists.size(reqDoc2list)<4}" placeholder=""
@@ -473,7 +482,7 @@ margin:10px;
                   <input type="hidden" id="fseq" value="5">
                   <input
                           type="text"  name="req_doc_file05" id="req_doc_file05"
-                          th:if="${#lists.size(reqDoc2list)>=5}" th:value="${reqDoc2list[4].jrd_fname!=null?reqDoc2list[4].jrd_fname:''}"
+                          th:if="${#lists.size(reqDoc2list)>=5}" th:value="${reqDoc2list[4].file_nm!=null?reqDoc2list[4].file_nm:''}"
                           readonly
                           class="notWriteInput" style="text-align:center"/>
                   <input
@@ -497,7 +506,7 @@ margin:10px;
                   <input type="hidden" id="fseq" value="6">
                   <input
                           type="text"  name="req_doc_file06" id="req_doc_file06"
-                          th:if="${#lists.size(reqDoc2list)>=6}" th:value="${reqDoc2list[5].jrd_fname!=null?reqDoc2list[5].jrd_fname:''}"
+                          th:if="${#lists.size(reqDoc2list)>=6}" th:value="${reqDoc2list[5].file_nm!=null?reqDoc2list[5].file_nm:''}"
                           readonly
                           class="notWriteInput" style="text-align:center"/>
                   <input
@@ -521,7 +530,7 @@ margin:10px;
                   <input type="hidden" id="fseq" value="7">
                   <input
                           type="text"  name="req_doc_file07" id="req_doc_file07"
-                          th:if="${#lists.size(reqDoc2list)>=7}" th:value="${reqDoc2list[6].jrd_fname!=null?reqDoc2list[6].jrd_fname:''}"
+                          th:if="${#lists.size(reqDoc2list)>=7}" th:value="${reqDoc2list[6].file_nm!=null?reqDoc2list[6].file_nm:''}"
                           readonly
                           class="notWriteInput" style="text-align:center"/>
                   <input
@@ -549,7 +558,7 @@ margin:10px;
                   <input type="hidden" id="fseq" value="8">
                   <input
                           type="text"  name="req_doc_file08" id="req_doc_file08"
-                          th:if="${#lists.size(reqDoc2list)>=8}" th:value="${reqDoc2list[7].jrd_fname!=null?reqDoc2list[7].jrd_fname:''}"
+                          th:if="${#lists.size(reqDoc2list)>=8}" th:value="${reqDoc2list[7].file_nm!=null?reqDoc2list[7].file_nm:''}"
                           readonly
                           class="notWriteInput" style="text-align:center"/>
                   <input
@@ -576,7 +585,7 @@ margin:10px;
                   <input type="hidden" id="fseq" value="9">
                   <input
                           type="text"  name="req_doc_file09" id="req_doc_file09"
-                          th:if="${#lists.size(reqDoc2list)>=9}" th:value="${reqDoc2list[8].jrd_fname!=null?reqDoc2list[8].jrd_fname:''}"
+                          th:if="${#lists.size(reqDoc2list)>=9}" th:value="${reqDoc2list[8].file_nm!=null?reqDoc2list[8].file_nm:''}"
                           readonly
                           class="notWriteInput" style="text-align:center"/>
                   <input
@@ -603,7 +612,7 @@ margin:10px;
                   <input type="hidden" id="fseq" value="10">
                   <input
                           type="text"  name="req_doc_file10" id="req_doc_file10"
-                          th:if="${#lists.size(reqDoc2list)>=10}" th:value="${reqDoc2list[9].jrd_fname!=null?reqDoc2list[9].jrd_fname:''}"
+                          th:if="${#lists.size(reqDoc2list)>=10}" th:value="${reqDoc2list[9].file_nm!=null?reqDoc2list[9].file_nm:''}"
                           readonly
                           class="notWriteInput" style="text-align:center"/>
                   <input

@@ -340,8 +340,8 @@ function loadDataTable(params) {
 			{ data: "soyuja", "defaultContent": "" },//5
 			{ data: "pmt_user", "defaultContent": "" },
 			{ data: "use_purpos", "defaultContent": "" },
-			{ data: "idx", "defaultContent": "" },
-			{ data: "idx", "defaultContent": "" },
+			{ data: "pa_usernm", "defaultContent": "" },
+			{ data: "pa_usernm", "defaultContent": "" },
 			{ data: "idx", "defaultContent": "" },//10
 			{ data: "idx", },//0
 			{ data: "idx", "defaultContent": "" },
