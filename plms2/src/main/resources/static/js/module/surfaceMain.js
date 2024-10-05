@@ -65,16 +65,16 @@ window.addEventListener("load", () => {
 			handleCheckboxes(dopcosurfaceInquire05);
 		}
 		//점용
-		else if (pathName === `/gover/menu03_1`) {
+		else if (pathName === `/land/gover/menu03_1`) {
 			return privateUseSelectEvet("#dopcoPrivateUse01 .privateUseSelectsTitleBtn", "#dopcoPrivateUse01 .sufaceSelectList", "#dopcoPrivateUse01 .sufaceSelectList .surfaceSelectListMember", ".privateUseHiddenSelect01");
 		}
-		else if (pathName === `/gover/menu03_2`) {
+		else if (pathName === `/land/gover/menu03_2`) {
 			return privateUseSelectEvet("#dopcoPrivateUse02 .privateUseSelectsTitleBtn", "#dopcoPrivateUse02 .sufaceSelectList", "#dopcoPrivateUse02 .sufaceSelectList .surfaceSelectListMember", ".privateUseHiddenSelect02");
 		}
-		else if (pathName === `/gover/menu03_3`) {
+		else if (pathName === `/land/gover/menu03_3`) {
 			return privateUseSelectEvet("#dopcoPrivateUse03 .privateUseSelectsTitleBtn", "#dopcoPrivateUse03 .sufaceSelectList", "#dopcoPrivateUse03 .sufaceSelectList .surfaceSelectListMember", ".privateUseHiddenSelect03");
 		}
-		else if (pathName === `/gover/orgAdmin`) {
+		else if (pathName === `/land/gover/orgAdmin`) {
 			return privateUseSelectEvet("#orgAdmin .privateUseSelectsTitleBtn", "#orgAdmin .sufaceSelectList", "#orgAdmin .sufaceSelectList .surfaceSelectListMember", ".privateUseHiddenSelect03");
 		}
 		//토지개발

@@ -168,23 +168,18 @@ public class MainController {
 		resultList.add("CCC");
 		
 		mav.addObject("resultList",resultList);
-		mav.setViewName("content/home");
+		//mav.setViewName("content/home");
+		mav.setViewName("content/jisang/menu02_1");
 		return mav;
 	}
 	@RequestMapping(value = "/land", method=RequestMethod.GET)
 	public ModelAndView goLand(HttpServletRequest request) {
 		ModelAndView mav=new ModelAndView();
 		
-		mav.setViewName("content/jisang/menu02_1");
+		mav.setViewName("content/home");
 		return mav;
 	}
-	@RequestMapping(value = "/land/", method=RequestMethod.GET)
-	public ModelAndView goLand1(HttpServletRequest request) {
-		ModelAndView mav=new ModelAndView();
-		
-		mav.setViewName("content/jisang/menu02_1");
-		return mav;
-	}
+	
 	
 	@RequestMapping(value = "/board", method=RequestMethod.GET)
 	public ModelAndView goboard(HttpServletRequest request) {

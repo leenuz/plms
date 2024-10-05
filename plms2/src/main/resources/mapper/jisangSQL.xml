@@ -3689,4 +3689,13 @@ DELETE from plms_POTENTIAL_ISSUE
 		where pmt_no = #{PMT_NO}
 	</delete>
 	
+	<select id="selectJisangCancelData" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT *,
+		 trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
+		FROM jisang_master jm LEFT JOIN jisang_merge_tmp jmt ON jmt.jmt_jisang_no=jm.jm_jisang_no
+WHERE 1=1 
+
+AND jmt.jmt_rep_jisang_no=#{idx}
+	</select>
+	
 </mapper>

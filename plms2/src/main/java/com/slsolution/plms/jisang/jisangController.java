@@ -1899,8 +1899,13 @@ log.info("data:"+data.get(0));
 			params.put("index",index);
 			log.info("params:"+params);
 
+<<<<<<< Updated upstream
 			//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 			ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectJisangDetailListNew",params);
+=======
+			ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+			//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectJisangDetailListNew",params);
+>>>>>>> Stashed changes
 			ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 
@@ -6518,6 +6523,80 @@ log.info("map:"+map);
 			response.getWriter().flush();
 
 		}
+		
+		//지상권합필 폐쇄된 지번보기
+//		@RequestMapping(value = "/getJisangCancelListData", method = { RequestMethod.GET, RequestMethod.POST })
+//		public void getJisangCancelListData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//			ParameterParser parser = new ParameterParser(request);
+//			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+//			JSONObject requestParamsObj=new JSONObject(requestParams);
+//			log.info("requestParams:"+requestParams);
+//			String idx = requestParamsObj.getString("idx");
+//			
+//			String str_result = "Y";
+//			String str_STATUS = "";
+//			 System.out.println("=========폐쇄된지번보기=======");
+//			 System.out.println("idx=" + idx);
+//
+//			try {
+//				HashMap params = new HashMap();
+//				params.put("idx", idx);
+//				mainService.DeleteQuery("jisangSQL.selectJisangCancelData", params);
+//
+//			} catch (Exception e) {
+//				str_result = "N";
+//				e.printStackTrace();
+//			}
+//			HashMap map = new HashMap();
+//			map.put("message", str_result);
+//			map.put("status", str_STATUS);
+//
+//			JSONObject jo = new JSONObject(map);
+//
+//			response.setCharacterEncoding("UTF-8");
+//			response.setHeader("Access-Control-Allow-Origin", "*");
+//			response.resetBuffer();
+//			response.setContentType("application/json");
+//			response.getWriter().print(jo);
+//			response.getWriter().flush();
+//
+//		}
+		
+		//지상권합필 폐쇄된 지번보기
+		@RequestMapping(value = "/getJisangCancelListData", method = { RequestMethod.GET, RequestMethod.POST })
+		public ModelAndView getJisangCancelListData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			ModelAndView mav=new ModelAndView();
+		
+			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			//log.info("httpRequest:"+Arrays.toString(httpRequest));
+
+			ParameterParser parser = new ParameterParser(httpRequest);
+			String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			String idx = requestParamsObj.getString("idx");
+			
+			String str_result = "Y";
+			String str_STATUS = "";
+			 System.out.println("=========폐쇄된지번보기=======");
+			 System.out.println("idx=" + idx);
+			 
+		
+
+			try {
+				HashMap params = new HashMap();
+				params.put("idx", idx);
+				list=mainService.selectQuery("jisangSQL.selectJisangCancelData", params);
+
+			} catch (Exception e) {
+				
+			}
+			log.info("list:"+list);
+			mav.addObject("list",list);
+			mav.setViewName("content/jisang/menu02_4 :: #searchResultsPopup");
+			return mav;
+		}
+
 
 
 }

@@ -349,12 +349,12 @@
             <li class="popTitle02">지번</li>
           </ul>
 
-          <div class="popContentBox" >
-            <ul class="popContents" th:each="val:${jibunList}">
+           <div class="popContentBox" >
+            <ul class="popContents" th:each="val:${list}">
               <li class="popContent01" th:text="${val.address}"></li>
-              <li class="popContent02" th:text="${val.jibun}"></li>
+              <li class="popContent02" th:text="${val.jm_jibun}"></li>
             </ul>
-          </div>
+          </div> 
         </div>
 
         <div class="lastBtnBox btnWrap">
