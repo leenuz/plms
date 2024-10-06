@@ -167,7 +167,7 @@ function menuListSet(result, result2) {
 	//2pms지도메뉴 권한
 	let menu2PmsList = JSON.parse(result2[0]);
 	let map2PmsCheck = menu2PmsList;	//0번째가 지도 검색 메뉴
-	console.log(map2PmsCheck);
+	//console.log(map2PmsCheck);
 	/********************/
 	
 	let innerHtml = '';
@@ -175,14 +175,14 @@ function menuListSet(result, result2) {
 	if(map2PmsCheck.mnLargeYn == 'Y') {
 		innerHtml += '<li>'; 
 		innerHtml += '	<button class="surfaceMenuBtn">';
-		innerHtml += '		<span><img src="/assets/media/nav/surfaceMap.png" alt="mapIcon" onclick="openMapGo();"/></span>지도';
+		innerHtml += '		<span><img src="/assets/media/nav/surfaceMap.png" alt="mapIcon" onclick="goto2pmsMap();"/></span>지도';
 		innerHtml += '	</button>';
 		innerHtml += '</li>';
 	}
 	
 	for(let i = 0 ; i < result.length ; i++) {
 		let menuInfo = JSON.parse(result[i]);
-		console.log(menuInfo);
+		//console.log(menuInfo);
 		
 		//소메뉴 img & URL 정보 pick
 		let targetImgArr = [];

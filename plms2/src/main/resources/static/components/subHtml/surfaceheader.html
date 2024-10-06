@@ -216,32 +216,19 @@ console.log("-----------start openMapWindow-----------------");
         </button>
       </li>
     </ul>
+    <!-- ul-2 [S] -->
+    <!--
+    <ul class="navMenu" id="naviMenuBar"></ul>
+    -->
+    <!-- ul-2 [E] -->
     
-   <!--  <ul class="navMenu" id="naviMenuBar">
-    	<li>
-    		<button class="surfaceMenuBtn">
-	          <span><img src="/land/assets/media/nav/surfaceMap.png" alt="mapIcon" onClick="openMapWindow();" /></span>지도
-	        </button>
-		</li>
-		<li th:each="row, stat : ${menuList}">
-	        <button class="surfaceMenuBtn">
-	        	<span><img src="/land/assets/media/nav/surfaceHammer.png" alt="nowDopco" /></span><p th:text="${row.mnName}">송유관로 현황</p>
-	        </button>
-	        <div class="hiddenMenuBoxs">
-	        	<div class="hiddenMenuList">
-	        		<a href="/songyu/menu01">권리확보현황</a>
-	        		<a href="/songyu/menu02">권리제외필지조회</a>
-	        		<a href="/songyu/menu03">권리필지조회</a>
-				</div>
-	        </div>
-		</li>
-    </ul> -->
+    <!-- 원본 메뉴바 -->
+    <!-- ul-1 [S] -->
     
-    <!-- 원본 hide 처리중 -->
     <ul class="navMenu" >
       <li>
         <button class="surfaceMenuBtn" >
-          <span><img src="/assets/media/nav/surfaceMap.png" alt="mapIcon" onClick="openMapWindow();" /></span>지도
+          <span><img src="/assets/media/nav/surfaceMap.png" alt="mapIcon" onClick="goto2pmsMap();" /></span>지도
         </button>
       </li>
       <li>
@@ -334,6 +321,8 @@ console.log("-----------start openMapWindow-----------------");
         </div>
       </li>
     </ul>
+    
+    <!-- ul-1 [E] -->
     <ul class="login">
       <li>
         <img src="/assets/media/nav/Ellipse 1.png" alt="loginImg" />

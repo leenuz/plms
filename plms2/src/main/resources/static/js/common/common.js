@@ -256,10 +256,18 @@ function commonCurrentPagePrint(id) {
 }
 
 
-/******************************/
-//좌측 사이드바 메뉴 동작 script
+/************************************************************/
+//좌측 사이드바 메뉴 동작 script들
+
+//좌측사이드바 지도메뉴버튼
+function goto2pmsMap() {
+	window.open(`http://localhost:8085/map`, '_blank');
+}
+
+//위치보기
 function openMapGo() {
-	console.log('2PMS 지도 연결할것');
+	//console.log('2PMS 지도 연결할것');
+	openMapWindow();
 }
 
 //
@@ -282,4 +290,45 @@ function largeMenuClick(obj, id){
 	}
 }
 
-/******************************/
+//
+function positionView() {
+	
+	let param = {'lon':mapCoordLng, 'lat':mapCoordLat, 'zoom':'15'};
+	
+	let targetWindow;
+	let zoom;
+	let message;
+	
+	if (location != undefined) {
+		zoom = param.zoom ?? '16';
+		message = { 
+			type: "setCenter" ,
+			lon: param.lon,
+			lat: param.lat,			
+			zoom: zoom
+		};
+	} else {
+		message = { type: "setMap" };
+	}
+	
+	let paramMessage = new URLSearchParams(message).toString();
+	
+	console.log(message);
+	
+	if (window.opener) {
+      targetWindow = window.opener.postMessage(paramMessage, '*');
+    } else {
+		targetWindow = window.open(`http://localhost:8085/map?${paramMessage}`, '_blank');
+	}
+	
+	if (!targetWindow) {
+		console.log('팝업 차단');
+	} else {
+		targetWindow.onload = function() {
+			targetWindow.postMessage(message, '*');
+		}
+		targetWindow.focus();
+	}
+	
+}
+/************************************************************/
