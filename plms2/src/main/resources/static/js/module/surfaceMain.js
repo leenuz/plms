@@ -215,7 +215,12 @@ function menuListSet(result, result2) {
 		//사이드바 큰메뉴 사용여부
 		if(menuInfo.mnLargeYn == 'Y') {
 			
-			innerHtml += '<li>';
+			if(menuInfo.mnLargeName == '통계') {
+				innerHtml += '<li style="display:none;">';
+			} else {
+				innerHtml += '<li>';
+			}
+			
 			innerHtml += '	<button class="surfaceMenuBtn" onclick="largeMenuClick(this, \''+ targetImgArr[2] +'\')">';
 			innerHtml += '		<span><img src="'+targetImgArr[0]+'" alt="'+targetImgArr[1]+'" /></span>' + menuInfo.mnLargeName;
 			innerHtml += '	</button>';
@@ -227,7 +232,14 @@ function menuListSet(result, result2) {
 				let mnInfo = menuInfo.mnList[k];
 				
 				if(mnInfo.mnYN == 'Y') {
-					innerHtml += '<a href="'+targetMenuUrlArr[k]+'">' + mnInfo.mnName + '</a>';
+					
+					if(mnInfo.mnName == '권리제외필지조회' || mnInfo.mnName == '관리필지조회' || mnInfo.mnName == '권리필지조회' || mnInfo.mnName == '토지개발 신규등록'
+					   || mnInfo.mnName == '회사토지 신규등록' || mnInfo.mnName == '처분' || mnInfo.mnName == '민원관리'
+					) {
+						innerHtml += '<a href="'+targetMenuUrlArr[k]+'" style="display:none;">' + mnInfo.mnName + '</a>';
+					} else {
+						innerHtml += '<a href="'+targetMenuUrlArr[k]+'">' + mnInfo.mnName + '</a>';
+					}
 				}
 			}
 			
