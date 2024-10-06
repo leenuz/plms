@@ -193,7 +193,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	and (emd_nm=#{emd_nm} or ri_nm=#{emd_nm}) 
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
-	and jibun=#{jibun}
+	and jibun LIKE '%${jibun}%'
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 	AND regexp_replace(juso,'\s+',' ') LIKE '%${address}%' 

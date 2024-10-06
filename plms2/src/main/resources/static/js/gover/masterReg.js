@@ -1452,7 +1452,7 @@ $(document).on("click",".searchAddressBtn",function(){
 				 
 	$.ajax({
 		// jisang API 기능 동일하여 사용
-	  url: "/land/jisang/getBunhalJIjukSelect1",
+	  url: "/land/jisang/getBunhalJIjukSelect",
    	  type: "POST",
    	  data: datas,
 	})

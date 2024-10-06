@@ -3877,17 +3877,17 @@ FROM JISANG_MASTER JM left outer join (
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESSCODE)">
 			AND JM.jm_ADDRCODE LIKE '${ADDRESSCODE}%'
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JIBEON)">
-			AND JM.jm_JIBUN LIKE '${JIBEON}%'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)">
+			AND JM.jm_JIBUN LIKE '${jibun}%'
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)">
-			AND JM.jm_JISA = #{JISA}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)">
+			AND JM.jm_JISA = #{jisa}
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SOYU)">
-			AND JS.js_SOUJA_NAME LIKE '%${SOYU}%'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(souja)">
+			AND JS.js_SOUJA_NAME LIKE '%${souja}%'
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JASAN_NO)">
-			AND JM.jm_JASAN_NO LIKE '%'|| #{JASAN_NO} ||'%'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)">
+			AND JM.jm_JASAN_NO LIKE '%'|| #{jasan_no} ||'%'
 		</if>
 		
 		

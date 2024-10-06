@@ -4482,8 +4482,8 @@ log.info("gubun:"+gubun);
 		return mav;
 	}
 	
-	
-	@PostMapping(path="/getBunhalJIjukSelect") //http://localhost:8080/api/get/dbTest
+	// 기존 주소 검색
+	@PostMapping(path="/getBunhalJIjukSelect1") //http://localhost:8080/api/get/dbTest
 	public ModelAndView getBunhalJIjukSelect(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
 		HashMap params = new HashMap();
@@ -4512,7 +4512,8 @@ log.info("gubun:"+gubun);
 		return mav;
 	}
 	
-	@PostMapping(path="/getBunhalJIjukSelect1") //http://localhost:8080/api/get/dbTest
+	// 수정한 주소 검색(어디서 이 API 호출해서 사용하는지 확인 안됐음.)
+	@PostMapping(path="/getBunhalJIjukSelect") //http://localhost:8080/api/get/dbTest
 	public ModelAndView getBunhalJIjukSelect1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
 		HashMap params = new HashMap();
