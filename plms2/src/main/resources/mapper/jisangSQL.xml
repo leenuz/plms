@@ -1527,7 +1527,7 @@ SELECT count(*)
 		jm.jm_ri_nm AS ri_nm,
 		jm.jm_jibun AS jibun,
 		jm.jm_deunggi_date AS deunggi_date,
-		TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
+		TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
 		COALESCE(jm.jm_jasan_no, '') AS jasan_no,
 		COALESCE(jm.jm_comple_yn, '') AS comple_yn,
 		COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
