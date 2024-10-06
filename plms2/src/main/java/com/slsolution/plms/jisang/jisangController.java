@@ -1777,8 +1777,6 @@ log.info("data:"+data.get(0));
 	//groundDetail  상세 조회
 		@GetMapping(path="/menu02_1") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView menu02_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-//			response.setHeader("X-Frame-Options", "SAMEORIGIN");
-//			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
             
             /*******************************/
             //받은 세션 Map으로 전환
@@ -1786,17 +1784,20 @@ log.info("data:"+data.get(0));
             /*******************************/
 			
 			HashMap params = new HashMap();
-            params.put("loginJisa", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
+            params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 			
 			ArrayList<HashMap> list = new ArrayList<HashMap>();
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+			
 			ModelAndView mav=new ModelAndView();
 
-			mav.addObject("jisaList",jisalist);
-			mav.addObject("resultJimokList",jimoklist);
-			mav.addObject("sidoList",sidolist);
+			mav.addObject("jisaList", jisalist);
+			mav.addObject("resultJimokList", jimoklist);
+			mav.addObject("sidoList", sidolist);
+			//241006 - 지사정보 추가
+			mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 			
 			mav.setViewName("content/jisang/menu02_1");
 			return mav;

@@ -89,6 +89,7 @@
 		<title>지상권 내역 조회</title>
 	</head>
 <th:block layout:fragment="content">
+	<input type="hidden" id="loginJisa" th:value="${loginJisa}"/>
     <!-- Begin Page Content -->
     <!--권리확보현황-->
     <div id="dopcoSurfacePart">
@@ -119,7 +120,7 @@
                   </select>
                 </div>
                 <div class="surfaceSelects">
-                  <button type="button" class="surfaceSelectsTitleBtn">전체</button>
+                  <button type="button" class="surfaceSelectsTitleBtn" id="jisaNameDiv">전체</button>
                   <div class="sufaceSelectList">
                     <ul class="surfaceSelectListMember">
                       <li><p>전체</p></li>

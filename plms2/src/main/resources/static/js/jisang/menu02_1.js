@@ -2,11 +2,12 @@
 var table;
 
 $(document).ready(function() {
-  console.log("jisang/menu02_1.js start");
-  /*$('#jisa').niceSelect();*/
-//testAjax();
-//init_Table();
-loadDataTable("");
+	console.log("jisang/menu02_1.js start");
+	/*$('#jisa').niceSelect();*/
+	//testAjax();
+	//init_Table();
+	jisaInfoCheck();
+	loadDataTable("");
 });
 
 //조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
@@ -247,6 +248,9 @@ function loadDataTable(params) {
 	console.log(params);
 
 	//var json=JSON.stringify(params);
+	
+	//지사정보
+	let jisaCheck = $("#loginJisa").val();
 
 	table = $('#userTable').DataTable({
 		fixedColumns: {
@@ -283,7 +287,7 @@ function loadDataTable(params) {
 			datatype: "json",
 			data: function(d) {
 				//d=params;
-				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.jisa = ljsIsNull(jisaCheck) ? '' : jisaCheck;
 				d.manage_no = params.manage_no;
 				d.souja = params.souja;
 				d.jasan_no = params.jasan_no;
@@ -410,7 +414,18 @@ $(document).on("click","#moveMap",function(){
 /****************************************/
 /****************************************/
 //종섭작업
-
+function jisaInfoCheck() {
+	let jisaName = $("#loginJisa").val();	//hidden type으로 되있는값 (위치 :: menu02_1.html :: line-92 )
+	
+	if(jisaName != '') {
+		$("#jisaNameDiv").text(jisaName);
+		$("#jisaNameDiv").attr('disabled', true);
+	} else {
+		$("#jisaNameDiv").text('전체');
+		$("#jisaNameDiv").attr('disabled', false);
+	}
+	
+}
 
 
 /****************************************/
