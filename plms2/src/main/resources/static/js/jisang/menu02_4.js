@@ -2,12 +2,12 @@
 var table;
 
 $(document).ready(function() {
-  console.log("jisang/menu02_2.js start");
-  /*$('#jisa').niceSelect();*/
-//testAjax();
-//init_Table();
-loadDataTable("");
-
+	console.log("jisang/menu02_4.js start");
+	/*$('#jisa').niceSelect();*/
+	//testAjax();
+	//init_Table();
+	commonJisaInfoCheck();
+	loadDataTable("");
 });
 
 $(document).on("click",".finalBtn",function(){
@@ -282,6 +282,9 @@ function loadDataTable(params) {
 	console.log(params);
 
 	//var json=JSON.stringify(params);
+	
+	//지사정보
+	let jisaCheck = $("#loginJisa").val();
 
 	table = $('#userTable').DataTable({
 		fixedColumns: {
@@ -318,7 +321,7 @@ function loadDataTable(params) {
 			datatype: "json",
 			data: function(d) {
 				//d=params;
-				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.jisa = ljsIsNull(jisaCheck) ? '' : jisaCheck;
 				d.manage_no = params.manage_no;
 				d.toji_type = params.toji_type;
 				d.toji_plan_type = params.toji_plan_type;
