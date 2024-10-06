@@ -179,7 +179,7 @@ public class MainController {
 	public ModelAndView goLand(HttpServletRequest request) {
 		ModelAndView mav=new ModelAndView();
 		
-		mav.setViewName("content/home");
+		mav.setViewName("content/songyu/menu01");
 		return mav;
 	}
 	

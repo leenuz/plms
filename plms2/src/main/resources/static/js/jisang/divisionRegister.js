@@ -384,6 +384,7 @@ $(document).on("click",".temporarySaveBtn",function(){
 			var togiTogiType=$(togiUls[i]).find("select[name='togiBunhalTogiType']").val();
 	   		var togiJimokText=$(togiUls[i]).find("input[name='togiBunhalJimokText']").val();
 	   		var togiJijukArea=$(togiUls[i]).find("input[name='togiBunhalJiJukArea']").val();
+			console.log("togiJijukArea:"+togiJijukArea);
 	   		var togiPyeonibArea=$(togiUls[i]).find("input[name='togiBunhalPyeonibArea']").val();
 	   		var togiJasanNo=$(togiUls[i]).find("input[name='togiBunhalJasanNo']").val();
 			var togiPipeYn="N";
@@ -695,6 +696,10 @@ var pnu=$(this).parent().parent().find(".popContent01").html();
 	var sgg_nm=$(this).parent().parent().find(".popContent0202").html();
 	var emd_nm=$(this).parent().parent().find(".popContent0203").html();
 	var ri_nm=$(this).parent().parent().find(".popContent0204").html();
+	var gover_own_yn=$(this).parent().parent().find(".popContent0207").html();
+	var jimok_text=$(this).parent().parent().find(".popContent0208").html();
+	var jijuk_area=$(this).parent().parent().find(".popContent0209").html();
+	
 	
 	var openerEle=$("#tojiDiv");
 //	console.log($(openerEle).html());
@@ -707,6 +712,10 @@ var pnu=$(this).parent().parent().find(".popContent01").html();
 	openerTargetEle.parent().parent().find("#togiri_nm").val(ri_nm);
 	openerTargetEle.parent().parent().find("#togijibun").val(jibun);
 	openerTargetEle.parent().parent().find("#togipnu").val(pnu);
+	openerTargetEle.parent().parent().find("input[name='togiBunhalJimokText']").val(jimok_text);
+	openerTargetEle.parent().parent().find("input[name='togiBunhalJijukArea']").val(jijuk_area);
+	if (gover_own_yn==="Y") openerTargetEle.parent().parent().find("select[name='togiBunhalTogiType']").val("국유지");
+	else openerTargetEle.parent().parent().find("select[name='togiBunhalTogiType']").val("사유지");
 $(".bunhalAddres_" + id).attr("readonly", true);
 $(".bunhalAddres_"+id).val(sido_nm+" "+sgg_nm + " " + emd_nm +" " +ri_nm  + " " + jibun);
 

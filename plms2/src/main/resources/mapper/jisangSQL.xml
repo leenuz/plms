@@ -1502,6 +1502,7 @@ SELECT count(*)
 		 ,jb_demise
 		 ,jb_bunhal_complete
 		 ,jb_bunhal_status
+		 
 		)
 		 VALUES (
 		 
@@ -1552,6 +1553,7 @@ SELECT count(*)
 		  ,#{togiDemise}
 		  ,#{bunhal_complete}
 		  ,#{togiBunhalStatus}
+		 
 		   )
 
 	</insert>
@@ -2810,6 +2812,7 @@ INSERT INTO JISANG_MASTER (
 	,jm_SPECIAL_CONT
 	,jm_PERMITTED_YN
 	,jm_LOCATION
+	
 	)
 VALUES (
 	#{JISANGNO}

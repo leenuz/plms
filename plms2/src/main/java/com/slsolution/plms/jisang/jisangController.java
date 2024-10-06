@@ -3234,7 +3234,7 @@ log.info("data:"+data.get(0));
 	        	sqlParams.put("cancelProfitLoss",requestJsonObj.getString("cancelProfitLoss"));
 	        	sqlParams.put("cancelRemainderMoney",requestJsonObj.getString("cancelRemainderMoney"));
 	        	
-	        	
+	        	log.info("sqlParams:"+sqlParams);
 	        	
 	        	//파일등록
 	        	ArrayList<HashMap<String, String>> docArray = new ArrayList<>();
