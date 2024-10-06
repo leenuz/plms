@@ -5557,6 +5557,7 @@ log.info(" 3932 params:"+params);
 				// System.out.println("params=" + params);
 
 				// 소유자
+				log.info("---------------------soujaArr.length(): " + soujaArr.length());
 				for (int i = 0; i < soujaArr.length(); i++) {
 					JSONObject obj=new JSONObject(soujaArr.get(i).toString());
 					String JIBUN = obj.getString("jibun");
