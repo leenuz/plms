@@ -179,6 +179,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</if>
 	</select>
 	
+  <select id="selectAddressFromJijuk1" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *,(row_number() over()) as NO
+  	from jijuk_2024
+  	WHERE 1=1
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+	and sido_nm=#{sido_nm}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+	and sgg_nm=#{sgg_nm}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+	and (emd_nm=#{emd_nm} or ri_nm=#{emd_nm}) 
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+	and jibun=#{jibun}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+	AND regexp_replace(juso,'\s+',' ') LIKE '%${address}%' 
+	limit 100
+	</if>
+	</select>
+	
 	<select id="selectJijukFromJisangAddress" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *
 		,(row_number() over()) as NO

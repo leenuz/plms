@@ -4495,16 +4495,18 @@ log.info("gubun:"+gubun);
 		String emd_nm=httpRequest.getParameter("emd_nm");
 		String ri_nm=httpRequest.getParameter("ri_nm");
 		String jibun=httpRequest.getParameter("jibun");
-
-		params.put("address", address);
-		params.put("sido_nm", sido_nm);
-		params.put("sgg_nm", sgg_nm);
-		params.put("emd_nm", emd_nm);
-		params.put("ri_nm", ri_nm);
-		params.put("jibun", jibun);
+		
+		String[] arr = address.split(" ");
+		
+		params.put("address", "");
+		params.put("sido_nm", "");
+		params.put("sgg_nm", "");
+		params.put("emd_nm", arr[0]);
+		params.put("ri_nm", arr[0]);
+		params.put("jibun", arr[1]);
 
 		log.info("params:"+params);
-		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectAddressFromJijuk",params);
+		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectAddressFromJijuk1",params);
 		//log.info("addressList:"+addressList);
 		mav.addObject("addressList",addressList);
 		mav.setViewName("content/jisang/divisionRegister :: #searchResultPopDiv");
