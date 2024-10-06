@@ -29,6 +29,7 @@ import com.slsolution.plms.json.JSONException;
 import com.slsolution.plms.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -302,4 +303,34 @@ public class CommonUtil implements ApplicationContextAware{
 		
 		return resultMap;
 	}
+	
+    
+    /******
+     * request Session값 Map<String, Object>로 return
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    public static Map<String, Object> requestSessionToMap(HttpServletRequest request) throws Exception {
+        
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        
+        try {
+            HttpSession session = request.getSession();
+            
+            Enumeration<String> attributeNames = session.getAttributeNames();
+            
+            while(attributeNames.hasMoreElements()) {
+                String attributeName = attributeNames.nextElement();
+//                System.out.println("Session Attribute name : " + attributeName + " || " + request.getSession().getAttribute(attributeName));
+                resultMap.put(attributeName, session.getAttribute(attributeName));
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return resultMap;
+        
+    }
 }

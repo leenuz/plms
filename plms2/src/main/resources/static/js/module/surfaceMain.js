@@ -239,6 +239,7 @@ function menuListSet(result, result2) {
 		
 	}
 	
+	$("#naviMenuBar").empty();
 	$("#naviMenuBar").html(innerHtml);
 }
 

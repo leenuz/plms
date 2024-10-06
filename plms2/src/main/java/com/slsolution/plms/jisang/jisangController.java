@@ -1779,8 +1779,16 @@ log.info("data:"+data.get(0));
 	    public ModelAndView menu02_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+            
+            /*******************************/
+            //받은 세션 Map으로 전환
+            Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+            /*******************************/
+			
 			HashMap params = new HashMap();
-			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+            params.put("loginJisa", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
+			
+			ArrayList<HashMap> list = new ArrayList<HashMap>();
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
