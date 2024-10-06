@@ -6,6 +6,7 @@ $(document).ready(function() {
 	/*$('#jisa').niceSelect();*/
 	//testAjax();
 	//init_Table();
+	commonJisaInfoCheck();
 	loadDataTable("");
 
 });
@@ -242,6 +243,9 @@ function loadDataTable(params) {
 
 	//var json=JSON.stringify(params);
 
+	//지사정보
+	let jisaCheck = $("#loginJisa").val();
+
 	table = $('#userTable').DataTable({
 		fixedColumns: {
 			start: 3,
@@ -274,7 +278,7 @@ function loadDataTable(params) {
 			datatype: "json",
 			data: function(d) {
 				//d=params;
-				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.jisa = ljsIsNull(jisaCheck) ? '' : jisaCheck;
 				d.manage_no = params.manage_no;
 				d.souja = params.souja;
 				d.jasan_no = params.jasan_no;

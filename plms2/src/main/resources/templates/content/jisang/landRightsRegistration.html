@@ -90,6 +90,7 @@ div.dt-filter-spacer {
 </head>
 
 <th:block layout:fragment="content">
+	<input type="hidden" id="loginJisa" th:value="${loginJisa}"/>
 	<div class="landRightsRegistrationWrappers">
 
 		<main id="landRightsRegistration">
@@ -129,7 +130,7 @@ div.dt-filter-spacer {
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<button class="customSelectView">전체</button>
+										<button class="customSelectView" id="jisaNameDiv">전체</button>
 
 										<ul class="customSelectBtns">
 											<!-- createCustomLiLandRegist() -->

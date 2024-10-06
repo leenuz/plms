@@ -6,7 +6,7 @@ $(document).ready(function() {
 	/*$('#jisa').niceSelect();*/
 	//testAjax();
 	//init_Table();
-	jisaInfoCheck();
+	commonJisaInfoCheck();
 	loadDataTable("");
 });
 

@@ -331,4 +331,22 @@ function positionView() {
 	}
 	
 }
+
+function commonFunctionTest() {
+	console.log('해당 페이지는 common.js 사용 가능');
+}
+
+
+function commonJisaInfoCheck() {
+	let jisaName = $("#loginJisa").val();	//각 해당 페이지의 hidden type으로 되있는 값 존재
+	
+	if(jisaName != '') {
+		$("#jisaNameDiv").text(jisaName);
+		$("#jisaNameDiv").attr('disabled', true);
+	} else {
+		$("#jisaNameDiv").text('전체');
+		$("#jisaNameDiv").attr('disabled', false);
+	}
+	
+}
 /************************************************************/

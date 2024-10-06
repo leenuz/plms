@@ -1791,7 +1791,7 @@ log.info("data:"+data.get(0));
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			
-			ModelAndView mav=new ModelAndView();
+			ModelAndView mav = new ModelAndView();
 
 			mav.addObject("jisaList", jisalist);
 			mav.addObject("resultJimokList", jimoklist);
@@ -1807,16 +1807,26 @@ log.info("data:"+data.get(0));
 	    public ModelAndView menu02_2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			
+			/*******************************/
+            //받은 세션 Map으로 전환
+            Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+            /*******************************/
+			
+			
 			HashMap params = new HashMap();
+			params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 			
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			//ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectJisangListDemo",params); //demo
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 			
-			ModelAndView mav=new ModelAndView();
+			ModelAndView mav = new ModelAndView();
 			
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("sidoList",sidolist);
+			//241006 - 지사정보 추가
+			mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 			
 			mav.setViewName("content/jisang/menu02_2");
 			return mav;
@@ -1826,12 +1836,24 @@ log.info("data:"+data.get(0));
 	    public ModelAndView menu02_3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			
+			/*******************************/
+            //받은 세션 Map으로 전환
+            Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+            /*******************************/
+			
+			
 			HashMap params = new HashMap();
+			params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 			
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 
 			ModelAndView mav=new ModelAndView();
+			
+			//241006 - 지사정보 추가
+			mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
+			
 			mav.setViewName("content/jisang/menu02_3");
 
 			mav.addObject("jisaList",jisalist);
@@ -1882,16 +1904,30 @@ log.info("data:"+data.get(0));
 	    public ModelAndView landRightsRegistration(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			
+			/*******************************/
+            //받은 세션 Map으로 전환
+            Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+            /*******************************/
+			
 			HashMap params = new HashMap();
-			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
+			
+			ArrayList<HashMap> list = new ArrayList<HashMap>();
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
+			
 			log.info("sidolist:"+sidolist);
+			
 			ModelAndView mav=new ModelAndView();
+			
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);
+			//241006 - 지사정보 추가
+			mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
+			
 			mav.setViewName("content/jisang/landRightsRegistration");
 			return mav;
 		}
@@ -2685,6 +2721,9 @@ log.info("data:"+data.get(0));
 		params.put("souja",souja);
 		params.put("jasan_no",jasan_no);
 		params.put("account_yn", account_yn);
+		
+		//241006
+		params.put("JISA", jisa);
 
 		params.put("manageYn","Y");
 		if (orderColumn==null || orderColumn.equals("null")) {

@@ -753,7 +753,13 @@ function changPipeName() {
 }
 
 $(document).ready(function(){
-	//getSidoMaster();	
+	//getSidoMaster();
+	commonJisaInfoCheck();
+	
+	insertJisaNameSet();
+	
+	
+	
 });
 
 
@@ -1122,3 +1128,14 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	 })
 	
 
+/************************/
+//등록시 지사 세팅
+function insertJisaNameSet() {
+	
+	const jisaNameCheck = $("#loginJisa").val();
+	
+	if(jisaNameCheck != ''){
+		$("#landRightsRegistSelectBox01").val(jisaNameCheck);
+	} 
+}
+/************************/

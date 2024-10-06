@@ -14,8 +14,8 @@
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 	  <link th:href="@{/css/common.css}" rel="stylesheet" />
 	  <link rel="stylesheet" href="/css/jisang/menu02_2.css" /> 
-	  
 	  <script src="/js/jisang/menu02_2.js"></script>
+	  
 	  <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 	  <style>
@@ -93,6 +93,7 @@
     <title>지상권 내역 해지</title>
   </head>
   <th:block layout:fragment="content">
+  	<input type="hidden" id="loginJisa" th:value="${loginJisa}"/>
     <!--지상권내역해지-->
     <div id="dopcosurfaceInquire02">
       <!--header삽입-->
@@ -123,7 +124,7 @@
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="surfaceInquireSelects">
-                  <button class="surfaceInquireSelectsTitleBtn">전체</button>
+                  <button class="surfaceInquireSelectsTitleBtn" id="jisaNameDiv">전체</button>
                   <div class="sufaceSelectList">
                     <ul class="surfaceSelectListMember">
                       <li><p>전체</p></li>

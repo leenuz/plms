@@ -2,12 +2,12 @@
 var table;
 
 $(document).ready(function() {
-  console.log("jisang/menu02_2.js start");
-  /*$('#jisa').niceSelect();*/
-//testAjax();
-//init_Table();
-loadDataTable("");
-
+	console.log("jisang/menu02_2.js start");
+	/*$('#jisa').niceSelect();*/
+	//testAjax();
+	//init_Table();
+	commonJisaInfoCheck();
+	loadDataTable("");
 });
 
 
@@ -232,6 +232,9 @@ function loadDataTable(params) {
 
 	//var json=JSON.stringify(params);
 
+	//지사정보
+	let jisaCheck = $("#loginJisa").val();
+
 	table = $('#userTable').DataTable({
 		fixedColumns: {
 			start: 3,
@@ -266,7 +269,7 @@ function loadDataTable(params) {
 			datatype: "json",
 			data: function(d) {
 				//d=params;
-				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.jisa = ljsIsNull(jisaCheck) ? '' : jisaCheck;
 				d.manage_no = params.manage_no;
 				d.toji_type = params.toji_type;
 				d.toji_plan_type = params.toji_plan_type;
@@ -455,3 +458,10 @@ $(document).on("click","#moveMap",function(){
 	const y = $(this).attr('y')
 	moveToCityHall(x,y);
 })
+
+/******************************************/
+/******************************************/
+//종섭작업
+
+/******************************************/
+/******************************************/
