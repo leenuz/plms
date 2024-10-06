@@ -1434,15 +1434,7 @@ SELECT count(*)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
 			and jm.jm_jibun=#{jibun}
 		</if>
-
-
-
-
-
-
-
 	</select>
-
 
 
 	<select id="selectPermitData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -1465,7 +1457,7 @@ SELECT count(*)
 		,jpt.soyuja as soyuja
 		,jpt.jimok as jimok
 		,jpt.jasan_no as jasan_no
-		,jpt.addr as addr
+		,TRIM(CONCAT(jpt.sido_nm, ' ', jpt.sgg_nm, ' ', jpt.emd_nm,' ', jpt.ri_nm, ' ', jpt.jibun)) AS addr
 		,jpt.jibun as jibun
 		,jm.jm_jisa as jisa
 		,jpt.all_area as all_area
@@ -1481,24 +1473,13 @@ SELECT count(*)
 			LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jisang_no
 		WHERE 1 = 1
 		
-		
-		
 		) AS r
 		where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 		and r.idx=#{idx}
 		</if>
-		
-		
-		
-		
 	</select>
 	
-	
-	
-
-
-
 
 	<select id="selectJisangBunhalChkCount" parameterType="java.util.HashMap" resultType="Integer">
 		SELECT count(*) as count FROM jisang_bunhal jb where 1=1 and jb.jb_jisang_no=#{jisang_no}

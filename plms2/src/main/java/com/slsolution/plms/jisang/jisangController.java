@@ -4647,17 +4647,17 @@ log.info("gubun:"+gubun);
 		return mav;
     }
 	
+	
+	// 지상권 사용승락 수정
 	@GetMapping(path="/usePermitEdit") //http://localhost:8080/api/get/dbTest
     public ModelAndView usePermitEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 		ModelAndView mav=new ModelAndView();
 		
-		
 //        List<TestDTO> list = new ArrayList<TestDTO>();
 //        list = dbService.getList();
 		HashMap params = new HashMap();
-		ArrayList<HashMap>  list=new ArrayList<HashMap>();
 		
 		String idx = httpRequest.getParameter("idx");
 		String index = httpRequest.getParameter("index");
@@ -4683,6 +4683,7 @@ log.info("gubun:"+gubun);
 
 		return mav;
     }
+	
 	@PostMapping(path="/getPermitEditJisangSelect") //http://localhost:8080/api/get/dbTest
 	public ModelAndView getPermitEditJisangSelect(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
