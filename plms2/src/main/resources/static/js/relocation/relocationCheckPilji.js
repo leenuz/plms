@@ -47,7 +47,7 @@ $(document).on("change","#sido",function(){
 					   console.log(allData);
 					  $.ajax({
 
-					    url: "/api/getSigunMaster",
+					    url: "/land/api/getSigunMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",
@@ -100,7 +100,7 @@ $(document).on("change","#sgg",function(){
 
 					  $.ajax({
 
-					    url: "/api/getDongMaster",
+					    url: "/land/api/getDongMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",
@@ -153,7 +153,7 @@ $(document).on("change","#emd",function(){
 
 					  $.ajax({
 
-					    url: "/api/getRiMaster",
+					    url: "/land/api/getRiMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",

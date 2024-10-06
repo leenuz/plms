@@ -760,7 +760,7 @@ function getSidoMaster(){
 	
 	
 	
-			 var url="/api/getSidoMaster";
+			 var url="/land/api/getSidoMaster";
 			 
 	var requestData={};
 	console.log(requestData);
@@ -817,7 +817,7 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	
 	
 	function getSigunMaster(key){
-				 var url="/api/getSigunMaster";
+				 var url="/land/api/getSigunMaster";
 				 
 		var requestData={"key":key};
 		console.log(requestData);
@@ -857,7 +857,7 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	
 	
 	function getDongMaster(sidoKey,gugunKey){
-				 var url="/api/getDongMaster";
+				 var url="/land/api/getDongMaster";
 				 
 		var requestData={"sidoKey":sidoKey,"gugunKey":gugunKey};
 		console.log(requestData);
@@ -895,7 +895,7 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	
 	
 	function getRiMaster(sidoKey,gugunKey,dongKey){
-					 var url="/api/getRiMaster";
+					 var url="/land/api/getRiMaster";
 					 
 			var requestData={"sidoKey":sidoKey,"gugunKey":gugunKey,"dongKey":dongKey};
 			console.log(requestData);
@@ -916,7 +916,7 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 								$("#landRightsRegistSelectBox12 option").remove();
 								$("#landRightsRegistSelectBox12").append('<option value="">전체</option>');
 								for(var i=0;i<response.resultData.length;i++){
-									$("#landRightsRegistSelectBox12").append('<option value="'+response.resultData[i].bm_dong+'">'+response.resultData[i].bm_dong+'</option>');
+									$("#landRightsRegistSelectBox12").append('<option value="'+response.resultData[i].rm_ri+'">'+response.resultData[i].rm_ri+'</option>');
 								}
 								loadCustomLiLandRegist($("#ri_ul"));
 							}

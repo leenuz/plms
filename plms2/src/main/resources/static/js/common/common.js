@@ -119,7 +119,7 @@ $(document).on("change","#sido",function(){
 					   console.log(allData);
 					  $.ajax({
 
-					    url: "/api/getSigunMaster",
+					    url: "/land/api/getSigunMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",

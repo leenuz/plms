@@ -1,5 +1,5 @@
 function getSidoMaster() {
-    var url = "/api/getSidoMaster";
+    var url = "/land/api/getSidoMaster";
 
     var requestData = {};
     console.log(requestData);
@@ -96,7 +96,7 @@ $(document).on("change", "#dongSelectBox", function () {
 })
 
 function getGugunMaster(key) {
-    var url = "/api/getSigunMaster";
+    var url = "/land/api/getSigunMaster";
 
     var requestData = { "key": key };
     console.log(requestData);
@@ -142,7 +142,7 @@ function getGugunMaster(key) {
 }
 
 function getDongMaster(sidoKey, gugunKey) {
-    var url = "/api/getDongMaster";
+    var url = "/land/api/getDongMaster";
 
     var requestData = { "sidoKey": sidoKey, "gugunKey": gugunKey };
     console.log(requestData);
@@ -182,7 +182,7 @@ function getDongMaster(sidoKey, gugunKey) {
 }
 
 function getRiMaster(sidoKey, gugunKey, dongKey) {
-    var url = "/api/getRiMaster";
+    var url = "/land/api/getRiMaster";
 
     var requestData = { "sidoKey": sidoKey, "gugunKey": gugunKey, "dongKey": dongKey };
     console.log(requestData);
@@ -271,7 +271,7 @@ $(document).on("click", "#addressSearchBtn", function () {
 
     //searchResultPopDiv 화면뿌릴 DIV
     $.ajax({
-        url: "/api/getBasicSearchData",
+        url: "/land/api/getBasicSearchData",
         type: "POST",
         data: formSerializeArray,
     }).done(function (fragment) {

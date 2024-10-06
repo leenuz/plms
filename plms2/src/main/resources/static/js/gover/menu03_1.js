@@ -77,7 +77,7 @@ $(document).on("change", "#sido_nm", function () {
     console.log(allData);
 
     $.ajax({
-        url: "/api/getSigunMaster",
+        url: "/land/api/getSigunMaster",
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -120,7 +120,7 @@ $(document).on("change", "#sgg", function () {
     console.log(allData);
 
     $.ajax({
-        url: "/api/getDongMaster",
+        url: "/land/api/getDongMaster",
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -163,7 +163,7 @@ $(document).on("change", "#emd", function () {
     console.log(allData);
 
     $.ajax({
-        url: "/api/getRiMaster",
+        url: "/land/api/getRiMaster",
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -244,7 +244,7 @@ function loadDataTable(params) {
 			dataSrc: 'b_seq'
 		},
 
-		//	sAjaxSources:"/songyu/menu01DataTableList",
+		//	sAjaxSources:"/land/songyu/menu01DataTableList",
 		//	sServerMethod:"POST",
 		ajax: {
 			url: "/land/gover/menu03_1DataTableList",

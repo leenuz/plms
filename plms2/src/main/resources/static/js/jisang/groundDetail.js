@@ -316,7 +316,7 @@ $(document).on("click","#fileSaveBtn",function(){
 		}
 	var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val(),"files":uploadFiles,"mode":"asave"};
 	console.log(params);
-	url="/api/pnuAtcUpload";
+	url="/land/api/pnuAtcUpload";
 	$.ajax({
 			
 				url:url,
@@ -548,7 +548,7 @@ function loadMemoEditBtn(){
 			var mparams={"mode":mode,"idx":idx,"manage_no":$("#manage_no").val(), "wname":$(thisEditContent01).find("#wname").val(),"wmemo":$(thisEditContent01).find("#wmemo").val()};
 			console.log(mparams);
 			$.ajax({
-			      url: "/api/putMemoData",
+			      url: "/land/api/putMemoData",
 			      type: "POST",
 			      data: mparams,
 				  success:function(memoList){
@@ -590,7 +590,7 @@ function loadMemoEditBtn(){
 			var mparams={"idx":$(thisEditContent01).find("#idx").val()};
 			console.log(mparams);
 			$.ajax({
-			      url: "/api/deleteMemoData",
+			      url: "/land/api/deleteMemoData",
 			      type: "POST",
 			      data: mparams,
 			 })
@@ -668,7 +668,7 @@ $(document).on("click","#deleteMemoBtn",function(){
 				var mparams={"idx":idx};
 				console.log(mparams);
 				$.ajax({
-				      url: "/api/deleteMemoData",
+				      url: "/land/api/deleteMemoData",
 				      type: "POST",
 				      data: mparams,
 				 })
@@ -692,7 +692,7 @@ $(document).on("click",".addBtn",function(){
 		var mparams={"idx":idx};
 		console.log(mparams);
 		$.ajax({
-						      url: "/api/getMemoData",
+						      url: "/land/api/getMemoData",
 						      type: "POST",
 						      data: mparams,
 						 })
@@ -777,7 +777,7 @@ $(document).on("click",".registBtn",function(){
 							var mparams={"mode":mode,"idx":idx,"manage_no":$("#manage_no").val(), "wname":$(thisContent).find("#wname").val(),"wmemo":$(thisContent).find("#wmemo").val()};
 							console.log(mparams);
 							$.ajax({
-							      url: "/api/putMemoData",
+							      url: "/land/api/putMemoData",
 							      type: "POST",
 							      data: mparams,
 								  success:function(memoList){
@@ -812,7 +812,7 @@ $(document).on("click","#deleteMemoBtn",function(){
 	console.log(mparams);
 	
 	$.ajax({
-	      url: "/api/deleteMemoData",
+	      url: "/land/api/deleteMemoData",
 	      type: "POST",
 	      data: mparams,
 	 })

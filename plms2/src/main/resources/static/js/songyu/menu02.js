@@ -91,7 +91,7 @@ $(document).on("change","#sido",function(){
 //					   console.log(allData);
 					  $.ajax({
 
-					    url: "/api/getSigunMaster",
+					    url: "/land/api/getSigunMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",
@@ -147,7 +147,7 @@ $(document).on("change","#sgg",function(){
 //					   console.log(allData);
 					  $.ajax({
 
-					    url: "/api/getDongMaster",
+					    url: "/land/api/getDongMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",
@@ -203,7 +203,7 @@ $(document).on("change","#emd",function(){
 //					   console.log(allData);
 					  $.ajax({
 
-					    url: "/api/getRiMaster",
+					    url: "/land/api/getRiMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",
@@ -314,10 +314,10 @@ console.log("***************params***************");
                 rowReorder:{
 					dataSrc:'b_seq'
 				},
-			//	sAjaxSources:"/songyu/menu01DataTableList",
+			//	sAjaxSources:"/land/songyu/menu01DataTableList",
 			//	sServerMethod:"POST",
                 ajax : {
-                    url:"/songyu/menu02DataTableList",
+                    url:"/land/songyu/menu02DataTableList",
                     type:"POST",
 					datatype:"json",
                     data: function(d){
@@ -541,21 +541,21 @@ console.log("***************params***************");
 					var data = table.row( this ).data();
 //										       console.log(data);
 					console.log("***************** " + data.idx);
-//					var url="/songyu/menu01_detail?idx="+data.idx;
+//					var url="/land/songyu/menu01_detail?idx="+data.idx;
 
                     if (data.idx.substring(0,1)=="J"){ //지상권
 						console.log("jisang");
-						url="/jisang/groundDetail?idx="+data.idx+"&index="+data.index;
+						url="/land/jisang/groundDetail?idx="+data.idx+"&index="+data.index;
 					}
 					else if (data.idx.substring(0,1)=="G"){ //점용
-						url="/gover/occupationDetails?idx="+data.idx+"&index="+data.index;
+						url="/land/gover/occupationDetails?idx="+data.idx+"&index="+data.index;
 
 					}
 					else if (data.idx.substring(0,1)=="N"){ //미설정
-						url="/notset/unsetOccupationDetails?idx="+data.idx+"&index="+data.index;
+						url="/land/notset/unsetOccupationDetails?idx="+data.idx+"&index="+data.index;
 
 					}else if (data.idx.substring(0,1)=="T"){ //토지
-                         url="/toji/tojiDetails?idx="+data.idx+"&index="+data.index;
+                         url="/land/toji/tojiDetails?idx="+data.idx+"&index="+data.index;
 					}
 					else return;
 					window.location = url;						   

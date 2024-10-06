@@ -24,7 +24,7 @@ $(document).on("click", ".sido li", function () {
 	if ($("#sido").val() == null) return;
 	var allData = { "key": $("#sido").val() };
 	$.ajax({
-		url: "/api/getSigunMaster",
+		url: "/land/api/getSigunMaster",
 		data: JSON.stringify(allData),
 		async: true,
 		type: "POST",
@@ -68,7 +68,7 @@ $(document).on("click", ".sgg li", function () {
 	var allData = { "gugunKey": ljsIsNull($("#sgg option:selected").val()) ? '' : $("#sgg option:selected").val(), "sidoKey": $("#sidoText").text() }
 
 	$.ajax({
-		url: "/api/getDongMaster",
+		url: "/land/api/getDongMaster",
 		data: JSON.stringify(allData),
 		async: true,
 		type: "POST",
@@ -114,7 +114,7 @@ $(document).on("click", ".emd li", function () {
 	var allData = { "dongKey": $("#emdText").text(), "gugunKey": $("#sggText").text(), "sidoKey": $("#sidoText").text() }
 
 	$.ajax({
-		url: "/api/getRiMaster",
+		url: "/land/api/getRiMaster",
 		data: JSON.stringify(allData),
 		async: true,
 		type: "POST",
@@ -189,7 +189,7 @@ function loadDataTable(params) {
 			dataSrc: 'b_seq'
 		},
 		ajax: {
-			url: "/dopco/menu05_2DataTableList",
+			url: "/land/dopco/menu05_2DataTableList",
 			type: "POST",
 			datatype: "json",
 			data: function (d) {
@@ -284,7 +284,7 @@ function loadDataTable(params) {
 			console.log(data);
 			console.log(data.idx);
 
-			var url = "/dopco/compLandInfo?idx=" + data.dom_idx + '&dopcoNo=' + data.dom_dopco_no + '&cancel=Y';
+			var url = "/land/dopco/compLandInfo?idx=" + data.dom_idx + '&dopcoNo=' + data.dom_dopco_no + '&cancel=Y';
 			window.location = url;
 		}
 	});

@@ -34,7 +34,7 @@ $(document).on("click",".sido li",function(){
 					   console.log("allDAta : " + allData);
 					  $.ajax({
 
-					    url: "/api/getSigunMaster",
+					    url: "/land/api/getSigunMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",
@@ -89,7 +89,7 @@ $(document).on("click",".sgg li",function() {
     					   console.log(allData);
 					  $.ajax({
 
-					    url: "/api/getDongMaster",
+					    url: "/land/api/getDongMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",
@@ -145,7 +145,7 @@ $(document).on("click",".emd li",function(){
 					   console.log(allData);
 					  $.ajax({
 
-					    url: "/api/getRiMaster",
+					    url: "/land/api/getRiMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",
@@ -245,10 +245,10 @@ function loadDataTable(params){
                 rowReorder:{
 					dataSrc:'b_seq'
 				},
-			//	sAjaxSources:"/songyu/menu01DataTableList",
+			//	sAjaxSources:"/land/songyu/menu01DataTableList",
 			//	sServerMethod:"POST",
                 ajax : {
-                    url:"/togi/menu04_1DataTableList",
+                    url:"/land/togi/menu04_1DataTableList",
                     type:"POST",
 					datatype:"json",
                     data: function(d){
@@ -373,7 +373,7 @@ function loadDataTable(params){
                             console.log(data);
                             console.log(data.idx);
 
-                            var url = "/togi/landDevInfo?idx=" + data.idx;
+                            var url = "/land/togi/landDevInfo?idx=" + data.idx;
                             window.location = url;
                         }
 

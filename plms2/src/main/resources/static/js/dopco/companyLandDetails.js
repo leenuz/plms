@@ -226,7 +226,7 @@ $(document).on("click", ".registBtn", function() {
 	var mparams = { "mode": mode, "idx": idx, "manage_no": $("#manage_no").val(), "wname": $(thisContent).find("#wname").val(), "wmemo": $(thisContent).find("#wmemo").val() };
 	console.log(mparams);
 	$.ajax({
-		url: "/api/putMemoData",
+		url: "/land/api/putMemoData",
 		type: "POST",
 		data: mparams,
 		success: function(memoList) {
@@ -261,7 +261,7 @@ $(document).on("click", "#deleteMemoBtn", function() {
 	console.log(mparams);
 
 	$.ajax({
-		url: "/api/deleteMemoData",
+		url: "/land/api/deleteMemoData",
 		type: "POST",
 		data: mparams,
 	})

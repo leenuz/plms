@@ -265,7 +265,7 @@ function getSigunMaster(sidoValue) {
 	const allData = { key: sidoValue };
 
 	$.ajax({
-		url: "/api/getSigunMaster",
+		url: "/land/api/getSigunMaster",
 		data: JSON.stringify(allData),
 		type: "POST",
 		dataType: "json",
@@ -310,7 +310,7 @@ function getDongMaster(sidoValue, sigunguValue) {
 	const allData = { sidoKey: sidoValue, gugunKey: sigunguValue };
 
 	$.ajax({
-		url: "/api/getDongMaster",
+		url: "/land/api/getDongMaster",
 		data: JSON.stringify(allData),
 		type: "POST",
 		dataType: "json",
@@ -354,7 +354,7 @@ function getRiMaster(sidoValue, sigunguValue, dongValue) {
 	const allData = { sidoKey: sidoValue, gugunKey: sigunguValue, dongKey: dongValue };
 
 	$.ajax({
-		url: "/api/getRiMaster",
+		url: "/land/api/getRiMaster",
 		data: JSON.stringify(allData),
 		type: "POST",
 		dataType: "json",

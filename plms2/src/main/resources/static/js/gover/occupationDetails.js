@@ -166,7 +166,7 @@ $(document).on("click","#fileSaveBtn",function(){
 		alert("첨부파일이 없습니다.");
 		return;
 	}
-	url="/api/pnuAtcUpload";
+	url="/land/api/pnuAtcUpload";
 	$.ajax({
 				url:url,
 				type:'POST',
@@ -195,7 +195,7 @@ $(document).on("click","#fileSaveBtn",function(){
 						$("#fileListDiv div").remove();
 						$("#fileListDiv").append("<div></div>");
 						$.ajax({
-						       url: "/jisang/getAtcFileData",
+						       url: "/land/jisang/getAtcFileData",
 						       type: "POST",
 						       data: params,
 						   })
@@ -276,7 +276,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     alert('선택된 파일이 삭제되었습니다.');
                     var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val()};
                     $.ajax({
-                           url: "/jisang/getAtcFileData",
+                           url: "/land/jisang/getAtcFileData",
                            type: "POST",
                            data: params,
                        })
@@ -352,7 +352,7 @@ $(document).on("click",".registBtn",function(){
 							var mparams={"mode":mode,"idx":idx,"manage_no":$("#manage_no").val(), "wname":$(thisContent).find("#wname").val(),"wmemo":$(thisContent).find("#wmemo").val()};
 							console.log(mparams);
 							$.ajax({
-							      url: "/api/putMemoData",
+							      url: "/land/api/putMemoData",
 							      type: "POST",
 							      data: mparams,
 								  success:function(memoList){
@@ -380,7 +380,7 @@ $(document).on("click",".delBtn",function(){
 	var mparams={"idx":$(thisContent).find("#idx").val(),"manage_no":$("#manage_no").val()};
 	console.log(mparams);
 	$.ajax({
-	      url: "/api/deleteMemoData",
+	      url: "/land/api/deleteMemoData",
 	      type: "POST",
 	      data: mparams,
 	 })

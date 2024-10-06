@@ -42,7 +42,7 @@ $(document).on("change","#sido",function(){
 					   console.log(allData);
 					  $.ajax({
 
-					    url: "/api/getSigunMaster",
+					    url: "/land/api/getSigunMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",
@@ -97,7 +97,7 @@ $(document).on("change","#sgg",function(){
 					   console.log(allData);
 					  $.ajax({
 
-					    url: "/api/getDongMaster",
+					    url: "/land/api/getDongMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",
@@ -153,7 +153,7 @@ $(document).on("change","#emd",function(){
 					   console.log(allData);
 					  $.ajax({
 
-					    url: "/api/getRiMaster",
+					    url: "/land/api/getRiMaster",
 					    data:JSON.stringify(allData),
 					    async: true,
 					    type:"POST",
@@ -257,10 +257,10 @@ function loadDataTable(params){
         rowReorder:{
 			dataSrc:'b_seq'
 		},
-			//	sAjaxSources:"/songyu/menu01DataTableList",
+			//	sAjaxSources:"/land/songyu/menu01DataTableList",
 			//	sServerMethod:"POST",
                 ajax : {
-                    url:"/songyu/menu01DataTableList",
+                    url:"/land/songyu/menu01DataTableList",
                     type:"POST",
 					datatype:"json",
                     data: function(d){
@@ -506,16 +506,16 @@ function loadDataTable(params){
 					var url;	
 					if (data.idx.substring(0,1)=="J"){ // 지상권
 						console.log("jisang");
-						url="/jisang/groundDetail?idx="+data.idx+"&index="+data.index+"&gidx=0";
+						url="/land/jisang/groundDetail?idx="+data.idx+"&index="+data.index+"&gidx=0";
 					}
 					else if (data.idx.substring(0,1)=="G"){ // 점용
-						url="/gover/occupationDetails?idx="+data.idx+"&index="+data.index+"&gidx="+data.gidx;
+						url="/land/gover/occupationDetails?idx="+data.idx+"&index="+data.index+"&gidx="+data.gidx;
 					}
 					else if (data.idx.substring(0,1)=="N"){ // 미설정
-						url="/notset/unsetOccupationDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
+						url="/land/notset/unsetOccupationDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
 					}
 					else if (data.idx.substring(0,1)=="L"){ // 회사토지
-						url="/dopco/companyLandDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
+						url="/land/dopco/companyLandDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
 					}
 										
 					else return;					   

@@ -508,7 +508,7 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 		})
 
 function getSigunMaster(key){
-					 var url="/api/getSigunMaster";
+					 var url="/land/api/getSigunMaster";
 
 			var requestData={"key":key};
 				 $.ajax({
@@ -543,7 +543,7 @@ function getSigunMaster(key){
 
 
 function getDongMaster(sidoKey,gugunKey){
-			 var url="/api/getDongMaster";
+			 var url="/land/api/getDongMaster";
 
 	var requestData={"sidoKey":sidoKey,"gugunKey":gugunKey};
 		 $.ajax({
@@ -576,7 +576,7 @@ function getDongMaster(sidoKey,gugunKey){
 
 
 function getRiMaster(sidoKey,gugunKey,dongKey){
-				 var url="/api/getRiMaster";
+				 var url="/land/api/getRiMaster";
 
 		var requestData={"sidoKey":sidoKey,"gugunKey":gugunKey,"dongKey":dongKey};
 			 $.ajax({

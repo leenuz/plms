@@ -1049,7 +1049,7 @@ $(document).on("click", "#requestBtn", function() {
 	  //console.log(json); // JSON 문자열 출력
 
 	console.log(object);
-	//url="/gover/insertGoverMaster"; //실제 임시저장
+	//url="/land/gover/insertGoverMaster"; //실제 임시저장
 	url="/land/gover/insertGoverMasterDemo";  //상신완료 된걸로 저장 테스트용
 				   $.ajax({
 				   			
@@ -1452,7 +1452,7 @@ $(document).on("click",".searchAddressBtn",function(){
 				 
 	$.ajax({
 		// jisang API 기능 동일하여 사용
-	  url: "/jisang/getBunhalJIjukSelect",
+	  url: "/land/jisang/getBunhalJIjukSelect",
    	  type: "POST",
    	  data: datas,
 	})

@@ -80,7 +80,7 @@ const delBtn = document.querySelectorAll('#groundDetail .delBtn');
 //			var mparams={"mode":mode,"idx":idx,"manage_no":$("#manage_no").val(), "wname":$(thisEditContent01).find("#wname").val(),"wmemo":$(thisEditContent01).find("#wmemo").val()};
 //			console.log(mparams);
 //			$.ajax({
-//			      url: "/api/putMemoData",
+//			      url: "/land/api/putMemoData",
 //			      type: "POST",
 //			      data: mparams,
 //				  success:function(memoList){
@@ -120,7 +120,7 @@ const delBtn = document.querySelectorAll('#groundDetail .delBtn');
 //			var mparams={"idx":$(thisEditContent01).find("#idx").val()};
 //			console.log(mparams);
 //			$.ajax({
-//			      url: "/api/deleteMemoData",
+//			      url: "/land/api/deleteMemoData",
 //			      type: "POST",
 //			      data: mparams,
 //			 })
@@ -233,7 +233,7 @@ $(document).on("click","#fileSaveBtn",function(){
 		console.log("filename:"+files[i].name);
 	}*/
 	var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val(),"files":uploadFiles};
-	url="/api/pnuAtcUpload";
+	url="/land/api/pnuAtcUpload";
 	$.ajax({
 
 				url:url,
@@ -469,7 +469,7 @@ $(document).on("click",".registBtn",function(){
 							var mparams={"mode":mode,"idx":idx,"manage_no":$("#manage_no").val(), "wname":$(thisContent).find("#wname").val(),"wmemo":$(thisContent).find("#wmemo").val()};
 							console.log(mparams);
 							$.ajax({
-							      url: "/api/putMemoData",
+							      url: "/land/api/putMemoData",
 							      type: "POST",
 							      data: mparams,
 								  success:function(memoList){
@@ -498,7 +498,7 @@ $(document).on("click",".delBtn",function(){
 	var mparams={"idx":$(thisContent).find("#idx").val(),"manage_no":$("#manage_no").val()};
 	console.log(mparams);
 	$.ajax({
-	      url: "/api/deleteMemoData",
+	      url: "/land/api/deleteMemoData",
 	      type: "POST",
 	      data: mparams,
 	 })

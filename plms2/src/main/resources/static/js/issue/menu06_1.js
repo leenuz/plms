@@ -412,7 +412,7 @@ $(document).on("click", "#newcomplaint_Popup .approveBtn", function () {
     console.log(data);
 
     $.ajax({
-		url: "/issue/saveMinwonData",
+		url: "/land/issue/saveMinwonData",
 		data: data,
 		async: true,
 		type: "POST",
@@ -453,7 +453,7 @@ $(document).on("click", "#newcomplaint_Popup .sangsinBtn", function () {
     console.log(data);
 
     $.ajax({
-        	url: "/issue/saveMinwonData",
+        	url: "/land/issue/saveMinwonData",
         	data: data,
         	async: true,
         	type: "POST",
@@ -500,7 +500,7 @@ $(document).on("click", ".landinfo .landStatusPopOpenBtn", function () {
     }
     const popupLayout = $('#landStatusPopup')
     $.ajax({
-        url: "/issue/getMinwonJijukSelectNotModel",
+        url: "/land/issue/getMinwonJijukSelectNotModel",
         type: "GET",
         data: { "address": addr },
         dataType: "json",
@@ -625,7 +625,7 @@ function loadDataTable(params) {
             dataSrc: 'b_seq'
         },
         ajax: {
-            url: "/issue/menu06_1DataTableList",
+            url: "/land/issue/menu06_1DataTableList",
             type: "POST",
             datatype: "json",
             data: function (d) {
@@ -733,7 +733,7 @@ function loadDataTable(params) {
             // 다른 열을 클릭했을 때만 상세 페이지로 이동
             console.log("--------------tr click---------------------");
             var data = table.row(this).data();
-            var url = "/issue/complaintManage?mw_seq=" + data.mm_mw_seq;
+            var url = "/land/issue/complaintManage?mw_seq=" + data.mm_mw_seq;
 
             history.replaceState({ page: 'current' }, document.title);
 
@@ -988,7 +988,7 @@ $(document).on("click", ".sido li", function () {
     if ($("#sido").val() == null) return;
     var allData = { "key": $("#sido").val() };
     $.ajax({
-        url: "/api/getSigunMaster",
+        url: "/land/api/getSigunMaster",
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -1032,7 +1032,7 @@ $(document).on("click", ".sgg li", function () {
     var allData = { "gugunKey": ljsIsNull($("#sgg option:selected").val()) ? '' : $("#sgg option:selected").val(), "sidoKey": $("#sidoText").text() }
 
     $.ajax({
-        url: "/api/getDongMaster",
+        url: "/land/api/getDongMaster",
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -1078,7 +1078,7 @@ $(document).on("click", ".emd li", function () {
     var allData = { "dongKey": $("#emdText").text(), "gugunKey": $("#sggText").text(), "sidoKey": $("#sidoText").text() }
 
     $.ajax({
-        url: "/api/getRiMaster",
+        url: "/land/api/getRiMaster",
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -1226,7 +1226,7 @@ customSelectView.forEach((btn) => {
 // 대분류 selectIssueCodeListDepth1
 (() => {
 	$.ajax({
-		url: "/issue/selectIssueCodeListDepth1",
+		url: "/land/issue/selectIssueCodeListDepth1",
 		async: true,
 		type: "POST",
 		dataType: "json",
@@ -1265,7 +1265,7 @@ const loadDepth2Codes = () => {
     }
 
 	$.ajax({
-		url: "/issue/selectIssueCodeListDepth2?DEPTH1=" + depth1Code,
+		url: "/land/issue/selectIssueCodeListDepth2?DEPTH1=" + depth1Code,
 		async: true,
 		type: "POST",
 		dataType: "json",
@@ -1304,7 +1304,7 @@ const loadDepth3Codes = () => {
     }
 
 	$.ajax({
-		url: "/issue/selectIssueCodeListDepth3?DEPTH1=" + depth1Code + '&DEPTH2=' + depth2Code,
+		url: "/land/issue/selectIssueCodeListDepth3?DEPTH1=" + depth1Code + '&DEPTH2=' + depth2Code,
 		async: true,
 		type: "POST",
 		dataType: "json",
