@@ -629,6 +629,7 @@ $(document).on('change', 'input[name="repLandRight"]', function(event) {
 });
 
 let mergeIndex = document.getElementById('lastIndex').value;
+
 //   주소 검색
 $(document).on("click",".searchAddressBtn",function(){
 //console.log($(this).parent().parent().html());
@@ -673,57 +674,61 @@ $(document).on("click",".searchAddressBtn",function(){
 });
 
 // 주소 선택 클릭
-$(document).on("click",".resultSelectBtn",function(){
-var id =  $('.resultSelectBtn').data('index');
+$(document).on("click", ".resultSelectBtn", function() {
+	var id = $('.resultSelectBtn').data('index');
 
-console.log("***클릭된 id*** : " + id);
-console.log($(this).parent().parent().html());
-var pnu=$(this).parent().parent().find(".popContent01").html();
-	var juso=$(this).parent().parent().find(".popContent02").html();
-	var jibun=$(this).parent().parent().find(".popContent03").html();
-    var sido_nm=$(this).parent().parent().find(".popContent0201").html();
-	var sgg_nm=$(this).parent().parent().find(".popContent0202").html();
-	var emd_nm=$(this).parent().parent().find(".popContent0203").html();
-	var ri_nm=$(this).parent().parent().find(".popContent0204").html();
+	console.log("***클릭된 id*** : " + id);
+	console.log($(this).parent().parent().html());
+	var pnu = $(this).parent().parent().find(".popContent01").html();
+	var juso = $(this).parent().parent().find(".popContent02").html();
+	var jibun = $(this).parent().parent().find(".popContent03").html();
+	var sido_nm = $(this).parent().parent().find(".popContent0201").html();
+	var sgg_nm = $(this).parent().parent().find(".popContent0202").html();
+	var emd_nm = $(this).parent().parent().find(".popContent0203").html();
+	var ri_nm = $(this).parent().parent().find(".popContent0204").html();
 
-	var openerEle=$("#tojiDiv");
-//	console.log($(openerEle).html());
-	var openerTargetEle=openerEle.find('input[id="mergeIndex"][value="'+id+'"]');
-	openerTargetEle.parent().parent().find("#merge_address").val(sido_nm+" "+sgg_nm + " " + emd_nm +" " +ri_nm  + " " + jibun);
+	var openerEle = $("#tojiDiv");
+	//	console.log($(openerEle).html());
+	var openerTargetEle = openerEle.find('input[id="mergeIndex"][value="' + id + '"]');
+	openerTargetEle.parent().parent().find("#merge_address").val(sido_nm + " " + sgg_nm + " " + emd_nm + " " + ri_nm + " " + jibun);
 	openerTargetEle.parent().parent().find("#togisido_nm").val(sido_nm);
-    openerTargetEle.parent().parent().find("#togisgg_nm").val(sgg_nm);
-    openerTargetEle.parent().parent().find("#togiemd_nm").val(emd_nm);
-    openerTargetEle.parent().parent().find("#togiri_nm").val(ri_nm);
-    openerTargetEle.parent().parent().find("#togijibun").val(jibun);
+	openerTargetEle.parent().parent().find("#togisgg_nm").val(sgg_nm);
+	openerTargetEle.parent().parent().find("#togiemd_nm").val(emd_nm);
+	openerTargetEle.parent().parent().find("#togiri_nm").val(ri_nm);
+	openerTargetEle.parent().parent().find("#togijibun").val(jibun);
 	openerTargetEle.parent().parent().find("#togipnu").val(pnu);
-$(".merge_address_" + id).attr("readonly", true);
-$(".merge_address_"+id).val(sido_nm+" "+sgg_nm + " " + emd_nm +" " +ri_nm  + " " + jibun);
+	$(".merge_address_" + id).attr("readonly", true);
+	$(".merge_address_" + id).val(sido_nm + " " + sgg_nm + " " + emd_nm + " " + ri_nm + " " + jibun);
+	
+	var targetDiv = $("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	$(".popupWrap").removeClass("active");
+
 })
 
 //pnu없이 선택/
-$(document).on("click",".saveBtn",function(){
-    var id =  $('.saveBtn').data('index');
-    $(".merge_address_" + id).val("");
+$(document).on("click", ".saveBtn", function() {
+	var id = $('.saveBtn').data('index');
+	$(".merge_address_" + id).val("");
 	$(".merge_address_" + id).removeAttr("readonly");
 
-	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	var targetDiv = $("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
 	$(".popupWrap").removeClass("active");
-    console.log(id);
+	console.log(id);
 
 });
 
-$(document).on("click","#popupCloseBtn",function(){
+$(document).on("click", "#popupCloseBtn", function() {
 
-	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	var targetDiv = $("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
 	$(".popupWrap").removeClass("active");
-//	$(".popupWrap").toggleClass("active");
+	//	$(".popupWrap").toggleClass("active");
 });
 
-$(document).on("click",".topCloseBtn",function(){
+$(document).on("click", ".topCloseBtn", function() {
 
-	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+	var targetDiv = $("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
 	$(".popupWrap").removeClass("active");
-//	$(".popupWrap").toggleClass("active");
+	//	$(".popupWrap").toggleClass("active");
 });
 
 

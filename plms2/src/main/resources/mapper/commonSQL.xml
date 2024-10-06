@@ -153,9 +153,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectAddressFromJijuk" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *,(row_number() over()) as NO
-
-	from jijuk_2024
-	WHERE 1=1
+  	from jijuk_2024
+  	WHERE 1=1
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
 	and sido_nm=#{sido_nm}
 	</if>

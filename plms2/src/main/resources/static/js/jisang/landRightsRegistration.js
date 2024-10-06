@@ -609,6 +609,7 @@ $(document).on("click",".topCloseBtn",function(){
 //	$(".popupWrap").toggleClass("active");
 });
 
+// 주소 선택 클릭
 $(document).on("click",".resultSelectBtn",function(){
 	console.log("----------resultSelectBtn-click--------");
 	console.log($(this).parent().parent().html());
