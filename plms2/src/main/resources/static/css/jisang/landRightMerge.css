@@ -350,9 +350,9 @@ label {
   align-items: center;
 }
 #landRightMerge .contWrap .depth1 .contents li .addressData {
-  overflow: hidden;
+  overflow: visible;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
 }
 #landRightMerge .contWrap .depth1 .contents li p {
   overflow: hidden;
@@ -996,4 +996,36 @@ label {
   .essentialDocuList
   input[type="text"]::placeholder {
   text-align: left;
+}
+
+
+/* 전체 li의 레이아웃을 flex로 설정 */
+#landRightMerge .targetLand .contents .content.addressInfoBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* input과 버튼 사이에 공간 확보 */
+    gap: 12px; /* 요소 간의 여백 설정 */
+}
+
+/* input 요소는 flex-grow를 통해 나머지 공간을 차지 */
+#landRightMerge .targetLand .contents .content.addressInfoBox .addressData {
+    flex-grow: 1; /* 남은 공간을 전부 차지 */
+        height: 100%;
+}
+
+/* 버튼을 오른쪽에 고정하고 여백을 추가 */
+#landRightMerge .targetLand .contents .content.addressInfoBox .searchAddressBtn {
+    margin-left: 10px; /* 버튼과 input 사이 여백 설정 */
+    flex-shrink: 0; /* 버튼의 크기가 줄어들지 않도록 고정 */
+}
+
+/* input 텍스트 중앙 정렬 */
+#landRightMerge .targetLand input[type="text"].notWriteInput {
+    text-align: center; /* 텍스트를 중앙 정렬 */
+    width: 100%; /* 가로 너비를 100%로 설정 */
+    height: 100%;
+    /* background: #edf2f9; */
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
 }
