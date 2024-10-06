@@ -68,7 +68,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableAsync
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/land/api")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ApiController {
 

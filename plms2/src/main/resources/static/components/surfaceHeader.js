@@ -1,7 +1,7 @@
 const surfaceHeaderEvet = () => {
    
      let surfaceHeader = document.querySelector(".surfaceHeader");
-     let htmlFilePath = '/land/components/subHtml/surfaceheader.html'; // 삽입할 HTML 파일 경로
+     let htmlFilePath = '/components/subHtml/surfaceheader.html'; // 삽입할 HTML 파일 경로
 
      if(surfaceHeader){
      let xhr = new XMLHttpRequest();

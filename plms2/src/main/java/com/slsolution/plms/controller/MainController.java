@@ -163,7 +163,7 @@ public class MainController {
        // return new ModelAndView("dbTest", "list", list);
     }
 	
-	@RequestMapping(value = "/home", method=RequestMethod.GET)
+	@RequestMapping(value = "/land/home", method=RequestMethod.GET)
 	public ModelAndView goHome(HttpServletRequest request) {
 		ModelAndView mav=new ModelAndView();
 		List<String> resultList=new ArrayList<String>();

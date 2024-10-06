@@ -43,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableAsync
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/common")
+@RequestMapping("/land/common")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class commonController {
 
