@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="selectJimokList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<![CDATA[
-		select * from jimok_master 
+		select jimok_cd as jm_idx , jimok_text as jm_name from jimok_code 
 		]]>
 	</select>
 	<select id="selectAddressList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -45,12 +45,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="getSidoMaster" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<![CDATA[
-		select * from sido_master order by sm_name 
+		select sm_idx,sm_sido as sm_name from sido_plms_2023 order by sm_name 
 		]]>
 	</select>
 	<select id="getSigunMaster" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		
-		 select sm_gugun from sigun_master 
+		 select sm_idx,sm_sigungu as sm_gugun from sigun_plms_2023 
 		 where 1=1
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(key)" > 
 		 and sm_sido=#{key} 
@@ -59,12 +59,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="getDongMaster" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<![CDATA[
-			SELECT bm_dong FROM bdong_master where bm_sido=#{sidoKey} AND bm_sigungu = #{gugunKey}
+			SELECT bm_dong FROM bdong_plms_2023 where bm_sido=#{sidoKey} AND bm_sigungu = #{gugunKey}
 		]]>
 	</select>
 	<select id="getRiMaster" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		<![CDATA[
-			SELECT rm_ri FROM ri_master where rm_sido=#{sidoKey} AND rm_sigungu = #{gugunKey} AND rm_dong = #{dongKey}
+			SELECT rm_ri FROM ri_plms_2023 where rm_sido=#{sidoKey} AND rm_sigungu = #{gugunKey} AND rm_dong = #{dongKey}
 		]]>
 	</select>
 	
@@ -256,7 +256,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectNextAppovalNo" parameterType="java.util.HashMap" resultType="Integer">
 
-		SELECT nextval('approval_seq')
+		SELECT nextval('APPROVAL_CNT_SEQ')
 	</select>
 	
 	<select id="selectUsePurposList" parameterType="java.util.HashMap" resultType="java.util.HashMap">

@@ -2702,10 +2702,14 @@ log.info("data:"+data.get(0));
 		}
 		log.info("params:"+params);
 
-		Object count= mainService.selectCountQuery("jisangSQL.selectJisangBunhalCount", params);
+		Object count= mainService.selectCountQuery("jisangSQL.selectJisangDivisionListCount", params);
 		int total=(int)count;
 
-		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangBunhalList",params);
+		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangDivisionList",params);
+//		Object count= mainService.selectCountQuery("jisangSQL.selectJisangBunhalCount", params);
+//		int total=(int)count;
+//
+//		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangBunhalList",params);
 
 		log.info("list:"+list);
 
