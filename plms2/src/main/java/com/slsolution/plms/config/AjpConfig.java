@@ -49,13 +49,13 @@ public class AjpConfig {
 		protocol.setAddress(InetAddress.getByName("0.0.0.0"));
 		protocol.setAllowedRequestAttributesPattern(".*");
 		
-		protocol.setConnectionTimeout(60000);
+//		protocol.setConnectionTimeout(60000);
 		
-		protocol.setRequiredSecret(null);
+//		protocol.setRequiredSecret(null);
 		
-		protocol.setKeepAliveTimeout(600000);
-		protocol.setMaxThreads(10);
-		protocol.setMaxConnections(100);
+//		protocol.setKeepAliveTimeout(600000);
+//		protocol.setMaxThreads(10);
+//		protocol.setMaxConnections(100);
 		
 		return ajpConnector;
 	}

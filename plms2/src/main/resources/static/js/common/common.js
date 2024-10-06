@@ -261,7 +261,11 @@ function commonCurrentPagePrint(id) {
 
 //좌측사이드바 지도메뉴버튼
 function goto2pmsMap() {
-	window.open(`http://localhost:8085/map`, '_blank');
+	// 자식 창에서 부모 창으로 메시지 보내기
+	if (window.opener) {
+		const message = { type: "setMap" };
+		window.opener.postMessage(message, '*');  // 부모 창으로 메시지 전송
+	}
 }
 
 //위치보기
@@ -292,48 +296,19 @@ function largeMenuClick(obj, id){
 
 //
 function positionView() {
-	
-	let param = {'lon':mapCoordLng, 'lat':mapCoordLat, 'zoom':'15'};
-	
-	let targetWindow;
-	let zoom;
-	let message;
-	
-	if (location != undefined) {
-		zoom = param.zoom ?? '16';
-		message = { 
-			type: "setCenter" ,
-			lon: param.lon,
-			lat: param.lat,			
-			zoom: zoom,
-			marker:[[127.387205,36.43472],[127.376596,36.411514],[127.464146,36.437349],[127.469639,36.398030],[127.328186,36.425660]]
-		};
-	} else {
-		message = { type: "setMap" };
-	}
-	
-	let paramMessage = new URLSearchParams(message).toString();
-	
-	console.log(message);
-	
+
+	// 자식 창에서 부모 창으로 메시지 보내기
 	if (window.opener) {
-      targetWindow = window.opener.postMessage(paramMessage, '*');
-    } else {
-		console.log('지금 여기로 오지?');
-		targetWindow = window.open(`http://localhost:8085/map`, '_blank').postMessage(paramMessage, '*');
-		targetWindow.postMessage(paramMessage, '*');
+		const message = {
+			type: "setCenter",
+			lon: 126.9779692,
+			lat: 37.566535,
+			zoom: 16,
+			markers: [[127.387205, 36.43472], [127.376596, 36.411514], [127.464146, 36.437349], [127.469639, 36.398030], [127.328186, 36.425660]]
+		};
+		window.opener.postMessage(message, '*');  // 부모 창으로 메시지 전송
 	}
-	
-	if (!targetWindow) {
-		console.log('팝업 차단');
-	} else {
-		targetWindow.onload = function() {
-			targetWindow.postMessage(message, '*');
-		}
-		targetWindow.focus();
-	}
-	
-}
+}	
 
 function commonFunctionTest() {
 	console.log('해당 페이지는 common.js 사용 가능');

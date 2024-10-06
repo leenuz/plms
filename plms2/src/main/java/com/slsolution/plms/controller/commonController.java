@@ -195,7 +195,7 @@ public class commonController {
 			
 			while(attributeNames.hasMoreElements()) {
 				String attributeName = attributeNames.nextElement();
-				System.out.println("Session Attribute name : " + attributeName + " || " + request.getSession().getAttribute(attributeName));
+//				System.out.println("Session Attribute name : " + attributeName + " || " + request.getSession().getAttribute(attributeName));
 				attrNames.add(attributeName);
 			}
 			
@@ -212,23 +212,23 @@ public class commonController {
 			JSONObject menu2PmsResultList = new JSONObject(menuCheck.get("2pmsMenu").toString());
 			JSONArray menu2PmsResult = menu2PmsResultList.getJSONArray("resultList");
 			
-			System.out.println("================================================================================");
+//			System.out.println("================================================================================");
 			
-			System.out.println("plmsMenu :: " + menuCheck.get("plmsMenu").toString());
+//			System.out.println("plmsMenu :: " + menuCheck.get("plmsMenu").toString());
 			
-			System.out.println("================================================================================");
+//			System.out.println("================================================================================");
 			
 			for(int k = 0 ; k < menuResultList.length() ; k++ ) {
-				System.out.println(menuResultList.get(k).toString());
+//				System.out.println(menuResultList.get(k).toString());
 				menuList.add(menuResultList.get(k).toString());
 			}
 			
 			for(int k = 0 ; k < menu2PmsResult.length() ; k++ ) {
-				System.out.println(menu2PmsResult.get(k).toString());
+//				System.out.println(menu2PmsResult.get(k).toString());
 				menu2pmsList.add(menu2PmsResult.get(k).toString());
 			}
 			
-			System.out.println("================================================================================");
+//			System.out.println("================================================================================");
 			
 			resultObj.put("result", "Y");
 			resultObj.put("menuList", menuList);
