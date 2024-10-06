@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,null as gover_length
 		,jm.jm_jasan_money as jasan_money
 		,null as pay_money
-		,jm.jm_cancel_yn AS cancel_yn
+		,jm.jm_cancle_yn AS cancel_yn
 		,jm.jm_manage_yn as manage_yn
 		,jm.jm_dosiplan as dosiplan
 		,case
@@ -84,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		,gpp.gp_gover_length as gover_length
 		,null as jasan_money
 		,gpp.gp_pay_money as pay_money
-		,gm.gm_cancel_yn AS cancel_yn
+		,gm.gm_cancle_yn AS cancel_yn
 		,null as manage_yn
 		,gp.gp_dosiplan as dosiplan
 		,null as toji_plan
@@ -310,7 +310,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
                 GROUP BY js_JISANG_NO, js_SOUJA_NAME
             ) AS sub1 WHERE ROW_IDX = 1
         ) JS ON JM.jm_JISANG_NO = JS.JISANG_NO
-        WHERE (JM.jm_CANCEL_YN IS NULL OR JM.jm_CANCEL_YN != 'Y')
+        WHERE (jm.jm_cancle_yn IS NULL OR jm.jm_cancle_yn != 'Y')
         
         UNION ALL
         
@@ -377,7 +377,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
             ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.GOVER_NO
         ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
         LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
-        WHERE GM.gm_SAVE_STATUS = 'A' AND (GM.gm_CANCEL_YN IS NULL or GM.gm_CANCEL_YN !='Y') 
+        WHERE GM.gm_SAVE_STATUS = 'A' AND (GM.gm_CANCLE_YN IS NULL or GM.gm_CANCLE_YN !='Y') 
         
         UNION ALL
         
@@ -470,18 +470,18 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
             '' as PERMITTED_YN,
             '' as PIPE_YN
         FROM DOPCO_MASTER DM
-        WHERE DM.dom_CANCEL_YN IS NULL
+        WHERE DM.dom_CANCLE_YN IS NULL
     ) JOIN_MST 
     LEFT JOIN jijuk_2024 JIJUK_MST ON JIJUK_MST.pnu=JOIN_MST.pnu
     LEFT JOIN (
         SELECT S.*
         FROM (
-            SELECT RANK() OVER(PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
-                RPAD(PPI.addrcode, 10, '0') AS ADDRCODE, PPI.jibun as JIBUN,
-                PPI.code_depth1 as CODE_DEPTH1, PPI.code_depth2 as CODE_DEPTH2, PPI.code_depth3 as CODE_DEPTH3,
-                PPI.registed_yn as REGISTED_YN, PPI.permitted_yn as PERMITTED_YN, PPI.pnu as PNU, PPI.del_flag as DEL_FLAG
+            SELECT RANK() OVER(PARTITION BY RPAD(PPI.pi_address_code, 10, '0'), PPI.pi_JIBUN ORDER BY PPI.pi_ISSUE_DATE DESC) AS RANK,
+                RPAD(PPI.pi_address_code, 10, '0') AS ADDRCODE, PPI.pi_jibun as JIBUN,
+                PPI.pi_code_depth1 as CODE_DEPTH1, PPI.pi_code_depth2 as CODE_DEPTH2, PPI.pi_code_depth3 as CODE_DEPTH3,
+                PPI.pi_registed_yn as REGISTED_YN, PPI.pi_permitted_yn as PERMITTED_YN, PPI.pi_pnu as PNU, PPI.pi_del_flag as DEL_FLAG
             FROM POTENTIAL_ISSUE PPI
-            WHERE PPI.DEL_FLAG != 'Y'
+            WHERE PPI.pi_DEL_FLAG != 'Y'
             LIMIT 1
         ) S WHERE S.RANK = 1
     ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
@@ -594,7 +594,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 		,null as gover_length
 		,jm.jm_jasan_money as jasan_money
 		,null as pay_money
-		,jm.jm_cancel_yn AS cancel_yn
+		,jm.jm_cancle_yn AS cancel_yn
 		,jm.jm_manage_yn as manage_yn
 		,jm.jm_dosiplan as dosiplan
 		,case
@@ -641,7 +641,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 		,gpp.gp_gover_length as gover_length
 		,null as jasan_money
 		,gpp.gp_pay_money as pay_money
-		,gm.gm_cancel_yn AS cancel_yn
+		,gm.gm_cancle_yn AS cancel_yn
 		,null as manage_yn
 		,gp.gp_dosiplan as dosiplan
 		,null as toji_plan
@@ -888,7 +888,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
                 GROUP BY js_JISANG_NO, js_SOUJA_NAME
             ) AS sub1 WHERE ROW_IDX = 1
         ) JS ON JM.jm_JISANG_NO = JS.JISANG_NO
-        WHERE (JM.jm_CANCEL_YN IS NULL OR JM.jm_CANCEL_YN != 'Y')
+        WHERE (jm.jm_cancle_yn IS NULL OR jm.jm_cancle_yn != 'Y')
         
         UNION ALL
         
@@ -958,7 +958,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
             ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.GOVER_NO
         ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
         LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
-        WHERE GM.gm_SAVE_STATUS = 'A' AND (GM.gm_CANCEL_YN !='Y' or GM.gm_CANCEL_YN is null)
+        WHERE GM.gm_SAVE_STATUS = 'A' AND (GM.gm_CANCLE_YN !='Y' or GM.gm_CANCLE_YN is null)
         
         UNION ALL
         
@@ -1057,18 +1057,18 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
             DM.dom_idx as index,
             0 as gidx
         FROM DOPCO_MASTER DM
-        WHERE DM.dom_CANCEL_YN IS NULL
+        WHERE DM.dom_CANCLE_YN IS NULL
     ) JOIN_MST 
     LEFT JOIN jijuk_2024 JIJUK_MST ON JIJUK_MST.pnu=JOIN_MST.pnu
     LEFT JOIN (
         SELECT S.*
         FROM (
-            SELECT RANK() OVER(PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
-                RPAD(PPI.addrcode, 10, '0') AS ADDRCODE, PPI.jibun as JIBUN,
-                PPI.code_depth1 as CODE_DEPTH1, PPI.code_depth2 as CODE_DEPTH2, PPI.code_depth3 as CODE_DEPTH3,
-                PPI.registed_yn as REGISTED_YN, PPI.permitted_yn as PERMITTED_YN, PPI.pnu as PNU, PPI.del_flag as DEL_FLAG
+            SELECT RANK() OVER(PARTITION BY RPAD(PPI.pi_address_code, 10, '0'), PPI.pi_JIBUN ORDER BY PPI.pi_ISSUE_DATE DESC) AS RANK,
+                RPAD(PPI.pi_address_code, 10, '0') AS ADDRCODE, PPI.pi_jibun as JIBUN,
+                PPI.pi_code_depth1 as CODE_DEPTH1, PPI.pi_code_depth2 as CODE_DEPTH2, PPI.pi_code_depth3 as CODE_DEPTH3,
+                PPI.pi_registed_yn as REGISTED_YN, PPI.pi_permitted_yn as PERMITTED_YN, PPI.pi_pnu as PNU, PPI.pi_del_flag as DEL_FLAG
             FROM POTENTIAL_ISSUE PPI
-            WHERE PPI.DEL_FLAG != 'Y'
+            WHERE PPI.pi_DEL_FLAG != 'Y'
             LIMIT 1
         ) S WHERE S.RANK = 1
     ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
@@ -1599,11 +1599,11 @@ FROM (
         JOIN_MST.SOUJA_NAME,
         JOIN_MST.SOUJA_CNT,
         JOIN_MST.JASAN_MONEY,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.REGISTED_YN ELSE GPI.REGISTED_YN END AS REGISTED_YN,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.PERMITTED_YN ELSE GPI.PERMITTED_YN END AS PERMITTED_YN,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH1 ELSE GPI.CODE_DEPTH1 END AS CODE_DEPTH1,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH2 ELSE GPI.CODE_DEPTH2 END AS CODE_DEPTH2,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.pi_REGISTED_YN ELSE GPI.REGISTED_YN END AS REGISTED_YN,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.pi_PERMITTED_YN ELSE GPI.PERMITTED_YN END AS PERMITTED_YN,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.pi_CODE_DEPTH1 ELSE GPI.CODE_DEPTH1 END AS CODE_DEPTH1,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.pi_CODE_DEPTH2 ELSE GPI.CODE_DEPTH2 END AS CODE_DEPTH2,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.pi_CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3,
         GPI.LNEWREG,
         GPI.LPERMITIONYN,
         GPI.LOCCUP_FEE,
@@ -1655,7 +1655,7 @@ FROM (
                 GROUP BY js_JISANG_NO, js_SOUJA_NAME
             ) WHERE ROW_IDX = 1
         ) JS ON JM.jm_jisang_no= JS.js_JISANG_NO
-        WHERE (JM.jm_CANCEL_YN IS NULL OR JM.jm_CANCEL_YN != 'Y')
+        WHERE (jm.jm_cancle_yn IS NULL OR jm.jm_cancle_yn != 'Y')
         
         UNION ALL
         
@@ -1697,7 +1697,7 @@ FROM (
         FROM GOVER_PNU GP
         LEFT JOIN GOVER_PERMIT GPE ON GP.gp_GOVER_NO = GPE.gp_GOVER_NO
         LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
-        WHERE GM.gm_SAVE_STATUS = 'A' AND GM.gm_CANCEL_YN IS NULL
+        WHERE GM.gm_SAVE_STATUS = 'A' AND GM.gm_CANCLE_YN IS NULL
 
         UNION ALL
 
@@ -1786,28 +1786,28 @@ FROM (
             '' AS COMPLE_YN,
             '' AS PERMITTED_YN
         FROM DOPCO_MASTER DM
-        WHERE DM.dom_CANCEL_YN IS NULL
+        WHERE DM.dom_CANCLE_YN IS NULL
         
         
     ) JOIN_MST ON JIJUK_MST.PNU = JOIN_MST.PNU
     LEFT JOIN (
         SELECT S.*
         FROM (
-            SELECT RANK() OVER (PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
-                   RPAD(PPI.addrcode, 10, '0') AS ADDRCODE,
-                   PPI.JIBUN,
-                   PPI.CODE_DEPTH1,
-                   PPI.CODE_DEPTH2,
-                   PPI.CODE_DEPTH3,
-                   PPI.REGISTED_YN,
-                   PPI.PERMITTED_YN,
-                   PPI.PNU,
-                   PPI.DEL_FLAG
+            SELECT RANK() OVER (PARTITION BY RPAD(PPI.pi_address_code, 10, '0'), PPI.pi_JIBUN ORDER BY PPI.pi_ISSUE_DATE DESC) AS RANK,
+                   RPAD(PPI.pi_address_code, 10, '0') AS ADDRCODE,
+                   PPI.pi_JIBUN,
+                   PPI.pi_CODE_DEPTH1,
+                   PPI.pi_CODE_DEPTH2,
+                   PPI.pi_CODE_DEPTH3,
+                   PPI.pi_REGISTED_YN,
+                   PPI.pi_PERMITTED_YN,
+                   PPI.pi_PNU,
+                   PPI.pi_DEL_FLAG
             FROM POTENTIAL_ISSUE PPI
-            WHERE PPI.DEL_FLAG != 'Y'
+            WHERE PPI.pi_DEL_FLAG != 'Y'
         ) S
         WHERE S.RANK = 1
-    ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
+    ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.pi_address_code AND JOIN_MST.JIBUN = PPI.pi_JIBUN
     LEFT JOIN GOVER_POTENTIAL_ISSUE GPI ON JOIN_MST.MASTER_NO = GPI.GOVER_NO AND GPI.DEL_FLAG != 'Y'
     
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRCODE)" >

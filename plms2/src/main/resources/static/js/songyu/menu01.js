@@ -260,7 +260,7 @@ function loadDataTable(params){
 			//	sAjaxSources:"/land/songyu/menu01DataTableList",
 			//	sServerMethod:"POST",
                 ajax : {
-                    url:"/land/songyu/menu01DataTableList",
+                    url:"/songyu/menu01DataTableList",
                     type:"POST",
 					datatype:"json",
                     data: function(d){
