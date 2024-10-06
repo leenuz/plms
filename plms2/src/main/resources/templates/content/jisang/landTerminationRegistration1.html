@@ -96,25 +96,21 @@ div.dt-filter-spacer {
 	border: 1px solid black;
 }
 
-.fileDownloadBtn {
-    width: 116px;
-    height: 27px;
-    border-radius: 20px;
-    background: #4e5871;
-    color: #fff;
-    font-size: 13px;
-    font-weight: 600;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
- }
- .downloadIcon {
-    width: 12px;
-    height: 12px;
-    display: inline-block;
-    background: url(/assets/media/menu02/images/download.png) no-repeat center;
-    background-size: contain;
+#landTerminationRegistration
+  .attachDocuments
+  .contWrap
+  .depth2
+  .contents
+  .content.selectFileWidth {
+	width: 33.7%
+  }
+  #landTerminationRegistration
+  .attachDocuments
+  .contWrap
+  .depth2
+  .titles
+  .title.selectFileWidth {
+  width: 33.7%;
 }
 </style>
 <title>지상권 해지 등록</title>
@@ -489,8 +485,7 @@ div.dt-filter-spacer {
 					</div>
 					<div class="depth2" id="req_Doc_Div">
 						<ul class="titles">
-							<li class="title">파일명</li>
-							<li class="title delContWidth">다운로드</li>
+							<li class="title fileNameWidth">파일명</li>
 							<li class="title selectFileWidth">파일보기</li>
 						</ul>
 
@@ -503,24 +498,10 @@ div.dt-filter-spacer {
 								name="req_doc_file01" id="req_doc_file01" type="text"
 								th:if="${#lists.size(reqDoc1list)<1}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
-							<li class="content delContWidth">
-								<!--  
-								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-								-->
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)>=1}"
-								th:onclick="downloadFile('${reqDoc1list[0].file_path}', '${reqDoc1list[0].file_nm}')">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)<1}">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
 								<button class="viewDetailButton"
 								th:if="${#lists.size(reqDoc1list)>=1}"
-								th:onclick="openFilePopup([[${reqDoc1list[0].file_path}]])">
+								th:onclick="downloadFile([[${reqDoc1list[0].file_path}]], [[${reqDoc1list[0].file_nm}]])">
 									파일보기
 								</button>
 								<button class="viewDetailButton"
@@ -543,24 +524,10 @@ div.dt-filter-spacer {
 								name="req_doc_file02" id="req_doc_file02" type="text"
 								th:if="${#lists.size(reqDoc1list)<2}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
-							<li class="content delContWidth">
-							<!-- 
-								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-							 -->
-							 <button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)>=2}"
-								th:onclick="downloadFile('${reqDoc1list[1].file_path}', '${reqDoc1list[1].file_nm}')">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)<2}">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
 								<button class="viewDetailButton"
 								th:if="${#lists.size(reqDoc1list)>=2}"
-								th:onclick="openFilePopup([[${reqDoc1list[1].file_path}]])">
+								th:onclick="downloadFile([[${reqDoc1list[1].file_path}]], [[${reqDoc1list[1].file_nm}]])">
 									파일보기
 								</button>
 								<button class="viewDetailButton"
@@ -585,24 +552,10 @@ div.dt-filter-spacer {
 								name="req_doc_file03" id="req_doc_file03" type="text"
 								th:if="${#lists.size(reqDoc1list)<3}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
-							<li class="content delContWidth">
-								<!-- 
-								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-							 -->
-							 <button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)>=3}"
-								th:onclick="downloadFile('${reqDoc1list[2].file_path}', '${reqDoc1list[2].file_nm}')">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)<3}">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
 								<button class="viewDetailButton"
 								th:if="${#lists.size(reqDoc1list)>=3}"
-								th:onclick="openFilePopup([[${reqDoc1list[2].file_path}]])">
+								th:onclick="downloadFile([[${reqDoc1list[2].file_path}]], [[${reqDoc1list[2].file_nm}]])">
 									파일보기
 								</button>
 								<button class="viewDetailButton"
@@ -626,24 +579,10 @@ div.dt-filter-spacer {
 								type="text" name="req_doc_file04" id="req_doc_file04"
 								th:if="${#lists.size(reqDoc1list)<4}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
-							<li class="content delContWidth">
-							<!-- 
-								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-							 -->
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)>=4}"
-								th:onclick="downloadFile('${reqDoc1list[3].file_path}', '${reqDoc1list[3].file_nm}')">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)<4}">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
 								<button class="viewDetailButton"
 								th:if="${#lists.size(reqDoc1list)>=4}"
-								th:onclick="openFilePopup([]${reqDoc1list[3].file_path}]])">
+								th:onclick="downloadFile([[${reqDoc1list[3].file_path}]], [[${reqDoc1list[3].file_nm}]])">
 									파일보기
 								</button>
 								<button class="viewDetailButton"
@@ -666,24 +605,10 @@ div.dt-filter-spacer {
 								type="text" name="req_doc_file05" id="req_doc_file05"
 								th:if="${#lists.size(reqDoc1list)<5}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
-							<li class="content delContWidth">
-								<!-- 
-								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-							 -->
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)>=5}"
-								th:onclick="downloadFile('${reqDoc1list[4].file_path}', '${reqDoc1list[4].file_nm}')">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)<5}">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
 								<button class="viewDetailButton"
 								th:if="${#lists.size(reqDoc1list)>=5}"
-								th:onclick="openFilePopup([[${reqDoc1list[4].file_path}]])">
+								th:onclick="downloadFile([[${reqDoc1list[4].file_path}]], [[${reqDoc1list[4].file_nm}]])">
 									파일보기
 								</button>
 								<button class="viewDetailButton"
@@ -707,24 +632,10 @@ div.dt-filter-spacer {
 								type="text" name="req_doc_file06" id="req_doc_file06"
 								th:if="${#lists.size(reqDoc1list)<6}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
-							<li class="content delContWidth">
-								<!-- 
-								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-							 -->
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)>=6}"
-								th:onclick="downloadFile('${reqDoc1list[5].file_path}', '${reqDoc1list[5].file_nm}')">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)<6}">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
 								<button class="viewDetailButton"
 								th:if="${#lists.size(reqDoc1list)>=6}"
-								th:onclick="openFilePopup([[${reqDoc1list[5].file_path}]]">
+								th:onclick="downloadFile([[${reqDoc1list[5].file_path}]], [[${reqDoc1list[5].file_nm}]])">
 									파일보기
 								</button>
 								<button class="viewDetailButton"
@@ -748,24 +659,10 @@ div.dt-filter-spacer {
 								type="text" name="req_doc_file07" id="req_doc_file07"
 								th:if="${#lists.size(reqDoc1list)<7}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
-							<li class="content delContWidth">
-								<!-- 
-								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-							 -->
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)>=7}"
-								th:onclick="downloadFile('${reqDoc1list[6].file_path}', '${reqDoc1list[6].file_nm}')">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)<7}">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
 								<button class="viewDetailButton"
 								th:if="${#lists.size(reqDoc1list)>=7}"
-								th:onclick="openFilePopup([[${reqDoc1list[6].file_path}]])">
+								th:onclick="downloadFile([[${reqDoc1list[6].file_path}]], [[${reqDoc1list[6].file_nm}]])">
 									파일보기
 								</button>
 								<button class="viewDetailButton"
@@ -789,24 +686,10 @@ div.dt-filter-spacer {
 								type="text" name="req_doc_file08" id="req_doc_file08"
 								th:if="${#lists.size(reqDoc1list)<8}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
-							<li class="content delContWidth">
-								<!-- 
-								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-							 -->
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)>=8}"
-								th:onclick="downloadFile('${reqDoc1list[7].file_path}', '${reqDoc1list[7].file_nm}')">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-								<button class="fileDownloadBtn"
-								th:if="${#lists.size(reqDoc1list)<8}">
-									다운로드 <span class="downloadIcon"></span>
-								</button>
-							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
 								<button class="viewDetailButton"
 								th:if="${#lists.size(reqDoc1list)>=8}"
-								th:onclick="openFilePopup([[${reqDoc1list[7].file_path}]])">
+								th:onclick="downloadFile([[${reqDoc1list[7].file_path}]], [[${reqDoc1list[7].file_nm}]])">
 									파일보기
 								</button>
 								<button class="viewDetailButton"
