@@ -3268,11 +3268,12 @@ WHERE
 		Values
 		(#{JISANGNO}, #{JIBUN}, #{NAME}, #{ADDR}, #{TEL} , #{HP})
 	</insert>
-		<insert id="insertJisangSoyu" parameterType="HashMap">
+	
+	<insert id="insertJisangSoyu" parameterType="HashMap">
 		Insert into JISANG_SOUJA
-		(js_JISANG_NO, js_JIBUN, js_SOUJA_NAME, js_ADDRESS, js_HOME_NUMBER ,js_PONE_NUMBER)
+		(js_JISANG_NO, js_JIBUN, js_SOUJA_NAME, js_ADDRESS ,js_PONE_NUMBER, js_HOME_NUMBER)
 		Values
-		(#{JISANGNO}, #{JIBUN}, #{NAME}, #{ADDR}, #{TEL} , #{HP})
+		(#{JISANGNO}, #{JIBUN}, #{NAME}, #{ADDR}, #{PONE_NUMBER} , #{HOME_NUMBER})
 	</insert>
 	
 		<select id="selectJISANG_ATCFILE_NoCheck" parameterType="HashMap" resultType="java.util.HashMap">

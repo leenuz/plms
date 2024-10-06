@@ -5066,12 +5066,10 @@ log.info("gubun:"+gubun);
 		@PostMapping(path="/insertJisangList")
 		public void insertJisangList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			String requestParams = ParameterUtil.getRequestBodyToStr(request);
-			JSONObject requestParamsObj=new JSONObject(requestParams);
-			log.info("requestParams:"+requestParams);
-			JSONArray soujaArr=new JSONArray(requestParamsObj.getString("soujaInfo"));
-			JSONArray fileArr=new JSONArray(requestParamsObj.getString("uploadFiles"));
-			
-			
+			JSONObject requestParamsObj = new JSONObject(requestParams);
+			log.info("requestParams:" + requestParams);
+			JSONArray soujaArr = new JSONArray(requestParamsObj.getString("soujaInfo"));
+			JSONArray fileArr = new JSONArray(requestParamsObj.getString("uploadFiles"));
 			
 			ArrayList list = new ArrayList();
 			CommonUtil comm = new CommonUtil();
@@ -5346,14 +5344,14 @@ log.info(" 3932 params:"+params);
 					String JIBUN = obj.getString("jibun");
 					String NAME = obj.getString("soujaName");
 					String ADDR = obj.getString("soujaAddress");
-					String TEL = obj.getString("soujaContact1");
-					String HP = obj.getString("soujaContact2");
+					String PONE_NUMBER = obj.getString("soujaContact1");
+					String HOME_NUMBER = obj.getString("soujaContact2");
 
 					params.put("JIBUN", JIBUN); // 공유지분
 					params.put("NAME", NAME); // 성명
 					params.put("ADDR", ADDR); // 주소
-					params.put("TEL", TEL); // 연락처(집)
-					params.put("HP", HP); // 연락처(모바일)
+					params.put("PONE_NUMBER", PONE_NUMBER); // 연락처1
+					params.put("HOME_NUMBER", HOME_NUMBER); // 연락처2
 
 					if (gubun.equals("modify")) {
 						if (i == 0) {

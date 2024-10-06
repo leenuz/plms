@@ -698,7 +698,7 @@ const runScriptsInElement = (element) => {
 
 //landRightSearchOpenPopUp();
 
-// 지사 선택 시 
+// 지사 선택 시  관로명 변경
 $(document).on("change","#landRightsRegistSelectBox01",function(){
 	
 	console.log("----landRightsRegistSelectBox01-----------");	
@@ -708,7 +708,7 @@ $(document).on("change","#landRightsRegistSelectBox01",function(){
 });
 
 function changPipeName() {
-	var url = "/api/getPipeName";
+	var url = "/land/api/getPipeName";
 	console.log("----changePipeName()-----------");
 	var requestData = { "jisaIdx": $("#landRightsRegistSelectBox01").val() };
 	
