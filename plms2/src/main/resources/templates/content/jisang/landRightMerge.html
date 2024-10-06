@@ -671,53 +671,55 @@ margin:10px;
     </main>
 </div>
 
-<!-- 추가 -->
-    <div class="divisionRegistSearchPopWrappers" id="searchResultPopDiv">
-        <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
-        <div id="searchResultsPopup">
-            <div class="popupWrap" id="popupWrap">
-                <h2>
-                    <p>검색결과</p>
-                    <span class="topCloseBtn"></span>
-                </h2>
+		<!-- 추가  -->
+		<div class="divisionRegistSearchPopWrappers" id="searchResultPopDiv">
+			<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+			<div id="searchResultsPopup">
+				<div class="popupWrap" id="popupWrap">
+					<h2>
+						<p>검색결과</p>
+						<span class="topCloseBtn"></span>
+					</h2>
 
-                <div class="popupCont">
-                    <ul class="popTitles">
-                        <li class="popTitle01">PNU</li>
-                        <li class="popTitle02">주소</li>
-                        <li class="popTitle03">지번</li>
-                        <li class="popTitle04">선택</li>
-                    </ul>
-                    <div class="popContentBox" >
-                        <ul class="popContents" th:each="val:${addressList}">
-                            <li class="popContent01"> [[${val.jm_pnu}]]</li>
-                            <li class="popContent02"> [[${val.jm_sido_nm +" "+val.jm_sgg_nm+" "+val.jm_emd_nm+" "+val.jm_jibun}]]</li>
-                            <ii class="popContent0201" hidden>[[${val.jm_sido_nm}]]</ii>
-                            <ii class="popContent0202" hidden>[[${val.jm_sgg_nm}]]</ii>
-                            <ii class="popContent0203" hidden>[[${val.jm_emd_nm}]]</ii>
-                            <ii class="popContent0204" hidden>[[${val.jm_ri_nm}]]</ii>
-                            <ii class="popContent0205" hidden>[[${val.jm_bcode}]]</ii>
-                            <ii class="popContent0206" hidden>[[${val.jm_jibun_full}]]</ii>
-                            <li class="popContent03">[[${val.jm_jibun}]]</li>
-                            <li class="popContent04">
-                                <button class="resultSelectBtn" >선택</button>
-                            </li>
-                            <ii class="popContent05" hidden>[[${val.jm_jimok_text}]]</ii>
-                        </ul>
+					<div class="popupCont">
+						<ul class="popTitles">
+							<li class="popTitle01">PNU</li>
+							<li class="popTitle02">주소</li>
+							<li class="popTitle03">지번</li>
+							<li class="popTitle04">선택</li>
+						</ul>
+						<div class="popContentBox">
+							<ul class="popContents" th:each="val:${addressList}">
+								<li class="popContent01">[[${val.pnu}]]</li>
+								<li class="popContent02">[[${val.sido_nm +" "+val.sgg_nm+"
+									"+val.emd_nm+" "+val.ri_nm+" "+val.jibun}]]</li>
+								<!-- <li class="popContent02"> [[${val.juso}]]</li> -->
+								<ii class="popContent0201" hidden>[[${val.sido_nm}]]</ii>
+								<ii class="popContent0202" hidden>[[${val.sgg_nm}]]</ii>
+								<ii class="popContent0203" hidden>[[${val.emd_nm}]]</ii>
+								<ii class="popContent0204" hidden>[[${val.ri_nm}]]</ii>
+								<ii class="popContent0205" hidden>[[${val.bcode}]]</ii>
+								<ii class="popContent0206" hidden>[[${val.jibun_full}]]</ii>
+								<li class="popContent03">[[${val.jibun}]]</li>
+								<li class="popContent04"><input type="hidden" name="x"
+									th:value="${val.x}" /> <input type="hidden" name="y"
+									th:value="${val.y}" />
+									<button class="resultSelectBtn">선택</button></li>
+								<ii class="popContent05" hidden>[[${val.jimok_text}]]</ii>
+							</ul>
 
+						</div>
+					</div>
 
-                    </div>
-                </div>
+					<div class="lastBtnBox btnWrap">
+						<button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+						<button class="saveBtn finalBtn">PNU 없이 선택</button>
+					</div>
 
-                <div class="lastBtnBox btnWrap">
-                    <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
-                    <button class="saveBtn finalBtn">PNU 없이 선택</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- script -->
+				</div>
+			</div>
+		</div>
+		<!-- script -->
     <script src="/js/jisang/landRightMerge.js"></script>
     <script type="module" src="/js/module/surfaceMain.js"></script>
     </th:block>
