@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AjpConfig {
-	
 	@Value("${tomcat.ajp.port}")
 	int ajpPort;
 	
@@ -37,18 +36,27 @@ public class AjpConfig {
 		Connector ajpConnector = new Connector(ajpProtocol);
 		
 		ajpConnector.setPort(ajpPort);
-		ajpConnector.setSecure(true);
+		ajpConnector.setSecure(false);
 		ajpConnector.setAllowTrace(false);
-		ajpConnector.setScheme("https");
+		ajpConnector.setScheme("http");
 		ajpConnector.setRedirectPort(8443);
 		
 		AjpNioProtocol protocol = (AjpNioProtocol)ajpConnector.getProtocolHandler();
+//		AbstractAjpProtocol<?> protocol = (AbstractAjpProtocol<?>) ajpConnector.getProtocolHandler();
 		
 		protocol.setSecret(null);
 		protocol.setSecretRequired(false);
 		protocol.setAddress(InetAddress.getByName("0.0.0.0"));
+		protocol.setAllowedRequestAttributesPattern(".*");
+		
+		protocol.setConnectionTimeout(60000);
+		
+		protocol.setRequiredSecret(null);
+		
+		protocol.setKeepAliveTimeout(600000);
+		protocol.setMaxThreads(10);
+		protocol.setMaxConnections(100);
 		
 		return ajpConnector;
 	}
-
 }
