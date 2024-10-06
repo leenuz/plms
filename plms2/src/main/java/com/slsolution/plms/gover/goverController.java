@@ -1744,7 +1744,8 @@ public class goverController {
 					String OFFICE_CHARGE = requestParamsObj.has("office_charege")?requestParamsObj.getString("office_charege"):""; // 부서담당자
 					String OFFICE_CONTACT = requestParamsObj.getString("office_contact"); // 담당자연락처
 					String OFFICE_MOBILE = requestParamsObj.getString("office_mobile"); // 담당자연락처
-					String GOVER_PERIOD = requestParamsObj.getString("gover_period"); // 담당자연락처
+					// String GOVER_PERIOD = requestParamsObj.getString("gover_period"); // 담당자연락처
+					String GOVER_PERIOD =requestParamsObj.has("gover_period")?requestParamsObj.getString("gover_period"):""; // 점용갱신주기
 					String EXEMPTIONYN = requestParamsObj.getString("exemptionyn"); // 감면여부
 					
 					String SAVE_STATUS = requestParamsObj.getString("save_status"); // 저장 코드  T:승인대기 R:반려 Q:임시저장
