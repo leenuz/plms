@@ -2012,7 +2012,7 @@ log.info("data:"+data.get(0));
 			log.info("atcFileList:"+atcFileList);
 			log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
 			log.info("jisangDoc1list:"+reqDoc1list);
-			
+			log.info("dataAccountYn:"+data.get(0).get("account_yn"));
 			ModelAndView mav=new ModelAndView();
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);

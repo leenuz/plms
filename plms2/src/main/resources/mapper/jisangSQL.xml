@@ -2187,7 +2187,8 @@ WHERE 1=1
        JM.jm_account_yn AS ACCOUNT_YN,
        JIJUK_MST.juso,
        JIJUK_MST.x,
-       JIJUK_MST.y
+       JIJUK_MST.y,
+       trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
 FROM JISANG_MASTER JM
 LEFT JOIN TOJA_ORDER TOR ON JM.jm_JISANG_NO = TOR.JISANG_NO
 LEFT JOIN PLMS_APPROVAL PA ON JM.jm_DOCKEY = PA.pa_DOCKEY
