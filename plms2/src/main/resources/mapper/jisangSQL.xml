@@ -1499,274 +1499,10 @@ SELECT count(*)
 	
 	
 	
-	
-	
-
-	<select id="selectJisangBunhalList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT *,
-		(row_number() OVER()) AS no
-		FROM (
-
-		SELECT jm.jm_idx AS index,
-		jm.jm_jisang_no AS idx,
-		0 AS gidx,
-		jm.jm_jisa AS jisa,
-		jm.jm_save_status AS save_status,
-		jm.jm_account_yn AS account_yn,
-		jm.jm_cancle_date AS cancel_date,
-		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
-		jm.jm_toji_type AS toji_type,
-		jm.jm_pipe_meter AS pipe_meter,
-		jm.jm_jimok_text AS jimok_text,
-		js.js_souja_name AS souja_name,
-		COALESCE(jm.jm_jijuk_area, NULL) AS jijuk_area,
-		COALESCE(jm.jm_pyeonib_area, NULL) AS pyeonib_area,
-		jm.jm_sido_nm AS sido_nm,
-		jm.jm_sgg_nm AS sgg_nm,
-		jm.jm_emd_nm AS emd_nm,
-		jm.jm_ri_nm AS ri_nm,
-		jm.jm_jibun AS jibun,
-		jm.jm_deunggi_date AS deunggi_date,
-		TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
-		COALESCE(jm.jm_jasan_no, '') AS jasan_no,
-		COALESCE(jm.jm_comple_yn, '') AS comple_yn,
-		COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
-		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
-		COALESCE('', '') AS gover_date,
-		jm.jm_jasan_money AS jasan_money,
-		jm.jm_cancle_yn AS cancel_yn,
-		jm.jm_manage_yn AS manage_yn,
-		jm.jm_dosiplan AS dosiplan,
-		jb.jb_yongdo AS yongdo,
-		jb.jb_set_money AS set_money,
-		jb.jb_remainder_money AS remainder_money,
-		jb.jb_profit_loss AS profit_loss,
-		jb.jb_gover_own_yn AS gover_own_yn,
-		jb.jb_gammoney AS gammoney,
-		jb.jb_dockey AS dockey,
-		jb.jb_demise AS demise,
-		jb.jb_chuideuk_money AS chuideuk_money,
-		jb.jb_bunhal_date AS bunhal_date,
-		jb.jb_bunhal_org_no AS bunhal_org_no,
-		jb.jb_bunhal_yn AS bunhal_yn,
-		jjm.x AS x,
-		jjm.y AS y,
-		js.js_idx,
-		NULL AS pay_date,
-		NULL AS gover_area,
-		NULL AS gover_length,
-		NULL AS pay_money,
-		CASE
-		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jb.jb_pnu) > 0 THEN 'Y'
-		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jb.jb_pnu) = 0 THEN 'N'
-		END AS toji_plan
-		FROM jisang_master jm
-		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
-		LEFT JOIN jisang_bunhal jb ON jb.jb_jisang_no = jm.jm_jisang_no
-		LEFT JOIN jijuk_2024 jjm ON jjm.pnu= jm.jm_pnu
-		WHERE 1 = 1
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-			and jb.jb_jisa=#{jisa}
-		</if>
-		) AS r
-		where 1=1
-		and r.cancel_yn!='Y'
-		and r.idx !=''
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-			and r.idx=#{idx}
-		</if>
-<!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >-->
-<!--			and r.manage_yn=#{manageYn}-->
-<!--		</if>-->
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
-			and r.dosiplan=#{dosiplan}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			and r.address like '%${address}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
-			AND r.sido_nm = #{sido_nm}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
-			AND r.sgg_nm = #{sgg_nm}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
-			AND r.emd_nm = #{emd_nm}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
-			AND r.ri_nm = #{ri_nm}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
-			AND r.jibun LIKE '%${jibun}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
-			and r.account_yn=#{account_yn}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jimokArray) and jimokArray.length > 0">
-			and r.jimok_text IN
-			<foreach item="item" index="index" collection="jimokArray" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(souja)" >
-			and r.souja_name like '%${souja}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
-			and r.jasan_no like '%${jasan_no}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
-			and r.deunggi_date::date between #{start_date}::date and #{end_date}::date
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-			and (SELECT COUNT(o.address) AS overlap
-			FROM
-			(
-			(
-			SELECT trim(concat(jb.jb_sido_nm,' ',jb.jb_sgg_nm,' ',jb.jb_ri_nm,' ',jb.jb_jibun)) as address
-			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jb.jb_jisang_no
-			where 1=1
-
-			)
-			) as o  WHERE o.address = r.address GROUP BY o.address ) >1
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
-			ORDER BY r.${orderCol} ${desc}
-		</if>
-		<if test="length>0">
-			limit #{length} offset #{start}
-		</if>
-
-	</select>
 
 
 
 
-
-	<select id="selectJisangBunhalCount" parameterType="java.util.HashMap" resultType="Integer">
-		SELECT count(*) as count FROM (
-		SELECT jm.jm_idx AS index,
-		jm.jm_jisang_no AS idx,
-		0 AS gidx,
-		jm.jm_jisa AS jisa,
-		jm.jm_save_status AS save_status,
-		jm.jm_account_yn AS account_yn,
-		jm.jm_cancle_date AS cancel_date,
-		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
-		jm.jm_toji_type AS toji_type,
-		jm.jm_pipe_meter AS pipe_meter,
-		jm.jm_jimok_text AS jimok_text,
-		js.js_souja_name AS souja_name,
-		COALESCE(jm.jm_jijuk_area, NULL) AS jijuk_area,
-		COALESCE(jm.jm_pyeonib_area, NULL) AS pyeonib_area,
-		jm.jm_sido_nm AS sido_nm,
-		jm.jm_sgg_nm AS sgg_nm,
-		jm.jm_emd_nm AS emd_nm,
-		jm.jm_ri_nm AS ri_nm,
-		jm.jm_jibun AS jibun,
-		jm.jm_deunggi_date AS deunggi_date,
-		TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
-		COALESCE(jm.jm_jasan_no, '') AS jasan_no,
-		COALESCE(jm.jm_comple_yn, '') AS comple_yn,
-		COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
-		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
-		COALESCE('', '') AS gover_date,
-		jm.jm_jasan_money AS jasan_money,
-		jm.jm_cancle_yn AS cancel_yn,
-		jm.jm_manage_yn AS manage_yn,
-		jm.jm_dosiplan AS dosiplan,
-		jb.jb_yongdo AS yongdo,
-		jb.jb_set_money AS set_money,
-		jb.jb_remainder_money AS remainder_money,
-		jb.jb_profit_loss AS profit_loss,
-		jb.jb_gover_own_yn AS gover_own_yn,
-		jb.jb_gammoney AS gammoney,
-		jb.jb_dockey AS dockey,
-		jb.jb_demise AS demise,
-		jb.jb_chuideuk_money AS chuideuk_money,
-		jb.jb_bunhal_date AS bunhal_date,
-		jb.jb_bunhal_org_no AS bunhal_org_no,
-		jb.jb_bunhal_yn AS bunhal_yn,
-		jjm.x AS x,
-		jjm.y AS y,
-		NULL AS pay_date,
-		NULL AS gover_area,
-		NULL AS gover_length,
-		NULL AS pay_money,
-		CASE
-		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jb.jb_pnu) > 0 THEN 'Y'
-		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jb.jb_pnu) = 0 THEN 'N'
-		END AS toji_plan
-		FROM jisang_master jm
-		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
-		LEFT JOIN jisang_bunhal jb ON jb.jb_jisang_no = jm.jm_jisang_no
-		LEFT JOIN jijuk_2024 jjm ON jjm.pnu= jm.jm_pnu
-		WHERE 1 = 1
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-			and jb.jb_jisa=#{jisa}
-		</if>
-		) AS r
-		where 1=1
-		and r.idx !=''
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-			and r.idx=#{idx}
-		</if>
-<!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >-->
-<!--			and r.manage_yn=#{manageYn}-->
-<!--		</if>-->
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
-			and r.dosiplan=#{dosiplan}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-			and r.address like '%${address}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
-			AND r.sido_nm = #{sido_nm}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
-			AND r.sgg_nm = #{sgg_nm}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
-			AND r.emd_nm = #{emd_nm}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
-			AND r.ri_nm = #{ri_nm}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
-			AND r.jibun LIKE '%${jibun}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jimokArray) and jimokArray.length > 0">
-			and r.jimok_text IN
-			<foreach item="item" index="index" collection="jimokArray" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
-			and r.account_yn=#{account_yn}
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(souja)" >
-			and r.souja_name like '%${souja}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
-			and r.jasan_no like '%${jasan_no}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
-			and r.deunggi_date::date between #{start_date}::date and #{end_date}::date
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-			and (SELECT COUNT(o.address) AS overlap
-			FROM
-			(
-			(
-			SELECT trim(concat(jb.jb_sido_nm,' ',jb.jb_sgg_nm,' ',jb.jb_ri_nm,' ',jb.jb_jibun)) as address
-			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jb.jb_jisang_no
-			where 1=1
-
-			)
-			) as o  WHERE o.address = r.address GROUP BY o.address ) >1
-		</if>
-
-	</select>
-	
 	<select id="selectJisangBunhalChkCount" parameterType="java.util.HashMap" resultType="Integer">
 		SELECT count(*) as count FROM jisang_bunhal jb where 1=1 and jb.jb_jisang_no=#{jisang_no}
 
@@ -3755,5 +3491,412 @@ WHERE 1=1
 
 AND jmt.jmt_rep_jisang_no=#{idx}
 	</select>
+	
+	
+	<select id="selectJisangBunhalCount" parameterType="java.util.HashMap" resultType="Integer">
+		SELECT count(*) as count FROM (
+		SELECT jm.jm_idx AS index,
+		jm.jm_jisang_no AS idx,
+		0 AS gidx,
+		jm.jm_jisa AS jisa,
+		jm.jm_save_status AS save_status,
+		jm.jm_account_yn AS account_yn,
+		jm.jm_cancle_date AS cancel_date,
+		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
+		jm.jm_toji_type AS toji_type,
+		jm.jm_pipe_meter AS pipe_meter,
+		jm.jm_jimok_text AS jimok_text,
+		js.js_souja_name AS souja_name,
+		COALESCE(jm.jm_jijuk_area, NULL) AS jijuk_area,
+		COALESCE(jm.jm_pyeonib_area, NULL) AS pyeonib_area,
+		jm.jm_sido_nm AS sido_nm,
+		jm.jm_sgg_nm AS sgg_nm,
+		jm.jm_emd_nm AS emd_nm,
+		jm.jm_ri_nm AS ri_nm,
+		jm.jm_jibun AS jibun,
+		jm.jm_deunggi_date AS deunggi_date,
+		TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
+		COALESCE(jm.jm_jasan_no, '') AS jasan_no,
+		COALESCE(jm.jm_comple_yn, '') AS comple_yn,
+		COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
+		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
+		COALESCE('', '') AS gover_date,
+		jm.jm_jasan_money AS jasan_money,
+		jm.jm_cancle_yn AS cancel_yn,
+		jm.jm_manage_yn AS manage_yn,
+		jm.jm_dosiplan AS dosiplan,
+		jb.jb_yongdo AS yongdo,
+		jb.jb_set_money AS set_money,
+		jb.jb_remainder_money AS remainder_money,
+		jb.jb_profit_loss AS profit_loss,
+		jb.jb_gover_own_yn AS gover_own_yn,
+		jb.jb_gammoney AS gammoney,
+		jb.jb_dockey AS dockey,
+		jb.jb_demise AS demise,
+		jb.jb_chuideuk_money AS chuideuk_money,
+		jb.jb_bunhal_date AS bunhal_date,
+		jb.jb_bunhal_org_no AS bunhal_org_no,
+		jb.jb_bunhal_yn AS bunhal_yn,
+		jjm.x AS x,
+		jjm.y AS y,
+		NULL AS pay_date,
+		NULL AS gover_area,
+		NULL AS gover_length,
+		NULL AS pay_money,
+		CASE
+		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jb.jb_pnu) > 0 THEN 'Y'
+		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jb.jb_pnu) = 0 THEN 'N'
+		END AS toji_plan
+		FROM jisang_master jm
+		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
+		LEFT JOIN jisang_bunhal jb ON jb.jb_jisang_no = jm.jm_jisang_no
+		LEFT JOIN jijuk_2024 jjm ON jjm.pnu= jm.jm_pnu
+		WHERE 1 = 1
+		AND jm.jm_SAVE_STATUS = '승인'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and jb.jb_jisa=#{jisa}
+		</if>
+		) AS r
+		where 1=1
+		and r.idx !=''
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and r.idx=#{idx}
+		</if>
+<!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >-->
+<!--			and r.manage_yn=#{manageYn}-->
+<!--		</if>-->
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
+			and r.dosiplan=#{dosiplan}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND r.sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND r.sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND r.emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND r.ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			AND r.jibun LIKE '%${jibun}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jimokArray) and jimokArray.length > 0">
+			and r.jimok_text IN
+			<foreach item="item" index="index" collection="jimokArray" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
+			and r.account_yn=#{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(souja)" >
+			and r.souja_name like '%${souja}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
+			and r.jasan_no like '%${jasan_no}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+			and r.deunggi_date::date between #{start_date}::date and #{end_date}::date
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
+			and (SELECT COUNT(o.address) AS overlap
+			FROM
+			(
+			(
+			SELECT trim(concat(jb.jb_sido_nm,' ',jb.jb_sgg_nm,' ',jb.jb_ri_nm,' ',jb.jb_jibun)) as address
+			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jb.jb_jisang_no
+			where 1=1
+
+			)
+			) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+		</if>
+
+	</select>
+
+	<select id="selectJisangBunhalList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *,
+		(row_number() OVER()) AS no
+		FROM (
+
+		SELECT jm.jm_idx AS index,
+		jm.jm_jisang_no AS idx,
+		0 AS gidx,
+		jm.jm_jisa AS jisa,
+		jm.jm_save_status AS save_status,
+		jm.jm_account_yn AS account_yn,
+		jm.jm_cancle_date AS cancel_date,
+		COALESCE(jm.jm_pipe_yn, 'N') AS pipe_yn,
+		jm.jm_toji_type AS toji_type,
+		jm.jm_pipe_meter AS pipe_meter,
+		jm.jm_jimok_text AS jimok_text,
+		js.js_souja_name AS souja_name,
+		COALESCE(jm.jm_jijuk_area, NULL) AS jijuk_area,
+		COALESCE(jm.jm_pyeonib_area, NULL) AS pyeonib_area,
+		jm.jm_sido_nm AS sido_nm,
+		jm.jm_sgg_nm AS sgg_nm,
+		jm.jm_emd_nm AS emd_nm,
+		jm.jm_ri_nm AS ri_nm,
+		jm.jm_jibun AS jibun,
+		jm.jm_deunggi_date AS deunggi_date,
+		TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
+		COALESCE(jm.jm_jasan_no, '') AS jasan_no,
+		COALESCE(jm.jm_comple_yn, '') AS comple_yn,
+		COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
+		COALESCE(jm.jm_chuideuk_date, NULL) AS chuideuk_date,
+		COALESCE('', '') AS gover_date,
+		jm.jm_jasan_money AS jasan_money,
+		jm.jm_cancle_yn AS cancel_yn,
+		jm.jm_manage_yn AS manage_yn,
+		jm.jm_dosiplan AS dosiplan,
+		jb.jb_yongdo AS yongdo,
+		jb.jb_set_money AS set_money,
+		jb.jb_remainder_money AS remainder_money,
+		jb.jb_profit_loss AS profit_loss,
+		jb.jb_gover_own_yn AS gover_own_yn,
+		jb.jb_gammoney AS gammoney,
+		jb.jb_dockey AS dockey,
+		jb.jb_demise AS demise,
+		jb.jb_chuideuk_money AS chuideuk_money,
+		jb.jb_bunhal_date AS bunhal_date,
+		jb.jb_bunhal_org_no AS bunhal_org_no,
+		jb.jb_bunhal_yn AS bunhal_yn,
+		jjm.x AS x,
+		jjm.y AS y,
+		js.js_idx,
+		NULL AS pay_date,
+		NULL AS gover_area,
+		NULL AS gover_length,
+		NULL AS pay_money,
+		CASE
+		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jb.jb_pnu) > 0 THEN 'Y'
+		WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu = jb.jb_pnu) = 0 THEN 'N'
+		END AS toji_plan
+		FROM jisang_master jm
+		LEFT JOIN jisang_souja js ON js.js_jisang_no = jm.jm_jisang_no
+		LEFT JOIN jisang_bunhal jb ON jb.jb_jisang_no = jm.jm_jisang_no
+		LEFT JOIN jijuk_2024 jjm ON jjm.pnu= jm.jm_pnu
+		WHERE 1 = 1
+		AND jm.jm_SAVE_STATUS = '승인'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and jb.jb_jisa=#{jisa}
+		</if>
+		) AS r
+		where 1=1
+		and r.cancel_yn!='Y'
+		and r.idx !=''
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and r.idx=#{idx}
+		</if>
+<!--		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >-->
+<!--			and r.manage_yn=#{manageYn}-->
+<!--		</if>-->
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
+			and r.dosiplan=#{dosiplan}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.address like '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND r.sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND r.sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND r.emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND r.ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			AND r.jibun LIKE '%${jibun}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
+			and r.account_yn=#{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jimokArray) and jimokArray.length > 0">
+			and r.jimok_text IN
+			<foreach item="item" index="index" collection="jimokArray" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(souja)" >
+			and r.souja_name like '%${souja}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)" >
+			and r.jasan_no like '%${jasan_no}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date) and @org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" >
+			and r.deunggi_date::date between #{start_date}::date and #{end_date}::date
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
+			and (SELECT COUNT(o.address) AS overlap
+			FROM
+			(
+			(
+			SELECT trim(concat(jb.jb_sido_nm,' ',jb.jb_sgg_nm,' ',jb.jb_ri_nm,' ',jb.jb_jibun)) as address
+			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jb.jb_jisang_no
+			where 1=1
+
+			)
+			) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+			ORDER BY r.${orderCol} ${desc}
+		</if>
+		<if test="length>0">
+			limit #{length} offset #{start}
+		</if>
+
+	</select>
+	
+	
+	<select id="selectJisangDivisionListCount" parameterType="HashMap" resultType="integer">
+		SELECT COUNT(*)
+FROM JISANG_MASTER JM left outer join (
+		SELECT
+		*
+		FROM
+		(
+		SELECT
+		js_JISANG_NO,
+		js_JIBUN,
+		js_SOUJA_NAME,
+		js_ADDRESS,
+		js_PONE_NUMBER,
+		js_HOME_NUMBER,
+		ROW_NUMBER() OVER(PARTITION BY js_JISANG_NO
+		ORDER BY
+		js_JISANG_NO ASC
+		) AS ROW_IDX
+		FROM
+		JISANG_SOUJA
+		) sub1
+		WHERE
+		ROW_IDX = 1
+		) JS on JM.jm_JISANG_NO = JS.js_JISANG_NO
+		LEFT OUTER JOIN JISANG_BUNHAL JB ON JM.jm_JISANG_NO = JB.jb_JISANG_NO AND JB.jb_BUNHAL_COMPLETE != 'Y'
+		LEFT OUTER JOIN PLMS_APPROVAL PA ON JB.jb_DOCKEY = PA.pa_DOCKEY
+		WHERE 1=1
+		
+		AND (JM.jm_CANCLE_YN IS NULL OR JM.jm_CANCLE_YN != 'Y')
+		AND JM.jm_SAVE_STATUS = '승인'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESSCODE)">
+			AND JM.jm_ADDRCODE LIKE '${ADDRESSCODE}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JIBEON)">
+			AND JM.jm_JIBUN LIKE '${JIBEON}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)">
+			AND JM.jm_JISA = #{JISA}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SOYU)">
+			AND JS.js_SOUJA_NAME LIKE '%${SOYU}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JASAN_NO)">
+			AND JM.jm_JASAN_NO LIKE '%'|| #{JASAN_NO} ||'%'
+		</if>
+		
+	</select>
+	
+	
+	<select id="selectJisangDivisionList" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT * FROM (SELECT
+		ROW_NUMBER() OVER(
+		ORDER BY
+		JM.jm_JISANG_NO DESC
+		) RN,
+		(row_number() OVER()) AS no,
+		JM.jm_idx AS index,
+		JM.jm_jisang_no AS idx,
+		0 AS gidx
+		,JM.jm_jisang_no as JISANG_NO
+		,JM.jm_sido_nm as SIDO_NM
+		,JM.jm_sgg_nm as SGG_NM
+		,JM.jm_emd_nm as EMD_NM
+		,JM.jm_ri_nm as RI_NM
+		,JM.jm_jibun as JIBUN
+		,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
+		,JM.jm_jasan_no as JASAN_NO
+		,JM.jm_jisa as JISA
+		,JM.jm_jimok_text AS jimok_text
+		,TO_CHAR(JM.jm_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE
+		,JM.jm_chuideuk_money as CHUIDEUK_MONEY
+		,TO_CHAR(JM.jm_DEUNGGI_DATE, 'YYYY-MM-DD') AS DEUNGGI_DATE
+		,JM.jm_cancle_yn as CANCLE_YN
+		,JM.jm_cancle_yn AS cancel_yn
+		,JM.jm_manage_yn AS manage_yn
+		,TO_CHAR(JM.jm_CANCLE_DATE, 'YYYY-MM-DD') AS CANCLE_DATE
+		,COALESCE(jm.jm_jijuk_area, NULL) AS jijuk_area
+		,COALESCE(jm.jm_pyeonib_area, NULL) AS pyeonib_area
+		
+		,JM.jm_pnu as PNU
+		,JS.js_souja_name as SOUJA_NAME,
+		(SELECT COUNT(*)-1 FROM JISANG_SOUJA WHERE js_JISANG_NO = JM.jm_JISANG_NO) AS SOUJA_CNT,
+		(CASE WHEN JB.jb_JISANG_NO IS NOT NULL THEN 1 ELSE 0 END) AS BUNHAL_CHECK,
+		PA.pa_status as STATUS
+		
+		,JB.jb_bunhal_date as bunhal_date
+		FROM JISANG_MASTER JM LEFT OUTER JOIN (
+		SELECT
+		*
+		FROM
+		(
+		SELECT
+		js_JISANG_NO,
+		js_JIBUN,
+		js_SOUJA_NAME,
+		js_ADDRESS,
+		js_PONE_NUMBER,
+		js_HOME_NUMBER,
+		ROW_NUMBER() OVER(PARTITION BY js_JISANG_NO
+		ORDER BY
+		js_JISANG_NO ASC
+		) AS ROW_IDX
+		FROM
+		JISANG_SOUJA
+		) sub1
+		WHERE
+		ROW_IDX = 1
+		) JS on JM.jm_JISANG_NO = JS.js_JISANG_NO
+		LEFT OUTER JOIN JISANG_BUNHAL JB ON JM.jm_JISANG_NO = JB.jb_JISANG_NO AND JB.jb_BUNHAL_COMPLETE != 'Y'
+		LEFT OUTER JOIN PLMS_APPROVAL PA ON JB.jb_DOCKEY = PA.pa_DOCKEY
+		WHERE 1=1
+		AND (JM.jm_CANCLE_YN IS NULL OR JM.jm_CANCLE_YN != 'Y')
+		AND JM.jm_SAVE_STATUS = '승인'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESSCODE)">
+			AND JM.jm_ADDRCODE LIKE '${ADDRESSCODE}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JIBEON)">
+			AND JM.jm_JIBUN LIKE '${JIBEON}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)">
+			AND JM.jm_JISA = #{JISA}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SOYU)">
+			AND JS.js_SOUJA_NAME LIKE '%${SOYU}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JASAN_NO)">
+			AND JM.jm_JASAN_NO LIKE '%'|| #{JASAN_NO} ||'%'
+		</if>
+		
+		
+			) AA WHERE 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+			ORDER BY AA.${orderCol} ${desc}
+		</if>
+		<if test="length>0">
+			limit #{length} offset #{start}
+		</if>
+		
+	</select>
+	
+	
 	
 </mapper>
