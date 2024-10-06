@@ -411,7 +411,7 @@ return nRow;
 				if (buttonClass == "regisRemoveBtn") {
 					url = "/land/jisang/landTerminationRegistration?idx=" + data.idx + "&index=" + data.index;        //해지등록
 				} else {
-					url = "/land/jisang/easementDetails?idx=" + data.idx + "&index=" + data.index;      //상세보기
+					url = "/land/jisang/landTerminationRegistration1?idx=" + data.idx + "&index=" + data.index;      //상세보기
 				}
 				window.location = url;
 			} else if (target.closest('td').index() === 13) {
