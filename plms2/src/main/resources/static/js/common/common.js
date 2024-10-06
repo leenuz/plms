@@ -305,7 +305,8 @@ function positionView() {
 			type: "setCenter" ,
 			lon: param.lon,
 			lat: param.lat,			
-			zoom: zoom
+			zoom: zoom,
+			marker:[[127.387205,36.43472],[127.376596,36.411514],[127.464146,36.437349],[127.469639,36.398030],[127.328186,36.425660]]
 		};
 	} else {
 		message = { type: "setMap" };
@@ -318,7 +319,9 @@ function positionView() {
 	if (window.opener) {
       targetWindow = window.opener.postMessage(paramMessage, '*');
     } else {
-		targetWindow = window.open(`http://localhost:8085/map?${paramMessage}`, '_blank');
+		console.log('지금 여기로 오지?');
+		targetWindow = window.open(`http://localhost:8085/map`, '_blank').postMessage(paramMessage, '*');
+		targetWindow.postMessage(paramMessage, '*');
 	}
 	
 	if (!targetWindow) {
