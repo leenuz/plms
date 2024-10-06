@@ -1136,6 +1136,11 @@ function insertJisaNameSet() {
 	
 	if(jisaNameCheck != ''){
 		$("#landRightsRegistSelectBox01").val(jisaNameCheck);
-	} 
+	}
+	
+	//기존 지사 선택시 관로 세팅하는 로직 
+	changPipeName();
+	$("#pipe_name_ul li").remove();
+	loadCustomLiLandRegist($("#pipe_name_ul"));
 }
 /************************/
