@@ -1714,6 +1714,7 @@ $(document).on("click","#deleteFileBtn",function(){
 				               
 				                 console.log(response);
 								 alert("파일이 삭제 되었습니다.");
+								 loadingHide();
 				        //         if (response.success = "Y") {
 				        //             console.log("response.success Y");
 				        //             console.log("response.resultData length:" + response.resultData.length);

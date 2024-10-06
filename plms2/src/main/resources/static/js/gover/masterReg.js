@@ -802,8 +802,6 @@ $(document).on("click", "#draftSaveBtn", function() {
 			if (adm_office==null || adm_office=="" ) adm_office=$(togiUls[i]).find("#admOfficeBtn").text();
 			var pipe_overlab_yn=$(togiUls[i]).find("input[name='pipe_overlap_yn']").val();
 			if (pipe_overlab_yn==null || pipe_overlab_yn=="" ) pipe_overlab_yn=$(togiUls[i]).find("#pipeOverlapYnBtn").text();
-			
-			
 	   		
 			var rep_flag="N";
 			if ($(togiUls[i]).find("input:checkbox[name='rep_flag']").is(":checked")==true){
@@ -878,8 +876,6 @@ $(document).on("click", "#draftSaveBtn", function() {
 		 object.office_mobile="";
 		 object.save_status="Q";
 			object.gubun="insert"; //신규등록
-		
-	
 	
     var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
     console.log("----------jsonobj------------");

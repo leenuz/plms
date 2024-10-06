@@ -1867,13 +1867,16 @@ public class goverController {
 						System.out.println("기본정보 params = " + params);
 						if (gubun.equals("insert")) {
 							mainService.InsertQuery("goverSQL.insertGoverMaster", params); // 기본정보 저장
-							HashMap memoParam=new HashMap();
-							memoParam.put("manage_no", str_GOVERNO);
-							memoParam.put("wname", USER_NAME);
-							memoParam.put("wid", USER_ID);
-							memoParam.put("wmemo", memo);
-							
-							mainService.InsertQuery("commonSQL.putMemoData", memoParam);
+							// 메모가 비어 있지 않은 경우에만 commonSQL.putMemoData 실행
+							if (memo != null && !memo.trim().isEmpty()) {
+								HashMap memoParam=new HashMap();
+								memoParam.put("manage_no", str_GOVERNO);
+								memoParam.put("wname", USER_NAME);
+								memoParam.put("wid", USER_ID);
+								memoParam.put("wmemo", memo);
+								
+								mainService.InsertQuery("commonSQL.putMemoData", memoParam);
+							}
 						} else if (gubun.equals("modify")) {
 
 							// 변경이력 등록
