@@ -143,7 +143,7 @@ div.dt-filter-spacer {
 										th:placeholder="${resultData.sun_gubun}" readonly
 										id="sun_gubun" class="notWriteInput" /></li>
 									<li class="addressInfoWidth content"><input type="text"
-										th:placeholder="${resultData.juso}" readonly id="address"
+										th:placeholder="${resultData.address}" readonly id="address"
 										class="notWriteInput" /></li>
 									<li class="content"><input type="text"
 										th:placeholder="${resultData.jijuk_area}" readonly
@@ -157,10 +157,11 @@ div.dt-filter-spacer {
 											<!-- name도 추가 -->
 											<select name="landTerminateSelectBox01"
 												id="landTerminateSelectBox01" hidden>
-												<option value="Y">Y</option>
-												<option value="N">N</option>
+												<option value="Y" th:selected="${#strings.trim(resultData.account_yn) == 'Y'}">Y</option>
+											<option value="N" th:selected="${#strings.trim(resultData.account_yn) == 'N'}">N</option>
 											</select>
 										</div>
+										
 										<section class="customSelectBox"
 											th:data-selected="${resultData.account_yn}">
 											<button class="customSelectView" id="account_yn_btn">[[${resultData.account_yn}]]</button>

@@ -52,7 +52,6 @@ public class MainController {
 			HttpSession session = request.getSession();
 			
 			Object checkId = request.getSession().getAttribute("userId");
-			System.out.println("TEST - checkId :: " + checkId);
 			
 			Enumeration<String> attributeNames = session.getAttributeNames();
 			
@@ -61,18 +60,18 @@ public class MainController {
 			
 			while(attributeNames.hasMoreElements()) {
 				String attributeName = attributeNames.nextElement();
-				System.out.println("Session Attribute name : " + attributeName + " || " + request.getSession().getAttribute(attributeName));
+//				System.out.println("Session Attribute name : " + attributeName + " || " + request.getSession().getAttribute(attributeName));
 				attrNames.add(attributeName);
 			}
 			
 			for(int i = 0 ; i < attrNames.size() ; i++ ) {
 				Object valueCheck = session.getAttribute(attrNames.get(i));
-				System.out.println("att :: " + attrNames.get(i) + " || " + valueCheck);
+//				System.out.println("att :: " + attrNames.get(i) + " || " + valueCheck);
 				attrArray.put(attrNames.get(i), valueCheck);
 			}
 			
 			JSONObject menuCheck = new JSONObject(attrArray);
-			log.info("menuCheck:"+menuCheck);
+//			log.info("menuCheck:"+menuCheck);
 			
 			JSONObject menuPlmsResultList = new JSONObject(menuCheck.get("plmsMenu").toString());
 			JSONArray menuResultList = menuPlmsResultList.getJSONArray("resultList");
@@ -80,18 +79,18 @@ public class MainController {
 			JSONObject menu2pmsResultList = new JSONObject(menuCheck.get("2pmsMenu").toString());
 			JSONArray menu2pmsResult = menu2pmsResultList.getJSONArray("resultList");
 			
-			System.out.println("================================================================================");
-			
-			System.out.println("plmsMenu :: " + menuCheck.get("plmsMenu").toString());
-			
-			System.out.println("================================================================================");
+//			System.out.println("================================================================================");
+//			
+//			System.out.println("plmsMenu :: " + menuCheck.get("plmsMenu").toString());
+//			
+//			System.out.println("================================================================================");
 			
 			for(int k = 0 ; k < menuResultList.length() ; k++ ) {
-				System.out.println(menuResultList.get(k).toString());
+//				System.out.println(menuResultList.get(k).toString());
 				menuList.add(menuResultList.get(k).toString());
 			}
 			
-			System.out.println("================================================================================");
+//			System.out.println("================================================================================");
 			
 			mav.addObject("resultList",resultList);
 			mav.addObject("menuList", menuList);
