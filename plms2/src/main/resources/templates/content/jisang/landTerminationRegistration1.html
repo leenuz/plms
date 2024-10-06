@@ -165,7 +165,7 @@ div.dt-filter-spacer {
 										th:placeholder="${resultData.sun_gubun}" readonly
 										id="sun_gubun" class="notWriteInput" /></li>
 									<li class="addressInfoWidth content"><input type="text"
-										th:placeholder="${resultData.juso}" readonly id="address"
+										th:placeholder="|${resultData.sido_nm} ${resultData.sgg_nm} ${resultData.emd_nm} ${resultData.ri_nm} ${resultData.jibun}|" readonly id="address"
 										class="notWriteInput" /></li>
 									<li class="content"><input type="text"
 										th:placeholder="${resultData.jijuk_area}" readonly
@@ -283,30 +283,33 @@ div.dt-filter-spacer {
 									th:placeholder="${resultData.dosiplan}" readonly
 									id="dosiplan" class="notWriteInput" /></li>
 								<li class="content">
+								[[${resultData.cancle_date}]]
+								<!-- 
 									<div class="dateInputWrap">
 										<input type="date"
 											th:data-placeholder="${resultData.cancle_date}"
 											th:value="${resultData.cancle_date}" id="cancle_date"
 											required aria-required="true" />
 									</div>
+								-->
 								</li>
 							</ul>
 						</div>
 						<div class="depth2">
 							<ul class="rowListBox">
 								<li class="title">취득금액</li>
-								<li class="content"><input type="text" placeholder="직접입력" disabled
+								<li class="content"><input type="text" placeholder="직접입력" readonly
 									th:value="${resultData.chuideuk_money}" id="chuideuk_money" />
 								</li>
 							</ul>
 							<ul class="rowListBox">
 								<li class="title">감가삼각충당금</li>
-								<li class="content"><input type="text" placeholder="직접입력" disabled
+								<li class="content"><input type="text" placeholder="직접입력" readonly
 									th:value="${resultData.gammoney}" id="gammoney" /></li>
 							</ul>
 							<ul class="rowListBox">
 								<li class="title">잔존가액</li>
-								<li class="content lastRowList"><input type="text" disabled
+								<li class="content lastRowList"><input type="text" readonly
 									placeholder="직접입력" th:value="${resultData.remainder_money}"
 									id="remainder_money" /></li>
 							</ul>
@@ -325,6 +328,9 @@ div.dt-filter-spacer {
 						<ul class="rowListBox">
 							<li class="title">해지보상유무</li>
 							<li class="content inputWrap">
+								<span th:if="${resultData.cancle_bosang_yn == 'Y'}" >유</span>
+								<span th:if="${resultData.cancle_bosang_yn == 'N'}" >무</span>
+								<!--
 								<div class="inputBox">
 									<input type="radio"
 										name="landTerminationRegistrationCompensation" value="Y"
@@ -337,6 +343,7 @@ div.dt-filter-spacer {
 										value="N"
 										th:checked="${resultData.cancle_bosang_yn == 'N'}" />무
 								</div>
+								-->
 							</li>
 						</ul>
 						<ul class="rowListBox">
@@ -344,7 +351,7 @@ div.dt-filter-spacer {
 							<li class="content lastRowList"><input type="text"
 								placeholder="직접입력"
 								th:value="${resultData.cancle_bosang_money}"
-								id="cancle_bosang_money" /></li>
+								id="cancle_bosang_money" readonly /></li>
 						</ul>
 					</div>
 				</div>
@@ -511,7 +518,15 @@ div.dt-filter-spacer {
 								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<button class="viewDetailButton">파일보기</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)>=1}"
+								th:onclick="openFilePopup([[${reqDoc1list[0].file_path}]])">
+									파일보기
+								</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)<1}">
+									파일보기
+								</button>
 								<!--<input type="file"
 								name="landTerminationRegistration_myPcFiles01"
 								id="landTerminationRegistration_myPcFiles01" /> <label
@@ -543,7 +558,15 @@ div.dt-filter-spacer {
 								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<button class="viewDetailButton">파일보기</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)>=2}"
+								th:onclick="openFilePopup([[${reqDoc1list[1].file_path}]])">
+									파일보기
+								</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)<2}">
+									파일보기
+								</button>
 								<!--
 								<input type="file"
 								name="landTerminationRegistration_myPcFiles02"
@@ -577,7 +600,15 @@ div.dt-filter-spacer {
 								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<button class="viewDetailButton">파일보기</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)>=3}"
+								th:onclick="openFilePopup([[${reqDoc1list[2].file_path}]])">
+									파일보기
+								</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)<3}">
+									파일보기
+								</button>
 								<!--
 								<input type="file"
 								name="landTerminationRegistration_myPcFiles03"
@@ -610,7 +641,15 @@ div.dt-filter-spacer {
 								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<button class="viewDetailButton">파일보기</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)>=4}"
+								th:onclick="openFilePopup([]${reqDoc1list[3].file_path}]])">
+									파일보기
+								</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)<4}">
+									파일보기
+								</button>
 								<!--<input type="file"
 								name="landTerminationRegistration_myPcFiles04"
 								id="landTerminationRegistration_myPcFiles04" /> <label
@@ -642,7 +681,15 @@ div.dt-filter-spacer {
 								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<button class="viewDetailButton">파일보기</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)>=5}"
+								th:onclick="openFilePopup([[${reqDoc1list[4].file_path}]])">
+									파일보기
+								</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)<5}">
+									파일보기
+								</button>
 								<!--
 								<input type="file"
 								name="landTerminationRegistration_myPcFiles05"
@@ -675,7 +722,15 @@ div.dt-filter-spacer {
 								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<button class="viewDetailButton">파일보기</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)>=6}"
+								th:onclick="openFilePopup([[${reqDoc1list[5].file_path}]]">
+									파일보기
+								</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)<6}">
+									파일보기
+								</button>
 								<!--
 								<input type="file"
 								name="landTerminationRegistration_myPcFiles06"
@@ -708,7 +763,15 @@ div.dt-filter-spacer {
 								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<button class="viewDetailButton">파일보기</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)>=7}"
+								th:onclick="openFilePopup([[${reqDoc1list[6].file_path}]])">
+									파일보기
+								</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)<7}">
+									파일보기
+								</button>
 								<!--  
 								<input type="file"
 								name="landTerminationRegistration_myPcFiles07"
@@ -741,7 +804,15 @@ div.dt-filter-spacer {
 								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<button class="viewDetailButton">파일보기</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)>=8}"
+								th:onclick="openFilePopup([[${reqDoc1list[7].file_path}]])">
+									파일보기
+								</button>
+								<button class="viewDetailButton"
+								th:if="${#lists.size(reqDoc1list)<8}">
+									파일보기
+								</button>
 								<!--  
 								<input type="file"
 								name="landTerminationRegistration_myPcFiles08"
