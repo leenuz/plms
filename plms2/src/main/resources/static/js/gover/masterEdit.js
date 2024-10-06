@@ -2085,7 +2085,7 @@ function selectFilesDownload() {
 				})
 				.catch(error =>{
 					console.error('다운로드 오류 : ', error);
-					alet(error.message);
+					alert(error.message);
 				});
 		}
 	}
