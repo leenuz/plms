@@ -278,7 +278,7 @@ function loadDataTable(params) {
 			datatype: "json",
 			data: function(d) {
 				//d=params;
-				d.jisa = ljsIsNull(jisaCheck) ? '' : jisaCheck;
+				d.jisa = ljsIsNull(jisaCheck) ? ljsIsNull(params.jisa) ? '' : params.jisa : jisaCheck;
 				d.manage_no = params.manage_no;
 				d.souja = params.souja;
 				d.jasan_no = params.jasan_no;
