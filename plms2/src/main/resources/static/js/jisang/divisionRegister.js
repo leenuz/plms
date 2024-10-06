@@ -866,3 +866,51 @@ $(document).on("click","#sangsinBtn",function(){
     // 새 창의 문서 닫기 (렌더링을 완료)
     newWindow.document.close();
 })
+
+
+
+$(document).on("click","#bunhalComplete",function(){
+		
+		var datas={"jisangno":$("#idx").val()}
+		console.log(datas);
+	url="/land/jisang/insertJisangBunhalComplete"; 
+				   $.ajax({
+				   			
+				   				url:url,
+				   				type:'POST',
+				   				contentType:"application/json",
+				   				data:JSON.stringify(datas),
+				   				
+				   				dataType:"json",
+				   				beforeSend:function(request){
+				   					console.log("beforesend ........................");
+				   					loadingShow();
+				   				},
+				   				success:function(response){
+				   					loadingHide();
+				   					console.log(response);
+				   					if (response.success="Y"){
+				   						console.log("response.success Y");
+				   						//console.log("response.resultData length:"+response.resultData.length);
+										alert("정상적으로 등록 되었습니다.");
+				   						/*$("#popup_bg").show();
+				   						$("#popup").show(500);
+				   						//$("#addrPopupLayer tbody td").remove();
+				   						for(var i=0;i<response.resultData.length;i++){
+				   							$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+				   						}*/
+				   					}
+				   					else {
+				   						console.log("response.success N");
+				   					}
+				   				},
+				   				error:function(jqXHR,textStatus,errorThrown){
+				   					alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+									return false;
+				   				}
+				   			
+				   		}); 
+})
+
+
+

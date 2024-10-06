@@ -1955,6 +1955,7 @@ log.info("data:"+data.get(0));
 
 			params.put("idx",idx);
 			params.put("manage_no",idx);
+			params.put("MANAGE_NO",idx);
 			params.put("JISANGNO",idx);
 			params.put("index",index);
 			log.info("params:"+params);
@@ -2681,10 +2682,17 @@ log.info("data:"+data.get(0));
 		}
 		log.info("params:"+params);
 
-		Object count= mainService.selectCountQuery("jisangSQL.selectJisangListCount02_2", params);
+//		Object count= mainService.selectCountQuery("jisangSQL.selectJisangListCount02_2", params);
+//		int total=(int)count;
+//
+//		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListOrg02_2",params);
+		
+		Object count= mainService.selectCountQuery("jisangSQL.selectJisangTerminationListCount", params);
 		int total=(int)count;
 
-		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListOrg02_2",params);
+		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangTerminationList",params);
+		
+		
 		log.info("list: " + list);
 		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangList",params);
 		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
@@ -6280,28 +6288,30 @@ log.info("map:"+map);
 					 ************************/
 
 					HashMap Addparams = new HashMap();
-					String wonjibeonYn = requestParamsObj.getString("wonjibeonYn");
+					String wonjibeonYn = requestParamsObj.has("wonjibeonYn")?requestParamsObj.getString("wonjibeonYn"):"N";
 
-					String sidonm = comm.nvl((String) bunhal_list.get(i).get("sido_nm"));
-					String gungunm = comm.nvl((String) bunhal_list.get(i).get("sgg_nm"));
-					String dongnm = comm.nvl((String) bunhal_list.get(i).get("emd_nm"));
-					String rinm = comm.nvl((String) bunhal_list.get(i).get("ri_nm"));
-					String jibun = comm.nvl((String) bunhal_list.get(i).get("jibun"));
-					String pnu = comm.nvl((String) bunhal_list.get(i).get("pnu"));
-					String jijukarea = comm.evl(bunhal_list.get(i).get("jijuk_area").toString(), "0");
-					String pyeonibarea = comm.evl((String) bunhal_list.get(i).get("pyeonib_area").toString(), "0");
-					String jasanNo = comm.evl((String) bunhal_list.get(i).get("jasan_no"), "0");
-					String ADDRCODE = comm.nvl((String) bunhal_list.get(i).get("addrcode"));
-					String jisanm = comm.nvl((String) bunhal_list.get(i).get("jisa"));
-					String goverownyn = comm.nvl((String) bunhal_list.get(i).get("gover_own_yn"));
-					String jimoktext = comm.nvl((String) bunhal_list.get(i).get("jimok_text"));
+					String sidonm = comm.nvl((String) bunhal_list.get(i).get("jb_sido_nm"));
+					String gungunm = comm.nvl((String) bunhal_list.get(i).get("jb_sgg_nm"));
+					String dongnm = comm.nvl((String) bunhal_list.get(i).get("jb_emd_nm"));
+					String rinm = comm.nvl((String) bunhal_list.get(i).get("jb_ri_nm"));
+					String jibun = comm.nvl((String) bunhal_list.get(i).get("jb_jibun"));
+					String pnu = comm.nvl((String) bunhal_list.get(i).get("jb_pnu"));
+					//String jijukarea = comm.evl(bunhal_list.get(i).get("jijuk_area").toString(), "0");
+					String jijukarea = bunhal_list.get(i).get("jb_jijuk_area") != null ? bunhal_list.get(i).get("jb_jijuk_area").toString() : "0";
+					String pyeonibarea = bunhal_list.get(i).get("jb_pyeonib_area")!=null?bunhal_list.get(i).get("jb_pyeonib_area").toString():"0";
+					//String pyeonibarea = comm.evl((String) bunhal_list.get(i).get("pyeonib_area").toString(), "0");
+					String jasanNo = comm.evl((String) bunhal_list.get(i).get("jb_jasan_no"), "0");
+					String ADDRCODE = comm.nvl((String) bunhal_list.get(i).get("jb_addrcode"));
+					String jisanm = comm.nvl((String) bunhal_list.get(i).get("jb_jisa"));
+					String goverownyn = comm.nvl((String) bunhal_list.get(i).get("jb_gover_own_yn"));
+					String jimoktext = comm.nvl((String) bunhal_list.get(i).get("jb_jimok_text"));
 
-					modifyReason += comm.nvl((String) bunhal_list.get(0).get("sido_nm")) + " ";
-					modifyReason += comm.nvl((String) bunhal_list.get(i).get("sgg_nm")) + " ";
-					modifyReason += comm.nvl((String) bunhal_list.get(i).get("emd_nm")) + " ";
-					modifyReason += comm.nvl((String) bunhal_list.get(i).get("ri_nm")) + " ";
-					modifyReason += comm.nvl((String) bunhal_list.get(i).get("jibun")) + " ";
-					modifyReason += "(지상권 번호:" + comm.nvl((String) bunhal_list.get(0).get("jisang_no")) + ")에서";
+					modifyReason += comm.nvl((String) bunhal_list.get(0).get("jb_sido_nm")) + " ";
+					modifyReason += comm.nvl((String) bunhal_list.get(i).get("jb_sgg_nm")) + " ";
+					modifyReason += comm.nvl((String) bunhal_list.get(i).get("jb_emd_nm")) + " ";
+					modifyReason += comm.nvl((String) bunhal_list.get(i).get("jb_ri_nm")) + " ";
+					modifyReason += comm.nvl((String) bunhal_list.get(i).get("jb_jibun")) + " ";
+					modifyReason += "(지상권 번호:" + comm.nvl((String) bunhal_list.get(0).get("jb_jisang_no")) + ")에서";
 
 					modifyReason2 = " ";
 					if (!sidonm.equals(""))
@@ -6354,6 +6364,7 @@ log.info("map:"+map);
 					Addparams.put("USER_NAME", USER_NAME);
 					Addparams.put("CONT", modifyReason + modifyReason2);
 					// System.out.println("modifyReason="+modifyReason+modifyReason2);
+					log.info("Addparams:"+Addparams);
 					mainService.InsertQuery("jisangSQL.insertJisangBunhalMasterNew", Addparams); // 기본정보
 																									// 저장
 					mainService.InsertQuery("jisangSQL.insertJisangModifyHistory", Addparams); // 변경이력

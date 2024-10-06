@@ -343,19 +343,22 @@ return nRow;
 				    }
 				}
 			},//해지여부
-			{ data: "cancel_date" },//해지요청일
+			{ data: "cancle_date" },//해지요청일
 
 			{
-				data: "cancel_date",
+				data: "cancle_date",
 				render: function(data, type, row, meta) {
 					console.log("data : " + data);
 					console.log("row.cancel_yn : " + row.cancel_yn);
+					console.log("row.cancel_yn : " + row.cancel_yn);
 					if (row.cancel_yn === 'N') {
-						return ` <button class="regisRemoveBtn">해지등록</button>`;
+						if (row.cancle_status==="임시저장") return ` <button class="viewDetailButton">상세보기</button>`;
+						else return ` <button class="regisRemoveBtn">해지등록</button>`;
 					} else if (row.cancel_yn === 'Y') {
 						return ` <button class="viewDetailButton">상세보기</button>`;
 					} else {
-						return ` <button class="regisRemoveBtn">해지등록</button>`;
+						if (row.cancle_status==="임시저장") return ` <button class="regisRemoveBtn">상세보기</button>`;
+						else return ` <button class="regisRemoveBtn">해지등록</button>`;
 					}
 					//                            return ` <button class="viewDetailButton">상세보기</button>
 					//                                     <button class="regisRemoveBtn">해지등록</button>
