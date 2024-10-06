@@ -348,7 +348,6 @@ function loadDataTable(params) {
 			{ data: "idx" }
 		],
 		columnDefs: [
-
 			{ "className": "dt-head-center", "targets": "_all" },
 			{ className: 'dt-center', "targets": "_all" },
 			{ targets: [0], width: "50px" },
@@ -367,15 +366,15 @@ function loadDataTable(params) {
 					return rtn;
 				}
 			},
-			{ targets: [9], width: "100px" }, //등기여부
-			{ targets: [10], width: "200px" }, //등기일
-			{ targets: [11], width: "150px" },
+			{ targets: [9], width: "100px" }, // 기안자
+			{ targets: [10], width: "200px" }, //사용승낙일
+			{ targets: [11], width: "150px" }, // 관리번호
 			{
 				targets: [12], width: "100px"
 				, render: function(data, type, row, meta) {
 					return "<button class='btnDesign'>위치보기</button> ";
 				}
-			},
+			}, //지도
 			{
 				targets: [13]
 				, width: "100px"
@@ -383,7 +382,7 @@ function loadDataTable(params) {
 
 					return "<button class='btnDesign'>문서보기</button> ";
 				}
-			}, //지도보기
+			}, //ECHO문서보기
 
 
 		]

@@ -178,8 +178,8 @@ margin:10px;
                                 <div class="hiddenSelectBox">
                                     <!-- name도 추가 -->
                                     <select name="landMergeSelectBox01" id="landMergeSelectBox01" hidden>
-                                        <option value="국유지">국유지</option>
-                                        <option value="사유지">사유지</option>
+                                        <option value="국유지" th:selected="${val.jm_toji_type=='국유지'}">국유지</option>
+                                        <option value="사유지" th:selected="${val.jm_toji_type=='사유지'}">사유지</option>
                                     </select>
                                 
                                 </div>
