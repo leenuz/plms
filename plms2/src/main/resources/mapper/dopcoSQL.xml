@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		dom_jimok_text as JIMOK_TEXT,
 		TO_CHAR(dom_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE
 		FROM
-		DOPCO_MASTER
+		DOPCO_MASTER dom
 		WHERE
 		1 = 1
 		AND dom_CANCLE_YN !='Y'
@@ -84,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		dom_jimok_text as JIMOK_TEXT,
 		TO_CHAR(dom_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE
 		FROM
-		DOPCO_MASTER
+		DOPCO_MASTER dom
 		WHERE
 		1 = 1
 		and (dom_CANCLE_YN !='Y' or dom_cancle_yn IS NULL)
