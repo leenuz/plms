@@ -741,11 +741,16 @@ $(document).on("click", "#completeSoujaBtn", function() {
 
 	if ($(input).eq(0).val() != "" && $(input).eq(1).val() != "" && $(input).eq(2).val() != "" && $(input).eq(3).val() != "") {
 		//	alert("소유자 정보를 정확하게 입력해주세요!");
-		$(thisUl).removeClass("editing");
-		$(thisUl).find('li input').attr('readonly', true);
-		if (editingCount < 3) {
+		/*$(thisUl).removeClass("editing");
+		$(thisUl).find('li input').attr('readonly', true);*/
+		//$(addUl).removeClass("editing");
+		var addTargetUl='<ul class="contents editing" id="soujaUl">' + addUl + '</ul>';
+		$(addTargetUl).find('li input').attr('readonly', false);
+		$("#soujaDiv").append(addTargetUl);
+		
+		/*if (editingCount < 3) {
 			$("#soujaDiv").append('<ul class="contents editing" id="soujaUl">' + addUl + '</ul>');
-		}
+		}*/
 
 		//return;
 	}

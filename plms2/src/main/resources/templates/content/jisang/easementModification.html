@@ -364,9 +364,9 @@
 								</li>
 								<li class="content06 content btnBox">
 									<!-- 수정입력할때 -->
-									<div class="editBefore">
+									<div class="editAfter">
 										<div class="btnWrap">
-											<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
+											<button class="addBtn miniBtn" id="completeSoujaBtn">추가</button>
 										</div>
 										<div class="btnWrap">
 											<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
@@ -374,11 +374,11 @@
 									</div>
 
 									<!-- 수정완료할 때 -->
-									<div class="editAfter">
+									<!-- <div class="editAfter">
 										<div class="newBtnWrap">
 											<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
 										</div>
-									</div>
+									</div> -->
 								</li>
 							</ul>
 
@@ -423,7 +423,7 @@
 							</ul>
 
 							<!--데이터가 1개 이상일 때-->
-							<ul class="contents editing" th:if="${soujaList.size() > 0}" th:each="souja : ${soujaList}" id="soujaUl">
+							<ul class="contents editing" th:if="${soujaList.size() > 0}" th:each="souja,iterStat : ${soujaList}" id="soujaUl">
 								<li class="content01 content editSpace">
 									<input type="hidden" name="addKey" value="add">
 									<input type="hidden" name="soujaJibunOrg" th:value="${souja.js_jibun}">
@@ -450,16 +450,9 @@
 									<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2"
 										th:value="${souja.js_home_number}">
 								</li>
-								<li class="content06 content btnBox">
+								<li class="content06 content btnBox" th:if="${iterStat.index==0}">
 									<!-- 수정입력할때 -->
-									<div class="editBefore">
-										<div class="btnWrap">
-											<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
-										</div>
-										<div class="btnWrap">
-											<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
-										</div>
-									</div>
+								
 
 									<!-- 수정완료할 때 -->
 									<div class="editAfter">
@@ -467,6 +460,19 @@
 											<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
 										</div>
 									</div>
+								</li>
+								<li class="content06 content btnBox" th:unless="${iterStat.index==0}">
+									<!-- 수정입력할때 -->
+									<div class="editAfter">
+										<div class="btnWrap">
+											<button class="addBtn miniBtn" id="completeSoujaBtn">추가</button>
+										</div>
+										<div class="btnWrap">
+											<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
+										</div>
+									</div>
+
+									
 								</li>
 							</ul>
 
