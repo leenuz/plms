@@ -3763,7 +3763,7 @@ AND jmt.jmt_rep_jisang_no=#{idx}
 	
 	<select id="selectJisangDivisionListCount" parameterType="HashMap" resultType="integer">
 		SELECT COUNT(*)
-FROM JISANG_MASTER JM left outer join (
+		FROM JISANG_MASTER JM left outer join (
 		SELECT
 		*
 		FROM
@@ -3794,17 +3794,35 @@ FROM JISANG_MASTER JM left outer join (
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESSCODE)">
 			AND JM.jm_ADDRCODE LIKE '${ADDRESSCODE}%'
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JIBEON)">
-			AND JM.jm_JIBUN LIKE '${JIBEON}%'
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)">
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)">
 			AND JM.jm_JISA = #{JISA}
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SOYU)">
-			AND JS.js_SOUJA_NAME LIKE '%${SOYU}%'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(souja)">
+			AND JS.js_SOUJA_NAME LIKE '%${souja}%'
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JASAN_NO)">
-			AND JM.jm_JASAN_NO LIKE '%'|| #{JASAN_NO} ||'%'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)">
+			AND JM.jm_JASAN_NO LIKE '%'|| #{jasan_no} ||'%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
+			and JM.jm_account_yn=#{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND JM.jm_sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND JM.jm_sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND JM.jm_emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND JM.jm_ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)">
+			AND JM.jm_JIBUN LIKE '${jibun}%'
 		</if>
 		
 	</select>
@@ -3826,7 +3844,7 @@ FROM JISANG_MASTER JM left outer join (
 		,JM.jm_emd_nm as EMD_NM
 		,JM.jm_ri_nm as RI_NM
 		,JM.jm_jibun as JIBUN
-		,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
+		,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
 		,JM.jm_jasan_no as JASAN_NO
 		,JM.jm_jisa as JISA
 		,JM.jm_jimok_text AS jimok_text
@@ -3877,9 +3895,6 @@ FROM JISANG_MASTER JM left outer join (
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESSCODE)">
 			AND JM.jm_ADDRCODE LIKE '${ADDRESSCODE}%'
 		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)">
-			AND JM.jm_JIBUN LIKE '${jibun}%'
-		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)">
 			AND JM.jm_JISA = #{jisa}
 		</if>
@@ -3889,8 +3904,27 @@ FROM JISANG_MASTER JM left outer join (
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)">
 			AND JM.jm_JASAN_NO LIKE '%'|| #{jasan_no} ||'%'
 		</if>
-		
-		
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
+			and JM.jm_account_yn=#{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND JM.jm_sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND JM.jm_sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND JM.jm_emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND JM.jm_ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)">
+			AND JM.jm_JIBUN LIKE '${jibun}%'
+		</if>
 			) AA WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 			ORDER BY AA.${orderCol} ${desc}

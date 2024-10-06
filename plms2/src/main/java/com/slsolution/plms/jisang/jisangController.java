@@ -2795,7 +2795,7 @@ log.info("data:"+data.get(0));
 
 		String jisa = req.getParameter("jisa");
 		String manage_no = req.getParameter("manage_no");
-		String address=req.getParameter("saddr");
+		String address = req.getParameter("saddr");
 		String sido_nm = req.getParameter("sido_nm");
 		String sgg_nm = req.getParameter("sgg");
 		String emd_nm = req.getParameter("emd");
