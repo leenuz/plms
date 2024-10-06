@@ -471,11 +471,17 @@ $(document).on("click", "#finalBtn", function() {
 	for (var i = 0; i < soujaUls.length; i++) {
 		console.log(soujaUls[i]);
 		console.log($(soujaUls[i]).find("#soujaJibun").val());
-		var soujaJibun = $(soujaUls[i]).find("#soujaJibun").val();
+		
+		var soujaJibun = $(soujaUls[i]).find("input[name='soujaJibun']").val();
+				var soujaName = $(soujaUls[i]).find("input[name='soujaName']").val();
+				var soujaAddress = $(soujaUls[i]).find("input[name='soujaAddress']").val();
+				var soujaContact1 = $(soujaUls[i]).find("input[name='soujaContact1']").val();
+				var soujaContact2 = $(soujaUls[i]).find("input[name='soujaContact2']").val();
+		/*var soujaJibun = $(soujaUls[i]).find("#soujaJibun").val();
 		var soujaName = $(soujaUls[i]).find("#soujaName").val();
 		var soujaAddress = $(soujaUls[i]).find("#soujaAddress").val();
 		var soujaContact1 = $(soujaUls[i]).find("#soujaContact1").val();
-		var soujaContact2 = $(soujaUls[i]).find("#soujaContact2").val();
+		var soujaContact2 = $(soujaUls[i]).find("#soujaContact2").val();*/
 
 		soujaJibun = (soujaJibun == "undefined" || soujaJibun == "" || soujaJibun == null) ? "" : soujaJibun;
 		soujaName = (soujaName == "undefined" || soujaName == "" || soujaName == null) ? "" : soujaName;

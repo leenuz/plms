@@ -5394,6 +5394,7 @@ log.info("gubun:"+gubun);
 				params.put("PERMITTED_YN", permitted_yn);				
 				params.put("PIPEYN", pipeOverlapYn);
 				params.put("ACCOUNTYN", account_yn);
+				
 
 				log.info("params: "+params);
 				

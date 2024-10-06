@@ -2580,7 +2580,7 @@ WHERE
 			jm_DEUNGGI_DATE,
 		</if>
 		jm_DEUNGGI_NO, jm_DEUNGGISO, jm_JASAN_NO, jm_ADDRCODE, jm_PNU, jm_USE_STATE, jm_SPECIAL_CONT, jm_LOCATION, jm_JIMOK_TEXT
-		, jm_SAVE_STATUS, jm_PERMITTED_YN,jm_PIPE_YN,jm_account_yn)
+		, jm_SAVE_STATUS, jm_PERMITTED_YN,jm_PIPE_YN,jm_account_yn,jm_manage_yn)
 		Values
 		(#{JISANGNO}, #{SINM}, #{GUNGUNM}, #{DONGNM}, #{RINM}, #{JIBUN}, #{JISANM}, #{GOVEROWNYN},
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CD_STARTDAY)" >
@@ -2593,7 +2593,7 @@ WHERE
 			TO_DATE(#{DGSTARTDAY}, 'YYYY-MM-DD') ,
 		</if>
 		#{DEUNGGINO}, #{DEUNGGISO},
-		#{JASANNO}, #{ADDRCODE}, #{PNU} ,#{USESTATE} , #{SPECIALCONT} , #{LOCATION}, #{JIMOK}, #{SAVE_STATUS}, #{PERMITTED_YN},#{PIPEYN},#{ACCOUNTYN})
+		#{JASANNO}, #{ADDRCODE}, #{PNU} ,#{USESTATE} , #{SPECIALCONT} , #{LOCATION}, #{JIMOK}, #{SAVE_STATUS}, #{PERMITTED_YN},#{PIPEYN},#{ACCOUNTYN},#{MANAGE_YN})
 	</insert>
 	
 	<insert id="insertJisangMasterTmp" parameterType="HashMap">
@@ -3136,6 +3136,7 @@ WHERE 1=1
 	</if>
 
 AND jmt.jmt_rep_jisang_no=#{idx}
+
 	</select>
 	
 	
