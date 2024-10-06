@@ -2,12 +2,12 @@
 var table;
      
 $(document).ready(function() {
-  console.log("jisang/menu02_5.js start");
-  /*$('#jisa').niceSelect();*/
-//testAjax();
-//init_Table();
-loadDataTable("");
-//MergeGridCells();
+	console.log("jisang/menu02_5.js start");
+	/*$('#jisa').niceSelect();*/
+	//testAjax();
+	//init_Table();
+	loadDataTable("");
+	//MergeGridCells();
 //SummerizeTable('#userTable');
 //MergeGridCells1('userTable',[1]);
 });

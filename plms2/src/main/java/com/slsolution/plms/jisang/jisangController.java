@@ -1866,18 +1866,30 @@ log.info("data:"+data.get(0));
 	    public ModelAndView menu02_4(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+			
+			/*******************************/
+            //받은 세션 Map으로 전환
+            Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+            /*******************************/
+			
 			ModelAndView mav=new ModelAndView();
 
 			HashMap params = new HashMap();
-			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+			params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
+			
+			ArrayList<HashMap> list= new ArrayList<HashMap>();
 			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 			ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 
-			mav.addObject("jisaList",jisalist);
-			mav.addObject("resultJimokList",jimoklist);
-			mav.addObject("sidoList",sidolist);
+			mav.addObject("jisaList", jisalist);
+			mav.addObject("resultJimokList", jimoklist);
+			mav.addObject("sidoList", sidolist);
+			//241006 - 지사정보 추가
+			mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
+			
 			mav.setViewName("content/jisang/menu02_4");
+			
 			return mav;
 		}
 		
@@ -6713,6 +6725,11 @@ log.info("map:"+map);
 		@RequestMapping(value = "/getJisangCancelListData", method = { RequestMethod.GET, RequestMethod.POST })
 		public ModelAndView getJisangCancelListData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 			ModelAndView mav=new ModelAndView();
+			
+			/*******************************/
+            //받은 세션 Map으로 전환
+            Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+            /*******************************/
 		
 			ArrayList<HashMap>  list=new ArrayList<HashMap>();
 			//log.info("httpRequest:"+Arrays.toString(httpRequest));
@@ -6725,25 +6742,25 @@ log.info("map:"+map);
 			
 			String str_result = "Y";
 			String str_STATUS = "";
-			 System.out.println("=========폐쇄된지번보기=======");
-			 System.out.println("idx=" + idx);
-			 
-		
-
+			System.out.println("=========폐쇄된지번보기=======");
+			System.out.println("idx=" + idx);
+			
 			try {
 				HashMap params = new HashMap();
 				params.put("idx", idx);
-				list=mainService.selectQuery("jisangSQL.selectJisangCancelData", params);
+				params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
+				
+				list = mainService.selectQuery("jisangSQL.selectJisangCancelData", params);
 
 			} catch (Exception e) {
-				
+				e.printStackTrace();
 			}
+			
 			log.info("list:"+list);
+			
 			mav.addObject("list",list);
 			mav.setViewName("content/jisang/menu02_4 :: #searchResultsPopup");
+			
 			return mav;
 		}
-
-
-
 }
