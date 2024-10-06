@@ -278,7 +278,7 @@ function loadDataTable(params) {
 			data: function(d) {
 				//d=params;
 
-				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.jisa = ljsIsNull(params.jisa) ? ljsIsNull(params.jisa) ? '' : params.jisa : params.jisa;
 				d.status = ljsIsNull(params.status) ? '' : params.status;
 				d.jibun = ljsIsNull(params.jibun) ? '' : params.jibun;
 
