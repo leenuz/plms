@@ -785,3 +785,10 @@ function openFilePopup(filePath) {
     // 새 창 열기
     window.open(serverUrl, '파일 보기', popupOptions);
 }
+
+function downloadFile(filePath, fileName) {
+      const url = `/api/download?filePath=${filePath}&fileName=${encodeURIComponent(fileName)}`;
+	 //  const url = `/api/download?filePath=${filePath}&fileName=${fileName}`;
+	   console.log(url);
+       window.open(url, '_blank');  // 새 창이나 새 탭에서 파일 다운로드
+   }

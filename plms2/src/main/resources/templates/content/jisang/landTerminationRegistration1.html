@@ -95,6 +95,27 @@ div.dt-filter-spacer {
 	height: 214px;
 	border: 1px solid black;
 }
+
+.fileDownloadBtn {
+    width: 116px;
+    height: 27px;
+    border-radius: 20px;
+    background: #4e5871;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+ }
+ .downloadIcon {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    background: url(/assets/media/menu02/images/download.png) no-repeat center;
+    background-size: contain;
+}
 </style>
 <title>지상권 해지 등록</title>
 </head>
@@ -154,8 +175,9 @@ div.dt-filter-spacer {
 										id="gover_own_yn" class="notWriteInput" /></li>
 									<!-- 회계처리 필요여부 -->
 									<li class="content selectContentArea">
+									[[${resultData.account_yn}]]
+									<!--  
 										<div class="hiddenSelectBox">
-											<!-- name도 추가 -->
 											<select name="landTerminateSelectBox01"
 												id="landTerminateSelectBox01" hidden>
 												<option value="Y">Y</option>
@@ -168,6 +190,7 @@ div.dt-filter-spacer {
 											<ul class="customSelectBtns">
 											</ul>
 										</section>
+									-->
 									</li>
 								</ul>
 							</div>
@@ -272,18 +295,18 @@ div.dt-filter-spacer {
 						<div class="depth2">
 							<ul class="rowListBox">
 								<li class="title">취득금액</li>
-								<li class="content"><input type="text" placeholder="직접입력"
+								<li class="content"><input type="text" placeholder="직접입력" disabled
 									th:value="${resultData.chuideuk_money}" id="chuideuk_money" />
 								</li>
 							</ul>
 							<ul class="rowListBox">
 								<li class="title">감가삼각충당금</li>
-								<li class="content"><input type="text" placeholder="직접입력"
+								<li class="content"><input type="text" placeholder="직접입력" disabled
 									th:value="${resultData.gammoney}" id="gammoney" /></li>
 							</ul>
 							<ul class="rowListBox">
 								<li class="title">잔존가액</li>
-								<li class="content lastRowList"><input type="text"
+								<li class="content lastRowList"><input type="text" disabled
 									placeholder="직접입력" th:value="${resultData.remainder_money}"
 									id="remainder_money" /></li>
 							</ul>
@@ -332,13 +355,15 @@ div.dt-filter-spacer {
 				<form name="uploadForm" method="post" enctype="multipart/form-data">
 					<div class="subTitle">
 						첨부파일
+						<!-- 
 						<div class="fileBtnWrap">
 							<input type="file" name="fileUpload"
 								id="landTerminationRegistration_myPcFiles"> <label
 								for="landTerminationRegistration_myPcFiles">내 PC</label>
 						</div>
+						 -->
 					</div>
-
+					<!-- 
 					<div class="fileUploadWrap">
 						<div class="fileUploadBox">
 							<img src="/assets/media/menu02/images/file-upload.png"
@@ -346,6 +371,7 @@ div.dt-filter-spacer {
 							<p>파일을 마우스로 끌어오세요.</p>
 						</div>
 					</div>
+					 -->
 					<!--<div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>-->
 					<!--<div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;"><div id="flist"></div></div>-->
 				</form>
@@ -381,11 +407,12 @@ div.dt-filter-spacer {
 						</div>
 					</div>
 				</div>
-
+				<!-- 
 				<div class="btnWrap">
 					<button class="fileDelBtn delBtn" id="deleteSelectedBtn">선택파일
 						삭제</button>
 				</div>
+				 -->
 			</section>
 
 			<section class="reasonTermination">
@@ -395,7 +422,7 @@ div.dt-filter-spacer {
 					<div class="depth1">
 						<ul class="rowListBox">
 							<li class="title">해지사유</li>
-							<li class="content inputWrap"><input type="text"
+							<li class="content inputWrap"><input type="text" readonly
 								placeholder="직접입력 (최소 10자 이상)"
 								th:value="${resultData.cancle_reason}" id="cancle_reason" />
 							</li>
@@ -405,7 +432,7 @@ div.dt-filter-spacer {
 						<ul class="rowListBox">
 							<li class="title">검토의견</li>
 							<li class="content lastRowList"><textarea
-									placeholder="직접입력 (최소 10자 이상)"
+									placeholder="직접입력 (최소 10자 이상)" readonly
 									th:text="${resultData.cancle_comment}" id="cancle_comment"></textarea>
 
 							</li>
@@ -456,8 +483,8 @@ div.dt-filter-spacer {
 					<div class="depth2" id="req_Doc_Div">
 						<ul class="titles">
 							<li class="title">파일명</li>
-							<li class="title delContWidth">삭제</li>
-							<li class="title selectFileWidth">파일선택</li>
+							<li class="title delContWidth">다운로드</li>
+							<li class="title selectFileWidth">파일보기</li>
 						</ul>
 
 						<ul class="contents">
@@ -470,13 +497,26 @@ div.dt-filter-spacer {
 								th:if="${#lists.size(reqDoc1list)<1}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
 							<li class="content delContWidth">
+								<!--  
 								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+								-->
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)>=1}"
+								th:onclick="downloadFile('${reqDoc1list[0].file_path}', '${reqDoc1list[0].file_nm}')">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)<1}">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								<button class="viewDetailButton">파일보기</button>
+								<!--<input type="file"
 								name="landTerminationRegistration_myPcFiles01"
 								id="landTerminationRegistration_myPcFiles01" /> <label
-								for="landTerminationRegistration_myPcFiles01">파일선택</label>
+								for="landTerminationRegistration_myPcFiles01">파일보기</label>
+								-->
 							</li>
 						</ul>
 						<ul class="contents">
@@ -489,13 +529,27 @@ div.dt-filter-spacer {
 								th:if="${#lists.size(reqDoc1list)<2}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
 							<li class="content delContWidth">
+							<!-- 
 								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							 -->
+							 <button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)>=2}"
+								th:onclick="downloadFile('${reqDoc1list[1].file_path}', '${reqDoc1list[1].file_nm}')">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)<2}">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								<button class="viewDetailButton">파일보기</button>
+								<!--
+								<input type="file"
 								name="landTerminationRegistration_myPcFiles02"
 								id="landTerminationRegistration_myPcFiles02" /> <label
-								for="landTerminationRegistration_myPcFiles02">파일선택</label>
+								for="landTerminationRegistration_myPcFiles02">파일보기</label>
+								-->
 							</li>
 						</ul>
 						<ul class="contents">
@@ -509,13 +563,27 @@ div.dt-filter-spacer {
 								th:if="${#lists.size(reqDoc1list)<3}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
 							<li class="content delContWidth">
+								<!-- 
 								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							 -->
+							 <button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)>=3}"
+								th:onclick="downloadFile('${reqDoc1list[2].file_path}', '${reqDoc1list[2].file_nm}')">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)<3}">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								<button class="viewDetailButton">파일보기</button>
+								<!--
+								<input type="file"
 								name="landTerminationRegistration_myPcFiles03"
 								id="landTerminationRegistration_myPcFiles03" /> <label
-								for="landTerminationRegistration_myPcFiles03">파일선택</label>
+								for="landTerminationRegistration_myPcFiles03">파일보기</label>
+								-->
 							</li>
 						</ul>
 						<ul class="contents">
@@ -528,13 +596,26 @@ div.dt-filter-spacer {
 								th:if="${#lists.size(reqDoc1list)<4}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
 							<li class="content delContWidth">
+							<!-- 
 								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							 -->
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)>=4}"
+								th:onclick="downloadFile('${reqDoc1list[3].file_path}', '${reqDoc1list[3].file_nm}')">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)<4}">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								<button class="viewDetailButton">파일보기</button>
+								<!--<input type="file"
 								name="landTerminationRegistration_myPcFiles04"
 								id="landTerminationRegistration_myPcFiles04" /> <label
-								for="landTerminationRegistration_myPcFiles04">파일선택</label>
+								for="landTerminationRegistration_myPcFiles04">파일보기</label>
+								-->
 							</li>
 						</ul>
 						<ul class="contents">
@@ -547,13 +628,27 @@ div.dt-filter-spacer {
 								th:if="${#lists.size(reqDoc1list)<5}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
 							<li class="content delContWidth">
+								<!-- 
 								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							 -->
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)>=5}"
+								th:onclick="downloadFile('${reqDoc1list[4].file_path}', '${reqDoc1list[4].file_nm}')">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)<5}">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								<button class="viewDetailButton">파일보기</button>
+								<!--
+								<input type="file"
 								name="landTerminationRegistration_myPcFiles05"
 								id="landTerminationRegistration_myPcFiles05" /> <label
-								for="landTerminationRegistration_myPcFiles05">파일선택</label>
+								for="landTerminationRegistration_myPcFiles05">파일보기</label>
+								-->
 							</li>
 						</ul>
 						<ul class="contents">
@@ -566,13 +661,27 @@ div.dt-filter-spacer {
 								th:if="${#lists.size(reqDoc1list)<6}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
 							<li class="content delContWidth">
+								<!-- 
 								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							 -->
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)>=6}"
+								th:onclick="downloadFile('${reqDoc1list[5].file_path}', '${reqDoc1list[5].file_nm}')">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)<6}">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								<button class="viewDetailButton">파일보기</button>
+								<!--
+								<input type="file"
 								name="landTerminationRegistration_myPcFiles06"
 								id="landTerminationRegistration_myPcFiles06" /> <label
-								for="landTerminationRegistration_myPcFiles06">파일선택</label>
+								for="landTerminationRegistration_myPcFiles06">파일보기</label>
+								-->
 							</li>
 						</ul>
 						<ul class="contents">
@@ -585,14 +694,27 @@ div.dt-filter-spacer {
 								th:if="${#lists.size(reqDoc1list)<7}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
 							<li class="content delContWidth">
+								<!-- 
 								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							 -->
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)>=7}"
+								th:onclick="downloadFile('${reqDoc1list[6].file_path}', '${reqDoc1list[6].file_nm}')">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)<7}">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<!-- 파일보기 -> 파일선택으로 text 변경 --> <!-- 파일보기 -> 파일선택으로 text 변경 -->
+								<button class="viewDetailButton">파일보기</button>
+								<!--  
 								<input type="file"
 								name="landTerminationRegistration_myPcFiles07"
 								id="landTerminationRegistration_myPcFiles07" /> <label
-								for="landTerminationRegistration_myPcFiles07">파일선택</label>
+								for="landTerminationRegistration_myPcFiles07">파일보기</label>
+								-->
 							</li>
 						</ul>
 						<ul class="contents">
@@ -605,13 +727,27 @@ div.dt-filter-spacer {
 								th:if="${#lists.size(reqDoc1list)<8}" placeholder="" readonly
 								class="notWriteInput" style="text-align: center" /></li>
 							<li class="content delContWidth">
+								<!-- 
 								<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
+							 -->
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)>=8}"
+								th:onclick="downloadFile('${reqDoc1list[7].file_path}', '${reqDoc1list[7].file_nm}')">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
+								<button class="fileDownloadBtn"
+								th:if="${#lists.size(reqDoc1list)<8}">
+									다운로드 <span class="downloadIcon"></span>
+								</button>
 							</li>
 							<li class="content selectFileWidth lightfileBtnWrap">
-								<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
+								<button class="viewDetailButton">파일보기</button>
+								<!--  
+								<input type="file"
 								name="landTerminationRegistration_myPcFiles08"
 								id="landTerminationRegistration_myPcFiles08" /> <label
-								for="landTerminationRegistration_myPcFiles08">파일선택</label>
+								for="landTerminationRegistration_myPcFiles08">파일보기</label>
+								-->
 							</li>
 						</ul>
 					</div>
@@ -623,12 +759,14 @@ div.dt-filter-spacer {
 					style="display: none" th:idx="${resultData.jisang_no}"
 					th:index="${resultData.idx}">상신 수락</button>
 				<button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
+				<!-- 
 				<button class="saveBtn vividBlueBtn finalBtn" id="save_btn"
 					th:idx="${resultData.jisang_no}" th:index="${resultData.idx}">
 					저장</button>
 				<button class="lightBlueBtn approvalBtn finalBtn" type="submit"
 					id="submit_btn" th:idx="${resultData.jisang_no}"
 					th:index="${resultData.idx}">상신</button>
+				-->
 			</div>
 		</main>
 	</div>
