@@ -49,10 +49,10 @@ dependencies {
 	implementation 'redis.clients:jedis:5.0.0'
 	
 	//tomcat-jpa1
-	implementation 'tomcat:tomcat-ajp:5.5.23'
+	//implementation 'tomcat:tomcat-ajp:5.5.23'
 	
 	//tomcat-jpa2
-	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:10.0.27'
 	implementation 'org.apache.tomcat.embed:tomcat-embed-core'
 		
 	
