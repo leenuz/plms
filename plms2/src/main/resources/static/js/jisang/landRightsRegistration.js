@@ -715,7 +715,7 @@ function changPipeName() {
 	
 	// 지사-전체 클릭 시 alert
 	var jisaIdx = $("#landRightsRegistSelectBox01").val();
-	if (!jisaIdx) {
+	if (jisaIdx == '') {
 	    alert("지사를 선택해주세요.");
 	    return;
 	}
@@ -1139,7 +1139,7 @@ function insertJisaNameSet() {
 	}
 	
 	//기존 지사 선택시 관로 세팅하는 로직 
-	changPipeName();
+	//changPipeName();
 	$("#pipe_name_ul li").remove();
 	loadCustomLiLandRegist($("#pipe_name_ul"));
 }
