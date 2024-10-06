@@ -6,15 +6,15 @@
  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
+     <link
       rel="stylesheet"
       as="style"
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   
-    <link rel="stylesheet" href="/css/menu01/menu01_1.css" />
+    <link rel="stylesheet" th:href="@{/css/menu01/menu01_1.css}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+ <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css"> 
 
   <!--  DataTable  -->
     <script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
@@ -926,10 +926,10 @@
        
       </div>
     </div>
-    <script type="module" src="/js/module/surfaceMain.js"></script>
-    <script src="/js/menu01/menuLinkEvet.js"></script>
-    <script src="/js/menu01/radioEvet.js"></script>
-    <script src="/js/menu01/resultPageEvet.js"></script>
+    <script type="module" src="/land/js/module/surfaceMain.js"></script>
+    <script src="/land/js/menu01/menuLinkEvet.js"></script>
+    <script src="/land/js/menu01/radioEvet.js"></script>
+    <script src="/land/js/menu01/resultPageEvet.js"></script>
      <script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
     <script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
     <script>
@@ -954,7 +954,7 @@
                 serverSide: false,
                 searching: true,
                 ajax : {
-                    "url":"/api/query/result",
+                    "url":"/land/api/query/result",
                     "type":"POST",
                     "data": function (d) {
                         d.userStatCd = "NR";

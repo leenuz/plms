@@ -12,6 +12,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +31,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+
+@CrossOrigin(origins="*",allowedHeaders="*")
 public class MainController {
 	 @Autowired
 	private MainService mainService;
@@ -170,7 +173,7 @@ public class MainController {
 		
 		mav.addObject("resultList",resultList);
 		//mav.setViewName("content/home");
-		mav.setViewName("content/jisang/menu02_1");
+		mav.setViewName("content/home");
 		return mav;
 	}
 	@RequestMapping(value = "/land", method=RequestMethod.GET)

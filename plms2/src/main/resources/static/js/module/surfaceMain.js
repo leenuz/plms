@@ -2,10 +2,10 @@ import { surfaceHeaderEvet } from './surfaceHeader.js';
 import { surfaceSelectEvet, handleCheckboxes } from './surfaceSelectEvet.js';
 
 //import { surfaceInquireSelectEvet , surfaceInquireCheckboxes } from './surfaceInquireSelectEvet.js';
-import { surfaceInquireSelectEvet, surfaceInquireCheckboxes } from '/js/jisang/surfaceInquireSelectEvet.js';
-import { privateUseSelectEvet } from '/js/gover/privateUseSelecEvet.js';
-import { landDevelopmentManageSelectEvet } from '/js/togi/landDevelopmentSelecEvet.js';
-import { issueManageSelectEvet } from '/js/issue/issueManageSelecEvet.js';
+import { surfaceInquireSelectEvet, surfaceInquireCheckboxes } from '/land/js/jisang/surfaceInquireSelectEvet.js';
+import { privateUseSelectEvet } from '/land/js/gover/privateUseSelecEvet.js';
+import { landDevelopmentManageSelectEvet } from '/land/js/togi/landDevelopmentSelecEvet.js';
+import { issueManageSelectEvet } from '/land/js/issue/issueManageSelecEvet.js';
 
 
 console.log("---------------------------surfaceMain.js start----------------------");
@@ -120,7 +120,7 @@ window.addEventListener("load", () => {
 function menuListLoad() {
 	
 	$.ajax({
-		url : '/common/menusetting',
+		url : '/land/common/menusetting',
 		type : "GET",
 		success : function(res) {
 			console.log(res);
@@ -142,25 +142,25 @@ function menuListLoad() {
 function menuListSet(result, result2) {
 	
 	//송유관로현황
-	let songyuImg = ['/assets/media/nav/surfaceHammer.png', 'nowDopco', 'songyuLargeMenuBox'];
-	let songyuUrl = ['/songyu/menu01', '/songyu/menu02', '/songyu/menu03'];
+	let songyuImg = ['/land/assets/media/nav/surfaceHammer.png', 'nowDopco', 'songyuLargeMenuBox'];
+	let songyuUrl = ['/land/songyu/menu01', '/songyu/menu02', '/songyu/menu03'];
 	//지상권
-	let jisangImg = ['/assets/media/nav/surfaceMenu.png', 'surface', 'jisangLargeMenuBox']
+	let jisangImg = ['/land/assets/media/nav/surfaceMenu.png', 'surface', 'jisangLargeMenuBox']
 	let jisangUrl = ['/land/jisang/menu02_1', '/land/jisang/landRightsRegistration', '/land/jisang/menu02_2', '/land/jisang/menu02_3', '/land/jisang/menu02_4', '/land/jisang/menu02_5'];
 	//점용
-	let goverImg = ['/assets/media/nav/surfacePrivate.png', 'private', 'goverLargeMenuBox']
+	let goverImg = ['/land/assets/media/nav/surfacePrivate.png', 'private', 'goverLargeMenuBox']
 	let goverUrl = ['/land/gover/menu03_1', '/land/gover/menu03_2', '/land/gover/menu03_3', '/land/gover/orgAdmin', '/land/gover/orgSysCode'];
 	//토지개발
-	let togiImg = ['/assets/media/nav/surfaceGround.png', 'develop', 'togiLargeMenuBox'];
+	let togiImg = ['/land/assets/media/nav/surfaceGround.png', 'develop', 'togiLargeMenuBox'];
 	let togiUrl = ['/togi/menu04_1', '/togi/landReg'];
 	//회사토지
-	let dopcoImg = ['/assets/media/nav/surfaceGround.png', 'company', 'dopcoLargeMenuBox']
+	let dopcoImg = ['/land/assets/media/nav/surfaceGround.png', 'company', 'dopcoLargeMenuBox']
 	let dopcoUrl = ['/dopco/menu05_1', '/dopco/compLandReg', '/dopco/menu05_2'];
 	//이슈
-	let issueImg = ['/assets/media/nav/surfaceIssue.png', 'issue', 'issueLargeMenuBox'];
+	let issueImg = ['/land/assets/media/nav/surfaceIssue.png', 'issue', 'issueLargeMenuBox'];
 	let issueUrl = ['/issue/issueCodeMgmt', '/issue/menu06_1'];
 	//통계
-	let statsImg = ['/assets/media/nav/total.png', 'totalIcon', 'statsLargeMenuBox'];
+	let statsImg = ['/land/assets/media/nav/total.png', 'totalIcon', 'statsLargeMenuBox'];
 	let statsUrl = ['/stats/rightCloseMng', '/stats/rightStatus', '/stats/issueStatus' , '/stats/rightChangeStat', '/stats/parcelChangeStat'];
 	
 	/********************/
@@ -175,7 +175,7 @@ function menuListSet(result, result2) {
 	if(map2PmsCheck.mnLargeYn == 'Y') {
 		innerHtml += '<li>'; 
 		innerHtml += '	<button class="surfaceMenuBtn">';
-		innerHtml += '		<span><img src="/assets/media/nav/surfaceMap.png" alt="mapIcon" onclick="openMapGo();"/></span>지도';
+		innerHtml += '		<span><img src="/land/assets/media/nav/surfaceMap.png" alt="mapIcon" onclick="openMapGo();"/></span>지도';
 		innerHtml += '	</button>';
 		innerHtml += '</li>';
 	}
