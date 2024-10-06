@@ -48,6 +48,14 @@ dependencies {
 	implementation 'org.springframework.session:spring-session-data-redis'  
 	implementation 'redis.clients:jedis:5.0.0'
 	
+	//tomcat-jpa1
+	implementation 'tomcat:tomcat-ajp:5.5.23'
+	
+	//tomcat-jpa2
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-core'
+		
+	
 	//#jsp 사용
 	//implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
   	///implementation 'jakarta.servlet:jakarta.servlet-api' //스프링부트 3.0 이상
