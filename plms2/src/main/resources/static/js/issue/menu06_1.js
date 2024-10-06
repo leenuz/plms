@@ -625,7 +625,7 @@ function loadDataTable(params) {
             dataSrc: 'b_seq'
         },
         ajax: {
-            url: "/land/issue/menu06_1DataTableList",
+            url: "/issue/menu06_1DataTableList",
             type: "POST",
             datatype: "json",
             data: function (d) {
@@ -733,7 +733,7 @@ function loadDataTable(params) {
             // 다른 열을 클릭했을 때만 상세 페이지로 이동
             console.log("--------------tr click---------------------");
             var data = table.row(this).data();
-            var url = "/land/issue/complaintManage?mw_seq=" + data.mm_mw_seq;
+            var url = "/issue/complaintManage?mw_seq=" + data.mm_mw_seq;
 
             history.replaceState({ page: 'current' }, document.title);
 

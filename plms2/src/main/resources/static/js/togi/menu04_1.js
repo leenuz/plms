@@ -248,7 +248,7 @@ function loadDataTable(params){
 			//	sAjaxSources:"/land/songyu/menu01DataTableList",
 			//	sServerMethod:"POST",
                 ajax : {
-                    url:"/land/togi/menu04_1DataTableList",
+                    url:"/togi/menu04_1DataTableList",
                     type:"POST",
 					datatype:"json",
                     data: function(d){
@@ -373,7 +373,7 @@ function loadDataTable(params){
                             console.log(data);
                             console.log(data.idx);
 
-                            var url = "/land/togi/landDevInfo?idx=" + data.idx;
+                            var url = "/togi/landDevInfo?idx=" + data.idx;
                             window.location = url;
                         }
 

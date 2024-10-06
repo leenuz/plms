@@ -93,7 +93,7 @@
       <!-- 기본/소유자 정보 -->
       <section class="basicOwnerInfo">
         <div class="subTitle">기본/소유자 정보</div>
-
+ 
         <script>
           var jijukX = '[[${jijuk.x}]]';
           var jijukY = '[[${jijuk.y}]]';
@@ -181,28 +181,6 @@
                     <input type="text" readonly class="notWriteInput" th:value="${data.jasan_no}"/>
                   </li>
                 </ul>
-                <!-- <ul class="contents">
-                <li class="content">
-                  <input type="text" readonly class="notWriteInput" />
-                </li>
-                <li class="content middleWidth">
-                  <input
-                    type="text"
-                    readonly
-                    class="notWriteInput"
-                    placeholder="서울저유소" />
-                </li>
-                <li class="content">
-                  <input
-                    type="text"
-                    readonly
-                    class="notWriteInput"
-                    placeholder="1995-06-30" />
-                </li>
-                <li class="content middleWidth">
-                  <input type="text" readonly class="notWriteInput" />
-                </li>
-              </ul> -->
               </div>
             </div>
           </div>
@@ -328,10 +306,10 @@
                 <div class="contentScr">
                   <ul class="contents" th:each="val:${modify_list}">
                     <li class="content smallWidth">
-                      <input type="text" th:value="${valStat.index + 1}" class="notWriteInput" readonly />
+                      <input type="text" th:value="${val.idx + 1}" class="notWriteInput" readonly />
                     </li>
                     <li class="content">
-                      <input type="text" th:value="${val.modifiy_date}" class="notWriteInput" readonly />
+                      <input type="text" th:value="${val.modify_date}" class="notWriteInput" readonly />
                     </li>
                     <li class="content">
                       <input type="text" th:value="${val.gubun}" class="notWriteInput" readonly />

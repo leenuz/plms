@@ -324,8 +324,8 @@ function onDataLoad(){
             const agreeList = data.agreeList;
             const tojiList = data.tojiList;
             const fileList = data.fileList;
-
-            $('#dopcoAllWrappers .com_name').val(result.mw_title); //민원명
+			console.log(data);
+            $('#dopcoAllWrappers .com_name').val(result.MW_TITLE); //민원명
             $('#dopcoAllWrappers .occ_date').val(result.mw_occur_date); //발생일자
             $('#dopcoAllWrappers .jisa').val(result.jisa); //발생지사
             $('#dopcoAllWrappers .issue_type').val(`${result.code_str1} > ${result.code_str2} > ${result.code_str3}`); //이슈타입
