@@ -260,7 +260,7 @@
                                     <li class="title03 title">파일보기</li>
                                     <li class="title04 title">파일저장</li>
                                 </ul>
-                                <ul class="contents" th:if="${atcFileList.size()==0}">
+                                <ul class="contents" th:if="${null != atcFileList && atcFileList.size()==0}">
                                     <li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
                                 </ul>
                                 <ul class="contents" th:each="val:${atcFileList}">
@@ -306,7 +306,7 @@
 									<li class="title06 title">등록상태</li>
 									<li class="title06 title">ECHO 문서보기</li>
 								</ul>
-								<ul class="contents lastContents" th:if="${jisangPermitList.size()==0}">
+								<ul class="contents lastContents" th:if="${null != jisangPermitList && jisangPermitList.size()==0}">
 									<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
 								</ul>
 								<ul class="contents lastContents" th:each="val, iterStat : ${jisangPermitList}">
@@ -369,7 +369,7 @@
 									<li class="title06 title">위치보기</li>
 								</ul>
 			
-								<ul class="contents " th:if="${jisangMergeList.size()==0}">
+								<ul class="contents " th:if="${null != jisangMergeList && jisangMergeList.size()==0}">
 									<li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
 								</ul>
 								<ul class="contents" th:each="val, iterStat : ${jisangMergeList}">
@@ -425,7 +425,7 @@
                                     <li class="title02 title">구분</li>
                                     <li class="title04 title">내용</li>
                                 </ul>
-                                <ul class="contents " th:if="${jisangModifyList.size()==0}">
+                                <ul class="contents " th:if="${null != jisangModifyList && jisangModifyList.size()==0}">
                                     <li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
                                 </ul>
 								<ul class="contents" th:each="val, iterStat : ${jisangModifyList}">
@@ -534,7 +534,8 @@
 								<li class="content01 content">
 									<!-- 등기설정 -->
 									<!-- input 추가 -->
-									<input type="text" placeholder="등기설정" th:value="${val.comple_yn}" readonly class="notWriteInput">
+									<!-- input type="text" placeholder="등기설정" th:value="${val.comple_yn}" readonly class="notWriteInput" -->
+									<input type="text" placeholder="등기설정"  readonly class="notWriteInput">
 								</li>
 								<li class="content02 content">
 									<!-- 계약체결 -->
@@ -559,7 +560,8 @@
 								<li class="content01 content">
 									<!-- 신규등록 -->
 									<!-- input 추가 -->
-									<input type="text" placeholder="신규등록" th:value="${val.pi_issue_comment}" readonly class="notWriteInput">
+									<!-- input type="text" placeholder="신규등록" th:value="${val.pi_issue_comment}" readonly class="notWriteInput"-->
+									<input type="text" placeholder="신규등록" readonly class="notWriteInput">
 								</li>
 								<li class="content04 content">
 									<!-- 2024-04-01 09:46:01 -->
@@ -599,7 +601,7 @@
 								<li class="title04 title">내용</li>
 								<li class="title03 title">사유</li>
 							</ul>
-							<ul class="contents lastContents" th:if="${jisangIssueHistoryList.size() == 0}">
+							<ul class="contents lastContents" th:if="${null != jisangIssueHistoryList && jisangIssueHistoryList.size() == 0}">
 								<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
 							</ul>
 							<ul class="contents" th:each="val:${jisangIssueHistoryList}">
@@ -641,7 +643,7 @@
 								<li class="title03 title">개정일자</li>
 								<li class="title04 title">다운로드</li>
 							</ul>
-							<ul class="contents lastContents" th:if="${jisangIssueHistoryList.size() == 0}">
+							<ul class="contents lastContents" th:if="${null != jisangIssueHistoryList && jisangIssueHistoryList.size() == 0}">
 								<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
 							</ul>
 							<ul class="contents" th:each="val:${jisangIssueCodeAtcFileList}">
@@ -764,7 +766,7 @@
                                         </li>
                                     </ul>
 
-                                    <ul class="contents" th:if="${memoList.size()==0}">
+                                    <ul class="contents" th:if="${null != memoList && memoList.size()==0}">
                                         <li class="content01 content">
                                             <!-- 2022-11-01 -->
                                             <!-- input 추가 -->
