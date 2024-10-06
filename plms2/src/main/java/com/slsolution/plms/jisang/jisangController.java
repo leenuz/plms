@@ -2688,7 +2688,8 @@ log.info("data:"+data.get(0));
 //		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListOrg02_2",params);
 		
 		Object count= mainService.selectCountQuery("jisangSQL.selectJisangTerminationListCount", params);
-		int total=(int)count;
+		
+		int total=Optional.ofNullable((int)count).orElse(0);
 
 		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangTerminationList",params);
 		

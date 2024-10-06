@@ -4221,14 +4221,6 @@ SELECT count(*)
         ORDER BY JM.jm_JISANG_NO DESC
     ) AA
     WHERE 1=1
-    
-    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
-			ORDER BY AA.${orderCol} ${desc}
-			</if>
-		<if test="length>0">
-			limit #{length} offset #{start}
-		</if>
-   
 </select>
 
 	
