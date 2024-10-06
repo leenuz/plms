@@ -322,7 +322,7 @@ function loadDataTable(params) {
 			dataSrc: function(json) {
 				console.log("-------------json---------------");
 				console.log(json);
-				$("#dataTableTotalCount").html(json.recordsTotal);
+				$("#dataTableTotalCount").html(json.recordsTotal.toLocaleString());
 				//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
 				return json.data;
 			}
