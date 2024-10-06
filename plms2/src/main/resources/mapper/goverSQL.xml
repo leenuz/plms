@@ -639,7 +639,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 			AND AA.GOVER_NO LIKE '%${gover_no}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(use_purpos)" >
-			AND aA.USE_PURPOS_PNU = #{use_purpos}
+			AND aA.USE_PURPOS = #{use_purpos}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pmt_office)" >
 			AND AA.PMT_OFFICE = #{pmt_office}
@@ -833,7 +833,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 			AND AA.GOVER_NO LIKE '%${gover_no}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(use_purpos)" >
-			AND AA.USE_PURPOS_PNU = #{use_purpos}
+			AND AA.USE_PURPOS = #{use_purpos}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pmt_office)" >
 			AND AA.PMT_OFFICE = #{pmt_office}
