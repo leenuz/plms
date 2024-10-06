@@ -173,11 +173,8 @@ ON PI.pnu = u.pnu
 		</if>
 		AND jm2.pnu IS NOT null
 		limit 100
-
-
-
-
 	</select>
+	
 	<select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap"><![CDATA[
 		select jm_set_money,jm_save_status from jisang_master
 	]]></select>

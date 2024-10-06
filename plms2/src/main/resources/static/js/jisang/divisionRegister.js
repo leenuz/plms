@@ -623,71 +623,62 @@ $(document).on("click",".temporarySaveBtn",function(){
 
 
 //   주소 검색
-$(document).on("click",".searchAddressBtn",function(){
+$(document).on("click", ".searchAddressBtn", function() {
 
-//var formSerializeArray = $('#searchForm').serializeArray();
+	//var formSerializeArray = $('#searchForm').serializeArray();
 
-  //var buttonId = $(this).attr("id").split("_")[1];
-//    formSerializeArray.push({
-//        name: 'selectedButton',
-//        value: buttonId
-//    });
-    // 가져온 id 값을 콘솔에 출력
-//
-//    const data_index = $(this).attr("data-index");
+	//var buttonId = $(this).attr("id").split("_")[1];
+	//    formSerializeArray.push({
+	//        name: 'selectedButton',
+	//        value: buttonId
+	//    });
+	// 가져온 id 값을 콘솔에 출력
+	//
+	//    const data_index = $(this).attr("data-index");
 
-//    $('#choiceBtn').attr('data-index', buttonId);
-console.log($(this).parent().parent().html());
-		var idObj=$(this).parent().parent().find(".addressData input");
-		var id=$(this).parent().parent().find("#bunhalIndex").val();
-		var sido_nm=$(this).parent().parent().find("#togisido_nm").val();
-		var sgg_nm=$(this).parent().parent().find("#togisgg_nm").val();
-		var emd_nm=$(this).parent().parent().find("#togiemd_nm").val();
-		var ri_nm=$(this).parent().parent().find("#togiri_nm").val();
-		var jibun=$(this).parent().parent().find("#togijibun").val();
-		
-		console.log(idObj.val()); 
-    	console.log(id);
-	
-		var addr=idObj.val();
-		var datas={"address":addr,"sido_nm":sido_nm,"sgg_nm":sgg_nm,"emd_nm":emd_nm,"ri_nm":ri_nm,"jibun":jibun}
-					   console.log($(this).parent().html());
-					   console.log(datas);
+	//    $('#choiceBtn').attr('data-index', buttonId);
+	console.log($(this).parent().parent().html());
+	var idObj = $(this).parent().parent().find(".addressData input");
+	var id = $(this).parent().parent().find("#bunhalIndex").val();
+	var sido_nm = $(this).parent().parent().find("#togisido_nm").val();
+	var sgg_nm = $(this).parent().parent().find("#togisgg_nm").val();
+	var emd_nm = $(this).parent().parent().find("#togiemd_nm").val();
+	var ri_nm = $(this).parent().parent().find("#togiri_nm").val();
+	var jibun = $(this).parent().parent().find("#togijibun").val();
 
+	console.log(idObj.val());
+	console.log(id);
 
-					   
-				  
-				   //searchResultPopDiv 화면뿌릴 DIV
-				   
-				   if (addr==null || addr=="" || addr==undefined) {
-					alert("주소를 입력해주세요.");
-					return;
-				   }
-				 
-				  
-				
-				   
-				   
-				   
-				   
-				   	   $.ajax({
-				   	   	  url: "/land/jisang/getBunhalJIjukSelect",
-				   	   	  type: "POST",
-				   	   	  data: datas,
-				   	   })
-				   	   .done(function (fragment) {
-//				  var buttonIdx = fragment.find('button#choiceBtn');
-//				  buttonIdx.attr('data-index', buttonId);
- console.log("***fragment***");
- console.log(fragment);
-				   	      $('#searchResultPopDiv').replaceWith(fragment);
-						  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
-                                console.log($(popupOpen).html());
-						  	   $(popupOpen).addClass("open");
-						  	   popupOpen.classList.add("active");
-                        	 $('.resultSelectBtn').attr('data-index', id);
-                           	$('.saveBtn').attr('data-index', id);
-				   	   	});
+	var addr = idObj.val();
+	var datas = { "address": addr, "sido_nm": sido_nm, "sgg_nm": sgg_nm, "emd_nm": emd_nm, "ri_nm": ri_nm, "jibun": jibun }
+	console.log($(this).parent().html());
+	console.log(datas);
+
+	//searchResultPopDiv 화면뿌릴 DIV
+
+	if (addr == null || addr == "" || addr == undefined) {
+		alert("주소를 입력해주세요.");
+		return;
+	}
+
+	$.ajax({
+		url: "/land/jisang/getBunhalJIjukSelect",
+		type: "POST",
+		data: datas,
+	})
+		.done(function(fragment) {
+			//				  var buttonIdx = fragment.find('button#choiceBtn');
+			//				  buttonIdx.attr('data-index', buttonId);
+			console.log("***fragment***");
+			console.log(fragment);
+			$('#searchResultPopDiv').replaceWith(fragment);
+			const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+			console.log($(popupOpen).html());
+			$(popupOpen).addClass("open");
+			popupOpen.classList.add("active");
+			$('.resultSelectBtn').attr('data-index', id);
+			$('.saveBtn').attr('data-index', id);
+		});
 
 });
 

@@ -2140,17 +2140,29 @@ log.info("data:"+data.get(0));
 			params.put("jisa",jisa);
 			
 			params.put("jibun", jibun);
-			if (addressRadioValue.equals("0")) params.put("address", address);
+			
+			ArrayList<HashMap> jisangBasicSearchList = new ArrayList<>(); // 변수 선언
+			if (addressRadioValue.equals("0")) {
+				// 입력형 선택하면 emd,ri + jibun 으로 검색하도록
+				String[] arr = address.split(" ");
+				
+				params.put("emd_nm", arr[0]);
+				params.put("ri_nm", arr[0]);
+				params.put("jibun", arr[1]);
+				params.put("address", "");
+				
+				jisangBasicSearchList = mainService.selectQuery("commonSQL.selectAddressFromJijuk1",params);
+			}
 			else {
 				params.put("sido_nm",sido_nm);
 				params.put("sgg_nm",sgg_nm);
 				params.put("emd_nm",emd_nm);
 				params.put("ri_nm",ri_nm);
+				jisangBasicSearchList = mainService.selectQuery("jisangSQL.selectBasicSearchList",params);
 			}
 			params.put("addressRadioValue", addressRadioValue);
 			//params.put("pnu",pnu);
 			log.info("params:"+params);
-			ArrayList<HashMap> jisangBasicSearchList = mainService.selectQuery("jisangSQL.selectBasicSearchList",params);
 			log.info("jisangBasicSearchList:"+jisangBasicSearchList);
 			mav.addObject("jisangBasicSearchList",jisangBasicSearchList);
 			mav.setViewName("content/jisang/landRightsRegistration :: #searchResultPopDiv");
@@ -2171,23 +2183,35 @@ log.info("data:"+data.get(0));
 		String emd_nm=httpRequest.getParameter("emd");
 		String ri_nm=httpRequest.getParameter("ri");
 		String jibun=httpRequest.getParameter("jibun");
-		String address=httpRequest.getParameter("address");
+		String address = httpRequest.getParameter("address");
 		
-		String addressRadioValue=httpRequest.getParameter("easementModification_addressInput");
+		String addressRadioValue = httpRequest.getParameter("easementModification_addressInput");
 		params.put("jisa",jisa);
 		
 		params.put("jibun", jibun);
-		if (addressRadioValue.equals("0")) params.put("address", address);
+		ArrayList<HashMap> jisangBasicSearchList = new ArrayList<>(); // 변수 선언
+		
+		if (addressRadioValue.equals("0")) {
+			// 입력형 선택하면 emd,ri + jibun 으로 검색하도록
+			String[] arr = address.split(" ");
+			
+			params.put("emd_nm", arr[0]);
+			params.put("ri_nm", arr[0]);
+			params.put("jibun", arr[1]);
+			params.put("address", "");
+			
+			jisangBasicSearchList = mainService.selectQuery("commonSQL.selectAddressFromJijuk1",params);
+		}
 		else {
 			params.put("sido_nm",sido_nm);
 			params.put("sgg_nm",sgg_nm);
 			params.put("emd_nm",emd_nm);
 			params.put("ri_nm",ri_nm);
+			jisangBasicSearchList = mainService.selectQuery("jisangSQL.selectBasicSearchList",params);
 		}
 		params.put("addressRadioValue", addressRadioValue);
 		//params.put("pnu",pnu);
 		log.info("params:"+params);
-		ArrayList<HashMap> jisangBasicSearchList = mainService.selectQuery("jisangSQL.selectBasicSearchList",params);
 		log.info("jisangBasicSearchList:"+jisangBasicSearchList);
 		mav.addObject("jisangBasicSearchList",jisangBasicSearchList);
 		mav.setViewName("content/jisang/easementModification :: #searchResultPopDiv");
@@ -4484,7 +4508,7 @@ log.info("gubun:"+gubun);
 	
 	// 기존 주소 검색
 	@PostMapping(path="/getBunhalJIjukSelect1") //http://localhost:8080/api/get/dbTest
-	public ModelAndView getBunhalJIjukSelect(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+	public ModelAndView getBunhalJIjukSelect1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
 		HashMap params = new HashMap();
 		ArrayList<HashMap>  list=new ArrayList<HashMap>();
@@ -4512,12 +4536,11 @@ log.info("gubun:"+gubun);
 		return mav;
 	}
 	
-	// 수정한 주소 검색(어디서 이 API 호출해서 사용하는지 확인 안됐음.)
+	// 수정한 주소 검색(emd(ri)+jibun 으로 검색/어디어디서 이 API 호출해서 사용하는지 확인 안됐음.)
 	@PostMapping(path="/getBunhalJIjukSelect") //http://localhost:8080/api/get/dbTest
-	public ModelAndView getBunhalJIjukSelect1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+	public ModelAndView getBunhalJIjukSelect(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
 		HashMap params = new HashMap();
-		ArrayList<HashMap>  list=new ArrayList<HashMap>();
 		//log.info("httpRequest:"+Arrays.toString(httpRequest));
 
 		String address=httpRequest.getParameter("address");
