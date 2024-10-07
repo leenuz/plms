@@ -2,10 +2,16 @@ package com.slsolution.plms.controller;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -17,8 +23,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +35,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.MainService;
@@ -92,24 +102,27 @@ public class commonController {
 	public void download(HttpServletRequest request, HttpServletResponse response) {
 
 		String fileOriName = request.getParameter("fileName");
-		String filePath = request.getParameter("filePath");
+		String filePath = "plms.dopco.co.kr/" + request.getParameter("filePath");
+		//    
 
 		System.out.println("fileOriName :: " + fileOriName);
 		System.out.println("filePath :: " + filePath);
+		
+		// /export/home1/plms/download/G_0010/test.txt
 		
 //		CloseableHttpClient httpClient = HttpClients.createDefault();
 //		HttpGet gttpGet = new HttpGet(filePath);
 		
 		try {
 			File f = new File(filePath);
-			if (!f.isFile() || !f.exists()) {
-				response.setCharacterEncoding("UTF-8");
-				response.setContentType("text/html; charset=UTF-8");
-				response.getWriter().write(
-						"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><script>alert('파일이 존재하지 않습니다.'); history.back();</script></head></html>");
-				return;
-
-			}
+//			if (!f.isFile() || !f.exists()) {
+//				response.setCharacterEncoding("UTF-8");
+//				response.setContentType("text/html; charset=UTF-8");
+//				response.getWriter().write(
+//						"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><script>alert('파일이 존재하지 않습니다.'); history.back();</script></head></html>");
+//				return;
+//
+//			}
 
 			String contentType = "application/octet-stream";
 
@@ -148,34 +161,98 @@ public class commonController {
 		}
 	}
 	
-	/**
-	 * file 다운로드시 사용
-	 * 해당 메소드로 요청시 참고 스크립트 및 메소드 ( masterEdit.js - attachFileDownload() )
+	/************************************
+	 * file 다운로드시 사용 (이걸로 통일!!)
+	 * 해당 메소드로 요청시 참고 스크립트 및 메소드 ( common.js - commonFileDownload )
 	 * @param filePath
 	 * @param fileName
 	 * @return
 	 */
 	@GetMapping("/downloadfile")
-	public ResponseEntity<FileSystemResource> downloadFile(@RequestParam(name="filePath") String filePath, @RequestParam(name="fileName") String fileName){
-		try {
-			File file = new File(filePath + File.separator + fileName);
-			
-			if(!file.exists()) {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-			}
-			
-			FileSystemResource resource = new FileSystemResource(file);
-			HttpHeaders headers = new HttpHeaders();
-			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
-			
-			return new ResponseEntity<>(resource, headers, HttpStatus.OK);
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	public ResponseEntity<Resource> downloadFile(
+				@RequestParam(name="filePath") String filePath,
+				@RequestParam(name="fileName") String fileName,
+				@RequestParam(name="fileJisangNo") String fileJisangNo,
+				@RequestParam(name="fileSeq") String fileSeq,
+				@RequestParam(name="fileGubun") String fileGubun
+				) throws IOException, URISyntaxException{
+		//http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no=J_010602&file_seq=30988&file_gubun=jisang
+		// URL 구성
+//		String fileUrl = "http://plms.dopco.co.kr/"+filePath+"/"+fileName;	//IDC or Local
+		String fileUrl = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no="+fileJisangNo+"&file_seq="+fileSeq+"&file_gubun="+fileGubun;	//운영
+		//String fileUrl = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no=J_010602&file_seq=30988&file_gubun=jisang";
+		System.out.println("====================================");
+		System.out.println("filePath :: " + filePath);
+		System.out.println("fileName :: " + fileName);
+		System.out.println("fileJisangNo :: " + fileJisangNo);
+		System.out.println("fileSeq :: " + fileSeq);
+		System.out.println("fileGubun :: " + fileGubun);
+		System.out.println("file URL :: " + fileUrl);
+		System.out.println("====================================");
+		
+		// RestTemplate를 사용한 외부서버로부터 파일 받아오기
+		/*
+		RestTemplate restTemplate = new RestTemplate();
+		byte[] fileData = restTemplate.getForObject(new URI(fileUrl), byte[].class);
+		
+		if(fileData == null || fileData.length == 0) {
+			throw new RuntimeException("파일을 가져올 수 없습니다. " + fileName);
 		}
+		
+		// 파일을 클라이언트로 반환하기 위해 InputStream으로 변환
+		InputStream inputStream = new ByteArrayInputStream(fileData);
+		Resource resource = new InputStreamResource(inputStream);
+		
+		// 기본적인 MIME 타입 지정
+		String contentType = "application/octet-stream";
+		
+		//파일이름 인코딩
+		String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
+		encodedFileName = encodedFileName.replaceAll("\\+", "%20");  // 공백 처리
+		
+		// 클라이언트로 파일 전송(파일 이름 및 다운로드 위한 헤더 설정)
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(contentType))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedFileName)
+				.body(resource);
+		*/
+		return null;
 	}
 	
+	@GetMapping("/downloadfile2")
+	public ResponseEntity<Resource> downloadFile2() throws IOException, URISyntaxException{
+		//
+		// URL 구성
+		String fileUrl = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no=J_010602&file_seq=30988&file_gubun=jisang";
+		
+		
+		System.out.println("file URL :: " + fileUrl);
+		
+		// RestTemplate를 사용한 외부서버로부터 파일 받아오기
+		RestTemplate restTemplate = new RestTemplate();
+		byte[] fileData = restTemplate.getForObject(new URI(fileUrl), byte[].class);
+		
+		if(fileData == null || fileData.length == 0) {
+			throw new RuntimeException("파일을 가져올 수 없습니다. " + "충청북도 영동군 황간면 노근리 602.pdf");
+		}
+		
+		// 파일을 클라이언트로 반환하기 위해 InputStream으로 변환
+		InputStream inputStream = new ByteArrayInputStream(fileData);
+		Resource resource = new InputStreamResource(inputStream);
+		
+		// 기본적인 MIME 타입 지정
+		String contentType = "application/octet-stream";
+		
+		//파일이름 인코딩
+		String encodedFileName = URLEncoder.encode("충청북도 영동군 황간면 노근리 602.pdf", StandardCharsets.UTF_8.toString());
+		encodedFileName = encodedFileName.replaceAll("\\+", "%20");  // 공백 처리
+		
+		// 클라이언트로 파일 전송(파일 이름 및 다운로드 위한 헤더 설정)
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(contentType))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''"+encodedFileName)
+				.body(resource);
+	}
 	
 	@GetMapping("/menusetting")
 	public void menuListSetting(HttpServletRequest request, HttpServletResponse response) {
