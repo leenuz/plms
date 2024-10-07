@@ -3036,7 +3036,7 @@ DELETE from plms_POTENTIAL_ISSUE
 		, USE_ST_DATE = to_date( #{USE_ST_DATE} , 'yyyy-mm-dd')
 		, USE_ED_DATE = to_date( #{USE_ED_DATE} , 'yyyy-mm-dd')
 		, SPOT_RESULT = #{SPOT_RESULT}
-		, rivew = #{review}
+		, rivew = #{REVIEW}
 		, CONTRACT = #{CONTRACT}
 
 		WHERE PMT_NO = #{PMT_NO}

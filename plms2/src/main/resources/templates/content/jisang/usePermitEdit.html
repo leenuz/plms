@@ -217,6 +217,7 @@ div.dt-filter-spacer {
 										name="purpose" readonly th:value="${resultData.use_purpos}" />
 								</ul>
 							</div>
+							[[${resultData}]]
 							<div class="rowListBox">
 								<div class="title">사용기간</div>
 								<ul class="rowListContents">
@@ -224,9 +225,11 @@ div.dt-filter-spacer {
 										<div class="dateInputWrap">
 											<input type="date"
 												th:data-placeholder="${resultData.use_st_date}"
+												th:value="${resultData.use_st_date}"
 												name="useStartDate" required aria-required="true" /> <span>~</span>
 											<input type="date"
 												th:data-placeholder="${resultData.use_ed_date}"
+												th:value="${resultData.use_ed_date}"
 												name="useEndDate" required aria-required="true" />
 										</div>
 									</li>
