@@ -19,7 +19,7 @@ public class MultipartConfig {
 	    @Bean
 	    public MultipartConfigElement multipartConfigElement() {
 	        MultipartConfigFactory factory = new MultipartConfigFactory();
-	        factory.setLocation("/Users/seokjun/Downloads/test/");
+//	        factory.setLocation("/Users/seokjun/Downloads/test/");
 //	        factory.setMaxRequestSize(DataSize.ofMegabytes(100L));
 //	        factory.setMaxFileSize(DataSize.ofMegabytes(100L));
 
