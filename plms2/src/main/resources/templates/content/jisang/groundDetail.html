@@ -45,7 +45,22 @@
                         <script>
                             var mapCoordLng = '[[${jijuk.x}]]';
                             var mapCoordLat = '[[${jijuk.y}]]';
-                            var mapUrl = 'http://10.168.0.247:8080/mapJijuk?lon=' + mapCoordLng + '&lat=' + mapCoordLat + '&lv=17';
+                            
+                            const currentDomain = window.location.hostname; // dgisdev.dopco.co.kr
+                            const currentprotocol = window.location.protocol; // http or https
+
+                            let serverMapUrl = "http://10.168.0.247:8080/mapJijuk";
+
+                            if(currentDomain.indexOf("dgis.dopco.co.kr") > -1 || currentDomain.indexOf("192.6.18.28") > -1) { // 운영
+                            	serverMapUrl = currentprotocol+"//dgis.dopco.co.kr/mapJijuk";
+                               
+                            }else if(currentDomain.indexOf("dgisdev.dopco.co.kr") > -1 || currentDomain.indexOf("192.6.18.28")  > -1) { // 개발
+                            	serverMapUrl = currentprotocol+"//dgisdev.dopco.co.kr/mapJijuk";
+                            }
+                            
+                            //var mapUrl = 'http://10.168.0.247:8080/mapJijuk?lon=' + mapCoordLng + '&lat=' + mapCoordLat + '&lv=17';
+                            var mapUrl = serverMapUrl +'?lon=' + mapCoordLng + '&lat=' + mapCoordLat + '&lv=17';
+                            
                             document.getElementById('mapFrame').src = mapUrl;
                         </script>
                     </div>
