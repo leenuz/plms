@@ -295,185 +295,24 @@
               </li>
               <li class="title selectFileWidth">파일보기</li>
             </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="hidden" id="fseq" value="1">
-                <input name="req_doc_file01" id="req_doc_file01"
-                       type="text"
-                       th:value="${#lists.size(reqDoc2list)>=1 && reqDoc2list[0].file_gubun=='1'} ? ${reqDoc2list[0].file_nm} : ''"
-                       readonly
-                       class="notWriteInput" style="text-align:center"/>
-              </li>
-
-              <li class="content selectFileWidth">
-                <button
-                		class="viewDetailButton"
-                		th:if="${#lists.size(reqDoc2list) > 0 && reqDoc2list[0].file_gubun == '1'}"
-						th:onclick="downloadFile([[${reqDoc2list[0].file_path}]], [[${reqDoc2list[0].file_nm}]], [[${reqDoc2list[0].pmt_no}]], [[${reqDoc2list[0].seq}]], 'permit')">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="hidden" id="fseq" value="2">
-                <input  name="req_doc_file02" id="req_doc_file02"
-                        type="text"
-                        th:value="${#lists.size(reqDoc2list)>1&& reqDoc2list[1].file_gubun=='2'} ? ${reqDoc2list[1].file_nm} : ''"
-                        readonly
-                        class="notWriteInput" style="text-align:center"/>
-              </li>
-
-              <li class="content selectFileWidth">
-               <button
-                		class="viewDetailButton"
-                		th:if="${#lists.size(reqDoc2list) > 1 && reqDoc2list[1].file_gubun == '2'}"
-						th:onclick="downloadFile([[${reqDoc2list[1].file_path}]],[[${reqDoc2list[1].file_nm}]])">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content"  >
-                <input type="hidden" id="fseq" value="3">
-                <input  name="req_doc_file03" id="req_doc_file03"
-                        type="text"
-                        th:value="${#lists.size(reqDoc2list)>2&& reqDoc2list[2].file_gubun =='3'} ? ${reqDoc2list[2].file_nm} : ''"
-                        readonly
-                        class="notWriteInput" style="text-align:center"/>
-              </li>
-
-              <li class="content selectFileWidth">
-                <button
-                		class="viewDetailButton"
-                		th:if="${#lists.size(reqDoc2list) > 2 && reqDoc2list[2].file_gubun == '3'}"
-						th:onclick="downloadFile([[${reqDoc2list[2].file_path}]],[[${reqDoc2list[2].file_nm}]])">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="hidden" id="fseq" value="4">
-                <input type="text"  name="req_doc_file04" id="req_doc_file04"
-                       th:value="${#lists.size(reqDoc2list)>3&& reqDoc2list[3].file_gubun=='4'} ? ${reqDoc2list[3].file_nm} : ''"
-                       readonly class="notWriteInput" style="text-align:center"/>
-              </li>
-
-              <li class="content selectFileWidth">
-                <button
-                		class="viewDetailButton"
-                		th:if="${#lists.size(reqDoc2list) > 3 && reqDoc2list[3].file_gubun == '4'}"
-						th:onclick="downloadFile([[${reqDoc2list[3].file_path}]],[[${reqDoc2list[3].file_nm}]])">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="hidden" id="fseq" value="5">
-                <input
-                        type="text"  name="req_doc_file05" id="req_doc_file05"
-                        th:value="${#lists.size(reqDoc2list)>4&& reqDoc2list[4].file_gubun=='5'} ? ${reqDoc2list[4].file_nm} : ''"
-                        readonly
-                        class="notWriteInput" style="text-align:center"/>
-              </li>
-
-              <li class="content selectFileWidth">
-                <button
-                		class="viewDetailButton"
-                		th:if="${#lists.size(reqDoc2list) > 4 && reqDoc2list[4].file_gubun == '5'}"
-						th:onclick="downloadFile([[${reqDoc2list[4].file_path}]],[[${reqDoc2list[4].file_nm}]])">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="hidden" id="fseq" value="6">
-                <input
-                        type="text"  name="req_doc_file06" id="req_doc_file06"
-                        th:value="${#lists.size(reqDoc2list)>5&& reqDoc2list[5].file_gubun=='6'} ? ${reqDoc2list[5].file_nm} : ''"
-                        readonly
-                        class="notWriteInput" style="text-align:center"/>
-              </li>
-
-              <li class="content selectFileWidth">
-                <button
-                		class="viewDetailButton"
-                		th:if="${#lists.size(reqDoc2list) > 5 && reqDoc2list[5].file_gubun == '6'}"
-						th:onclick="downloadFile([[${reqDoc2list[5].file_path}]],[[${reqDoc2list[5].file_nm}]])">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="hidden" id="fseq" value="7">
-                <input
-                        type="text"  name="req_doc_file07" id="req_doc_file07"
-                        th:value="${#lists.size(reqDoc2list)>6&& reqDoc2list[6].file_gubun=='7'} ? ${reqDoc2list[6].file_nm} : ''"
-                        readonly
-                        class="notWriteInput" style="text-align:center"/>
-              </li>
-
-              <li class="content selectFileWidth">
-                <button
-                		class="viewDetailButton"
-                		th:if="${#lists.size(reqDoc2list) > 6 && reqDoc2list[6].file_gubun == '7'}"
-						th:onclick="downloadFile([[${reqDoc2list[6].file_path}]],[[${reqDoc2list[6].file_nm}]])">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="hidden" id="fseq" value="8">
-                <input
-                        type="text"  name="req_doc_file08" id="req_doc_file08"
-                        th:value="${#lists.size(reqDoc2list)>7&& reqDoc2list[7].file_gubun=='8'} ? ${reqDoc2list[7].file_nm} : ''"
-                        readonly
-                        class="notWriteInput" style="text-align:center"/>
-                <input
-                        type="text"  name="req_doc_file08" id="req_doc_file08"
-                        th:if="${#lists.size(reqDoc2list)<8}" placeholder=""
-                        readonly
-                        class="notWriteInput" style="text-align:center"/>
-              </li>
-
-              <li class="content selectFileWidth">
-                <button
-                		class="viewDetailButton"
-                		th:if="${#lists.size(reqDoc2list) > 7 && reqDoc2list[7].file_gubun == '8'}"
-						th:onclick="downloadFile([[${reqDoc2list[7].file_path}]],[[${reqDoc2list[7].file_nm}]])">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="hidden" id="fseq" value="9">
-                <input
-                        type="text"  name="req_doc_file09" id="req_doc_file09"
-                        th:value="${#lists.size(reqDoc2list)>8&& reqDoc2list[8].file_gubun=='9'} ? ${reqDoc2list[8].file_nm} : ''"
-                        readonly
-                        class="notWriteInput" style="text-align:center"/>
-                <input
-                        type="text"  name="req_doc_file09" id="req_doc_file09"
-                        placeholder=""
-                        readonly
-                        class="notWriteInput" style="text-align:center"/>
-              </li>
-
-              <li class="content selectFileWidth">
-                <button
-                		class="viewDetailButton"
-                		th:if="${#lists.size(reqDoc2list) > 8 && reqDoc2list[8].file_gubun == '9'}"
-						th:onclick="downloadFile([[${reqDoc2list[8].file_path}]],[[${reqDoc2list[8].file_nm}]])">파일보기</button>
-              </li>
-            </ul>
-            <ul class="contents">
-              <li class="content">
-                <input type="hidden" id="fseq" value="10">
-                <input
-                        type="text"  name="req_doc_file10" id="req_doc_file10"
-                        th:value="${#lists.size(reqDoc2list)>9&& reqDoc2list[9].file_gubun=='10'} ? ${reqDoc2list[9].file_nm} : ''"
-                        readonly
-                        class="notWriteInput" style="text-align:center"/>
-              </li>
-
-              <li class="content selectFileWidth">
-                <button
-                		class="viewDetailButton"
-                		th:if="${#lists.size(reqDoc2list) > 9 && reqDoc2list[9].file_gubun == '10'}"
-						th:onclick="downloadFile([[${reqDoc2list[9].file_path}]],[[${reqDoc2list[9].file_nm}]])">파일보기</button>
-              </li>
-            </ul>
-
+            <ul class="contents" th:each="doc, iterStat : ${reqDoc3list}">
+			    <li class="content">
+			        <input type="hidden" id="fseq" th:value="${iterStat.index + 1}" />
+			        <input name="req_doc_file" th:id="'req_doc_file' + (iterStat.index + 1)"
+			               type="text"
+			               th:value="${doc.file_gubun} == ${iterStat.index + 1} ? ${doc.file_nm} : ''"
+			               readonly
+			               class="notWriteInput" style="text-align:center"/>
+			    </li>
+			
+			    <li class="content selectFileWidth">
+			        <button class="viewDetailButton"
+			                th:if="${doc.file_path} != ''"
+			                th:onclick="downloadFile([[${doc.file_path}]], [[${doc.file_nm}]], [[${doc.pmt_no}]], [[${doc.seq}]])">
+			            파일보기
+			        </button>
+			    </li>
+			</ul>
 
 
 

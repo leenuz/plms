@@ -4620,6 +4620,9 @@ log.info("gubun:"+gubun);
     public ModelAndView usePermitDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		List<HashMap<String, Object>> fileTempList = new ArrayList<>();
+		List<HashMap<String, Object>> fileProList = new ArrayList<>();
+		HashMap<String, Object> fileMap = new HashMap<>();
 		ModelAndView mav=new ModelAndView();
 		ArrayList list = new ArrayList();
 		ArrayList togiList = new ArrayList();
@@ -4646,15 +4649,32 @@ log.info("gubun:"+gubun);
 		 list = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_MASTER", params);
 		togiList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_TOGI", params);
 		fileList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_FILE", params);
+		fileTempList = fileList;
 		log.info("list:"+list);
 		log.info("togiList:"+togiList);
 		log.info("fileList:"+fileList);
-		//log.info("data:"+data);
 
+		
+		for (int i = 0; i < 10; i++) {
+			fileMap = new HashMap<>();
+			fileMap.put("file_path", "");
+			fileMap.put("file_nm", "");
+			fileMap.put("pmt_no", "");
+			fileMap.put("seq", 0);
+			fileMap.put("file_gubun", i + 1);
+			fileProList.add(fileMap);
+		}
+		
+		for (int j = 0; j < fileTempList.size(); j++) {
+			int idx1 = Integer.valueOf(String.valueOf(fileTempList.get(j).get("file_gubun"))) -1;
+			fileProList.set(idx1, fileTempList.get(j));
+		}
+		
       	mav.addObject("resultData",list.get(0));
       	mav.addObject("tojiList", data);
 //		mav.addObject("fileList", jisangPnuAtcFileList);
 		mav.addObject("reqDoc2list", fileList);
+		mav.addObject("reqDoc3list", fileProList);
 		mav.setViewName("content/jisang/usePermitDetail");
 		return mav;
     }

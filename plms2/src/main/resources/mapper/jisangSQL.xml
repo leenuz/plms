@@ -2323,7 +2323,7 @@ FROM permit_master
 			AND seq = #{SEQ}
 		</if>
 		
-		ORDER BY seq
+		ORDER BY file_gubun
 	</select>
 	
 	
