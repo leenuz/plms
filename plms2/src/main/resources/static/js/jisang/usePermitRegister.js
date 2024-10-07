@@ -510,6 +510,14 @@ $(document).ready(function(){
 				       var files = e.originalEvent.target.files;
 				       handleFileUpload1(files,this,"08");
 			});
+			$('input[name=landTerminationRegistration_myPcFiles09]').on('change', function(e) {
+					       var files = e.originalEvent.target.files;
+					       handleFileUpload1(files,this,"09");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles10]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"10");
+			});
 		    function handleFileUpload(files,obj)
 		    {
 		       for (var i = 0; i < files.length; i++)

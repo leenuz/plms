@@ -652,7 +652,7 @@ public class jisangController {
 		        		filesMap.put("PMT_NO",resp_PMT_NO);
 		    			//filesMap.put("seq",String.format("%06d",i));
 		    			filesMap.put("fseq",i);
-		    			filesMap.put("FILE_GUBUN",i);
+		    			filesMap.put("FILE_GUBUN",Integer.parseInt(key));
 		    			filesMap.put("FILE_NM",fname);
 		    			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
 		     			 String dataPath = GC.getJisangFileDataDir()+"/jisangPermit/"+resp_PMT_NO; //설정파일로 뺀다.
@@ -6432,44 +6432,45 @@ log.info("map:"+map);
 
 				// 대표필지 합필정보
 				param.put("JISANG_NO", mainJisangNo);
-				HashMap<String, String> mainJisangMap = (HashMap<String, String>) mainService.selectHashmapQuery("jisangsQL.selectJisangMergeSaveList", param);
-
+				ArrayList mlist= (ArrayList) mainService.selectQuery("jisangSQL.selectJisangMergeSaveList", param);
+				HashMap<String, Object> mainJisangMap=(HashMap) mlist.get(0);
+				log.info("mainJisangMap:"+mainJisangMap);
 				// 임시저장된 합필정보
 				param.put("JISANG_NO", null);
 				param.put("REP_JISANG_NO", mainJisangNo);
-				ArrayList targetList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangMergeSaveList", param);
+				ArrayList<HashMap> targetList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangMergeSaveList", param);
+				
+				for (HashMap<String, String> datas : targetList) {
+					log.info("targetList:"+datas);
+					// 합필 등록시 수정했던 내용 지상 마스터에서 수정
+					mainService.UpdateQuery("jisangSQL.updateMergeJisangMaster", datas);
 
-//				for (HashMap<String, String> datas : targetList) {
-//
-//					// 합필 등록시 수정했던 내용 지상 마스터에서 수정
-//					Database.getInstance().update("Json.updateMergeJisangMaster", datas);
-//
-//					// 대표지상권이 아닌 기존 지상권 정보를 삭제처리하고 지상권 합필정보 관리 테이블에 삽입한다.
-//					if ("N".equals(datas.get("MAIN_FLAG"))) {
-//						datas.put("REP_JISANG_NO", mainJisangNo); // 대표지상권 정보
-//						Database.getInstance().insert("Json.insertJisangMerge", datas);
-//
-//						datas.put("JISANG_NO", datas.get("JISANG_NO")); // 삭제 지상권 번호
-//						Database.getInstance().delete("Json.deleteJisangMerge", datas); // 대상 지상권 정보 삭제처리. !!!주의 진짜로 삭제처리함 !!!
-//
-//						// 변경이력을 등록한다
-//						String modify_reason = "지상권 " + datas.get("JISANG_NO") + "(자산관리번호:" + datas.get("JASAN_NO") + ")에서 지상권 " + mainJisangMap.get("JISANG_NO") + "(자산관리번호:" + mainJisangMap.get("JASAN_NO") + ")" + "로 합필처리";
-//						Map Addparams = new HashMap();
-//						Addparams.put("GUBUN", "합필");
-//						Addparams.put("USER_ID", USER_ID);
-//						Addparams.put("USER_NAME", USER_NAME);
-//						Addparams.put("CONT", modify_reason);
-//						log.debug("Addparams=" + Addparams);
-//
-//						Addparams.put("JISANGNO", mainJisangNo);
-//						Database.getInstance().insert("Json.insertJisangModifyHistory", Addparams);
-//					} else {
-//						// 모지번 정보에 합필사유, 검토의견 업데이트
-//						mainJisangMap.put("MERGE_REASON", datas.get("MERGE_REASON"));
-//						mainJisangMap.put("MERGE_COMMENT", datas.get("MERGE_COMMENT"));
-//						Database.getInstance().update("Json.updateJisangMasterMergeReason", mainJisangMap);
-//					}
-//				}
+					// 대표지상권이 아닌 기존 지상권 정보를 삭제처리하고 지상권 합필정보 관리 테이블에 삽입한다.
+					if ("N".equals(datas.get("main_flag"))) {
+						datas.put("REP_JISANG_NO", mainJisangNo); // 대표지상권 정보
+						mainService.InsertQuery("jisangSQL.insertJisangMerge", datas);
+
+						datas.put("JISANG_NO", datas.get("jisang_no")); // 삭제 지상권 번호
+						mainService.DeleteQuery("jisangSQL.deleteJisangMerge", datas); // 대상 지상권 정보 삭제처리. !!!주의 진짜로 삭제처리함 !!!
+
+						// 변경이력을 등록한다
+						String modify_reason = "지상권 " + datas.get("jisang_no") + "(자산관리번호:" + datas.get("jasan_no") + ")에서 지상권 " + mainJisangMap.get("jisang_no") + "(자산관리번호:" + mainJisangMap.get("jasan_no") + ")" + "로 합필처리";
+						HashMap Addparams = new HashMap();
+						Addparams.put("GUBUN", "합필");
+						Addparams.put("USER_ID", USER_ID);
+						Addparams.put("USER_NAME", USER_NAME);
+						Addparams.put("CONT", modify_reason);
+						log.debug("Addparams=" + Addparams);
+
+						Addparams.put("JISANGNO", mainJisangNo);
+						mainService.InsertQuery("jisangSQL.insertJisangModifyHistory", Addparams);
+					} else {
+						// 모지번 정보에 합필사유, 검토의견 업데이트
+						mainJisangMap.put("MERGE_REASON", datas.get("jmt_merge_reason"));
+						mainJisangMap.put("MERGE_COMMENT", datas.get("merge_comment"));
+						mainService.UpdateQuery("jisangSQL.updateJisangMasterMergeReason", mainJisangMap);
+					}
+				}
 
 				// 임시저장 내용 삭제
 				mainService.DeleteQuery("jisangSQL.deleteJisangMergeTmp", param);

@@ -895,6 +895,55 @@ console.log(object);
 
 });
 
+
+$(document).on("click","#completeBtn",function(){
+	
+	var main_jisang_no = $("input[name='mergeToji_no']").val();
+	console.info("main_jisang_no:"+main_jisang_no);
+	var datas={"mainJisangNo":$("input[name='mergeToji_no']").val()};
+	console.log("datas:"+datas);
+
+	url="/land/jisang/completeMerge";
+	    $.ajax({
+	       url:url,
+	       type:'POST',
+	       contentType:"application/json",
+	       data:JSON.stringify(datas),
+
+	       dataType:"json",
+	       beforeSend:function(request){
+	           console.log("beforesend ........................");
+	           loadingShow();
+	       },
+	       success:function(response){
+	           loadingHide();
+	           console.log(response);
+	           if (response.success="Y"){
+	               console.log("response.success Y");
+	               alert("승인 등록이 완료 되었습니다.");
+	               /*$("#popup_bg").show();
+	               $("#popup").show(500);
+	               //$("#addrPopupLayer tbody td").remove();
+	               for(var i=0;i<response.resultData.length;i++){
+	                   $("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+	               }*/
+	           }
+	           else {
+	               console.log("response.success N");
+	           }
+	       },
+	       error:function(jqXHR,textStatus,errorThrown){
+	           alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+	           return false;
+	       }
+
+	    });
+
+	
+})
+
+
+
 $(document).on("click",".viewDetailButton",function(){
 	const x = $(this).attr('x')
 	const y = $(this).attr('y')

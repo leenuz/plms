@@ -1097,7 +1097,7 @@ public class ApiController {
 //		System.out.println("############## start main EchoToPlmsTest");
 		
 		// 1. PLMS 인터페이스 용 웹서비스 URL
-		String url = "http://localhost:8080/api/GetPLMSCompforXML";
+		String url = "http://localhost:8081/land/api/GetPLMSCompforXML";
 		//String url = "http://plmsdev.dopco.co.kr/dcl/GetPLMSCompforXML";
 		//String url = "http://plms.dopco.co.kr/dcl/GetPLMSCompforXML";
 		//String url = "http://192.6.18.84/SimpleJaxs/PlmsToEcho";

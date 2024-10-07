@@ -2552,6 +2552,54 @@ WHERE
 		#{DOCKEY}
 		)
 	</insert>
+	<insert id="insertJisangMerge" parameterType="HashMap">
+		INSERT INTO JISANG_MERGE (
+		jm_JISANG_NO,
+		jm_SIDO_NM,
+		jm_SGG_NM,
+		jm_EMD_NM,
+		jm_RI_NM,
+		jm_JIBUN,
+		jm_PNU,
+		jm_JISA,
+		jm_JIMOK_TEXT,
+		jm_JIJUK_AREA,
+		jm_PYEONIB_AREA,
+		jm_SET_MONEY,
+		jm_JASAN_NO,
+		jm_REP_JISANG_NO
+		) VALUES (
+		#{jisang_no},
+		#{sido_nm},
+		#{sgg_nm},
+		#{emd_nm},
+		#{ri_nm},
+		#{jibun},
+		#{pnu},
+		#{jisa},
+		#{jimok_text},
+		#{jijuk_area},
+		#{pyeonib_area},
+		#{set_money},
+		#{jasan_no},
+		#{REP_JISANG_NO}
+		)
+	</insert>
+	
+	
+		<delete id="deleteJisangMerge" parameterType="HashMap">
+		DELETE FROM JISANG_MASTER
+		WHERE jm_JISANG_NO = #{JISANG_NO}
+	</delete>
+	
+	
+		<update id="updateJisangMasterMergeReason" parameterType="HashMap">
+		UPDATE JISANG_MASTER
+		SET
+		jm_MERGE_REASON = #{MERGE_REASON}
+		, jm_MERGE_COMMENT = #{MERGE_COMMENT}
+		WHERE jm_JISANG_NO = #{JISANG_NO}
+	</update>
 	
 	<select id="selectJijangNextNo"  parameterType="HashMap" resultType="HashMap">
 		
@@ -4227,7 +4275,18 @@ SELECT count(*)
     WHERE 1=1
 </select>
 
-	
+	<update id="updateMergeJisangMaster" parameterType="HashMap">
+		UPDATE
+		JISANG_MASTER
+		SET
+		<!-- JIMOK_TEXT = #JIMOK_TEXT#, -->
+		<!-- JIJUK_AREA = #JIJUK_AREA#, -->
+		jm_PYEONIB_AREA = #{pyeonib_area},
+		jm_SET_MONEY = #{set_money},
+		jm_JASAN_NO = #{jasan_no}
+		WHERE
+		jm_JISANG_NO=#{jisang_no}
+	</update>
 	
 	
 	
