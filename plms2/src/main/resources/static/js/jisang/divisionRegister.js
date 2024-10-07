@@ -866,14 +866,47 @@ $(document).on('change', 'input[name="togiBunhalCancelYn"]', function(event) {
 
 $(document).on("click","#sangsinBtn",function(){
 	
-	var url="/land/jisang/divisionRegisterSangsin?idx="+$("#idx").val()+"&index="+$("#index").val();
+	
+	
+	var url="/land/jisang/divisionRegisterSangsin";
+		var jsonData={"idx":$("input[name='bunhal_org_no']").val()};
+		console.log("url:"+url);
+		console.log("data:"+jsonData);
+		
+		
+	//	var jsonDatas=encodeURIComponent(JSON.stringify(data));
+		
+			$.ajax({
+				
+				url:url,
+				type:'GET',
+				contentType:"application/json",
+				data:jsonData,
+				async:false,
+				
+				success:function(response){
+					console.log(response);
+					if (response.success="Y"){
+						console.log("response.success Y");
+					}
+					else {
+						console.log("response.success N");
+					}
+				},
+				error:function(jqXHR,textStatus,errorThrown){
+					alert("ajax error\n"+textStatus+":"+errorThrown);
+				}
+				
+			});
+	
+	/*var url="/land/jisang/divisionRegisterSangsin?idx="+$("#idx").val()+"&index="+$("#index").val();
 	var newWindow = window.open(url, "sangsin", "width=1500,height=800");
 	
 
 	               
 	                
     // 새 창의 문서 닫기 (렌더링을 완료)
-    newWindow.document.close();
+    newWindow.document.close();*/
 })
 
 
