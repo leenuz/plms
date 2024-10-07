@@ -1098,6 +1098,7 @@ $(document).on("click","#sangsinBtn",function(){
 			type:'POST',
 			contentType:"application/json",
 			data:JSON.stringify(dataObj),
+			async:false,
 
 			dataType:"json",
 			beforeSend:function(request){

@@ -1074,7 +1074,7 @@ $(document).ready(function(){
 $(document).on("click","#sangsinBtn",function(){
 	
 	
-	
+	 var object=[];
 	
 	var togiDatas=[];
 	    var togiUls=$("#tojiDiv #tojiUl");
@@ -1237,7 +1237,7 @@ $(document).on("click","#sangsinBtn",function(){
 		var mergecomment="테스트";
 		var mainJisangNo=$("#mergeToji_no").val();
 		var mainTmpJisangNo="";
-		var mergeInsertCnt=mergeList.size();
+		var mergeInsertCnt=mergeList.length;
 		var merge_status=0;
 		var gubun="insert"; //save, insert 임시저장,상신
 		var MERGE_STATUS="임시저장";
@@ -1265,6 +1265,7 @@ $(document).on("click","#sangsinBtn",function(){
 				
 				success:function(response){
 					console.log(response);
+					
 					if (response.success="Y"){
 						console.log("response.success Y");
 					}
