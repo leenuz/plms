@@ -288,10 +288,10 @@
                                     <li class="content03 content">
                                     	
                                     	 
-                                        <button class="viewDetailButton" th:onclick="openFilePopup([[${val.ja_file_path}]])">보기</button>
+                                        <button class="viewDetailButton" th:onclick="openFilePopup([[${val.ja_file_path}]], [[${val.ja_file_nm}]], [[${val.ja_jisang_no}]], [[${val.ja_file_seq}]], 'jisang')">보기</button>
                                     </li>
                                     <li class="content04 content btnsWrap">
-                                        <button class="fileDownloadBtn"  th:onclick="downloadFile([[${val.ja_file_path}]],[[${val.ja_file_nm}]])" >다운로드 <span class="downloadIcon"></span></button>
+                                        <button class="fileDownloadBtn"  th:onclick="downloadFile([[${val.ja_file_path}]], [[${val.ja_file_nm}]], [[${val.ja_jisang_no}]], [[${val.ja_file_seq}]], 'jisang' )" >다운로드 <span class="downloadIcon"></span></button>
                                     </li>
                                 </ul>
                             </div>

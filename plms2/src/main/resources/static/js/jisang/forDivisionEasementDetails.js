@@ -19,14 +19,16 @@ $(document).ready(function () {
 });
 
 //첨부파일 - 파일 보기 클릭 시 팝업 기능
-function openFilePopup(filePath) {
+function openFilePopup(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 	// 절대 경로를 사용하도록 file:// 스킴을 추가
-	const serverUrl = `/api/downloadFile?filePath=` + encodeURIComponent(filePath);
+	//const serverUrl = `/api/downloadFile?filePath=` + encodeURIComponent(filePath);
 
 	// 새 창의 옵션 설정 (예: 너비 600px, 높이 400px, 스크롤바 허용 등)
-	const popupOptions = "width=800,height=600,scrollbars=yes,resizable=yes";
+	//const popupOptions = "width=800,height=600,scrollbars=yes,resizable=yes";
 	// 새 창 열기
-	window.open(serverUrl, '파일 보기', popupOptions);
+	//window.open(serverUrl, '파일 보기', popupOptions);
+	
+	commonFileView(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
 }
 
 //첨부파일 - 다운로드 스크립트

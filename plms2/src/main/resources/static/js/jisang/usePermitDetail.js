@@ -8,10 +8,6 @@ $(document).on("click",".editBtn",function() {
 
 //다운로드 스크립트
 function downloadFile(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
-	//const url = `/common/download?filePath=${filePath}&fileName=${encodeURIComponent(fileName)}`;
-	//  const url = `/api/download?filePath=${filePath}&fileName=${fileName}`;
-	//console.log(url);
-	//window.open(url, '_blank');  // 새 창이나 새 탭에서 파일 다운로드
 	console.log(filePath);
 	console.log(fileName);
 	console.log(fileJisangNo);
@@ -22,24 +18,6 @@ function downloadFile(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 }
 
 
-   
-   //상세보기 다운로드
-   function detailFileDownload(obj) {
-   	const filePath = $(obj).attr('data-filepath');
-   	
-   	const link = document.createElement('a');
-   	
-   	link.href = filePath;
-   	link.download = '';
-   	
-   	document.body.appendChild(link);
-   	link.click();
-   	document.body.removeChild(link);
-   	
-   }
-   
-   
-   
    $(document).on("click","#sangsinCancelBtn",function(){
 	console.log("sangsinCancelBtn");
 	//var dataObj = [];

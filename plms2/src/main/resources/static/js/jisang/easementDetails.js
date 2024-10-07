@@ -20,15 +20,16 @@ $(document).ready(function () {
 
 
 //보기 클릭 시 팝업 기능
-function openFilePopup(filePath) {
-	console.log(filePath);
+function openFilePopup(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
+	//console.log(filePath);
     // 절대 경로를 사용하도록 file:// 스킴을 추가
     //const serverUrl = `/land/common/downloadFile?filePath=` + encodeURIComponent(filePath);
-    const serverUrl = `http://plms.dopco.co.kr/` + filePath;
+    //const serverUrl = `http://plms.dopco.co.kr/` + filePath;
     // 새 창의 옵션 설정 (예: 너비 600px, 높이 400px, 스크롤바 허용 등)
-    const popupOptions = "width=800,height=600,scrollbars=yes,resizable=yes";
+    //const popupOptions = "width=800,height=600,scrollbars=yes,resizable=yes";
     // 새 창 열기
-    window.open(serverUrl, '파일 보기', '_blank');
+    //window.open(serverUrl, '파일 보기', '_blank');
+    commonFileView(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
 }
 
 //다운로드 스크립트
