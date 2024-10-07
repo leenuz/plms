@@ -305,8 +305,7 @@
 								<!-- 파일저장 -->
 								<li class="content btnBox">
 									<button class="fileDownloadBtn"
-										th:onclick="downloadFile([[${file.ga_file_path}]],[[${file.ga_file_nm}]])">다운로드 <span
-											class="downloadIcon"></span></button>
+										th:onclick="downloadFile([[${file.ga_file_path}]], [[${file.ga_file_nm}]], [[${file.ga_gover_no}]], [[${file.ga_file_seq}]], 'gover')">다운로드 <span class="downloadIcon"></span></button>
 								</li>
 							</ul>
 						</div>
@@ -607,8 +606,7 @@
 								<!-- 파일저장 -->
 								<li class="filetitle_td_4">
 									<button class="fileDownloadBtn"
-										th:onclick="downloadFile([[${file.ga_file_path}]],[[${file.ga_file_nm}]])">다운로드 <span
-											class="downloadIcon"></span></button>
+										th:onclick="downloadFile([[${file.ga_file_path}]], [[${file.ga_file_nm}]], [[${file.ga_gover_no}]], [[${file.ga_file_seq}]], 'gover')">다운로드 <span class="downloadIcon"></span></button>
 								</li>
 							</ul>
 						</div>

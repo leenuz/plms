@@ -2009,20 +2009,33 @@ function openMap(el) {
 
 /***************** */
 //종섭 추가
-function attachFileDownload(obj) {
-	const filePath = $(obj).attr("data-filepath");
-	const lastSlashIndex = filePath.lastIndexOf('/');
+function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 	
-	const path = filePath.substring(0, lastSlashIndex);
-	const fileName = filePath.substring(lastSlashIndex + 1);
+	console.log(filePath);
+	console.log(fileName);
+	console.log(fileJisangNo);
+	console.log(fileSeq);
+	console.log(fileGubun);
+	
+	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
+	
+	
+	//const filePath = $(obj).attr("data-filepath");
+	//const lastSlashIndex = filePath.lastIndexOf('/');
+	
+	//const path = filePath.substring(0, lastSlashIndex);
+	//const fileName = filePath.substring(lastSlashIndex + 1);
 	
 	//console.log(path)
 	//console.log(fileName)
 	
-	const serverFileUrl = `/api/downloadfile?fileName=${encodeURIComponent(fileName)}&filePath=${encodeURIComponent(path)}`;
-	
+	//const serverFileUrl = `/land/common/downloadfile?fileName=${encodeURIComponent(fileName)}&filePath=${encodeURIComponent(path)}`;
+	//const serverFileUrl = "http://plms.dopco.co.kr//"+path+"/"+fileName;
 	//console.log(serverFileUrl);
 	
+	//commonFileDownload(path, fileName);
+	
+	/*
 	fetch(serverFileUrl)
 		.then(response =>{
 			if(!response.ok) {
@@ -2044,6 +2057,7 @@ function attachFileDownload(obj) {
 			console.error('다운로드 오류 : ', error);
 			alet(error.message);
 		});
+	*/
 }
 
 function selectFilesDownload() {
@@ -2056,16 +2070,28 @@ function selectFilesDownload() {
 		let checkYn = $(listObj[i].children[0].children).is(':checked');
 		
 		if(checkYn) {
-			pathList.push($(listObj[i].children[3].children).attr('data-filepath'));
+			pathList.push($(listObj[i].children[3].children).attr('data-info'));
 			
-			let filePath = $(listObj[i].children[3].children).attr('data-filepath');
-			let lastSlashIndex = filePath.lastIndexOf('/');
+			let fileInfo = $(listObj[i].children[3].children).attr('data-info');
+			let fileInfoObj = queryValueToObject(fileInfo);
 			
-			let path = filePath.substring(0, lastSlashIndex);
-			let fileName = filePath.substring(lastSlashIndex + 1);
 			
-			let serverFileUrl = `/api/downloadfile?fileName=${encodeURIComponent(fileName)}&filePath=${encodeURIComponent(path)}`;
+			//let serverFileUrl = `/land/common/downloadfile?fileName=${encodeURIComponent(fileName)}&filePath=${encodeURIComponent(path)}`;
+			//let serverFileUrl = "http://plms.dopco.co.kr//"+path+"/"+fileName;
 			
+			
+			//console.log(fileInfo);
+			//console.log(fileInfoObj);
+			
+			//console.log(fileInfoObj.ga_file_path);
+			//console.log(fileInfoObj.ga_file_nm);
+			//console.log(fileInfoObj.ga_gover_no);
+			//console.log(fileInfoObj.ga_file_seq);
+			//console.log('gubun :: gover');
+			
+			commonFileDownload(fileInfoObj.ga_file_path, fileInfoObj.ga_file_nm, fileInfoObj.ga_gover_no, fileInfoObj.ga_file_seq, 'gover');
+			
+			/*
 			fetch(serverFileUrl)
 				.then(response =>{
 					if(!response.ok) {
@@ -2087,6 +2113,7 @@ function selectFilesDownload() {
 					console.error('다운로드 오류 : ', error);
 					alert(error.message);
 				});
+			*/
 		}
 	}
 }

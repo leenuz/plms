@@ -265,7 +265,7 @@
 										</li>
 										<!-- 파일다운로드 버튼 -->
 										<li class="content04 content btnsWrap">
-											<button class="fileDownloadBtn"  th:onclick="downloadFile([[${file.ja_file_path}]],[[${file.ja_file_nm}]])" >
+											<button class="fileDownloadBtn"  th:onclick="downloadFile([[${file.ja_file_path}]], [[${file.ja_file_nm}]], [[${file.ja_jisang_no}]], [[${file.ja_file_seq}]],'jisang')" >
 												다운로드 <span class="downloadIcon" ></span>
 											</button>
 											<!-- 파일 경로를 숨겨서 저장 -->

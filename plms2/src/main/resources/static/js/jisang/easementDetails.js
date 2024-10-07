@@ -23,19 +23,29 @@ $(document).ready(function () {
 function openFilePopup(filePath) {
 	console.log(filePath);
     // 절대 경로를 사용하도록 file:// 스킴을 추가
-    const serverUrl = `/api/downloadFile?filePath=` + encodeURIComponent(filePath);
-
+    //const serverUrl = `/land/common/downloadFile?filePath=` + encodeURIComponent(filePath);
+    const serverUrl = `http://plms.dopco.co.kr/` + filePath;
     // 새 창의 옵션 설정 (예: 너비 600px, 높이 400px, 스크롤바 허용 등)
     const popupOptions = "width=800,height=600,scrollbars=yes,resizable=yes";
     // 새 창 열기
-    window.open(serverUrl, '파일 보기', popupOptions);
+    window.open(serverUrl, '파일 보기', '_blank');
 }
 
 //다운로드 스크립트
-function downloadFile(filePath, fileName) {
-      const url = `/api/download?filePath=${filePath}&fileName=${encodeURIComponent(fileName)}`;
-	 //  const url = `/api/download?filePath=${filePath}&fileName=${fileName}`;
-	   console.log(url);
-       window.open(url, '_blank');  // 새 창이나 새 탭에서 파일 다운로드
-   }
+function downloadFile(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
+	
+	console.log(filePath);
+	console.log(fileName);
+	console.log(fileJisangNo);
+	console.log(fileSeq);
+	console.log(fileGubun);
+	
+	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
+	
+	//const url = `/land/common/download?filePath=${filePath}&fileName=${encodeURIComponent(fileName)}`;
+	//const url = `/api/download?filePath=${filePath}&fileName=${fileName}`;
+	//const url = "http://plms.dopco.co.kr/"+filePath;
+	//window.open(url, '_blank');  // 새 창이나 새 탭에서 파일 다운로드
+	//location.href = url;
+}
 

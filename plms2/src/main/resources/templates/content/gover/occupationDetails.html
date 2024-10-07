@@ -11,6 +11,7 @@
 
     <script src="/js/gover/occupationDetails.js"></script>
     <script src="/js/common/upload.js"></script>
+    <script src="/js/common/common.js"></script>
     <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
     <style>
@@ -569,7 +570,7 @@
                                         <button class="viewDetailButton" th:onclick="openFilePopup([[${val.ga_file_path}]])">상세보기</button>
                                     </li>
                                     <li class="content04 content btnsWrap">
-                                        <button class="fileDownloadBtn" th:onclick="downloadFile([[${val.ga_file_path}]],[[${val.ga_file_nm}]])">다운로드 <span class="downloadIcon"></span></button>
+                                        <button class="fileDownloadBtn" th:onclick="downloadFile([[${val.ga_file_path}]],[[${val.ga_file_nm}]], [[${val.ga_gover_no}]], [[${val.ga_file_seq}]], 'gover')">다운로드 <span class="downloadIcon"></span></button>
                                     </li>
                                 </ul>
                             </div>

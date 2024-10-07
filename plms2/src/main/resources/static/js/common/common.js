@@ -332,6 +332,7 @@ function commonFileDownloadValidation(f_path, f_name) {
 	
 }
 
+//공통 파일 다운로드 ajax
 function commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 	
 	let param = {
@@ -381,4 +382,33 @@ function commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun
 	});
 	
 } 
+
+function commonFileView(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
+	
+	console.log(filePath);
+	console.log(fileName);
+	console.log(fileJisangNo);
+	console.log(fileSeq);
+	console.log(fileGubun);
+	
+	//샘플 URL :: http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no=J_010602&file_seq=30988&file_gubun=jisang
+	//const url = `/api/download?filePath=${filePath}&fileName=${fileName}`;
+	//console.log(url);
+	//window.open(url, '_blank');  // 새 창이나 새 탭에서 파일 다운로드
+}
+
+function queryValueToObject(str) {
+	const cleanedStr = str.slice(1,-1);
+	
+	const entries = cleanedStr.split(', ').map(entry => {
+		const [key, value] = entry.split('=');
+		
+		let parsedValue = value === 'null' ? null : isNaN(value) ? value : Number(value);
+		return [key, parsedValue];
+	});
+	
+	const jsonObj = Object.fromEntries(entries);
+	
+	return jsonObj;
+}
 /************************************************************/

@@ -125,20 +125,33 @@ public class CommonUtil implements ApplicationContextAware{
 
 	
 	 public static void moveFile(String fileName, String beforeFilePath, String afterFilePath) {
+		 	//													temp				data
 	        //String path = afterFilePath+"/"+folderName;
-	        String newfilePath = afterFilePath+"/"+fileName;
-	        String orgFilePath=beforeFilePath+"/"+fileName;
+	        String newfilePath = afterFilePath+"/"+fileName;	//data
+	        String orgFilePath = beforeFilePath+"/"+fileName;	//temp
+	        
+	        log.info("newfilePath:"+newfilePath);
+	        log.info("orgFilePath:"+orgFilePath);
+	        
 	        File dir = new File(afterFilePath);
-
+	        
 	        if (!dir.exists()) { //폴더 없으면 폴더 생성
 	            dir.mkdirs();
+	            log.info("dir.mkdirs()");
 	        }
 	        
 	        try{
-	            File file =new File(orgFilePath);
+	            File file =new File(orgFilePath);	//temp에 있는 파일을 꺼내서
 
 	            // 옮기 고자 하는 경로로 파일 이동
-	            file.renameTo(new File(newfilePath));            
+	            if(file.renameTo(new File(newfilePath))) {
+	            	log.info("success");
+	            	//file.renameTo(new File(newfilePath));    //data의 각 관리번호 폴더에 넣는다
+	            }else {
+	            	log.info("fail");
+	            }
+	            
+	                    
 	        }catch(Exception e){
 	            e.printStackTrace();
 	        }

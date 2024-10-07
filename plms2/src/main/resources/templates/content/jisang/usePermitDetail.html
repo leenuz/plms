@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="/css/jisang/write.css">
   <!-- <script src="/js/jisang/groundDetail.js"></script> -->
   <script src="/js/common/upload.js"></script>
+  <script src="/js/common/common.js"></script>
   <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
   <style>
@@ -308,7 +309,7 @@
                 <button
                 		class="viewDetailButton"
                 		th:if="${#lists.size(reqDoc2list) > 0 && reqDoc2list[0].file_gubun == '1'}"
-						th:onclick="downloadFile([[${reqDoc2list[0].file_path}]],[[${reqDoc2list[0].file_nm}]])">파일보기</button>
+						th:onclick="downloadFile([[${reqDoc2list[0].file_path}]], [[${reqDoc2list[0].file_nm}]], [[${reqDoc2list[0].pmt_no}]], [[${reqDoc2list[0].seq}]], 'permit')">파일보기</button>
               </li>
             </ul>
             <ul class="contents">

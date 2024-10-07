@@ -180,7 +180,7 @@ public class commonController {
 		// URL 구성
 //		String fileUrl = "http://plms.dopco.co.kr/"+filePath+"/"+fileName;	//IDC or Local
 		String fileUrl = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no="+fileJisangNo+"&file_seq="+fileSeq+"&file_gubun="+fileGubun;	//운영
-		//String fileUrl = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no=J_010602&file_seq=30988&file_gubun=jisang";
+		
 		System.out.println("====================================");
 		System.out.println("filePath :: " + filePath);
 		System.out.println("fileName :: " + fileName);
@@ -191,7 +191,7 @@ public class commonController {
 		System.out.println("====================================");
 		
 		// RestTemplate를 사용한 외부서버로부터 파일 받아오기
-		/*
+		
 		RestTemplate restTemplate = new RestTemplate();
 		byte[] fileData = restTemplate.getForObject(new URI(fileUrl), byte[].class);
 		
@@ -213,10 +213,8 @@ public class commonController {
 		// 클라이언트로 파일 전송(파일 이름 및 다운로드 위한 헤더 설정)
 		return ResponseEntity.ok()
 				.contentType(MediaType.parseMediaType(contentType))
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedFileName)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+encodedFileName+"\"; filename*=UTF-8''"+ encodedFileName)
 				.body(resource);
-		*/
-		return null;
 	}
 	
 	@GetMapping("/downloadfile2")

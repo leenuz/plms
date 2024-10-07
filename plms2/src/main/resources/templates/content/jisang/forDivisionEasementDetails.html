@@ -7,6 +7,7 @@
 	<link rel="stylesheet" as="style" crossorigin
 		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 	<link th:href="@{/css/common.css}" rel="stylesheet" />
+	<script src="/js/common/common.js"></script>
 
 	<title>지상권 상세정보</title>
 	<link rel="stylesheet" href="/css/jisang/easementDetails.css" />
@@ -260,7 +261,7 @@
 										</li>
 										<!-- 파일다운로드 버튼 -->
 										<li class="content04 content btnsWrap">
-											<button class="fileDownloadBtn" th:onclick="downloadFile([[${file.ja_file_path}]],[[${file.ja_file_nm}]])">다운로드 <span class="downloadIcon"></span></button>
+											<button class="fileDownloadBtn" th:onclick="downloadFile([[${file.ja_file_path}]], [[${file.ja_file_nm}]], [[${file.ja_jisang_no}]], [[${file.ja_file_seq}]], 'bunhal')">다운로드 <span class="downloadIcon"></span></button>
 											<!-- 파일 경로를 숨겨서 저장 -->
 											<input type="hidden" th:value="${file.ja_file_path}" />
 										</li>

@@ -1034,7 +1034,7 @@
 									<li class="content viewBtnBox">
 										<!-- <a th:href="@{${file.ga_file_path}}" class="viewDetailButton lightBlueBtn" th:data-filepath="${file.ga_file_path}" target="_blank" onclick="attachFileDownload(this)">보기</a> -->
 										<a href="javascript:void(0);" class="viewDetailButton lightBlueBtn"
-											th:data-filepath="${file.ga_file_path}" target="_blank" onclick="attachFileDownload(this)">보기</a>
+											th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.ga_file_path}]], [[${file.ga_file_nm}]], [[${file.ga_gover_no}]], [[${file.ga_file_seq}]], 'gover')">보기</a>
 									</li>
 								</ul>
 							</div>

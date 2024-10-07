@@ -137,11 +137,19 @@ const feeDetailCangehistoryPopEvet = () => {
 //feeDetailCangehistoryPopEvet();
 
 //첨부파일 - 다운로드 스크립트
-function downloadFile(filePath, fileName) {
-	const url = `/api/download?filePath=${filePath}&fileName=${encodeURIComponent(fileName)}`;
+function downloadFile(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
+	//const url = `/api/download?filePath=${filePath}&fileName=${encodeURIComponent(fileName)}`;
 	//  const url = `/api/download?filePath=${filePath}&fileName=${fileName}`;
-	console.log(url);
-	window.open(url, '_blank');  // 새 창이나 새 탭에서 파일 다운로드
+	//console.log(url);
+	//window.open(url, '_blank');  // 새 창이나 새 탭에서 파일 다운로드
+	
+	console.log(filePath);
+	console.log(fileName);
+	console.log(fileJisangNo);
+	console.log(fileSeq);
+	console.log(fileGubun);
+	
+	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
 }
 
 /*

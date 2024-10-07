@@ -2265,8 +2265,11 @@ log.info("data:"+data.get(0));
 	          
 	           
 	            try {
+	            	
+	            	System.out.println("fileFullPath :: " + fileFullPath);
 	                //파일 저장
 	                mpf.transferTo(new File(fileFullPath)); //파일저장 실제로는 service에서 처리
+	                
 	                
 	                resultdata.put("fname",originalFilename);
 	                resultdata.put("fpath",fileFullPath);

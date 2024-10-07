@@ -159,17 +159,17 @@ function printCurrentPage(){
 }
 
 //상세보기 다운로드
-function detailFileDownload(obj) {
-	const filePath = $(obj).attr('data-filepath');
+function detailFileDownload(infoStr) {
+	//let fileInfoObj = queryValueToObject(infoStr);
+	console.log(infoStr);
 	
-	const link = document.createElement('a');
+	console.log(infoStr.ga_file_path);
+	console.log(infoStr.ga_file_nm);
+	console.log(infoStr.ga_gover_no);
+	console.log(infoStr.ga_file_seq);
+	console.log('gubun :: gover');
 	
-	link.href = filePath;
-	link.download = '';
-	
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
+	commonFileDownload(infoStr.ga_file_path, infoStr.ga_file_nm, infoStr.ga_gover_no, infoStr.ga_file_seq, 'gover');
 	
 }
 /**********************************/
