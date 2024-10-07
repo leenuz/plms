@@ -912,7 +912,7 @@ log.info("PMT_NO:"+PMT_NO);
 				ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectDocInfo", map);
 				if (null != echolist && echolist.size() > 0) {
 					String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
-					// System.out.println("str_EchoNo=====" + str_EchoNo);
+					 System.out.println("str_EchoNo=====" + str_EchoNo);
 					map.put("OUT_URL", str_EchoNo);
 				}
 
@@ -4676,7 +4676,7 @@ log.info("gubun:"+gubun);
 		params.put("PMT_NO",idx);
 		params.put("index",index);
 		log.info("params:"+params);
-		
+		//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectJisangPmtDetail_MASTER",params);
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);

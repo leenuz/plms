@@ -789,14 +789,14 @@ $(document).on("click",".approvalBtn ",function(){
 		 			type:'POST',
 		 			contentType:"application/json",
 		 			data:JSON.stringify(dataObj),
-
+					async:false,
 		 			dataType:"json",
 		 			beforeSend:function(request){
 		 				console.log("beforesend ........................");
-		 				loadingShow();
+		 				//loadingShow();
 		 			},
 		 			success:function(response){
-		 				loadingHide();
+		 				//loadingHide();
 		 				console.log(response);
 		 				if (response.success="Y"){
 		 					console.log("response.success Y");
@@ -804,13 +804,7 @@ $(document).on("click",".approvalBtn ",function(){
 		 					 dataObj.PMT_NO=response.PMT_NO;
 		 					 console.log(dataObj);
 		 					 console.log("---------------상신으로 넘겨야함-------------");
-		 					//alert("정상적으로 등록 되었습니다.");
-		 					/*$("#popup_bg").show();
-		 					$("#popup").show(500);
-		 					//$("#addrPopupLayer tbody td").remove();
-		 					for(var i=0;i<response.resultData.length;i++){
-		 						$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-		 					}*/
+		 					
 		 					
 		 					url="/land/jisang/selectJisangPmtDetailListAppoval";
 		 						   	$.ajax({
@@ -823,10 +817,11 @@ $(document).on("click",".approvalBtn ",function(){
 		 								dataType:"json",
 		 								beforeSend:function(request){
 		 									console.log("beforesend ........................");
-		 									loadingShow();
+		 									//loadingShow();
 		 								},
 		 								success:function(response){
-		 									loadingHide();
+		 									//loadingHide();
+											console.log("----------------sangsin result----------");
 		 									console.log(response);
 		 									if (response.success="Y"){
 		 										console.log("response.success Y");

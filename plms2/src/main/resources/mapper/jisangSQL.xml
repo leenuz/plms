@@ -2278,6 +2278,8 @@ LEFT JOIN JIJUK_2024 JIJUK_MST ON JM.jm_PNU = JIJUK_MST.PNU
 	
 	<select id="selectJisangPmtDetail_MASTER"  parameterType="HashMap" resultType="java.util.HashMap">
 		SELECT PMT_NO AS PMT_NO
+		,(row_number() over()) as no
+		,pmt_no as idx
 , USE_PURPOS AS USE_PURPOS
 , ECHO_NO AS ECHO_NO
 , TO_CHAR(USE_ST_DATE , 'YYYY-MM-DD') AS USE_ST_DATE
