@@ -404,7 +404,7 @@ div.dt-filter-spacer {
 									class="notWriteInput" /></li>
 								<li class="content">
 									<button class="viewDetailButton"
-										th:onclick="openFilePopup([[${val}]])">보기</button>
+										th:onclick="openFilePopup([[${val.ja_file_path}]], [[${val.ja_file_nm}]], [[${val.ja_jisang_no}]], [[${val.ja_file_seq}]], 'cancel')">보기</button>
 								</li>
 							</ul>
 						</div>
@@ -501,7 +501,7 @@ div.dt-filter-spacer {
 							<li class="content selectFileWidth lightfileBtnWrap">
 								<button class="viewDetailButton"
 								th:if="${#lists.size(reqDoc1list)>=1}"
-								th:onclick="downloadFile([[${reqDoc1list[0].file_path}]], [[${reqDoc1list[0].file_nm}]])">
+								th:onclick="downloadFile([[${reqDoc1list[0].file_path}]], [[${reqDoc1list[0].file_nm}]], [[${reqDoc1list[0].manage_no}]], [[${reqDoc1list[0].seq}]], 'cancel')">
 									파일보기
 								</button>
 								<button class="viewDetailButton"
