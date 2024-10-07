@@ -327,4 +327,58 @@ function commonJisaInfoCheck() {
 	}
 	
 }
+
+function commonFileDownloadValidation(f_path, f_name) {
+	
+}
+
+function commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
+	
+	let param = {
+		"filePath" : filePath,
+		"fileName" : fileName,
+		"fileJisangNo" : fileJisangNo,
+		"fileSeq" : fileSeq,		
+		"fileGubun" : fileGubun
+	};
+	
+	console.log(param);
+	
+	$.ajax({
+		url : "/land/common/downloadfile",
+		data : param,
+		type : "GET",
+		xhrFields: {
+			responseType: 'blob'
+		},
+		success: function(data, status, xhr){
+			
+			let filename = "";
+			let disposition = xhr.getResponseHeader('Content-Disposition');
+			
+			if(disposition && disposition.indexOf('attachment') !== -1) {
+				let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+				let matches = filenameRegex.exec(disposition);
+				
+				if(matches != null && matches[1]) {
+					filename = matches[1].replace(/['"]/g, '');
+				}
+			}
+			
+			let mimeType = xhr.getResponseHeader('Content-Type');  // MIME 타입 가져오기
+			let blob = new Blob([data], { type: mimeType });  // MIME 타입에 맞는 Blob 생성
+			let link = document.createElement('a');
+			
+			link.href = window.URL.createObjectURL(blob);
+			link.download = filename || 'downloaded_file';
+			link.click(); // 파일 다운로드 실행
+			
+			
+		},
+		error: function(err) {
+			console.error('파일 다운로드 실패', err);
+		}
+	});
+	
+} 
 /************************************************************/
