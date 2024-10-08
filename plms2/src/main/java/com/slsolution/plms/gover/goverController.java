@@ -209,10 +209,9 @@ public class goverController {
 		return mav;
 	}
 
-	// occupationDetails
+	// 송유관 - 점용 상세정보
 	@GetMapping(path = "/occupationDetails") // http://localhost:8080/api/get/dbTest
-	public ModelAndView occupationDetails(HttpServletRequest httpRequest, HttpServletResponse response)
-			throws Exception {
+	public ModelAndView occupationDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 
 //	        List<TestDTO> list = new ArrayList<TestDTO>();
