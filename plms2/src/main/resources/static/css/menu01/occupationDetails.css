@@ -90,8 +90,12 @@ button {
 #occupationDetails .subTitle {
     font-size: 18px;
     font-weight: 700;
-    color: #31394C;
+    color: #31394c;
     margin-bottom: 24px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 21px;
 }
 
 #occupationDetails .landInfoEdit {
@@ -1106,4 +1110,14 @@ button {
 
 .finalBtn.printBtn {
     background: #2B7DE1;
+}
+#occupationDetails .potentialIssues .issueAdd {
+    width: 81px;
+    height: 27px;
+    background: #2B7DE1;
+    border-radius: 20px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

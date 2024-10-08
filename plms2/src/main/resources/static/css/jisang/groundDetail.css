@@ -92,6 +92,10 @@ button {
     font-weight: 700;
     color: #31394C;
     margin-bottom: 24px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 21px;
 }
 
 #groundDetail .basicOwnerInfo {
@@ -996,4 +1000,15 @@ button {
     border-radius: 10px;
     font-size: 15px;
     font-weight: 600;
+}
+
+#groundDetail .potentialIssues .issueAdd {
+    width: 81px;
+    height: 27px;
+    background: #2B7DE1;
+    border-radius: 20px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
