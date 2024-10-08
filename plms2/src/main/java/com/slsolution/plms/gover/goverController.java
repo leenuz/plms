@@ -1370,8 +1370,8 @@ public class goverController {
 			String USE_PURPOS = requestParamsObj.getString("USE_PURPOS")==null?"":requestParamsObj.getString("USE_PURPOS");
 			String PMT_GOVER_LENGTH = requestParamsObj.getString("PMT_GOVER_LENGTH");
 			String PMT_GOVER_AREA = requestParamsObj.getString("PMT_GOVER_AREA");
-			JSONArray pnuLists=new JSONArray(requestParamsObj.get("pnuList"));
-			String PNU_CNT = String.valueOf(pnuLists.length()); // 소속토지 수
+			//JSONArray pnuLists=new JSONArray(requestParamsObj.get("pnuCnt"));
+			String PNU_CNT = String.valueOf(requestParamsObj.get("pnuCnt")); // 소속토지 수
 			
 			String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
 			String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
@@ -1510,16 +1510,28 @@ public class goverController {
 					if ("".equals(str_appNo)) {
 						map.put("message", "N");
 					} else {
-//						String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
-//						String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
-//						String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
-//						String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
-//						String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
-						String str_UserId = "105681";
-						String str_userName = "박영환";
-						String str_userDeptcd = "D250500";
-						String str_userDeptnm = "IT전략.지원팀";
-						String str_userUPDeptcd = "S250100";
+						String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
+						String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
+						String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
+						String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
+						String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+						log.info("str_UserId:"+str_UserId);
+						log.info("str_userName:"+str_userName);
+						log.info("str_userDeptcd:"+str_userDeptcd);
+						log.info("str_userDeptnm:"+str_userDeptnm);
+						log.info("str_userUPDeptcd:"+str_userUPDeptcd);
+						
+						
+//						String str_UserId = "105681";
+//						String str_userName = "박영환";
+//						String str_userDeptcd = "D250500";
+//						String str_userDeptnm = "IT전략.지원팀";
+//						String str_userUPDeptcd = "S250100";
+						log.info("str_GOVERNO:"+str_GOVERNO);
+						
+						log.info("session:"+request.getSession().toString());
+						
+						
 						res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getGover_pay_HTML("", str_GOVERNO, "", "", "", request, response), str_UserId, "", "", "GetHoldUsageDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
 					}
 					if (res_Echo) {
