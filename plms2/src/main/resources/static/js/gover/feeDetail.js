@@ -242,7 +242,7 @@ $(document).on("click","#sangsinBtn",function(){
 				,"USE_PURPOS":use_purpos
 				,"PMT_GOVER_LENGTH":pmt_gover_length
 				,"PMT_GOVER_AREA":pmt_gover_area
-				,"PAGETYPE":"" //update=수정에서 
+				,"PAGETYPE":"update" //update=수정에서 
 				,"OFFICE_MOBILE":""
 				,"pnuList":pnuArray
 				};
