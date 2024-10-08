@@ -1549,7 +1549,7 @@ public class goverController {
 						//ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectGoverDocInfo", map);
 						ArrayList echolist = (ArrayList) mainService.selectQuery("goverSQL.selectGoverDocInfo", map);
 						if (null != echolist && echolist.size() > 0) {
-							String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+							String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("pa_out_url"));
 							System.out.println("str_EchoNo=====" + str_EchoNo);
 							map.put("OUT_URL", str_EchoNo);
 						}

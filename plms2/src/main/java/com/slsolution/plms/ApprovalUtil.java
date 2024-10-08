@@ -161,13 +161,13 @@ public class ApprovalUtil implements ApplicationContextAware {
 			System.out.println("@@@@@ out_url:"+out_url);
 			HashMap hms = new HashMap();
 			
-			hms.put("DOCKEY", DOCKEY);
-			hms.put("OUTFLAG", out_flag);
-			hms.put("OUTURL", out_url);
-			hms.put("USERNM",USERNAME);
-			hms.put("DEPTCD", USERUPDEPTCD);
-			hms.put("DEPTNM", USERDEPTNM);
-			hms.put("UPDEPTCD", USERUPDEPTCD);
+			hms.put("dockey", DOCKEY);
+			hms.put("outflag", out_flag);
+			hms.put("outurl", out_url);
+			hms.put("usernm",USERNAME);
+			hms.put("deptcd", USERUPDEPTCD);
+			hms.put("deptnm", USERDEPTNM);
+			hms.put("updeptcd", USERUPDEPTCD);
 			
 			int nCount;
 			try {

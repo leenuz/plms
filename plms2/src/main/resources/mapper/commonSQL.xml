@@ -271,7 +271,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<insert id="insertEchoOut" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="pa_idx" keyProperty="pa_idx">
-		insert into plms_approval (pa_seq,pa_dockey,pa_out_url,pa_usernm,pa_deptcd,pa_deptnm,pa_updeptcd)
+		insert into plms_approval (pa_seq,pa_dockey,pa_out_flag,pa_out_url,pa_usernm,pa_deptcd,pa_deptnm,pa_updeptcd)
 		values
 		(#{seq},#{dockey},#{outflag},#{outurl},#{usernm},#{deptcd},#{deptnm},#{updeptcd})
 	</insert>
