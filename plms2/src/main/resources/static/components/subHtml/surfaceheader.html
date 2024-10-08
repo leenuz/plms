@@ -75,7 +75,7 @@ console.log("-----------start openMapWindow-----------------");
     const surfaceMenuBtn = document.querySelectorAll(".surfaceMenuBtn");
     const hiddenMenuBoxs = document.querySelectorAll(".hiddenMenuBoxs");
     const path = window.location.pathname;
-    console.log(path);
+    //console.log(path);
 
     //URL에 따라 메뉴불빛 유지
     //URL에 따라 메뉴불빛 유지
@@ -171,10 +171,10 @@ console.log("-----------start openMapWindow-----------------");
           hiddenMenuBoxs.forEach((box, boxIndex) => {
             // 메뉴 버튼과 hiddenMenuBoxs 인덱스 번호가 일치하면 메뉴를 열거나 닫음
             if (index - 1 === boxIndex) {
-              console.log(btn);
+              //console.log(btn);
               box.classList.add("surfacemunuOpen");
             } else {
-              console.log(btn, "사라짐");
+              //console.log(btn, "사라짐");
               box.classList.remove("surfacemunuOpen");
             }
           });

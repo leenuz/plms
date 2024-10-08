@@ -3,8 +3,8 @@ const surfaceHeaderEvet = () => {
      let surfaceHeader = document.querySelector(".surfaceHeader");
      let htmlFilePath = '/components/subHtml/surfaceheader.html'; // 삽입할 HTML 파일 경로
 
-    console.log(surfaceHeader);
-    console.log(htmlFilePath);
+    //console.log(surfaceHeader);
+    //console.log(htmlFilePath);
 
      let xhr = new XMLHttpRequest();
      xhr.open('GET', htmlFilePath, true);
@@ -15,7 +15,7 @@ const surfaceHeaderEvet = () => {
             
              // 새로 추가된 HTML 내의 스크립트 실행
              let headerscripts = surfaceHeader.getElementsByTagName('script');
-             console.log(headerscripts[0]);
+             //console.log(headerscripts[0]);
              for (let i = 0; i < headerscripts.length; i++) {
                  let script = document.createElement('script');
                  script.textContent = headerscripts[i].textContent;
@@ -25,9 +25,7 @@ const surfaceHeaderEvet = () => {
          }
      };
      xhr.send();
-     console.log('header작동');
-
-
+     //console.log('header작동');
 }
 
 

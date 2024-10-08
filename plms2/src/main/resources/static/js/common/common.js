@@ -1,9 +1,3 @@
-
-console.log("----------------common.js start----------------");
-
- 
- 
-
 //241005
 var selectDivId;
 
@@ -18,6 +12,7 @@ var selectDivId;
 	return newStr;
 	
 }*/
+
 function isEmpty(str,mode){
 	//mode string s , number n
 	var newStr=str;
@@ -30,9 +25,6 @@ function isEmpty(str,mode){
 	return false;
 	
 }
-
-
-
 
 function loadingShow(){
 	console.log("loading show....");
