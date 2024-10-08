@@ -73,7 +73,7 @@ public class goverController {
 		// ArrayList<HashMap> list = sqlSession.selectList("selectAllList",params);
 
 		list = mainService.selectQuery("goverSQL.selectAllList", params);
-		log.info("jisang /list:" + list.toString());
+		//log.info("jisang /list:" + list.toString());
 		// nhServ1.test();
 		// ts.Test1();
 		HashMap<String, Object> resultmap = new HashMap();
@@ -107,7 +107,7 @@ public class goverController {
 		// ArrayList<HashMap> list = sqlSession.selectList("selectAllList",params);
 
 		list = mainService.selectQuery("goverSQL.selectAllList", params);
-		log.info("jisang /list:" + list.toString());
+//		log.info("jisang /list:" + list.toString());
 		// nhServ1.test();
 		// ts.Test1();
 //        HashMap<String,Object> resultmap=new HashMap();
@@ -551,7 +551,7 @@ public class goverController {
 		// ArrayList<HashMap> list =
 		// mainService.selectQuery("goverSQL.selectGoverList",params);
 		ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverMasterSearchList", params);
-		log.info("list:" + list);
+//		log.info("list:" + list);
 
 		HashMap<String, Object> resultmap = new HashMap();
 		resultmap.put("draw", draw);
@@ -641,7 +641,7 @@ public class goverController {
 		// ArrayList<HashMap> list =
 		// mainService.selectQuery("goverSQL.selectGoverList",params);
 		ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverMasterSearchList", params);
-		log.info("list:" + list);
+//		log.info("list:" + list);
 //			Object count= mainService.selectCountQuery("goverSQL.selectTotalCount03_2", params);
 //			int total=(int)count;
 //
@@ -748,7 +748,7 @@ public class goverController {
 		// ArrayList<HashMap> list =
 		// mainService.selectQuery("goverSQL.selectGoverList",params);
 		ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverMasterCancelSearchList", params);
-		log.info("list:" + list);
+//		log.info("list:" + list);
 
 //			Object count= mainService.selectCountQuery("goverSQL.selectTotalCount03_3", params);
 //			int total=(int)count;
