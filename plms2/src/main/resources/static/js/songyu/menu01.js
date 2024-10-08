@@ -512,10 +512,10 @@ function loadDataTable(params){
 						url="/land/gover/occupationDetails?idx="+data.idx+"&index="+data.index+"&gidx="+data.gidx;
 					}
 					else if (data.idx.substring(0,1)=="N"){ // 미설정
-						url="/land/notset/unsetOccupationDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
+						url="/notset/unsetOccupationDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
 					}
 					else if (data.idx.substring(0,1)=="L"){ // 회사토지
-						url="/land/dopco/companyLandDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
+						url="/dopco/companyLandDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
 					}
 										
 					else return;					   

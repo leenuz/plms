@@ -1057,7 +1057,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
             DM.dom_idx as index,
             0 as gidx
         FROM DOPCO_MASTER DM
-        WHERE DM.dom_CANCLE_YN IS NULL
+        WHERE DM.dom_CANCLE_YN = ''
     ) JOIN_MST 
     LEFT JOIN jijuk_2024 JIJUK_MST ON JIJUK_MST.pnu=JOIN_MST.pnu
     LEFT JOIN (

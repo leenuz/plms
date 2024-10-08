@@ -454,7 +454,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				 FROM dopco_master dom
 				 
 		 ) AS u
-		 ON PI.pnu = u.pnu
+		 ON PI.pnu = u.jm_pnu
 		 WHERE 1=1
 		and pnu=#{pnu}
 	</select>
@@ -462,7 +462,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--회사토지 상세정보 - 잠재이슈 변경 이력-->
 	<select id="selectIssueHistoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *,(row_number() over()) as no 
-		 FROM  plms_potential_issue pi left join plms_potential_issue_history pih on pi.pnu=pih.pih_pnu 
+		 FROM  plms_potential_issue pi left join potential_issue_history pih on pi.pnu=pih.pih_pnu 
 		WHERE 1=1
 		and pih_pnu=#{pnu}
 	</select>
