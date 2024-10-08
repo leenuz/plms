@@ -1993,8 +1993,7 @@ public class goverController {
 								}
 							}
 						}
-						mainService.UpdateQuery("goverSQL.deleteGoverPNU", params); // 기존
-																					// 삭제
+						mainService.UpdateQuery("goverSQL.deleteGoverPNU", params); // 기존삭제
 					}
 				}
 
