@@ -181,14 +181,14 @@ public class commonController {
 //		String fileUrl = "http://plms.dopco.co.kr/"+filePath+"/"+fileName;	//IDC or Local
 		String fileUrl = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no="+fileJisangNo+"&file_seq="+fileSeq+"&file_gubun="+fileGubun;	//운영
 		
-		System.out.println("====================================");
-		System.out.println("filePath :: " + filePath);
-		System.out.println("fileName :: " + fileName);
-		System.out.println("fileJisangNo :: " + fileJisangNo);
-		System.out.println("fileSeq :: " + fileSeq);
-		System.out.println("fileGubun :: " + fileGubun);
-		System.out.println("file URL :: " + fileUrl);
-		System.out.println("====================================");
+		log.info("====================================");
+		log.info("filePath :: " + filePath);
+		log.info("fileName :: " + fileName);
+		log.info("fileJisangNo :: " + fileJisangNo);
+		log.info("fileSeq :: " + fileSeq);
+		log.info("fileGubun :: " + fileGubun);
+		log.info("file URL :: " + fileUrl);
+		log.info("====================================");
 		
 		// RestTemplate를 사용한 외부서버로부터 파일 받아오기
 		
@@ -213,7 +213,7 @@ public class commonController {
 		// 클라이언트로 파일 전송(파일 이름 및 다운로드 위한 헤더 설정)
 		return ResponseEntity.ok()
 				.contentType(MediaType.parseMediaType(contentType))
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+fileName+"\"")
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+fileName+"\"; filename*=UTF-8''"+fileName)
 				.body(resource);
 	}
 	

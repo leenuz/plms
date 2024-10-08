@@ -1,12 +1,5 @@
 var mapWindow;
 var uploadFiles = new Array();
-$(document).on("click","#moveMap",function(){
-	//openMapWindow();
-	// mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
-	// moveToCityHall();
-
-	openMapWindow({'lon':mapCoordLng, 'lat':mapCoordLat});
-})
 
 $(document).ready(function () {
 	// 드래그 앤 드롭 영역 파일 첨부 관련 코드 시작
