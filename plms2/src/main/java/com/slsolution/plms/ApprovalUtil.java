@@ -20,6 +20,9 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 
@@ -30,17 +33,30 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 
-
-public class ApprovalUtil  {
+@Component
+public class ApprovalUtil implements ApplicationContextAware {
+	
+	
+	
 	CommonUtil CU=new CommonUtil();
+	 private static ApplicationContext context;
+
+	    // ApplicationContext 주입
+	 	
+	    public void setApplicationContext(ApplicationContext applicationContext) {
+	        context = applicationContext;
+	    }
 	
-	@Autowired
-	private MainService mainService;
-	
+//	@Autowired
+//	private MainService mainService;
+//	
 	@Transactional
 	public boolean GetPLMSDataforXML(String DOCKEY,String HTML,String USERCD,String SDATE,String STIME
 			,String GUBUN,String USERNAME,String USERDEPTCD,String USERDEPTNM,String USERUPDEPTCD) throws MalformedURLException, IOException
 	{
+		
+		
+		MainService mainService = context.getBean(MainService.class);
 		System.out.println("@@@ XML SERVLET START");
 		System.out.println("@@@ XML DOCKEY:"+DOCKEY);
 		System.out.println("@@@ XML HTML:"+HTML);
@@ -69,7 +85,7 @@ public class ApprovalUtil  {
 //		String url="http://echo.depco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx?,op="+GUBUN; //개발
 		//String url="http://localhost:8081/land/api/dopcoApprovalTest"; //로컬 테스트
 		//String url="http://echo.depco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //운영
-		String url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx";
+		String url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //새 개발기 테스트
 		//String url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx/GetHoldUsageDataforXML";
 		String xmlString="";
 		xmlString=GetApprXmlget(DOCKEY,HTML,USERCD,SDATE,STIME,GUBUN);
@@ -155,6 +171,7 @@ public class ApprovalUtil  {
 			
 			int nCount;
 			try {
+				
 				nCount = (Integer) mainService.selectCountQuery("commonSQL.selectGetPLMSCompforeXML", hms);
 				if (nCount>0) {
 					mainService.UpdateQuery("commonSQL.updateEchoOut", hms);
