@@ -1199,7 +1199,10 @@ $(document).on("click","#mainSaveBtn",function(){
 	}
 	console.log("------dataObj--------");
 	console.log(dataObj);
-	
+	if (!dataObj.useStartDate || !dataObj.useEndDate) {
+		alert('사용기간 선택해주세요.');
+		return;
+	}
 	console.log("대상토지 정보");
 	var togiDatas=[];
 	var togiUls=$("#togiDiv .togiUl");
