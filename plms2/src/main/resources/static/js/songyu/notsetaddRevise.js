@@ -612,7 +612,7 @@ $(document).on("click", "#deleteFileBtn", function () {
 	var param={"fileIds":dids};
 
 	
-	url = "/notset/deleteNotsetAtcFile";
+	url = "/land/notset/deleteNotsetAtcFile";
 	         $.ajax({
 	             url: url,
 	             type: 'POST',

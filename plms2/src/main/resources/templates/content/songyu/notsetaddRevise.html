@@ -490,8 +490,10 @@
 					<!-- 메모 -->
 					<section class="memoSection">
 						<div class="subTitle">메모</div>
-
-						<textarea name="memo" id="memo" placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200" th:text="${memoList.mm_memo}"></textarea>
+						<textarea name="memo" id="memo"
+							placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200"
+							th:text="${memoList != null && memoList['mm_memo'] != null ? memoList['mm_memo'] : ''}">
+							</textarea>
 					</section>
 
 					<div class="finalBtnBox btnWrap">

@@ -515,7 +515,7 @@ $(document).ready(function() {
 		const idx = urlParams.get('idx');
 		const index = urlParams.get('index');
 		const gidx = urlParams.get('gidx');
-		url = "/notset/notsetaddRevise?idx=" + idx + "&index=" + index + "&g_idx=" + gidx;
+		url = "/land/notset/notsetaddRevise?idx=" + idx + "&index=" + index + "&g_idx=" + gidx;
 		window.location = url;
 	});
 });

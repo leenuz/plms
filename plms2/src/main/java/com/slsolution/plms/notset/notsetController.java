@@ -153,7 +153,6 @@ public class notsetController {
 		ArrayList<HashMap> notsetPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
 		ArrayList<HashMap> notsetMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 		log.info("data:"+data.get(0));
-		log.info("data:"+notsetMemoList);
 		mav.addObject("jisaList",jisalist);
 		mav.addObject("resultYongdoList",yongdolist);
 		mav.addObject("resultJimokList",jimoklist);
@@ -169,7 +168,13 @@ public class notsetController {
 		mav.addObject("jisangIssueCodeAtcFileList",notsetIssueCodeAtcFileList);
 		mav.addObject("notsetIssueHistoryList",notsetIssueHistoryList);
 		mav.addObject("notsetPnuAtcFileList",notsetPnuAtcFileList);
-		mav.addObject("memoList",notsetMemoList.get(0));
+		// mav.addObject("memoList",notsetMemoList.get(0));
+		// null 체크 및 사이즈 확인
+		if (notsetMemoList != null && !notsetMemoList.isEmpty()) {
+		    mav.addObject("memoList", notsetMemoList.get(0));
+		} else {
+		    mav.addObject("memoList", new HashMap());  // 빈 값을 넘겨줌
+		}
 		log.info("jisalist:"+jisalist);
 	
 		mav.setViewName("content/songyu/notsetaddRevise");
