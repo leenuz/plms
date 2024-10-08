@@ -296,8 +296,8 @@ function positionView(objInfo) {
 	if (window.opener) {
 		const message = {
 			type: "setCenter",
-			lon: objInfo.lon,
-			lat: obj.lat,
+			lon: mapCoordLng,
+			lat: mapCoordLat,
 			zoom: 19,
 			markers: [[127.387205, 36.43472], [127.376596, 36.411514], [127.464146, 36.437349], [127.469639, 36.398030], [127.328186, 36.425660]]
 		};
@@ -375,6 +375,8 @@ function commonFileView(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 	console.log("f_jisangNo :: " + fileJisangNo);
 	console.log("f_seq :: " + fileSeq);
 	console.log("f_gubun ::" + fileGubun);
+	
+	let selectUrl = '';
 	
 	//샘플 URL = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no=J_010602&file_seq=30988&file_gubun=jisang
 	const url = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no="+fileJisangNo+"&file_seq="+fileSeq+"&file_gubun="+fileGubun;

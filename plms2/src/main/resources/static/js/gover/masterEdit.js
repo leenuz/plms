@@ -2010,13 +2010,6 @@ function openMap(el) {
 /***************** */
 //종섭 추가
 function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
-	
-	console.log(filePath);
-	console.log(fileName);
-	console.log(fileJisangNo);
-	console.log(fileSeq);
-	console.log(fileGubun);
-	
 	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
 }
 

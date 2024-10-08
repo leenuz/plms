@@ -12,6 +12,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -167,7 +168,7 @@ public class commonController {
 	 * @param filePath
 	 * @param fileName
 	 * @return
-	 */
+	 **********************/
 	@GetMapping("/downloadfile")
 	public ResponseEntity<Resource> downloadFile(
 				@RequestParam(name="filePath") String filePath,
@@ -176,39 +177,78 @@ public class commonController {
 				@RequestParam(name="fileSeq") String fileSeq,
 				@RequestParam(name="fileGubun") String fileGubun
 				) throws IOException, URISyntaxException{
-		//http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no=J_010602&file_seq=30988&file_gubun=jisang
-		// URL 구성
-//		String fileUrl = "http://plms.dopco.co.kr/"+filePath+"/"+fileName;	//IDC or Local
-		String fileUrl = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no="+fileJisangNo+"&file_seq="+fileSeq+"&file_gubun="+fileGubun;	//운영
+		// 파일을 클라이언트로 반환하기 위해 InputStream으로 변환
+		InputStream inputStream;
+		Resource resource;
 		
-		log.info("====================================");
+		// 기본적인 MIME 타입 지정
+		String contentType = "";
+		
+		//파일이름 인코딩
+		String encodedFileName = "";
+		
+		String downloadUrl = "";
+		boolean filePathcheck = filePath.contains("/uploadfile");
+		
+		if(filePathcheck) {	//기존꺼라면 다운로드
+			downloadUrl = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no="+fileJisangNo+"&file_seq="+fileSeq+"&file_gubun="+fileGubun;	//운영
+			
+			// RestTemplate를 사용한 외부서버로부터 파일 받아오기
+			RestTemplate restTemplate = new RestTemplate();
+			byte[] fileData = restTemplate.getForObject(new URI(downloadUrl), byte[].class);
+			
+			if(fileData == null || fileData.length == 0) {
+				throw new RuntimeException("파일을 가져올 수 없습니다. " + fileName);
+			}
+			
+			inputStream = new ByteArrayInputStream(fileData);
+			resource = new InputStreamResource(inputStream);
+			
+			contentType = "application/octet-stream";
+		} else {	//신규라면 파일 다운로드
+			//신규라면
+			downloadUrl = filePath;
+			
+			File file = new File(downloadUrl);
+			
+			if(!file.exists()) {
+				throw new RuntimeException("파일이 없습니다. :: " + fileName);				
+			}
+			
+			contentType = Files.probeContentType(file.toPath());
+			
+			if(contentType == null) {
+				contentType = "application/octet-stream";
+			}
+			
+			try {
+				inputStream = new FileInputStream(file);
+				resource = new InputStreamResource(inputStream);	
+			} catch(IOException e) {
+				log.error("============filedown ERROR [S] ==========");
+				e.printStackTrace();
+				log.error("============filedown ERROR [E] ==========");
+				throw new RuntimeException("파일 읽는 도중 오류가 발생했습니다.");
+			}
+			
+			
+			contentType = Files.probeContentType(file.toPath());
+			if (contentType == null) {
+				contentType = "application/octet-stream";  // 기본 MIME 타입
+			}
+		}
+		
+		encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
+		encodedFileName = encodedFileName.replaceAll("\\+", "%20");  // 공백 처리
+		
+		log.info("============= FINAL ================");
 		log.info("filePath :: " + filePath);
 		log.info("fileName :: " + fileName);
 		log.info("fileJisangNo :: " + fileJisangNo);
 		log.info("fileSeq :: " + fileSeq);
 		log.info("fileGubun :: " + fileGubun);
-		log.info("file URL :: " + fileUrl);
+		log.info("file URL :: " + downloadUrl);
 		log.info("====================================");
-		
-		// RestTemplate를 사용한 외부서버로부터 파일 받아오기
-		
-		RestTemplate restTemplate = new RestTemplate();
-		byte[] fileData = restTemplate.getForObject(new URI(fileUrl), byte[].class);
-		
-		if(fileData == null || fileData.length == 0) {
-			throw new RuntimeException("파일을 가져올 수 없습니다. " + fileName);
-		}
-		
-		// 파일을 클라이언트로 반환하기 위해 InputStream으로 변환
-		InputStream inputStream = new ByteArrayInputStream(fileData);
-		Resource resource = new InputStreamResource(inputStream);
-		
-		// 기본적인 MIME 타입 지정
-		String contentType = "application/octet-stream";
-		
-		//파일이름 인코딩
-		String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
-		encodedFileName = encodedFileName.replaceAll("\\+", "%20");  // 공백 처리
 		
 		// 클라이언트로 파일 전송(파일 이름 및 다운로드 위한 헤더 설정)
 		return ResponseEntity.ok()
