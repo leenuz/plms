@@ -1290,7 +1290,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 	               gm.gm_cancle_name AS cancel_name,
 	               gm.gm_cancle_empcd AS cancel_empcd,
 	               gm.gm_use_purpos AS use_purpos,
-	               gm.gm_gover_st_date AS gover_st_date,
+	               to_char(gm.gm_gover_st_date) AS gover_st_date,
 	               gm.gm_gover_ed_date AS gover_ed_date,
 	               CONCAT(gm.gm_gover_st_date, ' ~ ', gm.gm_gover_ed_date) AS period,
 	               gm.gm_pmt_status AS pmt_status,
@@ -1921,7 +1921,7 @@ WHERE gp_GOVER_NO = #{GOVER_NO}
 	
 	
 	
-	<select id="selectGoverPmtLastForApproval" resultType="Integer" parameterType="HashMap">
+	<select id="selectGoverPmtLastForApproval" resultType="HashMap" parameterType="HashMap">
 		SELECT GP.gp_buseo as BUSEO
 		, GP.gp_dosiplan as DOSIPLAN
 		, GP.gp_echo_no as ECHO_NO

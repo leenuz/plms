@@ -877,6 +877,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 
 	}
 
+	//점용료 납부/전자결재 
 	public String getGover_pay_HTML(String TYPE, String GOVER_NO, String NextSeq, String FileSeq, String PmtNo, HttpServletRequest request, HttpServletResponse response) {
 
 		MainService mainService = context.getBean(MainService.class);
@@ -886,7 +887,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		ArrayList pmt_list = new ArrayList();
 		ArrayList pay_List = new ArrayList();
 		ArrayList modify_list = new ArrayList();
-		ArrayList<HashMap> file_list = new ArrayList<HashMap>();
+		ArrayList file_list = new ArrayList();
 
 		HashMap kibon_map = new HashMap();
 		HashMap togi_map = new HashMap();
@@ -907,6 +908,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 
 			params.put("GOVERNO", goverNo);
 			params.put("GOVER_NO", goverNo);
+			params.put("gover_no", goverNo);
 			params.put("FILENO", goverNo);
 			params.put("SEQ", NextSeq);
 			params.put("PMTNO", PmtNo);
@@ -919,16 +921,16 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 			
 			list = (ArrayList) mainService.selectQuery("goverSQL.selectGoverList", params); // 기본정보
 			pnu_list = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPnuList", params); // 소속토지정보
-			pmt_list = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPmtLastForApproval", params); // 허가 정보
+			pmt_list = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPmtLastForApproval", params); // 허가 정보 부서정보
 			pay_List = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPayList", params); // 납부실적목록
 			params.put("SEQ", FileSeq);
 
-			for (int i = 0; i < Integer.parseInt(FILE_SIZE); i++) {
-				params.put("FILE_SEQ", parser.getString("gv_fileSeq" + i, "0"));
-			//	file_list.add((HashMap) Database.getInstance().queryForObject("Json.selectGoverRowDetail_FilesObject", params)); // 첨부파일
-				file_list.add((HashMap) mainService.selectHashmapQuery("goverSQL.selectGoverRowDetail_FilesObject", params)); // 첨부파일
-			}
-
+//			for (int i = 0; i < Integer.parseInt(FILE_SIZE); i++) {
+//				params.put("FILE_SEQ", parser.getString("gv_fileSeq" + i, "0"));
+//			//	file_list.add((HashMap) Database.getInstance().queryForObject("Json.selectGoverRowDetail_FilesObject", params)); // 첨부파일
+//				file_list.add((HashMap) mainService.selectHashmapQuery("goverSQL.selectGoverRowDetail_FilesObject", params)); // 첨부파일
+//			}
+			file_list = mainService.selectQuery("goverSQL.selectGoverRowDetail_FilesObject", params);
 //			System.out.println("$$$ params=" + params);
 			log.info("list:"+list.get(0));
 			if (list.size() > 0) {
@@ -946,8 +948,15 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				kibon_map.put("JIMOK_TEXT", cu.evl((String) ((HashMap) list.get(0)).get("jimok_text"), ""));
 				kibon_map.put("JIJUK_AREA", cu.evl((String) ((HashMap) list.get(0)).get("jijuk_area"), ""));
 				kibon_map.put("DOSIPLAN", cu.evl((String) ((HashMap) list.get(0)).get("dosiplan"), ""));
-				kibon_map.put("GOVER_ST_DATE", cu.evl((String) ((HashMap) list.get(0)).get("gover_st_date"), ""));
-				kibon_map.put("GOVER_ED_DATE", cu.evl((String) ((HashMap) list.get(0)).get("gover_ed_date"), ""));
+				// java.sql.Date 객체에서 toString() 호출
+				java.sql.Date sqlDate = (java.sql.Date) ((HashMap) list.get(0)).get("gover_st_date");
+				kibon_map.put("GOVER_ST_DATE", cu.evl(sqlDate != null ? sqlDate.toString() : "", ""));
+				
+				java.sql.Date sqledDate = (java.sql.Date) ((HashMap) list.get(0)).get("gover_ed_date");
+				kibon_map.put("GOVER_ED_DATE", cu.evl(sqledDate != null ? sqledDate.toString() : "", ""));
+
+				//kibon_map.put("GOVER_ST_DATE", cu.evl((String) ((HashMap) list.get(0)).get("gover_st_date"), "").toString());
+				//kibon_map.put("GOVER_ED_DATE", cu.evl((String) ((HashMap) list.get(0)).get("gover_ed_date"), "").toString());
 
 				// 관리기관정보
 				kibon_map.put("PMT_OFFICE", cu.evl((String) ((HashMap) list.get(0)).get("pmt_office"), ""));
@@ -1011,7 +1020,14 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 					togi_map.put("RI" + i, RI);
 					togi_map.put("JIBUN" + i, JIBUN);
 					togi_map.put("GOVER_OWN_YN" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("gover_own_yn"), ""));
-					togi_map.put("JIJUK_AREA" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("jijuk_area"), ""));
+					
+					Object jijukAreaObj = ((HashMap) pnu_list.get(i)).get("jijuk_area");
+
+					// BigDecimal을 String으로 변환하고, null 여부를 확인하여 처리
+					String jijukAreaStr = (jijukAreaObj != null) ? jijukAreaObj.toString() : "";
+					togi_map.put("JIJUK_AREA" + i, cu.evl(jijukAreaStr, ""));
+					
+					//togi_map.put("JIJUK_AREA" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("jijuk_area"), ""));
 					togi_map.put("GOVER_LENGTH" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("gover_length"), ""));
 					togi_map.put("GOVER_AREA" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("gover_area"), ""));
 				}

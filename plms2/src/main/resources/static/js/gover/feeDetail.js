@@ -244,6 +244,7 @@ $(document).on("click","#sangsinBtn",function(){
 				,"PMT_GOVER_AREA":pmt_gover_area
 				,"PAGETYPE":"update" //update=수정에서 
 				,"OFFICE_MOBILE":""
+				,"pnuCnt":pnuArray.length
 				,"pnuList":pnuArray
 				};
 		console.log(jsonData);
@@ -265,6 +266,9 @@ $(document).on("click","#sangsinBtn",function(){
 						if (response.success="Y"){
 							console.log("response.success Y");
 							alert("상신이 완료 되었습니다.");
+							
+							
+							
 						}
 						else {
 							console.log("response.success N");
