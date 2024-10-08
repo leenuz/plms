@@ -73,7 +73,7 @@ public class goverController {
 		// ArrayList<HashMap> list = sqlSession.selectList("selectAllList",params);
 
 		list = mainService.selectQuery("goverSQL.selectAllList", params);
-		log.info("jisang /list:" + list.toString());
+		//log.info("jisang /list:" + list.toString());
 		// nhServ1.test();
 		// ts.Test1();
 		HashMap<String, Object> resultmap = new HashMap();
@@ -107,7 +107,7 @@ public class goverController {
 		// ArrayList<HashMap> list = sqlSession.selectList("selectAllList",params);
 
 		list = mainService.selectQuery("goverSQL.selectAllList", params);
-		log.info("jisang /list:" + list.toString());
+//		log.info("jisang /list:" + list.toString());
 		// nhServ1.test();
 		// ts.Test1();
 //        HashMap<String,Object> resultmap=new HashMap();
@@ -551,7 +551,7 @@ public class goverController {
 		// ArrayList<HashMap> list =
 		// mainService.selectQuery("goverSQL.selectGoverList",params);
 		ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverMasterSearchList", params);
-		log.info("list:" + list);
+//		log.info("list:" + list);
 
 		HashMap<String, Object> resultmap = new HashMap();
 		resultmap.put("draw", draw);
@@ -641,7 +641,7 @@ public class goverController {
 		// ArrayList<HashMap> list =
 		// mainService.selectQuery("goverSQL.selectGoverList",params);
 		ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverMasterSearchList", params);
-		log.info("list:" + list);
+//		log.info("list:" + list);
 //			Object count= mainService.selectCountQuery("goverSQL.selectTotalCount03_2", params);
 //			int total=(int)count;
 //
@@ -748,7 +748,7 @@ public class goverController {
 		// ArrayList<HashMap> list =
 		// mainService.selectQuery("goverSQL.selectGoverList",params);
 		ArrayList<HashMap> list = mainService.selectQuery("goverSQL.selectGoverMasterCancelSearchList", params);
-		log.info("list:" + list);
+//		log.info("list:" + list);
 
 //			Object count= mainService.selectCountQuery("goverSQL.selectTotalCount03_3", params);
 //			int total=(int)count;
@@ -1679,6 +1679,7 @@ public class goverController {
 	}
 
 	// 점용 마스터 등록 수정 실제 상신완료 된 걸로 등록
+	// 초초초이
 	@Transactional
 	@PostMapping(path = "/insertGoverMasterDemo")
 	public void insertGoverMasterDemo(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -1992,8 +1993,7 @@ public class goverController {
 								}
 							}
 						}
-						mainService.UpdateQuery("goverSQL.deleteGoverPNU", params); // 기존
-																					// 삭제
+						mainService.UpdateQuery("goverSQL.deleteGoverPNU", params); // 기존삭제
 					}
 				}
 
@@ -2141,6 +2141,8 @@ public class goverController {
 //					}
 //
 //				}
+				
+				//======== 첨부 파일 구간 =========
 				if (gubun.equals("insert")) {
 					for (int i = 0; i < fileArr.length(); i++) {
 						// JSONObject fobj=new JSONObject(fileArr.get(i).toString());
@@ -2162,6 +2164,7 @@ public class goverController {
 						log.info("filesMap:" + filesMap);
 						log.info("tempPath:" + tempPath);
 						log.info("dataPath:" + dataPath);
+						
 						mainService.InsertQuery("goverSQL.insertGoverUploadData", filesMap);
 
 					}
@@ -2197,11 +2200,12 @@ public class goverController {
 						filesMap.put("fseq", nseq + i);
 						filesMap.put("fname", file_name);
 
-						String tempPath = GC.getJisangFileTempDir(); // 설정파일로 뺀다.
+						String tempPath = GC.getGoverFileTempDir(); // 설정파일로 뺀다.
 						String dataPath = GC.getGoverFileDataDir() + "/" + str_GOVERNO; // 설정파일로 뺀다.
 						filesMap.put("fpath", dataPath + "/" + file_name);
 						
 						CommonUtil.moveFile(file_name, tempPath, dataPath);
+						
 						log.info("filesMap:" + filesMap);
 						mainService.InsertQuery("goverSQL.insertGoverUploadData", filesMap);
 
@@ -2225,6 +2229,8 @@ public class goverController {
 		map.put("GOVERNO", str_GOVERNO);
 		map.put("result", list);
 
+		log.info("gubun ::" + gubun);
+		
 		JSONObject jo = new JSONObject(map);
 
 		response.setCharacterEncoding("UTF-8");
@@ -2333,22 +2339,17 @@ public class goverController {
 		String modifyReason4 = requestParamsObj.has("modifyReason4") ? requestParamsObj.getString("modifyReason4") : ""; // 변경이력-허가관리
 		String modifyReason1 = requestParamsObj.optString("modifyReason1", ""); // 변경이력 - 기본정보
 		String modifyReason2 = requestParamsObj.optString("modifyReason2", ""); // 변경이력 - 소속토지정보
-		String modifyReason5 = requestParamsObj.optString("modifyReason5", ""); // 변경이력 - 허가관청
-		// 및
-		// 납부현황
+		String modifyReason5 = requestParamsObj.optString("modifyReason5", ""); // 변경이력 - 허가관청 및 납부현황
 
 		String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
 		String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
 
 		// ljs 이슈정보 추가
 		String NEWREGREASON = requestParamsObj.has("newregreason") ? requestParamsObj.getString("newregreason") : "";
-		String OCCUNONPAYREASON = requestParamsObj.has("occunonpayreason")
-				? requestParamsObj.getString("occunonpayreason")
-				: "";
+		String OCCUNONPAYREASON = requestParamsObj.has("occunonpayreason") ? requestParamsObj.getString("occunonpayreason") : "";
 		String PERMPOSSYN = requestParamsObj.has("permpossyn") ? requestParamsObj.getString("permpossyn") : "";
 		String OCCUPREPAYYN = requestParamsObj.has("occuprepayyn") ? requestParamsObj.getString("occuprepayyn") : "";
-		String OCCUPREPAYDATE = requestParamsObj.has("occuprepaydate") ? requestParamsObj.getString("occuprepaydate")
-				: "";
+		String OCCUPREPAYDATE = requestParamsObj.has("occuprepaydate") ? requestParamsObj.getString("occuprepaydate") : "";
 
 		System.out.println("modifyReason1=" + modifyReason1);
 		System.out.println("modifyReason2=" + modifyReason2);
@@ -2521,12 +2522,7 @@ public class goverController {
 //					String ADM_OFFICE_PNU = parser.getString("ADM_OFFICE" + String.valueOf(i), "");
 //					String USE_PURPOS_PNU = parser.getString("USE_PURPOS" + String.valueOf(i), "");
 //					String REP_FLAG = parser.getString("REP_FLAG" + String.valueOf(i), "");
-//					String ORG_PNU_NULL = parser.getString("ORG_PNU_NULL" + String.valueOf(i), ""); // pnu값이
-//																									// "NULL"도
-//																									// 아닌
-//																									// ""값인
-//																									// 예외
-//																									// 체크
+//					String ORG_PNU_NULL = parser.getString("ORG_PNU_NULL" + String.valueOf(i), ""); // pnu값이 "NULL"도 아닌 ""값인 예외 체크
 //
 //					String PIPE_OVERLAP_YN = parser.getString("PIPE_OVERLAP_YN" + String.valueOf(i), "");
 

@@ -189,7 +189,7 @@ $(document).ready(function() {
 	// Status bar 생성 함수
     function createStatusbar(obj,name,size,no){
 		console.log("----------start createStatusBar------------");
-        console.log(obj.html());
+        //console.log(obj.html());
 		
 		var sizeStr="";
         var sizeKB = size/1024; // 파일 크기를 문자열로 표시하기 위한 변수
@@ -1181,9 +1181,11 @@ $(document).on("click", "#draftSaveBtn", function() {
 	const attachFileUls = document.querySelectorAll('input[name="masterEdit_attachFile"]');
 	console.log(attachFileUls);
 
+	//첨부파일
 	var files = new Array();
+	
 	for (var i = 0; i < attachFileUls.length; i++) {
-		console.log($(attachFileUls[i]).parent().parent().html());
+		//console.log($(attachFileUls[i]).parent().parent().html());
 		var fname = $(attachFileUls[i]).parent().parent().find("#filename").val();
 		var wdate = $(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val();
 		console.log(fname);
@@ -1220,19 +1222,19 @@ $(document).on("click", "#draftSaveBtn", function() {
 	object.office_mobile = "";
 	object.save_status = "Q";//임시저장
 	object.gubun = "modify"; //신규등록
+	
 	var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
 	console.log("----------jsonobj------------");
 	console.log(object);
-	
 
 	url = "/land/gover/insertGoverMasterDemo";
+
 	$.ajax({
 
 		url: url,
 		type: 'POST',
 		contentType: "application/json",
 		data: JSON.stringify(object),
-
 		dataType: "json",
 		beforeSend: function(request) {
 			console.log("beforesend ........................");

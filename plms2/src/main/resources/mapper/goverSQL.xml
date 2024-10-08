@@ -2562,9 +2562,9 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 	</insert>
 	
 	<select id="getGoverAtcFileSeq" parameterType="java.util.HashMap" resultType="integer">
-		SELECT COALESCE(MAX(ga_file_seq), 0)  FROM gover_atcfile ga WHERE ga.ga_gover_no=#{GOVER_NO};
-	
+		SELECT COALESCE(MAX(ga_file_seq), 0)+1  FROM gover_atcfile ga WHERE ga.ga_gover_no=#{GOVER_NO};
 	</select>
+	
 	<select id="selectGoverDocInfo" resultType="HashMap" parameterType="HashMap">
 		SELECT * FROM PLMS_APPROVAL where pa_DOCKEY in (select max(gp_dockey) from GOVER_PERMIT where gp_GOVER_NO = #{GOVER_NO} ) and (pa_status is null or pa_status not in ('X'))
 	</select>
