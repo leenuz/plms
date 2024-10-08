@@ -189,7 +189,7 @@ function loadDataTable(params) {
 			dataSrc: 'b_seq'
 		},
 		ajax: {
-			url: "/dopco/menu05_1DataTableList",
+			url: "/land/dopco/menu05_1DataTableList",
 			type: "POST",
 			datatype: "json",
 			data: function (d) {
@@ -275,7 +275,7 @@ function loadDataTable(params) {
 			console.log(data);
 			console.log(data.idx);
 
-			var url = "/dopco/compLandInfo?idx=" + data.idx + '&dopcoNo=' + data.dopco_no;
+			var url = "/land/dopco/compLandInfo?idx=" + data.idx + '&dopcoNo=' + data.dopco_no;
 			window.location = url;
 		}
 	});

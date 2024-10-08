@@ -595,7 +595,7 @@ $(document).on("click",".registBtn",function(){
            console.log("----------jsonobj------------");
            console.log(json); // JSON 문자열 출력*/
          
-       url="/dopco/insertDopcoList"; 
+       url="/land/dopco/insertDopcoList"; 
 	   $.ajax({
 	   			
 			url:url,
@@ -648,7 +648,7 @@ $(document).on("click",".searchBtn",function(){
    }
 
 	$.ajax({
-    				   	   	  url: "/dopco/getBunhalJIjukSelect",
+    				   	   	  url: "/land/dopco/getBunhalJIjukSelect",
     				   	   	  type: "POST",
     				   	   	  data: datas,
     				   	   })

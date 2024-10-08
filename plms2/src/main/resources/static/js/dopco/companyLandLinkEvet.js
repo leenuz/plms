@@ -26,7 +26,7 @@ const companyLandLinkEvet = () => {
    dataBoxsSecondLink.forEach((link, index) => {
          link.addEventListener("mouseover" , () => {
 
-                link.setAttribute("href" , "/dopco/compLandInfo.html"); //회사토지상세정보
+                link.setAttribute("href" , "/land/dopco/compLandInfo.html"); //회사토지상세정보
 
               //dataBoxsSecond의 a링크 전체에 불끄고 현재 a링크에만 불들어오게하기
               dataBoxsSecondLink.forEach((otherLink) => otherLink.classList.remove("mouseEvet"));
@@ -67,10 +67,10 @@ if(dataBoxsFirstLink){
                     if(index == otherIndex){
                         
                           dataBoxsSecondLink[index].classList.add("mouseEvet" , link.classList.contains("mouseEvet"));
-                          link.setAttribute("href" , "/dopco/compLandInfo");
+                          link.setAttribute("href" , "/land/dopco/compLandInfo");
 
                     }else{
-                          link.setAttribute("href" , "/dopco/compLandInfo");
+                          link.setAttribute("href" , "/land/dopco/compLandInfo");
                           list.classList.remove("mouseEvet")
                     }
 

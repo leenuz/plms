@@ -355,16 +355,16 @@
       </section>
       <div class="finalBtnBox btnWrap">
         <button class="prevBtn finalBtn" th:if="${isCancel != 'Y'}">
-          <a href="/dopco/menu05_1">이전</a>
+          <a href="/land/dopco/menu05_1">이전</a>
         </button>
         <button class="prevBtn finalBtn" th:if="${isCancel == 'Y'}">
-          <a href="/dopco/menu05_2">이전</a>
+          <a href="/land/dopco/menu05_2">이전</a>
         </button>
         <button class="editBtn finalBtn" th:if="${isCancel != 'Y'}">
-          <a href="/dopco/compLandEdit" th:href="'/dopco/compLandEdit?idx=' + ${data.idx} + '&dopcoNo=' + ${data.dopco_no}">수정</a>
+          <a href="/land/dopco/compLandEdit" th:href="'/land/dopco/compLandEdit?idx=' + ${data.idx} + '&dopcoNo=' + ${data.dopco_no}">수정</a>
         </button>
         <button class="editBtn finalBtn" th:if="${isCancel == 'Y'}">
-          <a href="/dopco/compLandDispReg" th:href="'/dopco/compLandDispReg?idx=' + ${data.idx} + '&dopcoNo=' + ${data.dopco_no}">등록</a>
+          <a href="/land/dopco/compLandDispReg" th:href="'/land/dopco/compLandDispReg?idx=' + ${data.idx} + '&dopcoNo=' + ${data.dopco_no}">등록</a>
         </button>
         <button class="printBtn finalBtn">출력</button>
       </div>
