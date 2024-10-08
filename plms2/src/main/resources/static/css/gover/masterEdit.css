@@ -684,6 +684,31 @@ button {
   border-radius: 20px;
   font-size: 13px;
   font-weight: 600;
+  
+}
+#masterEdit .subTitleBtnBox .miniBtn {
+    width: 74px;
+    height: 27px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    align-self: center; /* 해당 버튼만 세로 정렬을 중앙으로 설정 */
+}
+
+#masterEdit .subTitleBtnBox .middleBtn {
+    width: 159px;
+    height: 38px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+#masterEdit .subTitleBtnBox .miniBtn {
+    width: auto; /* 너비 자동으로 변경 */
+    padding: 0 10px; /* 양쪽에 10px씩 여백 추가 */
+    height: 27px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
 }
 #masterEdit .addBtn {
   background: #fff;
