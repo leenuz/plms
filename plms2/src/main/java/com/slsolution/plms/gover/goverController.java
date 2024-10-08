@@ -1370,7 +1370,8 @@ public class goverController {
 			String USE_PURPOS = requestParamsObj.getString("USE_PURPOS")==null?"":requestParamsObj.getString("USE_PURPOS");
 			String PMT_GOVER_LENGTH = requestParamsObj.getString("PMT_GOVER_LENGTH");
 			String PMT_GOVER_AREA = requestParamsObj.getString("PMT_GOVER_AREA");
-			//String PNU_CNT = requestParamsObj.getString("pnuCnt", "0"); // 소속토지 수
+			JSONArray pnuLists=new JSONArray(requestParamsObj.get("pnuList"));
+			String PNU_CNT = String.valueOf(pnuLists.length()); // 소속토지 수
 			
 			String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
 			String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
