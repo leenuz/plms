@@ -256,8 +256,13 @@ function commonCurrentPagePrint(id) {
 }
 
 
-/************************************************************/
-//좌측 사이드바 메뉴 동작 script들
+/***************************************************************************/
+// 좌측 사이드바 메뉴 및 공통 동작 script들 
+/***************************************************************************/
+
+function commonFunctionTest() {
+	console.log('해당 페이지는 common.js 사용 가능');
+}
 
 //좌측사이드바 지도메뉴버튼
 function goto2pmsMap() {
@@ -266,12 +271,6 @@ function goto2pmsMap() {
 		const message = { type: "setMap" };
 		window.opener.postMessage(message, '*');  // 부모 창으로 메시지 전송
 	}
-}
-
-//위치보기
-function openMapGo() {
-	//console.log('2PMS 지도 연결할것');
-	openMapWindow();
 }
 
 //
@@ -294,25 +293,26 @@ function largeMenuClick(obj, id){
 	}
 }
 
-//
-function positionView() {
-
+//지도보기(이동,위치) 공통
+function positionView(objInfo) {
+	//({'lon':mapCoordLng, 'lat':mapCoordLat, 'zoom':'15'});
+	//({'lon':mapCoordLng, 'lat':mapCoordLat});
+	
+	console.log(objInfo)
+	
 	// 자식 창에서 부모 창으로 메시지 보내기
 	if (window.opener) {
 		const message = {
 			type: "setCenter",
-			lon: 126.9779692,
-			lat: 37.566535,
-			zoom: 16,
+			lon: objInfo.lon,
+			lat: obj.lat,
+			zoom: 19,
 			markers: [[127.387205, 36.43472], [127.376596, 36.411514], [127.464146, 36.437349], [127.469639, 36.398030], [127.328186, 36.425660]]
 		};
 		window.opener.postMessage(message, '*');  // 부모 창으로 메시지 전송
 	}
 }	
 
-function commonFunctionTest() {
-	console.log('해당 페이지는 common.js 사용 가능');
-}
 
 
 function commonJisaInfoCheck() {
@@ -350,49 +350,47 @@ function commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun
 		},
 		success: function(data, status, xhr){
 			
-			let filename = "";
 			let disposition = xhr.getResponseHeader('Content-Disposition');
+			let filename = 'downloaded_file'; //기본 파일명
 			
-			if(disposition && disposition.indexOf('attachment') !== -1) {
-				let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-				let matches = filenameRegex.exec(disposition);
-				
-				if(matches != null && matches[1]) {
-					filename = matches[1].replace(/['"]/g, '');
-				}
+			//Content-Disposition에서 파일명 추출
+			if(disposition && disposition.indexOf('filename*=UTF-8\'\'') !== -1) {
+				filename = decodeURIComponent(disposition.split('filename*=UTF-8\'\'')[1]);
 			}
 			
-			let mimeType = xhr.getResponseHeader('Content-Type');  // MIME 타입 가져오기
-			let blob = new Blob([data], { type: mimeType });  // MIME 타입에 맞는 Blob 생성
+			//Blob을 URL로 변환
+			let blob = new Blob([data],{ type: xhr.getResponseHeader('Content-Type') });  // Blob을 Content-Type에 맞게 설정
 			let link = document.createElement('a');
-			
 			link.href = window.URL.createObjectURL(blob);
-			link.download = filename || 'downloaded_file';
+			link.download = filename;
+			
+			//링크 강제 클릭 다운로드
+			document.body.appendChild(link);
 			link.click(); // 파일 다운로드 실행
-			
-			
+			document.body.removeChild(link);
 		},
 		error: function(err) {
 			console.error('파일 다운로드 실패', err);
 		}
 	});
-	
 } 
 
+//공통파일 보기
 function commonFileView(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 	
-	console.log(filePath);
-	console.log(fileName);
-	console.log(fileJisangNo);
-	console.log(fileSeq);
-	console.log(fileGubun);
+	console.log("f_path :: " + filePath);
+	console.log("f_name :: " + fileName);
+	console.log("f_jisangNo :: " + fileJisangNo);
+	console.log("f_seq :: " + fileSeq);
+	console.log("f_gubun ::" + fileGubun);
 	
-	//샘플 URL :: http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no=J_010602&file_seq=30988&file_gubun=jisang
+	//샘플 URL = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no=J_010602&file_seq=30988&file_gubun=jisang
 	const url = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no="+fileJisangNo+"&file_seq="+fileSeq+"&file_gubun="+fileGubun;
-	console.log(url);
-	window.open(url, '_blank');  // 새 창이나 새 탭에서 파일 다운로드
+	console.log("down URL :: " + url);
+	window.open(url, '_self');  // 새 창이나 새 탭에서 파일 다운로드
 }
 
+//쿼리 path obeject화
 function queryValueToObject(str) {
 	const cleanedStr = str.slice(1,-1);
 	
@@ -407,4 +405,5 @@ function queryValueToObject(str) {
 	
 	return jsonObj;
 }
-/************************************************************/
+/***************************************************************************/
+/***************************************************************************/

@@ -8,52 +8,24 @@ $(document).on("click","#moveMap",function(){
 	//openMapWindow();
 	// mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
 	// moveToCityHall();
-
-	openMapWindow({'lon':mapCoordLng, 'lat':mapCoordLat});
 })
-//memoEditBtn.forEach((btn) => {
-//    btn.addEventListener('click', function () {
-//        var thisEditContent = btn.closest('.contents');
-//        console.log(thisEditContent);
-//
-//        thisEditContent.classList.add('editing');
-//
-//        const inputs = thisEditContent.querySelectorAll('input');
-//
-//        if (thisEditContent.classList.contains('editing')) {
-//            inputs.forEach(input => {
-//                input.removeAttribute('readonly');
-//            });
-//        } else {
-//            inputs.forEach(input => {
-//                input.setAttribute('readonly', 'readonly');
-//            });
-//        }
-//    })
-//})
 
-if(registBtn) {
-    registBtn.forEach((regiBtn)=> {
-        regiBtn.addEventListener('click',function(){
+if (registBtn) {
+	registBtn.forEach((regiBtn) => {
+		regiBtn.addEventListener('click', function() {
 
-            var thisEditContent01 = regiBtn.closest('.contents');
-            thisEditContent01.classList.remove('editing')
+			var thisEditContent01 = regiBtn.closest('.contents');
+			thisEditContent01.classList.remove('editing')
 
-            const inputs = thisEditContent01.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.setAttribute('readonly', 'readonly');
-            });
-        })
-    })
+			const inputs = thisEditContent01.querySelectorAll('input');
+			inputs.forEach(input => {
+				input.setAttribute('readonly', 'readonly');
+			});
+		})
+	})
 }
 
-
-
-
-
-
 /* 잠재이슈 수정 팝업 오픈 */
-
 const occupationIssueReviseOpen = () => {
 
      const occupationIssueReviseBtn = document.querySelectorAll(".occupationIssueReviseBtn");
@@ -150,8 +122,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-
-
 $(document).on("click","#fileSaveBtn",function(){
 	console.log("--------------start fileSaveBtn---------");
 	console.log(uploadFiles);
@@ -214,19 +184,6 @@ $(document).on("click","#fileSaveBtn",function(){
 		})
 
 });
-
-
-//보기 클릭 시 팝업 기능
-function openFilePopup(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
-    // 절대 경로를 사용하도록 file:// 스킴을 추가
-    //const serverUrl = `/api/downloadFile?filePath=` + encodeURIComponent(filePath);
-
-    // 새 창의 옵션 설정 (예: 너비 600px, 높이 400px, 스크롤바 허용 등)
-    //const popupOptions = "width=800,height=600,scrollbars=yes,resizable=yes";
-    // 새 창 열기
-    //window.open(serverUrl, '파일 보기', popupOptions);
-    commonFileView(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
-}
 
 //필지 첨부파일 관련 이벤트
 document.addEventListener("DOMContentLoaded", function() {
@@ -327,41 +284,36 @@ $(document).on("click",".editBtn",function(){
 	                input.setAttribute('readonly', 'readonly');
 	            });
 	        }
-
 });
 
 $(document).on("click",".registBtn",function(){
-		var thisContent = this.closest('.contents');
-	            thisContent.classList.remove('editing')
+	var thisContent = this.closest('.contents');
+	thisContent.classList.remove('editing')
 
-				const inputs = thisContent.querySelectorAll('input');
-				            inputs.forEach(input => {
-				                input.setAttribute('readonly', 'readonly');
-				            });
+	const inputs = thisContent.querySelectorAll('input');
+	inputs.forEach(input => {
+		input.setAttribute('readonly', 'readonly');
+	});
 
-
-
-
-							console.log("------------registBtn end-------------");
-							console.log($(thisContent).find("#wname").val());
-							console.log($(thisContent).find("#wmemo").val());
-							console.log($(thisContent).find("#idx").val());
-							var idx=$(thisContent).find("#idx").val();
-							var mode="";
-							if (idx==0 || idx=="undefiled" ||idx==null) mode="insert";
-							else mode="update";
-							var mparams={"mode":mode,"idx":idx,"manage_no":$("#manage_no").val(), "wname":$(thisContent).find("#wname").val(),"wmemo":$(thisContent).find("#wmemo").val()};
-							console.log(mparams);
-							$.ajax({
-							      url: "/land/api/putMemoData",
-							      type: "POST",
-							      data: mparams,
-								  success:function(memoList){
-									$('#memoDiv').replaceWith(memoList);
-									loadMemoEditBtn();
-
-								  }
-							 });
+	console.log("------------registBtn end-------------");
+	console.log($(thisContent).find("#wname").val());
+	console.log($(thisContent).find("#wmemo").val());
+	console.log($(thisContent).find("#idx").val());
+	var idx = $(thisContent).find("#idx").val();
+	var mode = "";
+	if (idx == 0 || idx == "undefiled" || idx == null) mode = "insert";
+	else mode = "update";
+	var mparams = { "mode": mode, "idx": idx, "manage_no": $("#manage_no").val(), "wname": $(thisContent).find("#wname").val(), "wmemo": $(thisContent).find("#wmemo").val() };
+	console.log(mparams);
+	$.ajax({
+		url: "/land/api/putMemoData",
+		type: "POST",
+		data: mparams,
+		success: function(memoList) {
+			$('#memoDiv').replaceWith(memoList);
+			loadMemoEditBtn();
+		}
+	});
 
 });
 
@@ -391,43 +343,20 @@ $(document).on("click",".delBtn",function(){
 	  });
 });
 
-
-
 //보기 클릭 시 팝업 기능
-function openFilePopup(filePath) {
-	console.log(filePath);
-    // 절대 경로를 사용하도록 file:// 스킴을 추가
-    const serverUrl = `/api/downloadFile?filePath=` + encodeURIComponent(filePath);
-
-    // 새 창의 옵션 설정 (예: 너비 600px, 높이 400px, 스크롤바 허용 등)
-    const popupOptions = "width=800,height=600,scrollbars=yes,resizable=yes";
-    // 새 창 열기
-    window.open(serverUrl, '파일 보기', popupOptions);
+function openFilePopup(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
+    commonFileView(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
 }
 
 //다운로드 스크립트
 function downloadFile(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
-	//const url = `/api/download?filePath=${filePath}&fileName=${encodeURIComponent(fileName)}`;
-	//  const url = `/api/download?filePath=${filePath}&fileName=${fileName}`;
-	//console.log(url);
-	//window.open(url, '_blank');  // 새 창이나 새 탭에서 파일 다운로드
-	
-	console.log(filePath);
-	console.log(fileName);
-	console.log(fileJisangNo);
-	console.log(fileSeq);
-	console.log(fileGubun);
-	
 	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
 }
 
-
-
-$(function() {
-    $('#jijukNewWindowBtn').click(function() {
-        //window.open('http://202.68.225.158:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'jijukWindow', 'width=1024,height=768');
-        // window.open('http://202.68.225.158:8080/mapJijuk?lon=128.4923014&lat=35.908302&lv=17', 'jijukWindow', 'width=1024,height=768');
-        window.open(mapUrl, 'jijukWindow', 'width=1024,height=768,left=100,top=100');
-        //http://10.168.0.247:8080/sample/map/2pms.html
-    });
+$(function() { $('#jijukNewWindowBtn').click(function() {
+	//window.open('http://202.68.225.158:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'jijukWindow', 'width=1024,height=768');
+    // window.open('http://202.68.225.158:8080/mapJijuk?lon=128.4923014&lat=35.908302&lv=17', 'jijukWindow', 'width=1024,height=768');
+    window.open(mapUrl, 'jijukWindow', 'width=1024,height=768,left=100,top=100');
+    //http://10.168.0.247:8080/sample/map/2pms.html
+	});
 });
