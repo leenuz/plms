@@ -7,12 +7,7 @@ import { privateUseSelectEvet } from '/js/gover/privateUseSelecEvet.js';
 import { landDevelopmentManageSelectEvet } from '/js/togi/landDevelopmentSelecEvet.js';
 import { issueManageSelectEvet } from '/js/issue/issueManageSelecEvet.js';
 
-
-console.log("---------------------------surfaceMain.js start----------------------");
-
 window.addEventListener("load", () => {
-
-	console.log("---------------------------surfaceMain.js start-----load-----------------");
 
 	//header함수 실행
 	surfaceHeaderEvet();
@@ -109,7 +104,6 @@ window.addEventListener("load", () => {
 	selecBoxsEvetWrappers();
 
 	//241005
-	console.log('메뉴 불러와봐');
 	menuListLoad();
 })
 
@@ -123,7 +117,6 @@ function menuListLoad() {
 		url : '/land/common/menusetting',
 		type : "GET",
 		success : function(res) {
-			console.log(res);
 			if(res.result == 'Y') {
 				menuListSet(res.menuList, res.menu2pms);
 			} else {
@@ -210,7 +203,6 @@ function menuListSet(result, result2) {
 			targetImgArr = statsImg;		
 			targetMenuUrlArr = statsUrl;
 		}
-		
 		
 		//사이드바 큰메뉴 사용여부
 		if(menuInfo.mnLargeYn == 'Y') {

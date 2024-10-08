@@ -35,22 +35,26 @@ function createCustomLiLandRegist() {
 
 function loadCustomLiLandRegist(ele) {
 	console.log("---------ele---------------");
-	console.log($(ele).html());
-	
-  console.log("---------loadCustomLiLandRegist---------------");
+	//console.log($(ele).html());
+	console.log("---------loadCustomLiLandRegist---------------");
 	
 	var thisContent = ele.parent().parent().find('select');
 	console.log("---------thisContent---------------");
-	console.log($(thisContent).html());
+	//console.log($(thisContent).html());
+	
 	const customSelectBox = ele.closest('.customSelectBox');
-	console.log($(customSelectBox).html());
+	//console.log($(customSelectBox).html());
+	
 	$(customSelectBox).find("li").remove();
+	
 	var customSelectBtns = customSelectBox.find('.customSelectBtns');
 	console.log("---------customSelectBtns---------------");
-	console.log($(customSelectBtns).html());
+	//console.log($(customSelectBtns).html());
+	
 	var optList=thisContent[0];
 	//console.log(optList.length);
-	console.log(optList);
+	//console.log(optList);
+	
 	for (let i = 0; i < optList.length; i++) {
 		const optionValue = optList.options[i].value;
 		//console.log(optionValue);
