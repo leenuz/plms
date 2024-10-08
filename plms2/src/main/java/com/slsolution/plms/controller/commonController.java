@@ -213,7 +213,7 @@ public class commonController {
 		// 클라이언트로 파일 전송(파일 이름 및 다운로드 위한 헤더 설정)
 		return ResponseEntity.ok()
 				.contentType(MediaType.parseMediaType(contentType))
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+fileName+"\"; filename*=UTF-8''"+fileName)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+encodedFileName+"\"; filename*=UTF-8''"+encodedFileName)
 				.body(resource);
 	}
 	
