@@ -170,7 +170,6 @@ public class notsetController {
 		mav.addObject("notsetIssueHistoryList",notsetIssueHistoryList);
 		mav.addObject("notsetPnuAtcFileList",notsetPnuAtcFileList);
 		mav.addObject("memoList",notsetMemoList.get(0));
-		mav.setViewName("content/notset/unsetOccupationDetails");
 		log.info("jisalist:"+jisalist);
 	
 		mav.setViewName("content/songyu/notsetaddRevise");
