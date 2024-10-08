@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableAsync
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/dopco")
+@RequestMapping("/land/dopco")
 @CrossOrigin(origins="*",allowedHeaders="*")
 public class dopcoController {
 	
