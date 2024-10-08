@@ -399,7 +399,7 @@ $(document).on("click", "#searchBtn", function () {
     //  loadDataTable(object);
     console.log("-----------------------");
     /*  var myForm = document.netsetAddForm;
-       var url = "/songyu/searchResultsPopup";
+       var url = "/land/songyu/searchResultsPopup";
        window.open(url ,"popForm", 
              "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no"); 
        myForm.action =url; 
@@ -413,7 +413,7 @@ $(document).on("click", "#searchBtn", function () {
       
       // ajax process
       $.ajax({
-             url:"/songyu/searchResultsPopup",
+             url:"/land/songyu/searchResultsPopup",
              method:"POST",
              data:params,
              dataType:"html",
@@ -424,7 +424,7 @@ $(document).on("click", "#searchBtn", function () {
       function eventSuccess(data)
       {
              //여기서 팝업된 창의 주소를 변경하자.
-             w.location.href = "/songyu/searchResultsPopup";
+             w.location.href = "/land/songyu/searchResultsPopup";
       }*/
 
     /*const notsetAddPopBtn = document.querySelector(".notsetAddPopBtn");
@@ -986,7 +986,7 @@ $(document).ready(function () {
         console.log(dataObj);
 
         // 서버 전송
-         url = "/songyu/insertSonguList";
+         url = "/land/songyu/insertSonguList";
          $.ajax({
              url: url,
              type: 'POST',

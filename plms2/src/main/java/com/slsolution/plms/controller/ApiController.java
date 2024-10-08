@@ -699,18 +699,28 @@ public class ApiController {
         params.put("jisa", jisa);
 
         params.put("jibun", jibun);
-        if (addressRadioValue.equals("0"))
-            params.put("address", address);
-        else {
-            params.put("sido_nm", sido_nm);
-            params.put("sgg_nm", sgg_nm);
-            params.put("emd_nm", emd_nm);
-            params.put("ri_nm", ri_nm);
-        }
+        ArrayList<HashMap> jisangBasicSearchList = new ArrayList<>(); // 변수 선언
+		if (addressRadioValue.equals("0")) {
+			// 입력형 선택하면 emd,ri + jibun 으로 검색하도록
+			String[] arr = address.split(" ");
+			
+			params.put("emd_nm", arr[0]);
+			params.put("ri_nm", arr[0]);
+			params.put("jibun", arr[1]);
+			params.put("address", "");
+			
+			jisangBasicSearchList = mainService.selectQuery("commonSQL.selectAddressFromJijuk1",params);
+		}
+		else {
+			params.put("sido_nm",sido_nm);
+			params.put("sgg_nm",sgg_nm);
+			params.put("emd_nm",emd_nm);
+			params.put("ri_nm",ri_nm);
+			jisangBasicSearchList = mainService.selectQuery("jisangSQL.selectBasicSearchList",params);
+		}
         params.put("addressRadioValue", addressRadioValue);
         // params.put("pnu",pnu);
         log.info("params:" + params);
-        ArrayList<HashMap> jisangBasicSearchList = mainService.selectQuery("jisangSQL.selectBasicSearchList", params);
         log.info("jisangBasicSearchList:" + jisangBasicSearchList);
         mav.addObject("jisangBasicSearchList", jisangBasicSearchList);
         mav.setViewName("content/common/addressList");

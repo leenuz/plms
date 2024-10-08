@@ -258,7 +258,7 @@ function loadDataTable(params){
                 rowReorder:{
 					dataSrc:'b_seq'
 				},
-			//	sAjaxSources:"/songyu/menu01DataTableList",
+			//	sAjaxSources:"/land/songyu/menu01DataTableList",
 			//	sServerMethod:"POST",
                 ajax : {
                     url:"/jisang/menu02BunhalDataTableList",
