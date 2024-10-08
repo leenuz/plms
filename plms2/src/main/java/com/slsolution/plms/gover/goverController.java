@@ -1350,7 +1350,8 @@ public class goverController {
 			log.info("requestParams:"+requestParams);
 			ArrayList list = new ArrayList();
 			
-			String PAGETYPE = requestParamsObj.getString("PAGETYPE"); // 수정화면에서 상신을 눌렀는지
+			//String PAGETYPE = requestParamsObj.getString("PAGETYPE"); // 수정화면에서 상신을 눌렀는지
+			String PAGETYPE = "update"; // 수정화면에서 상신을 눌렀는지
 			String GOVER_NO = requestParamsObj.getString("GOVER_NO"); // 관리번호
 			String JISA = requestParamsObj.getString("JISA");
 			String PMT_OFFICE = requestParamsObj.getString("PMT_OFFICE");

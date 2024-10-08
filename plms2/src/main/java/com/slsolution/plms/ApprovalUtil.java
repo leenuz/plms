@@ -68,8 +68,9 @@ public class ApprovalUtil  {
 //		String url="https://apv.dopco.co.kr/Service/PLMSWebService.asmx";
 //		String url="http://echo.depco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx?,op="+GUBUN; //개발
 		//String url="http://localhost:8081/land/api/dopcoApprovalTest"; //로컬 테스트
-		String url="http://echo.depco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //운영
-		
+		//String url="http://echo.depco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //운영
+		String url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx";
+		//String url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx/GetHoldUsageDataforXML";
 		String xmlString="";
 		xmlString=GetApprXmlget(DOCKEY,HTML,USERCD,SDATE,STIME,GUBUN);
 		
@@ -187,32 +188,39 @@ public class ApprovalUtil  {
 		String str_XMLgubun="";
 		
 		
-		sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>                                        \n");
-		sb.append("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"> \n");
-		sb.append(" <soap:Body>                                                                              \n");
-		sb.append("   <"+gUbun+ "xmlns=\"http://tempuri.org/\">                                  \n");
-		sb.append("     <sap_datas>                                                                \n");
-		sb.append("       <GUBUN>PLMS</GUBUN>                                                \n");
-		sb.append("       <LANG></LANG>                                                        \n");
-		sb.append("       <SDATE>"+sDATE+"</SDATE>                                             \n");
-		sb.append("       <STIME>"+sTIME+"</STIME>                                             \n");
-		sb.append("       <USERCD>"+uSERCD+"</USERCD>                                          \n");
-		sb.append("       <SERARCHKEY1></SERARCHKEY1>    \n");
-		sb.append("        <DOCKEY>"+dOCKEY+"</DOCKEY>             \n");
-		sb.append("        <TITLE></TITLE>                          \n");
-		sb.append("       <arrDatas>                                        \n");
-		sb.append("         <DATAS>                                                        \n");
-		sb.append("          <datas_Header>                                     \n");
-		sb.append("            <BANFN>0000000000</BANFN>                             \n");
-		sb.append("          </datas_Header>                                          \n");
-		sb.append("          <arrDatas_HTML>                                      \n");
-		sb.append("            <TEXT><![CDATA["+hTML+"]]></TEXT>                     \n");
-		sb.append("          </arrDatas_HTML>                     \n");
-		sb.append("        </DATAS>      											\n");
-		sb.append("       <arrDatas>												\n");
-		sb.append("    </sap_datas>                                          \n");
-		sb.append("  </"+gUbun+">                                          \n");
-		sb.append("</soap:Envelop>                                                                      \n");
+	      sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>                                    \n");
+	      sb.append("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"> \n");
+	      sb.append("  <soap:Body>                                                                     \n");
+	      sb.append("    <"+gUbun+" xmlns=\"http://tempuri.org/\">                  \n");
+	      sb.append("      <sap_datas>                                                                  \n");
+	      sb.append("        <GUBUN>PLMS</GUBUN>                           \n");
+	      sb.append("        <LANG></LANG>                              \n");
+	      sb.append("        <SDATE>" + sDATE + "</SDATE>                           \n");
+	      sb.append("        <STIME>" + sTIME + "</STIME>                                     \n");
+	      sb.append("        <USERCD>" + uSERCD + "</USERCD>                            \n");
+	      sb.append("        <SERARCHKEY1></SERARCHKEY1>     \n");
+	      sb.append("        <DOCKEY>" + dOCKEY + "</DOCKEY>                           \n");
+	      sb.append("        <TITLE></TITLE>                                       \n");
+	      sb.append("        <arrDatas>                                                                                 \n");
+	      sb.append("          <DATAS>                                                                               \n");
+	      sb.append("            <datas_Header>                                                                  \n");
+	      sb.append("               <BANFN>0000000000</BANFN>                   \n");   
+	      sb.append("            </datas_Header>                                                               \n");
+	      sb.append("            <arrDatas_HTML>                                                                \n");
+	      sb.append("               <TEXT><![CDATA[" + hTML + "]]></TEXT>                         \n");
+	      sb.append("            </arrDatas_HTML>                                                             \n");
+	      /*
+	      sb.append("            <datas_Header xsi:nil=\"true\" />                  \n");   
+	      sb.append("            <arrDatas_HTML xsi:nil=\"true\" >                  \n");   
+	      sb.append("               <TEXT><![CDATA[" + hTML + "]]></TEXT>                         \n");
+	      sb.append("            </arrDatas_HTML>                                                             \n");
+	      */
+	      sb.append("          </DATAS>                                                                              \n");
+	      sb.append("        </arrDatas>                                                                                \n");
+	      sb.append("      </sap_datas>                                                                              \n");
+	      sb.append("    </"+gUbun+">                                                         \n");
+	      sb.append("  </soap:Body>                                                                                  \n");
+	      sb.append("</soap:Envelope>                                                                                \n");
 		
 		
 		System.out.println("@@@@@ GetPLMSDataforXMLTEST."+gUbun+" END");

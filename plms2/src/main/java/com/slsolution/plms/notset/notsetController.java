@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableAsync
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/notset")
+@RequestMapping("/land/notset")
 @CrossOrigin(origins="*",allowedHeaders="*")
 public class notsetController {
 	

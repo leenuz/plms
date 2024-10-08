@@ -43,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableAsync
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/songyu")
+@RequestMapping("/land/songyu")
 @CrossOrigin(origins="*",allowedHeaders="*")
 public class songyuController {
 
