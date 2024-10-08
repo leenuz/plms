@@ -55,6 +55,29 @@ public class notsetController {
 		log.info("index:"+index);
 
 		ArrayList<HashMap> data = mainService.selectQuery("notsetSQL.selectAllData",params);
+		
+		HashMap jijuk = new HashMap<>();
+		jijuk.put("x", 0);
+		jijuk.put("y", 0);
+		if (data.size() > 0) {
+			HashMap jijukParam = new HashMap<>();
+			jijukParam.put("sido_nm", data.get(0).get("mm_sido_nm"));
+			jijukParam.put("sgg_nm", data.get(0).get("mm_sgg_nm"));
+			jijukParam.put("emd_nm", data.get(0).get("mm_emd_nm"));
+			jijukParam.put("ri_nm", data.get(0).get("mm_ri_nm"));
+			jijukParam.put("jibun", data.get(0).get("mm_jibun"));
+
+			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			if (jijukList.size() > 0) {
+				jijuk = jijukList.get(0);
+			}
+			else {
+				jijuk = new HashMap<>();
+				jijuk.put("x", 0);
+				jijuk.put("y", 0);
+			}
+		}
+		
 		ArrayList<HashMap> soujaList = mainService.selectQuery("notsetSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("notsetSQL.selectAtcFileList",params);
 		
@@ -74,6 +97,7 @@ public class notsetController {
 		//ArrayList list4 = (ArrayList) Database.getInstance().queryForList("Json.selectNotsetRowDetail_Modify", params); // 변경이력
 
 		mav.addObject("resultData",data.get(0));
+		mav.addObject("jijuk", jijuk);
 		mav.addObject("soujaList",soujaList);
 		mav.addObject("atcFileList",atcFileList);
 //			mav.addObject("notsetPermitList",notsetPermitList);
