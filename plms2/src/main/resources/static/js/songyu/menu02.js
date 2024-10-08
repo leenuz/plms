@@ -298,9 +298,9 @@ function loadDataTable(params) {
 			datatype: "json",
 			data: function(d) {
 				//d=params;
-				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
-				d.manage_no = params.manage_no;
-				d.toji_type = params.toji_type;
+				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa; // 지사
+				// d.manage_no = params.manage_no; // 관리번호 없음.
+				d.toji_type = params.toji_type; // 토지유형
 				
 				var right_type = "";
 				if (params.songyu_type_all != undefined && params.songyu_type_all != null) right_type = "";
@@ -310,9 +310,9 @@ function loadDataTable(params) {
 					if (params.songyu_type_notset != undefined && params.songyu_type_notset != null) right_type += ",notset";
 					if (params.songyu_type_toji != undefined && params.songyu_type_toji != null) right_type += ",dopco";
 				}
-				d.right_type = right_type.substr(1);
+				d.right_type = right_type.substr(1); // 권리확보유형
 				
-				d.dosiplan = params.dosiplan;
+				// d.dosiplan = params.dosiplan; // 도시계획유형 없음.
 				
 				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
 				if (ask == "0") {
@@ -320,21 +320,12 @@ function loadDataTable(params) {
 					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
 				}
 				else {
-					//							console.log("----------------------------1--------------");
-					//							console.log(ljsIsNull(params.sgg));
-					var addrs = params.sido;
-					//							console.log("addrs:"+addrs);
-					if (ljsIsNull(params.sgg)) addrs = addrs + "";
-					else addrs = addrs + " " + params.sgg;
-					if (ljsIsNull(params.emd)) addrs = addrs + "";
-					else addrs = addrs + " " + params.emd;
-					if (ljsIsNull(params.ri)) addrs = addrs + "";
-					else addrs = addrs + " " + params.ri;
-					//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
-					//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
-					//							console.log("addrs:"+addrs);
-					d.saddr = (addrs == undefined || addrs == null) ? '' : addrs;
-					//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
+					console.log("------------선택형 주소--------------");
+					d.sido_nm = params.sido;
+					d.sgg_nm = params.sgg;
+					d.emd_nm = params.emd;
+					d.ri_nm = params.ri;
+					d.jibun = params.jibun;
 				}
 				//						console.log("saddr:"+d.saddr);
 				//						console.log(params);

@@ -15,37 +15,30 @@ div.dt-top-container {
 	display: grid;
 	grid-template-columns: auto auto auto;
 }
-
 div.dt-center-in-div {
 	margin: 0 auto;
 	float: right;
 	margin-right: 30px;
 }
-
 div.dt-center-in-div>div {
 	display: inline;
 }
-
 div.dt-filter-spacer {
 	margin: 10px 0;
 	border: 1px solid red;
 }
-
 .dt-title {
 	text-align: center;
 	width: 180px;
 	float: left;
 }
-
 .dt-buttons {
 	display: inline-block;
 	width: 180px;
 }
-
 .dt-length {
 	display: inline-block;
 }
-
 .dt-button {
 	color: white;
 	background-color: #4e5871;
@@ -61,11 +54,9 @@ div.dt-filter-spacer {
 	width: 159px;
 	height: 38px;
 }
-
 .dt-paging {
 	text-align: center;
 }
-
 .dt-paging-button {
 	box-sizing: border-box;
 	display: inline-block;
@@ -82,11 +73,9 @@ div.dt-filter-spacer {
 	font-size: 15px;
 	font-weight: 600;
 }
-
 .bottom {
 	text-align: center;
 }
-
 .top {
 	text-align: right;
 	margin: 10px;
@@ -107,6 +96,8 @@ div.dt-filter-spacer {
 				<section class="surfaceSectionBoxs">
 					<div class="surfacePartSectionCont">
 						<div class="surfacePartSectionContDevide">
+						
+							<!-- 지사 -->
 							<ul class="selectContent sectionMenuListBoxs">
 								<li class="selectTitle"><p>지사</p></li>
 								<div class="selectWrappers">
@@ -131,7 +122,8 @@ div.dt-filter-spacer {
 									</div>
 								</div>
 							</ul>
-
+							
+							<!-- 토지유형  -->
 							<ul class="selectContent sectionMenuListBoxs">
 								<li class="selectTitle"><p>토지유형</p></li>
 								<div class="selectWrappers">
@@ -140,9 +132,6 @@ div.dt-filter-spacer {
 										<option value="">전체</option>
 										<option value="사유지">사유지</option>
 										<option value="국유지">국유지</option>
-										<!--                                    <th:block th:each="val:${jisaList}">-->
-										<!--                                        <option th:text="${val.toji_type}" th:value="${val.toji_type}"></option>-->
-										<!--                                    </th:block>-->
 									</select>
 								</div>
 								<div class="surfaceSelects">
@@ -173,26 +162,32 @@ div.dt-filter-spacer {
 									<button class="surfaceSelectsTitleBtn" id="songyu_type">전체</button>
 									<div class="sufaceSelectList">
 										<ul class="surfaceSelectListMember checkBoxsContent">
-											<li><input type="checkbox" id="companylandCheckBox01"
-												name="songyu_type_all" checked /> <label
-												for="companylandCheckBox01"></label>
-												<p>전체</p></li>
-											<li><input type="checkbox" id="companylandCheckBox02"
-												name="songyu_type_jisang" /> <label
-												for="companylandCheckBox02"></label>
-												<p>지상권</p></li>
-											<li><input type="checkbox" id="companylandCheckBox03"
-												name="songyu_type_notset" /> <label
-												for="companylandCheckBox03"></label>
-												<p>미설정</p></li>
-											<li><input type="checkbox" id="companylandCheckBox04"
-												name="songyu_type_gover" /> <label
-												for="companylandCheckBox04"></label>
-												<p>점용</p></li>
-											<li><input type="checkbox" id="companylandCheckBox05"
-												name="songyu_type_toji" /> <label
-												for="companylandCheckBox05"></label>
-												<p>회사토지</p></li>
+											<li>
+												<input type="checkbox" id="companylandCheckBox01"
+												name="songyu_type_all" checked />
+												<label for="companylandCheckBox01"></label>
+												<p>전체</p>
+											</li>
+											<li>
+												<input type="checkbox" id="companylandCheckBox02" name="songyu_type_jisang" />
+												<label for="companylandCheckBox02"></label>
+												<p>지상권</p>
+											</li>
+											<li>
+												<input type="checkbox" id="companylandCheckBox03" name="songyu_type_notset" />
+												<label for="companylandCheckBox03"></label>
+												<p>미설정</p>
+											</li>
+											<li>
+												<input type="checkbox" id="companylandCheckBox04" name="songyu_type_gover" />
+												<label for="companylandCheckBox04"></label>
+												<p>점용</p>
+											</li>
+											<li>
+												<input type="checkbox" id="companylandCheckBox05" name="songyu_type_toji" />
+												<label for="companylandCheckBox05"></label>
+												<p>회사토지</p>
+											</li>
 										</ul>
 									</div>
 								</div>
@@ -214,6 +209,7 @@ div.dt-filter-spacer {
 								<ul class="radioBoxs menuRadioEvet01">
 									<li><input type="radio" name="askMenu01" value="1" /><span>선택형</span>
 									</li>
+									<!-- 시도 -->
 									<li>
 										<div class="selectWrappers">
 											<select name="sido" id="sido" hidden>
@@ -235,6 +231,7 @@ div.dt-filter-spacer {
 											</div>
 										</div>
 									</li>
+									<!-- 시군구 -->
 									<li>
 										<div class="selectWrappers">
 											<select name="sgg" id="sgg" hidden>
@@ -246,13 +243,11 @@ div.dt-filter-spacer {
 											<div class="sufaceSelectList smallHeight">
 												<ul class="surfaceSelectListMember" id="sggUl">
 													<li><p>전체</p></li>
-													<!--   <th:block th:each="sido:${sidolist}">
-                                                      <li><p th:text="${sido.sm_name}"></p></li>
-                                                  </th:block> -->
 												</ul>
 											</div>
 										</div>
 									</li>
+									<!-- 읍면동 -->
 									<li>
 										<div class="selectWrappers">
 											<select name="emd" id="emd" hidden>
@@ -268,6 +263,7 @@ div.dt-filter-spacer {
 											</div>
 										</div>
 									</li>
+									<!-- 리 -->
 									<li>
 										<div class="selectWrappers">
 											<select name="ri" id="ri" hidden>
@@ -283,10 +279,10 @@ div.dt-filter-spacer {
 											</div>
 										</div>
 									</li>
+									<!-- 지번 -->
 									<li style="padding: 0px 3px">
 										<div class="inputControlList">
-											<input name=jibun id="jibun" type="text" placeholder="지번입력"
-												class="menuAdderssInput01" />
+											<input name=jibun id="jibun" type="text" placeholder="지번입력" class="menuAdderssInput01" />
 										</div>
 									</li>
 								</ul>
