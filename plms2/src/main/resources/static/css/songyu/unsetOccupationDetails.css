@@ -1206,3 +1206,9 @@ textarea {
     text-align: center;
     color: #3c3c3c;
 }
+#unsetOccupationDetails input[type=text] {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+}

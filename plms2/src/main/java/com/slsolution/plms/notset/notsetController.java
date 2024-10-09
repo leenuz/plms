@@ -38,7 +38,7 @@ public class notsetController {
 	@Autowired
 	private GlobalConfig GC;
 	
-	//권리확보현황-데이터테이블-미설정/미점용
+	//송유관로현황-미설정/미점용
 	@GetMapping(path="/unsetOccupationDetails") //http://localhost:8080/api/get/dbTest
     public ModelAndView unsetOccupationDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
@@ -119,7 +119,7 @@ public class notsetController {
 //			mav.addObject("notsetPermitList",notsetPermitList);
 		mav.addObject("notsetModifyList",notsetModifyList);
 //			mav.addObject("notsetMergeList",notsetMergeList);
-		mav.addObject("notsetIssueList",notsetIssueList);
+		mav.addObject("notsetIssueList",notsetIssueList.get(0)); // 잠재이슈는 1개만 있음.
 		mav.addObject("jisangIssueCodeAtcFileList",notsetIssueCodeAtcFileList);
 		mav.addObject("notsetIssueHistoryList",notsetIssueHistoryList);
 		mav.addObject("notsetPnuAtcFileList",notsetPnuAtcFileList);
