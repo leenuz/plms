@@ -1961,8 +1961,10 @@ WHERE gp_GOVER_NO = #{GOVER_NO}
 		FROM GOVER_PERMIT GP
 		LEFT JOIN PLMS_APPROVAL PA ON GP.gp_DOCKEY = PA.pa_DOCKEY
 		WHERE GP.gp_GOVER_NO = #{GOVERNO}
-		AND GP.gp_SEQ = (SELECT MAX(S.gp_SEQ) FROM GOVER_PERMIT S WHERE S.gp_GOVER_NO =#{GOVERNO} )
-		ORDER BY GP.gp_SEQ DESC
+			AND GP.gp_idx = (SELECT MAX(S.gp_idx) FROM GOVER_PERMIT S WHERE S.gp_GOVER_NO =#{GOVERNO} )	
+		ORDER BY GP.gp_idx DESC
+		<!-- AND GP.gp_SEQ = (SELECT MAX(S.gp_SEQ) FROM GOVER_PERMIT S WHERE S.gp_GOVER_NO =#{GOVERNO} )
+		ORDER BY GP.gp_SEQ DESC -->
 	</select>
 	<select id="selectGoverRowDetail_FilesObject" resultType="HashMap" parameterType="HashMap">
 		SELECT *

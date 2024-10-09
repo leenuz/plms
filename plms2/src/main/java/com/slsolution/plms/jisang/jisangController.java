@@ -6836,6 +6836,8 @@ log.info("map:"+map);
 			try {
 				HashMap params = new HashMap();
 				params.put("PMT_NO", PMT_NO);
+				//permit_togi도 지우자
+				mainService.DeleteQuery("jisangSQL.deletePermitTogiList", params);
 				mainService.DeleteQuery("jisangSQL.deleteJisangPmtDockey", params);
 
 			} catch (Exception e) {

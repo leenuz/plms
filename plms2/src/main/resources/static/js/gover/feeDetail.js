@@ -214,8 +214,8 @@ $(document).on("click","#sangsinBtn",function(){
 	var pay_vat=$("#pay_vat").val();
 	var pmt_st_date=$("#pmt_st_date").val();
 	var pmt_ed_date=$("#pmt_ed_date").val();
-	var pmt_no=$("#p_office_contact").val();
-	var pmt_no=$("#p_office_contact").val();
+	//var pmt_no=$("#p_office_contact").val();
+	//var pmt_no=$("#p_office_contact").val();
 	var pay_way=$("#pay_way").val();
 	var use_purpos="";
 	var pmt_gover_length="";

@@ -302,7 +302,7 @@ function positionView(objInfo) {
 		
 		const trimArrCoord = sliceCoordList.split(',').map(item => item.trim());
 		
-		console.log(trimArrCoord);
+		//console.log(trimArrCoord);
 		
 		for(let i = 0 ; i < trimArrCoord.length ; i++) {
 			
@@ -318,25 +318,59 @@ function positionView(objInfo) {
 			
 			//console.log(i+' :: '+trimArrCoord[i]);
 		}
-		console.log(markerList);
+		//console.log(markerList);
+	}
+	
+	let message;
+	
+	if(markerList.length == 0) {
+		alert('좌표정보가 없습니다.');
+	} else if(markerList.length == 1) {
+		message = {
+			type: "setCenter",
+			lon: firstCoordLng,
+			lat: firstCoordLat,
+			markers:[firstCoordLng, firstCoordLat],
+			zoom: 19,
+		};
+	} else {
+		message = {
+			type: "setCenter",
+			zoom: 19,
+			markers: markerList
+		};
 	}
 	
 	// 자식 창에서 부모 창으로 메시지 보내기
 	if (window.opener) {
-		const message = {
-			type: "setCenter",
-			lon: firstCoordLng,
-			lat: firstCoordLat,
-			zoom: 19,
-			//markers: [[127.387205, 36.43472], [127.376596, 36.411514], [127.464146, 36.437349], [127.469639, 36.398030], [127.328186, 36.425660]]
-			markers: markerList
-		};
-		
 		window.opener.postMessage(message, '*');  // 부모 창으로 메시지 전송
 	}
 }	
 
-
+function onePostionView(obj) {
+	console.log('1개 위치보기');
+	console.log(obj);
+	
+	if(typeof(obj) == 'undefined') {
+		alert('위치 정보가 없습니다.');
+		return false;
+	}
+	
+	let firstCoordLng = obj.x;
+	let firstCoordLat = obj.y;
+	
+	const message = {
+		type: "setCenter",
+		lon: firstCoordLng,
+		lat: firstCoordLat,
+		markers:[firstCoordLng, firstCoordLat],
+		zoom: 19,
+	};
+	// 자식 창에서 부모 창으로 메시지 보내기
+	if (window.opener) {
+		window.opener.postMessage(message, '*');  // 부모 창으로 메시지 전송
+	}
+}
 
 function commonJisaInfoCheck() {
 	let jisaName = $("#loginJisa").val();	//각 해당 페이지의 hidden type으로 되있는 값 존재

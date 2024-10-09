@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -969,7 +970,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				kibon_map.put("PMT_OFFICE", cu.evl((String) ((HashMap) list.get(0)).get("pmt_office"), ""));
 				kibon_map.put("ADM_OFFICE", cu.evl((String) ((HashMap) list.get(0)).get("adm_office"), ""));
 				kibon_map.put("OFFICE_DEPART", cu.evl((String) ((HashMap) list.get(0)).get("office_depart"), ""));
-				kibon_map.put("OFFICE_CHARGE", cu.evl((String) ((HashMap) list.get(0)).get("office_charge"), ""));
+				kibon_map.put("OFFICE_CHARGE", cu.evl((String) ((HashMap) list.get(0)).get("office_charege"), ""));
 				kibon_map.put("OFFICE_CONTACT", cu.evl((String) ((HashMap) list.get(0)).get("office_contact"), ""));
 				kibon_map.put("OFFICE_MOBILE", cu.evl((String) ((HashMap) list.get(0)).get("office_mobile"), ""));
 			}
@@ -1053,7 +1054,9 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				for (int i = 0; i < file_list.size(); i++) {
 					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), ""));
 					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), ""));
-					file_map.put("FILE_SEQ" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), ""));
+					BigDecimal fileSeq = (BigDecimal) ((HashMap) file_list.get(i)).get("ga_file_seq");
+					file_map.put("FILE_SEQ" + i, cu.evl(fileSeq != null ? fileSeq.toString() : "", ""));
+					//file_map.put("FILE_SEQ" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), ""));
 					file_map.put("FILE_GOVER_NO" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ga_gover_no"), ""));
 					log.info("fileMap:"+file_map);
 
@@ -1227,8 +1230,8 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append("			 	<tbody>\n");
 		sbHtml.append("			 	<tr>");
 		sbHtml.append("			 		<th scope=\"row\">허가번호</th>	");
-		sbHtml.append("			 		<td>");
-		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PMT_NO") + "</span>	");
+		sbHtml.append("			 		<td>\n");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PMT_NO") + "</span>	\n");
 		sbHtml.append("			 		</td>\n");
 		sbHtml.append("			 		<th scope=\"row\">납부일</th>	");
 		sbHtml.append("			 		<td>");
@@ -1357,6 +1360,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 					
 					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
 					sbHtml.append("            </script>               \n");
+					//sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile('"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "")+"','"+kibon_map.get("GOVER_NO")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), "")+"', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 				}
 				////
 				//sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile('"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "")+"','"+kibon_map.get("GOVER_NO")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), "")+"', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
@@ -1366,6 +1370,9 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		} else {
 			sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr> 							");
 		}
+		
+		
+		
 		sbHtml.append("			 	</tbody>																		");
 		sbHtml.append("			 </table>																			");
 		sbHtml.append("         </div>  \n");

@@ -364,6 +364,7 @@ function loadDataTable(params) {
 				targets: [14]
 				, width: "100px"
 				, render: function(data, type, row, meta) {
+					//쿼리수정이 필요합니다.
 					return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
 				}
 			}, //지도보기

@@ -310,7 +310,8 @@ function loadDataTable(params) {
             {
                 data: "idx", "defaultContent": "",
                 render: function(data, type, row, meta) {
-                    return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
+					//쿼리 수정이 필요합니다.
+                    return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y} >위치보기</button> `;
                 }
             },
 			// ECHO 문서보기 버튼 추가
