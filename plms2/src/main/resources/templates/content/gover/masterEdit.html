@@ -833,11 +833,11 @@
 								</li>
 								<!-- 점용연장 -->
 								<li class="content">
-									<input type="text" name="gover_length" th:value="${pnu.gover_length}" />
+									<input type="text" name="gover_length" th:value="${pnu.gover_length ?: ''}" />
 								</li>
 								<!-- 점용면적 -->
 								<li class="content">
-									<input type="text" name="gover_area" th:value="${pnu.gover_area}" />
+									<input type="text" name="gover_area" th:value="${pnu.gover_area ?: ''}" />
 								</li>
 								<!-- 관로일치 여부 -->
 								<li class="content middleWidth selectContentArea">
