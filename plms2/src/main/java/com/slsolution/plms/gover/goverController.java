@@ -1978,7 +1978,13 @@ log.info("file_list:"+file_list);
 				String ORG_PNU_NULL = obj.has("org_pnu_null") ? obj.getString("org_pnu_null") : ""; // pnu값이 "NULL"도 아닌""값인 예외 체크
 
 				String PIPE_OVERLAP_YN = obj.getString("pipe_overlab_yn");
-
+				
+				if ("".equals(GOVER_AREA)) {
+					GOVER_AREA = null;
+				}
+				if ("".equals(GOVER_LENGTH)) {
+					GOVER_LENGTH = null;
+				}
 //				String SIDO_NM = (parser.getString("SIDO_NM" + String.valueOf(i), "")).replaceAll("전체", "");
 //				String SGG_NM = (parser.getString("SGG_NM" + String.valueOf(i), "")).replaceAll("전체", "");
 //				String EMD_NM = (parser.getString("EMD_NM" + String.valueOf(i), "")).replaceAll("전체", "");
