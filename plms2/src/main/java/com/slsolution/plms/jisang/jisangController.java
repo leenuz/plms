@@ -4035,7 +4035,7 @@ log.info("data:"+data.get(0));
 			
 			String jisangNo = requestParamObj.getString("jisang_no");
 			String startDay = requestParamObj.getString("cancel_date").replace("-", "");
-			String cancle_yes = requestParamObj.getString("cancel_bosang_yn"); //보상유무
+			String cancel_bosang_yn = requestParamObj.getString("cancel_bosang_yn"); //보상유무
 			String cancle_bosang_money = requestParamObj.getString("cancel_bosang_money");
 //			String empCd = String.valueOf(request.getSession().getAttribute("userId"));
 //			String empName = String.valueOf(request.getSession().getAttribute("userName"));
@@ -4061,7 +4061,7 @@ log.info("data:"+data.get(0));
 				HashMap params = new HashMap();
 				params.put("JISANGNO", jisangNo);
 				params.put("STARTDAY", startDay);
-				params.put("CANCLE_YES", cancle_yes);
+				params.put("CANCEL_BOSANG_YN", cancel_bosang_yn);
 				params.put("CANCLE_BOSANG_MONEY", cancle_bosang_money);
 				params.put("CHUIDEUKMONEY", cancle_chuideuk_money);
 				params.put("GAMMONEY", cancle_chuideuk_gammoney);
