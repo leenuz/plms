@@ -3,6 +3,7 @@ package com.slsolution.plms.dopco;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -153,7 +154,7 @@ public class dopcoController {
 		return mav;
 	}
 	
-	// 권리 확보 - 데이터테이블 - 회사토지 상세정보
+	// 송유관로 현황 - 회사토지 상세정보
 	@GetMapping(path="/companyLandDetails") //http://localhost:8080/api/get/dbTest
     public ModelAndView companyLandDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		HashMap params = new HashMap();
@@ -184,6 +185,11 @@ public class dopcoController {
 		log.info("file_list: " + file_list);
 		//ArrayList<HashMap> data = mainService.selectQuery("dopcoSQL.selectAllData",params);
 		HashMap resultData = new HashMap<>();
+		
+		//241009
+		List<String> coordinateVal = new ArrayList<>();
+		Integer coordinateSize = 0;
+		
 		HashMap jijuk = new HashMap<>();
 		jijuk.put("x", 0);
 		jijuk.put("y", 0);
@@ -197,14 +203,24 @@ public class dopcoController {
 			jijukParam.put("ri_nm", list.get(0).get("ri_nm"));
 			jijukParam.put("jibun", list.get(0).get("jibun"));
 
+			jijukParam.put("TARGET_PNU", list.get(0).get("pnu"));
+			
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			ArrayList<HashMap> jijukPNUList2 = mainService.selectQuery("commonSQL.selectJijuk_PNU", jijukParam);
+			
+			coordinateSize += jijukPNUList2.size();
+			
 			if (jijukList.size() > 0) {
 				jijuk = jijukList.get(0);
-			}
-			else {
+			} else {
 				jijuk = new HashMap<>();
 				jijuk.put("x", 0);
 				jijuk.put("y", 0);
+				
+				for(int k = 0 ; k < jijukPNUList2.size() ; k++) {
+					HashMap jijukInfo = jijukPNUList2.get(k);
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+jijukInfo.get("y").toString());
+				}
 			}
 		}
 		params.put("pnu", list.get(0).get("dom_pnu").toString().trim());
@@ -247,6 +263,10 @@ public class dopcoController {
 		mav.addObject("memoList", dopcoMemoList);
 		mav.setViewName("content/dopco/companyLandDetails");
 
+		//지도보기, 이동관련
+		mav.addObject("jijukCoordList", coordinateVal);
+		mav.addObject("jijukCoordSize", coordinateSize);
+		
 		return mav;
 	}
 

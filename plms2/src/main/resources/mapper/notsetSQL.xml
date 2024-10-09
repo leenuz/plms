@@ -15,10 +15,10 @@
     </select>
     
     <select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        select *
-        ,concat(nm_sido_nm,' ',nm_sgg_nm,' ',nm_ri_nm,' ',nm_jibun) as address
-        from notset_master
-        where 1=1
+        SELECT *
+        	,concat(nm_sido_nm,' ',nm_sgg_nm,' ',nm_ri_nm,' ',nm_jibun) as address
+        FROM notset_master
+        WHERE 1=1
         <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
             and nm_notset_no=#{idx}
         </if>

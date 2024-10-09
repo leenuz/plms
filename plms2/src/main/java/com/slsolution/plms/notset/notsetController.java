@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -56,25 +57,40 @@ public class notsetController {
 
 		ArrayList<HashMap> data = mainService.selectQuery("notsetSQL.selectAllData",params);
 		
+		//241009
+		List<String> coordinateVal = new ArrayList<>();
+		Integer coordinateSize = 0;
+		
 		HashMap jijuk = new HashMap<>();
 		jijuk.put("x", 0);
 		jijuk.put("y", 0);
+		
 		if (data.size() > 0) {
 			HashMap jijukParam = new HashMap<>();
-			jijukParam.put("sido_nm", data.get(0).get("mm_sido_nm"));
-			jijukParam.put("sgg_nm", data.get(0).get("mm_sgg_nm"));
-			jijukParam.put("emd_nm", data.get(0).get("mm_emd_nm"));
-			jijukParam.put("ri_nm", data.get(0).get("mm_ri_nm"));
-			jijukParam.put("jibun", data.get(0).get("mm_jibun"));
+			jijukParam.put("sido_nm", data.get(0).get("nm_sido_nm"));
+			jijukParam.put("sgg_nm", data.get(0).get("nm_sgg_nm"));
+			jijukParam.put("emd_nm", data.get(0).get("nm_emd_nm"));
+			jijukParam.put("ri_nm", data.get(0).get("nm_ri_nm"));
+			jijukParam.put("jibun", data.get(0).get("nm_jibun"));
+			
+			jijukParam.put("TARGET_PNU", data.get(0).get("nm_pnu"));
 
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			ArrayList<HashMap> jijukPNUList2 = mainService.selectQuery("commonSQL.selectJijuk_PNU", jijukParam);
+			
+			coordinateSize += jijukPNUList2.size();
+			
 			if (jijukList.size() > 0) {
 				jijuk = jijukList.get(0);
-			}
-			else {
+			} else {
 				jijuk = new HashMap<>();
 				jijuk.put("x", 0);
 				jijuk.put("y", 0);
+				
+				for(int k = 0 ; k < jijukPNUList2.size() ; k++) {
+					HashMap jijukInfo = jijukPNUList2.get(k);
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+jijukInfo.get("y").toString());
+				}
 			}
 		}
 		
@@ -109,6 +125,10 @@ public class notsetController {
 		mav.addObject("notsetPnuAtcFileList",notsetPnuAtcFileList);
 		mav.addObject("memoList",notsetMemoList);
 		mav.setViewName("content/notset/unsetOccupationDetails");
+		
+		//지도보기, 이동관련
+		mav.addObject("jijukCoordList", coordinateVal);
+		mav.addObject("jijukCoordSize", coordinateSize);
 		
 		return mav;
     }

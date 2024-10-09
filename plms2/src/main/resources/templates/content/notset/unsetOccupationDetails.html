@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/jisang/write.css">
      <script src="/js/notset/unsetOccupationDetails.js"></script>
      <script src="/js/common/upload.js"></script>
+     <script src="/js/common/common.js"></script>
     <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
     <style>
@@ -89,6 +90,11 @@ margin:10px;
     <title>지상권</title>
 </head>
 <th:block layout:fragment="content">
+
+	<!-- 241009 -->
+	<input type="hidden" id="jijukCoordList" th:value="${jijukCoordList}">
+	<input type="hidden" id="jijukCoordSize" th:value="${jijukCoordSize}">
+	
     <div class="unsetOccupationDetailsWrappers">
         <!--header삽입-->
 
@@ -109,7 +115,7 @@ margin:10px;
                             <div style="display:inline-block;">
                                 <h2>・참고 지적도</h2>
                             </div>
-                            <div style="display:inline-block;float:right;"><button class="viewDetailButton" id="moveMap">이동</button></div>
+                            <div style="display:inline-block;float:right;"><button class="viewDetailButton" onclick="positionView()">이동</button></div>
                             <div style="display:inline-block;float:right;"><button class="viewDetailButton" id="jijukNewWindowBtn">크게보기</button></div>
                         </div>
                         <iframe id="mapFrame" class="contentDetailBox mapFigure"></iframe>

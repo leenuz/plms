@@ -6,13 +6,19 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link th:href="@{/css/common.css}" rel="stylesheet" />
-
+	<script src="/js/common/common.js"></script>
+	
 	<title>회사토지 상세정보</title>
 	<link rel="stylesheet" href="/css/dopco/companyLandDetails.css">
 	<title>지상권</title>
 </head>
 
 <th:block layout:fragment="content">
+
+	<!-- 241009 -->
+	<input type="hidden" id="jijukCoordList" th:value="${jijukCoordList}">
+	<input type="hidden" id="jijukCoordSize" th:value="${jijukCoordSize}">
+	
 	<div class="companyLandDetailsWrappers">
 		<main id="companyLandDetails">
 			<div class="mainTitle">
@@ -30,7 +36,7 @@
                   <div style="display:inline-block;">
                       <h2>・참고 지적도</h2>
                   </div>
-                  <div style="display:inline-block;float:right;"><button class="viewDetailButton" id="moveMap">이동</button></div>
+                  <div style="display:inline-block;float:right;"><button class="viewDetailButton" onclick="positionView()">이동</button></div>
                   <div style="display:inline-block;float:right;"><button class="viewDetailButton" id="jijukNewWindowBtn">크게보기</button></div>
               </div>
               <iframe id="mapFrame" class="contentDetailBox mapFigure"></iframe>
