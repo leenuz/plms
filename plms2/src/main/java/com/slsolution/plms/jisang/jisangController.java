@@ -1369,7 +1369,6 @@ log.info("PMT_NO:"+PMT_NO);
 					HashMap jijukInfo = jijukPNUList2.get(k);
 					coordinateVal.add(jijukInfo.get("x").toString()+"|"+jijukInfo.get("y").toString());
 				}
-				
 			}
 		}
 		
@@ -1377,7 +1376,6 @@ log.info("PMT_NO:"+PMT_NO);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 
 //		ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
-
 		
 		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
 		params.put("JISANG_NO", idx);
