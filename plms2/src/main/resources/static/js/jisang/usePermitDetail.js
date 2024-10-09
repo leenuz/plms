@@ -14,7 +14,7 @@ function downloadFile(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 	console.log(fileSeq);
 	console.log(fileGubun);
 	
-	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
+	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, 'permit');
 }
 
 

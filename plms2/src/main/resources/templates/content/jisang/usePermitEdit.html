@@ -131,6 +131,7 @@ div.dt-filter-spacer {
 							<li class="title">사용자</li>
 							<li class="title titleBtnWrap">추가/삭제</li>
 						</ul>
+						[[${tojiList}]]
 						<div class="contentsBox">
 							<ul class="contents" th:each="val, iterStat:${tojiList}">
 								<!-- hidden -->
@@ -138,8 +139,8 @@ div.dt-filter-spacer {
 								<input type="hidden" id="permitIndex" th:if="${val.no!=null}"
 									th:value="${val.no}">
 								
-								<input type="hidden" id="togiManageNo" th:if="${val.idx!=null}"
-									th:value="${val.idx}">
+								<input type="hidden" name="togiManageNo" id="togiManageNo" th:if="${val.jisang_no!=null}"
+									th:value="${val.jisang_no}">
 								<input type="hidden" name="sido_nm" id="sido_nm"
 									th:if="${val.sido_nm!=null}" th:value="${val.sido_nm}">
 								<input type="hidden" name="sgg_nm" id="sgg_nm"

@@ -613,7 +613,6 @@ public class jisangController {
 					String JIBUN = obj.getString("jibun");
 					String ADDRCODE = obj.getString("addrcode");
 					
-					params.put("JISANG_NO", JISANG_NO);
 					params.put("ADDRESS", ADDRESS);
 					params.put("JIMOK", JIMOK);
 					params.put("JIJUK", JIJUK);
@@ -627,7 +626,8 @@ public class jisangController {
 					params.put("EMD_NM", EMD_NM);
 					params.put("RI_NM", RI_NM);
 					params.put("JIBUN", JIBUN);
-					params.put("ADDRCODE", ADDRCODE);
+					params.put("JISANG_NO", JISANG_NO);
+					
 
 					if (GUBUN.equals("modify")) {
 						if (i == 0) {
