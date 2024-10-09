@@ -493,13 +493,13 @@ function loadDataTable(params) {
 			url = "/land/jisang/groundDetail?idx=" + data.idx + "&index=" + data.index;
 		}
 		else if (data.idx.substring(0, 1) == "G") { //점용
-			url = "/land/gover/occupationDetails?idx=" + data.idx + "&index=" + data.index + "&gidx=" + data.gidx;;
+			url = "/land/gover/occupationDetails?idx=" + data.idx + "&index=" + data.index + "&gidx=" + data.gidx;
 		}
 		else if (data.idx.substring(0, 1) == "N") { //미설정
 			url = "/land/notset/unsetOccupationDetails?idx=" + data.idx + "&index=" + data.index;
 
-		} else if (data.idx.substring(0, 1) == "T") { //토지
-			url = "/land/toji/tojiDetails?idx=" + data.idx + "&index=" + data.index;
+		} else if (data.idx.substring(0, 1) == "L") { //토지
+			url = "/land/dopco/companyLandDetails?idx=" + data.idx + "&index=" + data.index + "&gidx=0";
 		}
 		else return;
 		window.location = url;

@@ -422,27 +422,19 @@ function loadDataTable(params) {
 		]
 	});
 
-
 	table.on('click', 'tr', function() {
-		/*  var data = table.fnGetData( this );
-			alert(data);*/
 		console.log("--------------tr click---------------------");
 
 		var data = table.row(this).data();
-		//										       console.log(data);
+		// console.log(data);
 		console.log("***************** " + data.idx);
 		var url = "/land/songyu/menu01_detail?idx=" + data.idx;
 		if (data.idx.substring(0, 1) == "J") { //지상권
 			console.log("jisang");
 			url = "/land/jisang/groundDetail?idx=" + data.idx + "&index=" + data.index;
 		}
-		else if (data.idx.substring(0, 1) == "G") { //점용
-			url = "/land/gover/occupationDetails?idx=" + data.idx + "&index=" + data.index;
-		}
 		else if (data.idx.substring(0, 1) == "N") { //미설정
 			url = "/land/notset/unsetOccupationDetails?idx=" + data.idx + "&index=" + data.index;
-		} else if (data.idx.substring(0, 1) == "T") { //토지
-			url = "/land/toji/tojiDetails?idx=" + data.idx + "&index=" + data.index;
 		}
 		else return;
 		window.location = url;
@@ -465,7 +457,6 @@ function loadDataTable(params) {
 							});
 			})
 			.draw();*/
-
 	// console.log($('#userTable').DataTable().page.info().recordsTotal);
 }
 
