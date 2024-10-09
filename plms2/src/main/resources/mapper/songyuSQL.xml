@@ -779,30 +779,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and r.jisa=#{jisa}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-		and (SELECT COUNT(o.address) AS overlap 
+		and (SELECT COUNT(o.pnu) AS overlap 
 			FROM
 			  (
-			  		(
-						SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_emd_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
-						FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
+		  		(
+						SELECT jm.jm_pnu AS pnu
+						FROM jisang_master jm 
+						LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
 						where 1=1
 					)
 					UNION ALL 
 					(
-						SELECT trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_emd_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
+						SELECT gp.gp_pnu AS pnu
 						FROM gover_master gm 
 						LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
 						LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-						where 1=1 and gp.gp_gover_no = gm.gm_gover_no
+						WHERE 1=1 
+						AND gp.gp_gover_no = gm.gm_gover_no
 						and gp.gp_pnu is not null
 					)
 					UNION ALL
 					(
-						SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
-						FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
+						SELECT nm.nm_pnu AS pnu
+						FROM notset_master nm 
+						LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
 						where 1=1
 					)
-			  ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+			  ) as o WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
 		</if>
 	  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 			ORDER BY r.${orderCol} ${desc}
@@ -1151,31 +1154,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and r.jisa=#{jisa}
 			</if>
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-			and (SELECT COUNT(o.address) AS overlap 
+			and (SELECT COUNT(o.pnu) AS overlap 
 			FROM
 			  (
-			  		(
-						SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_emd_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
-						FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
+		  		(
+						SELECT jm.jm_pnu AS pnu
+						FROM jisang_master jm 
+						LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
 						where 1=1
-			
 					)
 					UNION ALL 
 					(
-						SELECT trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_emd_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
+						SELECT gp.gp_pnu AS pnu
 						FROM gover_master gm 
 						LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
 						LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-						where 1=1 and gp.gp_gover_no = gm.gm_gover_no
+						WHERE 1=1 
+						AND gp.gp_gover_no = gm.gm_gover_no
 						and gp.gp_pnu is not null
 					)
 					UNION ALL
 					(
-						SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
-						FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
+						SELECT nm.nm_pnu AS pnu
+						FROM notset_master nm 
+						LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
 						where 1=1
 					)
-			  ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+			  ) as o WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
 			</if>
 	</select>
 	
@@ -2267,34 +2272,34 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 		and r.master_no=#{manage_no}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-		and (SELECT COUNT(o.address) AS overlap 
-			FROM
-			  (
-			  		(
-						SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_emd_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
-						FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-						where 1=1
-			
-					)
-					UNION ALL 
-					(
-						SELECT trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_emd_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
-						FROM gover_master gm 
-						LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
-						LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-						where 1=1 and gp.gp_gover_no = gm.gm_gover_no
-						and gp.gp_pnu is not null
-			
-					)
-					UNION ALL
-					(
-						SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
-						FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-						where 1=1
-			
-					)
-			  
-			  ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+			and (
+				SELECT COUNT(o.pnu) AS overlap 
+						FROM
+						  (
+					  		(
+									SELECT jm.jm_pnu AS pnu
+									FROM jisang_master jm 
+									LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
+									where 1=1
+								)
+								UNION ALL 
+								(
+									SELECT gp.gp_pnu AS pnu
+									FROM gover_master gm 
+									LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
+									LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
+									WHERE 1=1 
+									AND gp.gp_gover_no = gm.gm_gover_no
+									and gp.gp_pnu is not null
+								)
+								UNION ALL
+								(
+									SELECT nm.nm_pnu AS pnu
+									FROM notset_master nm 
+									LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
+									where 1=1
+								)
+						  ) as o WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
 		</if>
 	  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 		ORDER BY r.${orderCol} ${desc}
@@ -2305,10 +2310,10 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 	</select>
 	
 	<!-- 관리필지 건 수 조회 -->
-<select id="selectTotalCount5" parameterType="java.util.HashMap" resultType="Integer">
-	SELECT 
-		count(*)
-	FROM (
+	<select id="selectTotalCount5" parameterType="java.util.HashMap" resultType="Integer">
+		SELECT 
+			count(*)
+		FROM (
 			SELECT   NEWREGREASON,
 	        OCCUNONPAYREASON,
 	        PERMPOSSYN,
@@ -2639,32 +2644,33 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
 			and (
-			SELECT COUNT(o.address) AS overlap 
-			FROM
-			  (
-			  		(
-						SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_emd_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
-						FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-						where 1=1
-					)
-					UNION ALL 
-					(
-						SELECT trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_emd_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
-						FROM gover_master gm 
-						LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
-						LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-						where 1=1 and gp.gp_gover_no = gm.gm_gover_no
-						and gp.gp_pnu is not null
-					)
-					UNION ALL
-					(
-						SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
-						FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-						where 1=1
-					)
-			  ) as o  
-			  WHERE o.address = r.address 
-			  GROUP BY o.address ) >1
+				SELECT COUNT(o.pnu) AS overlap 
+						FROM
+						  (
+					  		(
+									SELECT jm.jm_pnu AS pnu
+									FROM jisang_master jm 
+									LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
+									where 1=1
+								)
+								UNION ALL 
+								(
+									SELECT gp.gp_pnu AS pnu
+									FROM gover_master gm 
+									LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
+									LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
+									WHERE 1=1 
+									AND gp.gp_gover_no = gm.gm_gover_no
+									and gp.gp_pnu is not null
+								)
+								UNION ALL
+								(
+									SELECT nm.nm_pnu AS pnu
+									FROM notset_master nm 
+									LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
+									where 1=1
+								)
+						  ) as o WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
 		</if>
 	</select>
 	
