@@ -1221,7 +1221,7 @@ $(document).on("click","#sangsinBtn",function(){
 																			
 												//var url=response.OUT_URL;
 					var urls = response.OUT_URL;
-					window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes"););
+					window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
 	                /*$("#popup_bg").show();
 	                $("#popup").show(500);
 	                //$("#addrPopupLayer tbody td").remove();
