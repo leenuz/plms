@@ -588,10 +588,11 @@
 							</ul>
 						</div>
 						<div class="filecontents_wrap">
-							<ul th:each="file : ${atcFileList}" class="filecontent">
+							<ul th:each="file,stat : ${atcFileList}" class="filecontent">
 								<li class="filetitle_td_1">
-									<input type="checkbox" id="occupancy_Popup_checkbox" class="approve_checkbox" />
-									<label for="occupancy_Popup_checkbox" class="approve_checkbox_label">
+								
+									<input type="checkbox" th:id="'occupancy_Popup_checkbox_'+${stat.index}" class="approve_checkbox" />
+									<label th:for="'occupancy_Popup_checkbox_'+${stat.index}" class="approve_checkbox_label">
 									</label>
 								</li>
 								<!-- 등록일 -->
