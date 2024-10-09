@@ -252,19 +252,38 @@ public class goverController {
 				}
 			}
 		}
+		
+		//241009
+		List<String> coordinateVal = new ArrayList<>();
+		Integer coordinateSize = 0;
 
 		// 소속 토지정보 각각의 좌표 가져오기
 		for (int i = 0; i < pnuList.size(); i++) {
 			HashMap jijukParam = new HashMap<>();
-			jijukParam.put("sido_nm", pnuList.get(i).get("gp_sido_nm"));
-			jijukParam.put("sgg_nm", pnuList.get(i).get("gp_sgg_nm"));
-			jijukParam.put("emd_nm", pnuList.get(i).get("gp_emd_nm"));
-			jijukParam.put("ri_nm", pnuList.get(i).get("gp_ri_nm"));
-			jijukParam.put("jibun", pnuList.get(i).get("gp_jibun"));
+			
+			System.out.println(pnuList.get(i));
+			
+//			jijukParam.put("sido_nm", pnuList.get(i).get("gp_sido_nm"));
+//			jijukParam.put("sgg_nm", pnuList.get(i).get("gp_sgg_nm"));
+//			jijukParam.put("emd_nm", pnuList.get(i).get("gp_emd_nm"));
+//			jijukParam.put("ri_nm", pnuList.get(i).get("gp_ri_nm"));
+//			jijukParam.put("jibun", pnuList.get(i).get("gp_jibun"));
+			
+			jijukParam.put("TARGET_PNU", pnuList.get(i).get("gp_pnu"));
+			
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			
+			coordinateSize += jijukList.size();
+			
 			if (jijukList.size() > 0) {
 				pnuList.get(i).put("lng", jijukList.get(0).get("x"));
 				pnuList.get(i).put("lat", jijukList.get(0).get("y"));
+				
+				for(int k = 0 ; k < jijukList.size() ; k++) {
+					HashMap jijukInfo = jijukList.get(k);
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
+				}
+				
 			} else {
 				pnuList.get(i).put("lng", "0");
 				pnuList.get(i).put("lat", "0");
@@ -319,6 +338,9 @@ public class goverController {
 //			mav.addObject("atcFileList",atcFileList);
 //			mav.addObject("jisangModifyList",jisangModifyList);
 //			mav.addObject("jisangMergeList",jisangMergeList);
+		
+		mav.addObject("jijukCoordList", coordinateVal);
+		mav.addObject("jijukCoordSize", coordinateSize);
 
 		mav.setViewName("content/gover/occupationDetails");
 		return mav;

@@ -1575,6 +1575,30 @@ log.info("PMT_NO:"+PMT_NO);
 		//ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
 		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+		
+		//241009
+		List<String> coordinateVal = new ArrayList<>();
+		Integer coordinateSize = 0;
+		
+		if (data.size() > 0) {
+			HashMap jijukParam = new HashMap<>();
+			// 241009 - 검색조건을 PNU로 하도록 조치
+			jijukParam.put("TARGET_PNU", data.get(0).get("jm_pnu"));
+			
+			// PNU를 통한 좌표조회
+			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			coordinateSize = jijukList.size();
+			
+			
+			if(jijukList.size() == 0) {
+				coordinateSize = 0;
+			} else {
+				for(int k = 0 ; k < jijukList.size() ; k++) {
+					HashMap jijukInfo = jijukList.get(k);
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
+				}
+			}
+		}
 
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("soujaList",soujaList);
@@ -1588,7 +1612,12 @@ log.info("PMT_NO:"+PMT_NO);
 		//mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
 		mav.addObject("memoList",jisangMemoList);
 		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+		
+		mav.addObject("jijukCoordList", coordinateVal);
+		mav.addObject("jijukCoordSize", coordinateSize);
+		
 		mav.setViewName("content/jisang/forDivisionEasementDetails");
+		
 		return mav;
 	}
 	
@@ -1656,7 +1685,6 @@ log.info("PMT_NO:"+PMT_NO);
 			// 241009 - 검색조건을 PNU로 하도록 조치
 			jijukParam.put("TARGET_PNU", data.get(0).get("jm_pnu"));
 			
-			
 			// PNU를 통한 좌표조회
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
 			jijuk.put("resultSize", jijukList.size());
@@ -1668,21 +1696,9 @@ log.info("PMT_NO:"+PMT_NO);
 				for(int k = 0 ; k < jijukList.size() ; k++) {
 					HashMap jijukInfo = jijukList.get(k);
 					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
-					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
-					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
-					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
-					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
 				}
 				jijuk.put("resultList", coordinateVal);
 			}
-			
-//			if (jijukList.size() > 0) {
-//				jijuk = jijukList.get(0);
-//			} else {
-//				jijuk = new HashMap<>();
-//				jijuk.put("x", 0);
-//				jijuk.put("y", 0);
-//			}
 		}
 
 		mav.addObject("resultData",data.get(0));

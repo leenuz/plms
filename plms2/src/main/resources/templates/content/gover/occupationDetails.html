@@ -104,6 +104,11 @@ div.dt-filter-spacer {
 <title>지상권</title>
 </head>
 <th:block layout:fragment="content">
+
+	<!-- 241009 -->
+	<input type="hidden" id="jijukCoordList" th:value="${jijukCoordList}">
+	<input type="hidden" id="jijukCoordSize" th:value="${jijukCoordSize}">
+
 	<div class="occupationDetailsWrappers">
 		<!--header삽입-->
 
@@ -121,7 +126,7 @@ div.dt-filter-spacer {
 								<h2>・참고 지적도</h2>
 							</div>
 							<div style="display: inline-block; float: right;">
-								<button class="viewDetailButton" id="moveMap">이동</button>
+								<button class="viewDetailButton" onclick="positionView()">이동</button>
 							</div>
 							<div style="display: inline-block; float: right;">
 								<button class="viewDetailButton" id="jijukNewWindowBtn">크게보기</button>

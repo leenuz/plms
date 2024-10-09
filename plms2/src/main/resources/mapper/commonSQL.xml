@@ -261,7 +261,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
 			and ri_nm=#{jibun}
 		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(TARGET_PNU)" >
 			and pnu = #{TARGET_PNU}
+		</if>
+			
 	</select>
 	
 	
