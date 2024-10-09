@@ -226,7 +226,16 @@ $(document).on("click","#sangsinBtn",function(){
 								
 								   console.log(pnuArray);  // JavaScript 배열로 출력
 	
-	
+   const clickedAttachFiles = document.querySelectorAll('input[name="attachFile"]:checked');
+   	   console.log(clickedAttachFiles);
+   	   var attachFiles=[];
+   	   for(var i=0;i<clickedAttachFiles.length;i++){
+			console.log($(clickedAttachFiles[i]).parent().find("#ga_idx").val());
+			var fidx=$(clickedAttachFiles[i]).parent().find("#ga_idx").val();
+			attachFiles.push(fidx);
+			
+	   }
+	   var attachFilesStr = attachFiles.join(',');
 	
 	var jsonData={"GOVER_NO":gover_no,"loginKey":"","JISA":jisa
 				,"PMT_OFFICE":pmt_office,"ADM_OFFICE":adm_office
@@ -246,9 +255,12 @@ $(document).on("click","#sangsinBtn",function(){
 				,"OFFICE_MOBILE":""
 				,"pnuCnt":pnuArray.length
 				,"pnuList":pnuArray
+				,"fileList":attachFilesStr
 				};
 		console.log(jsonData);
-	   
+		
+		
+		
 		var url="/land/gover/insertGoverPaySangsin";
 		//	var jsonDatas=encodeURIComponent(JSON.stringify(data));
 			

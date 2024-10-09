@@ -590,8 +590,8 @@
 						<div class="filecontents_wrap">
 							<ul th:each="file,stat : ${atcFileList}" class="filecontent">
 								<li class="filetitle_td_1">
-								
-									<input type="checkbox" th:id="'occupancy_Popup_checkbox_'+${stat.index}" class="approve_checkbox" />
+									<input type="hidden" id="ga_idx" th:value="${file.ga_idx}">
+									<input type="checkbox" th:id="'occupancy_Popup_checkbox_'+${stat.index}" name="attachFile" class="approve_checkbox" />
 									<label th:for="'occupancy_Popup_checkbox_'+${stat.index}" class="approve_checkbox_label">
 									</label>
 								</li>

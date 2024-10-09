@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
@@ -32,7 +33,9 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.slsolution.plms.jisang.jisangController;
+import com.slsolution.plms.json.JSONArray;
 import com.slsolution.plms.json.JSONException;
 import com.slsolution.plms.json.JSONObject;
 
@@ -881,7 +884,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 	}
 
 	//점용료 납부/전자결재 
-	public String getGover_pay_HTML(String TYPE, String GOVER_NO, String NextSeq, String FileSeq, String PmtNo, HttpServletRequest request, HttpServletResponse response) throws JSONException {
+	public String getGover_pay_HTML(String TYPE, String GOVER_NO, String NextSeq, String FileSeq, String PmtNo,String fileList, HttpServletRequest request, HttpServletResponse response) throws JSONException {
 
 		MainService mainService = context.getBean(MainService.class);
 		/** 조회 시작 **/
@@ -904,17 +907,34 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		String str_result = "Y";
 
 		try {
+			log.info("request:"+request);
+			
+	        // fileList를 가져옴
+	      //  List<String> fileList = (List<String>) jsonRequest.get("fileList");
+//			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+//			
+//			JSONObject requestParamsObj = new JSONObject(requestParams);
+//			log.info("requestParams:" + requestParams);
+			log.info("--------------------start getGover_pay_HTML--------------");
+			// JSONObject requestParamObj=new JSONObject(requestParams);
 			HashMap params = new HashMap();
+//			JSONArray fileJarr=requestParamObj.getJSONArray("fileList");
 			ParameterParser parser = new ParameterParser(request);
+			log.info("paser:"+parser.toString());
+			
 			// 선택 첨부파일
 			String FILE_SIZE = parser.getString("fileSize", "0"); // 선택한 파일 수
-
+			//String FILE_LIST = parser.getString("fileList", "0"); // 선택한 파일 수
+			//log.info("file_list:"+FILE_LIST);
+			 //log.info("fileArr:"+fileArr);
 			params.put("GOVERNO", goverNo);
 			params.put("GOVER_NO", goverNo);
 			params.put("gover_no", goverNo);
 			params.put("FILENO", goverNo);
 			params.put("SEQ", NextSeq);
 			params.put("PMTNO", PmtNo);
+			params.put("FILES", fileList);
+			
 
 //			list = (ArrayList) Database.getInstance().queryForList("Json.selectGoverList", params); // 기본정보
 //			pnu_list = (ArrayList) Database.getInstance().queryForList("Json.selectGoverPnuList", params); // 소속토지정보
@@ -933,7 +953,8 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 //			//	file_list.add((HashMap) Database.getInstance().queryForObject("Json.selectGoverRowDetail_FilesObject", params)); // 첨부파일
 //				file_list.add((HashMap) mainService.selectHashmapQuery("goverSQL.selectGoverRowDetail_FilesObject", params)); // 첨부파일
 //			}
-			file_list = mainService.selectQuery("goverSQL.selectGoverRowDetail_FilesObject", params);
+//			file_list = mainService.selectQuery("goverSQL.selectGoverRowDetail_FilesObject", params);
+			file_list = mainService.selectQuery("goverSQL.selectGoverRowDetail_FilesObjectFromIdx", params);
 //			System.out.println("$$$ params=" + params);
 			log.info("list:"+list.get(0));
 			if (list.size() > 0) {
@@ -1465,8 +1486,8 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 
 			if (file_list.size() > 0) {
 				for (int i = 0; i < file_list.size(); i++) {
-					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ja_file_path"), ""));
-					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ja_file_nm"), ""));
+					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ja_file_path"), "").trim());
+					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ja_file_nm"), "").trim());
 
 				}
 			}
@@ -1689,7 +1710,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 //				 System.out.println("type="+type);
 				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
 					sbHtml.append("            <script>               \n");
-					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH.trim() + "\");  });    \n");
 					sbHtml.append("            </script>               \n");
 				} else {
 					sbHtml.append("            <script>               \n");
@@ -1831,8 +1852,12 @@ log.info("ori_list:"+ori_list);
 		sbHtml.append("					<td>" + JISANG_NO + "</td>\n");
 		sbHtml.append("					<td>" + address + "</td>\n");
 		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("jimok_text")) + "</td>\n");
-		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("jijuk_area")) + "</td>\n");
-		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("pyeonib_area")) + "</td>\n");
+		Object jijukArea = dataMap.get("jijuk_area");
+		String jijukAreaStr = CommonUtil.nvl(jijukArea != null ? jijukArea.toString() : "");
+		Object pyeonibArea = dataMap.get("pyeonib_area");
+		String pyeonibAreaStr = CommonUtil.nvl(pyeonibArea != null ? pyeonibArea.toString() : "");
+		sbHtml.append("					<td>" + jijukAreaStr + "</td>\n");
+		sbHtml.append("					<td>" + pyeonibAreaStr + "</td>\n");
 //		sbHtml.append("					<!-- <td>???설정금액???</td> -->\n");
 		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("jasan_no")) + "</td>\n");
 		sbHtml.append("					<td>" + CommonUtil.nvl(soyuMap.get("SOUJA_NAME")) + "</td>\n");
