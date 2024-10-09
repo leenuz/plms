@@ -1981,6 +1981,13 @@ WHERE gp_GOVER_NO = #{GOVER_NO}
 		ORDER BY ga_SEQ DESC
                 , ga_FILE_PATH DESC
 	</select>
+	<select id="selectGoverRowDetail_FilesObjectFromIdx" resultType="HashMap" parameterType="HashMap">
+		SELECT *
+		FROM GOVER_ATCFILE
+		WHERE ga_idx in (${FILES})
+		ORDER BY ga_SEQ DESC
+                , ga_FILE_PATH DESC
+	</select>
 	
 	<update id="updateGoverEchoNo" parameterType="HashMap">
 		UPDATE gover_permit SET

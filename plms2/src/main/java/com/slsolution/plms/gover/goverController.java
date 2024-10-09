@@ -1402,10 +1402,11 @@ public class goverController {
 
 		String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
 		String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
-
+     
 		String str_GUBUN = "";
 		String str_GOVERNO = GOVER_NO;
-
+		String file_list=String.valueOf(requestParamsObj.get("fileList")); // 소속토지 수
+log.info("file_list:"+file_list);
 		String str_result = "Y";
 //			
 		// 확인
@@ -1561,7 +1562,7 @@ public class goverController {
 					log.info("session:" + request.getSession().toString());
 
 					res_Echo = epc.GetPLMSDataforXML(str_appNo,
-							eph.getGover_pay_HTML("", str_GOVERNO, "", "", "", request, response), str_UserId, "", "",
+							eph.getGover_pay_HTML("", str_GOVERNO, "", "", "",file_list, request, response), str_UserId, "", "",
 							"GetHoldUsageDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
 				}
 				if (res_Echo) {
