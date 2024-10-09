@@ -214,34 +214,7 @@ public class goverController {
 	public ModelAndView occupationDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 
-//	        List<TestDTO> list = new ArrayList<TestDTO>();
-//	        list = dbService.getList();
 		HashMap params = new HashMap();
-		ArrayList<HashMap> list = new ArrayList<HashMap>();
-		// List<CountryModel> list = masterDataBaseService.getCountry();
-		// ArrayList<HashMap> list = sqlSession.selectList("selectAllList",params);
-
-//			list=mainService.selectQuery("jisangSQL.selectAllList", params);
-//	        log.info("jisang /list:"+list.toString());
-		// nhServ1.test();
-		// ts.Test1();
-//	        HashMap<String,Object> resultmap=new HashMap();
-//	        resultmap.put("resultCode","0000");
-//	        resultmap.put("resultData",list);
-//	        resultmap.put("resultMessage","success");
-//	        JSONObject obj =new JSONObject(resultmap);
-////	        System.out.println(obj);
-//	       
-//	      //log.info("jo:"+jo);
-//	      			response.setCharacterEncoding("UTF-8");
-//	      			response.setHeader("Access-Control-Allow-Origin", "*");
-//	      			response.setHeader("Cache-Control", "no-cache");
-//	      			response.resetBuffer();
-//	      			response.setContentType("application/json");
-//	      			//response.getOutputStream().write(jo);
-//	      			response.getWriter().print(obj);
-//	      			response.getWriter().flush();
-//	       // return new ModelAndView("dbTest", "list", list);
 
 		String idx = httpRequest.getParameter("idx");
 		String index = httpRequest.getParameter("index");
@@ -263,6 +236,7 @@ public class goverController {
 		ArrayList<HashMap> pnuTargetList = new ArrayList<HashMap>();
 		if (!gidx.equals("0")) {
 			pnuTargetList = mainService.selectQuery("goverSQL.selectPnuTargetList", targetParam);
+			
 			params.put("pnu", pnuTargetList.get(0).get("gp_pnu"));
 
 			if (pnuTargetList.size() > 0) {
@@ -324,12 +298,24 @@ public class goverController {
 		mav.addObject("resultData", data.get(0));
 		mav.addObject("permitList", permitList);
 		mav.addObject("pnuList", pnuList);
-		mav.addObject("atcFileList", atcFileList);
+		if (atcFileList == null || atcFileList.isEmpty()) {
+		    mav.addObject("atcFileList", new ArrayList<>());  // 빈 리스트를 넘겨줌
+		} else {
+		    mav.addObject("atcFileList", atcFileList);
+		}
 		mav.addObject("pnuTargetList", pnuTargetList);
 		mav.addObject("jijuk", jijuk);
 
-		mav.addObject("goverPnuAtcFileList", goverPnuAtcFileList);
-		mav.addObject("memoList", goverMemoList);
+		if (goverPnuAtcFileList == null || goverPnuAtcFileList.isEmpty()) {
+		    mav.addObject("goverPnuAtcFileList", new ArrayList<>());  // 빈 리스트를 넘겨줌
+		} else {
+		    mav.addObject("goverPnuAtcFileList", goverPnuAtcFileList);
+		}
+		if (goverMemoList == null || goverMemoList.isEmpty()) {
+		    mav.addObject("memoList", new ArrayList<>());  // 빈 리스트를 넘겨줌
+		} else {
+		    mav.addObject("memoList", goverMemoList);
+		}
 //			mav.addObject("atcFileList",atcFileList);
 //			mav.addObject("jisangModifyList",jisangModifyList);
 //			mav.addObject("jisangMergeList",jisangMergeList);

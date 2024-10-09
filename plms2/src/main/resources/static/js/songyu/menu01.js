@@ -223,325 +223,300 @@ function datatablebasic(){
 // Korean    var lang_kor = {        "decimal" : "",        "emptyTable" : "데이터가 없습니다.",        "info" : "_START_ - _END_ (총 _TOTAL_ 명)",        "infoEmpty" : "0명",        "infoFiltered" : "(전체 _MAX_ 명 중 검색결과)",        "infoPostFix" : "",        "thousands" : ",",        "lengthMenu" : "_MENU_ 개씩 보기",        "loadingRecords" : "로딩중...",        "processing" : "처리중...",        "search" : "검색 : ",        "zeroRecords" : "검색된 데이터가 없습니다.",        "paginate" : {            "first" : "첫 페이지",            "last" : "마지막 페이지",            "next" : "다음",            "previous" : "이전"        },        "aria" : {            "sortAscending" : " :  오름차순 정렬",            "sortDescending" : " :  내림차순 정렬"        }    };
 
 
-function loadDataTable(params){
+function loadDataTable(params) {
 	console.log("-----start loadDataTable----------");
 	console.log(params);
-	
+
 	//var json=JSON.stringify(params);
 
-	table=$('#userTable').DataTable({
-		fixedColumns:{
-			start:3,
+	table = $('#userTable').DataTable({
+		fixedColumns: {
+			start: 3,
 		},
-		scrollCollapse:true,
-		scrollX:true,
-		scrollY:600,
-		paging:true,
-		"oLanguage":{"sLengthMenu":"_MENU_"},
+		scrollCollapse: true,
+		scrollX: true,
+		scrollY: 600,
+		paging: true,
+		"oLanguage": { "sLengthMenu": "_MENU_" },
 		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
-		dom:'<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
-		buttons: [{extend:'excel',text:'엑셀 다운로드'}],
-		
+		dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
+		buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
 		pageLength: 20,
-        bPaginate: true,
-        bLengthChange: true,
-        bInfo:false,
-        lengthMenu : [ [ 10, 20, 50, -1 ], [ "10건","20건","50건", "All" ] ],
-        bAutoWidth: false,
-        processing: true,
-        ordering: true,
-        bServerSide: true,
-        searching: false,
-		destroy:true,
-		
-        rowReorder:{
-			dataSrc:'b_seq'
+		bPaginate: true,
+		bLengthChange: true,
+		bInfo: false,
+		lengthMenu: [[10, 20, 50, -1], ["10건", "20건", "50건", "All"]],
+		bAutoWidth: false,
+		processing: true,
+		ordering: true,
+		bServerSide: true,
+		searching: false,
+		destroy: true,
+		rowReorder: {
+			dataSrc: 'b_seq'
 		},
-			//	sAjaxSources:"/land/songyu/menu01DataTableList",
-			//	sServerMethod:"POST",
-                ajax : {
-                    url:"/land/songyu/menu01DataTableList",
-                    type:"POST",
-					datatype:"json",
-                    data: function(d){
-						//d=params;
-						d.jisa=ljsIsNull(params.jisa)?'':params.jisa;
-						d.manage_no=params.manage_no;
-						if (params.toji_type=="국유지") d.toji_type="Y";
-						else if (params.toji_type=="사유지") d.toji_type="N";
-						else d.toji_type="";
-						d.toji_plan_type=params.toji_plan_type;
-						d.right_overlap=params.OverlapCheck01;
-						
-						var right_type="";
-						if (params.songyu_type_all!=undefined && params.songyu_type_all!=null) right_type="";
-						else {
-							if (params.songyu_type_gover!=undefined && params.songyu_type_gover!=null) right_type+=",gover";
-							if (params.songyu_type_jisang!=undefined && params.songyu_type_jisang!=null) right_type+=",jisang";
-							if (params.songyu_type_notset!=undefined && params.songyu_type_notset!=null) right_type+=",notset";
-							if (params.songyu_type_toji!=undefined && params.songyu_type_toji!=null) right_type+=",dopco";
-						}
-						
-						console.log("right_type:"+right_type.substr(1));
-						d.right_type=right_type.substr(1);
-						d.dosiplan=params.dosiplan;
-						var ask=(params.askMenu01==undefined || params.askMenu01==null)?'0':params.askMenu01;
-						console.log("askmenu:"+ask);
-						
-						if (ask=="0") {
-							console.log("---------3--------------");
-							d.saddr=(params.addressFull==undefined || params.addressFull==null)?'':params.addressFull;
-						}
-						else{
-							console.log("----------------------------1--------------");
-							console.log(ljsIsNull(params.sgg));
-							var addrs=params.sido;
-							console.log("addrs:"+addrs);
-							if (ljsIsNull(params.sgg)) addrs=addrs+"";
-							else addrs=addrs+" "+params.sgg;
-							if (ljsIsNull(params.emd)) addrs=addrs+"";
-							else addrs=addrs+" "+params.emd;
-							if (ljsIsNull(params.ri)) addrs=addrs+"";
-							else addrs=addrs+" "+params.ri;
-							if (ljsIsNull(params.jibun)) addrs=addrs+"";
-							else addrs=addrs+" "+params.jibun;
-							//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
-							//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
-							console.log("addrs:"+addrs);
-							d.saddr=(addrs==undefined || addrs==null)?'':addrs;
-							//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
-						} 
-	 
-						console.log("saddr:"+d.saddr);
-						console.log(params);
-						console.log("-----------d-----------");
-						console.log(d);
-					},
-					dataSrc: function(json){
-						console.log("-------------json---------------");
-						console.log(json);
-						$("#dataTableTotalCount").html(json.recordsTotal);
-						//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
-						return json.data;
-					}
-					
-					
-					
-                    
-                    
-                },
-				initComplete:function(){
-					
-					console.log(this.api().data().length );
-					
-				},
-                /*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-				//	console.log(aData);
-        			$('td:eq(0)', nRow).html(iDisplayIndexFull +1);
-					return nRow;
-    			},*/
-				
-                columns : [
-                    {data: "no","orderable":false},
-                    {data: "jisa"},
-                    {data:"address"},
-                    {data:"pipe_overlap_yn","defaultContent":""},
-                    {data: "pipe_meter","defaultContent":""},
-                    {data: "jimok_text","defaultContent":""}, //5
-                    {data: "souja_name","defaultContent":""},
-                    {data: "jijuk_area","defaultContent":""},
-                    {data: "toji_type","defaultContent":""},
-                    {data: "jisang_status"},
-                    {data: "jasan_no"}, //10
-                    {data: "master_no"},
-                    {data: "jisang_comple_yn"},
-                    {data: "permitted_yn"},
-                    {data: "chuideuk_date"},
-                    {data: "gover_date"}, //15
-					{data: "pay_date"},
-					{data: "gover_area"},
-					{data: "gover_length"},
-					{data: "jasan_money"},
-					{data: "pay_money"}, //20
-					{data: "registed_yn"},
-					{data: "permitted_yn"},
-					{data: "code_depth1"},
-					{data: "code_depth2"},
-					{data: "code_depth3"},
-					{data: "dosiplan"}
-                ],
-                columnDefs:[
-					
-					{"className": "dt-head-center", "targets": "_all"},
-					{className: 'dt-center',"targets": "_all"},
-					{targets:[0],width:"50px"},
-					{targets:[1],width:"200px"},
-					{ 
-						targets:[2]
-						,width:"500px"
-						
-					},
-					{targets:[3],width:"100px"},
-					{targets:[4],width:"100px"},
-					{targets:[5],width:"100px"},
-					{targets:[6],width:"100px"},
-					{
-						targets:[7]
-						,width:"100px"
-						,render:function(data,type,full,meta){
-							var rtn;
-							rtn=addCommas(ljsIsNull(full.jijuk_area)?'':full.jijuk_area);
-							return rtn;
-						}
-					}
-					,
-					{
-						targets:[8]
-						,width:"100px"
-						,render:function(data,type,full,meta){
-							var rtn;
-							if (full.gover_own_yn == "Y") rtn="국유지";
-							else if (full.gover_own_yn == "N") rtn="사유지";
-							else rtn="";
-							return rtn;
-						}
-					}
-					,
-					{
-						targets:[14],width:"150px"
-						,render:function(data,type,full,meta){
-							var rtn;
-							if (!full.chuideuk_date){
-								rtn="";
-							}
-							else rtn=full.chuideuk_date;
-							return rtn;
-						}
-					}
-					,
-					{
-						targets:[15],width:"300px"
-						,render:function(data,type,full,meta){
-							var rtn;
-							
-								rtn=full.pmt_st_date==undefined?"":full.pmt_st_date+" ~ "+full.pmt_ed_date;
-							
-							
-							return rtn;
-						}
-					}
-					,
-					{
-						targets:[16],width:"150px"
-						,render:function(data,type,full,meta){
-							var rtn;
-							if (!full.pay_date){
-								rtn="";
-							}
-							else rtn=full.pay_date;
-							return rtn;
-						}
-					}
-					,
-					{
-						targets:[17],width:"150px"
-						,render:function(data,type,full,meta){
-							var rtn;
-							if (!full.gover_area){
-								rtn="";
-							}
-							else rtn=full.gover_area;
-							return rtn;
-						}
-					}
-					,
-					{
-						targets:[18],width:"150px"
-						,render:function(data,type,full,meta){
-							var rtn;
-							if (!full.gover_length){
-								rtn="";
-							}
-							else rtn=full.gover_length;
-							return rtn;
-						}
-					}
-					,
-					{
-						targets:[19],width:"150px"
-						,render:function(data,type,full,meta){
-							var rtn;
-							if (!full.jasan_money){
-								rtn="";
-							}
-							else rtn=full.jasan_money;
-							return rtn;
-						}
-					}
-					,
-					{
-						targets:[20],width:"150px"
-						,render:function(data,type,full,meta){
-							var rtn;
-							if (!full.pay_money){
-								rtn="";
-							}
-							else rtn=addCommas(full.pay_money);
-							return rtn;
-						}
-					}					
-				]
-            });
-			
-			table.on('click','tr',function() {
-			      /*  var data = table.fnGetData( this );
-			        alert(data);*/
-					
-					console.log("--------------tr click---------------------");
-					
-					var data = table.row( this ).data();
-			        console.log(data);
-					console.log(data.idx);
-					
-					var url;	
-					if (data.idx.substring(0,1)=="J"){ // 지상권
-						console.log("jisang");
-						url="/land/jisang/groundDetail?idx="+data.idx+"&index="+data.index+"&gidx=0";
-					}
-					else if (data.idx.substring(0,1)=="G"){ // 점용
-						url="/land/gover/occupationDetails?idx="+data.idx+"&index="+data.index+"&gidx="+data.gidx;
-					}
-					else if (data.idx.substring(0,1)=="N"){ // 미설정
-						url="/land/notset/unsetOccupationDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
-					}
-					else if (data.idx.substring(0,1)=="L"){ // 회사토지
-						url="/land/dopco/companyLandDetails?idx="+data.idx+"&index="+data.index+"&gidx=0";
-					}
-										
-					else return;					   
-					
-					window.location = url;
-			    });
-			
-			/*$("table th").resizable({
-				handles:'e',
-				stop:function(e,ui){
-					$(this).width(ui.size.width);
-					table.columns.adjust().draw();
+		//	sAjaxSources:"/land/songyu/menu01DataTableList",
+		//	sServerMethod:"POST",
+		ajax: {
+			url: "/land/songyu/menu01DataTableList",
+			type: "POST",
+			datatype: "json",
+			data: function(d) {
+				//d=params;
+				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.manage_no = params.manage_no;
+				if (params.toji_type == "국유지") d.toji_type = "Y";
+				else if (params.toji_type == "사유지") d.toji_type = "N";
+				else d.toji_type = "";
+				d.toji_plan_type = params.toji_plan_type;
+				d.right_overlap = params.OverlapCheck01;
+
+				var right_type = "";
+				if (params.songyu_type_all != undefined && params.songyu_type_all != null) right_type = "";
+				else {
+					if (params.songyu_type_gover != undefined && params.songyu_type_gover != null) right_type += ",gover";
+					if (params.songyu_type_jisang != undefined && params.songyu_type_jisang != null) right_type += ",jisang";
+					if (params.songyu_type_notset != undefined && params.songyu_type_notset != null) right_type += ",notset";
+					if (params.songyu_type_toji != undefined && params.songyu_type_toji != null) right_type += ",dopco";
 				}
-			});*/
-			/*table
-			    .on('order.dt search.dt', function () {
-			        let i = 1;
-			 
-			        table
-			            .cells(null, 0, { search: 'applied', order: 'applied' })
-			            .every(function (cell) {
-			                this.data(i++);
-			            });
-			    })
-			    .draw();*/
-			
-			      // console.log($('#userTable').DataTable().page.info().recordsTotal);
+
+				console.log("right_type:" + right_type.substr(1));
+				d.right_type = right_type.substr(1);
+				d.dosiplan = params.dosiplan;
+				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
+				console.log("askmenu:" + ask);
+
+				if (ask == "0") {
+					console.log("---------3--------------");
+					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
+				}
+				else {
+					console.log("----------------------------1--------------");
+					console.log(ljsIsNull(params.sgg));
+					var addrs = params.sido;
+					console.log("addrs:" + addrs);
+					if (ljsIsNull(params.sgg)) addrs = addrs + "";
+					else addrs = addrs + " " + params.sgg;
+					if (ljsIsNull(params.emd)) addrs = addrs + "";
+					else addrs = addrs + " " + params.emd;
+					if (ljsIsNull(params.ri)) addrs = addrs + "";
+					else addrs = addrs + " " + params.ri;
+					if (ljsIsNull(params.jibun)) addrs = addrs + "";
+					else addrs = addrs + " " + params.jibun;
+					//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
+					//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
+					console.log("addrs:" + addrs);
+					d.saddr = (addrs == undefined || addrs == null) ? '' : addrs;
+					//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
+				}
+
+				console.log("saddr:" + d.saddr);
+				console.log(params);
+				console.log("-----------d-----------");
+				console.log(d);
+			},
+			dataSrc: function(json) {
+				console.log("-------------json---------------");
+				console.log(json);
+				$("#dataTableTotalCount").html(json.recordsTotal);
+				//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
+				return json.data;
+			}
+
+		},
+		initComplete: function() {
+			console.log(this.api().data().length);
+		},
+		/*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+//	console.log(aData);
+	$('td:eq(0)', nRow).html(iDisplayIndexFull +1);
+return nRow;
+},*/
+		columns: [
+			{ data: "no", "orderable": false },
+			{ data: "jisa" },
+			{ data: "address" },
+			{ data: "pipe_overlap_yn", "defaultContent": "" },
+			{ data: "pipe_meter", "defaultContent": "" },
+			{ data: "jimok_text", "defaultContent": "" }, //5
+			{ data: "souja_name", "defaultContent": "" },
+			{ data: "jijuk_area", "defaultContent": "" },
+			{ data: "toji_type", "defaultContent": "" },
+			{ data: "jisang_status" },
+			{ data: "jasan_no" }, //10
+			{ data: "master_no" },
+			{ data: "jisang_comple_yn" },
+			{ data: "permitted_yn" },
+			{ data: "chuideuk_date" },
+			{ data: "gover_date" }, //15
+			{ data: "pay_date" },
+			{ data: "gover_area" },
+			{ data: "gover_length" },
+			{ data: "jasan_money" },
+			{ data: "pay_money" }, //20
+			{ data: "registed_yn" },
+			{ data: "permitted_yn" },
+			{ data: "code_depth1" },
+			{ data: "code_depth2" },
+			{ data: "code_depth3" },
+			{ data: "dosiplan" }
+		],
+		columnDefs: [
+			{ "className": "dt-head-center", "targets": "_all" },
+			{ className: 'dt-center', "targets": "_all" },
+			{ targets: [0], width: "50px" },
+			{ targets: [1], width: "200px" },
+			{ targets: [2] , width: "500px" },
+			{ targets: [3], width: "100px" },
+			{ targets: [4], width: "100px" },
+			{ targets: [5], width: "100px" },
+			{ targets: [6], width: "100px" },
+			{
+				targets: [7]
+				, width: "100px"
+				, render: function(data, type, full, meta) {
+					var rtn;
+					rtn = addCommas(ljsIsNull(full.jijuk_area) ? '' : full.jijuk_area);
+					return rtn;
+				}
+			},
+			{
+				targets: [8]
+				, width: "100px"
+				, render: function(data, type, full, meta) {
+					var rtn;
+					if (full.gover_own_yn == "Y") rtn = "국유지";
+					else if (full.gover_own_yn == "N") rtn = "사유지";
+					else rtn = "";
+					return rtn;
+				}
+			},
+			{
+				targets: [14], width: "150px"
+				, render: function(data, type, full, meta) {
+					var rtn;
+					if (!full.chuideuk_date) {
+						rtn = "";
+					}
+					else rtn = full.chuideuk_date;
+					return rtn;
+				}
+			},
+			{
+				targets: [15], width: "300px"
+				, render: function(data, type, full, meta) {
+					var rtn;
+					rtn = full.pmt_st_date == undefined ? "" : full.pmt_st_date + " ~ " + full.pmt_ed_date;
+					return rtn;
+				}
+			},
+			{
+				targets: [16], width: "150px"
+				, render: function(data, type, full, meta) {
+					var rtn;
+					if (!full.pay_date) {
+						rtn = "";
+					}
+					else rtn = full.pay_date;
+					return rtn;
+				}
+			},
+			{
+				targets: [17], width: "150px"
+				, render: function(data, type, full, meta) {
+					var rtn;
+					if (!full.gover_area) {
+						rtn = "";
+					}
+					else rtn = full.gover_area;
+					return rtn;
+				}
+			},
+			{
+				targets: [18], width: "150px"
+				, render: function(data, type, full, meta) {
+					var rtn;
+					if (!full.gover_length) {
+						rtn = "";
+					}
+					else rtn = full.gover_length;
+					return rtn;
+				}
+			},
+			{
+				targets: [19], width: "150px"
+				, render: function(data, type, full, meta) {
+					var rtn;
+					if (!full.jasan_money) {
+						rtn = "";
+					}
+					else rtn = full.jasan_money;
+					return rtn;
+				}
+			},
+			{
+				targets: [20], width: "150px"
+				, render: function(data, type, full, meta) {
+					var rtn;
+					if (!full.pay_money) {
+						rtn = "";
+					}
+					else rtn = addCommas(full.pay_money);
+					return rtn;
+				}
+			}
+		]
+	});
+
+	table.on('click', 'tr', function() {
+		/*  var data = table.fnGetData( this );
+			alert(data);*/
+
+		console.log("--------------tr click---------------------");
+
+		var data = table.row(this).data();
+		console.log(data);
+		console.log(data.idx);
+
+		var url;
+		if (data.idx.substring(0, 1) == "J") { // 지상권
+			console.log("jisang");
+			url = "/land/jisang/groundDetail?idx=" + data.idx + "&index=" + data.index + "&gidx=0";
+		}
+		else if (data.idx.substring(0, 1) == "G") { // 점용
+			url = "/land/gover/occupationDetails?idx=" + data.idx + "&index=" + data.index + "&gidx=" + data.gidx;
+		}
+		else if (data.idx.substring(0, 1) == "N") { // 미설정
+			url = "/land/notset/unsetOccupationDetails?idx=" + data.idx + "&index=" + data.index + "&gidx=0";
+		}
+		else if (data.idx.substring(0, 1) == "L") { // 회사토지
+			url = "/land/dopco/companyLandDetails?idx=" + data.idx + "&index=" + data.index + "&gidx=0";
+		}
+
+		else return;
+
+		window.location = url;
+	});
+
+	/*$("table th").resizable({
+		handles:'e',
+		stop:function(e,ui){
+			$(this).width(ui.size.width);
+			table.columns.adjust().draw();
+		}
+	});*/
+	/*table
+			.on('order.dt search.dt', function () {
+					let i = 1;
+	 
+					table
+							.cells(null, 0, { search: 'applied', order: 'applied' })
+							.every(function (cell) {
+									this.data(i++);
+							});
+			})
+			.draw();*/
+
+	// console.log($('#userTable').DataTable().page.info().recordsTotal);
 }
 

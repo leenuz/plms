@@ -478,8 +478,7 @@ return nRow;
 			url = "/land/jisang/groundDetail?idx=" + data.idx + "&index=" + data.index;
 		}
 		else if (data.idx.substring(0, 1) == "G") { //점용
-			url = "/land/gover/occupationDetails?idx=" + data.idx + "&index=" + data.index;
-
+			url = "/land/gover/occupationDetails?idx=" + data.idx + "&index=" + data.index + "&gidx=" + data.gidx;;
 		}
 		else if (data.idx.substring(0, 1) == "N") { //미설정
 			url = "/land/notset/unsetOccupationDetails?idx=" + data.idx + "&index=" + data.index;

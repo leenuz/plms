@@ -1,274 +1,274 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default_layout}">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link th:href="@{/css/common.css}" rel="stylesheet" />
-    <link rel="stylesheet" href="/css/menu01/occupationDetails.css">
-    <link rel="stylesheet" href="/css/jisang/write.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link th:href="@{/css/common.css}" rel="stylesheet" />
+<link rel="stylesheet" href="/css/menu01/occupationDetails.css">
+<link rel="stylesheet" href="/css/jisang/write.css">
 
-    <script src="/js/gover/occupationDetails.js"></script>
-    <script src="/js/common/upload.js"></script>
-    <script src="/js/common/common.js"></script>
-    <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="/js/gover/occupationDetails.js"></script>
+<script src="/js/common/upload.js"></script>
+<script src="/js/common/common.js"></script>
+<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-    <style>
-        div.dt-top-container {
-            display: grid;
-            grid-template-columns: auto auto auto;
-        }
-        div.dt-center-in-div {
-            margin: 0 auto;
-            float: right;
-            margin-right: 30px;
-        }
-        div.dt-center-in-div>div {
-            display: inline;
-        }
-        div.dt-filter-spacer {
-            margin: 10px 0;
-            border: 1px solid red;
-        }
-        .dt-title {
-            text-align: center;
-            width: 180px;
-            float: left;
-        }
-        .dt-buttons {
-            display: inline-block;
-            width: 180px;
-        }
-        .dt-length {
-            display: inline-block;
-        }
-        .dt-button {
-            color: white;
-            background-color: #4e5871;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 10px;
-            background-image: url(/assets/media/menu01/download.png);
-            background-size: 11px;
-            background-repeat: no-repeat;
-            background-position: 123px center;
-            text-align: left;
-            margin-right: 10px;
-            width: 159px;
-            height: 38px;
-        }
-        .dt-paging {
-            text-align: center;
-        }
-        .dt-paging-button {
-            box-sizing: border-box;
-            display: inline-block;
-            min-width: 1.5em;
-            padding: 0.5em 1em;
-            margin-left: 2px;
-            text-align: center;
-            text-decoration: none !important;
-            cursor: pointer;
-            border: 1px solid transparent;
-            border-radius: 2px;
-            background: transparent;
-            color: #007bff !important;
-            font-size: 15px;
-            font-weight: 600;
-        }
-        .bottom {
-            text-align: center;
-        }
-        .top {
-            text-align: right;
-            margin: 10px;
-        }
-    </style>
+<style>
+div.dt-top-container {
+	display: grid;
+	grid-template-columns: auto auto auto;
+}
 
-    <title>지상권</title>
+div.dt-center-in-div {
+	margin: 0 auto;
+	float: right;
+	margin-right: 30px;
+}
+
+div.dt-center-in-div>div {
+	display: inline;
+}
+
+div.dt-filter-spacer {
+	margin: 10px 0;
+	border: 1px solid red;
+}
+
+.dt-title {
+	text-align: center;
+	width: 180px;
+	float: left;
+}
+
+.dt-buttons {
+	display: inline-block;
+	width: 180px;
+}
+
+.dt-length {
+	display: inline-block;
+}
+
+.dt-button {
+	color: white;
+	background-color: #4e5871;
+	font-size: 15px;
+	font-weight: 600;
+	border-radius: 10px;
+	background-image: url(/assets/media/menu01/download.png);
+	background-size: 11px;
+	background-repeat: no-repeat;
+	background-position: 123px center;
+	text-align: left;
+	margin-right: 10px;
+	width: 159px;
+	height: 38px;
+}
+
+.dt-paging {
+	text-align: center;
+}
+
+.dt-paging-button {
+	box-sizing: border-box;
+	display: inline-block;
+	min-width: 1.5em;
+	padding: 0.5em 1em;
+	margin-left: 2px;
+	text-align: center;
+	text-decoration: none !important;
+	cursor: pointer;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	background: transparent;
+	color: #007bff !important;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.bottom {
+	text-align: center;
+}
+
+.top {
+	text-align: right;
+	margin: 10px;
+}
+</style>
+
+<title>지상권</title>
 </head>
 <th:block layout:fragment="content">
-    <div class="occupationDetailsWrappers">
-        <!--header삽입-->
+	<div class="occupationDetailsWrappers">
+		<!--header삽입-->
 
-        <main id="occupationDetails">
+		<main id="occupationDetails">
 
-            <div class="mainTitle">
-                <h1>점용 상세정보</h1>
-            </div>
-            <section class="landInfoEdit">
-                <div class="subTitle">
-                    토지 정보수정
-                </div>
-                <div class="contWrap">
-                    <div class="contBox contBoxMini01">
-                        <div class="thirdTitle">
-                            <div style="display:inline-block;">
-                                <h2>・참고 지적도</h2>
-                            </div>
-                            <div style="display:inline-block;float:right;"><button class="viewDetailButton" id="moveMap">이동</button></div>
-                            <div style="display:inline-block;float:right;"><button class="viewDetailButton" id="jijukNewWindowBtn">크게보기</button></div>
-                        </div>
-                        <iframe id="mapFrame" class="contentDetailBox mapFigure"></iframe>
-                        <!--<div class="contentDetailBox mapFigure"></div>-->
-                        <script>
-                            // src="http://211.196.153.235:7070/geoserver/dopcogis/wms?service=WMS&version=1.1.1&request=GetMap&layers=dopcogis%3Adxf_test&bbox=128.48537837663474,35.926544471907825,128.48578475095366,35.927040257710196&width=660&height=214&srs=EPSG%3A4326&styles=&format=application/openlayers"
-                            var mapCoordLng = '[[${jijuk.x}]]';
-                            var mapCoordLat = '[[${jijuk.y}]]';
-                            
-                            const currentDomain = window.location.hostname; // dgisdev.dopco.co.kr
-                            const currentprotocol = window.location.protocol; // http or https
+			<div class="mainTitle">
+				<h1>점용 상세정보</h1>
+			</div>
+			<section class="landInfoEdit">
+				<div class="subTitle">토지 정보수정</div>
+				<div class="contWrap">
+					<div class="contBox contBoxMini01">
+						<div class="thirdTitle">
+							<div style="display: inline-block;">
+								<h2>・참고 지적도</h2>
+							</div>
+							<div style="display: inline-block; float: right;">
+								<button class="viewDetailButton" id="moveMap">이동</button>
+							</div>
+							<div style="display: inline-block; float: right;">
+								<button class="viewDetailButton" id="jijukNewWindowBtn">크게보기</button>
+							</div>
+						</div>
+						<iframe id="mapFrame" class="contentDetailBox mapFigure"></iframe>
+						<!--<div class="contentDetailBox mapFigure"></div>-->
+						<script>
+              // src="http://211.196.153.235:7070/geoserver/dopcogis/wms?service=WMS&version=1.1.1&request=GetMap&layers=dopcogis%3Adxf_test&bbox=128.48537837663474,35.926544471907825,128.48578475095366,35.927040257710196&width=660&height=214&srs=EPSG%3A4326&styles=&format=application/openlayers"
+              var mapCoordLng = '[[${jijuk.x}]]';
+              var mapCoordLat = '[[${jijuk.y}]]';
+              
+              const currentDomain = window.location.hostname; // dgisdev.dopco.co.kr
+              const currentprotocol = window.location.protocol; // http or https
 
-                            let serverMapUrl = "http://10.168.0.247:8080/mapJijuk";
+              let serverMapUrl = "http://10.168.0.247:8080/mapJijuk";
 
-                            if(currentDomain.indexOf("dgis.dopco.co.kr") > -1 || currentDomain.indexOf("192.6.18.28") > -1) { // 운영
-                            	serverMapUrl = currentprotocol+"//dgis.dopco.co.kr/mapJijuk";
-                               
-                            }else if(currentDomain.indexOf("dgisdev.dopco.co.kr") > -1 || currentDomain.indexOf("192.6.18.28")  > -1) { // 개발
-                            	serverMapUrl = currentprotocol+"//dgisdev.dopco.co.kr/mapJijuk";
-                            }
-                            
-                            var mapUrl = serverMapUrl + '?lon=' + mapCoordLng + '&lat=' + mapCoordLat + '&lv=17';
-                            document.getElementById('mapFrame').src = mapUrl;
-                        </script>
-                    </div>
-                    <div class="contBox contBoxMini02">
+              if(currentDomain.indexOf("dgis.dopco.co.kr") > -1 || currentDomain.indexOf("192.6.18.28") > -1) { // 운영
+              	serverMapUrl = currentprotocol+"//dgis.dopco.co.kr/mapJijuk";
+                 
+              }else if(currentDomain.indexOf("dgisdev.dopco.co.kr") > -1 || currentDomain.indexOf("192.6.18.28")  > -1) { // 개발
+              	serverMapUrl = currentprotocol+"//dgisdev.dopco.co.kr/mapJijuk";
+              }
+              
+              var mapUrl = serverMapUrl + '?lon=' + mapCoordLng + '&lat=' + mapCoordLat + '&lv=17';
+              document.getElementById('mapFrame').src = mapUrl;
+          </script>
+					</div>
+					<div class="contBox contBoxMini02">
 
-                        <div class="thirdTitle">
-                            <h2>・기본 정보</h2>
-                        </div>
+						<div class="thirdTitle">
+							<h2>・기본 정보</h2>
+						</div>
 
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">순번</li>
-                                    <li class="title02 title">담당지사</li>
-                                    <li class="title03 title">용도</li>
-                                    <li class="title04 title">관로명(구간)</li>
-                                    <li class="title05 title">단/복선</li>
-                                    <li class="title06 title">관경(mm)</li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        <input type="hidden" name="manage_no" id="manage_no" th:value="${resultData.gm_gover_no}" />
-                                        [[${resultData.gm_gover_no}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${resultData.gm_jisa}]]
-                                    </li>
-                                    <li class="content03 content">
-                                        [[${resultData.gm_yongdo}]]
-                                    </li>
-                                    <li class="content04 content">
-                                        [[${resultData.gm_pipe_name}]]
-                                    </li>
-                                    <li class="content05 content">
-                                        [[${resultData.gm_sun_gubun}]]
-                                    </li>
-                                    <li class="content06 content">
-                                        [[${resultData.gm_pipe_meter}]]
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="depth2">
-                                <ul class="titles">
-                                    <li class="title01 title">점용 목적</li>
-                                    <li class="title02 title">점용 기간</li>
-                                    <li class="title03 title">신규등록사유</li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        [[${resultData.gm_use_purpos}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${resultData.gm_gover_st_date}]] ~ [[${resultData.gm_gover_ed_date}]]
-                                    </li>
-                                    <li class="content03 content">
-                                        [[${resultData.gm_newregreason}]]
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="depth3">
-                                <ul class="titles">
-                                    <li class="title01 title">점용허가증 보유 여부</li>
-                                    <li class="title02 title">점용료 미납부 사유</li>
-                                    <li class="title03 title">점용료 선납 여부</li>
-                                    <li class="title03 title">선납기한</li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        [[${resultData.gm_permpossyn}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${resultData.gm_occunonpayreason}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${resultData.gm_occuprepayyn}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${resultData.gm_occuprepaydate}]]
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+						<div class="contentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">순번</li>
+									<li class="title02 title">담당지사</li>
+									<li class="title03 title">용도</li>
+									<li class="title04 title">관로명(구간)</li>
+									<li class="title05 title">단/복선</li>
+									<li class="title06 title">관경(mm)</li>
+								</ul>
+								<ul class="contents">
+									<li class="content01 content"><input type="hidden"
+										name="manage_no" id="manage_no"
+										th:value="${resultData.gm_gover_no}" />
+										[[${resultData.gm_gover_no}]]</li>
+									<li class="content02 content">[[${resultData.gm_jisa}]]</li>
+									<li class="content03 content">[[${resultData.gm_yongdo}]]
+									</li>
+									<li class="content04 content">
+										[[${resultData.gm_pipe_name}]]</li>
+									<li class="content05 content">
+										[[${resultData.gm_sun_gubun}]]</li>
+									<li class="content06 content">
+										[[${resultData.gm_pipe_meter}]]</li>
+								</ul>
+							</div>
+							<div class="depth2">
+								<ul class="titles">
+									<li class="title01 title">점용 목적</li>
+									<li class="title02 title">점용 기간</li>
+									<li class="title03 title">신규등록사유</li>
+								</ul>
+								<ul class="contents">
+									<li class="content01 content">
+										[[${resultData.gm_use_purpos}]]</li>
+									<li class="content02 content">
+										[[${resultData.gm_gover_st_date}]] ~
+										[[${resultData.gm_gover_ed_date}]]</li>
+									<li class="content03 content">
+										[[${resultData.gm_newregreason}]]</li>
+								</ul>
+							</div>
+							<div class="depth3">
+								<ul class="titles">
+									<li class="title01 title">점용허가증 보유 여부</li>
+									<li class="title02 title">점용료 미납부 사유</li>
+									<li class="title03 title">점용료 선납 여부</li>
+									<li class="title03 title">선납기한</li>
+								</ul>
+								<ul class="contents">
+									<li class="content01 content">
+										[[${resultData.gm_permpossyn}]]</li>
+									<li class="content02 content">
+										[[${resultData.gm_occunonpayreason}]]</li>
+									<li class="content02 content">
+										[[${resultData.gm_occuprepayyn}]]</li>
+									<li class="content02 content">
+										[[${resultData.gm_occuprepaydate}]]</li>
+								</ul>
+							</div>
+						</div>
 
-                    </div>
-                    <div class="contBox contBoxMini03">
+					</div>
+					<div class="contBox contBoxMini03">
 
-                        <div class="thirdTitle">
-                            <h2>・대상 토지정보</h2>
-                        </div>
+						<div class="thirdTitle">
+							<h2>・대상 토지정보</h2>
+						</div>
 
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">주소</li>
-                                    <li class="title02 title">전체면적(m²)</li>
-                                    <li class="title03 title">연장(m)</li>
-                                    <li class="title04 title">면적(m²)</li>
-                                    <li class="title05 title">보기</li>
-                                </ul>
-                                <ul class="contents" th:each="val:${pnuTargetList}">
-                                    <input type="hidden" name="pnu" id="pnu" th:value="${val.gp_pnu}" />
-                                    <li class="content01 content">
-                                        [[${val.gp_sido_nm}]] [[${val.gp_sgg_nm}]] [[${val.gp_emd_nm}]] [[${val.gp_ri_nm}]] [[${val.gp_jibun}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${val.gp_jijuk_area}]]
-                                    </li>
-                                    <li class="content03 content">
-                                        [[${val.gp_gover_length}]]
-                                    </li>
-                                    <li class="content04 content">
-                                        [[${val.gp_gover_area}]]
-                                    </li>
-                                    <li class="content05 content">
-                                        <button class="viewDetailButton">위치보기</button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+						<div class="contentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">주소</li>
+									<li class="title02 title">전체면적(m²)</li>
+									<li class="title03 title">연장(m)</li>
+									<li class="title04 title">면적(m²)</li>
+									<li class="title05 title">보기</li>
+								</ul>
+								<ul class="contents" th:each="val:${pnuTargetList}">
+									<input type="hidden" name="pnu" id="pnu"
+										th:value="${val.gp_pnu}" />
+									<li class="content01 content">[[${val.gp_sido_nm}]]
+										[[${val.gp_sgg_nm}]] [[${val.gp_emd_nm}]] [[${val.gp_ri_nm}]]
+										[[${val.gp_jibun}]]</li>
+									<li class="content02 content">[[${val.gp_jijuk_area}]]</li>
+									<li class="content03 content">[[${val.gp_gover_length}]]</li>
+									<li class="content04 content">[[${val.gp_gover_area}]]</li>
+									<li class="content05 content">
+										<button class="viewDetailButton">위치보기</button>
+									</li>
+								</ul>
+							</div>
+						</div>
 
-                    </div>
-                    <div class="contBox contBoxMini04">
+					</div>
+					<div class="contBox contBoxMini04">
 
-                        <div class="thirdTitle">
-                            <h2>・소속 토지정보</h2>
-                            <span class="landListViewBtn">토지 목록 보이기</span>
-                        </div>
+						<div class="thirdTitle">
+							<h2>・소속 토지정보</h2>
+							<span class="landListViewBtn">토지 목록 보이기</span>
+						</div>
 
-                        <div class="contentDetailBox" style="align-items:flex-start">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">순번</li>
-                                    <li class="title02 title">주소</li>
-                                    <li class="title03 title">전체면적(m²)</li>
-                                    <li class="title04 title">연장(m)</li>
-                                    <li class="title05 title">면적(m²)</li>
-                                    <li class="title06 title">보기</li>
-                                </ul>
-                                <script>
+						<div class="contentDetailBox" style="align-items: flex-start">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">순번</li>
+									<li class="title02 title">주소</li>
+									<li class="title03 title">전체면적(m²)</li>
+									<li class="title04 title">연장(m)</li>
+									<li class="title05 title">면적(m²)</li>
+									<li class="title06 title">보기</li>
+								</ul>
+								<script>
                                     var latArr = [];
                                     var lngArr = [];
                                     const openMap = (el) => {
@@ -313,786 +313,637 @@
 
                                     };
                                 </script>
-                                <ul class="contents" id="jijukList" th:each="val:${pnuList}">
-                                    <input type="hidden" name="pnuLat" th:value="${val.lat}"/>
-                                    <input type="hidden" name="pnuLng" th:value="${val.lng}"/>
-                                    <script>
+								<ul class="contents" id="jijukList" th:each="val:${pnuList}">
+									<input type="hidden" name="pnuLat" th:value="${val.lat}" />
+									<input type="hidden" name="pnuLng" th:value="${val.lng}" />
+									<script>
                                         var xxx = '[[${val.lng}]]';
                                         var yyy = '[[${val.lat}]]';
                                         latArr.push(yyy);
                                         lngArr.push(xxx);
                                     </script>
-                                    <li class="content01 content">
-                                        [[${val.gp_gover_no}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${val.gp_sido_nm}]] [[${val.gp_sgg_nm}]] [[${val.gp_emd_nm}]] [[${val.gp_ri_nm}]] [[${val.gp_jibun}]]
-                                    </li>
-                                    <li class="content03 content">
-                                        [[${val.gp_jijuk_area}]]
-                                    </li>
-                                    <li class="content04 content">
-                                        [[${val.gp_gover_length}]]
-                                    </li>
-                                    <li class="content05 content">
-                                        [[${val.gp_gover_area}]]
-                                    </li>
-                                    <li class="content06 content">
-                                        <button class="viewDetailButton" onclick="openMap(this)">위치보기</button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="depth2">
-                                <ul class="titles">
-                                    <li class="title01 title">
-                                        전체 위치보기
-                                    </li>
-                                </ul>
-                                <ul class="contents" th:each="val:${pnuList}">
-                                    <li class="content01 content">
-                                        <button class="viewAllBtn" onclick="openMapAll()">전체 위치보기</button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-            </section>
-            <section class="occupationPermitBasicInfo">
-                <div class="subTitle">
-                    점용허가 기본정보
-                </div>
-
-                <div class="contWrap">
-
-                    <!-- 허가 정보 -->
-
-                    <div class="contBox">
-
-                        <div class="thirdTitle">
-                            <h2>・허가 정보</h2>
-                        </div>
-
-
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">순번</li>
-                                    <li class="title02 title">허가번호</li>
-                                    <li class="title03 title">허가명</li>
-                                    <li class="title04 title">시설명칭</li>
-                                    <li class="title05 title">허가관청</li>
-                                    <li class="title06 title">관리청</li>
-                                    <li class="title07 title">연장(m)</li>
-                                    <li class="title08 title">면적(m²)</li>
-                                    <li class="title09 title">도시계획결정여부</li>
-                                    <li class="title10 title">결재문서 조회</li>
-                                </ul>
-                                <ul class="contents" th:each="val:${permitList}">
-                                    <li class="content01 content">
-                                        [[${val.gp_gover_no}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${val.gp_pmt_no}]]
-                                    </li>
-                                    <li class="content03 content">
-                                        [[${val.gp_pmt_name}]]
-                                    </li>
-                                    <li class="content04 content">
-                                        [[${val.gp_siseolname}]]
-                                    </li>
-                                    <li class="content05 content">
-                                        [[${val.gp_pmt_office}]]
-                                    </li>
-                                    <li class="content06 content">
-                                        [[${val.gp_adm_office}]]
-                                    </li>
-                                    <li class="content07 content">
-                                        [[${val.gp_gover_length}]]
-                                    </li>
-                                    <li class="content08 content">
-                                        [[${val.gp_gover_area}]]
-                                    </li>
-                                    <li class="content09 content">
-                                        [[${val.gp_dosiplan}]]
-                                    </li>
-                                    <li class="content10 content">
-                                        <button class="viewDetailButton">상세보기</button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- 점용 허가 및 점용료 납부 현황 -->
-
-                    <div class="contBox contBoxMini05">
-
-                        <div class="thirdTitle">
-                            <h2>・점용 허가 및 점용료 납부 현황</h2>
-                        </div>
-
-                        <div class="contentDetailBox">
-
-                            <!-- 순번 -->
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">순번</li>
-
-                                </ul>
-                                <ul class="contents" th:each="val:${permitList}">
-                                    <li class="content01 content">
-                                        [[${val.gp_gover_no}]]
-                                    </li>
-
-                                </ul>
-                            </div>
-
-                            <!-- 점용허가 유효기간 -->
-
-                            <div class="depth2">
-                                <ul class="titles">
-                                    <li class="title01 title">점용허가 유효기간</li>
-                                </ul>
-                                <ul class="titles bluetitle">
-                                    <li class="title01 title">시작일</li>
-                                    <li class="title01 title">종료일</li>
-                                    <li class="title01 title">부서</li>
-                                </ul>
-                                <ul class="contents" th:each="val:${permitList}">
-                                    <li class="content01 content">
-                                        [[${val.gp_pmt_st_date}]]
-                                    </li>
-                                    <li class="content01 content">
-                                        [[${val.gp_pmt_ed_date}]]
-                                    </li>
-                                    <li class="content01 content">
-                                        [[${val.gp_buseo}]]
-                                    </li>
-
-                                </ul>
-                            </div>
-
-                            <!-- 허가기관 담당부서 -->
-                            <div class="depth3">
-                                <ul class="titles">
-                                    <li class="title01 title">허가기관 담당 부서</li>
-                                </ul>
-                                <ul class="titles bluetitle">
-                                    <li class="title01 title">담당자</li>
-                                    <li class="title01 title">연락처</li>
-                                </ul>
-                                <ul class="contents" th:each="val:${permitList}">
-                                    <li class="content01 content">
-                                        [[${val.gp_nm}]]
-                                    </li>
-                                    <li class="content01 content">
-                                        [[${val.gp_phone_number}]]
-                                    </li>
-
-                                </ul>
-                            </div>
-
-                            <!-- 점용료 납부현황  -->
-                            <div class="depth4">
-                                <ul class="titles">
-                                    <li class="title01 title">점용료 납부현황</li>
-                                </ul>
-                                <ul class="titles bluetitle">
-                                    <li class="title01 title">납부방법</li>
-                                    <li class="title01 title">납부연월일</li>
-                                    <li class="title01 title">금액</li>
-                                </ul>
-                                <ul class="contents" th:each="val:${permitList}">
-                                    <li class="content01 content">
-                                        [[${val.gp_pay_way}]]
-                                    </li>
-                                    <li class="content01 content">
-                                        [[${val.gp_pay_date}]]
-                                    </li>
-                                    <li class="content01 content" th:data-money="${val.gp_pay_money}">
-                                        <span></span>
-                                    </li>
-
-                                </ul>
-                            </div>
-
-                            <!-- 점용료 납부 /전자결재조회 -->
-                            <div class="depth5">
-                                <ul class="titles">
-                                    <li class="title01 title">점용료 납부 /<br>
-                                        전자결재조회</li>
-                                </ul>
-                                <ul class="contents" th:each="val:${permitList}">
-                                    <li class="content01 content">
-                                        <button class="viewDetailButton">상세보기</button>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- 첨부파일 -->
-
-                    <div class="contBox contBoxMini06">
-
-                        <div class="thirdTitle">
-                            <h2>・첨부파일</h2>
-                        </div>
-
-
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">등록일</li>
-                                    <li class="title02 title">파일명</li>
-                                    <li class="title03 title">파일보기</li>
-                                    <li class="title04 title">파일저장</li>
-                                </ul>
-                                <ul class="contents" th:if="${atcFileList.size()==0}">
-                                    <li class="content01 " style="width:100%;text-align:center">데이터가 없습니다.</li>
-                                </ul>
-                                <ul class="contents" th:each="val:${atcFileList}">
-                                    <li class="content01 content">
-                                        [[${val.ga_wdate}]]
-                                    </li>
-                                    <li class="content02 content">
-                                        [[${val.ga_file_nm}]]
-                                    </li>
-                                    <li class="content03 content">
-                                        <button class="viewDetailButton" th:onclick="openFilePopup([[${val.ga_file_path}]],[[${val.ga_file_nm}]], [[${val.ga_gover_no}]], [[${val.ga_file_seq}]], 'gover')">상세보기</button>
-                                    </li>
-                                    <li class="content04 content btnsWrap">
-                                        <button class="fileDownloadBtn" th:onclick="downloadFile([[${val.ga_file_path}]],[[${val.ga_file_nm}]], [[${val.ga_gover_no}]], [[${val.ga_file_seq}]], 'gover')">다운로드<span class="downloadIcon"></span></button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </section>
-
-            <!-- 변경 이력 -->
-            <section class="changeHistory">
-                <div class="subTitle">
-                    변경이력
-                </div>
-
-                <div class="contWrap">
-                    <div class="contBox">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">순번</li>
-                                    <li class="title02 title">변경일시</li>
-                                    <li class="title02 title">구분</li>
-                                    <li class="title04 title">내용</li>
-                                </ul>
-                                <div class="contentScr">
-                                    <ul class="contents">
-                                        <li class="content01 content">
-                                            1
-                                        </li>
-                                        <li class="content02 content">
-                                            2024-04-02 15:40:01
-                                        </li>
-                                        <li class="content03 content">
-                                            기본 정보
-                                        </li>
-                                        <li class="content04 content">
-                                            국공유지 여부 변경
-                                        </li>
-                                    </ul>
-                                    <ul class="contents">
-                                        <li class="content01 content">
-                                            2
-                                        </li>
-                                        <li class="content02 content">
-                                            2024-04-02 15:40:01
-                                        </li>
-                                        <li class="content03 content">
-                                            기본 정보
-                                        </li>
-                                        <li class="content04 content">
-                                            허가관청 변경 (‘’ -> 여수시)
-                                            관리기관 변경 (‘’ -> ‘도로관리사업소’)
-                                        </li>
-                                    </ul>
-                                    <ul class="contents lastContents">
-                                        <li class="content01 content">
-                                            2
-                                        </li>
-                                        <li class="content02 content">
-                                            2024-04-02 15:40:01
-                                        </li>
-                                        <li class="content03 content">
-                                            기본 정보
-                                        </li>
-                                        <li class="content04 content">
-                                            허가관청 변경 (‘’ -> 여수시)
-                                            관리기관 변경 (‘’ -> ‘도로관리사업소’)
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </section>
-            <!-- 필지 첨부파일 -->
-            <section class="parcelAttachments">
-                <form name="uploadForm" method="post" enctype="multipart/form-data">
-                    <div class="subTitle">
-                        필지 첨부파일
-                        <!--                    <span class="myPc">내 PC</span>-->
-                        <div class="fileBtnWrap">
-                            <!-- <input type="file" id="groundDetail_myPcFiles"> -->
-                            <input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple />
-                            <label for="groundDetail_myPcFiles" class="myPc">내 PC</label>
-                        </div>
-                    </div>
-
-                    <div class="fileUploadWrap">
-                        <div id="fileUpload" class="fileUploadBox" style="">
-                            <img src="/assets/media/menu01/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
-                            <p>파일을 마우스로 끌어오세요.</p>
-                        </div>
-                    </div>
-                    <div id="fileListDiv" style="    border-bottom: 1px solid #A9CCD1;">
-                        <div id="flist"></div>
-                    </div>
-                </form>
-                <br>
-                <div class="contWrap" id="pnuAtcFilesDiv">
-                    <div class="contBox">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">선택</li>
-                                    <li class="title02 title">등록일</li>
-                                    <li class="title03 title">파일명</li>
-                                    <li class="title04 title">파일보기</li>
-                                </ul>
-                                <div class="contentScr">
-                                    <ul class="contents" th:each="val:${goverPnuAtcFileList}">
-                                        <li class="content01 content">
-                                            <input type="checkbox" th:id="'checkbox_' + ${val.pa_idx}" class="file-checkbox" th:value="${val.pa_idx}">
-                                            <label th:for="'checkbox_' + ${val.pa_idx}"></label>
-                                        </li>
-                                        <li class="content02 content">
-                                            [[${val.pa_wdate}]]
-                                        </li>
-                                        <li class="content03 content">
-                                            [[${val.pa_file_nm}]]
-                                        </li>
-                                        <li class="content04 content">
-                                            <button class="viewDetailButton" th:onclick="openFilePopup([[${val.pa_file_path}]])">보기</button>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="btnWrap">
-                            <button class="fileBtn fileSaveBtn" id="fileSaveBtn">첨부파일 저장</button>
-                            <button class="fileBtn delBtn" id="deleteSelectedBtn">선택파일 삭제</button>
-                        </div>
-                    </div>
-                </div>
-
-
-            </section>
-            <!-- 잠재이슈 -->
-            <section class="potentialIssues">
-                <div class="subTitle">
-                    잠재이슈
-                    <button class="issueAdd OccuIssueRegisPopBtn">이슈등록</button>
-                </div>
-                <div class="contWrap">
-                    <div class="contBox contBox07">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">등기여부</li>
-                                    <li class="title02 title">계약여부</li>
-                                    <li class="title03 title">이슈유형(대분류)</li>
-                                    <li class="title03 title">이슈유형(중분류)</li>
-                                    <li class="title03 title">이슈유형(세분류)</li>
-                                    <li class="title01 title">등록사유</li>
-                                    <li class="title04 title">등록일시</li>
-                                    <li class="title04 title ">편집</li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        등기설정
-                                    </li>
-                                    <li class="content02 content">
-                                        계약체결
-                                    </li>
-                                    <li class="content03 content">
-                                        이슈없음
-                                    </li>
-                                    <li class="content03 content">
-                                        이슈없음
-                                    </li>
-                                    <li class="content03 content">
-                                        이슈없음
-                                    </li>
-                                    <li class="content01 content">
-                                        신규등록
-                                    </li>
-                                    <li class="content04 content">
-                                        2024-04-01 09:46:01
-                                    </li>
-                                    <li class="content05 content btnBox">
-                                        <div class="newBtnWrap">
-                                            <button class="registBtn miniBtn">등록</button>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <ul class="contents lastContents">
-                                    <li class="content01 content">
-                                        등기설정
-                                    </li>
-                                    <li class="content02 content">
-                                        계약체결
-                                    </li>
-                                    <li class="content03 content">
-                                        이슈없음
-                                    </li>
-                                    <li class="content03 content">
-                                        이슈없음
-                                    </li>
-                                    <li class="content03 content">
-                                        이슈없음
-                                    </li>
-                                    <li class="content01 content">
-                                        신규등록
-                                    </li>
-                                    <li class="content04 content">
-                                        2024-04-01 09:46:01
-                                    </li>
-                                    <li class="content04 content btnBox">
-                                        <div class="btnWrap">
-                                            <button class="editBtn miniBtn occupationIssueReviseBtn">수정</button>
-                                        </div>
-                                        <div class="btnWrap">
-                                            <button class="delBtn miniBtn">삭제</button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </section>
-
-            <!-- 잠재이슈 변경 이력 -->
-            <section class="potentialIssuesChangeHistory">
-                <div class="subTitle">
-                    잠재이슈 변경 이력
-                </div>
-
-                <div class="contWrap">
-                    <div class="contBox">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">순번</li>
-                                    <li class="title02 title">구분</li>
-                                    <li class="title03 title">변경일자</li>
-                                    <li class="title04 title">내용</li>
-                                    <li class="title03 title">사유</li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        3
-                                    </li>
-                                    <li class="content02 content">
-                                        이슈 삭제
-                                    </li>
-                                    <li class="content03 content">
-                                        2024-04-01 11:21:04
-                                    </li>
-                                    <li class="content04 content">
-                                        [기공승낙서 미존재 > 토지소유자 협의없이 매설 > 오류/무단매설]
-                                    </li>
-                                    <li class="content03 content">
-                                        이슈 중복 등록
-                                    </li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        2
-                                    </li>
-                                    <li class="content02 content">
-                                        이슈 수정
-                                    </li>
-                                    <li class="content03 content">
-                                        2024-04-01 11:21:04
-                                    </li>
-                                    <li class="content04 content">
-                                        [이슈없음 > 이슈없음 > 이슈없음] -> [기공승낙서 미존재 > 토지소유자 협의없이 매설 > 오류/무단매설]
-                                    </li>
-                                    <li class="content03 content">
-                                        신규 등록
-                                    </li>
-                                </ul>
-                                <ul class="contents lastContents">
-                                    <li class="content01 content">
-                                        1
-                                    </li>
-                                    <li class="content02 content">
-                                        신규 등록
-                                    </li>
-                                    <li class="content03 content">
-                                        2024-04-01 11:21:04
-                                    </li>
-                                    <li class="content04 content">
-                                        [이슈없음 > 이슈없음 > 이슈없음]
-                                    </li>
-                                    <li class="content03 content">
-                                        신규 등록
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </section>
-
-            <!-- 잠재이슈 대응방안 메뉴얼 -->
-
-
-            <section class="potentialIssuesResponseManual">
-                <div class="subTitle">
-                    잠재이슈 대응방안 메뉴얼
-                </div>
-
-
-                <div class="contWrap">
-                    <div class="contBox">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">매뉴얼명</li>
-                                    <li class="title02 title">버전</li>
-                                    <li class="title03 title">개정일자</li>
-                                    <li class="title04 title">다운로드</li>
-                                </ul>
-                                <ul class="contents">
-                                    <li class="content01 content">
-                                        계약자와 현재소유자가 다른 경우 (5년이내)
-                                    </li>
-                                    <li class="content02 content">
-                                        1.0
-                                    </li>
-                                    <li class="content03 content">
-                                        2024-04-02 15:40:01
-                                    </li>
-                                    <li class="content04 content btnsWrap">
-                                        <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                    </li>
-                                </ul>
-                                <ul class="contents lastContents">
-                                    <li class="content01 content">
-                                        토지소유자가 아닌자와 계약 (20년 초과)
-                                    </li>
-                                    <li class="content02 content">
-                                        1.0
-                                    </li>
-                                    <li class="content03 content">
-                                        2024-04-02 15:40:01
-                                    </li>
-                                    <li class="content04 content btnsWrap">
-                                        <button class="fileDownloadBtn">다운로드 <span class="downloadIcon"></span></button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </section>
-
-            <!-- 메모 -->
-
-            <section class="memoSection">
-                <div class="subTitle">
-                    메모
-                </div>
-
-
-                <div class="contWrap">
-                    <div class="contBox">
-                        <div class="contentDetailBox">
-                            <div class="depth1">
-                                <ul class="titles">
-                                    <li class="title01 title">작성일시</li>
-                                    <li class="title02 title">작성자</li>
-                                    <li class="title03 title">내용</li>
-                                    <li class="title04 title">수정</li>
-                                    <li class="title05 title">추가/삭제</li>
-                                </ul>
-                                <div class="contentScr" id="memoDiv">
-                                    <ul class="contents nullContents" id="nullContents" style="display:none;">
-                                        <li class="content01 content">
-                                            <input type="text" readonly placeholder="" class="notWriteInput">1
-                                        </li>
-                                        <li class="content02 content editSpace">
-                                            <input type="text" readonly placeholder="" id="wname" class="editingContent">
-                                        </li>
-                                        <li class="content03 content editSpace">
-                                            <input type="text" readonly placeholder="" id="wmemo" class="editingContent">
-                                        </li>
-                                        <li class="content04 content editSpace">
-                                            <div class="btnsWrap">
-                                                <button class="editBtn miniBtn">수정</button>
-                                            </div>
-                                        </li>
-                                        <li class="content05 content btnBox">
-
-                                            <!-- 수정하지 않을 때 -->
-
-                                            <div class="editBefore">
-                                                <div class="btnWrap">
-                                                    <button class="addBtn miniBtn">추가</button>
-                                                </div>
-                                                <div class="btnWrap">
-                                                    <button class="delBtn miniBtn">삭제</button>
-                                                </div>
-                                            </div>
-
-                                            <!-- 수정할 때 -->
-
-                                            <div class="editAfter">
-                                                <div class="newBtnWrap">
-                                                    <button class="registBtn miniBtn">등록</button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <ul class="contents" th:each="val:${memoList}">
-                                        <li class="content01 content">
-                                            <input type="hidden" th:value="${val.mm_idx}" id="idx">
-                                            <input type="text" readonly placeholder="2022-11-01" id="wdate" th:value="${val.mm_wdate}" class="notWriteInput">
-                                        </li>
-                                        <li class="content02 content editSpace">
-                                            <input type="text" readonly placeholder="김철수" id="wname" th:value="${val.mm_user_name}" class="editingContent">
-                                        </li>
-                                        <li class="content03 content editSpace">
-                                            <input type="text" readonly placeholder="협의중" id="wmemo" th:value="${val.mm_memo}" class="editingContent">
-                                        </li>
-                                        <li class="content04 content editSpace">
-                                            <div class="btnsWrap">
-                                                <button class="editBtn miniBtn">수정</button>
-                                            </div>
-                                        </li>
-                                        <li class="content05 content btnBox">
-
-                                            <!-- 수정하지 않을 때 -->
-
-                                            <div class="editBefore">
-                                                <div class="btnWrap">
-                                                    <button class="addBtn miniBtn">추가</button>
-                                                </div>
-                                                <div class="btnWrap">
-                                                    <button class="delBtn miniBtn" id="deleteMemoBtn">삭제</button>
-                                                </div>
-                                            </div>
-
-                                            <!-- 수정할 때 -->
-
-                                            <div class="editAfter">
-                                                <div class="newBtnWrap">
-                                                    <button class="registBtn miniBtn">등록</button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <ul class="contents" th:if="${memoList.size()==0}">
-                                        <li class="content01 content">
-                                            <!-- 2022-11-01 -->
-                                            <!-- input 추가 -->
-                                            <input type="text" readonly placeholder="" class="notWriteInput">
-                                        </li>
-                                        <li class="content02 content editSpace">
-                                            <input type="text" readonly placeholder="" id="wname" class="editingContent">
-                                        </li>
-                                        <li class="content03 content editSpace">
-                                            <input type="text" readonly placeholder="" id="wmemo" class="editingContent">
-                                        </li>
-                                        <li class="content04 content editSpace">
-                                            <div class="btnsWrap">
-                                                <button class="editBtn miniBtn">수정</button>
-                                            </div>
-                                        </li>
-                                        <li class="content05 content btnBox">
-
-                                            <!-- 수정하지 않을 때 -->
-
-                                            <div class="editBefore">
-                                                <div class="btnWrap">
-                                                    <button class="addBtn miniBtn">추가</button>
-                                                </div>
-                                                <div class="btnWrap">
-                                                    <button class="delBtn miniBtn">삭제</button>
-                                                </div>
-                                            </div>
-
-                                            <!-- 수정할 때 -->
-
-                                            <div class="editAfter">
-                                                <div class="newBtnWrap">
-                                                    <button class="registBtn miniBtn">등록</button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </section>
-
-
-            <!-- 참고 -->
-
-
-            <div class="finalBtnBox btnWrap">
-                <button class="backBtn finalBtn" onclick="history.back();">이전</button>
-                <button class="printBtn finalBtn">출력</button>
-            </div>
-
-
-
-        </main>
-    </div>
-    <div class="occupationIssueReviseWrappers"></div>
-    <!-- script -->
-    <!--  <script src="/js/gover/occupationDetails.js"></script> -->
-    <script type="module" src="/js/module/surfaceMain.js"></script>
+									<li class="content01 content">[[${val.gp_gover_no}]]</li>
+									<li class="content02 content">[[${val.gp_sido_nm}]]
+										[[${val.gp_sgg_nm}]] [[${val.gp_emd_nm}]] [[${val.gp_ri_nm}]]
+										[[${val.gp_jibun}]]</li>
+									<li class="content03 content">[[${val.gp_jijuk_area}]]</li>
+									<li class="content04 content">[[${val.gp_gover_length}]]</li>
+									<li class="content05 content">[[${val.gp_gover_area}]]</li>
+									<li class="content06 content">
+										<button class="viewDetailButton" onclick="openMap(this)">위치보기</button>
+									</li>
+								</ul>
+							</div>
+							<div class="depth2">
+								<ul class="titles">
+									<li class="title01 title">전체 위치보기</li>
+								</ul>
+								<ul class="contents" th:each="val:${pnuList}">
+									<li class="content01 content">
+										<button class="viewAllBtn" onclick="openMapAll()">전체
+											위치보기</button>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+
+			</section>
+			<section class="occupationPermitBasicInfo">
+				<div class="subTitle">점용허가 기본정보</div>
+
+				<div class="contWrap">
+
+					<!-- 허가 정보 -->
+
+					<div class="contBox">
+
+						<div class="thirdTitle">
+							<h2>・허가 정보</h2>
+						</div>
+
+
+						<div class="contentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">순번</li>
+									<li class="title02 title">허가번호</li>
+									<li class="title03 title">허가명</li>
+									<li class="title04 title">시설명칭</li>
+									<li class="title05 title">허가관청</li>
+									<li class="title06 title">관리청</li>
+									<li class="title07 title">연장(m)</li>
+									<li class="title08 title">면적(m²)</li>
+									<li class="title09 title">도시계획결정여부</li>
+									<li class="title10 title">결재문서 조회</li>
+								</ul>
+								<ul class="contents" th:each="val:${permitList}">
+									<li class="content01 content">[[${val.gp_gover_no}]]</li>
+									<li class="content02 content">[[${val.gp_pmt_no}]]</li>
+									<li class="content03 content">[[${val.gp_pmt_name}]]</li>
+									<li class="content04 content">[[${val.gp_siseolname}]]</li>
+									<li class="content05 content">[[${val.gp_pmt_office}]]</li>
+									<li class="content06 content">[[${val.gp_adm_office}]]</li>
+									<li class="content07 content">[[${val.gp_gover_length}]]</li>
+									<li class="content08 content">[[${val.gp_gover_area}]]</li>
+									<li class="content09 content">[[${val.gp_dosiplan}]]</li>
+									<li class="content10 content">
+										<button class="viewDetailButton">상세보기</button>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- 점용 허가 및 점용료 납부 현황 -->
+
+					<div class="contBox contBoxMini05">
+
+						<div class="thirdTitle">
+							<h2>・점용 허가 및 점용료 납부 현황</h2>
+						</div>
+
+						<div class="contentDetailBox">
+
+							<!-- 순번 -->
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">순번</li>
+
+								</ul>
+								<ul class="contents" th:each="val:${permitList}">
+									<li class="content01 content">[[${val.gp_gover_no}]]</li>
+
+								</ul>
+							</div>
+
+							<!-- 점용허가 유효기간 -->
+
+							<div class="depth2">
+								<ul class="titles">
+									<li class="title01 title">점용허가 유효기간</li>
+								</ul>
+								<ul class="titles bluetitle">
+									<li class="title01 title">시작일</li>
+									<li class="title01 title">종료일</li>
+									<li class="title01 title">부서</li>
+								</ul>
+								<ul class="contents" th:each="val:${permitList}">
+									<li class="content01 content">[[${val.gp_pmt_st_date}]]</li>
+									<li class="content01 content">[[${val.gp_pmt_ed_date}]]</li>
+									<li class="content01 content">[[${val.gp_buseo}]]</li>
+
+								</ul>
+							</div>
+
+							<!-- 허가기관 담당부서 -->
+							<div class="depth3">
+								<ul class="titles">
+									<li class="title01 title">허가기관 담당 부서</li>
+								</ul>
+								<ul class="titles bluetitle">
+									<li class="title01 title">담당자</li>
+									<li class="title01 title">연락처</li>
+								</ul>
+								<ul class="contents" th:each="val:${permitList}">
+									<li class="content01 content">[[${val.gp_nm}]]</li>
+									<li class="content01 content">[[${val.gp_phone_number}]]</li>
+
+								</ul>
+							</div>
+
+							<!-- 점용료 납부현황  -->
+							<div class="depth4">
+								<ul class="titles">
+									<li class="title01 title">점용료 납부현황</li>
+								</ul>
+								<ul class="titles bluetitle">
+									<li class="title01 title">납부방법</li>
+									<li class="title01 title">납부연월일</li>
+									<li class="title01 title">금액</li>
+								</ul>
+								<ul class="contents" th:each="val:${permitList}">
+									<li class="content01 content">[[${val.gp_pay_way}]]</li>
+									<li class="content01 content">[[${val.gp_pay_date}]]</li>
+									<li class="content01 content"
+										th:data-money="${val.gp_pay_money}"><span></span></li>
+
+								</ul>
+							</div>
+
+							<!-- 점용료 납부 /전자결재조회 -->
+							<div class="depth5">
+								<ul class="titles">
+									<li class="title01 title">점용료 납부 /<br> 전자결재조회
+									</li>
+								</ul>
+								<ul class="contents" th:each="val:${permitList}">
+									<li class="content01 content">
+										<button class="viewDetailButton">상세보기</button>
+									</li>
+
+								</ul>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- 첨부파일 -->
+
+					<div class="contBox contBoxMini06">
+
+						<div class="thirdTitle">
+							<h2>・첨부파일</h2>
+						</div>
+
+
+						<div class="contentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">등록일</li>
+									<li class="title02 title">파일명</li>
+									<li class="title03 title">파일보기</li>
+									<li class="title04 title">파일저장</li>
+								</ul>
+								<ul class="contents" th:if="${atcFileList.size()==0}">
+									<li class="content01 " style="width: 100%; text-align: center">데이터가
+										없습니다.</li>
+								</ul>
+								<ul class="contents" th:each="val:${atcFileList}">
+									<li class="content01 content">[[${val.ga_wdate}]]</li>
+									<li class="content02 content">[[${val.ga_file_nm}]]</li>
+									<li class="content03 content">
+										<button class="viewDetailButton"
+											th:onclick="openFilePopup([[${val.ga_file_path}]],[[${val.ga_file_nm}]], [[${val.ga_gover_no}]], [[${val.ga_file_seq}]], 'gover')">상세보기</button>
+									</li>
+									<li class="content04 content btnsWrap">
+										<button class="fileDownloadBtn"
+											th:onclick="downloadFile([[${val.ga_file_path}]],[[${val.ga_file_nm}]], [[${val.ga_gover_no}]], [[${val.ga_file_seq}]], 'gover')">
+											다운로드<span class="downloadIcon"></span>
+										</button>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+			</section>
+
+			<!-- 변경 이력 -->
+			<section class="changeHistory">
+				<div class="subTitle">변경이력</div>
+
+				<div class="contWrap">
+					<div class="contBox">
+						<div class="contentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">순번</li>
+									<li class="title02 title">변경일시</li>
+									<li class="title02 title">구분</li>
+									<li class="title04 title">내용</li>
+								</ul>
+								<div class="contentScr">
+									<ul class="contents">
+										<li class="content01 content">1</li>
+										<li class="content02 content">2024-04-02 15:40:01</li>
+										<li class="content03 content">기본 정보</li>
+										<li class="content04 content">국공유지 여부 변경</li>
+									</ul>
+									<ul class="contents">
+										<li class="content01 content">2</li>
+										<li class="content02 content">2024-04-02 15:40:01</li>
+										<li class="content03 content">기본 정보</li>
+										<li class="content04 content">허가관청 변경 (‘’ -> 여수시) 관리기관 변경
+											(‘’ -> ‘도로관리사업소’)</li>
+									</ul>
+									<ul class="contents lastContents">
+										<li class="content01 content">2</li>
+										<li class="content02 content">2024-04-02 15:40:01</li>
+										<li class="content03 content">기본 정보</li>
+										<li class="content04 content">허가관청 변경 (‘’ -> 여수시) 관리기관 변경
+											(‘’ -> ‘도로관리사업소’)</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+			</section>
+			<!-- 필지 첨부파일 -->
+			<section class="parcelAttachments">
+				<form name="uploadForm" method="post" enctype="multipart/form-data">
+					<div class="subTitle">
+						필지 첨부파일
+						<!--                    <span class="myPc">내 PC</span>-->
+						<div class="fileBtnWrap">
+							<!-- <input type="file" id="groundDetail_myPcFiles"> -->
+							<input type="file" name="fileUpload" id="fileUpload"
+								style="display: none;" multiple /> <label
+								for="groundDetail_myPcFiles" class="myPc">내 PC</label>
+						</div>
+					</div>
+
+					<div class="fileUploadWrap">
+						<div id="fileUpload" class="fileUploadBox" style="">
+							<img src="/assets/media/menu01/images/file-upload.png"
+								alt="파일 업로드 아이콘" class="fileUploadIcon">
+							<p>파일을 마우스로 끌어오세요.</p>
+						</div>
+					</div>
+					<div id="fileListDiv" style="border-bottom: 1px solid #A9CCD1;">
+						<div id="flist"></div>
+					</div>
+				</form>
+				<br>
+				<div class="contWrap" id="pnuAtcFilesDiv">
+					<div class="contBox">
+						<div class="contentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">선택</li>
+									<li class="title02 title">등록일</li>
+									<li class="title03 title">파일명</li>
+									<li class="title04 title">파일보기</li>
+								</ul>
+								<div class="contentScr">
+									<ul class="contents" th:each="val:${goverPnuAtcFileList}">
+										<li class="content01 content"><input type="checkbox"
+											th:id="'checkbox_' + ${val.pa_idx}" class="file-checkbox"
+											th:value="${val.pa_idx}"> <label
+											th:for="'checkbox_' + ${val.pa_idx}"></label></li>
+										<li class="content02 content">[[${val.pa_wdate}]]</li>
+										<li class="content03 content">[[${val.pa_file_nm}]]</li>
+										<li class="content04 content">
+											<button class="viewDetailButton"
+												th:onclick="openFilePopup([[${val.pa_file_path}]])">보기</button>
+										</li>
+									</ul>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="btnWrap">
+							<button class="fileBtn fileSaveBtn" id="fileSaveBtn">첨부파일
+								저장</button>
+							<button class="fileBtn delBtn" id="deleteSelectedBtn">선택파일
+								삭제</button>
+						</div>
+					</div>
+				</div>
+
+
+			</section>
+			<!-- 잠재이슈 -->
+			<section class="potentialIssues">
+				<div class="subTitle">
+					잠재이슈
+					<button class="issueAdd OccuIssueRegisPopBtn">이슈등록</button>
+				</div>
+				<div class="contWrap">
+					<div class="contBox contBox07">
+						<div class="contentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">등기여부</li>
+									<li class="title02 title">계약여부</li>
+									<li class="title03 title">이슈유형(대분류)</li>
+									<li class="title03 title">이슈유형(중분류)</li>
+									<li class="title03 title">이슈유형(세분류)</li>
+									<li class="title01 title">등록사유</li>
+									<li class="title04 title">등록일시</li>
+									<li class="title04 title ">편집</li>
+								</ul>
+								<ul class="contents">
+									<li class="content01 content">등기설정</li>
+									<li class="content02 content">계약체결</li>
+									<li class="content03 content">이슈없음</li>
+									<li class="content03 content">이슈없음</li>
+									<li class="content03 content">이슈없음</li>
+									<li class="content01 content">신규등록</li>
+									<li class="content04 content">2024-04-01 09:46:01</li>
+									<li class="content05 content btnBox">
+										<div class="newBtnWrap">
+											<button class="registBtn miniBtn">등록</button>
+										</div>
+									</li>
+								</ul>
+								<ul class="contents lastContents">
+									<li class="content01 content">등기설정</li>
+									<li class="content02 content">계약체결</li>
+									<li class="content03 content">이슈없음</li>
+									<li class="content03 content">이슈없음</li>
+									<li class="content03 content">이슈없음</li>
+									<li class="content01 content">신규등록</li>
+									<li class="content04 content">2024-04-01 09:46:01</li>
+									<li class="content04 content btnBox">
+										<div class="btnWrap">
+											<button class="editBtn miniBtn occupationIssueReviseBtn">수정</button>
+										</div>
+										<div class="btnWrap">
+											<button class="delBtn miniBtn">삭제</button>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</section>
+
+			<!-- 잠재이슈 변경 이력 -->
+			<section class="potentialIssuesChangeHistory">
+				<div class="subTitle">잠재이슈 변경 이력</div>
+
+				<div class="contWrap">
+					<div class="contBox">
+						<div class="contentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">순번</li>
+									<li class="title02 title">구분</li>
+									<li class="title03 title">변경일자</li>
+									<li class="title04 title">내용</li>
+									<li class="title03 title">사유</li>
+								</ul>
+								<ul class="contents">
+									<li class="content01 content">3</li>
+									<li class="content02 content">이슈 삭제</li>
+									<li class="content03 content">2024-04-01 11:21:04</li>
+									<li class="content04 content">[기공승낙서 미존재 > 토지소유자 협의없이 매설 >
+										오류/무단매설]</li>
+									<li class="content03 content">이슈 중복 등록</li>
+								</ul>
+								<ul class="contents">
+									<li class="content01 content">2</li>
+									<li class="content02 content">이슈 수정</li>
+									<li class="content03 content">2024-04-01 11:21:04</li>
+									<li class="content04 content">[이슈없음 > 이슈없음 > 이슈없음] ->
+										[기공승낙서 미존재 > 토지소유자 협의없이 매설 > 오류/무단매설]</li>
+									<li class="content03 content">신규 등록</li>
+								</ul>
+								<ul class="contents lastContents">
+									<li class="content01 content">1</li>
+									<li class="content02 content">신규 등록</li>
+									<li class="content03 content">2024-04-01 11:21:04</li>
+									<li class="content04 content">[이슈없음 > 이슈없음 > 이슈없음]</li>
+									<li class="content03 content">신규 등록</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</section>
+
+			<!-- 잠재이슈 대응방안 메뉴얼 -->
+
+
+			<section class="potentialIssuesResponseManual">
+				<div class="subTitle">잠재이슈 대응방안 메뉴얼</div>
+
+
+				<div class="contWrap">
+					<div class="contBox">
+						<div class="contentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">매뉴얼명</li>
+									<li class="title02 title">버전</li>
+									<li class="title03 title">개정일자</li>
+									<li class="title04 title">다운로드</li>
+								</ul>
+								<ul class="contents">
+									<li class="content01 content">계약자와 현재소유자가 다른 경우 (5년이내)</li>
+									<li class="content02 content">1.0</li>
+									<li class="content03 content">2024-04-02 15:40:01</li>
+									<li class="content04 content btnsWrap">
+										<button class="fileDownloadBtn">
+											다운로드 <span class="downloadIcon"></span>
+										</button>
+									</li>
+								</ul>
+								<ul class="contents lastContents">
+									<li class="content01 content">토지소유자가 아닌자와 계약 (20년 초과)</li>
+									<li class="content02 content">1.0</li>
+									<li class="content03 content">2024-04-02 15:40:01</li>
+									<li class="content04 content btnsWrap">
+										<button class="fileDownloadBtn">
+											다운로드 <span class="downloadIcon"></span>
+										</button>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</section>
+
+			<!-- 메모 -->
+
+			<section class="memoSection">
+				<div class="subTitle">메모</div>
+
+
+				<div class="contWrap">
+					<div class="contBox">
+						<div class="contentDetailBox">
+							<div class="depth1">
+								<ul class="titles">
+									<li class="title01 title">작성일시</li>
+									<li class="title02 title">작성자</li>
+									<li class="title03 title">내용</li>
+									<li class="title04 title">수정</li>
+									<li class="title05 title">추가/삭제</li>
+								</ul>
+								<div class="contentScr" id="memoDiv">
+									<ul class="contents nullContents" id="nullContents"
+										style="display: none;">
+										<li class="content01 content"><input type="text" readonly
+											placeholder="" class="notWriteInput">1</li>
+										<li class="content02 content editSpace"><input
+											type="text" readonly placeholder="" id="wname"
+											class="editingContent"></li>
+										<li class="content03 content editSpace"><input
+											type="text" readonly placeholder="" id="wmemo"
+											class="editingContent"></li>
+										<li class="content04 content editSpace">
+											<div class="btnsWrap">
+												<button class="editBtn miniBtn">수정</button>
+											</div>
+										</li>
+										<li class="content05 content btnBox">
+											<!-- 수정하지 않을 때 -->
+
+											<div class="editBefore">
+												<div class="btnWrap">
+													<button class="addBtn miniBtn">추가</button>
+												</div>
+												<div class="btnWrap">
+													<button class="delBtn miniBtn">삭제</button>
+												</div>
+											</div> <!-- 수정할 때 -->
+
+											<div class="editAfter">
+												<div class="newBtnWrap">
+													<button class="registBtn miniBtn">등록</button>
+												</div>
+											</div>
+										</li>
+									</ul>
+									<ul class="contents" th:each="val:${memoList}">
+										<li class="content01 content"><input type="hidden"
+											th:value="${val.mm_idx}" id="idx"> <input type="text"
+											readonly placeholder="2022-11-01" id="wdate"
+											th:value="${val.mm_wdate}" class="notWriteInput"></li>
+										<li class="content02 content editSpace"><input
+											type="text" readonly placeholder="김철수" id="wname"
+											th:value="${val.mm_user_name}" class="editingContent">
+										</li>
+										<li class="content03 content editSpace"><input
+											type="text" readonly placeholder="협의중" id="wmemo"
+											th:value="${val.mm_memo}" class="editingContent"></li>
+										<li class="content04 content editSpace">
+											<div class="btnsWrap">
+												<button class="editBtn miniBtn">수정</button>
+											</div>
+										</li>
+										<li class="content05 content btnBox">
+											<!-- 수정하지 않을 때 -->
+
+											<div class="editBefore">
+												<div class="btnWrap">
+													<button class="addBtn miniBtn">추가</button>
+												</div>
+												<div class="btnWrap">
+													<button class="delBtn miniBtn" id="deleteMemoBtn">삭제</button>
+												</div>
+											</div> <!-- 수정할 때 -->
+
+											<div class="editAfter">
+												<div class="newBtnWrap">
+													<button class="registBtn miniBtn">등록</button>
+												</div>
+											</div>
+										</li>
+									</ul>
+									<ul class="contents" th:if="${memoList.size()==0}">
+										<li class="content01 content">
+											<!-- 2022-11-01 --> <!-- input 추가 --> <input type="text"
+											readonly placeholder="" class="notWriteInput">
+										</li>
+										<li class="content02 content editSpace"><input
+											type="text" readonly placeholder="" id="wname"
+											class="editingContent"></li>
+										<li class="content03 content editSpace"><input
+											type="text" readonly placeholder="" id="wmemo"
+											class="editingContent"></li>
+										<li class="content04 content editSpace">
+											<div class="btnsWrap">
+												<button class="editBtn miniBtn">수정</button>
+											</div>
+										</li>
+										<li class="content05 content btnBox">
+											<!-- 수정하지 않을 때 -->
+
+											<div class="editBefore">
+												<div class="btnWrap">
+													<button class="addBtn miniBtn">추가</button>
+												</div>
+												<div class="btnWrap">
+													<button class="delBtn miniBtn">삭제</button>
+												</div>
+											</div> <!-- 수정할 때 -->
+
+											<div class="editAfter">
+												<div class="newBtnWrap">
+													<button class="registBtn miniBtn">등록</button>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</section>
+
+
+			<!-- 참고 -->
+
+
+			<div class="finalBtnBox btnWrap">
+				<button class="backBtn finalBtn" onclick="history.back();">이전</button>
+				<button class="printBtn finalBtn">출력</button>
+			</div>
+
+
+
+		</main>
+	</div>
+	<div class="occupationIssueReviseWrappers"></div>
+	<!-- script -->
+	<!--  <script src="/js/gover/occupationDetails.js"></script> -->
+	<script type="module" src="/js/module/surfaceMain.js"></script>
 </th:block>
 
 </html>

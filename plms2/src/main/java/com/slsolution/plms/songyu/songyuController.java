@@ -576,8 +576,6 @@ public class songyuController {
 		String ri_nm = req.getParameter("ri_nm");
 		String jibun = req.getParameter("jibun");
 		
-		log.info("toji_type:" + toji_type);
-
 		Map map = req.getParameterMap();
 		log.info("draw:" + draw);
 		log.info("length:" + length);

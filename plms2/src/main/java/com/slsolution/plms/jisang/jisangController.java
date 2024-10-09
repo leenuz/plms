@@ -1772,9 +1772,7 @@ log.info("data:"+data.get(0));
 //      return "statistics/yearchart :: #tableStat";
 //    }
 	
-	
-	
-	//groundDetail  상세 조회
+
 		@GetMapping(path="/menu02_1") //http://localhost:8080/api/get/dbTest
 	    public ModelAndView menu02_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
             
