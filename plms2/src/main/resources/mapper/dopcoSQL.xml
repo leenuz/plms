@@ -412,6 +412,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      , (SELECT code_name FROM plms_issue_code pic WHERE pic."code" = PI.code_depth1) AS DEPTH1_title
      , (SELECT code_name FROM plms_issue_code pic WHERE pic."code" = PI.code_depth2) AS DEPTH2_title
      , (SELECT code_name FROM plms_issue_code pic WHERE pic."code" = PI.code_depth3) AS DEPTH3_title
+     , u.comple_yn
 		FROM plms_potential_issue PI
 		  LEFT JOIN 
 		  (				 
