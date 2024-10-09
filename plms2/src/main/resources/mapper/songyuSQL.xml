@@ -1905,13 +1905,13 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 	<!-- 관리필지 조회 -->
 	<select id="selectAllList5" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT r.*
-    , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH1) AS CODE_DEPTH1_NAME
-    , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH2) AS CODE_DEPTH2_NAME
-    , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH3) AS CODE_DEPTH3_NAME
-    ,(row_number() over()) as no
-    ,trim(concat(r.sido_nm,' ',r.sgg_nm,' ',r.emd_nm,' ',r.ri_nm,' ',r.jibun)) as address
-FROM (
-SELECT   NEWREGREASON,
+	    , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH1) AS CODE_DEPTH1_NAME
+	    , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH2) AS CODE_DEPTH2_NAME
+	    , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH3) AS CODE_DEPTH3_NAME
+	    ,(row_number() over()) as no
+	    ,trim(concat(r.sido_nm,' ',r.sgg_nm,' ',r.emd_nm,' ',r.ri_nm,' ',r.jibun)) as address
+		FROM (
+		SELECT   NEWREGREASON,
         OCCUNONPAYREASON,
         PERMPOSSYN,
         OCCUPREPAYYN,
@@ -1962,17 +1962,20 @@ SELECT   NEWREGREASON,
         JOIN_MST.index,
         JOIN_MST.gidx,
         JIJUK_MST.juso,
-          (SELECT 
-    CASE 
-        WHEN COUNT(*) > 0 THEN 'Y' 
-        ELSE 'N' 
-    END
-FROM dosi_master dm
-LEFT JOIN dosi_info di ON dm.dm_dosi_no = di.di_dosi_no
-LEFT JOIN dosi_dept dd ON dm.dm_dosi_no = dd.dd_dosi_no
-WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
-	 FROM (	
-		  SELECT
+        (
+        	SELECT 
+    				CASE 
+        		WHEN COUNT(*) > 0 THEN 'Y' 
+        		ELSE 'N' 
+    				END
+					FROM dosi_master dm
+					LEFT JOIN dosi_info di ON dm.dm_dosi_no = di.di_dosi_no
+					LEFT JOIN dosi_dept dd ON dm.dm_dosi_no = dd.dd_dosi_no
+					WHERE 1=1 
+					AND dm.dm_pnu = JOIN_MST.pnu
+				) AS toji_plan_type
+	 			FROM (	
+	  		SELECT
             '' as NEWREGREASON,
             '' as OCCUNONPAYREASON,
             '' as PERMPOSSYN,
@@ -2211,136 +2214,151 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     )r
     
     WHERE 1=1
+   	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and r.jisa=#{jisa}
+		</if>
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-	and r.master_no=#{idx}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
-	and r.dosiplan=#{dosiplan}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	and replace(trim(r.juso),'  ',' ') like '%${address}%'
-	
-	</if>
-	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
-	and r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
-	</if> 
-	
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >	
-		
-		    AND r.toji_plan_type = #{toji_plan_type}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
-	and r.gover_own_yn=#{toji_type}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
-	and r.master_no=#{manage_no}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-	and r.jisa=#{jisa}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-	and (SELECT COUNT(o.address) AS overlap 
-		FROM
-		  (
-		  		(
-					SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_emd_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
-					FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-					where 1=1
-		
-				)
-				UNION ALL 
-				(
-					SELECT trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_emd_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
-					FROM gover_master gm 
-					LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
-					LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-					where 1=1 and gp.gp_gover_no = gm.gm_gover_no
-					and gp.gp_pnu is not null
-		
-				)
-				UNION ALL
-				(
-					SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
-					FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-					where 1=1
-		
-				)
-		  
-		  ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
-	</if>
-  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
-	ORDER BY r.${orderCol} ${desc}
-	</if>
-	<if test="length>0"> 
-	 limit #{length} offset #{start}
-	 </if>
+			and r.master_no LIKE '%${idx}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
+			and r.gover_own_yn=#{toji_type}
+		</if>
+		<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
+			and r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
+		</if> 
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
+		and r.dosiplan=#{dosiplan}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+		and replace(trim(r.juso),'  ',' ') like '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND r.sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND r.sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND r.emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND r.ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			AND r.jibun LIKE '%${jibun}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >	
+			
+			    AND r.toji_plan_type = #{toji_plan_type}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
+		and r.master_no=#{manage_no}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
+		and (SELECT COUNT(o.address) AS overlap 
+			FROM
+			  (
+			  		(
+						SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_emd_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
+						FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
+						where 1=1
+			
+					)
+					UNION ALL 
+					(
+						SELECT trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_emd_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
+						FROM gover_master gm 
+						LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
+						LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
+						where 1=1 and gp.gp_gover_no = gm.gm_gover_no
+						and gp.gp_pnu is not null
+			
+					)
+					UNION ALL
+					(
+						SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
+						FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
+						where 1=1
+			
+					)
+			  
+			  ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+		</if>
+	  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+		ORDER BY r.${orderCol} ${desc}
+		</if>
+		<if test="length>0"> 
+		 limit #{length} offset #{start}
+	 	</if>
 	</select>
 	
 	<!-- 관리필지 건 수 조회 -->
 <select id="selectTotalCount5" parameterType="java.util.HashMap" resultType="Integer">
-	select  
-	count(*)
-FROM (
-SELECT   NEWREGREASON,
-        OCCUNONPAYREASON,
-        PERMPOSSYN,
-        OCCUPREPAYYN,
-        TO_CHAR(OCCUPREPAYDATE, 'YYYY-MM-DD') AS OCCUPREPAYDATE,
-        ROW_NUMBER() OVER (ORDER BY JIJUK_MST.PNU DESC) RNO,
-        ROW_NUMBER() OVER (ORDER BY JIJUK_MST.PNU ASC) RN,
-        JOIN_MST.SIDO_NM,
-        JOIN_MST.SGG_NM,
-        JOIN_MST.EMD_NM,
-        JOIN_MST.RI_NM,
-        trim(concat(JOIN_MST.sido_nm,' ',JOIN_MST.sgg_nm,' ',JOIN_MST.emd_nm,' ',JOIN_MST.ri_nm,' ',JOIN_MST.jibun)) as address,
-        JOIN_MST.JIBUN,
-        JIJUK_MST.JIBUN_FULL,
-        JIJUK_MST.JIMOK_TEXT,
-        JOIN_MST.PNU,
-        JOIN_MST.ADDRCODE,
-        JIJUK_MST.DOSIPLAN,
-        COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') AS GOVER_OWN_YN,
-        JIJUK_MST.JIJUK_AREA,
-        JOIN_MST.JIJUK_AREA AS AREA,
-        JOIN_MST.JISANG_STATUS,
-        JOIN_MST.JASAN_NO,
-        JOIN_MST.CHUIDEUK_DATE,
-        COALESCE(JIJUK_MST.PIPE_OVERLAP_YN, 'N') AS PIPE_OVERLAP_YN,
-        JOIN_MST.MASTER_NO,
-        JOIN_MST.COMPLE_YN AS JISANG_COMPLE_YN,
-        JOIN_MST.PERMITTED_YN AS JISANG_PERMITTED_YN,
-        JOIN_MST.JISA,
-        JOIN_MST.PMT_NO,
-        JOIN_MST.PAY_MONEY,
-        JOIN_MST.PAY_DATE,
-        JOIN_MST.PMT_ST_DATE,
-        JOIN_MST.PMT_ED_DATE,
-        JOIN_MST.CHUIDEUK_MONEY,
-        JOIN_MST.GOVER_LENGTH,
-        JOIN_MST.GOVER_AREA,
-        JOIN_MST.PIPE_METER,
-        JOIN_MST.PIPE_METER2,
-        JOIN_MST.SOUJA_NAME,
-        JOIN_MST.SOUJA_CNT,
-        JOIN_MST.JASAN_MONEY,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.REGISTED_YN ELSE GPI.REGISTED_YN END AS REGISTED_YN,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.PERMITTED_YN ELSE GPI.PERMITTED_YN END AS PERMITTED_YN,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH1 ELSE GPI.CODE_DEPTH1 END AS CODE_DEPTH1,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH2 ELSE GPI.CODE_DEPTH2 END AS CODE_DEPTH2,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3,
-          (SELECT 
-    CASE 
-        WHEN COUNT(*) > 0 THEN 'Y' 
-        ELSE 'N' 
-    END
-FROM dosi_master dm
-LEFT JOIN dosi_info di ON dm.dm_dosi_no = di.di_dosi_no
-LEFT JOIN dosi_dept dd ON dm.dm_dosi_no = dd.dd_dosi_no
-WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
-	  ,JIJUK_MST.juso
-	 FROM (	
-		  SELECT
-		   
+	SELECT 
+		count(*)
+	FROM (
+			SELECT   NEWREGREASON,
+	        OCCUNONPAYREASON,
+	        PERMPOSSYN,
+	        OCCUPREPAYYN,
+	        TO_CHAR(OCCUPREPAYDATE, 'YYYY-MM-DD') AS OCCUPREPAYDATE,
+	        ROW_NUMBER() OVER (ORDER BY JIJUK_MST.PNU DESC) RNO,
+	        ROW_NUMBER() OVER (ORDER BY JIJUK_MST.PNU ASC) RN,
+	        JOIN_MST.SIDO_NM,
+	        JOIN_MST.SGG_NM,
+	        JOIN_MST.EMD_NM,
+	        JOIN_MST.RI_NM,
+	        trim(concat(JOIN_MST.sido_nm,' ',JOIN_MST.sgg_nm,' ',JOIN_MST.emd_nm,' ',JOIN_MST.ri_nm,' ',JOIN_MST.jibun)) as address,
+	        JOIN_MST.JIBUN,
+	        JIJUK_MST.JIBUN_FULL,
+	        JIJUK_MST.JIMOK_TEXT,
+	        JOIN_MST.PNU,
+	        JOIN_MST.ADDRCODE,
+	        JIJUK_MST.DOSIPLAN,
+	        COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') AS GOVER_OWN_YN,
+	        JIJUK_MST.JIJUK_AREA,
+	        JOIN_MST.JIJUK_AREA AS AREA,
+	        JOIN_MST.JISANG_STATUS,
+	        JOIN_MST.JASAN_NO,
+	        JOIN_MST.CHUIDEUK_DATE,
+	        COALESCE(JIJUK_MST.PIPE_OVERLAP_YN, 'N') AS PIPE_OVERLAP_YN,
+	        JOIN_MST.MASTER_NO,
+	        JOIN_MST.COMPLE_YN AS JISANG_COMPLE_YN,
+	        JOIN_MST.PERMITTED_YN AS JISANG_PERMITTED_YN,
+	        JOIN_MST.JISA,
+	        JOIN_MST.PMT_NO,
+	        JOIN_MST.PAY_MONEY,
+	        JOIN_MST.PAY_DATE,
+	        JOIN_MST.PMT_ST_DATE,
+	        JOIN_MST.PMT_ED_DATE,
+	        JOIN_MST.CHUIDEUK_MONEY,
+	        JOIN_MST.GOVER_LENGTH,
+	        JOIN_MST.GOVER_AREA,
+	        JOIN_MST.PIPE_METER,
+	        JOIN_MST.PIPE_METER2,
+	        JOIN_MST.SOUJA_NAME,
+	        JOIN_MST.SOUJA_CNT,
+	        JOIN_MST.JASAN_MONEY,
+	        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.REGISTED_YN ELSE GPI.REGISTED_YN END AS REGISTED_YN,
+	        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.PERMITTED_YN ELSE GPI.PERMITTED_YN END AS PERMITTED_YN,
+	        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH1 ELSE GPI.CODE_DEPTH1 END AS CODE_DEPTH1,
+	        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH2 ELSE GPI.CODE_DEPTH2 END AS CODE_DEPTH2,
+	        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3,
+	        (
+	        	SELECT 
+	    				CASE 
+	       				WHEN COUNT(*) > 0 THEN 'Y' 
+	        			ELSE 'N' 
+	   						END
+						FROM dosi_master dm
+						LEFT JOIN dosi_info di ON dm.dm_dosi_no = di.di_dosi_no
+						LEFT JOIN dosi_dept dd ON dm.dm_dosi_no = dd.dd_dosi_no
+						WHERE 1=1 
+						AND dm.dm_pnu = JOIN_MST.pnu
+					) AS toji_plan_type
+	  			,JIJUK_MST.juso
+	 			FROM (	
+		  	SELECT
             '' as NEWREGREASON,
             '' as OCCUNONPAYREASON,
             '' as PERMPOSSYN,
@@ -2385,7 +2403,8 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
                     ROW_NUMBER() OVER (PARTITION BY js_JISANG_NO ORDER BY js_JISANG_NO ASC) AS ROW_IDX
                 FROM JISANG_SOUJA
                 GROUP BY js_JISANG_NO, js_SOUJA_NAME
-            ) AS sub1 WHERE ROW_IDX = 1
+            ) AS sub1 
+            WHERE ROW_IDX = 1
         ) JS ON JM.jm_JISANG_NO = JS.JISANG_NO
         WHERE (jm.jm_cancle_yn IS NULL OR jm.jm_cancle_yn != 'Y')
         AND (jm.jm_manage_yn IS NULL OR jm.jm_manage_yn != 'Y')
@@ -2393,7 +2412,6 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
         UNION ALL
         
         SELECT
-       
             GM.gm_NEWREGREASON as NEWREGREASON,
             GM.gm_OCCUNONPAYREASON as OCCUNONPAYREASON,
             GM.gm_PERMPOSSYN as PERMPOSSYN,
@@ -2509,7 +2527,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
         ) NS ON NM.nm_NOTSET_NO = NS.NOTSET_NO
         WHERE 1=1  
         AND (NM.nm_DEL_FLAG = 'N' OR NM.nm_DEL_FLAG IS NULL)
-        AND (NM.nm_MANAGE_YN IS NULL or NM.nm_MANAGE_YN !='Y') 
+        AND (NM.nm_MANAGE_YN !='Y' OR NM.nm_MANAGE_YN IS NULL) 
         
         UNION ALL
         
@@ -2551,7 +2569,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
             '' as PERMITTED_YN,
             '' as PIPE_YN
         FROM DOPCO_MASTER DM
-        WHERE DM.dom_CANCLE_YN = ''
+        WHERE (DM.dom_CANCLE_YN != 'Y' or DM.dom_CANCLE_YN IS NULL)
     ) JOIN_MST 
     LEFT JOIN jijuk_2024 JIJUK_MST ON JIJUK_MST.pnu=JOIN_MST.pnu
     LEFT JOIN (
@@ -2570,65 +2588,72 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     )r
     
     WHERE 1=1
+ 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and r.jisa=#{jisa}
+		</if>
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-	and r.master_no=#{idx}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
-	and r.dosiplan=#{dosiplan}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	and replace(trim(r.juso),'  ',' ') like '%${address}%'
-	</if>
-	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
-	and r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
-	</if> 
-	
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
-   
-    AND r.toji_plan_type =#{toji_plan_type}
-</if>
-		
-	
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
-	and r.gover_own_yn=#{toji_type}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
-	and r.master_no=#{manage_no}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-	and r.jisa=#{jisa}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-	and (SELECT COUNT(o.address) AS overlap 
-		FROM
-		  (
-		  		(
-					SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_emd_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
-					FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-					where 1=1
-		
-				)
-				UNION ALL 
-				(
-					SELECT trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_emd_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
-					FROM gover_master gm 
-					LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
-					LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-					where 1=1 and gp.gp_gover_no = gm.gm_gover_no
-					and gp.gp_pnu is not null
-		
-				)
-				UNION ALL
-				(
-					SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
-					FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-					where 1=1
-		
-				)
-		  
-		  ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
-	</if>
-</select>
+			and r.master_no=#{idx}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
+			and r.gover_own_yn=#{toji_type}
+		</if>
+		<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
+			and r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
+		</if> 
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
+			and r.dosiplan=#{dosiplan}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and replace(trim(r.juso),'  ',' ') like '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND r.sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND r.sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND r.emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND r.ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+			AND r.jibun LIKE '%${jibun}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
+			and r.master_no=#{manage_no}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
+			and (
+			SELECT COUNT(o.address) AS overlap 
+			FROM
+			  (
+			  		(
+						SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_emd_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
+						FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
+						where 1=1
+					)
+					UNION ALL 
+					(
+						SELECT trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_emd_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
+						FROM gover_master gm 
+						LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
+						LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
+						where 1=1 and gp.gp_gover_no = gm.gm_gover_no
+						and gp.gp_pnu is not null
+					)
+					UNION ALL
+					(
+						SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
+						FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
+						where 1=1
+					)
+			  ) as o  
+			  WHERE o.address = r.address 
+			  GROUP BY o.address ) >1
+		</if>
+	</select>
 	
 	<select id="selectNotsetNextNo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT 

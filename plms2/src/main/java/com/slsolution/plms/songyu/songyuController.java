@@ -637,26 +637,6 @@ public class songyuController {
 		// 일반웹형식
 		Properties requestParams = CommonUtil.convertToProperties(req);
 		log.info("requestParams:" + requestParams);
-//		        JSONObject jobj=new JSONObject(requestParams.toString());
-//		        log.info("obj:"+jobj);
-
-		// json으로 넘어올때
-//		        String getRequestBody = ParameterUtil.getRequestBodyToStr(req);
-//		        JSONObject object=new JSONObject(requestParams.toString());
-//		        if (object!=null) {
-//		        log.info("getRequestBody:"+object.getString("jisa"));
-//		        }
-		// log.info("jisa="+getRequestBody.g)
-
-		HashMap<String, String> returnHash = new HashMap<String, String>();
-		Enumeration<String> obj1 = req.getParameterNames();
-		int cnt = 0;
-
-		while (obj1.hasMoreElements()) {
-			String paramName = obj1.nextElement();
-			String paramValue = req.getParameter(paramName);
-			returnHash.put(paramName, paramValue);
-		}
 
 		int draw = Integer.parseInt(req.getParameter("draw"));
 		int start = Integer.parseInt(req.getParameter("start"));
@@ -669,51 +649,52 @@ public class songyuController {
 		log.info("orderColumnName:" + orderColumnName);
 		log.info("orderDirection:" + orderDirection);
 		String[] order_cols = req.getParameterValues("order");
-//				List val=new ArrayList();
-//				int mx=order_cols.length;
 
-//				
-		String jisa = req.getParameter("jisa");
-		String manage_no = req.getParameter("manage_no");
-		String right_type = req.getParameter("right_type");
-		String dosiplan = req.getParameter("dosiplan");
+		String jisa = req.getParameter("jisa"); // 지사
+		String manage_no = req.getParameter("manage_no"); // 관리번호
+		String toji_type = req.getParameter("toji_type"); // 토지유형
+		String right_type = req.getParameter("right_type"); // 권리확보유형
+		String dosiplan = req.getParameter("dosiplan"); //도시계획유형
+		String right_overlap = req.getParameter("right_overlap"); //권리중복필지
+		
 		String address = req.getParameter("saddr");
-		String toji_type = req.getParameter("toji_type");
-		String right_overlap = req.getParameter("right_overlap");
-		String type_gover = req.getParameter("type_gover");
-		String type_jisang = req.getParameter("type_jisang");
-		String type_notset = req.getParameter("type_notset");
-		String type_dopco = req.getParameter("type_dopco");
-		Map map = req.getParameterMap();
-		log.info("draw:" + draw);
-		log.info("length:" + length);
-
-		// log.info("mx:"+mx);
-
-		log.info("jisa:" + jisa);
-		log.info("manage_no:" + manage_no);
-		log.info("type_gover:" + type_gover);
-		log.info("type_jisang:" + type_jisang);
-		log.info("type_notset:" + type_notset);
-		log.info("type_dopco:" + type_dopco);
-		log.info("right_type:" + right_type);
+		String sido_nm = req.getParameter("sido_nm");
+		String sgg_nm = req.getParameter("sgg_nm");
+		String emd_nm = req.getParameter("emd_nm");
+		String ri_nm = req.getParameter("ri_nm");
+		String jibun = req.getParameter("jibun");
+		
+//		log.info("draw:" + draw);
+//		log.info("length:" + length);
+//		log.info("jisa:" + jisa);
+//		log.info("manage_no:" + manage_no);
+//		log.info("type_gover:" + type_gover);
+//		log.info("type_jisang:" + type_jisang);
+//		log.info("type_notset:" + type_notset);
+//		log.info("type_dopco:" + type_dopco);
+//		log.info("right_type:" + right_type);
 
 		HashMap params = new HashMap();
 		params.put("draw", draw);
 		params.put("start", start);
 		params.put("length", length);
+		
 		params.put("jisa", req.getParameter("jisa"));
 		params.put("idx", manage_no);
-		params.put("dosiplan", dosiplan);
-		params.put("address", address);
 		params.put("toji_type", toji_type);
+		params.put("dosiplan", dosiplan);
 		params.put("right_overlap", right_overlap);
+		params.put("address", address);
+		params.put("sido_nm",sido_nm);
+		params.put("sgg_nm",sgg_nm);
+		params.put("emd_nm",emd_nm);
+		params.put("ri_nm",ri_nm);
+		params.put("jibun",jibun);
 
 		String[] right_arr = {};
 		right_arr = right_type.split(",");
 		params.put("right_type", right_arr);
 
-		params.put("manageYn", "Y");
 		if (orderColumn == null || orderColumn.equals("null")) {
 			log.info("----------null--------");
 			orderColumn = "0";
@@ -721,28 +702,15 @@ public class songyuController {
 		if (Integer.parseInt(orderColumn) > 0) {
 			params.put("orderCol", orderColumnName);
 			params.put("desc", orderDirection);
-
 		} else {
 			params.put("orderCol", "");
 			params.put("desc", "");
 		}
 		log.info("params:" + params);
-//				ArrayList<HashMap>  list=new ArrayList<HashMap>();
 		Object count = mainService.selectCountQuery("songyuSQL.selectTotalCount5", params);
 		int total = (int) count;
 
 		ArrayList<HashMap> list = mainService.selectQuery("songyuSQL.selectAllList5", params);
-		// log.info("list:"+list);
-//				for(int i=0;i<List.size();i++) {
-//					HashMap map=new HashMap();
-//					map.put("jm_jisa",List.get(i).get("jm_jisa"));
-//					map.put("fullNmKr","fullnmKr"+i);
-//					map.put("userStatCd","user"+i);
-//					map.put("superUser","super"+i);
-//					list.add(map);
-//				}
-
-		// int total=list.size();
 
 		HashMap<String, Object> resultmap = new HashMap();
 		resultmap.put("draw", draw);
@@ -753,18 +721,6 @@ public class songyuController {
 		JSONObject obj = new JSONObject(resultmap);
 		log.info("obj:" + obj);
 		return ResponseEntity.ok(obj.toString());
-//			        JSONObject obj =new JSONObject(resultmap);
-//			        System.out.println(obj);
-//			       
-//			      //log.info("jo:"+jo);
-//			      			res.setCharacterEncoding("UTF-8");
-//			      			res.setHeader("Access-Control-Allow-Origin", "*");
-//			      			res.setHeader("Cache-Control", "no-cache");
-//			      			res.resetBuffer();
-//			      			res.setContentType("application/json");
-//			      			//response.getOutputStream().write(jo);
-//			      			res.getWriter().print(obj);
-//			      			res.getWriter().flush();
 	}
 
 	@RequestMapping(value = "/fileUpload/post") // ajax에서 호출하는 부분
