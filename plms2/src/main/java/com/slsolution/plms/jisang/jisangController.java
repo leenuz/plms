@@ -852,6 +852,8 @@ log.info("PMT_NO:"+PMT_NO);
 				togiList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_TOGI", params); // 대상토지
 				fileList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_FILE", params); // 첨부서류
 				log.info("list:"+list);
+				log.info("togiList:"+togiList);
+				log.info("fileList:"+fileList);
 			} catch (Exception e) {
 				str_result = "N";
 				e.printStackTrace();
@@ -918,7 +920,7 @@ log.info("PMT_NO:"+PMT_NO);
 				//ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectDocInfo", map);
 				ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectDocInfo", map);
 				if (null != echolist && echolist.size() > 0) {
-					String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+					String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("pa_out_url"));
 					 System.out.println("str_EchoNo=====" + str_EchoNo);
 					map.put("OUT_URL", str_EchoNo);
 				}

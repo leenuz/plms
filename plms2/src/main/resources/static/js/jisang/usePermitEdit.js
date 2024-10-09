@@ -856,7 +856,7 @@ $(document).on("click",".saveBtn ",function(){
 //상신
 $(document).on("click",".approvalBtn ",function(){
 	//fileCnt = $('#req_doc_file' +)
-	let flag = true;
+	/*let flag = true;
 	for(let i = 0; i < 10; i++ ) {
 		let content = $('.fileContent:eq('+i+') input').eq(2).val();
 		if(content == '') {
@@ -867,7 +867,7 @@ $(document).on("click",".approvalBtn ",function(){
 	if (!flag) {
 		alert('첨부파일을 확인해주세요.');
 		return;
-	}
+	}*/
 	var formSerializeArray = $('#saveForm').serializeArray();
   len = formSerializeArray.length;
        var dataObj = {};
@@ -944,9 +944,10 @@ $(document).on("click",".approvalBtn ",function(){
 	   	dataObj.desangTogis=togiDatas;
 		dataObj.gubun="modify";
 				dataObj.pmt_status="임시저장";
+				dataObj.PMT_NO=$("#pmt_no").val();
 		 //임시저장 호출
 console.log(dataObj);
-		 		url="/land/jisang/usePermitRegisterSave";
+		 		/*url="/land/jisang/usePermitRegisterSave";
 		 		$.ajax({
 
 		 			url:url,
@@ -964,48 +965,11 @@ console.log(dataObj);
 		 				if (response.success="Y"){
 		 					console.log("response.success Y");
 		 					//console.log("response.resultData length:"+response.resultData.length);
-		 					 dataObj.PMT_NO=response.PMT_NO;
+		 					 
 		 					 console.log("---------------상신으로 넘겨야함-------------");
 		 					
 		 					
-		 					url="/land/jisang/selectJisangPmtDetailListAppoval";
-		 						   	$.ajax({
-
-		 								url:url,
-		 								type:'POST',
-		 								contentType:"application/json",
-		 								data:JSON.stringify(dataObj),
-
-		 								dataType:"json",
-		 								beforeSend:function(request){
-		 									console.log("beforesend ........................");
-		 									//loadingShow();
-		 								},
-		 								success:function(response){
-		 									//loadingHide();
-											console.log("----------------sangsin result----------");
-		 									console.log(response);
-		 									if (response.success="Y"){
-		 										console.log("response.success Y");
-		 										//console.log("response.resultData length:"+response.resultData.length);
-		 										alert("정상적으로 상신 되었습니다.");
-		 										/*$("#popup_bg").show();
-		 										$("#popup").show(500);
-		 										//$("#addrPopupLayer tbody td").remove();
-		 										for(var i=0;i<response.resultData.length;i++){
-		 											$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-		 										}*/
-		 									}
-		 									else {
-		 										console.log("response.success N");
-		 									}
-		 								},
-		 								error:function(jqXHR,textStatus,errorThrown){
-		 									alert("sangsin ajax error\n"+textStatus+":"+errorThrown);
-		 									return false;
-		 								}
-
-		 						   	});
+		 					
 		 					
 		 					
 		 					
@@ -1019,7 +983,56 @@ console.log(dataObj);
 		 				return false;
 		 			}
 
-		 		});
+		 		});*/
+				
+				
+				
+				
+				url="/land/jisang/selectJisangPmtDetailListAppoval";
+			   	$.ajax({
+
+					url:url,
+					type:'POST',
+					contentType:"application/json",
+					data:JSON.stringify(dataObj),
+
+					dataType:"json",
+					beforeSend:function(request){
+						console.log("beforesend ........................");
+						//loadingShow();
+					},
+					success:function(response){
+						//loadingHide();
+						console.log("----------------sangsin result----------");
+						console.log(response);
+						if (response.success="Y"){
+							console.log("response.success Y");
+							//console.log("response.resultData length:"+response.resultData.length);
+							alert("정상적으로 상신 되었습니다.");
+							
+														
+														//var url=response.OUT_URL;
+							var urls = response.OUT_URL;
+							window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
+							/*$("#popup_bg").show();
+							$("#popup").show(500);
+							//$("#addrPopupLayer tbody td").remove();
+							for(var i=0;i<response.resultData.length;i++){
+								$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+							}*/
+						}
+						else {
+							console.log("response.success N");
+						}
+					},
+					error:function(jqXHR,textStatus,errorThrown){
+						alert("sangsin ajax error\n"+textStatus+":"+errorThrown);
+						return false;
+					}
+
+			   	});
+				
+				
 })
 
 
