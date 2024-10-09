@@ -938,15 +938,19 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				kibon_map.put("GOVER_NO", cu.evl((String) ((HashMap) list.get(0)).get("gover_no"), ""));
 				kibon_map.put("JISA", cu.evl((String) ((HashMap) list.get(0)).get("jisa"), ""));
 				kibon_map.put("GOVER_OWN_YN", cu.evl((String) ((HashMap) list.get(0)).get("gover_own_yn"), ""));
+				kibon_map.put("GOVER_OVERLAP_YN", cu.evl((String) ((HashMap) list.get(0)).get("gover_overlap_yn"), ""));
 				kibon_map.put("YONGDO", cu.evl((String) ((HashMap) list.get(0)).get("yongdo"), ""));
-				kibon_map.put("PIPE_NAME", cu.evl((String) ((HashMap) list.get(0)).get("pipe_name"), ""));
+				kibon_map.put("PIPE_NAME", cu.evl((String) ((HashMap) list.get(0)).get("pipename"), ""));
 				kibon_map.put("PIPE_METER", cu.evl(String.valueOf(((HashMap) list.get(0)).get("pipe_meter")), ""));
 				kibon_map.put("PIPE_METER2", cu.evl(String.valueOf(((HashMap) list.get(0)).get("pipe_meter2")), ""));
 				kibon_map.put("SUN_GUBUN", cu.evl((String) ((HashMap) list.get(0)).get("sun_gubun"), ""));
 				kibon_map.put("USE_PURPOS", cu.evl((String) ((HashMap) list.get(0)).get("use_purpos"), ""));
 				kibon_map.put("ADDRESS", cu.evl((String) ((HashMap) list.get(0)).get("sido_nm"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("sgg_nm"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("emd_nm"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("ri_nm"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("jibun"), ""));
+				
+				kibon_map.put("JIJUK_AREA", cu.evl(String.valueOf(((HashMap) list.get(0)).get("jijuk_area")), ""));
 				kibon_map.put("JIMOK_TEXT", cu.evl((String) ((HashMap) list.get(0)).get("jimok_text"), ""));
-				kibon_map.put("JIJUK_AREA", cu.evl((String) ((HashMap) list.get(0)).get("jijuk_area"), ""));
+				//kibon_map.put("JIJUK_AREA", cu.evl((String) ((HashMap) list.get(0)).get("jijuk_area"), ""));
+				kibon_map.put("ADDRESS", cu.evl((String) ((HashMap) list.get(0)).get("address"), ""));
 				kibon_map.put("DOSIPLAN", cu.evl((String) ((HashMap) list.get(0)).get("dosiplan"), ""));
 				// java.sql.Date 객체에서 toString() 호출
 				java.sql.Date sqlDate = (java.sql.Date) ((HashMap) list.get(0)).get("gover_st_date");
@@ -959,6 +963,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				//kibon_map.put("GOVER_ED_DATE", cu.evl((String) ((HashMap) list.get(0)).get("gover_ed_date"), "").toString());
 
 				// 관리기관정보
+				kibon_map.put("PMT_NM", cu.evl((String) ((HashMap) list.get(0)).get("pmt_nm"), ""));
 				kibon_map.put("PMT_OFFICE", cu.evl((String) ((HashMap) list.get(0)).get("pmt_office"), ""));
 				kibon_map.put("ADM_OFFICE", cu.evl((String) ((HashMap) list.get(0)).get("adm_office"), ""));
 				kibon_map.put("OFFICE_DEPART", cu.evl((String) ((HashMap) list.get(0)).get("office_depart"), ""));
@@ -983,7 +988,9 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 			if (pay_List.size() > 0) {
 				for (int i = 0; i < pay_List.size(); i++) {
 					pay_map.put("PAY_YR" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("pay_yr"), ""));
-					pay_map.put("SEQ" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("seq"), ""));
+					pay_map.put("SEQ" + i, cu.evl(String.valueOf(((HashMap) pay_List.get(i)).get("seq")), ""));
+
+					//pay_map.put("SEQ" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("seq"), ""));
 					pay_map.put("PAY_DATE" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("pay_date"), ""));
 					pay_map.put("PAY_MONEY" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("pay_money"), ""));
 					pay_map.put("PMT_ST_DATE" + i, cu.evl((String) ((HashMap) pay_List.get(i)).get("pmt_st_date"), ""));
@@ -1022,27 +1029,34 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 					togi_map.put("GOVER_OWN_YN" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("gover_own_yn"), ""));
 					
 					Object jijukAreaObj = ((HashMap) pnu_list.get(i)).get("jijuk_area");
-
 					// BigDecimal을 String으로 변환하고, null 여부를 확인하여 처리
 					String jijukAreaStr = (jijukAreaObj != null) ? jijukAreaObj.toString() : "";
 					togi_map.put("JIJUK_AREA" + i, cu.evl(jijukAreaStr, ""));
 					
+					
+					Object jijukLengthObj = ((HashMap) pnu_list.get(i)).get("gover_length");
+					// BigDecimal을 String으로 변환하고, null 여부를 확인하여 처리
+					String jijukLengthStr = (jijukLengthObj != null) ? jijukLengthObj.toString() : "";
+					togi_map.put("GOVER_LENGTH" + i, cu.evl(jijukLengthStr, ""));
+					
 					//togi_map.put("JIJUK_AREA" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("jijuk_area"), ""));
-					togi_map.put("GOVER_LENGTH" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("gover_length"), ""));
-					togi_map.put("GOVER_AREA" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("gover_area"), ""));
+					//togi_map.put("GOVER_LENGTH" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("gover_length"), ""));
+					togi_map.put("GOVER_AREA" + i, cu.evl(String.valueOf(((HashMap) pnu_list.get(i)).get("gover_area")), ""));
+					//togi_map.put("GOVER_AREA" + i, cu.evl((String) ((HashMap) pnu_list.get(i)).get("gover_area"), ""));
 				}
 			}
 //			System.out.println(togi_map);
 			if (file_list.size() > 0) {
 				for (int i = 0; i < file_list.size(); i++) {
-					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), ""));
-					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), ""));
+					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), ""));
+					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), ""));
+					log.info("fileMap:"+file_map);
 
 				}
 			}
 
-//			System.out.println("file_list=" + file_list);
-
+			System.out.println("file_list=" + file_list);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1113,7 +1127,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append("			 		</td>");
 		sbHtml.append("			 		<th scope=\"row\">관로저촉여부</th>	");
 		sbHtml.append("			 		<td>");
-		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + /* kibon_map.get("관로저촉여부") + */"</span>	"); // TODO: 관로저촉여부 값 입력내용 확인후 수정.=> 추후 관로관리 개발후 정보적용
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" +  kibon_map.get("GOVER_OVERLAP_YN") + "</span>	"); // TODO: 관로저촉여부 값 입력내용 확인후 수정.=> 추후 관로관리 개발후 정보적용
 		sbHtml.append("			 		</td>	");
 		sbHtml.append("			 	</tr>");
 		sbHtml.append("			 	<tr>");
@@ -1143,6 +1157,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append("			 		</td>");
 		sbHtml.append("			 		<th scope=\"row\">지적면적</th>	");
 		sbHtml.append("			 		<td>");
+		log.info("kibon_map:"+kibon_map);
 		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + kibon_map.get("JIJUK_AREA") + "</span>	");
 		sbHtml.append("			 		</td>");
 		sbHtml.append("			 		<th scope=\"row\">토지이용계획</th>	");
@@ -1348,7 +1363,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append(" </body>         \n");
 		sbHtml.append("                 \n");
 		sbHtml.append(" </html>         \n");
-	//	System.out.println(sbHtml.toString());
+		System.out.println(sbHtml.toString());
 		return sbHtml.toString();
 
 	}

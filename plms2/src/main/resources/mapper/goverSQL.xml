@@ -145,6 +145,7 @@ LEFT JOIN plms_approval PA
 SELECT *
 FROM (
     SELECT A.GOVER_NO
+    	 ,TRIM(CONCAT(A.sido_nm, ' ', A.sgg_nm, ' ', A.emd_nm, ' ',A.ri_nm, ' ', A.jibun)) AS address
          , A.JISA
          , A.YONGDO
          , A.PIPE_NAME
@@ -355,6 +356,10 @@ WHERE 1=1
 	               gp.gp_gover_length AS gover_length,
 	               gp.gp_gover_area AS gover_area,
 	               gp.gp_jimok_text AS jimok_text,
+	               gp.gp_jijuk_area as jijuk_area,
+	               gp.gp_gover_own_yn as gover_own_yn,
+	               gp.gp_pipe_overlap_yn as overlap_yn,
+	               gp.gp_dosiplan as dosiplan,
 	               gpm.gp_pay_date AS pay_date,
 	               gpm.gp_pay_money AS pay_money,
 	               (SELECT COUNT(*) FROM gover_pnu WHERE gover_pnu.gp_gover_no = gm.gm_gover_no) AS pnu_count  <!-- 필지수 계산 -->
@@ -363,6 +368,7 @@ WHERE 1=1
 	               ,gpm.gp_pmt_st_date as pmt_st_date
 	               ,gpm.gp_pmt_ed_date as pmt_ed_date
 	               ,gpm.gp_pay_way as pay_way
+	               ,gpm.gp_nm as pmt_nm
 	        FROM gover_master gm
 	        LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
 	        LEFT JOIN GOVER_PERMIT gpm ON gm.gm_gover_no = gpm.gp_gover_no

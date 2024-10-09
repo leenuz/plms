@@ -102,28 +102,28 @@
 						<ul class="contents">
 						    <!-- 주소 -->
 						    <li class="content largeWidth">
-						        <input type="text" th:if="${repFlagPnu != null && !repFlagPnu.isEmpty()}" 
-						               th:value="${(repFlagPnu[0].sido_nm != null ? repFlagPnu[0].sido_nm : '') 
-						                         + (repFlagPnu[0].sgg_nm != null ? ' ' + repFlagPnu[0].sgg_nm : '') 
-						                         + (repFlagPnu[0].emd_nm != null ? ' ' + repFlagPnu[0].emd_nm : '') 
-						                         + (repFlagPnu[0].ri_nm != null ? ' ' + repFlagPnu[0].ri_nm : '') 
-						                         + (repFlagPnu[0].jibun != null ? ' ' + repFlagPnu[0].jibun : '')}"
+						        <input type="text" th:if="${resultData != null && !resultData.isEmpty()}" 
+						               th:value="${(resultData.sido_nm != null ? resultData.sido_nm : '') 
+						                         + (resultData.sgg_nm != null ? ' ' + resultData.sgg_nm : '') 
+						                         + (resultData.emd_nm != null ? ' ' + resultData.emd_nm : '') 
+						                         + (resultData.ri_nm != null ? ' ' + resultData.ri_nm : '') 
+						                         + (resultData.jibun != null ? ' ' + resultData.jibun : '')}"
 						               class="notWriteInput" readonly />
 						    </li>
 						    <!-- 지목 -->
 						    <li class="content">
-						        <input type="text" th:if="${repFlagPnu != null && !repFlagPnu.isEmpty()}" 
-						               th:value="${repFlagPnu[0].jimok_text}" class="notWriteInput" readonly />
+						        <input type="text" 
+						               th:value="${resultData.jimok_text}" class="notWriteInput" readonly />
 						    </li>
 						    <!-- 지적면적 -->
 						    <li class="content middleWidth">
-						        <input type="text" th:if="${repFlagPnu != null && !repFlagPnu.isEmpty()}" 
-						               th:value="${repFlagPnu[0].jijuk_area}" readonly class="notWriteInput" />
+						        <input type="text" 
+						               th:value="${resultData.jijuk_area}" readonly class="notWriteInput" />
 						    </li>
 						    <!-- 토지이용계획 -->
 						    <li class="content middleWidth">
-						        <input type="text" th:if="${repFlagPnu != null && !repFlagPnu.isEmpty()}" 
-						               th:value="${repFlagPnu[0].dosiplan}" class="notWriteInput" readonly />
+						        <input type="text"
+						               th:value="${resultData.dosiplan}" class="notWriteInput" readonly />
 						    </li>
 						</ul>
 					</div>
