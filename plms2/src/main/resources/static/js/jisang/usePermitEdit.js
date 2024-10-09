@@ -23,14 +23,62 @@ const usePermitEditInfoAddBtnEvent01 = () => {
 
 
     infoContentsBox.addEventListener('click', function (event) {
-
-
+	console.log('indexs :: ' , index);
+		let idx = $('#togiDiv .contents').length + 1;
         // 버튼 클릭시 추가되게
         if (event.target.classList.contains('addBtn')) {
             // ul 만들기
             const infoUl = document.createElement('ul');
             infoUl.classList.add('contents');
-
+			
+			const hiddenPermitIndexInput = document.createElement('input');
+                hiddenPermitIndexInput.id = 'permitIndex';
+                hiddenPermitIndexInput.value = idx;
+                hiddenPermitIndexInput.type = 'hidden';
+                
+                const hiddenTogiManageNoInput = document.createElement('input');
+                hiddenTogiManageNoInput.id = 'togiManageNo';
+                hiddenTogiManageNoInput.name = 'togiManageNo';
+                hiddenTogiManageNoInput.type = 'hidden';
+                
+                const hiddenSidoNmInput = document.createElement('input');
+                hiddenSidoNmInput.id = 'sido_nm';
+                hiddenSidoNmInput.name = 'sido_nm';
+                hiddenSidoNmInput.type = 'hidden';
+                
+                const hiddenSggNmInput = document.createElement('input');
+                hiddenSggNmInput.id = 'sgg_nm';
+                hiddenSggNmInput.name = 'sgg_nm';
+                hiddenSggNmInput.type = 'hidden';
+                
+                const hiddenEmdNmInput = document.createElement('input');
+                hiddenEmdNmInput.id = 'emd_nm';
+                hiddenEmdNmInput.name = 'emd_nm';
+                hiddenEmdNmInput.type = 'hidden';
+                
+                const hiddenRiNmInput = document.createElement('input');
+                hiddenRiNmInput.id = 'ri_nm';
+                hiddenRiNmInput.name = 'ri_nm';
+                hiddenRiNmInput.type = 'hidden';
+                
+                const hiddenJibunNmInput = document.createElement('input');
+                hiddenJibunNmInput.id = 'jibun';
+                hiddenJibunNmInput.name = 'jibun';
+                hiddenJibunNmInput.type = 'hidden';
+                
+                const hiddenAddrCodeNmInput = document.createElement('input');
+                hiddenAddrCodeNmInput.id = 'addrcode';
+                hiddenAddrCodeNmInput.name = 'addrcode';
+                hiddenAddrCodeNmInput.type = 'hidden';
+				
+				infoUl.appendChild(hiddenPermitIndexInput);
+				infoUl.appendChild(hiddenTogiManageNoInput);
+				infoUl.appendChild(hiddenSidoNmInput);
+				infoUl.appendChild(hiddenSggNmInput);
+				infoUl.appendChild(hiddenEmdNmInput);
+				infoUl.appendChild(hiddenRiNmInput);
+				infoUl.appendChild(hiddenJibunNmInput);
+				infoUl.appendChild(hiddenAddrCodeNmInput);
             for (let i = 1; i <= 9; i++) {
                 // li 만들기
                 const infoLi = document.createElement('li');
@@ -333,12 +381,21 @@ $(document).on("click",".PopupMoreSelectBtn",function(){
 });
 
 $(document).on("click",".addParentBtn",function(){
-
   const checkboxes = document.querySelectorAll('input[name="chk"]:checked'); // 체크된 체크박스만 선택
 
     var id = $(this).attr('data-index');
+    
     console.log(id);
+    console.log(checkboxes);
+    //if(checkboxes.length > 1) {
+	// $('#togiDiv .contents').eq(id).remove();
+	//}
+    
     checkboxes.forEach((checkbox,checkno) => {
+		let idx = $('#togiDiv .contents').length;
+		const infoUl = document.createElement('ul');
+            infoUl.classList.add('contents');
+            
             var jusoInfo = checkbox.parentNode.parentNode;
              const address = jusoInfo.querySelector('input#popupAddress').value + " " +  jusoInfo.querySelector('input#jibun').value ;
              const jimok = jusoInfo.querySelector('input#popupJimokText').value;
@@ -347,20 +404,158 @@ $(document).on("click",".addParentBtn",function(){
              const jasanNo = jusoInfo.querySelector('input#popupJasanNo').value;
              const souja = jusoInfo.querySelector('input#popupSouja').value;
              const setMoney = jusoInfo.querySelector('input#popupSetMoney').value;
-      if (checkno === 0) {
+             
+             const sido_nm = jusoInfo.querySelector('input#sido_nm').value;
+             const sgg_nm = jusoInfo.querySelector('input#sgg_nm').value;
+             const ri_nm = jusoInfo.querySelector('input#ri_nm').value;
+             const jibun = jusoInfo.querySelector('input#jibun').value;
+             const emd_nm = jusoInfo.querySelector('input#emd_nm').value;
+             
+             $("input[name='sido_nm']").eq(idx).val(sido_nm);
+             $("input[name='sgg_nm']").eq(idx).val(sgg_nm);
+             $("input[name='ri_nm']").eq(idx).val(ri_nm);
+             $("input[name='jibun']").eq(idx).val(jibun);
+             $("input[name='emd_nm']").eq(idx).val(emd_nm);
+             
+             
+             
+     if (checkno === 0) {
              // 선택된 칸에 데이터 넣기
-               $("input[name='address_" + id + "']").val(address);
-               $("input[name='jimok_" + id + "']").val(jimok);
-               $("input[name='fullArea_" + id + "']").val(jijukArea);
-               $("input[name='setArea_" + id + "']").val(pyeonibArea);
-               $("input[name='jasan_" + id + "']").val(jasanNo);
-               $("input[name='soyuja_" + id + "']").val(souja);
-               $("input[name='setMoney_" + id + "']").val(setMoney);
-               }else{
-	 // ul 만들기
-                const infoUl = document.createElement('ul');
-                infoUl.classList.add('contents');
-
+             console.log('id ',id);
+             console.log(sido_nm);
+             console.log('checkno :: ',checkno);
+             $("input[name='address_" + id + "']").val(address);
+             $("input[name='jimok_" + id + "']").val(jimok);
+             $("input[name='fullArea_" + id + "']").val(jijukArea);
+             $("input[name='setArea_" + id + "']").val(pyeonibArea);
+             $("input[name='jasan_" + id + "']").val(jasanNo);
+             $("input[name='soyuja_" + id + "']").val(souja);
+             $("input[name='setMoney_" + id + "']").val(setMoney);
+             
+             const hiddenPermitIndexInput = document.createElement('input');
+                hiddenPermitIndexInput.id = 'permitIndex';
+                hiddenPermitIndexInput.value = idx;
+                hiddenPermitIndexInput.type = 'hidden';
+                
+                const hiddenTogiManageNoInput = document.createElement('input');
+                hiddenTogiManageNoInput.id = 'togiManageNo';
+                hiddenTogiManageNoInput.name = 'togiManageNo';
+                hiddenTogiManageNoInput.type = 'hidden';
+                hiddenTogiManageNoInput.value = $('#saveForm [name="pmt_no"]').val();
+                
+                
+                const hiddenSidoNmInput = document.createElement('input');
+                hiddenSidoNmInput.id = 'sido_nm';
+                hiddenSidoNmInput.name = 'sido_nm';
+                hiddenSidoNmInput.type = 'hidden';
+                hiddenSidoNmInput.value = sido_nm;
+                
+                const hiddenSggNmInput = document.createElement('input');
+                hiddenSggNmInput.id = 'sgg_nm';
+                hiddenSggNmInput.name = 'sgg_nm';
+                hiddenSggNmInput.type = 'hidden';
+                hiddenSggNmInput.value = sgg_nm;
+                
+                const hiddenEmdNmInput = document.createElement('input');
+                hiddenEmdNmInput.id = 'emd_nm';
+                hiddenEmdNmInput.name = 'emd_nm';
+                hiddenEmdNmInput.type = 'hidden';
+                hiddenEmdNmInput.value = emd_nm;
+                
+                const hiddenRiNmInput = document.createElement('input');
+                hiddenRiNmInput.id = 'ri_nm';
+                hiddenRiNmInput.name = 'ri_nm';
+                hiddenRiNmInput.type = 'hidden';
+                hiddenRiNmInput.value = ri_nm;
+                
+                const hiddenJibunNmInput = document.createElement('input');
+                hiddenJibunNmInput.id = 'jibun';
+                hiddenJibunNmInput.name = 'jibun';
+                hiddenJibunNmInput.type = 'hidden';
+                hiddenJibunNmInput.value = jibun;
+                
+                const hiddenAddrCodeNmInput = document.createElement('input');
+                hiddenAddrCodeNmInput.id = 'addrcode';
+                hiddenAddrCodeNmInput.name = 'addrcode';
+                hiddenAddrCodeNmInput.type = 'hidden';
+                
+                infoUl.appendChild(hiddenPermitIndexInput);
+				infoUl.appendChild(hiddenTogiManageNoInput);
+				infoUl.appendChild(hiddenSidoNmInput);
+				infoUl.appendChild(hiddenSggNmInput);
+				infoUl.appendChild(hiddenEmdNmInput);
+				infoUl.appendChild(hiddenRiNmInput);
+				infoUl.appendChild(hiddenJibunNmInput);
+				infoUl.appendChild(hiddenAddrCodeNmInput);
+     }else{
+		 const hiddenPermitIndexInput = document.createElement('input');
+                hiddenPermitIndexInput.id = 'permitIndex';
+                hiddenPermitIndexInput.value = idx;
+                hiddenPermitIndexInput.type = 'hidden';
+                
+                const hiddenTogiManageNoInput = document.createElement('input');
+                hiddenTogiManageNoInput.id = 'togiManageNo';
+                hiddenTogiManageNoInput.name = 'togiManageNo';
+                hiddenTogiManageNoInput.type = 'hidden';
+                hiddenTogiManageNoInput.value = $('#saveForm [name="pmt_no"]').val();
+                
+                
+                const hiddenSidoNmInput = document.createElement('input');
+                hiddenSidoNmInput.id = 'sido_nm';
+                hiddenSidoNmInput.name = 'sido_nm';
+                hiddenSidoNmInput.type = 'hidden';
+                hiddenSidoNmInput.value = sido_nm;
+                
+                const hiddenSggNmInput = document.createElement('input');
+                hiddenSggNmInput.id = 'sgg_nm';
+                hiddenSggNmInput.name = 'sgg_nm';
+                hiddenSggNmInput.type = 'hidden';
+                hiddenSggNmInput.value = sgg_nm;
+                
+                const hiddenEmdNmInput = document.createElement('input');
+                hiddenEmdNmInput.id = 'emd_nm';
+                hiddenEmdNmInput.name = 'emd_nm';
+                hiddenEmdNmInput.type = 'hidden';
+                hiddenEmdNmInput.value = emd_nm;
+                
+                const hiddenRiNmInput = document.createElement('input');
+                hiddenRiNmInput.id = 'ri_nm';
+                hiddenRiNmInput.name = 'ri_nm';
+                hiddenRiNmInput.type = 'hidden';
+                hiddenRiNmInput.value = ri_nm;
+                
+                const hiddenJibunNmInput = document.createElement('input');
+                hiddenJibunNmInput.id = 'jibun';
+                hiddenJibunNmInput.name = 'jibun';
+                hiddenJibunNmInput.type = 'hidden';
+                hiddenJibunNmInput.value = jibun;
+                
+                const hiddenAddrCodeNmInput = document.createElement('input');
+                hiddenAddrCodeNmInput.id = 'addrcode';
+                hiddenAddrCodeNmInput.name = 'addrcode';
+                hiddenAddrCodeNmInput.type = 'hidden';
+                
+                infoUl.appendChild(hiddenPermitIndexInput);
+				infoUl.appendChild(hiddenTogiManageNoInput);
+				infoUl.appendChild(hiddenSidoNmInput);
+				infoUl.appendChild(hiddenSggNmInput);
+				infoUl.appendChild(hiddenEmdNmInput);
+				infoUl.appendChild(hiddenRiNmInput);
+				infoUl.appendChild(hiddenJibunNmInput);
+				infoUl.appendChild(hiddenAddrCodeNmInput);
+	 // ul 만들기	
+	 			console.log('====================================');
+             console.log(sido_nm);
+             console.log(sgg_nm);
+             console.log(ri_nm);
+             console.log(jibun);
+             console.log(emd_nm);
+             console.log('====================================');
+	 			console.log(sido_nm);
+                
+                
+                
+                
                 for (let i = 1; i <= 9; i++) {
                     // li 만들기
                     const infoLi = document.createElement('li');
@@ -484,11 +679,18 @@ $(document).on("click",".addParentBtn",function(){
                     infoUl.appendChild(infoLi);
                     infoContentsBox.appendChild(infoUl);
                 }
+				
                 index++;
+                
+                 
+                
+                
                 }
                 });
-
+	
+				
  $(".popupWrap").removeClass("active");
+ //$('#togiDiv .contents').last().remove();
 })
 
 
@@ -664,14 +866,15 @@ $(document).on("click",".saveBtn ",function(){
 			var soyuja=$(togiUls[i]).find("input[name='soyuja_"+ i +"']").val();
 			var pmtUser=$(togiUls[i]).find("input[name='pmtUser_"+ i +"']").val();
 			var togiManageNo=$(togiUls[i]).find("input[name='togiManageNo']").val();
+			console.log($(togiUls).eq(i).find("input[name='sido_nm']").val() + 'fasdfasdfsdfasasdf');
 			
-			var sido_nm=$(togiUls[i]).find("input[name='sido_nm']").val();
-			var sgg_nm=$(togiUls[i]).find("input[name='sgg_nm']").val();
-			var emd_nm=$(togiUls[i]).find("input[name='emd_nm']").val();
-			var ri_nm=$(togiUls[i]).find("input[name='ri_nm']").val();
-			var jibun=$(togiUls[i]).find("input[name='jibun']").val();
-			var addrcode=$(togiUls[i]).find("input[name='addrcode']").val();
-
+			var sido_nm=$(togiUls).eq(i).find("input[name='sido_nm']").val();
+			var sgg_nm=$(togiUls).eq(i).find("input[name='sgg_nm']").val();
+			var emd_nm=$(togiUls).eq(i).find("input[name='emd_nm']").val();
+			var ri_nm=$(togiUls).eq(i).find("input[name='ri_nm']").val();
+			var jibun=$(togiUls).eq(i).find("input[name='jibun']").val();
+			var addrcode=$(togiUls).eq(i).find("input[name='addrcode']").val();
+			console.log('address :: ' + address + ' i ::',i);
 	   		var togiObj={
 				"address":ljsIsNull(address)?'':address
 				,"togiaddress":ljsIsNull(address)?'':address
@@ -689,10 +892,11 @@ $(document).on("click",".saveBtn ",function(){
 				,"ri_nm":ljsIsNull(ri_nm)?'':ri_nm
 				,"jibun":ljsIsNull(jibun)?'':jibun
 				,"addrcode":ljsIsNull(addrcode)?'':addrcode
-
 	   		}
 	   		togiDatas.push(togiObj);
 	   	}
+	   	
+	   	console.log(togiDatas);
 	   	dataObj.desangTogis=togiDatas;
 		dataObj.gubun="modify";
 			dataObj.pmt_status="임시저장";

@@ -131,12 +131,14 @@ div.dt-filter-spacer {
 							<li class="title">사용자</li>
 							<li class="title titleBtnWrap">추가/삭제</li>
 						</ul>
-
+						[[${tojiList[0]}]]
 						<div class="contentsBox">
 							<ul class="contents" th:each="val, iterStat:${tojiList}">
 								<!-- hidden -->
+								
 								<input type="hidden" id="permitIndex" th:if="${val.no!=null}"
 									th:value="${val.no}">
+								
 								<input type="hidden" id="togiManageNo" th:if="${val.idx!=null}"
 									th:value="${val.idx}">
 								<input type="hidden" name="sido_nm" id="sido_nm"
@@ -151,6 +153,7 @@ div.dt-filter-spacer {
 									th:if="${val.jibun!=null}" th:value="${val.jibun}">
 								<input type="hidden" name="addrcode" id="addrcode"
 									th:if="${val.addrcode!=null}" th:value="${val.addrcode}">
+									
 								<!-- 주소 -->
 								<li class="content addressInfoWidth addressInfoBox">
 									<div class="addressData">
@@ -324,199 +327,26 @@ div.dt-filter-spacer {
 								<li class="title delContWidth">삭제</li>
 								<li class="title selectFileWidth">파일선택</li>
 							</ul>
-
-							<ul class="contents">
-								<li class="content"><input type="hidden" id="fseq"
-									value="1"> <input name="req_doc_file01"
-									id="req_doc_file01" type="text"
-									th:if="${#lists.size(reqDoc2list)>=1}"
-									th:value="${reqDoc2list[0].file_nm}" readonly
-									class="notWriteInput" style="text-align: center" /> <input
-									name="req_doc_file01" id="req_doc_file01" type="text"
-									th:if="${#lists.size(reqDoc2list)<1}" placeholder="" readonly
-									class="notWriteInput" style="text-align: center" /></li>
+							<ul class="contents" th:each="doc, iterStat : ${reqDoc3list}">
+							    <li class="content">
+							        <input type="hidden" id="fseq" th:value="${iterStat.index + 1}" />
+							        <input type="hidden" id="pmt_no" th:value="${resultData.idx}" />
+							        <input th:id="'req_doc_file' + (${iterStat.index + 1} < 10 ? '0' + (${iterStat.index + 1}) : (${iterStat.index + 1}))"
+							        	   th:name="'req_doc_file' + (${iterStat.index + 1} < 10 ? '0' + (${iterStat.index + 1}) : (${iterStat.index + 1}))"
+							               type="text"
+							               th:value="${doc.file_gubun} == ${iterStat.index + 1} ? ${doc.file_nm} : ''"
+							               readonly
+							               class="notWriteInput" style="text-align:center"/>
+							    </li>
 								<li class="content delContWidth">
 									<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
 								</li>
 								<li class="content selectFileWidth lightfileBtnWrap">
 									<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
-									name="landTerminationRegistration_myPcFiles01"
-									id="landTerminationRegistration_myPcFiles01" /> <label
-									for="landTerminationRegistration_myPcFiles01">파일선택</label>
-								</li>
-							</ul>
-							<ul class="contents">
-								<li class="content"><input type="hidden" id="fseq"
-									value="2"> <input name="req_doc_file02"
-									id="req_doc_file02" type="text"
-									th:if="${#lists.size(reqDoc2list)>=2}"
-									th:value="${reqDoc2list[1].file_nm!=null?reqDoc2list[1].file_nm:''}"
-									readonly class="notWriteInput" style="text-align: center" /> <input
-									name="req_doc_file02" id="req_doc_file02" type="text"
-									th:if="${#lists.size(reqDoc2list)<2}" placeholder="" readonly
-									class="notWriteInput" style="text-align: center" /></li>
-								<li class="content delContWidth">
-									<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-								</li>
-								<li class="content selectFileWidth lightfileBtnWrap">
-									<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
-									name="landTerminationRegistration_myPcFiles02"
-									id="landTerminationRegistration_myPcFiles02" /> <label
-									for="landTerminationRegistration_myPcFiles02">파일선택</label>
-								</li>
-							</ul>
-							<ul class="contents">
-								<li class="content"><input type="hidden" id="fseq"
-									value="3"> <input name="req_doc_file03"
-									id="req_doc_file03" type="text"
-									th:if="${#lists.size(reqDoc2list)>=3}"
-									th:value="${reqDoc2list[2].file_nm!=null?reqDoc2list[2].file_nm:''}"
-									readonly class="notWriteInput" style="text-align: center" /> <input
-									name="req_doc_file03" id="req_doc_file03" type="text"
-									th:if="${#lists.size(reqDoc2list)<3}" placeholder="" readonly
-									class="notWriteInput" style="text-align: center" /></li>
-								<li class="content delContWidth">
-									<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-								</li>
-								<li class="content selectFileWidth lightfileBtnWrap">
-									<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
-									name="landTerminationRegistration_myPcFiles03"
-									id="landTerminationRegistration_myPcFiles03" /> <label
-									for="landTerminationRegistration_myPcFiles03">파일선택</label>
-								</li>
-							</ul>
-							<ul class="contents">
-								<li class="content"><input type="hidden" id="fseq"
-									value="4"> <input type="text" name="req_doc_file04"
-									id="req_doc_file04" th:if="${#lists.size(reqDoc2list)>=4}"
-									th:value="${reqDoc2list[3].file_nm!=null?reqDoc2list[3].file_nm:''}"
-									readonly class="notWriteInput" style="text-align: center" /> <input
-									type="text" name="req_doc_file04" id="req_doc_file04"
-									th:if="${#lists.size(reqDoc2list)<4}" placeholder="" readonly
-									class="notWriteInput" style="text-align: center" /></li>
-								<li class="content delContWidth">
-									<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-								</li>
-								<li class="content selectFileWidth lightfileBtnWrap">
-									<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
-									name="landTerminationRegistration_myPcFiles04"
-									id="landTerminationRegistration_myPcFiles04" /> <label
-									for="landTerminationRegistration_myPcFiles04">파일선택</label>
-								</li>
-							</ul>
-							<ul class="contents">
-								<li class="content"><input type="hidden" id="fseq"
-									value="5"> <input type="text" name="req_doc_file05"
-									id="req_doc_file05" th:if="${#lists.size(reqDoc2list)>=5}"
-									th:value="${reqDoc2list[4].file_nm!=null?reqDoc2list[4].file_nm:''}"
-									readonly class="notWriteInput" style="text-align: center" /> <input
-									type="text" name="req_doc_file05" id="req_doc_file05"
-									th:if="${#lists.size(reqDoc2list)<5}" placeholder="" readonly
-									class="notWriteInput" style="text-align: center" /></li>
-								<li class="content delContWidth">
-									<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-								</li>
-								<li class="content selectFileWidth lightfileBtnWrap">
-									<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
-									name="landTerminationRegistration_myPcFiles05"
-									id="landTerminationRegistration_myPcFiles05" /> <label
-									for="landTerminationRegistration_myPcFiles05">파일선택</label>
-								</li>
-							</ul>
-							<ul class="contents">
-								<li class="content"><input type="hidden" id="fseq"
-									value="6"> <input type="text" name="req_doc_file06"
-									id="req_doc_file06" th:if="${#lists.size(reqDoc2list)>=6}"
-									th:value="${reqDoc2list[5].file_nm!=null?reqDoc2list[5].file_nm:''}"
-									readonly class="notWriteInput" style="text-align: center" /> <input
-									type="text" name="req_doc_file06" id="req_doc_file06"
-									th:if="${#lists.size(reqDoc2list)<6}" placeholder="" readonly
-									class="notWriteInput" style="text-align: center" /></li>
-								<li class="content delContWidth">
-									<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-								</li>
-								<li class="content selectFileWidth lightfileBtnWrap">
-									<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
-									name="landTerminationRegistration_myPcFiles06"
-									id="landTerminationRegistration_myPcFiles06" /> <label
-									for="landTerminationRegistration_myPcFiles06">파일선택</label>
-								</li>
-							</ul>
-							<ul class="contents">
-								<li class="content"><input type="hidden" id="fseq"
-									value="7"> <input type="text" name="req_doc_file07"
-									id="req_doc_file07" th:if="${#lists.size(reqDoc2list)>=7}"
-									th:value="${reqDoc2list[6].file_nm!=null?reqDoc2list[6].file_nm:''}"
-									readonly class="notWriteInput" style="text-align: center" /> <input
-									type="text" name="req_doc_file07" id="req_doc_file07"
-									th:if="${#lists.size(reqDoc2list)<7}" placeholder="" readonly
-									class="notWriteInput" style="text-align: center" /></li>
-								<li class="content delContWidth">
-									<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-								</li>
-								<li class="content selectFileWidth lightfileBtnWrap">
-									<!-- 파일보기 -> 파일선택으로 text 변경 --> <!-- 파일보기 -> 파일선택으로 text 변경 -->
-									<input type="file"
-									name="landTerminationRegistration_myPcFiles07"
-									id="landTerminationRegistration_myPcFiles07" /> <label
-									for="landTerminationRegistration_myPcFiles07">파일선택</label>
-								</li>
-							</ul>
-							<ul class="contents">
-								<li class="content"><input type="hidden" id="fseq"
-									value="8"> <input type="text" name="req_doc_file08"
-									id="req_doc_file08" th:if="${#lists.size(reqDoc2list)>=8}"
-									th:value="${reqDoc2list[7].file_nm!=null?reqDoc2list[7].file_nm:''}"
-									readonly class="notWriteInput" style="text-align: center" /> <input
-									type="text" name="req_doc_file08" id="req_doc_file08"
-									th:if="${#lists.size(reqDoc2list)<8}" placeholder="" readonly
-									class="notWriteInput" style="text-align: center" /></li>
-								<li class="content delContWidth">
-									<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-								</li>
-								<li class="content selectFileWidth lightfileBtnWrap">
-									<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
-									name="landTerminationRegistration_myPcFiles08"
-									id="landTerminationRegistration_myPcFiles08" /> <label
-									for="landTerminationRegistration_myPcFiles08">파일선택</label>
-								</li>
-							</ul>
-							<ul class="contents">
-								<li class="content"><input type="hidden" id="fseq"
-									value="9"> <input type="text" name="req_doc_file09"
-									id="req_doc_file09" th:if="${#lists.size(reqDoc2list)>=9}"
-									th:value="${reqDoc2list[8].file_nm!=null?reqDoc2list[8].file_nm:''}"
-									readonly class="notWriteInput" style="text-align: center" /> <input
-									type="text" name="req_doc_file09" id="req_doc_file09"
-									th:if="${#lists.size(reqDoc2list)<9}" placeholder="" readonly
-									class="notWriteInput" style="text-align: center" /></li>
-								<li class="content delContWidth">
-									<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-								</li>
-								<li class="content selectFileWidth lightfileBtnWrap">
-									<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
-									name="landTerminationRegistration_myPcFiles09"
-									id="landTerminationRegistration_myPcFiles09" /> <label
-									for="landTerminationRegistration_myPcFiles09">파일선택</label>
-								</li>
-							</ul>
-							<ul class="contents">
-								<li class="content"><input type="hidden" id="fseq"
-									value="10"> <input type="text" name="req_doc_file10"
-									id="req_doc_file10" th:if="${#lists.size(reqDoc2list)>=10}"
-									th:value="${reqDoc2list[9].file_nm!=null?reqDoc2list[9].file_nm:''}"
-									readonly class="notWriteInput" style="text-align: center" /> <input
-									type="text" name="req_doc_file10" id="req_doc_file10"
-									th:if="${#lists.size(reqDoc2list)<10}" placeholder="" readonly
-									class="notWriteInput" style="text-align: center" /></li>
-								<li class="content delContWidth">
-									<button class="attachDelBtn miniBtn" id="docFileDelBtn">삭제</button>
-								</li>
-								<li class="content selectFileWidth lightfileBtnWrap">
-									<!-- 파일보기 -> 파일선택으로 text 변경 --> <input type="file"
-									name="landTerminationRegistration_myPcFiles10"
-									id="landTerminationRegistration_myPcFiles10" /> <label
-									for="landTerminationRegistration_myPcFiles10">파일선택</label>
+									th:id="'landTerminationRegistration_myPcFiles' + (${iterStat.index + 1} < 10 ? '0' + (${iterStat.index + 1}) : (${iterStat.index + 1}))"
+									th:name="'landTerminationRegistration_myPcFiles' + (${iterStat.index + 1} < 10 ? '0' + (${iterStat.index + 1}) : (${iterStat.index + 1}))"
+									/> <label
+									th:for="'landTerminationRegistration_myPcFiles' + (${iterStat.index + 1} < 10 ? '0' + (${iterStat.index + 1}) : (${iterStat.index + 1}))">파일선택</label>
 								</li>
 							</ul>
 						</div>
