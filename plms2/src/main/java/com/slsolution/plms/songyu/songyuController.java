@@ -579,7 +579,6 @@ public class songyuController {
 		Map map = req.getParameterMap();
 		log.info("draw:" + draw);
 		log.info("length:" + length);
-		// log.info("mx:"+mx);
 
 		HashMap params = new HashMap();
 		params.put("draw", draw);

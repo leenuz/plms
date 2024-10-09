@@ -2214,6 +2214,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     )r
     
     WHERE 1=1
+    AND r.jisang_status IN ('jisang', 'notset')
    	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and r.jisa=#{jisa}
 		</if>
@@ -2588,6 +2589,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     )r
     
     WHERE 1=1
+    AND r.jisang_status IN ('jisang', 'notset')
  		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 			and r.jisa=#{jisa}
 		</if>
