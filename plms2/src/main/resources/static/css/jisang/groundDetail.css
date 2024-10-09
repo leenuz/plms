@@ -1014,3 +1014,11 @@ button {
     justify-content: center;
     align-items: center;
 }
+#groundDetail input.notWriteInput {
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+    width: 100%;
+    text-align: center;
+}

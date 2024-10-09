@@ -86,40 +86,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      , (SELECT code_name FROM plms_issue_code pic WHERE pic."code" = PI.code_depth1) AS DEPTH1_title
      , (SELECT code_name FROM plms_issue_code pic WHERE pic."code" = PI.code_depth2) AS DEPTH2_title
      , (SELECT code_name FROM plms_issue_code pic WHERE pic."code" = PI.code_depth3) AS DEPTH3_title
-FROM plms_potential_issue PI
-LEFT JOIN (
-    SELECT
-        jm.jm_jisang_no AS manage_no,
-        COALESCE(jm.jm_comple_yn, '') AS comple_yn,
-        COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
-        SUBSTRING(jm.jm_jisang_no, 1, 1) AS rtype,
-        jm.jm_pnu AS pnu
-    FROM jisang_master jm
-
-    UNION ALL
-
-    SELECT
-        gm.gm_gover_no AS manage_no,
-        COALESCE('', '') AS comple_yn,
-        COALESCE('', '') AS permitted_yn,
-        SUBSTRING(gm.gm_gover_no, 1, 1) AS rtype,
-        gp.gp_pnu AS pnu
-    FROM gover_master gm
-    LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
-
-    UNION ALL
-
-    SELECT
-        nm.nm_notset_no AS manage_no,
-        COALESCE('', '') AS comple_yn,
-        COALESCE('', '') AS permitted_yn,
-        SUBSTRING(nm.nm_notset_no, 1, 1) AS rtype,
-        nm.nm_pnu AS pnu
-    FROM notset_master nm
-) AS u
-ON PI.pnu = u.pnu
-
-	where 1=1 	and PI.pnu=#{pnu}
+		FROM plms_potential_issue PI
+		LEFT JOIN (
+		    SELECT
+		        jm.jm_jisang_no AS manage_no,
+		        COALESCE(jm.jm_comple_yn, '') AS comple_yn,
+		        COALESCE(jm.jm_permitted_yn, '') AS permitted_yn,
+		        SUBSTRING(jm.jm_jisang_no, 1, 1) AS rtype,
+		        jm.jm_pnu AS pnu
+		    FROM jisang_master jm
+		
+		    UNION ALL
+		
+		    SELECT
+		        gm.gm_gover_no AS manage_no,
+		        COALESCE('', '') AS comple_yn,
+		        COALESCE('', '') AS permitted_yn,
+		        SUBSTRING(gm.gm_gover_no, 1, 1) AS rtype,
+		        gp.gp_pnu AS pnu
+		    FROM gover_master gm
+		    LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
+		
+		    UNION ALL
+		
+		    SELECT
+		        nm.nm_notset_no AS manage_no,
+		        COALESCE('', '') AS comple_yn,
+		        COALESCE('', '') AS permitted_yn,
+		        SUBSTRING(nm.nm_notset_no, 1, 1) AS rtype,
+		        nm.nm_pnu AS pnu
+		    FROM notset_master nm
+		) AS u
+		ON PI.pnu = u.pnu
+		WHERE 1=1 
+		AND PI.pnu=#{pnu}
 	</select>
 
 	<select id="selectIssueHistoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">

@@ -246,8 +246,7 @@
 								</ul>
 								<ul class="contents"
 									th:if="${atcFileList == null || atcFileList.isEmpty()}">
-									<li class="content01 " style="width: 100%; text-align: center">데이터가
-										없습니다.</li>
+									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
 								<ul class="contents" th:each="val:${atcFileList}">
 									<li class="content01 content">[[${val.ja_wdate}]]</li>
@@ -288,10 +287,8 @@
 									<li class="title06 title">등록상태</li>
 									<li class="title06 title">ECHO 문서보기</li>
 								</ul>
-								<ul class="contents lastContents"
-									th:if="${jisangPermitList == null || jisangPermitList.isEmpty()}">
-									<li class="content01 " style="width: 100%; text-align: center">데이터가
-										없습니다.</li>
+								<ul class="contents lastContents" th:if="${jisangPermitList == null || jisangPermitList.isEmpty()}">
+									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
 								<ul class="contents lastContents"
 									th:each="val, iterStat : ${jisangPermitList}">
@@ -343,10 +340,8 @@
 									<li class="title06 title">위치보기</li>
 								</ul>
 
-								<ul class="contents "
-									th:if="${jisangMergeList == null || jisangMergeList.isEmpty()}">
-									<li class="content01 " style="width: 100%; text-align: center">데이터가
-										없습니다.</li>
+								<ul class="contents" th:if="${jisangMergeList == null || jisangMergeList.isEmpty()}">
+									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
 								<ul class="contents"
 									th:each="val, iterStat : ${jisangMergeList}">
@@ -508,42 +503,37 @@
 								<ul class="contents " th:if="${jisangIssueList == null || jisangIssueList.isEmpty()}">
 									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents lastContents" th:each="val:${jisangIssueList}">
+								<ul class="contents lastContents">
+									<!-- 등기여부 -->
 									<li class="content01 content">
-										<!-- 등기설정 --> <!-- input 추가 --> <!-- input type="text" placeholder="등기설정" th:value="${val.comple_yn}" readonly class="notWriteInput" -->
-										<input type="text" placeholder="등기설정" readonly
-										class="notWriteInput">
+										<input type="text" placeholder="등기설정"  readonly class="notWriteInput">
+<!-- 										<input type="text" placeholder="등기설정" th:value="${jisangIssueList.comple_yn}" readonly class="notWriteInput"> -->
 									</li>
+									<!-- 계약여부 -->
 									<li class="content02 content">
-										<!-- 계약체결 --> <!-- input 추가 --> <input type="text"
-										placeholder="계약체결" th:value="${val.permitted_yn}" readonly
-										class="notWriteInput">
+										<input type="text" th:value="${jisangIssueList.permitted_yn}" readonly class="notWriteInput">
 									</li>
+									<!-- 이슈유형 대분류 -->
 									<li class="content03 content">
-										<!-- 이슈없음 --> <!-- input 추가 --> <input type="text"
-										placeholder="이슈없음" th:value="${val.depth1_title}" readonly
-										class="notWriteInput">
+										<input type="text" th:value="${jisangIssueList.depth1_title}" readonly class="notWriteInput">
 									</li>
+									<!-- 이슈유형 중분류 -->
 									<li class="content03 content">
-										<!-- 이슈없음 --> <!-- input 추가 --> <input type="text"
-										placeholder="이슈없음" th:value="${val.depth2_title}" readonly
-										class="notWriteInput">
+										<input type="text" th:value="${jisangIssueList.depth2_title}" readonly class="notWriteInput">
 									</li>
+									<!-- 이슈유형 세분류 -->
 									<li class="content03 content">
-										<!-- 이슈없음 --> <!-- input 추가 --> <input type="text"
-										placeholder="이슈없음" th:value="${val.depth3_title}" readonly
-										class="notWriteInput">
+										<input type="text" th:value="${jisangIssueList.depth3_title}" readonly class="notWriteInput">
 									</li>
+									<!-- 등록사유 -->
 									<li class="content01 content">
-										<!-- 신규등록 --> <!-- input 추가 --> <!-- input type="text" placeholder="신규등록" th:value="${val.pi_issue_comment}" readonly class="notWriteInput"-->
-										<input type="text" placeholder="신규등록" readonly
-										class="notWriteInput">
+										<input type="text" th:value="${jisangIssueList.issue_comment}" readonly class="notWriteInput">
 									</li>
+									<!-- 등록일시 -->
 									<li class="content04 content">
-										<!-- 2024-04-01 09:46:01 --> <!-- input 추가 --> <input
-										type="text" placeholder="2024-04-01 09:46:01"
-										th:value="${val.issue_date}" readonly class="notWriteInput">
+										<input type="text" th:value="${jisangIssueList.issue_date}" readonly class="notWriteInput">
 									</li>
+									<!-- 편집 -->
 									<li class="content04 content btnBox">
 										<div class="btnWrap">
 											<button class="editBtn miniBtn groundIssueReviseBtn">수정</button>
