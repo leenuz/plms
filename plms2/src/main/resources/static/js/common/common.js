@@ -330,6 +330,7 @@ function positionView(objInfo) {
 			type: "setCenter",
 			lon: firstCoordLng,
 			lat: firstCoordLat,
+			markers:[firstCoordLng, firstCoordLat],
 			zoom: 19,
 		};
 	} else {
@@ -362,6 +363,7 @@ function onePostionView(obj) {
 		type: "setCenter",
 		lon: firstCoordLng,
 		lat: firstCoordLat,
+		markers:[firstCoordLng, firstCoordLat],
 		zoom: 19,
 	};
 	// 자식 창에서 부모 창으로 메시지 보내기

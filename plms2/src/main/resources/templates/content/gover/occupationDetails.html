@@ -335,7 +335,7 @@ div.dt-filter-spacer {
 									<li class="content04 content">[[${val.gp_gover_length}]]</li>
 									<li class="content05 content">[[${val.gp_gover_area}]]</li>
 									<li class="content06 content">
-										<button class="viewDetailButton" onclick="openMap(this)">위치보기</button>
+										<button class="viewDetailButton" th:onclick="onePostionView([[${val}]])">위치보기</button>
 									</li>
 								</ul>
 							</div>
