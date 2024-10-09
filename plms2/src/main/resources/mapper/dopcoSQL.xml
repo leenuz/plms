@@ -406,57 +406,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--회사토지 상세정보 - 잠재이슈-->
 	<select id="selectIssueList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select (row_number() over()) as NO
-		 , to_char(issue_date,'YYYY-MM-DD HH:MM:SS') as issue_date
-		 ,*
-		  FROM plms_potential_issue PI
+		SELECT (ROW_NUMBER() OVER()) AS NO
+     , TO_CHAR(PI.issue_date, 'YYYY-MM-DD HH:MI:SS') AS issue_date  -- HH:MM:SS -> HH:MI:SS 수정
+     , PI.*
+     , (SELECT code_name FROM plms_issue_code pic WHERE pic."code" = PI.code_depth1) AS DEPTH1_title
+     , (SELECT code_name FROM plms_issue_code pic WHERE pic."code" = PI.code_depth2) AS DEPTH2_title
+     , (SELECT code_name FROM plms_issue_code pic WHERE pic."code" = PI.code_depth3) AS DEPTH3_title
+		FROM plms_potential_issue PI
 		  LEFT JOIN 
-		  (
-		
+		  (				 
 				SELECT 
-				jm.jm_jisang_no AS manage_no
-				,COALESCE(jm.jm_comple_yn,'') AS comple_yn
-				,COALESCE(jm.jm_permitted_yn,'') AS permitted_yn
-				,SUBSTRING(jm.jm_jisang_no,1,1) AS rtype
-				,jm.jm_pnu
-				 FROM jisang_master jm
-				 
-				 UNION all
-				 
-				 
-					SELECT 
-				gm.gm_gover_no AS manage_no
-				,COALESCE('','') AS comple_yn
-				,COALESCE('','') AS permitted_yn
-				,SUBSTRING(gm.gm_gover_no,1,1) AS rtype
-				,gp.gp_pnu
-				 FROM gover_master gm
-				 LEFT JOIN gover_pnu gp on gp.gp_gover_no=gm.gm_gover_no
-				 
-				 UNION all
-				 
-				 	SELECT 
-				nm.nm_notset_no AS manage_no
-				,COALESCE('','') AS comple_yn
-				,COALESCE('','') AS permitted_yn
-				,SUBSTRING(nm.nm_notset_no,1,1) AS rtype
-				,nm.nm_pnu
-				 FROM notset_master nm
-				 
- 				 UNION all
-				 
-				 	SELECT 
-				dom.dom_dopco_no AS manage_no
-				,COALESCE('','') AS comple_yn
-				,COALESCE('','') AS permitted_yn
-				,SUBSTRING(dom.dom_dopco_no,1,1) AS rtype
-				,dom.dom_pnu
-				 FROM dopco_master dom
-				 
-		 ) AS u
-		 ON PI.pnu = u.jm_pnu
-		 WHERE 1=1
-		and pnu=#{pnu}
+					dom.dom_dopco_no AS manage_no
+					,COALESCE('','') AS comple_yn
+					,COALESCE('','') AS permitted_yn
+					,SUBSTRING(dom.dom_dopco_no,1,1) AS rtype
+					,dom.dom_pnu
+			 	FROM dopco_master dom
+		 	) AS u
+		 	ON PI.pnu = u.dom_pnu
+		 	WHERE 1=1
+			AND PI.pnu=#{pnu}
 	</select>
 	
 	<!--회사토지 상세정보 - 잠재이슈 변경 이력-->

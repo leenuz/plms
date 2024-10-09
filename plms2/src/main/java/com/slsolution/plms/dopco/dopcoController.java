@@ -179,6 +179,25 @@ public class dopcoController {
 		ArrayList toja_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Toja", params); // 투자오더
 		ArrayList right_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Right", params); // 권리내역
 		ArrayList modify_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Modify", params); // 변경이력
+		//params.put("pnu", list.get(0).get("dom_pnu"));
+		params.put("pnu", list.get(0).get("dom_pnu").toString().trim());
+		log.info("pnu: " + list.get(0).get("dom_pnu"));
+		ArrayList<HashMap> dopcoIssueList = mainService.selectQuery("dopcoSQL.selectIssueList",params); // 잠재이슈
+		
+		if (dopcoIssueList == null) {
+		    dopcoIssueList = new ArrayList<>();
+		}
+		
+		log.info("dopcoIssueList size:"+dopcoIssueList.size());
+	    if (!dopcoIssueList.isEmpty()) {
+	        log.info("issueManualCode1: " + dopcoIssueList.get(0).get("pi_code_depth1"));
+	        log.info("issueManualCode2: " + dopcoIssueList.get(0).get("pi_code_depth2"));
+	        log.info("issueManualCode3: " + dopcoIssueList.get(0).get("pi_code_depth3"));
+	        
+	        params.put("issueManualCode1", dopcoIssueList.get(0).get("pi_code_depth1"));
+	        params.put("issueManualCode2", dopcoIssueList.get(0).get("pi_code_depth2"));
+	        params.put("issueManualCode3", dopcoIssueList.get(0).get("pi_code_depth3"));
+	    }
 		//params.put("dopco_no", modify_list)
 		
 		ArrayList file_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Files", params); // 첨부파일
@@ -223,28 +242,14 @@ public class dopcoController {
 				}
 			}
 		}
-		params.put("pnu", list.get(0).get("dom_pnu").toString().trim());
-		log.info("pnu: " + list.get(0).get("dom_pnu"));
-		ArrayList<HashMap> dopcoIssueList = mainService.selectQuery("dopcoSQL.selectIssueList",params);
-		log.info("dopcoIssueList size:"+dopcoIssueList.size());
-		log.info("dopcoIssueList: " + dopcoIssueList);
-		if (dopcoIssueList.size()>0) {
-			log.info("issueManualCode1: " + dopcoIssueList.get(0).get("pi_code_depth1"));
-			log.info("issueManualCode2: " + dopcoIssueList.get(0).get("pi_code_depth2"));
-			log.info("issueManualCode3: " + dopcoIssueList.get(0).get("pi_code_depth3"));
-			
-			params.put("issueManualCode1", dopcoIssueList.get(0).get("pi_code_depth1"));
-			params.put("issueManualCode2", dopcoIssueList.get(0).get("pi_code_depth2"));
-			params.put("issueManualCode3", dopcoIssueList.get(0).get("pi_code_depth3"));
-		}
+
 		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
 		ArrayList<HashMap> dopcoIssueHistoryList = mainService.selectQuery("dopcoSQL.selectIssueHistoryList",params);
 		ArrayList<HashMap> dopcoIssueCodeAtcFileList = mainService.selectQuery("dopcoSQL.selectIssueCodeAtcFileList",params);
-		log.info("dopcoIssueCodeAtcFileList: " + dopcoIssueCodeAtcFileList);
 		ArrayList<HashMap> dopcoMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+		log.info("dopcoIssueCodeAtcFileList: " + dopcoIssueCodeAtcFileList);
 		log.info("dopcoMemoList.size(): "+ dopcoMemoList.size());
 		log.info("dopcoIssueHistoryList: " + dopcoIssueHistoryList);
-		
 		log.info("data : " + resultData);
 		log.info("jijuk : " + jijuk);
 		
@@ -253,6 +258,7 @@ public class dopcoController {
 		mav.addObject("toja_list", toja_list);
 		mav.addObject("right_list", right_list);
 		mav.addObject("modify_list", modify_list);
+		mav.addObject("dopcoIssueList", dopcoIssueList.isEmpty() ? new HashMap<>() : dopcoIssueList.get(0)); // 비어있을 경우 빈 맵 전달
 		mav.addObject("file_list", file_list);
 		mav.addObject("jijuk", jijuk);
 		mav.addObject("addressList",addressList);

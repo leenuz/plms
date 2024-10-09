@@ -347,19 +347,24 @@
 									<li class="title03 title">등록일시</li>
 									<li class="title04 title">편집</li>
 								</ul>
-								<ul class="contents lastContents">
+								<ul class="contents lastContents" th:if="${dopcoIssueList == null or dopcoIssueList.size() == 0}">
+								    <li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+								</ul>
+								<ul class="contents lastContents" th:if="${dopcoIssueList != null and dopcoIssueList.size() > 0}">
+									<!-- 이슈세부유형 -->
 									<li class="content01 content">
-										<!-- 이슈없음 > 이슈없음 > 이슈없음 -->
-										<input type="text" placeholder="이슈없음 > 이슈없음 > 이슈없음" class="notWriteInput" readonly>
+										<input type="text" th:value="${dopcoIssueList.depth1_title} + ' > ' + ${dopcoIssueList.depth2_title} + ' > ' + ${dopcoIssueList.depth3_title}"
+										class="notWriteInput" readonly>
 									</li>
+									<!-- 사유 -->
 									<li class="content02 content">
-										<!-- 계약미체결 -->
-										<input type="text" placeholder="계약미체결" class="notWriteInput" readonly>
+										<input type="text" th:value="${dopcoIssueList.issue_comment}" class="notWriteInput" readonly>
 									</li>
+									<!-- 등록일시 -->
 									<li class="content03 content">
-										<!-- 1995-02-13 -->
-										<input type="text" placeholder="1995-02-13" class="notWriteInput" readonly>
+										<input type="text" th:value="${dopcoIssueList.issue_date}"  class="notWriteInput" readonly>
 									</li>
+									<!-- 편집 -->
 									<li class="content04 content btnBox">
 										<div class="btnWrap">
 											<button class="editBtn miniBtn issueReviseBtn">수정</button>
@@ -393,10 +398,10 @@
 									<li class="title04 title">내용</li>
 									<li class="title03 title">사유</li>
 								</ul>
-								<ul class="contents lastContents" th:if="${modify_list.size() == 0}">
+								<ul class="contents lastContents" th:if="${dopcoIssueHistoryList == null or dopcoIssueHistoryList.size() == 0}">
 									<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents" th:each="val:${dopcoIssueHistoryList}">
+								<ul class="contents lastContents" th:if="${dopcoIssueHistoryList != null and dopcoIssueHistoryList.size() > 0}">
 									<li class="content01 content">
 										[[${val.no}]]
 									</li>
