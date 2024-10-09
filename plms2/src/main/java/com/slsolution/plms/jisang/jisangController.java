@@ -1611,49 +1611,84 @@ log.info("PMT_NO:"+PMT_NO);
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
-		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
 		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 최신버전
-		log.info("jisangPermitList: " + jisangPermitList);
 		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
-		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
 		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
 		params.put("pnu", data.get(0).get("jm_pnu"));
 		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
-		log.info("jisangIssueList size:"+jisangIssueList.size());
+		
+		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
+		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
+		
+		log.info("jisangPermitList : " +  jisangPermitList);
+		log.info("jisangIssueList size : "+jisangIssueList.size());
+		
 		if (jisangIssueList.size()>0) {
 			params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
 			params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
 			params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
 		}
+		
 		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
 		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
 		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 
-		HashMap jijuk = new HashMap<>();
+		HashMap<String, Object> jijuk = new HashMap<String, Object>();
+		
+		//241009
+		List<String> coordinateVal = new ArrayList<>();
+		Integer coordinateSize = 0;
+
+		
 		jijuk.put("x", 0);
 		jijuk.put("y", 0);
+		
 		if (data.size() > 0) {
+			
 			HashMap jijukParam = new HashMap<>();
-			jijukParam.put("sido_nm", data.get(0).get("jm_sido_nm"));
-			jijukParam.put("sgg_nm", data.get(0).get("jm_sgg_nm"));
-			jijukParam.put("emd_nm", data.get(0).get("jm_emd_nm"));
-			jijukParam.put("ri_nm", data.get(0).get("jm_ri_nm"));
-			jijukParam.put("jibun", data.get(0).get("jm_jibun"));
-
+//			jijukParam.put("sido_nm", data.get(0).get("jm_sido_nm"));
+//			jijukParam.put("sgg_nm", data.get(0).get("jm_sgg_nm"));
+//			jijukParam.put("emd_nm", data.get(0).get("jm_emd_nm"));
+//			jijukParam.put("ri_nm", data.get(0).get("jm_ri_nm"));
+//			jijukParam.put("jibun", data.get(0).get("jm_jibun"));
+			
+			// 241009 - 검색조건을 PNU로 하도록 조치
+			jijukParam.put("TARGET_PNU", data.get(0).get("jm_pnu"));
+			
+			
+			// PNU를 통한 좌표조회
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
-			if (jijukList.size() > 0) {
-				jijuk = jijukList.get(0);
+			jijuk.put("resultSize", jijukList.size());
+			coordinateSize = jijukList.size();
+			
+			if(jijukList.size() == 0) {
+				jijuk.put("resultList", "-");
+			} else {
+				for(int k = 0 ; k < jijukList.size() ; k++) {
+					HashMap jijukInfo = jijukList.get(k);
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
+				}
+				jijuk.put("resultList", coordinateVal);
 			}
-			else {
-				jijuk = new HashMap<>();
-				jijuk.put("x", 0);
-				jijuk.put("y", 0);
-			}
+			
+//			if (jijukList.size() > 0) {
+//				jijuk = jijukList.get(0);
+//			} else {
+//				jijuk = new HashMap<>();
+//				jijuk.put("x", 0);
+//				jijuk.put("y", 0);
+//			}
 		}
 
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("jijuk", jijuk);
+		mav.addObject("jijukCoordList", coordinateVal);
+		mav.addObject("jijukCoordSize", coordinateSize);
 		mav.addObject("soujaList",soujaList);
 		mav.addObject("jisangPermitList",jisangPermitList);
 		mav.addObject("atcFileList",atcFileList);

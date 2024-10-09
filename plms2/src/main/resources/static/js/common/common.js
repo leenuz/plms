@@ -290,7 +290,14 @@ function positionView(objInfo) {
 	//({'lon':mapCoordLng, 'lat':mapCoordLat, 'zoom':'15'});
 	//({'lon':mapCoordLng, 'lat':mapCoordLat});
 	
-	console.log(objInfo)
+	//console.log(objInfo)
+	
+	let coordiList = $("#jijukCoordList").val();
+	let coordiSize = $("#jijukCoordSize").val();
+	
+	console.log('coordiList :: ' + coordiList);
+	console.log('coordiSize :: ' + coordiSize);
+	
 	
 	// 자식 창에서 부모 창으로 메시지 보내기
 	if (window.opener) {

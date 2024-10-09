@@ -1177,11 +1177,11 @@ $(document).on("click", "#draftSaveBtn", function() {
 		togiDatas.push(togiObj);
 	}
 
+	//첨부파일 <====== 
 	//const attachFileUls = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
 	const attachFileUls = document.querySelectorAll('input[name="masterEdit_attachFile"]');
 	console.log(attachFileUls);
-
-	//첨부파일
+	
 	var files = new Array();
 	
 	for (var i = 0; i < attachFileUls.length; i++) {

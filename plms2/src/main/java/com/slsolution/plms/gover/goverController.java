@@ -2141,7 +2141,7 @@ public class goverController {
 //
 //				}
 				
-				//======== 첨부 파일 구간 =========
+				//======== 첨부파일 =========
 				if (gubun.equals("insert")) {
 					for (int i = 0; i < fileArr.length(); i++) {
 						// JSONObject fobj=new JSONObject(fileArr.get(i).toString());
@@ -2182,6 +2182,12 @@ public class goverController {
 //						}
 //					}
 					log.info("param:" + params);
+					
+					
+					if(!"LOCAL".equals(GC.getServerName())|| !"IDC".equals(GC.getServerName())) {
+						// 기존 등록된 파일리스트 삭제
+						mainService.DeleteQuery("goverSQL.deleteBeforeGoverAtcFileList", params);
+					}
 					
 					// seq 가져오기
 					int nseq = (int) mainService.selectCountQuery("goverSQL.getGoverAtcFileSeq", params);
@@ -2229,6 +2235,7 @@ public class goverController {
 		map.put("result", list);
 
 		log.info("gubun ::" + gubun);
+		log.info("serverName :: " + GC.getServerName());
 		
 		JSONObject jo = new JSONObject(map);
 

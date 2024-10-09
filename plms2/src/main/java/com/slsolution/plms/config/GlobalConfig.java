@@ -23,6 +23,10 @@ public class GlobalConfig {
 	private static String jisangReqDoc1Dir;
 	private static String jisangReqDoc2Dir;
 	
+	private static String serverName;
+	
+	
+	
 	@Value("${plms.pnuAtcFileDir}")
 	public void setPnuAtcFileDir(String str) {
 		pnuAtcFileDir=str;
@@ -108,6 +112,15 @@ public class GlobalConfig {
 	}
 	public static String getJisangReqDoc2Dir() {
 		return jisangReqDoc2Dir;
+	}
+	
+	@Value("${server.name}")
+	public void setServerName(String sn) {
+		serverName = sn;
+	}
+	
+	public static String getServerName() {
+		return serverName;
 	}
 	
 
