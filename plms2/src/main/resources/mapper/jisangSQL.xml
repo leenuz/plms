@@ -16,7 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *
 		,concat(jm_sido_nm,' ',jm_sgg_nm,' ',jm_emd_nm,' ',jm_ri_nm,' ',jm_jibun) as address
-		from jisang_master jm left join jisang_bunhal jb on jb.jb_jisang_no=jm.jm_jisang_no
+		from jisang_master jm 
+		left join
+			jisang_bunhal jb 
+		on jb.jb_jisang_no=jm.jm_jisang_no
+		left outer join
+			jijuk_2024 jj
+		on jj.pnu = jm.JM_PNU 
 		where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 		and jm.jm_jisang_no=#{idx}
@@ -3629,13 +3635,13 @@ AND jmt.jmt_rep_jisang_no=#{idx}
 		,COALESCE(jm.jm_jijuk_area, NULL) AS jijuk_area
 		,COALESCE(jm.jm_pyeonib_area, NULL) AS pyeonib_area
 		
-		,JM.jm_pnu as PNU
-		,JS.js_souja_name as SOUJA_NAME,
-		(SELECT COUNT(*)-1 FROM JISANG_SOUJA WHERE js_JISANG_NO = JM.jm_JISANG_NO) AS SOUJA_CNT,
-		(CASE WHEN JB.jb_JISANG_NO IS NOT NULL THEN 1 ELSE 0 END) AS BUNHAL_CHECK,
-		PA.pa_status as STATUS
-		
-		,JB.jb_bunhal_date as bunhal_date
+		, JM.jm_pnu as PNU
+		, JS.js_souja_name as SOUJA_NAME
+		, JS.js_idx
+		, (SELECT COUNT(*)-1 FROM JISANG_SOUJA WHERE js_JISANG_NO = JM.jm_JISANG_NO) AS SOUJA_CNT
+		, (CASE WHEN JB.jb_JISANG_NO IS NOT NULL THEN 1 ELSE 0 END) AS BUNHAL_CHECK
+		, PA.pa_status as STATUS
+		, JB.jb_bunhal_date as bunhal_date
 		FROM JISANG_MASTER JM LEFT OUTER JOIN (
 		SELECT
 		*
@@ -3648,10 +3654,8 @@ AND jmt.jmt_rep_jisang_no=#{idx}
 		js_ADDRESS,
 		js_PONE_NUMBER,
 		js_HOME_NUMBER,
-		ROW_NUMBER() OVER(PARTITION BY js_JISANG_NO
-		ORDER BY
-		js_JISANG_NO ASC
-		) AS ROW_IDX
+		js_idx,
+		ROW_NUMBER() OVER(PARTITION BY js_JISANG_NO	ORDER BY js_JISANG_NO ASC ) AS ROW_IDX
 		FROM
 		JISANG_SOUJA
 		) sub1

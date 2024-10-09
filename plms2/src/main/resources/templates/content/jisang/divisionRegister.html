@@ -356,331 +356,225 @@ border: 1px solid black;
             
             
             <!-- -기존 분할 데이터가 있을때  -->
-                        <ul class="contents" id="tojiUl" th:if="${#lists.size(bunhalList)>0}" th:each="val:${bunhalList}">
-                        
-                            <li class="content numInfoWidth">
-                            <input type="hidden" id="bunhalIndex" th:value="${val.no}">
-                            	<input type="hidden" id="togisido_nm" th:value="${val.jb_sido_nm}">
-                            	<input type="hidden" id="togisgg_nm" th:value="${val.jb_sgg_nm}">
-                            	<input type="hidden" id="togiemd_nm" th:value="${val.jb_emd_nm}">
-                            	<input type="hidden" id="togiri_nm" th:value="${val.jb_ri_nm}">
-                            	<input type="hidden" id="togijibun" th:value="${val.jibun}">
-                            	<input type="hidden" id="togipnu" th:value="${val.jb_pnu}">
-                            	
-                                <input type="text" placeholder="1" th:value="${val.no}"  readonly class="notWriteInput ulNumPlace">
-                            </li>
-                            <li class="content middleWidth">
-                                <input type="text" placeholder="J_010598"  th:value="${val.jb_jisang_no}" name="togiBunhalJisangNo" readonly class="notWriteInput">
-                            </li>
-                            <li class="content addressInfoWidth">
-                                <div class="addressData">
-                                    <input type="text" th:value="${val.address}" placeholder="서울특별시 서초구 서초동 1" name="togiBunhalAddr" id="bunhalAddres" class="notWriteInput">
-                                </div>
-                                <button class="searchAddressBtn">검색</button>
-                            </li>
-                            <li class="content middleWidth selectContentArea">
-                                <div class="hiddenSelectBox">
-                                    <!-- name도 추가 -->
-                                    <select name="togiBunhalTogiType" id="divisionRegistSelectBox02" hidden>
-                                        <option value="국유지">국유지</option>
-                                        <option value="사유지">사유지</option>
-                                    </select>
-                                </div>
-                                <section class="customSelectBox">
-                                    <button class="customSelectView" id="hiddenBtn">
-                                        [[${#lists.isEmpty(val.jb_toji_type)}?'선택':${val.jb_toji_type}]]
-                                    </button>
-                                
-                                    <ul class="customSelectBtns">
-                                        <!-- createCustomLiDivisionRegist(); -->
-                                    </ul>
-                                </section>
-                            </li>
-                            <li class="content contentBox">
-                                <ul class="secondContents">
-                                    <li class="secondContent"><input type="text" th:value="${val.jb_jimok_text}" name="togiBunhalJimokText"></li>
-                                    <li class="secondContent"><input type="text" th:value="${val.jb_jijuk_area}" name="togiBunhalJijukArea"></li>
-                                    <li class="secondContent"><input type="text" th:value="${val.jb_pyeonib_area}" name="togiBunhalPyeonibArea"></li>
-                                    <li class="secondContent"><input type="text" th:value="${val.jb_jasan_no}" name="togiBunhalJasanNo"></li>
-                                </ul>
-                            </li>
-                            <li class="content">
-                               <!--  <input type="checkbox" name="togiBunhalPipeYn" id="divisionRegister_pipeline_interference_01">
-                                <label for="divisionRegister_pipeline_interference_01"></label> -->
-                                  <input type="checkbox" th:id="'divisionRegister_pipeline_interference_' + ${val.jb_idx}" name="togiBunhalPipeYn"  th:value="${val.jb_idx}" th:checked="${val.jb_pipe_yn}=='Y'">
-                                   <label th:for="'divisionRegister_pipeline_interference_' + ${val.jb_idx}"></label>
-                            </li>
-                            <li class="content">
-                              <!--   <input type="checkbox" name="togiBunhalCancelYn" id="divisionRegister_termination_status_01">
-                                <label for="divisionRegister_termination_status_01"></label> -->
-                                 <input type="checkbox" th:id="'divisionRegister_termination_status_' + ${val.jb_idx}" name="togiBunhalCancelYn"  th:value="${val.jb_idx}" th:checked="${val.jb_cancle_yn}=='Y'">
-                                   <label th:for="'divisionRegister_termination_status_' + ${val.jb_idx}"></label>
-                            </li>
-                            <li class="content">
-                                <!-- <input type="checkbox" name="togiBunhalDemise" id="divisionRegister_data_succession_01">
-                                <label for="divisionRegister_data_succession_01"></label> -->
-                                 <input type="checkbox" th:id="'divisionRegister_data_succession_' + ${val.jb_idx}" name="togiBunhalDemise"  th:value="${val.jb_idx}" th:checked="${val.jb_demise}=='Y'">
-                                   <label th:for="'divisionRegister_data_succession_' + ${val.jb_idx}"></label>
-                            </li>
-                            <li class="content middleWidth">
-                                <button class="viewDetailButton">위치보기</button>
-                            </li>
-                            <li class="content middleWidth selectContentArea">
-                                <div class="hiddenSelectBox">
-                                    <!-- name도 추가 -->
-                                    <select name="togiBunhalAccountYn" id="divisionRegistSelectBox03" hidden>
-                                        <option value="Y">Y</option>
-                                        <option value="N">N</option>
-                                    </select>
-                                </div>
-                                <section class="customSelectBox">
-                                    <button class="customSelectView" th:text="${resultData.jm_account_yn}?:'N'">
-                                    </button>
-                
-                                    <ul class="customSelectBtns">
-                                        <!-- createCustomLiDivisionRegist(); -->
-                                    </ul>
-                                </section>
-                            </li>
-                            <li class="content titleBtnWrap btnBox">
-                                <!-- 수정하지 않을 때 -->
-                                
-                                <!-- <div class="editBefore"> -->
-                                    <div class="btnWrap">
-                                        <button class="addBtn miniBtn" id="addBtn">추가</button>
-                                    </div>
-                                    <!-- <div class="btnWrap">
-                                        <button class="delBtn miniBtn">삭제</button>
-                                    </div> -->
-                                <!-- </div> -->
-                                
-                                <!-- 수정할 때 -->
-    <!--                             
-                                <div class="editAfter">
-                                    <div class="newBtnWrap">
-                                        <button class="registBtn miniBtn">추가</button>
-                                    </div>
-                                </div> -->
-                            </li>
+            <ul class="contents" id="tojiUl" th:if="${#lists.size(bunhalList)>0}" th:each="val:${bunhalList}">
+            
+                <li class="content numInfoWidth">
+                <input type="hidden" id="bunhalIndex" th:value="${val.no}">
+                	<input type="hidden" id="togisido_nm" th:value="${val.jb_sido_nm}">
+                	<input type="hidden" id="togisgg_nm" th:value="${val.jb_sgg_nm}">
+                	<input type="hidden" id="togiemd_nm" th:value="${val.jb_emd_nm}">
+                	<input type="hidden" id="togiri_nm" th:value="${val.jb_ri_nm}">
+                	<input type="hidden" id="togijibun" th:value="${val.jibun}">
+                	<input type="hidden" id="togipnu" th:value="${val.jb_pnu}">
+                	
+                    <input type="text" placeholder="1" th:value="${val.no}"  readonly class="notWriteInput ulNumPlace">
+                </li>
+                <li class="content middleWidth">
+                    <input type="text" placeholder="J_010598"  th:value="${val.jb_jisang_no}" name="togiBunhalJisangNo" readonly class="notWriteInput">
+                </li>
+                <li class="content addressInfoWidth">
+                    <div class="addressData">
+                        <input type="text" th:value="${val.address}" placeholder="서울특별시 서초구 서초동 1" name="togiBunhalAddr" id="bunhalAddres" class="notWriteInput">
+                    </div>
+                    <button class="searchAddressBtn">검색</button>
+                </li>
+                <li class="content middleWidth selectContentArea">
+                    <div class="hiddenSelectBox">
+                        <!-- name도 추가 -->
+                        <select name="togiBunhalTogiType" id="divisionRegistSelectBox02" hidden>
+                            <option value="국유지">국유지</option>
+                            <option value="사유지">사유지</option>
+                        </select>
+                    </div>
+                    <section class="customSelectBox">
+                        <button class="customSelectView" id="hiddenBtn">
+                            [[${val.gover_own_yn == 'Y'} ? '국유지' : '사유지']]
+                        </button>
+                    
+                        <ul class="customSelectBtns">
+                            <!-- createCustomLiDivisionRegist(); -->
                         </ul>
-                        
-                        
-                         <ul class="contents" id="tojiUl" th:if="${#lists.size(bunhalList)==0}" >
-                        
-                            <li class="content numInfoWidth">
-                            	<input type="hidden" id="bunhalIndex" value="0">
-                            	<input type="hidden" id="togisido_nm" th:value="${resultData.jm_sido_nm}">
-                            	<input type="hidden" id="togisgg_nm" th:value="${resultData.jm_sgg_nm}">
-                            	<input type="hidden" id="togiemd_nm" th:value="${resultData.jm_emd_nm}">
-                            	<input type="hidden" id="togiri_nm" th:value="${resultData.jm_ri_nm}">
-                            	<input type="hidden" id="togijibun" th:value="${resultData.jm_jibun}">
-                            	<input type="hidden" id="togipnu" th:value="${resultData.jm_pnu}">
-                                <input type="text" placeholder="1" readonly class="notWriteInput ulNumPlace">
-                            </li>
-                            <li class="content middleWidth">
-                                <input type="text" placeholder="J_010598"  name="togiBunhalJisangNo" th:value="${resultData.jm_jisang_no}" readonly class="notWriteInput">
-                            </li>
-                            <li class="content addressInfoWidth">
-                                <div class="addressData">
-                                    <input type="text" placeholder="서울특별시 서초구 서초동 1" name="togiBunhalAddr" th:value="${resultData.address}" readonly id="bunhalSaddr" class="notWriteInput">
-                                </div>
-                                <button class="searchAddressBtn" id="searchAddressBtn">검색</button>
-                            </li>
-                            <li class="content middleWidth selectContentArea">
-                                <div class="hiddenSelectBox">
-                                    <!-- name도 추가 -->
-                                    <select name="togiBunhalTogiType" id="divisionRegistSelectBox02" hidden>
-                                        <option value="">전체</option>
-                                        <option value="국유지">국유지</option>
-                                        <option value="사유지">사유지</option>
-                                       
-                                    </select>
-                                </div>
-                                <section class="customSelectBox">
-                                    <button class="customSelectView">
-                                        선택
-                                    </button>
-                                
-                                    <ul class="customSelectBtns">
-                                       [[${resultData.jm_toji_type}]]
-                                        <!-- createCustomLiDivisionRegist(); -->
-                                    </ul>
-                                </section>
-                            </li>
-                            <li class="content contentBox">
-                                <ul class="secondContents">
-                                    <li class="secondContent"><input type="text" name="togiBunhalJimokText" th:value="${resultData.jm_jimok_text}"></li>
-                                    <li class="secondContent"><input type="text" name="togiBunhalJiJukArea" th:value="${resultData.jm_jijuk_area}"></li>
-                                    <li class="secondContent"><input type="text" name="togiBunhalPyeonibArea" th:value="${resultData.jm_pyeonib_area}"></li>
-                                    <li class="secondContent"><input type="text" name="togiBunhalJasanNo" th:value="${resultData.jm_jasan_no}"></li>
-                                </ul>
-                            </li>
-                            <li class="content">
-                                <input type="checkbox" name="togiBunhalPipeYn" id="divisionRegister_pipeline_interference_01" th:checked="${resultData.jm_pipe_yn=='Y'}">
-                                <label for="divisionRegister_pipeline_interference_01"></label>
-                            </li>
-                            <li class="content">
-                                <input type="checkbox" name="togiBunhalCancelYn" id="divisionRegister_termination_status_01" th:checked="${resultData.jm_cancle_yn=='Y'}">
-                                <label for="divisionRegister_termination_status_01"></label>
-                            </li>
-                            <li class="content">
-                                <input type="checkbox" name="togiBunhalDemise" id="divisionRegister_data_succession_01">
-                                <label for="divisionRegister_data_succession_01"></label>
-                            </li>
-                            <li class="content middleWidth">
-                                <button class="viewDetailButton">위치보기</button>
-                            </li>
-                            <li class="content middleWidth selectContentArea">
-                                <div class="hiddenSelectBox">
-                                    <!-- name도 추가 -->
-                                    <select name="togiBunhalAccountYn" id="divisionRegistSelectBox03" hidden>
-                                        <option value="">선택</option>
-                                        <option value="Y">Y</option>
-                                        <option value="N">N</option>
-                                        
-                                    </select>
-                                </div>
-                                <section class="customSelectBox">
-                                    <button class="customSelectView">
-                                        [[${resultData.jm_account_yn}?:'선택']]
-                                    </button>
-                
-                                    <ul class="customSelectBtns">
-                                        <!-- createCustomLiDivisionRegist(); -->
-                                    </ul>
-                                </section>
-                            </li>
-                            <li class="content titleBtnWrap btnBox">
-                                <!-- 수정하지 않을 때 -->
-                                
-                                <!-- <div class="editBefore"> -->
-                                    <div class="btnWrap">
-                                        <button class="addBtn miniBtn" id="addBtn" >추가</button>
-                                    </div>
-                                    <!-- <div class="btnWrap">
-                                        <button class="delBtn miniBtn">삭제</button>
-                                    </div> -->
-                                <!-- </div> -->
-                                
-                                <!-- 수정할 때 -->
-    <!--                             
-                                <div class="editAfter">
-                                    <div class="newBtnWrap">
-                                        <button class="registBtn miniBtn">추가</button>
-                                    </div>
-                                </div> -->
-                            </li>
+                    </section>
+                </li>
+                <li class="content contentBox">
+                    <ul class="secondContents">
+                        <li class="secondContent"><input type="text" th:value="${val.jb_jimok_text}" name="togiBunhalJimokText"></li>
+                        <li class="secondContent"><input type="text" th:value="${val.jb_jijuk_area}" name="togiBunhalJijukArea"></li>
+                        <li class="secondContent"><input type="text" th:value="${val.jb_pyeonib_area}" name="togiBunhalPyeonibArea"></li>
+                        <li class="secondContent"><input type="text" th:value="${val.jb_jasan_no}" name="togiBunhalJasanNo"></li>
+                    </ul>
+                </li>
+                <li class="content">
+                   <!--  <input type="checkbox" name="togiBunhalPipeYn" id="divisionRegister_pipeline_interference_01">
+                    <label for="divisionRegister_pipeline_interference_01"></label> -->
+                      <input type="checkbox" th:id="'divisionRegister_pipeline_interference_' + ${val.jb_idx}" name="togiBunhalPipeYn"  th:value="${val.jb_idx}" th:checked="${val.jb_pipe_yn}=='Y'">
+                       <label th:for="'divisionRegister_pipeline_interference_' + ${val.jb_idx}"></label>
+                </li>
+                <li class="content">
+                  <!--   <input type="checkbox" name="togiBunhalCancelYn" id="divisionRegister_termination_status_01">
+                    <label for="divisionRegister_termination_status_01"></label> -->
+                     <input type="checkbox" th:id="'divisionRegister_termination_status_' + ${val.jb_idx}" name="togiBunhalCancelYn"  th:value="${val.jb_idx}" th:checked="${val.jb_cancle_yn}=='Y'">
+                       <label th:for="'divisionRegister_termination_status_' + ${val.jb_idx}"></label>
+                </li>
+                <li class="content">
+                    <!-- <input type="checkbox" name="togiBunhalDemise" id="divisionRegister_data_succession_01">
+                    <label for="divisionRegister_data_succession_01"></label> -->
+                     <input type="checkbox" th:id="'divisionRegister_data_succession_' + ${val.jb_idx}" name="togiBunhalDemise"  th:value="${val.jb_idx}" th:checked="${val.jb_demise}=='Y'">
+                       <label th:for="'divisionRegister_data_succession_' + ${val.jb_idx}"></label>
+                </li>
+                <li class="content middleWidth">
+                    <button class="viewDetailButton">위치보기</button>
+                </li>
+                <li class="content middleWidth selectContentArea">
+                    <div class="hiddenSelectBox">
+                        <!-- name도 추가 -->
+                        <select name="togiBunhalAccountYn" id="divisionRegistSelectBox03" hidden>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+                    <section class="customSelectBox">
+                        <button class="customSelectView" th:text="${resultData.jm_account_yn}?:'N'">
+                        </button>
+    
+                        <ul class="customSelectBtns">
+                            <!-- createCustomLiDivisionRegist(); -->
                         </ul>
+                    </section>
+                </li>
+                <li class="content titleBtnWrap btnBox">
+                    <!-- 수정하지 않을 때 -->
+                    
+                    <!-- <div class="editBefore"> -->
+                        <div class="btnWrap">
+                            <button class="addBtn miniBtn" id="addBtn">추가</button>
+                        </div>
+                        <!-- <div class="btnWrap">
+                            <button class="delBtn miniBtn">삭제</button>
+                        </div> -->
+                    <!-- </div> -->
+                    
+                    <!-- 수정할 때 -->
+<!--                             
+                            <div class="editAfter">
+                                <div class="newBtnWrap">
+                                    <button class="registBtn miniBtn">추가</button>
+                                </div>
+                            </div> -->
+                </li>
+            </ul>
+                        
+                        
+            <ul class="contents" id="tojiUl" th:if="${#lists.size(bunhalList)==0}" >
+           
+               <li class="content numInfoWidth">
+               	<input type="hidden" id="bunhalIndex" value="0">
+               	<input type="hidden" id="togisido_nm" th:value="${resultData.jm_sido_nm}">
+               	<input type="hidden" id="togisgg_nm" th:value="${resultData.jm_sgg_nm}">
+               	<input type="hidden" id="togiemd_nm" th:value="${resultData.jm_emd_nm}">
+               	<input type="hidden" id="togiri_nm" th:value="${resultData.jm_ri_nm}">
+               	<input type="hidden" id="togijibun" th:value="${resultData.jm_jibun}">
+               	<input type="hidden" id="togipnu" th:value="${resultData.jm_pnu}">
+                   <input type="text" placeholder="1" readonly class="notWriteInput ulNumPlace">
+               </li>
+               <li class="content middleWidth">
+                   <input type="text" placeholder="J_010598"  name="togiBunhalJisangNo" th:value="${resultData.jm_jisang_no}" readonly class="notWriteInput">
+               </li>
+               <li class="content addressInfoWidth">
+                   <div class="addressData">
+                       <input type="text" placeholder="서울특별시 서초구 서초동 1" name="togiBunhalAddr" th:value="${resultData.address}" readonly id="bunhalSaddr" class="notWriteInput">
+                   </div>
+                   <button class="searchAddressBtn" id="searchAddressBtn">검색</button>
+               </li>
+               <li class="content middleWidth selectContentArea">
+                   <div class="hiddenSelectBox">
+                       <!-- name도 추가 -->
+                       <select name="togiBunhalTogiType" id="divisionRegistSelectBox02" hidden>
+                           <option value="">전체</option>
+                           <option value="국유지">국유지</option>
+                           <option value="사유지">사유지</option>
+                       </select>
+                   </div>
+                   <section class="customSelectBox">
+                       <button class="customSelectView">
+                           선택
+                       </button>
+                   
+                       <ul class="customSelectBtns">
+                          [[${resultData.jm_toji_type}]]
+                           <!-- createCustomLiDivisionRegist(); -->
+                       </ul>
+                   </section>
+               </li>
+               <li class="content contentBox">
+                   <ul class="secondContents">
+                       <li class="secondContent"><input type="text" name="togiBunhalJimokText" th:value="${resultData.jm_jimok_text}"></li>
+                       <li class="secondContent"><input type="text" name="togiBunhalJiJukArea" th:value="${resultData.jm_jijuk_area}"></li>
+                       <li class="secondContent"><input type="text" name="togiBunhalPyeonibArea" th:value="${resultData.jm_pyeonib_area}"></li>
+                       <li class="secondContent"><input type="text" name="togiBunhalJasanNo" th:value="${resultData.jm_jasan_no}"></li>
+                   </ul>
+               </li>
+               <li class="content">
+                   <input type="checkbox" name="togiBunhalPipeYn" id="divisionRegister_pipeline_interference_01" th:checked="${resultData.jm_pipe_yn=='Y'}">
+                   <label for="divisionRegister_pipeline_interference_01"></label>
+               </li>
+               <li class="content">
+                   <input type="checkbox" name="togiBunhalCancelYn" id="divisionRegister_termination_status_01" th:checked="${resultData.jm_cancle_yn=='Y'}">
+                   <label for="divisionRegister_termination_status_01"></label>
+               </li>
+               <li class="content">
+                   <input type="checkbox" name="togiBunhalDemise" id="divisionRegister_data_succession_01">
+                   <label for="divisionRegister_data_succession_01"></label>
+               </li>
+               <li class="content middleWidth">
+                   <button class="viewDetailButton">위치보기</button>
+               </li>
+               <li class="content middleWidth selectContentArea">
+                   <div class="hiddenSelectBox">
+                       <!-- name도 추가 -->
+                       <select name="togiBunhalAccountYn" id="divisionRegistSelectBox03" hidden>
+                           <option value="">선택</option>
+                           <option value="Y">Y</option>
+                           <option value="N">N</option>
+                           
+                       </select>
+                   </div>
+                   <section class="customSelectBox">
+                       <button class="customSelectView">
+                           [[${resultData.jm_account_yn}?:'선택']]
+                       </button>
+   
+                       <ul class="customSelectBtns">
+                           <!-- createCustomLiDivisionRegist(); -->
+                       </ul>
+                   </section>
+               </li>
+               <li class="content titleBtnWrap btnBox">
+                   <!-- 수정하지 않을 때 -->
+                   
+                   <!-- <div class="editBefore"> -->
+                       <div class="btnWrap">
+                           <button class="addBtn miniBtn" id="addBtn" >추가</button>
+                       </div>
+                       <!-- <div class="btnWrap">
+                           <button class="delBtn miniBtn">삭제</button>
+                       </div> -->
+                   <!-- </div> -->
+                   
+                   <!-- 수정할 때 -->
+<!--                             
+                            <div class="editAfter">
+                                <div class="newBtnWrap">
+                                    <button class="registBtn miniBtn">추가</button>
+                                </div>
+                            </div> -->
+               </li>
+           </ul>
                         
                         
                         
                         
                     </div>
-                    <!-- <ul class="contents lastContents">
-                        <li class="content numInfoWidth">
-                            <input type="text" placeholder="2" readonly class="notWriteInput">
-                        </li>
-                        <li class="content middleWidth"><input type="text" placeholder="신규" readonly class="notWriteInput"></li>
-                        <li class="content addressInfoWidth">
-                            <div class="addressData"><input type="text" placeholder="서울특별시 서초구 서초동 1" readonly class="notWriteInput"></div>
-                            <button class="searchAddressBtn">검색</button>
-                        </li>
-                        <li class="content middleWidth selectContentArea">
-                            <div class="hiddenSelectBox">
-                                name도 추가
-                                <select name="divisionRegistSelectBox04" id="divisionRegistSelectBox04" hidden>
-                                    <option value="선택1">선택1</option>
-                                    <option value="선택2">선택2</option>
-                                    <option value="선택3">선택3</option>
-                                    <option value="선택4">선택4</option>
-                                    <option value="선택5">선택5</option>
-                                    <option value="선택6">선택6</option>
-                                    <option value="선택7">선택7</option>
-                                    <option value="선택8">선택8</option>
-                                    <option value="선택9">선택9</option>
-                                    <option value="선택10">선택10</option>
-                                </select>
-                            </div>
-                            <section class="customSelectBox">
-                                <button class="customSelectView">
-                                    선택
-                                </button>
-                            
-                                <ul class="customSelectBtns">
-                                    createCustomLiDivisionRegist();
-                                </ul>
-                            </section>
-                        </li>
-                        <li class="content contentBox">
-                            <ul class="secondContents">
-                                <li class="secondContent"><input type="text"></li>
-                                <li class="secondContent"><input type="text"></li>
-                                <li class="secondContent"><input type="text"></li>
-                                <li class="secondContent"><input type="text"></li>
-                            </ul>
-                        </li>
-                        <li class="content">
-                            <input type="checkbox" name="divisionRegisterPipeLineInterferenceNameHere02" id="divisionRegister_pipeline_interference_02">
-                            <label for="divisionRegister_pipeline_interference_02"></label>
-                        </li>
-                        <li class="content">
-                            <input type="checkbox" name="divisionRegisterTerminationStatusNameHere02" id="divisionRegister_termination_status_02">
-                            <label for="divisionRegister_termination_status_02"></label>
-                        </li>
-                        <li class="content">
-                            <input type="checkbox" name="divisionRegisterDataSuccessionNameHere02" id="divisionRegister_data_succession_02">
-                            <label for="divisionRegister_data_succession_02"></label>
-                        </li>
-                        <li class="content middleWidth">
-                            <button class="viewDetailButton">위치보기</button>
-                        </li>
-                        <li class="content middleWidth selectContentArea">
-                            <div class="hiddenSelectBox">
-                               name도 추가
-                                <select name="divisionRegistSelectBox05" id="divisionRegistSelectBox05" hidden>
-                                    <option value="Y1">Y1</option>
-                                    <option value="Y2">Y2</option>
-                                    <option value="Y3">Y3</option>
-                                    <option value="Y4">Y4</option>
-                                    <option value="Y5">Y5</option>
-                                    <option value="Y6">Y6</option>
-                                    <option value="Y7">Y7</option>
-                                    <option value="Y8">Y8</option>
-                                    <option value="Y9">Y9</option>
-                                    <option value="Y10">Y10</option>
-                                </select>
-                            </div>
-                            <section class="customSelectBox">
-                                <button class="customSelectView">
-                                    &#160
-                                </button>
-            
-                                <ul class="customSelectBtns">
-                                   createCustomLiDivisionRegist();
-                                </ul>
-                            </section>
-                        </li>
-                        <li class="content titleBtnWrap btnBox">
-                           수정하지 않을 때
-                            
-                            <div class="editBefore">
-                                <div class="btnWrap">
-                                    <button class="addBtn miniBtn">추가</button>
-                                </div>
-                                <div class="btnWrap">
-                                    <button class="delBtn miniBtn">삭제</button>
-                                </div>
-                            </div>
-                            
-                           수정할 때
-                            
-                            <div class="editAfter">
-                                <div class="newBtnWrap">
-                                    <button class="registBtn miniBtn">추가</button>
-                                </div>
-                            </div>
-                        </li>
-                    </ul> -->
                 </div>
             
             </div>
