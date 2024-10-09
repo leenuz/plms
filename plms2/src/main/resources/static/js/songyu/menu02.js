@@ -490,25 +490,5 @@ return nRow;
 		window.location = url;
 	});
 
-	/*$("table th").resizable({
-		handles:'e',
-		stop:function(e,ui){
-			$(this).width(ui.size.width);
-			table.columns.adjust().draw();
-		}
-	});*/
-	/*table
-			.on('order.dt search.dt', function () {
-					let i = 1;
-	 
-					table
-							.cells(null, 0, { search: 'applied', order: 'applied' })
-							.every(function (cell) {
-									this.data(i++);
-							});
-			})
-			.draw();*/
-
-	// console.log($('#userTable').DataTable().page.info().recordsTotal);
 }
 
