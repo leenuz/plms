@@ -210,6 +210,7 @@ function mergeTableCells(tableId, columnIndex) {
  * 진행 현황 관련 함수
  **/
 //진행 현황 데이터
+/*
 const progStatusMap = {
     "임시저장": "1",
     "민원발생": "2",
@@ -217,7 +218,9 @@ const progStatusMap = {
     "협의중": "4",
     "완료": "5"
 };
+*/
 // 진행 현황 상태 찾는 함수
+/*
 function findProgStatus(input) {
     if (progStatusMap[input]) {
         return progStatusMap[input];
@@ -225,6 +228,7 @@ function findProgStatus(input) {
     const statusEntry = Object.entries(progStatusMap).find(([key, value]) => value === input);
     return statusEntry ? statusEntry[0] : null; 
 }
+*/
 
 
 
@@ -330,11 +334,14 @@ function positionView(objInfo) {
 			type: "setCenter",
 			lon: firstCoordLng,
 			lat: firstCoordLat,
+			markers:[firstCoordLng, firstCoordLat],
 			zoom: 19,
 		};
 	} else {
 		message = {
 			type: "setCenter",
+			lon: [markerList[0][0],markerList[0][1]],
+			lat: firstCoordLat,
 			zoom: 19,
 			markers: markerList
 		};
@@ -358,10 +365,16 @@ function onePostionView(obj) {
 	let firstCoordLng = obj.x;
 	let firstCoordLat = obj.y;
 	
+	if(typeof(firstCoordLat) == 'undefined') {
+		firstCoordLng = obj.lng;
+		firstCoordLat = obj.lat;
+	}
+	
 	const message = {
 		type: "setCenter",
 		lon: firstCoordLng,
 		lat: firstCoordLat,
+		markers:[firstCoordLng, firstCoordLat],
 		zoom: 19,
 	};
 	// 자식 창에서 부모 창으로 메시지 보내기

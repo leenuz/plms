@@ -1,14 +1,12 @@
 
 var table;
 
-
 $(document).ready(function() {
 	console.log("songyu/menu03.js start");
 	/*$('#jisa').niceSelect();*/
 	//testAjax();
 	//init_Table();
 	loadDataTable("");
-
 });
 
 
@@ -32,7 +30,6 @@ $(document).on("click", "#registerBtn", function() {
 
 	loadDataTable(object);
 	console.log("-----------------------");
-
 })
 
 
@@ -208,9 +205,6 @@ function datatablebasic() {
 function loadDataTable(params) {
 	console.log("-----start loadDataTable----------");
 	console.log(params);
-
-	//var json=JSON.stringify(params);
-
 	table = $('#userTable').DataTable({
 		fixedColumns: {
 			start: 3,
@@ -237,22 +231,22 @@ function loadDataTable(params) {
 		rowReorder: {
 			dataSrc: 'b_seq'
 		},
-		//	sAjaxSources:"/land/songyu/menu01DataTableList",
-		//	sServerMethod:"POST",
 		ajax: {
 			url: "/land/songyu/menu03DataTableList",
 			type: "POST",
 			datatype: "json",
 			data: function(d) {
-				//d=params;
 				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
-				d.manage_no = params.manage_no;
-				d.toji_type = params.toji_type;
-				d.dosiplan = params.togi_plan_type;
-				d.right_overlap = params.OverlapCheck02;
-				console.log("askmenu:" + params.askMenu03);
+				d.manage_no = params.manage_no; // 관리번호
+				if (params.toji_type == "국유지") { // 토지유형
+					d.toji_type = "Y";
+				} else if (params.toji_type == "사유지") {
+					d.toji_type = "N";
+				} else d.toji_type = "";
+				d.dosiplan = params.dosiplan; // 도시계획유형
+				d.right_overlap = params.OverlapCheck02; // 권리중복필지
 
-				var right_type = "";
+				var right_type = ""; // 권리확보유형
 				if (params.songyu_type_all != undefined && params.songyu_type_all != null) right_type = "";
 				else {
 					if (params.songyu_type_gover != undefined && params.songyu_type_gover != null) right_type += ",gover";
@@ -262,34 +256,22 @@ function loadDataTable(params) {
 				}
 				console.log("right_type:" + right_type.substr(1));
 				d.right_type = right_type.substr(1);
-				d.dosiplan = params.dosiplan;
 
+				console.log("askmenu:" + params.askMenu03);
 				var ask = (params.askMenu03 == undefined || params.askMenu03 == null) ? '0' : params.askMenu03;
 				console.log("askmenu:" + ask);
-				//						if (params.askMenu01=="0") d.saddr=params.addressFull;
 				if (ask == "0") {
 					console.log("---------3--------------");
 					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
 				}
 				else {
-					console.log("----------------------------1--------------");
-					console.log(ljsIsNull(params.sgg));
-					var addrs = params.sido;
-					console.log("addrs:" + addrs);
-					if (ljsIsNull(params.sgg)) addrs = addrs + "";
-					else addrs = addrs + " " + params.sgg;
-					if (ljsIsNull(params.emd)) addrs = addrs + "";
-					else addrs = addrs + " " + params.emd;
-					if (ljsIsNull(params.ri)) addrs = addrs + "";
-					else addrs = addrs + " " + params.ri;
-					//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
-					//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
-					console.log("addrs:" + addrs);
-					//							d.saddr=addrs;
-					d.saddr = (addrs == undefined || addrs == null) ? '' : addrs;
-					//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
+					console.log("------------선택형 주소--------------");
+					d.sido_nm = params.sido;
+					d.sgg_nm = params.sgg;
+					d.emd_nm = params.emd;
+					d.ri_nm = params.ri;
+					d.jibun = params.jibun;
 				}
-
 				console.log("saddr:" + d.saddr);
 				console.log(params);
 				console.log("-----------d-----------");

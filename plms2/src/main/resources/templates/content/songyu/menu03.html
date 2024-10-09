@@ -126,7 +126,7 @@ div.dt-filter-spacer {
 							<ul class="inputControlBoxs sectionMenuListBoxs">
 								<li class="selectTitle"><p>관리번호</p></li>
 								<div class="inputControlList">
-									<input type="text" placeholder="지번입력" />
+									<input type="text" name="manage_no" placeholder="지번입력" />
 								</div>
 							</ul>
 							
@@ -254,6 +254,7 @@ div.dt-filter-spacer {
 											</div>
 										</div>
 									</li>
+									<!-- 시군구 -->
 									<li>
 										<div class="selectWrappers">
 											<select name="sgg" id="sgg" hidden>
@@ -269,6 +270,7 @@ div.dt-filter-spacer {
 											</div>
 										</div>
 									</li>
+									<!-- 읍면동 -->
 									<li>
 										<div class="selectWrappers">
 											<select name="emd" id="emd" hidden>
@@ -284,7 +286,13 @@ div.dt-filter-spacer {
 											</div>
 										</div>
 									</li>
+									<!-- 리 -->
 									<li>
+										<div class="selectWrappers">
+                      <select name="ri" class="menuHiddenSelect03" id="ri" hidden>
+                        <option value="">전체</option>
+                      </select>
+                    </div>
 										<div class="surfaceSelects">
 											<button class="surfaceSelectsTitleBtn" id="riText">전체</button>
 											<div class="sufaceSelectList smallHeight">
@@ -294,10 +302,10 @@ div.dt-filter-spacer {
 											</div>
 										</div>
 									</li>
+									<!-- 지번 -->
 									<li style="padding: 0px 3px">
 										<div class="inputControlList">
-											<input name=jibun id="jibun" type="text" placeholder="지번입력"
-												class="menuAdderssInput03" />
+											<input name=jibun id="jibun" type="text" placeholder="지번입력" class="menuAdderssInput03" />
 										</div>
 									</li>
 								</ul>
@@ -316,7 +324,7 @@ div.dt-filter-spacer {
 					<div class="surfaceMainContent">
 						<div class="dataTitles">
 							<h5>
-								총 검색 건 수<span id="dataTableTotalCount">154</span>건
+								총 검색 건 수<span id="dataTableTotalCount"></span>건
 							</h5>
 						</div>
 					</div>
@@ -324,8 +332,7 @@ div.dt-filter-spacer {
 				
 				<!-- 데이터 테이블 -->
 				<div class="">
-					<table id="userTable" class="cell-border nowrap"
-						style="width: 200%;">
+					<table id="userTable" class="cell-border nowrap" style="width: 200%;">
 						<thead>
 							<tr>
 								<th>순번</th>

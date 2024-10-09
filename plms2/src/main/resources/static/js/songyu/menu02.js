@@ -299,8 +299,11 @@ function loadDataTable(params) {
 			data: function(d) {
 				//d=params;
 				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa; // 지사
-				// d.manage_no = params.manage_no; // 관리번호 없음.
-				d.toji_type = params.toji_type; // 토지유형
+				if (params.toji_type == "국유지") { // 토지유형
+					d.toji_type = "Y";
+				} else if (params.toji_type == "사유지") {
+					d.toji_type = "N";
+				} else d.toji_type = "";
 				
 				var right_type = "";
 				if (params.songyu_type_all != undefined && params.songyu_type_all != null) right_type = "";
@@ -311,8 +314,6 @@ function loadDataTable(params) {
 					if (params.songyu_type_toji != undefined && params.songyu_type_toji != null) right_type += ",dopco";
 				}
 				d.right_type = right_type.substr(1); // 권리확보유형
-				
-				// d.dosiplan = params.dosiplan; // 도시계획유형 없음.
 				
 				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
 				if (ask == "0") {

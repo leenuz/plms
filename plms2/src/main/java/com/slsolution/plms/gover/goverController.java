@@ -2,6 +2,7 @@ package com.slsolution.plms.gover;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -3830,9 +3831,12 @@ log.info("file_list:"+file_list);
 
 		// //json으로 넘어올때
 		String getRequestBody = ParameterUtil.getRequestBodyToStr(httpRequest);
+		
 		log.info("getRequestBody:" + getRequestBody);
+		
 		JSONObject json = new JSONObject(getRequestBody.toString());
 		JSONArray idxarr = json.getJSONArray("fileIds");
+		
 		log.info("idxarr:" + idxarr);
 		log.info("idxarr0:" + idxarr.get(0));
 
@@ -3849,24 +3853,32 @@ log.info("file_list:"+file_list);
 
 			// 파일 삭제 부분.
 			// 파일 경로 생성
-			String filePath = GC.getGoverFileDataDir() + "/" + jsonObject.get("gover_no");
-			; // 설정파일로 뺀다.
+			String filePath = GC.getGoverFileDataDir() + "/" + jsonObject.get("gover_no"); // 설정파일로 뺀다.
 			String originalFilename = jsonObject.get("filename").toString();
 			String fileFullPath = filePath + "/" + originalFilename; // 파일 전체 경로
 
 			File file = new File(fileFullPath);
+			
+			log.info("=============================");
+			log.info("* fileFullPath :: " + fileFullPath);
+			log.info("=============================");
+			
 			// 파일이 존재하는지 확인
 			if (file.exists()) {
 				// 파일 삭제
 				if (file.delete()) {
 					// 파일 삭제 성공
+					log.info("파일 삭제 성공");
 				} else {
 					// 파일 삭제 실패시 에러
+					log.error("===== 파일 삭제에 실패했습니다. =====");
+					throw new IOException("파일 삭제 실패");
 				}
 			} else {
 				// 파일 없을때 에러
+				log.error("===== 파일이 없습니다. =====");
+				throw new IOException("파일 존재하지 않음");
 			}
-
 		}
 
 		HashMap<String, Object> resultmap = new HashMap();
