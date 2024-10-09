@@ -524,7 +524,7 @@
 			<div class="finalBtnBox btnWrap no-print">
 				<button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
 				<button class="printBtn vividBlueBtn finalBtn" onclick="commonCurrentPagePrint('easementDetailPrintSection')">출력</button>
-				<button class="divideBtn lightBlueBtn finalBtn" th:data-jisang-no="${resultData.jm_jisang_no}">분할</button>
+				<button class="divideBtn lightBlueBtn finalBtn" th:data-jisang-no="${resultData.jm_jisang_no}" th:onclick="divisionPageGo([[${resultData.jm_jisang_no}]])">분할</button>
 			</div>
 		</main>
 	</div>

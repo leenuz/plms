@@ -807,8 +807,6 @@ $(document).on("click",".delBtn",function(){
 	    checkbox.trigger('click');
 	}
 
-	console.log($(thisContents).html());
-	console.log($(thisContents).length);
 	if ($(thisContents).length<=2) return;
 	$(thisUl).remove();
 
