@@ -1673,70 +1673,88 @@ $(document).on("click","#deleteFileBtn",function(){
 	    	console.log($(this).val());
 	    }
 	})*/
+	
 	var delFiles=[];
 	const clickedAttachFiles = document.querySelectorAll('input[name="masterEdit_attachFile"]:checked');
+
 	console.log(clickedAttachFiles);
 	console.log(uploadFiles);
-	for(var i=0;i<clickedAttachFiles.length;i++){
+	
+	for(var i = 0 ; i < clickedAttachFiles.length ; i++){
 		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
-		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
-		var delfileName=$(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val();
 		
-		var idx=$(clickedAttachFiles[i]).closest("#fileListUl").find("#idx").val();
-		var ids={"gover_no":$("#gover_no").val(),"idx":$(clickedAttachFiles[i]).closest("#fileListUl").find("#idx").val(),"filename":$(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val()};
+		//console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
+		
+		var delfileName = $(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val();
+		
+		var idx = $(clickedAttachFiles[i]).closest("#fileListUl").find("#idx").val();
+		var ids = {
+			"gover_no" : $("#gover_no").val(),
+			"idx" : $(clickedAttachFiles[i]).closest("#fileListUl").find("#idx").val(),
+			"filename" : $(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val()
+		};
+		
 		console.log(delfileName);
 		console.log(idx);
+		
 		/*var data={"delfile":delFileName,"idx":idx}
 				delFiles.push(data);*/
-				if (idx!=null && idx!="" && idx!=undefined) delFiles.push(ids);
-		$(delEle).remove();
-		
-				
-
+		if (idx!=null && idx!="" && idx!=undefined) {
+			delFiles.push(ids);
+		}
+		//$(delEle).remove();
 	}
 	
 	console.log(delFiles);
-		var param={"fileIds":delFiles};
+	
+	var param={
+		"fileIds":delFiles
+	};
+	
 	console.log(param);
 	
-	if (delFiles.length>0){
+	if (delFiles.length > 0){
 		url = "/land/gover/deleteGoverAtcfile1";
-				         $.ajax({
-				             url: url,
-				             type: 'POST',
-				             contentType: "application/json",
-				             data: JSON.stringify(param),
-
-				             dataType: "json",
-				             beforeSend: function (request) {
-				                 console.log("beforesend ........................");
-				                 loadingShow();
-				             },
-				             success: function (response) {
-				               
-				                 console.log(response);
-								 alert("파일이 삭제 되었습니다.");
-								 loadingHide();
-				        //         if (response.success = "Y") {
-				        //             console.log("response.success Y");
-				        //             console.log("response.resultData length:" + response.resultData.length);
-				        //             alert("정상적으로 등록 되었습니다.");
-				        //             /*$("#popup_bg").show();
-				        //             $("#popup").show(500);
-				        //             //$("#addrPopupLayer tbody td").remove();
-				        //             for(var i=0;i<response.resultData.length;i++){
-				        //                 $("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-				        //             }*/
-				        //         }
-				        //         else {
-				        //             console.log("response.success N");
-				        //         }
-				             },
-				             error: function (jqXHR, textStatus, errorThrown) {
-				                 alert("deleteFileBtn ajax error\n" + textStatus + ":" + errorThrown);
-				                 return false;
-				             }
-				         });
+		$.ajax({
+			url: url,
+			type: 'POST',
+			contentType: "application/json",
+			data: JSON.stringify(param),
+			dataType: "json",
+			beforeSend: function(request) {
+				console.log("beforesend ........................");
+				loadingShow();
+			},
+			success: function(response) {
+				
+				if(response.result) {
+					alert(response.resultMessage);
+					$(delEle).remove();
+				} else {
+					alert(response.resultMessage);
+				}
+				loadingHide();
+				
+				//         if (response.success = "Y") {
+				//             console.log("response.success Y");
+				//             console.log("response.resultData length:" + response.resultData.length);
+				//             alert("정상적으로 등록 되었습니다.");
+				//             /*$("#popup_bg").show();
+				//             $("#popup").show(500);
+				//             //$("#addrPopupLayer tbody td").remove();
+				//             for(var i=0;i<response.resultData.length;i++){
+				//                 $("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+				//             }*/
+				//         }
+				//         else {
+				//             console.log("response.success N");
+				//         }
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert("deleteFileBtn ajax error\n" + textStatus + ":" + errorThrown);
+				return false;
+			}
+		});
 			
 	}
 	
