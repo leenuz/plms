@@ -261,7 +261,7 @@ function loadDataTable(params) {
 				var ask = (params.askMenu03 == undefined || params.askMenu03 == null) ? '0' : params.askMenu03;
 				console.log("askmenu:" + ask);
 				if (ask == "0") {
-					console.log("---------3--------------");
+					console.log("---------입력형 주소--------------");
 					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
 				}
 				else {
@@ -291,7 +291,7 @@ function loadDataTable(params) {
 			{ data: "no", "orderable": false }, //0. 순번
 			{ data: "jisa" }, //1. 담당지사
 			{ data: "address" }, //2. 주소
-			{ data: "pipe_yn", "defaultContent": "" }, //3. 관로저촉
+			{ data: "pipe_overlap_yn", "defaultContent": "" }, //3. 관로저촉
 			{ data: "pipe_meter", "defaultContent": "" }, //4. 관경
 			{ data: "jimok_text", "defaultContent": "" }, //5. 지목
 			{ data: "souja_name", "defaultContent": "" }, //6. 소유자

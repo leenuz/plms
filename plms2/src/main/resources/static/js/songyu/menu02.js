@@ -317,7 +317,7 @@ function loadDataTable(params) {
 				
 				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
 				if (ask == "0") {
-					console.log("---------3--------------");
+					console.log("---------입력형 주소--------------");
 					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
 				}
 				else {
@@ -348,7 +348,7 @@ function loadDataTable(params) {
 			{ data: "no", "orderable": false }, // 0. 순번
 			{ data: "jisa" }, // 1. 담당지사
 			{ data: "address" }, //2. 주소
-			{ data: "pipe_yn", "defaultContent": "" }, //3. 관로저촉
+			{ data: "pipe_overlap_yn", "defaultContent": "" }, //3. 관로저촉
 			{ data: "pipe_meter", "defaultContent": "" }, //4. 관경
 			{ data: "jimok_text", "defaultContent": "" }, //5. 지목
 			{ data: "souja_name", "defaultContent": "" }, //6. 소유자
@@ -360,7 +360,7 @@ function loadDataTable(params) {
 			{ data: "jisang_comple_yn" }, //12. 등기여부
 			{ data: "permitted_yn" }, //13. 계약유형
 			{ data: "chuideuk_date" }, //14. 취득일
-			{ data: "gover_date" }, //15 . 점용기간
+			{ data: "gover_date" }, //15. 점용기간
 			{ data: "pay_date" }, //16. 점용납부일
 			{ data: "gover_area" }, //17. 설정면적
 			{ data: "gover_length" }, //18. 설정연장

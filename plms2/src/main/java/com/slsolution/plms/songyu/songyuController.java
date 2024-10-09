@@ -267,6 +267,7 @@ public class songyuController {
 		return mav;
 	}
 
+	// 권리확보현황 데이터테이블
 	@RequestMapping(value = "/menu01DataTableList", method = { RequestMethod.GET, RequestMethod.POST }) // http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> datatableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
@@ -305,27 +306,25 @@ public class songyuController {
 		log.info("orderColumnName:" + orderColumnName);
 		log.info("orderDirection:" + orderDirection);
 		String[] order_cols = req.getParameterValues("order");
-		// List val=new ArrayList();
-		// int mx=order_cols.length;
 
-		//
-		String jisa = req.getParameter("jisa");
-		String manage_no = req.getParameter("manage_no");
-		String right_type = req.getParameter("right_type");
-		String dosiplan = req.getParameter("dosiplan");
+		String jisa = req.getParameter("jisa"); //지사
+		String manage_no = req.getParameter("manage_no"); //관리번호
+		String toji_type = req.getParameter("toji_type"); //토지유형
+		String right_type = req.getParameter("right_type"); //권리확보유형
+		String dosiplan = req.getParameter("dosiplan"); // 도시계획유형
+		String toji_plan_type = req.getParameter("toji_plan_type"); //토지개발대상
+		String right_overlap = req.getParameter("right_overlap"); //권리중복필지
 
-		String address = req.getParameter("saddr");
-		if (address.equals("undefined"))
-			address = null;
+		String address = req.getParameter("saddr"); // 입력형 주소
+		String sido_nm = req.getParameter("sido_nm");
+		String sgg_nm = req.getParameter("sgg_nm");
+		String emd_nm = req.getParameter("emd_nm");
+		String ri_nm = req.getParameter("ri_nm");
+		String jibun = req.getParameter("jibun");
 
-		String toji_plan_type = req.getParameter("toji_plan_type");
-		String toji_type = req.getParameter("toji_type");
-		String right_overlap = req.getParameter("right_overlap");
 		Map map = req.getParameterMap();
 		log.info("draw:" + draw);
 		log.info("length:" + length);
-
-		// log.info("mx:"+mx);
 
 		log.info("jisa:" + jisa);
 		log.info("manage_no:" + manage_no);
@@ -336,13 +335,21 @@ public class songyuController {
 		params.put("draw", draw);
 		params.put("start", start);
 		params.put("length", length);
-		params.put("jisa", req.getParameter("jisa"));
+		
+		params.put("jisa", jisa);
 		params.put("idx", manage_no);
-		params.put("dosiplan", dosiplan);
-		params.put("address", address);
-		params.put("toji_plan_type", toji_plan_type);
 		params.put("toji_type", toji_type);
+		params.put("dosiplan", dosiplan);
+		params.put("toji_plan_type", toji_plan_type);
 		params.put("right_overlap", right_overlap);
+		
+		params.put("address", address);
+		params.put("sido_nm",sido_nm);
+		params.put("sgg_nm",sgg_nm);
+		params.put("emd_nm",emd_nm);
+		params.put("ri_nm",ri_nm);
+		params.put("jibun",jibun);
+		
 		String[] right_arr = {};
 		right_arr = right_type.split(",");
 		params.put("right_type", right_arr);
@@ -364,7 +371,7 @@ public class songyuController {
 			params.put("desc", "");
 		}
 		log.info("params:" + params);
-		// ArrayList<HashMap> list=new ArrayList<HashMap>();
+
 		Object count = mainService.selectCountQuery("songyuSQL.selectTotalCount1", params);
 		int total = (int) count;
 
@@ -568,8 +575,8 @@ public class songyuController {
 		String jisa = req.getParameter("jisa"); // 지사
 		String toji_type = req.getParameter("toji_type"); // 토지유형
 		String right_type = req.getParameter("right_type"); // 권리확보유형
-		String address = req.getParameter("saddr"); // 입력형 주소
 		
+		String address = req.getParameter("saddr"); // 입력형 주소
 		String sido_nm = req.getParameter("sido_nm");
 		String sgg_nm = req.getParameter("sgg_nm");
 		String emd_nm = req.getParameter("emd_nm");

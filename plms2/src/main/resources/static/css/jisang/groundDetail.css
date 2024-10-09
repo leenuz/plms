@@ -284,7 +284,9 @@ button {
     width: 100%;
 }
 #groundDetail .contBoxMini03 .contentDetailBox {
-    height: 137px;
+    /* height: 135px; */
+    max-height: calc(45px * 3);
+ 		overflow-y: auto; /* 스크롤 활성화 */
 }
 #groundDetail .basicOwnerInfo .contBoxMini03 .contents:last-child {
     border-bottom: 0;

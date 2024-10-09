@@ -281,31 +281,20 @@ function loadDataTable(params) {
 				console.log("right_type:" + right_type.substr(1));
 				d.right_type = right_type.substr(1);
 				d.dosiplan = params.dosiplan;
+				
 				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
 				console.log("askmenu:" + ask);
-
 				if (ask == "0") {
-					console.log("---------3--------------");
+					console.log("---------입력형 주소--------------");
 					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
 				}
 				else {
-					console.log("----------------------------1--------------");
-					console.log(ljsIsNull(params.sgg));
-					var addrs = params.sido;
-					console.log("addrs:" + addrs);
-					if (ljsIsNull(params.sgg)) addrs = addrs + "";
-					else addrs = addrs + " " + params.sgg;
-					if (ljsIsNull(params.emd)) addrs = addrs + "";
-					else addrs = addrs + " " + params.emd;
-					if (ljsIsNull(params.ri)) addrs = addrs + "";
-					else addrs = addrs + " " + params.ri;
-					if (ljsIsNull(params.jibun)) addrs = addrs + "";
-					else addrs = addrs + " " + params.jibun;
-					//var addrs=params.sido+" "+params.sgg+" "+params.emd+" "+(params.ri==null || params.ri=="undefined") ? '' : params.ri;
-					//console.log("emd:"+ljsIsNull(params.emd)?'':params.emd);
-					console.log("addrs:" + addrs);
-					d.saddr = (addrs == undefined || addrs == null) ? '' : addrs;
-					//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
+					console.log("------------선택형 주소--------------");
+					d.sido_nm = params.sido;
+					d.sgg_nm = params.sgg;
+					d.emd_nm = params.emd;
+					d.ri_nm = params.ri;
+					d.jibun = params.jibun;
 				}
 
 				console.log("saddr:" + d.saddr);
@@ -330,7 +319,7 @@ function loadDataTable(params) {
 			{ data: "address" }, //2. 주소
 			{ data: "pipe_overlap_yn", "defaultContent": "" }, //3. 관로저촉 
 			{ data: "pipe_meter", "defaultContent": "" }, //4. 관경
-			{ data: "jimok_text", "defaultContent": "" }, //5 지목
+			{ data: "jimok_text", "defaultContent": "" }, //5. 지목
 			{ data: "souja_name", "defaultContent": "" }, //6. 소유자
 			{ data: "jijuk_area", "defaultContent": "" }, //7. 면적
 			{ data: "toji_type", "defaultContent": "" }, //8. 토지유형
