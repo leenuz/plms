@@ -904,6 +904,14 @@ $(document).on("click",".approvalBtn ",function(){
 			var togiSouja=$(togiUls[i]).find("input[name='soyuja_"+ i +"']").val();
 			var togiUseName=$(togiUls[i]).find("input[name='pmtUser_"+ i +"']").val();
 			var togiManageNo=$(togiUls[i]).find("#togiManageNo").val();
+			
+			
+			
+			var sido_nm=$(togiUls[i]).find("#sido_nm").val();
+			var sgg_nm=$(togiUls[i]).find("#sgg_nm").val();
+			var emd_nm=$(togiUls[i]).find("#emd_nm").val();
+			var ri_nm=$(togiUls[i]).find("#ri_nm").val();
+			var jibun=$(togiUls[i]).find("#jibun").val();
 
 	   		var togiObj={
 				"address":ljsIsNull(address)?'':address
@@ -924,6 +932,11 @@ $(document).on("click",".approvalBtn ",function(){
 				,"togiSouja":ljsIsNull(togiSouja)?'':togiSouja
 				,"togiUseName":ljsIsNull(togiUseName)?'':togiUseName
 				,"togiManageNo":ljsIsNull(togiManageNo)?'':togiManageNo
+				,"sido_nm":ljsIsNull(sido_nm)?'':sido_nm
+				,"sgg_nm":ljsIsNull(sgg_nm)?'':sgg_nm
+				,"emd_nm":ljsIsNull(emd_nm)?'':emd_nm
+				,"ri_nm":ljsIsNull(ri_nm)?'':ri_nm
+				,"jibun":ljsIsNull(jibun)?'':jibun
 
 	   		}
 	   		togiDatas.push(togiObj);
