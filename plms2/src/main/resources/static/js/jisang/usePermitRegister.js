@@ -395,16 +395,16 @@ $(document).on("click","#addParentBtn",function(){
 			 	selectEles.val("");
 			 }
 			 //#전체 셀렉트 박스와 버튼을 초기화 끝
+closeSelectedBox();
 })
 
       // 저장, 닫기 버튼 click시 팝업 사라지게
 $(document).on("click","#popupCloseBtn",function(){
 	console.log("------------popupCloseBtn-------------------");
-	const landPopupFinalBtns = document.querySelector(
-	        "#land_searchResultsPopup .popupWrap .lastBtnBox .finalBtn"
-	      );
-		  const PopupWrap = landPopupFinalBtns.closest(".popupWrap");
-		           PopupWrap.classList.remove("active");
+const landPopupFinalBtns = document.querySelector("#land_searchResultsPopup .popupWrap .lastBtnBox .finalBtn");
+const PopupWrap = landPopupFinalBtns.closest(".popupWrap");
+PopupWrap.classList.remove("active");
+closeSelectedBox();
 });
     
 	  
@@ -685,9 +685,8 @@ $(document).on("click","#jisangTogiAddBtn",function(){
 	console.log("----------jisangTogiAddBtn--------------");
 	var orgEle=$("#togiHiddenUl");
 	console.log(orgEle.html());
+	console.log('여기여기');
 	var togiDiv=$("#togiDiv");
-	console.log($("#togiDiv").html());
-	console.log($(togiDiv).find(".togiUl"));
 	/*const togiDiv1=document.querySelector('#togiDiv');
 	var togiUls=togiDiv1.querySelector('.togiUl');
 	console.log(togiUls);*/
@@ -1296,3 +1295,7 @@ $(document).on("click","#mainSaveBtn",function(){
 	
 });
 
+function closeSelectedBox() {
+	$('.PopupCustomSelectBtns, .PopupCustomSelectView').removeClass('active');
+	$('.selectLabel input[name=chk]').prop('checked',false);
+}

@@ -78,6 +78,7 @@ const usePermitEditInfoAddBtnEvent01 = () => {
 				infoUl.appendChild(hiddenRiNmInput);
 				infoUl.appendChild(hiddenJibunNmInput);
 				infoUl.appendChild(hiddenAddrCodeNmInput);
+				
             for (let i = 1; i <= 9; i++) {
                 // li 만들기
                 const infoLi = document.createElement('li');
@@ -230,6 +231,7 @@ $(document).on("click","#popupCloseBtn",function(){
 
 	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
 	$(".popupWrap").removeClass("active");
+	closeSelectedBox();
 });
 
 
@@ -397,7 +399,7 @@ $(document).on("click",".addParentBtn",function(){
              const jasanNo = jusoInfo.querySelector('input#popupJasanNo').value;
              const souja = jusoInfo.querySelector('input#popupSouja').value;
              const setMoney = jusoInfo.querySelector('input#popupSetMoney').value;
-             
+             const jisang_no = jusoInfo.querySelector('input#popupManageNo').value;
              const sido_nm = jusoInfo.querySelector('input#sido_nm').value;
              const sgg_nm = jusoInfo.querySelector('input#sgg_nm').value;
              const ri_nm = jusoInfo.querySelector('input#ri_nm').value;
@@ -410,8 +412,24 @@ $(document).on("click",".addParentBtn",function(){
              $("input[name='jibun']").eq(idx).val(jibun);
              $("input[name='emd_nm']").eq(idx).val(emd_nm);
              
-             
-             const hiddenPermitIndexInput = document.createElement('input');
+     if (checkno === 0) {
+             // 선택된 칸에 데이터 넣기
+             $("input[name='address_" + id + "']").val(address);
+             $("input[name='jimok_" + id + "']").val(jimok);
+             $("input[name='fullArea_" + id + "']").val(jijukArea);
+             $("input[name='setArea_" + id + "']").val(pyeonibArea);
+             $("input[name='jasan_" + id + "']").val(jasanNo);
+             $("input[name='soyuja_" + id + "']").val(souja);
+             $("input[name='setMoney_" + id + "']").val(setMoney);
+             $('#togiDiv .contents').eq(id).find("input[name='sido_nm']").val(sido_nm);
+             $('#togiDiv .contents').eq(id).find("input[name='sgg_nm']").val(sgg_nm);
+             $('#togiDiv .contents').eq(id).find("input[name='ri_nm']").val(ri_nm);
+             $('#togiDiv .contents').eq(id).find("input[name='jibun']").val(jibun);
+             $('#togiDiv .contents').eq(id).find("input[name='emd_nm']").val(emd_nm);
+             $('#togiDiv .contents').eq(id).find("input[name='togiManageNo']").val(jisang_no);
+     }else{
+	 // ul 만들기	
+	 const hiddenPermitIndexInput = document.createElement('input');
                 hiddenPermitIndexInput.id = 'permitIndex';
                 hiddenPermitIndexInput.value = idx;
                 hiddenPermitIndexInput.type = 'hidden';
@@ -420,8 +438,7 @@ $(document).on("click",".addParentBtn",function(){
                 hiddenTogiManageNoInput.id = 'togiManageNo';
                 hiddenTogiManageNoInput.name = 'togiManageNo';
                 hiddenTogiManageNoInput.type = 'hidden';
-                hiddenTogiManageNoInput.value = $('#saveForm [name="pmt_no"]').val();
-                
+                hiddenTogiManageNoInput.value = jisang_no;
                 
                 const hiddenSidoNmInput = document.createElement('input');
                 hiddenSidoNmInput.id = 'sido_nm';
@@ -466,24 +483,6 @@ $(document).on("click",".addParentBtn",function(){
 				infoUl.appendChild(hiddenRiNmInput);
 				infoUl.appendChild(hiddenJibunNmInput);
 				infoUl.appendChild(hiddenAddrCodeNmInput);
-     if (checkno === 0) {
-             // 선택된 칸에 데이터 넣기
-             $("input[name='address_" + id + "']").val(address);
-             $("input[name='jimok_" + id + "']").val(jimok);
-             $("input[name='fullArea_" + id + "']").val(jijukArea);
-             $("input[name='setArea_" + id + "']").val(pyeonibArea);
-             $("input[name='jasan_" + id + "']").val(jasanNo);
-             $("input[name='soyuja_" + id + "']").val(souja);
-             $("input[name='setMoney_" + id + "']").val(setMoney);
-             $('#togiDiv .contents').eq(id).find("input[name='sido_nm']").val(sido_nm);
-             $('#togiDiv .contents').eq(id).find("input[name='sgg_nm']").val(sgg_nm);
-             $('#togiDiv .contents').eq(id).find("input[name='ri_nm']").val(ri_nm);
-             $('#togiDiv .contents').eq(id).find("input[name='jibun']").val(jibun);
-             $('#togiDiv .contents').eq(id).find("input[name='emd_nm']").val(emd_nm);
-     }else{
-	 // ul 만들기	
-	 			
-                
                 for (let i = 1; i <= 9; i++) {
                     // li 만들기
                     const infoLi = document.createElement('li');
@@ -618,6 +617,7 @@ $(document).on("click",".addParentBtn",function(){
 	
 				
  $(".popupWrap").removeClass("active");
+ closeSelectedBox();
  //$('#togiDiv .contents').last().remove();
 })
 
@@ -792,6 +792,7 @@ $(document).on("click",".saveBtn ",function(){
 		let soyuja=$(togiUls[i]).find("input[name='soyuja_"+ i +"']").val();
 		let pmtUser=$(togiUls[i]).find("input[name='pmtUser_"+ i +"']").val();
 		let togiManageNo=$(togiUls[i]).find("input[name='togiManageNo']").val();
+		let jisangNo = $(togiUls[i]).find("input[name='jisang_no_"+i+"']").val();
 		
 		let sido_nm=$(togiUls).eq(i).find("input[name='sido_nm']").val();
 		let sgg_nm=$(togiUls).eq(i).find("input[name='sgg_nm']").val();
@@ -799,6 +800,9 @@ $(document).on("click",".saveBtn ",function(){
 		let ri_nm=$(togiUls).eq(i).find("input[name='ri_nm']").val();
 		let jibun=$(togiUls).eq(i).find("input[name='jibun']").val();
 		let addrcode=$(togiUls).eq(i).find("input[name='addrcode']").val();
+		if (!jisangNo) {
+			jisangNo=$(togiUls).eq(i).find("input[name='jisang_no']").val();	
+		}
 		
    		let togiObj={
 			"address" : ljsIsNull(address) ? '' : address,
@@ -887,6 +891,19 @@ $(document).on("click",".approvalBtn ",function(){
 			var jasan=$(togiUls[i]).find("input[name='jasan_"+ i +"']").val();
 			var soyuja=$(togiUls[i]).find("input[name='soyuja_"+ i +"']").val();
 			var pmtUser=$(togiUls[i]).find("input[name='pmtUser_"+ i +"']").val();
+			var manageNo=$(togiUls[i]).find("#togiManageNo").val();
+			
+			
+			
+			var togiaddress=$(togiUls[i]).find("input[name='address_"+ i +"']").val();
+			var togiJimokText=$(togiUls[i]).find("input[name='jimok_"+ i +"']").val();
+			var togiJijukArea=$(togiUls[i]).find("input[name='fullArea_"+ i +"']").val();
+			var togiPyeonibArea=$(togiUls[i]).find("input[name='setArea_"+ i +"']").val();
+			var togiSetMoney=$(togiUls[i]).find("input[name='setMoney_"+ i +"']").val();
+			var togiJasanNo=$(togiUls[i]).find("input[name='jasan_"+ i +"']").val();
+			var togiSouja=$(togiUls[i]).find("input[name='soyuja_"+ i +"']").val();
+			var togiUseName=$(togiUls[i]).find("input[name='pmtUser_"+ i +"']").val();
+			var togiManageNo=$(togiUls[i]).find("#togiManageNo").val();
 
 	   		var togiObj={
 				"address":ljsIsNull(address)?'':address
@@ -897,6 +914,16 @@ $(document).on("click",".approvalBtn ",function(){
 				,"jasan":ljsIsNull(jasan)?'':jasan
 				,"soyuja":ljsIsNull(soyuja)?'':soyuja
 				,"pmtUser":ljsIsNull(pmtUser)?'':pmtUser
+				,"manageNo":ljsIsNull(pmtUser)?'':manageNo
+				,"togiaddress":ljsIsNull(togiaddress)?'':togiaddress
+				,"togiJimokText":ljsIsNull(togiJimokText)?'':togiJimokText
+				,"togiJijukArea":ljsIsNull(togiJijukArea)?'':togiJijukArea
+				,"togiPyeonibArea":ljsIsNull(togiPyeonibArea)?'':togiPyeonibArea
+				,"togiSetMoney":ljsIsNull(togiSetMoney)?'':togiSetMoney
+				,"togiJasanNo":ljsIsNull(togiJasanNo)?'':togiJasanNo
+				,"togiSouja":ljsIsNull(togiSouja)?'':togiSouja
+				,"togiUseName":ljsIsNull(togiUseName)?'':togiUseName
+				,"togiManageNo":ljsIsNull(togiManageNo)?'':togiManageNo
 
 	   		}
 	   		togiDatas.push(togiObj);
@@ -905,7 +932,7 @@ $(document).on("click",".approvalBtn ",function(){
 		dataObj.gubun="modify";
 				dataObj.pmt_status="임시저장";
 		 //임시저장 호출
-
+console.log(dataObj);
 		 		url="/land/jisang/usePermitRegisterSave";
 		 		$.ajax({
 
@@ -1235,3 +1262,8 @@ $(document).on("click","#docFileDelBtn",function(){
 	}
 
 })
+
+function closeSelectedBox() {
+	$('.PopupCustomSelectBtns, .PopupCustomSelectView').removeClass('active');
+	$('.selectLabel input[name=chk]').prop('checked',false);
+}
