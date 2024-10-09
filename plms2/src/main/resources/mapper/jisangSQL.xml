@@ -1270,8 +1270,12 @@ SELECT count(*)
 		TRIM(CONCAT(jb_sido_nm, ' ', jb_sgg_nm, ' ',jb_emd_nm,' ', jb_ri_nm, ' ', jb_jibun)) AS address,
 		jb_jibun AS jibun,
 		jb_idx, jb_jisang_no, jb_sido_nm, jb_sgg_nm, jb_emd_nm, jb_ri_nm, jb_jisa, jb_jijuk_area, jb_yongdo, jb_pyeonib_area, jb_jasan_no, jb_gover_own_yn, jb_cancle_yn, jb_bunhal_yn, jb_bunhal_date, jb_bunhal_reason, jb_bunhal_org_no, jb_addrcode, jb_pnu, jb_remainder_money, jb_jimok_text, jb_dockey, jb_toji_type, jb_pipe_yn, jb_bunhal_comment, jb_set_money, jb_bunhal_status, jb_chuideuk_money, jb_gammoney, jb_bosang_money, jb_profit_loss, jb_demise, jb_bunhal_complete
+		, j.pnu AS jijuk_PNU
+		 , j.GOVER_OWN_YN 
 		FROM
 		jisang_bunhal
+		LEFT OUTER JOIN JIJUK_2024 J
+		             ON J.pnu = jb_pnu
 		where 1 = 1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 		AND jb_bunhal_org_no = #{idx}
@@ -1299,6 +1303,8 @@ SELECT count(*)
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			,jb_bunhal_org_no
 		</if>
+		, j.pnu
+		, j.GOVER_OWN_YN 
 	</select>
 	
 	<!--  지상 분할 첨부파일 카운터 -->

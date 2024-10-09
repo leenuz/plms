@@ -233,17 +233,17 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				HashMap hm = (HashMap) list.get(i);
 
 				sbHtml.append("                <tr>            \n");
-				sbHtml.append("                    <td>" + cu.evl(String.valueOf(hm.get("ADDR")), "") + "</td>               \n");
-				sbHtml.append("                    <td>" + cu.evl(String.valueOf(hm.get("JIMOK")), "") + "</td> \n");
-				sbHtml.append("                    <td>" + cu.evl(String.valueOf(hm.get("ALL_AREA")), "") + "</td>\n");
-				sbHtml.append("                    <td>" + cu.evl(String.valueOf(hm.get("SET_AREA")), "") + "</td>\n");
+				sbHtml.append("                    <td>" + cu.evl(String.valueOf(hm.get("addr")), "") + "</td>               \n");
+				sbHtml.append("                    <td>" + cu.evl(String.valueOf(hm.get("jimok")), "") + "</td> \n");
+				sbHtml.append("                    <td>" + cu.evl(String.valueOf(hm.get("all_area")), "") + "</td>\n");
+				sbHtml.append("                    <td>" + cu.evl(String.valueOf(hm.get("set_area")), "") + "</td>\n");
 				sbHtml.append("                    <td class=\"inner_tag\">         \n");
-				sbHtml.append("   " + cu.evl(String.valueOf(hm.get("SET_MONEY")), "") + "                    \n");
+				sbHtml.append("   " + cu.evl(String.valueOf(hm.get("set_money")), "") + "                    \n");
 				sbHtml.append("                    </td>       \n");
-				sbHtml.append("                    <td>" + cu.evl(String.valueOf(hm.get("JASAN_NO")), "") + "</td>                  \n");
-				sbHtml.append("                    <td>" + cu.evl(String.valueOf(hm.get("SOYUJA")), "") + "</td>                  \n");
+				sbHtml.append("                    <td>" + cu.evl(String.valueOf(hm.get("jasan_no")), "") + "</td>                  \n");
+				sbHtml.append("                    <td>" + cu.evl(String.valueOf(hm.get("soyuja")), "") + "</td>                  \n");
 				sbHtml.append("                    <td class=\"inner_tag\">         \n");
-				sbHtml.append("   " + cu.evl(String.valueOf(hm.get("PMT_USER")), "") + "  \n");
+				sbHtml.append("   " + cu.evl(String.valueOf(hm.get("pmt_user")), "") + "  \n");
 				sbHtml.append("                    </td>       \n");
 				sbHtml.append("                </tr>           \n");
 			}
@@ -277,12 +277,12 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		if (n_listCnt > 0) {
 			ArrayList list = (ArrayList) map.get("list");
 			HashMap hm = (HashMap) list.get(0);
-			str_USE_PURPOS = cu.evl(String.valueOf(hm.get("USE_PURPOS")), "");
-			str_USE_ST_DATE = cu.evl(String.valueOf(hm.get("USE_ST_DATE")), "");
-			str_USE_ED_DATE = cu.evl(String.valueOf(hm.get("USE_ED_DATE")), "");
-			str_SPOT_RESULT = cu.evl(String.valueOf(hm.get("SPOT_RESULT")), "");
-			str_RIVEW = cu.evl(String.valueOf(hm.get("RIVEW")), "");
-			str_CONTRACT = cu.evl(String.valueOf(hm.get("CONTRACT")), "");
+			str_USE_PURPOS = cu.evl(String.valueOf(hm.get("use_purpos")), "");
+			str_USE_ST_DATE = cu.evl(String.valueOf(hm.get("use_st_date")), "");
+			str_USE_ED_DATE = cu.evl(String.valueOf(hm.get("use_ed_date")), "");
+			str_SPOT_RESULT = cu.evl(String.valueOf(hm.get("spot_result")), "");
+			str_RIVEW = cu.evl(String.valueOf(hm.get("rivew")), "");
+			str_CONTRACT = cu.evl(String.valueOf(hm.get("contract")), "");
 
 		}
 
@@ -353,14 +353,14 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 
 			for (int i = 0; i < 6; i++) {
 				HashMap hm = new HashMap();
-
+				log.info("hm:"+hm);
 				if (5 == i) {
 					if (n_fileCount > 5) {
 						hm = (HashMap) list.get(i);
-						str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("FILE_PATH")), "");
-						str_FILE_NM = cu.evl(String.valueOf(hm.get("FILE_NM")), "");
-						str_FILE_SEQ = cu.evl(String.valueOf(hm.get("SEQ")), "");
-						str_PMT_NO = cu.evl(String.valueOf(hm.get("PMT_NO")), "");
+						str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("file_path")), "");
+						str_FILE_NM = cu.evl(String.valueOf(hm.get("file_nm")), "");
+						str_FILE_SEQ = cu.evl(String.valueOf(hm.get("seq")), "");
+						str_PMT_NO = cu.evl(String.valueOf(hm.get("pmt_no")), "");
 					} else {
 						str_FILE_PATH = "#";
 						str_FILE_NM = "";
@@ -370,10 +370,10 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 
 				} else {
 					hm = (HashMap) list.get(i);
-					str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("FILE_PATH")), "");
-					str_FILE_NM = cu.evl(String.valueOf(hm.get("FILE_NM")), "");
-					str_FILE_SEQ = cu.evl(String.valueOf(hm.get("SEQ")), "");
-					str_PMT_NO = cu.evl(String.valueOf(hm.get("PMT_NO")), "");
+					str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("file_path")), "");
+					str_FILE_NM = cu.evl(String.valueOf(hm.get("file_nm")), "");
+					str_FILE_SEQ = cu.evl(String.valueOf(hm.get("seq")), "");
+					str_PMT_NO = cu.evl(String.valueOf(hm.get("pmt_no")), "");
 				}
 
 //				System.out.println("str_FILE_PATH=" + str_FILE_PATH);

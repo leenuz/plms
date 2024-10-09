@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -2252,21 +2253,36 @@ log.info("file_list:"+file_list);
 					
 					// fileseq 가져오기
 					for (int i = 0; i < fileArr.length(); i++) {
-						// JSONObject fobj=new JSONObject(fileArr.get(i).toString());
-						String file_name = fileArr.getString(i);
-						log.info("file_name:" + file_name);
+						JSONObject fobj=new JSONObject(fileArr.get(i).toString());
+						String filePath = fobj.getString("fpath");
+						String fileName = fobj.getString("fname");
+						String[] paths = Arrays.copyOf(filePath.split("/"), filePath.split("/").length - 1);
+						boolean flag = true;
+						for (String item : paths) {
+							if (item.contains("upload")) {
+								flag = false;
+								break;
+							}
+						}
+						
+//						String file_name = fileArr.getString(i);
+						
+//						log.info("file_name:" + file_name);
 						HashMap<String, Object> filesMap = new HashMap<>();
 
 						filesMap.put("goverNo", str_GOVERNO);
 						filesMap.put("seq", String.format("%06d", i));
 						filesMap.put("fseq", nseq + i);
-						filesMap.put("fname", file_name);
-
+						filesMap.put("fname", fileName);
 						String tempPath = GC.getGoverFileTempDir(); // 설정파일로 뺀다.
 						String dataPath = GC.getGoverFileDataDir() + "/" + str_GOVERNO; // 설정파일로 뺀다.
-						filesMap.put("fpath", dataPath + "/" + file_name);
+						if (!flag) {
+							filesMap.put("fpath", filePath);
+						} else {
+							filesMap.put("fpath", dataPath + "/" + fileName);
+						}
 						
-						CommonUtil.moveFile(file_name, tempPath, dataPath);
+						CommonUtil.moveFile(fileName, tempPath, dataPath);
 						
 						log.info("filesMap:" + filesMap);
 						mainService.InsertQuery("goverSQL.insertGoverUploadData", filesMap);

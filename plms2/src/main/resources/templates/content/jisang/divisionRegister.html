@@ -143,6 +143,9 @@ border: 1px solid black;
 		<input type="hidden" name="jisa" th:value="${resultData.jm_jisa}">
 		<input type="hidden" name="idx" id="idx" th:value="${idx}">
 		<input type="hidden" name="index" id="index" th:value="${index}">
+		<input type="hidden" id="bunhalListCheck" th:value="${bunhalList}">
+		<input type="hidden" id="resultDataCheck" th:value="${resultData}">
+		
         <!-- 대상토지 -->
         <section class="targetLand">
             <div class="subTitle">
@@ -389,8 +392,6 @@ border: 1px solid black;
                     <section class="customSelectBox">
                         <button class="customSelectView" id="hiddenBtn">
                         [[${val['gover_own_yn'] == 'Y'} ? '국유지' : '사유지']]
-                        
-                       
                         </button>
                     
                         <ul class="customSelectBtns">
@@ -499,7 +500,7 @@ border: 1px solid black;
                    </div>
                    <section class="customSelectBox">
                        <button class="customSelectView">
-                           선택
+                           [[${resultData.jm_gover_own_yn == 'Y' ? '국유지' : '사유지'}]]
                        </button>
                    
                        <ul class="customSelectBtns">
@@ -516,21 +517,26 @@ border: 1px solid black;
                        <li class="secondContent"><input type="text" name="togiBunhalJasanNo" th:value="${resultData.jm_jasan_no}"></li>
                    </ul>
                </li>
+               <!-- 관로저촉 -->
                <li class="content">
                    <input type="checkbox" name="togiBunhalPipeYn" id="divisionRegister_pipeline_interference_01" th:checked="${resultData.jm_pipe_yn=='Y'}">
                    <label for="divisionRegister_pipeline_interference_01"></label>
                </li>
+               <!-- 해지여부 -->
                <li class="content">
                    <input type="checkbox" name="togiBunhalCancelYn" id="divisionRegister_termination_status_01" th:checked="${resultData.jm_cancle_yn=='Y'}">
                    <label for="divisionRegister_termination_status_01"></label>
                </li>
+               <!-- 자료승계 -->
                <li class="content">
                    <input type="checkbox" name="togiBunhalDemise" id="divisionRegister_data_succession_01">
                    <label for="divisionRegister_data_succession_01"></label>
                </li>
+               <!-- 위치보기 -->
                <li class="content middleWidth">
                    <button class="viewDetailButton">위치보기</button>
                </li>
+               <!-- 회계처리필요여부 -->
                <li class="content middleWidth selectContentArea">
                    <div class="hiddenSelectBox">
                        <!-- name도 추가 -->
@@ -1040,6 +1046,8 @@ border: 1px solid black;
 					<ii class="popContent0207" hidden>[[${val.gover_own_yn}]]</ii>
 					<ii class="popContent0208" hidden>[[${val.jimok_text}]]</ii>
 					<ii class="popContent0209" hidden>[[${val.jijuk_area}]]</ii>
+					
+					<ii class="popContent0210" hidden>[[${val.pipe_overlap_yn}]]</ii>
 					
 	                <li class="popContent03">[[${val.jibun}]]</li>
 	                <li class="popContent04">

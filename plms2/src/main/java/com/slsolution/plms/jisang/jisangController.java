@@ -852,6 +852,8 @@ log.info("PMT_NO:"+PMT_NO);
 				togiList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_TOGI", params); // 대상토지
 				fileList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_FILE", params); // 첨부서류
 				log.info("list:"+list);
+				log.info("togiList:"+togiList);
+				log.info("fileList:"+fileList);
 			} catch (Exception e) {
 				str_result = "N";
 				e.printStackTrace();
@@ -918,7 +920,7 @@ log.info("PMT_NO:"+PMT_NO);
 				//ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectDocInfo", map);
 				ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectDocInfo", map);
 				if (null != echolist && echolist.size() > 0) {
-					String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+					String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("pa_out_url"));
 					 System.out.println("str_EchoNo=====" + str_EchoNo);
 					map.put("OUT_URL", str_EchoNo);
 				}
@@ -3280,11 +3282,7 @@ log.info("data:"+data.get(0));
 	        		jisang_no=obj.getString("togiManageNo");
 	        	}
 	        	
-	        	
-	        	
 	        	sqlParams.put("jisang_no",jisang_no);
-	        	
-	        	
 	        	
 	        	sqlParams.put("togiCancelYn",obj.getString("togiCancelYn"));
 	        	sqlParams.put("togiAccountYn",obj.getString("togiAccountYn"));
@@ -3323,7 +3321,9 @@ log.info("data:"+data.get(0));
 	        	
 	        	//파일등록
 	        	ArrayList<HashMap<String, String>> docArray = new ArrayList<>();
+	        	
 	    		log.info("req_doc_file01:"+requestJsonObj.getString("req_doc_file01"));
+	    		
 	    		if (requestJsonObj.getString("req_doc_file01")!=null && requestJsonObj.getString("req_doc_file01")!="" && !requestJsonObj.getString("req_doc_file01").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
 	    			docMap.put("jisang_no",  jisang_no);
@@ -3340,6 +3340,7 @@ log.info("data:"+data.get(0));
 	    			}
 	    			 docArray.add(docMap);
 	    		}
+	    		
 	    		if (requestJsonObj.getString("req_doc_file02")!=null && requestJsonObj.getString("req_doc_file02")!="" && !requestJsonObj.getString("req_doc_file02").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
 	    			docMap.put("jisang_no",  jisang_no);
@@ -3351,6 +3352,7 @@ log.info("data:"+data.get(0));
 	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file02"), tmp, fpath);
 	    			 docArray.add(docMap);
 	    		}
+	    		
 	    		if (requestJsonObj.getString("req_doc_file03")!=null && requestJsonObj.getString("req_doc_file03")!="" && !requestJsonObj.getString("req_doc_file03").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
 	    			docMap.put("jisang_no",  jisang_no);
@@ -3362,6 +3364,7 @@ log.info("data:"+data.get(0));
 	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file03"), tmp, fpath);
 	    			 docArray.add(docMap);
 	    		}
+	    		
 	    		if (requestJsonObj.getString("req_doc_file04")!=null && requestJsonObj.getString("req_doc_file04")!="" && !requestJsonObj.getString("req_doc_file04").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
 	    			docMap.put("jisang_no",  jisang_no);
@@ -3373,6 +3376,7 @@ log.info("data:"+data.get(0));
 	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file04"), tmp, fpath);
 	    			 docArray.add(docMap);
 	    		}
+	    		
 	    		if (requestJsonObj.getString("req_doc_file05")!=null && requestJsonObj.getString("req_doc_file05")!="" && !requestJsonObj.getString("req_doc_file05").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
 	    			docMap.put("jisang_no",  jisang_no);
@@ -3384,6 +3388,7 @@ log.info("data:"+data.get(0));
 	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file05"), tmp, fpath);
 	    			 docArray.add(docMap);
 	    		}
+	    		
 	    		if (requestJsonObj.getString("req_doc_file06")!=null && requestJsonObj.getString("req_doc_file06")!="" && !requestJsonObj.getString("req_doc_file06").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
 	    			docMap.put("jisang_no",  jisang_no);
@@ -3395,6 +3400,7 @@ log.info("data:"+data.get(0));
 	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file06"), tmp, fpath);
 	    			 docArray.add(docMap);
 	    		}
+	    		
 	    		if (requestJsonObj.getString("req_doc_file07")!=null && requestJsonObj.getString("req_doc_file07")!="" && !requestJsonObj.getString("req_doc_file07").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
 	    			docMap.put("jisang_no",  jisang_no);
@@ -3406,6 +3412,7 @@ log.info("data:"+data.get(0));
 	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file07"), tmp, fpath);
 	    			 docArray.add(docMap);
 	    		}
+	    		
 	    		if (requestJsonObj.getString("req_doc_file08")!=null && requestJsonObj.getString("req_doc_file08")!="" && !requestJsonObj.getString("req_doc_file08").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
 	    			docMap.put("jisang_no",  jisang_no);
@@ -3504,9 +3511,6 @@ log.info("data:"+data.get(0));
 //		int docCount=0;
 //		
 //		
-		
-		
-		
 		
 ////		
 //		params.put("jisa",jisa);
@@ -3607,14 +3611,14 @@ log.info("data:"+data.get(0));
 //	        System.out.println(obj);
 	       
 	      //log.info("jo:"+jo);
-	      			response.setCharacterEncoding("UTF-8");
-	      			response.setHeader("Access-Control-Allow-Origin", "*");
-	      			response.setHeader("Cache-Control", "no-cache");
-	      			response.resetBuffer();
-	      			response.setContentType("application/json");
-	      			//response.getOutputStream().write(jo);
-	      			response.getWriter().print(obj);
-	      			response.getWriter().flush();
+  			response.setCharacterEncoding("UTF-8");
+  			response.setHeader("Access-Control-Allow-Origin", "*");
+  			response.setHeader("Cache-Control", "no-cache");
+  			response.resetBuffer();
+  			response.setContentType("application/json");
+  			//response.getOutputStream().write(jo);
+  			response.getWriter().print(obj);
+  			response.getWriter().flush();
 		
 		
 	}

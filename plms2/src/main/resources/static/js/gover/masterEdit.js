@@ -1183,14 +1183,18 @@ $(document).on("click", "#draftSaveBtn", function() {
 	console.log(attachFileUls);
 	
 	var files = new Array();
-	
+	let fileObj = {'ga_idx':'', 'file_seq':'', 'fname':'', 'wdate':'', 'fpath':''};
 	for (var i = 0; i < attachFileUls.length; i++) {
+		fileObj = {'ga_idx':'', 'file_seq':'', 'fname':'', 'wdate':'', 'fpath':''};
 		//console.log($(attachFileUls[i]).parent().parent().html());
-		var fname = $(attachFileUls[i]).parent().parent().find("#filename").val();
-		var wdate = $(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val();
-		console.log(fname);
-		console.log("wdate:" + wdate);
-		if (wdate == null || wdate == "" || wdate == undefined) files.push(fname);
+		let file_path = $(attachFileUls[i]).prev().val() || '';
+		var fname = $(attachFileUls[i]).parent().parent().find("#filename").val() || '';
+		var wdate = $(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val() || '';
+		fileObj.wdate = wdate;
+		fileObj.fname = fname;
+		fileObj.fpath = file_path;
+		
+		if (wdate == null || wdate == "" || wdate == undefined) files.push(fileObj);
 	}
 
 	console.log("----------togiDatas-------------");
@@ -1226,9 +1230,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 	var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
 	console.log("----------jsonobj------------");
 	console.log(object);
-
 	url = "/land/gover/insertGoverMasterDemo";
-
 	$.ajax({
 
 		url: url,
