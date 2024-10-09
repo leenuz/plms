@@ -426,10 +426,7 @@
 
 			<!-- 잠재이슈 대응방안 메뉴얼 -->
 			<section class="potentialIssuesResponseManual">
-				<div class="subTitle">
-					잠재이슈 대응방안 메뉴얼
-				</div>
-			
+				<div class="subTitle">잠재이슈 대응방안 메뉴얼</div>
 				<div class="contWrap">
 					<div class="contBox">
 						<div class="contentDetailBox">
@@ -454,7 +451,9 @@
 										[[${val.icaf_file_regdate}]]
 									</li>
 									<li class="content04 content btnsWrap">
-											<button class="fileDownloadBtn"  th:onclick="downloadFile([[${val.icaf_file_path}]],[[${val.icaf_file_nm}]])">다운로드 <span class="downloadIcon"></span></button>
+											<button class="fileDownloadBtn"  
+											th:onclick="downloadFile([[${val.icaf_file_path}]],[[${val.icaf_file_nm}]])">
+											다운로드 <span class="downloadIcon"></span></button>
 									</li>
 								</ul>
 							</div>

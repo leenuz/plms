@@ -132,6 +132,14 @@ LEFT JOIN plms_approval PA
 		order by gm_modify_date desc
 	</select>
 	
+	<!-- 송유관로 현황 - 점용 상세정보 - 잠재이슈 변경 이력-->
+	<select id="selectIssueHistoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *,(row_number() over()) as no 
+		 FROM  plms_potential_issue pi left join potential_issue_history pih on pi.pnu=pih.pih_pnu 
+		WHERE 1=1
+		and pih_pnu=#{pnu}
+	</select>
+	
 	<select id="selectMemoList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *,(row_number() over()) as no 
 		from memo_master 

@@ -589,7 +589,6 @@
 			<!-- 잠재이슈 대응방안 메뉴얼 -->
 			<section class="potentialIssuesResponseManual">
 				<div class="subTitle">잠재이슈 대응방안 메뉴얼</div>
-
 				<div class="contWrap">
 					<div class="contBox">
 						<div class="contentDetailBox">
@@ -600,8 +599,7 @@
 									<li class="title03 title">개정일자</li>
 									<li class="title04 title">다운로드</li>
 								</ul>
-								<ul class="contents lastContents"
-									th:if="${jisangIssueCodeAtcFileList == null || jisangIssueCodeAtcFileList.isEmpty()}">
+								<ul class="contents lastContents" th:if="${jisangIssueCodeAtcFileList == null || jisangIssueCodeAtcFileList.isEmpty()}">
 									<li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
 								<ul class="contents" th:each="val:${jisangIssueCodeAtcFileList}">

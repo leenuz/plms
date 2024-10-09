@@ -624,44 +624,35 @@
 									<li class="title04 title">내용</li>
 									<li class="title03 title">사유</li>
 								</ul>
-								<ul class="contents">
-									<li class="content01 content">3</li>
-									<li class="content02 content">이슈 삭제</li>
-									<li class="content03 content">2024-04-01 11:21:04</li>
-									<li class="content04 content">[기공승낙서 미존재 > 토지소유자 협의없이 매설 >
-										오류/무단매설]</li>
-									<li class="content03 content">이슈 중복 등록</li>
+								<ul class="contents lastContents" th:if="${goverIssueHistoryList == null or goverIssueHistoryList.size() == 0}">
+									<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents">
-									<li class="content01 content">2</li>
-									<li class="content02 content">이슈 수정</li>
-									<li class="content03 content">2024-04-01 11:21:04</li>
-									<li class="content04 content">[이슈없음 > 이슈없음 > 이슈없음] ->
-										[기공승낙서 미존재 > 토지소유자 협의없이 매설 > 오류/무단매설]</li>
-									<li class="content03 content">신규 등록</li>
-								</ul>
-								<ul class="contents lastContents">
-									<li class="content01 content">1</li>
-									<li class="content02 content">신규 등록</li>
-									<li class="content03 content">2024-04-01 11:21:04</li>
-									<li class="content04 content">[이슈없음 > 이슈없음 > 이슈없음]</li>
-									<li class="content03 content">신규 등록</li>
+								<ul class="contents lastContents" th:if="${goverIssueHistoryList != null and goverIssueHistoryList.size() > 0}">
+									<li class="content01 content">
+										[[${val.no}]]
+									</li>
+									<li class="content02 content">
+										[[${val.pih_history_type}]]
+									</li>
+									<li class="content03 content">
+										[[${val.pih_history_date}]]
+									</li>
+									<li class="content04 content">
+										[[${val.pih_content}]]
+									</li>
+									<li class="content03 content">
+										[[${val.pi_issue_comment}]]
+									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
-
-
 			</section>
 
 			<!-- 잠재이슈 대응방안 메뉴얼 -->
-
-
 			<section class="potentialIssuesResponseManual">
 				<div class="subTitle">잠재이슈 대응방안 메뉴얼</div>
-
-
 				<div class="contWrap">
 					<div class="contBox">
 						<div class="contentDetailBox">
@@ -672,22 +663,22 @@
 									<li class="title03 title">개정일자</li>
 									<li class="title04 title">다운로드</li>
 								</ul>
-								<ul class="contents">
-									<li class="content01 content">계약자와 현재소유자가 다른 경우 (5년이내)</li>
-									<li class="content02 content">1.0</li>
-									<li class="content03 content">2024-04-02 15:40:01</li>
-									<li class="content04 content btnsWrap">
-										<button class="fileDownloadBtn">
-											다운로드 <span class="downloadIcon"></span>
-										</button>
-									</li>
+								<ul class="contents lastContents" th:if="${goverIssueCodeAtcFileList == null || goverIssueCodeAtcFileList.isEmpty()}">
+									<li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents lastContents">
-									<li class="content01 content">토지소유자가 아닌자와 계약 (20년 초과)</li>
-									<li class="content02 content">1.0</li>
-									<li class="content03 content">2024-04-02 15:40:01</li>
+								<ul class="contents" th:each="val:${goverIssueCodeAtcFileList}">
+									<li class="content01 content">
+										[[${val.icaf_manual_title}]]
+									</li>
+									<li class="content02 content">
+										[[${val.icaf_file_version}]]
+									</li>
+									<li class="content03 content">
+										[[${val.icaf_file_regdate}]]
+									</li>
 									<li class="content04 content btnsWrap">
-										<button class="fileDownloadBtn">
+										<button class="fileDownloadBtn"
+											th:onclick="downloadFile([[${val.icaf_file_path}]],[[${val.icaf_file_nm}]])">
 											다운로드 <span class="downloadIcon"></span>
 										</button>
 									</li>
@@ -696,8 +687,6 @@
 						</div>
 					</div>
 				</div>
-
-
 			</section>
 
 			<!-- 메모 -->

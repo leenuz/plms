@@ -297,8 +297,8 @@ public class goverController {
 		ArrayList<HashMap> goverPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList", params);
 		params.put("pnu", data.get(0).get("jm_pnu"));
 		log.info("pnu: "+ data.get(0).get("jm_pnu"));
-		ArrayList<HashMap> goverIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
-		
+		ArrayList<HashMap> goverIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params); // 잠재이슈
+		ArrayList<HashMap> goverIssueHistoryList = mainService.selectQuery("goverSQL.selectIssueHistoryList",params); // 잠재이슈 변경 이력
 		log.info("jisangIssueList size:"+goverIssueList.size());
 		if (!goverIssueList.isEmpty()) {
 			log.info("issueManualCode1:"+goverIssueList.get(0).get("pi_code_depth1"));
@@ -309,6 +309,7 @@ public class goverController {
 			params.put("issueManualCode2", goverIssueList.get(0).get("pi_code_depth2"));
 			params.put("issueManualCode3", goverIssueList.get(0).get("pi_code_depth3"));
 		}
+		ArrayList<HashMap> goverIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params); // 잠재이슈 대응방안 메뉴얼
 //			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
 		ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
 //			ArrayList<HashMap> jisangMergeList = mainService.selectQuery("goverSQL.selectMergeList",params);
@@ -318,9 +319,6 @@ public class goverController {
 		log.info("params:" + params);
 		log.info("data:" + data.get(0));
 		log.info("pnu:" + pnuTargetList.get(0).get("gp_pnu"));
-//			log.info("jm_pipe_yn:"+data.get(0).get("gm_pipe_yn"));
-		log.info("gm_youngdo:" + data.get(0).get("gm_youngdo"));
-		log.info("gm_pipe_name:" + data.get(0).get("gm_pipe_name"));
 		log.info("permitList:" + permitList);
 		log.info("atcFileList:" + atcFileList);
 		log.info("goverMemoList:" + goverMemoList);
@@ -351,7 +349,9 @@ public class goverController {
 		} else {
 		    mav.addObject("goverPnuAtcFileList", goverPnuAtcFileList);
 		}
-		mav.addObject("goverIssueList", goverIssueList.isEmpty() ? new HashMap<>() : goverIssueList.get(0)); // 비어있을 경우 빈 맵 전달
+		mav.addObject("goverIssueList", goverIssueList.isEmpty() ? new HashMap<>() : goverIssueList.get(0)); // 잠재이슈
+		mav.addObject("goverIssueHistoryList", goverIssueHistoryList); // 잠재이슈 변경 이력
+		mav.addObject("goverIssueCodeAtcFileList", goverIssueCodeAtcFileList); // 잠재이슈 대응방안 메뉴얼
 		if (goverMemoList == null || goverMemoList.isEmpty()) { // 메모
 		    mav.addObject("memoList", new ArrayList<>());
 		} else {
@@ -368,6 +368,7 @@ public class goverController {
 		mav.setViewName("content/gover/occupationDetails");
 		return mav;
 	}
+	
 
 	// 지사 선택에 따라 허가관청 목록을 반환하는 API
 	@PostMapping("/getPmtOffice")

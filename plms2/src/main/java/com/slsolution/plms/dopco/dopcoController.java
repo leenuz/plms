@@ -264,7 +264,7 @@ public class dopcoController {
 		mav.addObject("addressList",addressList);
 		mav.addObject("resultJimokList",jimoklist);
 		mav.addObject("jisaList",jisalist);
-		mav.addObject("jisangIssueHistoryList", dopcoIssueHistoryList);
+		mav.addObject("dopcoIssueHistoryList", dopcoIssueHistoryList);
 		mav.addObject("dopcoIssueCodeAtcFileList",dopcoIssueCodeAtcFileList);
 		mav.addObject("memoList", dopcoMemoList);
 		mav.setViewName("content/dopco/companyLandDetails");
