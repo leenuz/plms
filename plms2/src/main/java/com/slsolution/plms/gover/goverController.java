@@ -1990,14 +1990,14 @@ log.info("file_list:"+file_list);
 				params.put("PNU", PNU); // 새로 입력받은 PNU
 				params.put("ORG_PNU", ORG_PNU); // 기존PNU
 				params.put("GOVEROWNYN", GOVEROWNYN); // 국공유지여부
-				params.put("JIJUK_AREA", JIJUK_AREA); // 지적면적
+				params.put("JIJUK_AREA", JIJUK_AREA); // 지적면적 (지적구역...화면상에선 위치보기 버튼이던데..)
 				params.put("JIMOK_TEXT", JIMOK_TEXT); // 지목
-				params.put("GOVER_LENGTH", GOVER_LENGTH); // 연장
-				params.put("GOVER_AREA", GOVER_AREA); // 면적
-				params.put("ADM_OFFICE", ADM_OFFICE_PNU); // 면적
-				params.put("USE_PURPOS", USE_PURPOS_PNU); // 면적
-				params.put("REP_FLAG", REP_FLAG); // 대표필지 플래그
-				params.put("PIPEYN", PIPE_OVERLAP_YN); // 대표필지 플래그
+				params.put("GOVER_LENGTH", GOVER_LENGTH); // 점용연장!!
+				params.put("GOVER_AREA", GOVER_AREA); // 점용면적!!
+				params.put("ADM_OFFICE", ADM_OFFICE_PNU); // 관리기관!!
+				params.put("USE_PURPOS", USE_PURPOS_PNU); // 점용구분!!
+				params.put("REP_FLAG", REP_FLAG); // 대표필지!!
+				params.put("PIPEYN", PIPE_OVERLAP_YN); // 관로일치 여부!!
 				
 				System.out.println("insertGoverList >>>>>> insertGoverPnu Params" + params);
 

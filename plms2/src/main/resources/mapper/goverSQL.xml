@@ -1809,8 +1809,7 @@ WHERE GOVER_NO = #{GOVER_NO}
 	</select>
 	
 	<insert id="insertGoverPnu" parameterType="HashMap">
-INSERT
-     INTO GOVER_PNU (
+INSERT INTO GOVER_PNU (
            gp_SEQ
            , gp_GOVER_NO
            , gp_PNU
