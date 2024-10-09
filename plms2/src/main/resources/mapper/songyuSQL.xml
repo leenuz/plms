@@ -142,7 +142,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	and r.idx=#{idx}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
-	and r.cancle_yn=#{cancelYn}
+	and r.cancel_yn=#{cancelYn}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
 	and r.manage_yn=#{manageYn}
