@@ -1124,10 +1124,10 @@ SELECT count(*)
 		,jpt.all_area as all_area
 		,jpt.set_area as set_area
 		,jpt.set_money as set_money
-			,jm.jm_sido_nm AS sido_nm
-		,jm.jm_sgg_nm AS sgg_nm
-		,jm.jm_emd_nm AS emd_nm
-		,jm.jm_ri_nm AS ri_nm
+			,jpt.sido_nm AS sido_nm
+		,jpt.sgg_nm AS sgg_nm
+		,jpt.emd_nm AS emd_nm
+		,jpt.ri_nm AS ri_nm
 		,jm.jm_addrcode AS addrcode
 		FROM permit_master jpm
 			LEFT JOIN permit_togi jpt ON jpt.pmt_no=jpm.pmt_no
@@ -2293,6 +2293,7 @@ FROM permit_master
 		WHERE pmt_no = #{PMT_NO}
 	</select>
 	<select id="selectJisangPmtDetail_TOGI"  parameterType="HashMap" resultType="java.util.HashMap">
+	/*xhflwlfmtm*/
 		SELECT PMT_NO as PMT_NO
 		,jisang_no as JISANG_NO
 		,addrcode as ADDRCODE
@@ -4290,6 +4291,9 @@ SELECT count(*)
 		jm_JISANG_NO=#{jisang_no}
 	</update>
 	
-	
+	<delete id="jisangReqDoc2FileDelete" parameterType="HashMap">
+		delete from permit_atcfile
+		where pmt_no = #{PMT_NO}
+	</delete>
 	
 </mapper>

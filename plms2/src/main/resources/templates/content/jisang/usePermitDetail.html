@@ -297,8 +297,9 @@
             </ul>
             <ul class="contents" th:each="doc, iterStat : ${reqDoc3list}">
 			    <li class="content">
-			        <input type="hidden" id="fseq" th:value="${iterStat.index + 1}" />
-			        <input name="req_doc_file" th:id="'req_doc_file' + (iterStat.index + 1)"
+			        <input type="hidden" id="fseq" th:value="${iterStat}" />
+			        <input th:attr="name='req_doc_file' + ${iterStat.index + 1}"
+			        	   th:id="'req_doc_file' + (iterStat.index + 1)"
 			               type="text"
 			               th:value="${doc.file_gubun} == ${iterStat.index + 1} ? ${doc.file_nm} : ''"
 			               readonly

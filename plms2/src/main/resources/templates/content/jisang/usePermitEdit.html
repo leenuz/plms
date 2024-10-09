@@ -131,7 +131,6 @@ div.dt-filter-spacer {
 							<li class="title">사용자</li>
 							<li class="title titleBtnWrap">추가/삭제</li>
 						</ul>
-						[[${tojiList[0]}]]
 						<div class="contentsBox">
 							<ul class="contents" th:each="val, iterStat:${tojiList}">
 								<!-- hidden -->
@@ -319,7 +318,7 @@ div.dt-filter-spacer {
 								</ul>
 							</div>
 						</div>
-						<div class="depth2">
+						<div class="depth2"  >
 							<ul class="titles">
 								<li class="title">
 									<p>파일명</p>
@@ -328,7 +327,7 @@ div.dt-filter-spacer {
 								<li class="title selectFileWidth">파일선택</li>
 							</ul>
 							<ul class="contents" th:each="doc, iterStat : ${reqDoc3list}">
-							    <li class="content">
+							    <li class="content fileContent">
 							        <input type="hidden" id="fseq" th:value="${iterStat.index + 1}" />
 							        <input type="hidden" id="pmt_no" th:value="${resultData.idx}" />
 							        <input th:id="'req_doc_file' + (${iterStat.index + 1} < 10 ? '0' + (${iterStat.index + 1}) : (${iterStat.index + 1}))"

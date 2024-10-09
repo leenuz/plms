@@ -13,10 +13,15 @@
 </head>
 
 <th:block layout:fragment="content">
-	<script>
-		var mapCoordLng = '[[${jijuk.x}]]';
-		var mapCoordLat = '[[${jijuk.y}]]';
+	<script th:inline="javascript">
+	
+		var mapCoordLng = '0';
+		var mapCoordLat = '0';
 	</script>
+	<!-- 241009 -->
+	<input type="hidden" id="jijukCoordList" th:value="${jijukCoordList}">
+	<input type="hidden" id="jijukCoordSize" th:value="${jijukCoordSize}">
+	
 	<div class="easementDetailsWrappers" id="jisanDetailPrintSection">
 		<!-- 지상권 상세정보 -->
 		<main id="easementDetails">

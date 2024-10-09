@@ -2666,4 +2666,9 @@ UPDATE SYS_CODE
 			and T.so_adm_seq=${seq}		
 			)TT
 	</select>
+	
+	<!-- 기존 등록된 파일리스트 삭제 -->
+	<delete id="deleteBeforeGoverAtcFileList" parameterType="HashMap">
+	DELETE FROM ATCFILE WHERE ga_gover_no = #{GOVER_NO}
+	</delete>
 </mapper>

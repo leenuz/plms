@@ -1020,7 +1020,7 @@
 								<!--첨부파일 목록 반복문-->
 								<ul class="contents" id="fileListUl" th:each="file, iterStat : ${atcFileList}">
 									<li class="selectWidth content checkboxWrap">
-									<input type="hidden" name="idx" id="idx" th:value="${file.ga_idx}">
+									<input type="hidden" name="idx" th:id="'idx_'+${file.ga_idx}" th:value="${file.ga_idx}">
 										<input type="checkbox" th:id="'masterEdit_attachFile' + ${iterStat.index + 1}"
 											name="masterEdit_attachFile" />
 										<label th:for="'masterEdit_attachFile' + ${iterStat.index + 1}"></label>

@@ -367,7 +367,7 @@ $(document).on("click","#addParentBtn",function(){
 			j++;
 			
 		}
-		console.log
+		console.log();
 		
 	}
 	

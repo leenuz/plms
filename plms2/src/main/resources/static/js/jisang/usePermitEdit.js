@@ -23,7 +23,6 @@ const usePermitEditInfoAddBtnEvent01 = () => {
 
 
     infoContentsBox.addEventListener('click', function (event) {
-	console.log('indexs :: ' , index);
 		let idx = $('#togiDiv .contents').length + 1;
         // 버튼 클릭시 추가되게
         if (event.target.classList.contains('addBtn')) {
@@ -381,15 +380,9 @@ $(document).on("click",".PopupMoreSelectBtn",function(){
 });
 
 $(document).on("click",".addParentBtn",function(){
-  const checkboxes = document.querySelectorAll('input[name="chk"]:checked'); // 체크된 체크박스만 선택
+	const checkboxes = document.querySelectorAll('input[name="chk"]:checked'); // 체크된 체크박스만 선택
 
-    var id = $(this).attr('data-index');
-    
-    console.log(id);
-    console.log(checkboxes);
-    //if(checkboxes.length > 1) {
-	// $('#togiDiv .contents').eq(id).remove();
-	//}
+    let id = $(this).attr('data-index');
     
     checkboxes.forEach((checkbox,checkno) => {
 		let idx = $('#togiDiv .contents').length;
@@ -417,20 +410,6 @@ $(document).on("click",".addParentBtn",function(){
              $("input[name='jibun']").eq(idx).val(jibun);
              $("input[name='emd_nm']").eq(idx).val(emd_nm);
              
-             
-             
-     if (checkno === 0) {
-             // 선택된 칸에 데이터 넣기
-             console.log('id ',id);
-             console.log(sido_nm);
-             console.log('checkno :: ',checkno);
-             $("input[name='address_" + id + "']").val(address);
-             $("input[name='jimok_" + id + "']").val(jimok);
-             $("input[name='fullArea_" + id + "']").val(jijukArea);
-             $("input[name='setArea_" + id + "']").val(pyeonibArea);
-             $("input[name='jasan_" + id + "']").val(jasanNo);
-             $("input[name='soyuja_" + id + "']").val(souja);
-             $("input[name='setMoney_" + id + "']").val(setMoney);
              
              const hiddenPermitIndexInput = document.createElement('input');
                 hiddenPermitIndexInput.id = 'permitIndex';
@@ -487,74 +466,23 @@ $(document).on("click",".addParentBtn",function(){
 				infoUl.appendChild(hiddenRiNmInput);
 				infoUl.appendChild(hiddenJibunNmInput);
 				infoUl.appendChild(hiddenAddrCodeNmInput);
+     if (checkno === 0) {
+             // 선택된 칸에 데이터 넣기
+             $("input[name='address_" + id + "']").val(address);
+             $("input[name='jimok_" + id + "']").val(jimok);
+             $("input[name='fullArea_" + id + "']").val(jijukArea);
+             $("input[name='setArea_" + id + "']").val(pyeonibArea);
+             $("input[name='jasan_" + id + "']").val(jasanNo);
+             $("input[name='soyuja_" + id + "']").val(souja);
+             $("input[name='setMoney_" + id + "']").val(setMoney);
+             $('#togiDiv .contents').eq(id).find("input[name='sido_nm']").val(sido_nm);
+             $('#togiDiv .contents').eq(id).find("input[name='sgg_nm']").val(sgg_nm);
+             $('#togiDiv .contents').eq(id).find("input[name='ri_nm']").val(ri_nm);
+             $('#togiDiv .contents').eq(id).find("input[name='jibun']").val(jibun);
+             $('#togiDiv .contents').eq(id).find("input[name='emd_nm']").val(emd_nm);
      }else{
-		 const hiddenPermitIndexInput = document.createElement('input');
-                hiddenPermitIndexInput.id = 'permitIndex';
-                hiddenPermitIndexInput.value = idx;
-                hiddenPermitIndexInput.type = 'hidden';
-                
-                const hiddenTogiManageNoInput = document.createElement('input');
-                hiddenTogiManageNoInput.id = 'togiManageNo';
-                hiddenTogiManageNoInput.name = 'togiManageNo';
-                hiddenTogiManageNoInput.type = 'hidden';
-                hiddenTogiManageNoInput.value = $('#saveForm [name="pmt_no"]').val();
-                
-                
-                const hiddenSidoNmInput = document.createElement('input');
-                hiddenSidoNmInput.id = 'sido_nm';
-                hiddenSidoNmInput.name = 'sido_nm';
-                hiddenSidoNmInput.type = 'hidden';
-                hiddenSidoNmInput.value = sido_nm;
-                
-                const hiddenSggNmInput = document.createElement('input');
-                hiddenSggNmInput.id = 'sgg_nm';
-                hiddenSggNmInput.name = 'sgg_nm';
-                hiddenSggNmInput.type = 'hidden';
-                hiddenSggNmInput.value = sgg_nm;
-                
-                const hiddenEmdNmInput = document.createElement('input');
-                hiddenEmdNmInput.id = 'emd_nm';
-                hiddenEmdNmInput.name = 'emd_nm';
-                hiddenEmdNmInput.type = 'hidden';
-                hiddenEmdNmInput.value = emd_nm;
-                
-                const hiddenRiNmInput = document.createElement('input');
-                hiddenRiNmInput.id = 'ri_nm';
-                hiddenRiNmInput.name = 'ri_nm';
-                hiddenRiNmInput.type = 'hidden';
-                hiddenRiNmInput.value = ri_nm;
-                
-                const hiddenJibunNmInput = document.createElement('input');
-                hiddenJibunNmInput.id = 'jibun';
-                hiddenJibunNmInput.name = 'jibun';
-                hiddenJibunNmInput.type = 'hidden';
-                hiddenJibunNmInput.value = jibun;
-                
-                const hiddenAddrCodeNmInput = document.createElement('input');
-                hiddenAddrCodeNmInput.id = 'addrcode';
-                hiddenAddrCodeNmInput.name = 'addrcode';
-                hiddenAddrCodeNmInput.type = 'hidden';
-                
-                infoUl.appendChild(hiddenPermitIndexInput);
-				infoUl.appendChild(hiddenTogiManageNoInput);
-				infoUl.appendChild(hiddenSidoNmInput);
-				infoUl.appendChild(hiddenSggNmInput);
-				infoUl.appendChild(hiddenEmdNmInput);
-				infoUl.appendChild(hiddenRiNmInput);
-				infoUl.appendChild(hiddenJibunNmInput);
-				infoUl.appendChild(hiddenAddrCodeNmInput);
 	 // ul 만들기	
-	 			console.log('====================================');
-             console.log(sido_nm);
-             console.log(sgg_nm);
-             console.log(ri_nm);
-             console.log(jibun);
-             console.log(emd_nm);
-             console.log('====================================');
-	 			console.log(sido_nm);
-                
-                
-                
+	 			
                 
                 for (let i = 1; i <= 9; i++) {
                     // li 만들기
@@ -827,8 +755,6 @@ $(document).on("click","#popupSearchBtn",function(){
 
 					   	   })
 					   	   .done(function (fragment) {
-							 console.log("***fragment***");
-							 //console.log(fragment);
 					   	      $('#searchResultPopDiv').replaceWith(fragment);
 
 
@@ -842,107 +768,102 @@ $(document).on("click","#popupSearchBtn",function(){
 
 //저장
 $(document).on("click",".saveBtn ",function(){
-	var formSerializeArray = $('#saveForm').serializeArray();
-         len = formSerializeArray.length;
-       var dataObj = {};
-       for (i=0; i<len; i++) {
-        dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
-       }
+	let formSerializeArray = $('#saveForm').serializeArray();
+	let len = formSerializeArray.length;
+	let dataObj = {};
+	for (i=0; i<len; i++) {
+		dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
+	}
 
-        var st_date = $('input[name="st_date"]').data('placeholder');
-        dataObj['st_date'] = st_date;
-        var ed_date = $('input[name="ed_date"]').data('placeholder');
-        dataObj['ed_date'] = ed_date;
+	let st_date = $('input[name="st_date"]').data('placeholder');
+	dataObj['st_date'] = st_date;
+	let ed_date = $('input[name="ed_date"]').data('placeholder');
+	dataObj['ed_date'] = ed_date;
 
-        var togiDatas=[];
-	   	var togiUls=$("#togiDiv .contents");
-	   	for(var i=0;i<togiUls.length;i++){
-			var address=$(togiUls[i]).find("input[name='address_"+ i +"']").val();
-			var jimok_text=$(togiUls[i]).find("input[name='jimok_"+ i +"']").val();
-			var fullArea=$(togiUls[i]).find("input[name='fullArea_"+ i +"']").val();
-			var setArea=$(togiUls[i]).find("input[name='setArea_"+ i +"']").val();
-			var setMoney=$(togiUls[i]).find("input[name='setMoney_"+ i +"']").val();
-			var jasan=$(togiUls[i]).find("input[name='jasan_"+ i +"']").val();
-			var soyuja=$(togiUls[i]).find("input[name='soyuja_"+ i +"']").val();
-			var pmtUser=$(togiUls[i]).find("input[name='pmtUser_"+ i +"']").val();
-			var togiManageNo=$(togiUls[i]).find("input[name='togiManageNo']").val();
-			console.log($(togiUls).eq(i).find("input[name='sido_nm']").val() + 'fasdfasdfsdfasasdf');
-			
-			var sido_nm=$(togiUls).eq(i).find("input[name='sido_nm']").val();
-			var sgg_nm=$(togiUls).eq(i).find("input[name='sgg_nm']").val();
-			var emd_nm=$(togiUls).eq(i).find("input[name='emd_nm']").val();
-			var ri_nm=$(togiUls).eq(i).find("input[name='ri_nm']").val();
-			var jibun=$(togiUls).eq(i).find("input[name='jibun']").val();
-			var addrcode=$(togiUls).eq(i).find("input[name='addrcode']").val();
-			console.log('address :: ' + address + ' i ::',i);
-	   		var togiObj={
-				"address":ljsIsNull(address)?'':address
-				,"togiaddress":ljsIsNull(address)?'':address
-				,"togiJimokText":ljsIsNull(jimok_text)?'':jimok_text
-				,"togiJijukArea":ljsIsNull(fullArea)?'':fullArea
-				,"togiPyeonibArea":ljsIsNull(setArea)?'':setArea
-				,"togiSetMoney":ljsIsNull(setMoney)?'':setMoney
-				,"togiJasanNo":ljsIsNull(jasan)?'':jasan
-				,"togiSouja":ljsIsNull(soyuja)?'':soyuja
-				,"togiUseName":ljsIsNull(pmtUser)?'':pmtUser
-				,"togiManageNo":ljsIsNull(togiManageNo)?'':togiManageNo
-				,"sido_nm":ljsIsNull(sido_nm)?'':sido_nm
-				,"sgg_nm":ljsIsNull(sgg_nm)?'':sgg_nm
-				,"emd_nm":ljsIsNull(emd_nm)?'':emd_nm
-				,"ri_nm":ljsIsNull(ri_nm)?'':ri_nm
-				,"jibun":ljsIsNull(jibun)?'':jibun
-				,"addrcode":ljsIsNull(addrcode)?'':addrcode
-	   		}
-	   		togiDatas.push(togiObj);
-	   	}
-	   	
-	   	console.log(togiDatas);
-	   	dataObj.desangTogis=togiDatas;
-		dataObj.gubun="modify";
-			dataObj.pmt_status="임시저장";
-    	 console.log(dataObj);
-		 url="/land/jisang/usePermitRegisterSave";
-		    	$.ajax({
-
-		 		url:url,
-		 		type:'POST',
-		 		contentType:"application/json",
-		 		data:JSON.stringify(dataObj),
-
-		 		dataType:"json",
-		 		beforeSend:function(request){
-		 			console.log("beforesend ........................");
-		 			loadingShow();
-		 		},
-		 		success:function(response){
-		 			loadingHide();
-		 			console.log(response);
-		 			if (response.success="Y"){
-		 				console.log("response.success Y");
-		 				//console.log("response.resultData length:"+response.resultData.length);
-		 				alert("정상적으로 등록 되었습니다.");
-		 				/*$("#popup_bg").show();
-		 				$("#popup").show(500);
-		 				//$("#addrPopupLayer tbody td").remove();
-		 				for(var i=0;i<response.resultData.length;i++){
-		 					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-		 				}*/
-		 			}
-		 			else {
-		 				console.log("response.success N");
-		 			}
-		 		},
-		 		error:function(jqXHR,textStatus,errorThrown){
-		 			alert("mainSaveBtn ajax error\n"+textStatus+":"+errorThrown);
-		 			return false;
-		 		}
-
-		    	});
-		 	
+	var togiDatas=[];
+	var togiUls=$("#togiDiv .contents");
+   	for(let i = 0; i < togiUls.length; i++){
+		let address=$(togiUls[i]).find("input[name='address_"+ i +"']").val();
+		let jimok_text=$(togiUls[i]).find("input[name='jimok_"+ i +"']").val();
+		let fullArea=$(togiUls[i]).find("input[name='fullArea_"+ i +"']").val();
+		let setArea=$(togiUls[i]).find("input[name='setArea_"+ i +"']").val();
+		let setMoney=$(togiUls[i]).find("input[name='setMoney_"+ i +"']").val();
+		let jasan=$(togiUls[i]).find("input[name='jasan_"+ i +"']").val();
+		let soyuja=$(togiUls[i]).find("input[name='soyuja_"+ i +"']").val();
+		let pmtUser=$(togiUls[i]).find("input[name='pmtUser_"+ i +"']").val();
+		let togiManageNo=$(togiUls[i]).find("input[name='togiManageNo']").val();
+		
+		let sido_nm=$(togiUls).eq(i).find("input[name='sido_nm']").val();
+		let sgg_nm=$(togiUls).eq(i).find("input[name='sgg_nm']").val();
+		let emd_nm=$(togiUls).eq(i).find("input[name='emd_nm']").val();
+		let ri_nm=$(togiUls).eq(i).find("input[name='ri_nm']").val();
+		let jibun=$(togiUls).eq(i).find("input[name='jibun']").val();
+		let addrcode=$(togiUls).eq(i).find("input[name='addrcode']").val();
+		
+   		let togiObj={
+			"address" : ljsIsNull(address) ? '' : address,
+			"togiaddress" : ljsIsNull(address) ? '' : address,
+			"togiJimokText" : ljsIsNull(jimok_text) ? '' : jimok_text,
+			"togiJijukArea" : ljsIsNull(fullArea) ? '' : fullArea,
+			"togiPyeonibArea" : ljsIsNull(setArea) ? '' : setArea,
+			"togiSetMoney" : ljsIsNull(setMoney) ? '' : setMoney,
+			"togiJasanNo" : ljsIsNull(jasan) ? '' : jasan,
+			"togiSouja" : ljsIsNull(soyuja) ? '' : soyuja,
+			"togiUseName" : ljsIsNull(pmtUser) ? '' : pmtUser,
+			"togiManageNo" : ljsIsNull(togiManageNo) ? '' : togiManageNo,
+			"sido_nm" : ljsIsNull(sido_nm) ? '' : sido_nm,
+			"sgg_nm" : ljsIsNull(sgg_nm) ? '' : sgg_nm,
+			"emd_nm" : ljsIsNull(emd_nm) ? '' : emd_nm,
+			"ri_nm" : ljsIsNull(ri_nm) ? '' : ri_nm,
+			"jibun" : ljsIsNull(jibun) ? '' : jibun,
+			"addrcode" : ljsIsNull(addrcode) ? '' : addrcode
+		}
+		togiDatas.push(togiObj);
+	}
+	dataObj.desangTogis=togiDatas;
+	dataObj.gubun="modify";
+	dataObj.pmt_status="임시저장";
+	url="/land/jisang/usePermitRegisterSave";
+	$.ajax({
+		url : url,
+		type : 'POST',
+		contentType : "application/json",
+		data : JSON.stringify(dataObj),
+		dataType : "json",
+		beforeSend : function(request) {
+			loadingShow();
+		},
+		success : function(response) {
+			loadingHide();
+			if (response.success="Y"){
+				console.log("response.success Y");
+				alert("정상적으로 등록 되었습니다.");
+			} else {
+				console.log("response.success N");
+			}
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("mainSaveBtn ajax error\n"+textStatus+":"+errorThrown);
+			return false;
+		}
+	});
 })
 
 //상신
 $(document).on("click",".approvalBtn ",function(){
+	//fileCnt = $('#req_doc_file' +)
+	let flag = true;
+	for(let i = 0; i < 10; i++ ) {
+		let content = $('.fileContent:eq('+i+') input').eq(2).val();
+		if(content == '') {
+			flag = false;
+		}
+	}
+	
+	if (!flag) {
+		alert('첨부파일을 확인해주세요.');
+		return;
+	}
 	var formSerializeArray = $('#saveForm').serializeArray();
   len = formSerializeArray.length;
        var dataObj = {};
@@ -983,7 +904,6 @@ $(document).on("click",".approvalBtn ",function(){
 	   	dataObj.desangTogis=togiDatas;
 		dataObj.gubun="modify";
 				dataObj.pmt_status="임시저장";
-    	 console.log(dataObj);
 		 //임시저장 호출
 
 		 		url="/land/jisang/usePermitRegisterSave";
@@ -1001,12 +921,10 @@ $(document).on("click",".approvalBtn ",function(){
 		 			},
 		 			success:function(response){
 		 				//loadingHide();
-		 				console.log(response);
 		 				if (response.success="Y"){
 		 					console.log("response.success Y");
 		 					//console.log("response.resultData length:"+response.resultData.length);
 		 					 dataObj.PMT_NO=response.PMT_NO;
-		 					 console.log(dataObj);
 		 					 console.log("---------------상신으로 넘겨야함-------------");
 		 					
 		 					
@@ -1144,6 +1062,14 @@ $(document).ready(function(){
 				       var files = e.originalEvent.target.files;
 				       handleFileUpload1(files,this,"08");
 			});
+			$('input[name=landTerminationRegistration_myPcFiles09]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"09");
+			});
+			$('input[name=landTerminationRegistration_myPcFiles10]').on('change', function(e) {
+				       var files = e.originalEvent.target.files;
+				       handleFileUpload1(files,this,"10");
+			});
 		    function handleFileUpload(files,obj)
 		    {
 		       for (var i = 0; i < files.length; i++)
@@ -1169,10 +1095,8 @@ $(document).ready(function(){
 
 			          //  var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
 			          //  status.setFileNameSize(files[i].name,files[i].size);
-					    console.log($(obj).parent().parent().parent().html());
 						var changeObj=$(obj).parent().parent().find("#req_doc_file"+idx).val(files[i].name);
 						console.log("--------changeObj---------------");
-						console.log(changeObj);
 			            sendFileToServer1(fd,status,idx);
 
 			       }
@@ -1181,7 +1105,6 @@ $(document).ready(function(){
 		    var rowCount=0;
 		    function createStatusbar(obj,name,size,no){
 		        console.log("----------start createStatusBar------------");
-		            console.log(obj.html());
 
 		        var sizeStr="";
 		                                var sizeKB = size/1024;
@@ -1205,7 +1128,6 @@ $(document).ready(function(){
 		        var radio=$(row).find('input');
 		        console.log("---------------radio checkbox----------");
 		        $(radio).find('input').attr("disabled",false);
-		        console.log($(radio).parent().html());
 		    }
 
 		    function sendFileToServer(formData,status)
@@ -1237,8 +1159,6 @@ $(document).ready(function(){
 		            data: formData,
 		            success: function(data){
 		               // status.setProgress(100);
-		                console.log(data);
-		                console.log(data.resultData);
 		                //$("#status1").append("File upload Done<br>");
 		                uploadFiles.push(data.resultData.fpath);
 		                //allCheckEventLandRightsRegist();
@@ -1251,7 +1171,6 @@ $(document).ready(function(){
 			function sendFileToServer1(formData,status,no)
 			    {
 					var idx=$("#hiddenJisangNo").val();
-					console.log($("#hiddenJisangNo").val());
 			        var uploadURL = "/land/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
 			        var extraData ={}; //Extra Data.
 			        var jqXHR=$.ajax({
@@ -1279,8 +1198,6 @@ $(document).ready(function(){
 			            data: formData,
 			            success: function(data){
 			               // status.setProgress(100);
-			                console.log(data);
-			                console.log(data.resultData);
 			                //$("#status1").append("File upload Done<br>");
 			                uploadFiles.push(data.resultData.fpath);
 			                //allCheckEventLandRightsRegist();
@@ -1295,15 +1212,10 @@ $(document).ready(function(){
 $(document).on("click","#docFileDelBtn",function(){
 	console.log("---------------docFileDelBtn---------------");
 	var $currentElement = $(this);
-	console.log($(this).parent().parent().html());
 	var inputFseq=$(this).parent().parent().find("#fseq").val();
 	var inputValue=$(this).parent().parent().find(".notWriteInput").val();
-	console.log(inputValue);
 	if (inputValue!=null || inputValue!=""){
 		var params={"dfile_name":inputValue,"jisang_no":$("#hiddenJisangNo").val(),"fseq":inputFseq,"docNo":"2"}
-
-		console.log(params);
-
 
 		//임시파일 삭제
 		$.ajax({
@@ -1321,6 +1233,5 @@ $(document).on("click","#docFileDelBtn",function(){
 		    });
 
 	}
-	//console.log($(this).parent().parent().find(".notWriteInput").val(""));
 
 })
