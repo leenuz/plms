@@ -467,11 +467,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                     SELECT PA.pa_STATUS
                       FROM PLMS_APPROVAL PA
                      WHERE PA.pa_DOCKEY = JHT.jmt_DOCKEY
+                     LIMIT 1
                 ) AS MERGE_STATUS
                        , (
                     SELECT PA.pa_STATUS
                       FROM PLMS_APPROVAL PA
                      WHERE PA.pa_DOCKEY = JMT.jmt_DOCKEY
+                     LIMIT 1
                 ) AS APPROVAL_STATUS
                   ,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
                   ,jm.jm_cancle_date AS cancel_date
@@ -1657,38 +1659,36 @@ SELECT count(*)
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(yongdo)" >
 		 ,jb_yongdo=#{yongdo}
 		 </if>
-		 ,jb_pyeonib_area=nullif(cast(#{togiPyeonibArea} as varchar),''):: numeric
+		 ,jb_pyeonib_area = nullif(cast(#{togiPyeonibArea} as varchar),''):: numeric
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(togiJasanNo)" >
-		 ,jb_jasan_no=#{togiJasanNo}
+		 ,jb_jasan_no = #{togiJasanNo}
 		 </if>
-		 ,jb_gover_own_yn=#{togiGoverOwnYn}
-		 ,jb_cancle_yn=#{togiCancelYn}
-		 ,jb_bunhal_yn=#{bunhal_yn}
+		 ,jb_gover_own_yn = #{togiGoverOwnYn}
+		 ,jb_cancle_yn    = #{togiCancelYn}
+		 ,jb_bunhal_yn    = #{bunhal_yn}
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(bunhalDate)" >
-		 ,jb_bunhal_date=#{bunhalDate}::date
+		 ,jb_bunhal_date = #{bunhalDate}::date
 		 </if>
-		 ,jb_bunhal_reason=#{bunhal_reason}
-		 
-		 ,jb_addrcode=#{addrcode}
-		
-		 ,jb_remainder_money=nullif(#{cancelRemainderMoney},'')::numeric
-		 ,jb_jimok_text=#{togiJimokText}
+		 ,jb_bunhal_reason = #{bunhal_reason}
+		 ,jb_addrcode = #{addrcode}
+		 ,jb_remainder_money = NULLIF(#{cancelRemainderMoney},'')::numeric
+		 ,jb_jimok_text = #{togiJimokText}
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dockey)" >
 		 ,jb_dockey=#{dockey}
 		 </if>
-		 ,jb_toji_type=#{togiTogiType}
-		 ,jb_pipe_yn=#{togiPipeYn}
-		 ,jb_bunhal_comment=#{bunhal_comment}
+		 ,jb_toji_type = #{togiTogiType}
+		 ,jb_pipe_yn   = #{togiPipeYn}
+		 ,jb_bunhal_comment = #{bunhal_comment}
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelChuideukMoney)" >
-		 ,jb_chuideuk_money=NULLIF(cast(#{cancelChuideukMoney} as varchar),'')::numeric
+		 ,jb_chuideuk_money = NULLIF(cast(#{cancelChuideukMoney} as varchar),'')::numeric
 		 </if>
-		 ,jb_gammoney=nullif(#{cancelGammoney},'')::numeric
-		 ,jb_bosang_money = nullif(#{cancelBosangMoney}, null)::numeric
-		 ,jb_profit_loss=nullif(#{cancelProfitLoss},'')::numeric
-		 ,jb_demise=#{togiDemise}
-		 ,jb_bunhal_complete=#{bunhal_complete}
-		 ,jb_bunhal_status=#{togiBunhalStatus}
-		 where jb_jisang_no=#{jisang_no}
+		 ,jb_gammoney =      NULLIF(#{cancelGammoney}, '')::numeric
+		 ,jb_bosang_money =  NULLIF(#{cancelBosangMoney}, '')::numeric
+		 ,jb_profit_loss  =  NULLIF(#{cancelProfitLoss}, '')::numeric
+		 ,jb_demise = #{togiDemise}
+		 ,jb_bunhal_complete = #{bunhal_complete}
+		 ,jb_bunhal_status   = #{togiBunhalStatus}
+		 where jb_jisang_no  = #{jisang_no}
 
 	</update>
 	<!--  부할후 지상에 해지 분할 정보 업데이트 -->
