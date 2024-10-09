@@ -340,8 +340,8 @@ function positionView(objInfo) {
 	} else {
 		message = {
 			type: "setCenter",
-			lon: [markerList[0][0],markerList[0][1]],
-			lat: firstCoordLat,
+			lon: markerList[0][0],
+			lat: markerList[0][1],
 			zoom: 19,
 			markers: markerList
 		};
