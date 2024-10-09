@@ -325,33 +325,33 @@ function loadDataTable(params) {
 			console.log(this.api().data().length);
 		},
 		columns: [
-			{ data: "no", "orderable": false },
-			{ data: "jisa" },
-			{ data: "address" },
-			{ data: "pipe_overlap_yn", "defaultContent": "" },
-			{ data: "pipe_meter", "defaultContent": "" },
-			{ data: "jimok_text", "defaultContent": "" }, //5
-			{ data: "souja_name", "defaultContent": "" },
-			{ data: "jijuk_area", "defaultContent": "" },
-			{ data: "toji_type", "defaultContent": "" },
-			{ data: "jisang_status" },
-			{ data: "jasan_no" }, //10
-			{ data: "master_no" },
-			{ data: "jisang_comple_yn" },
-			{ data: "permitted_yn" },
-			{ data: "chuideuk_date" },
-			{ data: "gover_date" }, //15
-			{ data: "pay_date" },
-			{ data: "gover_area" },
-			{ data: "gover_length" },
-			{ data: "jasan_money" },
-			{ data: "pay_money" }, //20
-			{ data: "registed_yn" },
-			{ data: "permitted_yn" },
-			{ data: "code_depth1" },
-			{ data: "code_depth2" },
-			{ data: "code_depth3" },
-			{ data: "dosiplan" }
+			{ data: "no", "orderable": false }, //0. 순번
+			{ data: "jisa" }, //1. 지사 
+			{ data: "address" }, //2. 주소
+			{ data: "pipe_overlap_yn", "defaultContent": "" }, //3. 관로저촉 
+			{ data: "pipe_meter", "defaultContent": "" }, //4. 관경
+			{ data: "jimok_text", "defaultContent": "" }, //5 지목
+			{ data: "souja_name", "defaultContent": "" }, //6. 소유자
+			{ data: "jijuk_area", "defaultContent": "" }, //7. 면적
+			{ data: "toji_type", "defaultContent": "" }, //8. 토지유형
+			{ data: "jisang_status" }, //9. 권리확보
+			{ data: "jasan_no" }, //10. 자산번호
+			{ data: "master_no" }, //11. 관리번호 
+			{ data: "jisang_comple_yn" }, //12. 등기여부 
+			{ data: "permitted_yn" }, //13. 계약유형 
+			{ data: "chuideuk_date" }, //14. 취득일 
+			{ data: "gover_date" }, //15. 점용기간
+			{ data: "pay_date" }, //16. 점용납부일 
+			{ data: "gover_area" }, //17. 설정면적
+			{ data: "gover_length" }, //18. 설정연장 
+			{ data: "jasan_money" }, //19. 자산금액 
+			{ data: "pay_money" }, //20. 납부금액
+			{ data: "registed_yn" }, //21. 등기/점용 여부 
+			{ data: "permitted_yn" }, //22. 계약허가여부
+			{ data: "code_depth1_name" }, //23. 이슈유형대분류 
+			{ data: "code_depth2_name" }, //24. 이슈유형중분류
+			{ data: "code_depth3_name" }, //25. 이슈유형세분류 
+			{ data: "dosiplan" } //26. 토지개발대상
 		],
 		columnDefs: [
 			{ "className": "dt-head-center", "targets": "_all" },
@@ -371,7 +371,7 @@ function loadDataTable(params) {
 					rtn = addCommas(ljsIsNull(full.jijuk_area) ? '' : full.jijuk_area);
 					return rtn;
 				}
-			},
+			}, //7. 면적
 			{
 				targets: [8]
 				, width: "100px"
@@ -382,7 +382,7 @@ function loadDataTable(params) {
 					else rtn = "";
 					return rtn;
 				}
-			},
+			}, //8. 토지유형
 			{
 				targets: [14], width: "150px"
 				, render: function(data, type, full, meta) {
@@ -393,7 +393,7 @@ function loadDataTable(params) {
 					else rtn = full.chuideuk_date;
 					return rtn;
 				}
-			},
+			}, //14. 취득일
 			{
 				targets: [15], width: "300px"
 				, render: function(data, type, full, meta) {
@@ -401,7 +401,7 @@ function loadDataTable(params) {
 					rtn = full.pmt_st_date == undefined ? "" : full.pmt_st_date + " ~ " + full.pmt_ed_date;
 					return rtn;
 				}
-			},
+			}, //15. 점용기간
 			{
 				targets: [16], width: "150px"
 				, render: function(data, type, full, meta) {
@@ -412,7 +412,7 @@ function loadDataTable(params) {
 					else rtn = full.pay_date;
 					return rtn;
 				}
-			},
+			}, //16. 점용납부일
 			{
 				targets: [17], width: "150px"
 				, render: function(data, type, full, meta) {
@@ -423,7 +423,7 @@ function loadDataTable(params) {
 					else rtn = full.gover_area;
 					return rtn;
 				}
-			},
+			}, //17. 설정면적
 			{
 				targets: [18], width: "150px"
 				, render: function(data, type, full, meta) {
@@ -434,7 +434,7 @@ function loadDataTable(params) {
 					else rtn = full.gover_length;
 					return rtn;
 				}
-			},
+			}, //18. 설정연장
 			{
 				targets: [19], width: "150px"
 				, render: function(data, type, full, meta) {
@@ -445,7 +445,7 @@ function loadDataTable(params) {
 					else rtn = full.jasan_money;
 					return rtn;
 				}
-			},
+			}, //19. 자산금액
 			{
 				targets: [20], width: "150px"
 				, render: function(data, type, full, meta) {
@@ -456,7 +456,7 @@ function loadDataTable(params) {
 					else rtn = addCommas(full.pay_money);
 					return rtn;
 				}
-			}
+			} //20. 납부금액
 		]
 	});
 

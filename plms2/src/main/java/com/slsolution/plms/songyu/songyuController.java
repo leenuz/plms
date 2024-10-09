@@ -614,10 +614,10 @@ public class songyuController {
 		}
 		log.info("params:" + params);
 		
-		Object count = mainService.selectCountQuery("songyuSQL.selectTotalCount", params);
+		Object count = mainService.selectCountQuery("songyuSQL.selectTotalCount4", params);
 		int total = (int) count;
 
-		ArrayList<HashMap> list = mainService.selectQuery("songyuSQL.selectAllList3", params);
+		ArrayList<HashMap> list = mainService.selectQuery("songyuSQL.selectAllList4", params);
 
 		HashMap<String, Object> resultmap = new HashMap();
 		resultmap.put("draw", draw);
@@ -728,10 +728,10 @@ public class songyuController {
 		}
 		log.info("params:" + params);
 //				ArrayList<HashMap>  list=new ArrayList<HashMap>();
-		Object count = mainService.selectCountQuery("songyuSQL.selectTotalCount", params);
+		Object count = mainService.selectCountQuery("songyuSQL.selectTotalCount5", params);
 		int total = (int) count;
 
-		ArrayList<HashMap> list = mainService.selectQuery("songyuSQL.selectAllList", params);
+		ArrayList<HashMap> list = mainService.selectQuery("songyuSQL.selectAllList5", params);
 		// log.info("list:"+list);
 //				for(int i=0;i<List.size();i++) {
 //					HashMap map=new HashMap();

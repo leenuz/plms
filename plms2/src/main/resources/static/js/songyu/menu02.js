@@ -343,25 +343,20 @@ function loadDataTable(params) {
 		initComplete: function() {
 			//					console.log(this.api().data().length );
 		},
-		/*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-//	console.log(aData);
-	$('td:eq(0)', nRow).html(iDisplayIndexFull +1);
-return nRow;
-},*/
 		columns: [
 			{ data: "no", "orderable": false }, // 0. 순번
 			{ data: "jisa" }, // 1. 담당지사
-			{ data: "address" },
-			{ data: "pipe_yn", "defaultContent": "" },
-			{ data: "pipe_meter", "defaultContent": "" },
+			{ data: "address" }, //2. 주소
+			{ data: "pipe_yn", "defaultContent": "" }, //3. 관로저촉
+			{ data: "pipe_meter", "defaultContent": "" }, //4. 관경
 			{ data: "jimok_text", "defaultContent": "" }, //5. 지목
 			{ data: "souja_name", "defaultContent": "" }, //6. 소유자
 			{ data: "jijuk_area", "defaultContent": "" }, //7. 면적
 			{ data: "toji_type", "defaultContent": "" }, //8. 토지유형
-			{ data: "right" }, //9. 권리확보
+			{ data: "jisang_status" }, //9. 권리확보
 			{ data: "jasan_no" }, //10. 자산번호
-			{ data: "idx" }, //11. 관리번호
-			{ data: "comple_yn" }, //12. 등기여부
+			{ data: "master_no" }, //11. 관리번호
+			{ data: "jisang_comple_yn" }, //12. 등기여부
 			{ data: "permitted_yn" }, //13. 계약유형
 			{ data: "chuideuk_date" }, //14. 취득일
 			{ data: "gover_date" }, //15 . 점용기간
@@ -370,11 +365,11 @@ return nRow;
 			{ data: "gover_length" }, //18. 설정연장
 			{ data: "jasan_money" }, //19. 자산금액
 			{ data: "pay_money" }, //20. 납부금액
-			{ data: "jisa" }, //21. 등기/점용 여부
-			{ data: "jisa" }, //22. 계약 허가 여부
-			{ data: "jisa" }, //23. 이슈유형대분류
-			{ data: "jisa" }, //24. 이슈유형중분류
-			{ data: "jisa" } //25. 이슈유형세분류
+			{ data: "registed_yn" }, //21. 등기/점용 여부
+			{ data: "permitted_yn" }, //22. 계약 허가 여부
+			{ data: "code_depth1_name" }, //23. 이슈유형대분류
+			{ data: "code_depth2_name" }, //24. 이슈유형중분류
+			{ data: "code_depth3_name" } //25. 이슈유형세분류
 		],
 		columnDefs: [
 			{ "className": "dt-head-center", "targets": "_all" },
@@ -396,6 +391,17 @@ return nRow;
 				}
 			}, //7. 면적
 			{
+				targets: [8]
+				, width: "100px"
+				, render: function(data, type, full, meta) {
+					var rtn;
+					if (full.gover_own_yn == "Y") rtn = "국유지";
+					else if (full.gover_own_yn == "N") rtn = "사유지";
+					else rtn = "";
+					return rtn;
+				}
+			}, //8. 토지유형
+			{
 				targets: [14], width: "150px"
 				, render: function(data, type, full, meta) {
 					var rtn;
@@ -406,6 +412,14 @@ return nRow;
 					return rtn;
 				}
 			}, //14. 취득일
+			{
+				targets: [15], width: "300px"
+				, render: function(data, type, full, meta) {
+					var rtn;
+					rtn = full.pmt_st_date == undefined ? "" : full.pmt_st_date + " ~ " + full.pmt_ed_date;
+					return rtn;
+				}
+			}, //15. 점용기간
 			{
 				targets: [16], width: "150px"
 				, render: function(data, type, full, meta) {
@@ -490,25 +504,5 @@ return nRow;
 		window.location = url;
 	});
 
-	/*$("table th").resizable({
-		handles:'e',
-		stop:function(e,ui){
-			$(this).width(ui.size.width);
-			table.columns.adjust().draw();
-		}
-	});*/
-	/*table
-			.on('order.dt search.dt', function () {
-					let i = 1;
-	 
-					table
-							.cells(null, 0, { search: 'applied', order: 'applied' })
-							.every(function (cell) {
-									this.data(i++);
-							});
-			})
-			.draw();*/
-
-	// console.log($('#userTable').DataTable().page.info().recordsTotal);
 }
 

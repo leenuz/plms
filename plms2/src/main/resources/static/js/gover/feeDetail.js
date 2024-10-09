@@ -248,7 +248,7 @@ $(document).on("click","#sangsinBtn",function(){
 				,"pnuList":pnuArray
 				};
 		console.log(jsonData);
-	    return;	
+	   
 		var url="/land/gover/insertGoverPaySangsin";
 		//	var jsonDatas=encodeURIComponent(JSON.stringify(data));
 			
