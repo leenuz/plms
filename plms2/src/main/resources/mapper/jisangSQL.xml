@@ -1773,6 +1773,7 @@ SELECT count(*)
 	<update id="updateJisangMasterNoCancel" parameterType="map">
 		UPDATE jisang_master
 		SET
+		jm_pnu = #{PNU},
 		jm_jisa = #{JISA},
 		jm_yongdo = #{YONGDO},
 		jm_pipe_name = #{ZONE},
