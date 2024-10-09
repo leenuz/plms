@@ -3962,7 +3962,7 @@ log.info("data:"+data.get(0));
 	
 	// 지상권 해지 등록 임시저장후 > 상신
 	@Transactional
-	@GetMapping(path="/insertJisangTerminationAdd")
+	@PostMapping(path="/insertJisangTerminationAdd")
 		public void insertJisangTerminationAdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		 String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		 log.info("requestParams:"+requestParams);
@@ -4179,16 +4179,17 @@ log.info("data:"+data.get(0));
 
 			// 임시저장
 			for(int i=0;i<MergeList.length();i++) {
+				
 				JSONObject obj=new JSONObject(MergeList.get(i).toString());
 				HashMap dataMap = new HashMap();
 				String JISANG_NO = obj.getString("jm_jisang_no");
 				String jimok_text = obj.getString("jm_jimok_text");
 				String jijuk_area = obj.getString("jm_jijuk_area");
 				String pyeonib_area = obj.getString("jm_pyeonib_area");
-				String set_money = parser.getString("jm_set_money");
-				String jasan_no = parser.getString("jm_jasan_no");
+				String set_money = obj.getString("jm_set_money");
+				String jasan_no = obj.getString("jm_jasan_no");
 			//	String mainjisang = parser.getString("merge_insert_main_jisang" + i, "0");
-				String dockey = parser.getString("jm_dockey");
+				String dockey = obj.getString("jm_dockey");
 				dataMap.put("JISANG_NO", JISANG_NO);
 				dataMap.put("JIMOK_TEXT", jimok_text);
 				dataMap.put("JIJUK_AREA", jijuk_area);
@@ -4205,6 +4206,7 @@ log.info("data:"+data.get(0));
 					MERGE_STATUS = "임시저장";
 				}
 				dataMap.put("MERGE_STATUS", MERGE_STATUS);
+				log.info("datamap:"+dataMap);
 				mainService.InsertQuery("jisangSQL.insertJisangMergeTmp", dataMap);
 				
 				
@@ -4266,16 +4268,16 @@ log.info("gubun:"+gubun);
 				if ("".equals(str_appNo)) {
 					map.put("message", "N");
 				} else {
-//					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
-//					String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
-//					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
-//					String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
-//					String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
-					String str_UserId = "105681";
-					String str_userName = "박영환";
-					String str_userDeptcd = "D250500";
-					String str_userDeptnm = "IT전략.지원팀";
-					String str_userUPDeptcd = "S250100";
+					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
+					String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
+					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
+					String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
+					String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+//					String str_UserId = "105681";
+//					String str_userName = "박영환";
+//					String str_userDeptcd = "D250500";
+//					String str_userDeptnm = "IT전략.지원팀";
+//					String str_userUPDeptcd = "S250100";
 					res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getJisang_merge_HTML(mainJisangNo, request, response), str_UserId, "", "", "GetSurfaceRightsMergeDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
 					log.info("res_Echo:"+res_Echo);
 				}

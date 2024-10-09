@@ -59,10 +59,11 @@ public class EchoController {
 			
 			// 1. PLMS 인터페이스 용 웹서비스 URL
 			String url = "http://localhost:8081/land/dcl/GetPLMSCompforXML";
+			//String url = "https://dgisdev.dopco.co.kr:8443/land/dcl/GetPLMSCompforXML";
 			//String url = "http://plmsdev.dopco.co.kr/dcl/GetPLMSCompforXML";
 			//String url = "http://plms.dopco.co.kr/dcl/GetPLMSCompforXML";
 			//String url = "http://192.6.18.84/SimpleJaxs/PlmsToEcho";
-			
+			log.info("url:"+url);
 			//String url = "http://localhost:8888/dcl/GetPLMSCompforXML";
 			// 작성된 xml
 						String xmlString = "";

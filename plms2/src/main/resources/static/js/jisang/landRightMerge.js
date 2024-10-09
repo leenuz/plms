@@ -1156,6 +1156,12 @@ $(document).on("click","#sangsinBtn",function(){
 	        var togiRiNm=$(togiUls[i]).find("#togiri_nm").val();
 	        var togiJibun=$(togiUls[i]).find("#togijibun").val();
 	        var togiPnu=$(togiUls[i]).find("#togipnu").val();
+			var togiSouja=$(togiUls[i]).find("#souja").val();
+			var togiAccountYn=$(togiUls[i]).find("#account_yn").text().trim();
+			
+			//주석이 되있지? 
+			var togiSetMoney=$(togiUls[i]).find("input#set_money").val();
+			var togiJasanNo=$(togiUls[i]).find("input#jasan_no").val();
 
 	        //console.log("togiManageNo:"+togiManageNo);
 	        var togiObj={
@@ -1232,15 +1238,16 @@ $(document).on("click","#sangsinBtn",function(){
 		   
 		   console.log("---------------mergeList----------------");
 		   console.log(mergeList);
+		   
 		   // mergeDatas.push()
-		var mergereason="테스트";
-		var mergecomment="테스트";
+		var mergereason=merge_reason;
+		var mergecomment=merge_comment;
 		var mainJisangNo=$("#mergeToji_no").val();
 		var mainTmpJisangNo="";
 		var mergeInsertCnt=mergeList.length;
 		var merge_status=0;
 		var gubun="insert"; //save, insert 임시저장,상신
-		var MERGE_STATUS="임시저장";
+		var MERGE_STATUS="상신";
 		
 		var jsonData={"MERGE_INSERT_REASON":mergereason,"loginKey":login_key,"MERGE_INSERT_COMMENT":mergecomment
 				,"MAIN_JISANG_NO":mainJisangNo,"MAIN_TMP_JISANG_NO":""

@@ -142,7 +142,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	and r.idx=#{idx}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
-	and r.cancel_yn=#{cancelYn}
+	and r.cancle_yn=#{cancelYn}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
 	and r.manage_yn=#{manageYn}
@@ -506,7 +506,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 	and r.master_no=#{idx}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
-	and r.cancel_yn=#{cancelYn}
+	and r.cancle_yn=#{cancelYn}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
 	and r.manage_yn=#{manageYn}
@@ -709,7 +709,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 	and r.idx=#{idx}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
-	and r.cancel_yn=#{cancelYn}
+	and r.cancle_yn=#{cancelYn}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
 	and r.manage_yn=#{manageYn}
@@ -834,11 +834,11 @@ SELECT   NEWREGREASON,
         JOIN_MST.SOUJA_NAME,
         JOIN_MST.SOUJA_CNT,
         JOIN_MST.JASAN_MONEY,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.REGISTED_YN ELSE GPI.REGISTED_YN END AS REGISTED_YN,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.PERMITTED_YN ELSE GPI.PERMITTED_YN END AS PERMITTED_YN,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH1 ELSE GPI.CODE_DEPTH1 END AS CODE_DEPTH1,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH2 ELSE GPI.CODE_DEPTH2 END AS CODE_DEPTH2,
-        CASE WHEN JOIN_MST.JISANG_STATUS != 'GOVER' THEN PPI.CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'gover' THEN PPI.REGISTED_YN ELSE GPI.REGISTED_YN END AS REGISTED_YN,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'gover' THEN PPI.PERMITTED_YN ELSE GPI.PERMITTED_YN END AS PERMITTED_YN,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'gover' THEN PPI.CODE_DEPTH1 ELSE GPI.CODE_DEPTH1 END AS CODE_DEPTH1,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'gover' THEN PPI.CODE_DEPTH2 ELSE GPI.CODE_DEPTH2 END AS CODE_DEPTH2,
+        CASE WHEN JOIN_MST.JISANG_STATUS != 'gover' THEN PPI.CODE_DEPTH3 ELSE GPI.CODE_DEPTH3 END AS CODE_DEPTH3,
         JOIN_MST.idx,
         JOIN_MST.index,
         JOIN_MST.gidx,
@@ -1079,12 +1079,12 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     LEFT JOIN (
         SELECT S.*
         FROM (
-            SELECT RANK() OVER(PARTITION BY RPAD(PPI.pi_address_code, 10, '0'), PPI.pi_JIBUN ORDER BY PPI.pi_ISSUE_DATE DESC) AS RANK,
-                RPAD(PPI.pi_address_code, 10, '0') AS ADDRCODE, PPI.pi_jibun as JIBUN,
-                PPI.pi_code_depth1 as CODE_DEPTH1, PPI.pi_code_depth2 as CODE_DEPTH2, PPI.pi_code_depth3 as CODE_DEPTH3,
-                PPI.pi_registed_yn as REGISTED_YN, PPI.pi_permitted_yn as PERMITTED_YN, PPI.pi_pnu as PNU, PPI.pi_del_flag as DEL_FLAG
-            FROM POTENTIAL_ISSUE PPI
-            WHERE PPI.pi_DEL_FLAG != 'Y'
+            SELECT RANK() OVER(PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
+                RPAD(PPI.addrcode, 10, '0') AS ADDRCODE, PPI.jibun as JIBUN,
+                PPI.code_depth1 as CODE_DEPTH1, PPI.code_depth2 as CODE_DEPTH2, PPI.code_depth3 as CODE_DEPTH3,
+                PPI.registed_yn as REGISTED_YN, PPI.permitted_yn as PERMITTED_YN, PPI.pnu as PNU, PPI.del_flag as DEL_FLAG
+            FROM plms_POTENTIAL_ISSUE PPI
+            WHERE PPI.DEL_FLAG != 'Y'
             LIMIT 1
         ) S WHERE S.RANK = 1
     ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
@@ -1096,7 +1096,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 	and r.master_no=#{idx}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
-	and r.cancel_yn=#{cancelYn}
+	and r.cancle_yn=#{cancelYn}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
 	and r.manage_yn=#{manageYn}

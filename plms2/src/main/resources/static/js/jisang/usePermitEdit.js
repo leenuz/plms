@@ -410,8 +410,98 @@ $(document).on("click",".addParentBtn",function(){
              $("input[name='jibun']").eq(idx).val(jibun);
              $("input[name='emd_nm']").eq(idx).val(emd_nm);
              
+<<<<<<< Updated upstream
+=======
+             idx=idx+1;
+             
+     if (checkno === 0) {
+             // 선택된 칸에 데이터 넣기
+             console.log('id ',id);
+             console.log(sido_nm);
+             console.log('checkno :: ',checkno);
+             $("input[name='address_" + id + "']").val(address);
+             $("input[name='jimok_" + id + "']").val(jimok);
+             $("input[name='fullArea_" + id + "']").val(jijukArea);
+             $("input[name='setArea_" + id + "']").val(pyeonibArea);
+             $("input[name='jasan_" + id + "']").val(jasanNo);
+             $("input[name='soyuja_" + id + "']").val(souja);
+             $("input[name='setMoney_" + id + "']").val(setMoney);
+>>>>>>> Stashed changes
              
              const hiddenPermitIndexInput = document.createElement('input');
+                hiddenPermitIndexInput.id = 'permitIndex';
+                hiddenPermitIndexInput.value = idx;
+                hiddenPermitIndexInput.type = 'hidden';
+                
+                const hiddenTogiManageNoInput = document.createElement('input');
+                hiddenTogiManageNoInput.id = 'togiManageNo';
+                hiddenTogiManageNoInput.name = 'togiManageNo';
+                hiddenTogiManageNoInput.type = 'hidden';
+                hiddenTogiManageNoInput.value = $('#saveForm [name="pmt_no"]').val();
+                
+                
+                const hiddenSidoNmInput = document.createElement('input');
+                hiddenSidoNmInput.id = 'sido_nm';
+                hiddenSidoNmInput.name = 'sido_nm';
+                hiddenSidoNmInput.type = 'hidden';
+                hiddenSidoNmInput.value = sido_nm;
+                
+                const hiddenSggNmInput = document.createElement('input');
+                hiddenSggNmInput.id = 'sgg_nm';
+                hiddenSggNmInput.name = 'sgg_nm';
+                hiddenSggNmInput.type = 'hidden';
+                hiddenSggNmInput.value = sgg_nm;
+                
+                const hiddenEmdNmInput = document.createElement('input');
+                hiddenEmdNmInput.id = 'emd_nm';
+                hiddenEmdNmInput.name = 'emd_nm';
+                hiddenEmdNmInput.type = 'hidden';
+                hiddenEmdNmInput.value = emd_nm;
+                
+                const hiddenRiNmInput = document.createElement('input');
+                hiddenRiNmInput.id = 'ri_nm';
+                hiddenRiNmInput.name = 'ri_nm';
+                hiddenRiNmInput.type = 'hidden';
+                hiddenRiNmInput.value = ri_nm;
+                
+                const hiddenJibunNmInput = document.createElement('input');
+                hiddenJibunNmInput.id = 'jibun';
+                hiddenJibunNmInput.name = 'jibun';
+                hiddenJibunNmInput.type = 'hidden';
+                hiddenJibunNmInput.value = jibun;
+                
+                const hiddenAddrCodeNmInput = document.createElement('input');
+                hiddenAddrCodeNmInput.id = 'addrcode';
+                hiddenAddrCodeNmInput.name = 'addrcode';
+                hiddenAddrCodeNmInput.type = 'hidden';
+               
+                infoUl.appendChild(hiddenPermitIndexInput);
+				infoUl.appendChild(hiddenTogiManageNoInput);
+				infoUl.appendChild(hiddenSidoNmInput);
+				infoUl.appendChild(hiddenSggNmInput);
+				infoUl.appendChild(hiddenEmdNmInput);
+				infoUl.appendChild(hiddenRiNmInput);
+				infoUl.appendChild(hiddenJibunNmInput);
+				infoUl.appendChild(hiddenAddrCodeNmInput);
+     if (checkno === 0) {
+             // 선택된 칸에 데이터 넣기
+             $("input[name='address_" + id + "']").val(address);
+             $("input[name='jimok_" + id + "']").val(jimok);
+             $("input[name='fullArea_" + id + "']").val(jijukArea);
+             $("input[name='setArea_" + id + "']").val(pyeonibArea);
+             $("input[name='jasan_" + id + "']").val(jasanNo);
+             $("input[name='soyuja_" + id + "']").val(souja);
+             $("input[name='setMoney_" + id + "']").val(setMoney);
+             $('#togiDiv .contents').eq(id).find("input[name='sido_nm']").val(sido_nm);
+             $('#togiDiv .contents').eq(id).find("input[name='sgg_nm']").val(sgg_nm);
+             $('#togiDiv .contents').eq(id).find("input[name='ri_nm']").val(ri_nm);
+             $('#togiDiv .contents').eq(id).find("input[name='jibun']").val(jibun);
+             $('#togiDiv .contents').eq(id).find("input[name='emd_nm']").val(emd_nm);
+     }else{
+<<<<<<< Updated upstream
+=======
+		
+		 const hiddenPermitIndexInput = document.createElement('input');
                 hiddenPermitIndexInput.id = 'permitIndex';
                 hiddenPermitIndexInput.value = idx;
                 hiddenPermitIndexInput.type = 'hidden';
@@ -466,21 +556,7 @@ $(document).on("click",".addParentBtn",function(){
 				infoUl.appendChild(hiddenRiNmInput);
 				infoUl.appendChild(hiddenJibunNmInput);
 				infoUl.appendChild(hiddenAddrCodeNmInput);
-     if (checkno === 0) {
-             // 선택된 칸에 데이터 넣기
-             $("input[name='address_" + id + "']").val(address);
-             $("input[name='jimok_" + id + "']").val(jimok);
-             $("input[name='fullArea_" + id + "']").val(jijukArea);
-             $("input[name='setArea_" + id + "']").val(pyeonibArea);
-             $("input[name='jasan_" + id + "']").val(jasanNo);
-             $("input[name='soyuja_" + id + "']").val(souja);
-             $("input[name='setMoney_" + id + "']").val(setMoney);
-             $('#togiDiv .contents').eq(id).find("input[name='sido_nm']").val(sido_nm);
-             $('#togiDiv .contents').eq(id).find("input[name='sgg_nm']").val(sgg_nm);
-             $('#togiDiv .contents').eq(id).find("input[name='ri_nm']").val(ri_nm);
-             $('#togiDiv .contents').eq(id).find("input[name='jibun']").val(jibun);
-             $('#togiDiv .contents').eq(id).find("input[name='emd_nm']").val(emd_nm);
-     }else{
+>>>>>>> Stashed changes
 	 // ul 만들기	
 	 			
                 

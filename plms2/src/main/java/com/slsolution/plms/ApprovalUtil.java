@@ -258,7 +258,7 @@ public class ApprovalUtil implements ApplicationContextAware {
 	@Transactional
 	public void GetPLMSCompforXML(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("@@@@@ GetPLMSDataforXML START");
-
+		MainService mainService = context.getBean(MainService.class);
 		// XML 수신
 		BufferedReader br = null;
 		ServletInputStream is = request.getInputStream();
@@ -342,13 +342,13 @@ public class ApprovalUtil implements ApplicationContextAware {
 				hms.put("DISPOSE", CU.evl(xml_DISPOSE, ""));
 				System.out.println("hms=" + hms);
 
-//				int nCount = (Integer) mainService.selectCountQuery("testSQL.selectGetPLMSCompforXML", hms);
-////
-//				if (nCount > 0) {
-//					mainService.UpdateQuery("testSQL.updateGetPLMSCompforXML", hms);
-//				} else {
-//					mainService.InsertQuery("testSQL.insertGetPLMSCompforXML", hms);
-//				}
+				int nCount = (Integer) mainService.selectCountQuery("commonSQL.selectGetPLMSCompforXML", hms);
+//
+				if (nCount > 0) {
+					mainService.UpdateQuery("commonSQL.updateGetPLMSCompforXML", hms);
+				} else {
+					mainService.InsertQuery("commonSQL.insertGetPLMSCompforXML", hms);
+				}
 
 			} catch (Exception e) {
 				str_meg = "상태값을 저장하던 중 에러가 발생하였습니다.";

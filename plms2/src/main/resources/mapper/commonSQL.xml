@@ -332,7 +332,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		, pa_URL = #{URL}
 		, pa_STATUS = #{STATUS}
 		, pa_DISPOSE = #{DISPOSE}
-		WHERE DOCKEY = #{DOCKEY}
+		WHERE pa_DOCKEY = #{DOCKEY}
 	</update>
 	
 	<insert id="insertGetPLMSCompforXML" parameterType="HashMap">

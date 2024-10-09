@@ -617,7 +617,7 @@ public class songyuController {
 		Object count = mainService.selectCountQuery("songyuSQL.selectTotalCount", params);
 		int total = (int) count;
 
-		ArrayList<HashMap> list = mainService.selectQuery("songyuSQL.selectAllList", params);
+		ArrayList<HashMap> list = mainService.selectQuery("songyuSQL.selectAllList3", params);
 
 		HashMap<String, Object> resultmap = new HashMap();
 		resultmap.put("draw", draw);

@@ -1050,6 +1050,8 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				for (int i = 0; i < file_list.size(); i++) {
 					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), ""));
 					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), ""));
+					file_map.put("FILE_SEQ" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), ""));
+					file_map.put("FILE_GOVER_NO" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ga_gover_no"), ""));
 					log.info("fileMap:"+file_map);
 
 				}
@@ -1060,7 +1062,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		/* 조회 끝 */
 		StringBuffer sbHtml = new StringBuffer();
 
@@ -1324,6 +1326,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append("			 	<tbody>");
 		if (file_list.size() > 0) {
 			for (int i = 0; i < file_list.size(); i++) {
+				
 				sbHtml.append("			 		<tr>");
 				sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>");
 				String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
@@ -1345,6 +1348,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 					sbHtml.append("            </script>               \n");
 				} else {
 					sbHtml.append("            <script>               \n");
+					sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile("+file_map.get("FILE_PATH" + i)+", "+file_map.get("FILE_NM" + i)+", "+kibon_map.get("GOVER_NO")+", "+file_map.get("FILE_SEQ"+i)+", 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
 					sbHtml.append("            </script>               \n");
 				}
