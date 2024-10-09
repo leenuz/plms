@@ -393,4 +393,12 @@ SELECT PNU
 	  ORDER BY T.ISSUE_DATE DESC
 	</select>
 	
+	<!--  -->
+	<select id="selectJijuk_PNU" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM jijuk_2024
+		WHERE 1=1
+		and pnu = #{TARGET_PNU}
+	</select>
+	
 </mapper>
