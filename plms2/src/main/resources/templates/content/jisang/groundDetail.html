@@ -386,20 +386,23 @@
 									<li class="title02 title">구분</li>
 									<li class="title04 title">내용</li>
 								</ul>
-								<ul class="contents "
-									th:if="${jisangModifyList == null || jisangModifyList.isEmpty()}">
+								<ul class="contents " th:if="${jisangModifyList == null || jisangModifyList.isEmpty()}">
 									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
 								<ul class="contents"
 									th:each="val, iterStat : ${jisangModifyList}">
 									<li class="content01 content"><span
-										th:text="${iterStat.count}"></span> <!-- 순번 --></li>
+										th:text="${iterStat.count}"></span>
+									</li>
 									<li class="content02 content"><span
-										th:text="${val.jm_modify_date}"></span> <!-- 변경일시 --></li>
+										th:text="${val.jm_modify_date}"></span>
+									</li>
 									<li class="content03 content"><span
-										th:text="${val.jm_gubun}"></span> <!-- 구분 --></li>
+										th:text="${val.jm_gubun}"></span>
+									</li>
 									<li class="content04 content"><span
-										th:text="${val.jm_cont}"></span> <!-- 내용 --></li>
+										th:text="${val.jm_cont}"></span>
+									</li>
 								</ul>
 							</div>
 						</div>

@@ -210,7 +210,7 @@ public class goverController {
 		return mav;
 	}
 
-	// 송유관 - 점용 상세정보
+	// 송유관로 현황 - 점용 상세정보
 	@GetMapping(path = "/occupationDetails") // http://localhost:8080/api/get/dbTest
 	public ModelAndView occupationDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
@@ -228,6 +228,7 @@ public class goverController {
 		ArrayList<HashMap> permitList = mainService.selectQuery("goverSQL.selectPermitList", params);
 		ArrayList<HashMap> pnuList = mainService.selectQuery("goverSQL.selectPnuList", params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList", params);
+		
 		HashMap jijuk = new HashMap<>();
 		jijuk.put("x", 0);
 		jijuk.put("y", 0);
@@ -293,8 +294,22 @@ public class goverController {
 
 //			ArrayList<HashMap> goverPnuAtcFileList = mainService.selectQuery("goverSQL.selectPnuAtcFileList",params);
 		ArrayList<HashMap> goverPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList", params);
+		params.put("pnu", data.get(0).get("jm_pnu"));
+		log.info("pnu: "+ data.get(0).get("jm_pnu"));
+		ArrayList<HashMap> goverIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
+		
+		log.info("jisangIssueList size:"+goverIssueList.size());
+		if (!goverIssueList.isEmpty()) {
+			log.info("issueManualCode1:"+goverIssueList.get(0).get("pi_code_depth1"));
+			log.info("issueManualCode2:"+goverIssueList.get(0).get("pi_code_depth2"));
+			log.info("issueManualCode3:"+goverIssueList.get(0).get("pi_code_depth3"));
+			
+			params.put("issueManualCode1", goverIssueList.get(0).get("pi_code_depth1"));
+			params.put("issueManualCode2", goverIssueList.get(0).get("pi_code_depth2"));
+			params.put("issueManualCode3", goverIssueList.get(0).get("pi_code_depth3"));
+		}
 //			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);
-//			ArrayList<HashMap> jisangModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
+		ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
 //			ArrayList<HashMap> jisangMergeList = mainService.selectQuery("goverSQL.selectMergeList",params);
 		params.put("manage_no", idx);
 		ArrayList<HashMap> goverMemoList = mainService.selectQuery("commonSQL.selectMemoList", params);
@@ -316,28 +331,33 @@ public class goverController {
 //			log.info("atcFileList:"+atcFileList);
 
 		mav.addObject("resultData", data.get(0));
-		mav.addObject("permitList", permitList);
-		mav.addObject("pnuList", pnuList);
-		if (atcFileList == null || atcFileList.isEmpty()) {
-		    mav.addObject("atcFileList", new ArrayList<>());  // 빈 리스트를 넘겨줌
+		mav.addObject("pnuTargetList", pnuTargetList); //대상 토지정보
+		mav.addObject("pnuList", pnuList); // 소속 토지정보
+		mav.addObject("permitList", permitList); // 허가정보
+		if (atcFileList == null || atcFileList.isEmpty()) { // 첨부파일
+		    mav.addObject("atcFileList", new ArrayList<>());
 		} else {
 		    mav.addObject("atcFileList", atcFileList);
 		}
-		mav.addObject("pnuTargetList", pnuTargetList);
+		if (goverModifyList == null || goverModifyList.isEmpty()) { // 변경이력
+		    mav.addObject("goverModifyList", new ArrayList<>());
+		} else {
+		    mav.addObject("goverModifyList", goverModifyList);
+		}
 		mav.addObject("jijuk", jijuk);
-
-		if (goverPnuAtcFileList == null || goverPnuAtcFileList.isEmpty()) {
-		    mav.addObject("goverPnuAtcFileList", new ArrayList<>());  // 빈 리스트를 넘겨줌
+		if (goverPnuAtcFileList == null || goverPnuAtcFileList.isEmpty()) { // 필지 첨부파일
+		    mav.addObject("goverPnuAtcFileList", new ArrayList<>());
 		} else {
 		    mav.addObject("goverPnuAtcFileList", goverPnuAtcFileList);
 		}
-		if (goverMemoList == null || goverMemoList.isEmpty()) {
-		    mav.addObject("memoList", new ArrayList<>());  // 빈 리스트를 넘겨줌
+		mav.addObject("goverIssueList", goverIssueList.isEmpty() ? new HashMap<>() : goverIssueList.get(0)); // 비어있을 경우 빈 맵 전달
+		if (goverMemoList == null || goverMemoList.isEmpty()) { // 메모
+		    mav.addObject("memoList", new ArrayList<>());
 		} else {
 		    mav.addObject("memoList", goverMemoList);
 		}
 //			mav.addObject("atcFileList",atcFileList);
-//			mav.addObject("jisangModifyList",jisangModifyList);
+
 //			mav.addObject("jisangMergeList",jisangMergeList);
 		
 		//지도보기, 이동관련

@@ -18,90 +18,7 @@
 <script src="/js/common/common.js"></script>
 <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-<style>
-div.dt-top-container {
-	display: grid;
-	grid-template-columns: auto auto auto;
-}
-
-div.dt-center-in-div {
-	margin: 0 auto;
-	float: right;
-	margin-right: 30px;
-}
-
-div.dt-center-in-div>div {
-	display: inline;
-}
-
-div.dt-filter-spacer {
-	margin: 10px 0;
-	border: 1px solid red;
-}
-
-.dt-title {
-	text-align: center;
-	width: 180px;
-	float: left;
-}
-
-.dt-buttons {
-	display: inline-block;
-	width: 180px;
-}
-
-.dt-length {
-	display: inline-block;
-}
-
-.dt-button {
-	color: white;
-	background-color: #4e5871;
-	font-size: 15px;
-	font-weight: 600;
-	border-radius: 10px;
-	background-image: url(/assets/media/menu01/download.png);
-	background-size: 11px;
-	background-repeat: no-repeat;
-	background-position: 123px center;
-	text-align: left;
-	margin-right: 10px;
-	width: 159px;
-	height: 38px;
-}
-
-.dt-paging {
-	text-align: center;
-}
-
-.dt-paging-button {
-	box-sizing: border-box;
-	display: inline-block;
-	min-width: 1.5em;
-	padding: 0.5em 1em;
-	margin-left: 2px;
-	text-align: center;
-	text-decoration: none !important;
-	cursor: pointer;
-	border: 1px solid transparent;
-	border-radius: 2px;
-	background: transparent;
-	color: #007bff !important;
-	font-size: 15px;
-	font-weight: 600;
-}
-
-.bottom {
-	text-align: center;
-}
-
-.top {
-	text-align: right;
-	margin: 10px;
-}
-</style>
-
-<title>지상권</title>
+<title>점용 상세정보</title>
 </head>
 <th:block layout:fragment="content">
 
@@ -111,7 +28,6 @@ div.dt-filter-spacer {
 
 	<div class="occupationDetailsWrappers">
 		<!--header삽입-->
-
 		<main id="occupationDetails">
 
 			<div class="mainTitle">
@@ -155,8 +71,9 @@ div.dt-filter-spacer {
               document.getElementById('mapFrame').src = mapUrl;
           </script>
 					</div>
+					
+					<!-- 기본 정보 -->
 					<div class="contBox contBoxMini02">
-
 						<div class="thirdTitle">
 							<h2>・기본 정보</h2>
 						</div>
@@ -222,14 +139,13 @@ div.dt-filter-spacer {
 								</ul>
 							</div>
 						</div>
-
 					</div>
+					
+					<!-- 대상 토지정보 -->
 					<div class="contBox contBoxMini03">
-
 						<div class="thirdTitle">
 							<h2>・대상 토지정보</h2>
 						</div>
-
 						<div class="contentDetailBox">
 							<div class="depth1">
 								<ul class="titles">
@@ -239,12 +155,17 @@ div.dt-filter-spacer {
 									<li class="title04 title">면적(m²)</li>
 									<li class="title05 title">보기</li>
 								</ul>
+								
+		            <!-- 데이터가 없을 때 메시지 표시 -->
+		            <ul class="contents" th:if="${pnuTargetList == null or pnuTargetList.size() == 0}">
+		                <li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+		            </ul>
 								<ul class="contents" th:each="val:${pnuTargetList}">
-									<input type="hidden" name="pnu" id="pnu"
-										th:value="${val.gp_pnu}" />
-									<li class="content01 content">[[${val.gp_sido_nm}]]
-										[[${val.gp_sgg_nm}]] [[${val.gp_emd_nm}]] [[${val.gp_ri_nm}]]
-										[[${val.gp_jibun}]]</li>
+									<input type="hidden" name="pnu" id="pnu" th:value="${val.gp_pnu}" />
+	                <li class="content01 content">
+	                    <input type="hidden" name="pnu" id="pnu" th:value="${val.gp_pnu}" />
+	                    [[${val.gp_sido_nm}]] [[${val.gp_sgg_nm}]] [[${val.gp_emd_nm}]] [[${val.gp_ri_nm}]] [[${val.gp_jibun}]]
+	                </li>
 									<li class="content02 content">[[${val.gp_jijuk_area}]]</li>
 									<li class="content03 content">[[${val.gp_gover_length}]]</li>
 									<li class="content04 content">[[${val.gp_gover_area}]]</li>
@@ -254,8 +175,8 @@ div.dt-filter-spacer {
 								</ul>
 							</div>
 						</div>
-
 					</div>
+
 					<div class="contBox contBoxMini04">
 
 						<div class="thirdTitle">
@@ -274,50 +195,49 @@ div.dt-filter-spacer {
 									<li class="title06 title">보기</li>
 								</ul>
 								<script>
-                                    var latArr = [];
-                                    var lngArr = [];
-                                    const openMap = (el) => {
-                                        var lat = $($(el).parent().parent().children('input')[0]).val();
-                                        var lng = $($(el).parent().parent().children('input')[1]).val();
-                                        if (lat != 0 && lng != 0) {
-                                            var opt = {
-                                                lat: lat,
-                                                lon: lng
-                                            }
-                                            openMapWindow(opt);
-                                        } else {
-                                            alert('좌표가 존재하지 않습니다.');
-                                        }
-                                    };
+                    var latArr = [];
+                    var lngArr = [];
+                    const openMap = (el) => {
+                        var lat = $($(el).parent().parent().children('input')[0]).val();
+                        var lng = $($(el).parent().parent().children('input')[1]).val();
+                        if (lat != 0 && lng != 0) {
+                            var opt = {
+                                lat: lat,
+                                lon: lng
+                            }
+                            openMapWindow(opt);
+                        } else {
+                            alert('좌표가 존재하지 않습니다.');
+                        }
+                    };
 
-                                    const openMapAll = () => {
-                                        if (window.opener) {
-                                            var latAll = 0;
-                                            var lngAll = 0;
-                                            var markers = [];
-                                            for (var i = 0; i < latArr.length; i++) {
-                                                var lat = parseFloat(latArr[i]);
-                                                var lng = parseFloat([i]);
-                                                if (isNaN(lat) || isNaN(lng) || lat == 0 || lng == 0)
-                                                    continue;
-                                                latAll += lat;
-                                                lngAll += lng;
-                                                var pos = [lng, lat];
-                                                markers.push(pos);
-                                            }
-                                            var centerLat = latAll / markers.length;
-                                            var centerLng = lngAll / markers.length;
+                    const openMapAll = () => {
+                        if (window.opener) {
+                            var latAll = 0;
+                            var lngAll = 0;
+                            var markers = [];
+                            for (var i = 0; i < latArr.length; i++) {
+                                var lat = parseFloat(latArr[i]);
+                                var lng = parseFloat([i]);
+                                if (isNaN(lat) || isNaN(lng) || lat == 0 || lng == 0)
+                                    continue;
+                                latAll += lat;
+                                lngAll += lng;
+                                var pos = [lng, lat];
+                                markers.push(pos);
+                            }
+                            var centerLat = latAll / markers.length;
+                            var centerLng = lngAll / markers.length;
 
-                                            if (centerLat != 0 && centerLng != 0 && !isNaN(centerLat) && !isNaN(centerLng)) {
-                                                cityHallCoords = { lon: centerLng, lat: centerLat, zoom: 16 };
-                                                openMapWindow(cityHallCoords);
-                                            } else {
-                                                alert("해당 위치에 대한 좌표가 없습니다.");
-                                            }
-                                        }
-
-                                    };
-                                </script>
+                            if (centerLat != 0 && centerLng != 0 && !isNaN(centerLat) && !isNaN(centerLng)) {
+                                cityHallCoords = { lon: centerLng, lat: centerLat, zoom: 16 };
+                                openMapWindow(cityHallCoords);
+                            } else {
+                                alert("해당 위치에 대한 좌표가 없습니다.");
+                            }
+                        }
+                    };
+                </script>
 								<ul class="contents" id="jijukList" th:each="val:${pnuList}">
 									<input type="hidden" name="pnuLat" th:value="${val.lat}" />
 									<input type="hidden" name="pnuLng" th:value="${val.lng}" />
@@ -335,7 +255,8 @@ div.dt-filter-spacer {
 									<li class="content04 content">[[${val.gp_gover_length}]]</li>
 									<li class="content05 content">[[${val.gp_gover_area}]]</li>
 									<li class="content06 content">
-										<button class="viewDetailButton" th:onclick="onePostionView([[${val}]])">위치보기</button>
+										<button class="viewDetailButton"
+											th:onclick="onePostionView([[${val}]])">위치보기</button>
 									</li>
 								</ul>
 							</div>
@@ -351,27 +272,20 @@ div.dt-filter-spacer {
 								</ul>
 							</div>
 						</div>
-
 					</div>
-
 				</div>
-
-
 			</section>
+			
+			<!-- 점용허가 기본정보 -->
 			<section class="occupationPermitBasicInfo">
 				<div class="subTitle">점용허가 기본정보</div>
-
 				<div class="contWrap">
-
+				
 					<!-- 허가 정보 -->
-
 					<div class="contBox">
-
 						<div class="thirdTitle">
 							<h2>・허가 정보</h2>
 						</div>
-
-
 						<div class="contentDetailBox">
 							<div class="depth1">
 								<ul class="titles">
@@ -385,6 +299,9 @@ div.dt-filter-spacer {
 									<li class="title08 title">면적(m²)</li>
 									<li class="title09 title">도시계획결정여부</li>
 									<li class="title10 title">결재문서 조회</li>
+								</ul>
+								<ul class="contents" th:if="${permitList == null or permitList.size() == 0}">
+								    <li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
 								</ul>
 								<ul class="contents" th:each="val:${permitList}">
 									<li class="content01 content">[[${val.gp_gover_no}]]</li>
@@ -402,33 +319,25 @@ div.dt-filter-spacer {
 								</ul>
 							</div>
 						</div>
-
 					</div>
 
 					<!-- 점용 허가 및 점용료 납부 현황 -->
-
 					<div class="contBox contBoxMini05">
-
 						<div class="thirdTitle">
 							<h2>・점용 허가 및 점용료 납부 현황</h2>
 						</div>
-
 						<div class="contentDetailBox">
-
 							<!-- 순번 -->
 							<div class="depth1">
 								<ul class="titles">
 									<li class="title01 title">순번</li>
-
 								</ul>
-								<ul class="contents" th:each="val:${permitList}">
-									<li class="content01 content">[[${val.gp_gover_no}]]</li>
-
+								<ul class="contents" th:if="${permitList != null}" th:each="val:${permitList}">
+								    <li class="content01 content">[[${val.gp_gover_no}]]</li>
 								</ul>
 							</div>
-
+							
 							<!-- 점용허가 유효기간 -->
-
 							<div class="depth2">
 								<ul class="titles">
 									<li class="title01 title">점용허가 유효기간</li>
@@ -442,7 +351,6 @@ div.dt-filter-spacer {
 									<li class="content01 content">[[${val.gp_pmt_st_date}]]</li>
 									<li class="content01 content">[[${val.gp_pmt_ed_date}]]</li>
 									<li class="content01 content">[[${val.gp_buseo}]]</li>
-
 								</ul>
 							</div>
 
@@ -458,7 +366,6 @@ div.dt-filter-spacer {
 								<ul class="contents" th:each="val:${permitList}">
 									<li class="content01 content">[[${val.gp_nm}]]</li>
 									<li class="content01 content">[[${val.gp_phone_number}]]</li>
-
 								</ul>
 							</div>
 
@@ -477,7 +384,6 @@ div.dt-filter-spacer {
 									<li class="content01 content">[[${val.gp_pay_date}]]</li>
 									<li class="content01 content"
 										th:data-money="${val.gp_pay_money}"><span></span></li>
-
 								</ul>
 							</div>
 
@@ -491,21 +397,16 @@ div.dt-filter-spacer {
 									<li class="content01 content">
 										<button class="viewDetailButton">상세보기</button>
 									</li>
-
 								</ul>
 							</div>
 						</div>
-
 					</div>
 
 					<!-- 첨부파일 -->
-
 					<div class="contBox contBoxMini06">
-
 						<div class="thirdTitle">
 							<h2>・첨부파일</h2>
 						</div>
-
 
 						<div class="contentDetailBox">
 							<div class="depth1">
@@ -516,8 +417,7 @@ div.dt-filter-spacer {
 									<li class="title04 title">파일저장</li>
 								</ul>
 								<ul class="contents" th:if="${atcFileList.size()==0}">
-									<li class="content01 " style="width: 100%; text-align: center">데이터가
-										없습니다.</li>
+									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
 								<ul class="contents" th:each="val:${atcFileList}">
 									<li class="content01 content">[[${val.ga_wdate}]]</li>
@@ -535,11 +435,8 @@ div.dt-filter-spacer {
 								</ul>
 							</div>
 						</div>
-
 					</div>
 				</div>
-
-
 			</section>
 
 			<!-- 변경 이력 -->
@@ -556,36 +453,30 @@ div.dt-filter-spacer {
 									<li class="title02 title">구분</li>
 									<li class="title04 title">내용</li>
 								</ul>
-								<div class="contentScr">
-									<ul class="contents">
-										<li class="content01 content">1</li>
-										<li class="content02 content">2024-04-02 15:40:01</li>
-										<li class="content03 content">기본 정보</li>
-										<li class="content04 content">국공유지 여부 변경</li>
-									</ul>
-									<ul class="contents">
-										<li class="content01 content">2</li>
-										<li class="content02 content">2024-04-02 15:40:01</li>
-										<li class="content03 content">기본 정보</li>
-										<li class="content04 content">허가관청 변경 (‘’ -> 여수시) 관리기관 변경
-											(‘’ -> ‘도로관리사업소’)</li>
-									</ul>
-									<ul class="contents lastContents">
-										<li class="content01 content">2</li>
-										<li class="content02 content">2024-04-02 15:40:01</li>
-										<li class="content03 content">기본 정보</li>
-										<li class="content04 content">허가관청 변경 (‘’ -> 여수시) 관리기관 변경
-											(‘’ -> ‘도로관리사업소’)</li>
-									</ul>
-								</div>
+								<ul class="contents " th:if="${goverModifyList == null || goverModifyList.isEmpty()}">
+									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
+								</ul>
+								<ul class="contents"
+									th:each="val, iterStat : ${goverModifyList}">
+									<li class="content01 content"><span
+										th:text="${iterStat.count}"></span>
+									</li>
+									<li class="content02 content"><span
+										th:text="${val.gm_modify_date}"></span>
+									</li>
+									<li class="content03 content"><span
+										th:text="${val.gm_gubun}"></span>
+									</li>
+									<li class="content04 content"><span
+										th:text="${val.gm_cont}"></span>
+									</li>
+								</ul>
 							</div>
 						</div>
-
 					</div>
 				</div>
-
-
 			</section>
+			
 			<!-- 필지 첨부파일 -->
 			<section class="parcelAttachments">
 				<form name="uploadForm" method="post" enctype="multipart/form-data">
@@ -648,9 +539,8 @@ div.dt-filter-spacer {
 						</div>
 					</div>
 				</div>
-
-
 			</section>
+			
 			<!-- 잠재이슈 -->
 			<section class="potentialIssues">
 				<div class="subTitle">
@@ -671,28 +561,39 @@ div.dt-filter-spacer {
 									<li class="title04 title">등록일시</li>
 									<li class="title04 title ">편집</li>
 								</ul>
-								<ul class="contents">
-									<li class="content01 content">등기설정</li>
-									<li class="content02 content">계약체결</li>
-									<li class="content03 content">이슈없음</li>
-									<li class="content03 content">이슈없음</li>
-									<li class="content03 content">이슈없음</li>
-									<li class="content01 content">신규등록</li>
-									<li class="content04 content">2024-04-01 09:46:01</li>
-									<li class="content05 content btnBox">
-										<div class="newBtnWrap">
-											<button class="registBtn miniBtn">등록</button>
-										</div>
-									</li>
+								<ul class="contents lastContents" th:if="${goverIssueList == null or goverIssueList.size() == 0}">
+								    <li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents lastContents">
-									<li class="content01 content">등기설정</li>
-									<li class="content02 content">계약체결</li>
-									<li class="content03 content">이슈없음</li>
-									<li class="content03 content">이슈없음</li>
-									<li class="content03 content">이슈없음</li>
-									<li class="content01 content">신규등록</li>
-									<li class="content04 content">2024-04-01 09:46:01</li>
+								<ul class="contents lastContents" th:if="${goverIssueList != null and goverIssueList.size() > 0}">
+									<!-- 등기여부 -->
+									<li class="content01 content">
+										<input type="text" placeholder="등기설정"  readonly class="notWriteInput">
+<!-- 										<input type="text" placeholder="등기설정" th:value="${jisangIssueList.comple_yn}" readonly class="notWriteInput"> -->
+									</li>
+									<!-- 계약여부 -->
+									<li class="content02 content">
+										<input type="text" th:value="${goverIssueList.permitted_yn}" readonly class="notWriteInput">
+									</li>
+									<!-- 이슈유형 대분류 -->
+									<li class="content03 content">
+										<input type="text" th:value="${goverIssueList.depth1_title}" readonly class="notWriteInput">
+									</li>
+									<!-- 이슈유형 중분류 -->
+									<li class="content03 content">
+										<input type="text" th:value="${goverIssueList.depth2_title}" readonly class="notWriteInput">
+									</li>
+									<!-- 이슈유형 세분류 -->
+									<li class="content03 content">
+										<input type="text" th:value="${goverIssueList.depth3_title}" readonly class="notWriteInput">
+									</li>
+									<!-- 등록사유 -->
+									<li class="content01 content">
+										<input type="text" th:value="${goverIssueList.issue_comment}" readonly class="notWriteInput">
+									</li>
+									<!-- 등록일시 -->
+									<li class="content04 content">
+										<input type="text" th:value="${goverIssueList.issue_date}" readonly class="notWriteInput">
+									</li>
 									<li class="content04 content btnBox">
 										<div class="btnWrap">
 											<button class="editBtn miniBtn occupationIssueReviseBtn">수정</button>
@@ -706,7 +607,6 @@ div.dt-filter-spacer {
 						</div>
 					</div>
 				</div>
-
 			</section>
 
 			<!-- 잠재이슈 변경 이력 -->

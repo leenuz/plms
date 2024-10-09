@@ -158,7 +158,7 @@ public class dopcoController {
 	@GetMapping(path="/companyLandDetails") //http://localhost:8080/api/get/dbTest
     public ModelAndView companyLandDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		HashMap params = new HashMap();
-		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		ArrayList<HashMap> list = new ArrayList<HashMap>();
 
 		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 		ArrayList<HashMap> addressList = mainService.selectQuery("jisangSQL.bunhalAddressSearch",params);
