@@ -600,14 +600,19 @@ public class jisangController {
 					String JASAN_NO = obj.getString("togiJasanNo"); // 자산분류번호
 					String SOUJA = obj.getString("togiSouja"); // 소유자
 					String USER = obj.getString("togiUseName"); // 사용자
-
+					if(JIJUK == null || "".equals(JIJUK)) {
+						JIJUK = "0";
+					}
+					if(PYENIB == null || "".equals(PYENIB)) {
+						PYENIB = "0";
+					}
 					String SIDO_NM = obj.getString("sido_nm");
 					String SGG_NM = obj.getString("sgg_nm");
 					String EMD_NM = obj.getString("emd_nm");
 					String RI_NM = obj.getString("ri_nm");
 					String JIBUN = obj.getString("jibun");
 					String ADDRCODE = obj.getString("addrcode");
-
+					
 					params.put("JISANG_NO", JISANG_NO);
 					params.put("ADDRESS", ADDRESS);
 					params.put("JIMOK", JIMOK);
@@ -636,8 +641,8 @@ public class jisangController {
 																						// 저장
 				}
 
-				
-				
+				// 해당 p_no에 대한것 삭제
+//				mainService.DeleteQuery("jisangSQL.jisangReqDoc2FileDelete", params);
 				//사용승락 첨부서류 등록
 		        for(int i=1;i<11;i++) {
 		        	String key=String.format("%02d",i);
@@ -663,11 +668,12 @@ public class jisangController {
 		     			log.info("filesMap:"+filesMap);
 		     			
 		     			
+		     			
 		     			//해당파일있는지체크 
-		     			int fcount=(int)mainService.selectCountQuery("jisangSQL.selectPermitFileCount", filesMap);
-		     			log.info("fcount:"+fcount);
-		     			if (fcount>0) mainService.InsertQuery("jisangSQL.updatePermitFile", filesMap);
-		     			else mainService.InsertQuery("jisangSQL.insertPermitFile", filesMap);
+//		     			int fcount=(int)mainService.selectCountQuery("jisangSQL.selectPermitFileCount", filesMap);
+//		     			log.info("fcount:"+fcount);
+//		     			if (fcount>0) mainService.InsertQuery("jisangSQL.updatePermitFile", filesMap);
+		     			mainService.InsertQuery("jisangSQL.insertPermitFile", filesMap);
 		        	}
 		        }
 				// 첨부파일
@@ -4350,7 +4356,7 @@ log.info("gubun:"+gubun);
 		String fpath=GC.getJisangReqDoc1Dir();
 		String tmp=GC.getJisangFileTempDir();
 		if (docNo=="1") mainService.DeleteQuery("jisangSQL.jisangReqDoc1Delete", param);
-		else if (docNo=="2") mainService.DeleteQuery("jisangSQL.jisangReqDoc2Delete", param);
+//		else if (docNo=="2") mainService.DeleteQuery("jisangSQL.jisangReqDoc2FileDelete", param);
 		 CommonUtil.delFile(dfile_name, tmp);
 		 CommonUtil.delFile(dfile_name, fpath);
 		
@@ -4671,7 +4677,7 @@ log.info("gubun:"+gubun);
 		}
 		
       	mav.addObject("resultData",list.get(0));
-      	mav.addObject("tojiList", data);
+      	mav.addObject("tojiList", togiList);
 //		mav.addObject("fileList", jisangPnuAtcFileList);
 		mav.addObject("reqDoc2list", fileList);
 		mav.addObject("reqDoc3list", fileProList);
@@ -4690,7 +4696,9 @@ log.info("gubun:"+gubun);
 //        List<TestDTO> list = new ArrayList<TestDTO>();
 //        list = dbService.getList();
 		HashMap params = new HashMap();
-		
+		HashMap<String, Object> fileMap = new HashMap<>();
+		List<HashMap> fileTempList = new ArrayList<>();
+		List<HashMap<String, Object>> fileProList = new ArrayList<>();
 		String idx = httpRequest.getParameter("idx");
 		String index = httpRequest.getParameter("index");
 		
@@ -4699,18 +4707,34 @@ log.info("gubun:"+gubun);
 		params.put("PMT_NO",idx);
 		params.put("index",index);
 		log.info("params:"+params);
-		//ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectJisangPmtDetail_MASTER",params);
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectPermitData",params);
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 		ArrayList<HashMap> reqDoc2list = mainService.selectQuery("jisangSQL.selectJisangReqDoc2",params);
 		ArrayList<HashMap> fileList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_FILE", params);
-
+		ArrayList<HashMap> togiList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangPmtDetail_TOGI", params);
+		fileTempList = fileList;
+		for (int i = 0; i < 10; i++) {
+			fileMap = new HashMap<>();
+			fileMap.put("file_path", "");
+			fileMap.put("file_nm", "");
+			fileMap.put("pmt_no", "");
+			fileMap.put("seq", 0);
+			fileMap.put("file_gubun", i + 1);
+			fileProList.add(fileMap);
+		}
+		
+		for (int j = 0; j < fileTempList.size(); j++) {
+			int idx1 = Integer.valueOf(String.valueOf(fileTempList.get(j).get("file_gubun"))) -1;
+			fileProList.set(idx1, fileTempList.get(j));
+		}
+		
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("tojiList", data);
 		mav.addObject("jisaList", jisalist);
 		mav.addObject("sidoList",sidolist);
 		mav.addObject("reqDoc2list",fileList);
+		mav.addObject("reqDoc3list",fileProList);
 		mav.setViewName("content/jisang/usePermitEdit");
 
 		return mav;
