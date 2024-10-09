@@ -1332,9 +1332,14 @@ log.info("PMT_NO:"+PMT_NO);
 		
 		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
 		
+		//241009
+		List<String> coordinateVal = new ArrayList<>();
+		Integer coordinateSize = 0;
+		
 		HashMap jijuk = new HashMap<>();
 		jijuk.put("x", 0);
 		jijuk.put("y", 0);
+		
 		if (data.size() > 0) {
 			HashMap jijukParam = new HashMap<>();
 			jijukParam.put("sido_nm", data.get(0).get("jm_sido_nm"));
@@ -1342,15 +1347,26 @@ log.info("PMT_NO:"+PMT_NO);
 			jijukParam.put("emd_nm", data.get(0).get("jm_emd_nm"));
 			jijukParam.put("ri_nm", data.get(0).get("jm_ri_nm"));
 			jijukParam.put("jibun", data.get(0).get("jm_jibun"));
+			
+			jijukParam.put("TARGET_PNU", data.get(0).get("jm_pnu"));
 
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			ArrayList<HashMap> jijukPNUList2 = mainService.selectQuery("commonSQL.selectJijuk_PNU", jijukParam);
+			
+			coordinateSize += jijukPNUList2.size();
+			
 			if (jijukList.size() > 0) {
 				jijuk = jijukList.get(0);
-			}
-			else {
+			} else {
 				jijuk = new HashMap<>();
 				jijuk.put("x", 0);
 				jijuk.put("y", 0);
+				
+				for(int k = 0 ; k < jijukPNUList2.size() ; k++) {
+					HashMap jijukInfo = jijukPNUList2.get(k);
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+jijukInfo.get("y").toString());
+				}
+				
 			}
 		}
 		
@@ -1420,6 +1436,10 @@ log.info("PMT_NO:"+PMT_NO);
 		mav.addObject("memoList",jisangMemoList);
 		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
 		mav.setViewName("content/jisang/groundDetail");
+		
+		//지도보기, 이동관련
+		mav.addObject("jijukCoordList", coordinateVal);
+		mav.addObject("jijukCoordSize", coordinateSize);
 		
 		return mav;
     }
