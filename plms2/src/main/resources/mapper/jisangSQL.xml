@@ -2295,8 +2295,9 @@ LEFT JOIN JIJUK_2024 JIJUK_MST ON JM.jm_PNU = JIJUK_MST.PNU
 	
 	
 	
-	<select id="selectJisangBunHalDocInfo" parameterType="HashMap" resultType="java.util.HashMap">
-		SELECT * FROM plms_approval where dockey in (select dockey from jisang_bunhal where jb_jisang_no = #{JISANGNO}) and (status is null or status not in ('X'))
+	<select id="selectJisangBunHalDocInfo" parameterType="HashMap" resultType="HashMap">
+		SELECT * FROM PLMS_APPROVAL where pa_dockey in (select jb_dockey from jisang_bunhal where jb_jisang_no = #{JISANGNO}) and (pa_status is null or pa_status not in ('X'))
+		
 	</select>
 	
 	<select id="selectJisangBunhalTmpList" parameterType="HashMap" resultType="java.util.HashMap">

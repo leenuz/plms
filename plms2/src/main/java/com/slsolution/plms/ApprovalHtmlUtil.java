@@ -1807,7 +1807,7 @@ log.info("ori_list:"+ori_list);
 		if (soyu_list != null && !soyu_list.isEmpty() && soyu_list.size() > 0) {
 			soyuMap = soyu_list.get(0);
 		}
-
+log.info("soyuMap:"+soyuMap);
 		StringBuffer sbHtml = new StringBuffer();
 
 		sbHtml.append(
@@ -1852,6 +1852,7 @@ log.info("ori_list:"+ori_list);
 		sbHtml.append("					<td>" + JISANG_NO + "</td>\n");
 		sbHtml.append("					<td>" + address + "</td>\n");
 		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("jimok_text")) + "</td>\n");
+		log.info("dataMap:"+dataMap);
 		Object jijukArea = dataMap.get("jijuk_area");
 		String jijukAreaStr = CommonUtil.nvl(jijukArea != null ? jijukArea.toString() : "");
 		Object pyeonibArea = dataMap.get("pyeonib_area");
@@ -1860,7 +1861,7 @@ log.info("ori_list:"+ori_list);
 		sbHtml.append("					<td>" + pyeonibAreaStr + "</td>\n");
 //		sbHtml.append("					<!-- <td>???설정금액???</td> -->\n");
 		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("jasan_no")) + "</td>\n");
-		sbHtml.append("					<td>" + CommonUtil.nvl(soyuMap.get("SOUJA_NAME")) + "</td>\n");
+		sbHtml.append("					<td>" + CommonUtil.nvl(soyuMap.get("js_souja_name")) + "</td>\n");
 		sbHtml.append("				</tr>\n");
 		sbHtml.append("			</tbody>\n");
 		sbHtml.append("		</table>\n");
@@ -1951,7 +1952,9 @@ log.info("ori_list:"+ori_list);
 		sbHtml.append("			</thead>\n");
 		sbHtml.append("			<tbody>\n");
 		int heji_count = 0;
+		log.info("heji_list:"+heji_list);
 		for (HashMap hejiMap : heji_list) {
+			log.info("hejiMap:"+hejiMap);
 			sbHtml.append("				<tr>\n");
 			sbHtml.append("					<td>" + CommonUtil.nvl((String) hejiMap.get("addrStr")) + "</td>\n");
 			sbHtml.append("					<td>" + CommonUtil.nvl((String) hejiMap.get("heji_toji_type")) + "</td>\n");

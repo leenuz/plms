@@ -221,6 +221,8 @@ public class CommonUtil implements ApplicationContextAware{
 		}
 	 
 	 public static String numberWithCommas(Object x) {
+		 if (x==null) return "";
+		 
 			return numberWithCommas(x.toString());
 		}
 

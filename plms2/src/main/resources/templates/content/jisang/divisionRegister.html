@@ -388,7 +388,9 @@ border: 1px solid black;
                     </div>
                     <section class="customSelectBox">
                         <button class="customSelectView" id="hiddenBtn">
-                            [[${val.gover_own_yn == 'Y'} ? '국유지' : '사유지']]
+                        [[${val['gover_own_yn'] == 'Y'} ? '국유지' : '사유지']]
+                        
+                       
                         </button>
                     
                         <ul class="customSelectBtns">

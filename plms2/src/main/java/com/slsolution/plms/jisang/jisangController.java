@@ -591,6 +591,7 @@ public class jisangController {
 				// 대상토지
 				for (int i = 0; i < togiArr.length(); i++) {
 					JSONObject obj=new JSONObject(togiArr.get(i).toString());
+					log.info("obj:"+obj);
 					String JISANG_NO = obj.getString("togiManageNo"); // 지상권번호
 					String ADDRESS = obj.getString("togiaddress"); // 주소
 					String JIMOK = obj.getString("togiJimokText"); // 지목
@@ -611,7 +612,7 @@ public class jisangController {
 					String EMD_NM = obj.getString("emd_nm");
 					String RI_NM = obj.getString("ri_nm");
 					String JIBUN = obj.getString("jibun");
-					String ADDRCODE = obj.getString("addrcode");
+					String ADDRCODE = obj.has("addrcode")?obj.getString("addrcode"):"";
 					
 					params.put("ADDRESS", ADDRESS);
 					params.put("JIMOK", JIMOK);
@@ -891,16 +892,16 @@ log.info("PMT_NO:"+PMT_NO);
 				map.put("message", "N");
 			} else {
 
-//				String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
-//				String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
-//				String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
-//				String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
-//				String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
-				String str_UserId = "034599";
-				String str_userName = "장우형";
-				String str_userDeptcd = "D250500";
-				String str_userDeptnm = "IT전략.지원팀";
-				String str_userUPDeptcd = "S250100";
+				String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
+				String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
+				String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
+				String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
+				String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+//				String str_UserId = "034599";
+//				String str_userName = "장우형";
+//				String str_userDeptcd = "D250500";
+//				String str_userDeptnm = "IT전략.지원팀";
+//				String str_userUPDeptcd = "S250100";
 				res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getPERMIT_HTML(map, request, response), str_UserId, "", "", "GetSurfaceRightsDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
 			}
 //
@@ -3081,19 +3082,20 @@ log.info("data:"+data.get(0));
 		if ("".equals(str_appNo)) {
 			map.put("message", "N");
 		} else {
-//			String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
-//			String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
-//			String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
-//			String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
-//			String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
-			String str_UserId = "105681";
-			String str_userName = "박영환";
-			String str_userDeptcd = "D250500";
-			String str_userDeptnm = "IT전략.지원팀";
-			String str_userUPDeptcd = "S250100";
+			String str_UserId = String.valueOf(httpRequest.getSession().getAttribute("userId"));
+			String str_userName = String.valueOf(httpRequest.getSession().getAttribute("userName"));
+			String str_userDeptcd = String.valueOf(httpRequest.getSession().getAttribute("userDeptcd"));
+			String str_userDeptnm = String.valueOf(httpRequest.getSession().getAttribute("userDeptnm"));
+			String str_userUPDeptcd = String.valueOf(httpRequest.getSession().getAttribute("userUPDeptcd"));
+			/*
+			 * String str_UserId = "105681"; String str_userName = "박영환"; String
+			 * str_userDeptcd = "D250500"; String str_userDeptnm = "IT전략.지원팀"; String
+			 * str_userUPDeptcd = "S250100";
+			 */
 			res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getJisang_divide_HTML(jisangno), str_UserId, "", "", "GetSurfaceRightsDivisionDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
 		}
 		System.out.println("insertJisangBunhalNew::"+res_Echo);
+		//res_Echo=true;
 		if (res_Echo) {
 
 			// 문서번호 업데이트
@@ -3105,13 +3107,14 @@ log.info("data:"+data.get(0));
 			//("Json.updateJisangBunhalEchoNo", map);
 			
 
-			// System.out.println("%%%%%%%%%%%%map=" + map);
+			 System.out.println("%%%%%%%%%%%%map=" + map);
 			// 문서 URL조회
 			//ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectJisangBunHalDocInfo", map);
 			ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangBunHalDocInfo", map);
+			 System.out.println("echoList0:"+echolist.get(0));
 			if (null != echolist && echolist.size() > 0) {
-				String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
-				System.out.println("str_EchoNo=====" + str_EchoNo);
+				String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("pa_out_url"));
+				System.out.println("bunhal str_EchoNo=====" + str_EchoNo);
 				map.put("OUT_URL", str_EchoNo);
 			}
 
@@ -3213,7 +3216,7 @@ log.info("data:"+data.get(0));
 					// 문서 URL조회                                                               selectJisangBunHalDocInfo
 					ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangBunHalDocInfo", map);
 					if (null != echolist && echolist.size() > 0) {
-						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("pa_out_url"));
 						System.out.println("str_EchoNo=====" + str_EchoNo);
 						map.put("OUT_URL", str_EchoNo);
 					}
