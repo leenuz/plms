@@ -1291,7 +1291,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
                 GROUP BY js_JISANG_NO, js_SOUJA_NAME
             ) AS sub1 WHERE ROW_IDX = 1
         ) JS ON JM.jm_JISANG_NO = JS.JISANG_NO
-        WHERE (jm.jm_cancle_yn IS NULL OR jm.jm_cancle_yn != 'Y')
+        WHERE (jm.jm_cancle_yn = 'Y')
         
         UNION ALL
         
@@ -1361,7 +1361,8 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
             ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.GOVER_NO
         ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
         LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
-        WHERE GM.gm_SAVE_STATUS = 'A' AND (GM.gm_CANCLE_YN !='Y' or GM.gm_CANCLE_YN is null)
+        WHERE GM.gm_SAVE_STATUS = 'A' 
+        AND (GM.gm_CANCLE_YN ='Y')
         
         UNION ALL
         
@@ -1415,7 +1416,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
                 GROUP BY ns_NOTSET_NO, ns_SOUJA_NAME
             )AS sub2 WHERE ROW_IDX = 1
         ) NS ON NM.nm_NOTSET_NO = NS.NOTSET_NO
-        WHERE 1=1 and  (NM.nm_DEL_FLAG = 'N' OR NM.nm_DEL_FLAG IS NULL)
+        WHERE 1=1 and  (NM.nm_DEL_FLAG = 'Y')
         
         UNION ALL
         
@@ -1460,7 +1461,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
             DM.dom_idx as index,
             0 as gidx
         FROM DOPCO_MASTER DM
-        WHERE DM.dom_CANCLE_YN = ''
+        WHERE DM.dom_CANCLE_YN = 'Y'
     ) JOIN_MST 
     LEFT JOIN jijuk_2024 JIJUK_MST ON JIJUK_MST.pnu=JOIN_MST.pnu
     LEFT JOIN (
@@ -1481,12 +1482,6 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     WHERE 1=1
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 	and r.master_no=#{idx}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
-	and r.cancel_yn=#{cancelYn}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
-	and r.manage_yn=#{manageYn}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
 	and r.dosiplan=#{dosiplan}
@@ -1665,7 +1660,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
                 GROUP BY js_JISANG_NO, js_SOUJA_NAME
             ) AS sub1 WHERE ROW_IDX = 1
         ) JS ON JM.jm_JISANG_NO = JS.JISANG_NO
-        WHERE (jm.jm_cancle_yn IS NULL OR jm.jm_cancle_yn != 'Y')
+        WHERE (jm.jm_cancle_yn = 'Y')
         
         UNION ALL
         
@@ -1732,7 +1727,8 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
             ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.GOVER_NO
         ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
         LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
-        WHERE GM.gm_SAVE_STATUS = 'A' AND (GM.gm_CANCLE_YN IS NULL or GM.gm_CANCLE_YN !='Y') 
+        WHERE GM.gm_SAVE_STATUS = 'A' 
+        AND (GM.gm_CANCLE_YN = 'Y') 
         
         UNION ALL
         
@@ -1743,7 +1739,6 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
             '' as OCCUPREPAYYN,
             NULL as OCCUPREPAYDATE,
             NM.nm_NOTSET_NO AS MASTER_NO,
-            
             'notset' AS JISANG_STATUS,
             NM.nm_jisa as JISA,
             NM.nm_sido_nm as SIDO_NM,
@@ -1783,7 +1778,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
                 GROUP BY ns_NOTSET_NO, ns_SOUJA_NAME
             )AS sub2 WHERE ROW_IDX = 1
         ) NS ON NM.nm_NOTSET_NO = NS.NOTSET_NO
-        WHERE 1=1  and (NM.nm_DEL_FLAG = 'N' OR NM.nm_DEL_FLAG IS NULL)
+        WHERE 1=1  and (NM.nm_DEL_FLAG = 'Y')
         
         UNION ALL
         
@@ -1825,7 +1820,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
             '' as PERMITTED_YN,
             '' as PIPE_YN
         FROM DOPCO_MASTER DM
-        WHERE DM.dom_CANCLE_YN = ''
+        WHERE DM.dom_CANCLE_YN = 'Y'
     ) JOIN_MST 
     LEFT JOIN jijuk_2024 JIJUK_MST ON JIJUK_MST.pnu=JOIN_MST.pnu
     LEFT JOIN (
@@ -1847,9 +1842,6 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 	and r.master_no=#{idx}
 	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
-	and r.manage_yn=#{manageYn}
-	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
 	and r.dosiplan=#{dosiplan}
 	</if>
@@ -1859,13 +1851,9 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
 	and r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
 	</if> 
-	
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
-   
-    AND r.toji_plan_type =#{toji_plan_type}
-</if>
-		
-	
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
+  AND r.toji_plan_type =#{toji_plan_type}
+	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
 	and r.gover_own_yn=#{toji_type}
 	</if>
@@ -1893,16 +1881,13 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 					LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
 					where 1=1 and gp.gp_gover_no = gm.gm_gover_no
 					and gp.gp_pnu is not null
-		
 				)
 				UNION ALL
 				(
 					SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
 					FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
 					where 1=1
-		
 				)
-		  
 		  ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
 	</if>
 </select>
