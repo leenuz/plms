@@ -3316,6 +3316,7 @@ log.info("data:"+data.get(0));
 	        	sqlParams.put("cancelGammoney",requestJsonObj.getString("cancelGammoney"));
 	        	sqlParams.put("cancelProfitLoss",requestJsonObj.getString("cancelProfitLoss"));
 	        	sqlParams.put("cancelRemainderMoney",requestJsonObj.getString("cancelRemainderMoney"));
+	        	sqlParams.put("cancelBosangMoney", requestJsonObj.getString("cancelBosangMoney"));
 	        	
 	        	log.info("sqlParams:"+sqlParams);
 	        	

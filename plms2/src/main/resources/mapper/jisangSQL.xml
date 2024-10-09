@@ -1682,7 +1682,7 @@ SELECT count(*)
 		 ,jb_chuideuk_money=NULLIF(cast(#{cancelChuideukMoney} as varchar),'')::numeric
 		 </if>
 		 ,jb_gammoney=nullif(#{cancelGammoney},'')::numeric
-		 ,jb_bosang_money=#{bosang_money}
+		 ,jb_bosang_money = nullif(#{cancelBosangMoney}, null)::numeric
 		 ,jb_profit_loss=nullif(#{cancelProfitLoss},'')::numeric
 		 ,jb_demise=#{togiDemise}
 		 ,jb_bunhal_complete=#{bunhal_complete}
