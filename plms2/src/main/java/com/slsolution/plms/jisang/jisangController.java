@@ -1589,7 +1589,6 @@ log.info("PMT_NO:"+PMT_NO);
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
 			coordinateSize = jijukList.size();
 			
-			
 			if(jijukList.size() == 0) {
 				coordinateSize = 0;
 			} else {

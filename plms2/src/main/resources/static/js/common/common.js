@@ -290,24 +290,48 @@ function positionView(objInfo) {
 	//({'lon':mapCoordLng, 'lat':mapCoordLat, 'zoom':'15'});
 	//({'lon':mapCoordLng, 'lat':mapCoordLat});
 	
-	//console.log(objInfo)
+	const coordList = $("#jijukCoordList").val();
+	const coordSize = $("#jijukCoordSize").val();
 	
-	let coordiList = $("#jijukCoordList").val();
-	let coordiSize = $("#jijukCoordSize").val();
+	let firstCoordLng = '';
+	let firstCoordLat = '';
+	let markerList = [];
 	
-	console.log('coordiList :: ' + coordiList);
-	console.log('coordiSize :: ' + coordiSize);
-	
+	if(coordSize > 0) {
+		const sliceCoordList = coordList.slice(1, -1);
+		
+		const trimArrCoord = sliceCoordList.split(',').map(item => item.trim());
+		
+		console.log(trimArrCoord);
+		
+		for(let i = 0 ; i < trimArrCoord.length ; i++) {
+			
+			let coordInfo = trimArrCoord[i].split('|');
+			let coordArr = [Number(coordInfo[0]), Number(coordInfo[1])];
+			
+			if(i == 0) {
+				firstCoordLng = Number(coordInfo[0]);
+				firstCoordLat = Number(coordInfo[1]);
+			}
+			
+			markerList.push(coordArr);
+			
+			//console.log(i+' :: '+trimArrCoord[i]);
+		}
+		console.log(markerList);
+	}
 	
 	// 자식 창에서 부모 창으로 메시지 보내기
 	if (window.opener) {
 		const message = {
 			type: "setCenter",
-			lon: mapCoordLng,
-			lat: mapCoordLat,
+			lon: firstCoordLng,
+			lat: firstCoordLat,
 			zoom: 19,
-			markers: [[127.387205, 36.43472], [127.376596, 36.411514], [127.464146, 36.437349], [127.469639, 36.398030], [127.328186, 36.425660]]
+			//markers: [[127.387205, 36.43472], [127.376596, 36.411514], [127.464146, 36.437349], [127.469639, 36.398030], [127.328186, 36.425660]]
+			markers: markerList
 		};
+		
 		window.opener.postMessage(message, '*');  // 부모 창으로 메시지 전송
 	}
 }	

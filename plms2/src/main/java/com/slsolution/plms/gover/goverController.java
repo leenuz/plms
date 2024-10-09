@@ -339,6 +339,7 @@ public class goverController {
 //			mav.addObject("jisangModifyList",jisangModifyList);
 //			mav.addObject("jisangMergeList",jisangMergeList);
 		
+		//지도보기, 이동관련
 		mav.addObject("jijukCoordList", coordinateVal);
 		mav.addObject("jijukCoordSize", coordinateSize);
 
@@ -404,7 +405,7 @@ public class goverController {
 		// SQL 호출하여 데이터 가져오기
 		ArrayList<HashMap> pipeNameList = mainService.selectQuery("goverSQL.selectPipeNameByJisa", params);
 
-		log.info("pipeNameList: " + pipeNameList);
+//		log.info("pipeNameList: " + pipeNameList);
 
 		// 결과를 담은 Map 객체 생성
 		Map<String, Object> response = new HashMap<>();
@@ -803,7 +804,7 @@ public class goverController {
 	public ModelAndView masterEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 
-		log.info("점용 마스터 수정 컨트롤러 동작");
+//		log.info("점용 마스터 수정 컨트롤러 동작");
 		HashMap params = new HashMap();
 		ArrayList<HashMap> list = new ArrayList<HashMap>();
 
@@ -814,7 +815,7 @@ public class goverController {
 		params.put("gover_no", idx);
 		params.put("GOVER_NO", idx);
 		params.put("index", index);
-		log.info("params:" + params);
+//		log.info("params:" + params);
 
 		ArrayList<HashMap> jisaList = mainService.selectQuery("commonSQL.selectAllJisaList", params);
 		ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData", params);
@@ -833,8 +834,30 @@ public class goverController {
 //			fileList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverRowDetail_Files", params); //첨부파일
 //			modifyList = (ArrayList) Database.getInstance().queryForList("Json.selectGoverModifyHistory", params); //첨부파일
 
+		//241009
+		List<String> coordinateVal = new ArrayList<>();
+		Integer coordinateSize = 0;
+		
 		// goverPnuList 크기 구하기
-		int goverPnuListSize = goverPnuList.size();
+		int goverPnuListSize = goverPnuList.size();	//PNU로 꺼내야
+		
+		for(int k = 0 ; k < goverPnuListSize ; k++) {
+			HashMap sosokTogiParam = new HashMap();
+			
+			sosokTogiParam.put("TARGET_PNU", goverPnuList.get(k).get("pnu"));
+			
+			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", sosokTogiParam);
+			coordinateSize += jijukList.size();
+			
+			if(jijukList.size() == 0) {
+				//
+			} else {
+				for(int z = 0 ; z < jijukList.size() ; z++) {
+					HashMap jijukInfo = jijukList.get(z);
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
+				}
+			}
+		}
 
 		log.info("data:" + data.get(0));
 		log.info("jisaList:" + jisaList);
@@ -857,6 +880,9 @@ public class goverController {
 		mav.addObject("pnuList", goverPnuList);
 		mav.addObject("pnuListSize", goverPnuListSize);
 		mav.addObject("usePurposlist", usePurposlist);
+		
+		mav.addObject("jijukCoordList", coordinateVal);
+		mav.addObject("jijukCoordSize", coordinateSize);
 
 		mav.setViewName("content/gover/masterEdit");
 		return mav;
@@ -2192,7 +2218,7 @@ public class goverController {
 					log.info("param:" + params);
 					
 					
-					if(!"LOCAL".equals(GC.getServerName())|| !"IDC".equals(GC.getServerName())) {
+					if(!"LOCAL".equals(GC.getServerName()) && !"IDC".equals(GC.getServerName())) {
 						// 기존 등록된 파일리스트 삭제
 						mainService.DeleteQuery("goverSQL.deleteBeforeGoverAtcFileList", params);
 					}
