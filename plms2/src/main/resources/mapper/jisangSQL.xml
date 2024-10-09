@@ -2471,12 +2471,12 @@ VALUES (
     #{CANCLE_REASON},
     #{CANCLE_COMMENT},
     #{CANCLE_BOSANG_YN},
-    #{CANCLE_BOSANG_MONEY}::numeric,
+    replace(#{CANCLE_BOSANG_MONEY}, ',', '') :: numeric,
     #{NAME},
     #{EMPCD},
     nullif(#{CHUIDEUKMONEY},'')::numeric,
     nullif(#{GAMMONEY},'')::numeric,
-    nullif(#{REMAINDERMONEY},'')::numeric,
+    replace(#{REMAINDERMONEY},',','')::numeric,
     #{CANCLE_STATUS},
     #{ACCOUNT_YN}
 )
@@ -2487,12 +2487,12 @@ SET
     cancle_reason = #{CANCLE_REASON},
     cancle_comment = #{CANCLE_COMMENT},
     cancle_bosang_yn = #{CANCLE_BOSANG_YN},
-    cancle_bosang_money = #{CANCLE_BOSANG_MONEY}::numeric,
+    cancle_bosang_money = replace(#{CANCLE_BOSANG_MONEY}, ',', '') :: numeric,
     cancle_name = #{NAME},
     cancle_empcd = #{EMPCD},
     chuideuk_money = nullif(#{CHUIDEUKMONEY},'')::numeric,
     gammoney = nullif(#{GAMMONEY},'')::numeric,
-    remainder_money = nullif(#{REMAINDERMONEY},'')::numeric,
+    remainder_money = replace(#{REMAINDERMONEY},',','')::numeric,
     cancle_status = #{CANCLE_STATUS},
     account_yn=#{ACCOUNT_YN}
 	</update>
@@ -4391,5 +4391,15 @@ SELECT count(*)
 		delete from permit_atcfile
 		where pmt_no = #{PMT_NO}
 	</delete>
+	<update id="updateJisangEchoNo" parameterType="HashMap">
+		UPDATE JISANG_MASTER SET
+		jm_DOCKEY = #{DOCKEY}
+		WHERE jm_JISANG_NO = #{JISANGNO}
+	</update>
 	
+	<update id="updateJisangTerminationDockey" parameterType="HashMap">
+		UPDATE JISANG_TERMINATION
+		SET jt_DOCKEY = #{DOCKEY}
+		WHERE jt_JISANG_NO = #{JISANGNO}
+	</update>
 </mapper>

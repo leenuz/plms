@@ -4012,26 +4012,46 @@ log.info("data:"+data.get(0));
 		public void insertJisangTerminationAdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		 String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		 log.info("requestParams:"+requestParams);
-		 JSONObject requestParamObj=new JSONObject(requestParams);
+		 JSONObject requestParamObj=new JSONObject(requestParams.toString());
 			ParameterParser parser = new ParameterParser(request);
-			String jisangNo = parser.getString("jisangNo", "");
-			String startDay = parser.getString("startDay", "").replace("-", "");
-			String cancle_yes = parser.getString("cancle_yes", "");
-			String cancle_bosang_money = parser.getString("cancle_bosang_money", "");
+//			String jisangNo = parser.getString("jisangNo", "");
+//			String startDay = parser.getString("startDay", "").replace("-", "");
+//			String cancle_yes = parser.getString("cancle_yes", "");
+//			String cancle_bosang_money = parser.getString("cancle_bosang_money", "");
+////			String empCd = String.valueOf(request.getSession().getAttribute("userId"));
+////			String empName = String.valueOf(request.getSession().getAttribute("userName"));
+//			String empCd=parser.getString("empCd","");
+//			String empName=parser.getString("empName","");
+//			String account_yn = parser.getString("account_yn"); // 회계처리 필요여부
+//			String cancle_chuideuk_money = parser.getString("cancle_chuideuk_money", "");
+//			String cancle_chuideuk_gammoney = parser.getString("cancle_chuideuk_gammoney", "");
+//			String cancle_chuideuk_remainder_money = parser.getString("cancle_chuideuk_remainder_money", "");
+//			String cancle_reason = parser.getString("cancle_reason", "");
+//			String cancle_status = parser.getString("cancle_status", "");
+//			String cancle_comment = parser.getString("cancle_comment", "");
+//			String filenumber = parser.getString("filenumber", "");
+//
+//			String fileseq = parser.getString("fileseq", ""); // 파일 seq
+			
+			String jisangNo = requestParamObj.getString("jisang_no");
+			String startDay = requestParamObj.getString("cancel_date").replace("-", "");
+			String cancle_yes = requestParamObj.getString("cancel_bosang_yn"); //보상유무
+			String cancle_bosang_money = requestParamObj.getString("cancel_bosang_money");
 //			String empCd = String.valueOf(request.getSession().getAttribute("userId"));
 //			String empName = String.valueOf(request.getSession().getAttribute("userName"));
-			String empCd=parser.getString("empCd","");
-			String empName=parser.getString("empName","");
-			String account_yn = parser.getString("account_yn"); // 회계처리 필요여부
-			String cancle_chuideuk_money = parser.getString("cancle_chuideuk_money", "");
-			String cancle_chuideuk_gammoney = parser.getString("cancle_chuideuk_gammoney", "");
-			String cancle_chuideuk_remainder_money = parser.getString("cancle_chuideuk_remainder_money", "");
-			String cancle_reason = parser.getString("cancle_reason", "");
-			String cancle_status = parser.getString("cancle_status", "");
-			String cancle_comment = parser.getString("cancle_comment", "");
-			String filenumber = parser.getString("filenumber", "");
+			String empCd=requestParamObj.has("empCd")?requestParamObj.getString("empCd"):"";
+			String empName=requestParamObj.has("empName")?requestParamObj.getString("empName"):"";
+			String account_yn = requestParamObj.getString("account_yn"); // 회계처리 필요여부
+			String cancle_chuideuk_money = requestParamObj.getString("chuideuk_money");
+			String cancle_chuideuk_gammoney = requestParamObj.getString("gammoney");
+			String cancle_chuideuk_remainder_money = requestParamObj.getString("remainder_money");
+			String cancle_reason = requestParamObj.getString("cancel_reason");
+			String cancle_status = requestParamObj.has("cancle_status")?requestParamObj.getString("cancle_status"):"";
+			String cancle_comment = requestParamObj.getString("cancel_comment");
+//			String filenumber = requestParamObj.getString("filenumber");
+//
+//			String fileseq = requestParamObj.getString("fileseq"); // 파일 seq
 
-			String fileseq = parser.getString("fileseq", ""); // 파일 seq
 
 			String str_result = "Y";
 			HashMap map = new HashMap();
@@ -4051,7 +4071,7 @@ log.info("data:"+data.get(0));
 				params.put("account_yn", account_yn);
 				params.put("CANCLE_REASON", cancle_reason);
 				params.put("CANCLE_COMMENT", cancle_comment);
-				params.put("FILESEQ", fileseq);
+			//	params.put("FILESEQ", fileseq);
 				params.put("CANCLE_STATUS", "상신");
 				
 				log.info("params:"+params);
@@ -4124,49 +4144,56 @@ log.info("data:"+data.get(0));
 					map.put("message", "N");
 				} else {
 
-//					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
-//					String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
-//					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
-//					String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
-//					String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
-					String str_UserId = "105681";
-					String str_userName = "박영환";
-					String str_userDeptcd = "D250500";
-					String str_userDeptnm = "IT전략.지원팀";
-					String str_userUPDeptcd = "S250100";
+					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
+					String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
+					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
+					String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
+					String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+//					String str_UserId = "105681";
+//					String str_userName = "박영환";
+//					String str_userDeptcd = "D250500";
+//					String str_userDeptnm = "IT전략.지원팀";
+//					String str_userUPDeptcd = "S250100";
 					res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getJisang_termination_HTML("", jisangNo, "", "", "", request, response), str_UserId, "", "", "GetSurfaceRightsCancelDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
 				}
 //
-//				if (res_Echo) {
-//					// 문서번호 업데이트
-//					map.put("DOCKEY", str_appNo);
-//					map.put("JISANGNO", jisangNo);
-//					map.put("message", "Y");
-//					// System.out.println("updateJisangEchoNo=" + map);
-//					Database.getInstance().update("Json.updateJisangEchoNo", map);
-//					Database.getInstance().update("Json.updateJisangTerminationDockey", map); // 해지정보 결재연계정보 저장
-//
-//					// 문서 URL조회
-//					ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectJisangDocInfo", map);
-//					// System.out.println("echolist=" + map);
-//					if (null != echolist && echolist.size() > 0) {
-//						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
-//						// System.out.println("str_EchoNo=====" + str_EchoNo);
-//						map.put("OUT_URL", str_EchoNo);
-//					}
-//
-//				} else {
-//					map.put("message", "N");
-//				}
+				if (res_Echo) {
+					// 문서번호 업데이트
+					map.put("DOCKEY", str_appNo);
+					map.put("JISANGNO", jisangNo);
+					map.put("message", "Y");
+					// System.out.println("updateJisangEchoNo=" + map);
+					mainService.UpdateQuery("jisangSQL.updateJisangEchoNo", map);
+					mainService.UpdateQuery("jisangSQL.updateJisangTerminationDockey", map); // 해지정보 결재연계정보 저장
+
+					// 문서 URL조회
+					ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangDocInfo", map);
+					// System.out.println("echolist=" + map);
+					if (null != echolist && echolist.size() > 0) {
+						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("pa_out_url"));
+						// System.out.println("str_EchoNo=====" + str_EchoNo);
+						map.put("OUT_URL", str_EchoNo);
+					}
+
+				} else {
+					map.put("message", "N");
+				}
 //
 			} catch (Exception e) {
 				str_result = "N";
 				e.printStackTrace();
 			}
 //
-//			map.put("message", str_result);
+			map.put("message", str_result);
 //
-//			this.mapToJsonResponse(response, map);
+			JSONObject jo = new JSONObject(map);
+			
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
 		}
 	
 	//지상합필저장(임시저장,상신)

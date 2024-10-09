@@ -617,14 +617,14 @@ $(document).on("click","#submit_btn",function(){
         dosiplan: $('#dosiplan').attr('placeholder') || '',  // 도시계획 결정여부
 
         account_yn: $('.customSelectView').text() || '',  // 회계처리 필요여부
-        cancel_date: $('#cancel_date').val() || '',  // 해지일자
+        cancel_date: $('#cancle_date').val() || '',  // 해지일자
         chuideuk_money: $('#chuideuk_money').val() || '',  // 취득금액
         gammoney: $('#gammoney').val() || '',  // 감가삼각충당금
         remainder_money: $('#remainder_money').val() || '',  // 잔존가액
-        cancel_bosang_yn: selectedRadio ? selectedRadio.value : '',  // 해지보상유무
-        cancel_bosang_money: $('#cancel_bosang_money').val() || '',  // 보상금액
-        cancel_reason: $('#cancel_reason').val() || '',  // 해지사유
-        cancel_comment: $('#cancel_comment').val() || '',  // 검토의견
+        cancel_bosang_yn: $("input[name='landTerminationRegistrationCompensation']").val()||'',  // 해지보상유무
+        cancel_bosang_money: $('#cancle_bosang_money').val() || '',  // 보상금액
+        cancel_reason: $('#cancle_reason').val() || '',  // 해지사유
+        cancel_comment: $('#cancle_comment').val() || '',  // 검토의견
         jisang_no: jmJisangNo || '',  // 지상번호
         jIdx: jmIdx || '',  // 지상 인덱스
 		req_doc_file01:$("#req_doc_file01").val() || '',
@@ -691,7 +691,7 @@ $(document).on("click","#commit",function(){
     $.ajax({
           url: "/land/jisang/commitJisangTmp",
           type: "POST",
-          data: formData,
+          data: JSON.stringify(formData),
      })
      .done(function (fragment) {
         loadingHide();
@@ -731,7 +731,7 @@ function landTerminationSangsinSave(params){
     $.ajax({
           url: "/land/jisang/insertJisangTerminationAdd",
           type: "POST",
-          data: params,
+          data: JSON.stringify(params),
      })
      .done(function (fragment) {
         loadingHide();
