@@ -4171,12 +4171,12 @@ log.info("data:"+data.get(0));
 //			this.mapToJsonResponse(response, map);
 		}
 	
-	//지상합필저장
+	//지상합필저장(임시저장,상신)
 	@Transactional
 	@PostMapping(path="/saveJisangMerge")
 	public void saveJisangMerge(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		
+		log.info("--------------------saveJisangMerge start------------------------------");
 		 String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		 log.info("requestParams:"+requestParams);
 		 JSONObject requestParamObj=new JSONObject(requestParams);
@@ -4237,7 +4237,7 @@ log.info("data:"+data.get(0));
 				String set_money = obj.getString("jm_set_money");
 				String jasan_no = obj.getString("jm_jasan_no");
 			//	String mainjisang = parser.getString("merge_insert_main_jisang" + i, "0");
-				String dockey = obj.getString("jm_dockey");
+				String dockey = obj.has("jm_dockey")?obj.getString("jm_dockey"):"";
 				dataMap.put("JISANG_NO", JISANG_NO);
 				dataMap.put("JIMOK_TEXT", jimok_text);
 				dataMap.put("JIJUK_AREA", jijuk_area);
@@ -4343,7 +4343,7 @@ log.info("gubun:"+gubun);
 //					ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectJisangMergeInfo", map);
 					ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangMergeInfo", map);
 					if (null != echolist && echolist.size() > 0) {
-						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("pa_out_url"));
 						System.out.println("str_EchoNo=====" + str_EchoNo);
 						map.put("OUT_URL", str_EchoNo);
 					}

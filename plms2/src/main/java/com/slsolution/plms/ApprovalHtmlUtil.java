@@ -172,7 +172,8 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 						str_PMT_NO = "";
 					}
 
-				} else {
+				} 
+				else {
 					hm = (HashMap) list.get(i);
 					str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("FILE_PATH")), "");
 					str_FILE_NM = cu.evl(String.valueOf(hm.get("FILE_NM")), "");
@@ -2012,16 +2013,18 @@ log.info("soyuMap:"+soyuMap);
 		ArrayList<HashMap> jisangMergeList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectJisangMergeSaveList", param);
 
 		for (int i = 0; i < jisangMergeList.size(); i++) {
+			log.info("jisangMergeList:"+jisangMergeList.get(i));
 			param.put("JISANGNO", jisangMergeList.get(i).get("jisang_no"));
 //			List<HashMap<String, String>> soyuList = Database.getInstance().queryForList("Json.selectJisangDetailSoyu", param);
 			ArrayList<HashMap> soyuList = mainService.selectQuery("jisangSQL.selectJisangDetailSoyu", param);
-			jisangMergeList.get(i).put("SOUJA_NAME", (soyuList.size() > 0 ? soyuList.get(0).get("souja_name") : ""));
+			log.info("soyuList:"+soyuList);
+			jisangMergeList.get(i).put("SOUJA_NAME", (soyuList.size() > 0 ? soyuList.get(0).get("js_souja_name") : ""));
 			if ("Y".equals(jisangMergeList.get(i).get("main_flag"))) {
 				mainData = jisangMergeList.get(i);
 			}
 
 		}
-
+		log.info("mainData:"+mainData);
 		// 합계정보 처리
 		double sumJijuk = 0.0;
 		double sumPyeonib = 0.0;
@@ -2096,7 +2099,9 @@ log.info("soyuMap:"+soyuMap);
 //		sbHtml.append("								<td>"+CommonUtil.nvl((String)mainData.get("JASAN_NO"))+"</td>\n");
 //		sbHtml.append("								<td></td>\n");
 //		sbHtml.append("							</tr>\n");
+log.info("jisangMergeList:"+jisangMergeList);
 		for (HashMap<String, String> datas : jisangMergeList) {
+			log.info("datas:"+datas);
 			sbHtml.append("						<tr>\n");
 			sbHtml.append("							<td>" + CommonUtil.nvl((String) datas.get("jisang_no")) + "</td>\n");
 			sbHtml.append("							<td class=\"inner_tag\">\n");
@@ -2153,7 +2158,7 @@ log.info("soyuMap:"+soyuMap);
 		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) String.valueOf(sumPyeonib)) + "</td>\n");
 		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) String.valueOf(sumSetMoney)) + "</td>\n");
 		sbHtml.append("						<td style=\"text-align:center;\">" + mainData.get("jasan_no") + "</td>\n");
-		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) mainData.get("souja_name")) + "</td>\n");
+		sbHtml.append("						<td style=\"text-align:center;\">" + CommonUtil.nvl((String) mainData.get("SOUJA_NAME")) + "</td>\n");
 		sbHtml.append("					</tr>\n");
 		sbHtml.append("				</tbody>\n");
 		sbHtml.append("			</table>\n");
@@ -2166,7 +2171,7 @@ log.info("soyuMap:"+soyuMap);
 		sbHtml.append("				</colgroup>\n");
 		sbHtml.append("				<tr>\n");
 		sbHtml.append("					<th>합병사유</th>\n");
-		sbHtml.append("					<td class=\"inner_tag\">" + CommonUtil.nvl((String) mainData.get("merge_reason")) + "</td>\n");
+		sbHtml.append("					<td class=\"inner_tag\">" + CommonUtil.nvl((String) mainData.get("jmt_merge_reason")) + "</td>\n");
 		sbHtml.append("				</tr>\n");
 		sbHtml.append("				<tr>\n");
 		sbHtml.append("					<th>검토의견</th>\n");

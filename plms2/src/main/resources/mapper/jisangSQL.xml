@@ -2560,7 +2560,14 @@ WHERE
 	<!--  지상정보 조회  -->
 	<select id="getSaveJisangMergeData"  parameterType="HashMap" resultType="java.util.HashMap">
 		SELECT *
-		FROM jisang_master
+		FROM jisang_master 
+		WHERE jm_jisang_no =#{jisangNo}
+		
+	</select>
+	<!--  합필  조회  -->
+	<select id="getSaveJisangMergeData1"  parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM jisang_merge  jm 
 		WHERE jm_jisang_no =#{jisangNo}
 		
 	</select>
@@ -2620,25 +2627,29 @@ WHERE
 	
 	<insert id="insertJisangMergeTmp" parameterType="HashMap">
 		INSERT INTO jisang_merge_tmp (
-		jmt_jisang_no,
-		jmt_pyeonib_area,
-		jmt_set_money,
-		jmt_jasan_no,
-		jmt_rep_jisang_no,
-		jmt_merge_reason,
-		jmt_merge_comment,
-		jmt_merge_status,
-		jmt_dockey
+		jmt_jisang_no
+		,jmt_pyeonib_area
+		,jmt_set_money
+		,jmt_jasan_no
+		,jmt_rep_jisang_no
+		,jmt_merge_reason
+		,jmt_merge_comment
+		,jmt_merge_status
+		<if test="DOCKEY != null and DOCKEY != 'null'">
+		,jmt_dockey
+		</if>
 		) VALUES (
-		#{JISANG_NO},
-		#{PYEONIB_AREA}::numeric,
-		#{SET_MONEY}::numeric,
-		#{JASAN_NO},
-		#{REP_JISANG_NO},
-		#{MERGE_REASON},
-		#{MERGE_COMMENT},
-		#{MERGE_STATUS},
-		#{DOCKEY}
+		#{JISANG_NO}
+		,#{PYEONIB_AREA}::numeric
+		,#{SET_MONEY}::numeric
+		,#{JASAN_NO}
+		,#{REP_JISANG_NO}
+		,#{MERGE_REASON}
+		,#{MERGE_COMMENT}
+		,#{MERGE_STATUS}
+		 <if test="DOCKEY != null and DOCKEY != 'null'">
+		,#{DOCKEY}
+		</if>
 		)
 	</insert>
 	<insert id="insertJisangMerge" parameterType="HashMap">

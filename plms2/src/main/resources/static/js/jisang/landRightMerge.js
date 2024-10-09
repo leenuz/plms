@@ -1074,9 +1074,8 @@ $(document).ready(function(){
 $(document).on("click","#sangsinBtn",function(){
 	
 	
-	 var object=[];
-	
-	var togiDatas=[];
+	 var object = {};
+	    var togiDatas=[];
 	    var togiUls=$("#tojiDiv #tojiUl");
 
 	    //합필 토지 정보
@@ -1133,13 +1132,13 @@ $(document).on("click","#sangsinBtn",function(){
 	    object.MAIN_JISANG_NO = mergeToji_no;
 	    object.MAIN_TMP_JISANG_NO = "";
 	    object.MERGE_INSERT_CNT = togiUls.length;
-	    object.MERGE_STATUS = "임시저장";
-	    object.GUBUN = "save";
+	    object.MERGE_STATUS = "상신";
+	    object.GUBUN = "insert";
 
 	    for(var i=0;i<togiUls.length;i++){
-	        
+	        var togiJisa=$("#jisa").val();
 	        var togiManageNo=$(togiUls[i]).find("input#jisang_no").val();
-/*	        var togiaddress=$(togiUls[i]).find("input#merge_address").val();
+	        var togiaddress=$(togiUls[i]).find("input#merge_address").val();
 	        var togiTogiType=$(togiUls[i]).find("button#toji_type").text().trim();
 	        var togiJimokText=$(togiUls[i]).find("input#jimok_text").val();
 	        var togiJijukArea=$(togiUls[i]).find("input#jijuk_area").val();
@@ -1148,7 +1147,19 @@ $(document).on("click","#sangsinBtn",function(){
 	        var togiJasanNo=$(togiUls[i]).find("input#jasan_no").val();
 	        var togiSouja=$(togiUls[i]).find("input#souja").val();
 	        var togiAccountYn=$(togiUls[i]).find("button#account_yn").text().trim();
-*/
+
+	        if(togiTogiType == "선택"){
+	            alert("토지 유형은 필수 입니다.");
+	            return null;
+	        }
+	        if(togiAccountYn == "선택"){
+	            alert("회계처리필요여부는 필수 입니다.");
+	            return null;
+	        }
+
+	        var gover_own_yn="";
+	        if (togiTogiType=="국유지") gover_own_yn='Y';
+	        else gover_own_yn='N';
 	        var togiBunhalStatus="임시저장";
 	        var togiSidoNm=$(togiUls[i]).find("#togisido_nm").val();
 	        var togiSggNm=$(togiUls[i]).find("#togisgg_nm").val();
@@ -1156,134 +1167,77 @@ $(document).on("click","#sangsinBtn",function(){
 	        var togiRiNm=$(togiUls[i]).find("#togiri_nm").val();
 	        var togiJibun=$(togiUls[i]).find("#togijibun").val();
 	        var togiPnu=$(togiUls[i]).find("#togipnu").val();
-			var togiSouja=$(togiUls[i]).find("#souja").val();
-			var togiAccountYn=$(togiUls[i]).find("#account_yn").text().trim();
-			
-			//주석이 되있지? 
-			var togiSetMoney=$(togiUls[i]).find("input#set_money").val();
-			var togiJasanNo=$(togiUls[i]).find("input#jasan_no").val();
 
 	        //console.log("togiManageNo:"+togiManageNo);
 	        var togiObj={
-	          
-	            "jisang_no":togiManageNo
-	          
+	            "togiSidoNm":ljsIsNull(togiSidoNm)?'':togiSidoNm
+	            ,"togiSggNm":togiSggNm
+	            ,"togiEmdNm":togiEmdNm
+	            ,"togiRiNm":togiRiNm
+	            ,"togiJibun":togiJibun
+	            ,"togiPnu":togiPnu
+	            ,"jm_jisang_no":togiManageNo
+	            ,"togiaddress":togiaddress.trim()
+	            ,"togiTogiType":togiTogiType
+	            ,"jm_jimok_text":togiJimokText
+	            ,"jm_jijuk_area":ljsIsNull(togiJijukArea)?'':togiJijukArea
+	            ,"jm_pyeonib_area":togiPyeonibArea
+	            ,"jm_set_money":togiSetMoney
+	            ,"jm_jasan_no":togiJasanNo
+	            ,"togiAccountYn":togiAccountYn
+	            ,"togiBunhalStatus":togiBunhalStatus
+	            ,"togiGoverOwnYn":gover_own_yn
+	            ,"togiJisa":togiJisa
+				,"togiSouja":togiSouja
+				,"togiAccountYn":togiAccountYn
 	        }
 	        console.log(togiObj);
 	        togiDatas.push(togiObj);
 	    }
-	
-	
-		
-		//"P_000507"
-	/* 	String str_UserId = "105681";
-		String str_userName = "박영환";
-		String str_userDeptcd = "D250500";
-		String str_userDeptnm = "IT전략.지원팀";
-		String str_userUPDeptcd = "S250100"; */
-		var login_key="105681";
-		
-		/* var jisangNo="J_010246";
-		var startDay="2024-09-19";
-		var cancle_yes="Y";
-		var cancle_bosang_money="10000";
-		var empCd=login_key;
-		var empName="박영환";
-		
-		var cancle_chuideuk_money="1000";
-		var cancle_chuideuk_gammoney="1000";
-		var cancle_chuideuk_remainder_money="1000";
-		 
-		var cancle_reason="테스트";
-		var cancle_status="임시저장";
-		var cancle_comment="테스트";
-		var filenumber="";
-		var fileseq=""; */
-		
-		//var mergeDatas=new array();
-		//var mergeJisangs=new array();	
-		var mergeList;
-		//두개의 지상권 정보를 가져와
-		  // var data=[{"jisang_no":"J_010246"},{"jisang_no":"J_010247"}];
-		  var data=togiDatas;
-		console.log(data);
-		    var turl="/land/jisang/getSaveJisangMergeData";
-		   $.ajax({
-				
-				url:turl,
-				type:'POST',
-				contentType:"application/json",
-				data:JSON.stringify(data),
-				async:false,
-				dataType:"json",
-				
-				
-				success:function(response){
-					console.log(response);
-					mergeList=response.data;
-					
-					if (response.success="Y"){
-						console.log("response.success Y");
-					}
-					else {
-						console.log("response.success N");
-					}
-				},
-				error:function(jqXHR,textStatus,errorThrown){
-					alert("ajax error\n"+textStatus+":"+errorThrown);
-				}
-				
-			});
-		   
-		   
-		   console.log("---------------mergeList----------------");
-		   console.log(mergeList);
-		   
-		   // mergeDatas.push()
-		var mergereason=merge_reason;
-		var mergecomment=merge_comment;
-		var mainJisangNo=$("#mergeToji_no").val();
-		var mainTmpJisangNo="";
-		var mergeInsertCnt=mergeList.length;
-		var merge_status=0;
-		var gubun="insert"; //save, insert 임시저장,상신
-		var MERGE_STATUS="상신";
-		
-		var jsonData={"MERGE_INSERT_REASON":mergereason,"loginKey":login_key,"MERGE_INSERT_COMMENT":mergecomment
-				,"MAIN_JISANG_NO":mainJisangNo,"MAIN_TMP_JISANG_NO":""
-				,"MERGE_INSERT_CNT":2,"MERGE_STATUS":merge_status
-				,"GUBUN":gubun
-				,"MERGE_STATUS":MERGE_STATUS
-				,"mergeList":mergeList
-				};
-		console.log(jsonData);
-		
-		var url="/land/jisang/saveJisangMerge";
-	//	var jsonDatas=encodeURIComponent(JSON.stringify(data));
-		console.log(jsonData);
-			$.ajax({
-				
-				url:url,
-				type:'POST',
-				contentType:"application/json",
-				data:JSON.stringify(jsonData),
-				async:false,
-				dataType:"json",
-				
-				success:function(response){
-					console.log(response);
-					
-					if (response.success="Y"){
-						console.log("response.success Y");
-					}
-					else {
-						console.log("response.success N");
-					}
-				},
-				error:function(jqXHR,textStatus,errorThrown){
-					alert("ajax error\n"+textStatus+":"+errorThrown);
-				}
-				
-			});
+	     console.log("----------togiDatas-------------");
+	     console.log(togiDatas);
+
+	     object.mergeList=togiDatas;
+	console.log(object);
+	     url="/land/jisang/saveJisangMerge";
+	     $.ajax({
+	        url:url,
+	        type:'POST',
+	        contentType:"application/json",
+	        data:JSON.stringify(object),
+
+	        dataType:"json",
+	        beforeSend:function(request){
+	            console.log("beforesend ........................");
+	            loadingShow();
+	        },
+	        success:function(response){
+	            loadingHide();
+	            console.log(response);
+	            if (response.success="Y"){
+	                console.log("response.success Y");
+					alert("정상적으로 상신 되었습니다.");
+												
+																			
+												//var url=response.OUT_URL;
+					var urls = response.OUT_URL;
+					window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes"););
+	                /*$("#popup_bg").show();
+	                $("#popup").show(500);
+	                //$("#addrPopupLayer tbody td").remove();
+	                for(var i=0;i<response.resultData.length;i++){
+	                    $("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+	                }*/
+	            }
+	            else {
+	                console.log("response.success N");
+	            }
+	        },
+	        error:function(jqXHR,textStatus,errorThrown){
+	            alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+	            return false;
+	        }
+
+	     });
 	
 })

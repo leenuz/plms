@@ -1084,7 +1084,7 @@ $(document).on("click","#sangsinBtn",function(){
 		
 		dataObj.desangTogis=togiDatas;
 		dataObj.gubun="insert";
-		dataObj.pmt_status="임시저장";
+		dataObj.pmt_status="";
 		console.log(dataObj);
 		
 		
@@ -1141,6 +1141,11 @@ $(document).on("click","#sangsinBtn",function(){
 										console.log("response.success Y");
 										//console.log("response.resultData length:"+response.resultData.length);
 										alert("정상적으로 상신 되었습니다.");
+										
+																	
+																	//var url=response.OUT_URL;
+										var urls = response.OUT_URL;
+										window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
 										/*$("#popup_bg").show();
 										$("#popup").show(500);
 										//$("#addrPopupLayer tbody td").remove();
