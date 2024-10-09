@@ -642,7 +642,7 @@ public class jisangController {
 				}
 
 				// 해당 p_no에 대한것 삭제
-//				mainService.DeleteQuery("jisangSQL.jisangReqDoc2FileDelete", params);
+				mainService.DeleteQuery("jisangSQL.jisangReqDoc2FileDelete", params);
 				//사용승락 첨부서류 등록
 		        for(int i=1;i<11;i++) {
 		        	String key=String.format("%02d",i);
