@@ -868,7 +868,8 @@ $(document).on("click","#sangsinBtn",function(){
 	
 	
 	
-	var url="/land/jisang/divisionRegisterSangsin";
+	//var url="/land/jisang/divisionRegisterSangsin";
+	var url="/land/jisang/insertJisangBunhalNew";
 		var jsonData={"idx":$("input[name='bunhal_org_no']").val()};
 		console.log("url:"+url);
 		console.log("data:"+jsonData);

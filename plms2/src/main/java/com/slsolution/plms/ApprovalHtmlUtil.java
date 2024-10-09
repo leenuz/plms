@@ -32,6 +32,8 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
 import com.slsolution.plms.jisang.jisangController;
+import com.slsolution.plms.json.JSONException;
+import com.slsolution.plms.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -878,7 +880,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 	}
 
 	//점용료 납부/전자결재 
-	public String getGover_pay_HTML(String TYPE, String GOVER_NO, String NextSeq, String FileSeq, String PmtNo, HttpServletRequest request, HttpServletResponse response) {
+	public String getGover_pay_HTML(String TYPE, String GOVER_NO, String NextSeq, String FileSeq, String PmtNo, HttpServletRequest request, HttpServletResponse response) throws JSONException {
 
 		MainService mainService = context.getBean(MainService.class);
 		/** 조회 시작 **/
@@ -973,6 +975,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 			}
 			System.out.println("kibon_map=" + kibon_map);
 			// 점용허가정보
+			log.info("pmt_list:"+pmt_list.get(0));
 			if (pmt_list.size() > 0) {
 				pmt_map.put("PMT_NO", cu.evl((String) ((HashMap) pmt_list.get(0)).get("pmt_no"), ""));
 				pmt_map.put("PAY_DATE", cu.evl((String) ((HashMap) pmt_list.get(0)).get("pay_date"), ""));
@@ -980,7 +983,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				pmt_map.put("PMT_ED_DATE", cu.evl((String) ((HashMap) pmt_list.get(0)).get("pmt_ed_date"), ""));
 
 				pmt_map.put("PAY_MONEY", cu.evl((String) ((HashMap) pmt_list.get(0)).get("pay_money"), ""));
-				pmt_map.put("PAY_VAT", cu.evl((String) (((HashMap) pmt_list.get(0)).get("pay_vat")), ""));
+				pmt_map.put("PAY_VAT", cu.evl((String) (((HashMap) pmt_list.get(0)).get("gp_pay_vat")), ""));
 				pmt_map.put("PAY_WAY", cu.evl((String) ((HashMap) pmt_list.get(0)).get("pay_way"), ""));
 			}
 //			System.out.println("pmt_map=" + pmt_map);
@@ -1082,8 +1085,8 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 
 		if (file_list.size() > 0) {
 			for (int i = 0; i < file_list.size(); i++) {
-				String str_GOVER_NO = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("GOVER_NO")), "");
-				String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("FILE_SEQ")), "");
+				String str_GOVER_NO = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("ga_gover_no")), "");
+				String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("ga_file_seq")), "");
 //				System.out.println("str_GOVER_NO=" + str_GOVER_NO + " , str_FILE_SEQ=" + str_FILE_SEQ);
 				sbHtml.append("           <form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >                   \n");
 				sbHtml.append("            <input type='hidden' name='file_no' value='" + str_GOVER_NO + "'/>                  \n");
@@ -1210,6 +1213,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append("			 </table>");
 		sbHtml.append("			 <br>		");
 		sbHtml.append("			 <!-- *납부 정보 -->");
+		log.info("pmt_map:"+pmt_map);
 		sbHtml.append("			 <h4>납부 정보</h4>");
 		sbHtml.append("			 <table class=\"base4\">");
 		sbHtml.append("			 	<colgroup>");
@@ -1220,44 +1224,44 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append("			 		<col style=\"width: 10%\" />	");
 		sbHtml.append("			 		<col style=\"width: 24%\" />	");
 		sbHtml.append("			 	</colgroup>");
-		sbHtml.append("			 	<tbody>");
+		sbHtml.append("			 	<tbody>\n");
 		sbHtml.append("			 	<tr>");
 		sbHtml.append("			 		<th scope=\"row\">허가번호</th>	");
 		sbHtml.append("			 		<td>");
 		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PMT_NO") + "</span>	");
-		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		</td>\n");
 		sbHtml.append("			 		<th scope=\"row\">납부일</th>	");
 		sbHtml.append("			 		<td>");
 		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PAY_DATE") + "</span>	");
-		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		</td>\n");
 		sbHtml.append("			 		<th scope=\"row\">유효기간</th>	");
 		sbHtml.append("			 		<td>");
 		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PMT_ST_DATE") + " ~ " + pmt_map.get("PMT_ED_DATE") + "</span>	");
-		sbHtml.append("			 		</td>	");
-		sbHtml.append("			 	</tr>");
+		sbHtml.append("			 		</td>\n");
+		sbHtml.append("			 	</tr>\n");
 		sbHtml.append("			 	<tr>");
 		sbHtml.append("			 		<th scope=\"row\">금액</th>	");
 		sbHtml.append("			 		<td>");
 		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PAY_MONEY") + "</span>	");
-		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		</td>\n");
 		sbHtml.append("			 		<th scope=\"row\">VAT.</th>	");
 		sbHtml.append("			 		<td>");
 		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PAY_VAT") + "</span>	");
-		sbHtml.append("			 		</td>");
+		sbHtml.append("			 		</td>\n");
 		sbHtml.append("			 		<th scope=\"row\">합계</th>	");
-		sbHtml.append("			 		<td>");
+		sbHtml.append("			 		<td>\n");
 		Long sumValue = Long.parseLong((cu.evl((String) pmt_map.get("PAY_MONEY"), "0")).replaceAll(",", ""));
 		sumValue += Long.parseLong((cu.evl((String) pmt_map.get("PAY_VAT"), "0")).replaceAll(",", ""));
 		DecimalFormat df = new DecimalFormat("###,###.##");
 		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + df.format(sumValue) + "</span>	");
 		sbHtml.append("			 		</td>	");
-		sbHtml.append("			 	</tr>");
+		sbHtml.append("			 	</tr>\n");
 		sbHtml.append("			 	<tr>");
 		sbHtml.append("			 		<th scope=\"row\">납부방법</th>	");
 		sbHtml.append("			 		<td colspan=\"5\">");
 		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + pmt_map.get("PAY_WAY") + "</span>	");
 		sbHtml.append("			 		</td>	");
-		sbHtml.append("			 	</tr>");
+		sbHtml.append("			 	</tr>\n");
 		sbHtml.append("			 	</tbody>");
 		sbHtml.append("			 </table>");
 		sbHtml.append("			 <br>		");
@@ -1325,8 +1329,10 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append("				</thead>");
 		sbHtml.append("			 	<tbody>");
 		if (file_list.size() > 0) {
+			
 			for (int i = 0; i < file_list.size(); i++) {
-				
+				log.info("fileList"+i+":"+file_list.get(i));
+				JSONObject fobj=new JSONObject(file_list.get(i));
 				sbHtml.append("			 		<tr>");
 				sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>");
 				String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
@@ -1348,12 +1354,12 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 					sbHtml.append("            </script>               \n");
 				} else {
 					sbHtml.append("            <script>               \n");
-					sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile("+file_map.get("FILE_PATH" + i)+", "+file_map.get("FILE_NM" + i)+", "+kibon_map.get("GOVER_NO")+", "+file_map.get("FILE_SEQ"+i)+", 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+					
 					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
 					sbHtml.append("            </script>               \n");
 				}
 				////
-
+				//sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile('"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "")+"','"+kibon_map.get("GOVER_NO")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), "")+"', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 				sbHtml.append("            </td>               \n");
 				sbHtml.append("				 	</tr>");
 			}
@@ -1364,6 +1370,11 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append("			 </table>																			");
 		sbHtml.append("         </div>  \n");
 		sbHtml.append("     </div>      \n");
+		
+		
+		
+		
+		
 		sbHtml.append(" </body>         \n");
 		sbHtml.append("                 \n");
 		sbHtml.append(" </html>         \n");
@@ -1714,7 +1725,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		HashMap params = new HashMap();
 		// 기존데이터 조회
 		params.put("JISANGNO", JISANG_NO);
-		ArrayList<HashMap> ori_list=mainService.selectQuery("jisangSQL.selectJisangDetailList", params);
+		ArrayList<HashMap> ori_list=mainService.selectQuery("jisangSQL.selectJisangDetailListNew", params);
 //		ArrayList<HashMap> ori_list = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectJisangDetailList", params);
 
 		// 분할지번 지상권 조회
@@ -1751,13 +1762,15 @@ log.info("ori_list:"+ori_list);
 		String address = null;
 
 		if (ori_list != null && !ori_list.isEmpty() && ori_list.size() > 0) {
+			log.info("ori_list:"+ori_list.get(0));
 			dataMap = ori_list.get(0);
-			address = CommonUtil.nvl(dataMap.get("jm_SIDO_NM")) + " " + CommonUtil.nvl(dataMap.get("SGG_NM")) + " " + CommonUtil.nvl(dataMap.get("EMD_NM")) + " " + CommonUtil.nvl(dataMap.get("RI_NM")) + " " + CommonUtil.nvl(dataMap.get("JIBUN"));
+			
+			address = CommonUtil.nvl(dataMap.get("sido_nm")) + " " + CommonUtil.nvl(dataMap.get("sgg_nm")) + " " + CommonUtil.nvl(dataMap.get("emd_nm")) + " " + CommonUtil.nvl(dataMap.get("ri_nm")) + " " + CommonUtil.nvl(dataMap.get("jibun"));
 			dataMap.put("BUNHAL_DATE", (bunhal_list.get(0).get("jb_bunhal_date")==null)?"":bunhal_list.get(0).get("jb_bunhal_date").toString());
 			dataMap.put("BUNHAL_REASON", bunhal_list.get(0).get("jb_bunhal_reason").toString());
 			dataMap.put("BUNHAL_COMMENT", bunhal_list.get(0).get("jb_bunhal_comment").toString());
 		}
-
+		
 		// 소유자정보 조회
 		Map<String, String> soyuMap = new HashMap<String, String>();
 		ArrayList<HashMap> soyu_list=mainService.selectQuery("jisangSQL.selectJisangDetailSoyu", params);
@@ -1810,11 +1823,11 @@ log.info("ori_list:"+ori_list);
 		sbHtml.append("				<tr>\n");
 		sbHtml.append("					<td>" + JISANG_NO + "</td>\n");
 		sbHtml.append("					<td>" + address + "</td>\n");
-		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("JIMOK_TEXT")) + "</td>\n");
-		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("JIJUK_AREA")) + "</td>\n");
-		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("PYEONIB_AREA")) + "</td>\n");
+		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("jimok_text")) + "</td>\n");
+		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("jijuk_area")) + "</td>\n");
+		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("pyeonib_area")) + "</td>\n");
 //		sbHtml.append("					<!-- <td>???설정금액???</td> -->\n");
-		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("JASAN_NO")) + "</td>\n");
+		sbHtml.append("					<td>" + CommonUtil.nvl(dataMap.get("jasan_no")) + "</td>\n");
 		sbHtml.append("					<td>" + CommonUtil.nvl(soyuMap.get("SOUJA_NAME")) + "</td>\n");
 		sbHtml.append("				</tr>\n");
 		sbHtml.append("			</tbody>\n");
@@ -1865,7 +1878,7 @@ log.info("ori_list:"+ori_list);
 			sbHtml.append("					<td>" + jusoText + "</td>\n");
 			sbHtml.append("					<td>" + ("Y".equals(CommonUtil.nvl((String) bunhalMap.get("jb_gover_own_yn"))) ? "국유지" : "사유지") + "</td>\n");
 			sbHtml.append("					<td>" + CommonUtil.nvl((String) bunhalMap.get("jb_jimok_text")) + "</td>\n");
-			sbHtml.append("					<td>" + CommonUtil.nvl(bunhalMap.get("jb_jijuk_area").toString()) + "</td>\n");
+			sbHtml.append("					<td>" + CommonUtil.nvl(bunhalMap.get("jb_jijuk_area") != null ? bunhalMap.get("jb_jijuk_area").toString() : "") + "</td>\n");
 			sbHtml.append("					<td>" + CommonUtil.nvl(bunhalMap.get("jb_pyeonib_area").toString()) + "</td>\n");
 //				sbHtml.append("					<td>"+CommonUtil.nvl(bunhalMap.get("SET_MONEY").toString())+"</td>\n");
 			sbHtml.append("					<td>" + CommonUtil.nvl((String) bunhalMap.get("jb_jasan_no")) + "</td>\n");

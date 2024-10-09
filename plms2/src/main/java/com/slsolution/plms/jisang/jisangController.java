@@ -1589,7 +1589,6 @@ log.info("PMT_NO:"+PMT_NO);
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
 			coordinateSize = jijukList.size();
 			
-			
 			if(jijukList.size() == 0) {
 				coordinateSize = 0;
 			} else {
@@ -3126,97 +3125,102 @@ log.info("data:"+data.get(0));
 	}
 	
 	// 지상권 분할등록 신규 :: 분할상신
-//		public void insertJisangBunhalNew(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//			ParameterParser parser = new ParameterParser(request);
-//			String jisangno = parser.getString("jisangno", "");
-//			String bunhal_status = parser.getString("bunhal_status", "");
-//			String modifyReason = "";
-//			String modifyReason2 = "";
-//			String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
-//			String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
-//
-//			CommonUtil comm = new CommonUtil();
-//			String str_result = "Y";
-//
-//			HashMap map = new HashMap(); // 응답용 맵
-//
-//			try {
-//				Database.getInstance().startTransaction();
-//
-//				// 1. 기존 지상권 정보 분할여부, 분할사유, 검토의견 등록
-//				Map params = new HashMap();
-//				params.put("JISANGNO", jisangno);
-//
-//				// 5.전자결재 상신처리.
-//				// 전자결재 반려시에 대한 프로세스가 없음. 따라서 원상복구 가능하도록 모지번을 제외한 하위 지상권 정보 별도처리 계획
+	@Transactional
+	@GetMapping(path="/insertJisangBunhalNew") 
+		public void insertJisangBunhalNew(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			ParameterParser parser = new ParameterParser(request);
+			//String idx = httpRequest.getParameter("idx");
+			String jisangno = parser.getString("idx", "");
+			String bunhal_status = parser.getString("bunhal_status", "");
+			String modifyReason = "";
+			String modifyReason2 = "";
+			String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
+			String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
+
+			CommonUtil comm = new CommonUtil();
+			String str_result = "Y";
+
+			HashMap map = new HashMap(); // 응답용 맵
+
+			try {
+				//Database.getInstance().startTransaction();
+
+				// 1. 기존 지상권 정보 분할여부, 분할사유, 검토의견 등록
+				Map params = new HashMap();
+				params.put("JISANGNO", jisangno);
+
+				// 5.전자결재 상신처리.
+				// 전자결재 반려시에 대한 프로세스가 없음. 따라서 원상복구 가능하도록 모지번을 제외한 하위 지상권 정보 별도처리 계획
 //				ElectronicPaymentHTML eph = new ElectronicPaymentHTML(); // 상신용 HTML
 //				ElectronicPaymentUtil epc = new ElectronicPaymentUtil(); // 전자결재 연계
-//
-//				// 반려시 기존 DOCKEY로 사용
-//				String str_appNo = "";
-//				// System.out.println("test :: " + bunhal_status);
-//				if ("R".equals(bunhal_status)) {
-//					map.put("JISANGNO", jisangno);
-//					ArrayList<HashMap> echolist = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectJisangBunHalDocInfo", map);
-//					str_appNo = (String) echolist.get(0).get("DOCKEY");
-//				} else {
-//					str_appNo = CommonUtil.getNextAppovalSeq();
-//				}
-//
-//				boolean res_Echo = false;
-//				System.out.println("insertJisangBunhalNew::"+str_appNo);
-//				if ("".equals(str_appNo)) {
-//					map.put("message", "N");
-//				} else {
-//					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
-//					String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
-//					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
-//					String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
-//					String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
-//					res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getJisang_divide_HTML(jisangno), str_UserId, "", "", "GetSurfaceRightsDivisionDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
-//				}
-//				System.out.println("insertJisangBunhalNew::"+res_Echo);
-//				
-//				if (res_Echo) {
-//
-//					// 문서번호 업데이트
-//					map.put("DOCKEY", str_appNo);
-//					str_result = "Y";
-//					map.put("JISANGNO", jisangno);
-//					Database.getInstance().update("Json.updateJisangBunhalEchoNo", map);
-//
-//					// System.out.println("%%%%%%%%%%%%map=" + map);
-//					// 문서 URL조회
-//					ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectJisangBunHalDocInfo", map);
-//					if (null != echolist && echolist.size() > 0) {
-//						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
-//						System.out.println("str_EchoNo=====" + str_EchoNo);
-//						map.put("OUT_URL", str_EchoNo);
-//					}
-//
-//				} else {
-//					str_result = "N";
-//				}
-//				Database.getInstance().commitTransaction();
-//
-//			} catch (Exception e) {
-//				str_result = "N";
-//				e.printStackTrace();
-//			} finally {
-//				Database.getInstance().endTransaction();
-//			}
-//
-//			map.put("message", str_result);
-//
-//			JSONObject jo = new JSONObject(map);
-//
-//			response.setCharacterEncoding("UTF-8");
-//			response.setHeader("Access-Control-Allow-Origin", "*");
-//			response.resetBuffer();
-//			response.setContentType("application/json");
-//			response.getWriter().print(jo);
-//			response.getWriter().flush();
-//		}
+				ApprovalHtmlUtil eph=new ApprovalHtmlUtil();
+				ApprovalUtil epc= new ApprovalUtil();
+
+				// 반려시 기존 DOCKEY로 사용
+				String str_appNo = "";
+				// System.out.println("test :: " + bunhal_status);
+				if ("R".equals(bunhal_status)) {
+					map.put("JISANGNO", jisangno);
+					ArrayList<HashMap> echolist = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectJisangBunHalDocInfo", map);
+					str_appNo = (String) echolist.get(0).get("DOCKEY");
+				} else {
+					str_appNo = CommonUtil.getNextAppovalSeq();
+				}
+
+				boolean res_Echo = false;
+				System.out.println("insertJisangBunhalNew::"+str_appNo);
+				if ("".equals(str_appNo)) {
+					map.put("message", "N");
+				} else {
+					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
+					String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
+					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
+					String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
+					String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+					res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getJisang_divide_HTML(jisangno), str_UserId, "", "", "GetSurfaceRightsDivisionDataforXML", str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
+				}
+				System.out.println("insertJisangBunhalNew::"+res_Echo);
+				
+				if (res_Echo) {
+
+					// 문서번호 업데이트
+					map.put("DOCKEY", str_appNo);
+					str_result = "Y";
+					map.put("JISANGNO", jisangno);
+					mainService.UpdateQuery("jisangSQL.updateJisangBunhalEchoNo", map);
+
+					// System.out.println("%%%%%%%%%%%%map=" + map);
+					// 문서 URL조회                                                               selectJisangBunHalDocInfo
+					ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangBunHalDocInfo", map);
+					if (null != echolist && echolist.size() > 0) {
+						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+						System.out.println("str_EchoNo=====" + str_EchoNo);
+						map.put("OUT_URL", str_EchoNo);
+					}
+
+				} else {
+					str_result = "N";
+				}
+				//Database.getInstance().commitTransaction();
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			} finally {
+				//Database.getInstance().endTransaction();
+			}
+
+			map.put("message", str_result);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
 	
 	
 	//분할 저장
