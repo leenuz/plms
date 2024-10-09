@@ -383,9 +383,10 @@ $(document).on("click",".temporarySaveBtn",function(){
 			var togiJisa=$("#jisa").val();
 	   		var togiManageNo=$(togiUls[i]).find("input[name='togiBunhalJisangNo']").val();
 	   		var togiaddress=$(togiUls[i]).find("input[name='togiBunhalAddr'").val();
-			var togiTogiType=$(togiUls[i]).find("select[name='togiBunhalTogiType']").val();
+			var togiTogiType=$(togiUls[i]).find('.customSelectView').text().replace(/[^가-힣]/g, "");
 	   		var togiJimokText=$(togiUls[i]).find("input[name='togiBunhalJimokText']").val();
-	   		var togiJijukArea=$(togiUls[i]).find("input[name='togiBunhalJiJukArea']").val();
+	   		//var togiJijukArea=$(togiUls[i]).find("input[name='togiBunhalJiJukArea']").val();
+	   		var togiJijukArea=$($(togiUls[i]).find(".contentBox").children().children()[1]).find('[name="togiBunhalJijukArea"]').val();
 			
 			console.log("togiJijukArea:"+togiJijukArea);
 	   		
@@ -428,7 +429,7 @@ $(document).on("click",".temporarySaveBtn",function(){
 			if ($(togiUls[i]).find("input:checkbox[name='togiBunhalDemise']").is(":checked")==true){
 				togiDemise="Y";
 			}
-			var gover_own_yn="";
+			var gover_own_yn = ""; 
 			
 			if (togiTogiType=="국유지"){
 				gover_own_yn='Y';
@@ -594,6 +595,7 @@ $(document).on("click",".temporarySaveBtn",function(){
    		}
 */
 
+	//임시 저장 Go
 	url = "/land/jisang/divisionRegisterSave";
 	
 	$.ajax({
@@ -615,12 +617,12 @@ $(document).on("click",".temporarySaveBtn",function(){
 				console.log("response.success Y");
 				console.log("response.resultData length:" + response.resultData.length);
 				alert("정상적으로 등록 되었습니다.");
-				/*$("#popup_bg").show();
+				$("#popup_bg").show();
 				$("#popup").show(500);
 				//$("#addrPopupLayer tbody td").remove();
 				for(var i=0;i<response.resultData.length;i++){
 					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-				}*/
+				}
 			}
 			else {
 				console.log("response.success N");
