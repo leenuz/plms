@@ -1194,7 +1194,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 		fileObj.fname = fname;
 		fileObj.fpath = file_path;
 		
-		if (wdate == null || wdate == "" || wdate == undefined) files.push(fileObj);
+		files.push(fileObj);
 	}
 
 	console.log("----------togiDatas-------------");
