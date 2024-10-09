@@ -3831,6 +3831,8 @@ log.info("file_list:"+file_list);
 
 		// //json으로 넘어올때
 		String getRequestBody = ParameterUtil.getRequestBodyToStr(httpRequest);
+		boolean result = false;
+		String resultMessage = "";
 		
 		log.info("getRequestBody:" + getRequestBody);
 		
@@ -3848,8 +3850,6 @@ log.info("file_list:"+file_list);
 			HashMap params = new HashMap();
 			JSONObject jsonObject = (JSONObject) idxarr.get(i);
 			params.put("idx", jsonObject.get("idx"));
-
-			mainService.DeleteQuery("goverSQL.deleteGoverAtcFile", params);
 
 			// 파일 삭제 부분.
 			// 파일 경로 생성
@@ -3869,22 +3869,27 @@ log.info("file_list:"+file_list);
 				if (file.delete()) {
 					// 파일 삭제 성공
 					log.info("파일 삭제 성공");
+					result = true;
+					resultMessage = "파일이 삭제되었습니다.";
+					//삭제가 성공해야지 지워야함
+					mainService.DeleteQuery("goverSQL.deleteGoverAtcFile", params);
 				} else {
 					// 파일 삭제 실패시 에러
 					log.error("===== 파일 삭제에 실패했습니다. =====");
-					throw new IOException("파일 삭제 실패");
+					resultMessage = "파일 삭제에 실패했습니다.";
 				}
 			} else {
 				// 파일 없을때 에러
 				log.error("===== 파일이 없습니다. =====");
-				throw new IOException("파일 존재하지 않음");
+				resultMessage = "파일이 없습니다.";
 			}
 		}
 
 		HashMap<String, Object> resultmap = new HashMap();
 		resultmap.put("resultCode", "0000");
 		resultmap.put("resultData", idxarr);
-		resultmap.put("resultMessage", "success");
+		resultmap.put("result", result);
+		resultmap.put("resultMessage", resultMessage);
 		JSONObject obj = new JSONObject(resultmap);
 
 		response.setCharacterEncoding("UTF-8");
