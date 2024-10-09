@@ -887,6 +887,19 @@ $(document).on("click",".approvalBtn ",function(){
 			var jasan=$(togiUls[i]).find("input[name='jasan_"+ i +"']").val();
 			var soyuja=$(togiUls[i]).find("input[name='soyuja_"+ i +"']").val();
 			var pmtUser=$(togiUls[i]).find("input[name='pmtUser_"+ i +"']").val();
+			var manageNo=$(togiUls[i]).find("#togiManageNo").val();
+			
+			
+			
+			var togiaddress=$(togiUls[i]).find("input[name='address_"+ i +"']").val();
+			var togiJimokText=$(togiUls[i]).find("input[name='jimok_"+ i +"']").val();
+			var togiJijukArea=$(togiUls[i]).find("input[name='fullArea_"+ i +"']").val();
+			var togiPyeonibArea=$(togiUls[i]).find("input[name='setArea_"+ i +"']").val();
+			var togiSetMoney=$(togiUls[i]).find("input[name='setMoney_"+ i +"']").val();
+			var togiJasanNo=$(togiUls[i]).find("input[name='jasan_"+ i +"']").val();
+			var togiSouja=$(togiUls[i]).find("input[name='soyuja_"+ i +"']").val();
+			var togiUseName=$(togiUls[i]).find("input[name='pmtUser_"+ i +"']").val();
+			var togiManageNo=$(togiUls[i]).find("#togiManageNo").val();
 
 	   		var togiObj={
 				"address":ljsIsNull(address)?'':address
@@ -897,6 +910,16 @@ $(document).on("click",".approvalBtn ",function(){
 				,"jasan":ljsIsNull(jasan)?'':jasan
 				,"soyuja":ljsIsNull(soyuja)?'':soyuja
 				,"pmtUser":ljsIsNull(pmtUser)?'':pmtUser
+				,"manageNo":ljsIsNull(pmtUser)?'':manageNo
+				,"togiaddress":ljsIsNull(togiaddress)?'':togiaddress
+				,"togiJimokText":ljsIsNull(togiJimokText)?'':togiJimokText
+				,"togiJijukArea":ljsIsNull(togiJijukArea)?'':togiJijukArea
+				,"togiPyeonibArea":ljsIsNull(togiPyeonibArea)?'':togiPyeonibArea
+				,"togiSetMoney":ljsIsNull(togiSetMoney)?'':togiSetMoney
+				,"togiJasanNo":ljsIsNull(togiJasanNo)?'':togiJasanNo
+				,"togiSouja":ljsIsNull(togiSouja)?'':togiSouja
+				,"togiUseName":ljsIsNull(togiUseName)?'':togiUseName
+				,"togiManageNo":ljsIsNull(togiManageNo)?'':togiManageNo
 
 	   		}
 	   		togiDatas.push(togiObj);
@@ -905,7 +928,7 @@ $(document).on("click",".approvalBtn ",function(){
 		dataObj.gubun="modify";
 				dataObj.pmt_status="임시저장";
 		 //임시저장 호출
-
+console.log(dataObj);
 		 		url="/land/jisang/usePermitRegisterSave";
 		 		$.ajax({
 
