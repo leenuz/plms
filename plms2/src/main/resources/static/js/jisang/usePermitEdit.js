@@ -827,6 +827,51 @@ $(document).on("click",".saveBtn ",function(){
 	dataObj.desangTogis=togiDatas;
 	dataObj.gubun="modify";
 	dataObj.pmt_status="임시저장";
+	
+	
+	if ($("input[name='req_doc_file01']").val()=="" || $("input[name='req_doc_file01']").val()==null) {
+					alert("모든파일을 입력해주세요");
+					return;
+				}
+				if ($("input[name='req_doc_file02']").val()=="" || $("input[name='req_doc_file02']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file03']").val()=="" || $("input[name='req_doc_file03']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file04']").val()=="" || $("input[name='req_doc_file04']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file05']").val()=="" || $("input[name='req_doc_file05']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file06']").val()=="" || $("input[name='req_doc_file06']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file07']").val()=="" || $("input[name='req_doc_file07']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file08']").val()=="" || $("input[name='req_doc_file08']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file09']").val()=="" || $("input[name='req_doc_file09']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file10']").val()=="" || $("input[name='req_doc_file10']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+	
+	
+	//console.log(dataObje);
 	url="/land/jisang/usePermitRegisterSave";
 	$.ajax({
 		url : url,
@@ -947,6 +992,48 @@ $(document).on("click",".approvalBtn ",function(){
 				dataObj.PMT_NO=$("#pmt_no").val();
 		 //임시저장 호출
 console.log(dataObj);
+
+
+			if ($("input[name='req_doc_file01']").val()=="" || $("input[name='req_doc_file01']").val()==null) {
+				alert("모든파일을 입력해주세요");
+				return;
+			}
+			if ($("input[name='req_doc_file02']").val()=="" || $("input[name='req_doc_file02']").val()==null) {
+							alert("모든파일을 입력해주세요");
+							return;
+			}
+			if ($("input[name='req_doc_file03']").val()=="" || $("input[name='req_doc_file03']").val()==null) {
+							alert("모든파일을 입력해주세요");
+							return;
+			}
+			if ($("input[name='req_doc_file04']").val()=="" || $("input[name='req_doc_file04']").val()==null) {
+							alert("모든파일을 입력해주세요");
+							return;
+			}
+			if ($("input[name='req_doc_file05']").val()=="" || $("input[name='req_doc_file05']").val()==null) {
+							alert("모든파일을 입력해주세요");
+							return;
+			}
+			if ($("input[name='req_doc_file06']").val()=="" || $("input[name='req_doc_file06']").val()==null) {
+							alert("모든파일을 입력해주세요");
+							return;
+			}
+			if ($("input[name='req_doc_file07']").val()=="" || $("input[name='req_doc_file07']").val()==null) {
+							alert("모든파일을 입력해주세요");
+							return;
+			}
+			if ($("input[name='req_doc_file08']").val()=="" || $("input[name='req_doc_file08']").val()==null) {
+							alert("모든파일을 입력해주세요");
+							return;
+			}
+			if ($("input[name='req_doc_file09']").val()=="" || $("input[name='req_doc_file09']").val()==null) {
+							alert("모든파일을 입력해주세요");
+							return;
+			}
+			if ($("input[name='req_doc_file10']").val()=="" || $("input[name='req_doc_file10']").val()==null) {
+							alert("모든파일을 입력해주세요");
+							return;
+			}
 		 		/*url="/land/jisang/usePermitRegisterSave";
 		 		$.ajax({
 
@@ -1272,7 +1359,7 @@ $(document).on("click","#docFileDelBtn",function(){
 
 		//임시파일 삭제
 		$.ajax({
-		          url: "/land/jisang/deleteJisangTmpFile",
+		          url: "/land/jisang/deletePermitAtcfile",
 		          type: "POST",
 		          data: params,
 

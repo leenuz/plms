@@ -664,9 +664,13 @@ public class jisangController {
 		     			 String dataPath = GC.getJisangFileDataDir()+"/jisangPermit/"+resp_PMT_NO; //설정파일로 뺀다.
 		     			 log.info("tepPath:"+tempPath);
 		     			log.info("dataPath:"+dataPath);
-		     			 filesMap.put("FILE_PATH",dataPath+"/"+fname);
-		     			 CommonUtil.moveFile(fname, tempPath, dataPath);
-		     			log.info("filesMap:"+filesMap);
+		     			if (CommonUtil.isFileExists(tempPath, fname)) {
+		     				long unixTimeMillis = System.currentTimeMillis();
+			     			  String nfilename=String.valueOf(unixTimeMillis);
+			     			 filesMap.put("FILE_PATH",dataPath+"/"+nfilename);
+			     			 CommonUtil.moveFile1(fname,nfilename, tempPath, dataPath);
+			     			log.info("filesMap:"+filesMap);
+		     	        } 
 		     			
 		     			
 		     			

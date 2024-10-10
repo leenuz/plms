@@ -3216,7 +3216,21 @@ DELETE from plms_POTENTIAL_ISSUE
 		where ja_idx = #{idx}::int
 
 	</delete>
-	
+	<delete id="deleteJisangPermitAtcFile" parameterType="java.util.HashMap">
+
+		delete from jisang_permit_atcfile
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
+		and jpa_idx = #{idx}::int
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pmt_no)">
+		and pmt_no = #{pmt_no}::int
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(fseq)">
+		and file_gubun = #{fseq}::int
+		</if>
+
+	</delete>
 	
 	
 	<select id="selectJisangPmtList" resultType="HashMap" parameterType="HashMap">

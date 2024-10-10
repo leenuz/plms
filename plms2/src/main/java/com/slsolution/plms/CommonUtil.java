@@ -8,6 +8,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -174,6 +177,59 @@ public class CommonUtil implements ApplicationContextAware{
             e.printStackTrace();
         }
     }
+	 
+	 
+	 
+	 public static void moveFile1(String fileName,String tfileName, String beforeFilePath, String afterFilePath) {
+		 	//													temp				data
+	        //String path = afterFilePath+"/"+folderName;
+	        String newfilePath = afterFilePath + "/" + tfileName;	//data
+	        String orgFilePath = beforeFilePath + "/" + fileName;	//temp
+	        
+	        log.info("newfilePath:"+newfilePath);
+	        log.info("orgFilePath:"+orgFilePath);
+	        
+	        File dir = new File(afterFilePath);
+	        
+	        if (!dir.exists()) { //폴더 없으면 폴더 생성
+	            dir.mkdirs();
+	            log.info("dir.mkdirs()");
+	        }
+	        
+	        File sourceFile = new File(orgFilePath);
+	        File destFile = new File(newfilePath);
+	        
+	        try{
+	        	
+	            File file = new File(orgFilePath);	//temp에 있는 파일을 꺼내서
+
+	            //renameTo 메소드 불안정으로 인한 아래의 파일 복사 메소드 이용
+	            // 옮기 고자 하는 경로로 파일 이동
+//	            if(file.renameTo(new File(newfilePath))) {
+//	            	log.info("----- File Move Success -----");
+	            	//file.renameTo(new File(newfilePath));    //data의 각 관리번호 폴더에 넣는다
+//	            }else {
+//	            	log.info("----- File Move Fail -----");
+//	            }
+	            
+	            //파일 복사 방식
+	            copyFileUsingChannel(sourceFile, destFile);
+	            
+	            if(sourceFile.delete()) {
+	            	log.info("----- File Move Success -----");
+	            } else {
+	            	log.error("----- File Move Fail: Could not delete source file -----");
+	            }
+	            
+	            
+	        }catch(Exception e){
+	        	log.error("File Move Exception :: ", e);
+	            e.printStackTrace();
+	        }
+	    }
+	 
+	 
+	 
 	
 	 //241008 : renameTo 메소드 아닌 복사 방법으로 교체
 	 private static void copyFileUsingChannel(File source, File dest) throws IOException {
@@ -185,7 +241,13 @@ public class CommonUtil implements ApplicationContextAware{
 		 
 	 }
 	 
-	 
+	 public static boolean isFileExists(String directoryPath, String fileName) {
+	        // 파일 경로 생성
+	        Path filePath = Paths.get(directoryPath, fileName);
+	        
+	        // 파일 존재 여부 반환
+	        return Files.exists(filePath);
+	    }
 	 
 	 public static void delFile(String fileName, String beforeFilePath) {
 	        //String path = afterFilePath+"/"+folderName;

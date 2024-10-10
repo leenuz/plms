@@ -261,7 +261,7 @@ $(document).on("click","#addParentBtn",function(){
 			console.log("###################################");
 			console.log(inputEles[i]);	
 			console.log($(inputEles[i]).parent().parent().html());
-			var address=$(inputEles[i]).parent().parent().find(".popTitle_address").text();
+			
 			var manageno=$(inputEles[i]).parent().parent().find("#popupManageNo").val();
 			var jimok=$(inputEles[i]).parent().parent().find("#popupJimokText").val();
 			var jijukarea=$(inputEles[i]).parent().parent().find("#popupJijukArea").val();
@@ -275,6 +275,7 @@ $(document).on("click","#addParentBtn",function(){
 			var ri_nm=$(inputEles[i]).parent().parent().find("#ri_nm").val();
 			var jibun=$(inputEles[i]).parent().parent().find("#jibun").val();
 			var addrcode=$(inputEles[i]).parent().parent().find("#addrcode").val();
+			var address=$(inputEles[i]).parent().parent().find(".popTitle_address").text().trim()+" "+jibun;
 			//var sido_nm=$(inputEles[i]).parent().parent().find("#sido_nm").val();
 							console.log("address:"+address);
 							console.log("jimok:"+jimok);
@@ -1087,7 +1088,46 @@ $(document).on("click","#sangsinBtn",function(){
 		dataObj.pmt_status="";
 		console.log(dataObj);
 		
-		
+		if ($("input[name='req_doc_file01']").val()=="" || $("input[name='req_doc_file01']").val()==null) {
+						alert("모든파일을 입력해주세요");
+						return;
+					}
+					if ($("input[name='req_doc_file02']").val()=="" || $("input[name='req_doc_file02']").val()==null) {
+									alert("모든파일을 입력해주세요");
+									return;
+					}
+					if ($("input[name='req_doc_file03']").val()=="" || $("input[name='req_doc_file03']").val()==null) {
+									alert("모든파일을 입력해주세요");
+									return;
+					}
+					if ($("input[name='req_doc_file04']").val()=="" || $("input[name='req_doc_file04']").val()==null) {
+									alert("모든파일을 입력해주세요");
+									return;
+					}
+					if ($("input[name='req_doc_file05']").val()=="" || $("input[name='req_doc_file05']").val()==null) {
+									alert("모든파일을 입력해주세요");
+									return;
+					}
+					if ($("input[name='req_doc_file06']").val()=="" || $("input[name='req_doc_file06']").val()==null) {
+									alert("모든파일을 입력해주세요");
+									return;
+					}
+					if ($("input[name='req_doc_file07']").val()=="" || $("input[name='req_doc_file07']").val()==null) {
+									alert("모든파일을 입력해주세요");
+									return;
+					}
+					if ($("input[name='req_doc_file08']").val()=="" || $("input[name='req_doc_file08']").val()==null) {
+									alert("모든파일을 입력해주세요");
+									return;
+					}
+					if ($("input[name='req_doc_file09']").val()=="" || $("input[name='req_doc_file09']").val()==null) {
+									alert("모든파일을 입력해주세요");
+									return;
+					}
+					if ($("input[name='req_doc_file10']").val()=="" || $("input[name='req_doc_file10']").val()==null) {
+									alert("모든파일을 입력해주세요");
+									return;
+					}
 		//임시저장 호출
 
 		url="/land/jisang/usePermitRegisterSave";
@@ -1256,6 +1296,49 @@ $(document).on("click","#mainSaveBtn",function(){
 	dataObj.gubun="insert";
 	dataObj.pmt_status="임시저장";
 	console.log(dataObj);
+	
+	if ($("input[name='req_doc_file01']").val()=="" || $("input[name='req_doc_file01']").val()==null) {
+					alert("모든파일을 입력해주세요");
+					return;
+				}
+				if ($("input[name='req_doc_file02']").val()=="" || $("input[name='req_doc_file02']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file03']").val()=="" || $("input[name='req_doc_file03']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file04']").val()=="" || $("input[name='req_doc_file04']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file05']").val()=="" || $("input[name='req_doc_file05']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file06']").val()=="" || $("input[name='req_doc_file06']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file07']").val()=="" || $("input[name='req_doc_file07']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file08']").val()=="" || $("input[name='req_doc_file08']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file09']").val()=="" || $("input[name='req_doc_file09']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+				if ($("input[name='req_doc_file10']").val()=="" || $("input[name='req_doc_file10']").val()==null) {
+								alert("모든파일을 입력해주세요");
+								return;
+				}
+	
+	
 	
 	
 	url="/land/jisang/usePermitRegisterSave";

@@ -352,13 +352,13 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		if (n_fileCount > 0) {
 			ArrayList list = (ArrayList) map.get("fileList");
 
-			for (int i = 0; i < 6; i++) {
+			for (int i = 0; i < 10; i++) {
 				HashMap hm = new HashMap();
 				log.info("hm:"+hm);
-				if (5 == i) {
-					if (n_fileCount > 5) {
+				if (9 == i) {
+					if (n_fileCount > 9) {
 						hm = (HashMap) list.get(i);
-						str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("file_path")), "");
+						str_FILE_PATH =cu.evl(String.valueOf(hm.get("file_path")), "");
 						str_FILE_NM = cu.evl(String.valueOf(hm.get("file_nm")), "");
 						str_FILE_SEQ = cu.evl(String.valueOf(hm.get("seq")), "");
 						str_PMT_NO = cu.evl(String.valueOf(hm.get("pmt_no")), "");
@@ -371,7 +371,8 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 
 				} else {
 					hm = (HashMap) list.get(i);
-					str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("file_path")), "");
+					str_FILE_PATH =cu.evl(String.valueOf(hm.get("file_path")), "");
+					//str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("file_path")), "");
 					str_FILE_NM = cu.evl(String.valueOf(hm.get("file_nm")), "");
 					str_FILE_SEQ = cu.evl(String.valueOf(hm.get("seq")), "");
 					str_PMT_NO = cu.evl(String.valueOf(hm.get("pmt_no")), "");
@@ -384,26 +385,40 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 
 				sbHtml.append("        <tr>                    \n");
 				if (0 == i) {
-					sbHtml.append("            <td rowspan=\"5\">필수 증빙서류</td>     \n");
+					sbHtml.append("            <td rowspan=\"10\">필수 증빙서류</td>     \n");
 					sbHtml.append("            <td style=\"text-align:left;\">1. 토지사용 승낙(원)서</td>    \n");
 				} else if (1 == i) {
-					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">2. 등기부등본 및 토지대장 각 1부</td>                   \n");
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">2. 토지사용 기본조건</td>                   \n");
 				} else if (2 == i) {
-					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">3. 위치도 (사용토지 및 송유관 위치표기) 및 지적도</td>     \n");
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">3. 굴착시 안전조치 사항</td>     \n");
 				} else if (3 == i) {
-					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">4. 현장사진</td>                  \n");
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">4. 각서</td>                  \n");
 				} else if (4 == i) {
-					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">5. 현장 확인자의 자필 서명이 포함된 검토 의견서</td>          \n");
-				} else if (5 == i) {
-					sbHtml.append("            <td>참고증빙</td>   \n");
-					sbHtml.append("            <td style=\"text-align:left;\">6. 기타 사용 승인 관련 부속서류\n");
-					sbHtml.append("                <br />&nbsp;&nbsp;&nbsp;(건축물 배치도, 공사관련 서류 등)</td>                 \n");
-
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">5. 등기사항 전부 증명서</td>          \n");
+				}else if (5 == i) {
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">6. 토지대장</td>          \n");
+				}else if (6 == i) {
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">7. 지적도(관로표기)</td>          \n");
+				}else if (7 == i) {
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">8. 현장사진</td>          \n");
+				}else if (8 == i) {
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">9. 검토 의견서</td>          \n");
+				}else if (9 == i) {
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">10. 도면(용지도,위치도 등),민원인 관계서류</td>          \n");
 				}
+//				else if (10 == i) {
+//					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">5. 현장 확인자의 자필 서명이 포함된 검토 의견서</td>          \n");
+//				}
+//				else if (5 == i) {
+//					sbHtml.append("            <td>참고증빙</td>   \n");
+//					sbHtml.append("            <td style=\"text-align:left;\">6. 기타 사용 승인 관련 부속서류\n");
+//					sbHtml.append("                <br />&nbsp;&nbsp;&nbsp;(건축물 배치도, 공사관련 서류 등)</td>                 \n");
+//
+//				}
 
 				sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
 				sbHtml.append("            <td>                \n");
-				sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+				//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
 				sbHtml.append("      \n");
 				// sbHtml.append(" <script> \n");
 				// sbHtml.append(" $(\"#file"+i+"\").click(function(){
@@ -416,16 +431,32 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 					type = pathSplit[1].toLowerCase();
 				}
 
-				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
-					sbHtml.append("            <script>               \n");
-					sbHtml.append("                 $('#file" + i + "').click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
-					sbHtml.append("            </script>               \n");
-				} else if (!type.equals("")) {
-					sbHtml.append("            <script>               \n");
-					sbHtml.append("                 $('#file" + i + "').click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
-					sbHtml.append("            </script>               \n");
+//				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+//					sbHtml.append("            <script>               \n");
+//					sbHtml.append("                 $('#file" + i + "').click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+//					sbHtml.append("            </script>               \n");
+//				} else if (!type.equals("")) {
+//					sbHtml.append("            <script>               \n");
+//					sbHtml.append("                 $('#file" + i + "').click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+//					sbHtml.append("            </script>               \n");
+//
+//				}
+				//개발
+				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+						  + "filePath=" + cu.evl(str_FILE_PATH, "") 
+						    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+						    + "&fileJisangNo=" + str_PMT_NO
+						    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+						    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+				
+				//운영
+//				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//					    + "filePath=" + cu.evl(str_FILE_PATH, "") 
+//					    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+//					    + "&fileJisangNo=" + str_PMT_NO
+//					    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+//					    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 
-				}
 				sbHtml.append("            </td>               \n");
 				sbHtml.append("        </tr>                   \n");
 
