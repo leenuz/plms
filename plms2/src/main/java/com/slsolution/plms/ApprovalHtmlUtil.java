@@ -1421,12 +1421,12 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append("<script>	\n");
 		sbHtml.append("function downloadFile(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {	\n");
 		sbHtml.append("let param = { \"filePath\":filePath, \"fileName\":fileName, \"fileJisangNo\":fileJisangNo, \"fileSeq\":fileSeq, \"fileGubun\":fileGubun }	\n");
-		sbHtml.append("$.ajax({");	//ajax 구간[S]
+		sbHtml.append("$.ajax({ 	\n");	//ajax 구간[S]
 		
 		sbHtml.append(" url: \"/land/common/downloadfile\", data : param, type:\"GET\",		\n");
-		sbHtml.append(" xhrFields: { responseType: \'blob\'},	\n");
+		sbHtml.append(" xhrFields: { responseType: 'blob'},	\n");
 		sbHtml.append(" success : function(data, status, xhr) {		\n");
-		sbHtml.append(" let disposition = xhr.getResponseHeader(\'Content-Disposition\'); let filename = \'downloaded_file\';	\n");
+		sbHtml.append(" let disposition = xhr.getResponseHeader('Content-Disposition'); let filename = 'downloaded_file';	\n");
 		sbHtml.append(" if(disposition && disposition.indexOf('filename*=UTF-8\\'\\'') !== -1){	\n");
 		sbHtml.append(" 	filename = decodeURIComponent(disposition.split('filename*=UTF-8\\'\\'')[1]); \n");
 		sbHtml.append(" }	\n");
