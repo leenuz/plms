@@ -130,52 +130,42 @@ public class CommonUtil implements ApplicationContextAware{
 	}
 
 	
-	 public static void moveFile(String fileName, String beforeFilePath, String afterFilePath) {
-	 	//													temp				data
-        //String path = afterFilePath+"/"+folderName;
-        String newfilePath = afterFilePath + "/" + fileName;	//data
-        String orgFilePath = beforeFilePath + "/" + fileName;	//temp
+	 public static void moveFile(String fileName, String beforeFilePath, String afterFilePath, String fileNickname) {
+		 //													temp				data
+		 //String path = afterFilePath+"/"+folderName;
+		 String orgFilePath = beforeFilePath + "/" + fileName;		//temp
+         String newfilePath = afterFilePath + "/" + fileNickname;	//data
         
-        log.info("newfilePath:"+newfilePath);
-        log.info("orgFilePath:"+orgFilePath);
+         log.info("newfilePath : " + newfilePath);
+         log.info("orgFilePath : " + orgFilePath);
         
-        File dir = new File(afterFilePath);
+         File dir = new File(afterFilePath);
         
-        if (!dir.exists()) { //폴더 없으면 폴더 생성
-            dir.mkdirs();
-            log.info("dir.mkdirs()");
-        }
-        
-        File sourceFile = new File(orgFilePath);
-        File destFile = new File(newfilePath);
-        
-        try{
-        	
-            File file = new File(orgFilePath);	//temp에 있는 파일을 꺼내서
+			if (!dir.exists()) { // 폴더 없으면 폴더 생성
+				dir.mkdirs();
+				log.info("dir.mkdirs()");
+			}
 
-            //renameTo 메소드 불안정으로 인한 아래의 파일 복사 메소드 이용
-            // 옮기 고자 하는 경로로 파일 이동
-//            if(file.renameTo(new File(newfilePath))) {
-//            	log.info("----- File Move Success -----");
-            	//file.renameTo(new File(newfilePath));    //data의 각 관리번호 폴더에 넣는다
-//            }else {
-//            	log.info("----- File Move Fail -----");
-//            }
-            
-            //파일 복사 방식
-            copyFileUsingChannel(sourceFile, destFile);
-            
-            if(sourceFile.delete()) {
-            	log.info("----- File Move Success -----");
-            } else {
-            	log.error("----- File Move Fail: Could not delete source file -----");
-            }
-            
-            
-        }catch(Exception e){
-        	log.error("File Move Exception :: ", e);
-            e.printStackTrace();
-        }
+			File sourceFile = new File(orgFilePath);
+			File destFile = new File(newfilePath);
+
+			try {
+
+				File file = new File(orgFilePath); // temp에 있는 파일을 꺼내서
+
+				// 파일 복사 방식
+				copyFileUsingChannel(sourceFile, destFile);
+
+				if (sourceFile.delete()) {
+					log.info("----- File Move Success -----");
+				} else {
+					log.error("----- File Move Fail: Could not delete source file -----");
+				}
+
+			} catch (Exception e) {
+				log.error("File Move Exception :: ", e);
+				e.printStackTrace();
+			}
     }
 	 
 	 
@@ -237,8 +227,6 @@ public class CommonUtil implements ApplicationContextAware{
 			 FileChannel destChannel = new FileOutputStream(dest).getChannel()) {
 			 destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
 		 }
-		 
-		 
 	 }
 	 
 	 public static boolean isFileExists(String directoryPath, String fileName) {
@@ -437,5 +425,28 @@ public class CommonUtil implements ApplicationContextAware{
         
         return resultMap;
         
+    }
+    
+    /**
+     * 파일명 전달시 자동으로 임의숫자로 교체해서 return
+     * @param filename
+     * @return
+     */
+    public static String filenameAutoChange(String filename) {
+    	
+    	//Map<String, String> resultMap = new HashMap<String, String>();
+    	String result = "";
+    	
+    	int lastIndex = filename.lastIndexOf(".");
+    	
+    	String justFileName = filename.substring(0, lastIndex);	//파일명
+		String justFileType = filename.substring(lastIndex +1); //확장자명
+		
+		long unixTimeMillis = System.currentTimeMillis();
+		String fileNickname = String.valueOf(unixTimeMillis) + "." + justFileType;
+		
+		result = fileNickname;
+		
+		return result;
     }
 }

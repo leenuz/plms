@@ -1099,16 +1099,13 @@ public class songyuController {
 
 				if (gubun.equals("modify")) {
 					if (i == 0) {
-						mainService.UpdateQuery("songyuSQL.deleteNotsetSoyu", params); // 기존
-																						// 소유자
-																						// 삭제
+						mainService.UpdateQuery("songyuSQL.deleteNotsetSoyu", params); // 기존 소유자 삭제
 					}
 				}
 
 				// if(!JIBUN.equals("") || !NAME.equals("") ||
 				// !ADDR.equals("")|| !TEL.equals("")|| !HP.equals(""))
-				mainService.InsertQuery("songyuSQL.insertNotsetSoyu", params); // 소유자
-																				// 저장
+				mainService.InsertQuery("songyuSQL.insertNotsetSoyu", params); // 소유자 저장
 			}
 
 			for (int i = 0; i < fileArr.length(); i++) {
@@ -1123,18 +1120,22 @@ public class songyuController {
 				filesMap.put("seq", i);
 				filesMap.put("fseq", i);
 				filesMap.put("fname", file_name);
-
-//
+				
+				String chageFileName = CommonUtil.filenameAutoChange(file_name);
 				String tempPath = GC.getJisangFileTempDir(); // 설정파일로 뺀다.
-				String dataPath = GC.getNotsetFileDataDir() + "/" + String.valueOf((params.get("NOTSET_NO"))); // 설정파일로
-																												// 뺀다.
-				filesMap.put("fpath", dataPath + "/" + file_name);
-				CommonUtil.moveFile(file_name, tempPath, dataPath);
+				String dataPath = GC.getNotsetFileDataDir() + "/" + String.valueOf((params.get("NOTSET_NO"))); // 설정파일로 뺀다.
+				filesMap.put("fpath", dataPath + "/" + chageFileName);
+				
+				CommonUtil.moveFile(file_name, tempPath, dataPath, chageFileName);
 				log.info("filesMap:" + filesMap);
+				
 				mainService.InsertQuery("notsetSQL.insertNotsetUploadData", filesMap);
+				
 				HashMap historyParam = new HashMap();
+				
 				params.put("GUBUN", "파일정보");
 				params.put("CONT", "파일등록(" + file_name + ")");
+				
 				log.info("params:" + params);
 				mainService.InsertQuery("songyuSQL.insertNotsetModifyHistory", params);
 

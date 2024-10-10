@@ -1277,11 +1277,13 @@ public class goverController {
 		Iterator<String> itr = multipartRequest.getFileNames();
 
 		String filePath = GC.getGoverFileTempDir(); // 설정파일로 뺀다.
+
 		HashMap<String, Object> resultmap = new HashMap();
 		ArrayList<HashMap> resultdataarr = new ArrayList<HashMap>();
 		HashMap resultdata = new HashMap();
 		String resultCode = "0000";
 		String resultMessage = "success";
+		
 		while (itr.hasNext()) { // 받은 파일들을 모두 돌린다.
 
 			/*
@@ -1293,7 +1295,12 @@ public class goverController {
 			MultipartFile mpf = multipartRequest.getFile(itr.next());
 
 			String originalFilename = mpf.getOriginalFilename(); // 파일명
-
+			
+			int lastIndex = originalFilename.lastIndexOf(".");
+			
+			String justFileName = originalFilename.substring(0, lastIndex);	//파일명
+			String justFileType = originalFilename.substring(lastIndex +1); //확장자명
+			
 			String fileFullPath = filePath + "/" + originalFilename; // 파일 전체 경로
 
 			try {
@@ -1302,8 +1309,10 @@ public class goverController {
 
 				resultdata.put("fname", originalFilename);
 				resultdata.put("fpath", fileFullPath);
+				
 				System.out.println("originalFilename => " + originalFilename);
 				System.out.println("fileFullPath => " + fileFullPath);
+				
 				// resultdataarr.add(resultdata);
 			} catch (Exception e) {
 				resultCode = "4001";
@@ -1314,18 +1323,6 @@ public class goverController {
 				System.out.println("postTempFile_ERROR======>" + fileFullPath);
 				e.printStackTrace();
 			}
-
-//	            System.out.println(obj);
-
-			// log.info("jo:"+jo);
-//	          			response.setCharacterEncoding("UTF-8");
-//	          			response.setHeader("Access-Control-Allow-Origin", "*");
-//	          			response.setHeader("Cache-Control", "no-cache");
-//	          			response.resetBuffer();
-//	          			response.setContentType("application/json");
-//	          			//response.getOutputStream().write(jo);
-//	          			response.getWriter().print(obj);
-//	          			response.getWriter().flush();
 
 		}
 		resultmap.put("resultCode", resultCode);
@@ -2218,7 +2215,9 @@ log.info("file_list:"+file_list);
 						// JSONObject fobj=new JSONObject(fileArr.get(i).toString());
 						String file_name = fileArr.getString(i);
 						log.info("file_name:" + file_name);
+						
 						HashMap<String, Object> filesMap = new HashMap<>();
+						String chageFileName = CommonUtil.filenameAutoChange(file_name);	//파일명 교체
 						
 						filesMap.put("goverNo", str_GOVERNO);
 						filesMap.put("seq", String.format("%06d", i));
@@ -2227,10 +2226,9 @@ log.info("file_list:"+file_list);
 						//
 						String tempPath = GC.getGoverFileTempDir(); // 설정파일로 뺀다.
 						String dataPath = GC.getGoverFileDataDir() + "/" + str_GOVERNO; // 설정파일로 뺀다.
+						filesMap.put("fpath", dataPath + "/" + chageFileName);
 						
-						filesMap.put("fpath", dataPath + "/" + file_name);
-
-						CommonUtil.moveFile(file_name, tempPath, dataPath);
+						CommonUtil.moveFile(file_name, tempPath, dataPath, chageFileName);
 						
 						log.info("filesMap:" + filesMap);
 						log.info("tempPath:" + tempPath);
@@ -2242,24 +2240,11 @@ log.info("file_list:"+file_list);
 				}
 
 				if (gubun.equals("modify")) {
-//					for (int i = 0; i < Integer.parseInt(FILE_CNT); i++) {
-//						String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
-//						String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
-//
-//						if (IS_DEL.equals("Y")) {
-//							System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
-//							params.put("SEQ", DEL_SEQ);
-//							mainService.UpdateQuery("goverSQL.deleteGoverFile", params);
-//
-//						}
-//					}
 					log.info("param:" + params);
 					
-					
-					if(!"LOCAL".equals(GC.getServerName()) && !"IDC".equals(GC.getServerName())) {
-						// 기존 등록된 파일리스트 삭제
-						mainService.DeleteQuery("goverSQL.deleteBeforeGoverAtcFileList", params);
-					}
+					// 기존 등록된 파일리스트 삭제 - 이 로직 필요 없어짐.
+					// 이제 새파일을 구분할수 있는 플래그도 값이 넘어옴.
+					//mainService.DeleteQuery("goverSQL.deleteBeforeGoverAtcFileList", params);
 					
 					// seq 가져오기
 					int nseq = (int) mainService.selectCountQuery("goverSQL.getGoverAtcFileSeq", params);
@@ -2267,43 +2252,48 @@ log.info("file_list:"+file_list);
 					
 					// fileseq 가져오기
 					for (int i = 0; i < fileArr.length(); i++) {
+						
 						JSONObject fobj = new JSONObject(fileArr.get(i).toString());
-						String filePath = fobj.getString("fpath");
-						String fileName = fobj.getString("fname");
-						String[] paths = Arrays.copyOf(filePath.split("/"), filePath.split("/").length - 1);
-						boolean flag = true;
-						for (String item : paths) {
-							if (item.contains("upload")) {
-								flag = false;
-								break;
+						
+						//새파일일 경우에만 등록 로직이 이루어짐
+						if("Y".equals(fobj.get("newFileCheckYn"))) {
+							String filePath = fobj.getString("fpath");
+							String fileName = fobj.getString("fname");
+							String[] paths = Arrays.copyOf(filePath.split("/"), filePath.split("/").length - 1);
+							
+							boolean flag = true;
+							for (String item : paths) {
+								if (item.contains("upload")) {
+									flag = false;
+									break;
+								}
 							}
-						}
-						
-//						String file_name = fileArr.getString(i);
-						
-//						log.info("file_name:" + file_name);
-						HashMap<String, Object> filesMap = new HashMap<>();
+							
+							HashMap<String, Object> filesMap = new HashMap<>();
 
-						filesMap.put("goverNo", str_GOVERNO);
-						
-						filesMap.put("fname", fileName);
-						String tempPath = GC.getGoverFileTempDir(); // 설정파일로 뺀다.
-						String dataPath = GC.getGoverFileDataDir() + "/" + str_GOVERNO; // 설정파일로 뺀다.
-						if (!flag) {
-							filesMap.put("fpath", filePath);
-							filesMap.put("seq", fobj.getString("ga_seq"));
-							filesMap.put("fseq", fobj.getString("ga_file_seq"));
-						} else {
-							filesMap.put("fpath", dataPath + "/" + fileName);
-							filesMap.put("seq", String.format("%06d", i));
-							filesMap.put("fseq", nseq + i);
+							filesMap.put("goverNo", str_GOVERNO);
+							
+							filesMap.put("fname", fileName);
+							
+							String chageFileName = CommonUtil.filenameAutoChange(fileName); 
+							String tempPath = GC.getGoverFileTempDir(); // 설정파일로 뺀다.
+							String dataPath = GC.getGoverFileDataDir() + "/" + str_GOVERNO; // 설정파일로 뺀다.
+							
+							if (!flag) {
+								filesMap.put("fpath", filePath);
+								filesMap.put("seq", fobj.getString("ga_seq"));
+								filesMap.put("fseq", fobj.getString("ga_file_seq"));
+							} else {
+								filesMap.put("fpath", dataPath + "/" + chageFileName);
+								filesMap.put("seq", String.format("%06d", i));
+								filesMap.put("fseq", nseq + i);
+							}
+							
+							CommonUtil.moveFile(fileName, tempPath, dataPath, chageFileName);
+							
+							log.info("filesMap:" + filesMap);
+							mainService.InsertQuery("goverSQL.insertGoverUploadData", filesMap);
 						}
-						
-						CommonUtil.moveFile(fileName, tempPath, dataPath);
-						
-						log.info("filesMap:" + filesMap);
-						mainService.InsertQuery("goverSQL.insertGoverUploadData", filesMap);
-
 					}
 				}
 			}
@@ -2806,9 +2796,11 @@ log.info("file_list:"+file_list);
 				if (gubun.equals("insert")) {
 					for (int i = 0; i < fileArr.length(); i++) {
 						// JSONObject fobj=new JSONObject(fileArr.get(i).toString());
+						
 						String file_name = fileArr.getString(i);
 						log.info("file_name:" + file_name);
 						HashMap<String, Object> filesMap = new HashMap<>();
+						String chageFileName = CommonUtil.filenameAutoChange(file_name);
 						
 						filesMap.put("goverNo", str_GOVERNO);
 						filesMap.put("seq", String.format("%06d", i));
@@ -2817,9 +2809,9 @@ log.info("file_list:"+file_list);
 						//
 						String tempPath = GC.getGoverFileTempDir(); // 설정파일로 뺀다.
 						String dataPath = GC.getGoverFileDataDir() + "/" + str_GOVERNO; // 설정파일로 뺀다.
-						filesMap.put("fpath", dataPath + "/" + file_name);
+						filesMap.put("fpath", dataPath + "/" + chageFileName);
 
-						CommonUtil.moveFile(file_name, tempPath, dataPath);
+						CommonUtil.moveFile(file_name, tempPath, dataPath, chageFileName);
 						
 						log.info("filesMap:" + filesMap);
 						log.info("tempPath:" + tempPath);
@@ -2857,9 +2849,11 @@ log.info("file_list:"+file_list);
 					// fileseq 가져오기
 					for (int i = 0; i < fileArr.length(); i++) {
 						// JSONObject fobj=new JSONObject(fileArr.get(i).toString());
+						
 						String file_name = fileArr.getString(i);
 						log.info("file_name:" + file_name);
 						HashMap<String, Object> filesMap = new HashMap<>();
+						String chageFileName = CommonUtil.filenameAutoChange(file_name);	//파일명 교체
 
 						filesMap.put("goverNo", str_GOVERNO);
 						filesMap.put("seq", String.format("%06d", i));
@@ -2868,9 +2862,9 @@ log.info("file_list:"+file_list);
 
 						String tempPath = GC.getGoverFileTempDir(); // 설정파일로 뺀다.
 						String dataPath = GC.getGoverFileDataDir() + "/" + str_GOVERNO; // 설정파일로 뺀다.
-						filesMap.put("fpath", dataPath + "/" + file_name);
+						filesMap.put("fpath", dataPath + "/" + chageFileName);
 						
-						CommonUtil.moveFile(file_name, tempPath, dataPath);
+						CommonUtil.moveFile(file_name, tempPath, dataPath, chageFileName);
 						
 						log.info("filesMap:" + filesMap);
 						mainService.InsertQuery("goverSQL.insertGoverUploadData", filesMap);

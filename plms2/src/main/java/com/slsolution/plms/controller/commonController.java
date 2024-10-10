@@ -198,7 +198,7 @@ public class commonController {
 			byte[] fileData = restTemplate.getForObject(new URI(downloadUrl), byte[].class);
 			
 			log.info("==================================");
-			log.info("downloadUrl CHECK :: " + downloadUrl);
+			log.info("downloadUrl CHECK (download) :: " + downloadUrl);
 			log.info("==================================");
 			
 			if(fileData == null || fileData.length == 0) {
@@ -212,6 +212,10 @@ public class commonController {
 		} else {	//신규라면 파일 다운로드
 			//신규라면
 			downloadUrl = filePath;
+			
+			log.info("==================================");
+			log.info("downloadUrl CHECK (filepath) :: " + downloadUrl);
+			log.info("==================================");
 			
 			File file = new File(downloadUrl);
 			

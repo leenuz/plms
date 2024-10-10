@@ -179,7 +179,7 @@ $(document).ready(function() {
             fd.append('file', files[i]); // 파일 객체를 FormData에 추가
      		
             // var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
-			var status = new createStatusbar($("#fileListDiv"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
+			var status = new createStatusbar($("#fileListDiv"), files[i].name, files[i].size, rowCount, files[i].nfname); // 파일 업로드 상태바 생성
             sendFileToServer(fd,status); // 서버로 파일 전송 함수 호출
 			
 			rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
@@ -187,7 +187,7 @@ $(document).ready(function() {
     }
 
 	// Status bar 생성 함수
-    function createStatusbar(obj,name,size,no){
+    function createStatusbar(obj, name, size, no){
 		console.log("----------start createStatusBar------------");
         //console.log(obj.html());
 		
@@ -200,7 +200,7 @@ $(document).ready(function() {
             sizeStr = sizeKB.toFixed(2)+" KB"; // KB로 표시
         }
 		
-        var row='<ul class="contents" id="fileListUl">';
+        var row = '<ul class="contents" id="fileListUl">';
 		row += '<li class="selectWidth content checkboxWrap">';
 		row += '<input type="checkbox" id="masterEdit_attachFile'+no+'" name="masterEdit_attachFile" >';
 		row += '<label for="masterEdit_attachFile'+no+'"></label>';
@@ -210,6 +210,7 @@ $(document).ready(function() {
 		row += '</li>';
 		row += '<li class="content fileNameWidth">';
 		row += '<input type="text" value="' + name + '" id="filename" readonly class="notWriteInput" />';
+		row += '<input type="hidden" name="newFileCheckYn" value="Y">'; //
 		row += '</li>';
 		row += '<li class="content viewBtnBox">';
 		row += '<button class="viewDetailButton lightBlueBtn">보기</button>';
@@ -226,7 +227,7 @@ $(document).ready(function() {
 	                
     function sendFileToServer(formData,status) {
         var uploadURL = "/land/gover/fileUpload/post"; //Upload URL
-        var extraData ={}; //Extra Data.
+        var extraData = {}; //Extra Data.
         var jqXHR = $.ajax({
 			xhr: function() {
 			    var xhrobj = $.ajaxSettings.xhr(); // 기본 XMLHttpRequest 객체 생성
@@ -1065,8 +1066,10 @@ function toggleLineDisplay(value) {
 
 // '임시저장' 버튼 클릭 시, 폼 데이터를 로그로 출력
 $(document).on("click", "#draftSaveBtn", function() {
+	
 	console.log("----masterEdit.js 임시저장 버튼 클릭----")
 	console.log($("#saveForm").serialize());
+	
 	var formSerializeArray = $('#saveForm').serializeArray(); // 폼 데이터를 직렬화하여 배열로 저장
 	console.log(formSerializeArray); // 배열 형태로 폼 데이터 출력
 
@@ -1193,6 +1196,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 		let ga_file_seq = $(attachFileUls[i]).prev().prev().val() || '';
 		var fname = $(attachFileUls[i]).parent().parent().find("#filename").val() || '';
 		var wdate = $(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val() || '';
+		let newFileCheckYn = $("input[name='newFileCheckYn']").eq(i).val();
 		console.log(file_path);
 		console.log(fname);
 		console.log(wdate);
@@ -1202,6 +1206,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 		fileObj.ga_seq = ga_seq;
 		fileObj.ga_idx = ga_idx;
 		fileObj.ga_file_seq = ga_file_seq;
+		fileObj.newFileCheckYn = newFileCheckYn;
 		files.push(fileObj);
 	}
 
@@ -1256,16 +1261,14 @@ $(document).on("click", "#draftSaveBtn", function() {
 			console.log(response);
 			if (response.success = "Y") {
 				console.log("response.success Y");
-				//console.log("response.resultData length:"+response.resultData.length);
 				alert("정상적으로 등록 되었습니다.");
-				/*$("#popup_bg").show();
-				$("#popup").show(500);
-				//$("#addrPopupLayer tbody td").remove();
-				for(var i=0;i<response.resultData.length;i++){
-					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-				}*/
-			}
-			else {
+				
+				//임시저장 버튼 또누를수 있으므로 정상적으로 저장 완료되면 첨부파일 속성들을 새파일이 아닌걸로 변경
+				for(let k = 0 ; k < $("input[name='newFileCheckYn']").length ; k++){
+					$("input[name='newFileCheckYn']").eq(k).val('N');
+				}
+				
+			} else {
 				console.log("response.success N");
 			}
 		},
@@ -1274,6 +1277,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 			return false;
 		}
 	}); // end ajax
+	
 });
 
 
@@ -1720,7 +1724,7 @@ $(document).on("click","#deleteFileBtn",function(){
 	
 	console.log(delFiles);
 	
-	var param={
+	var param = {
 		"fileIds":delFiles
 	};
 	
@@ -1771,19 +1775,7 @@ $(document).on("click","#deleteFileBtn",function(){
 			
 	}
 	
-	
-	
 	//$('#searchResultPopDiv').replaceWith();
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 })
 
 /* 손지민 2024-10-01 - 허가관청 이력보기 팝업 -- 상단에 대체 코드 있음. 이 코드 사용 안 함. */

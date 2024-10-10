@@ -1031,6 +1031,7 @@
 										<input type="hidden" name="ga_seq" th:id="'seq'" th:value="${file.ga_seq}">
 										<input type="hidden" name="ga_file_seq" th:id="'file_seq'" th:value="${file.ga_file_seq}">
 										<input type="hidden" name="ga_file_path" th:id="'file_path'" th:value="${file.ga_file_path}">
+										<input type="hidden" name="newFileCheckYn" value="N">
 										<input type="checkbox" th:id="'masterEdit_attachFile' + ${iterStat.index + 1}"
 											name="masterEdit_attachFile" />
 										<label th:for="'masterEdit_attachFile' + ${iterStat.index + 1}"></label>

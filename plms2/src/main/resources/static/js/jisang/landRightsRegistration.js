@@ -1034,20 +1034,23 @@ $(document).on("change","#landRightsRegistSelectBox09",function(){
 	                    this.abort = $("<div class='abort'>중지</div>").appendTo(this.statusbar);*/
 						
 						var sizeStr="";
-						                        var sizeKB = size/1024;
-						                        if(parseInt(sizeKB) > 1024){
-						                            var sizeMB = sizeKB/1024;
-						                            sizeStr = sizeMB.toFixed(2)+" MB";
-						                        }else{
-						                            sizeStr = sizeKB.toFixed(2)+" KB";
-						                        }
+	                    var sizeKB = size/1024;
+	                    if(parseInt(sizeKB) > 1024){
+	                        var sizeMB = sizeKB/1024;
+	                        sizeStr = sizeMB.toFixed(2)+" MB";
+	                    }else{
+	                        sizeStr = sizeKB.toFixed(2)+" KB";
+	                    }
 						
 	                    var row='<ul class="contents" id="fileListUl">';
 						row+='<li class="content01 content checkboxWrap">';
 						row+='<input type="checkbox" id="landRightsRegistration_attachFile'+no+'" name="landRightsRegistration_attachFile" >';
 						row+='<label for="landRightsRegistration_attachFile'+no+'"></label>';
 						row+='</li>';
-						row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
+						row+='<li class="content02 content">';
+						row+='<input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly>';
+						row+='<input type="hidden" name="newFileCheckYn" value="Y">';	//파일추가 유무 판단
+						row+='</li></ul>';
 	                    obj.after(row);
 						
 						var radio=$(row).find('input');

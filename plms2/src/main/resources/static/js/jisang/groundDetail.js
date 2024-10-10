@@ -79,6 +79,7 @@ $(document).ready(function () {
 		row += '<li class="content fileNameWidth">';
 		row += '<input type="text" value="" id="filepath" readonly class="notWriteInput" hidden />';
 		row += '<input type="text" value="' + name + '" id="filename" readonly class="notWriteInput" />';
+		row += '<input type="hidden" name="newFileCheckYn" value="Y">';	//새로운 첨부파일 파악 여부
 		row += '</li>';
 		row += '<li class="content viewBtnBox">';
 		//row += '<button class="viewDetailButton lightBlueBtn">보기</button>';

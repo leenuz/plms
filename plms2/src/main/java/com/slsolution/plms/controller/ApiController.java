@@ -754,11 +754,11 @@ public class ApiController {
 
             HashMap filesMap = new HashMap();
         	
-//
- 			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
- 			 String dataPath = GC.getPnuAtcFileDir()+"/"+json.get("manage_no"); //설정파일로 뺀다.
+            String chageFileName = CommonUtil.filenameAutoChange(jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", "")); 
+ 			String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+ 			String dataPath = GC.getPnuAtcFileDir()+"/"+json.get("manage_no"); //설정파일로 뺀다.
  			 
- 			 CommonUtil.moveFile(jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", ""), tempPath, dataPath);
+ 			CommonUtil.moveFile(jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", ""), tempPath, dataPath, chageFileName);
             
             
             

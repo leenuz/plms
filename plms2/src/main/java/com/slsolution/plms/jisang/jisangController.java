@@ -209,10 +209,13 @@ public class jisangController {
     			filesMap.put("fseq",i);
     			filesMap.put("fname",fname);
 
-    			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
-    			 String dataPath = GC.getJisangFileDataDir(); //설정파일로 뺀다.
-    			 filesMap.put("fpath",dataPath+"/"+fname);
-    			 CommonUtil.moveFile(fname, tempPath, dataPath);
+    			String chageFileName = CommonUtil.filenameAutoChange(fname);
+    			String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+    			String dataPath = GC.getJisangFileDataDir(); //설정파일로 뺀다.
+    			filesMap.put("fpath",dataPath+"/"+fname);
+    			
+    			CommonUtil.moveFile(fname, tempPath, dataPath, chageFileName);
+    			
 //    			log.info("filesMap:"+filesMap);
     			mainService.InsertQuery("jisangSQL.insertJisangUploadData", filesMap);
     		}
@@ -653,24 +656,34 @@ public class jisangController {
 		        		log.info("fname:"+fname);
 		        		if (fname.equals("") || fname==null ) continue;
 		        		
-		        		
+		        		String chageFileName = CommonUtil.filenameAutoChange(fname);
 		        		HashMap<String, Object> filesMap= new HashMap<>();
+		        		
 		        		filesMap.put("PMT_NO",resp_PMT_NO);
 		    			//filesMap.put("seq",String.format("%06d",i));
 		    			filesMap.put("fseq",i);
 		    			filesMap.put("FILE_GUBUN",Integer.parseInt(key));
 		    			filesMap.put("FILE_NM",fname);
-		    			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
-		     			 String dataPath = GC.getJisangFileDataDir()+"/jisangPermit/"+resp_PMT_NO; //설정파일로 뺀다.
-		     			 log.info("tepPath:"+tempPath);
+		    			
+		    			String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+		     			String dataPath = GC.getJisangFileDataDir()+"/jisangPermit/"+resp_PMT_NO; //설정파일로 뺀다.
+		     			
+		     			log.info("tepPath:"+tempPath);
 		     			log.info("dataPath:"+dataPath);
-		     			if (CommonUtil.isFileExists(tempPath, fname)) {
-		     				long unixTimeMillis = System.currentTimeMillis();
-			     			  String nfilename=String.valueOf(unixTimeMillis);
-			     			 filesMap.put("FILE_PATH",dataPath+"/"+nfilename);
-			     			 CommonUtil.moveFile1(fname,nfilename, tempPath, dataPath);
-			     			log.info("filesMap:"+filesMap);
-		     	        } 
+		     			
+//		     			if (CommonUtil.isFileExists(tempPath, fname)) {
+//		     				long unixTimeMillis = System.currentTimeMillis();
+//			     			  String nfilename=String.valueOf(unixTimeMillis);
+//			     			 filesMap.put("FILE_PATH",dataPath+"/"+nfilename);
+//			     			 CommonUtil.moveFile1(fname,nfilename, tempPath, dataPath);
+//			     			log.info("filesMap:"+filesMap);
+//		     	        }
+		     			
+		     			filesMap.put("FILE_PATH",dataPath +"/"+ chageFileName);
+		     			
+		     			CommonUtil.moveFile(fname, tempPath, dataPath, chageFileName);
+		     			
+		     			log.info("filesMap:"+filesMap);
 		     			
 		     			
 		     			
@@ -3365,103 +3378,144 @@ log.info("data:"+data.get(0));
 	    		
 	    		if (requestJsonObj.getString("req_doc_file01")!=null && requestJsonObj.getString("req_doc_file01")!="" && !requestJsonObj.getString("req_doc_file01").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
+	    			
 	    			docMap.put("jisang_no",  jisang_no);
 	    			docMap.put("fseq","1");
 	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file01"));
+	    			
+	    			String chageFileName = CommonUtil.filenameAutoChange(requestJsonObj.getString("req_doc_file01"));
 	    			String fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 	    			String tmp=GC.getJisangFileTempDir();
 	    			log.info("fpath:"+fpath);
+	    			
 	    			docMap.put("file_path",  fpath);
+	    			
 	    			try {
-	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file01"), tmp, fpath);
-	    			}catch(Exception e) {
-	    				
+	    				CommonUtil.moveFile(requestJsonObj.getString("req_doc_file01"), tmp, fpath, chageFileName);
+	    			} catch(Exception e) {
+	    				e.printStackTrace();
 	    			}
 	    			 docArray.add(docMap);
 	    		}
 	    		
 	    		if (requestJsonObj.getString("req_doc_file02")!=null && requestJsonObj.getString("req_doc_file02")!="" && !requestJsonObj.getString("req_doc_file02").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
+	    			
 	    			docMap.put("jisang_no",  jisang_no);
 	    			docMap.put("fseq","2");
 	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file02"));
+	    			
+	    			String chageFileName = CommonUtil.filenameAutoChange(requestJsonObj.getString("req_doc_file02"));
 	    			String fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 	    			String tmp=GC.getJisangFileTempDir();
+	    			
 	    			docMap.put("file_path",  fpath);
-	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file02"), tmp, fpath);
-	    			 docArray.add(docMap);
+	    			
+	    			CommonUtil.moveFile(requestJsonObj.getString("req_doc_file02"), tmp, fpath, chageFileName);
+	    			docArray.add(docMap);
 	    		}
 	    		
 	    		if (requestJsonObj.getString("req_doc_file03")!=null && requestJsonObj.getString("req_doc_file03")!="" && !requestJsonObj.getString("req_doc_file03").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
+	    			
 	    			docMap.put("jisang_no",  jisang_no);
 	    			docMap.put("fseq","3");
 	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file03"));
+	    			
+	    			String chageFileName = CommonUtil.filenameAutoChange(requestJsonObj.getString("req_doc_file03"));
 	    			String fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 	    			String tmp=GC.getJisangFileTempDir();
+	    			
 	    			docMap.put("file_path",  fpath);
-	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file03"), tmp, fpath);
-	    			 docArray.add(docMap);
+	    			CommonUtil.moveFile(requestJsonObj.getString("req_doc_file03"), tmp, fpath, chageFileName);
+	    			
+	    			docArray.add(docMap);
 	    		}
 	    		
 	    		if (requestJsonObj.getString("req_doc_file04")!=null && requestJsonObj.getString("req_doc_file04")!="" && !requestJsonObj.getString("req_doc_file04").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
+	    			
 	    			docMap.put("jisang_no",  jisang_no);
 	    			docMap.put("fseq","4");
 	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file04"));
+	    			
+	    			String chageFileName = CommonUtil.filenameAutoChange(requestJsonObj.getString("req_doc_file04"));
 	    			String fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 	    			String tmp=GC.getJisangFileTempDir();
+	    			
 	    			docMap.put("file_path",  fpath);
-	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file04"), tmp, fpath);
-	    			 docArray.add(docMap);
+	    			
+	    			CommonUtil.moveFile(requestJsonObj.getString("req_doc_file04"), tmp, fpath, chageFileName);
+	    			docArray.add(docMap);
 	    		}
 	    		
 	    		if (requestJsonObj.getString("req_doc_file05")!=null && requestJsonObj.getString("req_doc_file05")!="" && !requestJsonObj.getString("req_doc_file05").equals("")) {
+	    			
 	    			HashMap<String,String> docMap = new HashMap();
+	    			
 	    			docMap.put("jisang_no",  jisang_no);
 	    			docMap.put("fseq","5");
 	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file05"));
+	    			
+	    			String chageFileName = CommonUtil.filenameAutoChange(requestJsonObj.getString("req_doc_file05"));
 	    			String fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 	    			String tmp=GC.getJisangFileTempDir();
+	    			
 	    			docMap.put("file_path",  fpath);
-	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file05"), tmp, fpath);
-	    			 docArray.add(docMap);
+	    			
+	    			CommonUtil.moveFile(requestJsonObj.getString("req_doc_file05"), tmp, fpath, chageFileName);
+	    			docArray.add(docMap);
 	    		}
 	    		
 	    		if (requestJsonObj.getString("req_doc_file06")!=null && requestJsonObj.getString("req_doc_file06")!="" && !requestJsonObj.getString("req_doc_file06").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
+	    			
 	    			docMap.put("jisang_no",  jisang_no);
 	    			docMap.put("fseq","6");
 	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file06"));
+	    			
+	    			String chageFileName = CommonUtil.filenameAutoChange(requestJsonObj.getString("req_doc_file06"));
 	    			String fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 	    			String tmp=GC.getJisangFileTempDir();
+	    			
 	    			docMap.put("file_path",  fpath);
-	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file06"), tmp, fpath);
-	    			 docArray.add(docMap);
+	    			
+	    			CommonUtil.moveFile(requestJsonObj.getString("req_doc_file06"), tmp, fpath, chageFileName);
+	    			docArray.add(docMap);
 	    		}
 	    		
 	    		if (requestJsonObj.getString("req_doc_file07")!=null && requestJsonObj.getString("req_doc_file07")!="" && !requestJsonObj.getString("req_doc_file07").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
+	    			
 	    			docMap.put("jisang_no",  jisang_no);
 	    			docMap.put("fseq","7");
 	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file07"));
+	    			
+	    			String chageFileName = CommonUtil.filenameAutoChange(requestJsonObj.getString("req_doc_file07"));
 	    			String fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 	    			String tmp=GC.getJisangFileTempDir();
+	    			
 	    			docMap.put("file_path",  fpath);
-	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file07"), tmp, fpath);
-	    			 docArray.add(docMap);
+	    			
+	    			CommonUtil.moveFile(requestJsonObj.getString("req_doc_file07"), tmp, fpath, chageFileName);
+	    			docArray.add(docMap);
 	    		}
 	    		
 	    		if (requestJsonObj.getString("req_doc_file08")!=null && requestJsonObj.getString("req_doc_file08")!="" && !requestJsonObj.getString("req_doc_file08").equals("")) {
 	    			HashMap<String,String> docMap = new HashMap();
+	    			
 	    			docMap.put("jisang_no",  jisang_no);
 	    			docMap.put("fseq","8");
 	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file08"));
+	    			
+	    			String chageFileName = CommonUtil.filenameAutoChange(requestJsonObj.getString("req_doc_file08"));
 	    			String fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 	    			String tmp=GC.getJisangFileTempDir();
+	    			
 	    			docMap.put("file_path",  fpath);
-	    			 CommonUtil.moveFile(requestJsonObj.getString("req_doc_file08"), tmp, fpath);
-	    			 docArray.add(docMap);
+	    			
+	    			CommonUtil.moveFile(requestJsonObj.getString("req_doc_file08"), tmp, fpath, chageFileName);
+	    			docArray.add(docMap);
 	    		}
 	    		
 	    		for(int j=0;j<docArray.size();j++) {
@@ -3732,95 +3786,131 @@ log.info("data:"+data.get(0));
 			
 			int docCount=0;
 			
-			
 			ArrayList<HashMap<String, String>> docArray = new ArrayList<>();
 			if (httpRequest.getParameter("req_doc_file01")!=null && httpRequest.getParameter("req_doc_file01")!="" && !httpRequest.getParameter("req_doc_file01").equals("")) {
+				
 				HashMap<String,String> docMap = new HashMap();
+				
 				docMap.put("jisang_no",  jisang_no);
 				docMap.put("fseq","1");
 				docMap.put("file_name",  httpRequest.getParameter("req_doc_file01"));
+				
+				String chageFileName = CommonUtil.filenameAutoChange(httpRequest.getParameter("req_doc_file01"));
 				String fpath=GC.getJisangReqDoc1Dir();
 				String tmp=GC.getJisangFileTempDir();
 				docMap.put("file_path",  fpath);
-				 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file01"), tmp, fpath);
-				 docArray.add(docMap);
+				CommonUtil.moveFile(httpRequest.getParameter("req_doc_file01"), tmp, fpath, chageFileName);
+				docArray.add(docMap);
 			}
 			if (httpRequest.getParameter("req_doc_file02")!=null && httpRequest.getParameter("req_doc_file02")!="" && !httpRequest.getParameter("req_doc_file02").equals("")) {
 				HashMap<String,String> docMap = new HashMap();
+				
 				docMap.put("jisang_no",  jisang_no);
 				docMap.put("fseq","2");
 				docMap.put("file_name",  httpRequest.getParameter("req_doc_file02"));
+				
+				String chageFileName = CommonUtil.filenameAutoChange(httpRequest.getParameter("req_doc_file02"));
 				String fpath=GC.getJisangReqDoc1Dir();
 				String tmp=GC.getJisangFileTempDir();
+				
 				docMap.put("file_path",  fpath);
-				 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file02"), tmp, fpath);
-				 docArray.add(docMap);
+				
+				CommonUtil.moveFile(httpRequest.getParameter("req_doc_file02"), tmp, fpath, chageFileName);
+				docArray.add(docMap);
 			}
 			if (httpRequest.getParameter("req_doc_file03")!=null && httpRequest.getParameter("req_doc_file03")!="" && !httpRequest.getParameter("req_doc_file03").equals("")) {
+				
 				HashMap<String,String> docMap = new HashMap();
+				
 				docMap.put("jisang_no",  jisang_no);
 				docMap.put("fseq","3");
 				docMap.put("file_name",  httpRequest.getParameter("req_doc_file03"));
+				
+				String chageFileName = CommonUtil.filenameAutoChange(httpRequest.getParameter("req_doc_file03"));
 				String fpath=GC.getJisangReqDoc1Dir();
 				String tmp=GC.getJisangFileTempDir();
 				docMap.put("file_path",  fpath);
-				 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file03"), tmp, fpath);
-				 docArray.add(docMap);
+				
+				CommonUtil.moveFile(httpRequest.getParameter("req_doc_file03"), tmp, fpath, chageFileName);
+				docArray.add(docMap);
 			}
 			if (httpRequest.getParameter("req_doc_file04")!=null && httpRequest.getParameter("req_doc_file04")!="" && !httpRequest.getParameter("req_doc_file04").equals("")) {
 				HashMap<String,String> docMap = new HashMap();
+				
 				docMap.put("jisang_no",  jisang_no);
 				docMap.put("fseq","4");
 				docMap.put("file_name",  httpRequest.getParameter("req_doc_file04"));
+				
+				String chageFileName = CommonUtil.filenameAutoChange(httpRequest.getParameter("req_doc_file04"));
 				String fpath=GC.getJisangReqDoc1Dir();
 				String tmp=GC.getJisangFileTempDir();
 				docMap.put("file_path",  fpath);
-				 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file04"), tmp, fpath);
+				 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file04"), tmp, fpath, chageFileName);
 				 docArray.add(docMap);
 			}
 			if (httpRequest.getParameter("req_doc_file05")!=null && httpRequest.getParameter("req_doc_file05")!="" && !httpRequest.getParameter("req_doc_file05").equals("")) {
 				HashMap<String,String> docMap = new HashMap();
+				
 				docMap.put("jisang_no",  jisang_no);
 				docMap.put("fseq","5");
 				docMap.put("file_name",  httpRequest.getParameter("req_doc_file05"));
+				
+				String chageFileName = CommonUtil.filenameAutoChange(httpRequest.getParameter("req_doc_file05"));
 				String fpath=GC.getJisangReqDoc1Dir();
 				String tmp=GC.getJisangFileTempDir();
+				
 				docMap.put("file_path",  fpath);
-				 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file05"), tmp, fpath);
-				 docArray.add(docMap);
+				
+				CommonUtil.moveFile(httpRequest.getParameter("req_doc_file05"), tmp, fpath, chageFileName);
+				docArray.add(docMap);
 			}
 			if (httpRequest.getParameter("req_doc_file06")!=null && httpRequest.getParameter("req_doc_file06")!="" && !httpRequest.getParameter("req_doc_file06").equals("")) {
 				HashMap<String,String> docMap = new HashMap();
+				
 				docMap.put("jisang_no",  jisang_no);
 				docMap.put("fseq","6");
 				docMap.put("file_name",  httpRequest.getParameter("req_doc_file06"));
+				
+				String chageFileName = CommonUtil.filenameAutoChange(httpRequest.getParameter("req_doc_file06"));
 				String fpath=GC.getJisangReqDoc1Dir();
 				String tmp=GC.getJisangFileTempDir();
+				
 				docMap.put("file_path",  fpath);
-				 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file06"), tmp, fpath);
-				 docArray.add(docMap);
+				
+				CommonUtil.moveFile(httpRequest.getParameter("req_doc_file06"), tmp, fpath, chageFileName);
+				docArray.add(docMap);
 			}
 			if (httpRequest.getParameter("req_doc_file07")!=null && httpRequest.getParameter("req_doc_file07")!="" && !httpRequest.getParameter("req_doc_file07").equals("")) {
 				HashMap<String,String> docMap = new HashMap();
+				
 				docMap.put("jisang_no",  jisang_no);
 				docMap.put("fseq","7");
 				docMap.put("file_name",  httpRequest.getParameter("req_doc_file07"));
+				
+				String chageFileName = CommonUtil.filenameAutoChange(httpRequest.getParameter("req_doc_file07"));
 				String fpath=GC.getJisangReqDoc1Dir();
 				String tmp=GC.getJisangFileTempDir();
+				
 				docMap.put("file_path",  fpath);
-				 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file07"), tmp, fpath);
-				 docArray.add(docMap);
+				
+				CommonUtil.moveFile(httpRequest.getParameter("req_doc_file07"), tmp, fpath, chageFileName);
+				docArray.add(docMap);
 			}
 			if (httpRequest.getParameter("req_doc_file08")!=null && httpRequest.getParameter("req_doc_file08")!="" && !httpRequest.getParameter("req_doc_file08").equals("")) {
 				HashMap<String,String> docMap = new HashMap();
+				
 				docMap.put("jisang_no",  jisang_no);
 				docMap.put("fseq","8");
 				docMap.put("file_name",  httpRequest.getParameter("req_doc_file08"));
+				
+				String chageFileName = CommonUtil.filenameAutoChange(httpRequest.getParameter("req_doc_file08"));
 				String fpath=GC.getJisangReqDoc1Dir();
 				String tmp=GC.getJisangFileTempDir();
+				
 				docMap.put("file_path",  fpath);
-				 CommonUtil.moveFile(httpRequest.getParameter("req_doc_file08"), tmp, fpath);
-				 docArray.add(docMap);
+				
+				CommonUtil.moveFile(httpRequest.getParameter("req_doc_file08"), tmp, fpath, chageFileName);
+				docArray.add(docMap);
 			}
 	//		
 			params.put("jisa",jisa);
@@ -3980,10 +4070,15 @@ log.info("data:"+data.get(0));
 	    			filesMap.put("fseq",i);
 	    			filesMap.put("FILE_GUBUN",i);
 	    			filesMap.put("FILE_NM",fname);
-	    			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
-	     			 String dataPath = GC.getJisangFileDataDir()+"/jisangCancel/"+jisangNo; //설정파일로 뺀다.
-	     			 filesMap.put("FILE_PATH",dataPath+"/"+fname);
-	     			 CommonUtil.moveFile(fname, tempPath, dataPath);
+	    			
+	    			String chageFileName = CommonUtil.filenameAutoChange(fname);
+	    			String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+	     			String dataPath = GC.getJisangFileDataDir()+"/jisangCancel/"+jisangNo; //설정파일로 뺀다.
+	     			
+	     			filesMap.put("FILE_PATH",dataPath +"/"+ chageFileName);
+	     			
+	     			CommonUtil.moveFile(fname, tempPath, dataPath, chageFileName);
+	     			
 	     			log.info("filesMap:"+filesMap);
 	     			
 	     			
@@ -5830,18 +5925,24 @@ log.info(" 3932 params:"+params);
 					     			filesMap.put("seq",String.format("%06d",i));
 					     			filesMap.put("fseq",i);
 					     			filesMap.put("fname",file_name);
-//
-					     			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
-					     			 String dataPath = GC.getJisangFileDataDir()+"/"+str_manageNo; //설정파일로 뺀다.
-					     			 
-//					     			  long unixTimeMillis = System.currentTimeMillis();
-//					     			  String nfilename=String.valueOf(unixTimeMillis);
-					     			 filesMap.put("fpath",dataPath+"/"+file_name);
-					     			 CommonUtil.moveFile(file_name, tempPath, dataPath);
+					     			
+					     			String chageFileName = CommonUtil.filenameAutoChange(file_name);
+					     			String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+					     			String dataPath = GC.getJisangFileDataDir()+"/"+str_manageNo; //설정파일로 뺀다.
+
+					     			//long unixTimeMillis = System.currentTimeMillis();
+					     			//String nfilename=String.valueOf(unixTimeMillis);
+					     			
+					     			filesMap.put("fpath",dataPath+"/"+chageFileName);
+					     			
+					     			CommonUtil.moveFile(file_name, tempPath, dataPath, chageFileName);
 					     			log.info("filesMap:"+filesMap);
+					     			
 					     			mainService.InsertQuery("jisangSQL.insertJisangUploadData", filesMap);
+					     			
 					     			params.put("GUBUN", "파일정보");
 									params.put("CONT", "파일등록(" + file_name + ")");
+									
 									mainService.InsertQuery("jisangSQL.insertJisangModifyHistory", params);
 					
 				}
