@@ -2265,7 +2265,7 @@ log.info("file_list:"+file_list);
 					
 					// fileseq 가져오기
 					for (int i = 0; i < fileArr.length(); i++) {
-						JSONObject fobj=new JSONObject(fileArr.get(i).toString());
+						JSONObject fobj = new JSONObject(fileArr.get(i).toString());
 						String filePath = fobj.getString("fpath");
 						String fileName = fobj.getString("fname");
 						String[] paths = Arrays.copyOf(filePath.split("/"), filePath.split("/").length - 1);
@@ -2283,15 +2283,18 @@ log.info("file_list:"+file_list);
 						HashMap<String, Object> filesMap = new HashMap<>();
 
 						filesMap.put("goverNo", str_GOVERNO);
-						filesMap.put("seq", String.format("%06d", i));
-						filesMap.put("fseq", nseq + i);
+						
 						filesMap.put("fname", fileName);
 						String tempPath = GC.getGoverFileTempDir(); // 설정파일로 뺀다.
 						String dataPath = GC.getGoverFileDataDir() + "/" + str_GOVERNO; // 설정파일로 뺀다.
 						if (!flag) {
 							filesMap.put("fpath", filePath);
+							filesMap.put("seq", fobj.getString("ga_seq"));
+							filesMap.put("fseq", fobj.getString("ga_file_seq"));
 						} else {
 							filesMap.put("fpath", dataPath + "/" + fileName);
+							filesMap.put("seq", String.format("%06d", i));
+							filesMap.put("fseq", nseq + i);
 						}
 						
 						CommonUtil.moveFile(fileName, tempPath, dataPath);

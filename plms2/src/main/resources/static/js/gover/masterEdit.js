@@ -1183,17 +1183,25 @@ $(document).on("click", "#draftSaveBtn", function() {
 	console.log(attachFileUls);
 	
 	var files = new Array();
-	let fileObj = {'ga_idx':'', 'file_seq':'', 'fname':'', 'wdate':'', 'fpath':''};
+	let fileObj = {'ga_seq':'', 'ga_file_seq':'', 'fname':'', 'wdate':'', 'fpath':'', 'ga_idx':''};
 	for (var i = 0; i < attachFileUls.length; i++) {
-		fileObj = {'ga_idx':'', 'file_seq':'', 'fname':'', 'wdate':'', 'fpath':''};
+		fileObj = {'ga_seq':'', 'ga_file_seq':'', 'fname':'', 'wdate':'', 'fpath':'', 'ga_idx':''};
 		//console.log($(attachFileUls[i]).parent().parent().html());
 		let file_path = $(attachFileUls[i]).prev().val() || '';
+		let ga_idx = $(attachFileUls[i]).prev().prev().prev().prev().val() || '';
+		let ga_seq = $(attachFileUls[i]).prev().prev().prev().val() || '';
+		let ga_file_seq = $(attachFileUls[i]).prev().prev().val() || '';
 		var fname = $(attachFileUls[i]).parent().parent().find("#filename").val() || '';
 		var wdate = $(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val() || '';
+		console.log(file_path);
+		console.log(fname);
+		console.log(wdate);
 		fileObj.wdate = wdate;
 		fileObj.fname = fname;
 		fileObj.fpath = file_path;
-		
+		fileObj.ga_seq = ga_seq;
+		fileObj.ga_idx = ga_idx;
+		fileObj.ga_file_seq = ga_file_seq;
 		files.push(fileObj);
 	}
 

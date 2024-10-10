@@ -2579,7 +2579,7 @@ WHERE COALESCE(JOIN_MST.GOVER_OWN_YN, 'N') = 'Y'
 		  ,#{seq}::integer
 		  ,#{fpath}
 		  ,#{fname}
-		  ,#{fseq}
+		  ,#{fseq}::integer
 		  
 		    )
 	
