@@ -5829,6 +5829,9 @@ log.info(" 3932 params:"+params);
 //
 					     			 String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
 					     			 String dataPath = GC.getJisangFileDataDir()+"/"+str_manageNo; //설정파일로 뺀다.
+					     			 
+//					     			  long unixTimeMillis = System.currentTimeMillis();
+//					     			  String nfilename=String.valueOf(unixTimeMillis);
 					     			 filesMap.put("fpath",dataPath+"/"+file_name);
 					     			 CommonUtil.moveFile(file_name, tempPath, dataPath);
 					     			log.info("filesMap:"+filesMap);
