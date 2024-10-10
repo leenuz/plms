@@ -1419,25 +1419,25 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append("let param = { \"filePath\":filePath, \"fileName\":fileName, \"fileJisangNo\":fileJisangNo, \"fileSeq\":fileSeq, \"fileGubun\":fileGubun }	\n");
 		sbHtml.append("$.ajax({");	//ajax 구간[S]
 		
-		sbHtml.append(" url: \"/land/common/downloadfile\", data : param, type:\"GET\",	");
-		sbHtml.append(" xhrFields: { responseType: \'blob\'},");
-		sbHtml.append(" success : function(data, status, xhr) {");
-		sbHtml.append(" let disposition = xhr.getResponseHeader(\'Content-Disposition\'); let filename = \'downloaded_file\';");
-		sbHtml.append(" if(disposition && disposition.indexOf('filename*=UTF-8\'\'') !== -1){	\n");
-		sbHtml.append(" 	filename = decodeURIComponent(disposition.split('filename*=UTF-8\'\'')[1])");
-		sbHtml.append(" }");
-		sbHtml.append(" let blob = new Blob([data],{ type: xhr.getResponseHeader('Content-Type')})");
-		sbHtml.append(" let link = document.createElement('a');");
-		sbHtml.append(" link.href = window.URL.createObjectURL(blob);");
-		sbHtml.append(" link.download = filename;");
-		sbHtml.append(" document.body.appendChild(link);");
-		sbHtml.append(" link.click();");
-		sbHtml.append(" document.body.removeChild(link);");
+		sbHtml.append(" url: \"/land/common/downloadfile\", data : param, type:\"GET\",		\n");
+		sbHtml.append(" xhrFields: { responseType: \'blob\'},	\n");
+		sbHtml.append(" success : function(data, status, xhr) {		\n");
+		sbHtml.append(" let disposition = xhr.getResponseHeader(\'Content-Disposition\'); let filename = \'downloaded_file\';	\n");
+		sbHtml.append(" if(disposition && disposition.indexOf('filename*=UTF-8\\'\\'') !== -1){	\n");
+		sbHtml.append(" 	filename = decodeURIComponent(disposition.split('filename*=UTF-8\\'\\'')[1]); \n");
+		sbHtml.append(" }	\n");
+		sbHtml.append(" let blob = new Blob([data],{ type: xhr.getResponseHeader('Content-Type')}); \n");
+		sbHtml.append(" let link = document.createElement('a');	\n");
+		sbHtml.append(" link.href = window.URL.createObjectURL(blob);	\n");
+		sbHtml.append(" link.download = filename;	\n");
+		sbHtml.append(" document.body.appendChild(link);	\n");
+		sbHtml.append(" link.click();	\n");
+		sbHtml.append(" document.body.removeChild(link);	\n");
 		sbHtml.append(" },");
-		sbHtml.append(" error: function(err) {console.error('파일 다운로드 실패', err);}");
+		sbHtml.append(" error: function(err) {console.error('파일 다운로드 실패', err); }	\n");
 		sbHtml.append("});");	//ajax 구간[E]
 		sbHtml.append("}	\n");
-		sbHtml.append("</script>\n");
+		sbHtml.append("</script>	\n");
 		
 		sbHtml.append(" </body>         \n");
 		sbHtml.append("                 \n");
