@@ -1599,7 +1599,7 @@ SELECT count(*)
 		  , #{bunhal_jisa}
 		  </if>
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(togiJijukArea)" >
-		  ,nullif(cast(#{togiJijukArea} as varchar),''):: integer
+		  ,nullif(cast(#{togiJijukArea} as varchar),''):: numeric
 		  </if>
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(yongdo)" >
 		  , #{yongdo}
@@ -1654,7 +1654,7 @@ SELECT count(*)
 		 , jb_jisa=#{bunhal_jisa}
 		 </if>
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(togiJijukArea)" >
-		 ,jb_jijuk_area=nullif(cast(#{togiJijukArea} as varchar),''):: integer
+		 ,jb_jijuk_area=nullif(cast(#{togiJijukArea} as varchar),''):: numeric
 		 </if>
 		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(yongdo)" >
 		 ,jb_yongdo=#{yongdo}
@@ -1967,7 +1967,7 @@ SELECT count(*)
 		  ,NULLIF(cast(#{chuideuk_money} as varchar),'')::numeric
 		  </if>
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jijuk_area)" >
-		  ,nullif(cast(#{jijuk_area} as varchar),''):: integer
+		  ,nullif(cast(#{jijuk_area} as varchar),''):: numeric
 		  </if>
 		  ,#{pipe_name}, #{sun_gubun}, #{yongdo}
 		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
