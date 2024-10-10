@@ -956,6 +956,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 //			}
 //			file_list = mainService.selectQuery("goverSQL.selectGoverRowDetail_FilesObject", params);
 			if (fileList.length()>0) file_list = mainService.selectQuery("goverSQL.selectGoverRowDetail_FilesObjectFromIdx", params);
+			log.info("fileList:"+fileList);
 //			System.out.println("$$$ params=" + params);
 			log.info("list:"+list.get(0));
 			if (list.size() > 0) {
@@ -1387,7 +1388,17 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				}
 				*/
 				////
-				sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile('"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "")+"','"+kibon_map.get("GOVER_NO")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), "")+"', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+				//sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile('"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "")+"','"+kibon_map.get("GOVER_NO")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), "")+"', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+				sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile('"
+				        + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "") + "','"
+				        + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "") + "','"
+				        + kibon_map.get("GOVER_NO") + "','"
+				        + cu.evl(
+				            ((HashMap) file_list.get(i)).get("ga_file_seq") != null ? 
+				            ((HashMap) file_list.get(i)).get("ga_file_seq").toString() : "", 
+				            "") 
+				        + "', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
 				sbHtml.append("            </td>               \n");
 				sbHtml.append("				 	</tr>");
 			}
