@@ -275,7 +275,8 @@ $(document).on("click","#addParentBtn",function(){
 			var ri_nm=$(inputEles[i]).parent().parent().find("#ri_nm").val();
 			var jibun=$(inputEles[i]).parent().parent().find("#jibun").val();
 			var addrcode=$(inputEles[i]).parent().parent().find("#addrcode").val();
-			var address=$(inputEles[i]).parent().parent().find(".popTitle_address").text().trim()+" "+jibun;
+			//var address=$(inputEles[i]).parent().parent().find(".popTitle_address").text().trim()+" "+jibun;
+			var address=sido_nm+" "+sgg_nm+" "+emd_nm+" "+ri_nm+" "+jibun;
 			//var sido_nm=$(inputEles[i]).parent().parent().find("#sido_nm").val();
 							console.log("address:"+address);
 							console.log("jimok:"+jimok);

@@ -84,9 +84,9 @@ public class ApprovalUtil implements ApplicationContextAware {
 //		
 		//String url="http://localhost:8081/land/api/dopcoApprovalTest"; //로컬 테스트
 
-		String url="http://echo.dopco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //운영
+		//String url="http://echo.dopco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //운영
 
-		//String url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //새 개발기 테스트
+		String url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //새 개발기 테스트
 		
 		String xmlString="";
 		xmlString=GetApprXmlget(DOCKEY,HTML,USERCD,SDATE,STIME,GUBUN);
