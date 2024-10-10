@@ -217,10 +217,11 @@
 									<li class="title01 title">연락처</li>
 									<li class="title06 title">주소</li>
 								</ul>
-								<ul class="contents lastContents" th:if="${right_list.size() == 0}">
+								<ul class="contents" th:if="${right_list == null || right_list.isEmpty()}">
 									<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents" th:each="val:${right_list}">
+								<ul class="contents" th:if="${right_list != null && !right_list.isEmpty()}"
+									th:each="val, iterStat : ${right_list}">
 									<li class="content01 content">
 										[[${val.right_name}]]
 									</li>
@@ -262,10 +263,11 @@
 									<li class="title04 title">파일저장</li>
 								</ul>
 								<div class="contentScr">
-									<ul class="contents lastContents" th:if="${file_list.size() == 0}">
-										<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+									<ul class="contents" th:if="${file_list == null || file_list.isEmpty()}">
+										<li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
 									</ul>
-									<ul class="contents" th:each="val:${file_list}">
+									<ul class="contents" th:if="${file_list != null && !file_list.isEmpty()}"
+										th:each="val, iterStat : ${file_list}">
 										<li class="content01 content">
 											[[${val.reg_date}]]
 										</li>
@@ -307,21 +309,22 @@
 									<li class="title04 title">내용</li>
 								</ul>
 								<div class="contentScr">
-									<ul class="contents lastContents" th:if="${modify_list.size() == 0}">
-										<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+									<ul class="contents" th:if="${modify_list == null || modify_list.isEmpty()}">
+										<li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
 									</ul>
-									<ul class="contents" th:each="val, valStat : ${modify_list}">
-										<li class="content01 content">
-											[[${valStat.index + 1}]]
+									<ul class="contents" th:if="${modify_list != null && !modify_list.isEmpty()}"
+									th:each="val, iterStat : ${modify_list}">
+										<li class="content01 content"><span
+											th:text="${iterStat.count}"></span>
 										</li>
-										<li class="content02 content">
-											[[${val.get('modifiy_date')}]]
+										<li class="content02 content"><span
+											th:text="${val.modify_date}"></span>
 										</li>
-										<li class="content03 content">
-											[[${val.get('gubun')}]]
+										<li class="content03 content"><span
+											th:text="${val.gubun}"></span>
 										</li>
-										<li class="content04 content">
-											[[${val.get('cont')}]]
+										<li class="content04 content"><span
+											th:text="${val.cont}"></span>
 										</li>
 									</ul>
 								</div>
@@ -398,25 +401,16 @@
 									<li class="title04 title">내용</li>
 									<li class="title03 title">사유</li>
 								</ul>
-								<ul class="contents lastContents" th:if="${dopcoIssueHistoryList == null or dopcoIssueHistoryList.size() == 0}">
-									<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+								<ul class="contents lastContents" th:if="${dopcoIssueHistoryList == null || dopcoIssueHistoryList.isEmpty()}">
+									<li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents lastContents" th:if="${dopcoIssueHistoryList != null and dopcoIssueHistoryList.size() > 0}">
-									<li class="content01 content">
-										[[${val.no}]]
-									</li>
-									<li class="content02 content">
-										[[${val.pih_history_type}]]
-									</li>
-									<li class="content03 content">
-										[[${val.pih_history_date}]]
-									</li>
-									<li class="content04 content">
-										[[${val.pih_content}]]
-									</li>
-									<li class="content03 content">
-										[[${val.pi_issue_comment}]]
-									</li>
+								<ul class="contents lastContents" th:if="${dopcoIssueHistoryList != null and dopcoIssueHistoryList.size() > 0}"
+								th:each="val, iterStat : ${dopcoIssueHistoryList}">
+									<li class="content01 content">[[${iterStat.count}]]</li><!-- 순번 -->
+									<li class="content02 content">[[${val.history_type}]]</li><!-- 구분 -->
+									<li class="content03 content">[[${val.history_date}]]</li><!-- 변경일자 -->
+									<li class="content04 content">[[${val.content}]]</li><!-- 내용 -->
+									<li class="content03 content">[[${val.issue_comment}]]</li><!-- 사유 -->
 								</ul>
 							</div>
 						</div>
@@ -437,10 +431,10 @@
 									<li class="title03 title">개정일자</li>
 									<li class="title04 title">다운로드</li>
 								</ul>
-								<ul class="contents lastContents" th:if="${dopcoIssueCodeAtcFileList.size() == 0}">
-									<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
+								<ul class="contents lastContents" th:if="${dopcoIssueCodeAtcFileList == null || dopcoIssueCodeAtcFileList.isEmpty()}">
+									<li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents" th:each="val:${dopcoIssueCodeAtcFileList}">
+								<ul class="contents" th:if="${dopcoIssueCodeAtcFileList != null && !dopcoIssueCodeAtcFileList.isEmpty()}" th:each="val:${dopcoIssueCodeAtcFileList}">
 									<li class="content01 content">
 										[[${val.icaf_manual_title}]]
 									</li>
