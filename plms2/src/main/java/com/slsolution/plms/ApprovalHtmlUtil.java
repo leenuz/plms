@@ -1393,7 +1393,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				*/
 				////
 				//sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile('"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "")+"','"+kibon_map.get("GOVER_NO")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), "")+"', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
-				sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile('"
+				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"downloadFile('"
 				        + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "") + "','"
 				        + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "") + "','"
 				        + kibon_map.get("GOVER_NO") + "','"

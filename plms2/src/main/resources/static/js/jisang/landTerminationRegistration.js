@@ -734,7 +734,7 @@ function landTerminationSangsinSave(params){
 						url:url,
 						type:'POST',
 						contentType:"application/json",
-						data:JSON.stringify(dataObj),
+						data:JSON.stringify(params),
 
 						dataType:"json",
 						beforeSend:function(request){
