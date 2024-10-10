@@ -81,13 +81,12 @@ public class ApprovalUtil implements ApplicationContextAware {
 		if ("".equals(CU.evl(DOCKEY, ""))|| "".equals(CU.evl(USERCD, ""))) {
 			return false;
 		}
-//		String url="https://apv.dopco.co.kr/Service/PLMSWebService.asmx";
-//		String url="http://echo.depco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx?,op="+GUBUN; //개발
+//		
 		//String url="http://localhost:8081/land/api/dopcoApprovalTest"; //로컬 테스트
-		String url="http://echo.depco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //운영
+		
 		//String url="http://echo.dopco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx";
-		//String url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //새 개발기 테스트
-		//String url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx/GetHoldUsageDataforXML";
+		String url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //새 개발기 테스트
+		
 		String xmlString="";
 		xmlString=GetApprXmlget(DOCKEY,HTML,USERCD,SDATE,STIME,GUBUN);
 		
