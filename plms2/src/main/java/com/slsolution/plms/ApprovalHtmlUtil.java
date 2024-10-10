@@ -1373,6 +1373,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 					type = pathSplit[1].toLowerCase();
 				}
 				// System.out.println("type="+type);
+				/*
 				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
 					sbHtml.append("            <script>               \n");
 					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
@@ -1384,8 +1385,9 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 					sbHtml.append("            </script>               \n");
 					//sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile('"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "")+"','"+kibon_map.get("GOVER_NO")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), "")+"', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 				}
+				*/
 				////
-				//sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile('"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "")+"','"+kibon_map.get("GOVER_NO")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), "")+"', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+				sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile('"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "")+"','"+kibon_map.get("GOVER_NO")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), "")+"', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 				sbHtml.append("            </td>               \n");
 				sbHtml.append("				 	</tr>");
 			}
@@ -1400,9 +1402,31 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append("         </div>  \n");
 		sbHtml.append("     </div>      \n");
 		
+		//script
+		sbHtml.append("<script>	\n");
+		sbHtml.append("function downloadFile(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {	\n");
+		sbHtml.append("let param = { \"filePath\":filePath, \"fileName\":fileName, \"fileJisangNo\":fileJisangNo, \"fileSeq\":fileSeq, \"fileGubun\":fileGubun }	\n");
+		sbHtml.append("$.ajax({");	//ajax 구간[S]
 		
-		
-		
+		sbHtml.append(" url: \"/land/common/downloadfile\", data : param, type:\"GET\",	");
+		sbHtml.append(" xhrFields: { responseType: \'blob\'},");
+		sbHtml.append(" success : function(data, status, xhr) {");
+		sbHtml.append(" let disposition = xhr.getResponseHeader(\'Content-Disposition\'); let filename = \'downloaded_file\';");
+		sbHtml.append(" if(disposition && disposition.indexOf('filename*=UTF-8\'\'') !== -1){	\n");
+		sbHtml.append(" 	filename = decodeURIComponent(disposition.split('filename*=UTF-8\'\'')[1])");
+		sbHtml.append(" }");
+		sbHtml.append(" let blob = new Blob([data],{ type: xhr.getResponseHeader('Content-Type')})");
+		sbHtml.append(" let link = document.createElement('a');");
+		sbHtml.append(" link.href = window.URL.createObjectURL(blob);");
+		sbHtml.append(" link.download = filename;");
+		sbHtml.append(" document.body.appendChild(link);");
+		sbHtml.append(" link.click();");
+		sbHtml.append(" document.body.removeChild(link);");
+		sbHtml.append(" },");
+		sbHtml.append(" error: function(err) {console.error('파일 다운로드 실패', err);}");
+		sbHtml.append("});");	//ajax 구간[E]
+		sbHtml.append("}	\n");
+		sbHtml.append("</script>\n");
 		
 		sbHtml.append(" </body>         \n");
 		sbHtml.append("                 \n");
