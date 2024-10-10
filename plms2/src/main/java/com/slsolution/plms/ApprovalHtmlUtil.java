@@ -1367,7 +1367,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>");
 				String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
 				sbHtml.append("            <td>                \n");
-				sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+				//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
 
 				// 파일다운로드 수정 2017.01.16*/
 				String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM" + i)), ""); // 파일네임
@@ -1393,15 +1393,15 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				*/
 				////
 				//sbHtml.append("<button class=\"fileDownloadBtn\" th:onclick=\"downloadFile('"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "")+"','"+kibon_map.get("GOVER_NO")+"','"+cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_seq"), "")+"', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
-				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"downloadFile('"
-				        + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "") + "','"
-				        + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "") + "','"
-				        + kibon_map.get("GOVER_NO") + "','"
-				        + cu.evl(
-				            ((HashMap) file_list.get(i)).get("ga_file_seq") != null ? 
-				            ((HashMap) file_list.get(i)).get("ga_file_seq").toString() : "", 
-				            "") 
-				        + "', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+//				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"downloadFile('"
+//				        + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "") + "','"
+//				        + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "") + "','"
+//				        + kibon_map.get("GOVER_NO") + "','"
+//				        + cu.evl(
+//				            ((HashMap) file_list.get(i)).get("ga_file_seq") != null ? 
+//				            ((HashMap) file_list.get(i)).get("ga_file_seq").toString() : "", 
+//				            "") 
+//				        + "', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 				
 //				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
 //					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "") 
@@ -1420,7 +1420,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 					        ((HashMap) file_list.get(i)).get("ga_file_seq") != null ? 
 					        ((HashMap) file_list.get(i)).get("ga_file_seq").toString() : "", 
 					        "") 
-					    + "&fileGubun=gover', '_blank')\">다운로드1 <span class=\"downloadIcon\"></span></button>\n");
+					    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 
 
 				sbHtml.append("            </td>               \n");
