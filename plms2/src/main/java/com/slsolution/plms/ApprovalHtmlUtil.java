@@ -1423,7 +1423,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		sbHtml.append("let param = { \"filePath\":filePath, \"fileName\":fileName, \"fileJisangNo\":fileJisangNo, \"fileSeq\":fileSeq, \"fileGubun\":fileGubun }	\n");
 		sbHtml.append("$.ajax({ 	\n");	//ajax 구간[S]
 		
-		sbHtml.append(" url: \"/land/common/downloadfile\", data : param, type:\"GET\",		\n");
+		sbHtml.append(" url: \"https://dgisdev.dopco.co.kr:8443/land/common/downloadfile\", data : param, type:\"GET\",		\n");
 		sbHtml.append(" xhrFields: { responseType: 'blob'},	\n");
 		sbHtml.append(" success : function(data, status, xhr) {		\n");
 		sbHtml.append(" let disposition = xhr.getResponseHeader('Content-Disposition'); let filename = 'downloaded_file';	\n");
