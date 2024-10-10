@@ -1413,7 +1413,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 	}
 
 	public String getJisang_termination_HTML(String TYPE, String JISANG_NO, String NextSeq, String FileSeq, String PmtNo, HttpServletRequest request, HttpServletResponse response) {
-
+log.info("-------------------getJisang_termination_HTML----------------------------");
 		MainService mainService = context.getBean(MainService.class);
 		/** 조회 시작 **/
 		ArrayList list = new ArrayList();
@@ -1444,7 +1444,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 			// 해지사유 검토의견 등
 			list=(ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_KibonInfo", params);
 			//list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_KibonInfo", params); // 기본정보
-			heji_list=(ArrayList) mainService.selectQuery("jisangSQL.selectJisangDetailList", params);
+			heji_list=(ArrayList) mainService.selectQuery("jisangSQL.selectJisangDetailListNew", params);
 			//heji_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangDetailList", params); // 기본정보
 			soyu_list=(ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_SoujaInfo", params);
 			//soyu_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_SoujaInfo", params); // 소유자정보
@@ -1454,34 +1454,37 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 			
 			//file_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_Files", params); // 첨부파일
 //			System.out.println("$$$ params=" + params);
-
+			log.info("list:"+list);
+			log.info("heji_list:"+heji_list);
+			log.info("soyu_list:"+soyu_list);
+			log.info("file_list:"+file_list);
 			if (list.size() > 0) {
 				// 기본정보
-				kibon_map.put("JISANG_NO", cu.evl((String) ((HashMap) list.get(0)).get("JISANG_NO"), ""));
-				kibon_map.put("JISA", cu.evl((String) ((HashMap) list.get(0)).get("JISA"), ""));
-				kibon_map.put("ADDRESS", cu.evl((String) ((HashMap) list.get(0)).get("SIDO_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("SGG_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("EMD_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("RI_NM"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("JIBUN"), ""));
-				kibon_map.put("SIDO_NM", cu.evl((String) ((HashMap) list.get(0)).get("SIDO_NM"), ""));
-				kibon_map.put("SGG_NM", cu.evl((String) ((HashMap) list.get(0)).get("SGG_NM"), ""));
-				kibon_map.put("EMD_NM", cu.evl((String) ((HashMap) list.get(0)).get("EMD_NM"), ""));
-				kibon_map.put("RI_NM", cu.evl((String) ((HashMap) list.get(0)).get("RI_NM"), ""));
-				kibon_map.put("JIBUN", cu.evl((String) ((HashMap) list.get(0)).get("JIBUN"), ""));
-				kibon_map.put("YONGDO", cu.evl((String) ((HashMap) list.get(0)).get("YONGDO"), ""));
-				kibon_map.put("PIPE_NAME", cu.evl((String) ((HashMap) list.get(0)).get("PIPE_NAME"), ""));
-				kibon_map.put("PIPE_OVERLAP_YN", cu.evl((String) ((HashMap) list.get(0)).get("PIPE_OVERLAP_YN"), ""));
-				kibon_map.put("SUN_GUBUN", cu.evl((String) ((HashMap) list.get(0)).get("SUN_GUBUN"), ""));
-				kibon_map.put("JIJUK_AREA", cu.evl(String.valueOf(((HashMap) list.get(0)).get("JIJUK_AREA")), ""));
-				kibon_map.put("JIMOK_TEXT", cu.evl((String) ((HashMap) list.get(0)).get("JIMOK_TEXT"), ""));
+				kibon_map.put("JISANG_NO", cu.evl((String) ((HashMap) list.get(0)).get("jisang_no"), ""));
+				kibon_map.put("JISA", cu.evl((String) ((HashMap) list.get(0)).get("jisa"), ""));
+				kibon_map.put("ADDRESS", cu.evl((String) ((HashMap) list.get(0)).get("sido_nm"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("sgg_nm"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("emd_nm"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("ri_nm"), "") + " " + cu.evl((String) ((HashMap) list.get(0)).get("jibun"), ""));
+				kibon_map.put("SIDO_NM", cu.evl((String) ((HashMap) list.get(0)).get("sido_nm"), ""));
+				kibon_map.put("SGG_NM", cu.evl((String) ((HashMap) list.get(0)).get("sgg_nm"), ""));
+				kibon_map.put("EMD_NM", cu.evl((String) ((HashMap) list.get(0)).get("emd_nm"), ""));
+				kibon_map.put("RI_NM", cu.evl((String) ((HashMap) list.get(0)).get("ri_nm"), ""));
+				kibon_map.put("JIBUN", cu.evl((String) ((HashMap) list.get(0)).get("jibun"), ""));
+				kibon_map.put("YONGDO", cu.evl((String) ((HashMap) list.get(0)).get("yongdo"), ""));
+				kibon_map.put("PIPE_NAME", cu.evl((String) ((HashMap) list.get(0)).get("pipe_name"), ""));
+				kibon_map.put("PIPE_OVERLAP_YN", cu.evl((String) ((HashMap) list.get(0)).get("pipe_overlap_yn"), ""));
+				kibon_map.put("SUN_GUBUN", cu.evl((String) ((HashMap) list.get(0)).get("sun_gubun"), ""));
+				kibon_map.put("JIJUK_AREA", cu.evl(String.valueOf(((HashMap) list.get(0)).get("jijuk_area")), ""));
+				kibon_map.put("JIMOK_TEXT", cu.evl((String) ((HashMap) list.get(0)).get("jimok_text"), ""));
 
 			}
 			if (heji_list.size() > 0) {
-				kibon_map.put("CANCLE_DATE", cu.evl((String) ((HashMap) heji_list.get(0)).get("CANCLE_DATE"), ""));
-				kibon_map.put("CHUIDEUK_MONEY", cu.evl((String) ((HashMap) heji_list.get(0)).get("CHUIDEUK_MONEY"), "0"));
-				kibon_map.put("GAMMONEY", cu.evl(String.valueOf(((HashMap) heji_list.get(0)).get("GAMMONEY")), "0"));
-				kibon_map.put("REMAINDER_MONEY", cu.evl(String.valueOf(((HashMap) heji_list.get(0)).get("REMAINDER_MONEY")), "0"));
-				kibon_map.put("CANCLE_BOSANG_MONEY", cu.evl((String) ((HashMap) heji_list.get(0)).get("CANCLE_BOSANG_MONEY"), "0"));
+				kibon_map.put("CANCLE_DATE", cu.evl((String) ((HashMap) heji_list.get(0)).get("cancle_date"), ""));
+				kibon_map.put("CHUIDEUK_MONEY", cu.evl((String) ((HashMap) heji_list.get(0)).get("chuideuk_money"), "0"));
+				kibon_map.put("GAMMONEY", cu.evl(String.valueOf(((HashMap) heji_list.get(0)).get("gammoney")), "0"));
+				kibon_map.put("REMAINDER_MONEY", cu.evl(String.valueOf(((HashMap) heji_list.get(0)).get("remainder_money")), "0"));
+				kibon_map.put("CANCLE_BOSANG_MONEY", cu.evl((String) ((HashMap) heji_list.get(0)).get("cancle_bosang_money"), "0"));
 
-				kibon_map.put("CANCLE_REASON", cu.evl((String) ((HashMap) heji_list.get(0)).get("CANCLE_REASON"), ""));
-				kibon_map.put("CANCLE_COMMENT", cu.evl((String) ((HashMap) heji_list.get(0)).get("CANCLE_COMMENT"), ""));
+				kibon_map.put("CANCLE_REASON", cu.evl((String) ((HashMap) heji_list.get(0)).get("cancle_reason"), ""));
+				kibon_map.put("CANCLE_COMMENT", cu.evl((String) ((HashMap) heji_list.get(0)).get("cancle_comment"), ""));
 			}
 //			System.out.println("kibon_map=" + kibon_map);
 
@@ -1498,7 +1501,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+log.info("kibon_map:"+kibon_map);
 		/* 조회 끝 */
 		StringBuffer sbHtml = new StringBuffer();
 
@@ -1612,11 +1615,11 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 				soyu_map = (HashMap) map;
 				sbHtml.append("            <tr>\n");
 				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + count + "</span></td>\n");
-				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("JIBUN"), "") + "</span></td>\n");
-				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("SOUJA_NAME"), "") + "</span></td>\n");
-				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("ADDRESS"), "") + "</span></td>\n");
-				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("HOME_NUMBER"), "") + "</span></td>\n");
-				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("PONE_NUMBER"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("js_jibun"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("js_souja_name"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("js_address"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("js_home_number"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("js_pone_number"), "") + "</span></td>\n");
 				sbHtml.append("            </tr>\n");
 				count++;
 			}
