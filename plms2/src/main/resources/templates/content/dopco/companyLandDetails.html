@@ -76,7 +76,7 @@
 								<ul class="titles">
 									<li class="title01 title">관리번호</li>
 									<li class="title02 title">담당지사</li>
-									<li class="title03 title">관로일치여부</li>
+									<!-- <li class="title03 title">관로일치여부</li> -->
 									<li class="title04 title">용도</li>
 									<li class="title04 title">관로명(구간)</li>
 								</ul>
@@ -88,10 +88,10 @@
 									<li class="content02 content">
 										[[${data.dom_jisa}]]
 									</li>
-									<li class="content03 content">
-										<!--관로일치 여부 pipe_yn-->
+<!-- 									<li class="content03 content">
+										관로일치 여부 pipe_yn
 										[[${data.dom_dopco_no}]]
-									</li>
+									</li> -->
 									<li class="content03 content">
 										[[${data.dom_yongdo}]]
 									</li>
@@ -137,19 +137,23 @@
 									<li class="title03 title">자산분류번호</li>
 								</ul>
 								<ul class="contents lastContents">
+									<!-- 국공유지여부 -->
 									<li class="content01 content">
 										[[${data.dom_gover_own_yn}]]
 									</li>
+									<!-- 도시계획결정여부 -->
 									<li class="content02 content">
 										[[${data.dom_dosiplan}]]
 									</li>
 									<!--현재활용현황-->
 									<li class="content03 content">
-										[[${data.dom_dosiplan}]]
+										[[${data.dom_dopco_status}]]
 									</li>
+									<!-- 취득일 -->
 									<li class="content03 content">
 										[[${data.dom_chuideuk_date}]]
 									</li>
+									<!-- 자산분류번호 -->
 									<li class="content03 content">
 										[[${data.dom_jasan_no}]]
 									</li>
