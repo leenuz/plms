@@ -1238,6 +1238,7 @@ $(document).on("click", "#draftSaveBtn", function() {
 	var json = JSON.stringify(formSerializeArray); // 객체를 JSON 문자열로 변환
 	console.log("----------jsonobj------------");
 	console.log(object);
+	
 	url = "/land/gover/insertGoverMasterDemo";
 	$.ajax({
 

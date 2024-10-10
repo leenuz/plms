@@ -604,13 +604,13 @@
 							</ul>
 
 							<!-- 첫 번째 고정된 줄 -->
-							<ul class="contents" id="goverUl" th:if="${pnuList.size() > 0}">
-								<!-- 선택 -->
-								<!--<li class="content smallWidth checkboxWrap">
+							<!-- <ul class="contents" id="goverUl" th:if="${pnuList.size() > 0  && pnuList.size()==1}">
+								선택
+								<li class="content smallWidth checkboxWrap">
 			      <input type="checkbox" th:id="'masterEditContentSelectBox_' + ${pnuList[0].no}" />
 			      <label th:for="'masterEditContentSelectBox_' + ${pnuList[0].no}"></label>
-			    </li>-->
-								<!-- 순번 -->
+			    </li>
+								순번
 								<li class="content smallWidth">
 									<input type="hidden" id="goverIndex" value="0">
 									<input type="hidden" id="addKey" name="addKey" value="add">
@@ -622,7 +622,7 @@
 									<input type="hidden" id="jibun_full" name="jibun_full" th:value="${pnuList[0].jibun_full}">
 									<input type="hidden" id="addrcode" name="addrcode" th:value="${pnuList[0].addrcode}">
 
-									<!-- 소속 토지 정보에 기존 값을 hidden 필드로 추가 -->
+									소속 토지 정보에 기존 값을 hidden 필드로 추가
 									<input type="hidden" name="tadm_office_org" th:value="${pnuList[0].adm_office}">
 									<input type="hidden" name="tgover_own_yn_org" th:value="${pnuList[0].gover_own_yn=='Y'?'국유지':'사유지'}">
 									<input type="hidden" name="trep_flag_org" th:value="${pnuList[0].rep_flag}">
@@ -637,7 +637,7 @@
 									<input type="text" class="notWriteInput" readonly placeholder="1" />
 								</li>
 
-								<!-- 관리기관 -->
+								관리기관
 								<li class="content largeWidth selectContentArea">
 									<div class="hiddenSelectBox">
 										<select name="adm_office" id="goverEditSelectBox03" hidden>
@@ -650,7 +650,7 @@
 									</section>
 								</li>
 
-								<!-- 국공유지 여부 -->
+								국공유지 여부
 								<li class="content middleWidth selectContentArea">
 									<div class="hiddenSelectBox">
 										<select name="gover_own_yn" id="masterRegSelectBox13" hidden>
@@ -659,14 +659,14 @@
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<!-- 버튼에 선택된 값을 표시 -->
+										버튼에 선택된 값을 표시
 										<button class="customSelectView"
 											th:text="${pnuList[0].gover_own_yn == 'Y' ? '국유지' : '사유지'}"
 											id="goverOwnYnBtn">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
-								<!-- 대표필지 -->
+								대표필지
 								<li class="content checkboxWrap">
 									<input type="checkbox" id="masterRegSelectBox_Checkbox02" name="rep_flag"
 									th:checked="${pnuList[0].rep_flag != null and #strings.trim(pnuList[0].rep_flag) == 'Y'}" 
@@ -676,20 +676,20 @@
 									
 									
 								</li>
-								<!-- 주소 -->
+								주소
 								<li class="content addressInfoWidth">
-									<!--<div class="addressData">-->
-									<!-- text 창 높이를 위해 주석처리 -->
+									<div class="addressData">
+									text 창 높이를 위해 주석처리
 									<input type="text" id="addr" name="addr"
 										th:value="${pnuList[0].sido_nm + ' ' + pnuList[0].sgg_nm + ' ' + pnuList[0].emd_nm + ' ' + pnuList[0].ri_nm + ' ' + pnuList[0].jibun}" />
-									<!--</div>-->
+									</div>
 									<button class="searchAddressBtn">검색</button>
 								</li>
-								<!-- PNU -->
+								PNU
 								<li class="content middleWidth">
 									<input type="text" name="pnu" id="pnu" th:value="${pnuList[0].pnu}" />
 								</li>
-								<!-- 지목 -->
+								지목
 								<li class="content selectContentArea">
 									<div class="hiddenSelectBox">
 										<select name="jimok_text" id="masterRegSelectBox18" hidden>
@@ -703,15 +703,15 @@
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
-								<!-- 점용연장 -->
+								점용연장
 								<li class="content">
 									<input type="text" name="gover_length" th:value="${pnuList[0].gover_length}" />
 								</li>
-								<!-- 점용면적 -->
+								점용면적
 								<li class="content">
 									<input type="text" name="gover_area" th:value="${pnuList[0].gover_area}" />
 								</li>
-								<!-- 관로일치 여부 -->
+								관로일치 여부
 								<li class="content middleWidth selectContentArea">
 									<div class="hiddenSelectBox">
 										<select name="pipe_overlap_yn" id="masterRegSelectBox19" hidden>
@@ -720,27 +720,28 @@
 										</select>
 									</div>
 									<section class="customSelectBox">
-										<!-- 버튼에 선택된 값을 표시 -->
+										버튼에 선택된 값을 표시
 										<button class="customSelectView"
 											th:text="${pnuList[0].pipe_overlap_yn == 'Y' ? 'Y' : 'N'}"
 											id="pipeOverlapYnBtn">선택</button>
 										<ul class="customSelectBtns"></ul>
 									</section>
 								</li>
-								<!-- 보기 -->
+								보기
 								<li class="content btnBox">
 									<button class="miniBtn lightBlueBtn viewDetailButton" th:onclick="onePostionView( [[${pnuList[0]}]] )">위치보기</button>
 								</li>
-								<!-- 추가 버튼 -->
+								추가 버튼
 								<li class="middleWidth content btnBox">
 									<div class="newBtnWrap">
 										<button class="addBtn miniBtn" onclick="addRow()">추가</button>
 									</div>
 								</li>
 							</ul>
+ -->
 
 							<!-- 두번째ul: pnuList 가 2개 이상일 때 반복문 -->
-							<ul class="contents" id="goverUl02" th:each="pnu, iterStat : ${pnuList}" th:if="${iterStat.index > 0}">
+							<ul class="contents" id="goverUl" th:each="pnu, iterStat : ${pnuList}" th:if="${iterStat.index >= 0}">
 								<!-- 선택 -->
 								<!--<li class="content smallWidth checkboxWrap">
 		          <input type="checkbox" th:id="'masterEditContentSelectBox_' + ${pnu.no}" />
@@ -749,15 +750,15 @@
 
 								<!-- 순번 -->
 								<li class="content smallWidth">
-									<input type="hidden" id="goverIndex" value="0">
+									<input type="hidden" id="goverIndex" value="${iterStat.index}">
 									<input type="hidden" id="addKey" name="addKey" value="add">
-									<input type="hidden" id="sido_nm" name="sido_nm" th:value="${pnuList[0].sido_nm}">
-									<input type="hidden" id="sgg_nm" name="sgg_nm" th:value="${pnuList[0].sgg_nm}">
-									<input type="hidden" id="emd_nm" name="emd_nm" th:value="${pnuList[0].emd_nm}">
-									<input type="hidden" id="ri_nm" name="ri_nm" th:value="${pnuList[0].ri_nm}">
-									<input type="hidden" id="jibun" name="jibun" th:value="${pnuList[0].jibun}">
-									<input type="hidden" id="jibun_full" name="jibun_full" th:value="${pnuList[0].jibun_full}">
-									<input type="hidden" id="addrcode" name="addrcode" th:value="${pnuList[0].addrcode}">
+									<input type="hidden" id="sido_nm" name="sido_nm" th:value="${pnu.sido_nm}">
+									<input type="hidden" id="sgg_nm" name="sgg_nm" th:value="${pnu.sgg_nm}">
+									<input type="hidden" id="emd_nm" name="emd_nm" th:value="${pnu.emd_nm}">
+									<input type="hidden" id="ri_nm" name="ri_nm" th:value="${pnu.ri_nm}">
+									<input type="hidden" id="jibun" name="jibun" th:value="${pnu.jibun}">
+									<input type="hidden" id="jibun_full" name="jibun_full" th:value="${pnu.jibun_full}">
+									<input type="hidden" id="addrcode" name="addrcode" th:value="${pnu.addrcode}">
 
 									<!-- 기존 값들을 hidden 필드로 추가 -->
 									<input type="hidden" name="adm_office_org_${iterStat.index}" th:value="${pnu.adm_office}">
@@ -771,7 +772,7 @@
 									<input type="hidden" name="gover_area_org_${iterStat.index}" th:value="${pnu.gover_area}">
 									<input type="hidden" name="pipe_overlap_yn_org_${iterStat.index}" th:value="${pnu.pipe_overlap_yn}">
 
-									<input type="text" class="notWriteInput" readonly th:placeholder="${pnu.no}" />
+									<input type="text" class="notWriteInput" readonly th:placeholder="${iterStat.index+1}" />
 								</li>
 
 								<!-- 관리기관 -->

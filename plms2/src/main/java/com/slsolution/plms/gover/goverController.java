@@ -870,6 +870,7 @@ public class goverController {
 		int goverPnuListSize = goverPnuList.size();	//PNU로 꺼내야
 		
 		for(int k = 0 ; k < goverPnuListSize ; k++) {
+			log.info("goverPnuList:"+goverPnuList.get(k));
 			HashMap sosokTogiParam = new HashMap();
 			
 			sosokTogiParam.put("TARGET_PNU", goverPnuList.get(k).get("pnu"));
@@ -1880,7 +1881,7 @@ log.info("file_list:"+file_list);
 			params.put("PMT_STATUS", "임시저장"); // 등록상태
 			params.put("USER_ID", USER_ID);
 			params.put("USER_NAME", USER_NAME);
-			params.put("SAVE_STATUS", "A");
+			params.put("SAVE_STATUS", "Q");
 			//params.put("SAVE_STATUS", SAVE_STATUS);
 
 			/**********************
