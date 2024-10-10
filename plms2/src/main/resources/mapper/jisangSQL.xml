@@ -2470,15 +2470,15 @@ VALUES (
     #{STARTDAY}::date,
     #{CANCLE_REASON},
     #{CANCLE_COMMENT},
-    #{CANCLE_BOSANG_YN},
+    nullif(#{CANCLE_BOSANG_YN},''),
     replace(#{CANCLE_BOSANG_MONEY}, ',', '') :: numeric,
-    #{NAME},
-    #{EMPCD},
+    nullif(#{NAME},''),
+    nullif(#{EMPCD},''),
     nullif(#{CHUIDEUKMONEY},'')::numeric,
     nullif(#{GAMMONEY},'')::numeric,
-    replace(#{REMAINDERMONEY},',','')::numeric,
+    nullif(replace(#{REMAINDERMONEY},',',''),'')::numeric,
     #{CANCLE_STATUS},
-    #{ACCOUNT_YN}
+    nullif(#{ACCOUNT_YN},'')
 )
 ON CONFLICT (jisang_no)
 DO UPDATE
@@ -2486,15 +2486,15 @@ SET
     cancle_date = #{STARTDAY}::date,
     cancle_reason = #{CANCLE_REASON},
     cancle_comment = #{CANCLE_COMMENT},
-    cancle_bosang_yn = #{CANCLE_BOSANG_YN},
+    cancle_bosang_yn = nullif(#{CANCLE_BOSANG_YN},''),
     cancle_bosang_money = replace(#{CANCLE_BOSANG_MONEY}, ',', '') :: numeric,
-    cancle_name = #{NAME},
-    cancle_empcd = #{EMPCD},
+    cancle_name = nullif(#{NAME},''),
+    cancle_empcd = nullif(#{EMPCD},''),
     chuideuk_money = nullif(#{CHUIDEUKMONEY},'')::numeric,
     gammoney = nullif(#{GAMMONEY},'')::numeric,
-    remainder_money = replace(#{REMAINDERMONEY},',','')::numeric,
+    remainder_money = nullif(replace(#{REMAINDERMONEY},',',''),'')::numeric,
     cancle_status = #{CANCLE_STATUS},
-    account_yn=#{ACCOUNT_YN}
+    account_yn=nullif(#{ACCOUNT_YN},'')
 	</update>
 	
 	
