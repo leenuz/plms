@@ -1403,6 +1403,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 //				            "") 
 //				        + "', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 				
+				//개발
 //				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
 //					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "") 
 //					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "") 
@@ -1412,6 +1413,8 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 //					        ((HashMap) file_list.get(i)).get("ga_file_seq").toString() : "", 
 //					        "") 
 //					    + "&fileGubun=gover', '_blank')\">다운로드1 <span class=\"downloadIcon\"></span></button>\n");
+				
+				//운영
 				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
 					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "") 
 					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "") 
