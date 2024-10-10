@@ -2557,6 +2557,21 @@ WHERE
 		</if>
 		ORDER BY ja_seq DESC
 	</select>
+	<!-- 해지신청 필수 첨부 파일 저장 -->
+	<select id="selectJisangCancel_Files" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM jisang_cancel_atcfile
+		WHERE ja_jisang_no =#{FILENO}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
+		
+			AND ja_seq =#{SEQ}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(FILE_SEQ)" >
+		
+			AND ja_file_seq =#{FILE_SEQ}
+		</if>
+		ORDER BY ja_seq DESC
+	</select>
 	
 	<!--  지상정보 조회  -->
 	<select id="getSaveJisangMergeData"  parameterType="HashMap" resultType="java.util.HashMap">

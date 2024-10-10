@@ -1457,6 +1457,7 @@ log.info("-------------------getJisang_termination_HTML-------------------------
 			log.info("list:"+list);
 			log.info("heji_list:"+heji_list);
 			log.info("soyu_list:"+soyu_list);
+			log.info("file_list:"+file_list);
 			if (list.size() > 0) {
 				// 기본정보
 				kibon_map.put("JISANG_NO", cu.evl((String) ((HashMap) list.get(0)).get("jisang_no"), ""));
@@ -1614,11 +1615,11 @@ log.info("kibon_map:"+kibon_map);
 				soyu_map = (HashMap) map;
 				sbHtml.append("            <tr>\n");
 				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + count + "</span></td>\n");
-				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("JIBUN"), "") + "</span></td>\n");
-				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("SOUJA_NAME"), "") + "</span></td>\n");
-				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("ADDRESS"), "") + "</span></td>\n");
-				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("HOME_NUMBER"), "") + "</span></td>\n");
-				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("PONE_NUMBER"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("js_jibun"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("js_souja_name"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("js_address"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("js_home_number"), "") + "</span></td>\n");
+				sbHtml.append("                <td><span style=\"width:100%; display:inline-block; text-align:center;\">" + cu.evl((String) soyu_map.get("js_pone_number"), "") + "</span></td>\n");
 				sbHtml.append("            </tr>\n");
 				count++;
 			}

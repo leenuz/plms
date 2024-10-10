@@ -735,7 +735,9 @@ function landTerminationSangsinSave(params){
      })
      .done(function (fragment) {
         loadingHide();
-        alert("저장이 완료 되었습니다.");
+		alert("정상적으로 상신 되었습니다.");
+		var urls = response.OUT_URL;
+		window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
      });
 }
 
