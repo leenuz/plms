@@ -728,7 +728,54 @@ function landTerminationSave(params){
 
 function landTerminationSangsinSave(params){
     loadingShow();
-    $.ajax({
+	var url= "/land/jisang/insertJisangTerminationAdd";
+	$.ajax({
+
+						url:url,
+						type:'POST',
+						contentType:"application/json",
+						data:JSON.stringify(dataObj),
+
+						dataType:"json",
+						beforeSend:function(request){
+							console.log("beforesend ........................");
+							//loadingShow();
+						},
+						success:function(response){
+							//loadingHide();
+							console.log("----------------sangsin result----------");
+							console.log(response);
+							if (response.success="Y"){
+								console.log("response.success Y");
+								//console.log("response.resultData length:"+response.resultData.length);
+								alert("정상적으로 상신 되었습니다.");
+								
+															
+															//var url=response.OUT_URL;
+								var urls = response.OUT_URL;
+								window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
+								/*$("#popup_bg").show();
+								$("#popup").show(500);
+								//$("#addrPopupLayer tbody td").remove();
+								for(var i=0;i<response.resultData.length;i++){
+									$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+								}*/
+							}
+							else {
+								console.log("response.success N");
+							}
+						},
+						error:function(jqXHR,textStatus,errorThrown){
+							alert("sangsin ajax error\n"+textStatus+":"+errorThrown);
+							return false;
+						}
+
+				   	});
+	
+	
+	
+	
+   /* $.ajax({
           url: "/land/jisang/insertJisangTerminationAdd",
           type: "POST",
           data: JSON.stringify(params),
@@ -738,7 +785,7 @@ function landTerminationSangsinSave(params){
 		alert("정상적으로 상신 되었습니다.");
 		var urls = response.OUT_URL;
 		window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
-     });
+     });*/
 }
 
 

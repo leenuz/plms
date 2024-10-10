@@ -947,6 +947,10 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 			pnu_list = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPnuList", params); // 소속토지정보
 			pmt_list = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPmtLastForApproval", params); // 허가 정보 부서정보
 			pay_List = (ArrayList) mainService.selectQuery("goverSQL.selectGoverPayList", params); // 납부실적목록
+			for(int i=0;i<pnu_list.size();i++) {
+				log.info("pnu_list:"+pnu_list.get(i));
+			}
+		
 			params.put("SEQ", FileSeq);
 
 //			for (int i = 0; i < Integer.parseInt(FILE_SIZE); i++) {
