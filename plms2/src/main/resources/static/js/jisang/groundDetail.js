@@ -978,4 +978,31 @@ function printDivContent(divId) {
 				                };
 }
 
+/***************** */
+//첨부파일 저장
+function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
+	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
+}
 
+function selectFilesDownload() {
+	const attachFileCount = $("#fileListDiv").children().length;
+	const listObj = $("#fileListDiv").children();
+	let pathList = [];
+	
+	
+	for(let i = 0 ; i < attachFileCount ; i++) {
+		let checkYn = $(listObj[i].children[0].children).is(':checked');
+		
+		if(checkYn) {
+			pathList.push($(listObj[i].children[3].children).attr('data-info'));
+			
+			let fileInfo = $(listObj[i].children[3].children).attr('data-info');
+			let fileInfoObj = queryValueToObject(fileInfo);
+			
+			commonFileDownload(fileInfoObj.pa_file_path, fileInfoObj.pa_file_nm, fileInfoObj.pa_gover_no, fileInfoObj.pa_file_seq, 'jisang');
+			
+		}
+	}
+}
+
+/***************** */

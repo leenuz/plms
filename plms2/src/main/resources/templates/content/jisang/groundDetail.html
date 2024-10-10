@@ -416,16 +416,14 @@
 				<div class="subTitle">
 					필지 첨부파일
 					<div class="fileBtnWrap">
-						<input type="file" name="fileUpload"
-							id="easementModification_myPcFiles"> <label
-							for="easementModification_myPcFiles">내 PC</label>
+						<input type="file" name="fileUpload" id="easementModification_myPcFiles">
+						<label for="easementModification_myPcFiles">내 PC</label>
 					</div>
 				</div>
 
 				<div class="fileUploadWrap">
 					<div class="fileUploadBox">
-						<img src="/assets/media/menu02/images/file-upload.png"
-							alt="파일 업로드 아이콘" class="fileUploadIcon">
+						<img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
 						<p>파일을 마우스로 끌어오세요.</p>
 					</div>
 				</div>
@@ -435,10 +433,9 @@
 					<div class="depth1" id="fileDiv">
 						<ul class="titles titleScr" id="fileTitleUl">
 							<li class="title selectWidth allSelectCheck">
-								<!-- 선택 --> <input type="checkbox"
-								id="masterEdit_file_select_all"
-								name="masterEdit_file_select_all" /> <label
-								for="masterEdit_file_select_all"></label>
+								<!-- 선택 --> 
+								<input type="checkbox" id="masterEdit_file_select_all" name="masterEdit_file_select_all" />
+								<label for="masterEdit_file_select_all"></label>
 							</li>
 							<li class="title">등록일</li>
 							<li class="title fileNameWidth">파일명</li>
@@ -447,29 +444,33 @@
 
 						<!-- 첨부파일 리스트 -->
 						<div class="contentScr" id="fileListDiv">
-							<ul class="contents "
-								th:if="${jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()}">
+							<!-- 첨부파일 없을 때 -->
+							<ul class="contents" th:if="${jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()}">
 								<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 							</ul>
 							<!--첨부파일 목록 반복문-->
 							<ul class="contents" id="fileListUl" th:if="${jisangPnuAtcFileList != null && !jisangPnuAtcFileList.isEmpty()}"
 								th:each="file, iterStat : ${jisangPnuAtcFileList}">
-								<li class="selectWidth content checkboxWrap"><input
-									type="hidden" id="idx" th:value="${file.pa_idx}"> <input
-									type="checkbox"
-									th:id="'masterEdit_attachFile' + ${iterStat.index + 1}"
-									name="masterEdit_attachFile" /> <label
-									th:for="'masterEdit_attachFile' + ${iterStat.index + 1}"></label>
+								<li class="selectWidth content checkboxWrap">
+									<input type="hidden" id="idx" th:value="${file.pa_idx}">
+									<input type="hidden" name="file_seq" th:id="'file_seq'" th:value="${file.pa_file_seq}">
+									<input type="hidden" name="file_path" th:id="'file_path'" th:value="${file.pa_file_path}">
+									<input type="checkbox" th:id="'masterEdit_attachFile' + ${iterStat.index + 1}" 
+									name="masterEdit_attachFile" />
+									<label th:for="'masterEdit_attachFile' + ${iterStat.index + 1}"></label>
 								</li>
-								<li class="content registDateWidth"><input type="text"
-									th:value="${#dates.format(file.pa_wdate, 'yyyy-MM-dd HH:mm')}"
-									readonly class="notWriteInput" name="registDateWidth" /></li>
-								<li class="content fileNameWidth"><input type="text"
-									th:value="${file.pa_file_nm}" id="filename" readonly
-									class="notWriteInput" /></li>
+								<li class="content registDateWidth">
+									<input type="text" th:value="${#dates.format(file.pa_wdate, 'yyyy-MM-dd HH:mm')}" readonly 
+									class="notWriteInput" name="registDateWidth" />
+								</li>
+								<li class="content fileNameWidth">
+									<input type="text" th:value="${file.pa_file_nm}" id="filename" readonly class="notWriteInput" />
+								</li>
 								<li class="content viewBtnBox">
-									<button class="viewDetailButton"
-										th:onclick="downloadFile([[${file.pa_file_path}]],[[${file.pa_file_nm}]])">보기</button>
+									<!-- <button class="viewDetailButton"
+										th:onclick="downloadFile([[${file.pa_file_path}]],[[${file.pa_file_nm}]])">보기</button> -->
+									<a href="javascript:void(0);" class="viewDetailButton lightBlueBtn"
+											th:data-info="${file}" target="_blank" onclick="attachFileDownload([[${file.pa_file_path}]], [[${file.pa_file_nm}]], [[${file.pa_gover_no}]], [[${file.pa_file_seq}]], 'jisang')">보기</a>
 								</li>
 							</ul>
 						</div>
@@ -477,10 +478,8 @@
 				</div>
 
 				<div class="btnWrap">
-					<button class="attachFileBtn vividBlueBtn" id="fileSaveBtn">첨부파일
-						저장</button>
-					<button class="attachFileBtn grayBtn" id="deleteFileBtn">선택파일
-						삭제</button>
+					<button class="attachFileBtn vividBlueBtn" id="fileSaveBtn" onclick="selectFilesDownload();">첨부파일 저장</button>
+					<button class="attachFileBtn grayBtn" id="deleteFileBtn">선택파일 삭제</button>
 				</div>
 			</section>
 
