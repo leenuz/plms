@@ -626,9 +626,10 @@
 								<ul class="contents lastContents" th:if="${goverIssueHistoryList == null or goverIssueHistoryList.size() == 0}">
 									<li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents lastContents" th:if="${goverIssueHistoryList != null and goverIssueHistoryList.size() > 0}">
+								<ul class="contents lastContents" th:if="${goverIssueHistoryList != null and goverIssueHistoryList.size() > 0}" 
+								th:each="val, iterStat : ${goverIssueHistoryList}">
 									<li class="content01 content">
-										[[${val.no}]]
+										[[${iterStat.no}]]
 									</li>
 									<li class="content02 content">
 										[[${val.pih_history_type}]]

@@ -156,7 +156,10 @@
 									<li class="title05 title">연락처 1</li>
 									<li class="title05 title">연락처 2</li>
 								</ul>
-								<ul class="contents" th:each="val:${soujaList}">
+								<ul class="contents" th:if="${soujaList == null || soujaList.isEmpty()}">
+								    <li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
+								</ul>
+								<ul class="contents" th:if="${soujaList != null && !soujaList.isEmpty()}" th:each="val:${soujaList}">
 									<li class="content01 content">[[${val.no}]]</li>
 									<li class="content02 content">[[${val.js_jibun}]]</li>
 									<li class="content02 content">[[${val.js_souja_name}]]</li>
@@ -290,8 +293,7 @@
 								<ul class="contents lastContents" th:if="${jisangPermitList == null || jisangPermitList.isEmpty()}">
 									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents lastContents"
-									th:each="val, iterStat : ${jisangPermitList}">
+								<ul class="contents lastContents" th:if="${jisangPermitList != null && !jisangPermitList.isEmpty()}" th:each="val, iterStat : ${jisangPermitList}">
 									<li class="content01 content"><span
 										th:text="${iterStat.count}"></span> <!-- 순번 --></li>
 									<li class="content02 content"><span
@@ -343,7 +345,7 @@
 								<ul class="contents" th:if="${jisangMergeList == null || jisangMergeList.isEmpty()}">
 									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents"
+								<ul class="contents" th:if="${jisangMergeList != null && !jisangMergeList.isEmpty()}" 
 									th:each="val, iterStat : ${jisangMergeList}">
 									<li class="content01 content"><span
 										th:text="${val.jm_jasan_no}"></span> <!-- 기존자산번호 --></li>
@@ -451,7 +453,7 @@
 								<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 							</ul>
 							<!--첨부파일 목록 반복문-->
-							<ul class="contents" id="fileListUl"
+							<ul class="contents" id="fileListUl" th:if="${jisangPnuAtcFileList != null && !jisangPnuAtcFileList.isEmpty()}"
 								th:each="file, iterStat : ${jisangPnuAtcFileList}">
 								<li class="selectWidth content checkboxWrap"><input
 									type="hidden" id="idx" th:value="${file.pa_idx}"> <input
@@ -503,10 +505,10 @@
 									<li class="title04 title">등록일시</li>
 									<li class="title04 title ">편집</li>
 								</ul>
-								<ul class="contents " th:if="${jisangIssueList == null || jisangIssueList.isEmpty()}">
-									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
+								<ul class="contents lastContents" th:if="${jisangIssueList == null or jisangIssueList.size() == 0}">
+								    <li class="content01" style="width:100%; text-align:center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents lastContents">
+								<ul class="contents lastContents" th:if="${jisangIssueList != null and jisangIssueList.size() > 0}">
 									<!-- 등기여부 -->
 									<li class="content01 content">
 										<input type="text" th:value="${jisangIssueList.comple_yn}" readonly class="notWriteInput">
@@ -569,15 +571,13 @@
 								<ul class="contents lastContents" th:if="${jisangIssueHistoryList == null || jisangIssueHistoryList.isEmpty()}">
 									<li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents" th:each="val:${jisangIssueHistoryList}">
-									<li class="content01 content">[[${val.no}]]</li>
-									<li class="content02 content">[[${val.pih_history_type}]]
-									</li>
-									<li class="content03 content">[[${val.pih_history_date}]]
-									</li>
-									<li class="content04 content">[[${val.pih_content}]]</li>
-									<li class="content03 content">[[${val.pi_issue_comment}]]
-									</li>
+								<ul class="contents lastContents" th:if="${jisangIssueHistoryList != null and jisangIssueHistoryList.size() > 0}"
+								th:each="val, iterStat : ${jisangIssueHistoryList}">
+									<li class="content01 content">[[${iterStat.count}]]</li><!-- 순번 -->
+									<li class="content02 content">[[${val.history_type}]]</li><!-- 구분 -->
+									<li class="content03 content">[[${val.history_date}]]</li><!-- 변경일자 -->
+									<li class="content04 content">[[${val.content}]]</li><!-- 내용 -->
+									<li class="content03 content">[[${val.issue_comment}]]</li><!-- 사유 -->
 								</ul>
 							</div>
 						</div>
@@ -601,7 +601,7 @@
 								<ul class="contents lastContents" th:if="${jisangIssueCodeAtcFileList == null || jisangIssueCodeAtcFileList.isEmpty()}">
 									<li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents" th:each="val:${jisangIssueCodeAtcFileList}">
+								<ul class="contents" th:if="${jisangIssueCodeAtcFileList != null && !jisangIssueCodeAtcFileList.isEmpty()}" th:each="val:${jisangIssueCodeAtcFileList}">
 									<li class="content01 content">
 										[[${val.icaf_manual_title}]]</li>
 									<li class="content02 content">

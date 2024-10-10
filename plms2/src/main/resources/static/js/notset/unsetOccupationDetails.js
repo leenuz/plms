@@ -278,9 +278,7 @@ $(document).on("click", "#fileSaveBtn", function() {
 		error: function(jqXHR, textStatus, errorThrown) {
 			alert("getAddressData ajax error\n" + textStatus + ":" + errorThrown);
 		}
-
 	})
-
 });
 
 

@@ -301,13 +301,13 @@ public class goverController {
 		ArrayList<HashMap> goverIssueHistoryList = mainService.selectQuery("goverSQL.selectIssueHistoryList",params); // 잠재이슈 변경 이력
 		log.info("jisangIssueList size:"+goverIssueList.size());
 		if (!goverIssueList.isEmpty()) {
-			log.info("issueManualCode1:"+goverIssueList.get(0).get("pi_code_depth1"));
-			log.info("issueManualCode2:"+goverIssueList.get(0).get("pi_code_depth2"));
-			log.info("issueManualCode3:"+goverIssueList.get(0).get("pi_code_depth3"));
+			log.info("issueManualCode1:"+goverIssueList.get(0).get("depth1_title"));
+			log.info("issueManualCode2:"+goverIssueList.get(0).get("depth2_title"));
+			log.info("issueManualCode3:"+goverIssueList.get(0).get("depth3_title"));
 			
-			params.put("issueManualCode1", goverIssueList.get(0).get("pi_code_depth1"));
-			params.put("issueManualCode2", goverIssueList.get(0).get("pi_code_depth2"));
-			params.put("issueManualCode3", goverIssueList.get(0).get("pi_code_depth3"));
+			params.put("issueManualCode1", goverIssueList.get(0).get("depth1_title"));
+			params.put("issueManualCode2", goverIssueList.get(0).get("depth2_title"));
+			params.put("issueManualCode3", goverIssueList.get(0).get("depth3_title"));
 		}
 		ArrayList<HashMap> goverIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params); // 잠재이슈 대응방안 메뉴얼
 //			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("goverSQL.selectPermitList",params);

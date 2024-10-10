@@ -1390,21 +1390,27 @@ log.info("PMT_NO:"+PMT_NO);
 
 		params.put("pnu", data.get(0).get("jm_pnu"));
 		log.info("pnu: "+ data.get(0).get("jm_pnu"));
-		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
+		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params); // 잠재이슈
 		log.info("jisangIssueList size:"+jisangIssueList.size());
 		
-		if (jisangIssueList.size()>0) {
-			log.info("1:"+jisangIssueList.get(0).get("pi_code_depth1"));
-			log.info("2:"+jisangIssueList.get(0).get("pi_code_depth2"));
-			log.info("3:"+jisangIssueList.get(0).get("pi_code_depth3"));
-			params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
-			params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
-			params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
+		if (jisangIssueList != null && !jisangIssueList.isEmpty()) {
+			log.info("jisangIssueList:"+jisangIssueList.get(0));
+		    log.info("issueManualCode1:"+jisangIssueList.get(0).get("depth1_title"));
+		    log.info("issueManualCode2:"+jisangIssueList.get(0).get("depth2_title"));
+		    log.info("issueManualCode3:"+jisangIssueList.get(0).get("depth3_title"));
+		    
+		    params.put("issueManualCode1", jisangIssueList.get(0).get("depth1_title"));
+		    params.put("issueManualCode2", jisangIssueList.get(0).get("depth2_title"));
+		    params.put("issueManualCode3", jisangIssueList.get(0).get("depth3_title"));
+		    mav.addObject("jisangIssueList", jisangIssueList.get(0)); // 잠재이슈는 1개만 있음.
+		} else {
+		    log.info("잠재이슈리스트 없음");
+		    mav.addObject("jisangIssueList", new HashMap<>()); // 빈 객체 추가
 		}
 		
 		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
-		//ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
-		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
+		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params); // 잠재이슈 변경이력
+		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params); // 잠재이슈 대응방안 메뉴얼
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 		
 		log.info("params:"+params);
@@ -1415,27 +1421,63 @@ log.info("PMT_NO:"+PMT_NO);
 		log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
 		log.info("jisangPermitList:"+jisangPermitList);
 		log.info("jisangMergeList:"+jisangMergeList);
-		log.info("jisangIssueList:"+jisangIssueList.get(0));
 		log.info("souja count:"+soujaList.size());
 		log.info("soujaList:"+soujaList);
 		log.info("atcFileList:"+atcFileList);
 		log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
-		//log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
+		log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
 		log.info("jisangMemoList:"+jisangMemoList);
 		log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
 		
-		mav.addObject("resultData",data.get(0));
+		mav.addObject("resultData",data.get(0)); // 기본정보
 		mav.addObject("jijuk", jijuk);
-		mav.addObject("soujaList",soujaList);
-		mav.addObject("jisangPermitList",jisangPermitList);
-		mav.addObject("atcFileList",atcFileList);
-		mav.addObject("jisangModifyList",jisangModifyList);
-		mav.addObject("jisangMergeList",jisangMergeList);
-		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
-		mav.addObject("jisangIssueList",jisangIssueList.get(0)); // 잠재이슈는 1개만 있음.
-		//mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
-		mav.addObject("memoList",jisangMemoList);
-		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+		if (soujaList == null || soujaList.isEmpty()) { // 소유자 정보
+		    mav.addObject("soujaList", new ArrayList<>());
+		} else {
+		    mav.addObject("soujaList", soujaList);
+		}
+		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
+			mav.addObject("atcFileList", new ArrayList<>());
+		} else {
+			mav.addObject("atcFileList", atcFileList);
+		}
+		if (jisangPermitList == null || jisangPermitList.isEmpty()) { //사용승락
+		    mav.addObject("jisangPermitList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangPermitList", jisangPermitList);
+		}
+		if (jisangMergeList == null || jisangMergeList.isEmpty()) { //합필 지상권 정보
+		    mav.addObject("jisangMergeList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangMergeList", jisangMergeList);
+		}
+		if (jisangModifyList == null || jisangModifyList.isEmpty()) { //변경이력
+		    mav.addObject("jisangModifyList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangModifyList", jisangModifyList);
+		}
+		if (jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()) { //필지 첨부파일
+		    mav.addObject("jisangPnuAtcFileList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangPnuAtcFileList", jisangPnuAtcFileList);
+		}
+		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
+		if (jisangIssueHistoryList == null || jisangIssueHistoryList.isEmpty()) { //잠재이슈 변경이력
+		    mav.addObject("jisangIssueHistoryList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangIssueHistoryList", jisangIssueHistoryList);
+		}
+		if (jisangIssueCodeAtcFileList == null || jisangIssueCodeAtcFileList.isEmpty()) { //잠재이슈 대응 메뉴얼
+		    mav.addObject("jisangIssueCodeAtcFileList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangIssueCodeAtcFileList", jisangIssueCodeAtcFileList);
+		}
+		if (jisangMemoList == null || jisangMemoList.isEmpty()) { // 메모
+		    mav.addObject("memoList", new ArrayList<>());
+		} else {
+		    mav.addObject("memoList", jisangMemoList);
+		}
+		
 		mav.setViewName("content/jisang/groundDetail");
 		
 		//지도보기, 이동관련
