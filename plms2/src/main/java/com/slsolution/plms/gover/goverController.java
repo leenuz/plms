@@ -596,7 +596,7 @@ public class goverController {
 		resultmap.put("data", list);
 
 		JSONObject obj = new JSONObject(resultmap);
-		log.info("obj:" + obj);
+//		log.info("obj:" + obj);
 		return ResponseEntity.ok(obj.toString());
 	}
 
@@ -691,7 +691,7 @@ public class goverController {
 		resultmap.put("data", list);
 
 		JSONObject obj = new JSONObject(resultmap);
-		log.info("obj:" + obj);
+//		log.info("obj:" + obj);
 
 		return ResponseEntity.ok(obj.toString());
 	}
@@ -799,7 +799,7 @@ public class goverController {
 		resultmap.put("data", list);
 
 		JSONObject obj = new JSONObject(resultmap);
-		log.info("obj:" + obj);
+//		log.info("obj:" + obj);
 
 		return ResponseEntity.ok(obj.toString());
 	}
@@ -1149,7 +1149,7 @@ public class goverController {
 		HashMap<String, Object> resultMap = new HashMap<>();
 		resultMap.put("data", list);
 		JSONObject obj = new JSONObject(resultMap);
-		log.info("obj:" + obj);
+//		log.info("obj:" + obj);
 		return ResponseEntity.ok(obj.toString());
 	}
 
@@ -1513,7 +1513,7 @@ log.info("file_list:"+file_list);
 
 				for (int i = 0; i < pnuList.size(); i++) {
 
-					log.info("obj:" + pnuList.get(i));
+//					log.info("obj:" + pnuList.get(i));
 					logParams = new HashMap(); // 맵 객체 초기화
 
 					logParams.put("GOVER_NO", ((HashMap) pnuList.get(i)).get("gover_no"));
