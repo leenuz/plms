@@ -3365,7 +3365,7 @@ log.info("data:"+data.get(0));
 	    			HashMap<String,String> docMap = new HashMap();
 	    			docMap.put("jisang_no",  jisang_no);
 	    			docMap.put("fseq","1");
-	    			docMap.put("file_name",  httpRequest.getParameter("req_doc_file01"));
+	    			docMap.put("file_name",  requestJsonObj.getString("req_doc_file01"));
 	    			String fpath=GC.getJisangBunhalDataDir()+"/"+jisang_no;
 	    			String tmp=GC.getJisangFileTempDir();
 	    			log.info("fpath:"+fpath);

@@ -1989,11 +1989,13 @@ WHERE gp_GOVER_NO = #{GOVER_NO}
                 , ga_FILE_PATH DESC
 	</select>
 	<select id="selectGoverRowDetail_FilesObjectFromIdx" resultType="HashMap" parameterType="HashMap">
+		
 		SELECT *
 		FROM GOVER_ATCFILE
 		WHERE ga_idx in (${FILES})
 		ORDER BY ga_SEQ DESC
                 , ga_FILE_PATH DESC
+        
 	</select>
 	
 	<update id="updateGoverEchoNo" parameterType="HashMap">
@@ -2006,7 +2008,7 @@ WHERE gp_GOVER_NO = #{GOVER_NO}
 	<select id="selectGoverPayList" resultType="HashMap" parameterType="HashMap">
 SELECT 
     TO_CHAR(GP.gp_PAY_DATE, 'YYYY') AS PAY_YR,
-    GP.gp_seq AS SEQ,  -- SEQ는 숫자라서 TO_CHAR 생략 가능
+    GP.gp_seq AS SEQ,  
     TO_CHAR(GP.gp_PAY_DATE, 'YYYY-MM-DD') AS PAY_DATE,
     GP.gp_pay_money as PAY_MONEY,
     TO_CHAR(GP.gp_PMT_ST_DATE, 'YYYY-MM-DD') AS PMT_ST_DATE,
@@ -2021,8 +2023,8 @@ SELECT
     GP.gp_buseo as BUSEO,
     GP.gp_dosiplan as DOSIPLAN,
     GP.gp_echo_no as ECHO_NO,
-    TO_CHAR(GP.gp_GOVER_AREA, 'FM999999999.00') AS GOVER_AREA,  -- 숫자 포맷 처리
-    TO_CHAR(GP.gp_GOVER_LENGTH, 'FM999999999.00') AS GOVER_LENGTH,  -- 숫자 포맷 처리
+    TO_CHAR(GP.gp_GOVER_AREA, 'FM999999999.00') AS GOVER_AREA,  
+    TO_CHAR(GP.gp_GOVER_LENGTH, 'FM999999999.00') AS GOVER_LENGTH,
     GP.gp_gover_no as GOVER_NO,
     TO_CHAR(GP.gp_NEXT_DATE, 'YYYY-MM-DD') AS NEXT_DATE,
     GP.gp_nm as NM,

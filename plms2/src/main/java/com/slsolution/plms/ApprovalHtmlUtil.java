@@ -955,7 +955,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 //				file_list.add((HashMap) mainService.selectHashmapQuery("goverSQL.selectGoverRowDetail_FilesObject", params)); // 첨부파일
 //			}
 //			file_list = mainService.selectQuery("goverSQL.selectGoverRowDetail_FilesObject", params);
-			file_list = mainService.selectQuery("goverSQL.selectGoverRowDetail_FilesObjectFromIdx", params);
+			if (fileList.length()>0) file_list = mainService.selectQuery("goverSQL.selectGoverRowDetail_FilesObjectFromIdx", params);
 //			System.out.println("$$$ params=" + params);
 			log.info("list:"+list.get(0));
 			if (list.size() > 0) {
