@@ -197,6 +197,8 @@ public class commonController {
 			RestTemplate restTemplate = new RestTemplate();
 			byte[] fileData = restTemplate.getForObject(new URI(downloadUrl), byte[].class);
 			
+			System.out.println("downloadUrl CHECK :: " + downloadUrl);
+			
 			if(fileData == null || fileData.length == 0) {
 				throw new RuntimeException("파일을 가져올 수 없습니다. " + fileName);
 			}
