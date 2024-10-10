@@ -470,7 +470,7 @@
 									<!-- <button class="viewDetailButton"
 										th:onclick="downloadFile([[${file.pa_file_path}]],[[${file.pa_file_nm}]])">보기</button> -->
 									<a href="javascript:void(0);" class="viewDetailButton lightBlueBtn"
-											th:data-info="${file}" target="_blank" onclick="attachFileDownload([[${file.pa_file_path}]], [[${file.pa_file_nm}]], [[${file.pa_gover_no}]], [[${file.pa_file_seq}]], 'jisang')">보기</a>
+											th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.pa_file_path}]], [[${file.pa_file_nm}]], [[${file.pa_pnu}]], [[${file.pa_file_seq}]], 'jisang')">보기</a>
 								</li>
 							</ul>
 						</div>
