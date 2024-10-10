@@ -246,7 +246,10 @@ div.dt-filter-spacer {
 									<li class="title05 title">연락처 2</li>
 								</ul>
 
-								<ul class="contents" th:each="val:${soujaList}">
+								<ul class="contents" th:if="${soujaList == null || soujaList.isEmpty()}">
+								    <li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
+								</ul>
+								<ul class="contents" th:if="${soujaList != null && !soujaList.isEmpty()}" th:each="val:${soujaList}">
 									<li class="content01 content">[[${val.no}]]</li>
 									<li class="content02 content">[[${val.ns_jibun}]]</li>
 									<li class="content02 content">[[${val.ns_souja_name}]]</li>
@@ -280,7 +283,7 @@ div.dt-filter-spacer {
 								</ul>
 								
 								<!-- 첨부파일 목록 -->
-								<ul class="contents" th:if="${atcFileList.size()==0}">
+								<ul class="contents" th:if="${atcFileList == null || atcFileList.isEmpty()}">
 									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
 								<ul class="contents" th:each="val:${atcFileList}">
@@ -319,10 +322,11 @@ div.dt-filter-spacer {
 								</ul>
 								
 								<!-- 목록 -->
-								<ul class="contents" th:if="${notsetModifyList.size()==0}">
-									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
+								<ul class="contents" th:if="${notsetModifyList == null || notsetModifyList.isEmpty()}">
+									<li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents" th:each="val:${notsetModifyList}">
+								<ul class="contents" th:if="${notsetModifyList != null && !notsetModifyList.isEmpty()}"
+									th:each="val, iterStat : ${notsetModifyList}">
 									<li class="content01 content">[[${val.nm_idx}]]</li>
 									<li class="content02 content">[[${val.modify_date}]]</li>
 									<li class="content03 content">[[${val.nm_gubun}]]</li>
@@ -480,16 +484,16 @@ div.dt-filter-spacer {
 									<li class="title04 title">내용</li>
 									<li class="title03 title">사유</li>
 								</ul>
-
-								<ul class="contents" th:each="val:${notsetIssueHistoryList}">
-									<li class="content01 content">[[${val.pih_history_seq}]]</li>
-									<li class="content02 content">[[${val.pih_history_type}]]
-									</li>
-									<li class="content03 content">[[${val.pih_history_date}]]
-									</li>
-									<li class="content04 content">[[${val.pih_content}]]</li>
-									<li class="content03 content">[[${val.pi_issue_comment}]]
-									</li>
+								<ul class="contents lastContents" th:if="${notsetIssueHistoryList == null || notsetIssueHistoryList.isEmpty()}">
+									<li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
+								</ul>
+								<ul class="contents lastContents" th:if="${notsetIssueHistoryList != null and notsetIssueHistoryList.size() > 0}"
+								th:each="val, iterStat : ${notsetIssueHistoryList}">
+									<li class="content01 content">[[${iterStat.count}]]</li><!-- 순번 -->
+									<li class="content02 content">[[${val.history_type}]]</li><!-- 구분 -->
+									<li class="content03 content">[[${val.history_date}]]</li><!-- 변경일자 -->
+									<li class="content04 content">[[${val.content}]]</li><!-- 내용 -->
+									<li class="content03 content">[[${val.issue_comment}]]</li><!-- 사유 -->
 								</ul>
 							</div>
 						</div>

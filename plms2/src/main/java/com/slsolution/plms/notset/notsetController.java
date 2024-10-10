@@ -38,7 +38,7 @@ public class notsetController {
 	@Autowired
 	private GlobalConfig GC;
 	
-	//송유관로현황-미설정/미점용
+	//송유관로현황-미설정/미점용 상세
 	@GetMapping(path="/unsetOccupationDetails") //http://localhost:8080/api/get/dbTest
     public ModelAndView unsetOccupationDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
@@ -55,7 +55,7 @@ public class notsetController {
 		log.info("idx:"+idx);
 		log.info("index:"+index);
 
-		ArrayList<HashMap> data = mainService.selectQuery("notsetSQL.selectAllData",params);
+		ArrayList<HashMap> data = mainService.selectQuery("notsetSQL.selectAllData",params); // 기본정보
 		
 		//241009
 		List<String> coordinateVal = new ArrayList<>();
@@ -94,36 +94,73 @@ public class notsetController {
 			}
 		}
 		
-		ArrayList<HashMap> soujaList = mainService.selectQuery("notsetSQL.selectSoyujaData",params);
-		ArrayList<HashMap> atcFileList = mainService.selectQuery("notsetSQL.selectAtcFileList",params);
+		ArrayList<HashMap> soujaList = mainService.selectQuery("notsetSQL.selectSoyujaData",params); //소유자
+		ArrayList<HashMap> atcFileList = mainService.selectQuery("notsetSQL.selectAtcFileList",params); //첨부파일
+		ArrayList<HashMap> notsetModifyList = mainService.selectQuery("notsetSQL.selectModifyList",params); //변경이력
+		ArrayList<HashMap> notsetPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params); // 필지 첨부파일
 		
-		ArrayList<HashMap> notsetModifyList = mainService.selectQuery("notsetSQL.selectModifyList",params);
-//			ArrayList<HashMap> notsetMergeList = mainService.selectQuery("notsetSQL.selectMergeList",params);
 		params.put("pnu", data.get(0).get("nm_pnu"));
-		ArrayList<HashMap> notsetIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
-		if (notsetIssueList.size()>0) {
-			params.put("issueManualCode1", notsetIssueList.get(0).get("pi_code_depth1"));
-			params.put("issueManualCode2", notsetIssueList.get(0).get("pi_code_depth2"));
-			params.put("issueManualCode3", notsetIssueList.get(0).get("pi_code_depth3"));
+		log.info("pnu: " + data.get(0).get("nm_pnu"));
+		ArrayList<HashMap> notsetIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params); //잠재이슈
+		log.info("jisangIssueList size:"+notsetIssueList.size());
+		
+		if (notsetIssueList != null && !notsetIssueList.isEmpty()) {
+			log.info("jisangIssueList:"+notsetIssueList.get(0));
+		    log.info("issueManualCode1:"+notsetIssueList.get(0).get("depth1_title"));
+		    log.info("issueManualCode2:"+notsetIssueList.get(0).get("depth2_title"));
+		    log.info("issueManualCode3:"+notsetIssueList.get(0).get("depth3_title"));
+		    
+		    params.put("issueManualCode1", notsetIssueList.get(0).get("depth1_title"));
+		    params.put("issueManualCode2", notsetIssueList.get(0).get("depth2_title"));
+		    params.put("issueManualCode3", notsetIssueList.get(0).get("depth3_title"));
+		    mav.addObject("notsetIssueList", notsetIssueList.get(0)); // 잠재이슈는 1개만 있음.
+		} else {
+		    log.info("잠재이슈리스트 없음");
+		    mav.addObject("notsetIssueList", new HashMap<>()); // 빈 객체 추가
 		}
-		ArrayList<HashMap> notsetIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
-		ArrayList<HashMap> notsetIssueHistoryList = mainService.selectQuery("notsetSQL.selectIssueHistoryList",params);
-		ArrayList<HashMap> notsetPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
-		ArrayList<HashMap> notsetMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+		ArrayList<HashMap> notsetIssueHistoryList = mainService.selectQuery("notsetSQL.selectIssueHistoryList",params); //잠재이슈 변경이력
+		ArrayList<HashMap> notsetIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params); //잠재이슈 대응 메뉴얼
+		ArrayList<HashMap> notsetMemoList = mainService.selectQuery("commonSQL.selectMemoList",params); // 메모
 		//ArrayList list4 = (ArrayList) Database.getInstance().queryForList("Json.selectNotsetRowDetail_Modify", params); // 변경이력
 
-		mav.addObject("resultData",data.get(0));
+		mav.addObject("resultData",data.get(0)); // 기본정보
 		mav.addObject("jijuk", jijuk);
-		mav.addObject("soujaList",soujaList);
-		mav.addObject("atcFileList",atcFileList);
-//			mav.addObject("notsetPermitList",notsetPermitList);
-		mav.addObject("notsetModifyList",notsetModifyList);
-//			mav.addObject("notsetMergeList",notsetMergeList);
-		mav.addObject("notsetIssueList",notsetIssueList.get(0)); // 잠재이슈는 1개만 있음.
-		mav.addObject("jisangIssueCodeAtcFileList",notsetIssueCodeAtcFileList);
-		mav.addObject("notsetIssueHistoryList",notsetIssueHistoryList);
-		mav.addObject("notsetPnuAtcFileList",notsetPnuAtcFileList);
-		mav.addObject("memoList",notsetMemoList);
+		if (soujaList == null || soujaList.isEmpty()) { // 소유자 정보
+		    mav.addObject("soujaList", new ArrayList<>());
+		} else {
+		    mav.addObject("soujaList", soujaList);
+		}
+		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
+			mav.addObject("atcFileList", new ArrayList<>());
+		} else {
+			mav.addObject("atcFileList", atcFileList);
+		}
+		if (notsetModifyList == null || notsetModifyList.isEmpty()) { //변경이력
+		    mav.addObject("notsetModifyList", new ArrayList<>());
+		} else {
+		    mav.addObject("notsetModifyList", notsetModifyList);
+		}
+		if (notsetPnuAtcFileList == null || notsetPnuAtcFileList.isEmpty()) { //필지 첨부파일
+		    mav.addObject("notsetPnuAtcFileList", new ArrayList<>());
+		} else {
+		    mav.addObject("notsetPnuAtcFileList", notsetPnuAtcFileList);
+		}
+		if (notsetIssueHistoryList == null || notsetIssueHistoryList.isEmpty()) { //잠재이슈 변경이력
+		    mav.addObject("notsetIssueHistoryList", new ArrayList<>());
+		} else {
+		    mav.addObject("notsetIssueHistoryList", notsetIssueHistoryList);
+		}
+		mav.addObject("notsetIssueCodeAtcFileList",notsetIssueCodeAtcFileList);
+		if (notsetIssueCodeAtcFileList == null || notsetIssueCodeAtcFileList.isEmpty()) { //잠재이슈 대응 메뉴얼
+		    mav.addObject("notsetIssueCodeAtcFileList", new ArrayList<>());
+		} else {
+		    mav.addObject("notsetIssueCodeAtcFileList", notsetIssueCodeAtcFileList);
+		}
+		if (notsetMemoList == null || notsetMemoList.isEmpty()) { // 메모
+		    mav.addObject("memoList", new ArrayList<>());
+		} else {
+		    mav.addObject("memoList", notsetMemoList);
+		}
 		mav.setViewName("content/notset/unsetOccupationDetails");
 		
 		//지도보기, 이동관련

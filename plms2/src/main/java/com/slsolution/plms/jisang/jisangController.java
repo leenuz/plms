@@ -1407,25 +1407,23 @@ log.info("PMT_NO:"+PMT_NO);
 		    mav.addObject("jisangIssueList", new HashMap<>()); // 빈 객체 추가
 		}
 		
-		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params); //필지 첨부파일
 		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params); // 잠재이슈 변경이력
 		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params); // 잠재이슈 대응방안 메뉴얼
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params); // 메모
-		
-		log.info("params:"+params);
-		log.info("data:"+data.get(0));
-		log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
-		log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
-		log.info("jisangPermitList:"+jisangPermitList);
-		log.info("jisangMergeList:"+jisangMergeList);
-		log.info("souja count:"+soujaList.size());
-		log.info("soujaList:"+soujaList);
-		log.info("atcFileList:"+atcFileList);
-		log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
-		log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
-		log.info("jisangMemoList:"+jisangMemoList);
-		log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
-		
+		/*
+		 * log.info("params:"+params); log.info("data:"+data.get(0));
+		 * log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
+		 * log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+		 * log.info("jisangPermitList:"+jisangPermitList);
+		 * log.info("jisangMergeList:"+jisangMergeList);
+		 * log.info("souja count:"+soujaList.size()); log.info("soujaList:"+soujaList);
+		 * log.info("atcFileList:"+atcFileList);
+		 * log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+		 * log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
+		 * log.info("jisangMemoList:"+jisangMemoList);
+		 * log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+		 */
 		mav.addObject("resultData",data.get(0)); // 기본정보
 		mav.addObject("jijuk", jijuk);
 		if (soujaList == null || soujaList.isEmpty()) { // 소유자 정보

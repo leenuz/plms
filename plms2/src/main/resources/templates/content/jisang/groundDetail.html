@@ -247,8 +247,7 @@
 									<li class="title03 title">파일보기</li>
 									<li class="title04 title">파일저장</li>
 								</ul>
-								<ul class="contents"
-									th:if="${atcFileList == null || atcFileList.isEmpty()}">
+								<ul class="contents" th:if="${atcFileList == null || atcFileList.isEmpty()}">
 									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
 								<ul class="contents" th:each="val:${atcFileList}">
