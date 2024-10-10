@@ -456,7 +456,7 @@
 								<ul class="contents " th:if="${goverModifyList == null || goverModifyList.isEmpty()}">
 									<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents"
+								<ul class="contents" th:if="${goverModifyList != null && !goverModifyList.isEmpty()}"
 									th:each="val, iterStat : ${goverModifyList}">
 									<li class="content01 content"><span
 										th:text="${iterStat.count}"></span>
@@ -628,21 +628,11 @@
 								</ul>
 								<ul class="contents lastContents" th:if="${goverIssueHistoryList != null and goverIssueHistoryList.size() > 0}" 
 								th:each="val, iterStat : ${goverIssueHistoryList}">
-									<li class="content01 content">
-										[[${iterStat.no}]]
-									</li>
-									<li class="content02 content">
-										[[${val.pih_history_type}]]
-									</li>
-									<li class="content03 content">
-										[[${val.pih_history_date}]]
-									</li>
-									<li class="content04 content">
-										[[${val.pih_content}]]
-									</li>
-									<li class="content03 content">
-										[[${val.pi_issue_comment}]]
-									</li>
+									<li class="content01 content">[[${iterStat.count}]]</li><!-- 순번 -->
+									<li class="content02 content">[[${val.history_type}]]</li><!-- 구분 -->
+									<li class="content03 content">[[${val.history_date}]]</li><!-- 변경일자 -->
+									<li class="content04 content">[[${val.content}]]</li><!-- 내용 -->
+									<li class="content03 content">[[${val.issue_comment}]]</li><!-- 사유 -->
 								</ul>
 							</div>
 						</div>

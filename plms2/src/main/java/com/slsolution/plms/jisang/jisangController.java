@@ -1318,12 +1318,11 @@ log.info("PMT_NO:"+PMT_NO);
     }
 	
 	
-	//groundDetail  상세 조회
+	// 송유관로 현황 - 지상권 상세정보
 	@GetMapping(path="/groundDetail") //http://localhost:8080/api/get/dbTest
     public ModelAndView groundDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
 		HashMap params = new HashMap();
-		ArrayList<HashMap> list=new ArrayList<HashMap>();
 		
 		String idx = httpRequest.getParameter("idx");
 		String index = httpRequest.getParameter("index");
@@ -1411,13 +1410,11 @@ log.info("PMT_NO:"+PMT_NO);
 		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
 		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params); // 잠재이슈 변경이력
 		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params); // 잠재이슈 대응방안 메뉴얼
-		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
+		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params); // 메모
 		
 		log.info("params:"+params);
 		log.info("data:"+data.get(0));
 		log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
-		log.info("jm_youngdo:"+data.get(0).get("jm_youngdo"));
-		log.info("jm_pipe_name:"+data.get(0).get("jm_pipe_name"));
 		log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
 		log.info("jisangPermitList:"+jisangPermitList);
 		log.info("jisangMergeList:"+jisangMergeList);
@@ -1461,7 +1458,6 @@ log.info("PMT_NO:"+PMT_NO);
 		} else {
 		    mav.addObject("jisangPnuAtcFileList", jisangPnuAtcFileList);
 		}
-		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
 		if (jisangIssueHistoryList == null || jisangIssueHistoryList.isEmpty()) { //잠재이슈 변경이력
 		    mav.addObject("jisangIssueHistoryList", new ArrayList<>());
 		} else {
