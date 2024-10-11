@@ -431,10 +431,10 @@ function loadDataTable(params) {
 		var url = "/land/songyu/menu01_detail?idx=" + data.idx;
 		if (data.idx.substring(0, 1) == "J") { //지상권
 			console.log("jisang");
-			url = "/land/jisang/groundDetail?idx=" + data.idx + "&index=" + data.index;
+			url = "/land/jisang/groundDetail3?idx=" + data.idx + "&index=" + data.index;
 		}
 		else if (data.idx.substring(0, 1) == "N") { //미설정
-			url = "/land/notset/unsetOccupationDetails?idx=" + data.idx + "&index=" + data.index;
+			url = "/land/notset/unsetOccupationDetails2?idx=" + data.idx + "&index=" + data.index;
 		}
 		else return;
 		window.location = url;

@@ -374,6 +374,169 @@ public class goverController {
 		return mav;
 	}
 	
+	// 송유관로 현황 - 점용 상세정보
+	@GetMapping(path = "/occupationDetails2") // http://localhost:8080/api/get/dbTest
+	public ModelAndView occupationDetails2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HashMap params = new HashMap();
+
+		String idx = httpRequest.getParameter("idx");
+		String index = httpRequest.getParameter("index");
+		String gidx = httpRequest.getParameter("gidx");
+
+		params.put("idx", idx);
+		params.put("index", index);
+//				log.info("params:"+params);
+		ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData", params);
+		ArrayList<HashMap> permitList = mainService.selectQuery("goverSQL.selectPermitList", params);
+		ArrayList<HashMap> pnuList = mainService.selectQuery("goverSQL.selectPnuList", params);
+		ArrayList<HashMap> atcFileList = mainService.selectQuery("goverSQL.selectAtcFileList", params);
+		
+		HashMap jijuk = new HashMap<>();
+		jijuk.put("x", 0);
+		jijuk.put("y", 0);
+
+		HashMap targetParam = new HashMap();
+		targetParam.put("idx", Integer.parseInt(gidx));
+		ArrayList<HashMap> pnuTargetList = new ArrayList<HashMap>();
+		if (!gidx.equals("0")) {
+			pnuTargetList = mainService.selectQuery("goverSQL.selectPnuTargetList", targetParam);
+			
+			params.put("pnu", pnuTargetList.get(0).get("gp_pnu"));
+
+			if (pnuTargetList.size() > 0) {
+				HashMap jijukParam = new HashMap<>();
+				jijukParam.put("sido_nm", pnuTargetList.get(0).get("gp_sido_nm"));
+				jijukParam.put("sgg_nm", pnuTargetList.get(0).get("gp_sgg_nm"));
+				jijukParam.put("emd_nm", pnuTargetList.get(0).get("gp_emd_nm"));
+				jijukParam.put("ri_nm", pnuTargetList.get(0).get("gp_ri_nm"));
+				jijukParam.put("jibun", pnuTargetList.get(0).get("gp_jibun"));
+				ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+				if (jijukList.size() > 0) {
+					jijuk = jijukList.get(0);
+				}
+			}
+		}
+		
+		//241009
+		List<String> coordinateVal = new ArrayList<>();
+		Integer coordinateSize = 0;
+
+		// 소속 토지정보 각각의 좌표 가져오기
+		for (int i = 0; i < pnuList.size(); i++) {
+			HashMap jijukParam = new HashMap<>();
+			
+			System.out.println(pnuList.get(i));
+			
+//				jijukParam.put("sido_nm", pnuList.get(i).get("gp_sido_nm"));
+//				jijukParam.put("sgg_nm", pnuList.get(i).get("gp_sgg_nm"));
+//				jijukParam.put("emd_nm", pnuList.get(i).get("gp_emd_nm"));
+//				jijukParam.put("ri_nm", pnuList.get(i).get("gp_ri_nm"));
+//				jijukParam.put("jibun", pnuList.get(i).get("gp_jibun"));
+			
+			jijukParam.put("TARGET_PNU", pnuList.get(i).get("gp_pnu"));
+			
+			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			
+			coordinateSize += jijukList.size();
+			
+			if (jijukList.size() > 0) {
+				pnuList.get(i).put("lng", jijukList.get(0).get("x"));
+				pnuList.get(i).put("lat", jijukList.get(0).get("y"));
+				
+				for(int k = 0 ; k < jijukList.size() ; k++) {
+					HashMap jijukInfo = jijukList.get(k);
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+(String)jijukInfo.get("y").toString());
+				}
+				
+			} else {
+				pnuList.get(i).put("lng", "0");
+				pnuList.get(i).put("lat", "0");
+			}
+		}
+
+//				ArrayList<HashMap> goverPnuAtcFileList = mainService.selectQuery("goverSQL.selectPnuAtcFileList",params);
+		ArrayList<HashMap> goverPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList", params);
+		params.put("pnu", data.get(0).get("jm_pnu"));
+		log.info("pnu: "+ data.get(0).get("jm_pnu"));
+		ArrayList<HashMap> goverIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params); // 잠재이슈
+		log.info("goverIssueList size:"+goverIssueList.size());
+		if (goverIssueList != null && !goverIssueList.isEmpty()) {
+			log.info("issueManualCode1:"+goverIssueList.get(0).get("depth1_title"));
+			log.info("issueManualCode2:"+goverIssueList.get(0).get("depth2_title"));
+			log.info("issueManualCode3:"+goverIssueList.get(0).get("depth3_title"));
+			
+			params.put("issueManualCode1", goverIssueList.get(0).get("depth1_title"));
+			params.put("issueManualCode2", goverIssueList.get(0).get("depth2_title"));
+			params.put("issueManualCode3", goverIssueList.get(0).get("depth3_title"));
+		    mav.addObject("jisangIssueList", goverIssueList.get(0)); // 잠재이슈는 1개만 있음.
+		} else {
+		    log.info("잠재이슈리스트 없음");
+		    mav.addObject("goverIssueList", new HashMap<>()); // 빈 객체 추가
+		}
+		ArrayList<HashMap> goverModifyList = mainService.selectQuery("goverSQL.selectModifyList",params);
+		ArrayList<HashMap> goverIssueHistoryList = mainService.selectQuery("goverSQL.selectIssueHistoryList",params); // 잠재이슈 변경 이력
+		ArrayList<HashMap> goverIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params); // 잠재이슈 대응방안 메뉴얼
+		ArrayList<HashMap> goverMemoList = mainService.selectQuery("commonSQL.selectMemoList", params); // 메모
+//				ArrayList<HashMap> jisangMergeList = mainService.selectQuery("goverSQL.selectMergeList",params);
+		params.put("manage_no", idx);
+
+		log.info("params:" + params);
+		log.info("data:" + data.get(0));
+		log.info("pnu:" + pnuTargetList.get(0).get("gp_pnu"));
+		log.info("permitList:" + permitList);
+		log.info("atcFileList:" + atcFileList);
+		log.info("goverMemoList:" + goverMemoList);
+//				log.info("jm_jijuk_area:"+data.get(0).get("gm_jijuk_area"));
+//				log.info("jisangPermitList:"+jisangPermitList);
+//				log.info("souja count:"+soujaList.size());
+//				log.info("soujaList:"+soujaList);
+//				log.info("atcFileList:"+atcFileList);
+
+		mav.addObject("resultData", data.get(0));
+		mav.addObject("pnuTargetList", pnuTargetList); //대상 토지정보
+		mav.addObject("pnuList", pnuList); // 소속 토지정보
+		mav.addObject("permitList", permitList); // 허가정보
+		mav.addObject("jijuk", jijuk);
+		if (atcFileList == null || atcFileList.isEmpty()) { // 첨부파일
+		    mav.addObject("atcFileList", new ArrayList<>());
+		} else {
+		    mav.addObject("atcFileList", atcFileList);
+		}
+		if (goverModifyList == null || goverModifyList.isEmpty()) { // 변경이력
+		    mav.addObject("goverModifyList", new ArrayList<>());
+		} else {
+		    mav.addObject("goverModifyList", goverModifyList);
+		}
+		if (goverPnuAtcFileList == null || goverPnuAtcFileList.isEmpty()) { // 필지 첨부파일
+		    mav.addObject("goverPnuAtcFileList", new ArrayList<>());
+		} else {
+		    mav.addObject("goverPnuAtcFileList", goverPnuAtcFileList);
+		}
+		if (goverIssueHistoryList == null || goverIssueHistoryList.isEmpty()) { //잠재이슈 변경이력
+		    mav.addObject("goverIssueHistoryList", new ArrayList<>());
+		} else {
+		    mav.addObject("goverIssueHistoryList", goverIssueHistoryList);
+		}
+		if (goverIssueCodeAtcFileList == null || goverIssueCodeAtcFileList.isEmpty()) { //잠재이슈 대응 메뉴얼
+		    mav.addObject("goverIssueCodeAtcFileList", new ArrayList<>());
+		} else {
+		    mav.addObject("goverIssueCodeAtcFileList", goverIssueCodeAtcFileList);
+		}
+		if (goverMemoList == null || goverMemoList.isEmpty()) { // 메모
+		    mav.addObject("memoList", new ArrayList<>());
+		} else {
+		    mav.addObject("memoList", goverMemoList);
+		}
+		
+		//지도보기, 이동관련
+		mav.addObject("jijukCoordList", coordinateVal);
+		mav.addObject("jijukCoordSize", coordinateSize);
+
+		mav.setViewName("content/gover/occupationDetails2");
+		return mav;
+	}
+	
 
 	// 지사 선택에 따라 허가관청 목록을 반환하는 API
 	@PostMapping("/getPmtOffice")

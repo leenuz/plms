@@ -490,16 +490,16 @@ function loadDataTable(params) {
 
 		if (data.idx.substring(0, 1) == "J") { //지상권
 			console.log("jisang");
-			url = "/land/jisang/groundDetail?idx=" + data.idx + "&index=" + data.index;
+			url = "/land/jisang/groundDetail2?idx=" + data.idx + "&index=" + data.index;
 		}
 		else if (data.idx.substring(0, 1) == "G") { //점용
-			url = "/land/gover/occupationDetails?idx=" + data.idx + "&index=" + data.index + "&gidx=" + data.gidx;
+			url = "/land/gover/occupationDetails2?idx=" + data.idx + "&index=" + data.index + "&gidx=" + data.gidx;
 		}
 		else if (data.idx.substring(0, 1) == "N") { //미설정
-			url = "/land/notset/unsetOccupationDetails?idx=" + data.idx + "&index=" + data.index;
+			url = "/land/notset/unsetOccupationDetails2?idx=" + data.idx + "&index=" + data.index;
 
 		} else if (data.idx.substring(0, 1) == "L") { //토지
-			url = "/land/dopco/companyLandDetails?idx=" + data.idx + "&index=" + data.index + "&gidx=0";
+			url = "/land/dopco/companyLandDetails2?idx=" + data.idx + "&index=" + data.index + "&gidx=0";
 		}
 		else return;
 		window.location = url;

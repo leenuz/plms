@@ -1353,7 +1353,7 @@ log.info("PMT_NO:"+PMT_NO);
     }
 	
 	
-	// 송유관로 현황 - 지상권 상세정보
+	// 송유관로 현황 - 권리확보현황 - 지상권 상세정보
 	@GetMapping(path="/groundDetail") //http://localhost:8080/api/get/dbTest
     public ModelAndView groundDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
@@ -1508,6 +1508,332 @@ log.info("PMT_NO:"+PMT_NO);
 		}
 		
 		mav.setViewName("content/jisang/groundDetail");
+		
+		//지도보기, 이동관련
+		mav.addObject("jijukCoordList", coordinateVal);
+		mav.addObject("jijukCoordSize", coordinateSize);
+		
+		return mav;
+    }
+	
+	// 송유관로 현황- 권리제외필지 - 지상권 상세정보
+	@GetMapping(path="/groundDetail2") //http://localhost:8080/api/get/dbTest
+    public ModelAndView groundDetail2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		
+		String idx = httpRequest.getParameter("idx");
+		String index = httpRequest.getParameter("index");
+		
+		params.put("idx",idx);
+		params.put("manage_no",idx);
+		params.put("index",index);
+		log.info("params:"+params);
+		
+		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+		
+		//241009
+		List<String> coordinateVal = new ArrayList<>();
+		Integer coordinateSize = 0;
+		
+		HashMap jijuk = new HashMap<>();
+		jijuk.put("x", 0);
+		jijuk.put("y", 0);
+		
+		if (data.size() > 0) {
+			HashMap jijukParam = new HashMap<>();
+			jijukParam.put("sido_nm", data.get(0).get("jm_sido_nm"));
+			jijukParam.put("sgg_nm", data.get(0).get("jm_sgg_nm"));
+			jijukParam.put("emd_nm", data.get(0).get("jm_emd_nm"));
+			jijukParam.put("ri_nm", data.get(0).get("jm_ri_nm"));
+			jijukParam.put("jibun", data.get(0).get("jm_jibun"));
+			
+			jijukParam.put("TARGET_PNU", data.get(0).get("jm_pnu"));
+
+			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			ArrayList<HashMap> jijukPNUList2 = mainService.selectQuery("commonSQL.selectJijuk_PNU", jijukParam);
+			
+			coordinateSize += jijukPNUList2.size();
+			
+			if (jijukList.size() > 0) {
+				jijuk = jijukList.get(0);
+			} else {
+				jijuk = new HashMap<>();
+				jijuk.put("x", 0);
+				jijuk.put("y", 0);
+				
+				for(int k = 0 ; k < jijukPNUList2.size() ; k++) {
+					HashMap jijukInfo = jijukPNUList2.get(k);
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+jijukInfo.get("y").toString());
+				}
+			}
+		}
+		
+		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+
+//			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+		
+		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
+		params.put("JISANG_NO", idx);
+		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 신버전
+		
+		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
+		// jisangModifyList를 역순으로 정렬 (변경일시 내림차순 하기 위해서)
+		Collections.reverse(jisangModifyList);
+		
+		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
+		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
+
+		params.put("pnu", data.get(0).get("jm_pnu"));
+		log.info("pnu: "+ data.get(0).get("jm_pnu"));
+		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params); // 잠재이슈: pnu 로 조회
+		log.info("jisangIssueList size:"+jisangIssueList.size());
+		
+		if (jisangIssueList != null && !jisangIssueList.isEmpty()) {
+			log.info("jisangIssueList:"+jisangIssueList.get(0));
+		    log.info("issueManualCode1:"+jisangIssueList.get(0).get("depth1_title"));
+		    log.info("issueManualCode2:"+jisangIssueList.get(0).get("depth2_title"));
+		    log.info("issueManualCode3:"+jisangIssueList.get(0).get("depth3_title"));
+		    
+		    params.put("issueManualCode1", jisangIssueList.get(0).get("depth1_title"));
+		    params.put("issueManualCode2", jisangIssueList.get(0).get("depth2_title"));
+		    params.put("issueManualCode3", jisangIssueList.get(0).get("depth3_title"));
+		    mav.addObject("jisangIssueList", jisangIssueList.get(0)); // 잠재이슈는 1개만 있음.
+		} else {
+		    log.info("잠재이슈리스트 없음");
+		    mav.addObject("jisangIssueList", new HashMap<>()); // 빈 객체 추가
+		}
+		
+		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params); //필지 첨부파일
+		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params); // 잠재이슈 변경이력: pnu 로 조회
+		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params); // 잠재이슈 대응방안 메뉴얼: pnu로 조회
+		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params); // 메모
+		/*
+		 * log.info("params:"+params); log.info("data:"+data.get(0));
+		 * log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
+		 * log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+		 * log.info("jisangPermitList:"+jisangPermitList);
+		 * log.info("jisangMergeList:"+jisangMergeList);
+		 * log.info("souja count:"+soujaList.size()); log.info("soujaList:"+soujaList);
+		 * log.info("atcFileList:"+atcFileList);
+		 * log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+		 * log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
+		 * log.info("jisangMemoList:"+jisangMemoList);
+		 * log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+		 */
+		mav.addObject("resultData",data.get(0)); // 기본정보
+		mav.addObject("jijuk", jijuk);
+		if (soujaList == null || soujaList.isEmpty()) { // 소유자 정보
+		    mav.addObject("soujaList", new ArrayList<>());
+		} else {
+		    mav.addObject("soujaList", soujaList);
+		}
+		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
+			mav.addObject("atcFileList", new ArrayList<>());
+		} else {
+			mav.addObject("atcFileList", atcFileList);
+		}
+		if (jisangPermitList == null || jisangPermitList.isEmpty()) { //사용승락
+		    mav.addObject("jisangPermitList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangPermitList", jisangPermitList);
+		}
+		if (jisangMergeList == null || jisangMergeList.isEmpty()) { //합필 지상권 정보
+		    mav.addObject("jisangMergeList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangMergeList", jisangMergeList);
+		}
+		if (jisangModifyList == null || jisangModifyList.isEmpty()) { //변경이력
+		    mav.addObject("jisangModifyList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangModifyList", jisangModifyList);
+		}
+		if (jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()) { //필지 첨부파일
+		    mav.addObject("jisangPnuAtcFileList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangPnuAtcFileList", jisangPnuAtcFileList);
+		}
+		if (jisangIssueHistoryList == null || jisangIssueHistoryList.isEmpty()) { //잠재이슈 변경이력
+		    mav.addObject("jisangIssueHistoryList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangIssueHistoryList", jisangIssueHistoryList);
+		}
+		if (jisangIssueCodeAtcFileList == null || jisangIssueCodeAtcFileList.isEmpty()) { //잠재이슈 대응 메뉴얼
+		    mav.addObject("jisangIssueCodeAtcFileList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangIssueCodeAtcFileList", jisangIssueCodeAtcFileList);
+		}
+		if (jisangMemoList == null || jisangMemoList.isEmpty()) { // 메모
+		    mav.addObject("memoList", new ArrayList<>());
+		} else {
+		    mav.addObject("memoList", jisangMemoList);
+		}
+		
+		mav.setViewName("content/jisang/groundDetail2");
+		
+		//지도보기, 이동관련
+		mav.addObject("jijukCoordList", coordinateVal);
+		mav.addObject("jijukCoordSize", coordinateSize);
+		
+		return mav;
+    }
+	
+	// 송유관로 현황- 권리제외필지 - 지상권 상세정보
+	@GetMapping(path="/groundDetail3") //http://localhost:8080/api/get/dbTest
+    public ModelAndView groundDetail3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		
+		String idx = httpRequest.getParameter("idx");
+		String index = httpRequest.getParameter("index");
+		
+		params.put("idx",idx);
+		params.put("manage_no",idx);
+		params.put("index",index);
+		log.info("params:"+params);
+		
+		ArrayList<HashMap> data = mainService.selectQuery("jisangSQL.selectAllData",params);
+		
+		//241009
+		List<String> coordinateVal = new ArrayList<>();
+		Integer coordinateSize = 0;
+		
+		HashMap jijuk = new HashMap<>();
+		jijuk.put("x", 0);
+		jijuk.put("y", 0);
+		
+		if (data.size() > 0) {
+			HashMap jijukParam = new HashMap<>();
+			jijukParam.put("sido_nm", data.get(0).get("jm_sido_nm"));
+			jijukParam.put("sgg_nm", data.get(0).get("jm_sgg_nm"));
+			jijukParam.put("emd_nm", data.get(0).get("jm_emd_nm"));
+			jijukParam.put("ri_nm", data.get(0).get("jm_ri_nm"));
+			jijukParam.put("jibun", data.get(0).get("jm_jibun"));
+			
+			jijukParam.put("TARGET_PNU", data.get(0).get("jm_pnu"));
+
+			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			ArrayList<HashMap> jijukPNUList2 = mainService.selectQuery("commonSQL.selectJijuk_PNU", jijukParam);
+			
+			coordinateSize += jijukPNUList2.size();
+			
+			if (jijukList.size() > 0) {
+				jijuk = jijukList.get(0);
+			} else {
+				jijuk = new HashMap<>();
+				jijuk.put("x", 0);
+				jijuk.put("y", 0);
+				
+				for(int k = 0 ; k < jijukPNUList2.size() ; k++) {
+					HashMap jijukInfo = jijukPNUList2.get(k);
+					coordinateVal.add(jijukInfo.get("x").toString()+"|"+jijukInfo.get("y").toString());
+				}
+			}
+		}
+		
+		ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
+		ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
+
+//				ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
+		
+		//ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params); // 사용승락 구버전
+		params.put("JISANG_NO", idx);
+		ArrayList jisangPermitList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Permit", params); // 사용승락 신버전
+		
+		ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
+		// jisangModifyList를 역순으로 정렬 (변경일시 내림차순 하기 위해서)
+		Collections.reverse(jisangModifyList);
+		
+		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
+		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
+
+		params.put("pnu", data.get(0).get("jm_pnu"));
+		log.info("pnu: "+ data.get(0).get("jm_pnu"));
+		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params); // 잠재이슈: pnu 로 조회
+		log.info("jisangIssueList size:"+jisangIssueList.size());
+		
+		if (jisangIssueList != null && !jisangIssueList.isEmpty()) {
+			log.info("jisangIssueList:"+jisangIssueList.get(0));
+		    log.info("issueManualCode1:"+jisangIssueList.get(0).get("depth1_title"));
+		    log.info("issueManualCode2:"+jisangIssueList.get(0).get("depth2_title"));
+		    log.info("issueManualCode3:"+jisangIssueList.get(0).get("depth3_title"));
+		    
+		    params.put("issueManualCode1", jisangIssueList.get(0).get("depth1_title"));
+		    params.put("issueManualCode2", jisangIssueList.get(0).get("depth2_title"));
+		    params.put("issueManualCode3", jisangIssueList.get(0).get("depth3_title"));
+		    mav.addObject("jisangIssueList", jisangIssueList.get(0)); // 잠재이슈는 1개만 있음.
+		} else {
+		    log.info("잠재이슈리스트 없음");
+		    mav.addObject("jisangIssueList", new HashMap<>()); // 빈 객체 추가
+		}
+		
+		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params); //필지 첨부파일
+		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params); // 잠재이슈 변경이력: pnu 로 조회
+		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params); // 잠재이슈 대응방안 메뉴얼: pnu로 조회
+		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params); // 메모
+		/*
+		 * log.info("params:"+params); log.info("data:"+data.get(0));
+		 * log.info("jm_pipe_yn:"+data.get(0).get("jm_pipe_yn"));
+		 * log.info("jm_jijuk_area:"+data.get(0).get("jm_jijuk_area"));
+		 * log.info("jisangPermitList:"+jisangPermitList);
+		 * log.info("jisangMergeList:"+jisangMergeList);
+		 * log.info("souja count:"+soujaList.size()); log.info("soujaList:"+soujaList);
+		 * log.info("atcFileList:"+atcFileList);
+		 * log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
+		 * log.info("jisangIssueHistoryList:"+jisangIssueHistoryList);
+		 * log.info("jisangMemoList:"+jisangMemoList);
+		 * log.info("jisangIssueCodeAtcFileList:"+jisangIssueCodeAtcFileList);
+		 */
+		mav.addObject("resultData",data.get(0)); // 기본정보
+		mav.addObject("jijuk", jijuk);
+		if (soujaList == null || soujaList.isEmpty()) { // 소유자 정보
+		    mav.addObject("soujaList", new ArrayList<>());
+		} else {
+		    mav.addObject("soujaList", soujaList);
+		}
+		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
+			mav.addObject("atcFileList", new ArrayList<>());
+		} else {
+			mav.addObject("atcFileList", atcFileList);
+		}
+		if (jisangPermitList == null || jisangPermitList.isEmpty()) { //사용승락
+		    mav.addObject("jisangPermitList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangPermitList", jisangPermitList);
+		}
+		if (jisangMergeList == null || jisangMergeList.isEmpty()) { //합필 지상권 정보
+		    mav.addObject("jisangMergeList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangMergeList", jisangMergeList);
+		}
+		if (jisangModifyList == null || jisangModifyList.isEmpty()) { //변경이력
+		    mav.addObject("jisangModifyList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangModifyList", jisangModifyList);
+		}
+		if (jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()) { //필지 첨부파일
+		    mav.addObject("jisangPnuAtcFileList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangPnuAtcFileList", jisangPnuAtcFileList);
+		}
+		if (jisangIssueHistoryList == null || jisangIssueHistoryList.isEmpty()) { //잠재이슈 변경이력
+		    mav.addObject("jisangIssueHistoryList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangIssueHistoryList", jisangIssueHistoryList);
+		}
+		if (jisangIssueCodeAtcFileList == null || jisangIssueCodeAtcFileList.isEmpty()) { //잠재이슈 대응 메뉴얼
+		    mav.addObject("jisangIssueCodeAtcFileList", new ArrayList<>());
+		} else {
+		    mav.addObject("jisangIssueCodeAtcFileList", jisangIssueCodeAtcFileList);
+		}
+		if (jisangMemoList == null || jisangMemoList.isEmpty()) { // 메모
+		    mav.addObject("memoList", new ArrayList<>());
+		} else {
+		    mav.addObject("memoList", jisangMemoList);
+		}
+		
+		mav.setViewName("content/jisang/groundDetail3");
 		
 		//지도보기, 이동관련
 		mav.addObject("jijukCoordList", coordinateVal);

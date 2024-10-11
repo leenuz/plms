@@ -181,95 +181,66 @@ const allCheckEventMasterEdit = () => {
 
 allCheckEventMasterEdit();
 
-// 첨부파일 선택파일 삭제 기능
-$(document).on("click","#deleteFileBtn",function(){
-	//const attachFiles = document.querySelectorAll('input:checkbox[name="landRightsRegistration_attachFile"]:checked');
-	/*$('input:checkbox[name=landRightsRegistration_attachFile]').each(function (index) {
-		if($(this).is(":checked")==true){
-	    	console.log($(this).val());
-	    }
-	})*/
-	/*const clickedAttachFiles = document.querySelectorAll('input[name="masterEdit_attachFile"]:checked');
-	console.log(clickedAttachFiles);
-	console.log(uploadFiles);
-	for(var i=0;i<clickedAttachFiles.length;i++){
-		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
-		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
-		$(delEle).remove();
-
-	}*/
-	
+// 필지 첨부파일 - 선택파일 삭제 버튼 기능
+$(document).on("click", "#deleteFileBtn", function() {
 	const selectedCheckboxes = document.querySelectorAll('input[name="masterEdit_attachFile"]:checked');
 
-	       // 체크된 체크박스들의 값과 파일 이름을 추출하여 리스트로 만듦
-	       const selectedFiles = Array.from(selectedCheckboxes).map(checkbox => {
-	           const parentLi = checkbox.closest('ul.contents'); // 체크박스가 포함된 ul 요소를 찾음
-			   console.log(parentLi);
-	          // const fileName = parentLi.querySelector('#filename').val().trim(); // 파일 이름 추출
-			  
-			    const fileName=$(parentLi).find("#filename").val();
-				const idx=$(parentLi).find("#idx").val();
-	           return {
-	               value: Number(checkbox.value),   // 체크박스의 value 값
-	               fileName: fileName,       // 파일 이름
-				   idx:idx
-	           };
-	       });
+	// 체크된 체크박스들의 값과 파일 이름을 추출하여 리스트로 만듦
+	const selectedFiles = Array.from(selectedCheckboxes).map(checkbox => {
+		const parentLi = checkbox.closest('ul.contents'); // 체크박스가 포함된 ul 요소를 찾음
+		console.log(parentLi);
+		// const fileName = parentLi.querySelector('#filename').val().trim(); // 파일 이름 추출
 
-	       console.log(selectedFiles); // 결과 확인용 콘솔 출력
+		const fileName = $(parentLi).find("#filename").val();
+		const idx = $(parentLi).find("#idx").val();
+		return {
+			value: Number(checkbox.value),   // 체크박스의 value 값
+			fileName: fileName,       // 파일 이름
+			idx: idx
+		};
+	});
 
-	       if (selectedFiles.length > 0) {
-	           console.log("Deleting files with IDs:", selectedFiles);
+	console.log(selectedFiles); // 결과 확인용 콘솔 출력
 
-	           // 서버로 삭제 요청 보내기 (예: AJAX 요청)
-	           fetch('/api/pnuAtcDeleteIdx', {
-	               method: 'POST',
-	               headers: {
-	                   'Content-Type': 'application/json',
-	               },
-	               body: JSON.stringify({ fileIds: selectedFiles }),
-	           })
-	           .then(response => response.json())
-	           .then(data => {
-	               if (data.resultMessage == "success") {
-	                   // 성공적으로 삭제되었을 경우 체크박스와 관련된 리스트 항목 삭제
+	if (selectedFiles.length > 0) {
+		console.log("Deleting files with IDs:", selectedFiles);
 
-	                   alert('선택된 파일이 삭제되었습니다.');
-	                   var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val()};
-	                   $.ajax({
-	                          url: "/land/jisang/getAtcFileData",
-	                          type: "POST",
-	                          data: params,
-	                      })
-	                      .done(function (fragment) {
-	                          $('#fileListDiv').replaceWith(fragment);
-	                      });
-	               } else {
-	                   alert('파일 삭제에 실패하였습니다.');
-	               }
-	           })
-	           .catch(error => {
-	               console.error('Error:', error);
-	               alert('파일 삭제 중 오류가 발생하였습니다.');
-	           });
-	       } else {
-	           alert('삭제할 파일을 선택해 주세요.');
-	       }
-	
-	
-	
-	
+		// 서버로 삭제 요청 보내기 (예: AJAX 요청)
+		fetch('/land/api/pnuAtcDeleteIdx', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ fileIds: selectedFiles }),
+		})
+			.then(response => response.json())
+			.then(data => {
+				if (data.resultMessage == "success") {
+					// 성공적으로 삭제되었을 경우 체크박스와 관련된 리스트 항목 삭제
+
+					alert('선택된 파일이 삭제되었습니다.');
+					var params = { "manage_no": $("#manage_no").val(), "pnu": $("#pnu").val() };
+					$.ajax({
+						url: "/land/jisang/getAtcFileData",
+						type: "POST",
+						data: params,
+					})
+						.done(function(fragment) {
+							$('#fileListDiv').replaceWith(fragment);
+						});
+				} else {
+					alert('파일 삭제에 실패하였습니다.');
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				alert('파일 삭제 중 오류가 발생하였습니다.');
+			});
+	} else {
+		alert('삭제할 파일을 선택해 주세요.');
+	}
 })
 
-
-$(document).on("click",".bunhalBtn",function(){
-     const urlParams = new URL(location.href).searchParams;
-      const idx = urlParams.get('idx');
-      const index = urlParams.get('index');
-       const js_idx = urlParams.get('js_idx');
-	  url = "/land/jisang/divisionRegister?idx=" + idx + "&index=" + index + "&js_idx=" + js_idx ;
-      window.location = url;
-});
 
 // 첨부파일 저장 버튼
 $(document).on("click", "#fileSaveBtn", function() {
@@ -977,7 +948,7 @@ function printDivContent(divId) {
 }
 
 /*****************************
- * 첨부파일 다운로드
+ * 첨부파일 다운로드 (보기 버튼)
  * */
 //파일 보기 클릭 시 첨부파일 다운로드
 function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
