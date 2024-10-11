@@ -304,38 +304,17 @@
 							<li class="title fileNameWidth">파일명</li>
 							<li class="title">파일보기</li>
 						</ul>
-						<!--              <div class="contentScr">-->
-						<!--              <ul class="contents" th:each="val:${togiAtcFileList}">-->
-						<!--                <li class="content">-->
-						<!--                  <input type="text"-->
-						<!--                    readonly-->
-						<!--                    class="notWriteInput" th:value="${val.date}"/>-->
-						<!--                </li>-->
-						<!--                <li class="content fileNameWidth">-->
-						<!--                  <input-->
-						<!--                    type="text"-->
-						<!--                    readonly-->
-						<!--                    th:value="${val.da_file_nm}"-->
-						<!--                    class="notWriteInput" />-->
-						<!--                  &lt;!&ndash;                             th:value="${resultData.da_file_nm}" &ndash;&gt;-->
-						<!--                </li>-->
-						<!--                <li class="content btnBox">-->
-						<!--                  <button class="viewDetailButton lightBlueBtn">-->
-						<!--                    상세보기-->
-						<!--                  </button>-->
-						<!--                </li>-->
-						<!--              </ul>-->
-						<!--              </div>-->
-						<ul class="contents">
+						<ul class="contents" th:each="file, iterStat : ${fileList}">
 							<li class="content">
-								<input type="text" placeholder="2022-06-21" readonly class="notWriteInput" />
+								<input type="text" th:placeholder="${#dates.format(file.wdate, 'yyyy-MM-dd HH:mm')}" readonly class="notWriteInput" />
 							</li>
 							<li class="content fileNameWidth">
-								<input type="text" placeholder="지적측량 결과 - 평택시 월곡동 산32-6번지.pdf" readonly class="notWriteInput" />
+								<input type="text" th:placeholder="${file.file_nm}" readonly class="notWriteInput" />
 							</li>
 							<li class="content btnBox">
 								<button class="viewDetailButton lightBlueBtn">
-									상세보기 <span class="downloadIcon"></span>
+									<a href="javascript:void(0);" class="viewDetailButton lightBlueBtn"
+											th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.file_path}]], [[${file.file_nm}]], [[${file.dosi_no}]], [[${file.file_seq}]], 'togi')">보기</a>
 								</button>
 							</li>
 						</ul>
@@ -360,6 +339,7 @@
 							<li class="title">제목</li>
 							<li class="title">승인일</li>
 						</ul>
+						<!-- 
 						<div class="contentsBox" id="fileList">
 							<ul class="contents" id="fileListUl">
 								<li class="content smallWidth checkboxWrap">
@@ -381,7 +361,7 @@
 								</li>
 							</ul>
 						</div>
-
+ -->
 					</div>
 				</div>
 
@@ -411,7 +391,7 @@
 					<h2>
 						<p>전자결재 문서 추가</p>
 						<span class="topCloseBtn"></span>
-					</h2>
+					</h2> 
 					<div class="add_document_wrap">
 						<ul>
 							<li class="add_document_title">문서번호</li>
@@ -434,7 +414,7 @@
 							<li class="add_document_content"><input type="text" name="documentURL" /></li>
 						</ul>
 					</div>
-
+ 
 					<div class="lastBtnBox btnWrap">
 						<button class="saveBtn finalBtn" id="saveBtn">저장</button>
 						<button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>

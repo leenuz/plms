@@ -174,3 +174,6 @@ var formSerializeArray = $('#saveForm').serializeArray();
        console.log(dataObj);
 
 });
+function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
+	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
+}

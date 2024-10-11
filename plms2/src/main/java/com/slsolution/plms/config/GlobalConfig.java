@@ -22,6 +22,8 @@ public class GlobalConfig {
 	private static String notsetFileDataDir;
 	private static String jisangReqDoc1Dir;
 	private static String jisangReqDoc2Dir;
+	private static String togiFileTempDir;
+	private static String togiFileDataDir;
 	
 	private static String serverName;
 	
@@ -112,6 +114,22 @@ public class GlobalConfig {
 	}
 	public static String getJisangReqDoc2Dir() {
 		return jisangReqDoc2Dir;
+	}
+
+	@Value("${plms.togiFileTempDir}")
+	public void setTogiFileTempDir(String str) {
+		togiFileTempDir=str;
+	}
+	public static String getTogiFileTempDir() {
+		return togiFileTempDir;
+	}
+	
+	@Value("${plms.togiFileDataDir}")
+	public void setTogiFileDataDir(String str) {
+		togiFileDataDir=str;
+	}
+	public static String getTogiFileDataDir() {
+		return togiFileDataDir;
 	}
 	
 	@Value("${server.name}")
