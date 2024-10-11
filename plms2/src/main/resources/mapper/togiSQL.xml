@@ -185,7 +185,7 @@
 		LEFT JOIN dosi_info di ON dm.dm_dosi_no=di.di_dosi_no
 		LEFT JOIN dosi_dept dd ON dm.dm_dosi_no=dd.dd_dosi_no
 		where 1=1
-		and dm_master_yn ='N'
+--		and dm_master_yn ='N'
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and dm_dosi_no=#{idx}
 		</if>
@@ -354,5 +354,54 @@
 			and DOSI_NO = #{idx}
 		</if>
 	</select>
-
+	
+	<insert id="insertDosiApproval" parameterType="HashMap">
+		INSERT INTO DOSI_APPROVAL
+		(
+				dosi_no
+			,	doc_seq
+			,	dockey
+			,	doc_title
+			,	doc_url
+			,	doc_date
+			,	del_flag
+			,	reg_date
+		) VALUES (
+				#{dosi_no}
+			,	#{doc_seq} ::int
+			,	#{dockey}
+			,	#{doc_title}
+			,	#{doc_url}
+			,	#{doc_date}
+			,	'N'
+			,	now()
+		)
+	</insert>
+	
+	<select id="selectDosiApproval" resultType="HashMap" parameterType="HashMap">
+		SELECT
+					DOSI_NO
+				,	DOC_SEQ
+				,	DOCKEY
+				,	DOC_TITLE
+				,	DOC_DATE
+				,	DOC_URL
+		FROM
+					DOSI_APPROVAL
+		WHERE		DOSI_NO		= #{idx}
+		  AND		DEL_FLAG	= 'N'
+	</select>
+	
+	<update id="updateDosiApproval" parameterType="HashMap">
+		UPDATE DOSI_APPROVAL SET
+			DEL_FLAG = 'Y'
+		WHERE DOSI_NO	= #{dosi_no}
+		  AND DOC_SEQ	= #{dosi_seq} ::numeric
+	</update>
+	
+	<select id="selectDosiApprovalNextSeq" parameterType="java.util.HashMap" resultType="Integer">
+	SELECT
+		COALESCE(MAX(doc_seq), 0) + 1 as doc_seq
+	FROM DOSI_APPROVAL 
+	</select>
 </mapper>
