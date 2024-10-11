@@ -825,7 +825,7 @@ public class ApiController {
 
             // 파일 삭제 부분.
             // 파일 경로 생성
-            String filePath = GC.getPnuAtcFileDir();
+            String filePath = GC.getPnuFileDataDir();
             ; // 설정파일로 뺀다.
             String originalFilename = jsonObject.get("fileName").toString();
             String fileFullPath = filePath + "/" + originalFilename; // 파일 전체 경로
@@ -883,14 +883,16 @@ public class ApiController {
         for (int i = 0; i < fsize; i++) {
             log.info("delete IDX:" + idxarr.get(i));
 
+            // DB 에서 pa_idx 로 삭제
             HashMap params = new HashMap();
             JSONObject jsonObject = (JSONObject) idxarr.get(i);
             params.put("pa_idx", jsonObject.get("idx"));
+            
             mainService.DeleteQuery("commonSQL.pnuAtcDelete", params);
 
-            // 파일 삭제 부분.
+            // 로컬 경로에서 파일 삭제 부분.
             // 파일 경로 생성
-            String filePath = GC.getPnuAtcFileDir();
+            String filePath = GC.getPnuFileDataDir();
             ; // 설정파일로 뺀다.
             String originalFilename = jsonObject.get("fileName").toString();
             String fileFullPath = filePath + "/" + originalFilename; // 파일 전체 경로
