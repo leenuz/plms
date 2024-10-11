@@ -404,4 +404,22 @@
 		COALESCE(MAX(doc_seq), 0) + 1 as doc_seq
 	FROM DOSI_APPROVAL 
 	</select>
+	
+	<select id="selectDosiCompleteYn" parameterType="java.util.HashMap" resultType="HashMap">
+		SELECT COALESCE(DI_COMPLETE_YN, 'N') AS di_complete_yn
+		  FROM DOSI_INFO 
+		 WHERE DI_DOSI_NO = #{di_dosi_no}
+	</select>
+	
+	<update id="updateDosiComplete" parameterType="HashMap">
+		UPDATE DOSI_INFO SET
+			   DI_COMPLETE_YN = #{di_complete_yn} ,
+			   <if test="@org.apache.commons.lang3.ObjectUtils@isEmpty(di_complete_date)" >
+			 	DI_COMPLETE_DATE = TO_DATE(NOW()::VARCHAR, 'YYYY-MM-DD')
+			   </if>
+			   <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(di_complete_date)" >
+			   DI_COMPLETE_DATE = null
+			   </if>
+		 WHERE DI_DOSI_NO = #{di_dosi_no}
+	</update>
 </mapper>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -39,6 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Slf4j
 @EnableAsync
@@ -641,27 +644,64 @@ public class togiController {
 		return resultMap;
 	}
 	
-	// 토지 개발정보 > 전자결재 문서 열람 추가
-		@PostMapping("/deleteDosiDoc")
-		public HashMap deleteDosiDoc(HttpServletRequest request, HttpServletResponse response) throws Exception {
-			// JSON 데이터를 문자열로 읽음
-		    String requestParams = ParameterUtil.getRequestBodyToStr(request);
-		    HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		    HashMap<String, Object> param = new HashMap<String, Object>();
-		    
-		    // 문자열을 JSON 객체로 변환
-		    JSONObject requestParamObj = new JSONObject(requestParams);
-		    
-		    JSONArray delArr = new JSONArray(requestParamObj.getString("delList"));
-		    int result = 0;
-		    for(int i = 0; i < delArr.length(); i++) {
-		    	JSONObject delObj = new JSONObject(delArr.getString(i));
-		    	param.put("dosi_no", delObj.getString("doc_no"));
-		    	param.put("dosi_seq", delObj.getString("doc_seq"));
-		    	
-		    	result += (int)mainService.UpdateQuery("togiSQL.updateDosiApproval", param);
-		    }
-		    resultMap.put("result", result);
-			return resultMap;
-		}
+	// 토지 개발정보 > 전자결재 문서 열람 삭제
+	@PostMapping("/deleteDosiDoc")
+	public HashMap deleteDosiDoc(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// JSON 데이터를 문자열로 읽음
+	    String requestParams = ParameterUtil.getRequestBodyToStr(request);
+	    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	    HashMap<String, Object> param = new HashMap<String, Object>();
+	    
+	    // 문자열을 JSON 객체로 변환
+	    JSONObject requestParamObj = new JSONObject(requestParams);
+	    
+	    JSONArray delArr = new JSONArray(requestParamObj.getString("delList"));
+	    int result = 0;
+	    for(int i = 0; i < delArr.length(); i++) {
+	    	JSONObject delObj = new JSONObject(delArr.getString(i));
+	    	param.put("dosi_no", delObj.getString("doc_no"));
+	    	param.put("dosi_seq", delObj.getString("doc_seq"));
+	    	
+	    	result += (int)mainService.UpdateQuery("togiSQL.updateDosiApproval", param);
+	    }
+	    resultMap.put("result", result);
+		return resultMap;
+	}
+	
+	// 완료처리 / 취소처리
+	@PostMapping("/complete")
+	public HashMap completeTogiInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+	    HashMap<String, Object> param = new HashMap<String, Object>();
+	    
+	    // 문자열을 JSON 객체로 변환
+	    JSONObject requestParamObj = new JSONObject(requestParams);
+	    String dosi_no = requestParamObj.getString("dosiNo");
+	    param.put("di_dosi_no", dosi_no);
+	    ArrayList<HashMap> complete = mainService.selectQuery("togiSQL.selectDosiCompleteYn", param);
+	    String selectedYn = (String) complete.get(0).get("di_complete_yn");
+	    String completeYn = "";
+	    String compleStr = "";
+	    String compleMsg = "";
+	    if ("N".equals(selectedYn)) {
+	    	completeYn = "Y";
+	    	compleStr = "완료처리";
+	    	compleMsg = "완료";
+	    } else {
+	    	completeYn = "N";
+	    	compleStr = "취소처리";
+	    	compleMsg = "취소";
+	    	param.put("di_complete_date", completeYn);
+	    }
+	    param.put("di_complete_yn", completeYn);
+	    
+	    int result = (int) mainService.UpdateQuery("togiSQL.updateDosiComplete", param);
+	    resultMap.put("complete", completeYn);
+	    resultMap.put("completeStr", compleStr);
+	    resultMap.put("completeMsg", compleMsg);
+	    resultMap.put("result", result);
+		return resultMap;
+	}
+	
 }
