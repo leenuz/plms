@@ -1,8 +1,10 @@
 package com.slsolution.plms.togi;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
@@ -15,13 +17,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.MainService;
 import com.slsolution.plms.ParameterParser;
 import com.slsolution.plms.ParameterUtil;
+import com.slsolution.plms.config.GlobalConfig;
 import com.slsolution.plms.json.JSONArray;
 import com.slsolution.plms.json.JSONObject;
 
@@ -42,6 +48,9 @@ import java.util.HashMap;
 public class togiController {
 	@Autowired
 	private MainService mainService;
+	
+	@Autowired
+	private GlobalConfig GC;
 	
 	@GetMapping(path="/menu04_1") //http://localhost:8080/api/get/dbTest
     public ModelAndView menu04_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
@@ -87,9 +96,11 @@ public class togiController {
 		ArrayList<HashMap>  list=new ArrayList<HashMap>();
 		ArrayList<HashMap> data = mainService.selectQuery("togiSQL.selectDaepyoData",params);
 		ArrayList<HashMap> sosokData = mainService.selectQuery("togiSQL.selectSosokData",params);
+		ArrayList<HashMap> fileList = mainService.selectQuery("togiSQL.selectAtcFileList",params);
 
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("sosokData",sosokData);
+		mav.addObject("fileList",fileList);
 
 		mav.setViewName("content/togi/landDevInfo");
 		return mav;
@@ -282,7 +293,7 @@ public class togiController {
 			String gubun = null;
 			String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
 			String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
-
+			String str_DOSINO = "";
 			try {
 				CommonUtil comm = new CommonUtil();
 
@@ -308,7 +319,7 @@ public class togiController {
 				String bizOper = requestParamObj.getString("business_oper");
 				String dosiNo = requestParamObj.getString("dosiNo");
 				gubun = requestParamObj.getString("gubun");
-
+				JSONArray fileArr = new JSONArray(requestParamObj.getString("files"));
 				// System.out.println("#########gubun::" + gubun);
 				// System.out.println("#########filenumber::" + filenumber);
 				// System.out.println("#########fileseq::" + fileseq);
@@ -317,12 +328,12 @@ public class togiController {
 //				params.put("FILE_SEQ", fileseq);
 
 				// 도시마스터 채번
-				ArrayList DosiList = (ArrayList) mainService.selectQuery("togiSQL.selectDosiNextNo", null);
+				
 
 				if ("insert".equals(gubun)) {
-					String no=(((HashMap) DosiList.get(0)).get("now_dosino").toString());
-					//String Next_DosiNo = String.valueOf(Integer.parseInt((String) ((HashMap) DosiList.get(0)).get("now_dosino")) + 1);
-					String Next_DosiNo = String.valueOf((Integer.parseInt(no)+1));
+					ArrayList DosiList = (ArrayList) mainService.selectQuery("togiSQL.selectDosiNextNo", null);
+					String no = (((HashMap) DosiList.get(0)).get("now_dosino").toString());
+					String Next_DosiNo = String.valueOf((Integer.parseInt(no) + 1));
 					int n_Next_DosiNo = Next_DosiNo.length();
 
 					String add_Zero = "";
@@ -332,6 +343,8 @@ public class togiController {
 					Next_DosiNo = "D_" + add_Zero + Next_DosiNo;
 
 					params.put("DOSI_NO", Next_DosiNo);
+					
+					str_DOSINO = Next_DosiNo;
 				} else if ("modify".equals(gubun)) {
 					params.put("DOSI_NO", dosiNo);
 				}
@@ -418,6 +431,28 @@ public class togiController {
 
 				//파일첨부는 별도로 처리 ljs
 				// 첨부파일 관련 처리
+				if (gubun.equals("insert")) {
+					for (int i = 0; i < fileArr.length(); i++)  {
+						String file_name = fileArr.getString(i);
+						
+						HashMap<String, Object> filesMap = new HashMap<>();
+						String chageFileName = CommonUtil.filenameAutoChange(file_name); // 파일명 교체
+						
+						filesMap.put("dosiNo", str_DOSINO);
+						filesMap.put("seq", String.format("%06d", i));
+						filesMap.put("fseq", i);
+						filesMap.put("fname", file_name);
+						
+						String tempPath = GC.getTogiFileTempDir(); // 설정파일로 뺀다.
+						String dataPath = GC.getTogiFileDataDir() + "/" + str_DOSINO; // 설정파일로 뺀다.
+						filesMap.put("fpath", dataPath + "/" + chageFileName);
+						
+						CommonUtil.moveFile(file_name, tempPath, dataPath, chageFileName);
+						
+						mainService.InsertQuery("togiSQL.insertDosiUploadData", filesMap);
+						
+					}
+				}
 				if (gubun.equals("modify")) {
 //					// System.out.println("filenumber = " + filenumber);
 //					for (int i = 0; i < Integer.parseInt(filenumber); i++) {
@@ -490,5 +525,71 @@ public class togiController {
 		response.getWriter().print(jo);
 		response.getWriter().flush();
 
+	}
+	
+	@RequestMapping(value = "/fileUpload/post") // ajax에서 호출하는 부분
+	@ResponseBody
+	public HashMap upload(MultipartHttpServletRequest multipartRequest) { // Multipart로 받는다.
+
+		Iterator<String> itr = multipartRequest.getFileNames();
+
+		String filePath = GC.getTogiFileTempDir(); // 설정파일로 뺀다.
+		HashMap<String, Object> resultmap = new HashMap();
+		ArrayList<HashMap> resultdataarr = new ArrayList<HashMap>();
+		HashMap resultdata = new HashMap();
+		String resultCode = "0000";
+		String resultMessage = "success";
+		while (itr.hasNext()) { // 받은 파일들을 모두 돌린다.
+
+			/*
+			 * 기존 주석처리 MultipartFile mpf = multipartRequest.getFile(itr.next()); String
+			 * originFileName = mpf.getOriginalFilename();
+			 * System.out.println("FILE_INFO: "+originFileName); //받은 파일 리스트 출력'
+			 */
+
+			MultipartFile mpf = multipartRequest.getFile(itr.next());
+
+			String originalFilename = mpf.getOriginalFilename(); // 파일명
+
+			String fileFullPath = filePath + "/" + originalFilename; // 파일 전체 경로
+
+			try {
+				// 파일 저장
+				mpf.transferTo(new File(fileFullPath)); // 파일저장 실제로는 service에서 처리
+
+				resultdata.put("fname", originalFilename);
+				resultdata.put("fpath", fileFullPath);
+				System.out.println("originalFilename => " + originalFilename);
+				System.out.println("fileFullPath => " + fileFullPath);
+				// resultdataarr.add(resultdata);
+			} catch (Exception e) {
+				resultCode = "4001";
+				resultdata.put("fname", "");
+				resultdata.put("fpath", "");
+				resultMessage = "error";
+				// resultdataarr.add(resultdata);
+				System.out.println("postTempFile_ERROR======>" + fileFullPath);
+				e.printStackTrace();
+			}
+
+//	            System.out.println(obj);
+
+			// log.info("jo:"+jo);
+//	          			response.setCharacterEncoding("UTF-8");
+//	          			response.setHeader("Access-Control-Allow-Origin", "*");
+//	          			response.setHeader("Cache-Control", "no-cache");
+//	          			response.resetBuffer();
+//	          			response.setContentType("application/json");
+//	          			//response.getOutputStream().write(jo);
+//	          			response.getWriter().print(obj);
+//	          			response.getWriter().flush();
+
+		}
+		resultmap.put("resultCode", resultCode);
+		resultmap.put("resultData", resultdata);
+		resultmap.put("resultMessage", resultMessage);
+		JSONObject obj = new JSONObject(resultmap);
+
+		return resultmap;
 	}
 }

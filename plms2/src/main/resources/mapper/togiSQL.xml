@@ -325,6 +325,34 @@
 		DELETE FROM DOSI_MASTER
 		WHERE dm_DOSI_NO = TO_CHAR(#{DOSI_NO})
 	</delete>
+	
+	<delete id="insertDosiUploadData" parameterType="HashMap">
+		INSERT INTO dosi_atcfile 
+		(
 
+		 dosi_no
+		 ,seq
+		 ,file_path
+		 ,file_nm
+		 ,file_seq
+		) 
+		 VALUES (
+		  #{dosiNo}
+		  ,#{seq}::integer
+		  ,#{fpath}
+		  ,#{fname}
+		  ,#{fseq}::integer
+		  
+		    )
+	</delete>
+	
+	<select id="selectAtcFileList"  resultType="HashMap" parameterType="HashMap">
+		select *,(row_number() over()) as no
+		FROM DOSI_ATCFILE
+		WHERE 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			and DOSI_NO = #{idx}
+		</if>
+	</select>
 
 </mapper>
