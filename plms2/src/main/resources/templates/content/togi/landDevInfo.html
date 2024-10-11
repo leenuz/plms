@@ -375,12 +375,13 @@
 				</div>
 			</section>
 
-
+[[${resultData}]]
+완료처리
 			<div class="finalBtnBox btnWrap">
 				<button class="finalBtn prevBtn" onclick="history.back();">이전</button>
 				<button class="finalBtn deleteBtn">삭제</button>
-				<button class="finalBtn completeBtn">완료처리</button>
-				<button class="finalBtn printBtn">출력</button>
+				<button class="finalBtn completeBtn" id="completeYn">[[${resultData.di_complete_yn == 'Y' ? '취소처리' : '완료처리'}]]</button>
+				<button class="finalBtn printBtn" onclick="commonCurrentPagePrint('landDevInfo')">출력</button>
 				<button class="finalBtn editBtn">수정
 					<!--            <a href="/togi/landEdit">수정</a>-->
 				</button>

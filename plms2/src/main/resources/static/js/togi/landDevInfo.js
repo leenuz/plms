@@ -224,38 +224,44 @@ $(document).on("click",".delBtn",function(){
 
 //완료처리버튼 클릭
 $(document).on("click",".completeBtn",function(){
-
-var formSerializeArray = $('#saveForm').serializeArray();
-
-       len = formSerializeArray.length;
-       var dataObj = {};
-       for (i=0; i<len; i++) {
-        dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
-       }
-
-       var fileDatas=[];
-       var fileUls=$("#fileList .contents");
-       	   	for(var i=0;i<fileUls.length;i++){
-       			var docNum=$(fileUls[i]).find("input[name='docNum_"+i+"']").attr("placeholder");
-       			var docTitle=$(fileUls[i]).find("input[name='docTitle_"+i+"']").attr("placeholder");
-       			var docDate=$(fileUls[i]).find("input[name='docDate_"+i+"']").attr("placeholder");
-       			var docURL=$(fileUls[i]).find("input[name='docURL_"+i+"']").attr("placeholder");
-
-       	   		var fileObj={
-       				"docNum":ljsIsNull(docNum)?'':docNum
-       				,"docTitle":ljsIsNull(docTitle)?'':docTitle
-       				,"docDate":ljsIsNull(docDate)?'':docDate
-       				,"docURL":ljsIsNull(docURL)?'':docURL
-       	   		}
-       	   		fileDatas.push(fileObj);
-       	   	}
-       	   	dataObj.fileDatas=fileDatas;
-
-		dataObj.gubun="modify";
-//		dataObj.dosiNo=""; //수정일때는 들어간다
-       console.log("**dataObj**");
-       console.log(dataObj);
-
+	console.log('토지개발 > 상세정보 > 완료처리 시작');
+	let dataObj = {};
+	
+	dataObj.dosiNo = $('#dosi_no').val();
+	console.log("**dataObj**");
+	console.log(dataObj);
+	console.log($(this).text());
+	if(confirm('해당 토지정보를 ' + $(this).text() +'하시겠습니까?')) {
+		let url="/togi/complete";
+		$.ajax({
+			url:url,
+		   	type:'POST',
+		   	contentType:"application/json",
+		   	data:JSON.stringify(dataObj),
+	
+			dataType:"json",
+			beforeSend:function(request){
+				loadingShow();
+			},
+			success:function(response){
+				loadingHide();
+				console.log(response);
+				if (response.result){
+					alert(response.completeMsg + '처리 되었습니다.');
+					$('#completeYn').text(response.compleStr);
+				} else {
+					console.log("response.success N");
+				}
+			},
+			error:function(jqXHR,textStatus,errorThrown){
+				alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+				return false;
+			}
+		});
+	}
+	 
+	
+	
 });
 function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
