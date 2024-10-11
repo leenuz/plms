@@ -45,13 +45,28 @@ public class issueController {
 
 	@GetMapping(path = "/menu06_1") // http://localhost:8080/api/get/dbTest
 	public ModelAndView menu06_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-		HashMap params = new HashMap();
-		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList", params);
-		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster", params);
-
+		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("jisaList", jisalist);
-		mav.addObject("sidoList", sidolist);
+		
+		try {
+			HashMap params = new HashMap();
+			
+			params.put("CODE_DEPTH", "1");
+			
+			//지사코드
+			ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList", params);
+			//시도코드
+			ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster", params);
+			//이슈유형 코드 불러오기 (이슈유형 : 첫번째 메뉴)
+			ArrayList<HashMap> issueDepth1 = mainService.selectQuery("issueSQL.selectIssueCodeListDepth", params);
+			
+			mav.addObject("jisaList", jisalist);
+			mav.addObject("sidoList", sidolist);
+			mav.addObject("depthList1", issueDepth1);
+			
+		} catch(Exception e) {
+			log.error("===  ===");
+		}
 
 		mav.setViewName("content/issue/menu06_1");
 		return mav;
@@ -178,6 +193,7 @@ public class issueController {
 
 		HashMap<String, String> returnHash = new HashMap<String, String>();
 		Enumeration<String> obj1 = req.getParameterNames();
+		
 		int cnt = 0;
 
 		while (obj1.hasMoreElements()) {
@@ -189,6 +205,7 @@ public class issueController {
 		int draw = Integer.parseInt(req.getParameter("draw"));
 		int start = Integer.parseInt(req.getParameter("start"));
 		int length = Integer.parseInt(req.getParameter("length"));
+		
 		String orderColumn = req.getParameter("order[0][column]");
 		String orderDirection = req.getParameter("order[0][dir]");
 		String orderColumnName = req.getParameter("columns[" + orderColumn + "][data]");

@@ -28,8 +28,9 @@
 		<div class="issueManageheader"></div>
 		<div class="issueManageWrappers01">
 			<div class="issueManageTitleBoxs">
-				<h5>민원관리</h5>
+				<h5>민원관리?</h5>
 			</div>
+			<!-- 상단 날짜, 진행현황, 이슈유형, 주소 form [S] -->
 			<form id="searchForm" onsubmit="return false;">
 				<section class="issueManageSectionBoxs">
 					<div class="issueManageSectionCont">
@@ -37,16 +38,14 @@
 							<ul class="inputControlBoxs sectionMenuListBoxs">
 								<li class="selectTitle"><p>발생일자</p></li>
 								<div class="inputControlList dateListBox active">
-									<input name="start_date" type="date"> <span>-</span> <input
-										name="end_date" type="date">
+									<input name="start_date" type="date"> <span>-</span> <input name="end_date" type="date">
 								</div>
 							</ul>
 							<ul class="selectContent sectionMenuListBoxs">
 								<li class="selectTitle"><p>진행현황</p></li>
-								<!--수정부분 지사-->
+								<!-- 진행현황 -->
 								<div class="issueManageSelectWrappers">
-									<select name="status" class="issueManageHiddenSelect"
-										id="issueManageSelectBox01" hidden="">
+									<select name="status" class="issueManageHiddenSelect" id="issueManageSelectBox01" hidden="">
 										<option value="전체">전체</option>
 										<option value="임시저장">임시저장</option>
 										<option value="민원발생">민원발생</option>
@@ -72,26 +71,28 @@
 							</ul>
 							<ul class="selectContent sectionMenuListBoxs addSelectWidth">
 								<li class="selectTitle"><p>이슈유형</p></li>
-								<!--이슈유형 지사-->
+								<!--이슈유형 대메뉴-->
 								<div class="issueManageSelectTotalContent">
 									<div class="selectICodeContentArea">
 										<div class="hiddenSelectBox">
-											<select name="depth1Code" id="issueCodeMgmtSelectBox01_1"
-												hidden>
+											<select name="depth1Code" id="issueCodeMgmtSelectBox01_1" hidden>
 												<option value="">전체</option>
+												<th:block th:each="depth1:${depthList1}">
+												<option th:text="${depth1.code_name}" th:value="${depth1.code}">1</option>
+												</th:block>
 											</select>
 										</div>
-										<!--보여지는 셀렉박스-->
+										<!-- 보여지는 셀렉박스 -->
 										<div class="customSelectBox">
 											<button class="customSelectView">전체</button>
-											<ul class="customSelectBtns" id="depth1Codes"></ul>
+											<ul class="customSelectBtns" id="depth1Codes">
+											</ul>
 										</div>
 									</div>
 
 									<div class="selectICodeContentArea">
 										<div class="hiddenSelectBox">
-											<select name="depth2Code" id="issueCodeMgmtSelectBox01_2"
-												hidden>
+											<select name="depth2Code" id="issueCodeMgmtSelectBox01_2" hidden>
 												<option value="">전체</option>
 											</select>
 										</div>
@@ -104,8 +105,7 @@
 
 									<div class="selectICodeContentArea">
 										<div class="hiddenSelectBox">
-											<select name="depth3Code" id="issueCodeMgmtSelectBox01_3"
-												hidden>
+											<select name="depth3Code" id="issueCodeMgmtSelectBox01_3" hidden>
 												<option value="">전체</option>
 											</select>
 										</div>
@@ -122,12 +122,10 @@
 								<li class="selectTitle"><p>발생지사</p></li>
 								<!--수정부분 지사-->
 								<div class="issueManageSelectWrappers">
-									<select name="jisa" class="issueManageHiddenSelect"
-										id="issueManageSelectBox05" hidden>
+									<select name="jisa" class="issueManageHiddenSelect" id="issueManageSelectBox05" hidden>
 										<option value="전체">전체</option>
 										<th:block th:each="val:${jisaList}">
-											<option th:text="${val.jm_jisa_name}"
-												th:value="${val.jm_jisa_name}"></option>
+											<option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
 										</th:block>
 									</select>
 								</div>
@@ -153,20 +151,16 @@
 							<p class="devideSecondTitles">주소</p>
 							<div class="issueManageSectionRadioBoxs">
 								<ul class="radioBoxs">
-									<li><input type="radio" name="issueManageRadio01"
-										value="0" checked /><span>입력형</span></li>
-									<li class="addressInput"><input type="search"
-										placeholder="주소입력" name="addressFull" class="searchInputBox01" />
+									<li><input type="radio" name="issueManageRadio01" value="0" checked /><span>입력형</span></li>
+									<li class="addressInput"><input type="search" placeholder="주소입력" name="addressFull" class="searchInputBox01" />
 									</li>
 								</ul>
 								<ul class="radioBoxs menuRadioEvet01">
-									<li><input type="radio" name="issueManageRadio01"
-										value="1" /><span>선택형</span></li>
+									<li><input type="radio" name="issueManageRadio01" value="1" /><span>선택형</span></li>
 									<li>
 										<!--수정부분 지사-->
 										<div class="issueManageSelectWrappers">
-											<select name="sido" id="sido" class="issueManageHiddenSelect"
-												hidden>
+											<select name="sido" id="sido" class="issueManageHiddenSelect" hidden>
 												<option value="전체">전체</option>
 												<th:block th:each="val:${sidoList}">
 													<option th:text="${val.sm_name}" th:value="${val.sm_name}"></option>
@@ -176,16 +170,14 @@
 										<div class="issueManageSelects">
 											<button class="issueManageSelectsTitleBtn" id="sidoText">전체</button>
 											<div class="sufaceSelectList smallHeight">
-												<ul class="surfaceSelectListMember sido">
-												</ul>
+												<ul class="surfaceSelectListMember sido"></ul>
 											</div>
 										</div>
 									</li>
 									<li>
 										<!--수정부분 지사-->
 										<div class="issueManageSelectWrappers">
-											<select name="sgg" id="sgg" class="issueManageHiddenSelect"
-												hidden>
+											<select name="sgg" id="sgg" class="issueManageHiddenSelect" hidden>
 												<option value="전체">전체</option>
 											</select>
 										</div> <!--보여지는 셀렉박스-->
@@ -200,8 +192,7 @@
 									<li>
 										<!--수정부분 지사-->
 										<div class="issueManageSelectWrappers">
-											<select name="emd" id="emd" class="issueManageHiddenSelect"
-												hidden>
+											<select name="emd" id="emd" class="issueManageHiddenSelect" hidden>
 												<option value="전체">전체</option>
 											</select>
 										</div> <!--보여지는 셀렉박스-->
@@ -231,8 +222,7 @@
 									</li>
 									<li style="padding: 0px 3px">
 										<div class="inputControlList">
-											<input name="jibun" type="text" placeholder="지번입력"
-												class="menuAdderssInput01" />
+											<input name="jibun" type="text" placeholder="지번입력" class="menuAdderssInput01" />
 										</div>
 									</li>
 								</ul>
@@ -242,13 +232,14 @@
 							<div class="issueManageSectionBtnBoxs">
 								<button class="issueManageTotalBtn">현황통계</button>
 								<button class="newIssueBtn">신규민원</button>
-								<button id="searchBtn" class="issueManageRegisterBtn">조회하기</button>
+								<button class="issueManageRegisterBtn" onclick="minwonListSearch()">조회하기</button>
 							</div>
 						</div>
 					</div>
 					<!--issueManageSectionCont-->
 				</section>
 			</form>
+			<!-- 상단 날짜, 진행현황, 이슈유형, 주소 form [E] -->
 			<main>
 				<div class="privateUseMainContentWrapper">
 					<div class="privateUseMainContent">
@@ -1275,5 +1266,6 @@ if (issuePopupOpen) {
 	<script src="/js/issue/issueManageLinkEvet.js"></script>
 	<script src="/js/issue/resultPageEvet.js"></script>
 	<script src="/js/issue/menu06_1.js"></script>
+	<script src="/js/common/common.js"></script>
 </th:block>
 </html>

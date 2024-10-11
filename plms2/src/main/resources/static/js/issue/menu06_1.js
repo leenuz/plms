@@ -1,3 +1,25 @@
+//일반 실행 == $(document).ready(function(){})
+$(function() {
+	console.log("---------- start menu06_1.js ------------");
+	var formSerializeArray = $('#searchForm').serializeArray();
+	var object = {};
+	for (var i = 0; i < formSerializeArray.length; i++) {
+		if (formSerializeArray[i]['value'] === '전체') {
+			continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
+		}
+		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+	}
+
+	var json = JSON.stringify(formSerializeArray);
+
+	console.log("----------jsonobj------------");
+	console.log(json);
+	console.log("object issueManageRadio01:" + object.issueManageRadio01);
+
+	//loadDataTable(object);
+	console.log("-----------------------");
+})
+
 /* 이슈보기팝업 */
 const IssuePopupOpenEvet = () => {
 	const issuePopBtn = document.querySelectorAll("#dopcoIssueManage .issuePopBtn");
@@ -34,10 +56,7 @@ const IssuePopupOpenEvet = () => {
 				document.body.appendChild(script).parentNode.removeChild(script);
 			}
 		}
-
-
 	}
-
 }
 // IssuePopupOpenEvet();
 
@@ -411,7 +430,7 @@ $(document).on("click", "#newcomplaint_Popup .approveBtn", function() {
 	console.log(data);
 
 	$.ajax({
-		url: "/land/issue/saveMinwonData",
+		url: "/issue/saveMinwonData",
 		data: data,
 		async: true,
 		type: "POST",
@@ -452,7 +471,7 @@ $(document).on("click", "#newcomplaint_Popup .sangsinBtn", function() {
 	console.log(data);
 
 	$.ajax({
-		url: "/land/issue/saveMinwonData",
+		url: "/issue/saveMinwonData",
 		data: data,
 		async: true,
 		type: "POST",
@@ -499,7 +518,7 @@ $(document).on("click", ".landinfo .landStatusPopOpenBtn", function() {
 	}
 	const popupLayout = $('#landStatusPopup')
 	$.ajax({
-		url: "/land/issue/getMinwonJijukSelectNotModel",
+		url: "/issue/getMinwonJijukSelectNotModel",
 		type: "GET",
 		data: { "address": addr },
 		dataType: "json",
@@ -593,10 +612,13 @@ $(document).on("change", ".approve_checkbox", function() {
 
 var saveJsonData = [];
 function loadDataTable(params) {
+	
 	console.log("-----start loadDataTable----------");
+	
 	console.log("Params:", params); // params 객체 출력
 
 	//var json=JSON.stringify(params);
+	
 	table = $('#userTable').DataTable({
 		// fixedColumns: {
 		//     start: 3,
@@ -638,7 +660,7 @@ function loadDataTable(params) {
 				d.code3 = params.depth3Code;
 				d.mw_title = params.mw_title;
 
-				d.status = findProgStatus(params.status)
+				//d.status = findProgStatus(params.status)
 
 				//주소
 				var ask = (params.issueManageRadio01 == undefined || params.issueManageRadio01 == null) ? '0' : params.issueManageRadio01;
@@ -760,26 +782,7 @@ function hyeonhwangPop() {
 }
 
 
-//조회하기 클릭시 상단 정보 출력
-$(document).on("click", "#searchBtn", function() {
-	var formSerializeArray = $('#searchForm').serializeArray();
-	var object = {};
-	for (var i = 0; i < formSerializeArray.length; i++) {
-		if (formSerializeArray[i]['value'] === '전체') {
-			continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
-		}
-		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
-	}
 
-	var json = JSON.stringify(formSerializeArray);
-
-	console.log("----------jsonobj------------");
-	console.log(json);
-	console.log("object issueManageRadio01:" + object.issueManageRadio01);
-
-	loadDataTable(object);
-	console.log("-----------------------");
-})
 
 //민원관리 -> 현황통계
 $(document).on("click", ".issueManageTotalBtn", function() {
@@ -961,27 +964,6 @@ function convetHyeonhwangData(data) {
 	return returnObj;
 }
 
-//조회하기 클릭시 상단 정보 출력
-$(document).on("click", "#searchBtn", function() {
-	var formSerializeArray = $('#searchForm').serializeArray();
-	var object = {};
-	for (var i = 0; i < formSerializeArray.length; i++) {
-		if (formSerializeArray[i]['value'] === '전체') {
-			continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
-		}
-		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
-	}
-
-	var json = JSON.stringify(formSerializeArray);
-
-	console.log("----------jsonobj------------");
-	console.log(json);
-	console.log("object issueManageRadio01:" + object.issueManageRadio01);
-
-	loadDataTable(object);
-	console.log("-----------------------");
-})
-
 $(document).on("click", ".sido li", function() {
 	$("#sido").val($("#sidoText").text()).attr("selected", "selected");
 	if ($("#sido").val() == null) return;
@@ -1110,34 +1092,6 @@ $(document).on("click", ".emd li", function() {
 
 
 
-//일반 실행
-$(function() {
-	var formSerializeArray = $('#searchForm').serializeArray();
-	var object = {};
-	for (var i = 0; i < formSerializeArray.length; i++) {
-		if (formSerializeArray[i]['value'] === '전체') {
-			continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
-		}
-		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
-	}
-
-	var json = JSON.stringify(formSerializeArray);
-
-	console.log("----------jsonobj------------");
-	console.log(json);
-	console.log("object issueManageRadio01:" + object.issueManageRadio01);
-
-	loadDataTable(object);
-	console.log("-----------------------");
-})
-
-
-
-
-
-
-
-
 
 
 
@@ -1225,7 +1179,7 @@ customSelectView.forEach((btn) => {
 // 대분류 selectIssueCodeListDepth1
 (() => {
 	$.ajax({
-		url: "/land/issue/selectIssueCodeListDepth1",
+		url: "/issue/selectIssueCodeListDepth1",
 		async: true,
 		type: "POST",
 		dataType: "json",
@@ -1264,7 +1218,7 @@ const loadDepth2Codes = () => {
 	}
 
 	$.ajax({
-		url: "/land/issue/selectIssueCodeListDepth2?DEPTH1=" + depth1Code,
+		url: "/issue/selectIssueCodeListDepth2?DEPTH1=" + depth1Code,
 		async: true,
 		type: "POST",
 		dataType: "json",
@@ -1303,7 +1257,7 @@ const loadDepth3Codes = () => {
 	}
 
 	$.ajax({
-		url: "/land/issue/selectIssueCodeListDepth3?DEPTH1=" + depth1Code + '&DEPTH2=' + depth2Code,
+		url: "/issue/selectIssueCodeListDepth3?DEPTH1=" + depth1Code + '&DEPTH2=' + depth2Code,
 		async: true,
 		type: "POST",
 		dataType: "json",
@@ -1328,3 +1282,30 @@ const loadDepth3Codes = () => {
 	});
 };
 
+/*********************************************/
+/*********************************************/
+//민원관리 조회하기 클릭시
+function minwonListSearch(){
+	let formSerializeArray = $('#searchForm').serializeArray();
+	let object = {};
+	
+	for (let i = 0; i < formSerializeArray.length; i++) {
+		if (formSerializeArray[i]['value'] === '전체') {
+			continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
+		}
+		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+	}
+
+	let json = JSON.stringify(formSerializeArray);
+
+	console.log("----------jsonobj------------");
+	console.log(json);
+	console.log("object issueManageRadio01:" + object.issueManageRadio01);
+
+	console.log('조회는 나중에')
+	loadDataTable(object);
+	console.log("-----------------------");
+}
+
+/*********************************************/
+/*********************************************/
