@@ -162,16 +162,16 @@
 							<li class="title">담당자</li>
 							<li class="title">연락처</li>
 						</ul>
-						<ul class="contents">
+						<ul class="contents" th:each="dept, iterStat : ${deptData}">
 							<li class="content">
-								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${resultData.dd_dept_nm}" />
+								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${dept.dd_dept_nm}" />
 							</li>
 							<li class="content">
-								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${resultData.dd_manager}" />
+								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${dept.dd_manager}" />
 							</li>
 							<li class="content">
 								<input type="text" placeholder="" readonly class="notWriteInput"
-									th:value="${resultData.dd_contact_num}" />
+									th:value="${dept.dd_contact_num}" />
 
 							</li>
 						</ul>
@@ -183,7 +183,6 @@
 				<div class="subTitle">
 					<div class="subTitleText">대표토지 정보</div>
 				</div>
-
 				<div class="contWrap">
 					<div class="depth1" id="togiInfoDiv">
 						<ul class="titles">
@@ -197,40 +196,43 @@
 							<li class="title largeWidth">소유자</li>
 							<li class="title middleWidth">지도</li>
 						</ul>
-						<ul class="contents">
+						<ul class="contents"  th:each="sosok, iterStat : ${masterSosokList}" th:if="${#lists.size(masterSosokList) > 0}">
 							<li class="content largeWidth">
-								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${resultData.dm_toji_type == 'JISANG' ? '지상권' :
-                (resultData.dm_toji_type == 'DOPCO' ? '회사토지' :
-                (resultData.dm_toji_type == '' ? '미설정' :
-                (resultData.dm_toji_type == 'GOVER' ? '점용' : resultData.dm_toji_type)))}" />
+								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${sosok.dm_toji_type == 'JISANG' ? '지상권' :
+                (sosok.dm_toji_type == 'DOPCO' ? '회사토지' :
+                (sosok.dm_toji_type == '' ? '미설정' :
+                (sosok.dm_toji_type == 'GOVER' ? '점용' : sosok.dm_toji_type)))}" />
 							</li>
 							<li class="content middleWidth">
-								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${resultData.dm_pipe_yn}" />
+								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${sosok.dm_pipe_yn}" />
 							</li>
 							<li class="content middleWidth">
-								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${resultData.dm_jisa}" />
+								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${sosok.dm_jisa}" />
 							</li>
 							<li class="content addressWidth">
-								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${resultData.address}" />
+								<input type="text" placeholder="" readonly class="notWriteInput" th:value="${sosok.address}" />
 							</li>
 							<li class="content">
-								<input type="text" readonly class="notWriteInput" th:value="${resultData.dm_jimok_text}" />
+								<input type="text" readonly class="notWriteInput" th:value="${sosok.dm_jimok_text}" />
 							</li>
 							<li class="content">
-								<input type="text" readonly class="notWriteInput" th:value="${resultData.dm_length}" />
+								<input type="text" readonly class="notWriteInput" th:value="${sosok.dm_length}" />
 							</li>
 							<li class="content">
 								<input type="text" placeholder="" readonly class="notWriteInput"
-									th:value="${resultData.dm_jijuk_area}" />
+									th:value="${sosok.dm_jijuk_area}" />
 							</li>
 							<li class="content largeWidth">
-								<input type="text" readonly class="notWriteInput" th:value="${resultData.dm_soyouja}" />
+								<input type="text" readonly class="notWriteInput" th:value="${sosok.dm_soyouja}" />
 							</li>
 							<li class="content middleWidth btnBox">
 								<button class="viewDetailButton lightBlueBtn" id='moveMap'>
 									위치보기
 								</button>
 							</li>
+						</ul>
+						<ul class="contents"  th:each="sosok, iterStat : ${masterSosokList}" th:if="${#lists.size(masterSosokList) == 0}">
+						<li>데이터가 없습니다.</li>
 						</ul>
 					</div>
 				</div>
@@ -339,29 +341,31 @@
 							<li class="title">제목</li>
 							<li class="title">승인일</li>
 						</ul>
-						<!-- 
-						<div class="contentsBox" id="fileList">
-							<ul class="contents" id="fileListUl">
-								<li class="content smallWidth checkboxWrap">
-									<input type="checkbox" id="landDevInfo_eDocView_Checkbox_0" name="landDevInfo_eDocFile" />
-									<label for="landDevInfo_eDocView_Checkbox_0"></label>
-								</li>
+						 
+						<div class="contentsBox" id="approvalList">
+                            <ul class="contents" id="fileListUl" th:each="docs, iterStat : ${dosiApprovalList}">
+                                <li class="content smallWidth checkboxWrap">
+                                	<input type="hidden" th:value="${docs.dosi_no}">
+                                	<input type="hidden" th:value="${docs.doc_seq}">
+                                    <input type="checkbox" th:id="'landDevInfo_eDocView_Checkbox_' + ${iterStat.index}" name="landDevInfo_eDocFile" />
+                                    <label th:for="'landDevInfo_eDocView_Checkbox_' + ${iterStat.index}"></label>
+                                </li>
 
-								<li class="content middleWidth">
-									<input id="docNum_0" type="text" name="docNum_0" readonly placeholder="현장지원팀" class="notWriteInput" />
-								</li>
-								<li class="content">
-									<input id="docTitle_0" name="docTitle_0" type="text" readonly placeholder="광양노후관 개량구간 공사"
-										class="notWriteInput" />
-								</li>
-								<li class="content">
-									<input name="docDate_0" type="text" readonly placeholder="2023-07-05" id="docDate_0"
-										class="notWriteInput" />
-									<input type="hidden" id="docURL_0" name="docURL_0">
-								</li>
-							</ul>
+                                <li class="content middleWidth">
+                                    <input id="docNum_0" type="text" name="docNum_0" readonly th:placeholder="${docs.dockey}" class="notWriteInput" />
+                                </li>
+                                <li class="content">
+                                    <input id="docTitle_0" name="docTitle_0" type="text" readonly th:placeholder="${docs.doc_title}"
+                                        class="notWriteInput" />
+                                </li>
+                                <li class="content">
+                                    <input name="docDate_0" type="text" readonly th:placeholder="${docs.doc_date}" id="docDate_0"
+                                        class="notWriteInput" />
+                                    <input type="hidden" id="docURL_0" name="docURL_0">
+                                </li>
+                            </ul>
 						</div>
- -->
+ 
 					</div>
 				</div>
 
@@ -384,43 +388,45 @@
 		</main>
 
 		<div class="landDevInfoPopWrapper" id="searchResultPopDiv">
-
 			<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
-			<div id="searchResultsPopup">
-				<div class="popupWrap" id="popupWrap">
-					<h2>
-						<p>전자결재 문서 추가</p>
-						<span class="topCloseBtn"></span>
-					</h2> 
-					<div class="add_document_wrap">
-						<ul>
-							<li class="add_document_title">문서번호</li>
-							<li class="add_document_content"><input type="text" name="documentNo" /></li>
-						</ul>
-						<ul>
-							<li class="add_document_title">제목</li>
-							<li class="add_document_content"><input type="text" name="documentTitle" /></li>
-						</ul>
-						<ul>
-							<li class="add_document_title">승인일</li>
-							<li class="add_document_calender">
-								<div class="complaint_calender_wrap">
-									<input type="date" name="documentdate" data-placeholder="2024-01-01" required aria-required="true" />
-								</div>
-							</li>
-						</ul>
-						<ul>
-							<li class="add_document_title">URL</li>
-							<li class="add_document_content"><input type="text" name="documentURL" /></li>
-						</ul>
-					</div>
- 
-					<div class="lastBtnBox btnWrap">
-						<button class="saveBtn finalBtn" id="saveBtn">저장</button>
-						<button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+			<form id="dosiDocForm" onSubmit="return false">
+				
+				<div id="searchResultsPopup">
+					<div class="popupWrap" id="popupWrap">
+						<h2>
+							<p>전자결재 문서 추가</p>
+							<span class="topCloseBtn"></span>
+						</h2> 
+						<div class="add_document_wrap">
+							<ul>
+								<li class="add_document_title">문서번호</li>
+								<li class="add_document_content"><input type="text" name="documentNo" /></li>
+							</ul>
+							<ul>
+								<li class="add_document_title">제목</li>
+								<li class="add_document_content"><input type="text" name="documentTitle" /></li>
+							</ul>
+							<ul>
+								<li class="add_document_title">승인일</li>
+								<li class="add_document_calender">
+									<div class="complaint_calender_wrap">
+										<input type="date" name="documentdate" data-placeholder="2024-01-01" required aria-required="true" />
+									</div>
+								</li>
+							</ul>
+							<ul>
+								<li class="add_document_title">URL</li>
+								<li class="add_document_content"><input type="text" name="documentURL" /></li>
+							</ul>
+						</div>
+	 
+						<div class="lastBtnBox btnWrap">
+							<button class="saveBtn finalBtn" id="saveBtn">저장</button>
+							<button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+						</div>
 					</div>
 				</div>
-			</div>
+			</form>
 		</div>
 		<div class="landDevInfoApprovalPopWrapper"></div>
 		<script type="module" src="/js/module/surfaceMain.js"></script>

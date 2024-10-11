@@ -217,6 +217,26 @@ const landRegInfoAddBtnEvent02 = () => {
                                const addressDiv = document.createElement('div');
                                addressDiv.classList.add('addressData');
                                // input 만들기
+                               const address_sido_nm = document.createElement('input');
+                               address_sido_nm.id = 'sido_nm_' + index;
+                               address_sido_nm.name = 'sido_nm';
+                               address_sido_nm.type = 'hidden';
+                               const address_sgg_nm = document.createElement('input');
+                               address_sgg_nm.id = 'sgg_nm_' + index;
+                               address_sgg_nm.name = 'sgg_nm';
+                               address_sgg_nm.type = 'hidden';
+                               const address_emd_nm = document.createElement('input');
+                               address_emd_nm.id = 'emd_nm_' + index;
+                               address_emd_nm.name = 'emd_nm';
+                               address_emd_nm.type = 'hidden';
+                               const address_ri_nm = document.createElement('input');
+                               address_ri_nm.id = 'ri_nm_' + index;
+                               address_ri_nm.name = 'ri_nm';
+                               address_ri_nm.type = 'hidden';
+                               const address_jibun = document.createElement('input');
+                               address_jibun.id = 'jibun_' + index;
+                               address_jibun.name = 'jibun';
+                               address_jibun.type = 'hidden';
                                const addressInput = document.createElement('input');
                                addressInput.id = 'address_'+index;
                                addressInput.name = 'address_'+index;
@@ -224,6 +244,11 @@ const landRegInfoAddBtnEvent02 = () => {
 
                                // div에 input 넣기
 
+                               addressDiv.appendChild(address_sido_nm);
+                               addressDiv.appendChild(address_sgg_nm);
+                               addressDiv.appendChild(address_emd_nm);
+                               addressDiv.appendChild(address_ri_nm);
+                               addressDiv.appendChild(address_jibun);
                                addressDiv.appendChild(addressInput);
                                infoLi.appendChild(addressDiv);
 
@@ -743,14 +768,19 @@ $(document).on("click","#popupCloseBtn",function(){
 
 //주소 선택 버튼
 $(document).on("click",".resultSelectBtn",function(){
-var id =  $('.resultSelectBtn').data('index');
+	let id =  $('.resultSelectBtn').data('index');
 
-    var pnu=$(this).parent().parent().find(".popContent01").html();
-	var juso=$(this).parent().parent().find(".popContent02").html();
-	var jibun=$(this).parent().parent().find(".popContent03").html();
-	var area=$(this).parent().parent().find(".popContent07").html();
-    var jimok=$(this).parent().parent().find(".popContent06").html();
-
+    let pnu = $(this).parent().parent().find(".popContent01").html();
+	let juso =$(this).parent().parent().find(".popContent02").html();
+	let jibun = $(this).parent().parent().find(".popContent03").html();
+	let area = $(this).parent().parent().find(".popContent07").html();
+    let jimok = $(this).parent().parent().find(".popContent06").html();
+	
+	let sido_nm = $(this).parent().parent().find('.popContent0201').text();
+	let sgg_nm = $(this).parent().parent().find('.popContent0202').text();
+	let emd_nm = $(this).parent().parent().find('.popContent0203').text();
+	let ri_nm = $(this).parent().parent().find('.popContent0204').text();
+	
 //$(".addressData input").val(juso + " " +jibun);
 //$(".areaData_"+id).val(area);
 //$(".jimokData_"+id).val(jimok);
@@ -758,10 +788,18 @@ $("input[name='address_" + id + "']").val(juso + " " +jibun);
 $("input[name='myeonjuk_" + id + "']").val(area);
 $("input[name='jimok_" + id + "']").val(jimok);
 
- $("input[name='myeonjuk_" + id + "']").attr("readonly");
+$("input[name='myeonjuk_" + id + "']").attr("readonly");
 $("input[name='myeonjuk_" + id + "']").addClass("notWriteInput");
 $("input[name='jimok_" + id + "']").attr("readonly");
 $("input[name='jimok_" + id + "']").addClass("notWriteInput");
+$("input[name='jimok_" + id + "']").addClass("notWriteInput");
+
+$("input#sido_nm_" + id).val(sido_nm);
+$("input#sgg_nm_" + id).val(sgg_nm);
+$("input#emd_nm_" + id).val(emd_nm);
+$("input#ri_nm_" + id).val(ri_nm);
+$("input#jibun_" + id).val(jibun);
+$("input#addrcode_").val();
 
 $(".popupWrap").removeClass("active");
 

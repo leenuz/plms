@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -97,10 +98,23 @@ public class togiController {
 		ArrayList<HashMap> data = mainService.selectQuery("togiSQL.selectDaepyoData",params);
 		ArrayList<HashMap> sosokData = mainService.selectQuery("togiSQL.selectSosokData",params);
 		ArrayList<HashMap> fileList = mainService.selectQuery("togiSQL.selectAtcFileList",params);
+		ArrayList<HashMap> deptData = mainService.selectQuery("togiSQL.selectDeptData",params);
+		ArrayList<HashMap> sosokList = (ArrayList<HashMap>) sosokData.stream()
+			    .filter(sosok -> "N".equals(sosok.get("dm_master_yn")))
+			    .collect(Collectors.toList());
+		ArrayList<HashMap> masterSosokData = (ArrayList<HashMap>) sosokData.stream()
+			    .filter(sosok -> "Y".equals(sosok.get("dm_master_yn")))
+			    .collect(Collectors.toList());
 
+		ArrayList<HashMap> dosiApprovalList = mainService.selectQuery("togiSQL.selectDosiApproval",params);
+		
 		mav.addObject("resultData",data.get(0));
-		mav.addObject("sosokData",sosokData);
+		mav.addObject("sosokData",sosokList);
+		mav.addObject("deptData",deptData);
 		mav.addObject("fileList",fileList);
+		mav.addObject("masterSosokList", masterSosokData);
+		mav.addObject("dosiApprovalList", dosiApprovalList);
+
 
 		mav.setViewName("content/togi/landDevInfo");
 		return mav;
@@ -120,7 +134,7 @@ public class togiController {
 		ArrayList<HashMap> deptdata = mainService.selectQuery("togiSQL.selectDeptData",params);
 		ArrayList<HashMap> daepyodata = mainService.selectQuery("togiSQL.selectDaepyoData",params);
 		ArrayList<HashMap> sosokData = mainService.selectQuery("togiSQL.selectSosokData",params);
-
+		
 		mav.addObject("resultData",data);
 		mav.addObject("deptdata",deptdata);
 		mav.addObject("daepyodata",daepyodata.get(0));
@@ -592,4 +606,62 @@ public class togiController {
 
 		return resultmap;
 	}
+	
+	// 토지 개발정보 > 전자결재 문서 열람 추가
+	@PostMapping("/insertDosiDoc")
+	public HashMap insertDosiDoc(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// JSON 데이터를 문자열로 읽음
+	    String requestParams = ParameterUtil.getRequestBodyToStr(request);
+	    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	    HashMap<String, Object> param = new HashMap<String, Object>();
+	    
+	    // 문자열을 JSON 객체로 변환
+	    JSONObject requestParamObj = new JSONObject(requestParams);
+	    Object seq = mainService.selectCountQuery("togiSQL.selectDosiApprovalNextSeq",param);
+		int doc_seq = (int)seq;
+		String no = "";
+		
+	    // JSON 객체에서 직접 값 추출
+	    String doc_title = requestParamObj.optString("doc_title", "");
+	    String dockey = requestParamObj.optString("dockey", "");
+	    String doc_date = requestParamObj.optString("doc_date", "");
+	    String doc_url = requestParamObj.optString("doc_url", "");
+	    String doc_no = requestParamObj.optString("doc_no", "");
+	    
+	    
+	    param.put("dosi_no", doc_no);
+	    param.put("doc_seq", doc_seq);
+	    param.put("doc_title", doc_title);
+	    param.put("dockey", dockey);
+	    param.put("doc_date", doc_date);
+	    param.put("doc_url", doc_url);
+	    int result = (int) mainService.InsertQuery("togiSQL.insertDosiApproval", param);
+	    resultMap.put("result", result);
+		JSONObject obj = new JSONObject(resultMap);
+		return resultMap;
+	}
+	
+	// 토지 개발정보 > 전자결재 문서 열람 추가
+		@PostMapping("/deleteDosiDoc")
+		public HashMap deleteDosiDoc(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			// JSON 데이터를 문자열로 읽음
+		    String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		    HashMap<String, Object> param = new HashMap<String, Object>();
+		    
+		    // 문자열을 JSON 객체로 변환
+		    JSONObject requestParamObj = new JSONObject(requestParams);
+		    
+		    JSONArray delArr = new JSONArray(requestParamObj.getString("delList"));
+		    int result = 0;
+		    for(int i = 0; i < delArr.length(); i++) {
+		    	JSONObject delObj = new JSONObject(delArr.getString(i));
+		    	param.put("dosi_no", delObj.getString("doc_no"));
+		    	param.put("dosi_seq", delObj.getString("doc_seq"));
+		    	
+		    	result += (int)mainService.UpdateQuery("togiSQL.updateDosiApproval", param);
+		    }
+		    resultMap.put("result", result);
+			return resultMap;
+		}
 }
