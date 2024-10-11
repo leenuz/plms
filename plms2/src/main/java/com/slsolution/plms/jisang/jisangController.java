@@ -646,7 +646,7 @@ public class jisangController {
 				}
 
 				// 해당 p_no에 대한것 삭제
-				mainService.DeleteQuery("jisangSQL.jisangReqDoc2FileDelete", params);
+				//mainService.DeleteQuery("jisangSQL.jisangReqDoc2FileDelete", params);
 				//사용승락 첨부서류 등록
 		        for(int i=1;i<11;i++) {
 		        	String key=String.format("%02d",i);
@@ -671,27 +671,45 @@ public class jisangController {
 		     			log.info("tepPath:"+tempPath);
 		     			log.info("dataPath:"+dataPath);
 		     			
-//		     			if (CommonUtil.isFileExists(tempPath, fname)) {
+		     			
+		     			
+		     			if (CommonUtil.isFileExists(tempPath, fname)) {
 //		     				long unixTimeMillis = System.currentTimeMillis();
 //			     			  String nfilename=String.valueOf(unixTimeMillis);
 //			     			 filesMap.put("FILE_PATH",dataPath+"/"+nfilename);
 //			     			 CommonUtil.moveFile1(fname,nfilename, tempPath, dataPath);
 //			     			log.info("filesMap:"+filesMap);
-//		     	        }
+		     				
+		     				
+		     				filesMap.put("FILE_PATH",dataPath +"/"+ chageFileName);
+			     			
+			     			CommonUtil.moveFile(fname, tempPath, dataPath, chageFileName);
+			     			
+			     			log.info("filesMap:"+filesMap);
+			     			
+			     			//해당파일있는지체크 
+			     			int fcount=(int)mainService.selectCountQuery("jisangSQL.selectPermitFileCount", filesMap);
+			     			log.info("fcount:"+fcount);
+			     			if (fcount>0) mainService.InsertQuery("jisangSQL.updatePermitFile", filesMap);
+			     			else mainService.InsertQuery("jisangSQL.insertPermitFile", filesMap);
+			     			
+			     			
+		     	        }
 		     			
-		     			filesMap.put("FILE_PATH",dataPath +"/"+ chageFileName);
 		     			
-		     			CommonUtil.moveFile(fname, tempPath, dataPath, chageFileName);
-		     			
-		     			log.info("filesMap:"+filesMap);
-		     			
-		     			
-		     			
-		     			//해당파일있는지체크 
-//		     			int fcount=(int)mainService.selectCountQuery("jisangSQL.selectPermitFileCount", filesMap);
-//		     			log.info("fcount:"+fcount);
-//		     			if (fcount>0) mainService.InsertQuery("jisangSQL.updatePermitFile", filesMap);
-		     			mainService.InsertQuery("jisangSQL.insertPermitFile", filesMap);
+//		     			filesMap.put("FILE_PATH",dataPath +"/"+ chageFileName);
+//		     			
+//		     			CommonUtil.moveFile(fname, tempPath, dataPath, chageFileName);
+//		     			
+//		     			log.info("filesMap:"+filesMap);
+//		     			
+//		     			
+//		     			
+//		     			//해당파일있는지체크 
+////		     			int fcount=(int)mainService.selectCountQuery("jisangSQL.selectPermitFileCount", filesMap);
+////		     			log.info("fcount:"+fcount);
+////		     			if (fcount>0) mainService.InsertQuery("jisangSQL.updatePermitFile", filesMap);
+//		     			mainService.InsertQuery("jisangSQL.insertPermitFile", filesMap);
 		        	}
 		        }
 				// 첨부파일

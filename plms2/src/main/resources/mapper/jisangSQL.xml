@@ -2411,7 +2411,7 @@ FROM permit_master
 			AND seq = #{SEQ}
 		</if>
 		
-		ORDER BY file_gubun
+		ORDER BY CAST(file_gubun AS INTEGER)
 	</select>
 	
 	
@@ -4416,7 +4416,7 @@ SELECT count(*)
 		jm_JISANG_NO=#{jisang_no}
 	</update>
 	
-	<delete id="jisangReqDoc2FileDelete" parameterType="HashMap">
+	<delete id="jisangPermitAtcFileDelete" parameterType="HashMap">
 		delete from permit_atcfile
 		where pmt_no = #{PMT_NO}
 	</delete>
