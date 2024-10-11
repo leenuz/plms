@@ -727,6 +727,7 @@ public class ApiController {
         return mav;
     }
 
+    // 관리번호(manage_no(ex. jisang_no)기준의 pnu 조회해서 저장)
     @RequestMapping(value = "/pnuAtcUpload", method = { RequestMethod.GET, RequestMethod.POST })
     public void pnuAtcUpload(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 
@@ -754,19 +755,19 @@ public class ApiController {
 
             HashMap filesMap = new HashMap();
         	
-            String chageFileName = CommonUtil.filenameAutoChange(jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", "")); 
- 			String tempPath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
- 			String dataPath = GC.getPnuAtcFileDir()+"/"+json.get("manage_no"); //설정파일로 뺀다.
+            String originFileName = jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", "");
+            
+            String chageFileName = CommonUtil.filenameAutoChange(originFileName); 
+ 			String tempPath = GC.getPnuFileTempDir(); //설정파일로 뺀다.
+ 			String dataPath = GC.getPnuFileDataDir()+"/"+json.get("manage_no"); //설정파일로 뺀다.
  			 
- 			CommonUtil.moveFile(jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", ""), tempPath, dataPath, chageFileName);
-            
-            
+ 			CommonUtil.moveFile(originFileName, tempPath, dataPath, chageFileName);
             
             HashMap params = new HashMap();
             params.put("manage_no", json.get("manage_no"));
             params.put("pnu", json.get("pnu"));
-            params.put("filepath", dataPath+"/"+jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", ""));
-            params.put("filename", jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", ""));
+            params.put("filepath", dataPath +"/" + chageFileName);
+            params.put("filename", originFileName);
             params.put("fileseq", i);
             params.put("pmt_no", i);
             mainService.InsertQuery("commonSQL.pnuAtcUpload", params);

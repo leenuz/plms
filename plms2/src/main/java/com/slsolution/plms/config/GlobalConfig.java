@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 public class GlobalConfig {
 	
 	
-	private static String pnuAtcFileDir;
+	private static String pnuFileDataDir;
+	private static String pnuFileTempDir;
 	private static String jisangFileTempDir;
 	private static String goverFileTempDir;
 	private static String jisangFileDataDir;
@@ -27,22 +28,39 @@ public class GlobalConfig {
 	
 	private static String serverName;
 	
-	
-	
-	@Value("${plms.pnuAtcFileDir}")
-	public void setPnuAtcFileDir(String str) {
-		pnuAtcFileDir=str;
+	// 필지 임시저장 디렉토리
+	@Value("${plms.pnuFileTempDir}")
+	public void setPnuFileTempDir(String str) {
+		pnuFileTempDir=str;
 	}
-	public static String getPnuAtcFileDir() {
-		return pnuAtcFileDir;
+	public static String getPnuFileTempDir() {
+		return pnuFileTempDir;
 	}
 	
+	// 필지 저장 디렉토리
+	@Value("${plms.pnuFileDataDir}")
+	public void setPnuFileDataDir(String str) {
+		pnuFileDataDir=str;
+	}
+	public static String getPnuFileDataDir() {
+		return pnuFileDataDir;
+	}
+
+	// 지상권 임시저장 디렉토리
 	@Value("${plms.jisangFileTempDir}")
 	public void setJisangFileTempDir(String str) {
 		jisangFileTempDir=str;
 	}
 	public static String getJisangFileTempDir() {
 		return jisangFileTempDir;
+	}
+	
+	@Value("${plms.jisangFileDataDir}")
+	public void setJisangFileDataDir(String str) {
+		jisangFileDataDir=str;
+	}
+	public static String getJisangFileDataDir() {
+		return jisangFileDataDir;
 	}
 	
 	//점용 임시저장 디렉토리
@@ -54,14 +72,6 @@ public class GlobalConfig {
 		return goverFileTempDir;
 	}
 	
-	
-	@Value("${plms.jisangFileDataDir}")
-	public void setJisangFileDataDir(String str) {
-		jisangFileDataDir=str;
-	}
-	public static String getJisangFileDataDir() {
-		return jisangFileDataDir;
-	}
 	
 	@Value("${plms.goverFileDataDir}")
 	public void setGoverFileDataDir(String str) {

@@ -1406,7 +1406,7 @@ log.info("PMT_NO:"+PMT_NO);
 
 		params.put("pnu", data.get(0).get("jm_pnu"));
 		log.info("pnu: "+ data.get(0).get("jm_pnu"));
-		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params); // 잠재이슈
+		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params); // 잠재이슈: pnu 로 조회
 		log.info("jisangIssueList size:"+jisangIssueList.size());
 		
 		if (jisangIssueList != null && !jisangIssueList.isEmpty()) {
@@ -1425,8 +1425,8 @@ log.info("PMT_NO:"+PMT_NO);
 		}
 		
 		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params); //필지 첨부파일
-		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params); // 잠재이슈 변경이력
-		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params); // 잠재이슈 대응방안 메뉴얼
+		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params); // 잠재이슈 변경이력: pnu 로 조회
+		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params); // 잠재이슈 대응방안 메뉴얼: pnu로 조회
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params); // 메모
 		/*
 		 * log.info("params:"+params); log.info("data:"+data.get(0));

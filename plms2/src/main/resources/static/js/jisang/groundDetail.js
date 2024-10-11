@@ -47,7 +47,7 @@ $(document).ready(function () {
 			fd.append('file', files[i]); // 파일 객체를 FormData에 추가
 
 			// var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
-			var status = new createStatusbar($("#fileListDiv"), files[i].name, files[i].size, rowCount); // 파일 업로드 상태바 생성
+			var status = new createStatusbar($("#fileListDiv"), files[i].name, files[i].size, files[i].nfname); // 파일 업로드 상태바 생성
 			sendFileToServer(fd, status); // 서버로 파일 전송 함수 호출
 
 			rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
@@ -57,7 +57,7 @@ $(document).ready(function () {
 	// Status bar 생성 함수
 	function createStatusbar(obj, name, size, no) {
 		console.log("----------start createStatusBar------------");
-		console.log(obj.html());
+		//console.log(obj.html());
 
 		var sizeStr = "";
 		var sizeKB = size / 1024; // 파일 크기를 문자열로 표시하기 위한 변수
@@ -77,12 +77,12 @@ $(document).ready(function () {
 		row += '<input type="text" value="" readonly class="notWriteInput" name="registDateWidth"/>';
 		row += '</li>';
 		row += '<li class="content fileNameWidth">';
-		row += '<input type="text" value="" id="filepath" readonly class="notWriteInput" hidden />';
+		//row += '<input type="text" value="" id="filepath" readonly class="notWriteInput" hidden />';
 		row += '<input type="text" value="' + name + '" id="filename" readonly class="notWriteInput" />';
 		row += '<input type="hidden" name="newFileCheckYn" value="Y">';	//새로운 첨부파일 파악 여부
 		row += '</li>';
 		row += '<li class="content viewBtnBox">';
-		//row += '<button class="viewDetailButton lightBlueBtn">보기</button>';
+		//row += '<button class="viewDetailButton lightBlueBtn">보기</button>'; // 새로 추가한 파일은 보기 버튼 제거?
 		row += '</li>';
 		row += '</ul>';
 
@@ -95,7 +95,7 @@ $(document).ready(function () {
 	}
 	                
 	function sendFileToServer(formData, status) {
-		var uploadURL = "/land/jisang/fileUpload/post"; //Upload URL
+		var uploadURL = "/land/songyu/fileUpload/post/pnu"; //Upload URL
 		var extraData = {}; //Extra Data.
 		var jqXHR = $.ajax({
 			xhr: function() {
@@ -272,7 +272,7 @@ $(document).on("click",".bunhalBtn",function(){
 });
 
 // 첨부파일 저장 버튼
-$(document).on("click","#fileSaveBtn",function(){
+$(document).on("click", "#fileSaveBtn", function() {
 	console.log("--------------start fileSaveBtn---------");
 	console.log(uploadFiles);
 	//console.log($("#uploadForm").serialize());
@@ -280,12 +280,12 @@ $(document).on("click","#fileSaveBtn",function(){
 	for(var i=0;i<files.length;i++){
 		console.log("filename:"+files[i].name);
 	}*/
-	
+
 	/*const attachFileUls = document.querySelectorAll('input[name="masterEdit_attachFile"]');
-								   console.log(attachFileUls);
+									 console.log(attachFileUls);
 				
 				var files=new Array();
-							   for(var i=0;i<attachFileUls.length;i++){
+								 for(var i=0;i<attachFileUls.length;i++){
 								console.log($(attachFileUls[i]).parent().parent().html());
 									var fname=$(attachFileUls[i]).parent().parent().find("#filename").val();
 									var wdate=$(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val();
@@ -294,71 +294,68 @@ $(document).on("click","#fileSaveBtn",function(){
 									if (wdate==null || wdate=="" || wdate==undefined ) files.push(fname);
 									
 								}*/
-	
-	
-	
-	
-	var manage_no=$("#manage_no").val();
-		if (manage_no==null || manage_no=="undefined"){
-			alert("지상권 관리 번호를 찾을수 없습니다.");
-			return;
-		}
-		console.log(uploadFiles.length);
-		if (uploadFiles.length<1){
-			alert("첨부파일이 없습니다.");
-					return;
-		}
-	var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val(),"files":uploadFiles,"mode":"asave"};
+
+	var manage_no = $("#manage_no").val();
+	if (manage_no == null || manage_no == "undefined") {
+		alert("지상권 관리 번호를 찾을수 없습니다.");
+		return;
+	}
+	console.log(uploadFiles.length);
+	if (uploadFiles.length < 1) {
+		alert("첨부파일이 없습니다.");
+		return;
+	}
+	var params = { "manage_no": $("#manage_no").val(), "pnu": $("#pnu").val(), "files": uploadFiles, "mode": "asave" };
 	console.log(params);
-	url="/land/api/pnuAtcUpload";
+	url = "/land/api/pnuAtcUpload";
 	$.ajax({
-			
-				url:url,
-				type:'POST',
-				contentType:"application/json",
-				data:JSON.stringify(params),
-				
-				dataType:"json",
-				beforeSend:function(request){
-					console.log("beforesend ........................");
-					loadingShow();
-				},
-				success:function(response){
-					loadingHide();
-					console.log(response);
-					if (response.success="Y"){
-						console.log("response.success Y");
-						console.log("response.resultData length:"+response.resultData.length);
-						/*$("#popup_bg").show();
-						$("#popup").show(500);
-						//$("#addrPopupLayer tbody td").remove();
-						for(var i=0;i<response.resultData.length;i++){
-							$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-						}*/
-						console.log(params);
-						//$("#pnuAtcFilesDiv").replaceWith()
-						uploadFiles=[];
-						$("#fileListDiv div").remove();
-						$("#fileListDiv").append("<div id='flist'></div>");
-						$.ajax({
-						       url: "/land/jisang/getPnuAtcFileData",
-						       type: "POST",
-						       data: params,
-						   })
-						   .done(function (fragment) {
-						       $('#fileListDiv').replaceWith(fragment);
-						   });
-					}
-					else {
-						console.log("response.success N");
-					}
-				},
-				error:function(jqXHR,textStatus,errorThrown){
-					alert("getAddressData ajax error\n"+textStatus+":"+errorThrown);
-				}
-			
-		})
-	
+
+		url: url,
+		type: 'POST',
+		contentType: "application/json",
+		data: JSON.stringify(params),
+
+		dataType: "json",
+		beforeSend: function(request) {
+			console.log("beforesend ........................");
+			loadingShow();
+		},
+		success: function(response) {
+			loadingHide();
+			console.log(response);
+			if (response.success = "Y") {
+				console.log("response.success Y");
+				console.log("response.resultData length:" + response.resultData.length);
+				/*$("#popup_bg").show();
+				$("#popup").show(500);
+				//$("#addrPopupLayer tbody td").remove();
+				for(var i=0;i<response.resultData.length;i++){
+					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+				}*/
+				console.log(params);
+				//$("#pnuAtcFilesDiv").replaceWith()
+				uploadFiles = [];
+				$("#fileListDiv div").remove();
+				$("#fileListDiv").append("<div id='flist'></div>");
+				$.ajax({
+					url: "/land/jisang/getPnuAtcFileData",
+					type: "POST",
+					data: params,
+				})
+					.done(function(fragment) {
+						$('#fileListDiv').replaceWith(fragment);
+					});
+			}
+			else {
+				console.log("response.success N");
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert("getAddressData ajax error\n" + textStatus + ":" + errorThrown);
+		}
+
+	})
+
 });
 
 //필지 첨부파일 관련 이벤트
@@ -979,31 +976,12 @@ function printDivContent(divId) {
 				                };
 }
 
-/***************** */
-//첨부파일 저장
+/*****************************
+ * 첨부파일 다운로드
+ * */
+//파일 보기 클릭 시 첨부파일 다운로드
 function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
-}
-
-function selectFilesDownload() {
-	const attachFileCount = $("#fileListDiv").children().length;
-	const listObj = $("#fileListDiv").children();
-	let pathList = [];
-	
-	
-	for(let i = 0 ; i < attachFileCount ; i++) {
-		let checkYn = $(listObj[i].children[0].children).is(':checked');
-		
-		if(checkYn) {
-			pathList.push($(listObj[i].children[3].children).attr('data-info'));
-			
-			let fileInfo = $(listObj[i].children[3].children).attr('data-info');
-			let fileInfoObj = queryValueToObject(fileInfo);
-			
-			commonFileDownload(fileInfoObj.pa_file_path, fileInfoObj.pa_file_nm, fileInfoObj.pa_gover_no, fileInfoObj.pa_file_seq, 'jisang');
-			
-		}
-	}
 }
 
 /***************** */

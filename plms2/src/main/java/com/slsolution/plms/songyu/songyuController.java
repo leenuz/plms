@@ -2,6 +2,7 @@ package com.slsolution.plms.songyu;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -729,6 +730,7 @@ public class songyuController {
 		return ResponseEntity.ok(obj.toString());
 	}
 
+	//TODO: 미설정(notset) temp 로 저장 - notsetController 에서 처리하도록 수정 필요
 	@RequestMapping(value = "/fileUpload/post") // ajax에서 호출하는 부분
 	@ResponseBody
 	public HashMap upload(MultipartHttpServletRequest multipartRequest) { // Multipart로 받는다.
@@ -794,7 +796,82 @@ public class songyuController {
 
 		return resultmap;
 	}
-
+	
+	/*
+	 * groundDetail.js의 sendFileToServer() 함수
+	 * 탐색기에서 파일 선택했을 때 필지 정보 임시 저장
+	 */
+	@RequestMapping(value = "/fileUpload/post/pnu") //ajax에서 호출하는 부분
+    @ResponseBody
+    public HashMap uploadPnu(MultipartHttpServletRequest multipartRequest) { //Multipart로 받는다.
+         
+        Iterator<String> itr =  multipartRequest.getFileNames();
+        
+        String filePath = GC.getPnuFileTempDir(); //설정파일로 뺀다.
+        HashMap<String,Object> resultmap=new HashMap();
+        ArrayList<HashMap> resultdataarr=new ArrayList<HashMap>();
+        HashMap resultdata=new HashMap();
+        String resultCode="0000";
+        String resultMessage="success";
+        while (itr.hasNext()) { //받은 파일들을 모두 돌린다.
+            
+            /* 기존 주석처리
+            MultipartFile mpf = multipartRequest.getFile(itr.next());
+            String originFileName = mpf.getOriginalFilename();
+            System.out.println("FILE_INFO: "+originFileName); //받은 파일 리스트 출력'
+            */
+            
+            MultipartFile mpf = multipartRequest.getFile(itr.next());
+     
+            String originalFilename = mpf.getOriginalFilename(); //파일명
+     
+            String fileFullPath = filePath+"/"+originalFilename; //파일 전체 경로
+          
+           
+            try {
+            	
+            	System.out.println("fileFullPath :: " + fileFullPath);
+                //파일 저장
+                mpf.transferTo(new File(fileFullPath)); //파일저장 실제로는 service에서 처리
+                
+                
+                resultdata.put("fname",originalFilename);
+                resultdata.put("fpath",fileFullPath);
+                System.out.println("originalFilename => "+originalFilename);
+                System.out.println("fileFullPath => "+fileFullPath);
+               // resultdataarr.add(resultdata);
+            } catch (Exception e) {
+            	resultCode="4001";
+            	resultdata.put("fname","");
+                resultdata.put("fpath","");
+                resultMessage="error";
+               // resultdataarr.add(resultdata);
+                System.out.println("postTempFile_ERROR======>"+fileFullPath);
+                e.printStackTrace();
+            }
+           
+          
+//            System.out.println(obj);
+           
+          //log.info("jo:"+jo);
+//          			response.setCharacterEncoding("UTF-8");
+//          			response.setHeader("Access-Control-Allow-Origin", "*");
+//          			response.setHeader("Cache-Control", "no-cache");
+//          			response.resetBuffer();
+//          			response.setContentType("application/json");
+//          			//response.getOutputStream().write(jo);
+//          			response.getWriter().print(obj);
+//          			response.getWriter().flush();
+                         
+       }
+        resultmap.put("resultCode",resultCode);
+        resultmap.put("resultData",resultdata);
+        resultmap.put("resultMessage",resultMessage);
+        JSONObject obj =new JSONObject(resultmap);
+         
+        return resultmap;
+    }
+	
 	// 미설정/미점용 등록
 	@Transactional
 	@PostMapping(path = "/insertSonguList")

@@ -850,7 +850,7 @@ $(document).ready(function () {
     }
 
     function sendFileToServer(formData, status) {
-        var uploadURL = "/jisang/fileUpload/post"; //Upload URL
+        var uploadURL = "/notset/fileUpload/post"; //Upload URL
         var extraData = {}; //Extra Data.
         var jqXHR = $.ajax({
             xhr: function () {

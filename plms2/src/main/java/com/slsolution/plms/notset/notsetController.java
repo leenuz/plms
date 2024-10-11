@@ -245,7 +245,7 @@ public class notsetController {
          
         Iterator<String> itr =  multipartRequest.getFileNames();
         
-        String filePath = GC.getJisangFileTempDir(); //설정파일로 뺀다.
+        String filePath = GC.getNotsetFileTempDir(); //설정파일로 뺀다.
         HashMap<String,Object> resultmap=new HashMap();
         ArrayList<HashMap> resultdataarr=new ArrayList<HashMap>();
         HashMap resultdata=new HashMap();

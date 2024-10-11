@@ -338,68 +338,78 @@ div.dt-filter-spacer {
 				</div>
 			</section>
 			
-			<!-- 필지 첨부파일 -->
+			<!-- 필지 첨부파일 [S] -->
 			<section class="parcelAttachments">
-				<form name="uploadForm" method="post" enctype="multipart/form-data">
-					<div class="subTitle">
-						필지 첨부파일
-						<!--                    <span class="myPc">내 PC</span>-->
-						<div class="fileBtnWrap">
-							<!-- <input type="file" id="groundDetail_myPcFiles"> -->
-							<input type="file" name="fileUpload" id="fileUpload"
-								style="display: none;" multiple /> <label
-								for="groundDetail_myPcFiles" class="myPc">내 PC</label>
-						</div>
+				<div class="subTitle">
+					필지 첨부파일
+					<div class="fileBtnWrap">
+						<input type="file" name="fileUpload" id="easementModification_myPcFiles">
+						<label for="easementModification_myPcFiles">내 PC</label>
 					</div>
+				</div>
 
-					<div class="fileUploadWrap">
-						<div id="fileUpload" class="fileUploadBox" style="">
-							<img src="/assets/media/menu01/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
-							<p>파일을 마우스로 끌어오세요.</p>
-						</div>
+				<div class="fileUploadWrap">
+					<div class="fileUploadBox">
+						<img src="/assets/media/menu02/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon">
+						<p>파일을 마우스로 끌어오세요.</p>
 					</div>
-					<div id="fileListDiv" style="border-bottom: 1px solid #A9CCD1;">
-						<div id="flist"></div>
-					</div>
-				</form>
-				<br>
-				<div class="contWrap" id="pnuAtcFilesDiv">
-					<div class="contBox">
-						<div class="contentDetailBox">
-							<div class="depth1">
-								<ul class="titles">
-									<li class="title01 title">선택</li>
-									<li class="title02 title">등록일</li>
-									<li class="title03 title">파일명</li>
-									<li class="title04 title">파일보기</li>
-								</ul>
-								<div class="contentScr">
-									<ul class="contents" th:each="val:${notsetPnuAtcFileList}">
-										<li class="content01 content"><input type="checkbox"
-											th:id="'checkbox_' + ${val.pa_idx}" class="file-checkbox"
-											th:value="${val.pa_idx}"> <label
-											th:for="'checkbox_' + ${val.pa_idx}"></label></li>
-										<li class="content02 content">[[${val.pa_wdate}]]</li>
-										<li class="content03 content">[[${val.pa_file_nm}]]</li>
-										<li class="content04 content">
-											<button class="viewDetailButton"
-												th:onclick="openFilePopup([[${val.pa_file_path}]])">보기</button>
-										</li>
-									</ul>
+				</div>
 
-								</div>
-							</div>
-						</div>
+				<!-- 첨부파일 목록 -->
+				<div class="contWrap">
+					<div class="depth1" id="fileDiv">
+						<ul class="titles titleScr" id="fileTitleUl">
+							<li class="title selectWidth allSelectCheck">
+								<!-- 선택 --> 
+								<input type="checkbox" id="masterEdit_file_select_all" name="masterEdit_file_select_all" />
+								<label for="masterEdit_file_select_all"></label>
+							</li>
+							<li class="title">등록일</li>
+							<li class="title fileNameWidth">파일명</li>
+							<li class="title">파일보기</li>
+						</ul>
 
-						<div class="btnWrap">
-							<button class="fileBtn fileSaveBtn" id="fileSaveBtn">첨부파일
-								저장</button>
-							<button class="fileBtn delBtn" id="deleteSelectedBtn">선택파일
-								삭제</button>
+						<!-- 첨부파일 리스트 -->
+						<div class="contentScr" id="fileListDiv">
+							<!-- 첨부파일 없을 때 -->
+							<ul class="contents" th:if="${notsetPnuAtcFileList == null || notsetPnuAtcFileList.isEmpty()}">
+								<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
+							</ul>
+							<!--첨부파일 목록 반복문-->
+							<ul class="contents" id="fileListUl" th:if="${notsetPnuAtcFileList != null && !notsetPnuAtcFileList.isEmpty()}"
+								th:each="file, iterStat : ${notsetPnuAtcFileList}">
+								<li class="selectWidth content checkboxWrap">
+									<input type="hidden" id="idx" th:value="${file.pa_idx}">
+									<input type="hidden" name="file_seq" th:id="'file_seq'" th:value="${file.pa_file_seq}">
+									<input type="hidden" name="file_path" th:id="'file_path'" th:value="${file.pa_file_path}">
+									<input type="checkbox" th:id="'masterEdit_attachFile' + ${iterStat.index + 1}" 
+									name="masterEdit_attachFile" />
+									<label th:for="'masterEdit_attachFile' + ${iterStat.index + 1}"></label>
+								</li>
+								<li class="content registDateWidth">
+									<input type="text" th:value="${#dates.format(file.pa_wdate, 'yyyy-MM-dd HH:mm')}" readonly 
+									class="notWriteInput" name="registDateWidth" />
+								</li>
+								<li class="content fileNameWidth">
+									<input type="text" th:value="${file.pa_file_nm}" id="filename" readonly class="notWriteInput" />
+								</li>
+								<li class="content viewBtnBox">
+									<!-- <button class="viewDetailButton"
+										th:onclick="downloadFile([[${file.pa_file_path}]],[[${file.pa_file_nm}]])">보기</button> -->
+									<a href="javascript:void(0);" class="viewDetailButton lightBlueBtn"
+											th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.pa_file_path}]], [[${file.pa_file_nm}]], [[${file.pa_pnu}]], [[${file.pa_file_seq}]], 'pnu')">보기</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
+
+				<div class="btnWrap">
+					<button class="attachFileBtn vividBlueBtn" id="fileSaveBtn">첨부파일 저장</button><!-- 파일다운로드 id 로 동작 -->
+					<button class="attachFileBtn grayBtn" id="deleteFileBtn">선택파일 삭제</button>
+				</div>
 			</section>
+			<!-- 필지 첨부파일 [E] -->
 
 			<!-- 잠재이슈 -->
 			<section class="potentialIssues">

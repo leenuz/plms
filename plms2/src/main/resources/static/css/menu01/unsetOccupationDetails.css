@@ -40,6 +40,11 @@ textarea:focus {
 button {
     border: 0;
 }
+textarea {
+    border: 0;
+    outline: 0;
+    resize: none;
+}
 
 
 /* css추가 */ 
@@ -97,7 +102,7 @@ button {
 }
 
 #unsetOccupationDetails .basicOwnerInfo {
-    padding: 40px 0;
+    padding: 27px 0 40px 0;
 }
 #unsetOccupationDetails .thirdTitle {
     margin-bottom: 15px;
@@ -116,7 +121,7 @@ button {
     width: 46.2%;
 }
 .contBoxMini02 {
-    width: 52.4%;
+    width: 52.5%;
 }
 #unsetOccupationDetails .basicOwnerInfo .contWrap {
     display: flex;
@@ -124,7 +129,7 @@ button {
     gap: 20px;
 }
 #unsetOccupationDetails .mapFigure {
-    /*background: url(/assets/media/menu01/images/groundMap.png) no-repeat center;*/
+    background: url(/assets/media/menu01/images/groundMap.png) no-repeat center;
     background-size: cover;
 }
 #unsetOccupationDetails .contentDetailBox {
@@ -297,6 +302,10 @@ button {
     color: #2B7DE1;
     font-size: 13px;
     font-weight: 600;
+		vertical-align: middle;
+    display: inline-block;
+    text-align: center;
+    line-height: 27px;
 }
 #unsetOccupationDetails .basicOwnerInfo .contBoxMini03 {
     width: 100%;
@@ -601,6 +610,23 @@ button {
     background: #2B7DE1;
     color: #fff;
 }
+#unsetOccupationDetails input[type=file] {
+    display: none;
+}
+
+#unsetOccupationDetails .fileBtnWrap label {
+    width: 81px;
+    height: 27px;
+    background: #2B7DE1;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
 
 .switchBtn {
     background: #4E5871;
@@ -748,7 +774,7 @@ button {
 }
 
 #unsetOccupationDetails .parcelAttachments .contentScr {
-    height: 90px;
+    height: 180px;
 }
 #unsetOccupationDetails .contentScr {
     overflow-y: scroll;
@@ -789,12 +815,24 @@ button {
 #unsetOccupationDetails .parcelAttachments .contentDetailBox {
     margin-bottom: 18px;
 }
-#unsetOccupationDetails .parcelAttachments .depth1 .titles {
+/* #unsetOccupationDetails .parcelAttachments .depth1 .titles {
+    padding-right: 4px;
+    box-sizing: border-box;
+} */
+
+/* 추가 */
+#unsetOccupationDetails .titleScr {
     padding-right: 4px;
     box-sizing: border-box;
 }
+#unsetOccupationDetails .parcelAttachments .depth1 .titles {
+    border-bottom: 0;
+}
+#unsetOccupationDetails .parcelAttachments .depth1 .titles.active {
+    border-bottom: 1px solid #CDDBF0;
+}
 #unsetOccupationDetails .parcelAttachments .depth1 .titles .title {
-    width: 16%;
+    /* width: 16%; */
 }
 #unsetOccupationDetails .parcelAttachments .depth1 .titles .title.title03 {
     width: 59%;
@@ -813,6 +851,10 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+/* 추가 */
+#unsetOccupationDetails .parcelAttachments .depth1 .contents:last-of-type {
+    border-bottom: 0;
 }
 /* label */
 
@@ -904,7 +946,10 @@ button {
 #unsetOccupationDetails .potentialIssues .depth1 .titles .title.title04 {
     width: 12.8%;
 }
-
+/* 추가 */
+#unsetOccupationDetails .potentialIssues .depth1 .contents:last-of-type {
+    border-bottom: 0;
+}
 #unsetOccupationDetails .potentialIssues .depth1 .contents .content {
     width: 8.6%;
 }
@@ -1010,10 +1055,11 @@ button {
 }
 
 /* 메모 */
-#unsetOccupationDetails .memoSection .titles {
+/* #unsetOccupationDetails .memoSection .titles {
     padding-right: 4px;
     box-sizing: border-box;
-}
+} */
+
 #unsetOccupationDetails .memoSection .titles .title {
     width: 11.2%;
 }
@@ -1025,6 +1071,9 @@ button {
 }
 #unsetOccupationDetails .memoSection .contents .content {
     width: 11.2%;
+}
+#unsetOccupationDetails .memoSection .contents:last-of-type {
+    border-bottom: 0;
 }
 #unsetOccupationDetails .memoSection .contents .content.content03 {
     width: 59.4%;
@@ -1057,10 +1106,16 @@ button {
 #unsetOccupationDetails .memoSection .contents .content.btnBox .btnWrap {
     width: 50%;
     justify-content: center;
-}
-#unsetOccupationDetails .memoSection .contents .content.btnBox .btnWrap:first-child {
+    /* 추가 */
     border-right: 1px solid #CDDBF0;
 }
+/* 추가 */
+#unsetOccupationDetails .memoSection .contents .content.btnBox .btnWrap:last-of-type {
+    border-right: 0;
+}
+/* #unsetOccupationDetails .memoSection .contents .content.btnBox .btnWrap:first-child {
+    border-right: 1px solid #CDDBF0;
+} */
 #unsetOccupationDetails .memoSection .contentScr {
     /*height: 180px;*/
 		max-height: calc(45px * 5);
@@ -1160,4 +1215,172 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* input */
+#unsetOccupationDetails input[type=text] {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+}
+#unsetOccupationDetails input[type=text]::placeholder {
+    color: #3c3c3c;
+}
+
+/* input readonly */
+#unsetOccupationDetails input.notWriteInput {
+    background: transparent;
+}
+
+#unsetOccupationDetails textarea {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+}
+#unsetOccupationDetails textarea::placeholder {
+    text-align: center;
+    color: #3c3c3c;
+}
+
+/*첨부파일 관련*/
+
+#unsetOccupationDetails .parcelAttachments .contWrap {
+    width: 100%;
+    border: 1px solid #cddbf0;
+    border-radius: 5px;
+}
+#unsetOccupationDetails .parcelAttachments .contWrap .depth1 .titles {
+    border-radius: 5px 5px 0 0;
+}
+#unsetOccupationDetails .parcelAttachments .contWrap .titles {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 45px;
+    background: #f7f9fc;
+    border-bottom: 1px solid #cddbf0;
+}
+#unsetOccupationDetails .parcelAttachments .contWrap .depth1 .selectWidth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 8.6% !important;
+}
+
+#unsetOccupationDetails .parcelAttachments .contWrap .title {
+    width: 16%;
+}
+#unsetOccupationDetails .parcelAttachments .contWrap .titles li {
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    border-right: 1px solid #cddbf0;
+    box-sizing: border-box;
+}
+#unsetOccupationDetails .parcelAttachments input[type="checkbox"] {
+    display: none;
+}
+#unsetOccupationDetails .allSelectCheck input[type="checkbox"] ~ label {
+    background: #dce7f5;
+}
+#unsetOccupationDetails .parcelAttachments input[type="checkbox"] ~ label {
+    width: 21px;
+    height: 21px;
+    border-radius: 5px;
+    background: #eff6ff;
+    display: inline-block;
+    position: relative;
+}
+#unsetOccupationDetails .parcelAttachments .contWrap .titles li:last-child {
+    border-right: 0;
+}
+#unsetOccupationDetails .parcelAttachments .fileBtnWrap label {
+    width: 81px;
+    height: 27px;
+    background: #2b7de1;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#unsetOccupationDetails .parcelAttachments input[type="file"] {
+    display: none;
+}
+#unsetOccupationDetails .parcelAttachments .contWrap .contents li input[type="text"].notWriteInput {
+    background: transparent;
+}
+#unsetOccupationDetails .parcelAttachments .contWrap .contents li input[type="text"] {
+    width: 100%;
+    height: 100%;
+    background: #edf2f9;
+    border-radius: 10px;
+    text-align: center;
+}
+#unsetOccupationDetails .parcelAttachments .contWrap .fileNameWidth {
+    width: 59%;
+}
+#unsetOccupationDetails .parcelAttachments .depth1 .contents .content.fileNameWidth {
+    width: 59%;
+}
+#unsetOccupationDetails .parcelAttachments .depth1 .contents .content {
+    width: 16%;
+}
+#unsetOccupationDetails .parcelAttachments input[type=checkbox]:checked ~ label {
+    background: #4E5871;
+}
+/*첨부파일 저장, 삭제 버튼 구역*/
+#unsetOccupationDetails .parcelAttachments .btnWrap {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    gap: 10px;
+}
+.vividBlueBtn {
+    background: #2b7de1;
+    color: #fff;
+}
+.attachFileBtn {
+    width: 129px;
+    height: 37px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+.grayBtn {
+    background: #919191;
+    color: #fff;
+}
+.attachFileBtn {
+    width: 129px;
+    height: 37px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#unsetOccupationDetails .potentialIssues .issueAdd {
+    width: 81px;
+    height: 27px;
+    background: #2B7DE1;
+    border-radius: 20px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#unsetOccupationDetails input.notWriteInput {
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C3C3C;
+    width: 100%;
+    text-align: center;
 }

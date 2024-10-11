@@ -411,7 +411,7 @@
 				</div>
 			</section>
 
-			<!-- 필지 첨부파일 -->
+			<!-- 필지 첨부파일 [S] -->
 			<section class="parcelAttachments">
 				<div class="subTitle">
 					필지 첨부파일
@@ -470,7 +470,7 @@
 									<!-- <button class="viewDetailButton"
 										th:onclick="downloadFile([[${file.pa_file_path}]],[[${file.pa_file_nm}]])">보기</button> -->
 									<a href="javascript:void(0);" class="viewDetailButton lightBlueBtn"
-											th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.pa_file_path}]], [[${file.pa_file_nm}]], [[${file.pa_pnu}]], [[${file.pa_file_seq}]], 'jisang')">보기</a>
+											th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.pa_file_path}]], [[${file.pa_file_nm}]], [[${file.pa_pnu}]], [[${file.pa_file_seq}]], 'pnu')">보기</a>
 								</li>
 							</ul>
 						</div>
@@ -478,10 +478,11 @@
 				</div>
 
 				<div class="btnWrap">
-					<button class="attachFileBtn vividBlueBtn" id="fileSaveBtn" onclick="selectFilesDownload();">첨부파일 저장</button>
+					<button class="attachFileBtn vividBlueBtn" id="fileSaveBtn">첨부파일 저장</button><!-- id 로 저장 -->
 					<button class="attachFileBtn grayBtn" id="deleteFileBtn">선택파일 삭제</button>
 				</div>
 			</section>
+			<!-- 필지 첨부파일 [E] -->
 
 			<!-- 잠재이슈 -->
 			<section class="potentialIssues">
