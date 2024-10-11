@@ -331,6 +331,7 @@ div.dt-filter-spacer {
 							    <li class="content fileContent">
 							        <input type="hidden" id="fseq" th:value="${iterStat.index + 1}" />
 							        <input type="hidden" id="pmt_no" th:value="${resultData.idx}" />
+							        <input type="hidden" id="gubun" th:value="${doc.file_gubun}" />
 							        <input th:id="'req_doc_file' + (${iterStat.index + 1} < 10 ? '0' + (${iterStat.index + 1}) : (${iterStat.index + 1}))"
 							        	   th:name="'req_doc_file' + (${iterStat.index + 1} < 10 ? '0' + (${iterStat.index + 1}) : (${iterStat.index + 1}))"
 							               type="text"

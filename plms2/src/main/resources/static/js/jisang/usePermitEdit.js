@@ -1353,13 +1353,15 @@ $(document).on("click","#docFileDelBtn",function(){
 	console.log("---------------docFileDelBtn---------------");
 	var $currentElement = $(this);
 	var inputFseq=$(this).parent().parent().find("#fseq").val();
+	var pmt_no=$(this).parent().parent().find("#pmt_no").val();
 	var inputValue=$(this).parent().parent().find(".notWriteInput").val();
 	if (inputValue!=null || inputValue!=""){
-		var params={"dfile_name":inputValue,"jisang_no":$("#hiddenJisangNo").val(),"fseq":inputFseq,"docNo":"2"}
+		var params={"pmt_no":pmt_no,"dfile_name":inputValue,"jisang_no":$("#hiddenJisangNo").val(),"fseq":inputFseq,"docNo":"2"}
+		console.log(params);
 
 		//임시파일 삭제
 		$.ajax({
-		          url: "/land/jisang/deletePermitAtcfile",
+		          url: "/land/jisang/deleteJisangPermitAtcFile",
 		          type: "POST",
 		          data: params,
 

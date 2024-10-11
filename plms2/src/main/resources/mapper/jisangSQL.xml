@@ -1315,6 +1315,8 @@ SELECT count(*)
 		select count(*) as count from jisang_bunhal_atcfile
 		where jba_manage_no=#{jisang_no} and jba_fseq=#{fseq}::int 
 	</select>
+	
+
 	<!-- 분할 필수첨부파일 -->
 	<insert id="insertJisangBunhalAtcFile" parameterType="map">
 		INSERT INTO jisang_bunhal_atcfile (
@@ -1342,6 +1344,56 @@ SELECT count(*)
 		jba_wdate=Now()
 		where jba_manage_no=#{jisang_no} and jba_fseq=#{fseq}::int 
 	</update>
+	
+	
+	<!--  지상 합필 첨부파일 카운터 -->
+<select id="selectJisangMergeAtcFileCount" parameterType="map" resultType="Integer">
+		select count(*) as count from jisang_merge_atcfile
+		where manage_no=#{jisang_no} and file_gubun=CAST(#{fseq} AS TEXT)
+	</select>
+	<select id="selectJisangMergeAtcFile" parameterType="HashMap" resultType="HashMap">
+		select * from jisang_merge_atcfile
+		where 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
+		and manage_no=#{manage_no}
+		</if>
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(fseq)" >
+		and file_gubun=CAST(#{fseq} AS TEXT)
+		</if>
+		order by file_gubun asc
+	</select>
+	
+
+	<!-- 합필 필수첨부파일 -->
+	<insert id="insertJisangMergeAtcFile" parameterType="map">
+		INSERT INTO jisang_merge_atcfile (
+		manage_no,
+		file_gubun,
+		file_nm,
+		file_path,
+		wdate
+		) VALUES (
+		#{jisang_no},
+		#{fseq}::int,
+		#{file_name},
+		#{file_path},
+		Now()
+		
+		)
+		
+	</insert>
+	<!-- 분할 필수첨부파일 업데이트 -->
+	<update id="updateJisangMergeAtcFile" parameterType="map">
+		update jisang_merge_atcfile set 
+		
+		file_nm=#{file_name},
+		file_path=#{file_path},
+		wdate=Now()
+		where manage_no=#{jisang_no} and file_gubun=#{fseq}::text 
+	</update>
+	
+	
+	
 
 	<select id="selectAllTmpData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *
@@ -1756,15 +1808,18 @@ SELECT count(*)
 		jrd_wdate=Now()
 		where jrd_manage_no=#{jisang_no} and jrd_fseq=#{fseq}::int 
 	</update>
-	<select id="selectJisangBunhalAtcfileCount" parameterType="map" resultType="Integer">
-		select count(*) as count from jisang_req_doc2
-		where jrd_manage_no=#{jisang_no} and jrd_fseq=#{fseq}::int 
-	</select>
+	
 	<select id="selectJisangBunhalAtcfile" parameterType="map" resultType="java.util.HashMap">
 		select * from jisang_bunhal_atcfile
 		where 1=1
-		
+		 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(bunhal_idx)" >
 		and jba_bunhal_idx=#{bunhal_idx} 
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANG_NO)" >
+		and jba_manage_no=#{JISANG_NO} 
+		</if>
+		order by jba_fseq asc
+		
 	</select>
 	<delete id="jisangBunhalAtcfileDelete" parameterType="java.util.HashMap">
 
@@ -2561,16 +2616,16 @@ WHERE
 	<select id="selectJisangCancel_Files" parameterType="HashMap" resultType="java.util.HashMap">
 		SELECT *
 		FROM jisang_cancel_atcfile
-		WHERE ja_jisang_no =#{FILENO}
+		WHERE manage_no =#{FILENO}
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
 		
-			AND ja_seq =#{SEQ}
+			AND seq =#{SEQ}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(FILE_SEQ)" >
 		
-			AND ja_file_seq =#{FILE_SEQ}
+			AND file_gubun =#{FILE_SEQ}
 		</if>
-		ORDER BY ja_seq DESC
+		ORDER BY file_gubun asc
 	</select>
 	
 	<!--  지상정보 조회  -->
@@ -2630,6 +2685,7 @@ WHERE
 		
 			AND JMT.jmt_jisang_no = #{JISANG_NO}
 		</if>
+		
 	</select>
 	
 	<update id="updateJisangMergeEchoNo" parameterType="HashMap">
@@ -2657,7 +2713,7 @@ WHERE
 		) VALUES (
 		#{JISANG_NO}
 		,#{PYEONIB_AREA}::numeric
-		,#{SET_MONEY}::numeric
+		,nullif(#{SET_MONEY},'')::numeric
 		,#{JASAN_NO}
 		,#{REP_JISANG_NO}
 		,#{MERGE_REASON}
@@ -3218,17 +3274,36 @@ DELETE from plms_POTENTIAL_ISSUE
 	</delete>
 	<delete id="deleteJisangPermitAtcFile" parameterType="java.util.HashMap">
 
-		delete from jisang_permit_atcfile
+		delete from permit_atcfile
 		where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
-		and jpa_idx = #{idx}::int
+		and idx = #{idx}::int
 		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pmt_no)">
+		and pmt_no = #{pmt_no}::int
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(fseq)">
+		and seq = #{fseq}::int
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gubun)">
+		and file_gubun = #{gubun}::int
+		</if>
+		
+
+	</delete>
+	<delete id="deleteJisangPermitAtcFile1" parameterType="java.util.HashMap">
+
+		delete from permit_atcfile
+		where 1=1
+		
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pmt_no)">
 		and pmt_no = #{pmt_no}::int
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(fseq)">
 		and file_gubun = #{fseq}::int
 		</if>
+		
+		
 
 	</delete>
 	
