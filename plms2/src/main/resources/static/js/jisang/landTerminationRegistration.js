@@ -715,7 +715,7 @@ $(document).on("click","#radioNo",function(){
 
 		//임시저장
 function landTerminationSave(params){
-    loadingShow();
+   // loadingShow();
     $.ajax({
          // url: "/land/jisang/landTerminationSave",
 		 url:"/land/jisang/insertJisangTerminationTemp",

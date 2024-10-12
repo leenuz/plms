@@ -2,6 +2,7 @@ package com.slsolution.plms.dopco;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -93,7 +94,6 @@ public class dopcoController {
 		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 		ArrayList<HashMap> addressList = mainService.selectQuery("jisangSQL.bunhalAddressSearch",params);
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
-
 		String idx = httpRequest.getParameter("idx");
 		String dopco_no = httpRequest.getParameter("dopcoNo");
 
@@ -1036,17 +1036,17 @@ log.info("resultData:"+resultData);
 					if (!modifyReason2.equals("")) {
 						params.put("GUBUN", "소속 토지정보");
 						params.put("CONT", modifyReason2);
-						mainService.InsertQuery("Json.insertDopcoModifyHistory", params);
+						mainService.InsertQuery("dopcoSQL.insertDopcoModifyHistory", params);
 					}
 					if (!modifyReason3.equals("")) {
 						params.put("GUBUN", "지상권 정보");
 						params.put("CONT", modifyReason3);
-						mainService.InsertQuery("Json.insertDopcoModifyHistory", params);
+						mainService.InsertQuery("dopcoSQL.insertDopcoModifyHistory", params);
 					}
 					if (!modifyReason4.equals("")) {
 						params.put("GUBUN", "권리확보 내역");
 						params.put("CONT", modifyReason4);
-						mainService.InsertQuery("Json.insertDopcoModifyHistory", params);
+						mainService.InsertQuery("dopcoSQL.insertDopcoModifyHistory", params);
 					}
 					if (!modifyReason5.equals("")) {
 						params.put("GUBUN", "후순위 권리 내역");
@@ -1131,15 +1131,52 @@ log.info("resultData:"+resultData);
 				}
 				
 				if (gubun.equals("modify")) {
-					for (int i = 0; i < Integer.parseInt(FILE_CNT); i++) {
-						String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
-						String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
+//					log.info("param:" + params);
+					// 기존 등록된 파일리스트 삭제 - 이 로직 필요 없어짐.
+					// 이제 새파일을 구분할수 있는 플래그도 값이 넘어옴.
+					//mainService.DeleteQuery("goverSQL.deleteBeforeGoverAtcFileList", params);
+					
+					// seq 가져오기
+					int nseq = (int) mainService.selectCountQuery("togiSQL.getTogiAtcFileSeq", params);
+					log.info("nseq:" + nseq);
+					
+					// fileseq 가져오기
+					for (int i = 0; i < fileArr.length(); i++) {
+						
+						JSONObject fobj = new JSONObject(fileArr.get(i).toString());
+						
+						//새파일일 경우에만 등록 로직이 이루어짐
+						if("Y".equals(fobj.get("newFileCheckYn"))) {
+							String fileName = fobj.getString("fname");
+							
+							HashMap<String, Object> filesMap = new HashMap<>();
 
-						if (IS_DEL.equals("Y")) {
-							System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
-							// params.put("SEQ", DEL_SEQ);
-							mainService.UpdateQuery("dopcoSQL.deleteFile_dopco", params);
-
+							filesMap.put("dosiNo", ori_DOPCO_NO);
+							
+							filesMap.put("fname", fileName);
+							
+							String chageFileName = CommonUtil.filenameAutoChange(fileName); 
+							String tempPath = GC.getDopcoFileTempDir(); // 설정파일로 뺀다.
+							String dataPath = GC.getDopcoFileDataDir() + "/" + ori_DOPCO_NO; // 설정파일로 뺀다.
+							
+							filesMap.put("fpath", dataPath + chageFileName);
+							filesMap.put("seq", String.format("%06d", i));
+							filesMap.put("fseq", nseq + i);
+							
+							CommonUtil.moveFile(fileName, tempPath, dataPath, chageFileName);
+							
+							log.info("filesMap:" + filesMap);
+							mainService.InsertQuery("dopcoSQL.insertDopcoFile", filesMap);
+						} else if ("D".equals(fobj.get("newFileCheckYn"))) {
+							HashMap<String, Object> filesMap = new HashMap<>();
+							String filePath = fobj.getString("file_path");
+							String fileName = fobj.getString("fname");
+							String fileIdx = fobj.getString("idx");
+							filesMap.put("dosi_no", ori_DOPCO_NO);
+							filesMap.put("idx", fileIdx);
+							mainService.InsertQuery("dopcoSQL.deleteFile_dopco", filesMap);
+							
+							
 						}
 					}
 				}

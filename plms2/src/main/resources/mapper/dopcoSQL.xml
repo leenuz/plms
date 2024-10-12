@@ -333,7 +333,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 		<insert id="insertDopcoModifyHistory" parameterType="HashMap">
 		Insert into DOPCO_MODIFY
-		( dom_DOPCO_NO, dom_MODIFY_DATE, dom_GUBUN, dom_CONT, dom_USER_NAME, dom_USER_ID)
+		( DOPCO_NO, MODIFY_DATE, GUBUN, CONT, USER_NAME, USER_ID)
 		Values
 		(#{DOPCO_NO},Now(), #{GUBUN}, #{CONT}, #{USER_NAME}, #{USER_ID})
 	</insert>
@@ -350,9 +350,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<delete id="deleteFile_dopco" parameterType="HashMap">
 		DELETE FROM DOPCO_ATCFILE
-		WHERE da_DOPCO_NO = #{DOPCO_NO}
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
-			AND da_FILE_SEQ = #{SEQ}
+		WHERE dopco_no = #{dosi_no}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			AND idx = #{idx}::int
 		</if>
 	</delete>
 	
