@@ -62,6 +62,7 @@ const IssuePopupOpenEvet = () => {
 
 /* 신규민원등록 팝업 */
 const newIssueRegisterOpenEvet = () => {
+	console.log('여기야???');
 	const newIssueBtn = document.querySelector("#dopcoIssueManage .newIssueBtn");
 	const issueManageNewIssuePopWrap = document.querySelector(".issueManageNewIssuePopWrapper");
 	let newIssuePopFilePath = '/components/popuphtml/issue_management_Popup/newcomplaint.html'; // 삽입할 html 파일 경로
@@ -110,7 +111,11 @@ const newIssueRegisterOpenEvet = () => {
 				document.body.appendChild(script).parentNode.removeChild(script);
 			}
 		}
+		
+		//등록한 내용이 있다면 reset
+		
 	}
+	
 }
 newIssueRegisterOpenEvet()
 
@@ -379,6 +384,7 @@ function closeComplaintregisterPopup() {
 	complaintregisterPopupOpen.classList.remove("active");
 }
 
+
 //신규민원팝업 데이터 json
 function getPopupJsonData() {
 	var formSerializeArray = $('#saveFormPop').serializeArray();
@@ -393,8 +399,9 @@ function getPopupJsonData() {
 	//토지 정보
 	dataObj.tojiList = [];
 	$(".landinfo_box .landinfo_content").each(function(index, ul) {
-		var addrInfoStr = $(ul).find('.landinfo_content_8 input').val();
-		var obj = JSON.parse(addrInfoStr); // 각 UL에 대한 개별 객체 생성
+		let addrInfoStr = $(ul).find('.landinfo_content_8 input').val();
+		let obj = JSON.parse(addrInfoStr); // 각 UL에 대한 개별 객체 생성
+		//let obj = {};
 		obj.saddr = $(ul).find('.landinfo_content_4 input').val(); //주소
 		obj.REP_YN = $(ul).find('.landinfo_content_3 input').is(':checked') ? "Y" : "N"; //대표필지여부
 		obj.REGISTED_YN = $(ul).find('.landinfo_content_5 input').val(); //등기여부
@@ -402,9 +409,12 @@ function getPopupJsonData() {
 		obj.AREA = $(ul).find('.landinfo_content_7 input').val(); //실저촉면적
 		dataObj.tojiList.push(JSON.stringify(obj));
 	});
+	
+	dataObj.TOJI_LENGTH = dataObj.tojiList.length;
 
 	//민원인/토지주 정보
 	dataObj.userList = [];
+	
 	$(".com_content_contents_1 .landowner_wrap").each(function(index, ul) {
 		var obj = {}; // 각 UL에 대한 개별 객체 생성
 		obj.num = $(ul).find('input').eq(0).val() //순번
@@ -420,18 +430,33 @@ function getPopupJsonData() {
 	const newComplaintRegiPopup_myPcFiles = document.getElementById("complaint_contents_contents3_Popup_file");
 	const newComplaintRegiFiles = newComplaintRegiPopup_myPcFiles.files;
 	dataObj.files = newComplaintRegiFiles;
+	dataObj.filesLength = newComplaintRegiFiles.length;
+
+	//신규 파일은 SEQ가 없음
+	dataObj.MW_SEQ = "0";
+	
+	let dateCheck = $("input[name='MW_OCCUR_DATE']").val();
+	if( dateCheck == '' ) {
+		dateCheck = today_yyyymmdd();	//오늘 날짜로 변환(yyyymmdd)
+	}
+	
+	dataObj.MW_OCCUR_DATE = dateCheck;
+	dataObj.SANGSIN_FLAG = 'N';
 
 	return dataObj;
 }
 
-//신규민원 -> 저장
+//신규민원 -> 신규 민원 저장
 $(document).on("click", "#newcomplaint_Popup .approveBtn", function() {
-	var data = getPopupJsonData();
+	var data = getPopupJsonData();	//form안의 입력한 깂들 object화하는 function 
 	console.log(data);
-
+	
+	//alert('신규 민원 등록 저장');
+	
+	/*
 	$.ajax({
 		url: "/issue/saveMinwonData",
-		data: data,
+		data: JSON.stringify(data),
 		async: true,
 		type: "POST",
 		dataType: "json",
@@ -459,10 +484,11 @@ $(document).on("click", "#newcomplaint_Popup .approveBtn", function() {
 			//alert("ajax error \n" + textStatus + " : " + errorThrown);
 			console.log(jqXHR);
 			console.log(jqXHR.readyState);
-			console.log(jqXHR.responseText);
+			//console.log(jqXHR.responseText);
 			console.log(jqXHR.responseJSON);
 		}
 	}); //end ajax
+	*/
 });
 //신규민원 -> 상신
 $(document).on("click", "#newcomplaint_Popup .sangsinBtn", function() {
@@ -506,24 +532,33 @@ $(document).on("click", "#newcomplaint_Popup .sangsinBtn", function() {
 	}); //end ajax
 });
 
-//신규민원 -> 검색
+//신규민원 -> 주소 검색
 var togiDataList = [];
 $(document).on("click", ".landinfo .landStatusPopOpenBtn", function() {
-	const idx = $(this).closest("li").siblings(".landinfo_content_2").text()
+	
+	//const targetId = $(this).closest("li").siblings(".landinfo_content_4").attr('id');
+	const targetId = 'minwonAddr_' + ($(this).val());
+	const targetIdx = $(this).val();
 	var addr = $(this).parent().find("input").val().trim();
-	console.log(addr);
+	
+	console.log($(this).closest(".landinfo_content_4").val());
+	console.log(targetId);
+	
 	if (addr == null || addr == "" || addr == undefined) {
 		alert("주소를 입력해주세요.");
 		return;
 	}
-	const popupLayout = $('#landStatusPopup')
+	
+	//const popupLayout = $('#landStatusPopup');
+	loadingShow();
 	$.ajax({
 		url: "/issue/getMinwonJijukSelectNotModel",
-		type: "GET",
+		type: "POST",
 		data: { "address": addr },
-		dataType: "json",
 		success: function(response) {
-			console.log(response);
+			console.log('아래 .done으로 대체');
+			//console.log(response);
+			/*
 			const datas = response.result;
 			togiDataList = datas;
 			const popContentBox = popupLayout.find('.popContentBox');
@@ -556,11 +591,28 @@ $(document).on("click", ".landinfo .landStatusPopOpenBtn", function() {
 				alert("검색 된 결과가 없습니다.")
 				console.log("response.length = 0");
 			}
+			*/
 		},
 		error: function(xhr, status, error) {
 			console.log("Error: " + error);
 		}
-	});
+	}).done(function (fragment) {
+		// var buttonIdx = fragment.find('button#choiceBtn');
+		// buttonIdx.attr('data-index', buttonId);
+		//console.log("***fragment***");
+		//console.log(fragment);
+		loadingHide();
+		$('#minwon_searchResultPopDiv').replaceWith(fragment);
+		
+		const popupOpen = document.querySelector("#minwon_searchResultPopDiv .popupWrap");
+		//console.log($(popupOpen).html());
+		
+		$(popupOpen).addClass("open");
+		popupOpen.classList.add("active");
+		
+		$('.resultSelectBtn').attr('data-index', targetIdx);
+		$('.saveBtn').attr('data-index', targetIdx);
+   	});
 });
 
 //대표 필지정보 입력
@@ -661,7 +713,8 @@ function loadDataTable(params) {
 				d.mw_title = params.mw_title;
 
 				//d.status = findProgStatus(params.status)
-
+				d.status = params.status;
+				
 				//주소
 				var ask = (params.issueManageRadio01 == undefined || params.issueManageRadio01 == null) ? '0' : params.issueManageRadio01;
 				console.log("issueManageRadio01:" + ask);
@@ -717,7 +770,8 @@ function loadDataTable(params) {
 			{ data: "address_str", "defaultContent": "" },
 			{
 				data: "mm_status", render: function(data, type, row, meta) {
-					return findProgStatus(data)
+					//return findProgStatus(data)
+					return data
 				}
 			},
 			{ data: "mm_idx", "defaultContent": "" },
@@ -854,7 +908,8 @@ function selectMinwonStatusStatis(isAll = true) {
 	var occur_date = "";
 	if (!isAll) {
 		jisa = $(".issueTotalSelectsTitleBtn").eq(0).text() == "전체" ? "" : $(".issueTotalSelectsTitleBtn").eq(0).text();
-		status = $("#issueTotalHiddenSelectBox02").val()[0] == "전체" ? "" : findProgStatus($("#issueTotalHiddenSelectBox02").val()[0]);
+		let testValue = ($("#issueTotalHiddenSelectBox02").val()[0]);	//findProgStatus($("#issueTotalHiddenSelectBox02").val()[0])
+		status = $("#issueTotalHiddenSelectBox02").val()[0] == "전체" ? "" : testValue; 
 		occur_date = $("#issueTotalHiddenSelectBox03").val()[0] == "전체" ? "" : $("#issueTotalHiddenSelectBox03").val()[0];
 	}
 
@@ -1305,6 +1360,65 @@ function minwonListSearch(){
 	console.log('조회는 나중에')
 	loadDataTable(object);
 	console.log("-----------------------");
+}
+
+//주소검색 팝업에서 선택 버튼 - 주소 검색한거 선택
+function miwonSearchAddr(obj) {
+	let aa = queryValueToObject($(obj).attr('data-info'));
+	let idxCheck = $(obj).attr('data-index');
+	console.log(aa);
+	console.log(idxCheck);
+	
+	$("#minwonAddr_"+idxCheck).val(aa.juso);	//주소세팅
+	$("#minwonAddrInfo_"+idxCheck).val(JSON.stringify(aa));
+	searchPopClose();	//팝업닫기
+}
+
+function tempTest1() {
+	for(let i = 0 ; i < $("button[name='addressListInfo'").length ; i++ ) {
+		console.log(i);
+	}
+}
+
+
+//주소 팝업 닫기 
+function searchPopClose() {
+	
+	let popupOnCheck = $("#minwon_searchPopupWrap").hasClass('active');
+	
+	if(popupOnCheck) {
+		$("#minwon_searchPopupWrap").removeClass('active');
+	} else {
+		$("#minwon_searchPopupWrap").addClass('active');
+	}
+
+}
+
+//r.e.s.e.t - 신규 민원 등록 팝업
+function minwonPopReset() {
+	
+	$("input[name='MW_TITLE'").val('');
+	//토지정보리셋 - 첫줄만 남기고 다 삭제 및 data 비우기
+	$(".landinfo_box").children("ul:gt(0)").remove();	
+	$("#minwonAddr_1").val('');
+	$('.landinfo_content_3 input').prop('checked', false);
+	$("#minwonActualAreaYn_1").val('')
+	//대표 필지정보 리셋
+	$("input[name='REP_ADDRESS']").val('');
+	$("input[name='REGISTED_YN']").val('N');
+	$("input[name='PERMITTED_YN']").val('N');
+	
+	//민원내용 리셋
+	$(".com_content_contents_1").children("ul:gt(0)").remove();	
+	$("#landowner_name_1").val('');
+	$("#landowner_birthday_1").val('');
+	$("#landowner_relation_1").val('');
+	$("#landowner_phone_1").val('');
+	$("#landowner_presence_1").text('Y/N');
+	
+	$('textarea[name="MW_HISTORY"]').val('');
+	$('textarea[name="MW_REQUIREMENTS"]').val('');
+	$('textarea[name="MW_CONTENTS"]').val('');
 }
 
 /*********************************************/

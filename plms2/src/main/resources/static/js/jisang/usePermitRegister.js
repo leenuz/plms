@@ -1145,7 +1145,7 @@ $(document).on("click","#sangsinBtn",function(){
 		
 		
 
-		url="/land/jisang/usePermitRegisterSave";
+		/*url="/land/jisang/usePermitRegisterSave";
 		$.ajax({
 
 			url:url,
@@ -1169,55 +1169,14 @@ $(document).on("click","#sangsinBtn",function(){
 					 console.log(dataObj);
 					 console.log("---------------상신으로 넘겨야함-------------");
 					//alert("정상적으로 등록 되었습니다.");
-					/*$("#popup_bg").show();
+					$("#popup_bg").show();
 					$("#popup").show(500);
 					//$("#addrPopupLayer tbody td").remove();
 					for(var i=0;i<response.resultData.length;i++){
 						$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-					}*/
+					}
 					
-					url="/land/jisang/selectJisangPmtDetailListAppoval";
-						   	$.ajax({
-
-								url:url,
-								type:'POST',
-								contentType:"application/json",
-								data:JSON.stringify(dataObj),
-
-								dataType:"json",
-								beforeSend:function(request){
-									console.log("beforesend ........................");
-									loadingShow();
-								},
-								success:function(response){
-									loadingHide();
-									console.log(response);
-									if (response.success="Y"){
-										console.log("response.success Y");
-										//console.log("response.resultData length:"+response.resultData.length);
-										alert("정상적으로 상신 되었습니다.");
-										
-																	
-																	//var url=response.OUT_URL;
-										var urls = response.OUT_URL;
-										window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
-										/*$("#popup_bg").show();
-										$("#popup").show(500);
-										//$("#addrPopupLayer tbody td").remove();
-										for(var i=0;i<response.resultData.length;i++){
-											$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-										}*/
-									}
-									else {
-										console.log("response.success N");
-									}
-								},
-								error:function(jqXHR,textStatus,errorThrown){
-									alert("sangsin ajax error\n"+textStatus+":"+errorThrown);
-									return false;
-								}
-
-						   	});
+					
 					
 					
 					
@@ -1231,7 +1190,54 @@ $(document).on("click","#sangsinBtn",function(){
 				return false;
 			}
 
-		});
+		});*/
+			console.log("pmt_no:"+dataObj.tmp_pmt_no);
+			dataObj.PMT_NO=$("#tmp_pmt_no").val();
+			console.log(dataObj);
+			if ($("#save_status").val()=="TSAVE") url="/land/jisang/selectJisangPmtDetailListAppoval";
+			else url="/land/jisang/selectJisangPmtDetailListAppoval2";
+			console.log("url:"+url);
+								   	$.ajax({
+
+										url:url,
+										type:'POST',
+										contentType:"application/json",
+										data:JSON.stringify(dataObj),
+
+										dataType:"json",
+										beforeSend:function(request){
+											console.log("beforesend ........................");
+											loadingShow();
+										},
+										success:function(response){
+											loadingHide();
+											console.log(response);
+											if (response.success="Y"){
+												console.log("response.success Y");
+												//console.log("response.resultData length:"+response.resultData.length);
+												alert("정상적으로 상신 되었습니다.");
+												
+																			
+																			//var url=response.OUT_URL;
+												var urls = response.OUT_URL;
+												window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
+												/*$("#popup_bg").show();
+												$("#popup").show(500);
+												//$("#addrPopupLayer tbody td").remove();
+												for(var i=0;i<response.resultData.length;i++){
+													$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+												}*/
+											}
+											else {
+												console.log("response.success N");
+											}
+										},
+										error:function(jqXHR,textStatus,errorThrown){
+											alert("sangsin ajax error\n"+textStatus+":"+errorThrown);
+											return false;
+										}
+
+								   	});
 		
 		
 		
@@ -1376,6 +1382,8 @@ $(document).on("click","#mainSaveBtn",function(){
 				console.log("response.success Y");
 				//console.log("response.resultData length:"+response.resultData.length);
 				alert("정상적으로 등록 되었습니다.");
+				$("#save_status").val("TSAVE");
+				$("#tmp_pmt_no").val(response.PMT_NO);
 				/*$("#popup_bg").show();
 				$("#popup").show(500);
 				//$("#addrPopupLayer tbody td").remove();

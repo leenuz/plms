@@ -24,7 +24,8 @@ public class RedisConfig {
     private @Value("${spring.data.redis.host}") String redisHost;
     private @Value("${spring.data.redis.port}") int redisPort;
     private @Value("${spring.data.redis.password}") String password;
- 
+    
+    
     @Bean
     public JedisPoolConfig jedisPoolConfig() {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
@@ -58,4 +59,19 @@ public class RedisConfig {
         template.setEnableTransactionSupport(true);
         return template;
     }
+    
+    
+    /*
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+    	return new JedisConnectionFactory();
+    }
+    
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate() {
+    	RedisTemplate<String, Object> template = new RedisTemplate<>();
+    	template.setConnectionFactory(redisConnectionFactory());
+    	return template;
+    }
+    */
 }

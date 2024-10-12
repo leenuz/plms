@@ -1428,7 +1428,7 @@ const ExcelPopOpenEvet = () => {
 // 주소 검색 버튼 클릭 시
 $(document).on("click",".searchAddressBtn",function(){
 	
-	console.log($(this).parent().parent().html());
+	//console.log($(this).parent().parent().html());
 	var idObj=$(this).parent().parent().find("#addr");
 	var id=$(this).parent().parent().find("#goverIndex").val();
 		
