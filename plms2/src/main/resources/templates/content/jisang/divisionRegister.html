@@ -804,7 +804,7 @@ border: 1px solid black;
                 <input type="hidden" id="fseq" value="1">
                   <input name="req_doc_file01" id="req_doc_file01"
                     type="text"
-                    th:if="${#lists.size(atcfileList)>=1}" th:value="${atcfileList[0].jrd_fname}"
+                    th:if="${#lists.size(atcfileList)>=1}" th:value="${atcfileList[0].jba_file_nm}"
                     readonly
                     class="notWriteInput" style="text-align:center"/>
                     <input name="req_doc_file01" id="req_doc_file01"
@@ -828,7 +828,7 @@ border: 1px solid black;
                 <input type="hidden" id="fseq" value="2">
                   <input  name="req_doc_file02" id="req_doc_file02"
                     type="text"
-                    th:if="${#lists.size(atcfileList)>=2}" th:value="${atcfileList[1].jrd_fname!=null?atcfileList[1].jrd_fname:''}"
+                    th:if="${#lists.size(atcfileList)>=2}" th:value="${atcfileList[1].jba_file_nm!=null?atcfileList[1].jba_file_nm:''}"
                     readonly
                     class="notWriteInput" style="text-align:center"/>
                     <input  name="req_doc_file02" id="req_doc_file02"
@@ -852,7 +852,7 @@ border: 1px solid black;
                 <input type="hidden" id="fseq" value="3">
                   <input  name="req_doc_file03" id="req_doc_file03"
                     type="text"
-                    th:if="${#lists.size(atcfileList)>=3}" th:value="${atcfileList[2].jrd_fname!=null?atcfileList[2].jrd_fname:''}"
+                    th:if="${#lists.size(atcfileList)>=3}" th:value="${atcfileList[2].jba_file_nm!=null?atcfileList[2].jba_file_nm:''}"
                     readonly
                     class="notWriteInput" style="text-align:center"/>
                     <input  name="req_doc_file03" id="req_doc_file03"
@@ -875,7 +875,7 @@ border: 1px solid black;
                 <li class="content">
                 <input type="hidden" id="fseq" value="4">
                   <input type="text"  name="req_doc_file04" id="req_doc_file04"
-                    th:if="${#lists.size(atcfileList)>=4}" th:value="${atcfileList[3].jrd_fname!=null?atcfileList[3].jrd_fname:''}"
+                    th:if="${#lists.size(atcfileList)>=4}" th:value="${atcfileList[3].jba_file_nm!=null?atcfileList[3].jba_file_nm:''}"
                     readonly class="notWriteInput" style="text-align:center"/>
                     <input type="text"  name="req_doc_file04" id="req_doc_file04"
                     th:if="${#lists.size(atcfileList)<4}" placeholder=""
@@ -896,7 +896,7 @@ border: 1px solid black;
                 <input type="hidden" id="fseq" value="5">
                   <input
                     type="text"  name="req_doc_file05" id="req_doc_file05"
-                    th:if="${#lists.size(atcfileList)>=5}" th:value="${atcfileList[4].jrd_fname!=null?atcfileList[4].jrd_fname:''}"
+                    th:if="${#lists.size(atcfileList)>=5}" th:value="${atcfileList[4].jba_file_nm!=null?atcfileList[4].jba_file_nm:''}"
                     readonly
                     class="notWriteInput" style="text-align:center"/>
                     <input
@@ -920,7 +920,7 @@ border: 1px solid black;
                 <input type="hidden" id="fseq" value="6">
                   <input
                     type="text"  name="req_doc_file06" id="req_doc_file06"
-                    th:if="${#lists.size(atcfileList)>=6}" th:value="${atcfileList[5].jrd_fname!=null?atcfileList[5].jrd_fname:''}"
+                    th:if="${#lists.size(atcfileList)>=6}" th:value="${atcfileList[5].jba_file_nm!=null?atcfileList[5].jba_file_nm:''}"
                     readonly
                     class="notWriteInput" style="text-align:center"/>
                     <input
@@ -944,7 +944,7 @@ border: 1px solid black;
                 <input type="hidden" id="fseq" value="7">
                   <input
                     type="text"  name="req_doc_file07" id="req_doc_file07"
-                    th:if="${#lists.size(atcfileList)>=7}" th:value="${atcfileList[6].jrd_fname!=null?atcfileList[6].jrd_fname:''}"
+                    th:if="${#lists.size(atcfileList)>=7}" th:value="${atcfileList[6].jba_file_nm!=null?atcfileList[6].jba_file_nm:''}"
                     readonly
                     class="notWriteInput" style="text-align:center"/>
                     <input
@@ -972,7 +972,7 @@ border: 1px solid black;
                   <input type="hidden" id="fseq" value="8">
                   <input
                     type="text"  name="req_doc_file08" id="req_doc_file08"
-                    th:if="${#lists.size(atcfileList)>=8}" th:value="${atcfileList[7].jrd_fname!=null?atcfileList[7].jrd_fname:''}"
+                    th:if="${#lists.size(atcfileList)>=8}" th:value="${atcfileList[7].jba_file_nm!=null?atcfileList[7].jba_file_nm:''}"
                     readonly
                     class="notWriteInput" style="text-align:center"/>
                     <input

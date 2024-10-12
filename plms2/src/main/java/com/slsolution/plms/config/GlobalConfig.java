@@ -19,6 +19,7 @@ public class GlobalConfig {
 	private static String jisangFileDataDir;
 	private static String goverFileDataDir;
 	private static String jisangBunhalDataDir;
+	private static String jisangMergeDataDir;
 	private static String notsetFileTempDir;
 	private static String notsetFileDataDir;
 	private static String jisangReqDoc1Dir;
@@ -90,6 +91,15 @@ public class GlobalConfig {
 	public static String getJisangBunhalDataDir() {
 		return jisangBunhalDataDir;
 	}
+	
+	//지상권합필첨부서류
+		@Value("${plms.jisangMergeDataDir}")
+		public void setJisangMergeDataDir(String str) {
+			jisangMergeDataDir=str;
+		}
+		public static String getJisangMergeDataDir() {
+			return jisangMergeDataDir;
+		}
 	
 	//미설정파일관리
 	@Value("${plms.notsetFileTempDir}")

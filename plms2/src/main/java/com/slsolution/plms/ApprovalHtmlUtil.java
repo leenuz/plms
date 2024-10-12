@@ -442,20 +442,20 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 //
 //				}
 				//개발
-//				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
-//						  + "filePath=" + cu.evl(str_FILE_PATH, "") 
-//						    + "&fileName=" + cu.evl(str_FILE_NM, "") 
-//						    + "&fileJisangNo=" + str_PMT_NO
-//						    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
-//						    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+						  + "filePath=" + cu.evl(str_FILE_PATH, "") 
+						    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+						    + "&fileJisangNo=" + str_PMT_NO
+						    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+						    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 				
 				//운영
-				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
-					    + "filePath=" + cu.evl(str_FILE_PATH, "") 
-					    + "&fileName=" + cu.evl(str_FILE_NM, "") 
-					    + "&fileJisangNo=" + str_PMT_NO
-					    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
-					    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+//				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//					    + "filePath=" + cu.evl(str_FILE_PATH, "") 
+//					    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+//					    + "&fileJisangNo=" + str_PMT_NO
+//					    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+//					    + "&fileGubun=jisang_pmt', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 
 				sbHtml.append("            </td>               \n");
 				sbHtml.append("        </tr>                   \n");
@@ -1435,18 +1435,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 //				        + "', 'gover')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 				
 				//개발
-//				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
-//					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "") 
-//					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "") 
-//					    + "&fileJisangNo=" + kibon_map.get("GOVER_NO") 
-//					    + "&fileSeq=" + cu.evl(
-//					        ((HashMap) file_list.get(i)).get("ga_file_seq") != null ? 
-//					        ((HashMap) file_list.get(i)).get("ga_file_seq").toString() : "", 
-//					        "") 
-//					    + "&fileGubun=gover', '_blank')\">다운로드1 <span class=\"downloadIcon\"></span></button>\n");
-				
-				//운영
-				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
 					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "") 
 					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "") 
 					    + "&fileJisangNo=" + kibon_map.get("GOVER_NO") 
@@ -1454,7 +1443,18 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 					        ((HashMap) file_list.get(i)).get("ga_file_seq") != null ? 
 					        ((HashMap) file_list.get(i)).get("ga_file_seq").toString() : "", 
 					        "") 
-					    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+					    + "&fileGubun=gover', '_blank')\">다운로드1 <span class=\"downloadIcon\"></span></button>\n");
+				
+				//운영
+//				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_path"), "") 
+//					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("ga_file_nm"), "") 
+//					    + "&fileJisangNo=" + kibon_map.get("GOVER_NO") 
+//					    + "&fileSeq=" + cu.evl(
+//					        ((HashMap) file_list.get(i)).get("ga_file_seq") != null ? 
+//					        ((HashMap) file_list.get(i)).get("ga_file_seq").toString() : "", 
+//					        "") 
+//					    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 
 
 				sbHtml.append("            </td>               \n");
@@ -1543,7 +1543,9 @@ log.info("-------------------getJisang_termination_HTML-------------------------
 			//soyu_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_SoujaInfo", params); // 소유자정보
 			// 첨부파일
 			params.put("SEQ", FileSeq);
-			file_list=(ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Files", params);
+			//file_list=(ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Files", params);
+			file_list=(ArrayList) mainService.selectQuery("jisangSQL.selectJisangCancel_Files", params);
+			//ArrayList reqdoc_list=(ArrayList) mainService.selectQuery("jisangSQL.selectJisangCancel_Files", params);
 			
 			//file_list = (ArrayList) Database.getInstance().queryForList("Json.selectJisangRowDetail_Files", params); // 첨부파일
 //			System.out.println("$$$ params=" + params);
@@ -1583,8 +1585,8 @@ log.info("-------------------getJisang_termination_HTML-------------------------
 
 			if (file_list.size() > 0) {
 				for (int i = 0; i < file_list.size(); i++) {
-					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ja_file_path"), "").trim());
-					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("ja_file_nm"), "").trim());
+					file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "").trim());
+					file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "").trim());
 
 				}
 			}
@@ -1794,7 +1796,7 @@ log.info("kibon_map:"+kibon_map);
 				sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>\n");
 				String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
 				sbHtml.append("            <td>                \n");
-				sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+				//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
 
 				// 파일다운로드 수정 2017.01.16*/
 				String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM" + i)), ""); // 파일네임
@@ -1805,16 +1807,42 @@ log.info("kibon_map:"+kibon_map);
 					type = pathSplit[1].toLowerCase();
 				}
 //				 System.out.println("type="+type);
-				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
-					sbHtml.append("            <script>               \n");
-					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH.trim() + "\");  });    \n");
-					sbHtml.append("            </script>               \n");
-				} else {
-					sbHtml.append("            <script>               \n");
-					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
-					sbHtml.append("            </script>               \n");
-				}
+//				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+//					sbHtml.append("            <script>               \n");
+//					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH.trim() + "\");  });    \n");
+//					sbHtml.append("            </script>               \n");
+//				} else {
+//					sbHtml.append("            <script>               \n");
+//					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+//					sbHtml.append("            </script>               \n");
+//				}
 				////
+				
+				
+				//개발
+				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") 
+					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "") 
+					    + "&fileJisangNo=" + kibon_map.get("manage_no") 
+					    + "&fileSeq=" + cu.evl(
+					        ((HashMap) file_list.get(i)).get("file_gubun") != null ? 
+					        ((HashMap) file_list.get(i)).get("file_gubun").toString() : "", 
+					        "") 
+					    + "&fileGubun=jisang', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+				
+				//운영
+//				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") 
+//					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "") 
+//					    + "&fileJisangNo=" + kibon_map.get("manage_no") 
+//					    + "&fileSeq=" + cu.evl(
+//					        ((HashMap) file_list.get(i)).get("file_gubun") != null ? 
+//					        ((HashMap) file_list.get(i)).get("file_gubun").toString() : "", 
+//					        "") 
+//					    + "&fileGubun=jisang', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
+				
+				
 
 				sbHtml.append("            </td>               \n");
 				sbHtml.append("	</tr>\n");
@@ -1847,6 +1875,7 @@ log.info("kibon_map:"+kibon_map);
 	 */
 	public String getJisang_divide_HTML(String JISANG_NO) throws Exception {
 		MainService mainService = context.getBean(MainService.class);
+		CommonUtil cu = new CommonUtil();
 		HashMap params = new HashMap();
 		// 기존데이터 조회
 		params.put("JISANGNO", JISANG_NO);
@@ -1857,8 +1886,18 @@ log.info("kibon_map:"+kibon_map);
 		params.put("BUNHAL_ORG_NO", JISANG_NO);
 		ArrayList<HashMap> bunhal_list=mainService.selectQuery("jisangSQL.selectJisangBunhalTmpList", params);
 		//ArrayList<HashMap> bunhal_list = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectJisangBunhalTmpList", params);
+		
+		//신규필수첨부파일 조히
+		// 분할지번 지상권 조회
+		params.put("JISANG_NO", JISANG_NO);
+		ArrayList<HashMap> file_list=mainService.selectQuery("jisangSQL.selectJisangBunhalAtcfile", params);
+		
+		
+		
 log.info("bunhal_list:"+bunhal_list);
 log.info("ori_list:"+ori_list);
+log.info("file_list:"+file_list);
+log.info("file_list_size:"+file_list.size());
 		// 해지정보 표시만 하기위한 로직
 		ArrayList<HashMap> heji_list = new ArrayList<HashMap>();
 		int check_count = 0;
@@ -2085,29 +2124,463 @@ log.info("soyuMap:"+soyuMap);
 		sbHtml.append("			</tr>\n");
 		sbHtml.append("		</table>\n");
 		sbHtml.append("		<br>\n");
+		
+		
+		sbHtml.append("<!-- * 첨부 서류 -->            \n");
+		sbHtml.append("<h4>첨부 서류</h4>              \n");
+		sbHtml.append("<table class=\"base5\">         \n");
+		sbHtml.append("    <colgroup>                  \n");
+		sbHtml.append("        <col style=\"width:120px\" />                \n");
+		sbHtml.append("        <col style=\"width:340px\" />                \n");
+		sbHtml.append("        <col style=\"width:230px\" />                \n");
+		sbHtml.append("        <col style=\"width:230px\" />                \n");
+		sbHtml.append("    </colgroup>                 \n");
+		sbHtml.append("    <thead>\n");
+		sbHtml.append("        <tr>                    \n");
+		sbHtml.append("            <th scope=\"col\" colspan=\"2\">파일내용</th>                 \n");
+		sbHtml.append("            <th scope=\"col\">파일명</th>            \n");
+		sbHtml.append("            <th scope=\"col\">파일선택</th>          \n");
+		sbHtml.append("        </tr>                   \n");
+		sbHtml.append("    </thead>                    \n");
+		sbHtml.append("    <tbody>\n");
+
+		// /** 첨부 서류 **/
+		// int n_fileCount = Integer.parseInt(String.valueOf(
+		// map.get("fileCount") ));
+		//
+		 String str_FILE_PATH= ""; // 파일경로
+		 String str_FILE_NM= ""; // 파일네임
+		 String str_FILE_SEQ= ""; // 파일SEQ
+		 String str_PMT_NO= "";
+		 log.info("######################################################");
+		 log.info("file_list:"+file_list);
+		if (file_list.size() > 0) {
+		//	ArrayList list = (ArrayList) map.get("fileList");
+				
+			for (int i = 0; i< 8; i++) {
+				//JSONObject obj=new JSONObject(file_list.get(i).toString());
+				log.info("file_list:"+file_list.get(i));
+				//log.info("obj:"+obj);
+				HashMap hm = new HashMap();
+				log.info("hm:"+hm);
+				if ((HashMap) file_list.get(i)!=null) {
+					hm = (HashMap) file_list.get(i);
+					str_FILE_PATH =cu.evl(String.valueOf(hm.get("jba_file_path")), "");
+					//str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("file_path")), "");
+					str_FILE_NM = cu.evl(String.valueOf(hm.get("jba_file_nm")), "");
+					str_FILE_SEQ = cu.evl(String.valueOf(hm.get("jba_fseq")), "");
+					str_PMT_NO = cu.evl(String.valueOf(hm.get("jba_manage_no")), "");
+				}
+				else {
+					str_FILE_PATH ="";
+					//str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("file_path")), "");
+					str_FILE_NM ="";
+					str_FILE_SEQ ="";
+					str_PMT_NO = "";
+				}
+				
+					sbHtml.append("        <tr>                    \n");
+					if (0 == i) {
+						sbHtml.append("            <td rowspan=\"10\">필수 증빙서류</td>     \n");
+						sbHtml.append("            <td style=\"text-align:left;\">1. 토지사용 승낙(원)서</td>    \n");
+						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
+						sbHtml.append("            <td>                \n");
+						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+						sbHtml.append("      \n");
+						// sbHtml.append(" <script> \n");
+						// sbHtml.append(" $(\"#file"+i+"\").click(function(){
+						// window.open(\""+str_FILE_PATH+"\"); }); \n");
+						// sbHtml.append(" </script> \n");
+
+						String type = "";
+						if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+							String pathSplit[] = str_FILE_NM.split("\\.");
+							type = pathSplit[1].toLowerCase();
+						}
+
+//						if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+//							sbHtml.append("            </script>               \n");
+//						} else if (!type.equals("")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+//							sbHtml.append("            </script>               \n");
+		//
+//						}
+						//개발
+						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+								  + "filePath=" + cu.evl(str_FILE_PATH, "") 
+								    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+								    + "&fileJisangNo=" + str_PMT_NO
+								    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+								    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+						
+						//운영
+//						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//							    + "filePath=" + cu.evl(str_FILE_PATH, "") 
+//							    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+//							    + "&fileJisangNo=" + str_PMT_NO
+//							    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+//							    + "&fileGubun=jisang_bunhal', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
+						sbHtml.append("            </td>               \n");
+					} else if (1 == i) {
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">2. 토지사용 기본조건</td>                   \n");
+						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
+						sbHtml.append("            <td>                \n");
+						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+						sbHtml.append("      \n");
+						// sbHtml.append(" <script> \n");
+						// sbHtml.append(" $(\"#file"+i+"\").click(function(){
+						// window.open(\""+str_FILE_PATH+"\"); }); \n");
+						// sbHtml.append(" </script> \n");
+
+						String type = "";
+						if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+							String pathSplit[] = str_FILE_NM.split("\\.");
+							type = pathSplit[1].toLowerCase();
+						}
+
+//						if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+//							sbHtml.append("            </script>               \n");
+//						} else if (!type.equals("")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+//							sbHtml.append("            </script>               \n");
+		//
+//						}
+						//개발
+						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+								  + "filePath=" + cu.evl(str_FILE_PATH, "") 
+								    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+								    + "&fileJisangNo=" + str_PMT_NO
+								    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+								    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+						
+						//운영
+//						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//							    + "filePath=" + cu.evl(str_FILE_PATH, "") 
+//							    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+//							    + "&fileJisangNo=" + str_PMT_NO
+//							    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+//							    + "&fileGubun=jisang_pmt', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
+						sbHtml.append("            </td>               \n");
+					} else if (2 == i) {
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">3. 굴착시 안전조치 사항</td>     \n");
+						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
+						sbHtml.append("            <td>                \n");
+						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+						sbHtml.append("      \n");
+						// sbHtml.append(" <script> \n");
+						// sbHtml.append(" $(\"#file"+i+"\").click(function(){
+						// window.open(\""+str_FILE_PATH+"\"); }); \n");
+						// sbHtml.append(" </script> \n");
+
+						String type = "";
+						if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+							String pathSplit[] = str_FILE_NM.split("\\.");
+							type = pathSplit[1].toLowerCase();
+						}
+
+//						if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+//							sbHtml.append("            </script>               \n");
+//						} else if (!type.equals("")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+//							sbHtml.append("            </script>               \n");
+		//
+//						}
+						//개발
+						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+								  + "filePath=" + cu.evl(str_FILE_PATH, "") 
+								    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+								    + "&fileJisangNo=" + str_PMT_NO
+								    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+								    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+						
+						//운영
+//						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//							    + "filePath=" + cu.evl(str_FILE_PATH, "") 
+//							    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+//							    + "&fileJisangNo=" + str_PMT_NO
+//							    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+//							    + "&fileGubun=jisang_pmt', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
+						sbHtml.append("            </td>               \n");
+					} else if (3 == i) {
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">4. 각서</td>                  \n");
+						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
+						sbHtml.append("            <td>                \n");
+						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+						sbHtml.append("      \n");
+						// sbHtml.append(" <script> \n");
+						// sbHtml.append(" $(\"#file"+i+"\").click(function(){
+						// window.open(\""+str_FILE_PATH+"\"); }); \n");
+						// sbHtml.append(" </script> \n");
+
+						String type = "";
+						if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+							String pathSplit[] = str_FILE_NM.split("\\.");
+							type = pathSplit[1].toLowerCase();
+						}
+
+//						if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+//							sbHtml.append("            </script>               \n");
+//						} else if (!type.equals("")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+//							sbHtml.append("            </script>               \n");
+		//
+//						}
+						//개발
+						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+								  + "filePath=" + cu.evl(str_FILE_PATH, "") 
+								    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+								    + "&fileJisangNo=" + str_PMT_NO
+								    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+								    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+						
+						//운영
+//						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//							    + "filePath=" + cu.evl(str_FILE_PATH, "") 
+//							    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+//							    + "&fileJisangNo=" + str_PMT_NO
+//							    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+//							    + "&fileGubun=jisang_pmt', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
+						sbHtml.append("            </td>               \n");
+					} else if (4 == i) {
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">5. 등기사항 전부 증명서</td>          \n");
+						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
+						sbHtml.append("            <td>                \n");
+						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+						sbHtml.append("      \n");
+						// sbHtml.append(" <script> \n");
+						// sbHtml.append(" $(\"#file"+i+"\").click(function(){
+						// window.open(\""+str_FILE_PATH+"\"); }); \n");
+						// sbHtml.append(" </script> \n");
+
+						String type = "";
+						if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+							String pathSplit[] = str_FILE_NM.split("\\.");
+							type = pathSplit[1].toLowerCase();
+						}
+
+//						if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+//							sbHtml.append("            </script>               \n");
+//						} else if (!type.equals("")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+//							sbHtml.append("            </script>               \n");
+		//
+//						}
+						//개발
+						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+								  + "filePath=" + cu.evl(str_FILE_PATH, "") 
+								    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+								    + "&fileJisangNo=" + str_PMT_NO
+								    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+								    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+						
+						//운영
+//						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//							    + "filePath=" + cu.evl(str_FILE_PATH, "") 
+//							    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+//							    + "&fileJisangNo=" + str_PMT_NO
+//							    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+//							    + "&fileGubun=jisang_pmt', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
+						sbHtml.append("            </td>               \n");
+					}else if (5 == i) {
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">6. 토지대장</td>          \n");
+						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
+						sbHtml.append("            <td>                \n");
+						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+						sbHtml.append("      \n");
+						// sbHtml.append(" <script> \n");
+						// sbHtml.append(" $(\"#file"+i+"\").click(function(){
+						// window.open(\""+str_FILE_PATH+"\"); }); \n");
+						// sbHtml.append(" </script> \n");
+
+						String type = "";
+						if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+							String pathSplit[] = str_FILE_NM.split("\\.");
+							type = pathSplit[1].toLowerCase();
+						}
+
+//						if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+//							sbHtml.append("            </script>               \n");
+//						} else if (!type.equals("")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+//							sbHtml.append("            </script>               \n");
+		//
+//						}
+						//개발
+						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+								  + "filePath=" + cu.evl(str_FILE_PATH, "") 
+								    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+								    + "&fileJisangNo=" + str_PMT_NO
+								    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+								    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+						
+						//운영
+//						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//							    + "filePath=" + cu.evl(str_FILE_PATH, "") 
+//							    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+//							    + "&fileJisangNo=" + str_PMT_NO
+//							    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+//							    + "&fileGubun=jisang_pmt', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
+						sbHtml.append("            </td>               \n");
+					}else if (6 == i) {
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">7. 지적도(관로표기)</td>          \n");
+						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
+						sbHtml.append("            <td>                \n");
+						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+						sbHtml.append("      \n");
+						// sbHtml.append(" <script> \n");
+						// sbHtml.append(" $(\"#file"+i+"\").click(function(){
+						// window.open(\""+str_FILE_PATH+"\"); }); \n");
+						// sbHtml.append(" </script> \n");
+
+						String type = "";
+						if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+							String pathSplit[] = str_FILE_NM.split("\\.");
+							type = pathSplit[1].toLowerCase();
+						}
+
+//						if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+//							sbHtml.append("            </script>               \n");
+//						} else if (!type.equals("")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+//							sbHtml.append("            </script>               \n");
+		//
+//						}
+						//개발
+						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+								  + "filePath=" + cu.evl(str_FILE_PATH, "") 
+								    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+								    + "&fileJisangNo=" + str_PMT_NO
+								    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+								    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+						
+						//운영
+//						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//							    + "filePath=" + cu.evl(str_FILE_PATH, "") 
+//							    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+//							    + "&fileJisangNo=" + str_PMT_NO
+//							    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+//							    + "&fileGubun=jisang_pmt', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
+						sbHtml.append("            </td>               \n");
+					}else if (7 == i) {
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">8. 현장사진</td>          \n");
+						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
+						sbHtml.append("            <td>                \n");
+						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+						sbHtml.append("      \n");
+						// sbHtml.append(" <script> \n");
+						// sbHtml.append(" $(\"#file"+i+"\").click(function(){
+						// window.open(\""+str_FILE_PATH+"\"); }); \n");
+						// sbHtml.append(" </script> \n");
+
+						String type = "";
+						if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+							String pathSplit[] = str_FILE_NM.split("\\.");
+							type = pathSplit[1].toLowerCase();
+						}
+
+//						if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ window.open(\"" + str_FILE_PATH + "\");  });    \n");
+//							sbHtml.append("            </script>               \n");
+//						} else if (!type.equals("")) {
+//							sbHtml.append("            <script>               \n");
+//							sbHtml.append("                 $('#file" + i + "').click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+//							sbHtml.append("            </script>               \n");
+		//
+//						}
+						//개발
+						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+								  + "filePath=" + cu.evl(str_FILE_PATH, "") 
+								    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+								    + "&fileJisangNo=" + str_PMT_NO
+								    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+								    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+						
+						//운영
+//						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//							    + "filePath=" + cu.evl(str_FILE_PATH, "") 
+//							    + "&fileName=" + cu.evl(str_FILE_NM, "") 
+//							    + "&fileJisangNo=" + str_PMT_NO
+//							    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
+//							    + "&fileGubun=jisang_pmt', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
+						sbHtml.append("            </td>               \n");
+					
+					}
+
+					
+					sbHtml.append("        </tr>                   \n");
+
+			}	
+		}
+//				System.out.println("str_FILE_PATH=" + str_FILE_PATH);
+//				System.out.println("str_FILE_NM=" + str_FILE_NM);
+//				System.out.println("str_FILE_SEQ=" + str_FILE_SEQ);
+//				System.out.println("str_PMT_NO=" + str_PMT_NO);
+
+				
+			
+
+		sbHtml.append("    </tbody>                    \n");
+		sbHtml.append("</table>   \n");
+		
+		
+		
+		
 		sbHtml.append("		</div>\n");
 		sbHtml.append("		</div>\n");
 		sbHtml.append("</body>         \n");
 		sbHtml.append("</html>         \n");
 
-		System.out.println("지상권 분할 전자결재 HTML START");
+		//System.out.println("지상권 분할 전자결재 HTML START");
 //		System.out.println(sbHtml.toString());
-//		System.out.println("지상권 분할 전자결재 HTML END");
+		System.out.println("지상권 분할 전자결재 HTML END");
 
 		return sbHtml.toString();
 	}
 
 //	// 지상권 합필 전자결재 HTML
 	public String getJisang_merge_HTML(String JISANG_NO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("----------------------getJisang_merge_HTML-------------------------");
 		MainService mainService = context.getBean(MainService.class);
 		StringBuffer sbHtml = new StringBuffer();
 		HashMap param = new HashMap();
 		HashMap<String, String> mainData = new HashMap<String, String>();
-
+		CommonUtil cu = new CommonUtil();
 		param.put("REP_JISANG_NO", JISANG_NO);
+		param.put("manage_no", JISANG_NO);
+		
 		//ArrayList<HashMap<String, String>> jisangMergeList = (ArrayList<HashMap<String, String>>) Database.getInstance().queryForList("Json.selectJisangMergeSaveList", param);
 		ArrayList<HashMap> jisangMergeList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectJisangMergeSaveList", param);
-
+		
 		for (int i = 0; i < jisangMergeList.size(); i++) {
 			log.info("jisangMergeList:"+jisangMergeList.get(i));
 			param.put("JISANGNO", jisangMergeList.get(i).get("jisang_no"));
@@ -2121,6 +2594,11 @@ log.info("soyuMap:"+soyuMap);
 
 		}
 		log.info("mainData:"+mainData);
+		
+		
+		
+		
+		
 		// 합계정보 처리
 		double sumJijuk = 0.0;
 		double sumPyeonib = 0.0;
@@ -2134,6 +2612,19 @@ log.info("soyuMap:"+soyuMap);
 //		sumPyeonib += Double.parseDouble(CommonUtil.evl(String.valueOf(mainData.get("PYEONIB_AREA")), "0"));
 //		sumSetMoney += Integer.parseInt(CommonUtil.evl(String.valueOf(mainData.get("SET_MONEY")), "0"));
 
+		
+		
+		ArrayList file_list = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangMergeAtcFile", param);
+		log.info("file_list:"+file_list);
+		HashMap file_map=new HashMap();
+		if (file_list.size() > 0) {
+			for (int i = 0; i < file_list.size(); i++) {
+				file_map.put("FILE_PATH" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "").trim());
+				file_map.put("FILE_NM" + i, cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "").trim());
+
+			}
+		}
+		
 		sbHtml.append(
 				" <!DOCTYPE html>               																																																																																																																																																																																																																			\n");
 		sbHtml.append(" <html lang=\"ko\" xmlns=\"http://www.w3.org/1999/xhtml\">                \n");
@@ -2274,9 +2765,98 @@ log.info("jisangMergeList:"+jisangMergeList);
 		sbHtml.append("					<td class=\"inner_tag\">" + CommonUtil.nvl((String) mainData.get("merge_comment")).replaceAll("\n", "<br />") + "</td>\n");
 		sbHtml.append("				</tr>\n");
 		sbHtml.append("			</table>\n");
+		
+		
+		
+		
+		sbHtml.append("			 <br>		\n");
+		sbHtml.append("			 <!-- *첨부 파일 -->\n");
+		sbHtml.append("			 <h4>첨부 파일</h4>\n");
+		sbHtml.append("			 <table class=\"base5\">\n");
+		sbHtml.append("			 	<colgroup>\n");
+		sbHtml.append("			 		<col style=\'width:80%\' />\n");
+		sbHtml.append("			 		<col style=\'width:20%\' />\n");
+		sbHtml.append("			 	</colgroup>\n");
+		sbHtml.append("			 	<thead>\n");
+		sbHtml.append("			 		<tr>\n");
+		sbHtml.append("			 			<th scope=\"col\">파일명</th>\n");
+		sbHtml.append("			 			<th scope=\"col\">파일보기</th>\n");
+		sbHtml.append("				 	</tr>\n");
+		sbHtml.append("				</thead>\n");
+		sbHtml.append("			 	<tbody>\n");
+		if (file_list.size() > 0) {
+			for (int i = 0; i < file_list.size(); i++) {
+				sbHtml.append("			 		<tr>\n");
+				sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>\n");
+				String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
+				sbHtml.append("            <td>                \n");
+				//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
+
+				// 파일다운로드 수정 2017.01.16*/
+				String str_FILE_NM = cu.evl(String.valueOf(file_map.get("FILE_NM" + i)), ""); // 파일네임
+				String type = "";
+
+				if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
+					String pathSplit[] = str_FILE_NM.split("\\.");
+					type = pathSplit[1].toLowerCase();
+				}
+//				 System.out.println("type="+type);
+//				if (type.equals("jpg") || type.equals("png") || type.equals("gif") || type.equals("bmp")) {
+//					sbHtml.append("            <script>               \n");
+//					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ window.open(\"" + str_FILE_PATH.trim() + "\");  });    \n");
+//					sbHtml.append("            </script>               \n");
+//				} else {
+//					sbHtml.append("            <script>               \n");
+//					sbHtml.append("                 $(\"#file" + i + "\").click(function(){ document.getElementById('file_download_form" + i + "').submit();	  });    \n");
+//					sbHtml.append("            </script>               \n");
+//				}
+				////
+				
+				
+				//개발
+				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") 
+					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "") 
+					    + "&fileJisangNo=" + JISANG_NO 
+					    + "&fileSeq=" + cu.evl(
+					        ((HashMap) file_list.get(i)).get("file_gubun") != null ? 
+					        ((HashMap) file_list.get(i)).get("file_gubun").toString() : "", 
+					        "") 
+					    + "&fileGubun=jisang', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+				
+				//운영
+//				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+//					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") 
+//					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "") 
+//					    + "&fileJisangNo=" + JISANG_NO
+//					    + "&fileSeq=" + cu.evl(
+//					        ((HashMap) file_list.get(i)).get("file_gubun") != null ? 
+//					        ((HashMap) file_list.get(i)).get("file_gubun").toString() : "", 
+//					        "") 
+//					    + "&fileGubun=jisang', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
+				
+				
+
+				sbHtml.append("            </td>               \n");
+				sbHtml.append("	</tr>\n");
+			}
+		} else {
+			sbHtml.append("			 		<tr><td colspan=\"2\">첨부파일이 없습니다.</td></tr> 							");
+		}
+		sbHtml.append("			 	</tbody>																		");
+		sbHtml.append("			 </table>																			");
+		
+		
+		sbHtml.append("	<br>\n");
+		
+		
+		
 		sbHtml.append("	</div>\n");
 		sbHtml.append("	</div>\n");
 		sbHtml.append("	</div>\n");
+		sbHtml.append("	<br>\n");
+		sbHtml.append("	<br>\n");
 		sbHtml.append("</body>         \n");
 		sbHtml.append("</html>         \n");
 

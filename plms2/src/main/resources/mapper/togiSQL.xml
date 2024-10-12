@@ -263,10 +263,7 @@
 		, #{MASTER_YN}
 		)
 	</insert>
-	<delete id="deleteDosiInfo" parameterType="HashMap">
-		DELETE FROM DOSI_INFO
-		WHERE di_DOSI_NO = #{DOSI_NO}
-	</delete>
+
 	<insert id="insertDosiInfo" parameterType="HashMap">
 		INSERT INTO DOSI_INFO
 		(
@@ -297,10 +294,6 @@
 		, #{USER_ID}
 		)
 	</insert>
-	<delete id="deleteDosiDept" parameterType="HashMap">
-		DELETE FROM DOSI_DEPT
-		WHERE DOSI_NO = #DOSI_NO#
-	</delete>
 	<insert id="insertDosiDept" parameterType="HashMap">
 		INSERT INTO DOSI_DEPT
 		(dd_DEPT_SEQ, dd_DOSI_NO, dd_DEPT_NM, dd_MANAGER, dd_CONTACT_NUM)
@@ -309,9 +302,9 @@
 	</insert>
 	<delete id="dosiDeleteFile" parameterType="HashMap">
 		DELETE FROM DOSI_ATCFILE
-		WHERE da_DOSI_NO = TO_CHAR(#{DOSI_NO})
+		WHERE DOSI_NO = TO_CHAR(#{dosi_no})
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
-			AND da_FILE_SEQ = TO_CHAR(#{SEQ})
+			AND FILE_SEQ = TO_CHAR(#{seq})
 		</if>
 	</delete>
 	<select id="selectDosiRowDetail_Files"  resultType="HashMap" parameterType="HashMap">
@@ -332,11 +325,6 @@
 		da_DOSI_NO = TO_CHAR(#{DOSI_NO})
 		WHERE da_SEQ = TO_CHAR(#{FILE_SEQ})
 	</update>
-
-	<delete id="deleteDosiMaster" parameterType="HashMap">
-		DELETE FROM DOSI_MASTER
-		WHERE dm_DOSI_NO = TO_CHAR(#{DOSI_NO})
-	</delete>
 	
 	<delete id="insertDosiUploadData" parameterType="HashMap">
 		INSERT INTO dosi_atcfile 
@@ -362,7 +350,7 @@
 		select *,(row_number() over()) as no
 		FROM DOSI_ATCFILE
 		WHERE 1=1
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
 			and DOSI_NO = #{idx}
 		</if>
 	</select>
@@ -434,4 +422,28 @@
 			   </if>
 		 WHERE DI_DOSI_NO = #{di_dosi_no}
 	</update>
+	
+	<!-- 토지개발 삭제 -->
+	<delete id="deleteDosiMaster" parameterType="HashMap">
+		DELETE FROM DOSI_MASTER
+		WHERE DM_DOSI_NO = #{dosi_no}
+	</delete>
+
+	<delete id="deleteDosiInfo" parameterType="HashMap">
+		DELETE FROM DOSI_INFO
+		WHERE DI_DOSI_NO = #{dosi_no}
+	</delete>
+
+	<delete id="deleteDosiDept" parameterType="HashMap">
+		DELETE FROM DOSI_DEPT
+		WHERE DD_DOSI_NO = #{dosi_no}
+	</delete>
+
+	<delete id="deleteDosiFile" parameterType="HashMap">
+		DELETE FROM DOSI_ATCFILE
+		WHERE DOSI_NO = #{dosi_no}
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(file_seq)">
+			AND FILE_SEQ = #{file_seq}::int
+		</if>
+	</delete>
 </mapper>

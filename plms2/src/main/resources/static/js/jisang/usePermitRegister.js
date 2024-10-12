@@ -628,7 +628,7 @@ $(document).ready(function(){
 			    {
 					var idx=$("#hiddenJisangNo").val();
 					console.log($("#hiddenJisangNo").val());
-			        var uploadURL = "/land/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
+			        var uploadURL = "/land/jisang/fileUpload/jisangPermitAtcFile?idx="+idx; //Upload URL
 			        var extraData ={}; //Extra Data.
 			        var jqXHR=$.ajax({
 			                xhr: function() {
@@ -652,7 +652,7 @@ $(document).ready(function(){
 			            contentType:false,
 			            processData: false,
 			            cache: false,
-			            data: formData,
+			            data: extraData,
 			            success: function(data){
 			               // status.setProgress(100);
 			                console.log(data);
@@ -1089,7 +1089,11 @@ $(document).on("click","#sangsinBtn",function(){
 		dataObj.pmt_status="";
 		console.log(dataObj);
 		
-		if ($("input[name='req_doc_file01']").val()=="" || $("input[name='req_doc_file01']").val()==null) {
+		
+		
+		
+		
+		/*if ($("input[name='req_doc_file01']").val()=="" || $("input[name='req_doc_file01']").val()==null) {
 						alert("모든파일을 입력해주세요");
 						return;
 					}
@@ -1128,8 +1132,11 @@ $(document).on("click","#sangsinBtn",function(){
 					if ($("input[name='req_doc_file10']").val()=="" || $("input[name='req_doc_file10']").val()==null) {
 									alert("모든파일을 입력해주세요");
 									return;
-					}
+					}*/
 		//임시저장 호출
+		
+		
+		
 
 		url="/land/jisang/usePermitRegisterSave";
 		$.ajax({

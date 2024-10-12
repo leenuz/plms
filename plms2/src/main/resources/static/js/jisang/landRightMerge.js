@@ -737,7 +737,19 @@ $(document).on("click",".temporarySaveBtn",function(){
     var object = {};
     var togiDatas=[];
     var togiUls=$("#tojiDiv #tojiUl");
-
+	var formSerializeArray = $('#saveForm').serializeArray();
+	
+	
+		   for (var i = 0; i < formSerializeArray.length; i++){
+			
+					
+					
+		       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+		   }
+		   
+	
+	
+	
     //합필 토지 정보
     const mergeToji_no = $("#mergeToji_no").val();
     const mergeToji_address = $("#mergeToji_address").val();
@@ -1077,7 +1089,19 @@ $(document).on("click","#sangsinBtn",function(){
 	 var object = {};
 	    var togiDatas=[];
 	    var togiUls=$("#tojiDiv #tojiUl");
-
+		var formSerializeArray = $('#saveForm').serializeArray();
+		
+		
+			   for (var i = 0; i < formSerializeArray.length; i++){
+				
+						
+						
+			       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+			   }
+			   
+		
+		
+		
 	    //합필 토지 정보
 	    const mergeToji_no = $("#mergeToji_no").val();
 	    const mergeToji_address = $("#mergeToji_address").val();
@@ -1132,7 +1156,7 @@ $(document).on("click","#sangsinBtn",function(){
 	    object.MAIN_JISANG_NO = mergeToji_no;
 	    object.MAIN_TMP_JISANG_NO = "";
 	    object.MERGE_INSERT_CNT = togiUls.length;
-	    object.MERGE_STATUS = "상신";
+	    object.MERGE_STATUS = "임시저장";
 	    object.GUBUN = "insert";
 
 	    for(var i=0;i<togiUls.length;i++){
@@ -1188,8 +1212,6 @@ $(document).on("click","#sangsinBtn",function(){
 	            ,"togiBunhalStatus":togiBunhalStatus
 	            ,"togiGoverOwnYn":gover_own_yn
 	            ,"togiJisa":togiJisa
-				,"togiSouja":togiSouja
-				,"togiAccountYn":togiAccountYn
 	        }
 	        console.log(togiObj);
 	        togiDatas.push(togiObj);

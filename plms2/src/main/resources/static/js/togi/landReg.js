@@ -689,7 +689,7 @@ $(document).on("click","#finalBtn",function(){
            console.log("----------jsonobj------------");
            console.log(json); // JSON 문자열 출력*/
            
-           
+           return;
        url="/togi/insertDosiList"; 
 	   $.ajax({
 	   			
@@ -814,14 +814,24 @@ $(document).on("click", "#selectBtn", function() {
     checkboxes.forEach((checkbox,checkno) => {
         var jusoInfo = checkbox.parentNode.parentNode;
          const address = jusoInfo.querySelector('li.popContent02').textContent + " " +jusoInfo.querySelector('li.popContent03').textContent;
-         const jimok = jusoInfo.querySelector('li.popContent06').textContent
-         const area = jusoInfo.querySelector('li.popContent07').textContent
-
+         const jimok = jusoInfo.querySelector('li.popContent06').textContent;
+         const area = jusoInfo.querySelector('li.popContent07').textContent;
+		let sido_nm = jusoInfo.querySelector('li.popContent0201').textContent;
+		let sgg_nm = jusoInfo.querySelector('li.popContent0202').textContent;
+		let emd_nm = jusoInfo.querySelector('li.popContent0203').textContent;
+		let ri_nm = jusoInfo.querySelector('li.popContent0204').textContent;
+		let jibun = jusoInfo.querySelector("li.popContent03").textContent;
         if (checkno === 0) {
         // 선택된 칸에 데이터 넣기
           $("input[name='address_" + id + "']").val(address);
           $("input[name='myeonjuk_" + id + "']").val(area);
           $("input[name='jimok_" + id + "']").val(jimok);
+          
+          $("input#sido_nm_" + id).val(sido_nm);
+          $("input#sgg_nm_" + id).val(sgg_nm);
+          $("input#emd_nm_" + id).val(emd_nm);
+          $("input#ri_nm_" + id).val(ri_nm);
+          $("input#jibun_" + id).val(jibun);
 
           }else{
             //토지 정보 칸 추가해서 데이터 넣기

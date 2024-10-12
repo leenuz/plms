@@ -98,8 +98,8 @@ public class togiController {
 		String index = httpRequest.getParameter("index");
 		
 		params.put("idx",idx);
-		
-		ArrayList<HashMap> data = mainService.selectQuery("togiSQL.selectDaepyoData",params);
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		ArrayList<HashMap> data = mainService.selectQuery("togiSQL.selectAllData",params);
 		ArrayList<HashMap> sosokData = mainService.selectQuery("togiSQL.selectSosokData",params);
 		ArrayList<HashMap> fileList = mainService.selectQuery("togiSQL.selectAtcFileList",params);
 		ArrayList<HashMap> deptData = mainService.selectQuery("togiSQL.selectDeptData",params);
@@ -113,7 +113,7 @@ public class togiController {
 		ArrayList<HashMap> dosiApprovalList = mainService.selectQuery("togiSQL.selectDosiApproval",params);
 		
 		mav.addObject("resultData",data.get(0));
-		mav.addObject("sosokData",sosokList);
+		mav.addObject("sosokData",sosokData);
 		mav.addObject("deptData",deptData);
 		mav.addObject("fileList",fileList);
 		mav.addObject("masterSosokList", masterSosokData);
@@ -544,31 +544,26 @@ public class togiController {
 		}
 
 	@PostMapping(path="/DosiDelete")
-	public void DosiDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public HashMap DosiDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String requestParams = ParameterUtil.getRequestBodyToStr(request);
-		 log.info("requestParams:"+requestParams);
-		 JSONObject requestParamObj=new JSONObject(requestParams);
-		ParameterParser parser = new ParameterParser(request);
-		String dosiNo = parser.getString("dosiNo");
+		log.info("requestParams:"+requestParams);
+		JSONObject requestParamObj=new JSONObject(requestParams);
+		HashMap<String, Object> resultMap = new HashMap<>();
+		String dosiNo = requestParamObj.getString("dosiNo");
 		HashMap params = new HashMap();
-		params.put("DOSI_NO", dosiNo);
+		params.put("dosi_no", dosiNo);
 
-		mainService.UpdateQuery("togiSQL.deleteDosiMaster", params);
-		mainService.UpdateQuery("togiSQL.deleteDosiInfo", params);
-		mainService.UpdateQuery("togiSQL.deleteDosiDept", params);
-		mainService.UpdateQuery("togiSQL.dosiDeleteFile", params);
+		int result = (int)mainService.UpdateQuery("togiSQL.deleteDosiMaster", params);
+		result += (int)mainService.UpdateQuery("togiSQL.deleteDosiInfo", params);
+		result += (int)mainService.UpdateQuery("togiSQL.deleteDosiDept", params);
+		result += (int)mainService.UpdateQuery("togiSQL.deleteDosiFile", params);
 
 		HashMap map = new HashMap();
 		map.put("dosiNo", dosiNo);
 
 		JSONObject jo = new JSONObject(map);
-
-		response.setCharacterEncoding("UTF-8");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.resetBuffer();
-		response.setContentType("application/json");
-		response.getWriter().print(jo);
-		response.getWriter().flush();
+		resultMap.put("result", result);
+		return resultMap;
 
 	}
 	
@@ -731,5 +726,29 @@ public class togiController {
 	    resultMap.put("result", result);
 		return resultMap;
 	}
+	
+	// 완료처리 / 취소처리
+		@PostMapping("/delete")
+		public HashMap deleteTogiInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		    HashMap<String, Object> param = new HashMap<String, Object>();
+		    
+		    // 문자열을 JSON 객체로 변환
+		    JSONObject requestParamObj = new JSONObject(requestParams);
+		    String dosi_no = requestParamObj.getString("dosiNo");
+		    String file_seq = requestParamObj.getString("fileSeq");
+		    param.put("dosi_no", dosi_no);
+		    if (!"".equals(file_seq) || file_seq != null) {
+		    	param.put("file_seq", file_seq);
+		    }
+		    int result = (int) mainService.DeleteQuery("togiSQL.deleteDosiFile", param);
+		    result += (int) mainService.DeleteQuery("togiSQL.deleteDosiDept", param);
+		    result += (int) mainService.DeleteQuery("togiSQL.deleteDosiInfo", param);
+		    result += (int) mainService.DeleteQuery("togiSQL.deleteDosiMaster", param);
+		    
+		    resultMap.put("result", result);
+			return resultMap;
+		}
 	
 }
