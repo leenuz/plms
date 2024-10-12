@@ -2863,6 +2863,7 @@ log.info("data:"+data.get(0));
 			        HashMap resultdata=new HashMap();
 			        String resultCode="0000";
 			        String resultMessage="success";
+			        log.info("-----------------------------------------");
 			        while (itr.hasNext()) { //받은 파일들을 모두 돌린다.
 			            
 			            /* 기존 주석처리
@@ -2876,32 +2877,34 @@ log.info("data:"+data.get(0));
 			            String originalFilename = mpf.getOriginalFilename(); //파일명
 			     
 			            String fileFullPath = filePath+"/"+originalFilename; //파일 전체 경로
-			          
-			            
-			           if (CommonUtil.isFileExists(filePath,originalFilename)) {
-			        	   log.info("file exists");
+			          log.info("-----------------------------------------");
+			           if(CommonUtil.isFileExists(filePath, originalFilename)) {
+			        	   try {
+				                //파일 저장
+				                mpf.transferTo(new File(fileFullPath)); //파일저장 실제로는 service에서 처리
+				                
+				                resultdata.put("fname",originalFilename);
+				                resultdata.put("fpath",fileFullPath);
+				                System.out.println("originalFilename => "+originalFilename);
+				                System.out.println("fileFullPath => "+fileFullPath);
+				               // resultdataarr.add(resultdata);
+				            } catch (Exception e) {
+				            	resultCode="4001";
+				            	resultdata.put("fname","");
+				                resultdata.put("fpath","");
+				                resultMessage="error";
+				               // resultdataarr.add(resultdata);
+				                System.out.println("postTempFile_ERROR======>"+fileFullPath);
+				                e.printStackTrace();
+				            }
 			           }
 			           else {
-			        	   log.info("file not exists");
-			           }
-			            try {
-			                //파일 저장
-			                mpf.transferTo(new File(fileFullPath)); //파일저장 실제로는 service에서 처리
-			                
-			                resultdata.put("fname",originalFilename);
-			                resultdata.put("fpath",fileFullPath);
-			                System.out.println("originalFilename => "+originalFilename);
-			                System.out.println("fileFullPath => "+fileFullPath);
-			               // resultdataarr.add(resultdata);
-			            } catch (Exception e) {
-			            	resultCode="4001";
+			        	   resultCode="4002";
 			            	resultdata.put("fname","");
 			                resultdata.put("fpath","");
 			                resultMessage="error";
-			               // resultdataarr.add(resultdata);
-			                System.out.println("postTempFile_ERROR======>"+fileFullPath);
-			                e.printStackTrace();
-			            }
+			           }
+			           
 			           
 			          
 //			            System.out.println(obj);
@@ -2923,6 +2926,7 @@ log.info("data:"+data.get(0));
 			        JSONObject obj =new JSONObject(resultmap);
 			         
 			        return resultmap;
+			        //return null;
 			    }
 
 		
