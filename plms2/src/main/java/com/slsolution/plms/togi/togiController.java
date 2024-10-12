@@ -167,10 +167,12 @@ public class togiController {
 		ArrayList<HashMap> daepyodata = mainService.selectQuery("togiSQL.selectDaepyoData",params);
 		ArrayList<HashMap> sosokData = mainService.selectQuery("togiSQL.selectSosokData",params);
 		ArrayList<HashMap> atcFileList = mainService.selectQuery("togiSQL.selectAtcFileList",params);
+		ArrayList<HashMap> dosiInfoData = mainService.selectQuery("togiSQL.selectDosiInfo",params);
 		
 		mav.addObject("resultData",data);
+		mav.addObject("dosiInfoData",dosiInfoData.get(0));
 		mav.addObject("deptdata",deptdata);
-		mav.addObject("daepyodata",daepyodata.get(0));
+		mav.addObject("daepyodata",daepyodata);
 		mav.addObject("sosokData",sosokData);
 		mav.addObject("atcFileList",atcFileList);
 		

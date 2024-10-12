@@ -126,40 +126,37 @@
 								<li class="title middleWidth2"  >시행자(발주자)</li>
 								<li class="title middleWidth2" >사업자</li>
 							</ul>
-							<ul class="contents lastContents" th:if="${daepyodata != null}">
+							<ul class="contents lastContents">
 								<li class="content contentBox">	   
-									<input type="hidden" th:value="${daepyodata.dm_dosi_no}" id="dosi_no" name="dosiNo"> 
+									<input type="hidden" th:value="${dosiInfoData.di_dosi_no}" id="dosi_no" name="dosiNo"> 
 									<input type="text" placeholder=""
 										name="business_nm"
-										th:value="${daepyodata.di_business_nm}" >
+										th:value="${dosiInfoData.di_business_nm}" >
 								</li>
 								<li class="content contentBox2">
 									<ul class="secondContents">
 										<li class="secondContent">
 											<input type="date" placeholder=""
 												name="startDate"
-												th:value="${daepyodata.di_strdate}">
+												th:value="${dosiInfoData.di_strdate}">
 										</li>
 										<li class="secondContent">
 											<input type="date" placeholder=""
 												name="endDate"
-												th:value="${daepyodata.di_enddate}">
+												th:value="${dosiInfoData.di_enddate}">
 										</li>
 									</ul>
 								</li>
 								<li class="content contentBox">
 									<input type="text" placeholder=""
 										name="adm_office"
-										th:value="${daepyodata.di_adm_office}" >
+										th:value="${dosiInfoData.di_adm_office}" >
 								</li>
 								<li class="content contentBox">
 									<input type="text" placeholder=""
 										name="business_oper"
-										th:value="${daepyodata.di_business_oper}" >
+										th:value="${dosiInfoData.di_business_oper}" >
 								</li>
-							</ul>
-							<ul class="contents lastContents" th:if="${daepyodata == null}">
-								<li>대표 토지가 없습니다.</li>
 							</ul>
 						</div>
 					</div>
@@ -359,30 +356,30 @@
 						<li class="title largeWidth">소유자</li>
 						<li class="title middleWidth">지도</li>
 					</ul>
-					<ul class="contents">
+					<ul class="contents" th:if="${#lists.size(daepyodata) > 0}">
 						<li class="content middleWidth">
-							<input type="text" readonly class="notWriteInput" name="daepyoHakbo" th:value="${daepyodata.dm_toji_type == 'JISANG' ? '지상권' :
-								(daepyodata.dm_toji_type == 'DOPCO' ? '회사토지' :
-								(daepyodata.dm_toji_type == '' ? '미설정' :
-								(daepyodata.dm_toji_type == 'GOVER' ? '점용' : daepyodata.dm_toji_type)))}" />
+							<input type="text" readonly class="notWriteInput" name="daepyoHakbo" th:value="${daepyodata[0].dm_toji_type == 'JISANG' ? '지상권' :
+								(daepyodata[0].dm_toji_type == 'DOPCO' ? '회사토지' :
+								(daepyodata[0].dm_toji_type == '' ? '미설정' :
+								(daepyodata[0].dm_toji_type == 'GOVER' ? '점용' : daepyodata[0].dm_toji_type)))}" />
 						</li>
 						<li class="content middleWidth">
-							<input type="text" readonly class="notWriteInput" name="daepyoJeochok" th:value="${daepyodata.dm_pipe_yn}" />
+							<input type="text" readonly class="notWriteInput" name="daepyoJeochok" th:value="${daepyodata[0].dm_pipe_yn}" />
 						</li>
 						<li class="content addressWidth">
-							<input type="text" readonly class="notWriteInput" name="daepyoAddress" th:value="${daepyodata.address}" />
+							<input type="text" readonly class="notWriteInput" name="daepyoAddress" th:value="${daepyodata[0].address}" />
 						</li>
 						<li class="content">
-							<input type="text" readonly class="notWriteInput" name="daepyoJimok" th:value="${daepyodata.dm_jimok_text}"  />
+							<input type="text" readonly class="notWriteInput" name="daepyoJimok" th:value="${daepyodata[0].dm_jimok_text}"  />
 						</li>
 						<li class="content">
-							<input type="text" readonly class="notWriteInput" name="daepyoYeonjang" th:value="${daepyodata.dm_length}" />
+							<input type="text" readonly class="notWriteInput" name="daepyoYeonjang" th:value="${daepyodata[0].dm_length}" />
 						</li>
 						<li class="content">
-							<input type="text" readonly class="notWriteInput" name="daepyoMyeonjuk" th:value="${daepyodata.dm_jijuk_area}" />
+							<input type="text" readonly class="notWriteInput" name="daepyoMyeonjuk" th:value="${daepyodata[0].dm_jijuk_area}" />
 						</li>
 						<li class="content largeWidth">
-							<input type="text" readonly class="notWriteInput" name="daepyoSouja" th:value="${daepyodata.dm_soyouja}" />
+							<input type="text" readonly class="notWriteInput" name="daepyoSouja" th:value="${daepyodata[0].dm_soyouja}" />
 						</li>
 						<li class="content middleWidth btnBox">
 							<button class="viewDetailButton lightBlueBtn">위치보기</button>
