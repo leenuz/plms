@@ -485,5 +485,23 @@ function queryValueToObject(str) {
 	
 	return jsonObj;
 }
+
+//입력은 숫자만 가능하게끔.(소수점 가능)
+function onlyNumberingInput(event) {
+	// 허용할 키: 숫자(0-9), 소수점(.), 백스페이스(8), 탭(9), 화살표(37-40), Delete(46)
+	// Home(35), End(36)
+	const allowedKeys = [8, 9, 46, 37, 38, 39, 40, 35, 36];
+    const key = event.key;
+    const inputValue = event.target.value;
+    
+    // 숫자키와 소수점만 허용
+    if ( (key >= '0' && key <= '9') || allowedKeys.includes(event.keyCode) || (key === '.' && !inputValue.includes('.')) ) {
+        // 통과
+        return;
+    } else {
+        event.preventDefault(); // 그 외 키는 입력 차단
+    }
+}
+
 /***************************************************************************/
 /***************************************************************************/

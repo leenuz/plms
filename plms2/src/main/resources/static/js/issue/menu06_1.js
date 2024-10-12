@@ -1364,19 +1364,47 @@ function minwonListSearch(){
 
 //주소검색 팝업에서 선택 버튼 - 주소 검색한거 선택
 function miwonSearchAddr(obj) {
-	let aa = queryValueToObject($(obj).attr('data-info'));
+	let selectAddrInfo = queryValueToObject($(obj).attr('data-info'));
 	let idxCheck = $(obj).attr('data-index');
-	console.log(aa);
+	console.log(selectAddrInfo);
 	console.log(idxCheck);
 	
-	$("#minwonAddr_"+idxCheck).val(aa.juso);	//주소세팅
-	$("#minwonAddrInfo_"+idxCheck).val(JSON.stringify(aa));
+	
+	
+	let completeYn = 'N'
+	let permittedYn = 'N';
+	
+	if(selectAddrInfo.jisang_status == 'JISANG') {	//지상
+		//COMPLE_YN - 등기여부
+		//PERMITTED_YN - 계약여부 (파일명으로 올수도? 어쨌든 1개라도 있으면 Y)
+		completeYn = selectAddrInfo.jm_comple_yn;
+		if(selectAddrInfo.jm_permitted_yn.length > 0){
+			permittedYn = 'Y';
+		}
+	} else if(selectAddrInfo.jisang_status == 'GOVER') {	//점용
+		//준비
+	} else if(selectAddrInfo.jisang_status == 'DOPCO') {	//회사토지
+		//COMPLE_YN - 등기여부
+		completeYn = selectAddrInfo.dom_comple_yn;
+	} else if(selectAddrInfo.jisang_status == 'NOTSET') {	//미지정
+		//준비
+	} else {
+		//패스
+	}
+	
+	$("#minwonAddr_"+idxCheck).val(selectAddrInfo.juso);	//주소세팅
+	$("#minwonAddrInfo_"+idxCheck).val(JSON.stringify(selectAddrInfo));
+	$("#minwonRegiYn_"+idxCheck).val(completeYn);	//등기여부
+	$("#minwonContYn_"+idxCheck).val(permittedYn);	//계약여부
+	
 	searchPopClose();	//팝업닫기
 }
 
 function tempTest1() {
 	for(let i = 0 ; i < $("button[name='addressListInfo'").length ; i++ ) {
-		console.log(i);
+		
+		let objCheck = queryValueToObject($("button[name='addressListInfo'").eq(i).attr('data-info'));
+		console.log(objCheck);
 	}
 }
 

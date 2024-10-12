@@ -405,7 +405,7 @@ if (issuePopupOpen) {
 										<button class="landStatusPopOpenBtn" value="1">검색</button></li>
 									<li class="landinfo_content_5"><input type="text" id="minwonRegiYn_1" readonly /></li>
 									<li class="landinfo_content_6"><input type="text" id="minwonContYn_1" readonly /></li>
-									<li class="landinfo_content_7"><input type="text" id="minwonActualAreaYn_1" /></li>
+									<li class="landinfo_content_7"><input type="text" id="minwonActualAreaYn_1" onkeydown="onlyNumberingInput(event)" maxlength="15"/></li>
 									<li class="landinfo_content_8">
 										<input type="hidden" name="addrInfoStr" id="minwonAddrInfo_1"/>
 										<button class="complaint_addition">추가</button></li>
