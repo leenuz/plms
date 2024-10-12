@@ -242,7 +242,7 @@ $(document).on("click", "#deleteFileBtn", function() {
 })
 
 
-// 첨부파일 저장 버튼
+// 필지 첨부파일 - 첨부파일 저장 버튼
 $(document).on("click", "#fileSaveBtn", function() {
 	console.log("--------------start fileSaveBtn---------");
 	console.log(uploadFiles);
@@ -340,63 +340,6 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log(`Checkbox with value ${this.value} is ${this.checked ? 'checked' : 'unchecked'}`);
         });
     });
-
-    /*// 선택파일 삭제 버튼 클릭 이벤트 처리
-    deleteSelectedBtn.addEventListener('click', function() {
-        // 선택된 체크박스 값 가져오기
-        const selectedCheckboxes = document.querySelectorAll('.file-checkbox:checked');
-
-        // 체크된 체크박스들의 값과 파일 이름을 추출하여 리스트로 만듦
-        const selectedFiles = Array.from(selectedCheckboxes).map(checkbox => {
-            const parentLi = checkbox.closest('ul.contents'); // 체크박스가 포함된 ul 요소를 찾음
-            const fileName = parentLi.querySelector('.content03.content').textContent.trim(); // 파일 이름 추출
-
-            return {
-                value: Number(checkbox.value),   // 체크박스의 value 값
-                fileName: fileName       // 파일 이름
-            };
-        });
-
-        console.log(selectedFiles); // 결과 확인용 콘솔 출력
-
-        if (selectedFiles.length > 0) {
-            console.log("Deleting files with IDs:", selectedFiles);
-
-            // 서버로 삭제 요청 보내기 (예: AJAX 요청)
-            fetch('/api/pnuAtcDelete', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ fileIds: selectedFiles }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.resultMessage == "success") {
-                    // 성공적으로 삭제되었을 경우 체크박스와 관련된 리스트 항목 삭제
-
-                    alert('선택된 파일이 삭제되었습니다.');
-                    var params={"manage_no":$("#manage_no").val(),"pnu":$("#pnu").val()};
-                    $.ajax({
-                           url: "/land/jisang/getAtcFileData",
-                           type: "POST",
-                           data: params,
-                       })
-                       .done(function (fragment) {
-                           $('#pnuAtcFilesDiv').replaceWith(fragment);
-                       });
-                } else {
-                    alert('파일 삭제에 실패하였습니다.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('파일 삭제 중 오류가 발생하였습니다.');
-            });
-        } else {
-            alert('삭제할 파일을 선택해 주세요.');
-        }
-    });*/
 });
 
 //보기 클릭 시 팝업 기능

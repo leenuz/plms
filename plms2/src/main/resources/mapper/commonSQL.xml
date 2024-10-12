@@ -99,6 +99,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</delete>
 	
+	<select id="selectFilePathByPaIdx" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    SELECT pa_file_path
+    FROM pnu_atcfile
+    WHERE pa_idx = #{pa_idx}::int
+	</select>
+	
+	
 	<insert id="putMemoData" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="mm_idx" keyProperty="mm_idx">
 		
 		INSERT INTO  memo_master

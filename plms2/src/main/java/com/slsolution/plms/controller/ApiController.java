@@ -862,7 +862,7 @@ public class ApiController {
         // return new ModelAndView("dbTest", "list", list);
     }
     
-    
+    // 필지 첨부파일 삭제 - pa_idx 로 DB삭제, 경로 파일 삭제
     @RequestMapping(value = "/pnuAtcDeleteIdx", method = { RequestMethod.GET, RequestMethod.POST })
     public void pnuAtcDeleteIdx(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 
@@ -883,33 +883,54 @@ public class ApiController {
         for (int i = 0; i < fsize; i++) {
             log.info("delete IDX:" + idxarr.get(i));
 
-            // DB 에서 pa_idx 로 삭제
-            HashMap params = new HashMap();
-            JSONObject jsonObject = (JSONObject) idxarr.get(i);
-            params.put("pa_idx", jsonObject.get("idx"));
-            
-            mainService.DeleteQuery("commonSQL.pnuAtcDelete", params);
+	        // DB 에서 pa_idx 로 삭제
+	        HashMap params = new HashMap();
+	        JSONObject jsonObject = (JSONObject) idxarr.get(i);
+	        params.put("pa_idx", jsonObject.get("idx"));
+	        
+	        // pa_idx로 파일 경로 조회
+	        ArrayList<HashMap> filePathResultList = mainService.selectQuery("commonSQL.selectFilePathByPaIdx", params);
+	
+	        // 첫 번째 결과 선택
+	        if (filePathResultList != null && !filePathResultList.isEmpty()) {
+	            HashMap filePathResult = filePathResultList.get(0);
+	
+	            if (filePathResult != null && filePathResult.get("pa_file_path") != null) {
+	                String paFilePath = filePathResult.get("pa_file_path").toString();
+	
+	                // 마지막 슬래시의 위치 찾기
+	                int lastSlashIndex = paFilePath.lastIndexOf('/');
 
-            // 로컬 경로에서 파일 삭제 부분.
-            // 파일 경로 생성
-            String filePath = GC.getPnuFileDataDir();
-            ; // 설정파일로 뺀다.
-            String originalFilename = jsonObject.get("fileName").toString();
-            String fileFullPath = filePath + "/" + originalFilename; // 파일 전체 경로
+	                // 끝에서 두 번째 슬래시의 위치 찾기
+	                int secondLastSlashIndex = paFilePath.lastIndexOf('/', lastSlashIndex - 1);
 
-            File file = new File(fileFullPath);
-            // 파일이 존재하는지 확인
-            if (file.exists()) {
-                // 파일 삭제
-                if (file.delete()) {
-                    // 파일 삭제 성공
-                } else {
-                    // 파일 삭제 실패시 에러
-                }
-            } else {
-                // 파일 없을때 에러
-            }
-
+	                // 두 번째 슬래시 이후의 문자열 가져오기
+	                String fileName = paFilePath.substring(secondLastSlashIndex + 1);
+	                log.info("파일 이름: " + fileName);
+	
+	                // 로컬 경로에서 파일 삭제 부분
+	                String filePath = GC.getPnuFileDataDir();
+	                String fileFullPath = filePath + "/" + fileName;
+	
+	                File file = new File(fileFullPath);
+	                if (file.exists()) {
+	                    if (file.delete()) {
+	                        log.info("파일 삭제 성공: " + fileFullPath);
+	                    } else {
+	                        log.error("파일 삭제 실패: " + fileFullPath);
+	                    }
+	                } else {
+	                    log.warn("파일이 존재하지 않음: " + fileFullPath);
+	                }
+	
+	                // DB에서 파일 정보 삭제
+	                mainService.DeleteQuery("commonSQL.pnuAtcDelete", params);
+	            } else {
+	                log.warn("파일 경로를 찾을 수 없음. pa_idx: " + jsonObject.get("idx"));
+	            }
+	        } else {
+	            log.warn("파일 경로를 찾을 수 없음. pa_idx: " + jsonObject.get("idx"));
+	        }
         }
 
         HashMap<String, Object> resultmap = new HashMap();
