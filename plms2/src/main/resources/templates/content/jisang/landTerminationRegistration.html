@@ -375,7 +375,7 @@ div.dt-filter-spacer {
 									class="notWriteInput" /></li>
 								<li class="content">
 									<button class="viewDetailButton"
-										th:onclick="openFilePopup([[${val.ja_file_path}]])">보기</button>
+										th:onclick="attachFileDownload([[${val.ja_file_path}]], [[${val.ja_file_nm}]], [[${val.ja_jisang_no}]], [[${val.ja_file_seq}]], 'jisang')">보기</button>
 								</li>
 							</ul>
 						</div>

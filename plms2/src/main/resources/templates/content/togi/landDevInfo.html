@@ -311,7 +311,7 @@
 						</ul>
 						<ul class="contents" th:each="file, iterStat : ${fileList}">
 							<li class="content">
-								<input type="text" th:placeholder="${#dates.format(file.wdate, 'yyyy-MM-dd HH:mm')}" readonly class="notWriteInput" />
+								<input type="text" th:placeholder="${file.wdate}" readonly class="notWriteInput" />
 							</li>
 							<li class="content fileNameWidth">
 								<input type="text" th:placeholder="${file.file_nm}" readonly class="notWriteInput" />
