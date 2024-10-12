@@ -460,4 +460,9 @@
 	<select id="getTogiAtcFileSeq" parameterType="java.util.HashMap" resultType="integer">
 		SELECT COALESCE(MAX(file_seq), 0)+1  FROM dosi_atcfile WHERE dosi_no=#{dosi_no};
 	</select>
+	<select id="selectDosiInfo" parameterType="HashMap" resultType="HashMap">
+		SELECT *
+		  from dosi_info
+		  where di_dosi_no = #{idx}
+	</select>
 </mapper>

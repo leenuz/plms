@@ -320,11 +320,11 @@ $(document).ready(function(){
 
 	          //  var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
 	          //  status.setFileNameSize(files[i].name,files[i].size);
-			    console.log($(obj).parent().parent().parent().html());
+			   /* console.log($(obj).parent().parent().parent().html());
 				var changeObj=$(obj).parent().parent().find("#req_doc_file"+idx).val(files[i].name);
 				console.log("--------changeObj---------------");
-				console.log(changeObj);
-	            sendFileToServer1(fd,status,idx);
+				console.log(changeObj);*/
+	            sendFileToServer1(fd,status,idx,obj);
 
 	       }
 	    }
@@ -402,7 +402,7 @@ $(document).ready(function(){
     }
 	
 	
-	function sendFileToServer1(formData,status,no)
+	function sendFileToServer1(formData,status,no,obj)
 	    {
 			var idx=$("#hiddenJisangNo").val();
 			console.log($("#hiddenJisangNo").val());
@@ -433,6 +433,9 @@ $(document).ready(function(){
 	            data: formData,
 	            success: function(data){
 	               // status.setProgress(100);
+				   var changeObj=$(obj).parent().parent().find("#req_doc_file"+no).val(data.resultData.fname);
+   						console.log("--------changeObj---------------");
+   						console.log(changeObj);
 	                console.log(data);
 	                console.log(data.resultData);
 	                //$("#status1").append("File upload Done<br>");
@@ -710,7 +713,7 @@ $(document).on("click","#radioNo",function(){
     $('#cancel_bosang_money').val('0')
     })
 
-		
+		//임시저장
 function landTerminationSave(params){
     loadingShow();
     $.ajax({
@@ -720,12 +723,12 @@ function landTerminationSave(params){
           data: JSON.stringify(params),
      })
      .done(function (fragment) {
-        loadingHide();
+      //  loadingHide();
         alert("저장이 완료 되었습니다.");
      });
 }
 
-
+//상신
 function landTerminationSangsinSave(params){
     loadingShow();
 	var url= "/land/jisang/insertJisangTerminationAdd";
