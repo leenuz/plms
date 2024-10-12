@@ -1095,12 +1095,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    LEFT JOIN (
 	        SELECT S.*
 	        FROM (
-	            SELECT RANK() OVER(PARTITION BY RPAD(PPI.pi_address_code, 10, '0'), PPI.pi_JIBUN ORDER BY PPI.pi_ISSUE_DATE DESC) AS RANK,
-	                RPAD(PPI.pi_address_code, 10, '0') AS ADDRCODE, PPI.pi_jibun as JIBUN,
-	                PPI.pi_code_depth1 as CODE_DEPTH1, PPI.pi_code_depth2 as CODE_DEPTH2, PPI.pi_code_depth3 as CODE_DEPTH3,
-	                PPI.pi_registed_yn as REGISTED_YN, PPI.pi_permitted_yn as PERMITTED_YN, PPI.pi_pnu as PNU, PPI.pi_del_flag as DEL_FLAG
-	            FROM POTENTIAL_ISSUE PPI
-	            WHERE PPI.pi_DEL_FLAG != 'Y'
+	            SELECT RANK() OVER(PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
+	                RPAD(PPI.addrcode, 10, '0') AS ADDRCODE, PPI.jibun as JIBUN,
+	                PPI.code_depth1 as CODE_DEPTH1, PPI.code_depth2 as CODE_DEPTH2, PPI.code_depth3 as CODE_DEPTH3,
+	                PPI.registed_yn as REGISTED_YN, PPI.permitted_yn as PERMITTED_YN, PPI.pnu as PNU, PPI.del_flag as DEL_FLAG
+	            FROM plms_POTENTIAL_ISSUE PPI
+	            WHERE PPI.DEL_FLAG != 'Y'
 	            LIMIT 1
 	        ) S WHERE S.RANK = 1
 	    ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
