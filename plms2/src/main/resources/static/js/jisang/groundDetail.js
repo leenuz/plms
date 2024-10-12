@@ -601,7 +601,7 @@ $(document).on("click",".addBtn",function(){
 
 
 // 토지개발대상 상세보기 버튼
-$(document).on('click', '.viewDetailButton', function() {
+$(document).on('click', '.depth3 .viewDetailButton', function() {
     var pnu = $(this).data('pnu');  // data-pnu 속성 값 가져오기
     console.log("pnu: ", pnu);
 

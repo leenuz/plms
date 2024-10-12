@@ -31,8 +31,8 @@ public class SchedulerController {
 	    private boolean hasRun = false;
 	 
 	 
-	 @Scheduled(fixedRate = 5000) // 5초마다 실행	
-	//@PostConstruct  //시작후 한번만 실행
+	 //@Scheduled(fixedRate = 5000) // 5초마다 실행	
+	@PostConstruct  //시작후 한번만 실행
 	public void jobs() throws Exception {
 		
 		
