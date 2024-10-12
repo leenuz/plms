@@ -2545,8 +2545,8 @@ SET
     cancle_bosang_money = replace(#{CANCLE_BOSANG_MONEY}, ',', '') :: numeric,
     cancle_name = nullif(#{NAME},''),
     cancle_empcd = nullif(#{EMPCD},''),
-    chuideuk_money = nullif(#{CHUIDEUKMONEY},'')::numeric,
-    gammoney = nullif(#{GAMMONEY},'')::numeric,
+    chuideuk_money = nullif(replace(#{CHUIDEUKMONEY},',',''),'')::numeric,
+    gammoney = nullif(replace(#{GAMMONEY},',',''),'')::numeric,
     remainder_money = nullif(replace(#{REMAINDERMONEY},',',''),'')::numeric,
     cancle_status = #{CANCLE_STATUS},
     account_yn=nullif(#{ACCOUNT_YN},'')
@@ -4503,7 +4503,7 @@ SELECT count(*)
 	
 	<update id="updateJisangTerminationDockey" parameterType="HashMap">
 		UPDATE JISANG_TERMINATION
-		SET jt_DOCKEY = #{DOCKEY}
-		WHERE jt_JISANG_NO = #{JISANGNO}
+		SET DOCKEY = #{DOCKEY}
+		WHERE JISANG_NO = #{JISANGNO}
 	</update>
 </mapper>
