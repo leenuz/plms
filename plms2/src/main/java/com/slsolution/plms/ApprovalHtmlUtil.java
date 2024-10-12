@@ -1776,15 +1776,18 @@ log.info("kibon_map:"+kibon_map);
 		sbHtml.append("			 </table>\n");
 
 		sbHtml.append("			 <br>		\n");
-		sbHtml.append("			 <!-- *첨부 파일 -->\n");
-		sbHtml.append("			 <h4>첨부 파일</h4>\n");
+		sbHtml.append("			 <!-- *필수 첨부 서류 -->\n");
+		sbHtml.append("			 <h4>필수 첨부 서류</h4>\n");
 		sbHtml.append("			 <table class=\"base5\">\n");
 		sbHtml.append("			 	<colgroup>\n");
-		sbHtml.append("			 		<col style=\'width:80%\' />\n");
-		sbHtml.append("			 		<col style=\'width:20%\' />\n");
+		sbHtml.append("        <col style=\"width:120px\" />                \n");
+		sbHtml.append("        <col style=\"width:340px\" />                \n");
+		sbHtml.append("        <col style=\"width:230px\" />                \n");
+		sbHtml.append("        <col style=\"width:230px\" />                \n");
 		sbHtml.append("			 	</colgroup>\n");
 		sbHtml.append("			 	<thead>\n");
 		sbHtml.append("			 		<tr>\n");
+		sbHtml.append("            <th scope=\"col\" colspan=\"2\">파일내용</th>                 \n");
 		sbHtml.append("			 			<th scope=\"col\">파일명</th>\n");
 		sbHtml.append("			 			<th scope=\"col\">파일보기</th>\n");
 		sbHtml.append("				 	</tr>\n");
@@ -1793,6 +1796,25 @@ log.info("kibon_map:"+kibon_map);
 		if (file_list.size() > 0) {
 			for (int i = 0; i < file_list.size(); i++) {
 				sbHtml.append("			 		<tr>\n");
+				
+				if (0 == i) {
+					sbHtml.append("            <td rowspan=\"8\">필수 증빙서류</td>     \n");
+					sbHtml.append("            <td style=\"text-align:left;\">1. 등기사항 전부 증명서</td>    \n");
+				} else if (1 == i) {
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">2. 토지대장</td>                   \n");
+				} else if (2 == i) {
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">3. 지적도(관로표기)</td>     \n");
+				} else if (3 == i) {
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">4. 현장사진</td>                  \n");
+				} else if (4 == i) {
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">5. 검토의견서</td>          \n");
+				}else if (5 == i) {
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">6. 도면,민원인 관계서류 등</td>          \n");
+				}else if (6 == i) {
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">7. 지상권해지 승낙서/위임장</td>          \n");
+				}else if (7 == i) {
+					sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">8. 지상권 해지요청 공문서(신청서)</td>          \n");
+				}
 				sbHtml.append("			 			<td>" + file_map.get("FILE_NM" + i) + "</td>\n");
 				String str_FILE_PATH = str_FILE_URL + file_map.get("FILE_PATH" + i);
 				sbHtml.append("            <td>                \n");

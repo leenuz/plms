@@ -2529,8 +2529,8 @@ VALUES (
     replace(#{CANCLE_BOSANG_MONEY}, ',', '') :: numeric,
     nullif(#{NAME},''),
     nullif(#{EMPCD},''),
-    nullif(#{CHUIDEUKMONEY},'')::numeric,
-    nullif(#{GAMMONEY},'')::numeric,
+    nullif(replace(#{CHUIDEUKMONEY},',',''),'')::numeric,
+    nullif(replace(#{GAMMONEY},',',''),'')::numeric,
     nullif(replace(#{REMAINDERMONEY},',',''),'')::numeric,
     #{CANCLE_STATUS},
     nullif(#{ACCOUNT_YN},'')
@@ -2713,7 +2713,7 @@ WHERE
 		) VALUES (
 		#{JISANG_NO}
 		,#{PYEONIB_AREA}::numeric
-		,nullif(#{SET_MONEY},'')::numeric
+		,nullif(replace(#{SET_MONEY},',',''),'')::numeric
 		,#{JASAN_NO}
 		,#{REP_JISANG_NO}
 		,#{MERGE_REASON}
@@ -2752,7 +2752,7 @@ WHERE
 		#{jimok_text},
 		#{jijuk_area},
 		#{pyeonib_area},
-		#{set_money},
+		replace(#{set_money},',',''),
 		#{jasan_no},
 		#{REP_JISANG_NO}
 		)
@@ -4505,5 +4505,94 @@ SELECT count(*)
 		UPDATE JISANG_TERMINATION
 		SET DOCKEY = #{DOCKEY}
 		WHERE JISANG_NO = #{JISANGNO}
+	</update>
+	
+	
+	<!-- 지상권 해지 전자결재 결과값 확인쿼리 -->
+	<select id="selectApprovalTermination" parameterType="HashMap" resultType="HashMap">
+SELECT B.DOCKEY
+       , A.jm_jisang_no as JISANG_NO
+       , C.pa_status as STATUS
+       , A.jm_pnu as PNU
+       , A.jm_addrcode as ADDRCODE
+       , A.jm_jibun as JIBUN
+       , TO_CHAR(B.CANCLE_DATE,'YYYY-MM-DD') AS CANCLE_DATE
+       , B.cancle_empcd as CANCLE_EMPCD
+       , B.cancle_name as CANCLE_NAME
+  FROM JISANG_MASTER        A
+       , JISANG_TERMINATION   B
+       , PLMS_APPROVAL            C
+ WHERE A.jm_JISANG_NO = B.JISANG_NO
+   AND ( A.jm_CANCLE_YN != 'Y'
+    OR A.jm_CANCLE_YN IS NULL )
+   AND B.DOCKEY IS NOT NULL
+   AND C.pa_DOCKEY = B.DOCKEY
+   AND C.pa_STATUS = 'C'
+	</select>
+	
+	<update id="UpdateJisangCancleDate" parameterType="HashMap">
+		UPDATE JISANG_TERMINATION 
+		SET
+		CANCLE_STATUS = #{CANCLE_STATUS}
+		WHERE JISANG_NO = #{JISANG_NO}
+	</update>
+	<update id="UpdateJisangCancleYN" parameterType="HashMap">
+		UPDATE JISANG_MASTER 
+		SET
+		CANCLE_YN = #{CANCLE_YN}
+		, CANCLE_DATE = TO_DATE( #{CANCLE_DATE} ,'YYYY-MM-DD')
+		, CANCLE_EMPCD = #{CANCLE_EMPCD}
+		, CANCLE_NAME = #{CANCLE_NAME}
+		WHERE JISANG_NO = #{JISANG_NO}
+	</update>
+	
+	<update id="deletePnuIssueForPnu" parameterType="HashMap">
+	<![CDATA[ 
+UPDATE PLMS_POTENTIAL_ISSUE
+   SET DEL_FLAG = 'Y'
+     , DEL_COMMENT = #{DEL_COMMENT}
+ WHERE ( PNU = #{PNU}
+    OR (PNU = '99999'
+       AND ADDRCODE = #{ADDRCODE}
+       AND JIBUN = #{JIBUN}) )
+	]]>
+	</update>
+	
+	
+	<!-- 지상권 분할 전자결재 결과값 확인쿼리 -->
+	<select id="selectApprovalbunhal" parameterType="HashMap" resultType="HashMap">
+   SELECT A.jm_jisang_no as JISANG_NO
+       , C.pa_status as STATUS
+       , B.jb_dockey as DOCKEY
+       , C.pa_usernm as USERNM
+       , A.jm_pnu as PNU
+       , A.jm_addrcode as ADDRCODE
+       , A.jm_jibun as JIBUN
+  FROM JISANG_MASTER   A
+       , JISANG_BUNHAL   B
+       , PLMS_APPROVAL       C
+ WHERE A.jm_JISANG_NO = B.jb_JISANG_NO
+   AND B.jb_DOCKEY = C.pa_DOCKEY
+   AND C.pa_STATUS = 'C'
+   AND B.jb_BUNHAL_COMPLETE = 'N'
+	</select>
+	<update id="updateJisangJibun" parameterType="HashMap">
+		UPDATE
+		JISANG_MASTER
+		SET
+		SIDO_NM = #{SIDO_NM},
+		SGG_NM = #{SGG_NM},
+		EMD_NM = #{EMD_NM},
+		RI_NM = #{RI_NM},
+		JIBUN = #{JIBUN},
+		ADDRCODE = #{ADDRCODE},
+		JIJUK_AREA = nullif(#{JIJUK_AREA},'')::numeric,
+		JASAN_NO = #{JASAN_NO},
+		PYEONIB_AREA = nullif(#PYEONIB_AREA#,'')::numeric,
+		JIMOK_TEXT = #{JIMOK_TEXT},
+		PNU = #{PNU}
+		WHERE
+		JISANG_NO = #{orgJisnagNo}
+
 	</update>
 </mapper>

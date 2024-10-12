@@ -4797,6 +4797,7 @@ log.info("data:"+data.get(0));
 			// 임시저장시 대표지상권이 변경 됬을시 변경되기전 대표지상권으로 임시저장내용 삭제
 			param.put("REP_JISANG_NO", ("".equals(CommonUtil.nvl(mainTmpJisangNo)) ? mainJisangNo : mainTmpJisangNo));
 			//Database.getInstance().delete("Json.deleteJisangMergeTmp", param);
+			mainService.DeleteQuery("jisangSQL.deleteJisangMergeTmp", param);
 
 			// 임시저장
 			for(int i=0;i<MergeList.length();i++) {
