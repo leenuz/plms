@@ -216,6 +216,51 @@ public class staticsController {
 		response.getWriter().flush();
 	}
 	
+	//권리확보현황 마감관리 조회
+	public void selectStatisticsDeadlineList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String SAVE_YEAR = parser.getString("SAVE_YEAR", "");
+		String SAVE_QUARTER = parser.getString("SAVE_QUARTER", "");
+		String PROCESS_DATE = parser.getString("PROCESS_DATE", "");
+		String pageNum = parser.getString("pageNum", ""); // 페이지 번호
+		String pageCnt = parser.getString("pageCnt", ""); // 한 페이지 갯수
+
+		String str_result = "Y";
+		ArrayList dataList = new ArrayList();
+		Integer totalcnt = 0;
+		try {
+
+			HashMap params = new HashMap();
+			params.put("SAVE_YEAR", SAVE_YEAR);
+			params.put("SAVE_QUARTER", SAVE_QUARTER);
+			params.put("PROCESS_DATE", PROCESS_DATE);
+			params.put("PAGE_NUM", pageNum);
+			params.put("PAGE_CNT", pageCnt);
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectStatisticsDeadlineData", params);
+			totalcnt = (Integer) mainService.selectCountQuery("staticSQL.selectStatisticsDeadlineDataCnt", params);
+
+		} catch (Exception e) {
+			str_result = "N";
+			e.printStackTrace();
+		}
+		HashMap map = new HashMap();
+
+		map.put("message", str_result);
+		map.put("dataList", dataList);
+		map.put("TOTALCNT", totalcnt);
+
+		JSONObject jo = new JSONObject(map);
+
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+	
+	
 	// 통계> 권리확보현황통계> 토지 관리 현황(권리확보현황) 조회하기
 	@PostMapping(path="/selectTogiMgtStateList")
 		public void selectTogiMgtStateList(HttpServletRequest request, HttpServletResponse response) throws Exception {

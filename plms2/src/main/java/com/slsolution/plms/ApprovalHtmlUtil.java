@@ -995,6 +995,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 //			}
 //			file_list = mainService.selectQuery("goverSQL.selectGoverRowDetail_FilesObject", params);
 			if (fileList.length()>0) file_list = mainService.selectQuery("goverSQL.selectGoverRowDetail_FilesObjectFromIdx", params);
+			//if (fileList.length()>0) file_list = mainService.selectQuery("goverSQL.selectGoverRowDetail_FilesObject", params);
 			log.info("fileList:"+fileList);
 //			System.out.println("$$$ params=" + params);
 			log.info("list:"+list.get(0));
@@ -3216,6 +3217,9 @@ log.info("jisangMergeList:"+jisangMergeList);
 			//log.info("mapList:"+map_list.get(0));
 			//detailMap=map_list.get(0);
 //			System.out.println("$$$ params=" + params);
+			log.info("map_list:"+map_list);
+			log.info("pnu_list:"+pnu_list);
+			log.info("file_list:"+file_list);
 
 			if (pnu_list.size() > 0) {
 				for (int i = 0; i < pnu_list.size(); i++) {
@@ -3330,7 +3334,7 @@ log.info("dataMap:"+detailMap);
 		sbHtml.append("			 	</tr>	");
 		sbHtml.append("			 </tbody>		");
 		sbHtml.append("			 </table>		");
-		sbHtml.append("			 <br>		");
+		sbHtml.append("			 <br>		\n");
 		sbHtml.append("			 <!-- *민원 토지 -->");
 		sbHtml.append("			 <h4>민원 토지</h4>");
 		sbHtml.append("			 <table class=\'base4\'>");
@@ -3344,7 +3348,7 @@ log.info("dataMap:"+detailMap);
 		sbHtml.append("			 			<th scope=\'row\'>주소</th>");
 		sbHtml.append("			 			<th scope=\'row\'>등기여부</th>");
 		sbHtml.append("			 			<th scope=\'row\'>계약여부</th>");
-		sbHtml.append("			 		</tr>");
+		sbHtml.append("			 		</tr>\n");
 		if (pnu_list.size() > 0) {
 			for (int i = 0; i < pnu_list.size(); i++) {
 				sbHtml.append("			 		<tr>");
@@ -3357,7 +3361,7 @@ log.info("dataMap:"+detailMap);
 				sbHtml.append("			 			<td class=\'inner_tag\'>");
 				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("permitted_yn") + "</span>");
 				sbHtml.append("			 			</td>");
-				sbHtml.append("			 		</tr>");
+				sbHtml.append("			 		</tr>\n");
 			}
 		} else {
 			sbHtml.append("			 		<tr>");
@@ -3370,7 +3374,7 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			 			<td class=\'inner_tag\'>");
 			sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
 			sbHtml.append("			 			</td>");
-			sbHtml.append("			 		</tr>");
+			sbHtml.append("			 		</tr>\n");
 		}
 		sbHtml.append("			 	</tbody>");
 		sbHtml.append("			 </table>");
