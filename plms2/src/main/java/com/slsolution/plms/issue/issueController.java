@@ -477,17 +477,17 @@ public class issueController {
 //		String SANGSIN_FLAG = parser.getString("SANGSIN_FLAG", "");
 //
 //		Integer FILE_DEL_LENGTH = parser.getInt("FILE_DEL_LENGTH");
-		String fileseq = requestParamObj.getString("fileseq") == null ? "" : requestParamObj.getString("fileseq"); // 파일
+		String fileseq = (!requestParamObj.has("fileseq") || requestParamObj.getString("fileseq") == null) ? "" : requestParamObj.getString("fileseq"); // 파일
 																													// seq
-		String MW_SEQ = requestParamObj.getString("MW_SEQ");
+		String MW_SEQ = requestParamObj.has("MW_SEQ")?requestParamObj.getString("MW_SEQ"):"";
 		String MW_TITLE = requestParamObj.getString("MW_TITLE");
 		String MW_CONTENTS = requestParamObj.getString("MW_CONTENTS");
 		String MW_OCCUR_DATE = requestParamObj.getString("MW_OCCUR_DATE");
 		String JISA = requestParamObj.getString("JISA");
-		String TOJI_LENGTH = requestParamObj.getString("TOJI_LENGTH");
+		String TOJI_LENGTH = requestParamObj.has("TOJI_LENGTH")?requestParamObj.getString("TOJI_LENGTH"):"0";
 		String SANGSIN_FLAG = requestParamObj.getString("SANGSIN_FLAG");
 
-		Integer FILE_DEL_LENGTH = requestParamObj.getInt("FILE_DEL_LENGTH");
+		//Integer FILE_DEL_LENGTH = requestParamObj.getInt("FILE_DEL_LENGTH");
 		JSONArray tojiList = requestParamObj.getJSONArray("tojiList");
 
 		ArrayList list = null;
@@ -534,21 +534,21 @@ public class issueController {
 				mainService.InsertQuery("issueSQL.updateMinwonMaster", params);
 
 				// 삭제할 첨부파일 처리
-				if (FILE_DEL_LENGTH > 0) {
-					for (int i = 0; i < FILE_DEL_LENGTH; i++) {
-						mwSeq = Integer.parseInt(MW_SEQ);
-						params.put("MW_SEQ", mwSeq);
-						params.put("SEQ", parser.getString("FILE_DEL_SEQ" + i, ""));
-//						Database.getInstance().update("Json.deleteMinwonFile", params);
-						mainService.DeleteQuery("issueSQL.deleteMinwonFile", params);
-					}
-				}
+//				if (FILE_DEL_LENGTH > 0) {
+//					for (int i = 0; i < FILE_DEL_LENGTH; i++) {
+//						mwSeq = Integer.parseInt(MW_SEQ);
+//						params.put("MW_SEQ", mwSeq);
+//						params.put("SEQ", parser.getString("FILE_DEL_SEQ" + i, ""));
+////						Database.getInstance().update("Json.deleteMinwonFile", params);
+//						mainService.DeleteQuery("issueSQL.deleteMinwonFile", params);
+//					}
+//				}
 
 			}
 
 			// 첨부파일 등록
-//			params = new HashMap();
-//			params.put("MW_SEQ", mwSeq);
+			params = new HashMap();
+			params.put("MW_SEQ", mwSeq);
 //			params.put("FILESEQ", fileseq);
 //			Database.getInstance().update("Json.updateMinwonFileKey", params);
 
@@ -566,23 +566,24 @@ public class issueController {
 				params.put("MW_SEQ", mwSeq);
 				params.put("MINWON_SEQ", mwSeq);
 				params.put("PNU", obj.getString("pnu"));
-				params.put("ADDRCODE", (obj.getString("addrcode") == null || obj.getString("addrcode") == "null") ? ""
-						: obj.getString("addrcode"));
+				params.put("ADDRCODE", (obj.getString("bcode") == null || obj.getString("bcode") == "null") ? ""
+						: obj.getString("bcode"));
 				params.put("SIDO_NM", obj.getString("sido_nm"));
 				params.put("SGG_NM", obj.getString("sgg_nm"));
 				params.put("EMD_NM", obj.getString("emd_nm"));
 				params.put("RI_NM", obj.getString("ri_nm"));
 				params.put("JIBUN", obj.getString("jibun"));
 				params.put("JIBUN_FULL", obj.getString("jibun_full"));
-				params.put("REP_YN", obj.getString("rep_yn"));
+				params.put("REP_YN", obj.getString("REP_YN"));
 				params.put("REGISTED_YN",
-						(obj.getString("comple_yn") == null || obj.getString("comple_yn") == "null") ? ""
-								: obj.getString("comple_yn"));
+						(obj.getString("REGISTED_YN") == null || obj.getString("REGISTED_YN") == "null") ? "N"
+								: obj.getString("REGISTED_YN"));
 				params.put("PERMITTED_YN",
-						(obj.getString("permitted_yn") == null || obj.getString("permitted_yn") == "null") ? ""
-								: obj.getString("permitted_yn"));
+						(obj.getString("PERMITTED_YN") == null || obj.getString("PERMITTED_YN") == "null") ? "N"
+								: obj.getString("PERMITTED_YN"));
 				params.put("TOJI_TYPE", "");
-				params.put("REG_ID", "test");
+				//params.put("REG_ID", "test");
+				params.put("REG_ID", String.valueOf(request.getSession().getAttribute("userName")));
 				// params.put("REG_ID",
 				// String.valueOf((request.getSession().getAttribute("userName")=="null")?"":request.getSession().getAttribute("userName")));
 //				params.put("PNU", parser.getString("PNU_" + i, ""));
@@ -659,7 +660,7 @@ public class issueController {
 //					ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDocInfo", map);
 					ArrayList echolist = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDocInfo", map);
 					if (null != echolist && echolist.size() > 0) {
-						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("pa_out_url"));
 						System.out.println("str_EchoNo=====" + str_EchoNo);
 						map.put("OUT_URL", str_EchoNo);
 					}

@@ -336,7 +336,8 @@ FROM (
 		       A.mp_reg_id as REG_ID,
 		       TO_CHAR(A.mp_COMP_DATE, 'YYYY-MM-DD') AS COMP_DATE,
 		       B.JISANG_STATUS,
-		       B.JISANG_NO
+		       B.JISANG_NO,
+		       B.juso as addr
 		FROM MINWON_PNU A
 		LEFT JOIN JIJUK_2024 B ON A.mp_PNU = B.PNU
 		WHERE A.mp_MINWON_SEQ = ${MW_SEQ}
@@ -486,8 +487,8 @@ ORDER BY A.PNU ASC LIMIT 1
 		INSERT INTO MINWON_MASTER (
 		        mm_MW_SEQ,
 		        mm_MW_TITLE,
-		        mm_CONTENTS,
-		        mm_OCCUR_DATE,
+		        mm_mw_CONTENTS,
+		        mm_mw_OCCUR_DATE,
 		        mm_JISA,
 		        mm_REG_DATE,
 		        mm_REG_ID,
@@ -507,7 +508,7 @@ ORDER BY A.PNU ASC LIMIT 1
 	<update id="updateMinwonMaster" parameterType="HashMap">
 UPDATE MINWON_MASTER
    SET mm_MW_TITLE = #{MW_TITLE}
-     , mm_OCCUR_DATE = TO_DATE(#{MW_OCCUR_DATE}, 'yyyy-MM-dd')
+     , mm_mw_OCCUR_DATE = TO_DATE(#{MW_OCCUR_DATE}, 'yyyy-MM-dd')
      , mm_MW_CONTENTS = #{MW_CONTENTS}
      , mm_JISA = #{JISA}
  WHERE mm_MW_SEQ = #{MW_SEQ}

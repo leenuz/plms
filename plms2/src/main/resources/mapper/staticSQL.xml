@@ -852,5 +852,61 @@ SELECT TTT.TYPE,
 		ORDER BY mm.mm_jisa
 	
 	</select>
+	
+	<!-- 권리확보현황 마감관리 조회 -->
+	<select id="selectStatisticsDeadlineData" parameterType="HashMap" resultType="HashMap">
+    <![CDATA[
+    SELECT T.* 
+    FROM (
+        SELECT ROW_NUMBER() OVER (ORDER BY SEQ DESC) AS RN,
+               SEQ,
+               SAVE_YEAR,
+               SAVE_QUARTER,
+               SAVE_DATE,
+               SAYUJI_N,
+               SAYUJI_Y_Y,
+               SAYUJI_Y_N,
+               SAYUJI_TOTAL,
+               GUKYUJI_J,
+               GUKYUJI_Y,
+               GUKYUJI_N,
+               GUKYUJI_TOTAL,
+               PROCESS_DATE,
+               FILE_PATH,
+               FILE_NAME
+          FROM JISANG_STAT 
+         WHERE 1 = 1 
+    ]]>
+    <if test="SAVE_YEAR != null and SAVE_YEAR != ''">
+        AND SAVE_YEAR = #{SAVE_YEAR}
+    </if>
+    <if test="SAVE_QUARTER != null and SAVE_QUARTER != ''">
+        AND SAVE_QUARTER = #{SAVE_QUARTER}
+    </if>
+    <![CDATA[
+         ORDER BY SEQ DESC
+    ) T
+    WHERE 1 = 1 
+    ]]>
+    <if test="PAGE_NUM != null and PAGE_NUM != ''">
+        AND T.RN BETWEEN ((#{PAGE_CNT} * (#{PAGE_NUM} - 1)) + 1) AND (#{PAGE_CNT} * #{PAGE_NUM})
+    </if>
+</select>
+
+<select id="selectStatisticsDeadlineDataCnt" parameterType="HashMap" resultType="Integer">
+    <![CDATA[
+    SELECT COUNT(*) 
+      FROM JISANG_STAT 
+     WHERE 1 = 1 
+    ]]>
+    <if test="SAVE_YEAR != null and SAVE_YEAR != ''">
+        AND SAVE_YEAR = #{SAVE_YEAR}
+    </if>
+    <if test="SAVE_QUARTER != null and SAVE_QUARTER != ''">
+        AND SAVE_QUARTER = #{SAVE_QUARTER}
+    </if>
+</select>
+
+
 
 </mapper>

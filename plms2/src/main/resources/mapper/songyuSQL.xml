@@ -3128,7 +3128,7 @@ FROM (
         GPI.LPERMITIONYN,
         GPI.LOCCUP_FEE,
         
-        GPI.lperpay as LPREPAY
+        GPI.lprepay
     FROM JIJUK_2024 JIJUK_MST
     LEFT JOIN (
               SELECT 
@@ -3173,7 +3173,7 @@ FROM (
                 ROW_NUMBER() OVER (PARTITION BY js_JISANG_NO ORDER BY js_JISANG_NO ASC) AS ROW_IDX
                 FROM JISANG_SOUJA
                 GROUP BY js_JISANG_NO, js_SOUJA_NAME
-            ) WHERE ROW_IDX = 1
+            ) sub1 WHERE ROW_IDX = 1
         ) JS ON JM.jm_jisang_no= JS.js_JISANG_NO
         WHERE (jm.jm_cancle_yn IS NULL OR jm.jm_cancle_yn != 'Y')
         
@@ -3264,7 +3264,7 @@ FROM (
                 ROW_NUMBER() OVER (PARTITION BY ns_NOTSET_NO ORDER BY ns_NOTSET_NO ASC) AS ROW_IDX
                 FROM NOTSET_SOUJA
                 GROUP BY ns_NOTSET_NO, ns_SOUJA_NAME
-            ) WHERE ROW_IDX = 1
+            ) sub2 WHERE ROW_IDX = 1
         ) NS ON NM.nm_NOTSET_NO = NS.ns_NOTSET_NO
         WHERE (NM.nm_DEL_FLAG = 'N' OR NM.nm_del_flag IS NULL)
 
@@ -3327,7 +3327,7 @@ FROM (
             WHERE PPI.pi_DEL_FLAG != 'Y'
         ) S
         WHERE S.RANK = 1
-    ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.pi_address_code AND JOIN_MST.JIBUN = PPI.pi_JIBUN
+    ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.addrcode AND JOIN_MST.JIBUN = PPI.pi_JIBUN
     LEFT JOIN GOVER_POTENTIAL_ISSUE GPI ON JOIN_MST.MASTER_NO = GPI.GOVER_NO AND GPI.DEL_FLAG != 'Y'
     
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRCODE)" >
@@ -3351,10 +3351,11 @@ FROM (
                  
     
     
-    
     ORDER BY RN
 ) T
 WHERE 1 = 1
+
+		
 
 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PAGE_NUM)" >
 			AND T.RN BETWEEN (${PAGE_CNT}*(${PAGE_NUM}-1) + 1) AND (${PAGE_CNT}*${PAGE_NUM}))
