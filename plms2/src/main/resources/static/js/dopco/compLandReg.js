@@ -439,7 +439,6 @@ $(document).on("click",".registBtn",function(){
        /* var json = JSON.stringify(formSerializeArray);
            console.log("----------jsonobj------------");
            console.log(json); // JSON 문자열 출력*/
-         return;
        url="/land/dopco/insertDopcoList"; 
 	   $.ajax({
 	   			
@@ -751,12 +750,10 @@ $(document).ready(function() {
 
 	 $(document).on("click","#deleteFileBtn",function(){
 
-     	const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
+     	const clickedAttachFiles = document.querySelectorAll('input[name="landRegistration_attachFile"]:checked');
      	console.log(clickedAttachFiles);
-     	console.log(uploadFiles);
      	for(var i=0;i<clickedAttachFiles.length;i++){
      		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
-     		console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
      		$(delEle).remove();
 
 

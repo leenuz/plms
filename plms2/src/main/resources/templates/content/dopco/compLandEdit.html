@@ -257,7 +257,7 @@
                                             </th:block>
                                         </select>
                                     </div>
-                                    <section class="customSelectBox">
+                                    <section class="customSelectBox"> 
                                         <button class="customSelectView" th:text="${data.jimok_text}">선택</button>
 
                                         <ul class="customSelectBtns"></ul>
@@ -419,12 +419,12 @@
                         </div>
                     </div>
 
-                    <div class="fileUploadWrap">
-                        <div class="fileUploadBox">
-                            <img src="/assets/media/menu05/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
-                            <p>파일을 마우스로 끌어오세요.</p>
-                        </div>
-                    </div>
+					<div class="fileUploadWrap">
+						<div class="fileUploadBox">
+							<img src="/assets/media/menu05/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
+							<p>파일을 마우스로 끌어오세요.</p>
+						</div>
+					</div>
                     <div class="contWrap">
                         <div class="depth1" id="fileListDiv">
                             <ul class="titles" id="fileTitleUl">
@@ -436,6 +436,22 @@
                                 </li>
                                 <li class="title02">파일명</li>
                             </ul>
+                            <ul class="contents" id="fileListUl" th:each="file, iterStat : ${file_list}">
+								<li class="content01 content checkboxWrap">
+									<input type="hidden" name="idx" th:id="'idx'" th:value="${file.idx}">
+									<input type="hidden" name="seq" th:id="'seq'" th:value="${file.seq}">
+									<input type="hidden" name="file_seq" th:id="'file_seq'" th:value="${file.file_seq}">
+									<input type="hidden" name="file_path" th:id="'file_path'" th:value="${file.file_path}">
+									<input type="hidden" name="newFileCheckYn" value="N">
+									<input type="checkbox" th:id="'compLandEdit_attachFile' + ${iterStat.index + 1}"
+										name="compLandEdit_attachFile" />
+									<label th:for="'compLandEdit_attachFile' + ${iterStat.index + 1}"></label>
+								</li>
+								<li class="content02">
+									<input type="text" th:value="${file.file_nm}" id="filename" readonly class="notWriteInput" />
+								</li>
+							</ul>
+							
                         </div>
                     </div>
                     <div class="btnWrap">
@@ -444,7 +460,7 @@
                 </section>
                 <div class="finalBtnBox btnWrap">
                     <button class="prevBtn finalBtn" onclick="history.back()">이전</button>
-                    <button class="registBtn finalBtn">등록</button>
+                    <button class="registBtn finalBtn" >등록</button>
                 </div>
             </form>
         </main>

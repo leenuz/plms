@@ -282,9 +282,13 @@
                     <input type="text" th:value="${val.file_nm}" class="notWriteInput" readonly />
                   </li>
                   <li class="content btnsWrap smallWidth">
-                    <button class="fileDownloadBtn">
-                      다운로드 <span class="downloadIcon"></span>
+					<a href="javascript:void(0);" class="viewDetailButton lightBlueBtn"
+							th:data-info="${val}"
+							target="_blank"
+							th:onclick="attachFileDownload([[${val.file_path}]], [[${val.file_nm}]], [[${val.dopco_no}]], [[${val.file_seq}]], 'dopco')">
+                    <button class="fileDownloadBtn">다운로드<span class="downloadIcon"></span>
                     </button>
+                    </a>
                   </li>
                 </ul>
                 <ul class="contents" style="justify-content:center" th:if="${file_list == null || file_list.isEmpty()}">
@@ -378,11 +382,15 @@
         <button class="editBtn finalBtn" th:if="${isCancel == 'Y'}">
           <a href="/land/dopco/compLandDispReg" th:href="'/land/dopco/compLandDispReg?idx=' + ${data.idx} + '&dopcoNo=' + ${data.dopco_no}">등록</a>
         </button>
-        <button class="printBtn finalBtn">출력</button>
+        <button class="printBtn finalBtn" onclick="commonCurrentPagePrint('compLandInfo')">출력</button>
       </div>
     </main>
   </div>
   <!-- <script type="module" src="/components/surfaceMain.js"></script> -->
-
+	<script>
+		function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
+			commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
+		}
+	</script>
 </th:block>
 </html>

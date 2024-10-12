@@ -390,55 +390,7 @@ const compLandRegFileEvent = () => {
             }
         }
     })
-
-    // 전체 삭제 버튼
-    const allDeleteFileBtn = fileUploadAfter.querySelector('.allDeleteFileBtn');
-
-    allDeleteFileBtn.addEventListener('click', function () {
-        const nowAllContents = fileUploadAfter.querySelectorAll('.contents')
-        nowAllContents.forEach((contents) => {
-            contents.remove();
-        })
-
-        compLandReg_myPcFiles.value = '';
-
-        // 값 잘 사라졌는지 확인
-        console.log(compLandReg_myPcFiles.value);
-
-        if (compLandReg_myPcFiles.files.length == 0) {
-            compLandReg_myPcFiles.value = '';
-            defaultFileUploadWrap.forEach((wrap) => {
-                wrap.classList.remove('active');
-            })
-            defaultFileUploadWrap[0].classList.add('active');
-            fileSaveBtn.classList.remove('active');
-        }
-    })
-
-    // 용량 크기 변환하는 함수
-    function byteTransform(bytes) {
-        const dataSize = ['Bytes', 'KB', 'MB', 'GB', 'TB']
-
-        if (bytes === 0) return 'not available';
-
-        const d = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
-        if (d === 0) return `${bytes} ${dataSize[d]}`;
-        return `${(bytes / (1024 ** d)).toFixed(1)} ${dataSize[d]}`;
-    }
-
-    // 파일 삭제처리 하는 함수
-    const removeFile = (fileNameToRemove) => {
-        const filesArray = Array.from(compLandReg_myPcFiles.files);
-        const newDataTransfer = new DataTransfer();
-        filesArray.forEach(file => {
-            if (file.name !== fileNameToRemove) {
-                newDataTransfer.items.add(file);
-            }
-        });
-        compLandReg_myPcFiles.files = newDataTransfer.files; // 새로운 files 설정
-    };
 }
-
 //compLandRegFileEvent();
 
 // check박스 체크되었을 때
@@ -557,13 +509,36 @@ $(document).on("click", ".registBtn", function () {
         console.log(deptObj);
         rightDatas.push(deptObj);
     }
-
+	
+	const attachFileUls = document.querySelectorAll('input[name="compLandEdit_attachFile"]');
+		console.log(attachFileUls);
+		
+		let files = new Array();
+		for(var i = 0; i < attachFileUls.length; i++){
+			let fileInfo = {};
+			let fname = $(attachFileUls[i]).parent().parent().find("#filename").val();
+			let idx = $(attachFileUls[i]).prev().prev().prev().prev().prev().val();
+			let seq = $(attachFileUls[i]).prev().prev().prev().prev().val();
+			let file_seq = $(attachFileUls[i]).prev().prev().prev().val();
+			let file_path = $(attachFileUls[i]).prev().prev().val();
+			let checkYn = $(attachFileUls[i]).prev().val();
+			fileInfo.idx = idx;
+			fileInfo.seq = seq;
+			fileInfo.file_seq = file_seq;
+			fileInfo.file_path = file_path;
+			fileInfo.fname = fname;
+			fileInfo.newFileCheckYn = checkYn;
+			files.push(fileInfo);
+		}
+		dataObj.files = files;
+	
     dataObj.rightDatas = rightDatas;
     dataObj.gubun = "modify"; //modify:수정
     // dataObj.dopcoNo = ""; //수정일때는 들어간다(form에 추가함)
     console.log("**dataObj**");
     console.log(dataObj);
-
+    
+    
     // 변경이력 체크
     var modifyReason1 = '';
     var modifyReason2 = '';
@@ -752,133 +727,151 @@ $(document).on("click", "#notPNUBtn", function () {
     $(".popupWrap").removeClass("active");
 });
 
-/*첨부파일*/
-var uploadFiles = new Array();
-$(document).ready(function () {
-    var objDragAndDrop = $(".fileUploadBox");
-
-    $(document).on("dragenter", ".fileUploadBox", function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        $(this).css('border', '2px solid #0B85A1');
-    });
-    $(document).on("dragover", ".fileUploadBox", function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    $(document).on("drop", ".fileUploadBox", function (e) {
-
-        $(this).css('border', '2px dotted #0B85A1');
-        e.preventDefault();
-        var files = e.originalEvent.dataTransfer.files;
-
-        handleFileUpload(files, objDragAndDrop);
-    });
-
-    $(document).on('dragenter', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    $(document).on('dragover', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        objDragAndDrop.css('border', '2px dotted #0B85A1');
-    });
-    $(document).on('drop', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    //drag 영역 클릭시 파일 선택창
-    objDragAndDrop.on('click', function (e) {
-        $('input[type=file]').trigger('click');
-    });
-
-    $('input[type=file]').on('change', function (e) {
-        var files = e.originalEvent.target.files;
-        handleFileUpload(files, objDragAndDrop);
-    });
-
-    function handleFileUpload(files, obj) {
-        console.log("-------------handleFileUpload---------------");
-        console.log(files);
-        for (var i = 0; i < files.length; i++) {
-            var fd = new FormData();
-            fd.append('file', files[i]);
-
-            var status = new createStatusbar($("#fileTitleUl"), files[i].name, files[i].size, i); //Using this we can set progress.
-            //  status.setFileNameSize(files[i].name,files[i].size);
-            sendFileToServer(fd, status);
-        }
-    }
-
-    var rowCount = 0;
-    function createStatusbar(obj, name, size, no) {
-        console.log("----------start createStatusBar------------");
-        console.log(obj.html());
-
-        var sizeStr = "";
-        var sizeKB = size / 1024;
-        if (parseInt(sizeKB) > 1024) {
-            var sizeMB = sizeKB / 1024;
-            sizeStr = sizeMB.toFixed(2) + " MB";
-        } else {
-            sizeStr = sizeKB.toFixed(2) + " KB";
-        }
-
-        var row = '<ul class="contents" id="fileListUl">';
-        row += '<li class="content01 content checkboxWrap">';
-        row += '<input type="checkbox" id="landRightsRegistration_attachFile' + no + '" name="landRightsRegistration_attachFile" >';
-        row += '<label for="landRightsRegistration_attachFile' + no + '"></label>';
-        row += '</li>';
-        row += '<li class="content02 content"><input type="text" id="filename" placeholder="' + name + '" class="notWriteInput" readonly></li></ul>';
-        obj.after(row);
-
-        var radio = $(row).find('input');
-        console.log("---------------radio checkbox----------");
-        $(radio).find('input').attr("disabled", false);
-        console.log($(radio).parent().html());
-    }
-
-    function sendFileToServer(formData, status) {
-        var uploadURL = "/jisang/fileUpload/post"; //Upload URL
-        var extraData = {}; //Extra Data.
-        var jqXHR = $.ajax({
-            xhr: function () {
-                var xhrobj = $.ajaxSettings.xhr();
-                if (xhrobj.upload) {
-                    xhrobj.upload.addEventListener('progress', function (event) {
-                        var percent = 0;
-                        var position = event.loaded || event.position;
-                        var total = event.total;
-                        if (event.lengthComputable) {
-                            percent = Math.ceil(position / total * 100);
-                        }
-                        //Set progress
-                        //  status.setProgress(percent);
-                    }, false);
-                }
-                return xhrobj;
-            },
-            url: uploadURL,
-            type: "POST",
-            contentType: false,
-            processData: false,
-            cache: false,
-            data: formData,
-            success: function (data) {
-
-            }
-        });
+$(document).on("click", "#deleteFileBtn", function () {
+    const clickedAttachFiles = document.querySelectorAll('input[name="compLandEdit_attachFile"]:checked');
+    for (var i = 0; i < clickedAttachFiles.length; i++) {
+        var delEle = $(clickedAttachFiles[i]).closest("#fileListUl");
+        $(clickedAttachFiles[i]).prev().val('D');
+        $(delEle).hide();
+        
+        
     }
 });
 
-$(document).on("click", "#deleteFileBtn", function () {
-    const clickedAttachFiles = document.querySelectorAll('input[name="landRightsRegistration_attachFile"]:checked');
-    console.log(clickedAttachFiles);
-    console.log(uploadFiles);
-    for (var i = 0; i < clickedAttachFiles.length; i++) {
-        var delEle = $(clickedAttachFiles[i]).closest("#fileListUl");
-        console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
-        $(delEle).remove();
-    }
-})
+/*첨부파일*/
+let fileNo = 1;
+let uploadFiles = new Array();
+$(document).ready(function() {
+	let objDragAndDrop = $(".fileUploadBox");
+	
+	$(document).on("dragenter",".fileUploadBox",function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+		$(this).css('border', '2px solid #0B85A1');
+	});
+	
+	$(document).on("dragover",".fileUploadBox",function(e){
+		e.stopPropagation();
+		e.preventDefault();
+	});
+	
+	$(document).on("drop",".fileUploadBox",function(e){
+		$(this).css('border', '2px dotted #0B85A1');
+		e.preventDefault();
+		let files = e.originalEvent.dataTransfer.files;
+		handleFileUpload(files,objDragAndDrop);
+	});
+	
+	$(document).on('dragenter', function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+	});
+	
+	$(document).on('dragover', function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+		objDragAndDrop.css('border', '2px dotted #0B85A1');
+	});
+	
+	$(document).on('drop', function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+	});
+	
+	//drag 영역 클릭시 파일 선택창
+	objDragAndDrop.on('click',function (e) {
+		$('input[type=file]').trigger('click');
+	});
+	
+	$('input[type=file]').on('change', function(e) {
+		const fileListDiv = document.getElementById('fileListDiv');
+		const listItems = fileListDiv.getElementsByTagName('ul');
+		const itemCount = listItems.length; // ul 요소의 갯수
+		let files = e.originalEvent.target.files;
+		handleFileUpload(files,objDragAndDrop);
+	});
+	
+	function handleFileUpload(files,obj) {
+		for (let i = 0; i < files.length; i++) {
+			let fd = new FormData();
+			fd.append('file', files[i]);
+			let status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,fileNo); //Using this we can set progress.
+			//status.setFileNameSize(files[i].name,files[i].size);
+			sendFileToServer(fd,status);
+		}
+		fileNo++;
+	}
+	
+	let rowCount = 0;
+	function createStatusbar(obj,name,size,no) {
+		let sizeStr = "";
+		let sizeKB = size/1024;
+		if (parseInt(sizeKB) > 1024) {
+			let sizeMB = sizeKB/1024;
+			sizeStr = sizeMB.toFixed(2) + " MB";
+		} else {
+			sizeStr = sizeKB.toFixed(2) + " KB";
+		}
+		// var row='<ul class="contents" id="fileListUl">';
+		// row+='<li class="content01 content checkboxWrap">';
+		// row+='<input type="checkbox" id="landRegistration_attachFile'+no+'" name="landRegistration_attachFile" >';
+		// row+='<label for="landRegistration_attachFile'+no+'"></label>';
+		// row+='</li>';
+		// row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
+		// obj.after(row);
+		let now = new Date();
+		let formattedDate = now.toLocaleString();
+		let row = ``;
+		let noPro = $('input[name="compLandEdit_attachFile"]').length + 1;
+		row += `<ul class="contents" id="fileListUl">`;
+		row += `	<li class="content01 content checkboxWrap">`;
+		row += `		<input type="hidden" name="fname" value="${name}">`;
+		row += `		<input type="hidden" name="idx" value="${no}">`;
+		row += `		<input type="hidden" name="seq" value="">`;
+		row += `		<input type="hidden" name="file_seq" value="">`;
+		row += `		<input type="hidden" name="file_path" value="">`;
+		row += `		<input type="hidden" name="newFileCheckYn" value="Y">`;
+		row += `		<input type="checkbox" id="compLandEdit_attachFile${noPro}" name="compLandEdit_attachFile" >`;
+		row += `		<label for="compLandEdit_attachFile${noPro}"></label>`;
+		row += `	</li>`;
+		row += `	<li class="content02">`;
+		row += `		<input type="text" value="${name}" id="filename" readonly class="notWriteInput" />`;
+		row += `	</li>`;
+		row += `</ul>`;
+		
+		obj.after(row);
+	
+		let radio = $(row).find('input');
+		$(radio).find('input').attr("disabled",false);
+	}
+
+	function sendFileToServer(formData,status){
+		let uploadURL = "/land/dopco/fileUpload/post"; //Upload URL
+		let extraData = {}; //Extra Data.
+		let jqXHR=$.ajax({
+			xhr: function() {
+				let xhrobj = $.ajaxSettings.xhr();
+				if (xhrobj.upload) {
+					xhrobj.upload.addEventListener('progress', function(event) {
+						let percent = 0;
+						let position = event.loaded || event.position;
+						let total = event.total;
+						if (event.lengthComputable) {
+							percent = Math.ceil(position / total * 100);
+						}
+					}, false);
+				}
+				return xhrobj;
+			},
+			url: uploadURL,
+			type: "POST",
+			contentType:false,
+			processData: false,
+			cache: false,
+			data: formData,
+			success: function(data){
+				
+			}
+		});
+	}
+});
