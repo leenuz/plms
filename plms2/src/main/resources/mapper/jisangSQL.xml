@@ -4539,11 +4539,11 @@ SELECT B.DOCKEY
 	<update id="UpdateJisangCancleYN" parameterType="HashMap">
 		UPDATE JISANG_MASTER 
 		SET
-		CANCLE_YN = #{CANCLE_YN}
-		, CANCLE_DATE = TO_DATE( #{CANCLE_DATE} ,'YYYY-MM-DD')
-		, CANCLE_EMPCD = #{CANCLE_EMPCD}
-		, CANCLE_NAME = #{CANCLE_NAME}
-		WHERE JISANG_NO = #{JISANG_NO}
+		jm_CANCLE_YN = #{CANCLE_YN}
+		, jm_CANCLE_DATE = TO_DATE( #{CANCLE_DATE} ,'YYYY-MM-DD')
+		, jm_CANCLE_EMPCD = #{CANCLE_EMPCD}
+		, jm_CANCLE_NAME = #{CANCLE_NAME}
+		WHERE jm_JISANG_NO = #{JISANG_NO}
 	</update>
 	
 	<update id="deletePnuIssueForPnu" parameterType="HashMap">

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 
 import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.MainService;
+import com.slsolution.plms.config.GlobalConfig;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -25,17 +26,40 @@ import lombok.extern.slf4j.Slf4j;
 public class SchedulerController {
 	 @Autowired
 		private MainService mainService;
-	 
+	 @Autowired
+	 private GlobalConfig GC;
+
 	 
 	 // 한번만 실행되도록 제어할 플래그 변수
 	    private boolean hasRun = false;
 	 
 	 
-	 //@Scheduled(fixedRate = 5000) // 5초마다 실행	
-	@PostConstruct  //시작후 한번만 실행
+
+	    
+	    @PostConstruct
+	    public void init() throws Exception {
+	        if ("LOCAL".equalsIgnoreCase(GC.getServerName())) {
+	            System.out.println("LOCAL 환경에서 jobs() 메서드를 한 번 실행");
+	            jobs(); // 한 번만 실행
+	        }
+	    }
+
+	    @Scheduled(fixedRate = 5000)
+	    public void scheduledJobs() throws Exception {
+	        if ("DEV".equalsIgnoreCase(GC.getServerName()) || "LIVE".equalsIgnoreCase(GC.getServerName()) ) {
+	            jobs(); // 5초마다 실행
+	        }
+	    }
+	    
+	    
+
 	public void jobs() throws Exception {
 		
-		
+		if (!hasRun || "DEV".equalsIgnoreCase(GC.getServerName()) || "LIVE".equalsIgnoreCase(GC.getServerName())) {
+            System.out.println("jobs() 메서드 실행 중...");
+            // 실제 실행할 작업 추가
+            hasRun = true; // LOCAL 환경에서는 첫 실행 후 플래그를 설정해 반복 방지
+        }
 		
 //		System.out.println(System.currentTimeMillis());
 		System.out.println("스케줄러 정상작동 확인용입니다.");
@@ -985,12 +1009,7 @@ public class SchedulerController {
 //			Database.getInstance().endTransaction();
 //		}
 //
-		
-//		if (!hasRun) {
-//            System.out.println("스케줄러를 한 번만 실행합니다.");
-           // mainService.someServiceMethod(); // 실제 수행할 작업
-           // hasRun = true; // 이후 실행되지 않도록 플래그 설정
-//        }
+
 		
 	}
 }

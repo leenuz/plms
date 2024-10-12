@@ -26,6 +26,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 
+import com.slsolution.plms.config.GlobalConfig;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,7 +56,7 @@ public class ApprovalUtil implements ApplicationContextAware {
 	public boolean GetPLMSDataforXML(String DOCKEY,String HTML,String USERCD,String SDATE,String STIME
 			,String GUBUN,String USERNAME,String USERDEPTCD,String USERDEPTNM,String USERUPDEPTCD) throws MalformedURLException, IOException
 	{
-		
+		GlobalConfig GC = context.getBean(GlobalConfig.class);
 		
 		MainService mainService = context.getBean(MainService.class);
 		System.out.println("@@@ XML SERVLET START");
@@ -84,9 +86,15 @@ public class ApprovalUtil implements ApplicationContextAware {
 //		
 		//String url="http://localhost:8081/land/api/dopcoApprovalTest"; //로컬 테스트
 
-		//String url="http://echo.dopco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //운영
-
-		String url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //새 개발기 테스트
+		 String url="";
+		if ("DEV".equals(GC.getServerName())) {
+			 url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //새 개발기 테스트
+		}
+		else if ("LIVE".equals(GC.getServerName())) {
+			 url="http://echo.dopco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //운영
+		}
+		else url="http://localhost:8081/land/api/dopcoApprovalTest";
+		
 		
 		String xmlString="";
 		xmlString=GetApprXmlget(DOCKEY,HTML,USERCD,SDATE,STIME,GUBUN);
