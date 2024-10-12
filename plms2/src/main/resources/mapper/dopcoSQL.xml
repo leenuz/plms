@@ -299,8 +299,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 		<insert id="insertDopcoFile" parameterType="HashMap">
-			INSERT INTO DOPCO_ATCFILE(da_DOPCO_NO, da_SEQ	, da_FILE_PATH, da_FILE_NM)
-			VALUES (#{DOPCO_NO}, nextVal(dopco_atc_seq), #{FILE_PATH}, #{FILE_NM})
+			INSERT INTO DOPCO_ATCFILE(DOPCO_NO, SEQ	, FILE_PATH, FILE_NM, file_seq)
+			VALUES (#{dosiNo}, #{seq}::int, #{fpath}, #{fname}, #{fseq})
 	</insert>
 	
 	<update id="updateDopcoMaster" parameterType="HashMap">
