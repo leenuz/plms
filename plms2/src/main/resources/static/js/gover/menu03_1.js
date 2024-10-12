@@ -243,7 +243,6 @@ function loadDataTable(params) {
 		rowReorder: {
 			dataSrc: 'b_seq'
 		},
-
 		//	sAjaxSources:"/land/songyu/menu01DataTableList",
 		//	sServerMethod:"POST",
 		ajax: {
@@ -258,7 +257,6 @@ function loadDataTable(params) {
 				d.pmt_office = params.pmt_office;
 				d.adm_office = ljsIsNull(params.adm_office) ? '' : params.adm_office;
 				d.save_status = params.save_status;
-
 				d.idx = params.idx;
 
 				//주소
@@ -312,19 +310,15 @@ function loadDataTable(params) {
 				//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
 				return json.data;
 			}
-
 		},
 		initComplete: function() {
-
 			console.log(this.api().data().length);
-
 		},
 		/*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 //	console.log(aData);
 	$('td:eq(0)', nRow).html(iDisplayIndexFull +1);
 	return nRow;
 },*/
-
 		columns: [
 			{ data: "rno", "orderable": false },//0
 			{ data: "jisa", "defaultContent": "" },
@@ -342,7 +336,6 @@ function loadDataTable(params) {
 			{ data: "pay_money", "defaultContent": "" },
 			{ data: "idx", "defaultContent": "" }
 		],
-
 		columnDefs: [
 			{ "className": "dt-head-center", "targets": "_all" },
 			{ className: 'dt-center', "targets": "_all" },
@@ -365,14 +358,11 @@ function loadDataTable(params) {
 				, width: "100px"
 				, render: function(data, type, row, meta) {
 					//쿼리수정이 필요합니다.
-					return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
+					return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}, //지도보기
 		]
 	});
-
-
-
 
 	table.on('click', 'tr', function() {
 
@@ -381,6 +371,7 @@ function loadDataTable(params) {
 		var isButtonCell = target.closest('td').index() === 14;
 
 		if (isButtonCell) {
+			event.stopPropagation(); // 버튼 클릭 시에는 동작하지 않도록 이벤트 전파 차단
 			return;
 		} else {
 			// 다른 열을 클릭했을 때만 상세 페이지로 이동
@@ -395,35 +386,27 @@ function loadDataTable(params) {
 		}
 	});
 
-	/*$("table th").resizable({
-		handles:'e',
-		stop:function(e,ui){
-			$(this).width(ui.size.width);
-			table.columns.adjust().draw();
-		}
-	});*/
-	/*table
-			.on('order.dt search.dt', function () {
-					let i = 1;
-	 
-					table
-							.cells(null, 0, { search: 'applied', order: 'applied' })
-							.every(function (cell) {
-									this.data(i++);
-							});
-			})
-			.draw();*/
+	// 위치보기 버튼 클릭 이벤트 처리
+	$('#userTable').on('click', '.viewDetailButton', function(event) {
+	    event.stopPropagation(); // 이벤트 전파 차단
 
-	// console.log($('#userTable').DataTable().page.info().recordsTotal);
+	    // 버튼의 data 속성에서 x, y 좌표 가져오기
+	    const x = $(this).data('x');
+	    const y = $(this).data('y');
+	    
+	    console.log("x, y:", x, y);
+	    
+	    // 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
+	    if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
+	        // 좌표가 있을 때는 좌표를 전달
+	        onePostionView({ x, y });
+	    } else {
+	        // 좌표가 없을 때는 빈 객체를 전달하여 onePostionView 내부에서 처리
+	        onePostionView(undefined);
+	    }
+	});
+	
 }
-
-$(document).on("click","#moveMap",function(){
-	//openMapWindow();
-//	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
-	const x = $(this).attr('x')
-	const y = $(this).attr('y')
-	moveToCityHall(x,y);
-})
 
 
 // 지사 선택 시 허가관청 목록 업데이트를 위한 change 이벤트 트리거

@@ -192,7 +192,7 @@ function loadDataTable(params) {
 			url: "/land/dopco/menu05_2DataTableList",
 			type: "POST",
 			datatype: "json",
-			data: function (d) {
+			data: function(d) {
 				//d=params;
 				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
 				d.jasan_no = params.jasan_no;
@@ -200,7 +200,7 @@ function loadDataTable(params) {
 				d.start_date = params.start_date;
 				d.end_date = params.end_date;
 				d.cancel_yn = params.cancel_yn;
-				
+
 				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
 				if (ask == "0") {
 					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
@@ -220,14 +220,14 @@ function loadDataTable(params) {
 				console.log("-----------d-----------");
 				console.log(d);
 			},
-			dataSrc: function (json) {
+			dataSrc: function(json) {
 				console.log("-------------json---------------");
 				console.log(json);
 				$("#dataTableTotalCount").html(json.recordsTotal);
 				return json.data;
 			}
 		},
-		initComplete: function () {
+		initComplete: function() {
 			console.log(this.api().data().length);
 		},
 
@@ -255,26 +255,28 @@ function loadDataTable(params) {
 			{ targets: [5], width: "100px" },  // 취득일 칼럼
 			{ targets: [6], width: "100px" },  // 등기일 칼럼
 			{ targets: [7], width: "100px" },  // 면적 칼럼
-			{ targets: [8], width: "100px",
-				render: function (data, type, row, meta) {
+			{
+				targets: [8], width: "100px",
+				render: function(data, type, row, meta) {
 					return data == null ? '미처분' : '처분';
 				}
 			},  // 처분여부 칼럼
 			{ targets: [9], width: "100px" },  // 처분일 칼럼
 			{
 				targets: [10], width: "100px"
-				, render: function (data, type, row, meta) {
-					return `<button class="btnDesign" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
+				, render: function(data, type, row, meta) {
+					return `<button class="btnDesign viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}, //지도보기
 		]
 	});
 
-	table.on('click', 'tr', function () {
+	table.on('click', 'tr', function() {
 		var target = $(event.target);
 		var isButtonCell = target.closest('td').index() === 10;
 
 		if (isButtonCell) {
+			event.stopPropagation(); // 버튼 클릭 시에는 동작하지 않도록 이벤트 전파 차단
 			return;
 		} else {
 			// 다른 열을 클릭했을 때만 상세 페이지로 이동
@@ -288,14 +290,24 @@ function loadDataTable(params) {
 			window.location = url;
 		}
 	});
+	
+	// 위치보기 버튼 클릭 이벤트 처리
+	$('#userTable').on('click', '.viewDetailButton', function(event) {
+	    event.stopPropagation(); // 이벤트 전파 차단
+
+	    // 버튼의 data 속성에서 x, y 좌표 가져오기
+	    const x = $(this).data('x');
+	    const y = $(this).data('y');
+	    
+	    console.log("x, y:", x, y);
+	    
+	    // 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
+	    if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
+	        // 좌표가 있을 때는 좌표를 전달
+	        onePostionView({ x, y });
+	    } else {
+	        // 좌표가 없을 때는 빈 객체를 전달하여 onePostionView 내부에서 처리
+	        onePostionView(undefined);
+	    }
+	});
 }
-
-/*위치보기*/
-$(document).on("click","#moveMap",function(){
-	//openMapWindow();
-//	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
-	const x = $(this).attr('x')
-	const y = $(this).attr('y')
-	moveToCityHall(x,y);
-})
-

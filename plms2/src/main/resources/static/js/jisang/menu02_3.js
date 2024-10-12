@@ -339,9 +339,9 @@ return nRow;
 			{
 				data: "idx",
 				render: function(data, type, row, meta) {
-					return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
+					return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
-			},// 지도보기 데이터 수정필요
+			},// 지도보기 데이터
 			{
 				data: "idx",
 				render: function(data, type, row, meta) {
@@ -350,7 +350,6 @@ return nRow;
 			}// ECHO 문서보기 수정필요
 		],
 		columnDefs: [
-
 			{ "className": "dt-head-center", "targets": "_all" },
 			{ className: 'dt-center', "targets": "_all" },
 			{ targets: [0], width: "50px" },
@@ -367,9 +366,7 @@ return nRow;
 			{ targets: [11], width: "200px" },//분할요청일
 			{ targets: [12], width: "100px" }, // 지도보기
 			{ targets: [13], width: "100px" }, // 문서보기
-
 		]
-
 	});
 
 	table.on('click', 'tr', function() {
@@ -404,8 +401,8 @@ return nRow;
 					});
 			} else if (target.closest('td').index() === 12) {
 				//지도보기 클릭
-				//    mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
-				//                            mapWindow = window.open('http://10.168.0.247:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'mapWindow', 'width=2048,height=1024');
+				event.stopPropagation(); // 버튼 클릭 시에는 동작하지 않도록 이벤트 전파 차단
+				return;
 			} else {
 				// ECHO 문서보기 클릭
 
@@ -415,35 +412,26 @@ return nRow;
 			url = "/land/jisang/forDivisionEasementDetails?idx=" + data.idx + "&index=" + data.index + "&js_idx=" + js_idx;
 			window.location = url;
 		}
-
 	});
 
-	/*$("table th").resizable({
-		handles:'e',
-		stop:function(e,ui){
-			$(this).width(ui.size.width);
-			table.columns.adjust().draw();
-		}
-	});*/
-	/*table
-			.on('order.dt search.dt', function () {
-					let i = 1;
-	 
-					table
-							.cells(null, 0, { search: 'applied', order: 'applied' })
-							.every(function (cell) {
-									this.data(i++);
-							});
-			})
-			.draw();*/
+	// 위치보기 버튼 클릭 이벤트 처리
+	$('#userTable').on('click', '.viewDetailButton', function(event) {
+	    event.stopPropagation(); // 이벤트 전파 차단
 
-	// console.log($('#userTable').DataTable().page.info().recordsTotal);
+	    // 버튼의 data 속성에서 x, y 좌표 가져오기
+	    const x = $(this).data('x');
+	    const y = $(this).data('y');
+			
+			console.log("x, y:", x, y);
+	    
+	    // 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
+	    if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
+	        // 좌표가 있을 때는 좌표를 전달
+	        onePostionView({ x, y });
+	    } else {
+	        // 좌표가 없을 때는 빈 객체를 전달하여 onePostionView 내부에서 처리
+	        onePostionView(undefined);
+	    }
+	});
 }
 
-$(document).on("click", "#moveMap", function() {
-	//openMapWindow();
-	//	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
-	const x = $(this).attr('x')
-	const y = $(this).attr('y')
-	moveToCityHall(x, y);
-})

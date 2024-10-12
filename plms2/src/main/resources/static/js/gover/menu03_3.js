@@ -182,187 +182,207 @@ function datatablebasic(){
 }
 
 function loadDataTable(params) {
-    console.log("-----start loadDataTable----------");
-    console.log("Params:", params); // params 객체 출력
+	console.log("-----start loadDataTable----------");
+	console.log("Params:", params); // params 객체 출력
 
-    table = $('#userTable').DataTable({
-        fixedColumns: { start: 3 },
-        scrollCollapse: true,
-        scrollX: true,
-        scrollY: 600,
-        paging: true,
-        "oLanguage": { "sLengthMenu": "_MENU_" },
-        dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
-        buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
-        pageLength: 50,
-        bPaginate: true,
-        bLengthChange: true,
-        bInfo: false,
-        lengthMenu: [[10, 50, 100, -1], ["10건", "50건", "100건", "All"]],
-        bAutoWidth: false,
-        processing: true,
-        ordering: true,
-        bServerSide: true,
-        searching: false,
-        destroy: true,
-        order: [[3, 'desc']],
-        rowReorder: { dataSrc: 'b_seq' },
-        ajax: {
-            url: "/land/gover/menu03_3DataTableList",
-            type: "POST",
-            datatype: "json",
-            data: function(d) {
-                d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
-                d.gover_no = params.gover_no;
-                d.use_purpos = params.use_purpos;
-                d.pmt_office = params.pmt_office;
-                d.adm_office = params.adm_office;
-								console.log(params.adm_office);
-                // d.adm_office = ljsIsNull(params.adm_office) ? '' : params.adm_office;
-								
+	table = $('#userTable').DataTable({
+		fixedColumns: { start: 3 },
+		scrollCollapse: true,
+		scrollX: true,
+		scrollY: 600,
+		paging: true,
+		"oLanguage": { "sLengthMenu": "_MENU_" },
+		dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
+		buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
+		pageLength: 50,
+		bPaginate: true,
+		bLengthChange: true,
+		bInfo: false,
+		lengthMenu: [[10, 50, 100, -1], ["10건", "50건", "100건", "All"]],
+		bAutoWidth: false,
+		processing: true,
+		ordering: true,
+		bServerSide: true,
+		searching: false,
+		destroy: true,
+		order: [[3, 'desc']],
+		rowReorder: { dataSrc: 'b_seq' },
+		ajax: {
+			url: "/land/gover/menu03_3DataTableList",
+			type: "POST",
+			datatype: "json",
+			data: function(d) {
+				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.gover_no = params.gover_no;
+				d.use_purpos = params.use_purpos;
+				d.pmt_office = params.pmt_office;
+				d.adm_office = params.adm_office;
+				console.log(params.adm_office);
+				// d.adm_office = ljsIsNull(params.adm_office) ? '' : params.adm_office;
+
 				// 해지 여부 조건 추가
 				if (params.cancel_yn === "해지") {
-				    d.cancel_yn = "Y";
+					d.cancel_yn = "Y";
 				} else if (params.cancel_yn === "미해지") {
-				    d.cancel_yn = "N";
+					d.cancel_yn = "N";
 				} else {
-				    d.cancel_yn = ""; // 해지 여부가 없을 때 기본값 처리
+					d.cancel_yn = ""; // 해지 여부가 없을 때 기본값 처리
 				}
 				d.pay_date_start = params.pay_date_start;
 				d.pay_date_end = params.pay_date_end;
-                d.idx = params.idx;
+				d.idx = params.idx;
 
-                // 주소
-                var ask = (params.privateUseRadio03 == undefined || params.privateUseRadio03 == null) ? '0' : params.privateUseRadio03;
-                console.log("privateUseRadio03:" + ask);
+				// 주소
+				var ask = (params.privateUseRadio03 == undefined || params.privateUseRadio03 == null) ? '0' : params.privateUseRadio03;
+				console.log("privateUseRadio03:" + ask);
 
-                // 입력형 주소 입력 시
-                if (ask == "0") {
-                    d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
-                }
-                // 선택형 주소 입력 시
-                else {
-                    var addrs = params.sido_nm || '';
-                    if (!ljsIsNull(params.sgg)) addrs += " " + params.sgg;
-                    if (!ljsIsNull(params.emd)) addrs += " " + params.emd;
-                    if (!ljsIsNull(params.ri)) addrs += " " + params.ri;
-                    if (!ljsIsNull(params.jibun)) addrs += " " + params.jibun;
-                    d.saddr = (addrs == undefined || addrs == null || addrs == "undefined") ? '' : addrs;
-										
-										/* 2024.10.04 손지민 - 선택행 주소 검색 시 시도/시군구/읍면동/리/지번 분리 검색
-										d.sido_nm = params.sido_nm;
-										d.sgg_nm = params.sgg;
-										d.emd_nm = params.emd;
-										d.ri_nm = params.ri;
-										d.jibun = params.jibun;
-										*/
-                }
-                console.log("saddr:" + d.saddr);
+				// 입력형 주소 입력 시
+				if (ask == "0") {
+					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
+				}
+				// 선택형 주소 입력 시
+				else {
+					var addrs = params.sido_nm || '';
+					if (!ljsIsNull(params.sgg)) addrs += " " + params.sgg;
+					if (!ljsIsNull(params.emd)) addrs += " " + params.emd;
+					if (!ljsIsNull(params.ri)) addrs += " " + params.ri;
+					if (!ljsIsNull(params.jibun)) addrs += " " + params.jibun;
+					d.saddr = (addrs == undefined || addrs == null || addrs == "undefined") ? '' : addrs;
+
+					/* 2024.10.04 손지민 - 선택행 주소 검색 시 시도/시군구/읍면동/리/지번 분리 검색
+					d.sido_nm = params.sido_nm;
+					d.sgg_nm = params.sgg;
+					d.emd_nm = params.emd;
+					d.ri_nm = params.ri;
+					d.jibun = params.jibun;
+					*/
+				}
+				console.log("saddr:" + d.saddr);
 				console.log(d);
-            },
-            dataSrc: function(json) {
-                console.log("-------------json---------------");
-                console.log(json);
-                $("#dataTableTotalCount").html(json.recordsTotal.toLocaleString());
-                return json.data;
-            }
-        },
-        columns: [
-            { data: "no", "orderable": false },
-            { data: "jisa", "defaultContent": "" },
-            { data: "address", "defaultContent": "" },
-            { data: "gover_no", "defaultContent": "" },
+			},
+			dataSrc: function(json) {
+				console.log("-------------json---------------");
+				console.log(json);
+				$("#dataTableTotalCount").html(json.recordsTotal.toLocaleString());
+				return json.data;
+			}
+		},
+		columns: [
+			{ data: "no", "orderable": false },
+			{ data: "jisa", "defaultContent": "" },
+			{ data: "address", "defaultContent": "" },
+			{ data: "gover_no", "defaultContent": "" },
 			{ data: "pnu_count", "defaultContent": "" },
 			{ data: "jimok_text", "defaultContent": "" },
 			{ data: "use_purpos", "defaultContent": "" },
 			{ data: "period", "defaultContent": "" },
 			{ data: "gover_length", "defaultContent": "" },
 			{ data: "gover_area", "defaultContent": "" },
-            { data: "pmt_office", "defaultContent": "" },
-            { data: "adm_office", "defaultContent": "" },
+			{ data: "pmt_office", "defaultContent": "" },
+			{ data: "adm_office", "defaultContent": "" },
 			{ data: "pay_date", "defaultContent": "" },
 			{ data: "pay_money", "defaultContent": "" },
 			{
-			    data: "cancel_yn",
-			    "defaultContent": "",
-			    render: function(data, type, row, meta) {
-			        var cancelYnTrimmed = (data && data.trim()) || "";  // 공백 제거 후 null 체크
-			        if (cancelYnTrimmed === "Y") {
-			            return '해지'; // 해지일 경우 "해지" 표기
-			        } else {
-			            return '미해지'; // null 또는 미해지일 경우 "미해지" 표기
-			        }
-			    }
+				data: "cancel_yn",
+				"defaultContent": "",
+				render: function(data, type, row, meta) {
+					var cancelYnTrimmed = (data && data.trim()) || "";  // 공백 제거 후 null 체크
+					if (cancelYnTrimmed === "Y") {
+						return '해지'; // 해지일 경우 "해지" 표기
+					} else {
+						return '미해지'; // null 또는 미해지일 경우 "미해지" 표기
+					}
+				}
 			},
 			{
-	        data: "cancel_date",
-	        "defaultContent": "",
-		        render: function(data, type, row, meta) {
-		            var cancelYnTrimmed = (row.cancel_yn && row.cancel_yn.trim()) || "";  // 공백 제거 후 null 체크
-		            if (cancelYnTrimmed === "Y") {
-		                return data ? data : ''; // 해지일 경우 일자 표기
-		            } else {
-		                // 미해지 또는 null일 경우 해지 버튼 추가
-		                return `<button class="privateRemoveBtn" id='cancelBtn'>해지</a></button>`;
-		            }
-		        }
-		    },
-            {
-                data: "idx", "defaultContent": "",
-                render: function(data, type, row, meta) {
+				data: "cancel_date",
+				"defaultContent": "",
+				render: function(data, type, row, meta) {
+					var cancelYnTrimmed = (row.cancel_yn && row.cancel_yn.trim()) || "";  // 공백 제거 후 null 체크
+					if (cancelYnTrimmed === "Y") {
+						return data ? data : ''; // 해지일 경우 일자 표기
+					} else {
+						// 미해지 또는 null일 경우 해지 버튼 추가
+						return `<button class="privateRemoveBtn" id='cancelBtn'>해지</a></button>`;
+					}
+				}
+			},
+			{
+				data: "idx", "defaultContent": "",
+				render: function(data, type, row, meta) {
 					//쿼리 수정이 필요합니다.
-                    return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y} >위치보기</button> `;
-                }
-            },
+					return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
+				}
+			},
 			// ECHO 문서보기 버튼 추가
 			//{ data: "echo_no", "defaultContent": "" }
 			{
-                data: "idx", "defaultContent": "",
-                render: function(data, type, row, meta) {
-                    return `<button class="viewDetailButton" id='echoFile'>상세보기</button> `;
-                }
-            }
-        ],
-        columnDefs: [
-            { "className": "dt-head-center", "targets": "_all" },
-            { className: 'dt-center', "targets": "_all" },
-            { targets: [0], width: "50px" },
-            { targets: [1], width: "150px" },
-            { targets: [2], width: "400px" },
-            { targets: [3], width: "150px" },
-            { targets: [4], width: "100px" },
-            { targets: [5], width: "200px" },
-            { targets: [6], width: "150px" },
-            { targets: [7], width: "150px" },
-            { targets: [8], width: "200px" },
-            { targets: [9], width: "100px" },
-            { targets: [10], width: "200px" },
-            { targets: [11], width: "100px" },
-            { targets: [12], width: "100px" },
-            { targets: [13], width: "100px" },
-            { targets: [14], width: "100px" },
+				data: "idx", "defaultContent": "",
+				render: function(data, type, row, meta) {
+					return `<button class="viewDetailButton" id='echoFile'>상세보기</button> `;
+				}
+			}
+		],
+		columnDefs: [
+			{ "className": "dt-head-center", "targets": "_all" },
+			{ className: 'dt-center', "targets": "_all" },
+			{ targets: [0], width: "50px" },
+			{ targets: [1], width: "150px" },
+			{ targets: [2], width: "400px" },
+			{ targets: [3], width: "150px" },
+			{ targets: [4], width: "100px" },
+			{ targets: [5], width: "200px" },
+			{ targets: [6], width: "150px" },
+			{ targets: [7], width: "150px" },
+			{ targets: [8], width: "200px" },
+			{ targets: [9], width: "100px" },
+			{ targets: [10], width: "200px" },
+			{ targets: [11], width: "100px" },
+			{ targets: [12], width: "100px" },
+			{ targets: [13], width: "100px" },
+			{ targets: [14], width: "100px" },
 			{ targets: [15], width: "100px" },
 			{ targets: [16], width: "100px" },
 			{ targets: [17], width: "100px" },
-        ]
-    });
+		]
+	});
 
-    table.on('click', 'tr', function(event) {
+	table.on('click', 'tr', function(event) {
 		var data = table.row(this).data();
-        var target = $(event.target);
+		var target = $(event.target);
 		var isButtonCell = [15, 16, 17].includes(target.closest('td').index());
 
-        if (isButtonCell) {
-            return;
-        } else {
-            var data = table.row(this).data();
-            console.log(data);
-            console.log(data.idx);
+		if (isButtonCell) {
+			return;
+		} else {
+			var data = table.row(this).data();
+			console.log(data);
+			console.log(data.idx);
 
-            var url = "/land/gover/useDetail?idx=" + data.idx;
-            window.location = url;
-        }
-    });
+			var url = "/land/gover/useDetail?idx=" + data.idx;
+			window.location = url;
+		}
+	});
+	
+	// 위치보기 버튼 클릭 이벤트 처리
+	$('#userTable').on('click', '.viewDetailButton', function(event) {
+	    event.stopPropagation(); // 이벤트 전파 차단
+
+	    // 버튼의 data 속성에서 x, y 좌표 가져오기
+	    const x = $(this).data('x');
+	    const y = $(this).data('y');
+	    
+	    console.log("x, y:", x, y);
+	    
+	    // 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
+	    if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
+	        // 좌표가 있을 때는 좌표를 전달
+	        onePostionView({ x, y });
+	    } else {
+	        // 좌표가 없을 때는 빈 객체를 전달하여 onePostionView 내부에서 처리
+	        onePostionView(undefined);
+	    }
+	});
 }
 
 // '해지' 버튼에 대한 클릭 이벤트 처리
@@ -378,15 +398,6 @@ $(document).on('click', '#cancelBtn', function(event) {
     var url = "/land/gover/occupancyEndReg?idx=" + data.idx;
     window.location = url;
 });
-
-// 지도 '위치보기' 버튼에 대한 클릭 이벤트 처리
-$(document).on("click","#moveMap",function(){
-	//openMapWindow();
-//	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
-	const x = $(this).attr('x')
-	const y = $(this).attr('y')
-	moveToCityHall(x,y);
-})
 
 
 // 지사 선택 시 허가관청 목록 업데이트

@@ -326,7 +326,6 @@ function loadDataTable(params) {
 				d.toji_type = params.toji_type;
 				d.toji_plan_type = params.toji_plan_type;
 				d.right_overlap = params.OverlapCheck01;
-
 				d.souja = params.souja;
 				d.jasan_no = params.jasan_no;
 				d.dosiplan = params.dosiplan;
@@ -337,7 +336,6 @@ function loadDataTable(params) {
 				d.end_date = params.end_date;
 				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
 				console.log("askmenu:" + ask);
-
 
 				if (ask == "0") {
 					console.log("---------3--------------");
@@ -407,9 +405,9 @@ function loadDataTable(params) {
 			{
 				data: "idx",
 				render: function(data, type, row, meta) {
-					return `<button class="btnDesign" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
+					return `<button class="btnDesign viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
-			},// 지도보기 데이터 수정필요
+			},// 지도보기 데이터
 			{
 				data: "idx",
 				render: function(data, type, row, meta) {
@@ -475,8 +473,8 @@ function loadDataTable(params) {
                 });
 			} else if (target.closest('td').index() === 13) {
 				//지도보기 클릭
-				//    mapWindow = window.open('http://202.68.225.158:8080/', 'mapWindow', 'width=2048,height=1024');
-				// mapWindow = window.open('http://10.168.0.247:8080/mapJijuk?lon=126.9562273&lat=37.5544849&lv=17', 'mapWindow', 'width=2048,height=1024');
+				event.stopPropagation(); // 버튼 클릭 시에는 동작하지 않도록 이벤트 전파 차단
+				return;
 			} else {
 				// ECHO 문서보기 클릭
 			}
@@ -486,12 +484,25 @@ function loadDataTable(params) {
 			window.location = url;
 		}
 	});
+	
+	// 위치보기 버튼 클릭 이벤트 처리
+	$('#userTable').on('click', '.viewDetailButton', function(event) {
+		event.stopPropagation(); // 이벤트 전파 차단
+
+		// 버튼의 data 속성에서 x, y 좌표 가져오기
+		const x = $(this).data('x');
+		const y = $(this).data('y');
+
+		console.log("x, y:", x, y);
+
+		// 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
+		if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
+			// 좌표가 있을 때는 좌표를 전달
+			onePostionView({ x, y });
+		} else {
+			// 좌표가 없을 때는 빈 객체를 전달하여 onePostionView 내부에서 처리
+			onePostionView(undefined);
+		}
+	});
 }
 
-$(document).on("click","#moveMap",function(){
-	//openMapWindow();
-//	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
-	const x = $(this).attr('x')
-	const y = $(this).attr('y')
-	moveToCityHall(x,y);
-})
