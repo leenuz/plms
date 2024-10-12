@@ -62,7 +62,6 @@ const IssuePopupOpenEvet = () => {
 
 /* 신규민원등록 팝업 */
 const newIssueRegisterOpenEvet = () => {
-	console.log('여기야???');
 	const newIssueBtn = document.querySelector("#dopcoIssueManage .newIssueBtn");
 	const issueManageNewIssuePopWrap = document.querySelector(".issueManageNewIssuePopWrapper");
 	let newIssuePopFilePath = '/components/popuphtml/issue_management_Popup/newcomplaint.html'; // 삽입할 html 파일 경로

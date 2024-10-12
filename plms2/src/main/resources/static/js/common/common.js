@@ -1,13 +1,13 @@
 //241005
 var selectDivId;
 
-const today = new Date();
-const year = today.getFullYear(); // 연도
-const month = String(today.getMonth() + 1).padStart(2, '0'); // 월 (0부터 시작하므로 +1)
-const day = String(today.getDate()).padStart(2, '0'); // 일
+var nowDay = new Date();
+var n_Year = nowDay.getFullYear(); // 연도
+var n_Month = String(nowDay.getMonth() + 1).padStart(2, '0'); // 월 (0부터 시작하므로 +1)
+var n_Day = String(nowDay.getDate()).padStart(2, '0'); // 일
 
 function today_yyyymmdd() {
-	return `${year}-${month}-${day}`;
+	return `${n_Year}-${n_Month}-${n_Day}`;
 }
 
 /*function EmptyToStr(str,mode){
