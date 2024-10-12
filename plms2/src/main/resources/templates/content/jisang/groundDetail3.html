@@ -133,8 +133,7 @@
 									<li class="content02 content">
 										[[${resultData.jm_account_yn}]]</li>
 									<li class="content02 content">
-
-										<button class="viewDetailButton">상세보기</button>
+										<button class="viewDetailButton" th:data-pnu="${resultData.jm_pnu}">상세보기</button>
 									</li>
 								</ul>
 							</div>
@@ -691,7 +690,7 @@
 	</div>
 	<div class="groundIssueRevisePopWrappers"></div>
 	<!-- script -->
-	<script src="/js/jisang/groundDetail.js"></script>
+	<script src="/js/jisang/groundDetail3.js"></script>
 	<!--<script src="/js/common/upload.js"></script>-->
 	<!-- <script type="module" src="/js/module/surfaceMain.js"></script> -->
 </th:block>

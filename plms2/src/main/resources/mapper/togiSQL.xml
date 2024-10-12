@@ -9,48 +9,45 @@
 		SELECT *,
 		(row_number() OVER()) AS no
 		FROM (
-		SELECT
-		dm.dm_idx AS index,
-		dm.dm_dosi_no AS idx,
-		dm.dm_dosi_no AS dosi_no,
-		dm.dm_sido_nm as sido_nm,
-		dm.dm_sgg_nm as sgg_nm,
-		dm.dm_emd_nm as emd_nm,
-		dm.dm_ri_nm as ri_nm,
-		dm.dm_jibun as jibun,
-		dm.dm_jisa AS jisa,
-		COALESCE(dm.dm_jijuk_area, NULL) AS jijuk_area,
-		dm.dm_dosiplan AS dosiplan,
-		dm.dm_addrcode as addrcode,
-		dm.dm_pnu as pnu,
-		dm.dm_jimok_text as jimok_text,
-		dm.dm_toji_type AS toji_type,
-		COALESCE(dm.dm_pipe_yn, 'N') AS pipe_yn,
-		dm.dm_length as length,
-		dm.dm_soyouja as souja,
-		dm.dm_master_yn as master_yn,
-		dm_dosi_seq as dosi_seq,
-		di.di_business_nm AS business_nm,
-		di.di_strdate AS strdate,
-		di.di_enddate AS enddate,
-		di.di_adm_office AS adm_office,
-		di.di_business_oper AS business_oper,
-		di.di_complete_date AS complete_date,
-		di.di_complete_yn AS complete_yn,
-		j.dd_dept_nm AS dept_nm,
-		j.dd_manager AS manager,
-		j.dd_contact_num AS contact_num,
-		TRIM(CONCAT(dm.dm_sido_nm, ' ', dm.dm_sgg_nm, ' ', dm.dm_ri_nm, ' ', dm.dm_jibun)) AS address
-
-
-		FROM dosi_master dm
-		LEFT JOIN dosi_info di ON di.di_dosi_no=dm.dm_dosi_no
-		left JOIN (
-
-		SELECT dd.dd_dosi_no,dd.dd_dept_nm,dd.dd_manager,dd.dd_contact_num,dd.dd_dept_seq,(row_number() over()) as NO FROM dosi_dept dd
-
-
-		) j ON dm.dm_dosi_no=j.dd_dosi_no AND j.no=1
+			SELECT
+				dm.dm_idx AS index,
+				dm.dm_dosi_no AS idx,
+				dm.dm_dosi_no AS dosi_no,
+				dm.dm_sido_nm as sido_nm,
+				dm.dm_sgg_nm as sgg_nm,
+				dm.dm_emd_nm as emd_nm,
+				dm.dm_ri_nm as ri_nm,
+				dm.dm_jibun as jibun,
+				dm.dm_jisa AS jisa,
+				COALESCE(dm.dm_jijuk_area, NULL) AS jijuk_area,
+				dm.dm_dosiplan AS dosiplan,
+				dm.dm_addrcode as addrcode,
+				dm.dm_pnu as pnu,
+				dm.dm_jimok_text as jimok_text,
+				dm.dm_toji_type AS toji_type,
+				COALESCE(dm.dm_pipe_yn, 'N') AS pipe_yn,
+				dm.dm_length as length,
+				dm.dm_soyouja as souja,
+				dm.dm_master_yn as master_yn,
+				dm_dosi_seq as dosi_seq,
+				di.di_business_nm AS business_nm,
+				di.di_strdate AS strdate,
+				di.di_enddate AS enddate,
+				di.di_adm_office AS adm_office,
+				di.di_business_oper AS business_oper,
+				di.di_complete_date AS complete_date,
+				di.di_complete_yn AS complete_yn,
+				j.dd_dept_nm AS dept_nm,
+				j.dd_manager AS manager,
+				j.dd_contact_num AS contact_num,
+				TRIM(CONCAT(dm.dm_sido_nm, ' ', dm.dm_sgg_nm, ' ', dm.dm_ri_nm, ' ', dm.dm_jibun)) AS address
+	
+			FROM dosi_master dm
+			LEFT JOIN dosi_info di ON di.di_dosi_no=dm.dm_dosi_no
+			left JOIN (
+				SELECT dd.dd_dosi_no,dd.dd_dept_nm,dd.dd_manager,dd.dd_contact_num,dd.dd_dept_seq,(row_number() over()) as NO 
+				FROM dosi_dept dd
+			) j ON dm.dm_dosi_no=j.dd_dosi_no AND j.no=1
 
 		WHERE 1 = 1
 		) AS r
@@ -176,6 +173,9 @@
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and dm_dosi_no=#{idx}
 		</if>
+    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pnu)">
+      AND dm_pnu=#{pnu}
+    </if>
 	</select>
 
 	<select id="selectSosokData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -189,6 +189,9 @@
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and dm_dosi_no=#{idx}
 		</if>
+    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pnu)">
+      AND dm_pnu=#{pnu}
+    </if>
 	</select>
 
 	<select id="selectDeptData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -198,6 +201,15 @@
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and dd_dosi_no=#{idx}
 		</if>
+    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pnu)">
+        AND dd_pnu=#{pnu}
+    </if>
+	</select>
+	
+	<select id="selectDosiNoByPnu" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    SELECT dm_dosi_no
+    FROM dosi_master
+    WHERE dm_pnu = #{pnu}
 	</select>
 
 	<select id="selectDosiNextNo" resultType="HashMap" parameterType="HashMap">

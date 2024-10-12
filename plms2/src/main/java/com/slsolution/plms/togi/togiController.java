@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,11 +59,10 @@ public class togiController {
 	@GetMapping(path="/menu04_1") //http://localhost:8080/api/get/dbTest
     public ModelAndView menu04_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		HashMap params = new HashMap();
-		ArrayList<HashMap> list=new ArrayList<HashMap>();
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 
-		ModelAndView mav=new ModelAndView();
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("jisaList",jisalist);
 		mav.addObject("sidoList",sidolist);
 
@@ -87,17 +86,19 @@ public class togiController {
 		mav.setViewName("content/togi/landReg");
 		return mav;
 	}
+	
+	// 토지 개발정보
 	@GetMapping(path="/landDevInfo") //http://localhost:8080/api/get/dbTest
     public ModelAndView landDevInfo(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 
-		ModelAndView mav=new ModelAndView();
+		ModelAndView mav = new ModelAndView();
 
 		HashMap params = new HashMap();
-
 		String idx = httpRequest.getParameter("idx");
-
+		String index = httpRequest.getParameter("index");
+		
 		params.put("idx",idx);
-		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		
 		ArrayList<HashMap> data = mainService.selectQuery("togiSQL.selectDaepyoData",params);
 		ArrayList<HashMap> sosokData = mainService.selectQuery("togiSQL.selectSosokData",params);
 		ArrayList<HashMap> fileList = mainService.selectQuery("togiSQL.selectAtcFileList",params);
@@ -118,10 +119,37 @@ public class togiController {
 		mav.addObject("masterSosokList", masterSosokData);
 		mav.addObject("dosiApprovalList", dosiApprovalList);
 
-
 		mav.setViewName("content/togi/landDevInfo");
 		return mav;
 	}
+	
+	// pnu 에 해당하는 dosi_master 정보 있는지 조회
+	@GetMapping(path="/checkPnu")
+	public ResponseEntity<?> checkPnu(HttpServletRequest httpRequest) throws Exception {
+
+	    // HttpServletRequest를 사용하여 파라미터 읽기
+	    String pnu = httpRequest.getParameter("pnu");
+
+	    HashMap<String, Object> params = new HashMap<>();
+	    params.put("pnu", pnu);
+
+	    // pnu 값으로 dm_dosi_no 조회
+	    ArrayList<HashMap> pnuData = mainService.selectQuery("togiSQL.selectDosiNoByPnu", params);
+
+	    if (pnuData.isEmpty()) {
+	        // pnu에 해당하는 데이터가 없을 경우 404 상태 반환
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("토지개발대상토지가 아닙니다.");
+	    }
+
+	    // 조회된 dm_dosi_no 반환
+	    String dmDosiNo = (String) pnuData.get(0).get("dm_dosi_no");
+	    HashMap<String, String> result = new HashMap<>();
+	    result.put("dm_dosi_no", dmDosiNo);
+
+	    return ResponseEntity.ok(result);  // 정상적인 경우 dm_dosi_no 반환
+	}
+
+	
 	@GetMapping(path="/landEdit") //http://localhost:8080/api/get/dbTest
     public ModelAndView landEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 
