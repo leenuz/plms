@@ -46,8 +46,13 @@ $(document).on("click","#popupCloseBtn",function(){
 const getUlCountInContentsBox = (contentsBoxElement) => {
     // contentsBoxElement 내부에서 'contents' 클래스를 가진 모든 ul 태그를 찾음
     const ulElements = contentsBoxElement.querySelectorAll('ul.contents');
+    if ($(ulElements).attr('id') || $(ulElements).attr('id') == undefined) {
+		return ulElements.length - 1;
+	}else {
+		return ulElements.length;	
+	}
     // ul 태그들의 개수를 반환
-    return ulElements.length;
+    
 }
 
 //전자결재문서 추가 버튼
@@ -96,11 +101,19 @@ $(document).on("click","#saveBtn",function(){
 		if (i == 1) {
 			infoLi.classList.add('checkboxWrap');
 			infoLi.classList.add('smallWidth');
-			
+			let hiddenInput1 = document.createElement('input');
+			hiddenInput1.type = 'hidden';
+			hiddenInput1.value = $('#dosi_no').val();
+			let hiddenInput2 = document.createElement('input');
+			hiddenInput2.type = 'hidden';
+			hiddenInput2.value = doc_key;
 			// input checkbox 세팅
 			let checkboxInput = document.createElement('input');
 			checkboxInput.type = 'checkbox';
 			checkboxInput.name = 'landDevInfo_eDocFile';
+			
+			infoLi.appendChild(hiddenInput1);
+			infoLi.appendChild(hiddenInput2);
 			infoLi.appendChild(checkboxInput);
 			checkboxInput.id ='landDevInfo_eDocView_Checkbox_' + ulCount;
 			
@@ -155,6 +168,9 @@ $(document).on("click","#saveBtn",function(){
 			} else {
 				console.log("response.success N");
 			}
+			if ($('#approvalList .notData').length > 0) {
+				$('#approvalList .notData').remove();
+			}
 		},
 		error:function(jqXHR,textStatus,errorThrown){
 			alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
@@ -169,7 +185,7 @@ $(document).on("click",".delBtn",function(){
 	const clickedFiles = document.querySelectorAll('input[name="landDevInfo_eDocFile"]:checked');
 	console.log(clickedFiles);
 	let dataArr = [];
-	if (clickedFiles.length > 0) {
+	if (clickedFiles.length == 0) {
 		alert('체크된 리스트가 없습니다.');
 		return;
 	}
@@ -213,6 +229,10 @@ $(document).on("click",".delBtn",function(){
 			} else {
 				console.log("response.success N");
 			}
+			if($('#approvalList ul').length == 0) {
+				let notData = '<ul class="contents notData" style="justify-content:center"><li>데이터가 없습니다.</li></ul>';
+				$('#approvalList').append(notData);
+			}
 		},
 		error:function(jqXHR,textStatus,errorThrown){
 			alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
@@ -224,7 +244,7 @@ $(document).on("click",".delBtn",function(){
 
 //완료처리버튼 클릭
 $(document).on("click",".completeBtn",function(){
-	console.log('토지개발 > 상세정보 > 완료처리 시작');
+	//console.log('토지개발 > 상세정보 > 완료처리 시작');
 	let dataObj = {};
 	
 	dataObj.dosiNo = $('#dosi_no').val();
@@ -259,10 +279,45 @@ $(document).on("click",".completeBtn",function(){
 			}
 		});
 	}
-	 
-	
-	
 });
+
+// 삭제버튼 
+$(document).on("click",".deleteBtn",function(){
+	// console.log('토지개발 > 상세 > 삭제 시작');
+	
+	if(confirm('해당 토지 개발정보를 삭제하시겠습니까?')) {
+		let dataObj = {};
+	
+		dataObj.dosiNo = $('#dosi_no').val();
+		let url="/togi/DosiDelete";
+		$.ajax({
+			url:url,
+		   	type:'POST',
+		   	contentType:"application/json",
+		   	data:JSON.stringify(dataObj),
+	
+			dataType:"json",
+			beforeSend:function(request){
+				loadingShow();
+			},
+			success:function(response){
+				loadingHide();
+				console.log(response);
+				if (response.result){
+					alert('삭제 되었습니다.');
+					window.location = '/togi/menu04_1';
+				} else {
+					console.log("response.success N");
+				}
+			},
+			error:function(jqXHR,textStatus,errorThrown){
+				alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+				return false;
+			}
+		});
+	}
+});
+
 function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
 }

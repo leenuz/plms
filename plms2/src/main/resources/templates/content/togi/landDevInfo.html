@@ -231,8 +231,8 @@
 								</button>
 							</li>
 						</ul>
-						<ul class="contents"  th:each="sosok, iterStat : ${masterSosokList}" th:if="${#lists.size(masterSosokList) == 0}">
-						<li>데이터가 없습니다.</li>
+						<ul class="contents" style="justify-content:center" th:if="${masterSosokList == null || masterSosokList.isEmpty()}">
+							<li>데이터가 없습니다.</li>
 						</ul>
 					</div>
 				</div>
@@ -306,6 +306,9 @@
 							<li class="title fileNameWidth">파일명</li>
 							<li class="title">파일보기</li>
 						</ul>
+						<ul class="contents" style="justify-content:center" th:if="${fileList == null || fileList.isEmpty()}">
+							<li>데이터가 없습니다.</li>
+						</ul>
 						<ul class="contents" th:each="file, iterStat : ${fileList}">
 							<li class="content">
 								<input type="text" th:placeholder="${#dates.format(file.wdate, 'yyyy-MM-dd HH:mm')}" readonly class="notWriteInput" />
@@ -343,6 +346,9 @@
 						</ul>
 						 
 						<div class="contentsBox" id="approvalList">
+						<ul class="contents notData" style="justify-content:center" th:if="${dosiApprovalList == null || dosiApprovalList.isEmpty()}">
+							<li>데이터가 없습니다.</li>
+						</ul>
                             <ul class="contents" id="fileListUl" th:each="docs, iterStat : ${dosiApprovalList}">
                                 <li class="content smallWidth checkboxWrap">
                                 	<input type="hidden" th:value="${docs.dosi_no}">
@@ -375,8 +381,6 @@
 				</div>
 			</section>
 
-[[${resultData}]]
-완료처리
 			<div class="finalBtnBox btnWrap">
 				<button class="finalBtn prevBtn" onclick="history.back();">이전</button>
 				<button class="finalBtn deleteBtn">삭제</button>
