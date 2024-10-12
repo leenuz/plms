@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default_layout}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link th:href="@{/css/common.css}" rel="stylesheet" />
+<link rel="stylesheet" href="/css/noti/menu01.css" />
+<script src="/js/noti/menu01.js"></script>
+
+<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
+<style>
+div.dt-top-container {
+	display: grid;
+	grid-template-columns: auto auto auto;
+}
+
+div.dt-center-in-div {
+	margin: 0 auto;
+	float: right;
+	margin-right: 30px;
+}
+
+div.dt-center-in-div>div {
+	display: inline;
+}
+
+div.dt-filter-spacer {
+	margin: 10px 0;
+	border: 1px solid red;
+}
+
+.dt-title {
+	text-align: center;
+	width: 180px;
+	float: left;
+}
+
+.dt-buttons {
+	display: inline-block;
+	width: 180px;
+}
+
+.dt-length {
+	display: inline-block;
+}
+
+.dt-button {
+	color: white;
+	background-color: #4e5871;
+	font-size: 15px;
+	font-weight: 600;
+	border-radius: 10px;
+	background-image: url(/assets/media/menu01/download.png);
+	background-size: 11px;
+	background-repeat: no-repeat;
+	background-position: 123px center;
+	text-aline: left;
+	margin-right: 10px;
+	width: 159px;
+	height: 38px;
+}
+
+.dt-paging {
+	text-align: center;
+}
+
+.dt-paging-button {
+	box-sizing: border-box;
+	display: inline-block;
+	min-width: 1.5em;
+	padding: 0.5em 1em;
+	margin-left: 2px;
+	text-align: center;
+	text-decoration: none !important;
+	cursor: pointer;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	background: transparent;
+	color: #007bff !important;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.bottom {
+	text-align: center;
+}
+
+.top {
+	text-align: right;
+	margin: 10px;
+}
+</style>
+<title>이설공사 확인 필지</title>
+</head>
+<!-- 참고 - 지상내역해지 menu02_2.html,js,css 복붙해서 사용 -->
+<th:block layout:fragment="content">
+	<input type="hidden" id="loginJisa" th:value="${loginJisa}" />
+	<!--이설공사 확인 필지-->
+	<div id="dopcosurfaceInquire02">
+		<!--header삽입-->
+		<div class="inquire_header02"></div>
+		<div class="surfaceInquireWrappers">
+			<div class="surfaceInquireTitleBoxs">
+				<h5>이설공사 확인 필지</h5>
+			</div>
+			<form id="searchForm" onSubmit="return false;">
+
+				<section class="surfaceInquireSectionBoxs">
+					<div class="surfaceInquireSectionCont">
+						<div class="surfaceInquireSectionContDevide">
+							<ul class="selectContent sectionMenuListBoxs">
+								<li class="selectTitle"><p>지사</p></li>
+								<!--수정부분 지사-->
+								<div class="surfaceInquireSelectWrappers">
+									<select name="jisa" class="surfaceInquireHiddenSelect02"
+										id="surfaceInquireHiddenSelect02_1" hidden>
+										<option value="">전체</option>
+										<th:block th:each="val:${jisaList}">
+											<option th:text="${val.jm_jisa_name}"
+												th:value="${val.jm_jisa_name}"></option>
+										</th:block>
+									</select>
+								</div>
+								<!--보여지는 셀렉박스-->
+								<div class="surfaceInquireSelects">
+									<button class="surfaceInquireSelectsTitleBtn" id="jisaNameDiv">전체</button>
+									<div class="sufaceSelectList">
+										<ul class="surfaceSelectListMember">
+											<li><p>전체</p></li>
+											<th:block th:each="val:${jisaList}">
+												<li><p th:text="${val.jm_jisa_name}">Y</p></li>
+											</th:block>
+										</ul>
+									</div>
+								</div>
+							</ul>
+							
+							<!-- 이설반영일자 - 조건 추가를 대비햐여 미삭제 -->
+							<!-- 
+							<ul class="inputControlBoxs sectionMenuListBoxs">
+								<li class="selectTitle"><p>이설반영일자</p></li>
+								<div class="inputControlList dateListBox">
+									<input type="date" name="start_date" /> <span>-</span> <input
+										type="date" name="end_date" />
+								</div>
+							</ul>-->
+							
+							<!--구분-->
+							<ul class="selectContent sectionMenuListBoxs">
+								<li class="selectTitle"><p>구분</p></li>
+								<!--수정부분 지사-->
+								<div class="surfaceInquireSelectWrappers">
+									<select 
+										name="gubun" 
+										class="surfaceInquireHiddenSelect02"
+										id="surfaceInquireSelectBox02_3" hidden>
+										<option value="">전체</option>
+										<option value="N">신규대상</option>
+										<option value="C">해지대상</option>
+									</select>
+								</div>
+								<!--보여지는 셀렉박스-->
+								<div class="surfaceInquireSelects">
+									<button class="surfaceInquireSelectsTitleBtn">전체</button>
+									<div class="sufaceSelectList smallHeight">
+										<ul class="surfaceSelectListMember">
+											<li><p>전체</p></li>
+											<li><p>신규대상</p></li>
+											<li><p>해지대상</p></li>
+										</ul>
+									</div>
+								</div>
+							</ul>
+
+						</div>
+
+						<!-- 라디오버튼 있는 섹션-->
+						<div class="surfaceInquireSectionContDevide">
+							<p class="devideSecondTitles">주소</p>
+							<div class="surfaceInquireSectionRadioBoxs">
+								<ul class="radioBoxs">
+									<li><input type="radio" name="askMenu01" value="0" checked /><span>입력형</span>
+									</li>
+									<li class="addressInput"><input name="addressFull"
+										type="search" placeholder="주소입력" class="searchInputBox02" />
+									</li>
+								</ul>
+								<ul class="radioBoxs menuRadioEvet02">
+									<li><input type="radio" name="askMenu01" value="1" /><span>선택형</span>
+									</li>
+
+									<!--시도-->
+									<li>
+										<!--수정부분 지사-->
+										<div class="surfaceInquireSelectWrappers">
+											<select name="sido" id="sido" hidden>
+												<option value="">전체</option>
+												<th:block th:each="val:${sidoList}">
+													<option th:text="${val.sm_name}" th:value="${val.sm_name}"></option>
+												</th:block>
+											</select>
+										</div> <!--보여지는 셀렉박스-->
+										<div class="surfaceInquireSelects">
+											<button class="surfaceInquireSelectsTitleBtn" id="sidoText">전체</button>
+											<div class="sufaceSelectList smallHeight">
+												<ul class="surfaceSelectListMember">
+													<li><p>전체</p></li>
+													<th:block th:each="val:${sidoList}">
+														<li><p th:text="${val.sm_name}">Y</p></li>
+														<th:block>
+												</ul>
+											</div>
+										</div>
+									</li>
+									<!--시군구-->
+									<li>
+										<!--수정부분 지사-->
+										<div class="surfaceInquireSelectWrappers">
+											<select name="sgg" id="sgg" hidden>
+												<option value="">전체</option>
+											</select>
+										</div> <!--보여지는 셀렉박스-->
+										<div class="surfaceInquireSelects">
+											<button class="surfaceInquireSelectsTitleBtn" id="sggText">전체</button>
+											<div class="sufaceSelectList smallHeight">
+												<ul class="surfaceSelectListMember" id="sggUl">
+													<li><p>전체</p></li>
+													<!--   <th:block th:each="sido:${sidolist}">
+                                <li><p th:text="${sido.sm_name}"></p></li>
+                            </th:block> -->
+												</ul>
+											</div>
+										</div>
+									</li>
+									<!--읍면동-->
+									<li>
+										<div class="surfaceInquireSelectWrappers">
+											<select name="emd" id="emd" hidden>
+												<option value="">전체</option>
+											</select>
+										</div> <!--보여지는 셀렉박스-->
+										<div class="surfaceInquireSelects">
+											<button class="surfaceInquireSelectsTitleBtn" id="emdText">전체</button>
+											<div class="sufaceSelectList smallHeight">
+												<ul class="surfaceSelectListMember" id="emdUl">
+													<li><p>전체</p></li>
+												</ul>
+											</div>
+										</div>
+									</li>
+									<!--리-->
+									<li>
+										<div class="surfaceInquireSelectWrappers">
+											<select name="ri" id="ri" hidden>
+												<option value="">전체</option>
+											</select>
+										</div> <!--보여지는 셀렉박스-->
+										<div class="surfaceInquireSelects">
+											<button class="surfaceInquireSelectsTitleBtn" id="riText">전체</button>
+											<div class="sufaceSelectList smallHeight">
+												<ul class="surfaceSelectListMember" id="riUl">
+													<li><p>전체</p></li>
+												</ul>
+											</div>
+										</div>
+									</li>
+									<!--지번-->
+									<li style="padding: 0px 3px">
+										<div class="inputControlList">
+											<input name=jibun id="jibun" type="text" placeholder="지번입력"
+												class="menuAdderssInput02" />
+										</div>
+									</li>
+								</ul>
+							</div>
+							<!--surfaceInquireSectionRadioBoxs-->
+							<div class="surfaceInquireSectionBtnBoxs">
+								<button class="surfaceInquireRegisterBtn" id="registerBtn">조회하기</button>
+								<!--<a
+                  class="queryBtn"
+                  href="/jisang/landTerminationRegistration?idx=J_007476"
+                  >해지등록</a
+                >-->
+							</div>
+						</div>
+					</div>
+					<!--surfaceInquireSectionCont-->
+				</section>
+			</form>
+			<main>
+				<div class="surfaceInquireMainContentWrapper">
+					<div class="surfaceInquireMainContent">
+						<div class="dataTitles">
+							<h5>
+								총 검색 건 수<span id="dataTableTotalCount"></span>건
+							</h5>
+						</div>
+					</div>
+				</div>
+
+				<div class="">
+					<table id="userTable" class="cell-border nowrap"
+						style="width: 130%;">
+						<thead>
+							<tr>
+								<th>순번</th>
+								<th>담당지사</th>
+								<th>주소</th>
+								<th>지목</th>
+								<th>지적면적(㎡)</th>
+								<th>구간명</th>
+								<th>구분</th>
+								<th>이설반영일자</th>
+								<th>지도보기</th>
+								<th>확인</th>
+							</tr>
+						</thead>
+						<!-- tbody 태그 필요 없다. -->
+					</table>
+				</div>
+
+				<!-- 데이터박스 -->
+
+				<!--dataBoxswrappers-->
+
+				<!--boardPageBoxs-->
+		</div>
+	</div>
+	</main>
+	</div>
+	</div>
+	<script type="module" src="/js/module/surfaceMain.js"></script>
+	<script src="/js/menu01/menuLinkEvet.js"></script>
+	<script src="/js/menu01/radioEvet.js"></script>
+	<script src="/js/menu01/resultPageEvet.js"></script>
+</th:block>
+</html>

@@ -94,6 +94,12 @@ window.addEventListener("load", () => {
 			return surfaceSelectEvet("#relocationCheckPiljiDiv .surfaceInquireSelectsTitleBtn", "#relocationCheckPiljiDiv .sufaceSelectList"),
 				handleCheckboxes(relocationCheckPiljiDiv);
 		}
+		//이설공사 확인필지
+		else if (pathName === `/land/noti/menu01`) {
+			const dopcosurfaceInquire02 = document.getElementsByName("dopcosurfaceInquire02");
+			return surfaceSelectEvet("#dopcosurfaceInquire02 .surfaceInquireSelectsTitleBtn", "#dopcosurfaceInquire02 .sufaceSelectList"),
+				handleCheckboxes(dopcosurfaceInquire02);
+		}
 		//이슈코드 관리
 		else if (pathName === `/issue/codeMgmt` || pathName === `/issue/menu06_1`) {
 			return issueManageSelectEvet("#dopcoIssueManage .issueManageSelectsTitleBtn", "#dopcoIssueManage .sufaceSelectList", "#dopcoIssueManage .sufaceSelectList .surfaceSelectListMember", ".issueManageHiddenSelect");
