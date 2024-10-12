@@ -689,7 +689,6 @@ $(document).on("click","#finalBtn",function(){
            console.log("----------jsonobj------------");
            console.log(json); // JSON 문자열 출력*/
            
-           return;
        url="/togi/insertDosiList"; 
 	   $.ajax({
 	   			
@@ -853,10 +852,10 @@ $(document).on("click", "#selectBtn", function() {
 
                              infoLi.appendChild(checkboxInput);
                               if (i == 1) {
-checkboxInput.id ='landReg_checkbox_' + index;
-                             }else if (i == 4){
-checkboxInput.id ='landReg_MainParcelChk_' + index;
-checkboxInput.name ='daepyoPilji';
+								checkboxInput.id ='landReg_checkbox_' + index;
+								                             }else if (i == 4){
+								checkboxInput.id ='landReg_MainParcelChk_' + index;
+								checkboxInput.name ='daepyoPilji';
 
                              }
                              // label 세팅
@@ -941,8 +940,43 @@ checkboxInput.name ='daepyoPilji';
                              addressInput.name = 'address_'+index;
                              addressInput.type = 'text';
                              addressInput.value=address;
+                             
+                             const sido_nm_input = document.createElement('input');
+                             sido_nm_input.id = 'sido_nm_'+index;
+                             sido_nm_input.name = 'sido_nm';
+                             sido_nm_input.type = 'hidden';
+                             sido_nm_input.value = sido_nm;
+                             
+                             const sgg_nm_input = document.createElement('input');
+                             sgg_nm_input.id = 'sgg_nm_'+index;
+                             sgg_nm_input.name = 'sgg_nm';
+                             sgg_nm_input.type = 'hidden';
+                             sgg_nm_input.value = sgg_nm;
+                             
+                             const emd_nm_input = document.createElement('input');
+                             emd_nm_input.id = 'emd_nm_'+index;
+                             emd_nm_input.name = 'emd_nm';
+                             emd_nm_input.type = 'hidden';
+                             emd_nm_input.value = emd_nm;
+                             
+                             const ri_nm_input = document.createElement('input');
+                             ri_nm_input.id = 'ri_nm_'+index;
+                             ri_nm_input.name = 'ri_nm';
+                             ri_nm_input.type = 'hidden';
+                             ri_nm_input.value = ri_nm;
+                             
+                             const jibun_input = document.createElement('input');
+                             jibun_input.id = 'jibun_'+index;
+                             jibun_input.name = 'jibun';
+                             jibun_input.type = 'hidden';
+                             jibun_input.value = jibun;
+                             
                              // div에 input 넣기
-
+                             addressDiv.appendChild(sido_nm_input);
+                             addressDiv.appendChild(sgg_nm_input);
+                             addressDiv.appendChild(emd_nm_input);
+                             addressDiv.appendChild(ri_nm_input);
+                             addressDiv.appendChild(jibun_input);
                              addressDiv.appendChild(addressInput);
                              infoLi.appendChild(addressDiv);
 
@@ -1097,7 +1131,7 @@ $(document).on('change', 'input[name="daepyoPilji"]', function(event) {
     const souja = daepyoCheck.querySelector(`input[name="souja_${id}"]`).value;
 
     if (hakbo === '선택') {
-        alert("권리확보를 필수로 선택하셔야합니다.");
+        alert("권리확보를 필수로 선택하셔야합니다.11");
         checkedbox.checked = false;
         return;
     } else {

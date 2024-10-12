@@ -358,8 +358,6 @@ const landEditExcelPopEvet = () => {
           }
       };
       xhr.send();
-      console.log('landEditExcelPopWrapper 작동');
-
 
        landEditExcelPopBtn.addEventListener("click" , () => {
 
@@ -377,7 +375,6 @@ const landEditExcelPopEvet = () => {
        const scripts = element.getElementsByTagName('script');
        for (let i = 0; i < scripts.length; i++) {
            const script = document.createElement('script');
-           console.log(script);
            script.textContent = scripts[i].textContent;
            document.body.appendChild(script).parentNode.removeChild(script);
        }
@@ -462,12 +459,95 @@ $(document).on('click', '.moreSelectBtn', function() {
     const nearByContent = $(this).closest('.selectContentArea');
     const nearBySelectBox = nearByContent.find('select');
     nearBySelectBox.val(moreSelectBtnText);
-    console.log(`Selected value: ${nearBySelectBox.val()}`);
 });
 
 
+// 드래그 앤 드롭 영역 파일 첨부 관련 코드 시작
+	var objDragAndDrop = $(".fileUploadBox");
+	
+	// 드래그 앤 드롭 영역에 파일이 들어왔을 때
+	$(".fileUploadBox").on("dragenter", function(e) {
+	    e.stopPropagation();
+	    e.preventDefault();
+	    $(this).css('border', '2px solid #0B85A1');
+	});
 
-/* 첨부파일 */
+	// 드래그 앤 드롭 영역에서 파일을 드래그할 때
+	$(".fileUploadBox").on("dragover", function(e) {
+	    e.stopPropagation();
+	    e.preventDefault();
+	});
+
+	// 파일을 드롭할 때
+	$(".fileUploadBox").on("drop", function(e) {
+	    e.preventDefault();
+	    $(this).css('border', '2px dotted #0B85A1');
+	    var files = e.originalEvent.dataTransfer.files; // 드래그한 파일 객체를 가져옴
+	    handleFileUpload(files, $(this));  // 파일 처리 함수 호출
+	});
+
+	// 드래그 앤 드롭 영역을 클릭하면 파일 선택창을 띄움
+	objDragAndDrop.on('click', function(e) {
+	    if (!e.isTrigger) {  // 이 조건문은 이 이벤트가 수동 트리거된 경우를 방지합니다.
+	        $('input[type=file][name="fileUpload"]').trigger('click'); // 파일 선택 창을 띄우는 트리거
+	    }
+	});
+	 
+	$('input[type=file][name="fileUpload"]').on('change', function(e) {
+	    var files = e.originalEvent.target.files; // 파일 선택창에서 선택된 파일들
+	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
+	});
+    
+	var rowCount = document.querySelectorAll("#fileListDiv > ul").length + 1;  // 현재 렌더된 파일 개수 계산
+	
+    function handleFileUpload(files,obj) {
+       for (var i = 0; i < files.length; i++) { // 선택된 파일들을 하나씩 처리
+            var fd = new FormData(); // FormData 객체 생성 (파일 업로드를 위한 객체)
+            fd.append('file', files[i]); // 파일 객체를 FormData에 추가
+     		
+            // var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
+			var status = new createStatusbar($("#fileListDiv"), files[i].name, files[i].size, rowCount, files[i].nfname); // 파일 업로드 상태바 생성
+            sendFileToServer(fd,status); // 서버로 파일 전송 함수 호출
+			
+			rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
+       }
+    }
+    
+// Status bar 생성 함수
+    function createStatusbar(obj, name, size, no){
+		
+		var sizeStr="";
+        var sizeKB = size/1024; // 파일 크기를 문자열로 표시하기 위한 변수
+        if(parseInt(sizeKB) > 1024){
+            var sizeMB = sizeKB/1024;
+            sizeStr = sizeMB.toFixed(2)+" MB"; // MB로 변환
+        }else{
+            sizeStr = sizeKB.toFixed(2)+" KB"; // KB로 표시
+        }
+		
+        var row = '<ul class="contents" id="fileListUl">';
+		row += '<li class="selectWidth content checkboxWrap">';
+		row += '<input type="checkbox" id="landEdit_attachFile'+no+'" name="landEdit_attachFile" >';
+		row += '<label for="landEdit_attachFile'+no+'"></label>';
+		row += '</li>';
+		row += '<li class="content registDateWidth">';
+		row += '<input type="text" value="" readonly class="notWriteInput" name="registDateWidth"/>';
+		row += '</li>';
+		row += '<li class="content fileNameWidth">';
+		row += '<input type="text" value="' + name + '" id="filename" readonly class="notWriteInput" />';
+		row += '<input type="hidden" name="newFileCheckYn" value="Y">'; //
+		row += '</li>';
+		row += '<li class="content viewBtnBox">';
+		row += '<button class="viewDetailButton lightBlueBtn">보기</button>';
+		row += '</li>';
+		row += '</ul>';
+		
+        obj.append(row); // 파일 목록이 있는 DOM 요소 뒤에 파일 정보를 추가
+		
+		var radio=$(row).find('input'); // row에서 input 요소를 찾음
+		$(radio).find('input').attr("disabled",false); // 체크박스가 비활성화되지 않도록 설정
+    }
+/* 첨부파일 
 var fileNo = 1;
 	var uploadFiles=new Array();
 	  $(document).ready(function(){
@@ -571,14 +651,14 @@ var fileNo = 1;
 	                }
 
                     	 });
-
+*/
 /*선택파일 삭제*/
 $(document).on("click","#deleteSelectedBtn",function(){
-	const clickedAttachFiles = document.querySelectorAll('input[name="landEdit_myPcFiles"]:checked');
-
+	const clickedAttachFiles = document.querySelectorAll('input[name="landEdit_attachFile"]:checked');
 	for(var i=0;i<clickedAttachFiles.length;i++){
 		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
-		$(delEle).remove();
+		$(delEle).css('display', 'none');
+		$(delEle).find('input[name="newFileCheckYn"]').val('D');
 
 	}
 
@@ -737,13 +817,22 @@ $(document).on("click", "#selectBtn", function() {
          const address = jusoInfo.querySelector('li.popContent02').textContent + " " +jusoInfo.querySelector('li.popContent03').textContent;
          const jimok = jusoInfo.querySelector('li.popContent06').textContent
          const area = jusoInfo.querySelector('li.popContent07').textContent
-
+		 let sido_nm = jusoInfo.querySelector('li.popContent0201').textContent;
+		 let sgg_nm = jusoInfo.querySelector('li.popContent0202').textContent;
+		 let emd_nm = jusoInfo.querySelector('li.popContent0203').textContent;
+		 let ri_nm = jusoInfo.querySelector('li.popContent0204').textContent;
+		 let jibun = jusoInfo.querySelector("li.popContent03").textContent;
         if (checkno === 0) {
         // 선택된 칸에 데이터 넣기
           $("input[name='address_" + id + "']").val(address);
           $("input[name='myeonjuk_" + id + "']").val(area);
           $("input[name='jimok_" + id + "']").val(jimok);
-
+			
+		  $("input#sido_nm_" + id).val(sido_nm);
+          $("input#sgg_nm_" + id).val(sgg_nm);
+          $("input#emd_nm_" + id).val(emd_nm);
+          $("input#ri_nm_" + id).val(ri_nm);
+          $("input#jibun_" + id).val(jibun);
           }else{
 //                 const contentsBoxElement2 = document.querySelector('#togiInfoDiv .contentsBox');
 //                const index2 = getUlCountInContentsBox(contentsBoxElement2);
@@ -957,7 +1046,8 @@ $(document).on("click","#moveMap",function(){
 
 // 저장버튼
 $(document).on("click",".saveBtn",function(){
-
+	if(confirm('토지개발 정보를 수정하시겠습니까?')) {
+	
 var formSerializeArray = $('#saveForm').serializeArray();
 
        len = formSerializeArray.length;
@@ -1036,12 +1126,35 @@ var formSerializeArray = $('#saveForm').serializeArray();
 	   	}
 	   	dataObj.deptDatas=deptDatas;
 		dataObj.gubun="modify";
+		
+		const attachFileUls = document.querySelectorAll('input[name="landEdit_attachFile"]');
+	
+		// 첨부파일
+		let files = new Array();
+		let fileObj = {'seq':'', 'file_seq':'', 'fname':'', 'wdate':'', 'fpath':'', 'idx':''};
+		for (var i = 0; i < attachFileUls.length; i++) {
+			fileObj = {'seq':'', 'file_seq':'', 'fname':'', 'wdate':'', 'fpath':'', 'idx':''};
+			let file_path = $(attachFileUls[i]).prev().prev().val() || '';
+			let idx = $(attachFileUls[i]).prev().prev().prev().prev().prev().val() || '';
+			let seq = $(attachFileUls[i]).prev().prev().prev().prev().val() || '';
+			let file_seq = $(attachFileUls[i]).prev().prev().prev().val() || '';
+			var fname = $(attachFileUls[i]).parent().parent().find("#filename").val() || '';
+			var wdate = $(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val() || '';
+			let newFileCheckYn = $("input[name='newFileCheckYn']").eq(i).val();
+			fileObj.wdate = wdate;
+			fileObj.fname = fname;
+			fileObj.fpath = file_path;
+			fileObj.seq = seq;
+			fileObj.idx = idx;
+			fileObj.file_seq = file_seq;
+			fileObj.newFileCheckYn = newFileCheckYn;
+			files.push(fileObj);
+		}
+		
+		dataObj.files = files;
 //		dataObj.dosiNo=""; //수정일때는 들어간다
-       console.log("**dataObj**");
-       console.log(dataObj);
-//       location.href = "/togi/landDevInfo?idx=" + dataObj.dosiNo;
-
-     /*  url="/togi/insertDosiList";
+//       location.href = "/togi/insertDosiList?idx=" + dataObj.dosiNo;
+     /* */ url="/togi/insertDosiList";
 	   $.ajax({
 
 	   				url:url,
@@ -1051,13 +1164,11 @@ var formSerializeArray = $('#saveForm').serializeArray();
 
 	   				dataType:"json",
 	   				beforeSend:function(request){
-	   					console.log("beforesend ........................");
 	   					loadingShow();
 	   				},
 	   				success:function(response){
 	   					loadingHide();
-	   					console.log(response);
-	   					if (response.success==="Y"){
+	   					if (response.result){
 							alert("정상적으로 등록 되었습니다.");
 //                            location.href = "/togi/landDevInfo?idx=" + dataObj.dosiNo;
 	   					}
@@ -1071,6 +1182,40 @@ var formSerializeArray = $('#saveForm').serializeArray();
 	   				}
 
 	   		});
-	*/
+	   		}
+});
 
-})
+function sendFileToServer(formData,status) {
+        var uploadURL = "/togi/fileUpload/post"; //Upload URL
+        var extraData = {}; //Extra Data.
+        var jqXHR = $.ajax({
+			xhr: function() {
+			    var xhrobj = $.ajaxSettings.xhr(); // 기본 XMLHttpRequest 객체 생성
+			    if (xhrobj.upload) {
+			        xhrobj.upload.addEventListener('progress', function(event) {
+			            var percent = 0;
+			            var position = event.loaded || event.position;
+			            var total = event.total;
+			            if (event.lengthComputable) {
+			                percent = Math.ceil(position / total * 100); // 파일 업로드의 진행 상황을 계산
+			            }
+			            // status.setProgress(percent);  // 업로드 진행 상황을 status에 반영 (현재 주석 처리됨)
+			        }, false);
+			    }
+			    return xhrobj;
+			},
+            url: uploadURL,
+            type: "POST",
+            contentType:false,
+            processData: false,
+            cache: false,
+            data: formData,
+            success: function(data){
+            }
+        }); 
+    }
+
+function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
+	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
+}
+

@@ -1,540 +1,512 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-
-      layout:decorate="~{layout/default_layout}">
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/default_layout}">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link
-          rel="stylesheet"
-          as="style"
-          crossorigin
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link
+		rel="stylesheet"
+		as="style"
+		crossorigin
+		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+	<link th:href="@{/css/common.css}" rel="stylesheet" />
 
+	<link rel="stylesheet" href="/css/togi/landEdit.css" />
+	<style>
+		div.dt-top-container {
+			display: grid;
+			grid-template-columns: auto auto auto;
+		}
 
+		div.dt-center-in-div {
+			margin: 0 auto;
+			float: right;
+			margin-right: 30px;
+		}
 
+		div.dt-center-in-div>div{
+			display:inline;
+		}
 
+		div.dt-filter-spacer {
+			margin: 10px 0;
+			border:1px solid red;
+		}
 
+		.dt-title{
+			text-align:center;
+			width:180px;
+			float:left;
+		}
+		
+		.dt-buttons{
+			display:inline-block;
+			width:180px;
+		}
+		
+		.dt-length{
+			display:inline-block;
+		}
 
+		.dt-button{
+			color:white;
+			background-color:#4e5871;
+			font-size:15px;
+			font-weight:600;
+			border-radius:10px;
+			background-image:url(/assets/media/menu01/download.png);
+			background-size:11px;
+			background-repeat:no-repeat;
+			background-position:123px center;
+			text-aline:left;
+			margin-right:10px;
+			width:159px;
+			height:38px;
+		}
 
+		.dt-paging {
+			text-align: center;
+		}
 
-  <link th:href="@{/css/common.css}" rel="stylesheet" />
+		.dt-paging-button {
+			box-sizing: border-box;
+			display: inline-block;
+			min-width: 1.5em;
+			padding: 0.5em 1em;
+			margin-left: 2px;
+			text-align: center;
+			text-decoration: none !important;
+			cursor: pointer;
+			border: 1px solid transparent;
+			border-radius: 2px;
+			background: transparent;
+			color: #007bff !important;
+			font-size: 15px;
+			font-weight: 600;
+		}
 
-  <link rel="stylesheet" href="/css/togi/landEdit.css" />
+		.bottom{
+			text-align:center;
+		}
+		
+		.top{
+			text-align:right;
+			margin:10px;
+		}
+	</style>
 
-  <!-- 	<script src="/js/songyu/menu01.js"></script>	 -->
-  <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
-  <style>
-    div.dt-top-container {
-display: grid;
-grid-template-columns: auto auto auto;
-}
-
-div.dt-center-in-div {
-margin: 0 auto;
-  float: right;
-margin-right: 30px;
-
-}
-div.dt-center-in-div>div{
-
-display:inline;
-}
-
-div.dt-filter-spacer {
-margin: 10px 0;
-border:1px solid red;
-}
-
-
-.dt-title{
-
-text-align:center;
-width:180px;
-float:left;
-
-}
-.dt-buttons{
-display:inline-block;
-
-width:180px;
-
-}
-.dt-length{
-display:inline-block;
-}
-.dt-button{
-
-color:white;
-background-color:#4e5871;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-background-image:url(/assets/media/menu01/download.png);
-background-size:11px;
-background-repeat:no-repeat;
-background-position:123px center;
-text-aline:left;
-margin-right:10px;
-width:159px;
-height:38px;
-
-}
-
-.dt-paging {
-text-align: center;
-}
-
-.dt-paging-button {
-box-sizing: border-box;
-display: inline-block;
-min-width: 1.5em;
-padding: 0.5em 1em;
-margin-left: 2px;
-text-align: center;
-text-decoration: none !important;
-cursor: pointer;
-
-border: 1px solid transparent;
-border-radius: 2px;
-background: transparent;
-color: #007bff !important;
-font-size: 15px;
-font-weight: 600;
-
-
-}
-
-.bottom{
-text-align:center;
-
-}
-.top{
-
-text-align:right;
-margin:10px;
-
-}
-
-  </style>
-
-  <title>토지개발 등록</title>
+	<title>토지개발 등록</title>
 </head>
 <th:block layout:fragment="content">
-  <!-- 토지개발 수정 -->
-  <div class="landEditWrappers">
+	<!-- 토지개발 수정 -->
+	<div class="landEditWrappers">
+		<main id="landEdit">
+			<div class="mainTitle">
+			  <h1>토지개발 수정</h1>
+			</div>
+		
+			<form id="saveForm" onSubmit="return false;">
+				<!-- 기본 정보 -->
+				<section class="defaultInfo">
+					<div class="subTitle">
+						<div class="subTitleText">기본정보</div>
+					</div>
+					<div class="contWrap">
+						<div class="depth1">
+							<ul class="titles">
+								<li class="title middleWidth2" >사업명</li>
+								<li class="title titleBox" >사업기간
+									<ul class="secondTitles">
+										<li class="secondTitle">시작일</li>
+										<li class="secondTitle">종료일</li>
+									</ul>
+								</li>
+								<li class="title middleWidth2"  >시행자(발주자)</li>
+								<li class="title middleWidth2" >사업자</li>
+							</ul>
+							<ul class="contents lastContents" th:if="${daepyodata != null}">
+								<li class="content contentBox">	   
+									<input type="hidden" th:value="${daepyodata.dm_dosi_no}" id="dosi_no" name="dosiNo"> 
+									<input type="text" placeholder=""
+										name="business_nm"
+										th:value="${daepyodata.di_business_nm}" >
+								</li>
+								<li class="content contentBox2">
+									<ul class="secondContents">
+										<li class="secondContent">
+											<input type="date" placeholder=""
+												name="startDate"
+												th:value="${daepyodata.di_strdate}">
+										</li>
+										<li class="secondContent">
+											<input type="date" placeholder=""
+												name="endDate"
+												th:value="${daepyodata.di_enddate}">
+										</li>
+									</ul>
+								</li>
+								<li class="content contentBox">
+									<input type="text" placeholder=""
+										name="adm_office"
+										th:value="${daepyodata.di_adm_office}" >
+								</li>
+								<li class="content contentBox">
+									<input type="text" placeholder=""
+										name="business_oper"
+										th:value="${daepyodata.di_business_oper}" >
+								</li>
+							</ul>
+							<ul class="contents lastContents" th:if="${daepyodata == null}">
+								<li>대표 토지가 없습니다.</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+			</form>
+		
+			<!-- 시행자 관할 부서 -->
+			<section class="adminDept">
+			<div class="subTitle">
+				<div class="subTitleText" >시행자 관할 부서*</div>
+			</div>
+			<div class="contWrap">
+				<div class="depth1"  id="deptDiv">
+					<ul class="titles">
+						<li class="title">부서명</li>
+						<li class="title">담당자</li>
+						<li class="title">연락처</li>
+						<li class="title smallWidth">추가/삭제</li>
+					</ul>
+					<div class="contentsBox">
+						<ul class="contents" th:each="val:${deptdata}" id="deptUl">
+							<li class="content content01">
+								<input
+									type="text"
+									placeholder=""
+									name="dept_nm_0"
+									th:value="${val.dd_dept_nm}"/>
+							</li>
+							<li class="content content02">
+								<input
+									type="text"
+									placeholder=""
+									name="manager_0"
+									th:value="${val.dd_manager}" />
+							</li>
+							<li class="content content03">
+								<input
+									type="text"
+									placeholder=""
+									name="contact_num_0"
+									th:value="${val.dd_contact_num}"/>
+							</li>
+							<li class="content btnBox smallWidth">
+								<div class="newBtnWrap">
+									<button class="addBtn addDeptBtn miniBtn">추가</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 토지 정보 -->
+		<section class="landInfo">
+			<div class="subTitle">
+				<div class="subTitleText">토지 정보*</div>
+				<div class="subTitleBtnBox">
+					<button class="middleBtn whiteBtn excelUpBtn landEditExcelPopBtn">
+						엑셀 업로드
+					</button>
+				</div>
+			</div>
+			<div class="contWrap">
+				<div class="depth1" id="togiInfoDiv">
+					<ul class="titles">
+						<li class="title smallWidth">선택</li>
+						<li class="title smallWidth">순번</li>
+						<li class="title">권리확보</li>
+						<li class="title smallWidth">대표필지</li>
+						<li class="title middleWidth">관로저촉</li>
+						<li class="title middleWidth">담당지사</li>
+						<li class="title addressWidth">주소</li>
+						<li class="title">지목</li>
+						<li class="title">연장</li>
+						<li class="title">면적</li>
+						<li class="title middleWidth">소유자</li>
+						<li class="title middleWidth">보기</li>
+						<li class="title middleWidth">추가/삭제</li>
+					</ul>
+					<div class="contentsBox">
+						<ul class="contents" id="togiUl" th:each="val, iterStat :${resultData}">
+							<li class="content checkboxWrap smallWidth">
+								<!-- 선택 -->
+								<input type="checkbox" th:id="'landEdit_Checkbox_'+ ${iterStat.index}"  name="togiSelect" />
+								<label th:for="'landEdit_Checkbox_'+ ${iterStat.index}"  ></label>
+							</li>
+							<li class="content smallWidth">
+								<!-- 순번 -->
+								<input
+									type="text"
+									th:placeholder="${iterStat.count}"
+									readonly
+									class="notWriteInput contentsNum" />
+							</li>
+							<li class="content selectContentArea">
+								<div class="hiddenSelectBox">
+									<!-- name도 추가 -->
+									<select th:name="'hakbo_' + ${iterStat.index}" id="landDevelopmentManageSelectBox01" hidden>
+										<option value="지상권" th:selected="${val.dm_toji_type == 'JISANG'}">지상권</option>
+										<option value="미설정" th:selected="${val.dm_toji_type == ''}">미설정</option>
+										<option value="점용" th:selected="${val.dm_toji_type == 'GOVER'}">점용</option>
+										<option value="회사토지" th:selected="${val.dm_toji_type == 'DOPCO'}">회사토지</option>
+									</select>
+								</div>
+								<section class="customSelectBox">
+									<button class="customSelectView">
+										[[${val.dm_toji_type == 'JISANG' ? '지상권' :
+										(val.dm_toji_type == 'DOPCO' ? '회사토지' :
+										(val.dm_toji_type == '' ? '미설정' :
+										(val.dm_toji_type == 'GOVER' ? '점용' : val.dm_toji_type)))
+										}]]
+									</button>
+									<ul class="customSelectBtns"></ul>
+								</section>
+							</li>
+							<li class="content checkboxWrap smallWidth">
+								<!-- 대표필지 -->
+								<input type="checkbox" th:id="'landEditMainParcelChk_Checkbox_'+ ${iterStat.index}" name="landEditMainParcelChk_Checkbox01" th:checked="${val.dm_master_yn == 'Y'}" />
+								<label th:for="'landEditMainParcelChk_Checkbox_'+ ${iterStat.index}"  ></label>
+							</li>
+							<li class="content middleWidth">
+								<!-- 관로저촉 -->
+								<input type="text" th:value="${val.dm_pipe_yn}" th:name="'jeochok_' + ${iterStat.index}" />
+							</li>
+							<li class="content middleWidth">
+								<!-- 담당지사 -->
+								<input type="text" th:value="${val.dm_jisa}" th:name="'jisa_' + ${iterStat.index}"/>
+							</li>
+							<li class="content addressWidth">
+								<!-- 주소 -->
+								<div class="addressData">
+									<input type="hidden" name="sido_nm" th:id="'sido_nm_' + ${iterStat.index}" th:value="${val.dm_sido_nm}">
+									<input type="hidden" name="sgg_nm" th:id="'sgg_nm_' + ${iterStat.index}" th:value="${val.dm_sgg_nm}">
+									<input type="hidden" name="emd_nm" th:id="'emd_nm_' + ${iterStat.index}" th:value="${val.dm_emd_nm}">
+									<input type="hidden" name="ri_nm" th:id="'ri_nm_' + ${iterStat.index}" th:value="${val.dm_ri_nm}">
+									<input type="hidden" name="jibun" th:id="'jibun_' + ${iterStat.index}" th:value="${val.dm_jibun}">
+									<input type="text" th:value="${val.address}" th:id="'address_' + ${iterStat.index}" th:name="'address_' + ${iterStat.index}"/>
+								</div>
+								<button class="searchAddressBtn landEditSearchBtn" th:id="${iterStat.index}">
+									검색
+								</button>
+							</li>
+							<li class="content">
+								<!-- 지목 -->
+								<input type="text"th:value="${val.dm_jimok_text}" readonly class="notWriteInput" th:name="'jimok_' + ${iterStat.index}"/>
+							</li>
+							<li class="content">
+								<!-- 연장 -->
+								<input type="text" th:value="${val.dm_length}" th:id="'yeonjang_' + ${iterStat.index}" th:name="'yeonjang_' + ${iterStat.index}"/>
+							</li>
+							<li class="content">
+								<!-- 면적 -->
+								<input type="text" th:value="${val.dm_jijuk_area}" readonly class="notWriteInput" th:name="'myeonjuk_' + ${iterStat.index}"/>
+							</li>
+							<li class="content middleWidth">
+								<!-- 소유자 -->
+								<input type="text" th:value="${val.dm_soyouja}"th:name="'souja_' + ${iterStat.index}"/>
+							</li>
+							<li class="content middleWidth btnBox">
+								<!-- 보기 -->
+								<button class="viewDetailButton lightBlueBtn" id="moveMap">위치보기</button>
+							</li>
+							<li class="content middleWidth btnBox"
+								th:if="${iterStat.index == 0}">
+								<div class="newBtnWrap">
+									<button class="addBtn addTogiBtn miniBtn">추가</button>
+								</div>
+							</li>
+							<li class="content middleWidth btnBox"
+								th:unless="${iterStat.index == 0}">
+								<div class="btnWrap">
+									<button class="miniBtn addBtn">추가</button>
+								</div>
+								<div class="btnWrap">
+									<button class="miniBtn delBtn">삭제</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 대표토지 정보 -->
+		<section class="mainLandInfo">
+			<div class="subTitle">
+				<div class="subTitleText">대표토지 정보*</div>
+			</div>
+			<div class="contWrap">
+				<div class="depth1">
+					<ul class="titles">
+						<li class="title middleWidth">권리확보</li>
+						<li class="title middleWidth">관로저촉</li>
+						<li class="title addressWidth">주소</li>
+						<li class="title">지목</li>
+						<li class="title">연장</li>
+						<li class="title">면적</li>
+						<li class="title largeWidth">소유자</li>
+						<li class="title middleWidth">지도</li>
+					</ul>
+					<ul class="contents">
+						<li class="content middleWidth">
+							<input type="text" readonly class="notWriteInput" name="daepyoHakbo" th:value="${daepyodata.dm_toji_type == 'JISANG' ? '지상권' :
+								(daepyodata.dm_toji_type == 'DOPCO' ? '회사토지' :
+								(daepyodata.dm_toji_type == '' ? '미설정' :
+								(daepyodata.dm_toji_type == 'GOVER' ? '점용' : daepyodata.dm_toji_type)))}" />
+						</li>
+						<li class="content middleWidth">
+							<input type="text" readonly class="notWriteInput" name="daepyoJeochok" th:value="${daepyodata.dm_pipe_yn}" />
+						</li>
+						<li class="content addressWidth">
+							<input type="text" readonly class="notWriteInput" name="daepyoAddress" th:value="${daepyodata.address}" />
+						</li>
+						<li class="content">
+							<input type="text" readonly class="notWriteInput" name="daepyoJimok" th:value="${daepyodata.dm_jimok_text}"  />
+						</li>
+						<li class="content">
+							<input type="text" readonly class="notWriteInput" name="daepyoYeonjang" th:value="${daepyodata.dm_length}" />
+						</li>
+						<li class="content">
+							<input type="text" readonly class="notWriteInput" name="daepyoMyeonjuk" th:value="${daepyodata.dm_jijuk_area}" />
+						</li>
+						<li class="content largeWidth">
+							<input type="text" readonly class="notWriteInput" name="daepyoSouja" th:value="${daepyodata.dm_soyouja}" />
+						</li>
+						<li class="content middleWidth btnBox">
+							<button class="viewDetailButton lightBlueBtn">위치보기</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<!-- 첨부파일 -->
+			<section class="attachFileInfo">
+				<div class="subTitle">
+					<div class="subTitleText">필지 첨부파일</div>
+					<div class="fileBtnWrap">
+						<input type="file" name="fileUpload" id="landEdit_myPcFiles" />
+						<label for="landEdit_myPcFiles">내 PC</label>
+					</div>
+				</div>
+				<div class="fileUploadWrap">
+					<div class="fileUploadBox">
+						<img
+							src="/assets/media/menu04/images/file-upload.png"
+							alt="파일 업로드 아이콘"
+							class="fileUploadIcon" />
+						<p>파일을 마우스로 끌어오세요.</p>
+					</div>
+				</div>
+				<div class="contWrap">
+					<div class="depth1" id="fileListDiv">
+						<ul class="titles" id="fileTitleUl">
+							<li class="title01 allSelectCheck">
+								<input type="checkbox" id="landEdit_file_select_all" name="landEdit_file_select_all">
+								<label for="landEdit_file_select_all"></label>
+							</li>
+							<li class="title">등록일</li>
+							<li class="title fileNameWidth">파일명</li>
+							<li class="title">파일보기</li>
+						</ul>
+							<!--첨부파일 목록 반복문-->
+							<ul class="contents" id="fileListUl" th:each="file, iterStat : ${atcFileList}">
+								<li class="selectWidth content checkboxWrap">
+								<input type="hidden" name="idx" th:id="'idx'" th:value="${file.idx}">
+								<input type="hidden" name="seq" th:id="'seq'" th:value="${file.seq}">
+								<input type="hidden" name="file_seq" th:id="'file_seq'" th:value="${file.file_seq}">
+								<input type="hidden" name="file_path" th:id="'file_path'" th:value="${file.file_path}">
+								<input type="hidden" name="newFileCheckYn" value="N">
+								<input type="checkbox" th:id="'landEdit_attachFile' + ${iterStat.index + 1}"
+									name="landEdit_attachFile" />
+								<label th:for="'landEdit_attachFile' + ${iterStat.index + 1}"></label>
+								</li>
+								<li class="content registDateWidth">
+									<input type="text" th:value="${#dates.format(file.wdate, 'yyyy-MM-dd HH:mm')}" readonly
+										class="notWriteInput" name="registDateWidth" />
+								</li>
+								<li class="content fileNameWidth">
+									<input type="text" th:value="${file.file_nm}" id="filename" readonly class="notWriteInput" />
+								</li>
+								<li class="content viewBtnBox">
+									<!-- <a th:href="@{${file.ga_file_path}}" class="viewDetailButton lightBlueBtn" th:data-filepath="${file.ga_file_path}" target="_blank" onclick="attachFileDownload(this)">보기</a> -->
+									<button class="viewDetailButton lightBlueBtn"><a href="javascript:void(0);"
+											th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.file_path}]], [[${file.file_nm}]], [[${file.dosi_no}]], [[${file.file_seq}]], 'togi')">보기</a>
+											</button>
+								</li>
+							</ul>
+					</div>
+				</div>
+				<div class="btnWrap">
+					<button class="fileBtn fileDelBtn delBtn" id="deleteSelectedBtn">선택파일 삭제</button>
+				</div>
+			</section>
+			<div class="finalBtnBox btnWrap">
+				<button class="finalBtn prevBtn" onclick="history.back();">이전</button>
+				<button class="finalBtn saveBtn">저장</button>
+			</div>
+		</main>
+	</div>
+	<div class="landEditPopWrapper" id="searchResultPopDiv">
+		<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+		<div id="searchResultsPopup">
+			<div class="popupWrap" id="popupWrap">
+				<h2>
+					<p>검색결과</p>
+					<span class="topCloseBtn"></span>
+				</h2>
 
-    <main id="landEdit">
-      <div class="mainTitle">
-        <h1>토지개발 수정</h1>
-      </div>
-
-      <form id="saveForm" onSubmit="return false;">
-        <!-- 기본 정보 -->
-        <section class="defaultInfo">
-          <div class="subTitle">
-            <div class="subTitleText">기본정보</div>
-          </div>
-
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="titles">
-                <li class="title middleWidth2" >사업명</li>
-                <li class="title titleBox" >사업기간
-                  <ul class="secondTitles">
-                    <li class="secondTitle">시작일</li>
-                    <li class="secondTitle">종료일</li>
-                  </ul>
-                </li>
-                <li class="title middleWidth2"  >시행자(발주자)</li>
-                <li class="title middleWidth2" >사업자</li>
-              </ul>
-              <ul class="contents lastContents" >
-                <li class="content contentBox">
-                  <input type="hidden" th:value="${daepyodata.dm_dosi_no}" id="dosi_no" name="dosiNo">
-                  <input type="text" placeholder=""
-                         name="business_nm"
-                         th:value="${daepyodata.di_business_nm}" >
-                </li>
-                <li class="content contentBox2">
-                  <ul class="secondContents">
-                    <li class="secondContent">
-                      <input type="date" placeholder=""
-                             name="strdate"
-                             th:value="${daepyodata.di_strdate}">
-                    </li>
-                    <li class="secondContent">
-                      <input type="date" placeholder=""
-                             name="enddate"
-                             th:value="${daepyodata.di_enddate}">
-                    </li>
-                  </ul>
-                </li>
-                <li class="content contentBox">
-                  <input type="text" placeholder=""
-                         name="adm_office"
-                         th:value="${daepyodata.di_adm_office}" >
-                </li>
-                <li class="content contentBox">
-                  <input type="text" placeholder=""
-                         name="business_oper"
-                         th:value="${daepyodata.di_business_oper}" >
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-      </form>
-
-        <!-- 시행자 관할 부서 -->
-        <section class="adminDept">
-          <div class="subTitle">
-            <div class="subTitleText" >시행자 관할 부서*</div>
-          </div>
-
-          <div class="contWrap">
-            <div class="depth1"  id="deptDiv">
-              <ul class="titles">
-                <li class="title">부서명</li>
-                <li class="title">담당자</li>
-                <li class="title">연락처</li>
-                <li class="title smallWidth">추가/삭제</li>
-              </ul>
-
-              <div class="contentsBox">
-                <ul class="contents" th:each="val:${deptdata}" id="deptUl">
-                  <li class="content content01">
-                    <input
-                            type="text"
-                            placeholder=""
-                            name="dept_nm_0"
-                            th:value="${val.dd_dept_nm}"/>
-                  </li>
-                  <li class="content content02">
-                    <input
-                            type="text"
-                            placeholder=""
-                            name="manager_0"
-                            th:value="${val.dd_manager}" />
-                  </li>
-                  <li class="content content03">
-                    <input
-                            type="text"
-                            placeholder=""
-                            name="contact_num_0"
-                            th:value="${val.dd_contact_num}"/>
-                  </li>
-                  <li class="content btnBox smallWidth">
-                    <div class="newBtnWrap">
-                      <button class="addBtn addDeptBtn miniBtn">추가</button>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-        <!-- 토지 정보 -->
-        <section class="landInfo">
-          <div class="subTitle">
-            <div class="subTitleText">토지 정보*</div>
-            <div class="subTitleBtnBox">
-              <button class="middleBtn whiteBtn excelUpBtn landEditExcelPopBtn">
-                엑셀 업로드
-              </button>
-            </div>
-          </div>
-          <div class="contWrap">
-            <div class="depth1" id="togiInfoDiv">
-              <ul class="titles">
-                <li class="title smallWidth">선택</li>
-                <li class="title smallWidth">순번</li>
-                <li class="title">권리확보</li>
-                <li class="title smallWidth">대표필지</li>
-                <li class="title middleWidth">관로저촉</li>
-                <li class="title middleWidth">담당지사</li>
-                <li class="title addressWidth">주소</li>
-                <li class="title">지목</li>
-                <li class="title">연장</li>
-                <li class="title">면적</li>
-                <li class="title middleWidth">소유자</li>
-                <li class="title middleWidth">보기</li>
-                <li class="title middleWidth">추가/삭제</li>
-              </ul>
-              <div class="contentsBox">
-                <ul class="contents" id="togiUl" th:each="val, iterStat :${resultData}">
-                  <li class="content checkboxWrap smallWidth">
-                    <!-- 선택 -->
-                    <input type="checkbox" th:id="'landEdit_Checkbox_'+ ${iterStat.index}"  name="togiSelect" />
-                    <label th:for="'landEdit_Checkbox_'+ ${iterStat.index}"  ></label>
-                  </li>
-                  <li class="content smallWidth">
-                    <!-- 순번 -->
-                    <input
-                            type="text"
-                            th:placeholder="${iterStat.count}"
-                            readonly
-                            class="notWriteInput contentsNum" />
-                  </li>
-                  <!--                <li class="content">-->
-                  <!--                  &lt;!&ndash; 권리확보 &ndash;&gt;-->
-                  <!--                  <input type="text" th:value="${val.dm_toji_type}" th:name="'hakbo_' + ${iterStat.index}"/>-->
-                  <!--                </li>-->
-                  <li class="content selectContentArea">
-                    <div class="hiddenSelectBox">
-                      <!-- name도 추가 -->
-                      <select th:name="'hakbo_' + ${iterStat.index}" id="landDevelopmentManageSelectBox01" hidden>
-                        <!--                      <option value="" th:selected="${val.dm_toji_type == ''}" >선택</option>-->
-                        <option value="지상권" th:selected="${val.dm_toji_type == 'JISANG'}">지상권</option>
-                        <option value="미설정" th:selected="${val.dm_toji_type == ''}">미설정</option>
-                        <option value="점용" th:selected="${val.dm_toji_type == 'GOVER'}">점용</option>
-                        <option value="회사토지" th:selected="${val.dm_toji_type == 'DOPCO'}">회사토지</option>
-                      </select>
-                    </div>
-                    <section class="customSelectBox">
-                      <button class="customSelectView">
-                        [[${val.dm_toji_type == 'JISANG' ? '지상권' :
-                        (val.dm_toji_type == 'DOPCO' ? '회사토지' :
-                        (val.dm_toji_type == '' ? '미설정' :
-                        (val.dm_toji_type == 'GOVER' ? '점용' : val.dm_toji_type)))
-                        }]]
-                      </button>
-                      <ul class="customSelectBtns"></ul>
-                    </section>
-                  </li>
-
-
-                  <li class="content checkboxWrap smallWidth">
-                    <!-- 대표필지 -->
-                    <input type="checkbox" th:id="'landEditMainParcelChk_Checkbox_'+ ${iterStat.index}" name="landEditMainParcelChk_Checkbox01" th:checked="${val.dm_master_yn == 'Y'}" />
-                    <label th:for="'landEditMainParcelChk_Checkbox_'+ ${iterStat.index}"  ></label>
-                  </li>
-                  <li class="content middleWidth">
-                    <!-- 관로저촉 -->
-                    <input type="text" th:value="${val.dm_pipe_yn}" th:name="'jeochok_' + ${iterStat.index}" />
-                  </li>
-                  <li class="content middleWidth">
-                    <!-- 담당지사 -->
-                    <input type="text" th:value="${val.dm_jisa}" th:name="'jisa_' + ${iterStat.index}"/>
-                  </li>
-                  <li class="content addressWidth">
-                    <!-- 주소 -->
-                    <div class="addressData">
-                      <input type="text" th:value="${val.address}" th:name="'address_' + ${iterStat.index}"/>
-                    </div>
-                    <button class="searchAddressBtn landEditSearchBtn" th:id="${iterStat.index}">
-                      검색
-                    </button>
-                  </li>
-                  <li class="content">
-                    <!-- 지목 -->
-                    <input type="text"th:value="${val.dm_jimok_text}" readonly class="notWriteInput" th:name="'jimok_' + ${iterStat.index}"/>
-                  </li>
-                  <li class="content">
-                    <!-- 연장 -->
-                    <input type="text" th:value="${val.dm_length}" th:name="'yeonjang_' + ${iterStat.index}"/>
-                  </li>
-                  <li class="content">
-                    <!-- 면적 -->
-                    <input type="text" th:value="${val.dm_jijuk_area}" readonly class="notWriteInput" th:name="'myeonjuk_' + ${iterStat.index}"/>
-                  </li>
-                  <li class="content middleWidth">
-                    <!-- 소유자 -->
-                    <input type="text" th:value="${val.dm_soyouja}"th:name="'souja_' + ${iterStat.index}"/>
-                  </li>
-                  <li class="content middleWidth btnBox">
-                    <!-- 보기 -->
-                    <button class="viewDetailButton lightBlueBtn" id="moveMap">
-                      위치보기
-                    </button>
-                  </li>
-
-                  <li class="content middleWidth btnBox"
-                      th:if="${iterStat.index == 0}">
-                    <div class="newBtnWrap">
-                      <button class="addBtn addTogiBtn miniBtn">추가</button>
-                    </div>
-                  </li>
-
-                  <li class="content middleWidth btnBox"
-                      th:unless="${iterStat.index == 0}">
-                    <div class="btnWrap">
-                      <button class="miniBtn addBtn">추가</button>
-                    </div>
-                    <div class="btnWrap">
-                      <button class="miniBtn delBtn">삭제</button>
-                    </div>
-                  </li>
-
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-        <!-- 대표토지 정보 -->
-        <section class="mainLandInfo">
-          <div class="subTitle">
-            <div class="subTitleText">대표토지 정보*</div>
-          </div>
-
-          <div class="contWrap">
-            <div class="depth1">
-              <ul class="titles">
-                <li class="title middleWidth">권리확보</li>
-                <li class="title middleWidth">관로저촉</li>
-
-                <li class="title addressWidth">주소</li>
-                <li class="title">지목</li>
-                <li class="title">연장</li>
-                <li class="title">면적</li>
-                <li class="title largeWidth">소유자</li>
-                <li class="title middleWidth">지도</li>
-              </ul>
-              <ul class="contents">
-                <li class="content middleWidth">
-                  <input type="text" readonly class="notWriteInput" name="daepyoHakbo" th:value="${daepyodata.dm_toji_type == 'JISANG' ? '지상권' :
-      (daepyodata.dm_toji_type == 'DOPCO' ? '회사토지' :
-      (daepyodata.dm_toji_type == '' ? '미설정' :
-      (daepyodata.dm_toji_type == 'GOVER' ? '점용' : daepyodata.dm_toji_type)))}" />
-                </li>
-                <li class="content middleWidth">
-                  <input type="text" readonly class="notWriteInput" name="daepyoJeochok" th:value="${daepyodata.dm_pipe_yn}" />
-                </li>
-
-                <li class="content addressWidth">
-                  <input type="text" readonly class="notWriteInput" name="daepyoAddress" th:value="${daepyodata.address}" />
-                </li>
-                <li class="content">
-                  <input type="text" readonly class="notWriteInput" name="daepyoJimok" th:value="${daepyodata.dm_jimok_text}"  />
-                </li>
-                <li class="content">
-                  <input type="text" readonly class="notWriteInput" name="daepyoYeonjang" th:value="${daepyodata.dm_length}" />
-                </li>
-                <li class="content">
-                  <input type="text" readonly class="notWriteInput" name="daepyoMyeonjuk" th:value="${daepyodata.dm_jijuk_area}" />
-                </li>
-                <li class="content largeWidth">
-                  <input type="text" readonly class="notWriteInput" name="daepyoSouja" th:value="${daepyodata.dm_soyouja}" />
-                </li>
-                <li class="content middleWidth btnBox">
-                  <button class="viewDetailButton lightBlueBtn">
-                    위치보기
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-
-      <!-- 첨부파일 -->
-      <section class="attachFileInfo">
-        <div class="subTitle">
-          <div class="subTitleText">필지 첨부파일</div>
-          <div class="fileBtnWrap">
-            <input type="file" name="fileUpload" id="landEdit_myPcFiles" />
-            <label for="landEdit_myPcFiles">내 PC</label>
-          </div>
-        </div>
-
-        <div class="fileUploadWrap">
-          <div class="fileUploadBox">
-            <img
-                    src="/assets/media/menu04/images/file-upload.png"
-                    alt="파일 업로드 아이콘"
-                    class="fileUploadIcon" />
-            <p>파일을 마우스로 끌어오세요.</p>
-          </div>
-        </div>
-
-        <div class="contWrap">
-          <div class="depth1" id="fileListDiv">
-            <ul class="titles" id="fileTitleUl">
-              <li class="title01 allSelectCheck">
-                <input type="checkbox" id="landEdit_file_select_all" name="landEdit_file_select_all">
-                <label for="landEdit_file_select_all"></label>
-              </li>
-<!--              <li class="title02">파일명</li>-->
-              <li class="title">등록일</li>
-              <li class="title fileNameWidth">파일명</li>
-              <li class="title">파일보기</li>
-            </ul>
-
-          </div>
-        </div>
-
-        <div class="btnWrap">
-          <button class="fileBtn fileDelBtn delBtn" id="deleteSelectedBtn">선택파일 삭제</button>
-        </div>
-
-      </section>
-
-      <div class="finalBtnBox btnWrap">
-        <button class="finalBtn prevBtn" onclick="history.back();">이전</button>
-        <button class="finalBtn saveBtn">저장</button>
-      </div>
-    </main>
-  </div>
-
-
-  <div class="landEditPopWrapper" id="searchResultPopDiv">
-
-    <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
-    <div id="searchResultsPopup">
-      <div class="popupWrap" id="popupWrap">
-        <h2>
-          <p>검색결과</p>
-          <span class="topCloseBtn"></span>
-        </h2>
-
-        <div class="popupCont">
-          <ul class="popTitles">
-            <li class="popTitle05"></li>
-            <li class="popTitle01">PNU</li>
-            <li class="popTitle02">주소</li>
-            <li class="popTitle03">지번</li>
-            <li class="popTitle04">선택</li>
-
-          </ul>
-          <div class="popContentBox" >
-            <ul class="popContents" th:each="val:${addressList}">
-              <li class="popContent05">
-                <input type="checkbox" id="chkResultPop_Checkbox01">
-                <label for="chkResultPop_Checkbox01"></label>
-              </li>
-              <li class="popContent01"> [[${val.pnu}]]</li>
-              <li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.ri_nm}]]</li>
-              <li class="popContent0201" hidden>[[${val.sido_nm}]]</li>
-              <li class="popContent0202" hidden>[[${val.sgg_nm}]]</li>
-              <li class="popContent0203" hidden>[[${val.emd_nm}]]</li>
-              <li class="popContent0204" hidden>[[${val.ri_nm}]]</li>
-              <li class="popContent03">[[${val.jibun}]]</li>
-              <li class="popContent04">
-                <button class="resultSelectBtn">선택</button>
-              </li>
-              <li class="popContent07" hidden>[[${val.jijuk_area}]]</li>
-              <li class="popContent06" hidden>[[${val.jimok_text}]]</li>
-
-            </ul>
-
-
-          </div>
-        </div>
-
-        <div class="lastBtnBox btnWrap">
-          <button class="saveBtn finalBtn" id="selectBtn">선택 등록</button>
-          <button class="saveBtn finalBtn" id="notPNUBtn">PNU 없이 선택</button>
-          <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="landEditExcelPopWrapper"></div>
-    <div class="landEditSearchPopWrapper"></div>
-    <script type="module" src="/js/module/surfaceMain.js"></script>
-    <script src="/js/togi/landEdit.js"></script>
+				<div class="popupCont">
+					<ul class="popTitles">
+						<li class="popTitle05"></li>
+						<li class="popTitle01">PNU</li>
+						<li class="popTitle02">주소</li>
+						<li class="popTitle03">지번</li>
+						<li class="popTitle04">선택</li>
+					</ul>
+					<div class="popContentBox" >
+						<ul class="popContents" th:each="val:${addressList}">
+							<li class="popContent05">
+								<input type="checkbox" id="chkResultPop_Checkbox01">
+								<label for="chkResultPop_Checkbox01"></label>
+							</li>
+							<li class="popContent01"> [[${val.pnu}]]</li>
+							<li class="popContent02"> [[${val.sido_nm +" "+val.sgg_nm+" "+val.emd_nm+" "+val.ri_nm}]]</li>
+							<li class="popContent0201" hidden>[[${val.sido_nm}]]</li>
+							<li class="popContent0202" hidden>[[${val.sgg_nm}]]</li>
+							<li class="popContent0203" hidden>[[${val.emd_nm}]]</li>
+							<li class="popContent0204" hidden>[[${val.ri_nm}]]</li>
+							<li class="popContent03">[[${val.jibun}]]</li>
+							<li class="popContent04">
+								<button class="resultSelectBtn">선택</button>
+							</li>
+							<li class="popContent07" hidden>[[${val.jijuk_area}]]</li>
+							<li class="popContent06" hidden>[[${val.jimok_text}]]</li>
+						</ul>
+					</div>
+				</div>
+				<div class="lastBtnBox btnWrap">
+					<button class="saveBtn finalBtn" id="selectBtn">선택 등록</button>
+					<button class="saveBtn finalBtn" id="notPNUBtn">PNU 없이 선택</button>
+					<button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="landEditExcelPopWrapper"></div>
+	<div class="landEditSearchPopWrapper"></div>
+	<script type="module" src="/js/module/surfaceMain.js"></script>
+	<script src="/js/togi/landEdit.js"></script>
 </th:block>
 </html>

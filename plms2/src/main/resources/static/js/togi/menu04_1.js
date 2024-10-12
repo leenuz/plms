@@ -358,8 +358,6 @@ return nRow;
 			var data = table.row(this).data();
 			console.log(data);
 			console.log(data.idx);
-			alert(data);  // 알림 창에 idx 값을 출력
-			alert(data.idx);  // 알림 창에 idx 값을 출력
 			
 			var url = "/togi/landDevInfo?idx=" + data.idx;
 			window.location = url;
