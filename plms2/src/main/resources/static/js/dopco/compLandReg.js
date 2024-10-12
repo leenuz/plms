@@ -195,15 +195,15 @@ const compLandRegInfoAddBtnEvent = () => {
                     infoInput.type = 'text';
 
                     if(i == 2){
-                        infoInput.name = 'rightName_'+ index;
+                        infoInput.name = 'rightName';
                     }else if(i == 3){
-                        infoInput.name = 'rightMoney_'+ index;
+                        infoInput.name = 'rightMoney';
                     }else if(i == 6){
-                         infoInput.name = 'rightUname_'+ index;
+                         infoInput.name = 'rightUname';
                      }else if(i == 7){
-                         infoInput.name = 'rightPhone_'+ index;
+                         infoInput.name = 'rightPhone';
                      }else if (i == 8) {
-                        infoInput.name = 'rightAddr_'+ index;
+                        infoInput.name = 'rightAddr';
                         infoLi.classList.add('largeWidth');
                     }
                     // li안에 넣기
@@ -218,12 +218,12 @@ const compLandRegInfoAddBtnEvent = () => {
                     const dateInput = document.createElement('input');
                     dateInput.type = 'date';
                     dateInput.setAttribute('data-placeholder', '날짜선택');
-                    dateInput.setAttribute('ariaRequired', 'true');
-                    dateInput.required = true;
+                    //dateInput.setAttribute('ariaRequired', 'true');
+                    //dateInput.required = true;
                     if(i == 4){
-                    dateInput.name = 'rightDate_'+ index;
+                    dateInput.name = 'rightDate';
                     }else if(i ==5){
-                     dateInput.name = 'cancleDate_'+ index;
+                     dateInput.name = 'cancleDate';
                     }
                     // div에 input 넣기
 
@@ -279,183 +279,7 @@ const compLandRegInfoAddBtnEvent = () => {
 
 }
 compLandRegInfoAddBtnEvent();
-// 파일 첨부 기본 모습
 
-//const defaultFileUploadWrap = document.querySelectorAll('.fileUploadDisplay');
-
-//defaultFileUploadWrap[0].classList.add('active');
-
-// 파일 첨부시 모습 변경, x버튼 클릭시 비우기
-
-const compLandRegFileEvent = () => {
-    const compLandReg_myPcFiles = document.getElementById('compLandReg_myPcFiles');
-    // input[type file]을 가진 제일 큰 부모
-    const attachFileInfo = compLandReg_myPcFiles.closest('.attachFileInfo');
-    // 업로드시 보이는 라벨
-    const fileUploadAfter = attachFileInfo.querySelector('.fileUploadAfter');
-    const allContents = fileUploadAfter.querySelectorAll('.contents');
-    const fileSaveBtn = attachFileInfo.querySelector('.fileSaveBtn');
-
-    var fileInfoName = '';
-    var fileInfoSize = '';
-    var fileInfoType = '';
-
-    compLandReg_myPcFiles.addEventListener('change', function () {
-
-        // 기존의 ul 초기화
-        const existContents = fileUploadAfter.querySelectorAll('.contents')
-        console.log(existContents)
-
-        existContents.forEach((list) => {
-            list.remove();
-        })
-
-        if (compLandReg_myPcFiles.files.length > 0) {
-
-            for (let i = 0; i <= compLandReg_myPcFiles.files.length - 1; i++) {
-                const thisFileName = compLandReg_myPcFiles.files[i].name;
-                const thisFileSize = compLandReg_myPcFiles.files[i].size;
-                const thisFileType = compLandReg_myPcFiles.files[i].type;
-
-                // 사이즈를 바꾸자
-                const formattedSize = byteTransform(thisFileSize);
-
-                // 문자열에 변수를 담자
-                fileInfoName = thisFileName;
-                fileInfoSize = formattedSize;
-                fileInfoType = thisFileType;
-
-                // 파일 지우는 버튼용 li
-
-                const deleteLi = '<li class="btnbox"><button class="fileDeleteBtn"></button></li>';
-
-                // 파일 아이콘, 파일명 들어가는 li
-                const filenameBoxLi = `<li class="content filenameBox"><figure class="typeIcon"></figure><p class="fileNameText">${fileInfoName}</p></li >`;
-
-                // 업로드 상태
-                const uploadStatusLi = '<li class="content"><p>-</p></li>';
-
-                // 파일 크기 들어가는 li
-                const fileSizeLi = `<li class="content">
-                    <p class="fileSizeText"> ${fileInfoSize} </p>
-                </li>`;
-
-                const listBox = deleteLi + filenameBoxLi + uploadStatusLi + fileSizeLi;
-
-                // ul.contents 만들기
-                const ContentsUl = document.createElement('ul');
-                ContentsUl.classList.add('contents');
-
-                ContentsUl.innerHTML = listBox;
-
-                fileUploadAfter.appendChild(ContentsUl);
-
-                // 다음 걸 받기 위해 비워주기
-
-                fileInfoName = '';
-                fileInfoSize = '';
-                fileInfoType = '';
-
-            }
-
-            // 값 잘 담겼는지 확인
-            console.log(compLandReg_myPcFiles.value)
-
-            defaultFileUploadWrap.forEach((wrap) => {
-                wrap.classList.remove('active');
-            })
-            defaultFileUploadWrap[1].classList.add('active');
-            fileSaveBtn.classList.add('active');
-
-
-        } else {
-
-            compLandReg_myPcFiles.value = '';
-            defaultFileUploadWrap.forEach((wrap) => {
-                wrap.classList.remove('active');
-            })
-            defaultFileUploadWrap[0].classList.add('active');
-            fileSaveBtn.classList.remove('active');
-        }
-    })
-
-    // 개별 delbtn 누르면 생기는 이벤트
-    fileUploadAfter.addEventListener('click', function (event) {
-        if (event.target.classList.contains('fileDeleteBtn')) {
-            const fileDeleteBtns = fileUploadAfter.querySelectorAll('.fileDeleteBtn');
-            const fileDelBtn = event.target;
-            const nearbyContents = event.target.closest('.contents');
-            const fileNameToRemove = nearbyContents.querySelector('.fileNameText').textContent;
-
-            // 파일명이랑 틀린 것만 저장하는 함수
-            removeFile(fileNameToRemove);
-            nearbyContents.remove();
-
-            console.log(compLandReg_myPcFiles.files.length);
-
-            // 현재 선택된 파일이 없으면 input 값 비우기
-            if (compLandReg_myPcFiles.files.length === 0) {
-                compLandReg_myPcFiles.value = '';
-                defaultFileUploadWrap.forEach((wrap) => {
-                    wrap.classList.remove('active');
-                });
-                defaultFileUploadWrap[0].classList.add('active');
-                fileSaveBtn.classList.remove('active');
-            }
-        }
-
-    })
-
-    // 전체 삭제 버튼
-    const allDeleteFileBtn = fileUploadAfter.querySelector('.allDeleteFileBtn');
-
-    allDeleteFileBtn.addEventListener('click', function () {
-        const nowAllContents = fileUploadAfter.querySelectorAll('.contents')
-        nowAllContents.forEach((contents) => {
-            contents.remove();
-        })
-
-        compLandReg_myPcFiles.value = '';
-
-
-        // 값 잘 사라졌는지 확인
-        console.log(compLandReg_myPcFiles.value);
-
-
-        if (compLandReg_myPcFiles.files.length == 0) {
-            compLandReg_myPcFiles.value = '';
-            defaultFileUploadWrap.forEach((wrap) => {
-                wrap.classList.remove('active');
-            })
-            defaultFileUploadWrap[0].classList.add('active');
-            fileSaveBtn.classList.remove('active');
-        }
-    })
-
-    // 용량 크기 변환하는 함수
-    function byteTransform(bytes) {
-        const dataSize = ['Bytes', 'KB', 'MB', 'GB', 'TB']
-
-        if (bytes === 0) return 'not available';
-
-        const d = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
-        if (d === 0) return `${bytes} ${dataSize[d]}`;
-        return `${(bytes / (1024 ** d)).toFixed(1)} ${dataSize[d]}`;
-    }
-
-    // 파일 삭제처리 하는 함수
-    const removeFile = (fileNameToRemove) => {
-        const filesArray = Array.from(compLandReg_myPcFiles.files);
-        const newDataTransfer = new DataTransfer();
-        filesArray.forEach(file => {
-            if (file.name !== fileNameToRemove) {
-                newDataTransfer.items.add(file);
-            }
-        });
-        compLandReg_myPcFiles.files = newDataTransfer.files; // 새로운 files 설정
-    };
-
-}
 
 //compLandRegFileEvent();
 
@@ -567,7 +391,16 @@ $(document).on("click",".registBtn",function(){
 			var rightPhone=$(rightUls[i]).find("input[name='rightPhone']").val();
 			var rightAddr=$(rightUls[i]).find("input[name='rightAddr']").val();
 			
-			
+			if (!rightName.replace(/ /g, "") ||
+				!rightMoney.replace(/ /g, "") || 
+				!rightDate.replace(/ /g, "") || 
+				!cancleDate.replace(/ /g, "") || 
+				!rightUname.replace(/ /g, "") || 
+				!rightPhone.replace(/ /g, "") || 
+				!rightAddr.replace(/ /g, "")) {
+				alert('후순위 권리 내역을 확인해주세요.');
+				return;
+			}
 			
 			
 	   		//console.log("togiManageNo:"+togiManageNo);
@@ -588,13 +421,25 @@ $(document).on("click",".registBtn",function(){
 	   	dataObj.rightDatas=rightDatas;
 		dataObj.gubun="insert"; //modify:수정
 		dataObj.dopcoNo=""; //수정일때는 들어간다
+		
+		const attachFileUls = document.querySelectorAll('input[name="landRegistration_attachFile"]');
+		console.log(attachFileUls);
+		
+		let files = new Array();
+		for(var i = 0; i < attachFileUls.length; i++){
+			console.log($(attachFileUls[i]).parent().parent().html());
+			var fname = $(attachFileUls[i]).parent().parent().find("#filename").val();
+			console.log(fname);
+			files.push(fname);
+		}
+		dataObj.files = files;
        console.log("**dataObj**");
        console.log(dataObj);
 
        /* var json = JSON.stringify(formSerializeArray);
            console.log("----------jsonobj------------");
            console.log(json); // JSON 문자열 출력*/
-         
+         return;
        url="/land/dopco/insertDopcoList"; 
 	   $.ajax({
 	   			
@@ -725,132 +570,138 @@ $(document).on("click","#notPNUBtn",function(){
 });
 
 /*첨부파일*/
-var uploadFiles=new Array();
-	  $(document).ready(function(){
+let fileNo = 1;
+let uploadFiles = new Array();
+$(document).ready(function() {
+	let objDragAndDrop = $(".fileUploadBox");
+	
+	$(document).on("dragenter",".fileUploadBox",function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+		$(this).css('border', '2px solid #0B85A1');
+	});
+	
+	$(document).on("dragover",".fileUploadBox",function(e){
+		e.stopPropagation();
+		e.preventDefault();
+	});
+	
+	$(document).on("drop",".fileUploadBox",function(e){
+		$(this).css('border', '2px dotted #0B85A1');
+		e.preventDefault();
+		let files = e.originalEvent.dataTransfer.files;
+		handleFileUpload(files,objDragAndDrop);
+	});
+	
+	$(document).on('dragenter', function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+	});
+	
+	$(document).on('dragover', function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+		objDragAndDrop.css('border', '2px dotted #0B85A1');
+	});
+	
+	$(document).on('drop', function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+	});
+	
+	//drag 영역 클릭시 파일 선택창
+	objDragAndDrop.on('click',function (e) {
+		$('input[type=file]').trigger('click');
+	});
+	
+	$('input[type=file]').on('change', function(e) {
+		const fileListDiv = document.getElementById('fileListDiv');
+		const listItems = fileListDiv.getElementsByTagName('ul');
+		const itemCount = listItems.length; // ul 요소의 갯수
+		let files = e.originalEvent.target.files;
+		handleFileUpload(files,objDragAndDrop);
+	});
+	
+	function handleFileUpload(files,obj) {
+		for (let i = 0; i < files.length; i++) {
+			let fd = new FormData();
+			fd.append('file', files[i]);
+			let status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,fileNo); //Using this we can set progress.
+			//status.setFileNameSize(files[i].name,files[i].size);
+			sendFileToServer(fd,status);
+		}
+		fileNo++;
+	}
+	
+	let rowCount = 0;
+	function createStatusbar(obj,name,size,no) {
+		let sizeStr = "";
+		let sizeKB = size/1024;
+		if (parseInt(sizeKB) > 1024) {
+			let sizeMB = sizeKB/1024;
+			sizeStr = sizeMB.toFixed(2) + " MB";
+		} else {
+			sizeStr = sizeKB.toFixed(2) + " KB";
+		}
+		// var row='<ul class="contents" id="fileListUl">';
+		// row+='<li class="content01 content checkboxWrap">';
+		// row+='<input type="checkbox" id="landRegistration_attachFile'+no+'" name="landRegistration_attachFile" >';
+		// row+='<label for="landRegistration_attachFile'+no+'"></label>';
+		// row+='</li>';
+		// row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
+		// obj.after(row);
+		let now = new Date();
+		let formattedDate = now.toLocaleString();
+		let row = ``;
+		row += `<ul class="contents" id="fileListUl">`;
+		row += `	<input type="hidden" name="no" value="${no}">`;
+		row += `	<input type="hidden" name="name" value="${name}">`;
+		row += `	<input type="hidden" name="nfname" value="">`;
+		row += `	<li class="content01 content checkboxWrap">`;
+		row += `		<input type="checkbox" id="landRegistration_attachFile${no}" name="landRegistration_attachFile" >`;
+		row += `		<label for="landRegistration_attachFile${no}"></label>`;
+		row += `	</li>`;
+		row += `	<li class="content02">`;
+		row += `		<input type="text" value="${name}" id="filename" readonly class="notWriteInput" />`;
+		row += `	</li>`;
+		row += `</ul>`;
+		
+		obj.after(row);
+	
+		let radio = $(row).find('input');
+		$(radio).find('input').attr("disabled",false);
+	}
 
-	 var objDragAndDrop = $(".fileUploadBox");
-
-	                $(document).on("dragenter",".fileUploadBox",function(e){
-	                    e.stopPropagation();
-	                    e.preventDefault();
-	                    $(this).css('border', '2px solid #0B85A1');
-	                });
-	                $(document).on("dragover",".fileUploadBox",function(e){
-	                    e.stopPropagation();
-	                    e.preventDefault();
-	                });
-	                $(document).on("drop",".fileUploadBox",function(e){
-
-	                    $(this).css('border', '2px dotted #0B85A1');
-	                    e.preventDefault();
-	                    var files = e.originalEvent.dataTransfer.files;
-
-	                    handleFileUpload(files,objDragAndDrop);
-	                });
-
-	                $(document).on('dragenter', function (e){
-	                    e.stopPropagation();
-	                    e.preventDefault();
-	                });
-	                $(document).on('dragover', function (e){
-	                  e.stopPropagation();
-	                  e.preventDefault();
-	                  objDragAndDrop.css('border', '2px dotted #0B85A1');
-	                });
-	                $(document).on('drop', function (e){
-	                    e.stopPropagation();
-	                    e.preventDefault();
-	                });
-	                //drag 영역 클릭시 파일 선택창
-	                objDragAndDrop.on('click',function (e){
-	                    $('input[type=file]').trigger('click');
-	                });
-
-	                $('input[type=file]').on('change', function(e) {
-	                    var files = e.originalEvent.target.files;
-	                    handleFileUpload(files,objDragAndDrop);
-	                });
-
-									var rowCount=0;
-	                function handleFileUpload(files,obj)
-	                {
-						console.log("-------------handleFileUpload---------------");
-						console.log(files);
-	                   for (var i = 0; i < files.length; i++)
-	                   {
-	                        var fd = new FormData();
-	                        fd.append('file', files[i]);
-
-	                        var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); //Using this we can set progress.
-	                      //  status.setFileNameSize(files[i].name,files[i].size);
-	                        sendFileToServer(fd,status);
-
-													rowCount++;
-	                   }
-	                }
-	                
-	                function createStatusbar(obj,name,size,no){
-						console.log("----------start createStatusBar------------");
-	                        console.log(obj.html());
-
-						var sizeStr="";
-						                        var sizeKB = size/1024;
-						                        if(parseInt(sizeKB) > 1024){
-						                            var sizeMB = sizeKB/1024;
-						                            sizeStr = sizeMB.toFixed(2)+" MB";
-						                        }else{
-						                            sizeStr = sizeKB.toFixed(2)+" KB";
-						                        }
-
-	                    var row='<ul class="contents" id="fileListUl">';
-						row+='<li class="content01 content checkboxWrap">';
-						row+='<input type="checkbox" id="landRightsRegistration_attachFile'+no+'" name="landRightsRegistration_attachFile" >';
-						row+='<label for="landRightsRegistration_attachFile'+no+'"></label>';
-						row+='</li>';
-						row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
-	                    obj.after(row);
-
-						var radio=$(row).find('input');
-						console.log("---------------radio checkbox----------");
-						$(radio).find('input').attr("disabled",false);
-	                 	console.log($(radio).parent().html());
-	                }
-
-	                function sendFileToServer(formData,status)
-	                {
-	                    var uploadURL = "/jisang/fileUpload/post"; //Upload URL
-	                    var extraData ={}; //Extra Data.
-	                    var jqXHR=$.ajax({
-	                            xhr: function() {
-	                            var xhrobj = $.ajaxSettings.xhr();
-	                            if (xhrobj.upload) {
-	                                    xhrobj.upload.addEventListener('progress', function(event) {
-	                                        var percent = 0;
-	                                        var position = event.loaded || event.position;
-	                                        var total = event.total;
-	                                        if (event.lengthComputable) {
-	                                            percent = Math.ceil(position / total * 100);
-	                                        }
-	                                        //Set progress
-	                                      //  status.setProgress(percent);
-	                                    }, false);
-	                                }
-	                            return xhrobj;
-	                        },
-	                        url: uploadURL,
-	                        type: "POST",
-	                        contentType:false,
-	                        processData: false,
-	                        cache: false,
-	                        data: formData,
-	                        success: function(data){
-
-	                        }
-	                    });
-
-	                }
-
-	 });
+	function sendFileToServer(formData,status){
+		let uploadURL = "/land/dopco/fileUpload/post"; //Upload URL
+		let extraData = {}; //Extra Data.
+		let jqXHR=$.ajax({
+			xhr: function() {
+				let xhrobj = $.ajaxSettings.xhr();
+				if (xhrobj.upload) {
+					xhrobj.upload.addEventListener('progress', function(event) {
+						let percent = 0;
+						let position = event.loaded || event.position;
+						let total = event.total;
+						if (event.lengthComputable) {
+							percent = Math.ceil(position / total * 100);
+						}
+					}, false);
+				}
+				return xhrobj;
+			},
+			url: uploadURL,
+			type: "POST",
+			contentType:false,
+			processData: false,
+			cache: false,
+			data: formData,
+			success: function(data){
+				
+			}
+		});
+	}
+});
 
 
 	 // 첨부파일 전체 선택 체크박스

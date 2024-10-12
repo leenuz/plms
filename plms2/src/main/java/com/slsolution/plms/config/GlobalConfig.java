@@ -26,7 +26,11 @@ public class GlobalConfig {
 	private static String jisangReqDoc2Dir;
 	private static String togiFileTempDir;
 	private static String togiFileDataDir;
+
 	private static String statisFileDataDir;
+
+	private static String dopcoFileTempDir;
+	private static String dopcoFileDataDir;
 	
 	private static String serverName;
 	
@@ -161,7 +165,21 @@ public class GlobalConfig {
 		return statisFileDataDir;
 	}
 	
+	@Value("${plms.dopcoFileTempDir}")
+	public void setDopcoFileTempDir(String str) {
+		dopcoFileTempDir=str;
+	}
+	public static String getDopcoFileTempDir() {
+		return dopcoFileTempDir;
+	}
 	
+	@Value("${plms.dopcoFileDataDir}")
+	public void setDopcoFileDataDir(String str) {
+		dopcoFileDataDir=str;
+	}
+	public static String getDopcoFileDataDir() {
+		return dopcoFileDataDir;
+	}
 	
 	@Value("${server.name}")
 	public void setServerName(String sn) {

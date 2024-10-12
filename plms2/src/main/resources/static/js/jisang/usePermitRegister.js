@@ -652,7 +652,7 @@ $(document).ready(function(){
 			            contentType:false,
 			            processData: false,
 			            cache: false,
-			            data: extraData,
+			            data: formData,
 			            success: function(data){
 			               // status.setProgress(100);
 			                console.log(data);
