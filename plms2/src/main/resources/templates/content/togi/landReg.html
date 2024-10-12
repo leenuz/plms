@@ -333,7 +333,7 @@ margin:10px;
                 </li>
                 <li class="content middleWidth btnBox">
                   <!-- 보기 -->
-                  <button class="viewDetailButton" id="moveMap">
+                  <button class="viewDetailButton" th:onclick="onePositionView()">
                     위치보기
                   </button>
                 </li>
@@ -390,7 +390,7 @@ margin:10px;
                   <input type="text" readonly  class="notWriteInput" name="daepyoSouja"/>
                 </li>
                 <li class="content middleWidth btnBox">
-                  <button class="viewDetailButton lightBlueBtn" id="moveMap">
+                  <button class="viewDetailButton lightBlueBtn" th:onclick="onePositionView()">
                     위치보기
                   </button>
                 </li>

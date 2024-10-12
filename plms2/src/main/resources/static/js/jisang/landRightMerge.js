@@ -955,14 +955,6 @@ $(document).on("click","#completeBtn",function(){
 })
 
 
-
-$(document).on("click",".viewDetailButton",function(){
-	const x = $(this).attr('x')
-	const y = $(this).attr('y')
-	moveToCityHall(x,y);
-})
-
-
 $(document).ready(function(){
     //체크 박스 중 대표 지상권 번호 체크 하기
     let repJisangNo = document.getElementById('repJisangNo').value;

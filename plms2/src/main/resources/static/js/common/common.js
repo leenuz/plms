@@ -301,6 +301,8 @@ function largeMenuClick(obj, id){
 
 //지도보기(이동,위치) 공통
 function positionView(objInfo) {
+	console.log('1개 이상 위치보기');
+	console.log(objInfo);
 	//({'lon':mapCoordLng, 'lat':mapCoordLat, 'zoom':'15'});
 	//({'lon':mapCoordLng, 'lat':mapCoordLat});
 	

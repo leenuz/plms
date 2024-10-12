@@ -170,7 +170,7 @@
 									<li class="content03 content">[[${val.gp_gover_length}]]</li>
 									<li class="content04 content">[[${val.gp_gover_area}]]</li>
 									<li class="content05 content">
-										<button class="viewDetailButton">위치보기</button>
+										<button class="viewDetailButton" th:onclick="onePositionView()">위치보기</button>
 									</li>
 								</ul>
 							</div>
@@ -262,11 +262,11 @@
 							</div>
 							<div class="depth2">
 								<ul class="titles">
-									<li class="title01 title">전체 위치보기</li>
+									<li class="title01 title" th:onclick="positionView()">전체 위치보기</li>
 								</ul>
 								<ul class="contents" th:each="val:${pnuList}">
 									<li class="content01 content">
-										<button class="viewAllBtn" onclick="openMapAll()">전체
+										<button class="viewAllBtn" th:onclick="positionView()">전체
 											위치보기</button>
 									</li>
 								</ul>

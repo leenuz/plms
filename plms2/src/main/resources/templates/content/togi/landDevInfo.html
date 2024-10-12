@@ -226,7 +226,7 @@
 								<input type="text" readonly class="notWriteInput" th:value="${sosok.dm_soyouja}" />
 							</li>
 							<li class="content middleWidth btnBox">
-								<button class="viewDetailButton lightBlueBtn" id='moveMap'>
+								<button class="viewDetailButton lightBlueBtn" th:onclick="onePositionView()">
 									위치보기
 								</button>
 							</li>
@@ -285,7 +285,7 @@
 								<input type="text" readonly class="notWriteInput" th:value="${val.dm_soyouja}" />
 							</li>
 							<li class="content middleWidth btnBox">
-								<button class="viewDetailButton lightBlueBtn">
+								<button class="viewDetailButton lightBlueBtn" th:onclick="onePositionView()">
 									위치보기
 								</button>
 							</li>

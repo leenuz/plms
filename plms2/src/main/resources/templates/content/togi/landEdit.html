@@ -317,7 +317,7 @@
 							</li>
 							<li class="content middleWidth btnBox">
 								<!-- 보기 -->
-								<button class="viewDetailButton lightBlueBtn" id="moveMap">위치보기</button>
+								<button class="viewDetailButton lightBlueBtn" th:onclick="onePositionView()">위치보기</button>
 							</li>
 							<li class="content middleWidth btnBox"
 								th:if="${iterStat.index == 0}">
@@ -382,7 +382,7 @@
 							<input type="text" readonly class="notWriteInput" name="daepyoSouja" th:value="${daepyodata[0].dm_soyouja}" />
 						</li>
 						<li class="content middleWidth btnBox">
-							<button class="viewDetailButton lightBlueBtn">위치보기</button>
+							<button class="viewDetailButton lightBlueBtn" th:onclick="onePositionView()">위치보기</button>
 						</li>
 					</ul>
 				</div>

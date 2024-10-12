@@ -219,7 +219,8 @@ div.dt-filter-spacer {
 										<!--위치보기-->
 										<li class="content">
 											<button class="viewDetailButton"
-												th:onclick="onePositionView(${val})">위치보기</button>
+												th:onclick="onePositionView({x: [[${val.x}]], y: [[${val.y}]]})">
+												위치보기</button>
 										</li>
 										<!--회계처리필요여부-->
 										<li class="content selectContentArea">
