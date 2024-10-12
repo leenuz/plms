@@ -38,7 +38,7 @@
 						<div class="thirdTitle">
 							<h2>・기본 정보</h2>
 							<div class="btnbox">
-								<button class="viewLocation subBtn" onclick="positionView()">위치보기</button>
+								<button class="viewLocation subBtn" onclick="onePositionView()">위치보기</button>
 							</div>
 						</div>
 
@@ -419,7 +419,8 @@
 									</li>
 									<li class="content06 content">
 										<!-- 위치보기 버튼 -->
-										<button class="viewDetailButton">위치보기</button>
+										<button class="viewDetailButton"
+											th:onclick="onePositionView({x: [[${merge.x}]], y: [[${merge.y}]]})">위치보기</button>
 									</li>
 								</ul>
 							</div>

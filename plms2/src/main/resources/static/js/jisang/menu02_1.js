@@ -413,10 +413,10 @@ return nRow;
 	    // 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
 	    if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
 	        // 좌표가 있을 때는 좌표를 전달
-	        onePostionView({ x, y });
+	        onePositionView({ x, y });
 	    } else {
-	        // 좌표가 없을 때는 빈 객체를 전달하여 onePostionView 내부에서 처리
-	        onePostionView(undefined);
+	        // 좌표가 없을 때는 빈 객체를 전달하여 onePositionView 내부에서 처리
+	        onePositionView(undefined);
 	    }
 	});
 
@@ -426,7 +426,7 @@ return nRow;
 $('#userTable').on('click', '.viewDetailButton', function(event) {
     event.stopPropagation(); // 이벤트 전파 차단
     const row = table.row($(this).closest('tr')).data();
-    onePostionView({ x: row.x, y: row.y });
+    onePositionView({ x: row.x, y: row.y });
 });
 
 $(document).on("click","#moveMap",function(){

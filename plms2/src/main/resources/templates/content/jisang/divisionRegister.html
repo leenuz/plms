@@ -7,17 +7,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <link
           rel="stylesheet"
           as="style"
           crossorigin
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-
-
   <link th:href="@{/css/common.css}" rel="stylesheet" />
-
   <link rel="stylesheet" href="/css/jisang/divisionRegister.css" />
+  <script src="/js/common/common.js"></script>
  <!--  <link rel="stylesheet" href="/css/jisang/write.css"> -->
   <!-- <script src="/js/jisang/groundDetail.js"></script> -->
   <!-- <script src="/js/common/upload.js"></script> -->
@@ -425,10 +422,11 @@ border: 1px solid black;
                      <input type="checkbox" th:id="'divisionRegister_data_succession_' + ${val.jb_idx}" name="togiBunhalDemise"  th:value="${val.jb_idx}" th:checked="${val.jb_demise}=='Y'">
                        <label th:for="'divisionRegister_data_succession_' + ${val.jb_idx}"></label>
                 </li>
-                <li class="content middleWidth">
-                    <button class="viewDetailButton">위치보기</button>
-                </li>
-                <li class="content middleWidth selectContentArea">
+										<li class="content middleWidth">
+											<button class="viewDetailButton"
+												th:onclick="onePositionView()">위치보기</button>
+										</li>
+										<li class="content middleWidth selectContentArea">
                     <div class="hiddenSelectBox">
                         <!-- name도 추가 -->
                         <select name="togiBunhalAccountYn" id="divisionRegistSelectBox03" hidden>
