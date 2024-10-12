@@ -277,7 +277,7 @@ function loadDataTable(params) {
             },
 			{ data: "echo_no", "defaultContent": "",
 				render: function(data, type, row, meta) {
-					return `<button class="viewDetailButton">상세보기</button> `;
+					return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}	 // 15
 		],
@@ -308,7 +308,8 @@ function loadDataTable(params) {
 	    var isButtonCell = target.closest('td').index() === 14;
 	
 	    if (isButtonCell) {
-	        return;
+				event.stopPropagation(); // 버튼 클릭 시에는 동작하지 않도록 이벤트 전파 차단
+				return;
 	    } else {
 			var data = table.row(this).data();
 	        console.log(data);
@@ -318,16 +319,28 @@ function loadDataTable(params) {
 			window.location = url;
 		}
 	});
+	
+	// 위치보기 버튼 클릭 이벤트 처리
+	$('#userTable').on('click', '.viewDetailButton', function(event) {
+	    event.stopPropagation(); // 이벤트 전파 차단
+
+	    // 버튼의 data 속성에서 x, y 좌표 가져오기
+	    const x = $(this).data('x');
+	    const y = $(this).data('y');
+	    
+	    console.log("x, y:", x, y);
+	    
+	    // 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
+	    if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
+	        // 좌표가 있을 때는 좌표를 전달
+	        onePostionView({ x, y });
+	    } else {
+	        // 좌표가 없을 때는 빈 객체를 전달하여 onePostionView 내부에서 처리
+	        onePostionView(undefined);
+	    }
+	});
 }
 
-
-$(document).on("click","#moveMap",function(){
-	//openMapWindow();
-//	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
-	const x = $(this).attr('x')
-	const y = $(this).attr('y')
-	moveToCityHall(x,y);
-})
 
 // 지사 선택 시 허가관청 목록 업데이트
 $(document).on("click", "#jisaUl li", function () {

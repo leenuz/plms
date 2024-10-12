@@ -13,8 +13,6 @@ $(document).ready(function() {
 });
 
 
-
-
 //조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
 $(document).on("click","#searchBtn",function(){
        console.log($("#menuHiddenSelectBox01_1").val());
@@ -314,9 +312,7 @@ function loadDataTable(params) {
 			}
 		},
 		initComplete: function() {
-
 			console.log(this.api().data().length);
-
 		},
 		drwaCallback: function(settings) {
 			console.log("--------------데이터가 로드되고 테이블이 다시 그려졌습니다.----------------");
@@ -372,7 +368,7 @@ function loadDataTable(params) {
 			{
 				targets: [12], width: "100px"
 				, render: function(data, type, row, meta) {
-					return "<button class='btnDesign'>위치보기</button> ";
+					return `<button class="btnDesign viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}, //지도
 			{
@@ -383,12 +379,8 @@ function loadDataTable(params) {
 					return "<button class='btnDesign'>문서보기</button> ";
 				}
 			}, //ECHO문서보기
-
-
 		]
-
 	});
-
 
 	table.on('click', 'tr', function() {
 
@@ -397,6 +389,7 @@ function loadDataTable(params) {
 		var isButtonCell = target.closest('td').index() === 12;
 
 		if (isButtonCell) {
+			event.stopPropagation(); // 버튼 클릭 시에는 동작하지 않도록 이벤트 전파 차단
 			return;
 		} else {
 			// 다른 열을 클릭했을 때만 상세 페이지로 이동
@@ -411,27 +404,26 @@ function loadDataTable(params) {
 		}
 
 	});
+	
+	// 위치보기 버튼 클릭 이벤트 처리
+	$('#userTable').on('click', '.viewDetailButton', function(event) {
+		event.stopPropagation(); // 이벤트 전파 차단
 
-	/*$("table th").resizable({
-		handles:'e',
-		stop:function(e,ui){
-			$(this).width(ui.size.width);
-			table.columns.adjust().draw();
+		// 버튼의 data 속성에서 x, y 좌표 가져오기
+		const x = $(this).data('x');
+		const y = $(this).data('y');
+
+		console.log("x, y:", x, y);
+
+		// 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
+		if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
+			// 좌표가 있을 때는 좌표를 전달
+			onePostionView({ x, y });
+		} else {
+			// 좌표가 없을 때는 빈 객체를 전달하여 onePostionView 내부에서 처리
+			onePostionView(undefined);
 		}
-	});*/
-	/*table
-			.on('order.dt search.dt', function () {
-					let i = 1;
-	 
-					table
-							.cells(null, 0, { search: 'applied', order: 'applied' })
-							.every(function (cell) {
-									this.data(i++);
-							});
-			})
-			.draw();*/
-
-	// console.log($('#userTable').DataTable().page.info().recordsTotal);
+	});
 }
 
 
