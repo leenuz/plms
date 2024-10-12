@@ -26,6 +26,7 @@ public class GlobalConfig {
 	private static String jisangReqDoc2Dir;
 	private static String togiFileTempDir;
 	private static String togiFileDataDir;
+	private static String statisFileDataDir;
 	
 	private static String serverName;
 	
@@ -151,6 +152,16 @@ public class GlobalConfig {
 	public static String getTogiFileDataDir() {
 		return togiFileDataDir;
 	}
+	
+	@Value("${plms.statisFileDataDir}")
+	public void setStatisFileDataDir(String str) {
+		statisFileDataDir=str;
+	}
+	public static String getStatisFileDataDir() {
+		return statisFileDataDir;
+	}
+	
+	
 	
 	@Value("${server.name}")
 	public void setServerName(String sn) {

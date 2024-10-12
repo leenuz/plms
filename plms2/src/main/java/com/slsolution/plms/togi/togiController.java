@@ -2,6 +2,7 @@ package com.slsolution.plms.togi;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -165,12 +166,14 @@ public class togiController {
 		ArrayList<HashMap> deptdata = mainService.selectQuery("togiSQL.selectDeptData",params);
 		ArrayList<HashMap> daepyodata = mainService.selectQuery("togiSQL.selectDaepyoData",params);
 		ArrayList<HashMap> sosokData = mainService.selectQuery("togiSQL.selectSosokData",params);
+		ArrayList<HashMap> atcFileList = mainService.selectQuery("togiSQL.selectAtcFileList",params);
 		
 		mav.addObject("resultData",data);
 		mav.addObject("deptdata",deptdata);
 		mav.addObject("daepyodata",daepyodata.get(0));
 		mav.addObject("sosokData",sosokData);
-
+		mav.addObject("atcFileList",atcFileList);
+		
 		mav.setViewName("content/togi/landEdit");
 		return mav;
 	}
@@ -391,7 +394,9 @@ public class togiController {
 					
 					str_DOSINO = Next_DosiNo;
 				} else if ("modify".equals(gubun)) {
+					params.put("dosi_no", dosiNo);
 					params.put("DOSI_NO", dosiNo);
+					params.put("dosiNo", dosiNo);
 				}
 
 				for (int i = 0; i < togiArr.length(); i++) {
@@ -499,25 +504,70 @@ public class togiController {
 					}
 				}
 				if (gubun.equals("modify")) {
-//					// System.out.println("filenumber = " + filenumber);
-//					for (int i = 0; i < Integer.parseInt(filenumber); i++) {
-//						String IS_DEL = parser.getString("isFileDel" + String.valueOf(i), "");
-//						String DEL_SEQ = parser.getString("fileSeq" + String.valueOf(i), "");
-//
-//						if (IS_DEL.equals("Y")) {
-//							// System.out.println("FILE_DEL_SEQ=" + DEL_SEQ);
-//
-//							// 조회용 parma셋팅
-//							params.put("SEQ", "");
-//							params.put("DOSI_NO", String.valueOf((params.get("DOSI_NO"))));
-//							params.put("FILE_SEQ", DEL_SEQ);
-//							ArrayList File_list = (ArrayList) mainService.selectQuery("togiSQL.selectDosiRowDetail_Files", params); // 첨부
-//																																				// 파일
-//
-//							params.put("SEQ", DEL_SEQ);
-//							mainService.UpdateQuery("togiSQL.dosiDeleteFile", params);
-//						}
-//					}
+//					log.info("param:" + params);
+					// 기존 등록된 파일리스트 삭제 - 이 로직 필요 없어짐.
+					// 이제 새파일을 구분할수 있는 플래그도 값이 넘어옴.
+					//mainService.DeleteQuery("goverSQL.deleteBeforeGoverAtcFileList", params);
+					
+					// seq 가져오기
+					int nseq = (int) mainService.selectCountQuery("togiSQL.getTogiAtcFileSeq", params);
+					log.info("nseq:" + nseq);
+					
+					// fileseq 가져오기
+					for (int i = 0; i < fileArr.length(); i++) {
+						
+						JSONObject fobj = new JSONObject(fileArr.get(i).toString());
+						
+						//새파일일 경우에만 등록 로직이 이루어짐
+						if("Y".equals(fobj.get("newFileCheckYn"))) {
+							String filePath = fobj.getString("fpath");
+							String fileName = fobj.getString("fname");
+							String[] paths = Arrays.copyOf(filePath.split("/"), filePath.split("/").length - 1);
+							
+							boolean flag = true;
+							for (String item : paths) {
+								if (item.contains("upload")) {
+									flag = false;
+									break;
+								}
+							}
+							
+							HashMap<String, Object> filesMap = new HashMap<>();
+
+							filesMap.put("dosiNo", dosiNo);
+							
+							filesMap.put("fname", fileName);
+							
+							String chageFileName = CommonUtil.filenameAutoChange(fileName); 
+							String tempPath = GC.getTogiFileTempDir(); // 설정파일로 뺀다.
+							String dataPath = GC.getTogiFileDataDir() + "/" + str_DOSINO; // 설정파일로 뺀다.
+							
+							if (!flag) {
+								filesMap.put("fpath", filePath);
+								filesMap.put("seq", fobj.getString("seq"));
+								filesMap.put("fseq", fobj.getString("file_seq"));
+							} else {
+								filesMap.put("fpath", dataPath + chageFileName);
+								filesMap.put("seq", String.format("%06d", i));
+								filesMap.put("fseq", nseq + i);
+							}
+							
+							CommonUtil.moveFile(fileName, tempPath, dataPath, chageFileName);
+							
+							log.info("filesMap:" + filesMap);
+							mainService.InsertQuery("togiSQL.insertDosiUploadData", filesMap);
+						} else if ("D".equals(fobj.get("newFileCheckYn"))) {
+							HashMap<String, Object> filesMap = new HashMap<>();
+							String filePath = fobj.getString("fpath");
+							String fileName = fobj.getString("fname");
+							String fileIdx = fobj.getString("idx");
+							filesMap.put("dosi_no", dosiNo);
+							filesMap.put("idx", fileIdx);
+							mainService.InsertQuery("togiSQL.dosiDeleteFile", filesMap);
+							
+							
+						}
+					}
 				}
 
 				//mainService.UpdateQuery("togiSQL.updateDosiSeqFile", params);
@@ -574,11 +624,13 @@ public class togiController {
 		Iterator<String> itr = multipartRequest.getFileNames();
 
 		String filePath = GC.getTogiFileTempDir(); // 설정파일로 뺀다.
+
 		HashMap<String, Object> resultmap = new HashMap();
 		ArrayList<HashMap> resultdataarr = new ArrayList<HashMap>();
 		HashMap resultdata = new HashMap();
 		String resultCode = "0000";
 		String resultMessage = "success";
+		
 		while (itr.hasNext()) { // 받은 파일들을 모두 돌린다.
 
 			/*
@@ -590,7 +642,12 @@ public class togiController {
 			MultipartFile mpf = multipartRequest.getFile(itr.next());
 
 			String originalFilename = mpf.getOriginalFilename(); // 파일명
-
+			
+			int lastIndex = originalFilename.lastIndexOf(".");
+			
+			String justFileName = originalFilename.substring(0, lastIndex);	//파일명
+			String justFileType = originalFilename.substring(lastIndex +1); //확장자명
+			
 			String fileFullPath = filePath + "/" + originalFilename; // 파일 전체 경로
 
 			try {
@@ -599,8 +656,10 @@ public class togiController {
 
 				resultdata.put("fname", originalFilename);
 				resultdata.put("fpath", fileFullPath);
+				
 				System.out.println("originalFilename => " + originalFilename);
 				System.out.println("fileFullPath => " + fileFullPath);
+				
 				// resultdataarr.add(resultdata);
 			} catch (Exception e) {
 				resultCode = "4001";
@@ -611,18 +670,6 @@ public class togiController {
 				System.out.println("postTempFile_ERROR======>" + fileFullPath);
 				e.printStackTrace();
 			}
-
-//	            System.out.println(obj);
-
-			// log.info("jo:"+jo);
-//	          			response.setCharacterEncoding("UTF-8");
-//	          			response.setHeader("Access-Control-Allow-Origin", "*");
-//	          			response.setHeader("Cache-Control", "no-cache");
-//	          			response.resetBuffer();
-//	          			response.setContentType("application/json");
-//	          			//response.getOutputStream().write(jo);
-//	          			response.getWriter().print(obj);
-//	          			response.getWriter().flush();
 
 		}
 		resultmap.put("resultCode", resultCode);
@@ -749,6 +796,87 @@ public class togiController {
 		    
 		    resultMap.put("result", result);
 			return resultMap;
+		}
+		
+		@RequestMapping(value = "/deleteGoverAtcfile1", method = { RequestMethod.GET, RequestMethod.POST })
+		public void deleteGoverAtcfile1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+
+			// 일반웹형식
+			// Properties requestParams = CommonUtil.convertToProperties(httpRequest);
+			// log.info("requestParams:"+requestParams);
+
+			// //json으로 넘어올때
+			String getRequestBody = ParameterUtil.getRequestBodyToStr(httpRequest);
+			boolean result = false;
+			String resultMessage = "";
+			
+			log.info("getRequestBody:" + getRequestBody);
+			
+			JSONObject json = new JSONObject(getRequestBody.toString());
+			JSONArray idxarr = json.getJSONArray("fileIds");
+			
+			log.info("idxarr:" + idxarr);
+			log.info("idxarr0:" + idxarr.get(0));
+
+			int fsize = idxarr.length();
+
+			for (int i = 0; i < fsize; i++) {
+				log.info("delete IDX:" + idxarr.get(i));
+
+				HashMap params = new HashMap();
+				JSONObject jsonObject = (JSONObject) idxarr.get(i);
+				params.put("idx", jsonObject.get("idx"));
+
+				// 파일 삭제 부분.
+				// 파일 경로 생성
+				String filePath = GC.getTogiFileDataDir() + "/" + jsonObject.get("gover_no"); // 설정파일로 뺀다.
+				String originalFilename = jsonObject.get("filename").toString();
+				String fileFullPath = filePath + "/" + originalFilename; // 파일 전체 경로
+
+				File file = new File(fileFullPath);
+				
+				log.info("=============================");
+				log.info("* fileFullPath :: " + fileFullPath);
+				log.info("=============================");
+				
+				// 파일이 존재하는지 확인
+				if (file.exists()) {
+					// 파일 삭제
+					if (file.delete()) {
+						// 파일 삭제 성공
+						log.info("파일 삭제 성공");
+						result = true;
+						resultMessage = "파일이 삭제되었습니다.";
+						//삭제가 성공해야지 지워야함
+						mainService.DeleteQuery("goverSQL.deleteGoverAtcFile", params);
+					} else {
+						// 파일 삭제 실패시 에러
+						log.error("===== 파일 삭제에 실패했습니다. =====");
+						resultMessage = "파일 삭제에 실패했습니다.";
+					}
+				} else {
+					// 파일 없을때 에러
+					log.error("===== 파일이 없습니다. =====");
+					resultMessage = "파일이 없습니다.";
+				}
+			}
+
+			HashMap<String, Object> resultmap = new HashMap();
+			resultmap.put("resultCode", "0000");
+			resultmap.put("resultData", idxarr);
+			resultmap.put("result", result);
+			resultmap.put("resultMessage", resultMessage);
+			JSONObject obj = new JSONObject(resultmap);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.setHeader("Cache-Control", "no-cache");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			// response.getOutputStream().write(jo);
+			response.getWriter().print(obj);
+			response.getWriter().flush();
+			// return new ModelAndView("dbTest", "list", list);
 		}
 	
 }

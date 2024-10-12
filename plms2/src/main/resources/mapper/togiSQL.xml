@@ -302,9 +302,12 @@
 	</insert>
 	<delete id="dosiDeleteFile" parameterType="HashMap">
 		DELETE FROM DOSI_ATCFILE
-		WHERE DOSI_NO = TO_CHAR(#{dosi_no})
+		WHERE DOSI_NO = #{dosi_no}
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" >
 			AND FILE_SEQ = TO_CHAR(#{seq})
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+			AND idx = #{idx}::int
 		</if>
 	</delete>
 	<select id="selectDosiRowDetail_Files"  resultType="HashMap" parameterType="HashMap">
@@ -446,4 +449,8 @@
 			AND FILE_SEQ = #{file_seq}::int
 		</if>
 	</delete>
+	
+	<select id="getTogiAtcFileSeq" parameterType="java.util.HashMap" resultType="integer">
+		SELECT COALESCE(MAX(file_seq), 0)+1  FROM dosi_atcfile WHERE dosi_no=#{dosi_no};
+	</select>
 </mapper>

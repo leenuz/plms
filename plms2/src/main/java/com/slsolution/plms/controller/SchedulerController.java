@@ -522,102 +522,115 @@ public class SchedulerController {
 		}
 //		
 //		// 3. 합필 상신건 결재완료내용 조회
-//		ArrayList<HashMap> mergeTargetList = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectApprovalmerge");
-//		// 3.1. 합필 결재완료건 처리
-//		for (HashMap targetMap : mergeTargetList) {
-//			try {
-//
-//				Database.getInstance().startTransaction();
-//				HashMap param = new HashMap();
-//				String REP_JISANG_NO = (String) targetMap.get("REP_JISANG_NO");
-//
-//				// 대표필지 합필정보
-//				param.put("JISANG_NO", REP_JISANG_NO);
-//				HashMap<String, String> mainJisangMap = (HashMap<String, String>) Database.getInstance().queryForObject("Json.selectJisangMergeSaveList", param);
-//
-//				// 임시저장된 합필정보
-//				param.put("JISANG_NO", null);
-//				param.put("REP_JISANG_NO", REP_JISANG_NO);
-//				ArrayList<HashMap<String, String>> targetList = (ArrayList<HashMap<String, String>>) Database.getInstance().queryForList("Json.selectJisangMergeSaveList", param);
-//
-//				for (HashMap<String, String> datas : targetList) {
-//
-//					// 합필 등록시 수정했던 내용 지상 마스터에서 수정
-//					Database.getInstance().update("Json.updateMergeJisangMaster", datas);
-//
-//					// 대표지상권이 아닌 기존 지상권 정보를 삭제처리하고 지상권 합필정보 관리 테이블에 삽입한다.
-//					if ("N".equals(datas.get("MAIN_FLAG"))) {
-//						datas.put("REP_JISANG_NO", (String) targetMap.get("REP_JISANG_NO")); // 대표지상권 정보
-//						Database.getInstance().insert("Json.insertJisangMerge", datas);
-//
-//						datas.put("JISANG_NO", datas.get("JISANG_NO")); // 삭제 지상권 번호
-//
-////						// 해지후 미설정,미점용으로 등록
-////						HashMap dataMap = new HashMap();
-////						dataMap = (HashMap) Database.getInstance().queryForObject("Json.selectJisangRowDetail_KibonInfo", datas);
-////						ArrayList NotsetList = (ArrayList) Database.getInstance().queryForList("Json.selectNotsetNextNo", null);
-////						String Next_notsetNo = String.valueOf(Integer.parseInt((String) ((HashMap) NotsetList.get(0)).get("NOW_NOTSETNO")) + 1);
-////						int n_Next_notsetNo = Next_notsetNo.length();
-////						String add_Zero = "";
-////						for (int i = 0; i < (6 - n_Next_notsetNo); i++) {
-////							add_Zero += "0";
-////						}
-////						Next_notsetNo = "N_" + add_Zero + Next_notsetNo;
-////						dataMap.put("NOTSET_NO", Next_notsetNo);
-////						Database.getInstance().insert("Json.insertNotsetMaster", dataMap);
-////						dataMap.put("STATUS", "NOTSET");
-////						dataMap.put("JISANGNO", Next_notsetNo);
-////						Database.getInstance().update("Json.updateTogiJisang_Status", dataMap);
-//
-//						Database.getInstance().delete("Json.deleteJisangMerge", datas); // 대상 지상권 정보 삭제처리. !!!주의 진짜로 삭제처리함 !!!
-//
-//						// 변경이력을 등록한다
-//						String modify_reason = "지상권 " + datas.get("JISANG_NO") + "(자산관리번호:" + datas.get("JASAN_NO") + ")에서 지상권 " + mainJisangMap.get("JISANG_NO") + "(자산관리번호:" + mainJisangMap.get("JASAN_NO") + ")" + "로 합필처리";
-//						Map Addparams = new HashMap();
-//						Addparams.put("GUBUN", "합필");
-//						Addparams.put("USER_ID", targetMap.get("USER_ID"));
-//						Addparams.put("USER_NAME", targetMap.get("USER_NAME"));
-//						Addparams.put("CONT", modify_reason);
-//
-//						Addparams.put("JISANGNO", targetMap.get("REP_JISANG_NO"));
-//						Database.getInstance().insert("Json.insertJisangModifyHistory", Addparams);
-//
-//						// 잠재이슈 삭제.
-//						CommonUtil comm = new CommonUtil();
-//						param.put("PNU", comm.nvl((String) datas.get("PNU")));
-//						param.put("JIBUN", comm.nvl((String) datas.get("JIBUN")));
-//						param.put("ADDRCODE", comm.nvl((String) datas.get("ADDRCODE")));
-//						param.put("DEL_COMMENT", "지상권합필에 의한 삭제");
-////						Database.getInstance().update("Json.deletePnuIssueForPnu", param);
-//						Database.getInstance().delete("Json.deletePnuIssueForPnuReal", param); // DELETE로 변경
-//						Database.getInstance().delete("Json.deletePnuIssueHistory", param); // 잠재이슈 내역도 삭제 
-//					} else {
-//						// 모지번 정보에 합필사유, 검토의견 업데이트
-//						mainJisangMap.put("MERGE_REASON", datas.get("MERGE_REASON"));
-//						mainJisangMap.put("MERGE_COMMENT", datas.get("MERGE_COMMENT"));
-//						Database.getInstance().update("Json.updateJisangMasterMergeReason", mainJisangMap);
-//					}
-//
-//					// 합필대상 첨부파일 정보 업데이트
-//					ArrayList<HashMap<String, String>> attachList = (ArrayList<HashMap<String, String>>) Database.getInstance().queryForList("Json.selectJisangRowDetail_Files", datas);
-//
-//					for (HashMap<String, String> attachMap : attachList) {
-//						attachMap.put("JISANGNO", REP_JISANG_NO);
-//						Database.getInstance().update("Json.updateSeqFile", attachMap);
-//					}
-//
-//				}
-//
-//				// 임시저장 내용 삭제
-//				Database.getInstance().delete("Json.deleteJisangMergeTmp", param);
-//
-//				Database.getInstance().commitTransaction();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} finally {
-//				Database.getInstance().endTransaction();
-//			}
-//		}
+		ArrayList<HashMap> mergeTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalmerge",null);
+		// 3.1. 합필 결재완료건 처리
+		for (HashMap targetMap : mergeTargetList) {
+			try {
+
+				//Database.getInstance().startTransaction();
+				HashMap hparam = new HashMap();
+				String REP_JISANG_NO = (String) targetMap.get("rep_jisang_no");
+
+				// 대표필지 합필정보
+				hparam.put("JISANG_NO", REP_JISANG_NO);
+				HashMap<String, String> mainJisangMap = (HashMap<String, String>) mainService.selectHashmapQuery("jisangSQL.selectJisangMergeSaveList", hparam);
+
+				// 임시저장된 합필정보
+				hparam.put("JISANG_NO", null);
+				hparam.put("REP_JISANG_NO", REP_JISANG_NO);
+				//ArrayList<HashMap<String, String>> targetList = (ArrayList<HashMap<String, String>>) mainService.selectQuery("Json.selectJisangMergeSaveList", hparam);
+				List<HashMap> resultList = (List<HashMap>) mainService.selectQuery("jisangSQL.selectJisangMergeSaveList", hparam);
+				ArrayList<HashMap<String, String>> targetList = new ArrayList<>();
+
+				for (HashMap map : resultList) {
+				    targetList.add((HashMap<String, String>) map);
+				}
+
+				for (HashMap<String, String> datas : targetList) {
+
+					// 합필 등록시 수정했던 내용 지상 마스터에서 수정
+					mainService.UpdateQuery("jisangSQL.updateMergeJisangMaster", datas);
+
+					// 대표지상권이 아닌 기존 지상권 정보를 삭제처리하고 지상권 합필정보 관리 테이블에 삽입한다.
+					if ("N".equals(datas.get("MAIN_FLAG"))) {
+						datas.put("REP_JISANG_NO", (String) targetMap.get("rep_jisang_no")); // 대표지상권 정보
+						mainService.InsertQuery("jisangSQL.insertJisangMerge", datas);
+
+						datas.put("JISANG_NO", datas.get("jisang_no")); // 삭제 지상권 번호
+
+//						// 해지후 미설정,미점용으로 등록
+//						HashMap dataMap = new HashMap();
+//						dataMap = (HashMap) Database.getInstance().queryForObject("Json.selectJisangRowDetail_KibonInfo", datas);
+//						ArrayList NotsetList = (ArrayList) Database.getInstance().queryForList("Json.selectNotsetNextNo", null);
+//						String Next_notsetNo = String.valueOf(Integer.parseInt((String) ((HashMap) NotsetList.get(0)).get("NOW_NOTSETNO")) + 1);
+//						int n_Next_notsetNo = Next_notsetNo.length();
+//						String add_Zero = "";
+//						for (int i = 0; i < (6 - n_Next_notsetNo); i++) {
+//							add_Zero += "0";
+//						}
+//						Next_notsetNo = "N_" + add_Zero + Next_notsetNo;
+//						dataMap.put("NOTSET_NO", Next_notsetNo);
+//						Database.getInstance().insert("Json.insertNotsetMaster", dataMap);
+//						dataMap.put("STATUS", "NOTSET");
+//						dataMap.put("JISANGNO", Next_notsetNo);
+//						Database.getInstance().update("Json.updateTogiJisang_Status", dataMap);
+
+						mainService.DeleteQuery("jisangSQL.deleteJisangMerge1", datas); // 대상 지상권 정보 삭제처리. !!!주의 진짜로 삭제처리함 !!!
+
+						// 변경이력을 등록한다
+						String modify_reason = "지상권 " + datas.get("jisang_no") + "(자산관리번호:" + datas.get("jasan_no") + ")에서 지상권 " + mainJisangMap.get("jisang_no") + "(자산관리번호:" + mainJisangMap.get("jasan_no") + ")" + "로 합필처리";
+						HashMap Addparams = new HashMap();
+						Addparams.put("GUBUN", "합필");
+						Addparams.put("USER_ID", targetMap.get("user_id"));
+						Addparams.put("USER_NAME", targetMap.get("user_name"));
+						Addparams.put("CONT", modify_reason);
+
+						Addparams.put("JISANGNO", targetMap.get("rep_jisang_no"));
+						mainService.InsertQuery("jisangSQL.insertJisangModifyHistory", Addparams);
+
+						// 잠재이슈 삭제.
+						CommonUtil comm = new CommonUtil();
+						hparam.put("PNU", comm.nvl((String) datas.get("pnu")));
+						hparam.put("JIBUN", comm.nvl((String) datas.get("jibun")));
+						hparam.put("ADDRCODE", comm.nvl((String) datas.get("addrcode")));
+						hparam.put("DEL_COMMENT", "지상권합필에 의한 삭제");
+//						Database.getInstance().update("Json.deletePnuIssueForPnu", param);
+						mainService.DeleteQuery("jisangSQL.deletePnuIssueForPnuReal", hparam); // DELETE로 변경
+						mainService.DeleteQuery("jisangSQL.deletePnuIssueHistory", hparam); // 잠재이슈 내역도 삭제 
+					} else {
+						// 모지번 정보에 합필사유, 검토의견 업데이트
+						mainJisangMap.put("MERGE_REASON", datas.get("merge_reason"));
+						mainJisangMap.put("MERGE_COMMENT", datas.get("merge_comment"));
+						mainService.UpdateQuery("jisangSQL.updateJisangMasterMergeReason", mainJisangMap);
+					}
+
+					// 합필대상 첨부파일 정보 업데이트
+					//ArrayList<HashMap<String, String>> attachList = (ArrayList<HashMap<String, String>>) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Files1", datas);
+					// 반환된 리스트를 개별 요소에 대해 캐스팅
+					ArrayList<HashMap<String, String>> attachList = new ArrayList<>();
+					List<HashMap> resultList1 = (List<HashMap>) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Files1", datas);
+
+					for (HashMap map : resultList1) {
+					    attachList.add((HashMap<String, String>) map);
+					}
+
+					for (HashMap<String, String> attachMap : attachList) {
+						attachMap.put("JISANGNO", REP_JISANG_NO);
+						mainService.UpdateQuery("jisangSQL.updateSeqFile", attachMap);
+					}
+
+				}
+
+				// 임시저장 내용 삭제
+				mainService.DeleteQuery("jisangSQL.deleteJisangMergeTmp", hparam);
+
+				//Database.getInstance().commitTransaction();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				//Database.getInstance().endTransaction();
+			}
+		}
 //
 //		// 4. 지상권신규등록 결재완료내용 조회
 //		ArrayList<HashMap> jisnagInsertTargetList = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectApprovaljisangInsert");
@@ -708,197 +721,209 @@ public class SchedulerController {
 //		}
 //
 //		// 5. 지상권사용 승락
-//		ArrayList<HashMap> jisnagPermitTargetList = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectApprovaljisangPermit");
-//		for (HashMap targetMap : jisnagPermitTargetList) {
-//			try {
-//				Database.getInstance().startTransaction();
-//
-//				HashMap params = new HashMap();
-//				params.put("PMT_NO", targetMap.get("PMT_NO"));
-//				params.put("PMT_STATUS", targetMap.get("STATUS"));
-//
-//				Database.getInstance().update("Json.UpdateJisangPermit", params);
-//
-//				Database.getInstance().commitTransaction();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} finally {
-//				Database.getInstance().endTransaction();
-//			}
-//		}
+		ArrayList<HashMap> jisnagPermitTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovaljisangPermit",null);
+		for (HashMap targetMap : jisnagPermitTargetList) {
+			try {
+				//Database.getInstance().startTransaction();
+
+				HashMap params = new HashMap();
+				params.put("PMT_NO", targetMap.get("pmt_no"));
+				params.put("PMT_STATUS", targetMap.get("status").toString());
+				//params.put("PMT_STATUS","C");
+				log.info("params:"+params);
+				System.out.println("PMT_STATUS 값: " + params.get("PMT_STATUS"));
+				System.out.println("PMT_STATUS 타입: " + params.get("PMT_STATUS").getClass().getName());
+				//"  ' 의 차이로 인한 아래 쿼리가 안통하는부분 때문에 로그 찍음
+				mainService.UpdateQuery("jisangSQL.UpdateJisangPermit", params);
+
+				//Database.getInstance().commitTransaction();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				//Database.getInstance().endTransaction();
+			}
+		}
+		
+		
+		log.info("############ 민원발생보고 상신건 결재처리된 건에 대하여 처리###################");
 //
 //		// 이슈관리 >> 민원관리 전자결제 체크.
 //		// 1. 민원발생보고
-//		ArrayList<HashMap> minwonMasterList = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectApprovalMinwonMaster");
-//		// 1.1 민원발생보고 상신건 결재처리된 건에 대하여 처리
-//		for (HashMap targetMap : minwonMasterList) {
-////			System.out.println("##### "+targetMap.toString());
-//			try {
-//				Database.getInstance().startTransaction();
-//
-//				Map params = new HashMap();
-//				params.put("MW_SEQ", targetMap.get("MW_SEQ"));
-//				params.put("STATUS", "2"); // 민원발생상태(2)로 업데이트
-//				Database.getInstance().update("Json.updateMinwonMasterApprovalStatus", params);
-//				Database.getInstance().commitTransaction();
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} finally {
-//				Database.getInstance().endTransaction();
-//			}
-//		}
+		ArrayList<HashMap> minwonMasterList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonMaster",null);
+		// 1.1 민원발생보고 상신건 결재처리된 건에 대하여 처리
+		for (HashMap targetMap : minwonMasterList) {
+//			System.out.println("##### "+targetMap.toString());
+			try {
+				//Database.getInstance().startTransaction();
+
+				HashMap params = new HashMap();
+				params.put("MW_SEQ", targetMap.get("mw_seq"));
+				params.put("STATUS", "2"); // 민원발생상태(2)로 업데이트
+				log.info("params:"+params);
+				mainService.UpdateQuery("issueSQL.updateMinwonMasterApprovalStatus", params);
+			//	Database.getInstance().commitTransaction();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				//Database.getInstance().endTransaction();
+			}
+		}
+		
+		log.info("############ 민원발생보고 결재 반려된 경우###################");
 //		// 1.2. 민원발생보고 결재 반려된 경우
-//		ArrayList<HashMap> minwonMasterRejectedList = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectApprovalMinwonMaster");
-//		for (HashMap targetMap : minwonMasterRejectedList) {
-//			try {
-//				Database.getInstance().startTransaction();
+		ArrayList<HashMap> minwonMasterRejectedList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonMaster",null);
+		for (HashMap targetMap : minwonMasterRejectedList) {
+			try {
+			//	Database.getInstance().startTransaction();
+
+				HashMap params = new HashMap();
+				params.put("MW_SEQ", targetMap.get("mw_seq"));
+				mainService.UpdateQuery("issueSQL.updateMinwonMasterApprovalStatusRejected", params);
+				//Database.getInstance().commitTransaction();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				//Database.getInstance().endTransaction();
+			}
+		}
+		
 //
-//				Map params = new HashMap();
-//				params.put("MW_SEQ", targetMap.get("MW_SEQ"));
-//				Database.getInstance().update("Json.updateMinwonMasterApprovalStatusRejected", params);
-//				Database.getInstance().commitTransaction();
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} finally {
-//				Database.getInstance().endTransaction();
-//			}
-//		}
-//
+		log.info("############ 대응방안수립 보고###################");
 //		// 2. 대응방안수립 보고
-//		ArrayList<HashMap> minwonHandlingTmpList = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectApprovalMinwonHandlingTmp");
-//		for (HashMap targetMap : minwonHandlingTmpList) {
-//			try {
-//				Database.getInstance().startTransaction();
-//
-//				Map params = new HashMap();
-//				params.put("MW_SEQ", targetMap.get("MW_SEQ"));
-//				params.put("MW_CODE1", targetMap.get("MW_CODE1"));
-//				params.put("MW_CODE2", targetMap.get("MW_CODE2"));
-//				params.put("MW_CODE3", targetMap.get("MW_CODE3"));
-//				params.put("STATUS", "3"); // 민원 대응방안수립 상태(3)로 업데이트
-//				Database.getInstance().update("Json.updateMinwonHandling", params);
-//				Database.getInstance().update("Json.updateMinwonHandlingTmpComplete", params);
-//				Database.getInstance().commitTransaction();
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} finally {
-//				Database.getInstance().endTransaction();
-//			}
-//		}
+		ArrayList<HashMap> minwonHandlingTmpList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonHandlingTmp",null);
+		for (HashMap targetMap : minwonHandlingTmpList) {
+			try {
+				//Database.getInstance().startTransaction();
+
+				HashMap params = new HashMap();
+				params.put("MW_SEQ", targetMap.get("mw_seq"));
+				params.put("MW_CODE1", targetMap.get("mw_code1"));
+				params.put("MW_CODE2", targetMap.get("mw_code2"));
+				params.put("MW_CODE3", targetMap.get("mw_code3"));
+				params.put("STATUS", "3"); // 민원 대응방안수립 상태(3)로 업데이트
+				mainService.UpdateQuery("issueSQL.updateMinwonHandling", params);
+				mainService.UpdateQuery("issueSQL.updateMinwonHandlingTmpComplete", params);
+				//Database.getInstance().commitTransaction();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				//Database.getInstance().endTransaction();
+			}
+		}
 //		// 2. 대응방안수립 보고 반려일 경우 롤백
-//		ArrayList<HashMap> minwonHandlingTmpRejectedList = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectApprovalMinwonHandlingTmpRejected");
-//		for (HashMap targetMap : minwonHandlingTmpRejectedList) {
-//			try {
-//				Database.getInstance().startTransaction();
-//				Map params = new HashMap();
-//				params.put("MW_SEQ", targetMap.get("MW_SEQ"));
-//				Database.getInstance().update("Json.updateMinwonHandlingTmpEchoNoRejected", params);
-//				Database.getInstance().commitTransaction();
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} finally {
-//				Database.getInstance().endTransaction();
-//			}
-//		}
+		ArrayList<HashMap> minwonHandlingTmpRejectedList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonHandlingTmpRejected",null);
+		for (HashMap targetMap : minwonHandlingTmpRejectedList) {
+			try {
+				//Database.getInstance().startTransaction();
+				HashMap params = new HashMap();
+				params.put("MW_SEQ", targetMap.get("mw_seq"));
+				mainService.UpdateQuery("issueSQL.updateMinwonHandlingTmpEchoNoRejected", params);
+				//Database.getInstance().commitTransaction();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				//Database.getInstance().endTransaction();
+			}
+		}
 //
 //		// 3. 협의내용 보고 반려시 처리
-//		ArrayList<HashMap> minwonAgreementRejectList = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectApprovalMinwonAgreementRejected");
-//		for (HashMap targetMap : minwonAgreementRejectList) {
-//			try {
-//				Database.getInstance().startTransaction();
-//
-//				Map params = new HashMap();
-//				params.put("MW_SEQ", targetMap.get("MW_SEQ"));
-//				params.put("AGREE_SEQ", targetMap.get("AGREE_SEQ"));
-//				Database.getInstance().update("Json.updateMinwonAgreeApprovalCancel", params);
-//				Database.getInstance().commitTransaction();
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} finally {
-//				Database.getInstance().endTransaction();
-//			}
-//		}
+		ArrayList<HashMap> minwonAgreementRejectList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonAgreementRejected",null);
+		for (HashMap targetMap : minwonAgreementRejectList) {
+			try {
+				//Database.getInstance().startTransaction();
+
+				HashMap params = new HashMap();
+				params.put("MW_SEQ", targetMap.get("mw_seq"));
+				params.put("AGREE_SEQ", targetMap.get("agree_seq"));
+				mainService.UpdateQuery("issueSQL.updateMinwonAgreeApprovalCancel", params);
+				//Database.getInstance().commitTransaction();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				//Database.getInstance().endTransaction();
+			}
+		}
 //
 //		// 4. 민원 완료 보고
-//		ArrayList<HashMap> minwonCompleteList = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectApprovalMinwonComplete");
-//		System.out.println("LJS:  schedulerController minwonCompleteList-----------------");
-//		for (HashMap targetMap : minwonCompleteList) {
-//			try {
-//				Database.getInstance().startTransaction();
-//
-//				Map params = new HashMap();
-//				params.put("MW_SEQ", targetMap.get("MW_SEQ"));
-//				params.put("STATUS", "5"); // 민원 완료 상태(5)로 업데이트
-//				Database.getInstance().update("Json.updateMinwonMasterApprovalComplete", params);
-//
-//				// 민원완료 후 해당 토지 잠재이슈 이슈없음으로 변경.
-//				ArrayList<HashMap> minwonCompletePnuList = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectApprovalMinwonCompletePnu", params);
-//				for (HashMap pnuMap : minwonCompletePnuList) {
-//					// 이슈없음 코드에 대해서 하드코딩 처리...
-//
-//					// 지상권
-//					if (String.valueOf(pnuMap.get("JISANG_NO")).startsWith("J")) {
-//
-//						pnuMap.put("CODE_DEPTH1", "DY010000"); // 이슈없음
-//						pnuMap.put("CODE_DEPTH2", "DY010100"); // 이슈없음
-//						pnuMap.put("CODE_DEPTH3", "DY010101"); // 이슈없음
-//
-//					}
-//
-//					// 점용
-//					if (String.valueOf(pnuMap.get("JISANG_NO")).startsWith("G")) {
-//
-//						pnuMap.put("CODE_DEPTH1", "GY010000"); // 점용료납부
-//						pnuMap.put("CODE_DEPTH2", "GY010100"); // 이슈없음
-//						pnuMap.put("CODE_DEPTH3", "GY010101"); // 이슈없음
-//
-//					}
-//
-//					// 미설정/미점용 토지
-//					if (String.valueOf(pnuMap.get("JISANG_NO")).startsWith("N")) {
-//
-//						pnuMap.put("CODE_DEPTH1", "DY010000"); // 이슈없음
-//						pnuMap.put("CODE_DEPTH2", "DY010100"); // 이슈없음
-//						pnuMap.put("CODE_DEPTH3", "DY010101"); // 이슈없음
-//
-//					}
-//
-//					pnuMap.put("ISSUE_COMMENT", "민원완료에 의한 이슈없음 변경.");
-//
-//					Database.getInstance().update("Json.updatePnuIssue2", params);
-//				}
-//
+		ArrayList<HashMap> minwonCompleteList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonComplete",null);
+		System.out.println("LJS:  schedulerController minwonCompleteList-----------------");
+		for (HashMap targetMap : minwonCompleteList) {
+			try {
+				//Database.getInstance().startTransaction();
+
+				HashMap params = new HashMap();
+				params.put("MW_SEQ", targetMap.get("mw_seq"));
+				params.put("STATUS", "5"); // 민원 완료 상태(5)로 업데이트
+				mainService.UpdateQuery("issueSQL.updateMinwonMasterApprovalComplete", params);
+
+				// 민원완료 후 해당 토지 잠재이슈 이슈없음으로 변경.
+				ArrayList<HashMap> minwonCompletePnuList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonCompletePnu", params);
+				for (HashMap pnuMap : minwonCompletePnuList) {
+					// 이슈없음 코드에 대해서 하드코딩 처리...
+
+					// 지상권
+					if (String.valueOf(pnuMap.get("jisang_no")).startsWith("J")) {
+
+						pnuMap.put("CODE_DEPTH1", "DY010000"); // 이슈없음
+						pnuMap.put("CODE_DEPTH2", "DY010100"); // 이슈없음
+						pnuMap.put("CODE_DEPTH3", "DY010101"); // 이슈없음
+
+					}
+
+					// 점용
+					if (String.valueOf(pnuMap.get("jisang_no")).startsWith("G")) {
+
+						pnuMap.put("CODE_DEPTH1", "GY010000"); // 점용료납부
+						pnuMap.put("CODE_DEPTH2", "GY010100"); // 이슈없음
+						pnuMap.put("CODE_DEPTH3", "GY010101"); // 이슈없음
+
+					}
+
+					// 미설정/미점용 토지
+					if (String.valueOf(pnuMap.get("jisang_no")).startsWith("N")) {
+
+						pnuMap.put("CODE_DEPTH1", "DY010000"); // 이슈없음
+						pnuMap.put("CODE_DEPTH2", "DY010100"); // 이슈없음
+						pnuMap.put("CODE_DEPTH3", "DY010101"); // 이슈없음
+
+					}
+
+					pnuMap.put("ISSUE_COMMENT", "민원완료에 의한 이슈없음 변경.");
+
+					mainService.UpdateQuery("issueSQL.updatePnuIssue2", params);
+				}
+
 //				Database.getInstance().commitTransaction();
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} finally {
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
 //				Database.getInstance().endTransaction();
-//			}
-//		}
-//		ArrayList<HashMap> minwonCompleteRejectedList = (ArrayList<HashMap>) Database.getInstance().queryForList("Json.selectApprovalMinwonCompleteRejected");
-//		for (HashMap targetMap : minwonCompleteRejectedList) {
-//			try {
-//				Database.getInstance().startTransaction();
-//
-//				Map params = new HashMap();
-//				params.put("MW_SEQ", targetMap.get("MW_SEQ"));
-//				Database.getInstance().update("Json.updateMinwonMasterApprovalCompleteCancel", params);
-//				Database.getInstance().commitTransaction();
-//
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} finally {
-//				Database.getInstance().endTransaction();
-//			}
-//		}
-//
-//	}
+			}
+		}
+		ArrayList<HashMap> minwonCompleteRejectedList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonCompleteRejected",null);
+		for (HashMap targetMap : minwonCompleteRejectedList) {
+			try {
+				//Database.getInstance().startTransaction();
+
+				HashMap params = new HashMap();
+				params.put("MW_SEQ", targetMap.get("mw_seq"));
+				mainService.UpdateQuery("issueSQL.updateMinwonMasterApprovalCompleteCancel", params);
+				//Database.getInstance().commitTransaction();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				//Database.getInstance().endTransaction();
+			}
+		}
+
+	}
 //
 //	public void dosiMail() throws SQLException {
 //		System.out.println("스케줄러 메일 확인용입니다.");
@@ -1011,5 +1036,5 @@ public class SchedulerController {
 //
 
 		
-	}
+//	}
 }
