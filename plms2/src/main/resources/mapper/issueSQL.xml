@@ -581,21 +581,7 @@ SELECT mht_mw_seq as MW_SEQ,
   FROM MINWON_HANDLING_TMP
  WHERE mht_MW_SEQ = ${MW_SEQ}
 </select>
-		<update id="updateMinwonHandlingTmp" parameterType="HashMap">
-UPDATE MINWON_HANDLING_TMP
-   SET
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MW_CODE1)" >
-       mht_MW_CODE1 = #{MW_CODE1},
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MW_CODE2)" >
-       mht_MW_CODE2 = #{MW_CODE2},
-		</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MW_CODE3)" >
-       mht_MW_CODE3 = #{MW_CODE3},
-		</if>
-       mht_complete_yn = #{COMPLETE_YN}
- WHERE mht_MW_SEQ = ${MW_SEQ}
-	</update>
+	
 	
 		<!-- 민원관리 대응방안 임시저장 -->
 	<insert id="insertMinwonHandling" parameterType="HashMap">
@@ -1229,5 +1215,214 @@ SELECT COUNT(*) AS MINWON_CNT
    AND A.DEL_FLAG != 'Y'
 </select>
 
+<!-- 민원발생보고 전자결재 결과값 확인쿼리 -->
+	<select id="selectApprovalMinwonMaster" parameterType="HashMap" resultType="HashMap"><![CDATA[ 
+SELECT A.mm_mw_seq as MW_SEQ
+       , A.mm_STATUS AS MINWON_STATUS
+       , B.pa_status as STATUS
+  FROM MINWON_MASTER   A
+       , PLMS_APPROVAL       B
+ WHERE A.mm_DOCKEY = B.pa_DOCKEY
+   AND A.mm_STATUS = '1'
+   AND A.mm_SANGSIN_YN = 'Y'
+   AND B.pa_STATUS = 'C'
+	]]></select>
+	
+	<update id="updateMinwonMasterApprovalStatus" parameterType="HashMap"><![CDATA[
+UPDATE MINWON_MASTER
+   SET mm_STATUS = #{STATUS}
+     , mm_SANGSIN_YN = 'C'
+ WHERE mm_MW_SEQ = #{MW_SEQ}
+	]]></update>
+	
+	<update id="updateMinwonMasterApprovalStatusRejected" parameterType="HashMap"><![CDATA[
+UPDATE MINWON_MASTER
+   SET mm_DOCKEY = ''
+     , mm_SANGSIN_YN = 'N'
+ WHERE mm_MW_SEQ = #{MW_SEQ}
+	]]></update>
+	
+	
+	<!-- 민원 대응방안수립 젼자결재 결과값 확인쿼리 -->
+	<select id="selectApprovalMinwonHandlingTmp" parameterType="HashMap" resultType="HashMap"><![CDATA[ 
+SELECT 
+    A.mht_mw_seq as MW_SEQ,
+    A.mht_mw_code1 as MW_CODE1,
+    A.mht_mw_code2 as MW_CODE2,
+    A.mht_mw_code3 as MW_CODE3,
+    A.mht_COMPLETE_YN AS MINWON_STATUS,
+    B.pa_status as STATUS
+FROM 
+    MINWON_HANDLING_TMP A
+INNER JOIN 
+    PLMS_APPROVAL B ON A.mht_DOCKEY = B.pa_DOCKEY
+WHERE 
+    A.mht_COMPLETE_YN <> 'Y'
+    AND B.pa_STATUS = 'C'
+	]]></select>
+	
+	<update id="updateMinwonHandlingTmp" parameterType="HashMap">
+    <![CDATA[
+    UPDATE MINWON_HANDLING_TMP
+    SET
+    ]]>
+    <if test="MW_CODE1 != null and MW_CODE1 != ''">
+        mht_MW_CODE1 = #{MW_CODE1},
+    </if>
+    <if test="MW_CODE2 != null and MW_CODE2 != ''">
+        mht_MW_CODE2 = #{MW_CODE2},
+    </if>
+    <if test="MW_CODE3 != null and MW_CODE3 != ''">
+        mht_MW_CODE3 = #{MW_CODE3},
+    </if>
+    <![CDATA[
+        mht_COMPLETE_YN = #{COMPLETE_YN}
+    WHERE mht_MW_SEQ = #{MW_SEQ}
+    ]]>
+</update>
+	<!-- <update id="updateMinwonHandlingTmp" parameterType="HashMap">
+UPDATE MINWON_HANDLING_TMP
+   SET
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MW_CODE1)" >
+       mht_MW_CODE1 = #{MW_CODE1},
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MW_CODE2)" >
+       mht_MW_CODE2 = #{MW_CODE2},
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(MW_CODE3)" >
+       mht_MW_CODE3 = #{MW_CODE3},
+		</if>
+       mht_complete_yn = #{COMPLETE_YN}
+ WHERE mht_MW_SEQ = ${MW_SEQ}
+	</update> -->
 
+	 <!-- 대응방안 임시저장내용 완료처리 -->
+	<update id="updateMinwonHandlingTmpComplete" parameterType="HashMap"><![CDATA[
+UPDATE MINWON_HANDLING_TMP
+   SET mht_COMPLETE_YN = 'Y'
+ WHERE mht_MW_SEQ = #{MW_SEQ}
+	]]></update>
+
+
+
+	<select id="selectApprovalMinwonHandlingTmpRejected" parameterType="HashMap" resultType="HashMap"><![CDATA[ 
+		SELECT A.mht_mw_seq as MW_SEQ
+		       , A.mht_mw_code1 as MW_CODE1
+		       , A.mht_mw_code2 as MW_CODE2
+		       , A.mht_mw_code3 as MW_CODE3
+		       , A.mht_COMPLETE_YN AS MINWON_STATUS
+		       , B.pa_status as STATUS
+		  FROM MINWON_HANDLING_TMP   A
+		       , PLMS_APPROVAL       B
+		 WHERE A.mht_DOCKEY = B.pa_DOCKEY
+		   AND A.mht_COMPLETE_YN <> 'Y'
+		   AND B.pa_STATUS = 'X'
+	]]></select>
+	
+	
+	<update id="updateMinwonHandlingTmpEchoNoRejected" parameterType="HashMap"><![CDATA[
+UPDATE MINWON_HANDLING_TMP
+   SET mht_DOCKEY = ''
+ WHERE mht_MW_SEQ = #{MW_SEQ}
+	]]></update>
+	
+	<!-- 민원협의 전자결재 반려 확인쿼리 -->
+	<select id="selectApprovalMinwonAgreementRejected" parameterType="HashMap" resultType="HashMap"><![CDATA[ 
+SELECT A.ma_mw_seq as MW_SEQ
+       , A.ma_agree_seq as AGREE_SEQ
+       , B.pa_status as STATUS
+  FROM MINWON_AGREEMENT   A
+       , PLMS_APPROVAL          B
+ WHERE A.ma_DOCKEY = B.pa_DOCKEY
+   AND B.pa_STATUS = 'X'
+	]]></select>
+	
+	<!-- 민원협의 전자결재 상신취소 -->
+	<update id="updateMinwonAgreeApprovalCancel" parameterType="HashMap"><![CDATA[
+UPDATE MINWON_AGREEMENT
+   SET ma_DOCKEY = ''
+ WHERE ma_MW_SEQ = #{MW_SEQ}
+   AND ma_AGREE_SEQ = #{AGREE_SEQ}
+	]]></update>
+	
+	
+		<!-- 민원 완료 전자결재 결과값 확인쿼리 -->
+	<select id="selectApprovalMinwonComplete" parameterType="HashMap" resultType="HashMap"><![CDATA[ 
+SELECT A.mm_mw_seq as MW_SEQ
+       , A.mm_STATUS AS MINWON_STATUS
+       , B.pa_status as STATUS
+  FROM MINWON_MASTER   A
+       , PLMS_APPROVAL       B
+ WHERE A.mm_COMPLE_DOCKEY = B.pa_DOCKEY
+   AND A.mm_STATUS = '4'
+   AND B.pa_STATUS = 'C'
+	]]></select>
+	
+	<!-- 민원 완료 정보업데이트 처리 -->
+	<update id="updateMinwonMasterApprovalComplete" parameterType="HashMap"><![CDATA[
+UPDATE MINWON_MASTER
+   SET mm_STATUS = '5'
+     , mm_COMPLE_YN = 'Y'
+     , mm_COMPLE_DATE = SYSDATE
+ WHERE mm_MW_SEQ = #{MW_SEQ}
+	]]></update>
+	
+	
+	<!-- 민원 완료 전자결재 결과값 확인쿼리 -->
+	<select id="selectApprovalMinwonCompletePnu" parameterType="HashMap" resultType="HashMap"><![CDATA[ 
+SELECT A.mm_mw_seq as MW_SEQ
+     , A.mm_STATUS AS MINWON_STATUS
+     , B.pa_status as STATUS
+     , C.mp_pnu as PNU
+     , C.mp_addrcode as ADDRCODE
+     , C.mp_jibun as JIBUN
+     , JM.JISANG_NO
+  FROM MINWON_MASTER A
+     , PLMS_APPROVAL B
+     , MINWON_PNU C
+     , JIJUK_2024 JM
+ WHERE A.mm_COMPLE_DOCKEY = B.pa_DOCKEY
+   AND A.mm_MW_SEQ = C.mp_MINWON_SEQ
+   AND C.mp_PNU = JM.PNU
+   AND A.mm_MW_SEQ = #{MW_SEQ}
+	]]></select>
+	
+	<update id="updatePnuIssue2" parameterType="HashMap">
+	<![CDATA[ 
+UPDATE PLMS_POTENTIAL_ISSUE
+   SET CODE_DEPTH1 = #{CODE_DEPTH1}
+     , CODE_DEPTH2 = #{CODE_DEPTH2}
+     , CODE_DEPTH3 = #{CODE_DEPTH3}
+     , ISSUE_COMMENT = #{ISSUE_COMMENT}
+     , REGISTED_YN = #{REGISTED_YN}
+     , PERMITTED_YN = #{PERMITTED_YN}
+ WHERE ( PNU = #{PNU}
+    OR (PNU = '99999'
+       AND ADDRCODE = #{ADDRCODE}
+       AND JIBUN = #{JIBUN}) )
+	]]>
+	</update>
+	
+	<!-- 민원 완료 전자결재 반려 결과값 확인쿼리 -->
+	
+	<select id="selectApprovalMinwonCompleteRejected" parameterType="HashMap" resultType="HashMap"><![CDATA[ 
+SELECT A.mm_mw_seq as MW_SEQ
+       , A.mm_STATUS AS MINWON_STATUS
+       , B.pa_status as STATUS
+  FROM MINWON_MASTER   A
+       , PLMS_APPROVAL       B
+ WHERE A.mm_COMPLE_DOCKEY = B.pa_DOCKEY
+   AND A.mm_STATUS = '4'
+   AND B.pa_STATUS = 'X'
+	]]></select>
+	
+	
+	<!-- 민원완료 전자결재 상신취소 -->
+	<update id="updateMinwonMasterApprovalCompleteCancel" parameterType="HashMap"><![CDATA[
+UPDATE MINWON_MASTER
+   SET mm_COMPLE_DOCKEY = ''
+ WHERE mm_MW_SEQ = #{MW_SEQ}
+	]]></update>
+	
+	
 </mapper>

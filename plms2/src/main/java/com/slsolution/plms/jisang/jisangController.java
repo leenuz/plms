@@ -2877,7 +2877,13 @@ log.info("data:"+data.get(0));
 			     
 			            String fileFullPath = filePath+"/"+originalFilename; //파일 전체 경로
 			          
-			           
+			            
+			           if (CommonUtil.isFileExists(filePath,originalFilename)) {
+			        	   log.info("file exists");
+			           }
+			           else {
+			        	   log.info("file not exists");
+			           }
 			            try {
 			                //파일 저장
 			                mpf.transferTo(new File(fileFullPath)); //파일저장 실제로는 service에서 처리

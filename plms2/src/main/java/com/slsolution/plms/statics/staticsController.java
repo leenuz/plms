@@ -27,6 +27,7 @@ import com.slsolution.plms.ExcelUtil;
 import com.slsolution.plms.MainService;
 import com.slsolution.plms.ParameterParser;
 import com.slsolution.plms.ParameterUtil;
+import com.slsolution.plms.config.GlobalConfig;
 import com.slsolution.plms.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,7 +45,9 @@ public class staticsController {
 	@Autowired
 	private MainService mainService;
 	
-	
+	@Autowired
+	 private GlobalConfig GC;
+
 	/**
 	 * 권리확보현황 마감처리
 	 * 
@@ -66,16 +69,16 @@ public class staticsController {
 //
 		try {
 
-			Properties env = new Properties();
-			InputStream is = getClass().getResourceAsStream("/db.properties");
-			try {
-				env.load(is);
-			} catch (Exception es) {
-				es.printStackTrace();
-				System.err.println("Can't read the properties file. " + "Make sure env.properties is in the CLASSPATH");
-			}
+//			Properties env = new Properties();
+//			InputStream is = getClass().getResourceAsStream("/db.properties");
+//			try {
+//				env.load(is);
+//			} catch (Exception es) {
+//				es.printStackTrace();
+//				System.err.println("Can't read the properties file. " + "Make sure env.properties is in the CLASSPATH");
+//			}
 
-			String excelFIleBase = env.getProperty("FILE_BASE_PATH");
+			String excelFIleBase = GC.getStatisFileDataDir();
 
 			map = selectTogiMgtStateListReturn(request, response);
 
@@ -407,7 +410,7 @@ public class staticsController {
 			return map;
 		}
 		
-//잠재이슈 엑셀 다운로드
+//점용관리현황 
 @PostMapping(path="/landExcelDownload")
 public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			
