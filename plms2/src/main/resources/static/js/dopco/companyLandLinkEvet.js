@@ -4,7 +4,7 @@ const companyLandLinkEvet = () => {
    const dataBoxsSecondLink = document.querySelectorAll(".dataBoxsSecond05 .dataContent a.linkCont");
    const dataBoxsFirstLink = document.querySelectorAll(".dataBoxsFirst05 .dataContent a.linkCont");
  
-
+   const companyLandSelectsTitleBtn = document.querySelectorAll(".companyLandSelectsTitleBtn");
   if(dataBoxsSecondLink){
 
    //현재 보여지는 데이터가 10개 이상이면 스크롤이 발생
