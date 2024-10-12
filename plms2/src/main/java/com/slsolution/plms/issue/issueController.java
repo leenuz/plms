@@ -257,7 +257,7 @@ public class issueController {
 			params.put("orderCol", "");
 			params.put("desc", "");
 		}
-		log.info("params:" + params);
+//		log.info("params:" + params);
 
 		Object count = mainService.selectCountQuery("issueSQL.selectMinwonTotalCount", params);
 		int total = (int) count;
@@ -265,7 +265,7 @@ public class issueController {
 		ArrayList<HashMap> list = mainService.selectQuery("issueSQL.selectMinwonListOrg", params);
 		// ArrayList<HashMap> list =
 		// mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
-		log.info("list:" + list);
+//		log.info("list:" + list);
 
 		HashMap<String, Object> resultmap = new HashMap();
 		resultmap.put("draw", draw);
@@ -274,7 +274,7 @@ public class issueController {
 		resultmap.put("data", list);
 
 		JSONObject obj = new JSONObject(resultmap);
-		log.info("obj:" + obj);
+//		log.info("obj:" + obj);
 		return ResponseEntity.ok(obj.toString());
 
 	}
@@ -464,9 +464,11 @@ public class issueController {
 	@Transactional
 	@PostMapping(path = "/saveMinwonData")
 	public void saveMinwonData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		JSONObject requestParamObj = new JSONObject(requestParams);
 		ParameterParser parser = new ParameterParser(request);
+		
 //		String fileseq = parser.getString("fileseq", ""); // 파일 seq
 //		String MW_SEQ = parser.getString("MW_SEQ", "");
 //		String MW_TITLE = parser.getString("MW_TITLE", "");
@@ -477,15 +479,18 @@ public class issueController {
 //		String SANGSIN_FLAG = parser.getString("SANGSIN_FLAG", "");
 //
 //		Integer FILE_DEL_LENGTH = parser.getInt("FILE_DEL_LENGTH");
-		String fileseq = (!requestParamObj.has("fileseq") || requestParamObj.getString("fileseq") == null) ? "" : requestParamObj.getString("fileseq"); // 파일
-																													// seq
+
+		String fileseq = (!requestParamObj.has("fileseq") || requestParamObj.getString("fileseq") == null) ? "" : requestParamObj.getString("fileseq"); // 파일seq
 		String MW_SEQ = requestParamObj.has("MW_SEQ")?requestParamObj.getString("MW_SEQ"):"";
+
 		String MW_TITLE = requestParamObj.getString("MW_TITLE");
 		String MW_CONTENTS = requestParamObj.getString("MW_CONTENTS");
 		String MW_OCCUR_DATE = requestParamObj.getString("MW_OCCUR_DATE");
 		String JISA = requestParamObj.getString("JISA");
 		String TOJI_LENGTH = requestParamObj.has("TOJI_LENGTH")?requestParamObj.getString("TOJI_LENGTH"):"0";
 		String SANGSIN_FLAG = requestParamObj.getString("SANGSIN_FLAG");
+		
+		String REG_ID = String.valueOf(request.getSession().getAttribute("userName"));
 
 		//Integer FILE_DEL_LENGTH = requestParamObj.getInt("FILE_DEL_LENGTH");
 		JSONArray tojiList = requestParamObj.getJSONArray("tojiList");
@@ -513,7 +518,7 @@ public class issueController {
 				params.put("MW_OCCUR_DATE", MW_OCCUR_DATE);
 				params.put("JISA", JISA);
 				params.put("STATUS", "1");
-				params.put("REG_ID", String.valueOf(request.getSession().getAttribute("userName")));
+				params.put("REG_ID", REG_ID);
 
 //				Database.getInstance().insert("Json.insertMinwonMaster", params);
 				mainService.InsertQuery("issueSQL.insertMinwonMaster", params);
@@ -528,7 +533,7 @@ public class issueController {
 				params.put("MW_OCCUR_DATE", MW_OCCUR_DATE);
 				params.put("JISA", JISA);
 				params.put("STATUS", "1");
-				params.put("REG_ID", String.valueOf(request.getSession().getAttribute("userName")));
+				params.put("REG_ID", REG_ID);
 
 //				Database.getInstance().update("Json.updateMinwonMaster", params);
 				mainService.InsertQuery("issueSQL.updateMinwonMaster", params);
@@ -559,9 +564,9 @@ public class issueController {
 			// 토지정보 등록
 //			for (int i = 0; i < Integer.parseInt(TOJI_LENGTH); i++) {
 			for (int i = 0; i < tojiList.length(); i++) {
-				log.info("tojiList:" + tojiList.get(i));
+
 				JSONObject obj = new JSONObject(tojiList.get(i).toString());
-				log.info("obj:" + obj);
+				
 				params = new HashMap();
 				params.put("MW_SEQ", mwSeq);
 				params.put("MINWON_SEQ", mwSeq);
@@ -612,6 +617,11 @@ public class issueController {
 		}
 		log.info("map:" + map);
 		log.info("SANGSIN_FLAG:" + SANGSIN_FLAG);
+		
+		/************************************************************/
+		/************************************************************/
+		/************************************************************/
+		
 		/**
 		 * 별도 트랜잭션 분리를 위해 이렇게 처리함. 상단 정보처리단이 정상적으로 수행됐을 경우에만 아래 전자결제 관련 처리 진행
 		 */
@@ -655,7 +665,6 @@ public class issueController {
 					// Database.getInstance().update("Json.updateNinwonEchoNo", map);
 					mainService.InsertQuery("issueSQL.updateNinwonEchoNo", map);
 
-					System.out.println("%%%%%%%%%%%%map=" + map);
 					// 문서 URL조회
 //					ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDocInfo", map);
 					ArrayList echolist = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDocInfo", map);
@@ -1896,17 +1905,18 @@ public class issueController {
 
 		log.info("params:" + params);
 		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectJijukFromJisangAddress", params);
+		
 		log.info("addressList:" + addressList);
 		mav.addObject("addressList", addressList);
-		mav.setViewName("content/dopco/compLandReg :: #searchResultPopDiv");
+		mav.setViewName("content/issue/menu06_1");
 		return mav;
 	}
 
 	// 민원 PNU 검색 (토지정보 검색)
-	@RequestMapping(value = "/getMinwonJijukSelectNotModel", method = { RequestMethod.GET, RequestMethod.POST }) // http://localhost:8080/api/get/dbTest
-	public void getMinwonJijukSelectNotModel(HttpServletRequest httpRequest, HttpServletResponse response)
+	@PostMapping(path = "/getMinwonJijukSelectNotModel") // http://localhost:8080/api/get/dbTest
+	public ModelAndView getMinwonJijukSelectNotModel(HttpServletRequest httpRequest, HttpServletResponse response)
 			throws Exception {
-
+		/*
 		HashMap params = new HashMap();
 		ArrayList<HashMap> list = new ArrayList<HashMap>();
 		// log.info("httpRequest:"+Arrays.toString(httpRequest));
@@ -1939,6 +1949,85 @@ public class issueController {
 		response.setContentType("application/json");
 		response.getWriter().print(jo);
 		response.getWriter().flush();
+		*/
+		
+		ModelAndView mav = new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap> list = new ArrayList<HashMap>();
+		// log.info("httpRequest:"+Arrays.toString(httpRequest));
+
+		String address = httpRequest.getParameter("address");
+		String sido_nm = httpRequest.getParameter("sido_nm");
+		String sgg_nm = httpRequest.getParameter("sgg_nm");
+		String emd_nm = httpRequest.getParameter("emd_nm");
+		String ri_nm = httpRequest.getParameter("ri_nm");
+		String jibun = httpRequest.getParameter("jibun");
+
+		/*
+		params.put("address", address);
+		params.put("sido_nm", sido_nm);
+		params.put("sgg_nm", sgg_nm);
+		params.put("emd_nm", emd_nm);
+		params.put("ri_nm", ri_nm);
+		params.put("jibun", jibun);
+		*/
+		String[] arr = address.split(" ");
+		
+		params.put("address", "");
+		params.put("sido_nm", "");
+		params.put("sgg_nm", "");
+		params.put("emd_nm", arr[0]);
+		params.put("ri_nm", arr[0]);
+		params.put("jibun", arr[1]);
+		
+
+		log.info("params:" + params);
+//		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectJijukFromJisangAddress", params);
+		ArrayList<HashMap> addressList = mainService.selectQuery("commonSQL.selectAddressFromJijuk1", params);
+		
+		/************************************
+		 *  241012 참고 내용
+		 * 
+		 * jijuk_2024(일명 jijuk_master)테이블에선 등기, 계약정보등이 없습니다.
+		 * 그래서 조회한 컬럼값중 jisang_status의 값을 기준으로 jisang이면 jisang_master, gover면 gover_master 테이블에서 그에 해당하는 정보를 가져와야 합니다.
+		 * 이 jisang_status의 값은 현재 JISANG, GOVER, DOPCO, NOTSET, N 이렇게 6개입니다.
+		 * 
+		 *************************************/
+		for(HashMap searchMap : addressList) {
+			
+			String jisangStatus = (String)searchMap.get("jisang_status");
+			ArrayList<HashMap> extraAddrInfo =  new ArrayList<>();
+			
+			params.put("jisang_no", searchMap.get("jisang_no"));
+			
+			if("JISANG".equals(jisangStatus)) {
+				//JIJUK PNU와 비교해서 지상권 추가정보 조회
+				extraAddrInfo = mainService.selectQuery("commonSQL.selectAddressExtraInfo_JISANG", params);
+			} else if("GOVER".equals(jisangStatus)) {
+				extraAddrInfo = mainService.selectQuery("commonSQL.selectAddressExtraInfo_GOVER", params);
+			} else if("DOPCO".equals(jisangStatus)) {
+				extraAddrInfo = mainService.selectQuery("commonSQL.selectAddressExtraInfo_DOPCO", params);
+			} else if("NOTSET".equals(jisangStatus)) {
+				extraAddrInfo = mainService.selectQuery("commonSQL.selectAddressExtraInfo_NOTSET", params);
+			} else {
+				//없으면 PASS. 등기, 계약 정보등은 N으로.
+				log.info("jisangStatus is N (value Check) :: " + jisangStatus);
+			}
+			
+			//추가조회한 정보를 더해주기.....(단 추가조회한 정보가 있어야지만 수행)
+			if(extraAddrInfo.size() > 0) {
+				for(HashMap<String, Object> extraInfoMap : extraAddrInfo) {
+					for(Map.Entry<String, Object> entry : extraInfoMap.entrySet()) {
+						searchMap.put(entry.getKey(), entry.getValue());
+					}
+				}
+			}
+		}
+		
+//		log.info("addressList:" + addressList);
+		mav.addObject("addressList", addressList);
+		mav.setViewName("content/issue/menu06_1 :: #minwon_searchResultPopDiv");
+		return mav;
 	}
 
 	// PNU 조회 //민원신규등록시 주소검색에서 사용

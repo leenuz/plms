@@ -28,7 +28,7 @@
 		<div class="issueManageheader"></div>
 		<div class="issueManageWrappers01">
 			<div class="issueManageTitleBoxs">
-				<h5>민원관리?</h5>
+				<h5>민원관리</h5>
 			</div>
 			<!-- 상단 날짜, 진행현황, 이슈유형, 주소 form [S] -->
 			<form id="searchForm" onsubmit="return false;">
@@ -231,7 +231,7 @@
 							<!--issueManageSectionRadioBoxs-->
 							<div class="issueManageSectionBtnBoxs">
 								<button class="issueManageTotalBtn">현황통계</button>
-								<button class="newIssueBtn">신규민원</button>
+								<button class="newIssueBtn" onclick="minwonPopReset()">신규민원</button>
 								<button class="issueManageRegisterBtn" onclick="minwonListSearch()">조회하기</button>
 							</div>
 						</div>
@@ -319,11 +319,8 @@ if (issuePopupOpen) {
 }
 </script>
 
-	<link rel="stylesheet"
-		href="/assets/css/popup/Issue_development_Popup.css" />
-	<div id="newcomplaint_Popup" class="newcomplaint_Popup"
-		th:fragment="newcomplaint">
-
+	<link rel="stylesheet" href="/assets/css/popup/Issue_development_Popup.css" />
+	<div id="newcomplaint_Popup" class="newcomplaint_Popup" th:fragment="newcomplaint">
 		<form id="saveFormPop" onsubmit="return false;">
 			<div class="popupWrap">
 				<h2>
@@ -395,21 +392,22 @@ if (issuePopupOpen) {
 								</ul>
 							</div>
 
-							<!-- 토지정보 기본값 + 추가로 나오는 부분-->
+							<!-- 민원 :: 토지정보 기본값 + 추가로 나오는 부분-->
 							<div class="landinfo_box">
 								<ul class="landinfo_content">
-									<li class="landinfo_content_2">1</li>
-									<li class="landinfo_content_3"><input type="checkbox"
-										id="newcomplaint_checkbox1" class="approve_checkbox" /> <label
-										for="newcomplaint_checkbox1" class="approve_checkbox_label"></label>
+									<li class="landinfo_content_2" id="minwon_1" value="1">1</li>
+									<li class="landinfo_content_3">
+										<input type="checkbox" id="newcomplaint_checkbox1" class="approve_checkbox" />
+										<label for="newcomplaint_checkbox1" class="approve_checkbox_label"></label>
 									</li>
-									<li class="landinfo_content_4"><input type="text" /> <!-- button class 추가 -->
-										<button class="landStatusPopOpenBtn">검색</button></li>
-									<li class="landinfo_content_5"><input type="text" readonly /></li>
-									<li class="landinfo_content_6"><input type="text" readonly /></li>
-									<li class="landinfo_content_7"><input type="text" /></li>
-									<li class="landinfo_content_8"><input type="hidden"
-										name="addrInfoStr" />
+									<li class="landinfo_content_4">
+										<input type="text" name="minwonAddr" id="minwonAddr_1" /> <!-- button class 추가 -->
+										<button class="landStatusPopOpenBtn" value="1">검색</button></li>
+									<li class="landinfo_content_5"><input type="text" id="minwonRegiYn_1" readonly /></li>
+									<li class="landinfo_content_6"><input type="text" id="minwonContYn_1" readonly /></li>
+									<li class="landinfo_content_7"><input type="text" id="minwonActualAreaYn_1" /></li>
+									<li class="landinfo_content_8">
+										<input type="hidden" name="addrInfoStr" id="minwonAddrInfo_1"/>
 										<button class="complaint_addition">추가</button></li>
 								</ul>
 							</div>
@@ -456,12 +454,12 @@ if (issuePopupOpen) {
 								<!-- 민원인 토지주 여러내용 들어가는 곳-->
 								<li class="com_content_contents_1">
 									<ul class="landowner_wrap">
-										<li class="landowner_num"><input type="text" value="1"
-											readonly /></li>
-										<li><input type="text" /></li>
-										<li><input type="text" /></li>
-										<li><input type="text" /></li>
-										<li><input type="text" /></li>
+										<li class="landowner_num">
+											<input type="text" value="1" readonly /></li>
+										<li><input type="text" id="landowner_name_1"/></li>
+										<li><input type="text" id="landowner_birthday_1"/></li>
+										<li><input type="text" id="landowner_relation_1"/></li>
+										<li><input type="text" id="landowner_phone_1"/></li>
 										<li class="popSelectWrap">
 											<div class="hidden_SelectBox">
 												<select hidden>
@@ -470,7 +468,7 @@ if (issuePopupOpen) {
 												</select>
 											</div>
 											<div class="Popup_Custom_SelectBox">
-												<button class="Popup_Custom_SelectView">Y/N</button>
+												<button class="Popup_Custom_SelectView" id="landowner_presence_1">Y/N</button>
 												<ul class="Popup_Custom_SelectBtns"></ul>
 											</div>
 										</li>
@@ -629,22 +627,23 @@ if (issuePopupOpen) {
 
       // 추가 버튼 누를시 추가되는 내용
       newListItem.innerHTML = `
-              <li class="landinfo_content_2">${
-                document.querySelectorAll(".landinfo_content").length + 1
-              }</li>
+              <li class="landinfo_content_2" id="minwon_${document.querySelectorAll(".landinfo_content").length + 1}" value="${document.querySelectorAll(".landinfo_content").length + 1}">
+              	${document.querySelectorAll(".landinfo_content").length + 1}
+              </li>
               <li class="landinfo_content_3">
                 <input type="checkbox" id="${checkboxId}" class="approve_checkbox" />
                 <label for="${checkboxId}" class="approve_checkbox_label"></label>
               </li>
               <li class="landinfo_content_4">
-                <input type="text" />
-                <button class="landStatusPopOpenBtn">검색</button>
+                <input type="text" name="minwonAddr" id="minwonAddr_${document.querySelectorAll(".landinfo_content").length + 1}"/>
+                <button class="landStatusPopOpenBtn" value="${document.querySelectorAll(".landinfo_content").length + 1}">검색</button>
               </li>
-              <li class="landinfo_content_5"><input type="text" readonly /></li>
-              <li class="landinfo_content_6"><input type="text" readonly /></li>
-              <li class="landinfo_content_7"><input type="text" readonly /></li>
+              <li class="landinfo_content_5"><input type="text" id="minwonRegiYn_${document.querySelectorAll(".landinfo_content").length + 1}" readonly /></li>
+              <li class="landinfo_content_6"><input type="text" id="minwonContYn_${document.querySelectorAll(".landinfo_content").length + 1}" readonly /></li>
+              <li class="landinfo_content_7"><input type="text" id="minwonActualAreaYn_${document.querySelectorAll(".landinfo_content").length + 1}" /></li>
               <li class="landinfo_content_8">
                 <div class="landinfocontent_btn_wrap1">
+                  <input type="hidden" name="addrInfoStr" id="minwonAddrInfo_${document.querySelectorAll(".landinfo_content").length + 1}"/>
                   <button class="complaint_addition">추가</button>
                 </div>
                 <div class="landinfocontent_btn_wrap2">
@@ -773,13 +772,11 @@ if (issuePopupOpen) {
       newListItem.classList.add("landowner_wrap");
 
       newListItem.innerHTML = `
-            <li class="landowner_num"><input type="text" value="${
-              document.querySelectorAll(".landowner_wrap").length + 1
-            }" readonly /></li>
-            <li><input type="text" /></li>
-            <li><input type="text" /></li>
-            <li><input type="text" /></li>
-            <li><input type="text" /></li>
+            <li class="landowner_num"><input type="text" value="${document.querySelectorAll(".landowner_wrap").length + 1}" readonly /></li>
+            <li><input type="text" id="landowner_name_${document.querySelectorAll(".landowner_wrap").length + 1}" /></li>
+            <li><input type="text" id="landowner_birthday_${document.querySelectorAll(".landowner_wrap").length + 1}" /></li>
+            <li><input type="text" id="landowner_relation_${document.querySelectorAll(".landowner_wrap").length + 1}" /></li>
+            <li><input type="text" id="landowner_phone_${document.querySelectorAll(".landowner_wrap").length + 1}"/></li>
             <li class="popSelectWrap">
                 <div class="hidden_SelectBox">
                     <select hidden>
@@ -788,7 +785,7 @@ if (issuePopupOpen) {
                     </select>
                 </div>
                 <div class="Popup_Custom_SelectBox">
-                    <button class="Popup_Custom_SelectView">Y/N</button>
+                    <button class="Popup_Custom_SelectView" id="landowner_presence_${document.querySelectorAll(".landowner_wrap").length + 1}">Y/N</button>
                     <ul class="Popup_Custom_SelectBtns"></ul>
                 </div>
             </li>
@@ -1261,6 +1258,57 @@ if (issuePopupOpen) {
 
 		</div>
 	</div>
+	
+	
+	<!-- 주소 검색 결과 팝업창 [S] -->
+	<div class="masterRegExcelPopWrapper" id="minwon_searchResultPopDiv">
+	<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+		<div id="searchResultsPopup">
+			<div class="popupWrap" id="minwon_searchPopupWrap">
+				<h2>
+					<p>검색결과</p>
+					<span class="topCloseBtn" onclick="searchPopClose()"></span>
+				</h2>
+	
+				<!-- 검색 결과 grid 헤더 -->
+				<div class="popupCont">
+					<ul class="popTitles">
+						<li class="popTitle01">PNU</li>
+						<li class="popTitle02">주소</li>
+						<li class="popTitle03">지번</li>
+						<li class="popTitle04">선택</li>
+					</ul>
+					<div class="popContentBox">
+						<ul class="popContents" th:each="val:${addressList}">
+							<li class="popContent01" th:value="${val.pnu}">[[ ${val.pnu} ]]</li>
+							<li class="popContent02"  th:value="${val.juso}">[[ ${val.juso} ]]</li>
+							<li class="popContent03" th:value="${val.jibun}">[[ ${val.jibun} ]]</li>
+							<li class="popContent04">
+								<button class="resultSelectBtn" name="addressListInfo" th:data-info="${val}" onclick="miwonSearchAddr(this)">선택</button>
+							</li>
+						</ul>
+						<!--  
+						<ul class="popContents">
+							<li class="popContent01">115001100010010001</li>
+							<li class="popContent02">서울특별시 강서구 타임리프 꺼내야지</li>
+							<li class="popContent03">1-1</li>
+							<li class="popContent04">
+								<button class="resultSelectBtn">선택</button>
+							</li>
+						</ul>
+						-->
+					</div>
+				</div>
+				<div class="lastBtnBox btnWrap">
+					<button class="backBtn finalBtn" onclick="searchPopClose()">닫기</button>
+					<button class="saveBtn finalBtn">PNU 없이 선택</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 주소 검색 결과 팝업창 [E] -->
+	
+	
 	<script type="module" src="/js/module/surfaceMain.js"></script>
 	<script src="/js/issue/issueManageRadioEvet.js"></script>
 	<script src="/js/issue/issueManageLinkEvet.js"></script>

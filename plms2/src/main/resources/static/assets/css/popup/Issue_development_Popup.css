@@ -336,7 +336,8 @@ textarea:focus {
 .newcomplaint_Popup 
 .popupWrap{
   width: 1264px;
-  height: 979px;
+  /* height: 979px; */
+  height: auto;
 }
 .landinfo_wrap, .daepyo_pilji_wrap, .complaint_contents_Details{
   margin-top: 15px;

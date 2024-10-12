@@ -407,4 +407,187 @@ SELECT PNU
 		and pnu = #{TARGET_PNU}
 	</select>
 	
+<!-- JIJUK PNU와 비교해서 지상권 추가정보 조회 -->
+<select id="selectAddressExtraInfo_JISANG" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	SELECT  
+		JM.jm_jisang_no
+		, JM.jm_sido_nm
+		, JM.jm_sgg_nm
+		, JM.jm_emd_nm
+		, JM.jm_ri_nm
+		, JM.jm_jibun
+		, JM.jm_jisa
+		, JM.jm_chuideuk_date
+		, JM.jm_chuideuk_money
+		, JM.jm_jijuk_area
+		, JM.jm_pipe_name
+		, JM.jm_sun_gubun
+		, JM.jm_yongdo
+		, JM.jm_dosiplan
+		, JM.jm_comple_yn
+		, JM.jm_pyeonib_area
+		, JM.jm_use_state
+		, JM.jm_deunggi_date
+		, JM.jm_deunggi_no
+		, JM.jm_deunggiso
+		, JM.jm_jasan_no
+		, JM.jm_cancle_yn
+		, JM.jm_cancle_date
+		, JM.jm_cancle_empcd
+		, JM.jm_cancle_name
+		, JM.jm_cancle_bosang_yn
+		, JM.jm_cancle_bosang_money
+		, JM.jm_gover_own_yn
+		, JM.jm_bunhal_yn
+		, JM.jm_bunhal_date
+		, JM.jm_bunhal_reason
+		, JM.jm_bunhal_org_no
+		, JM.jm_addrcode
+		, JM.jm_pnu
+		, JM.jm_gammoney
+		, JM.jm_remainder_money
+		, JM.jm_location
+		, JM.jm_special_cont
+		, JM.jm_jimok_text
+		, JM.jm_jibun_2
+		, JM.jm_dockey
+		, JM.jm_toji_type
+		, JM.jm_bunhal_comment
+		, JM.jm_cancle_comment
+		, JM.jm_cancle_reason
+		, JM.jm_jasan_money
+		, JM.jm_merge_comment
+		, JM.jm_merge_no
+		, JM.jm_merge_reason
+		, JM.jm_merge_rep_yn
+		, JM.jm_pipe_yn
+		, JM.jm_save_status
+		, JM.jm_set_money
+		, JM.jm_permitted_yn
+		, JM.jm_wdate
+		, JM.jm_udate
+		, JM.jm_account_yn
+		, JM.jm_pipe_meter
+		, JM.jm_manage_yn
+		, JM.jm_idx
+	FROM jisang_master JM
+	WHERE
+		JM.jm_jisang_no = #{jisang_no}
+</select>
+	
+<!-- JIJUK PNU와 비교해서 회사토지 추가정보 조회 -->
+<select id="selectAddressExtraInfo_GOVER" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	SELECT 
+		 GM.gm_gover_no
+		, GM.gm_jisa
+		, GM.gm_yongdo
+		, GM.gm_pipe_name
+		, GM.gm_sun_gubun
+		, GM.gm_pipe_meter
+		, GM.gm_cancle_yn
+		, GM.gm_cancle_date
+		, GM.gm_cancle_name
+		, GM.gm_cancle_empcd
+		, GM.gm_use_purpos
+		, GM.gm_gover_st_date
+		, GM.gm_gover_ed_date
+		, GM.gm_pmt_status
+		, GM.gm_dockey
+		, GM.gm_pmt_office
+		, GM.gm_adm_office
+		, GM.gm_office_depart
+		, GM.gm_office_charege
+		, GM.gm_office_contact
+		, GM.gm_office_mobile
+		, GM.gm_gover_period
+		, GM.gm_pipe_meter2
+		, GM.gm_save_status
+		, GM.gm_newregreason
+		, GM.gm_occunonpayreason
+		, GM.gm_permpossyn
+		, GM.gm_occuprepayyn
+		, GM.gm_occuprepaydate
+		, GM.gm_udate
+		, GM.gm_wdate
+		, GM.gm_exemptionyn
+		, GM.gm_idx
+	FROM gover_master GM
+	WHERE GM.gm_gover_no = #{jisang_no}
+</select>
+
+<!-- JIJUK PNU와 비교해서 미지정 추가정보 조회 -->
+<select id="selectAddressExtraInfo_DOPCO" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	SELECT 
+		 DM.dom_dopco_no
+		, DM.dom_sido_nm
+		, DM.dom_sgg_nm
+		, DM.dom_emd_nm
+		, DM.dom_ri_nm
+		, DM.dom_jibun
+		, DM.dom_addrcode
+		, DM.dom_jisa
+		, DM.dom_dopco_status
+		, DM.dom_yongdo
+		, DM.dom_pipe_name
+		, DM.dom_sun_gubun
+		, DM.dom_jijuk_area
+		, DM.dom_gover_own_yn
+		, DM.dom_dosiplan
+		, DM.dom_jasan_no
+		, DM.dom_comple_yn
+		, DM.dom_deunggi_date
+		, DM.dom_deunggi_no
+		, DM.dom_deunggiso
+		, DM.dom_pnu
+		, DM.dom_cancle_yn
+		, DM.dom_cancle_date
+		, DM.dom_cancle_name
+		, DM.dom_cancle_empcd
+		, DM.dom_jimok_text
+		, DM.dom_chuideuk_date
+		, DM.dom_jasan_money
+		, DM.dom_souja_name
+		, DM.dom_dom_wdate
+		, DM.dom_dom_udate
+		, DM.dom_idx
+	FROM dopco_master DM
+	WHERE
+		DM.dom_dopco_no = #{jisang_no}
+</select>
+
+<!-- JIJUK PNU와 비교해서 지상권 추가정보 조회 -->
+<select id="selectAddressExtraInfo_NOTSET" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	SELECT 
+		 NM.nm_notset_no
+		, NM.nm_sido_nm
+		, NM.nm_sgg_nm
+		, NM.nm_emd_nm
+		, NM.nm_ri_nm
+		, NM.nm_jibun
+		, NM.nm_jisa
+		, NM.nm_jijuk_area
+		, NM.nm_pipe_name
+		, NM.nm_sun_gubun
+		, NM.nm_gover_own_yn
+		, NM.nm_addrcode
+		, NM.nm_pnu
+		, NM.nm_jimok_text
+		, NM.nm_dockey
+		, NM.nm_pipe_yn
+		, NM.nm_pipe_meter
+		, NM.nm_pipe_meter2
+		, NM.nm_toji_type
+		, NM.nm_del_flag
+		, NM.nm_comple_yn
+		, NM.nm_wdate
+		, NM.nm_udate
+		, NM.nm_del_date
+		, NM.nm_comple_date
+		, NM.nm_manage_yn
+		, NM.nm_idx
+	FROM notset_master NM
+	WHERE
+		NM.nm_notset_no = #{jisang_no}
+</select>
+	
 </mapper>
