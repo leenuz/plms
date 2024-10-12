@@ -1033,15 +1033,13 @@ $(document).ready(function(){
           //  var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,i); //Using this we can set progress.
           //  status.setFileNameSize(files[i].name,files[i].size);
             console.log($(obj).parent().parent().parent().html());
-            var changeObj=$(obj).parent().parent().find("#req_doc_file"+idx).val(files[i].name);
-            console.log("--------changeObj---------------");
-            console.log(changeObj);
-            sendFileToServer1(fd,status,idx);
+           
+            sendFileToServer1(fd,status,idx,obj);
 
        }
     }
 
-    function sendFileToServer1(formData,status,no) {
+    function sendFileToServer1(formData,status,no,obj) {
         var idx=$("#hiddenJisangNo").val();
         console.log($("#hiddenJisangNo").val());
         var uploadURL = "/land/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
@@ -1070,6 +1068,11 @@ $(document).ready(function(){
             cache: false,
             data: formData,
             success: function(data){
+				console.log("--------changeObj---------------");
+				console.log($(obj).parent().parent().html());
+				 var changeObj=$(obj).parent().parent().find("#req_doc_file"+no).val(data.resultData.fname);
+				         
+				           console.log(changeObj);
                // status.setProgress(100);
                 console.log(data);
                 console.log(data.resultData);

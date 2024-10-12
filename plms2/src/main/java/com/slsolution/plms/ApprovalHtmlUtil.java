@@ -156,38 +156,38 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 			sbHtml.append("            <input type='hidden' name='file_gubun' value='gover' />                  \n");
 			sbHtml.append("            </form>                 \n");
 
-			for (int i = 0; i < 6; i++) {
-				HashMap hm = new HashMap();
-
-				if (5 == i) {
-					if (n_fileCount > 5) {
-						hm = (HashMap) list.get(i);
-						str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("FILE_PATH")), "");
-						str_FILE_NM = cu.evl(String.valueOf(hm.get("FILE_NM")), "");
-						str_FILE_SEQ = cu.evl(String.valueOf(hm.get("SEQ")), "");
-						str_PMT_NO = cu.evl(String.valueOf(hm.get("PMT_NO")), "");
-					} else {
-						str_FILE_PATH = "#";
-						str_FILE_NM = "";
-						str_FILE_SEQ = "";
-						str_PMT_NO = "";
-					}
-
-				} 
-				else {
-					hm = (HashMap) list.get(i);
-					str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("FILE_PATH")), "");
-					str_FILE_NM = cu.evl(String.valueOf(hm.get("FILE_NM")), "");
-					str_FILE_SEQ = cu.evl(String.valueOf(hm.get("SEQ")), "");
-					str_PMT_NO = cu.evl(String.valueOf(hm.get("PMT_NO")), "");
-				}
-
-				sbHtml.append("           <form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >                   \n");
-				sbHtml.append("            <input type='hidden' name='file_no' value='" + str_PMT_NO + "'/>                  \n");
-				sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />                   \n");
-				sbHtml.append("            <input type='hidden' name='file_gubun' value='jisang_pmt' />                  \n");
-				sbHtml.append("            </form>                 \n");
-			}
+//			for (int i = 0; i < 6; i++) {
+//				HashMap hm = new HashMap();
+//
+//				if (5 == i) {
+//					if (n_fileCount > 5) {
+//						hm = (HashMap) list.get(i);
+//						str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("FILE_PATH")), "");
+//						str_FILE_NM = cu.evl(String.valueOf(hm.get("FILE_NM")), "");
+//						str_FILE_SEQ = cu.evl(String.valueOf(hm.get("SEQ")), "");
+//						str_PMT_NO = cu.evl(String.valueOf(hm.get("PMT_NO")), "");
+//					} else {
+//						str_FILE_PATH = "#";
+//						str_FILE_NM = "";
+//						str_FILE_SEQ = "";
+//						str_PMT_NO = "";
+//					}
+//
+//				} 
+//				else {
+//					hm = (HashMap) list.get(i);
+//					str_FILE_PATH = str_FILE_URL + cu.evl(String.valueOf(hm.get("FILE_PATH")), "");
+//					str_FILE_NM = cu.evl(String.valueOf(hm.get("FILE_NM")), "");
+//					str_FILE_SEQ = cu.evl(String.valueOf(hm.get("SEQ")), "");
+//					str_PMT_NO = cu.evl(String.valueOf(hm.get("PMT_NO")), "");
+//				}
+//
+//				sbHtml.append("           <form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' >                   \n");
+//				sbHtml.append("            <input type='hidden' name='file_no' value='" + str_PMT_NO + "'/>                  \n");
+//				sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />                   \n");
+//				sbHtml.append("            <input type='hidden' name='file_gubun' value='jisang_pmt' />                  \n");
+//				sbHtml.append("            </form>                 \n");
+//			}
 		}
 
 		sbHtml.append("           \n");

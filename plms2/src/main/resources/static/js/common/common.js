@@ -1,6 +1,15 @@
 //241005
 var selectDivId;
 
+const today = new Date();
+const year = today.getFullYear(); // 연도
+const month = String(today.getMonth() + 1).padStart(2, '0'); // 월 (0부터 시작하므로 +1)
+const day = String(today.getDate()).padStart(2, '0'); // 일
+
+function today_yyyymmdd() {
+	return `${year}-${month}-${day}`;
+}
+
 /*function EmptyToStr(str,mode){
 	//mode string s , number n
 	var newStr=str;
@@ -36,7 +45,8 @@ function loadingShow(){
 	$("#mask").css({
 		'width': maskWidth,
 		'height':maskHeight,
-		'opacity':'0.4'
+		'opacity':'0.4',
+		'z-index': 9999
 	})
 	$("#loadingBar").show();
 }
@@ -305,8 +315,6 @@ function positionView(objInfo) {
 		const sliceCoordList = coordList.slice(1, -1);
 		
 		const trimArrCoord = sliceCoordList.split(',').map(item => item.trim());
-		
-		//console.log(trimArrCoord);
 		
 		for(let i = 0 ; i < trimArrCoord.length ; i++) {
 			

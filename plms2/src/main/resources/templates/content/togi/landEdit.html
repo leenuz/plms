@@ -433,7 +433,7 @@
 								<label th:for="'landEdit_attachFile' + ${iterStat.index + 1}"></label>
 								</li>
 								<li class="content registDateWidth">
-									<input type="text" th:value="${#dates.format(file.wdate, 'yyyy-MM-dd HH:mm')}" readonly
+									<input type="text" th:value="${file.wdate}" readonly
 										class="notWriteInput" name="registDateWidth" />
 								</li>
 								<li class="content fileNameWidth">

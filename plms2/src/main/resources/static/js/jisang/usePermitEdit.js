@@ -1075,7 +1075,7 @@ console.log(dataObj);
 				
 				
 				
-				url="/land/jisang/selectJisangPmtDetailListAppoval";
+				url="/land/jisang/selectJisangPmtDetailListAppoval1";
 			   	$.ajax({
 
 					url:url,
@@ -1237,7 +1237,7 @@ $(document).ready(function(){
 			          //  status.setFileNameSize(files[i].name,files[i].size);
 						var changeObj=$(obj).parent().parent().find("#req_doc_file"+idx).val(files[i].name);
 						console.log("--------changeObj---------------");
-			            sendFileToServer1(fd,status,idx);
+			            sendFileToServer1(fd,status,idx,obj);
 
 			       }
 			    }
@@ -1306,9 +1306,57 @@ $(document).ready(function(){
 		        });
 		        //status.setAbort(jqXHR);
 		    }
-
-
-			function sendFileToServer1(formData,status,no)
+		
+			function sendFileToServer1(formData,status,no,obj)
+						    {
+								var idx=$("#hiddenJisangNo").val();
+								console.log($("#hiddenJisangNo").val());
+						        var uploadURL = "/land/jisang/fileUpload/jisangPermitAtcFile?idx="+idx; //Upload URL
+						        var extraData ={}; //Extra Data.
+						        var jqXHR=$.ajax({
+						                xhr: function() {
+						                var xhrobj = $.ajaxSettings.xhr();
+						                if (xhrobj.upload) {
+						                        xhrobj.upload.addEventListener('progress', function(event) {
+						                            var percent = 0;
+						                            var position = event.loaded || event.position;
+						                            var total = event.total;
+						                            if (event.lengthComputable) {
+						                                percent = Math.ceil(position / total * 100);
+						                            }
+						                            //Set progress
+						                          //  status.setProgress(percent);
+						                        }, false);
+						                    }
+						                return xhrobj;
+						            },
+						            url: uploadURL,
+						            type: "POST",
+						            contentType:false,
+						            processData: false,
+						            cache: false,
+						            data: formData,
+						            success: function(data){
+						               // status.setProgress(100);
+									   /*if (data.resultCode=="4002") {
+										alert("동잃란 파일이 존재합니다. 다른이름으로 올려주세요");
+										console.log(obj.parent().parent().html());
+										return;
+									   }*/
+									   console.log($(obj).parent().parent().html());
+									   var changeObj=$(obj).parent().parent().find("#req_doc_file"+no).val(data.resultData.fname);
+									   						console.log("--------changeObj---------------");
+									   						console.log(changeObj);
+						                console.log(data);
+						                console.log(data.resultData);
+						                //$("#status1").append("File upload Done<br>");
+						                uploadFiles.push(data.resultData.fpath);
+						                //allCheckEventLandRightsRegist();
+						            }
+						        });
+						        //status.setAbort(jqXHR);
+						    }
+			/*function sendFileToServer1(formData,status,no)
 			    {
 					var idx=$("#hiddenJisangNo").val();
 			        var uploadURL = "/land/jisang/fileUpload/reqDoc?idx="+idx; //Upload URL
@@ -1344,7 +1392,7 @@ $(document).ready(function(){
 			            }
 			        });
 			        //status.setAbort(jqXHR);
-			    }
+			    }*/
 }); //end ready
 
 
