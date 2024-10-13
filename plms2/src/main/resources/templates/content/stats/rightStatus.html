@@ -31,18 +31,17 @@
                                     </p>
                                     <div class="selectContentArea">
                                         <div class="hiddenSelectBox">
-                                            <select id="rightStatusSelectBox01" hidden>
-                                                <option value="전체">전체</option>
-                                                <option value="서울지사">서울지사</option>
-                                                <option value="경인지사">경인지사</option>
-                                                <option value="충청지사">충청지사</option>
-                                                <option value="대전지사">대전지사</option>
-                                                <option value="영남지사">영남지사</option>
-                                                <option value="전남지사">전남지사</option>
-                                                <option value="전북지사">전북지사</option>
-                                                <option value="경남지사">경남지사</option>
-                                                <option value="강원지사">강원지사</option>
-                                            </select>
+                                            <select
+                                            name="jisa"
+                                            class="menuHiddenSelect01"
+                                            id="rightStatusSelectBox01"
+                                            hidden>
+                                            <option value="전체">전체</option>
+                                             <th:block th:each="val:${jisaList}">
+                                              <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
+                                              </th:block>
+                                          </select>
+                        
                                         </div>
                                         <!--보여지는 셀렉박스-->
                                         <div class="customSelectBox">
@@ -88,16 +87,16 @@
                                                 <p class="dataText">등기</p>
                                             </li>
                                             <li class="secondContent">
-                                                <p class="dataText">6,803 건</p>
+                                                <p class="dataText" id="SAYUJI_Y_Y">0 건</p>
                                             </li>
                                         </ul>
                                         <!-- 미등기 -->
                                         <ul class="secondCate">
                                             <li class="secondTitle">
-                                                <p class="dataText">미등기</p>
+                                                <p class="dataText" >미등기</p>
                                             </li>
                                             <li class="secondContent">
-                                                <p class="dataText">710 건</p>
+                                                <p class="dataText" id="SAYUJI_Y_N">0 건</p>
                                             </li>
                                         </ul>
                                     </div>
@@ -109,7 +108,7 @@
                                             <p class="dataText">자산 미등록</p>
                                         </li>
                                         <li class="content">
-                                            <p class="dataText">2,008 건</p>
+                                            <p class="dataText" id="SAYUJI_N">0 건</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -120,7 +119,7 @@
                                             <p class="dataText">계</p>
                                         </li>
                                         <li class="content">
-                                            <p class="dataText">9,521 건</p>
+                                            <p class="dataText" id="SAYUJI_SUM">0 건</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -155,7 +154,7 @@
                                     <p>잠재이슈 관리필지</p>
                                 </li>
                                 <li class="content">
-                                    <p>2,721</p>
+                                    <p id="issueList_01">0</p>
                                 </li>
                             </ul>
                             <ul class="dataRowBox">
@@ -163,7 +162,7 @@
                                     <p>민원 발생필지</p>
                                 </li>
                                 <li class="content">
-                                    <p>31</p>
+                                    <p id="issueList_02">0</p>
                                 </li>
                             </ul>
                         </div>
@@ -191,7 +190,7 @@
                                             <p class="dataText">지상권</p>
                                         </li>
                                         <li class="content">
-                                            <p class="dataText">2,008 건</p>
+                                            <p class="dataText" id="GUKYUJI_Y">0 건</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -202,7 +201,7 @@
                                             <p class="dataText">점용</p>
                                         </li>
                                         <li class="content">
-                                            <p class="dataText">19,364 건</p>
+                                            <p class="dataText" id="GUKYUJI_J">0 건</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -213,7 +212,7 @@
                                             <p class="dataText">미점용</p>
                                         </li>
                                         <li class="content">
-                                            <p class="dataText">9 건</p>
+                                            <p class="dataText" id="GUKYUJI_N">0 건</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -224,7 +223,7 @@
                                             <p class="dataText">계</p>
                                         </li>
                                         <li class="content">
-                                            <p class="dataText">20,073 건</p>
+                                            <p class="dataText" id="SAYUJI_SUM">0 건</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -261,7 +260,7 @@
                                     <p>잠재이슈 관리필지</p>
                                 </li>
                                 <li class="content">
-                                    <p>1,648</p>
+                                    <p id="issueList_03">0</p>
                                 </li>
                             </ul>
                             <ul class="dataRowBox">
@@ -269,7 +268,7 @@
                                     <p>민원 발생필지</p>
                                 </li>
                                 <li class="content">
-                                    <p>0</p>
+                                    <p id="issueList_04">0</p>
                                 </li>
                             </ul>
                         </div>

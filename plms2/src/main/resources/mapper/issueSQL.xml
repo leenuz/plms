@@ -796,7 +796,7 @@ UPDATE MINWON_AGREEMENT
 		        FROM JISANG_SOUJA
 		        GROUP BY js_jisang_no, js_souja_name
 		    ) JS ON JM.jm_jisang_no = JS.JISANG_NO
-		    WHERE (JM.jm_cancel_yn IS NULL OR JM.jm_cancel_yn != 'Y')
+		    WHERE (JM.jm_cancle_yn IS NULL OR JM.jm_cancle_yn != 'Y')
 		    
 		    UNION ALL
 		    
@@ -841,7 +841,7 @@ UPDATE MINWON_AGREEMENT
 		        ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.gp_GOVER_NO
 		    ) GPE ON GP.gp_GOVER_NO = GPE.gp_GOVER_NO
 		    LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
-		    WHERE GM.gm_SAVE_STATUS = 'A' AND GM.gm_CANCEL_YN IS NULL
+		    WHERE GM.gm_SAVE_STATUS = 'A' AND GM.gm_CANCLE_YN IS NULL
 		    
 		    UNION ALL
 		    

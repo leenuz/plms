@@ -444,9 +444,12 @@ public class staticsController {
 			ParameterParser parser = new ParameterParser(request);
 			String SIDO = requestParamObj.getString("SIDO");
 			String SGG = requestParamObj.getString("SGG");
-			String JISA = requestParamObj.getString("JISA");
+			String JISA = requestParamObj.getString("JISA").replaceAll("전체", "");
 			String ADDRCODE = requestParamObj.getString("ADDRCODE");
-			String KIJUN =requestParamObj.getString("KIJUN")==null?requestParamObj.getString("JISA"):requestParamObj.getString("KIJUN");
+			String KIJUN =requestParamObj.getString("KIJUN");
+			if(KIJUN.isEmpty()){
+				KIJUN = "JISA";
+			}
 
 			CommonUtil cu = new CommonUtil();
 			HashMap map = new HashMap();
@@ -483,29 +486,29 @@ public class staticsController {
 
 				if (sayujiList.size() > 0) {
 					for (int i = 0; i < sayujiList.size(); i++) {
-						String JISANG_STATUS = cu.nvl((String) ((HashMap) sayujiList.get(i)).get("JISANG_STATUS"));
-						String COMPLE_YN = cu.nvl((String) ((HashMap) sayujiList.get(i)).get("COMPLE_YN"));
-						Long CNT = Long.parseLong(String.valueOf(((HashMap) sayujiList.get(i)).get("CNT")));
+						String JISANG_STATUS = cu.nvl((String) ((HashMap) sayujiList.get(i)).get("jisang_status"));
+						String COMPLE_YN = cu.nvl((String) ((HashMap) sayujiList.get(i)).get("comple_yn"));
+						Long CNT = Long.parseLong(String.valueOf(((HashMap) sayujiList.get(i)).get("cnt")));
 
-						if (JISANG_STATUS.equals("JISANG") && COMPLE_YN.equals("Y"))
+						if (JISANG_STATUS.equals("JISANG") && COMPLE_YN.equals("Y")) //등기
 							l_SAYUJI_Y_Y += CNT;
-						else if (JISANG_STATUS.equals("JISANG") && COMPLE_YN.equals("N"))
+						else if (JISANG_STATUS.equals("JISANG") && COMPLE_YN.equals("N")) //미등기
 							l_SAYUJI_Y_N += CNT;
-						else if (JISANG_STATUS.equals("N") || JISANG_STATUS.equals("NOTSET"))
+						else if (JISANG_STATUS.equals("N") || JISANG_STATUS.equals("NOTSET")) //미설정
 							l_SAYUJI_N += CNT;
 					}
 				}
 				if (gukyujiList.size() > 0) {
 					for (int i = 0; i < gukyujiList.size(); i++) {
-						String JISANG_STATUS = cu.nvl((String) ((HashMap) gukyujiList.get(i)).get("JISANG_STATUS"));
+						String JISANG_STATUS = cu.nvl((String) ((HashMap) gukyujiList.get(i)).get("jisang_status"));
 						// String CNT = cu.nvl(String.valueOf(((HashMap) gukyujiList.get(i)).get("CNT")));
-						Long CNT = Long.parseLong(String.valueOf(((HashMap) gukyujiList.get(i)).get("CNT")));
+						Long CNT = Long.parseLong(String.valueOf(((HashMap) gukyujiList.get(i)).get("cnt")));
 
-						if (JISANG_STATUS.equals("GOVER"))
+						if (JISANG_STATUS.equals("GOVER")) //점용
 							l_GUKYUJI_Y += CNT;
-						else if (JISANG_STATUS.equals("JISANG"))
+						else if (JISANG_STATUS.equals("JISANG"))  //지상권
 							l_GUKYUJI_J += CNT;
-						else if (JISANG_STATUS.equals("N") || JISANG_STATUS.equals("NOTSET"))
+						else if (JISANG_STATUS.equals("N") || JISANG_STATUS.equals("NOTSET")) //미점용
 							l_GUKYUJI_N += CNT;
 					}
 				}

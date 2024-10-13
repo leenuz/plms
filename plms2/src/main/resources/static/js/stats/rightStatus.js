@@ -81,3 +81,68 @@ const moreBtnEventForRightStatus = () => {
 moreBtnEventForRightStatus();
 
 // 마감 팝업
+
+
+//기본 실행
+$(function(){
+    $('#rightStatus .searchBtn').click(function() {
+        loadData();
+    });
+});
+
+ 
+const loadData = () => {
+    var params = {JISA:  $("#rightStatusSelectBox01").val() , ADDRCODE:"",SGG:"", KIJUN:"", SIDO:""}
+	console.log(params);
+	$.ajax({
+		url:  "/statics/selectTogiMgtStateList",
+		type: 'POST',
+		contentType: "application/json",
+		data: JSON.stringify(params),
+		dataType: "json",
+		beforeSend: function(request) {
+			console.log("beforesend ........................");
+			loadingShow();
+		},
+		success: function(response) {
+			loadingHide();
+            console.log(response);
+            if(response == 'Y'){
+                const result = response.result;
+                if(result != null && result != undefined){
+                    //사유지
+                    const sayuji_yy = parseInt(reslut.SAYUJI_Y_Y, 0);
+                    const sayuji_yn = parseInt(reslut.SAYUJI_Y_N, 0);
+                    const sayuji_n = parseInt(reslut.SAYUJI_N, 0);
+                    const sayuji_sum = sayuji_yy + sayuji_yn + sayuji_n;
+                    $("#SAYUJI_Y_Y").val(sayuji_yy);
+                    $("#SAYUJI_Y_N").val(sayuji_yn);
+                    $("#SAYUJI_N").val(sayuji_n);
+                    $("#SAYUJI_SUM").val(sayuji_sum);
+                    //국유지
+                    const gukyuji_y = parseInt(reslut.GUKYUJI_Y, 0);
+                    const gukyuji_j = parseInt(reslut.GUKYUJI_J, 0);
+                    const gukyuji_n = parseInt(reslut.GUKYUJI_N, 0);
+                    const gukyuji_sum = gukyuji_y + gukyuji_j + gukyuji_n;
+                    $("#GUKYUJI_Y").val(gukyuji_y);
+                    $("#GUKYUJI_J").val(gukyuji_j);
+                    $("#GUKYUJI_N").val(gukyuji_n);
+                    $("#gukyuji_sum").val(gukyuji_sum);
+                    //이슈
+                    // id="issueList_01"
+                }else{
+                    console.log("result null");
+                }
+            }else{
+                console.log("response error");
+            }
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+            loadingHide();
+			console.log(jqXHR);
+			console.log(jqXHR.readyState);
+			console.log(jqXHR.responseText);
+			console.log(jqXHR.responseJSON);
+		}
+	});
+};
