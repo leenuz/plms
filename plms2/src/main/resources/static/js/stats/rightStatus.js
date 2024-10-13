@@ -200,7 +200,7 @@ function initSAYUJIChart(yy, yn, n, sum) {
                 cursor: 'pointer',       // 커서 모양 변경
                 dataLabels: {
                     enabled: true,       // 데이터 레이블 표시 여부
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'  // 데이터 레이블 포맷
+                    format: '<b>{point.name}</b><br>{point.percentage:.1f} %'  // 데이터 레이블 포맷
                 }
             }
         },
@@ -243,7 +243,7 @@ function initGUKYUJIChart(j, y, n, sum) {
                 cursor: 'pointer',       // 커서 모양 변경
                 dataLabels: {
                     enabled: true,       // 데이터 레이블 표시 여부
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'  // 데이터 레이블 포맷
+                    format: '<b>{point.name}</b><br>{point.percentage:.1f} %'  // 데이터 레이블 포맷
                 }
             }
         },
