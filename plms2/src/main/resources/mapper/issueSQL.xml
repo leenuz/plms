@@ -306,13 +306,13 @@ FROM (
 		       PA.pa_URL AS ECHO_URL,
 		       C.pa_URL AS HANDLE_URL,
 		       D.pa_URL AS COMPLE_URL,
-		       A.MINWONIN_TOJIJU_NM,	-- 토지주 명
-		       A.MINWONIN_TOJIJU_BIRTH, -- 토지주 생년월일
-		       A.TOJIJU_RELATION, -- 토지주 관계
-		       A.MINWONIN_PHONE, -- 토지주 연락처
-		       A.FIELD_PRESENCE, -- 현장입회
-		       A.TOJI_HISTORY, -- 토지이력
-		       A.MINWON_REQUIREMENT  -- 요구사항
+		       A.MINWONIN_TOJIJU_NM,	
+		       A.MINWONIN_TOJIJU_BIRTH, 
+		       A.TOJIJU_RELATION, 
+		       A.MINWONIN_PHONE, 
+		       A.FIELD_PRESENCE, 
+		       A.TOJI_HISTORY, 
+		       A.MINWON_REQUIREMENT 
 		FROM MINWON_MASTER A
 		LEFT JOIN MINWON_HANDLING_TMP B ON A.mm_mw_seq = B.mht_MW_SEQ
 		LEFT JOIN PLMS_APPROVAL PA ON A.mm_DOCKEY = PA.pa_DOCKEY

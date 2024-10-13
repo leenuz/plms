@@ -2838,9 +2838,9 @@ WHERE
 		#{pnu},
 		#{jisa},
 		#{jimok_text},
-		#{jijuk_area},
-		#{pyeonib_area},
-		replace(#{set_money},',',''),
+		#{jijuk_area}::numeric,
+		#{pyeonib_area}::numeric,
+		replace(#{set_money}::text,',','')::numeric,
 		#{jasan_no},
 		#{REP_JISANG_NO}
 		)
@@ -2853,7 +2853,7 @@ WHERE
 	</delete>
 	<delete id="deleteJisangMerge1" parameterType="HashMap">
 		DELETE FROM JISANG_MASTER
-		WHERE jm_JISANG_NO = #{jisang_no}
+		WHERE jm_JISANG_NO = #{JISANG_NO}
 	</delete>
 	
 	
@@ -2862,7 +2862,7 @@ WHERE
 		SET
 		jm_MERGE_REASON = #{MERGE_REASON}
 		, jm_MERGE_COMMENT = #{MERGE_COMMENT}
-		WHERE jm_JISANG_NO = #{JISANG_NO}
+		WHERE jm_JISANG_NO = #{jisang_no}
 	</update>
 	
 	<select id="selectJijangNextNo"  parameterType="HashMap" resultType="HashMap">
@@ -2998,7 +2998,7 @@ WHERE
 	<update id="updateSeqFile" parameterType="HashMap">
 		UPDATE JISANG_ATCFILE SET
 		ja_JISANG_NO = #{JISANGNO}
-		WHERE ja_SEQ = #{FILESEQ}
+		WHERE ja_SEQ = #{ja_file_seq}
 	</update>
 
 	<update id="updateSeqFileTmp" parameterType="HashMap">
@@ -3264,6 +3264,12 @@ DELETE from plms_POTENTIAL_ISSUE
             
 			INSERT INTO JISANG_ATCFILE(ja_JISANG_NO, ja_SEQ, ja_FILE_PATH, ja_FILE_NM, ja_FILE_SEQ)
 			VALUES (#{JISANGNO}, nextVal('jisang_seq'), #{FILE_PATH}, #{FILE_NM}, 0)
+			
+	</insert>
+	<insert id="insertJisangFile1" parameterType="HashMap">
+            
+			INSERT INTO JISANG_ATCFILE(ja_JISANG_NO, ja_SEQ, ja_FILE_PATH, ja_FILE_NM, ja_FILE_SEQ)
+			VALUES (#{JISANGNO}, nextVal('jisang_seq'), #{ja_FILE_PATH}, #{ja_FILE_NM}, 0)
 			
 	</insert>
 	

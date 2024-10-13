@@ -605,6 +605,10 @@ public class issueController {
 
 					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
 						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 						mainService.InsertQuery("issueSQL.insertMinwonAtchFileInfo", fileParams);
 					}
 					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
@@ -883,6 +887,12 @@ public class issueController {
 		int agreeSeq = 0;
 		try {
 			HashMap params = new HashMap();
+			String stat="";
+			if ("임시저장".equals(STATUS)) stat="1";
+			else if ("민원발생".equals(STATUS)) stat="2";
+			else if ("대응방안수립".equals(STATUS)) stat="3";
+			else if ("협의중".equals(STATUS)) stat="4";
+			else if ("완료".equals(STATUS)) stat="5";
 			// 신규등록시
 			if ("".equals(AGREE_SEQ) || "0".equals(AGREE_SEQ)) {
 
@@ -892,12 +902,7 @@ public class issueController {
 				// 민원 협의 마스터 키 번호 생성
 //					agreeSeq = (int) Database.getInstance().queryForObject("Json.makeMinwonAgreeKey", params);
 				agreeSeq = (int) mainService.selectCountQuery("issueSQL.makeMinwonAgreeKey", params);
-				String stat="";
-				if ("임시저장".equals(STATUS)) stat="1";
-				else if ("민원발생".equals(STATUS)) stat="2";
-				else if ("대응방안수립".equals(STATUS)) stat="3";
-				else if ("협의중".equals(STATUS)) stat="4";
-				else if ("완료".equals(STATUS)) stat="5";
+				
 				
 				
 				params.put("AGREE_SEQ", agreeSeq);
@@ -919,7 +924,7 @@ public class issueController {
 				params.put("AGREE_TITLE", AGREE_TITLE);
 				params.put("AGREE_CONTENTS", AGREE_CONTENTS);
 				params.put("AGREE_DATE", AGREE_DATE);
-				params.put("STATUS", STATUS);
+				params.put("STATUS", stat);
 				params.put("REG_ID", String.valueOf(request.getSession().getAttribute("userName")));
 
 //					Database.getInstance().update("Json.updateMinwonAgree", params);
@@ -955,16 +960,16 @@ public class issueController {
 				if ("".equals(str_appNo)) {
 					map.put("message", "처리 중 오류가 발생했습니다.");
 				} else {
-//						String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
-//						String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
-//						String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
-//						String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
-//						String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
-					String str_UserId = "105681";
-					String str_userName = "박영환";
-					String str_userDeptcd = "D250500";
-					String str_userDeptnm = "IT전략.지원팀";
-					String str_userUPDeptcd = "S250100";
+						String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
+						String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
+						String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
+						String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
+						String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+//					String str_UserId = "105681";
+//					String str_userName = "박영환";
+//					String str_userDeptcd = "D250500";
+//					String str_userDeptnm = "IT전략.지원팀";
+//					String str_userUPDeptcd = "S250100";
 					String XML_GUBUN = "GetConferComplaintsDataforXML";
 					res_Echo = epc.GetPLMSDataforXML(str_appNo,
 							eph.getMinwonAgreeHTML(MW_SEQ, AGREE_SEQ, fileseq, request, response), str_UserId, "", "",
@@ -985,13 +990,14 @@ public class issueController {
 //						ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonAgreeDocInfo", map);
 					ArrayList echolist = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonAgreeDocInfo", map);
 					if (null != echolist && echolist.size() > 0) {
-						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("out_url"));
 						System.out.println("str_EchoNo=====" + str_EchoNo);
 						map.put("OUT_URL", str_EchoNo);
 					}
 
 				} else {
-					map.put("message", "처리 중 오류가 발생했습니다.");
+					map.put("message", "상신 처리 중 결과를 받지 못하는 오류가 발생했습니다.");
+					//map.put("mess, str_appNo)
 				}
 			}
 

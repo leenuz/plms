@@ -151,17 +151,17 @@ public class SchedulerController {
 				CommonUtil comm = new CommonUtil();
 				HashMap params = new HashMap();
 				params.put("BUNHALYN", "Y");
-				params.put("JISANGNO", targetMap.get("JISANG_NO"));
+				params.put("JISANGNO", targetMap.get("jisang_no"));
 				ArrayList<HashMap> ori_list = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectJisangDetailListNew", params);
 				ArrayList<HashMap> soyu_list = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectJisangDetailSoyu", params);
-				params.put("BUNHAL_ORG_NO", targetMap.get("JISANG_NO"));
+				params.put("BUNHAL_ORG_NO", targetMap.get("jisang_no"));
 				ArrayList<HashMap> bunhal_list = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectJisangBunhalTmpList", params);
 
 				// 분할대상 잠재이슈 조회
 				ArrayList<HashMap> potentialIssue_list = (ArrayList<HashMap>) mainService.selectQuery("commonSQL.selectPnuIssue", targetMap);
 
 				// 분할대상 모지번 첨부파일 정보 조회
-				params.put("FILENO", targetMap.get("JISANG_NO"));
+				params.put("FILENO", targetMap.get("jisang_no"));
 				//ArrayList<HashMap<String, String>> attachList = (ArrayList<HashMap<String, String>>) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Files", params);
 				// 반환된 리스트를 개별 요소에 대해 캐스팅
 				ArrayList<HashMap<String, String>> attachList = new ArrayList<>();
@@ -309,13 +309,13 @@ public class SchedulerController {
 							Addparams.put("PERMITTED_YN", PERMITTED_YN);
 							Addparams.put("PIPE_YN", pipe_yn);
 
-							Addparams.put("BUNHALORGNO", targetMap.get("JISANG_NO")); // 기존
+							Addparams.put("BUNHALORGNO", targetMap.get("jisang_no")); // 기존
 							// 지상권번호
 
 							Addparams.put("GUBUN", "분할");
 							Addparams.put("SAVE_STATUS", "승인");
-							Addparams.put("USER_ID", targetMap.get("USER_ID"));
-							Addparams.put("USER_NAME", targetMap.get("USER_NAME"));
+							Addparams.put("USER_ID", targetMap.get("user_id"));
+							Addparams.put("USER_NAME", targetMap.get("user_name"));
 							Addparams.put("CONT", modifyReason + modifyReason2);
 							System.out.println(Addparams.toString());
 							mainService.InsertQuery("jisangSQL.insertJisangBunhalMasterNew", Addparams); // 기본정보 저장
@@ -325,7 +325,7 @@ public class SchedulerController {
 							for (HashMap<String, String> attachMap : attachList) {
 								System.out.println(attachMap.toString());
 								attachMap.put("JISANGNO", Next_jisangNo);
-								mainService.UpdateQuery("jisangSQL.insertJisangFile", attachMap);
+								mainService.UpdateQuery("jisangSQL.insertJisangFile1", attachMap);
 							}
 
 							// 지적 등록
@@ -351,10 +351,10 @@ public class SchedulerController {
 							if(soyu_list != null && !soyu_list.isEmpty()) {
 								for( HashMap<String, String> soyuMap : soyu_list) {
 									soyuMap.put("JISANGNO", Next_jisangNo);
-									soyuMap.put("NAME", soyuMap.get("SOUJA_NAME"));
-									soyuMap.put("ADDR", soyuMap.get("ADDRESS"));
-									soyuMap.put("HOME_NUMBER", soyuMap.get("HOME_NUMBER"));
-									soyuMap.put("PHNE_NUMBER", soyuMap.get("PONE_NUMBER"));
+									soyuMap.put("NAME", soyuMap.get("js_souja_name"));
+									soyuMap.put("ADDR", soyuMap.get("js_address"));
+									soyuMap.put("HOME_NUMBER", soyuMap.get("js_home_number"));
+									soyuMap.put("PHNE_NUMBER", soyuMap.get("js_pone_number"));
 									mainService.UpdateQuery("jisangSQL.insertJisangSoyu", soyuMap);
 								}
 							}
@@ -509,7 +509,7 @@ public class SchedulerController {
 					}
 				}
 				HashMap map = new HashMap();
-				map.put("JISANGNO", targetMap.get("JISANG_NO"));
+				map.put("JISANGNO", targetMap.get("jisang_no"));
 				mainService.DeleteQuery("jisangSQL.deleteJisangBunhalTmp", map); // 임시저장 삭제 -->> 완료처리
 //				Database.getInstance().update("Json.completeJisangBunhalTmp", map); // 임시저장 삭제 -->> 완료처리 // 삭제에서 플래그 완료처리로 변경. 기록확인을 위한 기능변경.
 
@@ -552,7 +552,7 @@ public class SchedulerController {
 					mainService.UpdateQuery("jisangSQL.updateMergeJisangMaster", datas);
 
 					// 대표지상권이 아닌 기존 지상권 정보를 삭제처리하고 지상권 합필정보 관리 테이블에 삽입한다.
-					if ("N".equals(datas.get("MAIN_FLAG"))) {
+					if ("N".equals(datas.get("main_flag"))) {
 						datas.put("REP_JISANG_NO", (String) targetMap.get("rep_jisang_no")); // 대표지상권 정보
 						mainService.InsertQuery("jisangSQL.insertJisangMerge", datas);
 
@@ -599,7 +599,7 @@ public class SchedulerController {
 						mainService.DeleteQuery("jisangSQL.deletePnuIssueHistory", hparam); // 잠재이슈 내역도 삭제 
 					} else {
 						// 모지번 정보에 합필사유, 검토의견 업데이트
-						mainJisangMap.put("MERGE_REASON", datas.get("merge_reason"));
+						mainJisangMap.put("MERGE_REASON", datas.get("jmt_merge_reason")==null?"":datas.get("jmt_merge_reason"));
 						mainJisangMap.put("MERGE_COMMENT", datas.get("merge_comment"));
 						mainService.UpdateQuery("jisangSQL.updateJisangMasterMergeReason", mainJisangMap);
 					}
