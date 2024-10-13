@@ -605,10 +605,6 @@ public class issueController {
 
 					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
 						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 						mainService.InsertQuery("issueSQL.insertMinwonAtchFileInfo", fileParams);
 					}
 					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
