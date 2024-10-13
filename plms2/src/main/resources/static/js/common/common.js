@@ -500,6 +500,7 @@ function onlyNumberingInput(event) {
         return;
     } else {
         event.preventDefault(); // 그 외 키는 입력 차단
+        return false;
     }
 }
 
