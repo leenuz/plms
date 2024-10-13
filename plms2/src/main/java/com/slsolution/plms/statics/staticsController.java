@@ -1427,7 +1427,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	}
 	
 	//통계 > 권리별 증감현황 > 조회 > 엑셀
-	@PostMapping(path="/selectByRightInDeListExcel")
+	@RequestMapping(path="/selectByRightInDeListExcel")
 	public void selectByRightInDeListExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
 		String JISA = parser.getString("JISA", "");
@@ -1661,7 +1661,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	}
 	
 	//통계 > 관리필지 증감현황 > 메인 조회 > 엑셀다운로드
-	@PostMapping(path="/selectFieldInDeListExcel")
+	@RequestMapping(path="/selectFieldInDeListExcel")
 	public void selectFieldInDeListExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
 		String YYYY_REF = parser.getString("YYYY_REF", "0");
