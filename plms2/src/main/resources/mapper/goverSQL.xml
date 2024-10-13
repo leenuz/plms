@@ -11,14 +11,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	]]></select>
 
 	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select *
-		from gover_master
-		where 1=1
+		SELECT *
+		FROM gover_master
+		WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-			and gm_gover_no=#{idx}
+			AND gm_gover_no=#{idx}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(index)" >
-			and gm_idx=cast(#{index} as integer)
+			AND gm_idx=cast(#{index} as integer)
 		</if>
 	</select>
 
@@ -75,11 +75,15 @@ LEFT JOIN plms_approval PA
 	</select>
 
 	<select id="selectPnuList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select *,(row_number() over()) as no
-		from gover_pnu
-		where 1=1
+		SELECT *,
+			(row_number() over()) as no,
+			jj.x AS x, 
+			jj.y AS y
+		FROM gover_pnu
+		LEFT JOIN jijuk_2024 jj ON gover_pnu.gp_pnu = jj.pnu
+		WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-			and gp_gover_no=#{idx}
+			AND gp_gover_no=#{idx}
 		</if>
 	</select>
 

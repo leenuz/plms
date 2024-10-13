@@ -369,6 +369,10 @@ public class goverController {
 		//지도보기, 이동관련
 		mav.addObject("jijukCoordList", coordinateVal);
 		mav.addObject("jijukCoordSize", coordinateSize);
+		if (!pnuList.isEmpty()) {
+		    mav.addObject("x", pnuList.get(0).get("x"));
+		    mav.addObject("y", pnuList.get(0).get("y"));
+		}
 
 		mav.setViewName("content/gover/occupationDetails");
 		return mav;
@@ -532,6 +536,10 @@ public class goverController {
 		//지도보기, 이동관련
 		mav.addObject("jijukCoordList", coordinateVal);
 		mav.addObject("jijukCoordSize", coordinateSize);
+		if (!pnuList.isEmpty()) {
+		    mav.addObject("x", pnuList.get(0).get("x"));
+		    mav.addObject("y", pnuList.get(0).get("y"));
+		}
 
 		mav.setViewName("content/gover/occupationDetails2");
 		return mav;

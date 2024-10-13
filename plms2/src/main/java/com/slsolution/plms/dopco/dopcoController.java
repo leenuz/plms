@@ -225,9 +225,16 @@ public class dopcoController {
 
 			jijukParam.put("TARGET_PNU", list.get(0).get("pnu"));
 			
+			log.info("-----------------pnu: "+ list.get(0).get("pnu"));
+			
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
 			ArrayList<HashMap> jijukPNUList2 = mainService.selectQuery("commonSQL.selectJijuk_PNU", jijukParam);
-			
+			// 위치보기 버튼을 위해 바로 x,y mav 에 담기 - 손지민 241013
+			if (!jijukPNUList2.isEmpty()) {
+			    HashMap jijukInfo = jijukPNUList2.get(0); // 첫 번째 데이터를 가져옴
+			    mav.addObject("x", jijukInfo.get("x"));   // x 값을 mav에 추가
+			    mav.addObject("y", jijukInfo.get("y"));   // y 값을 mav에 추가
+			}
 			coordinateSize += jijukPNUList2.size();
 			
 			if (jijukList.size() > 0) {
@@ -243,6 +250,7 @@ public class dopcoController {
 				}
 			}
 		}
+		log.info("coordinateVal: " + coordinateVal);
 
 		log.info("data : " + resultData);
 		log.info("dopcoIssueHistoryList: " + dopcoIssueHistoryList);
@@ -358,7 +366,12 @@ public class dopcoController {
 			
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
 			ArrayList<HashMap> jijukPNUList2 = mainService.selectQuery("commonSQL.selectJijuk_PNU", jijukParam);
-			
+			// add. 손지민 241013 - 위치보기 버튼을 위해 바로 x, y mav 에 담기
+			if (!jijukPNUList2.isEmpty()) {
+			    HashMap jijukInfo = jijukPNUList2.get(0); // 첫 번째 데이터를 가져옴
+			    mav.addObject("x", jijukInfo.get("x"));   // x 값을 mav에 추가
+			    mav.addObject("y", jijukInfo.get("y"));   // y 값을 mav에 추가
+			}
 			coordinateSize += jijukPNUList2.size();
 			
 			if (jijukList.size() > 0) {
@@ -481,7 +494,6 @@ public class dopcoController {
 	//	params.put("index",index);
 		log.info("params:"+params);
 		list = (ArrayList) mainService.selectQuery("dopcoSQL.selectAllData", params); // 기본정보
-		
 		//ArrayList<HashMap> dopcoIssueList = mainService.selectQuery("commonSQL.selectPnuIssue",params);
 		//ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
 		ArrayList toja_list = (ArrayList) mainService.selectQuery("dopcoSQL.selectDopcoRowDetail_Toja", params); // 투자오더
@@ -503,8 +515,16 @@ public class dopcoController {
 			jijukParam.put("emd_nm", list.get(0).get("emd_nm"));
 			jijukParam.put("ri_nm", list.get(0).get("ri_nm"));
 			jijukParam.put("jibun", list.get(0).get("jibun"));
+			jijukParam.put("TARGET_PNU", list.get(0).get("dom_pnu"));
 
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			ArrayList<HashMap> jijukList2 = mainService.selectQuery("commonSQL.selectJijuk_PNU", jijukParam);
+			// add.손지민- 위치보기 버튼을 위해 x,y mav 에 담기 - 241013
+			if (!jijukList2.isEmpty()) {
+			    HashMap jijukInfo = jijukList2.get(0); // 첫 번째 데이터를 가져옴
+			    mav.addObject("x", jijukInfo.get("x"));   // x 값을 mav에 추가
+			    mav.addObject("y", jijukInfo.get("y"));   // y 값을 mav에 추가
+			}
 			if (jijukList.size() > 0) {
 				jijuk = jijukList.get(0);
 			}
