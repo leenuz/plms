@@ -1353,9 +1353,9 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		String JISA = parser.getString("JISA", "");
 		String STATUS = parser.getString("STATUS", "");
 		int YYYY_REF = parser.getInt("YYYY_REF");
-		String MM_REF = parser.getString("MM_REF", "");
-		String YYYY_TG = parser.getString("YYYY_TG", "");
-		String MM_TG = parser.getString("MM_TG", "");
+		int MM_REF = parser.getInt("MM_REF");
+		int YYYY_TG = parser.getInt("YYYY_TG");
+		int MM_TG = parser.getInt("MM_TG");
 		
 	
 		ArrayList dataList = new ArrayList();
