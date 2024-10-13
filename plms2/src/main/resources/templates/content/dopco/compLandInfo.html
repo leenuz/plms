@@ -77,6 +77,15 @@
       text-align: right;
       margin: 10px;
     }
+    @media print {
+		/* 전체 페이지가 인쇄되지 않도록 하고, 특정 영역만 인쇄되도록 설정 */
+		header {
+			display: none;
+		}
+		.dopcoAllwrappersBoxs > div {
+			margin-left: 0px !important;
+		}
+	}
   </style>
   
   <title>회사토지 상세정보</title>
