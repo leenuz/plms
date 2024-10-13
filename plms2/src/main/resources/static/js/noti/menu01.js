@@ -11,6 +11,21 @@ $(document).ready(function() {
 	loadDataTable("");
 });
 
+$(document).ready(function() {
+    // 리스트 항목 클릭 시 동작
+    $('.surfaceSelectListMember li').click(function() {
+        // 클릭한 항목의 텍스트와 값을 가져옴
+        const selectedText = $(this).text();
+        const selectedValue = $(this).data('value');
+
+        // 숨겨진 select에 값 적용
+        $('#gubun').val(selectedValue);
+
+        // 버튼 텍스트를 클릭한 항목의 텍스트로 변경
+        $('#gubunBtn').text(selectedText);
+    });
+});
+
 
 //조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
 $(document).on("click", "#registerBtn", function() {
