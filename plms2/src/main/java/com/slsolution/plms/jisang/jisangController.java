@@ -795,7 +795,7 @@ public class jisangController {
 				String GUBUN = "modify"; // 구분( modify : 수정, insert
 																// : 등록 )
 				//String TOGICNT = requestJsonObj.getString("TOGICNT"); // 대상토지 수
-				String PMT_NO =requestJsonObj.has("pmt_no")?requestJsonObj.getString("pmt_no"):""; // 승락등록 번호
+				String PMT_NO =requestJsonObj.has("PMT_NO")?requestJsonObj.getString("PMT_NO"):""; // 승락등록 번호
 				String USE_PURPOS = requestJsonObj.getString("purpose"); // 사용목적
 				String USE_ST_DATE = requestJsonObj.getString("useStartDate"); // 사용기간 시작
 				String USE_ED_DATE = requestJsonObj.getString("useEndDate"); // 사용기간 끝
@@ -1063,6 +1063,7 @@ public class jisangController {
 				} else {
 					map.put("message", "N");
 				}
+				map.put("PMT_NO", PMT_NO);
 
 				JSONObject jo = new JSONObject(map);
 
@@ -1269,8 +1270,8 @@ public class jisangController {
 						ArrayList togiList = new ArrayList();
 						ArrayList fileList = new ArrayList();
 						//log.info("request:"+request);
-						
-						 PMT_NO = requestJsonObj.getString("PMT_NO");
+						PMT_NO=resp_PMT_NO;
+						 //PMT_NO = requestJsonObj.getString("PMT_NO");
 						//String PMT_NO = parser.getString("PMT_NO", "");
 						//String loginKey = String.valueOf(request.getSession().getAttribute("loginKey"));
 						String loginKey=request.getParameter("loginKey");
@@ -1362,7 +1363,7 @@ public class jisangController {
 						} else {
 							map.put("message", "N");
 						}
-
+						map.put("PMT_NO", PMT_NO);
 						JSONObject jo = new JSONObject(map);
 
 						response.setCharacterEncoding("UTF-8");
@@ -4357,7 +4358,7 @@ log.info("data:"+data.get(0));
 			} finally {
 				//Database.getInstance().endTransaction();
 			}
-
+			map.put("JISANGNO", jisangno);
 			map.put("message", str_result);
 
 			JSONObject jo = new JSONObject(map);
@@ -4726,7 +4727,8 @@ log.info("data:"+data.get(0));
 				} finally {
 					//Database.getInstance().endTransaction();
 				}
-
+				map.put("JISANGNO", jisangno);
+				
 				map.put("message", str_result);
 
 				JSONObject jo = new JSONObject(map);
@@ -5206,42 +5208,45 @@ log.info("data:"+data.get(0));
 	
 	@PostMapping(path="/landTerminationSave")
 		public void landTerminationSave(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		 String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
+		 log.info("requestParams:"+requestParams);
+		 JSONObject requestParamObj=new JSONObject(requestParams.toString());
 			ModelAndView mav=new ModelAndView();
 			HashMap params = new HashMap();
 			ArrayList<HashMap>  list=new ArrayList<HashMap>();
+	         
+			String jisa = requestParamObj.getString("jisa");	//담당지사
+			String yongdo = requestParamObj.getString("yongdo");	//용도
+			String pipe_name = requestParamObj.getString("pipe_name");	//관로명(구간)
+			String sun_gubun = requestParamObj.getString("sun_gubun");	//단/복선
+			String sido_nm = requestParamObj.getString("sido_nm");	//주소
+			String sgg_nm = requestParamObj.getString("sgg_nm");	//주소
+			String ri_nm = requestParamObj.getString("ri_nm");	//주소
+			String jibun = requestParamObj.getString("jibun");	//주소
+			String jijuk_area = requestParamObj.getString("jijuk_area");	//지적면적(m²)
+			String gover_own_yn = requestParamObj.getString("gover_own_yn");	//국공유지여부
 	
-			String jisa = httpRequest.getParameter("jisa");	//담당지사
-			String yongdo = httpRequest.getParameter("yongdo");	//용도
-			String pipe_name = httpRequest.getParameter("pipe_name");	//관로명(구간)
-			String sun_gubun = httpRequest.getParameter("sun_gubun");	//단/복선
-			String sido_nm = httpRequest.getParameter("sido_nm");	//주소
-			String sgg_nm = httpRequest.getParameter("sgg_nm");	//주소
-			String ri_nm = httpRequest.getParameter("ri_nm");	//주소
-			String jibun = httpRequest.getParameter("jibun");	//주소
-			String jijuk_area = httpRequest.getParameter("jijuk_area");	//지적면적(m²)
-			String gover_own_yn = httpRequest.getParameter("gover_own_yn");	//국공유지여부
+			String jasan_no = requestParamObj.getString("jasan_no");	//자산분류번호
+			String chuideuk_date = requestParamObj.getString("chuideuk_date");	//취득일자
+			String pyeonib_area = requestParamObj.getString("pyeonib_area");	//편입면적(m2)
+			String use_state = requestParamObj.getString("use_state");	//사용현황
+			String deunggi_date = requestParamObj.getString("deunggi_date");	 //등기일
+			String deunggi_no = requestParamObj.getString("deunggi_no");	//등기번호
+			String deunggiso = requestParamObj.getString("deunggiso");	//등기소
+			String dosiplan = requestParamObj.getString("dosiplan");	//도시계획 결정여부
 	
-			String jasan_no = httpRequest.getParameter("jasan_no");	//자산분류번호
-			String chuideuk_date = httpRequest.getParameter("chuideuk_date");	//취득일자
-			String pyeonib_area = httpRequest.getParameter("pyeonib_area");	//편입면적(m2)
-			String use_state = httpRequest.getParameter("use_state");	//사용현황
-			String deunggi_date = httpRequest.getParameter("deunggi_date");	 //등기일
-			String deunggi_no = httpRequest.getParameter("deunggi_no");	//등기번호
-			String deunggiso = httpRequest.getParameter("deunggiso");	//등기소
-			String dosiplan = httpRequest.getParameter("dosiplan");	//도시계획 결정여부
+			String account_yn = requestParamObj.getString("account_yn");
+			String cancel_date = requestParamObj.getString("cancel_date");
+			String chuideuk_money = requestParamObj.getString("chuideuk_money");
+			String gammoney = requestParamObj.getString("gammoney");
+			String remainder_money = requestParamObj.getString("remainder_money");
+			String cancel_bosang_yn = requestParamObj.getString("cancel_bosang_yn");
+			String cancel_bosang_money = requestParamObj.getString("cancel_bosang_money");
+			String cancel_reason = requestParamObj.getString("cancel_reason");
+			String cancel_comment = requestParamObj.getString("cancel_comment");
 	
-			String account_yn = httpRequest.getParameter("account_yn");
-			String cancel_date = httpRequest.getParameter("cancel_date");
-			String chuideuk_money = httpRequest.getParameter("chuideuk_money");
-			String gammoney = httpRequest.getParameter("gammoney");
-			String remainder_money = httpRequest.getParameter("remainder_money");
-			String cancel_bosang_yn = httpRequest.getParameter("cancel_bosang_yn");
-			String cancel_bosang_money = httpRequest.getParameter("cancel_bosang_money");
-			String cancel_reason = httpRequest.getParameter("cancel_reason");
-			String cancel_comment = httpRequest.getParameter("cancel_comment");
-	
-			String jisang_no = httpRequest.getParameter("jisang_no");
-			String jIdx = httpRequest.getParameter("jIdx");
+			String jisang_no = requestParamObj.getString("jisang_no");
+			String jIdx = requestParamObj.getString("jIdx");
 			
 			int docCount=0;
 			
@@ -5408,12 +5413,12 @@ log.info("data:"+data.get(0));
 				params.put("chuideuk_money", null);
 			}
 			if (gammoney != null && !gammoney.trim().isEmpty()) {
-				params.put("gammoney",Integer.parseInt(gammoney));
+				params.put("gammoney",gammoney);
 			} else {
 				params.put("gammoney", null);
 			}
 			if (remainder_money != null && !remainder_money.trim().isEmpty()) {
-				params.put("remainder_money",Integer.parseInt(remainder_money));
+				params.put("remainder_money",remainder_money);
 			} else {
 				params.put("remainder_money", null);
 			}
@@ -5421,7 +5426,7 @@ log.info("data:"+data.get(0));
 			params.put("cancel_bosang_yn",cancel_bosang_yn);
 	
 			if (cancel_bosang_money != null && !cancel_bosang_money.trim().isEmpty()) {
-				params.put("cancel_bosang_money",Integer.parseInt(cancel_bosang_money));
+				params.put("cancel_bosang_money",cancel_bosang_money.replace(",",""));
 			} else {
 				params.put("cancel_bosang_money", null);
 			}
@@ -5429,7 +5434,7 @@ log.info("data:"+data.get(0));
 			params.put("cancel_comment",cancel_comment);
 	
 			params.put("jisang_no",jisang_no);
-			params.put("idx",Integer.parseInt(jIdx));
+			params.put("idx",jIdx);
 	
 			log.info("params:"+params);
 			
@@ -5461,7 +5466,19 @@ log.info("data:"+data.get(0));
 			mainService.InsertQuery("jisangSQL.upsertJisangMasterTmp",params);
 			
 			
+			HashMap map = new HashMap();
+
 			
+			 JSONObject obj = new JSONObject(map);
+	    	 // log.info("jo:"+jo);
+	        response.setCharacterEncoding("UTF-8");
+	        response.setHeader("Access-Control-Allow-Origin", "*");
+	        response.setHeader("Cache-Control", "no-cache");
+	        response.resetBuffer();
+	        response.setContentType("application/json");
+	        // response.getOutputStream().write(jo);
+	        response.getWriter().print(obj);
+	        response.getWriter().flush();
 			
 			
 		}
@@ -5818,6 +5835,7 @@ log.info("data:"+data.get(0));
 				e.printStackTrace();
 			}
 //
+			map.put("JISANGNO", jisangNo);
 			map.put("message", str_result);
 //
 			JSONObject jo = new JSONObject(map);
@@ -6205,7 +6223,7 @@ log.info("gubun:"+gubun);
 		} finally {
 			//Database.getInstance().endTransaction();
 		}
-
+		map.put("JISANGNO", mainJisangNo);
 		map.put("message", str_result);
 		
 		

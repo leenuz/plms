@@ -1194,7 +1194,7 @@ $(document).on("click","#sangsinBtn",function(){
 			console.log("pmt_no:"+dataObj.tmp_pmt_no);
 			dataObj.PMT_NO=$("#tmp_pmt_no").val();
 			console.log(dataObj);
-			if ($("#save_status").val()=="TSAVE") url="/land/jisang/selectJisangPmtDetailListAppoval";
+			if ($("#save_status").val()=="TSAVE") url="/land/jisang/selectJisangPmtDetailListAppoval1";
 			else url="/land/jisang/selectJisangPmtDetailListAppoval2";
 			console.log("url:"+url);
 								   	$.ajax({
@@ -1216,7 +1216,8 @@ $(document).on("click","#sangsinBtn",function(){
 												console.log("response.success Y");
 												//console.log("response.resultData length:"+response.resultData.length);
 												alert("정상적으로 상신 되었습니다.");
-												
+												$("#save_status").val("TSAVE");
+												$("#tmp_pmt_no").val(response.PMT_NO);
 																			
 																			//var url=response.OUT_URL;
 												var urls = response.OUT_URL;
