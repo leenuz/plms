@@ -310,17 +310,16 @@ function loadDataTable(params) {
 				data: "idx", "defaultContent": "",
 				render: function(data, type, row, meta) {
 					//쿼리 수정이 필요합니다.
-					return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
+					return `<button class="viewDetailButton" id="mapBtn" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
-			},
-			// ECHO 문서보기 버튼 추가
+			}, // 지도 위치보기
 			//{ data: "echo_no", "defaultContent": "" }
 			{
 				data: "idx", "defaultContent": "",
 				render: function(data, type, row, meta) {
 					return `<button class="viewDetailButton" id='echoFile'>상세보기</button> `;
 				}
-			}
+			} // ECHO 문서보기 버튼 기능
 		],
 		columnDefs: [
 			{ "className": "dt-head-center", "targets": "_all" },
@@ -364,7 +363,7 @@ function loadDataTable(params) {
 	});
 	
 	// 위치보기 버튼 클릭 이벤트 처리
-	$('#userTable').on('click', '.viewDetailButton', function(event) {
+	$('#userTable').on('click', '#mapBtn', function(event) {
 	    event.stopPropagation(); // 이벤트 전파 차단
 
 	    // 버튼의 data 속성에서 x, y 좌표 가져오기

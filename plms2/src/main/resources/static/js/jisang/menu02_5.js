@@ -361,7 +361,7 @@ function loadDataTable(params) {
 			{
 				targets: [12], width: "100px"
 				, render: function(data, type, row, meta) {
-					return `<button class="btnDesign viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
+					return `<button class="btnDesign viewDetailButton" id="mapBtn" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}, //지도
 			{
@@ -399,7 +399,7 @@ function loadDataTable(params) {
 	});
 	
 	// 위치보기 버튼 클릭 이벤트 처리
-	$('#userTable').on('click', '.viewDetailButton', function(event) {
+	$('#userTable').on('click', '#mapBtn', function(event) {
 		event.stopPropagation(); // 이벤트 전파 차단
 
 		// 버튼의 data 속성에서 x, y 좌표 가져오기
