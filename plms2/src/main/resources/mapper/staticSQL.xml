@@ -856,8 +856,8 @@ SELECT TTT.TYPE,
 						and jisang_status = #{STATUS} 
 					</if>
 					),
-			ref_tb as (select * from static_deadline where YEAR = {YYYY_REF} and month = {MM_REF} and desc1 is not null),
-			tg_tb as (select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}  and desc1 is not null),
+			ref_tb as (select * from static_deadline where YEAR = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null),
+			tg_tb as (select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}  and desc1 is not null),
 			add_cnt as (
 				select 
 					a.desc1,a.jisang_status, 'NEW' as gubun, count(*) as cnt 
@@ -957,10 +957,10 @@ SELECT TTT.TYPE,
 			static_deadline 
 		where 
 			1=1
-			and year= {YYYY}
-			and month = {MM}
-			and desc1 = {JISA}
-			and jisang_status = {STATUS}
+			and year= #{YYYY}
+			and month = #{MM}
+			and desc1 = #{JISA}
+			and jisang_status = #{STATUS}
 	</select>
 	
 	<!-- 통계 > 권리별 증감현황 > 조회 상세 > 증감현황 > 증가 -->
@@ -968,15 +968,15 @@ SELECT TTT.TYPE,
 		select 
 			a.desc1,a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF} and desc1 is not null) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null) a
 		left join
-			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG} and desc1 is not null) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and desc1 is not null) b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
 			1=1
-			and a.desc1 = {JISA}
-			and a.jisang_status = {STATUS}
+			and a.desc1 = #{JISA}
+			and a.jisang_status = #{STATUS}
 			and b.juso is null
 	</select>
 	
@@ -985,20 +985,20 @@ SELECT TTT.TYPE,
 		select 
 			a.desc1,a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF} and desc1 is not null) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null) a
 		left join
-			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG} and desc1 is not null) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and desc1 is not null) b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
 			1=1
-			and a.desc1 = {JISA}
-			and a.jisang_status = {STATUS}
+			and a.desc1 = #{JISA}
+			and a.jisang_status = #{STATUS}
 			and b.juso is null
 	</select>
 	
 		
-	<!-- 통계 > 권리필지 증감현황 > 년,월 -->
+	<!-- 통계 > 관리필지 증감현황 > 년,월 -->
 	<select id="selectFieldInDeListYYYYMM" parameterType="HashMap" resultType="HashMap">
 		select month from static_deadline 
 		where desc1 is not null 
@@ -1008,15 +1008,15 @@ SELECT TTT.TYPE,
 		group by month order by month
 	</select>
 	
-	<!-- 통계 > 권리필지 증감현황 > 조회 -->
+	<!-- 통계 > 관리필지 증감현황 > 조회 -->
 	<select id="selectFieldInDeList" parameterType="HashMap" resultType="HashMap">
 		with
 			all_tb as (
 				select desc1,desc1_num 
 				from static_deadline_info group by desc1,desc1_num
 					),
-			ref_tb as (select * from static_deadline where jisang_status = '지상권' and  jisang_manage='N' and year = {YYYY_REF} and month = {MM_REF} and desc1 is not null), --기준년월
-			tg_tb as (select * from static_deadline where jisang_status = '지상권' and  jisang_manage='N' and year = {YYYY_TG} and month = {MM_TG} and desc1 is not null), --비교년월
+			ref_tb as (select * from static_deadline where jisang_status = '지상권' and  jisang_manage='N' and year = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null), --기준년월
+			tg_tb as (select * from static_deadline where jisang_status = '지상권' and  jisang_manage='N' and year = #{YYYY_TG} and month = #{MM_TG} and desc1 is not null), --비교년월
 			ref_stat_cmpY as (
 				select desc1,count(*) from ref_tb where comple_yn = 'Y' group by desc1
 				), --기준 등기
@@ -1112,7 +1112,7 @@ SELECT TTT.TYPE,
 		from fin
 	</select>
 	
-	<!-- 통계 > 권리필지 증감현황 > 메인 조회 > 등기 -->
+	<!-- 통계 > 관리필지 증감현황 > 메인 조회 > 등기 -->
 	<select id="selectFieldInDeListDetailRegistered" parameterType="HashMap" resultType="HashMap">
 		select
 			desc1,
@@ -1122,15 +1122,15 @@ SELECT TTT.TYPE,
 			static_deadline 
 		where 
 			1=1
-			and year = {YYYY}
-			and month = {MM} 
-			and desc1 = {JISA}
-			and jisang_status = {STATUS}
+			and year = #{YYYY}
+			and month = #{MM} 
+			and desc1 = #{JISA}
+			and jisang_status = '지상권'
 			and comple_yn = 'Y'
 			and jisang_manage = 'N'
 	</select>
 	
-	<!-- 통계 > 권리필지 증감현황 > 메인 조회 > 미등기/계약 -->
+	<!-- 통계 > 관리필지 증감현황 > 메인 조회 > 미등기/계약 -->
 	<select id="selectFieldInDeListDetailUnRegisteredContract" parameterType="HashMap" resultType="HashMap">
 		select
 			desc1,
@@ -1140,16 +1140,16 @@ SELECT TTT.TYPE,
 			static_deadline 
 		where 
 			1=1
-			and year = {YYYY}
-			and month = {MM} 
-			and desc1 = {JISA}
-			and jisang_status = {STATUS}
+			and year = #{YYYY}
+			and month = #{MM} 
+			and desc1 = #{JISA}
+			and jisang_status = '지상권'
 			and comple_yn <![CDATA[<>]]> 'Y'
 			and permitted_yn <![CDATA[<>]]> '없음'
 			and jisang_manage = 'N'
 	</select>
 	
-	<!-- 통계 > 권리필지 증감현황 > 메인 조회 > 미등기/미계약 -->
+	<!-- 통계 > 관리필지 증감현황 > 메인 조회 > 미등기/미계약 -->
 	<select id="selectFieldInDeListDetailUnRegisteredUnContract" parameterType="HashMap" resultType="HashMap">
 		select
 			desc1,
@@ -1159,16 +1159,16 @@ SELECT TTT.TYPE,
 			static_deadline 
 		where 
 			1=1
-			and year = {YYYY}
-			and month = {MM} 
-			and desc1 = {JISA}
-			and jisang_status = {STATUS}
+			and year = #{YYYY}
+			and month = #{MM} 
+			and desc1 = #{JISA}
+			and jisang_status = '지상권'
 			and comple_yn <![CDATA[<>]]> 'Y'
 			and permitted_yn = '없음'
 			and jisang_manage = 'N'
 	</select>
 	
-	<!-- 통계 > 권리필지 증감현황 > 메인 조회 > 미등기/소계 -->
+	<!-- 통계 > 관리필지 증감현황 > 메인 조회 > 미등기/소계 -->
 	<select id="selectFieldInDeListDetailUnRegisteredSubtotal" parameterType="HashMap" resultType="HashMap">
 		select
 			desc1,
@@ -1178,15 +1178,15 @@ SELECT TTT.TYPE,
 			static_deadline 
 		where 
 			1=1
-			and year = {YYYY}
-			and month = {MM} 
-			and desc1 = {JISA}
-			and jisang_status = {STATUS}
+			and year = #{YYYY}
+			and month = #{MM} 
+			and desc1 = #{JISA}
+			and jisang_status = '지상권'
 			and comple_yn <![CDATA[<>]]> 'Y'
 			and jisang_manage = 'N'
 	</select>
 		
-	<!-- 통계 > 권리필지 증감현황 > 메인 조회 > 전체 -->
+	<!-- 통계 > 관리필지 증감현황 > 메인 조회 > 전체 -->
 	<select id="selectFieldInDeListDetailAll" parameterType="HashMap" resultType="HashMap">
 		select
 			desc1,
@@ -1196,14 +1196,14 @@ SELECT TTT.TYPE,
 			static_deadline 
 		where 
 			1=1
-			and year = {YYYY}
-			and month = {MM} 
-			and desc1 = {JISA}
-			and jisang_status = {STATUS}
+			and year = #{YYYY}
+			and month = #{MM} 
+			and desc1 = #{JISA}
+			and jisang_status = '지상권'
 			and jisang_manage = 'N'
 	</select>	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > 전체 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > 전체 -->
 	<select id="selectFieldInDeStatusBoardList" parameterType="HashMap" resultType="HashMap">
 		with
 			all_tb as (
@@ -1211,8 +1211,8 @@ SELECT TTT.TYPE,
 							union all
 							select concat(desc1,'-분기') as desc1, desc1_num+0.1 as desc1_num from static_deadline_info group by desc1,desc1_num
 						),
-				ref_tb as (select * from static_deadline where jisang_status <![CDATA[<>]]> '회사토지' and jisang_manage = 'N' and year = {YYYY_REF} and month = {MM_REF} and desc1 is not null), --기준년월
-				tg_tb as (select * from static_deadline where jisang_status <![CDATA[<>]]> '회사토지' and jisang_manage = 'N' and year = {YYYY_TG} and month = {MM_TG} and desc1 is not null), --비교년월
+				ref_tb as (select * from static_deadline where jisang_status <![CDATA[<>]]> '회사토지' and jisang_manage = 'N' and year = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null), --기준년월
+				tg_tb as (select * from static_deadline where jisang_status <![CDATA[<>]]> '회사토지' and jisang_manage = 'N' and year = #{YYYY_TG} and month = #{MM_TG} and desc1 is not null), --비교년월
 				ref_priv_cmpy as ( --기준 사유지 지상권(등기)
 					select desc1,count(*) from ref_tb where gover_own_yn = '사유지' and jisang_status = '지상권' and comple_yn = 'Y' group by desc1
 					union all
@@ -1542,7 +1542,7 @@ SELECT TTT.TYPE,
 		
 	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 지상권 클릭 했을 때 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 지상권 클릭 했을 때 -->
 	<select id="selectFieldInDeStatusBoardListPrivateRegistered" parameterType="HashMap" resultType="HashMap">
 		select
 			desc1, juso, jisang_status
@@ -1550,9 +1550,9 @@ SELECT TTT.TYPE,
 			static_deadline 
 		where 
 			1=1
-			and year = {YYYY}
-			and month = {MM}
-			and desc1 = {JISA}
+			and year = #{YYYY}
+			and month = #{MM}
+			and desc1 = #{JISA}
 			and gover_own_yn = '사유지'
 			and jisang_status = '지상권'
 			and comple_yn = 'Y'
@@ -1562,7 +1562,7 @@ SELECT TTT.TYPE,
 	
 	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 미등기 클릭 했을 때 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 미등기 클릭 했을 때 -->
 	<select id="selectFieldInDeStatusBoardListFieldPrivateUnRegistered" parameterType="HashMap" resultType="HashMap">
 		select
 			desc1, juso, jisang_status
@@ -1570,9 +1570,9 @@ SELECT TTT.TYPE,
 			static_deadline 
 		where 
 			1=1
-			and year = {YYYY}
-			and month = {MM}
-			and desc1 = {JISA}
+			and year = #{YYYY}
+			and month = #{MM}
+			and desc1 = #{JISA}
 			and gover_own_yn = '사유지'
 			and jisang_status = '지상권'
 			and comple_yn <![CDATA[<>]]> 'Y'
@@ -1580,7 +1580,7 @@ SELECT TTT.TYPE,
 	</select>
 	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 미설정 클릭 했을 때 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 미설정 클릭 했을 때 -->
 	<select id="selectFieldInDeStatusBoardListPrivateUnSetting" parameterType="HashMap" resultType="HashMap">
 		select
 			desc1, juso, jisang_status
@@ -1588,9 +1588,9 @@ SELECT TTT.TYPE,
 			static_deadline 
 		where 
 			1=1
-			and year = {YYYY}
-			and month = {MM}
-			and desc1 = {JISA}
+			and year = #{YYYY}
+			and month = #{MM}
+			and desc1 = #{JISA}
 			and gover_own_yn = '사유지'
 			and jisang_status = '미설정'
 			and jisang_manage = 'N'
@@ -1598,7 +1598,7 @@ SELECT TTT.TYPE,
 	
 	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 계 클릭 했을 때 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 계 클릭 했을 때 -->
 	<select id="selectFieldInDeStatusBoardListPrivateProperty" parameterType="HashMap" resultType="HashMap">
 		select
 			desc1, juso, jisang_status
@@ -1606,16 +1606,16 @@ SELECT TTT.TYPE,
 			static_deadline 
 		where 
 			1=1
-			and year = {YYYY}
-			and month = {MM}
-			and desc1 = {JISA}
+			and year = #{YYYY}
+			and month = #{MM}
+			and desc1 = #{JISA}
 			and gover_own_yn = '사유지' 
 			and jisang_status not in ('점용','회사토지')
 			and jisang_manage = 'N'
 	</select>
 	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 국유지 지상권 클릭 했을 때 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 국유지 지상권 클릭 했을 때 -->
 	<select id="selectFieldInDeStatusBoardListPublicRegistered" parameterType="HashMap" resultType="HashMap">
 		select
 			desc1, juso, jisang_status
@@ -1623,16 +1623,19 @@ SELECT TTT.TYPE,
 			static_deadline 
 		where 
 			1=1
-			and year = {YYYY}
-			and month = {MM}
-			and desc1 = {JISA}
+			and year = #{YYYY}
+			and month = #{MM}
+			and desc1 = #{JISA}
 			and gover_own_yn = '국유지'
-			and jisang_status = '지상권' // 지상권, 점용, 미설정, ""(제거시 전체)
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANG_STATUS)" > 
+				and jisang_status = #{JISANG_STATUS} //  지상권, 점용, 미설정, ""(제거시 전체)
+			</if>
+			
 			and jisang_manage = 'N'
 	</select>
 	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 합계 클릭 했을 때 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 합계 클릭 했을 때 -->
 	<select id="selectFieldInDeStatusBoardListSum" parameterType="HashMap" resultType="HashMap">
 		select
 			desc1, juso, jisang_status
@@ -1640,9 +1643,9 @@ SELECT TTT.TYPE,
 			static_deadline
 		where 
 			1 = 1
-			and year = {YYYY}
-			and month = {MM}
-			and desc1 = {JISA}
+			and year = #{YYYY}
+			and month = #{MM}
+			and desc1 = #{JISA}
 			and not(gover_own_yn = '사유지'
 				and jisang_status = '점용')
 			and jisang_manage = 'N';
@@ -1650,20 +1653,20 @@ SELECT TTT.TYPE,
 	
 	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > 분기 - (기준년월, 비교년월) 분기 - 사유지 지상권 클릭 했을 때 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > 분기 - (기준년월, 비교년월) 분기 - 사유지 지상권 클릭 했을 때 -->
 	<select id="selectFieldInDeStatusBoardListPrivateJisang" parameterType="HashMap" resultType="HashMap">
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF}) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF}) a
 		left join
-			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}) b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
 			1=1
 			and b.juso is null
-			and a.desc1 = {JISA}
+			and a.desc1 = #{JISA}
 			and a.gover_own_yn = '사유지'
 			and a.jisang_status = '지상권'
 			and a.comple_yn = 'Y'
@@ -1671,20 +1674,20 @@ SELECT TTT.TYPE,
 	</select>
 	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 사유지 미등기 클릭 했을 때 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 사유지 미등기 클릭 했을 때 -->
 	<select id="selectFieldInDeStatusBoardListPrivateUnRegistered" parameterType="HashMap" resultType="HashMap">
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF}) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF}) a
 		left join
-			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}) b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
 			1=1
 			and b.juso is null
-			and a.desc1 = {JISA}
+			and a.desc1 = #{JISA}
 			and a.gover_own_yn = '사유지'
 			and a.jisang_status = '지상권'
 			and a.comple_yn <![CDATA[<>]]> 'Y'
@@ -1693,81 +1696,83 @@ SELECT TTT.TYPE,
 	
 	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 사유지 미설정 클릭 했을 때 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 사유지 미설정 클릭 했을 때 -->
 	<select id="selectFieldInDeStatusBoardListFieldPrivateUnSetting" parameterType="HashMap" resultType="HashMap">	
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF}) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF}) a
 		left join
-			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}) b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
 			1=1
 			and b.juso is null
-			and a.desc1 = {JISA}
+			and a.desc1 = #{JISA}
 			and a.gover_own_yn = '사유지'
 			and a.jisang_status = '미설정'
 			and a.jisang_manage = 'N'
 	</select>
 	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 사유지 계 클릭 했을 때 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 사유지 계 클릭 했을 때 -->
 	<select id="selectFieldInDeStatusBoardListFieldPrivateProperty" parameterType="HashMap" resultType="HashMap">
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF}) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF}) a
 		left join
-			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}) b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
 			1=1
 			and b.juso is null
-			and a.desc1 = {JISA}
+			and a.desc1 = #{JISA}
 			and a.gover_own_yn = '사유지'
 			and a.jisang_status not in ('점용','회사토지')
 			and a.jisang_manage = 'N'
 	</select>
 	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 국유지 지상권 클릭 했을 때 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 국유지 지상권 클릭 했을 때 -->
 	<select id="selectFieldInDeStatusBoardListPublicJisang" parameterType="HashMap" resultType="HashMap">
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF}) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF}) a
 		left join
-			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}) b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
 			1=1
 			and b.juso is null
-			and a.desc1 = {JISA}
+			and a.desc1 = #{JISA}
 			and a.gover_own_yn = '국유지'
-			and a.jisang_status = '지상권' // 지상권, 점용, 미설정, ""(제거시 전체)
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANG_STATUS)" > 
+				and jisang_status = #{JISANG_STATUS} //  지상권, 점용, 미설정, ""(제거시 전체)
+			</if>
 			and a.jisang_manage = 'N'
 	</select>
 	
 	
 	
-	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 합계 클릭 했을 때 -->
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 합계 클릭 했을 때 -->
 	<select id="selectFieldInDeStatusBoardListBungiSum" parameterType="HashMap" resultType="HashMap">
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF}) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF}) a
 		left join
-			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}) b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
 			1=1
 			and b.juso is null
-			and a.desc1 = {JISA}
+			and a.desc1 = #{JISA}
 			and not(a.gover_own_yn = '사유지'
 				and a.jisang_status = '점용')
 			and a.jisang_manage = 'N'
