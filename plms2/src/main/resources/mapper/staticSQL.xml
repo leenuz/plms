@@ -582,6 +582,18 @@ WHERE 1=1;
 		             FROM MINWON_MASTER MM
 		            WHERE MM.MM_DEL_FLAG <![CDATA[<>]]> 'Y'
 		              AND MM.MM_STATUS IN ( '3', '4', '5' )
+		                <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEARCH_START_DAY)" >
+								AND MM.MM_MW_OCCUR_DATE >= #{SEARCH_START_DAY}
+						  </if>
+						  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEARCH_END_DAY)" >
+								AND MM.MM_MW_OCCUR_DATE <![CDATA[<=]]> #{SEARCH_END_DAY}
+						  </if>
+						  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEARCH_STATUS)" >
+								AND MM.MM_STATUS = #{SEARCH_STATUS}
+						  </if>
+						  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEARCH_JISA)" >
+								AND MM.MM_JISA = #{SEARCH_JISA}
+						 </if>
 		         ) MTC
 		       , (
 		         SELECT COUNT(*) AS TOTALCNT
@@ -844,6 +856,13 @@ WHERE 1=1;
 		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE3)" >
 		   AND MM.MM_MW_CODE3 = #{CODE3}
 		   		</if>
+		   		
+		   		
+		   		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
+		   AND MM.MM_JISA = #{JISA}
+		   		</if>
+		   		
+		   		
 		 ORDER BY MM.MM_MW_SEQ DESC
 		        , MP.MP_REP_YN DESC
 		        , MP.MP_PNU ASC
@@ -852,7 +871,7 @@ WHERE 1=1;
       <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PAGE_NUM)" >
          AND T.RN BETWEEN (#{PAGE_CNT}::numeric*(#{PAGE_NUM}::numeric-1) + 1) AND (#{PAGE_CNT}::numeric*#{PAGE_NUM}::numeric)
       </if>
-   </select>
+   </select>  
    
    <select id="selectMinwonPnuByCodeTotalcnt" parameterType="HashMap" resultType="Integer">
 		SELECT * FROM (
@@ -871,6 +890,10 @@ WHERE 1=1;
 		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE3)" >
 		   AND MM.MM_MW_CODE3 = #{CODE3}
 		     </if>
+		     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
+		   AND MM.MM_JISA = #{JISA}
+		   		</if>
+		     
 		      ) T
 		 WHERE 1 = 1
  
@@ -1719,7 +1742,7 @@ WHERE 1=1;
 			and desc1 = #{JISA}
 			and gover_own_yn = '국유지'
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANG_STATUS)" > 
-				and jisang_status = #{JISANG_STATUS} //  지상권, 점용, 미설정, ""(제거시 전체)
+				and jisang_status = #{JISANG_STATUS} 
 			</if>
 			
 			and jisang_manage = 'N'
@@ -1749,9 +1772,9 @@ WHERE 1=1;
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF}) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and jisang_manage = 'N') a
 		left join
-			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and jisang_manage = 'N') b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
@@ -1761,7 +1784,6 @@ WHERE 1=1;
 			and a.gover_own_yn = '사유지'
 			and a.jisang_status = '지상권'
 			and a.comple_yn = 'Y'
-			and a.jisang_manage = 'N'
 	</select>
 	
 	
@@ -1770,9 +1792,9 @@ WHERE 1=1;
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF}) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and jisang_manage = 'N') a
 		left join
-			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and jisang_manage = 'N') b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
@@ -1782,7 +1804,6 @@ WHERE 1=1;
 			and a.gover_own_yn = '사유지'
 			and a.jisang_status = '지상권'
 			and a.comple_yn <![CDATA[<>]]> 'Y'
-			and a.jisang_manage = 'N'
 	</select>
 	
 	
@@ -1792,9 +1813,9 @@ WHERE 1=1;
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF}) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and jisang_manage = 'N') a
 		left join
-			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and jisang_manage = 'N') b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
@@ -1803,7 +1824,6 @@ WHERE 1=1;
 			and a.desc1 = #{JISA}
 			and a.gover_own_yn = '사유지'
 			and a.jisang_status = '미설정'
-			and a.jisang_manage = 'N'
 	</select>
 	
 	
@@ -1812,9 +1832,9 @@ WHERE 1=1;
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF}) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and jisang_manage = 'N') a
 		left join
-			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and jisang_manage = 'N') b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
@@ -1823,7 +1843,6 @@ WHERE 1=1;
 			and a.desc1 = #{JISA}
 			and a.gover_own_yn = '사유지'
 			and a.jisang_status not in ('점용','회사토지')
-			and a.jisang_manage = 'N'
 	</select>
 	
 	
@@ -1832,9 +1851,9 @@ WHERE 1=1;
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF}) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and jisang_manage = 'N') a
 		left join
-			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and jisang_manage = 'N') b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
@@ -1843,9 +1862,8 @@ WHERE 1=1;
 			and a.desc1 = #{JISA}
 			and a.gover_own_yn = '국유지'
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANG_STATUS)" > 
-				and jisang_status = #{JISANG_STATUS} //  지상권, 점용, 미설정, ""(제거시 전체)
+				and a.jisang_status = #{JISANG_STATUS}
 			</if>
-			and a.jisang_manage = 'N'
 	</select>
 	
 	
@@ -2076,10 +2094,12 @@ WHERE 1=1;
 		where
 			1=1
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
-				and desc1 = #{JISA} -- 지사명칭 / " " ( 제거시 전체(=계) )
+			and desc1 = #{JISA} -- 지사명칭 / " " ( 제거시 전체(=계) )
 			</if>
-			
+
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STATUS)" > 
 			and gubun_del = #{STATUS};  --분할/해지/합필/권리전환
+			</if>
 
 	</select>
 
@@ -2140,7 +2160,9 @@ WHERE 1=1;
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
 				and desc1 = #{JISA} -- 지사명칭 / " " ( 제거시 전체(=계) )
 			</if>
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STATUS)" > 
 			and gubun_add = #{STATUS};  --분할 / 사유지 / 권리전환 
+			</if>
 	</select>
 	
 		

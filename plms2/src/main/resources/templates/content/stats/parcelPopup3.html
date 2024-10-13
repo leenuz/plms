@@ -1,18 +1,16 @@
 <script src="/vendor/jquery/jquery.min.js"></script>
 <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
 <div id="searchResultsPopup">
-    <div class="popupWrap active" id="popupWrap" style="width:60%">
+    <div class="popupWrap active" id="popupWrap" style="width:800px">
         <h2>
-            <p>잠재이슈 등록 필지 조회</p>
+            <p>필지 정보</p>
             <span class="topCloseBtn"></span>
         </h2>
-        <div class="potential_issue_classification">
+        <div class="pilji_total">
             <p>
-                <span th:text="${depth1name}"></span>
-                <span class="double_arrow"></span>
-                <span th:text="${depth2name}"></span>
-                <span class="double_arrow"></span>
-                <span th:text="${depth3name}"></span>
+                <span>총 검색 건 수</span>
+                <span class="total_blue" id="totalCount">0</span>
+                <span>건</span>
             </p>
 <!--            <button>-->
 <!--                <p>엑셀 다운로드</p>-->
@@ -21,33 +19,20 @@
 <!--                </figure>-->
 <!--            </button>-->
         </div>
-        <section class="potential_sec1">
-            <p class="potential_total_num">
-                <span>총 검색 건 수</span>
-                <span class="num_blue" id="totalCount"></span>
-                <span>건</span>
-            </p>
-            <!-- 잠재이슈 테이블 -->
+        <section>
             <div class="popupCont">
                 <ul class="popTitles">
-                    <li class="popTitle05">순번 </li>
-                    <li class="popTitle07">발생지사</li>
-                    <li class="popTitle06">주소 </li>
-                    <li class="popTitle07">토지유형</li>
-                    <li class="popTitle07">권리확보 </li>
-                    <li class="popTitle07">자산번호</li>
-                    <li class="popTitle07">관리번호</li>
-                    <li class="popTitle07">취득일 </li>
-                    <li class="popTitle01">점용기간 </li>
-                    <li class="popTitle07">점용료 납부일</li>
+                    <li class="popTitle05">순번</li>
+                    <li class="popTitle03">발생지사</li>
+                    <li class="popTitle06">주소</li>
+                    <li class="popTitle01">권리확보</li>
                 </ul>
-
-
-                <!-- 잠재이슈 테이블 내용 추가되는 부분 -->
                 <div class="popContentBox" id="resultList">
                 </div>
+
             </div>
         </section>
+        <!-- 페이네이션 -->
         <section>
             <div class="pilji_info_Popup_boardPageBoxs">
                 <ul>
@@ -60,7 +45,6 @@
                         </button>
                     </li>
                     <li class="pageCountBoxs" id="pagination">
-                        <p>1</p>
                     </li>
                     <li class="arrowRightWrapper">
                         <button onclick="nextPage()">
@@ -73,28 +57,30 @@
                 </ul>
             </div>
         </section>
-
         <div class="lastBtnBox btnWrap">
-            <button class="backbtn finalBtn" id="popupCloseBtn" style="background: #919191;">닫기</button>
+            <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
         </div>
     </div>
 </div>
 <script>
     var pageNum = 0;
     var pageNo = 1;
-    var totalCount = 0;
     var jisa = '[[${jisa}]]';
-    var depth1 = '[[${depth1code}]]';
-    var depth2 = '[[${depth2code}]]';
-    var depth3 = '[[${depth3code}]]';
+    var yyyy_ref = '[[${yyyy_ref}]]';
+    var mm_ref = '[[${mm_ref}]]';
+    var yyyy_tg = '[[${yyyy_tg}]]';
+    var mm_tg = '[[${mm_tg}]]';
+    var gubun = '[[${gubun}]]';
+    var status = '[[${status}]]';
+    var allData = 'JISA=' + jisa + '&GUBUN=' + gubun;
+    allData += '&YYYY_REF=' + yyyy_ref + '&MM_REF=' + mm_ref + '&YYYY_TG=' + yyyy_tg + '&MM_TG=' + mm_tg + '&STATUS=' + status;
     var resultData = [];
 
-    function loadData() {
-        var allData = 'jisa=' + jisa + '&pageNum=' + pageNo + '&pageCnt=10';
-        allData += '&SEARCH_CODE_1=' + depth1 + '&SEARCH_CODE_2=' + depth2 + '&SEARCH_CODE_3=' + depth3;
+    console.log("allData:"+allData);
 
+    function loadData() {
         $.ajax({
-            url: "/statics/selectPotentialIssuePnuListByCode?" + allData,
+            url: "/statics/selectFieldInDeStatusBoardChangeListDetailUpDown?" + allData,
             data: JSON.stringify(allData),
             async: true,
             type: "POST",
@@ -102,18 +88,17 @@
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
               console.log(response);
-<!--              if (response.success = "Y") {-->
-                totalCount = response.TOTALCNT;
+              if (response.success = "Y") {
                 resultData = response.dataList;
 
-                $('#totalCount').html(totalCount);
-                pageNum = Math.floor(totalCount / 10);
-                if (totalCount % 10 > 0) {
+                $('#totalCount').html(resultData.length);
+                pageNum = Math.floor(resultData.length / 10);
+                if (resultData.length % 10 > 0) {
                     pageNum += 1;
                 }
 
                 display();
-<!--              }-->
+              }
             },
             error: function () {
             }
@@ -125,22 +110,15 @@
         var startIdx = (pageNo - 1) * 10;
 
         var resultStr = '';
-        for (var i = 0; i < resultData.length; i++) {
+        for (var i = startIdx; i < startIdx + 10; i++) {
+            if (i > resultData.length - 1) break;
             var row = resultData[i];
 
-            var seq = (pageNo - 1) * 10 + 1 + i;
-            var toji = row.gover_own_yn == 'Y' ? '국유지' : '사유지';
             resultStr += '<ul class="popContents">';
-            resultStr += '<li class="popContent05"><p>'+(seq)+'</p></li>';
-            resultStr += '<li class="popContent07"><p>'+row.jisa+'</p></li>';
+            resultStr += '<li class="popContent05"><p>'+(i + 1)+'</p></li>';
+            resultStr += '<li class="popContent03"><p>'+row.desc1+'</p></li>';
             resultStr += '<li class="popContent06"><p>'+row.juso+'</p></li>';
-            resultStr += '<li class="popContent07"><p>'+toji+'</p></li>';
-            resultStr += '<li class="popContent07"><p>권리확보</p></li>';
-            resultStr += '<li class="popContent07"><p>'+row.jasan_no+'</p></li>';
-            resultStr += '<li class="popContent07"><p>'+row.jisang_no+'</p></li>';
-            resultStr += '<li class="popContent07"><p>'+row.chuideuk_date+'</p></li>';
-            resultStr += '<li class="popContent01"><p>'+row.gover_period+'</p></li>';
-            resultStr += '<li class="popContent07"><p>'+row.pay_date+'</p></li>';
+            resultStr += '<li class="popContent01"><p>'+row.jisang_status+'</p></li>';
             resultStr += '</ul>';
         }
 
@@ -163,29 +141,29 @@
     function prevPage() {
         if (pageNo > 1) {
             pageNo -= 1;
-            loadData();
+            display();
         }
     }
 
     function nextPage() {
         if (pageNo < pageNum) {
             pageNo += 1;
-            loadData();
+            display();
         }
     }
 
     function firstPage() {
         pageNo = 1;
-        loadData();
+        display();
     }
 
     function lastPage() {
         pageNo = pageNum;
-        loadData();
+        display();
     }
 
     function goPage(no) {
         pageNo = no;
-        loadData();
+        display();
     }
 </script>
