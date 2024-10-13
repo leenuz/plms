@@ -77,7 +77,13 @@ public class statsController {
 
 	@GetMapping(path="/parcelChangeStat") //http://localhost:8080/api/get/dbTest
 	public ModelAndView parcelChangeStat(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		
+		// 기준/비교 년도 리스트
+	    ArrayList<HashMap> yyyyList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeListYYYYMM", null);
+		log.info("yyyyList:" + yyyyList);
+		
 		ModelAndView mav=new ModelAndView();
+		mav.addObject("yyyyList", yyyyList);
 		mav.setViewName("content/stats/parcelChangeStat");
 		return mav;
 	}
