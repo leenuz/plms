@@ -835,7 +835,7 @@ SELECT TTT.TYPE,
 	<select id="selectByRightInDeListYYYY" parameterType="HashMap" resultType="HashMap">
 		select year from static_deadline where desc1 is not null 
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
-			and desc1='#{JISA}' 
+			and desc1=#{JISA}
 		</if>
 		
 		group by year order by year
