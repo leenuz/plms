@@ -511,7 +511,7 @@ SELECT TTT.TYPE,
                     AND MM.mm_DEL_FLAG != 'Y'
                     AND MM.mm_STATUS IN ('2', '3', '4')
         <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEARCH_START_DAY)" > 
-            AND MM.mm_MW_OCCUR_DATE >= #{SEARCH_START_DAY}
+            AND MM.mm_MW_OCCUR_DATE >= to_date(#{SEARCH_START_DAY},'YYYYMMDD')
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEARCH_END_DAY)" > 
             AND MM.mm_MW_OCCUR_DATE &lt;= to_date(#{SEARCH_END_DAY},'YYYYMMDD')

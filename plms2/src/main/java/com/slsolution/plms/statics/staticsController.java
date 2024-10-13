@@ -1232,8 +1232,8 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		try {
 	
 			HashMap params = new HashMap();
-			params.put("SEARCH_START_DAY", SEARCH_START_DAY);
-			params.put("SEARCH_END_DAY", SEARCH_END_DAY);
+			params.put("SEARCH_START_DAY", SEARCH_START_DAY.replaceAll("-", ""));
+			params.put("SEARCH_END_DAY", SEARCH_END_DAY.replaceAll("-", ""));
 			params.put("SEARCH_STATUS", SEARCH_STATUS);
 			params.put("SEARCH_REGISTED", SEARCH_REGISTED);
 			params.put("SEARCH_PERMITTED", SEARCH_PERMITTED);
