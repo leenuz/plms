@@ -2145,8 +2145,74 @@ SELECT count(*)
 	</select>
 	
 	
-	
-	
+	<insert id="InsertJisangBunhalTmp" parameterType="HashMap">
+    INSERT INTO JISANG_BUNHAL (
+        jb_JISANG_NO,
+        jb_SIDO_NM,
+        jb_SGG_NM,
+        jb_EMD_NM,
+        jb_RI_NM,
+        jb_JIBUN,
+        jb_JISA,
+        jb_JIJUK_AREA,
+        jb_PYEONIB_AREA,
+        jb_JASAN_NO,
+        jb_CANCLE_YN,
+        jb_GOVER_OWN_YN,
+        jb_BUNHAL_DATE,
+        jb_BUNHAL_REASON,
+        jb_BUNHAL_ORG_NO,
+        jb_ADDRCODE,
+        jb_PNU,
+        jb_JIMOK_TEXT,
+        jb_PIPE_YN,
+        jb_BUNHAL_COMMENT,
+        jb_DOCKEY,
+     
+        <if test='CANCLE_YN == "Y"'>
+            jb_REMAINDER_MONEY,
+            jb_CHUIDEUK_MONEY,
+            jb_GAMMONEY,
+            jb_BOSANG_MONEY,
+            jb_PROFIT_LOSS,
+        </if>
+        jb_BUNHAL_STATUS,
+        jb_DEMISE
+    ) VALUES (
+        #{JISANGNO},
+        #{SINM},
+        #{GUNGUNM},
+        #{DONGNM},
+        #{RINM},
+        #{JIBUN},
+        #{JISANM},
+        nullif(#{JIJUKAREA},'')::numeric,
+        nullif(#{PYEONIBAREA},'')::numeric,
+        #{JASANNO},
+        #{CANCLE_YN},
+        #{GOVEROWNYN},
+        #{BUNHALDATE}::date,
+        #{BUNHALREASON},
+        #{BUNHALORGNO},
+        #{ADDRCODE},
+        #{PNU},
+        #{JIMOK_TEXT},
+        #{PIPE_YN},
+        #{BUNHALCOMMENT},
+        #{DOCKEY},
+     
+        <if test='CANCLE_YN == "Y"'>
+            replace(#{REMAINDER_MONEY},',','')::numeric,
+            replace(#{CHUIDEUK_MONEY},',','')::numeric,
+            replace(#{GAMMONEY},',','')::numeric,
+            replace(#{BOSANG_MONEY},',','')::numeric,
+            replace(#{PROFIT_LOSS},',','')::numeric,
+        </if>
+        '임시저장',
+        #{DEMISE}
+    )
+</insert>
+
 	
 	<insert id="insertJIsangBunhalTmp" parameterType="java.util.HashMap">
 		INSERT INTO jisang_bunhal
@@ -4701,5 +4767,17 @@ UPDATE PLMS_POTENTIAL_ISSUE
 </update>
 
 
+	<select id="getJisangData" parameterType="HashMap" resultType="HashMap">
+	 <if test="jisang_no != null and jisang_no != ''">
+		SELECT * 
+		FROM jisang_master jm 
+		LEFT JOIN (
+		    SELECT *, ROW_NUMBER() OVER (PARTITION BY js_jisang_no ORDER BY js_idx DESC) AS row_num
+		    FROM jisang_souja
+		) js ON js.js_jisang_no = jm.jm_jisang_no AND js.row_num = 1
+		WHERE jm.jm_jisang_no = #{jisang_no};
+
+	    </if>
+	</select>
 
 </mapper>

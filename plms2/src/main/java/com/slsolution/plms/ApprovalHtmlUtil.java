@@ -2233,7 +2233,7 @@ log.info("soyuMap:"+soyuMap);
 					sbHtml.append("        <tr>                    \n");
 					if (0 == i) {
 						sbHtml.append("            <td rowspan=\"10\">필수 증빙서류</td>     \n");
-						sbHtml.append("            <td style=\"text-align:left;\">1. 토지사용 승낙(원)서</td>    \n");
+						sbHtml.append("            <td style=\"text-align:left;\">1. 등기사항 전부 증명서</td>    \n");
 						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + ")&nbsp;&nbsp;</td>                   \n");
 						sbHtml.append("            <td>                \n");
 						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
@@ -2292,7 +2292,7 @@ log.info("soyuMap:"+soyuMap);
 
 						sbHtml.append("            </td>               \n");
 					} else if (1 == i) {
-						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">2. 토지사용 기본조건</td>                   \n");
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">2. 토지대장</td>                   \n");
 						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
 						sbHtml.append("            <td>                \n");
 						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
@@ -2348,7 +2348,7 @@ log.info("soyuMap:"+soyuMap);
 
 						sbHtml.append("            </td>               \n");
 					} else if (2 == i) {
-						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">3. 굴착시 안전조치 사항</td>     \n");
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">3. 지적도 (관로표기)</td>     \n");
 						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
 						sbHtml.append("            <td>                \n");
 						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
@@ -2404,7 +2404,7 @@ log.info("soyuMap:"+soyuMap);
 
 						sbHtml.append("            </td>               \n");
 					} else if (3 == i) {
-						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">4. 각서</td>                  \n");
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">4. 현장사진</td>                  \n");
 						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
 						sbHtml.append("            <td>                \n");
 						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
@@ -2460,7 +2460,7 @@ log.info("soyuMap:"+soyuMap);
 
 						sbHtml.append("            </td>               \n");
 					} else if (4 == i) {
-						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">5. 등기사항 전부 증명서</td>          \n");
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">5. 검토의견서</td>          \n");
 						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
 						sbHtml.append("            <td>                \n");
 						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
@@ -2516,7 +2516,7 @@ log.info("soyuMap:"+soyuMap);
 
 						sbHtml.append("            </td>               \n");
 					}else if (5 == i) {
-						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">6. 토지대장</td>          \n");
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">6. 도면,민원인 관계서류 등</td>          \n");
 						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
 						sbHtml.append("            <td>                \n");
 						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
@@ -2572,7 +2572,7 @@ log.info("soyuMap:"+soyuMap);
 
 						sbHtml.append("            </td>               \n");
 					}else if (6 == i) {
-						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">7. 지적도(관로표기)</td>          \n");
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">7. 분할,합병/토지분할 소멸 승낙서</td>          \n");
 						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
 						sbHtml.append("            <td>                \n");
 						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
@@ -2628,7 +2628,7 @@ log.info("soyuMap:"+soyuMap);
 
 						sbHtml.append("            </td>               \n");
 					}else if (7 == i) {
-						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">8. 현장사진</td>          \n");
+						sbHtml.append("            <td style=\"text-align:left; border-left:1px solid #d3d3d3;\">8. 분할,합병 요청공문</td>          \n");
 						sbHtml.append("            <td style=\"text-align:left;\">" + str_FILE_NM + "&nbsp;&nbsp;</td>                   \n");
 						sbHtml.append("            <td>                \n");
 						//sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />          \n");
