@@ -106,4 +106,35 @@ public class statsController {
 		mav.setViewName("content/stats/parcelPopup");
 		return mav;
 	}
+
+	@GetMapping(path="/parcelPopup2") //http://localhost:8080/api/get/dbTest
+	public ModelAndView parcelPopup2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+
+		ParameterParser parser = new ParameterParser(httpRequest);
+		String JISA = parser.getString("JISA", "");
+		String YYYY = parser.getString("YYYY", "");
+		String MM = parser.getString("MM", "");
+		String YYYY_REF = parser.getString("YYYY_REF", "");
+		String MM_REF = parser.getString("MM_REF", "");
+		String YYYY_TG = parser.getString("YYYY_TG", "");
+		String MM_TG = parser.getString("MM_TG", "");
+		String GUBUN = parser.getString("GUBUN", "");
+		String GOVER_OWN = parser.getString("GOVER_OWN", "");
+		String JISANG_STATUS = parser.getString("JISANG_STATUS", "");
+
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("jisa", JISA);
+		mav.addObject("yyyy", YYYY);
+		mav.addObject("mm", MM);
+		mav.addObject("yyyy_ref", YYYY_REF);
+		mav.addObject("mm_ref", MM_REF);
+		mav.addObject("yyyy_tg", YYYY_TG);
+		mav.addObject("mm_tg", MM_TG);
+		mav.addObject("gubun", GUBUN);
+		mav.addObject("gover_own", GOVER_OWN);
+		mav.addObject("jisang_status", JISANG_STATUS);
+		mav.setViewName("content/stats/parcelPopup2");
+		return mav;
+	}
+
 }
