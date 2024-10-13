@@ -545,9 +545,6 @@ $(document).on("click", "#newcomplaint_Popup .approveBtn", function() {
 	var data = getPopupJsonData();	//form안의 입력한 깂들 object화하는 function 
 	console.log(data);
 	
-	//alert('신규 민원 등록 저장');
-	
-
 	$.ajax({
 		url: "/issue/saveMinwonData",
 		data: JSON.stringify(data),
@@ -559,7 +556,8 @@ $(document).on("click", "#newcomplaint_Popup .approveBtn", function() {
 		success: function(data, jqXHR) {
 			console.log(data);
 			if (data.message != null && data.message != undefined && data.message == "success") {
-				closeComplaintregisterPopup();
+				alert('저장하였습니다.');
+				//closeComplaintregisterPopup();
 			} else {
 				alert(data.message);
 			}

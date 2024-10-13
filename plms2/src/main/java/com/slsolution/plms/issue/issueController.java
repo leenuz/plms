@@ -600,7 +600,7 @@ public class issueController {
 					
 					CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
 					
-					mainService.InsertQuery("issueSQL.insertMinwonAtchFileInfo", params);
+					mainService.InsertQuery("issueSQL.insertMinwonAtchFileInfo", fileParams);
 				}
 			}
 			
