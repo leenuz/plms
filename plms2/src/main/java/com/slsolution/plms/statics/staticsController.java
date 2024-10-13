@@ -1352,7 +1352,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		
 		ParameterParser parser = new ParameterParser(request);
 		String JISA = parser.getString("JISA", "");
-		String SELECT_YYYY = parser.getString("SELECT_YYYY", "");
+		String SELECT_YYYY = parser.getString("SELECT_YYYY", "0");
 		
 		ArrayList dataList = new ArrayList();
 		HashMap map = new HashMap();
@@ -1360,7 +1360,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	
 			HashMap params = new HashMap();
 			params.put("JISA", JISA);
-			params.put("SELECT_YYYY", SELECT_YYYY);
+			params.put("SELECT_YYYY", Integer.parseInt(SELECT_YYYY));
 			
 			
 			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListYYYYMM", params);
@@ -1800,7 +1800,98 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		response.getWriter().flush();
 	}
 	
+	//통계 > 관리필지 증감현황 > 현황 상세정보 > 변동사유 > 클릭 조회
+	@PostMapping(path="/selectFieldInDeStatusBoardChangeList")
+	public void selectFieldInDeStatusBoardChangeList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String YYYY_REF = parser.getString("YYYY_REF", "0");
+		String MM_REF = parser.getString("MM_REF", "0");
+		String YYYY_TG = parser.getString("YYYY_TG", "0");
+		String MM_TG = parser.getString("MM_TG", "0");
+		
 	
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			HashMap params = new HashMap();
+			params.put("YYYY_REF", Integer.parseInt(YYYY_REF)); 	// 기준년
+			params.put("MM_REF", Integer.parseInt(MM_REF));		// 기준월
+			params.put("YYYY_TG", Integer.parseInt(YYYY_TG));		// 비교년
+			params.put("MM_TG", Integer.parseInt(MM_TG));			// 비교월
+	
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeStatusBoardChangeList", params);
+			
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+	//통계 > 관리필지 증감현황 > 현황 상세정보 > 변동사유 > 상세 클릭 조회
+	@PostMapping(path="/selectFieldInDeStatusBoardChangeListDetailUpDown")
+	public void selectFieldInDeStatusBoardChangeListDetailUpDown(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String JISA = parser.getString("JISA", "");
+		String YYYY_REF = parser.getString("YYYY_REF", "0");
+		String MM_REF = parser.getString("MM_REF", "0");
+		String YYYY_TG = parser.getString("YYYY_TG", "0");
+		String MM_TG = parser.getString("MM_TG", "0");
+		String GUBUN = parser.getString("GUBUN", "");
+		String STATUS = parser.getString("STATUS", "");
+		
+	
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			HashMap params = new HashMap();
+			params.put("JISA", JISA); 							// 지사
+			params.put("YYYY_REF", Integer.parseInt(YYYY_REF)); // 기준년
+			params.put("MM_REF", Integer.parseInt(MM_REF));		// 기준월
+			params.put("YYYY_TG", Integer.parseInt(YYYY_TG));	// 비교년
+			params.put("MM_TG", Integer.parseInt(MM_TG));		// 비교월
+			params.put("GUBUN", GUBUN);							// 감소 , 증가 
+			params.put("STATUS", STATUS);						// (감소): 분할/ 해지/ 합필/ 권리전환 , (증가): 분할/ 사유지/ 권리전환
+			
+			// 감소
+			if("감소".equals(GUBUN)) {
+				dataList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeStatusBoardChangeListDetailDown", params);
+			}
+			
+			// 증가
+			else {
+				dataList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeStatusBoardChangeListDetailUp", params);
+			}
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
 	
 	//민원관리 현황통계 데이터 조회
 	@PostMapping(path="/selectMinwonStatusStatis")
