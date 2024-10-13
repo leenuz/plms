@@ -300,6 +300,7 @@ $('.parcelChangeStatBtn').click(function () {
 
          //현황 상세 정보 load
           loadCurrent_detail($('#parcelChangeStat01_1').val(),$('#parcelChangeStat01_2').val(),$('#parcelChangeStat02_1').val(),$('#parcelChangeStat02_2').val());
+          loadCurrent_detail_BoardChangeList($('#parcelChangeStat01_1').val(),$('#parcelChangeStat01_2').val(),$('#parcelChangeStat02_1').val(),$('#parcelChangeStat02_2').val());
   
           var tbodyStr = '';
 

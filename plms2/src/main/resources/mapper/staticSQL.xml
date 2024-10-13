@@ -1645,7 +1645,7 @@ SELECT TTT.TYPE,
 			and desc1 = #{JISA}
 			and gover_own_yn = '국유지'
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANG_STATUS)" > 
-				and jisang_status = #{JISANG_STATUS} //  지상권, 점용, 미설정, ""(제거시 전체)
+				and jisang_status = #{JISANG_STATUS} 
 			</if>
 			
 			and jisang_manage = 'N'
@@ -1769,7 +1769,7 @@ SELECT TTT.TYPE,
 			and a.desc1 = #{JISA}
 			and a.gover_own_yn = '국유지'
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISANG_STATUS)" > 
-				and jisang_status = #{JISANG_STATUS} //  지상권, 점용, 미설정, ""(제거시 전체)
+				and jisang_status = #{JISANG_STATUS}
 			</if>
 			and a.jisang_manage = 'N'
 	</select>
