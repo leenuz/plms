@@ -596,7 +596,10 @@ public class issueController {
 
 					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
 						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
+<<<<<<< Updated upstream
 						
+=======
+>>>>>>> Stashed changes
 						mainService.InsertQuery("issueSQL.insertMinwonAtchFileInfo", fileParams);
 					}
 					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
@@ -864,9 +867,9 @@ public class issueController {
 		String fileseq =requestParamObj.has("fileseq")?requestParamObj.getString("fileseq"):"0"; // 파일 seq
 		String MW_SEQ = requestParamObj.getString("MW_SEQ");
 		String AGREE_SEQ = requestParamObj.getString("AGREE_SEQ");
-		String AGREE_TITLE = requestParamObj.getString("AGREE_TITLE");
-		String AGREE_CONTENTS = requestParamObj.getString("AGREE_CONTENTS");
-		String AGREE_DATE = requestParamObj.getString("AGREE_DATE");
+		String AGREE_TITLE = requestParamObj.getString("TITLE");
+		String AGREE_CONTENTS = requestParamObj.getString("CONTENTS");
+		String AGREE_DATE = requestParamObj.getString("DATE");
 		String STATUS = requestParamObj.getString("STATUS");
 		String SANGSIN_FLAG = requestParamObj.getString("SANGSIN_FLAG");
 
@@ -884,12 +887,19 @@ public class issueController {
 				// 민원 협의 마스터 키 번호 생성
 //					agreeSeq = (int) Database.getInstance().queryForObject("Json.makeMinwonAgreeKey", params);
 				agreeSeq = (int) mainService.selectCountQuery("issueSQL.makeMinwonAgreeKey", params);
-
+				String stat="";
+				if ("임시저장".equals(STATUS)) stat="1";
+				else if ("민원발생".equals(STATUS)) stat="2";
+				else if ("대응방안수립".equals(STATUS)) stat="3";
+				else if ("협의중".equals(STATUS)) stat="4";
+				else if ("완료".equals(STATUS)) stat="5";
+				
+				
 				params.put("AGREE_SEQ", agreeSeq);
 				params.put("AGREE_TITLE", AGREE_TITLE);
 				params.put("AGREE_CONTENTS", AGREE_CONTENTS);
 				params.put("AGREE_DATE", AGREE_DATE);
-				params.put("STATUS", STATUS);
+				params.put("STATUS", stat);
 				params.put("REG_ID", String.valueOf(request.getSession().getAttribute("userName")));
 
 //					Database.getInstance().insert("Json.insertMinwonAgree", params);

@@ -531,7 +531,7 @@ UPDATE MINWON_MASTER
      , mm_mw_OCCUR_DATE = TO_DATE(#{MW_OCCUR_DATE}, 'yyyy-MM-dd')
      , mm_MW_CONTENTS = #{MW_CONTENTS}
      , mm_JISA = #{JISA}
- WHERE mm_MW_SEQ = #{MW_SEQ}
+ WHERE mm_MW_SEQ = ${MW_SEQ}
 	</update>
 	
 		<delete id="deleteMinwonFile" parameterType="HashMap"> 
@@ -586,11 +586,11 @@ INSERT INTO MINWON_PNU (
 UPDATE MINWON_MASTER
    SET mm_DOCKEY = #{DOCKEY}
      , mm_SANGSIN_YN = 'Y'
- WHERE mm_MW_SEQ = $MW_SEQ
+ WHERE mm_MW_SEQ = ${MW_SEQ}
 </update>
 
 <select id="selectMinwonDocInfo" resultType="HashMap" parameterType="HashMap">
-		SELECT * FROM PLMS_APPROVAL WHERE pa_DOCKEY IN (SELECT DOCKEY FROM MINWON_MASTER WHERE mm_MW_SEQ = $MW_SEQ) AND (pa_STATUS IS NULL OR pa_STATUS NOT IN ('X'))
+		SELECT * FROM PLMS_APPROVAL WHERE pa_DOCKEY IN (SELECT mm_DOCKEY FROM MINWON_MASTER WHERE mm_MW_SEQ = ${MW_SEQ}) AND (pa_STATUS IS NULL OR pa_STATUS NOT IN ('X'))
 	</select>
 <select id="selectMinwonHandlingTmp" resultType="HashMap" parameterType="HashMap">
 SELECT mht_mw_seq as MW_SEQ,
