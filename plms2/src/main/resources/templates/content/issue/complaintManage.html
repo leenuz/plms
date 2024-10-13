@@ -11,6 +11,9 @@
 
 <link th:href="@{/css/common.css}" rel="stylesheet" />
 
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="/assets/css/popup//Issue_development_Popup.css" />
+
 <link rel="stylesheet" href="/css/issue/complaintManage.css" />
 <link rel="stylesheet" href="/css/issue/complaintRespond.css" />
 
@@ -304,9 +307,9 @@ div.dt-filter-spacer {
 	<div class="complainManageComplainFinishWrapper"></div>
 	
 	<!-- 민원 대응방안 수립[S] -->	
-	<div id="complainRespondContentBoxs" class="active" style="display:none;">
+	<div id="complainRespondContentBoxs" class="active">
         <div class="complainRespondPopWrap">
-            <div class="complainRespondPopContent" style="margin-bottom:900px">
+            <div class="complainRespondPopContent">
                 <div class="complainRespondPopTitles">
                     <h5>민원 대응방안 수립</h5>
                     <button class="complainRespondcloseBtn">
@@ -430,142 +433,233 @@ div.dt-filter-spacer {
 
         </div>
     </div>
-    <script>
-    /* x표시 클릭시 닫기 */
-
-    const complainRespondcloseBtn = document.querySelector(".complainRespondcloseBtn");
-    const complainRespondContentBoxWrapper = document.getElementById("complainRespondContentBoxs");
-
-    if (complainRespondcloseBtn) {
-        complainRespondcloseBtn.addEventListener("click", () => {
-            complainRespondContentBoxWrapper.classList.remove("active");
-        })
-    }
-
-    /* 삭제,저장,상신,닫기 버튼 클릭시 팝업창 닫히기 */
-    const closeEvetBtns = document.querySelectorAll("#complainRespondContentBoxs .closeEvetBtn");
-
-    if (closeEvetBtns) {
-        closeEvetBtns.forEach((btns) => {
-            btns.addEventListener("click", () => {
-                complainRespondContentBoxWrapper.classList.remove("active");
-            })
-        })
-    }
-
-
-
-    /* 셀렉트박스 함수 */
-
-    const complainRespondSelectEvet = () => {
-
-        const complainRespondSelectsTitleBtn = document.querySelectorAll(".complainRespondPopWrap .complainRespondSelectTitleBtn");
-        const complainRespondSelectList = document.querySelectorAll(".complainRespondPopWrap .sufaceSelectList");
-        const complainRespondSelectListMember = document.querySelectorAll(".complainRespondPopWrap .sufaceSelectList .surfaceSelectListMember");
-        const complainRespondselectWrappers = document.querySelectorAll(".complainRespondHiddenSelect"); //셀렉박스
-
-
-        let complainRespondAnswer = "";
-
-        //셀렉버튼 최초값 함수
-        const complainRespondInitialValues = () => {
-            if (complainRespondselectWrappers.length > 0) {
-
-                for (let d = 0; d <= complainRespondselectWrappers.length - 1; d++) {
-
-                    let complainRespondselectValuesInitial = complainRespondselectWrappers[d].children;
-
-                    complainRespondSelectsTitleBtn[d].innerText = complainRespondselectValuesInitial[0].value;
-                    complainRespondselectWrappers[d].value = complainRespondSelectsTitleBtn[d].innerText;
-
-                }
-            }
-        }
-
-
-        if (complainRespondselectWrappers.length > 0) {
-
-            complainRespondInitialValues(); //최초의값
-
-            //셀렉박스 값  li p값에 담기 
-            for (let i = 0; i <= complainRespondselectWrappers.length - 1; i++) {
-
-                const complainRespondSelectValues = complainRespondselectWrappers[i].children; //셀렉박스옵션값 
-
-                for (let x = 0; x <= complainRespondSelectValues.length - 1; x++) {
-                    complainRespondAnswer += `<li><p>${complainRespondSelectValues[x].value}</p></li>`;
-                }
-
-                complainRespondSelectListMember[i].innerHTML = complainRespondAnswer;
-                complainRespondAnswer = '';
-            }
-        }
-
-
-        complainRespondSelectsTitleBtn.forEach((btns, index) => {
-
-            btns.addEventListener("click", () => {
-                const complainRespondNextSiblings = btns.nextElementSibling;
-
-                complainRespondSelectsTitleBtn.forEach((otherBtn) => {
-                    if (otherBtn !== btns) {
-                        otherBtn.classList.remove("active");
-                    }
-                });
-                btns.classList.toggle("active");
-                complainRespondNextSiblings.classList.toggle("active");
-
-                //surfaceSelectList관련 toggle버튼
-                complainRespondSelectList.forEach((box, boxIndex) => {
-                    //셀렉버튼의 인덱스와 surfaceSelectList 인덱스번호가 일치하면 메뉴를 오픈하고, btn에 active를 포함
-                    if (index === boxIndex) {
-
-                        box.classList.toggle(
-                            "active",
-                            btns.classList.contains("active")
-                        );
-                    } else {
-                        //그렇지 않으면 메뉴닫기
-                        box.classList.remove("active");
-
-                    }
-
-
-                });
-
-            });
-
-
-            complainRespondSelectList.forEach((list) => {
-                list.addEventListener("click", (event) => {
-
-                    const complainRespondThisBtns = event.target.parentElement.parentElement.parentElement.previousElementSibling;
-                    const complainRespondSelectContent = event.target.parentElement.parentElement.parentElement.parentElement.previousElementSibling.children[0]; //셀렉박스
-                    let complainRespondCurrentSelect = complainRespondSelectContent.getAttribute("id"); //셀렉박스아이디 가져오기
-
-                    if (event.target.nodeName === "P") {
-
-                        let complainRespondCurrentSelectValue = document.getElementById(complainRespondCurrentSelect); //현재 셀렉박스 가져오기
-                        return complainRespondThisBtns.innerText = event.target.innerText,
-                            $(complainRespondCurrentSelectValue).val(event.target.innerText), //셀렉박스 값에 현재 클릭된 값의 텍스트 담기 
-                            console.log(complainRespondCurrentSelectValue.value), //셀렉박스값표시
-                            complainRespondSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
-                            complainRespondSelectList.forEach((lists) => lists.classList.remove("active"));
-
-                    }
-
-                });
-
-            });
-
-
-        })
-    }
-
-    complainRespondSelectEvet();
-    
-    </script>
 	<!-- 민원 대응방안 수립[E] -->
+	
+	<!-- 민원협의 내용 등록/수정 [S] -->
+<div id="complaint_register_Popup" class="complaint_register_Popup">
+    <form id="saveFormPop" onsubmit="return false;">
+        <div class="popupWrap">
+            <h2>
+                <p>민원협의 내용 등록/수정</p>
+                <span class="topCloseBtn"></span>
+            </h2>
+            <section class="complainant_contents_box">
+                <h3>민원 내용</h3>
+                <div class="complaints_contents_wrap">
+
+                    <ul>
+                        <li class="complaints_contents_titles">진행상태</li>
+                        <li class="popSelectWrap">
+                            <div class="hidden_SelectBox">
+                                <select name="STATUS" id="complaint_register_Selectbox01" hidden>
+                                    <option value="전체">전체</option>
+                                    <option value="임시저장">임시저장</option>
+                                    <option value="민원발생">민원발생</option>
+                                    <option value="대응방안수립">대응방안수립</option>
+                                    <option value="협의중">협의중</option>
+                                    <option value="완료">완료</option>
+                                </select>
+                            </div>
+                            <div class="Popup_Custom_SelectBox">
+                                <button class="Popup_Custom_SelectView">전체</button>
+                                <ul class="Popup_Custom_SelectBtns">
+
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="complaints_contents_titles">협의 날짜</li>
+                        <li class="complaints_calender_box">
+                            <div class="complaint_calender_wrap">
+                                <input type="date" name="DATE" data-placeholder="날짜선택" required aria-required="true">
+                            </div>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="complaints_contents_titles">협의 제목</li>
+                        <li class="complaints_contents_inputs"><input name="TITLE" type="text"></li>
+                    </ul>
+                    <ul class="complaints_contents_minHeight1">
+                        <li class="complaints_contents_titles">협의 내용</li>
+                        <li class="complaints_contents_inputs"><textarea name="CONTENTS" type="text"></textarea></li>
+                    </ul>
+                    <ul class="complaints_contents_minHeight2">
+                        <li class="complaints_contents_titles">첨부파일</li>
+                        <!--<li class="complaints_contents_fileBox">
+               <div class="file_img_wrap"><img src="/assets/media/popup/images/file-upload-line (1) 1.png" alt=""></div> 
+              <div class="file_img_wrap"><img src="/assets/media/popup/images/file-upload.png" alt=""></div>
+              <div>파일을 마우스로 끌어오세요.</div>
+            </li>-->
+
+                        <!-- class 추가 -->
+                        <li class="complaints_contents_fileBox complaintRegiFileInfo">
+                            <!-- multiple 추가 -->
+                            <input type="file" id="complaint_register_Popup_file" multiple hidden>
+                            <!-- <label for="complaint_register_Popup_file" class="complaint_register_Popup_file_wrap">
+                      첨부파일 기본값 
+                      <div class="file_default active" >
+                        <div class="file_background_wrap">
+                          <figure class="register_file_img_wrap"><img src="/assets/media/popup/images/file-upload.png" alt="upload"></figure>
+                          <p>파일을 마우스로 끌어오세요.</p>
+                        </div>
+                      </div>
+                      파일 추가시 나오는 곳
+                      <div class="file_add_contents">
+                        <ul class="file_add_contents_th">
+                          <li>
+                            <figure><img src="/assets/media/popup/images/back_icon.png" alt=""></figure>
+                          </li>
+                          <li class="file_add_name">
+                            <p>파일명</p>
+                          </li>
+                          <li>
+                            <p>업로드 상태</p>
+                          </li>
+                          <li>
+                            <p>용량</p>
+                          </li>
+                        </ul>
+                      </div>
+                    </label> -->
+                            <!-- 추가 -->
+
+                            <div class="popfileLargeWrap">
+                                <!-- 파일이 첨부되지 않았을 때 모습 -->
+                                <div class="popfileUploadWrap popfileUploadDisplay">
+                                    <label for="complaint_register_Popup_file" class="popfileUploadBox">
+                                        <img src="../../../assets/media/popup/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
+                                        <p>파일을 마우스로 끌어오세요.</p>
+                                    </label>
+                                </div>
+                                <div class="popfileUploadAfterWrap popfileUploadDisplay">
+                                    <!-- 추가, 업로드시 나오는 거 -->
+                                    <div class="popfileUploadAfter">
+                                        <ul class="poptitles">
+                                            <li class="popBtnbox">
+                                                <button class="popAllDeleteFileBtn"></button>
+                                            </li>
+                                            <li class="poptitle popfilenameBox">
+                                                <p>파일명</p>
+                                            </li>
+                                            <li class="poptitle">
+                                                <p>업로드 상태</p>
+                                            </li>
+                                            <li class="poptitle">
+                                                <p>용량</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </section>
+            <div class="document_add_btnWrap">
+                <button class="saveBtn">저장</button>
+                <button class="sangsinBtn">상신</button>
+                <button class="closeBtn finalBtn">닫기</button>
+            </div>
+        </div>
+    </form>
+</div>
+	<!-- 민원협의 내용 등록/수정 [E] -->
+	
+	<!-- 민원 완료 보고 [S] -->
+	<div id="complaint_completed" class="complaint_completed">
+    <div class="popupWrap">
+        <h2>
+            <p>민원 완료</p>
+            <span class="topCloseBtn"></span>
+        </h2>
+        <section>
+            <h3>민원 현황 상세</h3>
+            <div class="complaint_completed_detail_wrap">
+                <ul>
+                    <li class="complaints_title">민원 명</li>
+                    <li>오류로 인한 지상권 해지</li>
+                </ul>
+                <ul>
+                    <li class="complaints_title">발생일자</li>
+                    <li>2022-06-22</li>
+                </ul>
+                <ul>
+                    <li class="complaints_title">발생지사</li>
+                    <li>서울지사</li>
+                </ul>
+                <ul>
+                    <li class="complaints_title">이슈 유형</li>
+                    <li>지소유자와 계약 > 권리상실 > 해지업무 착오로 인한 지상권 소실</li>
+                </ul>
+                <ul>
+                    <li class="complaints_title">진행현황</li>
+                    <li>협의중</li>
+                </ul>
+                <ul class="complaint_completed_detail_title">
+                    <li class="complaints_title">구분</li>
+                    <li>순번</li>
+                    <li>성명</li>
+                    <li>생년월일</li>
+                    <li>토지주와의 관계</li>
+                    <li>연락처</li>
+                    <li>현장입회</li>
+                </ul>
+                <ul class="complaint_completed_detail_box7">
+                    <li class="complaints_title">민원인/토지주</li>
+                    <li class="complainant_info_list">
+                        <ul class="complainant_info">
+                            <li>1</li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li>Y</li>
+                        </ul>
+                        <ul class="complainant_info">
+                            <li>1</li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li>Y</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="complaint_completed_detail_box8">
+                    <li class="complaints_title">토지이력</li>
+                    <li class="complaints_content_box"></li>
+                </ul>
+                <ul class="complaint_completed_detail_box9">
+                    <li class="complaints_title">요구사항</li>
+                    <li class="complaints_content_box"></li>
+                </ul>
+                <ul class="complaint_completed_detail_box10">
+                    <li class="complaints_title">내용</li>
+                    <li class="complaints_content_box"></li>
+                </ul>
+            </div>
+        </section>
+        <section class="complaintinfo_update">
+            <ul class="complaintinfo_update_th">
+                <li>주소</li>
+                <li>업데이트 여부</li>
+                <li class="complaintinfo_update_btn">상세</li>
+            </ul>
+            <ul>
+                <li>경기도 평택시 월곡동 140-7</li>
+                <li>N</li>
+                <li class="complaintinfo_update_btn"><button>상세보기</button></li>
+            </ul>
+        </section>
+        <div class="complaintinfo_btns">
+            <button class="closeBtn finalBtn">닫기</button>
+        </div>
+    </div>
+</div>
+	<!-- 민원 완료 보고 [E] -->
+	
 	
 	<!-- script -->
 	<script type="module" src="/js/module/surfaceMain.js"></script>

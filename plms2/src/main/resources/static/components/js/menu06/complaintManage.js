@@ -527,7 +527,469 @@ function onDataLoad() {
 		}
 	}) //end ajax
 }
-/*
-===========================================================================================================
-===========================================================================================================
-*/
+
+//===========================================================================================================
+//민원 대응방안 수립 팝업
+function minwon_banganOpenPop() {
+	
+}
+
+//민원협의 내용 등록/수정 팝업
+function minwon_contentInsertPop() {
+	
+}
+
+//민원 완료 보고 팝업
+function minwon_completeReportPop() {
+	
+}
+
+
+//===========================================================================================================
+//민원 대응방안 수립[S]
+/* x표시 클릭시 닫기 */
+
+    const complainRespondcloseBtn = document.querySelector(".complainRespondcloseBtn");
+    const complainRespondContentBoxWrapper = document.getElementById("complainRespondContentBoxs");
+
+    if (complainRespondcloseBtn) {
+        complainRespondcloseBtn.addEventListener("click", () => {
+            complainRespondContentBoxWrapper.classList.remove("active");
+        })
+    }
+
+    /* 삭제,저장,상신,닫기 버튼 클릭시 팝업창 닫히기 */
+    const closeEvetBtns = document.querySelectorAll("#complainRespondContentBoxs .closeEvetBtn");
+
+    if (closeEvetBtns) {
+        closeEvetBtns.forEach((btns) => {
+            btns.addEventListener("click", () => {
+                complainRespondContentBoxWrapper.classList.remove("active");
+            })
+        })
+    }
+
+
+
+    /* 셀렉트박스 함수 */
+
+    const complainRespondSelectEvet = () => {
+
+        const complainRespondSelectsTitleBtn = document.querySelectorAll(".complainRespondPopWrap .complainRespondSelectTitleBtn");
+        const complainRespondSelectList = document.querySelectorAll(".complainRespondPopWrap .sufaceSelectList");
+        const complainRespondSelectListMember = document.querySelectorAll(".complainRespondPopWrap .sufaceSelectList .surfaceSelectListMember");
+        const complainRespondselectWrappers = document.querySelectorAll(".complainRespondHiddenSelect"); //셀렉박스
+
+
+        let complainRespondAnswer = "";
+
+        //셀렉버튼 최초값 함수
+        const complainRespondInitialValues = () => {
+            if (complainRespondselectWrappers.length > 0) {
+
+                for (let d = 0; d <= complainRespondselectWrappers.length - 1; d++) {
+
+                    let complainRespondselectValuesInitial = complainRespondselectWrappers[d].children;
+
+                    complainRespondSelectsTitleBtn[d].innerText = complainRespondselectValuesInitial[0].value;
+                    complainRespondselectWrappers[d].value = complainRespondSelectsTitleBtn[d].innerText;
+
+                }
+            }
+        }
+
+
+        if (complainRespondselectWrappers.length > 0) {
+
+            complainRespondInitialValues(); //최초의값
+
+            //셀렉박스 값  li p값에 담기 
+            for (let i = 0; i <= complainRespondselectWrappers.length - 1; i++) {
+
+                const complainRespondSelectValues = complainRespondselectWrappers[i].children; //셀렉박스옵션값 
+
+                for (let x = 0; x <= complainRespondSelectValues.length - 1; x++) {
+                    complainRespondAnswer += `<li><p>${complainRespondSelectValues[x].value}</p></li>`;
+                }
+
+                complainRespondSelectListMember[i].innerHTML = complainRespondAnswer;
+                complainRespondAnswer = '';
+            }
+        }
+
+
+        complainRespondSelectsTitleBtn.forEach((btns, index) => {
+
+            btns.addEventListener("click", () => {
+                const complainRespondNextSiblings = btns.nextElementSibling;
+
+                complainRespondSelectsTitleBtn.forEach((otherBtn) => {
+                    if (otherBtn !== btns) {
+                        otherBtn.classList.remove("active");
+                    }
+                });
+                btns.classList.toggle("active");
+                complainRespondNextSiblings.classList.toggle("active");
+
+                //surfaceSelectList관련 toggle버튼
+                complainRespondSelectList.forEach((box, boxIndex) => {
+                    //셀렉버튼의 인덱스와 surfaceSelectList 인덱스번호가 일치하면 메뉴를 오픈하고, btn에 active를 포함
+                    if (index === boxIndex) {
+
+                        box.classList.toggle(
+                            "active",
+                            btns.classList.contains("active")
+                        );
+                    } else {
+                        //그렇지 않으면 메뉴닫기
+                        box.classList.remove("active");
+
+                    }
+
+
+                });
+
+            });
+
+
+            complainRespondSelectList.forEach((list) => {
+                list.addEventListener("click", (event) => {
+
+                    const complainRespondThisBtns = event.target.parentElement.parentElement.parentElement.previousElementSibling;
+                    const complainRespondSelectContent = event.target.parentElement.parentElement.parentElement.parentElement.previousElementSibling.children[0]; //셀렉박스
+                    let complainRespondCurrentSelect = complainRespondSelectContent.getAttribute("id"); //셀렉박스아이디 가져오기
+
+                    if (event.target.nodeName === "P") {
+
+                        let complainRespondCurrentSelectValue = document.getElementById(complainRespondCurrentSelect); //현재 셀렉박스 가져오기
+                        return complainRespondThisBtns.innerText = event.target.innerText,
+                            $(complainRespondCurrentSelectValue).val(event.target.innerText), //셀렉박스 값에 현재 클릭된 값의 텍스트 담기 
+                            console.log(complainRespondCurrentSelectValue.value), //셀렉박스값표시
+                            complainRespondSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
+                            complainRespondSelectList.forEach((lists) => lists.classList.remove("active"));
+
+                    }
+
+                });
+
+            });
+
+
+        })
+    }
+    complainRespondSelectEvet();
+//민원 대응방안 수립[E]
+//===========================================================================================================
+//===========================================================================================================
+//민원협의 내용 등록/수정[S]
+//x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+    const complaintregisterPopupOpen = document.getElementById("complaint_register_Popup");
+
+    if (complaintregisterPopupOpen) {
+        complaintregisterPopupOpen.querySelectorAll(".topCloseBtn, .finalBtn")
+            .forEach(function(btn) {
+                btn.addEventListener("click", () => {
+                    complaintregisterPopupOpen.classList.remove("active");
+                });
+            });
+    }
+
+    //셀렉박스 이벤트
+    function complaintregisterSelect04() {
+        const complaintregisterSelectWrapitems = document.querySelectorAll(
+            "#complaint_register_Popup .popSelectWrap"
+        );
+
+        if (complaintregisterSelectWrapitems) {
+            complaintregisterSelectWrapitems.forEach((contentitem) => {
+                const nowIssueSelectBox04 = contentitem.querySelector("select");
+
+                if (!nowIssueSelectBox04) return;
+
+                const popCustomSelectBox04 = contentitem.querySelector(
+                    "#complaint_register_Popup .Popup_Custom_SelectBox"
+                );
+                const popCustomSelectBtns04 = popCustomSelectBox04.querySelector(
+                    "#complaint_register_Popup .Popup_Custom_SelectBtns"
+                );
+
+                for (let i = 0; i < nowIssueSelectBox04.length; i++) {
+                    const optionValue04 = nowIssueSelectBox04.options[i].value;
+                    const li04 = document.createElement("li");
+                    const button04 = document.createElement("button");
+                    button04.classList.add("PopupMoreSelectBtn");
+                    button04.type = "button";
+                    button04.textContent = optionValue04;
+                    li04.appendChild(button04);
+                    popCustomSelectBtns04.appendChild(li04);
+                }
+            });
+        }
+    }
+
+    complaintregisterSelect04();
+
+    const customSelectView04 = document.querySelectorAll(
+        "#complaint_register_Popup .Popup_Custom_SelectView"
+    );
+
+    if (customSelectView04) {
+        customSelectView04.forEach((btn) => {
+            btn.addEventListener("click", function() {
+                btn.classList.toggle("active");
+                if (btn.nextElementSibling) {
+                    btn.nextElementSibling.classList.toggle("active");
+                }
+            });
+        });
+    }
+
+    const PopupMoreSelectBtn04 = document.querySelectorAll(
+        "#complaint_register_Popup .PopupMoreSelectBtn"
+    );
+
+    if (PopupMoreSelectBtn04) {
+        PopupMoreSelectBtn04.forEach((moreBtn) => {
+            moreBtn.addEventListener("click", function() {
+                var moreBtnText04 = moreBtn.innerText;
+                console.log(moreBtnText04);
+                const parentMoreBtn04 = moreBtn.closest(".Popup_Custom_SelectBtns");
+                const editViewBtn04 = parentMoreBtn04.previousElementSibling;
+                while (editViewBtn04.firstChild) {
+                    editViewBtn04.removeChild(editViewBtn04.firstChild);
+                }
+                const textNode04 = document.createTextNode(moreBtnText04);
+
+                editViewBtn04.appendChild(textNode04);
+                editViewBtn04.classList.remove("active");
+                parentMoreBtn04.classList.remove("active");
+
+                const nearByContent04 = moreBtn.closest(".popSelectWrap");
+                const nearBySelectBox04 = nearByContent04.querySelector("select");
+                nearBySelectBox04.value = moreBtn.textContent;
+
+                console.log(`Selected value: ${nearBySelectBox04.value}`);
+            });
+        });
+    }
+// 파일첨부 추가 스크립트
+    // 파일 첨부 기본 모습
+
+    const defaultComplaintRegiFileUploadWrap = document.querySelectorAll('.popfileUploadDisplay');
+
+    defaultComplaintRegiFileUploadWrap[0].classList.add('active');
+
+    // 파일 첨부시 모습 변경, x버튼 클릭시 비우기
+
+    const complaintRegiFileEvent = () => {
+
+        if (document.getElementById('complaint_register_Popup_file')) {
+
+            const complaintRegiPopup_myPcFiles = document.getElementById('complaint_register_Popup_file');
+            const complaintRegiFiles = complaintRegiPopup_myPcFiles.files;
+            // input[type file]을 가진 제일 큰 부모
+            const complaintRegiFileInfo = complaintRegiPopup_myPcFiles.closest('.complaintRegiFileInfo');
+            // 업로드시 보이는 영역
+            const popfileUploadAfterWrap = complaintRegiFileInfo.querySelector('.popfileUploadAfter');
+            const allPopupcomplaintRegiContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+
+            var complaintRegipopfileInfoName = '';
+            var complaintRegipopfileInfoSize = '';
+            var complaintRegipopfileInfoType = '';
+
+            complaintRegiPopup_myPcFiles.addEventListener('change', function() {
+
+                // 기존의 ul 초기화
+                const popExistContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+
+                popExistContents.forEach((list) => {
+                    list.remove();
+                })
+
+                // 삭제 잘 되었는지 확인
+                const newPopExistContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+                console.log(newPopExistContents.length);
+
+                if (complaintRegiPopup_myPcFiles.files.length > 0) {
+
+                    for (let i = 0; i <= complaintRegiPopup_myPcFiles.files.length - 1; i++) {
+                        const thiscomplaintRegiPopFileName = complaintRegiPopup_myPcFiles.files[i].name;
+                        const thiscomplaintRegiPopFileSize = complaintRegiPopup_myPcFiles.files[i].size;
+                        const thiscomplaintRegiPopFileType = complaintRegiPopup_myPcFiles.files[i].type;
+
+                        // 사이즈를 바꾸자
+                        const complaintRegiformattedSize = byteTransformForPop_complaintRegi(thiscomplaintRegiPopFileSize);
+
+                        // 문자열에 변수를 담자
+                        complaintRegipopfileInfoName = thiscomplaintRegiPopFileName;
+                        complaintRegipopfileInfoSize = complaintRegiformattedSize;
+                        complaintRegipopfileInfoType = thiscomplaintRegiPopFileType;
+
+                        // 파일 지우는 버튼용 li
+
+                        const popdeleteLi = '<li class="popbtnbox"><button class="popfileDeleteBtn"></button></li>';
+
+                        // 파일 아이콘, 파일명 들어가는 li
+                        const popfilenameBoxLi = `<li class="popcontent popfilenameBox"><figure class="poptypeIcon ${complaintRegipopfileInfoName}"></figure><p class="popfileNameText">${complaintRegipopfileInfoName}</p></li >`;
+
+                        // 업로드 상태
+                        const popuploadStatusLi = '<li class="popcontent"><p>-</p></li>';
+
+                        // 파일 크기 들어가는 li
+                        const popfileSizeLi = `<li class="popcontent">
+                      <p class="popfileSizeText"> ${complaintRegipopfileInfoSize} </p>
+                  </li>`;
+
+                        const listBox = popdeleteLi + popfilenameBoxLi + popuploadStatusLi + popfileSizeLi;
+
+                        // ul.contents 만들기
+                        const popContentsUl = document.createElement('ul');
+                        popContentsUl.classList.add('popcontents');
+
+                        popContentsUl.innerHTML = listBox;
+
+                        popfileUploadAfterWrap.appendChild(popContentsUl);
+
+
+                        // 값 잘 담겼는지 확인
+
+                        console.log('담긴 파일 이름:' + thiscomplaintRegiPopFileName);
+
+
+                        // 다음 걸 받기 위해 비워주기
+
+                        complaintRegipopfileInfoName = '';
+                        complaintRegipopfileInfoSize = '';
+                        complaintRegipopfileInfoType = '';
+
+                    }
+
+
+                    defaultComplaintRegiFileUploadWrap.forEach((wrap) => {
+                        wrap.classList.remove('active');
+                    })
+                    defaultComplaintRegiFileUploadWrap[1].classList.add('active');
+
+                    if (complaintRegiPopup_myPcFiles.files.length > 2) {
+                        popfileUploadAfterWrap.classList.add('scroll');
+                    } else {
+                        popfileUploadAfterWrap.classList.remove('scroll');
+                    }
+
+
+                } else {
+
+                    complaintRegiPopup_myPcFiles.value = '';
+                    defaultComplaintRegiFileUploadWrap.forEach((wrap) => {
+                        wrap.classList.remove('active');
+                    })
+                    defaultComplaintRegiFileUploadWrap[0].classList.add('active');
+                }
+            })
+
+            // 개별 delbtn 누르면 생기는 이벤트
+            popfileUploadAfterWrap.addEventListener('click', function(event) {
+                if (event.target.classList.contains('popfileDeleteBtn')) {
+                    const popfileDeleteBtns = popfileUploadAfterWrap.querySelectorAll('.popfileDeleteBtn');
+                    const popfileDelBtn = event.target;
+                    const popnearbyContents = event.target.closest('.popcontents');
+                    const popfileNameToRemove = popnearbyContents.querySelector('.popfileNameText').textContent;
+
+                    // 파일명이랑 틀린 것만 저장하는 함수
+                    removeFileforPop_complaintRegi(popfileNameToRemove);
+                    popnearbyContents.remove();
+
+                    for (let b = 0; b < complaintRegiPopup_myPcFiles.files.length; b++) {
+                        console.log('현재 input[type=file]의 files name: ' + complaintRegiPopup_myPcFiles.files[b].name);
+                    }
+
+                    console.log('남은 파일의 개수:' + complaintRegiPopup_myPcFiles.files.length);
+
+                    if (complaintRegiPopup_myPcFiles.files.length < 3) {
+                        popfileUploadAfterWrap.classList.remove('scroll');
+                    }
+
+                    // 현재 선택된 파일이 없으면 input 값 비우기
+                    if (complaintRegiPopup_myPcFiles.files.length === 0) {
+                        complaintRegiPopup_myPcFiles.value = '';
+                        defaultComplaintRegiFileUploadWrap.forEach((wrap) => {
+                            wrap.classList.remove('active');
+                        });
+                        defaultComplaintRegiFileUploadWrap[0].classList.add('active');
+                    }
+                }
+
+
+            })
+
+            // 전체 삭제 버튼
+            const popallDeleteFileBtn = popfileUploadAfterWrap.querySelector('.popAllDeleteFileBtn');
+
+            popallDeleteFileBtn.addEventListener('click', function() {
+                const nowAllContents = popfileUploadAfterWrap.querySelectorAll('.popcontents');
+                nowAllContents.forEach((contents) => {
+                    contents.remove();
+                })
+
+                complaintRegiPopup_myPcFiles.value = '';
+
+
+                // 값 잘 사라졌는지 확인
+                console.log(complaintRegiPopup_myPcFiles.value);
+
+
+                if (complaintRegiPopup_myPcFiles.files.length == 0) {
+                    complaintRegiPopup_myPcFiles.value = '';
+                    defaultComplaintRegiFileUploadWrap.forEach((wrap) => {
+                        wrap.classList.remove('active');
+                    })
+                    defaultComplaintRegiFileUploadWrap[0].classList.add('active');
+                    popfileUploadAfterWrap.classList.remove('scroll');
+                }
+            })
+
+            // 용량 크기 변환하는 함수
+            function byteTransformForPop_complaintRegi(bytes) {
+                const dataSizeforPop = ['Bytes', 'KB', 'MB', 'GB', 'TB']
+
+                if (bytes === 0) return 'not available';
+
+                const d = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+                if (d === 0) return `${bytes} ${dataSizeforPop[d]}`;
+                return `${(bytes / (1024 ** d)).toFixed(1)} ${dataSizeforPop[d]}`;
+            }
+
+            // 파일 삭제처리 하는 함수
+            const removeFileforPop_complaintRegi = (popfileNameToRemove) => {
+                const filesArrayforPop = Array.from(complaintRegiPopup_myPcFiles.files);
+                const popNewDataTransfer = new DataTransfer();
+                filesArrayforPop.forEach(file => {
+                    if (file.name !== popfileNameToRemove) {
+                        popNewDataTransfer.items.add(file);
+                    }
+                });
+                complaintRegiPopup_myPcFiles.files = popNewDataTransfer.files; // 새로운 files 설정
+            };
+        }
+
+    }
+
+    complaintRegiFileEvent();
+//민원협의 내용 등록/수정[E]
+//===========================================================================================================
+//===========================================================================================================
+//민원 완료 보고[S]
+//x버튼, 닫기, 승인요청 클릭시 팝업클로즈
+const complaintCompletedPopupOpen = document.getElementById("complaint_completed");
+
+if (complaintCompletedPopupOpen) {
+  complaintCompletedPopupOpen.querySelectorAll(".topCloseBtn, .finalBtn")
+    .forEach(function (btn) {
+      btn.addEventListener("click", () => {
+        complaintCompletedPopupOpen.classList.remove("active");
+      });
+    });
+}
+
+//민원 완료 보고[E]
+//===========================================================================================================
