@@ -1,3 +1,5 @@
+var fileRowCount = 0;	//첨부파일카운트
+
 //일반 실행 == $(document).ready(function(){})
 $(function() {
 	console.log("---------- start menu06_1.js ------------");
@@ -20,8 +22,43 @@ $(function() {
 	console.log("-----------------------");
 	
 	//드래그 앤 드롭 영역 파일 첨부 관련 코드
-	//let objDragAndDrop = $(".fileUploadBox");
-	//let objDragAndDropExcel = $(".popfileUploadBox");
+	let objDragAndDrop = $("#newminwon_fileUploadBox");
+	
+	// 드래그 앤 드롭 영역에 파일이 들어왔을 때
+	$("#newminwon_fileUploadBox").on("dragenter", function(e) {
+	    e.stopPropagation();
+	    e.preventDefault();
+	    $(this).css('border', '2px solid #0B85A1');
+	});
+
+	// 드래그 앤 드롭 영역에서 파일을 드래그할 때
+	$("#newminwon_fileUploadBox").on("dragover", function(e) {
+	    e.stopPropagation();
+	    e.preventDefault();
+	});
+	
+	// 드래그 앤 드롭 영역에서 파일을 드래그할 때
+	$("#newminwon_fileUploadBox").on("dragover", function(e) {
+	    e.stopPropagation();
+	    e.preventDefault();
+	});
+	
+	// 파일을 드롭할 때
+	$("#newminwon_fileUploadBox").on("drop", function(e) {
+	    e.preventDefault();
+	    $(this).css('border', '2px dotted #0B85A1');
+	    var files = e.originalEvent.dataTransfer.files; // 드래그한 파일 객체를 가져옴
+	    handleFileUpload(files, $(this));  // 파일 처리 함수 호출
+	});
+	
+	$('input[type=file][name="fileUpload"]').on('change', function(e) {
+	    var files = e.originalEvent.target.files; // 파일 선택창에서 선택된 파일들
+	    console.log('파일업로드');
+	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
+	});
+	
+	//페이지 로드 후 리스트 조회
+	minwonListSearch();
 })
 
 /* 이슈보기팝업 */
@@ -390,19 +427,29 @@ function closeComplaintregisterPopup() {
 
 //신규민원팝업 데이터 json
 function getPopupJsonData() {
+	
 	var formSerializeArray = $('#saveFormPop').serializeArray();
 	len = formSerializeArray.length;
-	var dataObj = {};
-	for (i = 0; i < len; i++) {
+	
+	var dataObj = {};	//return할 param 내용
+	
+	for(let i = 0; i < len; i++) {
 		dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
 	}
 
 	dataObj.JISA = (ljsIsNull(dataObj.JISA) || dataObj.JISA == "전체") ? '' : dataObj.JISA;
 
-	//토지 정보
+	//토지 정보 세팅
 	dataObj.tojiList = [];
+	
 	$(".landinfo_box .landinfo_content").each(function(index, ul) {
 		let addrInfoStr = $(ul).find('.landinfo_content_8 input').val();
+		
+		if(commonNvl(addrInfoStr, "none") == "none") {
+			alert('주소 정보가 없습니다.');
+			return false;
+		}
+		
 		let obj = JSON.parse(addrInfoStr); // 각 UL에 대한 개별 객체 생성
 		//let obj = {};
 		obj.saddr = $(ul).find('.landinfo_content_4 input').val(); //주소
@@ -430,10 +477,21 @@ function getPopupJsonData() {
 	});
 
 	//첨부파일
-	const newComplaintRegiPopup_myPcFiles = document.getElementById("complaint_contents_contents3_Popup_file");
-	const newComplaintRegiFiles = newComplaintRegiPopup_myPcFiles.files;
-	dataObj.files = newComplaintRegiFiles;
-	dataObj.filesLength = newComplaintRegiFiles.length;
+	//const newComplaintRegiPopup_myPcFiles = document.getElementById("complaint_contents_contents3_Popup_file");
+	//const newComplaintRegiFiles = newComplaintRegiPopup_myPcFiles.files;
+	
+	let fileCheck = [];
+	
+	for(let t = 0 ; t < $("#fileTitleUl").children().length ; t++){
+		fileCheck.push($("#minwonFileName_"+t).text());
+	}
+	
+	
+	//dataObj.files = newComplaintRegiFiles;
+	//dataObj.filesLength = newComplaintRegiFiles.length;
+	fileCheck.pop();
+	dataObj.files = fileCheck;
+	dataObj.filesLength = fileCheck.length;
 
 	//신규 파일은 SEQ가 없음
 	dataObj.MW_SEQ = "0";
@@ -446,32 +504,38 @@ function getPopupJsonData() {
 	dataObj.MW_OCCUR_DATE = dateCheck;
 	dataObj.SANGSIN_FLAG = 'N';
 	
-	let min_to_nameArr = [];
-	let min_to_birhArr = [];
-	let min_to_relationArr = [];
-	let min_to_phoneArr = [];
-	let min_to_presenceArr = [];
+	let min_to_nameArr = '';
+	let min_to_birthArr = '';
+	let min_to_relationArr = '';
+	let min_to_phoneArr = '';
+	let min_to_presenceArr = '';
 	
 	//신규
 	for(let p = 0 ; p < $("#minwonin_totiju_body").children().length ; p++) {
-		let ownerNm = commonNvl( $("#landowner_name_"+(p+1)).val() , "-" );
-		let ownerBirth = commonNvl( $("#landowner_birthday_"+(p+1)).val(), "-" );
-		let ownerRelation = commonNvl( $("#landowner_relation_"+(p+1)).val(), "-" );
-		let ownerPhone = commonNvl( $("#landowner_phone_"+(p+1)).val(), "-" );
-		let owerPresence = commonNvl( $("#landowner_presence"+(p+1)).val(), "N" );
-		
+		let ownerNm = commonNvl( $("#landowner_name_"+(p+1)).val() , "-" ) + "|";
+		let ownerBirth = commonNvl( $("#landowner_birthday_"+(p+1)).val(), "-" )  + "|";
+		let ownerRelation = commonNvl( $("#landowner_relation_"+(p+1)).val(), "-" )  + "|";
+		let ownerPhone = commonNvl( $("#landowner_phone_"+(p+1)).val(), "-" )  + "|";
+		let owerPresence = commonNvl( $("#landowner_presence"+(p+1)).text(), "N" )  + "|";
+		/*
 		min_to_nameArr.push(ownerNm);
-		min_to_birhArr.push(ownerBirth);
+		min_to_birthArr.push(ownerBirth);
 		min_to_relationArr.push(ownerRelation);
 		min_to_phoneArr.push(ownerPhone);
 		min_to_presenceArr.push(owerPresence);
+		*/
+		min_to_nameArr += ownerNm;
+		min_to_birthArr += ownerBirth;
+		min_to_relationArr += ownerRelation;
+		min_to_phoneArr += ownerPhone;
+		min_to_presenceArr += owerPresence;
 	}
 	
-	dataObj.min_to_nameArr = min_to_nameArr.toString();
-	dataObj.min_to_birhArr = min_to_birhArr.toString();
-	dataObj.min_to_relationArr = min_to_relationArr.toString();
-	dataObj.min_to_phoneArr = min_to_phoneArr.toString();
-	dataObj.min_to_presenceArr = min_to_presenceArr.toString();
+	dataObj.min_to_nameArr = min_to_nameArr.slice(0, -1);
+	dataObj.min_to_birthArr = min_to_birthArr.slice(0, -1);
+	dataObj.min_to_relationArr = min_to_relationArr.slice(0, -1);
+	dataObj.min_to_phoneArr = min_to_phoneArr.slice(0, -1);
+	dataObj.min_to_presenceArr = min_to_presenceArr.slice(0, -1);
 
 	return dataObj;
 }
@@ -481,9 +545,6 @@ $(document).on("click", "#newcomplaint_Popup .approveBtn", function() {
 	var data = getPopupJsonData();	//form안의 입력한 깂들 object화하는 function 
 	console.log(data);
 	
-	//alert('신규 민원 등록 저장');
-	
-	/*
 	$.ajax({
 		url: "/issue/saveMinwonData",
 		data: JSON.stringify(data),
@@ -495,7 +556,8 @@ $(document).on("click", "#newcomplaint_Popup .approveBtn", function() {
 		success: function(data, jqXHR) {
 			console.log(data);
 			if (data.message != null && data.message != undefined && data.message == "success") {
-				closeComplaintregisterPopup();
+				alert('저장하였습니다.');
+				//closeComplaintregisterPopup();
 			} else {
 				alert(data.message);
 			}
@@ -518,7 +580,7 @@ $(document).on("click", "#newcomplaint_Popup .approveBtn", function() {
 			console.log(jqXHR.responseJSON);
 		}
 	}); //end ajax
-	*/
+	
 });
 //신규민원 -> 상신
 $(document).on("click", "#newcomplaint_Popup .sangsinBtn", function() {
@@ -1366,6 +1428,103 @@ const loadDepth3Codes = () => {
 		}
 	});
 };
+
+//파일 업로드 했을때 step.1
+function handleFileUpload(files, obj) {
+	console.log("-------------handleFileUpload---------------");
+	console.log(files);
+	
+	for (var i = 0; i < files.length; i++) { // 선택된 파일들을 하나씩 처리
+        var fd = new FormData(); // FormData 객체 생성 (파일 업로드를 위한 객체)
+        
+        fd.append('file', files[i]); // 파일 객체를 FormData에 추가
+ 		
+        var status = new createStatusbar($("#fileTitleUl"), files[i].name, files[i].size, fileRowCount); // 파일 업로드 상태바 생성
+        
+        sendFileToServer(fd,status); // 서버로 파일 전송 함수 호출
+		
+		fileRowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
+   }
+}
+
+//파일 업로드 했을때 step.1.5
+// Status bar 생성 함수
+function createStatusbar(obj, name, size, no){
+	console.log("----------start createStatusBar------------");
+    //console.log(obj.html());
+	
+	var sizeStr="";
+    var sizeKB = size/1024; // 파일 크기를 문자열로 표시하기 위한 변수
+    
+    if(parseInt(sizeKB) > 1024){
+        var sizeMB = sizeKB/1024;
+        sizeStr = sizeMB.toFixed(2)+" MB"; // MB로 변환
+    }else{
+        sizeStr = sizeKB.toFixed(2)+" KB"; // KB로 표시
+    }
+	
+	//보이는 화면 UI 추가 - obj 말고 그냥 div id 정했으니 그냥 추가 해줘도 됨.
+    let rowHtml = '';
+    
+    rowHtml += '<ul class="popcontents" name="fileListUl">';
+	rowHtml += '<li class="popBtnbox">';
+	rowHtml += '	<button class="popAllDeleteFileBtn"></button>';
+	rowHtml += '</li>';
+	rowHtml += '<li class="popcontent popfilenameBox">';
+	rowHtml += '<input type="hidden" value="'+ +'">';
+	rowHtml += '<figure class="poptypeIcon"></figure><p class="popfileNameText" id="minwonFileName_'+no+'">'+name+'</p></li>';
+	rowHtml += '<li class="popcontent"><p>완료</p></li>';
+	rowHtml += '<li class="popcontent"><p class="popfileSizeText">'+sizeStr+'</p></li>';
+	rowHtml += '</ul>';
+    
+    $("#fileTitleUl").append(rowHtml);
+}
+
+
+//파일 업로드 했을때 step.2
+//실제 서버에 파일 업로드 (/temp폴더로...)
+function sendFileToServer(formData, status) {
+	
+    let uploadURL = "/issue/fileUpload/post"; //Upload URL
+    
+    console.log('URL로 던져서 upload');
+    
+    var jqXHR = $.ajax({
+		xhr: function() {
+		    var xhrobj = $.ajaxSettings.xhr(); // 기본 XMLHttpRequest 객체 생성
+		    if (xhrobj.upload) {
+		        xhrobj.upload.addEventListener('progress', function(event) {
+		            var percent = 0;
+		            var position = event.loaded || event.position;
+		            var total = event.total;
+		            if (event.lengthComputable) {
+		                percent = Math.ceil(position / total * 100); // 파일 업로드의 진행 상황을 계산
+		            }
+		            // status.setProgress(percent);  // 업로드 진행 상황을 status에 반영 (현재 주석 처리됨)
+		        }, false);
+		    }
+		    return xhrobj;
+		},
+        url: uploadURL,
+        type: "POST",
+        contentType:false,
+        processData: false,
+        cache: false,
+        data: formData,
+        success: function(data){
+           // status.setProgress(100);
+ 			console.log(data);
+ 			console.log(data.resultData);
+			//console.log("-------------sendFileToServer-----------------------");
+			//console.log($(this).parent().parent().parent().parent());
+            //$("#status1").append("File upload Done<br>");    
+			//uploadFiles.push(data.resultData.fpath);    
+			//allCheckEventLandRightsRegist();   
+        }
+    }); 
+ 	
+    //status.setAbort(jqXHR);
+}
 
 /*********************************************/
 /*********************************************/

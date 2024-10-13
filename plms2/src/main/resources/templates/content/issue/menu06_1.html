@@ -370,8 +370,8 @@
 							</div>
 
 							<!-- 민원 :: 토지정보 기본값 + 추가로 나오는 부분-->
-							<div class="landinfo_box">
-								<ul class="landinfo_content">
+							<div class="landinfo_box" id="minwon_tojiInfoList">
+								<ul class="landinfo_content" >
 									<li class="landinfo_content_2" id="minwon_1" value="1">1</li>
 									<li class="landinfo_content_3">
 										<input type="checkbox" id="newcomplaint_checkbox1" class="approve_checkbox" />
@@ -477,52 +477,22 @@
 							</ul>
 							<ul class="complaint_contents_content3">
 								<li class="com_content_title3">첨부파일</li>
-								<li class="com_content_title5">
+								<li class="com_content_title5" style="overflow-y:auto;">
 									<ul class="complaint_contents_content3_wrap">
 										<li class="complaint_contents_content3_file">
-											<!-- multiple 추가 --> <input type="file"
-											id="complaint_contents_contents3_Popup_file" multiple hidden />
-											<!-- <label for="complaint_contents_contents3_Popup_file" class="complaint_contents_contents3_Popup_file_wrap">
-                    첨부파일 기본값 
-                    <div class="complaint_contents_contents3_file_default active">
-                      <div class="file_background_wrap">
-                        <figure class="complaint_contents_contents3_file_img_wrap"><img src="/assets/media/popup/images/file-upload.png"
-                            alt="upload"></figure>
-                        <p>파일을 마우스로 끌어오세요.</p>
-                      </div>
-                    </div>
-                    파일 추가시 나오는 곳 
-                    <div class="complaint_contents_contents3_file_add_contents">
-                      <ul class="complaint_contents_contents3_file_add_contents_th">
-                        <li>
-                          <figure><img src="/assets/media/popup/images/back_icon.png" alt="xbtn"></figure>
-                        </li>
-                        <li class="complaint_contents_contents3_file_add_name">
-                          <p>파일명</p>
-                        </li>
-                        <li>
-                          <p>업로드 상태</p>
-                        </li>
-                        <li>
-                          <p>용량</p>
-                        </li>
-                      </ul>
-                    </div>
-                  </label>--> <!-- 추가 -->
-
+											<!-- multiple 추가 -->
+											<input type="file" name="fileUpload" id="complaint_contents_contents3_Popup_file" hidden />
 											<div class="popfileLargeWrap">
 												<!-- 파일이 첨부되지 않았을 때 모습 -->
-												<div class="popfileUploadWrap popfileUploadDisplay">
-													<label for="complaint_contents_contents3_Popup_file"
-														class="popfileUploadBox"> <img
-														src="../../../assets/media/popup/images/file-upload.png"
-														alt="파일 업로드 아이콘" class="fileUploadIcon" />
+												<div class="popfileUploadWrap popfileUploadDisplay active">
+													<label for="complaint_contents_contents3_Popup_file" class="popfileUploadBox" id="newminwon_fileUploadBox">
+														<img src="../../../assets/media/popup/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
 														<p>파일을 마우스로 끌어오세요.</p>
 													</label>
 												</div>
-												<div class="popfileUploadAfterWrap popfileUploadDisplay">
+												<div class="popfileUploadAfterWrap popfileUploadDisplay active" style="top:125px;">
 													<!-- 추가, 업로드시 나오는 거 -->
-													<div class="popfileUploadAfter">
+													<div class="popfileUploadAfter" id="fileTitleUl" style="overflow-y:auto;">
 														<ul class="poptitles">
 															<li class="popBtnbox">
 																<button class="popAllDeleteFileBtn"></button>
@@ -1066,14 +1036,14 @@ textareas.forEach((textarea) => {
 // 파일첨부 추가 스크립트
 // 파일 첨부 기본 모습
 
-const defaultNewComplaintRegiFileUploadWrap = document.querySelectorAll(
-    ".popfileUploadDisplay"
-);
+//const defaultNewComplaintRegiFileUploadWrap = document.querySelectorAll(
+//    ".popfileUploadDisplay"
+//);
 
-defaultNewComplaintRegiFileUploadWrap[0].classList.add("active");
+//defaultNewComplaintRegiFileUploadWrap[0].classList.add("active");
 
 // 파일 첨부시 모습 변경, x버튼 클릭시 비우기
-
+/* 
 const newcomplaintRegiFileEvent = () => {
     if (document.getElementById("complaint_contents_contents3_Popup_file")) {
         const newComplaintRegiPopup_myPcFiles = document.getElementById(
@@ -1286,8 +1256,9 @@ const newcomplaintRegiFileEvent = () => {
         };
     }
 };
-
-newcomplaintRegiFileEvent();
+ */
+//위의 만든 function 실행 - 주석처리
+//newcomplaintRegiFileEvent();
 
 // 토지상태 항목 검색결과 추가
 
