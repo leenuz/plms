@@ -980,7 +980,7 @@ SELECT TTT.TYPE,
 			and b.juso is null
 	</select>
 	
-	<!-- 통계 > 권리별 증감현황 > 조회 상세 > 증감현황 > 증가 -->
+	<!-- 통계 > 권리별 증감현황 > 조회 상세 > 증감현황 > 감소 -->
 	<select id="selectByRightInDeListDetailDown" parameterType="HashMap" resultType="HashMap">
 		select 
 			a.desc1,a.juso, a.jisang_status
