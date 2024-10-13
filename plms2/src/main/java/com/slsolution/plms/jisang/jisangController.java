@@ -1102,7 +1102,7 @@ public class jisangController {
 						String SPOT_RESULT = requestJsonObj.getString("spot_result"); // 현장확인결과
 						String REVIEW = requestJsonObj.getString("review"); // 검토의견
 						String CONTRACT = requestJsonObj.getString("contract"); // 약정사항
-						String PMT_STATUS = requestJsonObj.getString("pmt_status"); // 등록상태
+						String PMT_STATUS = requestJsonObj.getString("PMT_STATUS"); // 등록상태
 						String str_result = "Y";
 						String resp_PMT_NO = "";
 						try {
@@ -3055,21 +3055,21 @@ log.info("data:"+data.get(0));
 			ArrayList<HashMap> soujaList = mainService.selectQuery("jisangSQL.selectSoyujaData",params);
 			ArrayList<HashMap> atcFileList = mainService.selectQuery("jisangSQL.selectAtcFileList",params);
 
-			//임시 저장 된 테이블 조회 시 있으면, 해당 테이블 뿌리기.
-			ArrayList<HashMap> dataTmp = mainService.selectQuery("jisangSQL.selectAllTmpData",params);
-			if(dataTmp.size() > 0) {
-				// dataTmp의 데이터를 하나씩 처리
-				HashMap<String, Object> tmpMap = dataTmp.get(0);
-				HashMap<String, Object> newMap = new HashMap<>();
-
-				// tmpMap의 모든 키를 순회하면서 "jmt_"를 "jm_"으로 바꾼 후 newMap에 넣음
-				for (Map.Entry<String, Object> entry : tmpMap.entrySet()) {
-					String newKey = entry.getKey().replace("jmt_", "jm_");
-					newMap.put(newKey, entry.getValue());
-				}
-				data.remove(0);
-				data.add(newMap);
-			}
+//			//임시 저장 된 테이블 조회 시 있으면, 해당 테이블 뿌리기.
+//			ArrayList<HashMap> dataTmp = mainService.selectQuery("jisangSQL.selectAllTmpData",params);
+//			if(dataTmp.size() > 0) {
+//				// dataTmp의 데이터를 하나씩 처리
+//				HashMap<String, Object> tmpMap = dataTmp.get(0);
+//				HashMap newMap = new HashMap<>();
+//
+//				// tmpMap의 모든 키를 순회하면서 "jmt_"를 "jm_"으로 바꾼 후 newMap에 넣음
+//				for (Map.Entry<String, Object> entry : tmpMap.entrySet()) {
+//					String newKey = entry.getKey().replace("jmt_", "jm_");
+//					newMap.put(newKey, entry.getValue());
+//				}
+//				data.remove(0);
+//				data.add(newMap);
+//			}
 
 			ArrayList<HashMap> jisangPermitList = mainService.selectQuery("jisangSQL.selectPermitList",params);
 			ArrayList<HashMap> jisangModifyList = mainService.selectQuery("jisangSQL.selectModifyList",params);
@@ -5260,6 +5260,12 @@ log.info("data:"+data.get(0));
 			
 			int docCount=0;
 			
+			
+			
+			
+			
+			
+			
 			ArrayList<HashMap<String, String>> docArray = new ArrayList<>();
 			if (httpRequest.getParameter("req_doc_file01")!=null && httpRequest.getParameter("req_doc_file01")!="" && !httpRequest.getParameter("req_doc_file01").equals("")) {
 				
@@ -5418,17 +5424,17 @@ log.info("data:"+data.get(0));
 			params.put("account_yn",account_yn);
 			params.put("cancel_date",cancel_date);
 			if (chuideuk_money != null && !chuideuk_money.trim().isEmpty()) {
-				params.put("chuideuk_money", Integer.parseInt(chuideuk_money));
+				params.put("chuideuk_money", chuideuk_money.replace(",",""));
 			} else {
 				params.put("chuideuk_money", null);
 			}
 			if (gammoney != null && !gammoney.trim().isEmpty()) {
-				params.put("gammoney",gammoney);
+				params.put("gammoney",gammoney.replace(",",""));
 			} else {
 				params.put("gammoney", null);
 			}
 			if (remainder_money != null && !remainder_money.trim().isEmpty()) {
-				params.put("remainder_money",remainder_money);
+				params.put("remainder_money",remainder_money.replace(",",""));
 			} else {
 				params.put("remainder_money", null);
 			}
@@ -5447,6 +5453,8 @@ log.info("data:"+data.get(0));
 			params.put("idx",jIdx);
 	
 			log.info("params:"+params);
+			
+			//mainService.UpdateQuery("jisangSQL.mergeJisangTermination", params);
 			
 			
 			//docMap.put("jisang_no", jisang_no);

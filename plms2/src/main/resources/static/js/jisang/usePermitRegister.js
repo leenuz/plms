@@ -1093,7 +1093,7 @@ $(document).on("click","#sangsinBtn",function(){
 		
 		dataObj.desangTogis=togiDatas;
 		dataObj.gubun="insert";
-		dataObj.pmt_status="";
+		dataObj.PMT_STATUS="상신";
 		console.log(dataObj);
 		
 		
