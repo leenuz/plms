@@ -434,7 +434,7 @@ $('.issueStatusBtn').click(function () {
           trStr += '<td><p>' + row.depth2_name + '</p></td>';
           trStr += '<td><p>' + row.depth3_name + '</p></td>';
           trStr += '<td><p class="textunderline" onclick="showPopup(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.potential_issue_cnt + '</p></td>';
-          trStr += '<td><p class="textunderline" onclick="showPopup2(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.minwon_total_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup2(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.minwon_cnt + '</p></td>';
           trStr += '</tr>';
 
           tbodyStr += trStr;
@@ -490,7 +490,7 @@ $('.issueStatusBtn').click(function () {
           }
           trStr += '<td><p>' + row.depth3_name + '</p></td>';
           trStr += '<td><p class="textunderline" onclick="showPopup(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.potential_issue_cnt + '</p></td>';
-          trStr += '<td><p class="textunderline" onclick="showPopup2(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.minwon_total_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup2(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.minwon_cnt + '</p></td>';
           trStr += '</tr>';
 
           tbodyStr += trStr;
@@ -544,7 +544,7 @@ $('.issueStatusBtn').click(function () {
           }
           trStr += '<td><p>' + row.depth3_name + '</p></td>';
           trStr += '<td><p class="textunderline" onclick="showPopup(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.potential_issue_cnt + '</p></td>';
-          trStr += '<td><p class="textunderline" onclick="showPopup2(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.minwon_total_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup2(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.minwon_cnt + '</p></td>';
           trStr += '</tr>';
 
           tbodyStr += trStr;
