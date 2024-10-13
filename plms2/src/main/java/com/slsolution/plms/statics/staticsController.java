@@ -1352,7 +1352,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		ParameterParser parser = new ParameterParser(request);
 		String JISA = parser.getString("JISA", "");
 		String STATUS = parser.getString("STATUS", "");
-		String YYYY_REF = parser.getString("YYYY_REF", "");
+		int YYYY_REF = parser.getInt("YYYY_REF");
 		String MM_REF = parser.getString("MM_REF", "");
 		String YYYY_TG = parser.getString("YYYY_TG", "");
 		String MM_TG = parser.getString("MM_TG", "");
