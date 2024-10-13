@@ -881,7 +881,9 @@ public class issueController {
 		String AGREE_DATE = requestParamObj.getString("DATE");
 		String STATUS = requestParamObj.getString("STATUS");
 		String SANGSIN_FLAG = requestParamObj.getString("SANGSIN_FLAG");
-
+		
+		JSONArray fileList = requestParamObj.getJSONArray("files");
+		
 		ArrayList list = null;
 		HashMap map = new HashMap();
 		int agreeSeq = 0;
@@ -931,7 +933,32 @@ public class issueController {
 				mainService.InsertQuery("issueSQL.updateMinwonAgree", params);
 
 			}
+			
+			
+			// STEP.2 첨부파일 등록 (Table - miwon_atcfile)
+			HashMap fileParams = new HashMap();
+			fileParams.put("MAA_MW_SEQ", MW_SEQ);
+			
+			if(fileList.length() > 0) {
+				for(int y = 0 ; y < fileList.length() ; y++) {
+					String originalFileName = fileList.get(y).toString();
+					String changeFileName = CommonUtil.filenameAutoChange(originalFileName);
+					String tempPath = GC.getMinwonFileTempDir();
+					String dataPath = GC.getMinwonFileDataDir() + "/"+ "m_seq_"+MW_SEQ;
+					
+					fileParams.put("FILE_PATH", dataPath +"/"+ changeFileName);	//파일명이 바뀌기 때문에.
+					fileParams.put("FILE_NAME", originalFileName);
+					fileParams.put("FILE_MINWON_SEQ", (y+1));
 
+					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
+						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
+						//TODO :: param값 추후 수정 해야함. FILE_MINWON_SEQ 수정.
+						mainService.InsertQuery("issueSQL.insertMinwonAgreeAtchFileInfo", fileParams);
+					}
+					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
+				}
+			}
+			
 			// 민원 마스터 상태정보 수정(협의중 : 4)
 			params.put("STATUS", "4");
 //				Database.getInstance().update("Json.updateMinwonMasterStatus", params);
@@ -1031,6 +1058,8 @@ public class issueController {
 		ParameterParser parser = new ParameterParser(request);
 		String MW_SEQ = requestParamObj.getString("MW_SEQ");
 		String STATUS = requestParamObj.getString("STATUS");
+		
+		JSONArray fileList = requestParamObj.getJSONArray("files");
 
 		ArrayList dataList = new ArrayList();
 		HashMap map = new HashMap();
@@ -1038,6 +1067,32 @@ public class issueController {
 
 			HashMap params = new HashMap();
 			params.put("MW_SEQ", MW_SEQ);
+			
+			//첨부파일 저장
+			HashMap fileParams = new HashMap();
+			fileParams.put("MAA_MW_SEQ", MW_SEQ);
+			
+			if(fileList.length() > 0) {
+				for(int y = 0 ; y < fileList.length() ; y++) {
+					String originalFileName = fileList.get(y).toString();
+					String changeFileName = CommonUtil.filenameAutoChange(originalFileName);
+					String tempPath = GC.getMinwonFileTempDir();
+					String dataPath = GC.getMinwonFileDataDir() + "/"+ "m_seq_"+MW_SEQ;
+					
+					fileParams.put("FILE_PATH", dataPath +"/"+ changeFileName);	//파일명이 바뀌기 때문에.
+					fileParams.put("FILE_NAME", originalFileName);
+					fileParams.put("FILE_MINWON_SEQ", (y+1));
+
+					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
+						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
+						//TODO :: param값 추후 수정 해야함. FILE_MINWON_SEQ 수정.
+						mainService.InsertQuery("issueSQL.insertMinwonAgreeAtchFileInfo", fileParams);
+					}
+					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
+				}
+			}
+			
+			
 
 			// 1. 민원완료 가능한 상태인지 체크 ->> 상태값:협의중, 모든 협의상태가 완결.
 //			int totalcnt = (Integer) Database.getInstance().queryForObject("Json.selectMinwonCompleteBeforeCheck", params);

@@ -1464,4 +1464,22 @@ INSERT INTO MINWON_ATCFILE (
 
 ]]></insert>
 	
+<!-- 신규 민원협의 내용 첨부파일 저장 -->
+<select id="insertMinwonAgreeAtchFileInfo" parameterType="HashMap"><![CDATA[
+INSERT INTO MINWON_AGREE_ATCFILE (
+	maa_mw_seq
+	, maa_agree_seq
+	, maa_file_nm
+	, maa_file_path
+	, maa_seq
+	, maa_file_seq
+) VALUES (
+	#{MAA_MW_SEQ}::numeric
+	, #{FILE_MINWON_SEQ}
+	, #{FILE_NAME}
+	, #{FILE_PATH}
+	, #{FILE_MINWON_SEQ}
+	, #{FILE_MINWON_SEQ}
+)
+]]></select>
 </mapper>
