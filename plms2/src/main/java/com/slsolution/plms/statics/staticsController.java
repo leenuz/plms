@@ -1313,9 +1313,38 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		response.getWriter().print(jo);
 		response.getWriter().flush();
 	}
+	
+	//통계 > 권리별 증감현황 > 년,월
+	@PostMapping(path="/selectByRightInDeListYYYY")
+	public void selectByRightInDeListYYYY(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		ParameterParser parser = new ParameterParser(request);
+		
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListYYYY", null);
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
 	//통계 > 권리별 증감현황 > 년,월
 	@PostMapping(path="/selectByRightInDeListYYYYMM")
-	public void selectByRightInDeListYMD(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void selectByRightInDeListYYYYMM(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		ParameterParser parser = new ParameterParser(request);
 		String SELECT_YYYY = parser.getString("SELECT_YYYY", "");
@@ -1327,7 +1356,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 			HashMap params = new HashMap();
 			params.put("SELECT_YYYY", SELECT_YYYY);
 			
-			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListYMD", params);
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListYYYYMM", params);
 	
 			map.put("message", "success");
 			map.put("dataList", dataList);
@@ -1459,6 +1488,34 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 				dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListDetailDown", params);
 			}
 			
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+	//통계 > 관리필지 증감현황 > 년,월
+	@PostMapping(path="/selectFieldInDeListYYYY")
+	public void selectFieldInDeListYYYY(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeListYYYY", null);
 	
 			map.put("message", "success");
 			map.put("dataList", dataList);
