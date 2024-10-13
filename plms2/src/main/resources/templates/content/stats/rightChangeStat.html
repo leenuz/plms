@@ -33,12 +33,7 @@
                                     <div class="hiddenSelectBox">
                                         <select id="rightChangeStatSelectBox01_1" hidden>
                                             <option value="전체">전체</option>
-                                            <option value="전체1">전체1</option>
-                                            <option value="전체2">전체2</option>
-                                            <option value="전체3">전체3</option>
-                                            <option value="전체4">전체4</option>
-                                            <option value="전체5">전체5</option>
-                                            <option value="전체6">전체6</option>
+                                            <option value="전체1" th:each="val:${jisaList}" th:value="${val.jm_jisa_name}" th:text="${val.jm_jisa_name}"></option>
                                         </select>
                                     </div>
                                     <!--보여지는 셀렉박스-->

@@ -18,6 +18,10 @@ $(function() {
 
 	//loadDataTable(object);
 	console.log("-----------------------");
+	
+	//드래그 앤 드롭 영역 파일 첨부 관련 코드
+	//let objDragAndDrop = $(".fileUploadBox");
+	//let objDragAndDropExcel = $(".popfileUploadBox");
 })
 
 /* 이슈보기팝업 */
