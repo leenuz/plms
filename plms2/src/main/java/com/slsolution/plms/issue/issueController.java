@@ -1,8 +1,10 @@
 package com.slsolution.plms.issue;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.ApprovalHtmlUtil;
@@ -25,6 +29,7 @@ import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.MainService;
 import com.slsolution.plms.ParameterParser;
 import com.slsolution.plms.ParameterUtil;
+import com.slsolution.plms.config.GlobalConfig;
 import com.slsolution.plms.json.JSONArray;
 import com.slsolution.plms.json.JSONObject;
 
@@ -40,8 +45,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/issue")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class issueController {
+	
 	@Autowired
 	private MainService mainService;
+	
+	@Autowired
+	private GlobalConfig GC;
 
 	@GetMapping(path = "/menu06_1") // http://localhost:8080/api/get/dbTest
 	public ModelAndView menu06_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
@@ -471,17 +480,8 @@ public class issueController {
 		JSONObject requestParamObj = new JSONObject(requestParams);
 		ParameterParser parser = new ParameterParser(request);
 		
-//		String fileseq = parser.getString("fileseq", ""); // 파일 seq
-//		String MW_SEQ = parser.getString("MW_SEQ", "");
-//		String MW_TITLE = parser.getString("MW_TITLE", "");
-//		String MW_CONTENTS = parser.getString("MW_CONTENTS", "");
-//		String MW_OCCUR_DATE = parser.getString("MW_OCCUR_DATE", "");
-//		String JISA = parser.getString("JISA", "");
-//		String TOJI_LENGTH = parser.getString("TOJI_LENGTH", "");
-//		String SANGSIN_FLAG = parser.getString("SANGSIN_FLAG", "");
-//
-//		Integer FILE_DEL_LENGTH = parser.getInt("FILE_DEL_LENGTH");
-
+		System.out.println(requestParamObj.toString());
+		
 		String fileseq = (!requestParamObj.has("fileseq") || requestParamObj.getString("fileseq") == null) ? "" : requestParamObj.getString("fileseq"); // 파일seq
 		String MW_SEQ = requestParamObj.has("MW_SEQ")?requestParamObj.getString("MW_SEQ"):"";
 
@@ -492,11 +492,22 @@ public class issueController {
 		String TOJI_LENGTH = requestParamObj.has("TOJI_LENGTH")?requestParamObj.getString("TOJI_LENGTH"):"0";
 		String SANGSIN_FLAG = requestParamObj.getString("SANGSIN_FLAG");
 		
+		String MIN_TO_NAMEARR = requestParamObj.getString("min_to_nameArr");
+		String MIN_TO_BIRTHARR = requestParamObj.getString("min_to_birthArr");
+		String MIN_TO_RELATIONARR = requestParamObj.getString("min_to_relationArr");
+		String MIN_TO_PHONEARR = requestParamObj.getString("min_to_phoneArr");
+		String MIN_TO_PRESENCEARR = requestParamObj.getString("min_to_presenceArr");
+		
+		String MW_HISTORY = requestParamObj.getString("MW_HISTORY");
+		String MW_REQUIREMENTS = requestParamObj.getString("MW_REQUIREMENTS");
+		
 		String REG_ID = String.valueOf(request.getSession().getAttribute("userName"));
 
-		//Integer FILE_DEL_LENGTH = requestParamObj.getInt("FILE_DEL_LENGTH");
 		JSONArray tojiList = requestParamObj.getJSONArray("tojiList");
-
+		
+		//첨부파일명 배열 
+		JSONArray fileList = requestParamObj.getJSONArray("files");
+		
 		ArrayList list = null;
 		HashMap map = new HashMap();
 		int mwSeq = 0;
@@ -513,14 +524,29 @@ public class issueController {
 
 				MW_SEQ = String.valueOf(mwSeq);
 
-				// 마스터 등록
+				// STEP - 1 :: 마스터 등록
 				params.put("MW_SEQ", mwSeq);
 				params.put("MW_TITLE", MW_TITLE);
-				params.put("MW_CONTENTS", MW_CONTENTS);
+				
 				params.put("MW_OCCUR_DATE", MW_OCCUR_DATE);
 				params.put("JISA", JISA);
 				params.put("STATUS", "1");
 				params.put("REG_ID", REG_ID);
+				
+				//241013 - 추가
+				params.put("MINWONIN_TOJIJU_NM", MIN_TO_NAMEARR);
+				params.put("MINWONIN_TOJIJU_BIRTH", MIN_TO_BIRTHARR);
+				params.put("TOJIJU_RELATION", MIN_TO_RELATIONARR);
+				params.put("MINWONIN_PHONE", MIN_TO_PHONEARR);
+				params.put("FIELD_PRESENCE", MIN_TO_PRESENCEARR);
+				params.put("TOJI_HISTORY", MIN_TO_NAMEARR);
+				params.put("MINWON_REQUIREMENT", MIN_TO_NAMEARR);
+				params.put("MINWON_CONTENT", MIN_TO_NAMEARR);
+				
+				params.put("MW_HISTORY", MW_HISTORY);
+				params.put("MW_REQUIREMENTS", MW_REQUIREMENTS);
+				params.put("MW_CONTENTS", MW_CONTENTS);
+				
 
 //				Database.getInstance().insert("Json.insertMinwonMaster", params);
 				mainService.InsertQuery("issueSQL.insertMinwonMaster", params);
@@ -553,14 +579,32 @@ public class issueController {
 
 			}
 
-			// 첨부파일 등록
-			params = new HashMap();
-			params.put("MW_SEQ", mwSeq);
-//			params.put("FILESEQ", fileseq);
-//			Database.getInstance().update("Json.updateMinwonFileKey", params);
-
-			// 기존 토지정보 전부 삭제처리
-//			Database.getInstance().delete("Json.deleteMinwonPnu", params);
+			// STEP.2 첨부파일 등록 (Table - miwon_atcfile)
+			HashMap fileParams = new HashMap();
+			fileParams.put("MW_SEQ", mwSeq);
+			
+			if(fileList.length() > 0 ) {
+				log.info(fileList.toString());
+				
+				for(int y = 0 ; y < fileList.length() ; y++) {
+					
+					String originalFileName = fileList.get(y).toString();
+					
+					String changeFileName = CommonUtil.filenameAutoChange(originalFileName);
+					String tempPath = GC.getMinwonFileTempDir();
+					String dataPath = GC.getMinwonFileDataDir() + "/"+ "m_seq_"+mwSeq;
+					
+					fileParams.put("FILE_PATH", dataPath +"/"+ changeFileName);	//파일명이 바뀌기 때문에.
+					fileParams.put("FILE_NAME", originalFileName);
+					fileParams.put("FILE_MINWON_SEQ", (y+1));
+					
+					CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
+					
+					mainService.InsertQuery("issueSQL.insertMinwonAtchFileInfo", params);
+				}
+			}
+			
+			// ??? 민원PNU 삭제 이유는 ???
 			mainService.DeleteQuery("issueSQL.deleteMinwonPnu", params);
 
 			// 토지정보 등록
@@ -2032,6 +2076,58 @@ public class issueController {
 		return mav;
 	}
 
+	
+	@RequestMapping(value = "/fileUpload/post")
+	@ResponseBody
+	public HashMap upload(MultipartHttpServletRequest multipartRequest) {
+		Iterator<String> itr = multipartRequest.getFileNames();
+		
+		String filePath = GC.getMinwonFileTempDir();	//설정파일로 뺀다
+		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		HashMap resultData = new HashMap();
+		ArrayList<HashMap> resultDataArr = new ArrayList<HashMap>();
+		
+		String resultCode = "0000";
+		String resultMessage = "success";
+		
+		while(itr.hasNext()) {	//받은 파일 모두 올리기
+			MultipartFile mpf = multipartRequest.getFile(itr.next());
+			
+			String originalFileName = mpf.getOriginalFilename();	//파일명
+			
+			String fileFullPath = filePath + "/" + originalFileName;	//파일 전체 경로
+			
+			try {
+				log.info("minwon fileFullPath :: " + fileFullPath);
+				
+				//파일저장
+				//참고! : temp파일에 올라갔을뿐 완전히 해당 정보로 결제나 상신이 이루어지고나서 만들어진 폴더로 간게 아닙니다.
+				mpf.transferTo(new File(fileFullPath));
+				
+				resultData.put("fname", originalFileName);
+				resultData.put("fpath", fileFullPath);
+				
+				log.info("==============================");
+				log.info("originalFileName :: " + originalFileName);
+				log.info("fileFullPath :: " + fileFullPath);
+				log.info("==============================");
+				
+			} catch(Exception e) {
+				log.error("minwonTempFile ERROR :: " + e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		
+		resultMap.put("resultCode", resultCode);
+		resultMap.put("resultData", resultData);
+		resultMap.put("resultMessage", resultMessage);
+		
+		JSONObject obj = new JSONObject(resultMap);
+		
+		return resultMap;
+	}
+	
 	// PNU 조회 //민원신규등록시 주소검색에서 사용
 //	@PostMapping(path="/selectMinwonPNUList")
 //		public void selectMinwonPNUList(HttpServletRequest request, HttpServletResponse response) throws Exception {

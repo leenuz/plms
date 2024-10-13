@@ -1,3 +1,4 @@
+<script src="/vendor/jquery/jquery.min.js"></script>
 <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
 <div id="searchResultsPopup">
     <div class="popupWrap active" id="popupWrap">
@@ -8,7 +9,7 @@
         <div class="pilji_total">
             <p>
                 <span>총 검색 건 수</span>
-                <span class="total_blue">130</span>
+                <span class="total_blue" id="totalCount">0</span>
                 <span>건</span>
             </p>
             <button>
@@ -26,147 +27,7 @@
                     <li class="popTitle06">주소</li>
                     <li class="popTitle01">권리확보</li>
                 </ul>
-                <div class="popContentBox">
-                    <ul class="popContents">
-                        <li class="popContent05">
-                            <p>1</p>
-                        </li>
-                        <li class="popContent03">
-                            <p>대전지사</p>
-                        </li>
-                        <li class="popContent06">
-                            <p>대전광역시 동구 신상동 213</p>
-                        </li>
-                        <li class="popContent01">
-                            <p>지상권</p>
-                        </li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent05">
-                            <p>2</p>
-                        </li>
-                        <li class="popContent03">
-                            <p>대전지사</p>
-                        </li>
-                        <li class="popContent06">
-                            <p>대전광역시 유성구 금고동 231-2</p>
-                        </li>
-                        <li class="popContent01">
-                            <p>지상권</p>
-                        </li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent05">
-                            <p>3</p>
-                        </li>
-                        <li class="popContent03">
-                            <p>대전지사</p>
-                        </li>
-                        <li class="popContent06">
-                            <p>대전광역시 유성구 금고동 381-2</p>
-                        </li>
-                        <li class="popContent01">
-                            <p>지상권</p>
-                        </li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent05">
-                            <p>4</p>
-                        </li>
-                        <li class="popContent03">
-                            <p>대전지사</p>
-                        </li>
-                        <li class="popContent06">
-                            <p>대전광역시 유성구 금고동 산76-1</p>
-                        </li>
-                        <li class="popContent01">
-                            <p>지상권</p>
-                        </li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent05">
-                            <p>5</p>
-                        </li>
-                        <li class="popContent03">
-                            <p>대전지사</p>
-                        </li>
-                        <li class="popContent06">
-                            <p>대전광역시 유성구 금고동 산80-1</p>
-                        </li>
-                        <li class="popContent01">
-                            <p>지상권</p>
-                        </li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent05">
-                            <p>6</p>
-                        </li>
-                        <li class="popContent03">
-                            <p>대전지사</p>
-                        </li>
-                        <li class="popContent06">
-                            <p>대전광역시 대덕구 읍내동 67-1</p>
-                        </li>
-                        <li class="popContent01">
-                            <p>지상권</p>
-                        </li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent05">
-                            <p>7</p>
-                        </li>
-                        <li class="popContent03">
-                            <p>대전지사</p>
-                        </li>
-                        <li class="popContent06">
-                            <p>세종특별자치시 세종시 금남면 도남리 222-1 </p>
-                        </li>
-                        <li class="popContent01">
-                            <p>지상권</p>
-                        </li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent05">
-                            <p>8</p>
-                        </li>
-                        <li class="popContent03">
-                            <p>대전지사</p>
-                        </li>
-                        <li class="popContent06">
-                            <p>경기도 평택시 용이동 420-3</p>
-                        </li>
-                        <li class="popContent01">
-                            <p>지상권</p>
-                        </li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent05">
-                            <p>9</p>
-                        </li>
-                        <li class="popContent03">
-                            <p>대전지사</p>
-                        </li>
-                        <li class="popContent06">
-                            <p>충청북도 청주시 서원구 남이면 외천리 02-4</p>
-                        </li>
-                        <li class="popContent01">
-                            <p>지상권</p>
-                        </li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent05">
-                            <p>10</p>
-                        </li>
-                        <li class="popContent03">
-                            <p>대전지사</p>
-                        </li>
-                        <li class="popContent06">
-                            <p>충청북도 청주시 서원구 현도면 중척리 355-2</p>
-                        </li>
-                        <li class="popContent01">
-                            <p>지상권</p>
-                        </li>
-                    </ul>
+                <div class="popContentBox" id="resultList">
                 </div>
 
             </div>
@@ -176,25 +37,20 @@
             <div class="pilji_info_Popup_boardPageBoxs">
                 <ul>
                     <li class="arrowLeftWrapper">
-                        <button>
+                        <button onclick="firstPage()">
                             <img src="/assets/media/popup/images/arrowRightLine02.png" alt="preBtnImg" />
                         </button>
-                        <button>
+                        <button onclick="prevPage()">
                             <img src="/assets/media/popup/images/arrowRightLine01.png" alt="preBtnImg" />
                         </button>
                     </li>
-                    <li class="pageCountBoxs">
-                        <p>1</p>
-                        <p>2</p>
-                        <p>3</p>
-                        <p>4</p>
-                        <p>5</p>
+                    <li class="pageCountBoxs" id="pagination">
                     </li>
                     <li class="arrowRightWrapper">
-                        <button>
+                        <button onclick="nextPage()">
                             <img src="/assets/media/popup/images/arrowRightLine01.png" alt="nextBtnImg" />
                         </button>
-                        <button>
+                        <button onclick="lastPage()">
                             <img src="/assets/media/popup/images/arrowRightLine02.png" alt="nextBtnImg" />
                         </button>
                     </li>
@@ -207,12 +63,14 @@
     </div>
 </div>
 <script>
+    var pageNum = 0;
     var pageNo = 1;
-    var jisa = '';
-    var yyyy = '';
-    var mm = '';
-    var gubun = '';
-    var allData = '';
+    var jisa = '서울지사';
+    var yyyy = '2024';
+    var mm = '9';
+    var gubun = '등기';
+    var allData = 'JISA=' + jisa + '&YYYY=' + yyyy + '&MM=' + mm + '&GUBUN=' + gubun;
+    var resultData = [];
 
     function loadData() {
         $.ajax({
@@ -225,13 +83,77 @@
             success: function (response) {
               console.log(response);
               if (response.success = "Y") {
-                const resultData = response.dataList;
+                resultData = response.dataList;
+
+                $('#totalCount').html(resultData.length);
+                pageNum = Math.floor(resultData.length / 10);
+                if (resultData.length % 10 > 0) {
+                    pageNum += 1;
+                }
+
+                display();
               }
             },
             error: function () {
             }
         });
     }
-
     loadData();
+
+    function display() {
+        var startIdx = (pageNo - 1) * 10;
+
+        var resultStr = '';
+        for (var i = startIdx; i < startIdx + 10; i++) {
+            if (i > resultData.length - 1) break;
+            var row = resultData[i];
+
+            resultStr += '<ul class="popContents">';
+            resultStr += '<li class="popContent05"><p>'+(i + 1)+'</p></li>';
+            resultStr += '<li class="popContent03"><p>'+row.desc1+'</p></li>';
+            resultStr += '<li class="popContent06"><p>'+row.juso+'</p></li>';
+            resultStr += '<li class="popContent01"><p>'+row.jisang_status+'</p></li>';
+            resultStr += '</ul>';
+        }
+
+        $('#resultList').html(resultStr);
+
+        // pagination
+        var pagiStr = '';
+        var startNo = Math.floor((pageNo - 1) / 5) * 5 + 1;
+        var endNo = startNo + 5;
+        for (var i = startNo; i < endNo; i++) {
+            pagiStr += '<p onclick="goPage(' + i + ')">' + i + '</p>';
+        }
+        $('#pagination').html(pagiStr);
+    }
+
+    function prevPage() {
+        if (pageNo > 1) {
+            pageNo -= 1;
+            display();
+        }
+    }
+
+    function nextPage() {
+        if (pageNo < pageNum) {
+            pageNo += 1;
+            display();
+        }
+    }
+
+    function firstPage() {
+        pageNo = 1;
+        display();
+    }
+
+    function lastPage() {
+        pageNo = pageNum;
+        display();
+    }
+
+    function goPage(no) {
+        pageNo = no;
+        display();
+    }
 </script>

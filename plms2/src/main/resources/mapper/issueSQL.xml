@@ -489,6 +489,15 @@ ORDER BY A.PNU ASC LIMIT 1
 		        mm_REG_DATE,
 		        mm_REG_ID,
 		        mm_STATUS
+		       
+		       , minwonin_tojiju_nm
+		       , minwonin_tojiju_birth
+		       , tojiju_relation
+		       , minwonin_phone
+		       , field_presence
+		       , toji_history
+		       , minwon_requirement
+		       , minwon_content
 		) VALUES (
 		        #{MW_SEQ},
 		        #{MW_TITLE},
@@ -498,6 +507,15 @@ ORDER BY A.PNU ASC LIMIT 1
 		        CURRENT_TIMESTAMP,
 		        #{REG_ID},
 		        #{STATUS}
+		        
+		        , #{MINWONIN_TOJIJU_NM}
+		        , #{MINWONIN_TOJIJU_BIRTH}
+		        , #{TOJIJU_RELATION}
+		        , #{MINWONIN_PHONE}
+		        , #{FIELD_PRESENCE}
+		        , #{TOJI_HISTORY}
+		        , #{MINWON_REQUIREMENT}
+		        , #{MINWON_CONTENT}
 		        )
 	</insert>
 	<update id="updateMinwonMaster" parameterType="HashMap">
@@ -1420,5 +1438,23 @@ UPDATE MINWON_MASTER
  WHERE mm_MW_SEQ = #{MW_SEQ}
 	]]></update>
 	
+	
+<!-- 신규 민원 첨부파일 저장-->
+<insert id="insertMinwonAtchFileInfo" parameterType="HashMap"><![CDATA[
+INSERT INTO MINWON_ATCFILE (
+	ma_mw_seq
+	, ma_file_nm
+	, ma_file_path
+	, ma_seq
+	, ma_file_seq
+) VALUES (
+	#{MW_SEQ}
+	, #{FILE_NAME}
+	, #{FILE_PATH}
+	, #{FILE_MINWON_SEQ}
+	, #{FILE_MINWON_SEQ}
+)
+
+]]></insert>
 	
 </mapper>
