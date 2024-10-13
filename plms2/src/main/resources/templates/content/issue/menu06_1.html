@@ -405,7 +405,7 @@ if (issuePopupOpen) {
 										<button class="landStatusPopOpenBtn" value="1">검색</button></li>
 									<li class="landinfo_content_5"><input type="text" id="minwonRegiYn_1" readonly /></li>
 									<li class="landinfo_content_6"><input type="text" id="minwonContYn_1" readonly /></li>
-									<li class="landinfo_content_7"><input type="text" id="minwonActualAreaYn_1" onkeydown="onlyNumberingInput(event)" maxlength="15"/></li>
+									<li class="landinfo_content_7"><input type="text" id="minwonActualAreaYn_1" onkeyDown="onlyNumberingInput(event)" maxlength="15"/></li>
 									<li class="landinfo_content_8">
 										<input type="hidden" name="addrInfoStr" id="minwonAddrInfo_1"/>
 										<button class="complaint_addition">추가</button></li>
@@ -452,7 +452,7 @@ if (issuePopupOpen) {
 								<li class="com_content_title1">민원인/토지주</li>
 
 								<!-- 민원인 토지주 여러내용 들어가는 곳-->
-								<li class="com_content_contents_1">
+								<li class="com_content_contents_1" id="minwonin_totiju_body">
 									<ul class="landowner_wrap">
 										<li class="landowner_num">
 											<input type="text" value="1" readonly /></li>
@@ -482,18 +482,21 @@ if (issuePopupOpen) {
 							<!-- 민원내용(토지이력 요구사항 내용 첨부파일)-->
 							<ul class="complaint_contents_content2">
 								<li class="com_content_title2">토지이력</li>
-								<li class="com_content_title4"><textarea name="MW_HISTORY"
-										class="auto_textarea"></textarea></li>
+								<li class="com_content_title4">
+									<textarea name="MW_HISTORY" class="auto_textarea"></textarea>
+								</li>
 							</ul>
 							<ul class="complaint_contents_content2">
 								<li class="com_content_title2">요구사항</li>
-								<li class="com_content_title4"><textarea
-										name="MW_REQUIREMENTS" class="auto_textarea"></textarea></li>
+								<li class="com_content_title4">
+									<textarea name="MW_REQUIREMENTS" class="auto_textarea"></textarea>
+								</li>
 							</ul>
 							<ul class="complaint_contents_content2">
 								<li class="com_content_title2">내용</li>
-								<li class="com_content_title4"><textarea name="MW_CONTENTS"
-										class="auto_textarea"></textarea></li>
+								<li class="com_content_title4">
+									<textarea name="MW_CONTENTS" class="auto_textarea"></textarea>
+								</li>
 							</ul>
 							<ul class="complaint_contents_content3">
 								<li class="com_content_title3">첨부파일</li>
