@@ -61,29 +61,35 @@
 		 AND desc1 = #{jisa}
 		 </if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gubun)" >
-			and gubun = #{gubun}
+			AND gubun = #{gubun}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(juso)" >
-		and juso like '%${juso}%'
+			AND juso like '%${juso}%'
+		</if>
+		<if test="start_date != null and start_date != ''">
+		    AND mv_date <![CDATA[ >= ]]> CAST(#{start_date} AS DATE)
+		</if>
+		<if test="end_date != null and end_date != ''">
+		    AND mv_date <![CDATA[ <= ]]> CAST(#{end_date} AS DATE)
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
-			and sido_nm = #{sido_nm}
+			AND sido_nm = #{sido_nm}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
-			and sgg_nm = #{sgg_nm}
+			AND sgg_nm = #{sgg_nm}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
-			and emd_nm = #{emd_nm}
+			AND emd_nm = #{emd_nm}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
-			and ri_nm = #{ri_nm}
+			AND ri_nm = #{ri_nm}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
-			and jibun LIKE '%${jibun}%'
+			AND jibun LIKE '%${jibun}%'
 		</if>
 		
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
-			ORDER BY AA.${orderCol} ${desc}
+			ORDER BY ${orderCol} ${desc}
 			</if>
 		<if test="length>0">
 			limit #{length} offset #{start}

@@ -11,6 +11,21 @@ $(document).ready(function() {
 	loadDataTable("");
 });
 
+$(document).ready(function() {
+    // 리스트 항목 클릭 시 동작
+    $('.surfaceSelectListMember li').click(function() {
+        // 클릭한 항목의 텍스트와 값을 가져옴
+        const selectedText = $(this).text();
+        const selectedValue = $(this).data('value');
+
+        // 숨겨진 select에 값 적용
+        $('#gubun').val(selectedValue);
+
+        // 버튼 텍스트를 클릭한 항목의 텍스트로 변경
+        $('#gubunBtn').text(selectedText);
+    });
+});
+
 
 //조회하기 클릭시 상단 정보 출력 (현재는 지사 부분만 추가하였음 ... 다 불수 있게 추가해주세요)
 $(document).on("click", "#registerBtn", function() {
@@ -95,7 +110,9 @@ function loadDataTable(params) {
 			data: function(d) {
 				d.jisa = ljsIsNull(jisaCheck) ? ljsIsNull(params.jisa) ? '' : params.jisa : jisaCheck;
 				d.gubun = params.gubun;
-
+				d.start_date = params.start_date;
+				d.end_date = params.end_date;
+				
 				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
 				console.log("askmenu:" + ask);
 
@@ -120,7 +137,6 @@ function loadDataTable(params) {
 				console.log("-------------json---------------");
 				console.log(json);
 				$("#dataTableTotalCount").html(json.recordsTotal.toLocaleString());
-				//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
 				return json.data;
 			}
 		},

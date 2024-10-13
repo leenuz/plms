@@ -373,7 +373,12 @@ $('.issueStatusBtn').click(function () {
     type: "POST",
     dataType: "json",
     contentType: 'application/json; charset=utf-8',
+    beforeSend: function(request) {
+        console.log("beforesend ........................");
+        loadingShow();
+    },
     success: function (response) {
+      loadingHide();
       console.log(response);
       if (response.success = "Y") {
         const resultData = response.dataList;

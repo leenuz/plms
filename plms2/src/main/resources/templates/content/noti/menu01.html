@@ -10,7 +10,6 @@
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <link th:href="@{/css/common.css}" rel="stylesheet" />
 <link rel="stylesheet" href="/css/noti/menu01.css" />
-<script src="/js/noti/menu01.js"></script>
 
 <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
@@ -141,25 +140,23 @@ div.dt-filter-spacer {
 								</div>
 							</ul>
 							
-							<!-- 이설반영일자 - 조건 추가를 대비햐여 미삭제 -->
-							<!-- 
+							<!-- 이설반영일자 -->
 							<ul class="inputControlBoxs sectionMenuListBoxs">
 								<li class="selectTitle"><p>이설반영일자</p></li>
 								<div class="inputControlList dateListBox">
-									<input type="date" name="start_date" /> <span>-</span> <input
-										type="date" name="end_date" />
+									<input type="date" name="start_date" /> <span>-</span> 
+									<input type="date" name="end_date" />
 								</div>
-							</ul>-->
+							</ul>
 							
 							<!--구분-->
 							<ul class="selectContent sectionMenuListBoxs">
-								<li class="selectTitle"><p>구분</p></li>
+								<li class="selectTitle">
+									<p>구분</p>
+								</li>
 								<!--수정부분 지사-->
 								<div class="surfaceInquireSelectWrappers">
-									<select 
-										name="gubun" 
-										class="surfaceInquireHiddenSelect02"
-										id="surfaceInquireSelectBox02_3" hidden>
+									<select name="gubun"  class="surfaceInquireHiddenSelect02" id="surfaceInquireSelectBox02_3" hidden>
 										<option value="">전체</option>
 										<option value="N">신규대상</option>
 										<option value="C">해지대상</option>
@@ -185,7 +182,9 @@ div.dt-filter-spacer {
 							<p class="devideSecondTitles">주소</p>
 							<div class="surfaceInquireSectionRadioBoxs">
 								<ul class="radioBoxs">
-									<li><input type="radio" name="askMenu01" value="0" checked /><span>입력형</span>
+									<li>
+										<input type="radio" name="askMenu01" value="0" checked />
+										<span>입력형</span>
 									</li>
 									<li class="addressInput"><input name="addressFull"
 										type="search" placeholder="주소입력" class="searchInputBox02" />
@@ -339,5 +338,7 @@ div.dt-filter-spacer {
 	<script src="/js/menu01/menuLinkEvet.js"></script>
 	<script src="/js/menu01/radioEvet.js"></script>
 	<script src="/js/menu01/resultPageEvet.js"></script>
+	<script src="/js/common/common.js"></script>
+	<script src="/js/noti/menu01.js"></script>
 </th:block>
 </html>

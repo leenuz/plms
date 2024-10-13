@@ -139,7 +139,7 @@ const findMonthForparcelChangeStat = () => {
 
 
             monthOption.textContent = y+'월' ;
-            monthOption.value = y+'월' ;
+            monthOption.value = y ;
             
 
             monthSelect.appendChild(monthOption);
@@ -175,7 +175,6 @@ const parcelCurrentPopEvet = () => {
 
            const popupOpen = document.getElementById("current_detail_info_Popup");
            if (popupOpen) {
-
                popupOpen.classList.add("active");
            }
        })
@@ -263,13 +262,7 @@ const pageCountEvetForPotentialIssue = () => {
   };
   pageCountEvetForPotentialIssue();
 
-$(document).on("click",".parcelNumArea",function(){
 
-						  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
-						  	   $(popupOpen).addClass("open");
-						  	   popupOpen.classList.add("active");
-
-				   	   	});
 
 $(document).on("click",".topCloseBtn",function(){
 
@@ -284,3 +277,87 @@ $(document).on("click","#popupCloseBtn",function(){
 	$(".popupWrap").removeClass("active");
 //	$(".popupWrap").toggleClass("active");
 });
+
+$('.parcelChangeStatBtn').click(function () {
+    var allData = $("#queryForm").serialize();
+  
+    console.log(allData);
+    
+    $.ajax({
+      url: "/statics/selectFieldInDeList?" + allData,
+      data: JSON.stringify(allData),
+      async: true,
+      type: "POST",
+      dataType: "json",
+      contentType: 'application/json; charset=utf-8',
+      success: function (response) {
+        //console.log(response);
+        if (response.success = "Y") {
+          const resultData = response.dataList;
+  
+          $('#pREF').html($('#parcelChangeStat01_1').val() + '년 ' + $('#parcelChangeStat01_2').val() + '월');    //기준년월 출력
+          $('#pTG').html($('#parcelChangeStat02_1').val() + '년 ' + $('#parcelChangeStat02_2').val() + '월');    //비교년월 출력
+
+         //현황 상세 정보 load
+          loadCurrent_detail($('#parcelChangeStat01_1').val(),$('#parcelChangeStat01_2').val(),$('#parcelChangeStat02_1').val(),$('#parcelChangeStat02_2').val());
+  
+          var tbodyStr = '';
+
+          for (var i = 0; i < resultData.length; i++) {
+            var data = resultData[i];
+            var trStr = '<tr>';
+            trStr += '<td><p>' + data.desc1 + '</p></td>';
+            
+            trStr += '<td class="parcelNumArea"><p class="textunderline" onclick="loadDataPopup(\'' + data.desc1 + '\', ' + $('#parcelChangeStat01_1').val() + ', ' + $('#parcelChangeStat01_2').val() + ', \'등기\')">' + data.ref_cmpy + '</p></td>';
+            trStr += '<td class="parcelNumArea"><p class="textunderline" onclick="loadDataPopup(\'' + data.desc1 + '\', ' + $('#parcelChangeStat01_1').val() + ', ' + $('#parcelChangeStat01_2').val() + ', \'미등기계약\')">' + data.ref_cmpn_pmty + '</p></td>';
+            trStr += '<td class="parcelNumArea"><p class="textunderline" onclick="loadDataPopup(\'' + data.desc1 + '\', ' + $('#parcelChangeStat01_1').val() + ', ' + $('#parcelChangeStat01_2').val() + ', \'미등기미계약\')">' + data.ref_cmpn_pmtn + '</p></td>';
+            trStr += '<td class="parcelNumArea"><p class="textunderline" onclick="loadDataPopup(\'' + data.desc1 + '\', ' + $('#parcelChangeStat01_1').val() + ', ' + $('#parcelChangeStat01_2').val() + ', \'소계\')">' + data.ref_cmpn + '</p></td>';
+            trStr += '<td class="parcelNumArea"><p class="textunderline" onclick="loadDataPopup(\'' + data.desc1 + '\', ' + $('#parcelChangeStat01_1').val() + ', ' + $('#parcelChangeStat01_2').val() + ', \'전체\')">' + data.ref_sum + '</p></td>';
+
+            trStr += '<td class="parcelNumArea"><p class="textunderline" onclick="loadDataPopup(\'' + data.desc1 + '\', ' + $('#parcelChangeStat02_1').val() + ', ' + $('#parcelChangeStat02_2').val() + ', \'등기\')">' + data.tg_cmpy + '</p></td>';
+            trStr += '<td class="parcelNumArea"><p class="textunderline" onclick="loadDataPopup(\'' + data.desc1 + '\', ' + $('#parcelChangeStat02_1').val() + ', ' + $('#parcelChangeStat02_2').val() + ', \'미등기계약\')">' + data.tg_cmpn_pmty + '</p></td>';
+            trStr += '<td class="parcelNumArea"><p class="textunderline" onclick="loadDataPopup(\'' + data.desc1 + '\', ' + $('#parcelChangeStat02_1').val() + ', ' + $('#parcelChangeStat02_2').val() + ', \'미등기미계약\')">' + data.tg_cmpn_pmtn + '</p></td>';
+            trStr += '<td class="parcelNumArea"><p class="textunderline" onclick="loadDataPopup(\'' + data.desc1 + '\', ' + $('#parcelChangeStat02_1').val() + ', ' + $('#parcelChangeStat02_2').val() + ', \'소계\')">' + data.tg_cmpn + '</p></td>';
+            trStr += '<td class="parcelNumArea"><p class="textunderline" onclick="loadDataPopup(\'' + data.desc1 + '\', ' + $('#parcelChangeStat02_1').val() + ', ' + $('#parcelChangeStat02_2').val() + ', \'전체\')">' + data.tg_sum + '</p></td>';
+
+            trStr += '<td class="parcelNumArea"><p>' + data.cmpy_dif + '</p></td>';
+            trStr += '<td class="parcelNumArea"><p>' + data.cmpn_pmty_dif + '</p></td>';
+            trStr += '<td class="parcelNumArea"><p>' + data.cmpn_pmtn_dif + '</p></td>';
+            trStr += '<td class="parcelNumArea"><p>' + data.cmpn_dif + '</p></td>';
+            trStr += '<td class="parcelNumArea"><p>' + data.sum_dif + '</p></td>';
+
+
+            trStr += '</tr>';
+
+            tbodyStr += trStr;
+          }
+  
+          
+          $('#tbody1').html(tbodyStr);
+  
+          
+        }
+      },
+      error: function () {
+      }
+    });
+  });
+
+  function loadDataPopup(jisa, yyyy, mm, gubun) {
+
+    $.ajax({
+        url: "/stats/parcelPopup?JISA=" + jisa + "&YYYY=" + yyyy + "&MM=" + mm + "&GUBUN=" + gubun,
+        async: true,
+        type: "GET",
+        // dataType: "json",
+        contentType: 'html/text; charset=utf-8',
+        success: function (response) {
+          console.log(response);
+          $('#searchResultPopDiv').html(response);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+      });
+    
+  }

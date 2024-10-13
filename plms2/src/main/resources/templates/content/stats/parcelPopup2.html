@@ -68,13 +68,21 @@
     var jisa = '[[${jisa}]]';
     var yyyy = '[[${yyyy}]]';
     var mm = '[[${mm}]]';
+    var yyyy_ref = '[[${yyyy_ref}]]';
+    var mm_ref = '[[${mm_ref}]]';
+    var yyyy_tg = '[[${yyyy_tg}]]';
+    var mm_tg = '[[${mm_tg}]]';
     var gubun = '[[${gubun}]]';
+    var goverOwn = '[[${gover_own}]]';
+    var jisangStatus = '[[${jisang_status}]]';
     var allData = 'JISA=' + jisa + '&YYYY=' + yyyy + '&MM=' + mm + '&GUBUN=' + gubun;
+    allData += '&YYYY_REF=' + yyyy_ref + '&MM_REF=' + mm_ref + '&YYYY_TG=' + yyyy_tg + '&MM_TG=' + mm_tg;
+    allData += '&GOVER_OWN=' + goverOwn + '&JISANG_STATUS=' + jisangStatus;
     var resultData = [];
 
     function loadData() {
         $.ajax({
-            url: "/statics/selectFieldInDeListDetail?" + allData,
+            url: "/statics/selectFieldInDeStatusBoardListDetail?" + allData,
             data: JSON.stringify(allData),
             async: true,
             type: "POST",

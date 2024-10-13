@@ -535,19 +535,14 @@ public class issueController {
 				params.put("REG_ID", REG_ID);
 				
 				//241013 - 추가
-				params.put("MINWONIN_TOJIJU_NM", MIN_TO_NAMEARR);
-				params.put("MINWONIN_TOJIJU_BIRTH", MIN_TO_BIRTHARR);
-				params.put("TOJIJU_RELATION", MIN_TO_RELATIONARR);
-				params.put("MINWONIN_PHONE", MIN_TO_PHONEARR);
-				params.put("FIELD_PRESENCE", MIN_TO_PRESENCEARR);
-				params.put("TOJI_HISTORY", MIN_TO_NAMEARR);
-				params.put("MINWON_REQUIREMENT", MIN_TO_NAMEARR);
-				params.put("MINWON_CONTENT", MIN_TO_NAMEARR);
-				
-				params.put("MW_HISTORY", MW_HISTORY);
-				params.put("MW_REQUIREMENTS", MW_REQUIREMENTS);
-				params.put("MW_CONTENTS", MW_CONTENTS);
-				
+				params.put("MINWONIN_TOJIJU_NM", MIN_TO_NAMEARR);	//성명
+				params.put("MINWONIN_TOJIJU_BIRTH", MIN_TO_BIRTHARR);	//생년월일
+				params.put("TOJIJU_RELATION", MIN_TO_RELATIONARR);	//관계
+				params.put("MINWONIN_PHONE", MIN_TO_PHONEARR);		//민원인,토지주 연락처
+				params.put("FIELD_PRESENCE", MIN_TO_PRESENCEARR);	//현장입회
+				params.put("TOJI_HISTORY", MW_HISTORY);				//토지이력
+				params.put("MINWON_REQUIREMENT", MW_REQUIREMENTS);	//요구사항
+				params.put("MINWON_CONTENT", MW_CONTENTS);			//내용
 
 //				Database.getInstance().insert("Json.insertMinwonMaster", params);
 				mainService.InsertQuery("issueSQL.insertMinwonMaster", params);
