@@ -175,7 +175,6 @@ const parcelCurrentPopEvet = () => {
 
            const popupOpen = document.getElementById("current_detail_info_Popup");
            if (popupOpen) {
-
                popupOpen.classList.add("active");
            }
        })
@@ -298,6 +297,9 @@ $('.parcelChangeStatBtn').click(function () {
   
           $('#pREF').html($('#parcelChangeStat01_1').val() + '년 ' + $('#parcelChangeStat01_2').val() + '월');    //기준년월 출력
           $('#pTG').html($('#parcelChangeStat02_1').val() + '년 ' + $('#parcelChangeStat02_2').val() + '월');    //비교년월 출력
+
+         //현황 상세 정보 load
+          loadCurrent_detail($('#parcelChangeStat01_1').val(),$('#parcelChangeStat01_2').val(),$('#parcelChangeStat02_1').val(),$('#parcelChangeStat02_2').val());
   
           var tbodyStr = '';
 

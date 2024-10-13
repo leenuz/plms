@@ -477,6 +477,7 @@ public class issueController {
 	public void saveMinwonData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		
 		JSONObject requestParamObj = new JSONObject(requestParams);
 		ParameterParser parser = new ParameterParser(request);
 		
@@ -592,10 +593,14 @@ public class issueController {
 					fileParams.put("FILE_PATH", dataPath +"/"+ changeFileName);	//파일명이 바뀌기 때문에.
 					fileParams.put("FILE_NAME", originalFileName);
 					fileParams.put("FILE_MINWON_SEQ", (y+1));
-					
-					CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
-					
-					mainService.InsertQuery("issueSQL.insertMinwonAtchFileInfo", fileParams);
+
+					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
+						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
+						
+						mainService.InsertQuery("issueSQL.insertMinwonAtchFileInfo", params);
+					}
+					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
+
 				}
 			}
 			
@@ -856,7 +861,7 @@ public class issueController {
 		String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		JSONObject requestParamObj = new JSONObject(requestParams);
 		ParameterParser parser = new ParameterParser(request);
-		String fileseq = requestParamObj.getString("fileseq"); // 파일 seq
+		String fileseq =requestParamObj.has("fileseq")?requestParamObj.getString("fileseq"):"0"; // 파일 seq
 		String MW_SEQ = requestParamObj.getString("MW_SEQ");
 		String AGREE_SEQ = requestParamObj.getString("AGREE_SEQ");
 		String AGREE_TITLE = requestParamObj.getString("AGREE_TITLE");
