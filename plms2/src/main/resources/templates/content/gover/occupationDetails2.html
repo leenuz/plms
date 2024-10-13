@@ -265,8 +265,7 @@
 								</ul>
 								<ul class="contents" th:each="val:${pnuList}">
 									<li class="content01 content">
-										<button class="viewAllBtn" onclick="openMapAll()">전체
-											위치보기</button>
+										<button class="viewAllBtn" th:onclick="positionView()">전체 위치보기</button>
 									</li>
 								</ul>
 							</div>
