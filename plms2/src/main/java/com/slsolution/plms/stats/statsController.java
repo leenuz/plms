@@ -1,6 +1,7 @@
 package com.slsolution.plms.stats;
 
 import com.slsolution.plms.MainService;
+import com.slsolution.plms.ParameterParser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -79,12 +80,30 @@ public class statsController {
 	public ModelAndView parcelChangeStat(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		
 		// 기준/비교 년도 리스트
-	    ArrayList<HashMap> yyyyList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeListYYYYMM", null);
+	    ArrayList<HashMap> yyyyList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeListYYYY", null);
 		log.info("yyyyList:" + yyyyList);
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("yyyyList", yyyyList);
 		mav.setViewName("content/stats/parcelChangeStat");
+		return mav;
+	}
+
+	@GetMapping(path="/parcelPopup") //http://localhost:8080/api/get/dbTest
+	public ModelAndView parcelPopup(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+
+		ParameterParser parser = new ParameterParser(httpRequest);
+		String JISA = parser.getString("JISA", "");
+		String YYYY = parser.getString("YYYY", "");
+		String MM = parser.getString("MM", "");
+		String GUBUN = parser.getString("GUBUN", "");
+
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("jisa", JISA);
+		mav.addObject("yyyy", YYYY);
+		mav.addObject("mm", MM);
+		mav.addObject("gubun", GUBUN);
+		mav.setViewName("content/stats/parcelPopup");
 		return mav;
 	}
 }
