@@ -468,182 +468,183 @@ compLandRegSearchOpenPopUp();
 
 $(document).on("click", ".registBtn", function () {
     var formSerializeArray = $('#saveForm').serializeArray();
-
-    len = formSerializeArray.length;
-    var dataObj = {};
-    for (i = 0; i < len; i++) {
-        dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
-    }
-
-    var rightDatas = [];
-    var rightUls = $("#rightDiv .contents");
-    console.log("----------deptUls------------");
-    console.log(rightUls);
-    /*String RIGHT_NAME = parser.getString("RIGHT_NAME" + String.valueOf(i), ""); // 권리명
-          String RIGHT_MONEY = parser.getString("RIGHT_MONEY" + String.valueOf(i), ""); // 설정금액
-          String RIGHT_DATE = parser.getString("RIGHT_DATE" + String.valueOf(i), ""); // 설정일
-          String CANCLE_DATE = parser.getString("CANCLE_DATE" + String.valueOf(i), ""); // 해지일
-          String RIGHT_UNAME = parser.getString("RIGHT_UNAME" + String.valueOf(i), ""); // 성명
-          String RIGHT_PHONE = parser.getString("RIGHT_PHONE" + String.valueOf(i), ""); // 연락처
-          String RIGHT_ADDR = parser.getString("RIGHT_ADDR" + String.valueOf(i), ""); // 주소*/
-
-    for (var i = 0; i < rightUls.length; i++) {
-        var rightName = $(rightUls[i]).find("input[name='rightName']").val();
-        var rightMoney = $(rightUls[i]).find("input[name='rightMoney']").val();
-        var rightDate = $(rightUls[i]).find("input[name='rightDate']").val();
-        var cancleDate = $(rightUls[i]).find("input[name='cancleDate']").val();
-        var rightUname = $(rightUls[i]).find("input[name='rightUname']").val();
-        var rightPhone = $(rightUls[i]).find("input[name='rightPhone']").val();
-        var rightAddr = $(rightUls[i]).find("input[name='rightAddr']").val();
-
-        //console.log("togiManageNo:"+togiManageNo);
-        var deptObj = {
-            "RIGHT_NAME": ljsIsNull(rightName) ? '' : rightName
-            , "RIGHT_MONEY": ljsIsNull(rightMoney) ? '' : rightMoney
-            , "RIGHT_DATE": ljsIsNull(rightDate) ? '' : rightDate
-            , "CANCLE_DATE": ljsIsNull(cancleDate) ? '' : cancleDate
-            , "RIGHT_UNAME": ljsIsNull(rightUname) ? '' : rightUname
-            , "RIGHT_PHONE": ljsIsNull(rightPhone) ? '' : rightPhone
-            , "RIGHT_ADDR": ljsIsNull(rightAddr) ? '' : rightAddr
-        }
-        console.log(deptObj);
-        rightDatas.push(deptObj);
-    }
+	if(confirm('회사토지를 수정하시겠습니까?')) {
+	    len = formSerializeArray.length;
+	    var dataObj = {};
+	    for (i = 0; i < len; i++) {
+	        dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
+	    }
 	
-	const attachFileUls = document.querySelectorAll('input[name="compLandEdit_attachFile"]');
-		console.log(attachFileUls);
+	    var rightDatas = [];
+	    var rightUls = $("#rightDiv .contents");
+	    console.log("----------deptUls------------");
+	    console.log(rightUls);
+	    /*String RIGHT_NAME = parser.getString("RIGHT_NAME" + String.valueOf(i), ""); // 권리명
+	          String RIGHT_MONEY = parser.getString("RIGHT_MONEY" + String.valueOf(i), ""); // 설정금액
+	          String RIGHT_DATE = parser.getString("RIGHT_DATE" + String.valueOf(i), ""); // 설정일
+	          String CANCLE_DATE = parser.getString("CANCLE_DATE" + String.valueOf(i), ""); // 해지일
+	          String RIGHT_UNAME = parser.getString("RIGHT_UNAME" + String.valueOf(i), ""); // 성명
+	          String RIGHT_PHONE = parser.getString("RIGHT_PHONE" + String.valueOf(i), ""); // 연락처
+	          String RIGHT_ADDR = parser.getString("RIGHT_ADDR" + String.valueOf(i), ""); // 주소*/
+	
+	    for (var i = 0; i < rightUls.length; i++) {
+	        var rightName = $(rightUls[i]).find("input[name='rightName']").val();
+	        var rightMoney = $(rightUls[i]).find("input[name='rightMoney']").val();
+	        var rightDate = $(rightUls[i]).find("input[name='rightDate']").val();
+	        var cancleDate = $(rightUls[i]).find("input[name='cancleDate']").val();
+	        var rightUname = $(rightUls[i]).find("input[name='rightUname']").val();
+	        var rightPhone = $(rightUls[i]).find("input[name='rightPhone']").val();
+	        var rightAddr = $(rightUls[i]).find("input[name='rightAddr']").val();
+	
+	        //console.log("togiManageNo:"+togiManageNo);
+	        var deptObj = {
+	            "RIGHT_NAME": ljsIsNull(rightName) ? '' : rightName
+	            , "RIGHT_MONEY": ljsIsNull(rightMoney) ? '' : rightMoney
+	            , "RIGHT_DATE": ljsIsNull(rightDate) ? '' : rightDate
+	            , "CANCLE_DATE": ljsIsNull(cancleDate) ? '' : cancleDate
+	            , "RIGHT_UNAME": ljsIsNull(rightUname) ? '' : rightUname
+	            , "RIGHT_PHONE": ljsIsNull(rightPhone) ? '' : rightPhone
+	            , "RIGHT_ADDR": ljsIsNull(rightAddr) ? '' : rightAddr
+	        }
+	        console.log(deptObj);
+	        rightDatas.push(deptObj);
+	    }
 		
-		let files = new Array();
-		for(var i = 0; i < attachFileUls.length; i++){
-			let fileInfo = {};
-			let fname = $(attachFileUls[i]).parent().parent().find("#filename").val();
-			let idx = $(attachFileUls[i]).prev().prev().prev().prev().prev().val();
-			let seq = $(attachFileUls[i]).prev().prev().prev().prev().val();
-			let file_seq = $(attachFileUls[i]).prev().prev().prev().val();
-			let file_path = $(attachFileUls[i]).prev().prev().val();
-			let checkYn = $(attachFileUls[i]).prev().val();
-			fileInfo.idx = idx;
-			fileInfo.seq = seq;
-			fileInfo.file_seq = file_seq;
-			fileInfo.file_path = file_path;
-			fileInfo.fname = fname;
-			fileInfo.newFileCheckYn = checkYn;
-			files.push(fileInfo);
-		}
-		dataObj.files = files;
+		const attachFileUls = document.querySelectorAll('input[name="compLandEdit_attachFile"]');
+			console.log(attachFileUls);
+			
+			let files = new Array();
+			for(var i = 0; i < attachFileUls.length; i++){
+				let fileInfo = {};
+				let fname = $(attachFileUls[i]).parent().parent().find("#filename").val();
+				let idx = $(attachFileUls[i]).prev().prev().prev().prev().prev().val();
+				let seq = $(attachFileUls[i]).prev().prev().prev().prev().val();
+				let file_seq = $(attachFileUls[i]).prev().prev().prev().val();
+				let file_path = $(attachFileUls[i]).prev().prev().val();
+				let checkYn = $(attachFileUls[i]).prev().val();
+				fileInfo.idx = idx;
+				fileInfo.seq = seq;
+				fileInfo.file_seq = file_seq;
+				fileInfo.file_path = file_path;
+				fileInfo.fname = fname;
+				fileInfo.newFileCheckYn = checkYn;
+				files.push(fileInfo);
+			}
+			dataObj.files = files;
+		
+	    dataObj.rightDatas = rightDatas;
+	    dataObj.gubun = "modify"; //modify:수정
+	    // dataObj.dopcoNo = ""; //수정일때는 들어간다(form에 추가함)
+	    console.log("**dataObj**");
+	    console.log(dataObj);
+	    
+	    
+	    // 변경이력 체크
+	    var modifyReason1 = '';
+	    var modifyReason2 = '';
+	    var modifyReason3 = '';
+	    var modifyReason4 = '';
+	    var modifyReason5 = '';
+	    // 기본정보 변경이력
+	    if (dataObj.jisa_p != dataObj.jisa) {
+	        modifyReason1 += "담당지사 변경('" + dataObj.jisa_p + "' > '" + dataObj.jisa + "') ";
+	    }
+	    if (dataObj.yongdo_p != dataObj.yongdo) {
+	        modifyReason1 += "용도 변경('" + dataObj.yongdo_p + "' > '" + dataObj.yongdo + "') ";
+	    }
+	    if (dataObj.pipe_name_p != dataObj.pipe_name) {
+	        modifyReason1 += "관로명 변경('" + dataObj.pipe_name_p + "' > '" + dataObj.pipe_name + "') ";
+	    }
+	    if (dataObj.sun_gubun_p != dataObj.sun_gubun) {
+	        modifyReason1 += "단/복선 변경('" + dataObj.sun_gubun_p + "' > '" + dataObj.sun_gubun + "') ";
+	    }
+	    // 소속 토지 정보 변경이력
+	    if (dataObj.addressData_p + dataObj.jibun_p != dataObj.addressData + dataObj.jibun) {
+	        modifyReason2 += "행정구역 변경('" + dataObj.addressData_p + dataObj.jibun_p + "' > '" + dataObj.addressData + dataObj.jibun + "') ";
+	    }
+	    if (dataObj.gover_own_yn_p != dataObj.gover_own_yn) {
+	        modifyReason2 += "국공유지 여부 변경('" + dataObj.gover_own_yn_p + "' > '" + dataObj.gover_own_yn + "') ";
+	    }
+	    if (dataObj.areaData_p != dataObj.areaData) {
+	        modifyReason2 += "지적면적 변경('" + dataObj.areaData_p + "' > '" + dataObj.areaData + "') ";
+	    }
+	    if (dataObj.jimok_text_p != dataObj.jimok_text) {
+	        modifyReason2 += "지목 변경('" + dataObj.jimok_text_p + "' > '" + dataObj.jimok_text + "') ";
+	    }
+	    // 소속 토지 지상권 변경이력
+	    if (dataObj.dosiplan_p != dataObj.dosiplan) {
+	        modifyReason3 += "도시 계획 설정여부 변경('" + dataObj.dosiplan_p + "' > '" + dataObj.dosiplan + "') ";
+	    }
+	    if (dataObj.current_p != dataObj.current) {
+	        modifyReason3 += "현재 활용 현황 변경('" + dataObj.current_p + "' > '" + dataObj.current + "') ";
+	    }
+	    if (dataObj.chuideukDate_p != dataObj.chuideukDate) {
+	        modifyReason3 += "취득일 변경('" + dataObj.chuideukDate_p + "' > '" + dataObj.chuideukDate + "') ";
+	    }
+	    if (dataObj.jasan_p != dataObj.jasan) {
+	        modifyReason3 += "자산분류번호 변경('" + dataObj.jasan_p + "' > '" + dataObj.jasan + "') ";
+	    }
+	    // 권리확보 내역 변경이력
+	    if (dataObj.comple_yn_p != dataObj.comple_yn) {
+	        modifyReason4 += "완결여부 변경('" + dataObj.comple_yn_p + "' > '" + dataObj.comple_yn + "') ";
+	    }
+	    if (dataObj.deunggiDate_p != dataObj.deunggiDate) {
+	        modifyReason4 += "등기일 변경('" + dataObj.deunggiDate_p + "' > '" + dataObj.deunggiDate + "') ";
+	    }
+	    if (dataObj.deunggiNo_p != dataObj.deunggiNo) {
+	        modifyReason4 += "등기번호 변경('" + dataObj.deunggiNo_p + "' > '" + dataObj.deunggiNo + "') ";
+	    }
+	    if (dataObj.deunggiso_p != dataObj.deunggiso) {
+	        modifyReason4 += "등기소 변경('" + dataObj.deunggiso_p + "' > '" + dataObj.deunggiso + "') ";
+	    }
 	
-    dataObj.rightDatas = rightDatas;
-    dataObj.gubun = "modify"; //modify:수정
-    // dataObj.dopcoNo = ""; //수정일때는 들어간다(form에 추가함)
-    console.log("**dataObj**");
-    console.log(dataObj);
-    
-    
-    // 변경이력 체크
-    var modifyReason1 = '';
-    var modifyReason2 = '';
-    var modifyReason3 = '';
-    var modifyReason4 = '';
-    var modifyReason5 = '';
-    // 기본정보 변경이력
-    if (dataObj.jisa_p != dataObj.jisa) {
-        modifyReason1 += "담당지사 변경('" + dataObj.jisa_p + "' > '" + dataObj.jisa + "') ";
-    }
-    if (dataObj.yongdo_p != dataObj.yongdo) {
-        modifyReason1 += "용도 변경('" + dataObj.yongdo_p + "' > '" + dataObj.yongdo + "') ";
-    }
-    if (dataObj.pipe_name_p != dataObj.pipe_name) {
-        modifyReason1 += "관로명 변경('" + dataObj.pipe_name_p + "' > '" + dataObj.pipe_name + "') ";
-    }
-    if (dataObj.sun_gubun_p != dataObj.sun_gubun) {
-        modifyReason1 += "단/복선 변경('" + dataObj.sun_gubun_p + "' > '" + dataObj.sun_gubun + "') ";
-    }
-    // 소속 토지 정보 변경이력
-    if (dataObj.addressData_p + dataObj.jibun_p != dataObj.addressData + dataObj.jibun) {
-        modifyReason2 += "행정구역 변경('" + dataObj.addressData_p + dataObj.jibun_p + "' > '" + dataObj.addressData + dataObj.jibun + "') ";
-    }
-    if (dataObj.gover_own_yn_p != dataObj.gover_own_yn) {
-        modifyReason2 += "국공유지 여부 변경('" + dataObj.gover_own_yn_p + "' > '" + dataObj.gover_own_yn + "') ";
-    }
-    if (dataObj.areaData_p != dataObj.areaData) {
-        modifyReason2 += "지적면적 변경('" + dataObj.areaData_p + "' > '" + dataObj.areaData + "') ";
-    }
-    if (dataObj.jimok_text_p != dataObj.jimok_text) {
-        modifyReason2 += "지목 변경('" + dataObj.jimok_text_p + "' > '" + dataObj.jimok_text + "') ";
-    }
-    // 소속 토지 지상권 변경이력
-    if (dataObj.dosiplan_p != dataObj.dosiplan) {
-        modifyReason3 += "도시 계획 설정여부 변경('" + dataObj.dosiplan_p + "' > '" + dataObj.dosiplan + "') ";
-    }
-    if (dataObj.current_p != dataObj.current) {
-        modifyReason3 += "현재 활용 현황 변경('" + dataObj.current_p + "' > '" + dataObj.current + "') ";
-    }
-    if (dataObj.chuideukDate_p != dataObj.chuideukDate) {
-        modifyReason3 += "취득일 변경('" + dataObj.chuideukDate_p + "' > '" + dataObj.chuideukDate + "') ";
-    }
-    if (dataObj.jasan_p != dataObj.jasan) {
-        modifyReason3 += "자산분류번호 변경('" + dataObj.jasan_p + "' > '" + dataObj.jasan + "') ";
-    }
-    // 권리확보 내역 변경이력
-    if (dataObj.comple_yn_p != dataObj.comple_yn) {
-        modifyReason4 += "완결여부 변경('" + dataObj.comple_yn_p + "' > '" + dataObj.comple_yn + "') ";
-    }
-    if (dataObj.deunggiDate_p != dataObj.deunggiDate) {
-        modifyReason4 += "등기일 변경('" + dataObj.deunggiDate_p + "' > '" + dataObj.deunggiDate + "') ";
-    }
-    if (dataObj.deunggiNo_p != dataObj.deunggiNo) {
-        modifyReason4 += "등기번호 변경('" + dataObj.deunggiNo_p + "' > '" + dataObj.deunggiNo + "') ";
-    }
-    if (dataObj.deunggiso_p != dataObj.deunggiso) {
-        modifyReason4 += "등기소 변경('" + dataObj.deunggiso_p + "' > '" + dataObj.deunggiso + "') ";
-    }
-
-    dataObj.modifyReason1 = modifyReason1;
-    dataObj.modifyReason2 = modifyReason2;
-    dataObj.modifyReason3 = modifyReason3;
-    dataObj.modifyReason4 = modifyReason4;
-    dataObj.modifyReason5 = modifyReason5;
-
-    /* var json = JSON.stringify(formSerializeArray);
-        console.log("----------jsonobj------------");
-        console.log(json); // JSON 문자열 출력*/
-
-    url = "/land/dopco/insertDopcoList";
-    $.ajax({
-
-        url: url,
-        type: 'POST',
-        contentType: "application/json",
-        data: JSON.stringify(dataObj),
-
-        dataType: "json",
-        beforeSend: function (request) {
-            console.log("beforesend ........................");
-            loadingShow();
-        },
-        success: function (response) {
-            loadingHide();
-            console.log(response);
-            if (response.success = "Y") {
-                console.log("response.success Y");
-                //console.log("response.resultData length:"+response.resultData.length);
-                alert("정상적으로 등록 되었습니다.");
-                /*$("#popup_bg").show();
-                $("#popup").show(500);
-                //$("#addrPopupLayer tbody td").remove();
-                for(var i=0;i<response.resultData.length;i++){
-                    $("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-                }*/
-            }
-            else {
-                console.log("response.success N");
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert("registBtn ajax error\n" + textStatus + ":" + errorThrown);
-            return false;
-        }
-    });
+	    dataObj.modifyReason1 = modifyReason1;
+	    dataObj.modifyReason2 = modifyReason2;
+	    dataObj.modifyReason3 = modifyReason3;
+	    dataObj.modifyReason4 = modifyReason4;
+	    dataObj.modifyReason5 = modifyReason5;
+	
+	    /* var json = JSON.stringify(formSerializeArray);
+	        console.log("----------jsonobj------------");
+	        console.log(json); // JSON 문자열 출력*/
+	
+	    url = "/land/dopco/insertDopcoList";
+	    $.ajax({
+	
+	        url: url,
+	        type: 'POST',
+	        contentType: "application/json",
+	        data: JSON.stringify(dataObj),
+	
+	        dataType: "json",
+	        beforeSend: function (request) {
+	            console.log("beforesend ........................");
+	            loadingShow();
+	        },
+	        success: function (response) {
+	            loadingHide();
+	            console.log(response);
+	            if (response.success = "Y") {
+	                console.log("response.success Y");
+	                //console.log("response.resultData length:"+response.resultData.length);
+	                alert("정상적으로 등록 되었습니다.");
+	                /*$("#popup_bg").show();
+	                $("#popup").show(500);
+	                //$("#addrPopupLayer tbody td").remove();
+	                for(var i=0;i<response.resultData.length;i++){
+	                    $("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+	                }*/
+	            }
+	            else {
+	                console.log("response.success N");
+	            }
+	        },
+	        error: function (jqXHR, textStatus, errorThrown) {
+	            alert("registBtn ajax error\n" + textStatus + ":" + errorThrown);
+	            return false;
+	        }
+	    });
+	}
 });
 
 $(document).on("click", ".searchBtn", function () {
@@ -731,11 +732,19 @@ $(document).on("click", "#deleteFileBtn", function () {
     const clickedAttachFiles = document.querySelectorAll('input[name="compLandEdit_attachFile"]:checked');
     for (var i = 0; i < clickedAttachFiles.length; i++) {
         var delEle = $(clickedAttachFiles[i]).closest("#fileListUl");
-        $(clickedAttachFiles[i]).prev().val('D');
-        $(delEle).hide();
-        
-        
+        let newFileCheck = $(delEle).find('input[name="newFileCheckYn"]').val();
+        if (newFileCheck == 'Y') {
+			$(delEle).remove();
+		} else {
+			$(clickedAttachFiles[i]).prev().val('D');
+        	$(delEle).hide();	
+		}
     }
+});
+
+$(document).on('click', '#landRightsRegistration_file_select_all', function() {
+	let checkFlag = $('#landRightsRegistration_file_select_all').prop('checked');
+	$('input[name="compLandEdit_attachFile"]').prop('checked', checkFlag);
 });
 
 /*첨부파일*/

@@ -588,7 +588,7 @@ $(document).on("click","#landRegistration_attachFile_select_all",function(){
 
 //저장버튼
 $(document).on("click","#finalBtn",function(){
-
+	if (confirm('토지개발 정보를 등록하시겠습니까?')) {
 	var formSerializeArray = $('#saveForm').serializeArray();
 
        len = formSerializeArray.length;
@@ -720,9 +720,7 @@ $(document).on("click","#finalBtn",function(){
 	   				}
 	   			
 	   		}); 
-	
-
-
+	}
 });
 
 /* 주소 검색 */

@@ -657,8 +657,14 @@ $(document).on("click","#deleteSelectedBtn",function(){
 	const clickedAttachFiles = document.querySelectorAll('input[name="landEdit_attachFile"]:checked');
 	for(var i=0;i<clickedAttachFiles.length;i++){
 		var delEle=$(clickedAttachFiles[i]).closest("#fileListUl");
-		$(delEle).css('display', 'none');
-		$(delEle).find('input[name="newFileCheckYn"]').val('D');
+		let newFileCheck = $(delEle).find('input[name="newFileCheckYn"]').val();
+		if (newFileCheck == 'Y') {
+			$(delEle).remove();
+		} else {
+			$(delEle).css('display', 'none');
+			$(delEle).find('input[name="newFileCheckYn"]').val('D');	
+		}
+		
 
 	}
 
@@ -668,6 +674,9 @@ $(document).on("click","#deleteSelectedBtn",function(){
 const clickedAllinput = document.querySelector('input[name="landEdit_file_select_all"]');
 
 $(document).on("click","#landEdit_file_select_all",function(){
+	console.log();
+	let checkFlag = $('#landEdit_file_select_all').prop('checked');
+	$('input[name="landEdit_attachFile"]').prop('checked', checkFlag);
    const attachFiles = document.querySelectorAll('input[name="landEdit_myPcFiles"]');
 
             attachFiles.forEach((checkbox) => {
@@ -678,6 +687,7 @@ $(document).on("click","#landEdit_file_select_all",function(){
 
 /*대표필지 선택*/
 $(document).on('change', 'input[name="landEditMainParcelChk_Checkbox01"]', function(event) {
+	
     const checkedbox = event.target;
     const daepyoCheck = checkedbox.parentNode.parentNode;
 
@@ -1168,8 +1178,8 @@ var formSerializeArray = $('#saveForm').serializeArray();
 	   				},
 	   				success:function(response){
 	   					loadingHide();
-	   					if (response.result){
-							alert("정상적으로 등록 되었습니다.");
+	   					if (response.message == 'Y'){
+							alert("수정 되었습니다.");
 //                            location.href = "/togi/landDevInfo?idx=" + dataObj.dosiNo;
 	   					}
 	   					else {

@@ -286,7 +286,7 @@ function loadDataTable(params) {
 			console.log(data);
 			console.log(data.idx);
 
-			var url = "/land/dopco/compLandInfo?idx=" + data.dom_idx + '&dopcoNo=' + data.dom_dopco_no + '&cancel=Y';
+			var url = "/land/dopco/compLandDispReg?idx=" + data.dom_idx + '&dopcoNo=' + data.dom_dopco_no;
 			window.location = url;
 		}
 	});
