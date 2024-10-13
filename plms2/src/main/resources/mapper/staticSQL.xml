@@ -997,6 +997,787 @@ SELECT TTT.TYPE,
 			and b.juso is null
 	</select>
 	
+		
+	<!-- 통계 > 권리필지 증감현황 > 년,월 -->
+	<select id="selectFieldInDeListYYYYMM" parameterType="HashMap" resultType="HashMap">
+		select month from static_deadline 
+		where desc1 is not null 
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SELECT_YYYY)" > 
+			and year = #{SELECT_YYYY} 
+		</if>
+		group by month order by month
+	</select>
+	
+	<!-- 통계 > 권리필지 증감현황 > 조회 -->
+	<select id="selectFieldInDeList" parameterType="HashMap" resultType="HashMap">
+		with
+			all_tb as (
+				select desc1,desc1_num 
+				from static_deadline_info group by desc1,desc1_num
+					),
+			ref_tb as (select * from static_deadline where jisang_status = '지상권' and  jisang_manage='N' and year = {YYYY_REF} and month = {MM_REF} and desc1 is not null), --기준년월
+			tg_tb as (select * from static_deadline where jisang_status = '지상권' and  jisang_manage='N' and year = {YYYY_TG} and month = {MM_TG} and desc1 is not null), --비교년월
+			ref_stat_cmpY as (
+				select desc1,count(*) from ref_tb where comple_yn = 'Y' group by desc1
+				), --기준 등기
+			ref_stat_cmpN_pmtY as (
+				select desc1,count(*) from ref_tb where comple_yn <![CDATA[<>]]> 'Y' and permitted_yn <![CDATA[<>]]> '없음' group by desc1
+				), --기준 미등기/계약
+			ref_stat_cmpN_pmtN as (
+				select desc1,count(*) from ref_tb where comple_yn <![CDATA[<>]]> 'Y' and permitted_yn = '없음' group by desc1
+				), --기준 미등기/미계약
+			ref_stat_cmpN as (
+				select desc1,count(*) from ref_tb where comple_yn <![CDATA[<>]]> 'Y' group by desc1
+				), --기준 미등기/소계
+			ref_stat as (
+				select desc1,count(*) from ref_tb group by desc1
+				), --기준 전체
+			tg_stat_cmpY as (
+				select desc1,count(*) from tg_tb where comple_yn = 'Y' group by desc1
+				), --비교 등기
+			tg_stat_cmpN_pmtY as (
+				select desc1,count(*) from tg_tb where comple_yn <![CDATA[<>]]> 'Y' and permitted_yn <![CDATA[<>]]> '없음' group by desc1
+				), --비교 미등기/계약
+			tg_stat_cmpN_pmtN as (
+				select desc1,count(*) from tg_tb where comple_yn <![CDATA[<>]]> 'Y' and permitted_yn = '없음' group by desc1
+				), --비교 미등기/미계약
+			tg_stat_cmpN as (
+				select desc1,count(*) from tg_tb where comple_yn <![CDATA[<>]]> 'Y' group by desc1
+				), --비교 미등기/소계
+			tg_stat as (
+				select desc1,count(*) from tg_tb group by desc1
+				), --비교 전체
+			fin as (select
+				a.desc1, --지사구분
+				coalesce(b.count,'0') as ref_cmpY, --기준 등기
+				coalesce(c.count,'0') as ref_cmpN_pmtY, --기준 미등기 계약
+				coalesce(d.count,'0') as ref_cmpN_pmtN, --기준 미등기 미계약
+				coalesce(e.count,'0') as ref_cmpN, --기준 미등기 소계
+				coalesce(f.count,'0') as ref_sum, --기준 전체
+				coalesce(g.count,'0') as tg_cmpY, --비교 등기
+				coalesce(h.count,'0') as tg_cmpN_pmtY, --비교 미등기 계약
+				coalesce(i.count,'0') as tg_cmpN_pmtN, --비교 미등기 미계약
+				coalesce(j.count,'0') as tg_cmpN, --비교 미등기 소계
+				coalesce(k.count,'0') as tg_sum --비교 전체
+			from  
+				all_tb a
+			left join 
+				ref_stat_cmpY b
+			on
+				a.desc1 = b.desc1
+			left join 
+				ref_stat_cmpN_pmtY c
+			on
+				a.desc1 = c.desc1
+			left join 
+				ref_stat_cmpN_pmtN d
+			on
+				a.desc1 = d.desc1
+			left join 
+				ref_stat_cmpN e
+			on
+				a.desc1 = e.desc1
+			left join 
+				ref_stat f
+			on
+				a.desc1 = f.desc1
+			left join 
+				tg_stat_cmpY g
+			on
+				a.desc1 = g.desc1
+			left join 
+				tg_stat_cmpN_pmtY h
+			on
+				a.desc1 = h.desc1
+			left join 
+				tg_stat_cmpN_pmtN i
+			on
+				a.desc1 = i.desc1
+			left join 
+				tg_stat_cmpN j
+			on
+				a.desc1 = j.desc1
+			left join 
+				tg_stat k
+			on
+				a.desc1 = k.desc1
+			order by a.desc1_num)
+		select
+			*,
+			(ref_cmpy - tg_cmpy) as cmpy_dif, --증감 등기
+			(ref_cmpn_pmty - tg_cmpn_pmty) as cmpn_pmty_dif, --증감 미등기 계약
+			(ref_cmpn_pmtn - tg_cmpn_pmtn) as cmpn_pmtn_dif, --증감 미등기 미계약
+			(ref_cmpn - tg_cmpn) as cmpn_dif, --증감 미등기 소계
+			(ref_sum - tg_sum) as sum_dif --증감 전체
+		from fin
+	</select>
+	
+	<!-- 통계 > 권리필지 증감현황 > 메인 조회 > 등기 -->
+	<select id="selectFieldInDeListDetailRegistered" parameterType="HashMap" resultType="HashMap">
+		select
+			desc1,
+			juso,
+			jisang_status
+		from 
+			static_deadline 
+		where 
+			1=1
+			and year = {YYYY}
+			and month = {MM} 
+			and desc1 = {JISA}
+			and jisang_status = {STATUS}
+			and comple_yn = 'Y'
+			and jisang_manage = 'N'
+	</select>
+	
+	<!-- 통계 > 권리필지 증감현황 > 메인 조회 > 미등기/계약 -->
+	<select id="selectFieldInDeListDetailUnRegisteredContract" parameterType="HashMap" resultType="HashMap">
+		select
+			desc1,
+			juso,
+			jisang_status
+		from 
+			static_deadline 
+		where 
+			1=1
+			and year = {YYYY}
+			and month = {MM} 
+			and desc1 = {JISA}
+			and jisang_status = {STATUS}
+			and comple_yn <![CDATA[<>]]> 'Y'
+			and permitted_yn <![CDATA[<>]]> '없음'
+			and jisang_manage = 'N'
+	</select>
+	
+	<!-- 통계 > 권리필지 증감현황 > 메인 조회 > 미등기/미계약 -->
+	<select id="selectFieldInDeListDetailUnRegisteredUnContract" parameterType="HashMap" resultType="HashMap">
+		select
+			desc1,
+			juso,
+			jisang_status
+		from 
+			static_deadline 
+		where 
+			1=1
+			and year = {YYYY}
+			and month = {MM} 
+			and desc1 = {JISA}
+			and jisang_status = {STATUS}
+			and comple_yn <![CDATA[<>]]> 'Y'
+			and permitted_yn = '없음'
+			and jisang_manage = 'N'
+	</select>
+	
+	<!-- 통계 > 권리필지 증감현황 > 메인 조회 > 미등기/소계 -->
+	<select id="selectFieldInDeListDetailUnRegisteredSubtotal" parameterType="HashMap" resultType="HashMap">
+		select
+			desc1,
+			juso,
+			jisang_status
+		from 
+			static_deadline 
+		where 
+			1=1
+			and year = {YYYY}
+			and month = {MM} 
+			and desc1 = {JISA}
+			and jisang_status = {STATUS}
+			and comple_yn <![CDATA[<>]]> 'Y'
+			and jisang_manage = 'N'
+	</select>
+		
+	<!-- 통계 > 권리필지 증감현황 > 메인 조회 > 전체 -->
+	<select id="selectFieldInDeListDetailAll" parameterType="HashMap" resultType="HashMap">
+		select
+			desc1,
+			juso,
+			jisang_status
+		from 
+			static_deadline 
+		where 
+			1=1
+			and year = {YYYY}
+			and month = {MM} 
+			and desc1 = {JISA}
+			and jisang_status = {STATUS}
+			and jisang_manage = 'N'
+	</select>	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > 전체 -->
+	<select id="selectFieldInDeStatusBoardList" parameterType="HashMap" resultType="HashMap">
+		with
+			all_tb as (
+					select desc1,desc1_num from static_deadline_info group by desc1,desc1_num
+							union all
+							select concat(desc1,'-분기') as desc1, desc1_num+0.1 as desc1_num from static_deadline_info group by desc1,desc1_num
+						),
+				ref_tb as (select * from static_deadline where jisang_status <![CDATA[<>]]> '회사토지' and jisang_manage = 'N' and year = {YYYY_REF} and month = {MM_REF} and desc1 is not null), --기준년월
+				tg_tb as (select * from static_deadline where jisang_status <![CDATA[<>]]> '회사토지' and jisang_manage = 'N' and year = {YYYY_TG} and month = {MM_TG} and desc1 is not null), --비교년월
+				ref_priv_cmpy as ( --기준 사유지 지상권(등기)
+					select desc1,count(*) from ref_tb where gover_own_yn = '사유지' and jisang_status = '지상권' and comple_yn = 'Y' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기') as desc1, count(*)
+					from 
+						ref_tb a
+					left join
+						tg_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '사유지' and a.jisang_status = '지상권' and a.comple_yn = 'Y'
+					group by a.desc1
+					),
+				ref_priv_cmpn as ( --기준 사유지 미등기
+					select desc1,count(*) from ref_tb where gover_own_yn = '사유지' and jisang_status = '지상권' and comple_yn <![CDATA[<>]]> 'Y' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기') as desc1, count(*)
+					from 
+						ref_tb a
+					left join
+						tg_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '사유지' and a.jisang_status = '지상권' and a.comple_yn <![CDATA[<>]]> 'Y'
+					group by a.desc1
+					),
+				ref_priv_ntst as ( --기준 사유지 미설정
+					select desc1,count(*) from ref_tb where gover_own_yn = '사유지' and jisang_status = '미설정' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기') as desc1, count(*)
+					from 
+						ref_tb a
+					left join
+						tg_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '사유지' and a.jisang_status = '미설정'
+					group by a.desc1
+					),
+				ref_priv_sum as ( --기준 사유지 계
+					select desc1,count(*) from ref_tb where gover_own_yn = '사유지' and jisang_status <![CDATA[<>]]> '점용' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기') as desc1, count(*)
+					from 
+						ref_tb a
+					left join
+						tg_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '사유지' and a.jisang_status <![CDATA[<>]]> '점용'
+					group by a.desc1
+					),
+				ref_gover_jisang as ( --기준 국유지 지상권
+					select desc1,count(*) from ref_tb where gover_own_yn = '국유지' and jisang_status = '지상권' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기') as desc1, count(*)
+					from 
+						ref_tb a
+					left join
+						tg_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '국유지' and a.jisang_status = '지상권'
+					group by a.desc1
+					),
+				ref_gover_g as ( --기준 국유지 점용
+					select desc1,count(*) from ref_tb where gover_own_yn = '국유지' and jisang_status = '점용' group by desc1
+					union all 
+					select 
+						concat(a.desc1,'-분기') as desc1, count(*)
+					from 
+						ref_tb a
+					left join
+						tg_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '국유지' and a.jisang_status = '점용'
+					group by a.desc1
+					),
+				ref_gover_ntst as ( --기준 국유지 미설정
+					select desc1,count(*) from ref_tb where gover_own_yn = '국유지' and jisang_status = '미설정' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기') as desc1, count(*)
+					from 
+						ref_tb a
+					left join
+						tg_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '국유지' and a.jisang_status = '미설정'
+					group by a.desc1
+					),
+				ref_gover_sum as ( --기준 국유지 계
+					select desc1,count(*) from ref_tb where gover_own_yn = '국유지' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기') as desc1, count(*)
+					from 
+						ref_tb a
+					left join
+						tg_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '국유지'
+					group by a.desc1
+					),
+				ref_sum as ( --기준 합계
+					select desc1,count(*) from ref_tb where not(gover_own_yn = '사유지' and jisang_status = '점용') group by desc1
+					union all 
+					select 
+						concat(a.desc1,'-분기') as desc1, count(*)
+					from 
+						ref_tb a
+					left join
+						tg_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and not(a.gover_own_yn = '사유지' and a.jisang_status = '점용')
+					group by a.desc1
+					),
+				tg_priv_cmpy as ( --비교 사유지 지상권(등기)
+					select desc1,count(*) from tg_tb where gover_own_yn = '사유지' and jisang_status = '지상권' and comple_yn = 'Y' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기'), count(*)
+					from 
+						tg_tb a
+					left join
+						ref_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '사유지' and a.jisang_status = '지상권' and a.comple_yn = 'Y'
+					group by a.desc1
+					),
+				tg_priv_cmpn as ( --비교 사유지 미등기
+					select desc1,count(*) from tg_tb where gover_own_yn = '사유지' and jisang_status = '지상권' and comple_yn <![CDATA[<>]]> 'Y' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기'), count(*)
+					from 
+						tg_tb a
+					left join
+						ref_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '사유지' and a.jisang_status = '지상권' and a.comple_yn <![CDATA[<>]]> 'Y'
+					group by a.desc1
+					),
+				tg_priv_ntst as ( --비교 사유지 미설정
+					select desc1,count(*) from tg_tb where gover_own_yn = '사유지' and jisang_status = '미설정' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기'), count(*)
+					from 
+						tg_tb a
+					left join
+						ref_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '사유지' and a.jisang_status = '미설정'
+					group by a.desc1
+					),
+				tg_priv_sum as ( --비교 사유지 계
+					select desc1,count(*) from tg_tb where gover_own_yn = '사유지' and jisang_status <![CDATA[<>]]> '점용' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기'), count(*)
+					from 
+						tg_tb a
+					left join
+						ref_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '사유지' and a.jisang_status <![CDATA[<>]]> '점용'
+					group by a.desc1
+					),
+				tg_gover_jisang as ( --비교 국유지 지상권
+					select desc1,count(*) from tg_tb where gover_own_yn = '국유지' and jisang_status = '지상권' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기'), count(*)
+					from 
+						tg_tb a
+					left join
+						ref_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '국유지' and a.jisang_status = '지상권'
+					group by a.desc1
+					),	
+				tg_gover_g as ( --비교 국유지 점용
+					select desc1,count(*) from tg_tb where gover_own_yn = '국유지' and jisang_status = '점용' group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기'), count(*)
+					from 
+						tg_tb a
+					left join
+						ref_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '국유지' and a.jisang_status = '점용'
+					group by a.desc1
+					),
+				tg_gover_ntst as ( --비교 국유지 점용
+					select desc1,count(*) from tg_tb where gover_own_yn = '국유지' and jisang_status = '미설정' group by desc1
+					union all 
+					select 
+						concat(a.desc1,'-분기'), count(*)
+					from 
+						tg_tb a
+					left join
+						ref_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '국유지' and a.jisang_status = '미설정'
+					group by a.desc1
+					),
+				tg_gover_sum as ( --비교 국유지 계
+					select desc1,count(*) from tg_tb where gover_own_yn = '국유지' group by desc1
+					union all 
+					select 
+						concat(a.desc1,'-분기'), count(*)
+					from 
+						tg_tb a
+					left join
+						ref_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and a.gover_own_yn = '국유지'
+					group by a.desc1
+					),
+				tg_sum as ( --비교 합계
+					select desc1,count(*) from tg_tb where not(gover_own_yn = '사유지' and jisang_status = '점용') group by desc1
+					union all
+					select 
+						concat(a.desc1,'-분기'), count(*)
+					from 
+						tg_tb a
+					left join
+						ref_tb b
+					on
+						a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+					where
+						b.juso is null and not(a.gover_own_yn = '사유지' and a.jisang_status = '점용')
+					group by a.desc1
+					),
+				fin as (select
+					t1.desc1,
+					coalesce(t2.count,0) as ref_priv_cmpy_cont, --기준 사유지 지상권
+					coalesce(t3.count,0) as ref_priv_cmpn_cont, --기준 사유지 미등기
+					coalesce(t4.count,0) as ref_priv_ntst_cont, --기준 사유지 미설정
+					coalesce(t5.count,0) as ref_priv_sum_cont, --기준 사유지 계
+					coalesce(t6.count,0) as ref_gover_jisang_cont, --기준 국유지 지상권
+					coalesce(t7.count,0) as ref_gover_g_cont, --기준 국유지 점용
+					coalesce(t8.count,0) as ref_gover_ntst_cont, --기준 국유지 미설정
+					coalesce(t9.count,0) as ref_gover_sum_cont, --기준 국유지 계
+					coalesce(t10.count,0) as ref_sum_cont, --기준 합계
+					coalesce(t11.count,0) as tg_priv_cmpy_cont, --비교 사유지 지상권
+					coalesce(t12.count,0) as tg_priv_cmpn_cont, --비교 사유지 미등기
+					coalesce(t13.count,0) as tg_priv_ntst_cont, --비교 사유지 미설정
+					coalesce(t14.count,0) as tg_priv_sum_cont, --비교 사유지 계
+					coalesce(t15.count,0) as tg_gover_jisang_cont, --비교 국유지 지상권
+					coalesce(t16.count,0) as tg_gover_g_cont, --비교 국유지 점용
+					coalesce(t17.count,0) as tg_gover_ntst_cont, --비교 국유지 미설정
+					coalesce(t18.count,0) as tg_gover_sum_cont, --비교 국유지 계
+					coalesce(t19.count,0) as tg_sum_cont --비교 합계
+				from
+					all_tb t1
+				left join ref_priv_cmpy t2 on t1.desc1 =  t2.desc1
+				left join ref_priv_cmpn t3 on t1.desc1 =  t3.desc1
+				left join ref_priv_ntst t4 on t1.desc1 =  t4.desc1
+				left join ref_priv_sum t5 on t1.desc1 =  t5.desc1
+				left join ref_gover_jisang t6 on t1.desc1 =  t6.desc1
+				left join ref_gover_g t7 on t1.desc1 =  t7.desc1
+				left join ref_gover_ntst t8 on t1.desc1 =  t8.desc1
+				left join ref_gover_sum t9 on t1.desc1 =  t9.desc1
+				left join ref_sum t10 on t1.desc1 =  t10.desc1
+				left join tg_priv_cmpy t11 on t1.desc1 =  t11.desc1
+				left join tg_priv_cmpn t12 on t1.desc1 =  t12.desc1
+				left join tg_priv_ntst t13 on t1.desc1 =  t13.desc1
+				left join tg_priv_sum t14 on t1.desc1 =  t14.desc1
+				left join tg_gover_jisang t15 on t1.desc1 =  t15.desc1
+				left join tg_gover_g t16 on t1.desc1 =  t16.desc1
+				left join tg_gover_ntst t17 on t1.desc1 =  t17.desc1
+				left join tg_gover_sum t18 on t1.desc1 =  t18.desc1
+				left join tg_sum t19 on t1.desc1 =  t19.desc1
+				order by t1.desc1_num
+				)
+			select
+				*,
+				(ref_priv_cmpy_cont - tg_priv_cmpy_cont) as priv_cmpy_dif, --증감 사유지 지상권
+				(ref_priv_cmpn_cont - tg_priv_cmpn_cont) as priv_cmpn_dif, --증감 사유지 미등기
+				(ref_priv_ntst_cont - tg_priv_ntst_cont) as priv_ntst_dif, --증감 사유지 미설정
+				(ref_priv_sum_cont - tg_priv_sum_cont) as priv_sum_dif, --증감 사유지 계
+				(ref_gover_jisang_cont - tg_gover_jisang_cont) as gover_jisang_dif, --증감 국유지 지상권
+				(ref_gover_g_cont - tg_gover_g_cont) as gover_g_dif, --증감 국유지 점용
+				(ref_gover_ntst_cont - tg_gover_ntst_cont) as gover_ntst_dif, --증감 국유지 미설정
+				(ref_gover_sum_cont - tg_gover_sum_cont) as gover_sum_dif, --증감 국유지 계
+				(ref_sum_cont - tg_sum_cont) as sum_dif --증감 합계
+			from
+				fin
+	</select>	
+		
+	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 지상권 클릭 했을 때 -->
+	<select id="selectFieldInDeStatusBoardListPrivateRegistered" parameterType="HashMap" resultType="HashMap">
+		select
+			desc1, juso, jisang_status
+		from 
+			static_deadline 
+		where 
+			1=1
+			and year = {YYYY}
+			and month = {MM}
+			and desc1 = {JISA}
+			and gover_own_yn = '사유지'
+			and jisang_status = '지상권'
+			and comple_yn = 'Y'
+			and jisang_manage = 'N'
+	</select>
+	
+	
+	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 미등기 클릭 했을 때 -->
+	<select id="selectFieldInDeStatusBoardListFieldPrivateUnRegistered" parameterType="HashMap" resultType="HashMap">
+		select
+			desc1, juso, jisang_status
+		from 
+			static_deadline 
+		where 
+			1=1
+			and year = {YYYY}
+			and month = {MM}
+			and desc1 = {JISA}
+			and gover_own_yn = '사유지'
+			and jisang_status = '지상권'
+			and comple_yn <![CDATA[<>]]> 'Y'
+			and jisang_manage = 'N';
+	</select>
+	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 미설정 클릭 했을 때 -->
+	<select id="selectFieldInDeStatusBoardListPrivateUnSetting" parameterType="HashMap" resultType="HashMap">
+		select
+			desc1, juso, jisang_status
+		from 
+			static_deadline 
+		where 
+			1=1
+			and year = {YYYY}
+			and month = {MM}
+			and desc1 = {JISA}
+			and gover_own_yn = '사유지'
+			and jisang_status = '미설정'
+			and jisang_manage = 'N'
+	</select>
+	
+	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 계 클릭 했을 때 -->
+	<select id="selectFieldInDeStatusBoardListPrivateProperty" parameterType="HashMap" resultType="HashMap">
+		select
+			desc1, juso, jisang_status
+		from 
+			static_deadline 
+		where 
+			1=1
+			and year = {YYYY}
+			and month = {MM}
+			and desc1 = {JISA}
+			and gover_own_yn = '사유지' 
+			and jisang_status not in ('점용','회사토지')
+			and jisang_manage = 'N'
+	</select>
+	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 국유지 지상권 클릭 했을 때 -->
+	<select id="selectFieldInDeStatusBoardListPublicRegistered" parameterType="HashMap" resultType="HashMap">
+		select
+			desc1, juso, jisang_status
+		from 
+			static_deadline 
+		where 
+			1=1
+			and year = {YYYY}
+			and month = {MM}
+			and desc1 = {JISA}
+			and gover_own_yn = '국유지'
+			and jisang_status = '지상권' // 지상권, 점용, 미설정, ""(제거시 전체)
+			and jisang_manage = 'N'
+	</select>
+	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 합계 클릭 했을 때 -->
+	<select id="selectFieldInDeStatusBoardListSum" parameterType="HashMap" resultType="HashMap">
+		select
+			desc1, juso, jisang_status
+		from 
+			static_deadline
+		where 
+			1 = 1
+			and year = {YYYY}
+			and month = {MM}
+			and desc1 = {JISA}
+			and not(gover_own_yn = '사유지'
+				and jisang_status = '점용')
+			and jisang_manage = 'N';
+	</select>
+	
+	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > 분기 - (기준년월, 비교년월) 분기 - 사유지 지상권 클릭 했을 때 -->
+	<select id="selectFieldInDeStatusBoardListPrivateJisang" parameterType="HashMap" resultType="HashMap">
+		select
+			a.desc1, a.juso, a.jisang_status
+		from 
+			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF}) a
+		left join
+			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}) b
+		on
+			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+		where 
+			1=1
+			and b.juso is null
+			and a.desc1 = {JISA}
+			and a.gover_own_yn = '사유지'
+			and a.jisang_status = '지상권'
+			and a.comple_yn = 'Y'
+			and a.jisang_manage = 'N'
+	</select>
+	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 사유지 미등기 클릭 했을 때 -->
+	<select id="selectFieldInDeStatusBoardListPrivateUnRegistered" parameterType="HashMap" resultType="HashMap">
+		select
+			a.desc1, a.juso, a.jisang_status
+		from 
+			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF}) a
+		left join
+			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}) b
+		on
+			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+		where 
+			1=1
+			and b.juso is null
+			and a.desc1 = {JISA}
+			and a.gover_own_yn = '사유지'
+			and a.jisang_status = '지상권'
+			and a.comple_yn <![CDATA[<>]]> 'Y'
+			and a.jisang_manage = 'N'
+	</select>
+	
+	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 사유지 미설정 클릭 했을 때 -->
+	<select id="selectFieldInDeStatusBoardListFieldPrivateUnSetting" parameterType="HashMap" resultType="HashMap">	
+		select
+			a.desc1, a.juso, a.jisang_status
+		from 
+			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF}) a
+		left join
+			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}) b
+		on
+			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+		where 
+			1=1
+			and b.juso is null
+			and a.desc1 = {JISA}
+			and a.gover_own_yn = '사유지'
+			and a.jisang_status = '미설정'
+			and a.jisang_manage = 'N'
+	</select>
+	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 사유지 계 클릭 했을 때 -->
+	<select id="selectFieldInDeStatusBoardListFieldPrivateProperty" parameterType="HashMap" resultType="HashMap">
+		select
+			a.desc1, a.juso, a.jisang_status
+		from 
+			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF}) a
+		left join
+			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}) b
+		on
+			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+		where 
+			1=1
+			and b.juso is null
+			and a.desc1 = {JISA}
+			and a.gover_own_yn = '사유지'
+			and a.jisang_status not in ('점용','회사토지')
+			and a.jisang_manage = 'N'
+	</select>
+	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 국유지 지상권 클릭 했을 때 -->
+	<select id="selectFieldInDeStatusBoardListPublicJisang" parameterType="HashMap" resultType="HashMap">
+		select
+			a.desc1, a.juso, a.jisang_status
+		from 
+			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF}) a
+		left join
+			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}) b
+		on
+			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+		where 
+			1=1
+			and b.juso is null
+			and a.desc1 = {JISA}
+			and a.gover_own_yn = '국유지'
+			and a.jisang_status = '지상권' // 지상권, 점용, 미설정, ""(제거시 전체)
+			and a.jisang_manage = 'N'
+	</select>
+	
+	
+	
+	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 합계 클릭 했을 때 -->
+	<select id="selectFieldInDeStatusBoardListBungiSum" parameterType="HashMap" resultType="HashMap">
+		select
+			a.desc1, a.juso, a.jisang_status
+		from 
+			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF}) a
+		left join
+			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}) b
+		on
+			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+		where 
+			1=1
+			and b.juso is null
+			and a.desc1 = {JISA}
+			and not(a.gover_own_yn = '사유지'
+				and a.jisang_status = '점용')
+			and a.jisang_manage = 'N'
+	</select>
+
+
+
+	
+		
+		
 	<select id="selectMinwonStatusStatic" parameterType="HashMap" resultType="HashMap">
 			SELECT 
 		    mm.mm_jisa,
