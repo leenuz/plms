@@ -12,6 +12,8 @@
 <link th:href="@{/css/common.css}" rel="stylesheet" />
 
 <link rel="stylesheet" href="/css/issue/complaintManage.css" />
+<link rel="stylesheet" href="/css/issue/complaintRespond.css" />
+
 
 
 <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
@@ -424,11 +426,277 @@ div.dt-filter-spacer {
 	</div>
 	<div class="complainManageaddComplainWrapper"></div>
 	<div class="complainManageComplainFinishWrapper"></div>
+	
+	<!-- 민원 대응방안 수립[S] -->	
+	<div id="complainRespondContentBoxs">
+        <div class="complainRespondPopWrap">
+            <div class="complainRespondPopContent">
+                <div class="complainRespondPopTitles">
+                    <h5>민원 대응방안 수립</h5>
+                    <button class="complainRespondcloseBtn">
+                        <img src="/complaintResponMedia/closeBtn.png" alt="close" />
+                    </button>
+                </div>
+                <div class="complainRespondBoxs">
+                    <div class="complainRespondDatas">
+                        <ul class="complainRespondDataCont">
+                            <li class="complainRespondDataTitle">
+                                <p>민원명</p>
+                            </li>
+                            <li class="complainRespondNameBox"><input type="text" readonly value="지상권 미설정 토지 송유관이설 요구" /></li>
+                        </ul>
+                        <ul class="complainRespondDataCont">
+                            <li class="complainRespondDataTitle">
+                                <p>권리확보</p>
+                            </li>
+                            <li>
+                                <div class="complainRespondRadioBoxs">
+                                    <input type="radio" name="complainRespondRights" value="지상권설정" /><span>지상권설정</span>
+                                    <input type="radio" name="complainRespondRights" value="지상권미설정" /><span>지상권미설정</span>
+                                    <input type="radio" name="complainRespondRights" value="점용" /><span>점용</span>
+                                    <input type="radio" name="complainRespondRights" value="미점용" /><span>미점용</span>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="complainRespondDataCont">
+                            <li class="complainRespondDataTitle">
+                                <p>계약여부</p>
+                            </li>
+                            <li>
+                                <div class="complainRespondRadioBoxs">
+                                    <input type="radio" name="complainRespondContract" value="계약체결"><span>계약체결</span>
+                                    <input type="radio" name="complainRespondContract" value="계약미체결"><span>계약미체결</span>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="complainRespondDataCont">
+                            <li class="complainRespondDataTitle">
+                                <p>이슈유형</p>
+                            </li>
+                            <li class="complainRespondDataSelectWrapper">
+                                <div class="complainRespondSelectBoxs">
+                                    <ul class="complainRespondSelectContent">
+                                        <!--수정부분 지사-->
+                                        <div class="selectWrappers">
+                                            <select name="" class="complainRespondHiddenSelect" id="complainRespondHiddenSelectBox01" multiple="multiple" hidden>
+                                                <option value="대분류">대분류</option>
+                                                <option value="이슈없음">이슈없음</option>
+                                                <option value="추가보상 요구">추가보상 요구</option>
+                                                <option value="지상권설정 오류">지상권설정 오류</option>
+                                            </select>
+                                        </div>
+                                        <!--보여지는 셀렉박스-->
+                                        <div class="surfaceSelects">
+                                            <button class="complainRespondSelectTitleBtn"></button>
+                                            <div class="sufaceSelectList">
+                                                <ul class="surfaceSelectListMember"></ul>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                    <ul class="complainRespondSelectContent">
+                                        <!--수정부분 지사-->
+                                        <div class="selectWrappers">
+                                            <select name="" class="complainRespondHiddenSelect" id="complainRespondHiddenSelectBox02" multiple="multiple" hidden>
+                                                <option value="중분류">중분류</option>
+                                                <option value="중분류1">중분류1</option>
+                                                <option value="중분류2">중분류2</option>
+                                                <option value="중분류3">중분류3</option>
+                                            </select>
+                                        </div>
+                                        <!--보여지는 셀렉박스-->
+                                        <div class="surfaceSelects">
+                                            <button class="complainRespondSelectTitleBtn"></button>
+                                            <div class="sufaceSelectList">
+                                                <ul class="surfaceSelectListMember"></ul>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                    <ul class="complainRespondSelectContent">
+                                        <!--수정부분 지사-->
+                                        <div class="selectWrappers">
+                                            <select name="" class="complainRespondHiddenSelect" id="complainRespondHiddenSelectBox03" multiple="multiple" hidden>
+                                                <option value="소분류">소분류</option>
+                                                <option value="소분류1">소분류1</option>
+                                                <option value="소분류2">소분류2</option>
+                                                <option value="소분류3">소분류3</option>
+                                            </select>
+                                        </div>
+                                        <!--보여지는 셀렉박스-->
+                                        <div class="surfaceSelects">
+                                            <button class="complainRespondSelectTitleBtn"></button>
+                                            <div class="sufaceSelectList">
+                                                <ul class="surfaceSelectListMember"></ul>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="complainRespondDataCont">
+                            <li class="complainRespondDataTitle complainRespondTextareaTitle">
+                                <p>민원내용</p>
+                            </li>
+                            <li class="complainRespondDataTextWrap">
+                                <div class="complainRespondTextBoxs">
+                                    <textarea placeholder="민원내용 입력칸입니다."></textarea>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="complainRespondBtnBoxs">
+                    <button class="complainRespondDelete closeEvetBtn">삭제</button>
+                    <button class="complainRespondSave closeEvetBtn">저장</button>
+                    <button class="complainRespondReport closeEvetBtn">상신</button>
+                    <button class="complainRespondClose closeEvetBtn">닫기</button>
+                </div>
+            </div>
 
+        </div>
+    </div>
+    <script>
+    /* x표시 클릭시 닫기 */
+
+    const complainRespondcloseBtn = document.querySelector(".complainRespondcloseBtn");
+    const complainRespondContentBoxWrapper = document.getElementById("complainRespondContentBoxs");
+
+    if (complainRespondcloseBtn) {
+        complainRespondcloseBtn.addEventListener("click", () => {
+            complainRespondContentBoxWrapper.classList.remove("active");
+        })
+    }
+
+    /* 삭제,저장,상신,닫기 버튼 클릭시 팝업창 닫히기 */
+    const closeEvetBtns = document.querySelectorAll("#complainRespondContentBoxs .closeEvetBtn");
+
+    if (closeEvetBtns) {
+        closeEvetBtns.forEach((btns) => {
+            btns.addEventListener("click", () => {
+                complainRespondContentBoxWrapper.classList.remove("active");
+            })
+        })
+    }
+
+
+
+    /* 셀렉트박스 함수 */
+
+    const complainRespondSelectEvet = () => {
+
+        const complainRespondSelectsTitleBtn = document.querySelectorAll(".complainRespondPopWrap .complainRespondSelectTitleBtn");
+        const complainRespondSelectList = document.querySelectorAll(".complainRespondPopWrap .sufaceSelectList");
+        const complainRespondSelectListMember = document.querySelectorAll(".complainRespondPopWrap .sufaceSelectList .surfaceSelectListMember");
+        const complainRespondselectWrappers = document.querySelectorAll(".complainRespondHiddenSelect"); //셀렉박스
+
+
+        let complainRespondAnswer = "";
+
+        //셀렉버튼 최초값 함수
+        const complainRespondInitialValues = () => {
+            if (complainRespondselectWrappers.length > 0) {
+
+                for (let d = 0; d <= complainRespondselectWrappers.length - 1; d++) {
+
+                    let complainRespondselectValuesInitial = complainRespondselectWrappers[d].children;
+
+                    complainRespondSelectsTitleBtn[d].innerText = complainRespondselectValuesInitial[0].value;
+                    complainRespondselectWrappers[d].value = complainRespondSelectsTitleBtn[d].innerText;
+
+                }
+            }
+        }
+
+
+        if (complainRespondselectWrappers.length > 0) {
+
+            complainRespondInitialValues(); //최초의값
+
+            //셀렉박스 값  li p값에 담기 
+            for (let i = 0; i <= complainRespondselectWrappers.length - 1; i++) {
+
+                const complainRespondSelectValues = complainRespondselectWrappers[i].children; //셀렉박스옵션값 
+
+                for (let x = 0; x <= complainRespondSelectValues.length - 1; x++) {
+                    complainRespondAnswer += `<li><p>${complainRespondSelectValues[x].value}</p></li>`;
+                }
+
+                complainRespondSelectListMember[i].innerHTML = complainRespondAnswer;
+                complainRespondAnswer = '';
+            }
+        }
+
+
+        complainRespondSelectsTitleBtn.forEach((btns, index) => {
+
+            btns.addEventListener("click", () => {
+                const complainRespondNextSiblings = btns.nextElementSibling;
+
+                complainRespondSelectsTitleBtn.forEach((otherBtn) => {
+                    if (otherBtn !== btns) {
+                        otherBtn.classList.remove("active");
+                    }
+                });
+                btns.classList.toggle("active");
+                complainRespondNextSiblings.classList.toggle("active");
+
+                //surfaceSelectList관련 toggle버튼
+                complainRespondSelectList.forEach((box, boxIndex) => {
+                    //셀렉버튼의 인덱스와 surfaceSelectList 인덱스번호가 일치하면 메뉴를 오픈하고, btn에 active를 포함
+                    if (index === boxIndex) {
+
+                        box.classList.toggle(
+                            "active",
+                            btns.classList.contains("active")
+                        );
+                    } else {
+                        //그렇지 않으면 메뉴닫기
+                        box.classList.remove("active");
+
+                    }
+
+
+                });
+
+            });
+
+
+            complainRespondSelectList.forEach((list) => {
+                list.addEventListener("click", (event) => {
+
+                    const complainRespondThisBtns = event.target.parentElement.parentElement.parentElement.previousElementSibling;
+                    const complainRespondSelectContent = event.target.parentElement.parentElement.parentElement.parentElement.previousElementSibling.children[0]; //셀렉박스
+                    let complainRespondCurrentSelect = complainRespondSelectContent.getAttribute("id"); //셀렉박스아이디 가져오기
+
+                    if (event.target.nodeName === "P") {
+
+                        let complainRespondCurrentSelectValue = document.getElementById(complainRespondCurrentSelect); //현재 셀렉박스 가져오기
+                        return complainRespondThisBtns.innerText = event.target.innerText,
+                            $(complainRespondCurrentSelectValue).val(event.target.innerText), //셀렉박스 값에 현재 클릭된 값의 텍스트 담기 
+                            console.log(complainRespondCurrentSelectValue.value), //셀렉박스값표시
+                            complainRespondSelectsTitleBtn.forEach((btn) => btn.classList.remove("active")),
+                            complainRespondSelectList.forEach((lists) => lists.classList.remove("active"));
+
+                    }
+
+                });
+
+            });
+
+
+        })
+    }
+
+    complainRespondSelectEvet();
+    
+    </script>
+	<!-- 민원 대응방안 수립[E] -->
+	
 	<!-- script -->
 	<script type="module" src="/js/module/surfaceMain.js"></script>
 	<script src="/components/js/menu06/complaintManage.js"></script>
 	<script src="/js/common/common.js"></script>
+	
+	
 
 </th:block>
 
