@@ -1045,7 +1045,8 @@ $(document).on("click","#sangsinBtn",function(){
 					if (response.success="Y"){
 						console.log("response.success Y");
 						alert("상신이 완료 되었습니다.");
-													
+						$("#save_status").val("TSAVE");
+						$("#tmp_jisangZ_no").val(response.JISANGNO);							
 						//var url=response.OUT_URL;
 						var urls = response.OUT_URL;
 						window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");

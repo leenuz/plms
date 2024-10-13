@@ -1445,7 +1445,7 @@ SELECT count(*)
 		jmt_cancle_yn
 		) VALUES (
 		#{jisang_no},
-		#{idx},
+		#{idx}::integer,
 		#{jisa},
 		#{yongdo},
 		#{pipe_name},
@@ -1466,11 +1466,11 @@ SELECT count(*)
 		#{dosiplan},
 		#{account_yn},
 		TO_DATE(#{cancel_date},'YYYY-MM-DD'),
-		#{chuideuk_money},
-		#{gammoney},
-		#{remainder_money},
+		replace(#{chuideuk_money}::text,',','')::numeric,
+		replace(#{gammoney}::text,',','')::numeric,
+		replace(#{remainder_money}::text,',','')::numeric,
 		#{cancel_bosang_yn},
-		#{cancel_bosang_money},
+		replace(#{cancel_bosang_money}::text,',','')::numeric,
 		#{cancel_reason},
 		#{cancel_comment},
 		'Y'
