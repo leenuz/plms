@@ -1,0 +1,169 @@
+<script src="/vendor/jquery/jquery.min.js"></script>
+<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+<div id="searchResultsPopup">
+    <div class="popupWrap active" id="popupWrap" style="width:800px">
+        <h2>
+            <p>필지 정보</p>
+            <span class="topCloseBtn"></span>
+        </h2>
+        <div class="pilji_total">
+            <p>
+                <span>총 검색 건 수</span>
+                <span class="total_blue" id="totalCount">0</span>
+                <span>건</span>
+            </p>
+<!--            <button>-->
+<!--                <p>엑셀 다운로드</p>-->
+<!--                <figure>-->
+<!--                    <img src="/assets/media/popup/images/download.png" alt="download" />-->
+<!--                </figure>-->
+<!--            </button>-->
+        </div>
+        <section>
+            <div class="popupCont">
+                <ul class="popTitles">
+                    <li class="popTitle05">순번</li>
+                    <li class="popTitle03">발생지사</li>
+                    <li class="popTitle06">주소</li>
+                    <li class="popTitle01">권리확보</li>
+                </ul>
+                <div class="popContentBox" id="resultList">
+                </div>
+
+            </div>
+        </section>
+        <!-- 페이네이션 -->
+        <section>
+            <div class="pilji_info_Popup_boardPageBoxs">
+                <ul>
+                    <li class="arrowLeftWrapper">
+                        <button onclick="firstPage()">
+                            <img src="/assets/media/popup/images/arrowRightLine02.png" alt="preBtnImg" />
+                        </button>
+                        <button onclick="prevPage()">
+                            <img src="/assets/media/popup/images/arrowRightLine01.png" alt="preBtnImg" />
+                        </button>
+                    </li>
+                    <li class="pageCountBoxs" id="pagination">
+                    </li>
+                    <li class="arrowRightWrapper">
+                        <button onclick="nextPage()">
+                            <img src="/assets/media/popup/images/arrowRightLine01.png" alt="nextBtnImg" />
+                        </button>
+                        <button onclick="lastPage()">
+                            <img src="/assets/media/popup/images/arrowRightLine02.png" alt="nextBtnImg" />
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <div class="lastBtnBox btnWrap">
+            <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+        </div>
+    </div>
+</div>
+<script>
+    var pageNum = 0;
+    var pageNo = 1;
+    var jisa = '[[${jisa}]]';
+    var yyyy_ref = '[[${yyyy_ref}]]';
+    var mm_ref = '[[${mm_ref}]]';
+    var yyyy_tg = '[[${yyyy_tg}]]';
+    var mm_tg = '[[${mm_tg}]]';
+    var gubun = '[[${gubun}]]';
+    var status = '[[${status}]]';
+    var allData = 'JISA=' + jisa + '&GUBUN=' + gubun;
+    allData += '&YYYY_REF=' + yyyy_ref + '&MM_REF=' + mm_ref + '&YYYY_TG=' + yyyy_tg + '&MM_TG=' + mm_tg + '&STATUS=' + status;
+    var resultData = [];
+
+    console.log("allData:"+allData);
+
+    function loadData() {
+        $.ajax({
+            url: "/statics/selectFieldInDeStatusBoardChangeListDetailUpDown?" + allData,
+            data: JSON.stringify(allData),
+            async: true,
+            type: "POST",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+              console.log(response);
+              if (response.success = "Y") {
+                resultData = response.dataList;
+
+                $('#totalCount').html(resultData.length);
+                pageNum = Math.floor(resultData.length / 10);
+                if (resultData.length % 10 > 0) {
+                    pageNum += 1;
+                }
+
+                display();
+              }
+            },
+            error: function () {
+            }
+        });
+    }
+    loadData();
+
+    function display() {
+        var startIdx = (pageNo - 1) * 10;
+
+        var resultStr = '';
+        for (var i = startIdx; i < startIdx + 10; i++) {
+            if (i > resultData.length - 1) break;
+            var row = resultData[i];
+
+            resultStr += '<ul class="popContents">';
+            resultStr += '<li class="popContent05"><p>'+(i + 1)+'</p></li>';
+            resultStr += '<li class="popContent03"><p>'+row.desc1+'</p></li>';
+            resultStr += '<li class="popContent06"><p>'+row.juso+'</p></li>';
+            resultStr += '<li class="popContent01"><p>'+row.jisang_status+'</p></li>';
+            resultStr += '</ul>';
+        }
+
+        $('#resultList').html(resultStr);
+
+        // pagination
+        var pagiStr = '';
+        var startNo = Math.floor((pageNo - 1) / 5) * 5 + 1;
+        var endNo = startNo + 5 < pageNum + 1 ? startNo + 5 : pageNum + 1;
+        for (var i = startNo; i < endNo; i++) {
+            if (i == pageNo) {
+                pagiStr += '<p class="active" onclick="goPage(' + i + ')">' + i + '</p>';
+            } else {
+                pagiStr += '<p onclick="goPage(' + i + ')">' + i + '</p>';
+            }
+        }
+        $('#pagination').html(pagiStr);
+    }
+
+    function prevPage() {
+        if (pageNo > 1) {
+            pageNo -= 1;
+            display();
+        }
+    }
+
+    function nextPage() {
+        if (pageNo < pageNum) {
+            pageNo += 1;
+            display();
+        }
+    }
+
+    function firstPage() {
+        pageNo = 1;
+        display();
+    }
+
+    function lastPage() {
+        pageNo = pageNum;
+        display();
+    }
+
+    function goPage(no) {
+        pageNo = no;
+        display();
+    }
+</script>

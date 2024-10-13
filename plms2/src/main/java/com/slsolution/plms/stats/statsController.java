@@ -185,4 +185,27 @@ public class statsController {
 		return mav;
 	}
 
+	@GetMapping(path="/parcelPopup3") //http://localhost:8081/stats/parcelPopup2?JISA=서울지사&YYYY=2024&MM=9&GUBUN=필지&YYYY_REF=2024&MM_REF=9&YYYY_TG=2024&MM_TG=8&GOVER_OWN=사유지&JISANG_STATUS=지상권
+	public ModelAndView parcelPopup3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+
+		ParameterParser parser = new ParameterParser(httpRequest);
+		String JISA = parser.getString("JISA", "");
+		String YYYY_REF = parser.getString("YYYY_REF", "");
+		String MM_REF = parser.getString("MM_REF", "");
+		String YYYY_TG = parser.getString("YYYY_TG", "");
+		String MM_TG = parser.getString("MM_TG", "");
+		String GUBUN = parser.getString("GUBUN", "");
+		String STATUS = parser.getString("STATUS", "");
+
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("jisa", JISA);
+		mav.addObject("yyyy_ref", YYYY_REF);
+		mav.addObject("mm_ref", MM_REF);
+		mav.addObject("yyyy_tg", YYYY_TG);
+		mav.addObject("mm_tg", MM_TG);
+		mav.addObject("gubun", GUBUN);
+		mav.addObject("status", STATUS);
+		mav.setViewName("content/stats/parcelPopup3");
+		return mav;
+	}
 }
