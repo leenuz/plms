@@ -32,6 +32,9 @@ public class GlobalConfig {
 	private static String dopcoFileTempDir;
 	private static String dopcoFileDataDir;
 	
+	private static String minwonFileTempDir;
+	private static String minwonFileDataDir;
+	
 	private static String serverName;
 	
 	// 필지 임시저장 디렉토리
@@ -180,6 +183,25 @@ public class GlobalConfig {
 	public static String getDopcoFileDataDir() {
 		return dopcoFileDataDir;
 	}
+	
+	@Value("${plms.minwonFileTempDir}")
+	public void setMinwonFileTempDir(String str) {
+		minwonFileTempDir = str;
+	}
+	
+	public static String getMinwonFileTempDir() {
+		return minwonFileTempDir;
+	}
+	
+	@Value("${plms.minwonFileDataDir}")
+	public void setMinwonFileDataDir(String str) {
+		minwonFileDataDir = str;
+	}
+	
+	public static String getMinwonFileDataDir() {
+		return minwonFileDataDir;
+	}
+	
 	
 	@Value("${server.name}")
 	public void setServerName(String sn) {
