@@ -529,14 +529,9 @@ function onDataLoad() {
 }
 
 //===========================================================================================================
-//민원 대응방안 수립 팝업
-function minwon_banganOpenPop() {
-	console.log("---");
-	
-}
 
-
-// 문서보기 버튼 클릭 시 민원 대응방안 수립 팝업 열기
+//======================민원 대응방안 수립 팝업 시작========================
+//문서보기 버튼 클릭 시 민원 대응방안 수립 팝업 열기
 $(document).on("click", "#test1", function() {
     var datas = { "address": "example address" }; // 실제 데이터로 변경
 
@@ -544,7 +539,7 @@ $(document).on("click", "#test1", function() {
 
     // Ajax 요청을 통해 데이터 처리
     $.ajax({
-        url: "/issue/test1",
+        url: "/issue/minwonBangan",
         type: "POST",
         data: datas
     })
@@ -566,11 +561,11 @@ $(document).on("click", "#test1", function() {
     });
 });
 
-// 팝업 닫기 버튼
-$(document).on("click", ".complainRespondcloseBtn", function() {
+// 민원 대응방안 수립 팝업 닫기 버튼
+$(document).on("click", "#complainRespondContentBoxs .complainRespondcloseBtn", function() {
     $("#complainRespondContentBoxs").hide();  // 팝업을 다시 숨김
 });
-
+//========================민원 대응방안 수립 팝업 끝========================
 
 //민원협의 내용 등록/수정 팝업
 function minwon_contentInsertPop() {

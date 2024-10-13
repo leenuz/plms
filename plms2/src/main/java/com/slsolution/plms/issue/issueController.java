@@ -103,10 +103,8 @@ public class issueController {
 		return mav;
 	}
 	
-	// 컨트롤러
-	
-	//지상권사용승락 주소 검색
-	@PostMapping(path = "/test1")
+	//민원관리 - 민원 대응방안 수립 팝업
+	@PostMapping(path = "/minwonBangan")
 	public ModelAndView getPermitJisangSelect1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 	    log.info("test1 컨트롤러 동작");
 	    ModelAndView mav = new ModelAndView();
