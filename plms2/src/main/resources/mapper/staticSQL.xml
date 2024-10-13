@@ -22,7 +22,7 @@ FROM (
                RPAD(S.jm_ADDRCODE, 10, '0') AS ADDRCODE,
                S.jm_jibun as JIBUN
         FROM JISANG_MASTER S
-        WHERE COALESCE(S.jm_CANCEL_YN, 'N') != 'Y'
+        WHERE COALESCE(S.jm_CANCLE_YN, 'N') != 'Y'
 
         UNION ALL
 
@@ -34,7 +34,7 @@ FROM (
         FROM GOVER_PNU GP
         JOIN GOVER_POTENTIAL_ISSUE GPI ON GP.gp_GOVER_NO = GPI.GOVER_NO
         JOIN GOVER_MASTER GM ON GM.gm_GOVER_NO = GPI.GOVER_NO
-        WHERE COALESCE(GM.gm_CANCEL_YN, 'N') != 'Y'
+        WHERE COALESCE(GM.gm_CANCLE_YN, 'N') != 'Y'
 
         UNION ALL
 
@@ -67,7 +67,7 @@ FROM (
       AND A.mm_MW_CODE3 != 'DY010101'
       AND A.mm_MW_CODE2 NOT IN ('GY010100', 'GY020100')
       <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
-   AND T.JISA = #{JISA}
+   AND A.mm_JISA = #{JISA}
 		    </if> 
     GROUP BY SUBSTRING(A.mm_MW_CODE1, 1, 1)
 
@@ -86,7 +86,7 @@ FROM (
         FROM GOVER_PNU GP
         JOIN GOVER_POTENTIAL_ISSUE GPI ON GP.gp_GOVER_NO = GPI.GOVER_NO
         JOIN GOVER_MASTER GM ON GM.gm_GOVER_NO = GPI.GOVER_NO
-        WHERE COALESCE(GM.gm_CANCEL_YN, 'N') != 'Y'
+        WHERE COALESCE(GM.gm_CANCLE_YN, 'N') != 'Y'
     ) T ON GPI.GOVER_NO = T.JISANG_NO
     WHERE GPI.DEL_FLAG != 'Y'
       AND GPI.CODE_DEPTH3 != 'DY010101'

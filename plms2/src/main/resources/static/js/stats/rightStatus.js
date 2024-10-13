@@ -81,3 +81,40 @@ const moreBtnEventForRightStatus = () => {
 moreBtnEventForRightStatus();
 
 // 마감 팝업
+
+
+//기본 실행
+$(function(){
+    $('#rightStatus .searchBtn').click(function() {
+        loadData();
+    });
+});
+
+ 
+const loadData = () => {
+    var params = {JISA:  $("#rightStatusSelectBox01").val() , ADDRCODE:"",SGG:"", KIJUN:"", SIDO:""}
+	console.log(params);
+	$.ajax({
+		url:  "/statics/selectTogiMgtStateList",
+		type: 'POST',
+		contentType: "application/json",
+		data: JSON.stringify(params),
+		dataType: "json",
+		beforeSend: function(request) {
+			console.log("beforesend ........................");
+			loadingShow();
+		},
+		success: function(response) {
+			loadingHide();
+            console.log(response);
+			
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+            loadingHide();
+			console.log(jqXHR);
+			console.log(jqXHR.readyState);
+			console.log(jqXHR.responseText);
+			console.log(jqXHR.responseJSON);
+		}
+	});
+};
