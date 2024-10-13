@@ -821,6 +821,239 @@ SELECT TTT.TYPE,
 
 	</select>
 	
+	<!-- 통계 > 이슈 및 민원현황 조회 > 잠재여부 관리필지 -->
+	<select id="selectPotentialIssuePnuListByCode" parameterType="HashMap" resultType="HashMap">
+		SELECT *
+		FROM (
+		    SELECT 
+		        ROW_NUMBER() OVER (ORDER BY A.ISSUE_DATE DESC) AS RN,
+		        A.PNU,
+		        T.JISA,
+		        A.CODE_DEPTH1,
+		        A.CODE_DEPTH2,
+		        A.CODE_DEPTH3,
+		        (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = A.CODE_DEPTH1) AS CODE1_NM,
+		        (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = A.CODE_DEPTH2) AS CODE2_NM,
+		        (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = A.CODE_DEPTH3) AS CODE3_NM,
+		        A.ISSUE_COMMENT,
+		        A.DEL_FLAG,
+		        A.DEL_COMMENT,
+		        A.ISSUE_DATE,
+		        A.SEQ,
+		        TRIM(CONCAT_WS(' ', B.SIDO_NM, B.SGG_NM, B.EMD_NM, B.RI_NM, B.JIBUN)) AS JUSO,
+		        TRIM(CONCAT_WS(' ', C.SIDO_NM, C.SGG_NM, C.EMD_NM, C.RI_NM, A.JIBUN)) || ' (PNU없음)' AS JUSO2,
+		        B.GOVER_OWN_YN,
+		        B.JISANG_STATUS,
+		        B.JISANG_NO,
+		        CASE 
+		            WHEN B.JISANG_STATUS = 'JISANG' THEN 
+		                (SELECT to_char(S.JM_CHUIDEUK_DATE, 'YYYY-MM-DD') 
+		                 FROM JISANG_MASTER S WHERE S.JM_JISANG_NO = B.JISANG_NO)
+		            ELSE '' 
+		        END AS CHUIDEUK_DATE,
+		        CASE 
+		            WHEN B.JISANG_STATUS = 'JISANG' THEN 
+		                (SELECT JM_JASAN_NO FROM JISANG_MASTER S WHERE S.JM_JISANG_NO = B.JISANG_NO)
+		            ELSE '' 
+		        END AS JASAN_NO,
+		        CASE 
+		            WHEN B.JISANG_STATUS = 'GOVER' THEN 
+		                (SELECT to_char(S.GP_PAY_DATE, 'YYYY-MM-DD') 
+		                 FROM GOVER_PERMIT S 
+		                 WHERE S.GP_GOVER_NO = B.JISANG_NO 
+		                   AND S.GP_ECHO_NO IS NOT NULL
+		                   AND S.GP_SEQ = (
+		                       SELECT MAX(SS.GP_SEQ) 
+		                       FROM GOVER_PERMIT SS 
+		                       WHERE SS.GP_GOVER_NO = B.JISANG_NO
+		                   ))
+		            ELSE '' 
+		        END AS PAY_DATE,
+		        CASE 
+		            WHEN B.JISANG_STATUS = 'GOVER' THEN 
+		                (SELECT to_char(S.GM_GOVER_ST_DATE, 'YYYY-MM-DD') || ' ~ ' || 
+		                        to_char(S.GM_GOVER_ED_DATE, 'YYYY-MM-DD') 
+		                 FROM GOVER_MASTER S 
+		                 WHERE S.GM_GOVER_NO = B.JISANG_NO)
+		            ELSE '' 
+		        END AS GOVER_PERIOD
+		    FROM 
+		        PLMS_POTENTIAL_ISSUE A
+		    LEFT JOIN JIJUK_2024 B ON A.PNU = B.PNU
+		    LEFT JOIN JIJUK_ADDR_2024 C ON RPAD(A.ADDRCODE, 10, '0') = C.B_CODE
+		    LEFT JOIN (
+		        SELECT 
+		            S.JM_PNU, S.JM_JISA as JISA, S.JM_JISANG_NO AS NO, 
+		            RPAD(S.JM_ADDRCODE, 10, '0') AS ADDRCODE, S.JM_JIBUN as JIBUN
+		        FROM JISANG_MASTER S
+		        WHERE COALESCE(S.JM_CANCLE_YN, 'N') <![CDATA[<>]]> 'Y'
+		        UNION ALL
+		        SELECT 
+		            S1.GP_PNU, S2.GM_JISA as JISA, S1.GP_GOVER_NO AS NO, 
+		            RPAD(S1.GP_ADDRCODE, 10, '0') AS ADDRCODE, S1.GP_JIBUN as JIBUN
+		        FROM GOVER_PNU S1
+		        JOIN GOVER_MASTER S2 ON S1.GP_GOVER_NO = S2.GM_GOVER_NO
+		        WHERE COALESCE(S2.GM_CANCLE_YN, 'N') <![CDATA[<>]]> 'Y'
+		        UNION ALL
+		        SELECT 
+		            S3.NM_PNU, S3.NM_JISA as JISA, S3.NM_NOTSET_NO AS NO, 
+		            RPAD(S3.NM_ADDRCODE, 10, '0') AS ADDRCODE, S3.NM_JIBUN as JIBUN
+		        FROM NOTSET_MASTER S3
+		        WHERE S3.NM_DEL_FLAG <![CDATA[<>]]> 'Y'
+		    ) T ON A.ADDRCODE = T.ADDRCODE AND A.JIBUN = T.JIBUN
+		    WHERE A.DEL_FLAG <![CDATA[<>]]> 'Y'
+		    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE1)" >
+		       AND A.CODE_DEPTH1 = #{CODE1}
+		      </if>
+		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE2)" >
+		       AND A.CODE_DEPTH2 = #{CODE2}
+		      </if>
+		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE3)" >
+		       AND A.CODE_DEPTH3 = #{CODE3}
+		     </if>
+		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
+		       AND T.JISA = #{JISA}
+		     </if>
+		) T
+		WHERE 1 = 1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PAGE_NUM)" >
+         AND T.RN BETWEEN (#{PAGE_CNT}::numeric*(#{PAGE_NUM}::numeric-1) + 1) AND (#{PAGE_CNT}::numeric*#{PAGE_NUM}::numeric)
+      </if>
+		ORDER BY T.RN
+		
+	</select>
+	<select id="selectPotentialIssuePnuListByCodeTotalCnt" parameterType="HashMap" resultType="Integer">
+		SELECT *
+		  FROM (
+		    SELECT COUNT(*) AS TOTALCNT
+		      FROM PLMS_POTENTIAL_ISSUE A
+		         , (
+		            SELECT S.JM_PNU
+		                   , S.JM_JISA
+		                   , S.JM_JISANG_NO AS NO
+		                   , RPAD(S.JM_ADDRCODE, 10, '0') AS ADDRCODE
+		                   , S.JM_JIBUN
+		              FROM JISANG_MASTER S
+		             WHERE coalesce (S.JM_CANCLE_YN, 'N') <![CDATA[<>]]> 'Y'
+		            UNION ALL
+		            SELECT S1.GP_PNU
+		                   , S2.GM_JISA
+		                   , S1.GP_GOVER_NO AS NO
+		                   , RPAD(S1.GP_ADDRCODE, 10, '0') AS ADDRCODE
+		                   , S1.GP_JIBUN
+		              FROM GOVER_PNU      S1
+		                   , GOVER_MASTER   S2
+		             WHERE S1.GP_GOVER_NO = S2.GM_GOVER_NO
+		               AND coalesce(S2.GM_CANCLE_YN,'N') <![CDATA[<>]]> 'Y'
+		            UNION ALL
+		            SELECT S3.NM_PNU
+		                   , S3.NM_JISA
+		                   , S3.NM_NOTSET_NO AS NO
+		                   , RPAD(S3.NM_ADDRCODE, 10, '0') AS ADDRCODE
+		                   , S3.NM_JIBUN
+		              FROM NOTSET_MASTER S3
+		             WHERE S3.NM_DEL_FLAG <![CDATA[<>]]> 'Y'
+		       ) T
+		     WHERE A.DEL_FLAG <![CDATA[<>]]> 'Y'
+		       AND A.ADDRCODE = T.ADDRCODE
+		       AND A.JIBUN = T.JM_JIBUN 
+		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE1)" >
+		       AND A.CODE_DEPTH1 = #{CODE1}
+		      </if>
+		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE2)" >
+		       AND A.CODE_DEPTH2 = #{CODE2}
+		      </if>
+		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE3)" >
+		       AND A.CODE_DEPTH3 = #{CODE3}
+		     </if>
+		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" >
+		       AND T.JM_JISA = #{JISA}
+		     </if>
+		) T
+	</select>
+	
+	<!-- 통계 > 이슈 및 민원현황 조회 > 민원발생건수 -->
+	<select id="selectMinwonPnuByCode" parameterType="HashMap" resultType="HashMap">
+
+		SELECT * FROM (
+		SELECT ROW_NUMBER() OVER( ORDER BY MM.MM_MW_SEQ DESC
+		        , MP.MP_REP_YN DESC
+		        , MP.MP_PNU ASC
+		       ) RN
+		     , MM.MM_MW_SEQ
+		     , MM.MM_MW_TITLE
+		     , MM.MM_MW_CODE1
+		     , MM.MM_MW_CODE2
+		     , MM.MM_MW_CODE3
+		     , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = MM.MM_MW_CODE1 ) AS MW_CODE1_NM
+		     , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = MM.MM_MW_CODE2 ) AS MW_CODE2_NM
+		     , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = MM.MM_MW_CODE3 ) AS MW_CODE3_NM
+		     , TO_CHAR(MM.MM_MW_OCCUR_DATE, 'yyyy-MM-dd') AS MW_OCCUR_DATE
+		     , MM.MM_JISA
+		     , MM.MM_STATUS
+		     , CASE 
+		          WHEN MM.MM_STATUS = '1' THEN '임시저장'
+		          WHEN MM.MM_STATUS = '2' THEN '민원등록'
+		          WHEN MM.MM_STATUS = '3' THEN '대응방안수립'
+		          WHEN MM.MM_STATUS = '4' THEN '협의중'
+		          WHEN MM.MM_STATUS = '5' THEN '민원완료'
+		          ELSE NULL
+		      END AS STATUS_STR
+		     , MP.MP_PNU
+		     , MP.MP_SIDO_NM
+		     , MP.MP_SGG_NM
+		     , MP.MP_EMD_NM
+		     , MP.MP_RI_NM
+		     , MP.MP_JIBUN
+		     , MP.MP_REP_YN
+		     , MP.MP_REGISTED_YN
+		     , MP.MP_PERMITTED_YN
+		  FROM MINWON_MASTER   MM
+		     , MINWON_PNU      MP
+		 WHERE MM.MM_MW_SEQ = MP.MP_MINWON_SEQ
+		   AND MM.MM_STATUS IN ( '3', '4', '5')
+		   AND MM.MM_DEL_FLAG <![CDATA[<>]]> 'Y'
+		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE1)" >
+		   AND MM.MM_MW_CODE1 = #{CODE1}
+		      </if>
+		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE2)" >
+		   AND MM.MM_MW_CODE2 = #{CODE2}
+		   		</if>
+		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE3)" >
+		   AND MM.MM_MW_CODE3 = #{CODE3}
+		   		</if>
+		 ORDER BY MM.MM_MW_SEQ DESC
+		        , MP.MP_REP_YN DESC
+		        , MP.MP_PNU ASC
+		      ) T
+		 WHERE 1 = 1
+      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(PAGE_NUM)" >
+         AND T.RN BETWEEN (#{PAGE_CNT}::numeric*(#{PAGE_NUM}::numeric-1) + 1) AND (#{PAGE_CNT}::numeric*#{PAGE_NUM}::numeric)
+      </if>
+   </select>
+   
+   <select id="selectMinwonPnuByCodeTotalcnt" parameterType="HashMap" resultType="Integer">
+		SELECT * FROM (
+		SELECT COUNT(*) TOTALCNT
+		  FROM MINWON_MASTER   MM
+		     , MINWON_PNU      MP
+		 WHERE MM.MM_MW_SEQ = MP.MP_MINWON_SEQ
+		   AND MM.MM_STATUS IN ( '3', '4', '5')
+		   AND MM.MM_DEL_FLAG <![CDATA[<>]]> 'Y'
+		   <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE1)" >
+		   AND MM.MM_MW_CODE1 = #{CODE1}
+			</if>
+		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE2)" >
+		   AND MM.MM_MW_CODE2 = #{CODE2}
+		   </if>
+		      <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(CODE3)" >
+		   AND MM.MM_MW_CODE3 = #{CODE3}
+		     </if>
+		      ) T
+		 WHERE 1 = 1
+ 
+   </select>
+	
 	<!-- 통계 > 권리별 증감현황 > 지사 -->
 	<select id="selectByRightInDeListJisa" parameterType="HashMap" resultType="HashMap">
 		select desc1 from static_deadline_info group by desc1,desc1_num order by desc1_num

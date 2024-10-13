@@ -264,6 +264,7 @@ function iotPopup(year,month,desc,jisangStatus){
 	
 	//표를 비우기
 	$("#popContentBox").empty();
+	$("#pagination").empty();
 	
 	var requestUrl = '/statics/selectByRightInDeListDetail';
 	
@@ -310,6 +311,7 @@ function iotPopup(year,month,desc,jisangStatus){
 function upDownPopup(type,yearRef,monthRef,yearTg,monthTg,desc,jisangStatus){
 	//표를 비우기
 	$("#popContentBox").empty();
+	$("#pagination").empty();
 	
 	var requestUrl = '/statics/selectByRightInDeListDetailUpDown';
 	
@@ -380,9 +382,14 @@ function display() {
         // pagination
         var pagiStr = '';
         var startNo = Math.floor((pageNo - 1) / 5) * 5 + 1;
-        var endNo = startNo + 5;
+        var endNo = startNo + 5 < pageNum + 1 ? startNo + 5 : pageNum + 1;
+        
         for (var i = startNo; i < endNo; i++) {
-            pagiStr += '<p onclick="goPage(' + i + ')">' + i + '</p>';
+            if (i == pageNo) {
+                pagiStr += '<p class="active" onclick="goPage(' + i + ')">' + i + '</p>';
+            } else {
+                pagiStr += '<p onclick="goPage(' + i + ')">' + i + '</p>';
+            }
         }
         $('#pagination').html(pagiStr);
     }
