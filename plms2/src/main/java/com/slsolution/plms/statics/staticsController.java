@@ -1320,6 +1320,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		
 		ParameterParser parser = new ParameterParser(request);
 		String JISA = parser.getString("JISA", "");
+		System.out.println("JISA:"+JISA);
 		
 		ArrayList dataList = new ArrayList();
 		HashMap map = new HashMap();

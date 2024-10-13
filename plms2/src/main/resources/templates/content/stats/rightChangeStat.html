@@ -33,12 +33,12 @@
                                     <div class="hiddenSelectBox">
                                         <select id="rightChangeStatSelectBox01_1" hidden>
                                             <option value="전체">전체</option>
-                                            <option value="전체1" th:each="val:${jisaList}" th:value="${val.jm_jisa_name}" th:text="${val.jm_jisa_name}"></option>
+                                            <option th:each="val:${jisaList}" th:value="${val.jm_jisa_name}" th:text="${val.jm_jisa_name}"></option>
                                         </select>
                                     </div>
                                     <!--보여지는 셀렉박스-->
                                     <div class="customSelectBox">
-                                        <button class="customSelectView">전체</button>
+                                        <button class="customSelectView" id="selectedJisa">전체</button>
                                         <ul class="customSelectBtns"></ul>
                                     </div>
                                 </div>
@@ -51,17 +51,15 @@
                                     <div class="hiddenSelectBox">
                                         <select id="rightChangeStatSelectBox01_2" hidden>
                                             <option value="전체">전체</option>
-                                            <option value="전체1">전체1</option>
-                                            <option value="전체2">전체2</option>
-                                            <option value="전체3">전체3</option>
-                                            <option value="전체4">전체4</option>
-                                            <option value="전체5">전체5</option>
-                                            <option value="전체6">전체6</option>
+                                            <option value="지상권">지상권</option>
+                                            <option value="점용">점용</option>
+                                            <option value="미설정">미설정</option>
+                                            <option value="회사토지">회사토지</option>
                                         </select>
                                     </div>
                                     <!--보여지는 셀렉박스-->
                                     <div class="customSelectBox">
-                                        <button class="customSelectView">전체</button>
+                                        <button class="customSelectView" id="selectedJisangStatus">전체</button>
                                         <ul class="customSelectBtns"></ul>
                                     </div>
                                 </div>
@@ -72,28 +70,28 @@
 
                                 <div class="selectLargeWrap">
                                     <div class="selectWrap">
-                                        <div class="selectContentArea">
+                                        <div class="selectContentArea" id="selectContentArea02_1">
                                             <div class="hiddenSelectBox">
                                                 <select id="rightChangeStatSelectBox02_1" hidden required class="getYearSelectBox">
                                                 </select>
                                             </div>
                                             <!--보여지는 셀렉박스-->
                                             <div class="customSelectBox">
-                                                <button class="customSelectView">연도 선택</button>
-                                                <ul class="customSelectBtns"></ul>
+                                                <button class="customSelectView" id="customSelectView02_1">연도 선택</button>
+                                                <ul class="customSelectBtns" id="customSelectBtns02_1"></ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="selectWrap">
-                                        <div class="selectContentArea">
+                                        <div class="selectContentArea" id="selectContentArea02_2">
                                             <div class="hiddenSelectBox">
                                                 <select id="rightChangeStatSelectBox02_2" hidden required class="getMonthSelectBox">
                                                 </select>
                                             </div>
                                             <!--보여지는 셀렉박스-->
                                             <div class="customSelectBox">
-                                                <button class="customSelectView">월 선택</button>
-                                                <ul class="customSelectBtns"></ul>
+                                                <button class="customSelectView" id="customSelectView02_2">월 선택</button>
+                                                <ul class="customSelectBtns" id="customSelectBtns02_2"></ul>
                                             </div>
                                         </div>
                                     </div>
@@ -105,28 +103,28 @@
 
                                 <div class="selectLargeWrap">
                                     <div class="selectWrap">
-                                        <div class="selectContentArea">
+                                        <div class="selectContentArea" id="selectContentArea02_3">
                                             <div class="hiddenSelectBox">
                                                 <select id="rightChangeStatSelectBox02_3" hidden required class="getYearSelectBox">
                                                 </select>
                                             </div>
                                             <!--보여지는 셀렉박스-->
                                             <div class="customSelectBox">
-                                                <button class="customSelectView">연도 선택</button>
-                                                <ul class="customSelectBtns"></ul>
+                                                <button class="customSelectView" id="customSelectView02_3">연도 선택</button>
+                                                <ul class="customSelectBtns" id="customSelectBtns02_3"></ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="selectWrap">
-                                        <div class="selectContentArea">
+                                        <div class="selectContentArea" id="selectContentArea02_4">
                                             <div class="hiddenSelectBox">
                                                 <select id="rightChangeStatSelectBox02_4" hidden required class="getMonthSelectBox">
                                                 </select>
                                             </div>
                                             <!--보여지는 셀렉박스-->
                                             <div class="customSelectBox">
-                                                <button class="customSelectView">월 선택</button>
-                                                <ul class="customSelectBtns"></ul>
+                                                <button class="customSelectView" id="customSelectView02_4">월 선택</button>
+                                                <ul class="customSelectBtns"id="customSelectBtns02_4"></ul>
                                             </div>
                                         </div>
                                     </div>
@@ -139,7 +137,7 @@
 
                     <!--privateUseSectionBtns-->
                     <div class="privateUseSectionBtnBoxs">
-                        <button class="viewBtn rightChangeStatBtn">조회하기</button>
+                        <button class="viewBtn rightChangeStatBtn" id="rightChangeStatSearchBtn" type="button">조회하기</button>
                     </div>
                 </div>
             </section>
@@ -147,7 +145,7 @@
             <!-- 엑셀 다운로드 버튼 -->
 
             <div class="dataBtnWrap">
-                <button class="excelDownBtn">엑셀 다운로드</button>
+                <button class="excelDownBtn" type="button">엑셀 다운로드</button>
             </div>
 
             <!-- table부분 -->
@@ -168,16 +166,16 @@
                                     <th colspan="2" class="divideSubject">
                                         <p>비교년월</p>
                                     </th>
-                                    <th rowspan="3" colspan="2" class="largeWidth">
+                                    <th rowspan="2" colspan="3" class="largeWidth">
                                         <p>증감현황</p>
                                     </th>
                                 </tr>
                                 <tr>
                                     <th colspan="2">
-                                        <p>2024-03</p>
+                                        <p id="resultSdate">2024-03</p>
                                     </th>
                                     <th colspan="2">
-                                        <p>2024-06</p>
+                                        <p id="resultEdate">2024-06</p>
                                     </th>
                                 </tr>
                                 <tr>
@@ -193,10 +191,19 @@
                                     <th>
                                         <p>필지수</p>
                                     </th>
+                                    <th>
+                                        <p>구분</p>
+                                    </th>
+                                    <th>
+                                        <p>증가</p>
+                                    </th>
+                                    <th>
+                                        <p>감소</p>
+                                    </th>
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody id="resultList">
                                 <!-- 서울지사 -->
                                 <tr>
                                     <!-- 서울지사 , 지상권 -->
@@ -217,6 +224,9 @@
                                     </td>
                                     <td>
                                         <p>지상권</p>
+                                    </td>
+                                    <td class="parcelNumArea">
+                                        <p class="textunderline">-4</p>
                                     </td>
                                     <td class="parcelNumArea">
                                         <p class="textunderline">-4</p>
@@ -242,6 +252,9 @@
                                     <td class="parcelNumArea">
                                         <p class="textunderline">+8</p>
                                     </td>
+                                    <td class="parcelNumArea">
+                                        <p class="textunderline">+8</p>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <!-- 서울지사, 미설정 -->
@@ -259,6 +272,9 @@
                                     </td>
                                     <td>
                                         <p>미설정</p>
+                                    </td>
+                                    <td class="parcelNumArea">
+                                        <p class="textunderline">+2</p>
                                     </td>
                                     <td class="parcelNumArea">
                                         <p class="textunderline">+2</p>
@@ -284,6 +300,9 @@
                                     <td class="parcelNumArea">
                                         <p class="textunderline">+2</p>
                                     </td>
+                                    <td class="parcelNumArea">
+                                        <p class="textunderline">+2</p>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <!-- 서울지사, 전체 -->
@@ -305,879 +324,13 @@
                                     <td class="parcelNumArea">
                                         <p class="textunderline">+8</p>
                                     </td>
-                                </tr>
-                                <!-- 경인지사 -->
-                                <tr>
-                                    <!-- 경인지사 , 지상권 -->
-                                    <td rowspan="5">
-                                        <p>경인지사</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,025</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">-4</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 경인지사, 점용 -->
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,540</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
                                     <td class="parcelNumArea">
                                         <p class="textunderline">+8</p>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <!-- 경인지사, 미설정 -->
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">100</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 경인지사, 회사토지  -->
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">6</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 경인지사, 전체 -->
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,671</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <!-- 충청지사 -->
-                                <tr>
-                                    <!-- 충청지사 , 지상권 -->
-                                    <td rowspan="5">
-                                        <p>충청지사</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,025</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">-4</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 충청지사, 점용 -->
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,540</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 충청지사, 미설정 -->
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">100</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 충청지사, 회사토지  -->
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">6</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 충청지사, 전체 -->
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,671</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <!-- 대전지사 -->
-                                <tr>
-                                    <!-- 대전지사 , 지상권 -->
-                                    <td rowspan="5">
-                                        <p>대전지사</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,025</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">-4</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 대전지사, 점용 -->
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,540</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 대전지사, 미설정 -->
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">100</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 대전지사, 회사토지  -->
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">6</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 대전지사, 전체 -->
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,671</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <!-- 영남지사 -->
-                                <tr>
-                                    <!-- 영남지사 , 지상권 -->
-                                    <td rowspan="5">
-                                        <p>영남지사</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,025</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">-4</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 영남지사, 점용 -->
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,540</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 영남지사, 미설정 -->
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">100</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 영남지사, 회사토지  -->
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">6</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 영남지사, 전체 -->
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,671</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <!-- 전남지사 -->
-                                <tr>
-                                    <!-- 전남지사 , 지상권 -->
-                                    <td rowspan="5">
-                                        <p>전남지사</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,025</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">-4</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 전남지사, 점용 -->
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,540</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 전남지사, 미설정 -->
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">100</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 전남지사, 회사토지  -->
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">6</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 전남지사, 전체 -->
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,671</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <!-- 전북지사 -->
-                                <tr>
-                                    <!-- 전북지사 , 지상권 -->
-                                    <td rowspan="5">
-                                        <p>전북지사</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,025</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">-4</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 전북지사, 점용 -->
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,540</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 전북지사, 미설정 -->
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">100</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 전북지사, 회사토지  -->
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">6</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 전북지사, 전체 -->
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,671</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <!-- 경남지사 -->
-                                <tr>
-                                    <!-- 경남지사 , 지상권 -->
-                                    <td rowspan="5">
-                                        <p>경남지사</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,025</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">-4</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 경남지사, 점용 -->
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,540</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 경남지사, 미설정 -->
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">100</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 경남지사, 회사토지  -->
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">6</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 경남지사, 전체 -->
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,671</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <!-- 강원지사 -->
-                                <tr>
-                                    <!-- 강원지사 , 지상권 -->
-                                    <td rowspan="5">
-                                        <p>강원지사</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,025</p>
-                                    </td>
-                                    <td>
-                                        <p>지상권</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">-4</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 강원지사, 점용 -->
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,540</p>
-                                    </td>
-                                    <td>
-                                        <p>점용</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 강원지사, 미설정 -->
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">100</p>
-                                    </td>
-                                    <td>
-                                        <p>미설정</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 강원지사, 회사토지  -->
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">6</p>
-                                    </td>
-                                    <td>
-                                        <p>회사토지</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!-- 강원지사, 전체 -->
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,671</p>
-                                    </td>
-                                    <td>
-                                        <p>전체</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">+8</p>
-                                    </td>
-                                </tr>
+                                
+                                
+                                
                             </tbody>
                         </table>
                     </div>
