@@ -168,34 +168,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select *
-		,concat(dom_sido_nm,' ',dom_sgg_nm,' ',dom_emd_nm,' ',dom_ri_nm,' ',dom_jibun) as address,
-		dom_idx as idx,
-		dom_dopco_no as DOPCO_NO,
-		dom_sido_nm as SIDO_NM,
-		dom_sgg_nm as SGG_NM,
-		dom_emd_nm as EMD_NM,
-		dom_ri_nm as RI_NM,
-		dom_jibun as JIBUN,
-		dom_addrcode as ADDRCODE,
-		dom_jisa as JISA,
-		dom_dopco_status as DOPCO_STATUS,
-		TO_CHAR(dom_DEUNGGI_DATE, 'YYYY-MM-DD') AS DEUNGGI_DATE,
-		dom_pnu as PNU,
-		dom_yongdo as YONGDO,
-		dom_pipe_name as PIPE_NAME,
-		dom_sun_gubun as SUN_GUBUN,
-		dom_JIJUK_AREA AS JIJUK_AREA,
-		dom_gover_own_yn as GOVER_OWN_YN,
-		dom_dosiplan as DOSIPLAN,
-		dom_jasan_no as JASAN_NO,
-		dom_comple_yn as COMPLE_YN,
-		dom_deunggi_no as DEUNGGI_NO,
-		dom_deunggiso as DEUNGGISO,
-		dom_jimok_text as JIMOK_TEXT,
-		TO_CHAR(dom_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE
-		from dopco_master 
-		where 1=1
+		SELECT *
+			,concat(dom_sido_nm,' ',dom_sgg_nm,' ',dom_emd_nm,' ',dom_ri_nm,' ',dom_jibun) as address,
+			dom_idx as idx,
+			dom_dopco_no as DOPCO_NO,
+			dom_sido_nm as SIDO_NM,
+			dom_sgg_nm as SGG_NM,
+			dom_emd_nm as EMD_NM,
+			dom_ri_nm as RI_NM,
+			dom_jibun as JIBUN,
+			dom_addrcode as ADDRCODE,
+			dom_jisa as JISA,
+			dom_dopco_status as DOPCO_STATUS,
+			TO_CHAR(dom_DEUNGGI_DATE, 'YYYY-MM-DD') AS DEUNGGI_DATE,
+			dom_pnu as PNU,
+			dom_yongdo as YONGDO,
+			dom_pipe_name as PIPE_NAME,
+			dom_sun_gubun as SUN_GUBUN,
+			dom_JIJUK_AREA AS JIJUK_AREA,
+			dom_gover_own_yn as GOVER_OWN_YN,
+			dom_dosiplan as DOSIPLAN,
+			dom_jasan_no as JASAN_NO,
+			dom_comple_yn as COMPLE_YN,
+			dom_deunggi_no as DEUNGGI_NO,
+			dom_deunggiso as DEUNGGISO,
+			dom_jimok_text as JIMOK_TEXT,
+			TO_CHAR(dom_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE
+		FROM dopco_master 
+		WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 		and dom_idx=cast(#{idx} as integer)
 		</if>

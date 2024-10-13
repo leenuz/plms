@@ -42,7 +42,7 @@
 								<h2>・참고 지적도</h2>
 							</div>
 							<div style="display: inline-block; float: right;">
-								<button class="viewDetailButton" onclick="positionView()">이동</button>
+								 <button class="viewDetailButton" th:onclick="|onePositionView({x: ${x}, y: ${y}})|">이동</button>
 							</div>
 							<div style="display: inline-block; float: right;">
 								<button class="viewDetailButton" id="jijukNewWindowBtn">크게보기</button>
@@ -170,7 +170,7 @@
 									<li class="content03 content">[[${val.gp_gover_length}]]</li>
 									<li class="content04 content">[[${val.gp_gover_area}]]</li>
 									<li class="content05 content">
-										<button class="viewDetailButton" th:onclick="onePositionView()">위치보기</button>
+										<button class="viewDetailButton" th:onclick="|onePositionView({x: ${x}, y: ${y}})|">이동</button>
 									</li>
 								</ul>
 							</div>
