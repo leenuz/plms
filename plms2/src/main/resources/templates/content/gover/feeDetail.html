@@ -269,9 +269,7 @@
 							</li>
 							<!-- 지도 -->
 							<li class="content btnBox">
-								<button class="lightBlueBtn viewDetailButton" th:onclick="onePositionView([[${pnu}]]);">
-									위치보기
-								</button>
+								<button class="lightBlueBtn viewDetailButton" th:onclick="|onePositionView({x: ${pnu.x}, y: ${pnu.y}})|">위치보기</button>
 							</li>
 						</ul>
 					</div>

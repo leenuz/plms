@@ -1763,43 +1763,43 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 	</select>
 
 	<select id="selectGoverPnuList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT * ,(row_number() OVER()) AS no
-		 FROM
-		 (
-		 SELECT GP.gp_SEQ AS SEQ
-		, GP.gp_addrcode AS ADDRCODE
-		, GP.gp_dosiplan AS DOSIPLAN
-		, GP.gp_echo_no AS ECHO_NO
-		, GP.gp_emd_nm AS EMD_NM
-		, GP.gp_gover_no AS GOVER_NO
-		, GP.gp_gover_own_yn AS GOVER_OWN_YN
-		, GP.gp_jibun AS JIBUN
-		, GP.gp_jibun_full AS JIBUN_FULL
-		, GP.gp_jijuk_area AS JIJUK_AREA
-		, GP.gp_jimok_text AS JIMOK_TEXT
-		, GP.gp_pnu AS PNU
-		, GP.gp_ri_nm AS RI_NM
-		, GP.gp_sgg_nm AS SGG_NM
-		, GP.gp_sido_nm AS SIDO_NM
-		, GP.gp_gover_length AS GOVER_LENGTH
-		,GP.gp_gover_area AS GOVER_AREA
-		, GP.gp_adm_office AS ADM_OFFICE
-		, GP.gp_use_purpos AS USE_PURPOS
-		, GP.gp_rep_flag AS REP_FLAG
-		, COALESCE(JKM.pipe_overlap_yn, GP.gp_pipe_overlap_yn) AS PIPE_OVERLAP_YN
-		, JKM.jisang_status AS JISANG_STATUS
-		, CASE 
-		    WHEN JKM.jisa IS NOT NULL  THEN JKM.jisa 
-		    ELSE GM.gm_jisa 
-		 END AS JISA
-		,JKM.x as x
-		,JKM.y as y
-		FROM GOVER_PNU GP
-                LEFT JOIN JIJUK_2024 JKM ON trim(GP.gp_pnu) = JKM.PNU
-                LEFT JOIN GOVER_MASTER  GM ON GM.gm_gover_no = GP.gp_gover_no
-		WHERE 1=1
-		and GP.gp_gover_no =#{GOVER_NO}
-		ORDER BY GP.gp_rep_flag DESC, GP.gp_seq ASC
+		SELECT * 
+			,(row_number() OVER()) AS no
+	  FROM (
+			 SELECT GP.gp_SEQ AS SEQ
+			, GP.gp_addrcode AS ADDRCODE
+			, GP.gp_dosiplan AS DOSIPLAN
+			, GP.gp_echo_no AS ECHO_NO
+			, GP.gp_emd_nm AS EMD_NM
+			, GP.gp_gover_no AS GOVER_NO
+			, GP.gp_gover_own_yn AS GOVER_OWN_YN
+			, GP.gp_jibun AS JIBUN
+			, GP.gp_jibun_full AS JIBUN_FULL
+			, GP.gp_jijuk_area AS JIJUK_AREA
+			, GP.gp_jimok_text AS JIMOK_TEXT
+			, GP.gp_pnu AS PNU
+			, GP.gp_ri_nm AS RI_NM
+			, GP.gp_sgg_nm AS SGG_NM
+			, GP.gp_sido_nm AS SIDO_NM
+			, GP.gp_gover_length AS GOVER_LENGTH
+			,GP.gp_gover_area AS GOVER_AREA
+			, GP.gp_adm_office AS ADM_OFFICE
+			, GP.gp_use_purpos AS USE_PURPOS
+			, GP.gp_rep_flag AS REP_FLAG
+			, COALESCE(JKM.pipe_overlap_yn, GP.gp_pipe_overlap_yn) AS PIPE_OVERLAP_YN
+			, JKM.jisang_status AS JISANG_STATUS
+			, CASE 
+			    WHEN JKM.jisa IS NOT NULL  THEN JKM.jisa 
+			    ELSE GM.gm_jisa 
+			 END AS JISA
+			,JKM.x as x
+			,JKM.y as y
+			FROM GOVER_PNU GP
+	                LEFT JOIN JIJUK_2024 JKM ON trim(GP.gp_pnu) = JKM.PNU
+	                LEFT JOIN GOVER_MASTER  GM ON GM.gm_gover_no = GP.gp_gover_no
+			WHERE 1=1
+			and GP.gp_gover_no =#{GOVER_NO}
+			ORDER BY GP.gp_rep_flag DESC, GP.gp_seq ASC
 		) T
 	</select>
 	<select id="selectNextGoverNo" resultType="Integer" parameterType="HashMap">
