@@ -2611,6 +2611,11 @@ log.info("PMT_NO:"+PMT_NO);
 			
 			// PNU를 통한 좌표조회
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			if (!jijukList.isEmpty()) {
+			    HashMap jijukInfo = jijukList.get(0); // 첫 번째 데이터를 가져옴
+			    mav.addObject("x", jijukInfo.get("x"));   // x 값을 mav에 추가
+			    mav.addObject("y", jijukInfo.get("y"));   // y 값을 mav에 추가
+			}
 			coordinateSize = jijukList.size();
 			
 			if(jijukList.size() == 0) {
@@ -2710,6 +2715,11 @@ log.info("PMT_NO:"+PMT_NO);
 			
 			// PNU를 통한 좌표조회
 			ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+			if (!jijukList.isEmpty()) {
+			    HashMap jijukInfo = jijukList.get(0); // 첫 번째 데이터를 가져옴
+			    mav.addObject("x", jijukInfo.get("x"));   // x 값을 mav에 추가
+			    mav.addObject("y", jijukInfo.get("y"));   // y 값을 mav에 추가
+			}
 			jijuk.put("resultSize", jijukList.size());
 			coordinateSize = jijukList.size();
 			
