@@ -490,11 +490,11 @@ public class staticsController {
 						String COMPLE_YN = cu.nvl((String) ((HashMap) sayujiList.get(i)).get("comple_yn"));
 						Long CNT = Long.parseLong(String.valueOf(((HashMap) sayujiList.get(i)).get("cnt")));
 
-						if (JISANG_STATUS.equals("JISANG") && COMPLE_YN.equals("Y"))
+						if (JISANG_STATUS.equals("JISANG") && COMPLE_YN.equals("Y")) //등기
 							l_SAYUJI_Y_Y += CNT;
-						else if (JISANG_STATUS.equals("JISANG") && COMPLE_YN.equals("N"))
+						else if (JISANG_STATUS.equals("JISANG") && COMPLE_YN.equals("N")) //미등기
 							l_SAYUJI_Y_N += CNT;
-						else if (JISANG_STATUS.equals("N") || JISANG_STATUS.equals("NOTSET"))
+						else if (JISANG_STATUS.equals("N") || JISANG_STATUS.equals("NOTSET")) //미설정
 							l_SAYUJI_N += CNT;
 					}
 				}
@@ -504,11 +504,11 @@ public class staticsController {
 						// String CNT = cu.nvl(String.valueOf(((HashMap) gukyujiList.get(i)).get("CNT")));
 						Long CNT = Long.parseLong(String.valueOf(((HashMap) gukyujiList.get(i)).get("cnt")));
 
-						if (JISANG_STATUS.equals("GOVER"))
+						if (JISANG_STATUS.equals("GOVER")) //점용
 							l_GUKYUJI_Y += CNT;
-						else if (JISANG_STATUS.equals("JISANG"))
+						else if (JISANG_STATUS.equals("JISANG"))  //지상권
 							l_GUKYUJI_J += CNT;
-						else if (JISANG_STATUS.equals("N") || JISANG_STATUS.equals("NOTSET"))
+						else if (JISANG_STATUS.equals("N") || JISANG_STATUS.equals("NOTSET")) //미점용
 							l_GUKYUJI_N += CNT;
 					}
 				}
