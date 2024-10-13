@@ -599,7 +599,8 @@ $(document).on("click",".temporarySaveBtn",function(){
 */
 
 	//임시 저장 Go
-	url = "/land/jisang/insertJisangBunhalTmp";
+	url = "/land/jisang/divisionRegisterSave";
+	//url = "/land/jisang/insertJisangBunhalTmp";
 	
 	$.ajax({
 
@@ -1025,7 +1026,7 @@ $(document).on("click","#sangsinBtn",function(){
 		 object.idx=$("input[name='bunhal_org_no']").val()
 	var url="";
 	if ($("#save_status").val()=="TSAVE") url="/land/jisang/insertJisangBunhalNew";
-	else url="/land/jisang/insertJisangBunhalNew1";
+	else url="/land/jisang/insertJisangBunhalNew2";
 		var jsonData={"idx":$("input[name='bunhal_org_no']").val()};
 		console.log("url:"+url);
 		console.log("data:"+jsonData);
