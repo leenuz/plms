@@ -275,7 +275,7 @@ FROM (
                     GROUP BY js_JISANG_NO, js_SOUJA_NAME
                 ) AS sub1 WHERE ROW_IDX = 1
             ) JS ON JM.jm_JISANG_NO = JS.JISANG_NO
-            WHERE (JM.jm_CANCEL_YN IS NULL OR JM.jm_CANCEL_YN != 'Y')
+            WHERE (JM.jm_CANCLE_YN IS NULL OR JM.jm_CANCLE_YN != 'Y')
             
             UNION ALL
             
@@ -341,7 +341,7 @@ FROM (
                 ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.GOVER_NO
             ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
             LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
-            WHERE GM.gm_SAVE_STATUS = 'A' AND GM.gm_CANCEL_YN IS NULL
+            WHERE GM.gm_SAVE_STATUS = 'A' AND GM.gm_CANCLE_YN IS NULL
             
             UNION ALL
             
@@ -431,7 +431,7 @@ FROM (
                 , '' AS COMPLE_YN
                 , '' AS PERMITTED_YN
             FROM DOPCO_MASTER DM
-            WHERE DM.dom_CANCEL_YN IS NULL
+            WHERE DM.dom_CANCLE_YN IS NULL
         ) JOIN_MST ON JOIN_MST.PNU = JIJUK_MST.PNU
         LEFT JOIN (
             SELECT S.*
@@ -602,7 +602,7 @@ SELECT TTT.TYPE,
                       FROM JISANG_SOUJA
                      GROUP BY js_JISANG_NO, js_SOUJA_NAME
                   ) JS ON JM.jm_JISANG_NO = JS.JISANG_NO
-                 WHERE (JM.jm_CANCEL_YN IS NULL OR JM.jm_CANCEL_YN != 'Y')
+                 WHERE (JM.jm_CANCLE_YN IS NULL OR JM.jm_CANCLE_YN != 'Y')
 
                 UNION ALL
 
@@ -665,7 +665,7 @@ SELECT TTT.TYPE,
                   ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
                   LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
                  WHERE GM.gm_SAVE_STATUS = 'A'
-                   AND GM.gm_CANCEL_YN IS NULL
+                   AND GM.gm_CANCLE_YN IS NULL
 
                 UNION ALL
 
@@ -744,7 +744,7 @@ SELECT TTT.TYPE,
                        '' AS COMPLE_YN,
                        '' AS PERMITTED_YN
                   FROM DOPCO_MASTER DM
-                 WHERE DM.dom_CANCEL_YN IS NULL
+                 WHERE DM.dom_CANCLE_YN IS NULL
               ) JOIN_MST ON JOIN_MST.PNU = JIJUK_MST.PNU
 				 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEARCH_JISA)" > 
 		   		AND JOIN_MST.JISA = #{SEARCH_JISA}
@@ -753,7 +753,7 @@ SELECT TTT.TYPE,
                 SELECT S.*
                   FROM (
                     SELECT RANK() OVER (PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
-                           RPAD(PPI.addrcodeaddress_code, 10, '0') AS ADDRCODE,
+                           RPAD(PPI.addrcode, 10, '0') AS ADDRCODE,
                            PPI.jibun as JIBUN,
                            PPI.code_depth1 as CODE_DEPTH1,
                            PPI.code_depth2 as CODE_DEPTH2,
