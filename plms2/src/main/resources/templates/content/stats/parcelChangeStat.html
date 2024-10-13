@@ -16,9 +16,10 @@
         <!-- <div class="parcelChangeStatHeader"></div> -->
         <main id="parcelChangeStat">
             <div class="mainTitle">
-                <h1>관리필지 증감현황!!!</h1>
+                <h1>관리필지 증감현황</h1>
             </div>
             <!-- 상단부분 -->
+            <form id="queryForm" onSubmit="return false;">
             <section class="privateUseSectionBoxs">
                 <div class="privateUseSectionCont">
                     <div class="selectSection">
@@ -32,7 +33,8 @@
                                     <div class="selectWrap">
                                         <div class="selectContentArea">
                                             <div class="hiddenSelectBox">
-                                                <select id="parcelChangeStat01_1" hidden required class="getYearSelectBox">
+                                                <select name="YYYY_REF" id="parcelChangeStat01_1" hidden required class="getYearSelectBox">
+                                                    <option th:each="val:${yyyyList}" th:value="${val.year}" th:text="${val.year}"></option>
                                                 </select>
                                             </div>
                                             <!--보여지는 셀렉박스-->
@@ -45,7 +47,7 @@
                                     <div class="selectWrap">
                                         <div class="selectContentArea">
                                             <div class="hiddenSelectBox">
-                                                <select id="parcelChangeStat01_2" hidden required class="getMonthSelectBox">
+                                                <select name="MM_REF" id="parcelChangeStat01_2" hidden required class="getMonthSelectBox">
                                                 </select>
                                             </div>
                                             <!--보여지는 셀렉박스-->
@@ -65,7 +67,8 @@
                                     <div class="selectWrap">
                                         <div class="selectContentArea">
                                             <div class="hiddenSelectBox">
-                                                <select id="parcelChangeStat02_1" hidden required class="getYearSelectBox">
+                                                <select name="YYYY_TG" id="parcelChangeStat02_1" hidden required class="getYearSelectBox">
+                                                    <option th:each="val:${yyyyList}" th:value="${val.year}" th:text="${val.year}"></option>
                                                 </select>
                                             </div>
                                             <!--보여지는 셀렉박스-->
@@ -78,7 +81,7 @@
                                     <div class="selectWrap">
                                         <div class="selectContentArea">
                                             <div class="hiddenSelectBox">
-                                                <select id="parcelChangeStat02_2" hidden required class="getMonthSelectBox">
+                                                <select name="MM_TG" id="parcelChangeStat02_2" hidden required class="getMonthSelectBox">
                                                 </select>
                                             </div>
                                             <!--보여지는 셀렉박스-->
@@ -101,6 +104,7 @@
                     </div>
                 </div>
             </section>
+            </form>
 
             <!-- 엑셀 다운로드 버튼, 현황 상세정보 버튼 -->
 
@@ -122,10 +126,10 @@
                                         <p>지사구분</p>
                                     </th>
                                     <th colspan="5" class="divideSubject">
-                                        <p>23년 12월</p>
+                                        <p id="pREF"></p>
                                     </th>
                                     <th colspan="5" class="divideSubject">
-                                        <p>24년 3월</p>
+                                        <p id="pTG"></p>
                                     </th>
                                     <th colspan="5" class="divideSubject">
                                         <p>증감</p>
@@ -191,475 +195,7 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
-                                <!-- 서울지사 -->
-                                <tr>
-                                    <td>
-                                        <p>서울지사</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <!-- 증감 -->
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                </tr>
-                                <!-- 경인지사 -->
-                                <tr>
-                                    <td>
-                                        <p>경인지사</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <!-- 증감 -->
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                </tr>
-                                <!-- 충청지사 -->
-                                <tr>
-                                    <td>
-                                        <p>충청지사</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <!-- 증감 -->
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">1</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">1</p>
-                                    </td>
-                                </tr>
-                                <!-- 대전지사 -->
-                                <tr>
-                                    <td>
-                                        <p>대전지사</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <!-- 증감 -->
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">1</p>
-                                    </td>
-                                </tr>
-                                <!-- 전북지사 -->
-                                <tr>
-                                    <td>
-                                        <p>전북지사</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">7,675</p>
-                                    </td>
-                                    <!-- 증감 -->
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">1</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                </tr>
-                                <!-- 전남지사 -->
-                                <tr>
-                                    <td>
-                                        <p>전남지사</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">2,021</p>
-                                    </td>
-                                    <!-- 증감 -->
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">1</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">1</p>
-                                    </td>
-                                </tr>
-                                <!-- 영남지사 -->
-                                <tr>
-                                    <td>
-                                        <p>영남지사</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">5,548</p>
-                                    </td>
-                                    <!-- 증감 -->
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">1</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">1</p>
-                                    </td>
-                                </tr>
-                                <!-- 강원지사 -->
-                                <tr>
-                                    <td>
-                                        <p>강원지사</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">102</p>
-                                    </td>
-                                    <!-- 증감 -->
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">1</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">1</p>
-                                    </td>
-                                </tr>
-                                <!-- 경남지사 -->
-                                <tr>
-                                    <td>
-                                        <p>경남지사</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">4</p>
-                                    </td>
-                                    <!-- 증감 -->
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline"></p>
-                                    </td>
-                                    <td class="parcelNumArea">
-                                        <p class="textunderline">1</p>
-                                    </td>
-                                </tr>
+                            <tbody id="tbody1">
                             </tbody>
                         </table>
                     </div>
@@ -671,214 +207,7 @@
 
     <div class="parcelChangeParcelDetailPopWrapper" id="searchResultPopDiv">
 
-        <link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
-        <div id="searchResultsPopup">
-            <div class="popupWrap" id="popupWrap">
-                <h2>
-                    <p>필지 정보</p>
-                    <span class="topCloseBtn"></span>
-                </h2>
-                <div class="pilji_total">
-                    <p>
-                        <span>총 검색 건 수</span>
-                        <span class="total_blue">130</span>
-                        <span>건</span>
-                    </p>
-                    <button>
-                        <p>엑셀 다운로드</p>
-                        <figure>
-                            <img src="/assets/media/popup/images/download.png" alt="download" />
-                        </figure>
-                    </button>
-                </div>
-                <section>
-                    <div class="popupCont">
-                        <ul class="popTitles">
-                            <li class="popTitle05">순번</li>
-                            <li class="popTitle03">발생지사</li>
-                            <li class="popTitle06">주소</li>
-                            <li class="popTitle01">권리확보</li>
-                        </ul>
-                        <div class="popContentBox">
-                            <ul class="popContents">
-                                <li class="popContent05">
-                                    <p>1</p>
-                                </li>
-                                <li class="popContent03">
-                                    <p>대전지사</p>
-                                </li>
-                                <li class="popContent06">
-                                    <p>대전광역시 동구 신상동 213</p>
-                                </li>
-                                <li class="popContent01">
-                                    <p>지상권</p>
-                                </li>
-                            </ul>
-                            <ul class="popContents">
-                                <li class="popContent05">
-                                    <p>2</p>
-                                </li>
-                                <li class="popContent03">
-                                    <p>대전지사</p>
-                                </li>
-                                <li class="popContent06">
-                                    <p>대전광역시 유성구 금고동 231-2</p>
-                                </li>
-                                <li class="popContent01">
-                                    <p>지상권</p>
-                                </li>
-                            </ul>
-                            <ul class="popContents">
-                                <li class="popContent05">
-                                    <p>3</p>
-                                </li>
-                                <li class="popContent03">
-                                    <p>대전지사</p>
-                                </li>
-                                <li class="popContent06">
-                                    <p>대전광역시 유성구 금고동 381-2</p>
-                                </li>
-                                <li class="popContent01">
-                                    <p>지상권</p>
-                                </li>
-                            </ul>
-                            <ul class="popContents">
-                                <li class="popContent05">
-                                    <p>4</p>
-                                </li>
-                                <li class="popContent03">
-                                    <p>대전지사</p>
-                                </li>
-                                <li class="popContent06">
-                                    <p>대전광역시 유성구 금고동 산76-1</p>
-                                </li>
-                                <li class="popContent01">
-                                    <p>지상권</p>
-                                </li>
-                            </ul>
-                            <ul class="popContents">
-                                <li class="popContent05">
-                                    <p>5</p>
-                                </li>
-                                <li class="popContent03">
-                                    <p>대전지사</p>
-                                </li>
-                                <li class="popContent06">
-                                    <p>대전광역시 유성구 금고동 산80-1</p>
-                                </li>
-                                <li class="popContent01">
-                                    <p>지상권</p>
-                                </li>
-                            </ul>
-                            <ul class="popContents">
-                                <li class="popContent05">
-                                    <p>6</p>
-                                </li>
-                                <li class="popContent03">
-                                    <p>대전지사</p>
-                                </li>
-                                <li class="popContent06">
-                                    <p>대전광역시 대덕구 읍내동 67-1</p>
-                                </li>
-                                <li class="popContent01">
-                                    <p>지상권</p>
-                                </li>
-                            </ul>
-                            <ul class="popContents">
-                                <li class="popContent05">
-                                    <p>7</p>
-                                </li>
-                                <li class="popContent03">
-                                    <p>대전지사</p>
-                                </li>
-                                <li class="popContent06">
-                                    <p>세종특별자치시 세종시 금남면 도남리 222-1 </p>
-                                </li>
-                                <li class="popContent01">
-                                    <p>지상권</p>
-                                </li>
-                            </ul>
-                            <ul class="popContents">
-                                <li class="popContent05">
-                                    <p>8</p>
-                                </li>
-                                <li class="popContent03">
-                                    <p>대전지사</p>
-                                </li>
-                                <li class="popContent06">
-                                    <p>경기도 평택시 용이동 420-3</p>
-                                </li>
-                                <li class="popContent01">
-                                    <p>지상권</p>
-                                </li>
-                            </ul>
-                            <ul class="popContents">
-                                <li class="popContent05">
-                                    <p>9</p>
-                                </li>
-                                <li class="popContent03">
-                                    <p>대전지사</p>
-                                </li>
-                                <li class="popContent06">
-                                    <p>충청북도 청주시 서원구 남이면 외천리 02-4</p>
-                                </li>
-                                <li class="popContent01">
-                                    <p>지상권</p>
-                                </li>
-                            </ul>
-                            <ul class="popContents">
-                                <li class="popContent05">
-                                    <p>10</p>
-                                </li>
-                                <li class="popContent03">
-                                    <p>대전지사</p>
-                                </li>
-                                <li class="popContent06">
-                                    <p>충청북도 청주시 서원구 현도면 중척리 355-2</p>
-                                </li>
-                                <li class="popContent01">
-                                    <p>지상권</p>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </section>
-                <!-- 페이네이션 -->
-                <section>
-                    <div class="pilji_info_Popup_boardPageBoxs">
-                        <ul>
-                            <li class="arrowLeftWrapper">
-                                <button>
-                                    <img src="/assets/media/popup/images/arrowRightLine02.png" alt="preBtnImg" />
-                                </button>
-                                <button>
-                                    <img src="/assets/media/popup/images/arrowRightLine01.png" alt="preBtnImg" />
-                                </button>
-                            </li>
-                            <li class="pageCountBoxs">
-                                <p>1</p>
-                                <p>2</p>
-                                <p>3</p>
-                                <p>4</p>
-                                <p>5</p>
-                            </li>
-                            <li class="arrowRightWrapper">
-                                <button>
-                                    <img src="/assets/media/popup/images/arrowRightLine01.png" alt="nextBtnImg" />
-                                </button>
-                                <button>
-                                    <img src="/assets/media/popup/images/arrowRightLine02.png" alt="nextBtnImg" />
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-                <div class="lastBtnBox btnWrap">
-                    <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
-                </div>
-            </div>
-        </div>
+    
 
     </div>
 
