@@ -2,6 +2,7 @@ var dataInfo = {};
 //실행
 var mw_seq;
 var fileRowCount = 0;
+
 ///start
 $(function() {
 	console.log("===== complainManage.js start =====");
@@ -11,7 +12,7 @@ $(function() {
 	const urlParams = new URLSearchParams(queryString);
 	// 파라미터 값 가져오기 (예: ?paramName=value 형태에서 paramName의 값)
 	mw_seq = urlParams.get('mw_seq');
-	console.log("mw_seq = " + mw_seq);
+	//console.log("mw_seq = " + mw_seq);
 	
 	//페이지 로드시 상세화면 내용 불러오기
 	self.onDataLoad();
@@ -52,6 +53,7 @@ const createCustomLiComplaintManage = () => {
 		}
 	});
 }
+
 createCustomLiComplaintManage();
 
 const customSelectView = document.querySelectorAll('.customSelectView')
@@ -98,7 +100,6 @@ MoreSelectBtn.forEach((moreBtn) => {
 
 
 /* 민원협의내용등록수정 팝업 */
-
 const complainManageAddComplainPopEvet = () => {
 
 	const complainManageAddComplainBtn = document.querySelector("#complaintManage .addComplainBtn");
@@ -138,19 +139,14 @@ const complainManageAddComplainPopEvet = () => {
 				document.body.appendChild(script).parentNode.removeChild(script);
 			}
 		}
-
-
 	}
-
-
-
 }
 
-complainManageAddComplainPopEvet();
+//민원협의내용등록수정 function 호출
+//complainManageAddComplainPopEvet();
 
 
 /* 민원완료 팝업 */
-
 const complainManageComplainFinPopEvet = () => {
 
 	const complainManageComplainFinBtn = document.querySelector("#complaintManage .complainFinBtn");
@@ -180,7 +176,6 @@ const complainManageComplainFinPopEvet = () => {
 
 		})
 
-
 		// 삽입된 html내 스크립트 실행 함수
 		const runScriptsInElement = (element) => {
 			const scripts = element.getElementsByTagName('script');
@@ -193,7 +188,8 @@ const complainManageComplainFinPopEvet = () => {
 	}
 }
 
-complainManageComplainFinPopEvet();
+//민원완료 작동 버튼 function호출
+//complainManageComplainFinPopEvet();
 
 //팝업 숨김
 function closeComplaintregisterPopup() {
