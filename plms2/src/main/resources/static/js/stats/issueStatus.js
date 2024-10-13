@@ -430,8 +430,8 @@ $('.issueStatusBtn').click(function () {
           trStr += '<td><p>' + row.depth1_name + '</p></td>';
           trStr += '<td><p>' + row.depth2_name + '</p></td>';
           trStr += '<td><p>' + row.depth3_name + '</p></td>';
-          trStr += '<td><p>' + row.potential_issue_cnt + '</p></td>';
-          trStr += '<td><p>' + row.minwon_total_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.potential_issue_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup2(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.minwon_total_cnt + '</p></td>';
           trStr += '</tr>';
 
           tbodyStr += trStr;
@@ -486,8 +486,8 @@ $('.issueStatusBtn').click(function () {
             trStr += '<td rowspan="' + (depth2IdxArr[0] - i) + '"><p>' + row.depth2_name + '</p></td>';
           }
           trStr += '<td><p>' + row.depth3_name + '</p></td>';
-          trStr += '<td><p>' + row.potential_issue_cnt + '</p></td>';
-          trStr += '<td><p>' + row.minwon_total_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup()">' + row.potential_issue_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup()">' + row.minwon_total_cnt + '</p></td>';
           trStr += '</tr>';
 
           tbodyStr += trStr;
@@ -540,8 +540,8 @@ $('.issueStatusBtn').click(function () {
             trStr += '<td rowspan="' + (depth2IdxArr[0] - i) + '"><p>' + row.depth2_name + '</p></td>';
           }
           trStr += '<td><p>' + row.depth3_name + '</p></td>';
-          trStr += '<td><p>' + row.potential_issue_cnt + '</p></td>';
-          trStr += '<td><p>' + row.minwon_total_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup()">' + row.potential_issue_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup2()">' + row.minwon_total_cnt + '</p></td>';
           trStr += '</tr>';
 
           tbodyStr += trStr;
@@ -553,3 +553,43 @@ $('.issueStatusBtn').click(function () {
     }
   });
 });
+
+function showPopup(depth1_code, depth2_code, depth3_code, depth1_name, depth2_name, depth3_name) {
+    var param = '';
+    param += 'DEPTH1NAME=' + depth1_name + '&DEPTH2NAME=' + depth2_name + '&DEPTH3NAME=' + depth3_name;
+
+    $.ajax({
+        url: "/stats/issuePopup?" + param,
+        async: true,
+        type: "GET",
+        // dataType: "json",
+        contentType: 'html/text; charset=utf-8',
+        success: function (response) {
+          console.log(response);
+          $('#issueStatusParcelPopupWrapper').html(response);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+      });
+}
+
+function showPopup2() {
+    var param = '';
+    param += 'DEPTH1NAME=' + depth1_name + '&DEPTH2NAME=' + depth2_name + '&DEPTH3NAME=' + depth3_name;
+
+    $.ajax({
+        url: "/stats/issuePopup2?" + param,
+        async: true,
+        type: "GET",
+        // dataType: "json",
+        contentType: 'html/text; charset=utf-8',
+        success: function (response) {
+          console.log(response);
+          $('#issueStatusComplaintPopupWrapper').html(response);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+      });
+}

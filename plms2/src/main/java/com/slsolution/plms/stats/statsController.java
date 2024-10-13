@@ -64,6 +64,54 @@ public class statsController {
 		return mav;
 	}
 
+	@GetMapping(path="/issuePopup") //http://localhost:8081/stats/parcelPopup?JISA=서울지사&YYYY=2024&MM=9&GUBUN=등기
+	public ModelAndView issuePopup(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+
+		ParameterParser parser = new ParameterParser(httpRequest);
+		String JISA = parser.getString("JISA", "");
+		String DEPTH1NAME = parser.getString("DEPTH1NAME", "");
+		String DEPTH2NAME = parser.getString("DEPTH2NAME", "");
+		String DEPTH3NAME = parser.getString("DEPTH3NAME", "");
+		String DEPTH1CODE = parser.getString("DEPTH1CODE", "");
+		String DEPTH2CODE = parser.getString("DEPTH2CODE", "");
+		String DEPTH3CODE = parser.getString("DEPTH3CODE", "");
+
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("jisa", JISA);
+		mav.addObject("depth1code", DEPTH1CODE);
+		mav.addObject("depth2code", DEPTH2CODE);
+		mav.addObject("depth3code", DEPTH3CODE);
+		mav.addObject("depth1name", DEPTH1NAME);
+		mav.addObject("depth2name", DEPTH2NAME);
+		mav.addObject("depth3name", DEPTH3NAME);
+		mav.setViewName("content/stats/issuePopup");
+		return mav;
+	}
+
+	@GetMapping(path="/issuePopup2") //http://localhost:8081/stats/parcelPopup?JISA=서울지사&YYYY=2024&MM=9&GUBUN=등기
+	public ModelAndView issuePopup2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+
+		ParameterParser parser = new ParameterParser(httpRequest);
+		String JISA = parser.getString("JISA", "");
+		String DEPTH1NAME = parser.getString("DEPTH1NAME", "");
+		String DEPTH2NAME = parser.getString("DEPTH2NAME", "");
+		String DEPTH3NAME = parser.getString("DEPTH3NAME", "");
+		String DEPTH1CODE = parser.getString("DEPTH1CODE", "");
+		String DEPTH2CODE = parser.getString("DEPTH2CODE", "");
+		String DEPTH3CODE = parser.getString("DEPTH3CODE", "");
+
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("jisa", JISA);
+		mav.addObject("depth1code", DEPTH1CODE);
+		mav.addObject("depth2code", DEPTH2CODE);
+		mav.addObject("depth3code", DEPTH3CODE);
+		mav.addObject("depth1name", DEPTH1NAME);
+		mav.addObject("depth2name", DEPTH2NAME);
+		mav.addObject("depth3name", DEPTH3NAME);
+		mav.setViewName("content/stats/issuePopup");
+		return mav;
+	}
+
 	@GetMapping(path="/rightChangeStat") //http://localhost:8080/api/get/dbTest
 	public ModelAndView rightChangeStat(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		//지사코드
