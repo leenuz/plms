@@ -367,7 +367,7 @@ $('.issueStatusBtn').click(function () {
   console.log(allData);
   
   $.ajax({
-    url: "/issue/selectIssueCodeList",
+    url: "/statics/selectIssueStatisticsList?" + allData,
     data: JSON.stringify(allData),
     async: true,
     type: "POST",
@@ -376,7 +376,7 @@ $('.issueStatusBtn').click(function () {
     success: function (response) {
       console.log(response);
       if (response.success = "Y") {
-        const resultData = response.result;
+        const resultData = response.dataList;
 
         var table1Data = []; // 지상권 설정
         var table2Data = []; // 지상권 미설정
@@ -385,7 +385,7 @@ $('.issueStatusBtn').click(function () {
         // 데이터 분류
         for (var i = 0; i < resultData.length; i++) {
           var codeData = resultData[i];
-          var prefix = codeData.depth1_code.substr(0, 2);
+          var prefix = codeData.depth1.substr(0, 2);
           if (prefix == 'DY') {
             table1Data.push(codeData);
           } else if (prefix == 'DN') {
@@ -424,7 +424,9 @@ $('.issueStatusBtn').click(function () {
           }
           trStr += '<td><p>' + row.depth1_name + '</p></td>';
           trStr += '<td><p>' + row.depth2_name + '</p></td>';
-          trStr += '<td><p><a href="/issue/issueCodeDetail?CODE=' + row.depth3_code + '">' + row.depth3_name + '</a></p></td>';
+          trStr += '<td><p>' + row.depth3_name + '</p></td>';
+          trStr += '<td><p>' + row.potential_issue_cnt + '</p></td>';
+          trStr += '<td><p>' + row.minwon_total_cnt + '</p></td>';
           trStr += '</tr>';
 
           tbodyStr += trStr;
@@ -446,13 +448,13 @@ $('.issueStatusBtn').click(function () {
             registedIdxArr.push(i);
             rComp = row.registed_yn;
           }
-          if (row.depth1_code != depth1Comp) {
+          if (row.depth1 != depth1Comp) {
             depth1IdxArr.push(i);
-            depth1Comp = row.depth1_code;
+            depth1Comp = row.depth1;
           }
-          if (row.depth2_code != depth2Comp) {
+          if (row.depth2 != depth2Comp) {
             depth2IdxArr.push(i);
-            depth2Comp = row.depth2_code;
+            depth2Comp = row.depth2;
           }
         }
         registedIdxArr.push(table2Data.length);
@@ -478,7 +480,9 @@ $('.issueStatusBtn').click(function () {
             depth2IdxArr.shift();
             trStr += '<td rowspan="' + (depth2IdxArr[0] - i) + '"><p>' + row.depth2_name + '</p></td>';
           }
-          trStr += '<td><p><a href="/issue/issueCodeDetail?CODE=' + row.depth3_code + '">' + row.depth3_name + '</a></p></td>';
+          trStr += '<td><p>' + row.depth3_name + '</p></td>';
+          trStr += '<td><p>' + row.potential_issue_cnt + '</p></td>';
+          trStr += '<td><p>' + row.minwon_total_cnt + '</p></td>';
           trStr += '</tr>';
 
           tbodyStr += trStr;
@@ -500,13 +504,13 @@ $('.issueStatusBtn').click(function () {
             registedIdxArr.push(i);
             rComp = row.permitted_yn;
           }
-          if (row.depth1_code != depth1Comp) {
+          if (row.depth1 != depth1Comp) {
             depth1IdxArr.push(i);
-            depth1Comp = row.depth1_code;
+            depth1Comp = row.depth1;
           }
-          if (row.depth2_code != depth2Comp) {
+          if (row.depth2 != depth2Comp) {
             depth2IdxArr.push(i);
-            depth2Comp = row.depth2_code;
+            depth2Comp = row.depth2;
           }
         }
         registedIdxArr.push(table3Data.length);
@@ -530,7 +534,9 @@ $('.issueStatusBtn').click(function () {
             depth2IdxArr.shift();
             trStr += '<td rowspan="' + (depth2IdxArr[0] - i) + '"><p>' + row.depth2_name + '</p></td>';
           }
-          trStr += '<td><p><a href="/issue/issueCodeDetail?CODE=' + row.depth3_code + '">' + row.depth3_name + '</a></p></td>';
+          trStr += '<td><p>' + row.depth3_name + '</p></td>';
+          trStr += '<td><p>' + row.potential_issue_cnt + '</p></td>';
+          trStr += '<td><p>' + row.minwon_total_cnt + '</p></td>';
           trStr += '</tr>';
 
           tbodyStr += trStr;

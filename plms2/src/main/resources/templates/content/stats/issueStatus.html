@@ -32,12 +32,12 @@
                                 </p>
                                 <div class="selectContentArea">
                                     <div class="hiddenSelectBox">
-                                        <select name="permit" id="issueStatusSelectBox01_1" hidden>
-                                            <option value="전체">전체</option>
-                                            <option value="전체1">지상권설정</option>
-                                            <option value="전체2">지상권미설정</option>
-                                            <option value="전체3">점용</option>
-                                            <option value="전체4">미점용</option>
+                                        <select name="SEARCH_PERMITTED" id="issueStatusSelectBox01_1" hidden>
+                                            <option value="">전체</option>
+                                            <option value="">지상권설정</option>
+                                            <option value="">지상권미설정</option>
+                                            <option value="">점용</option>
+                                            <option value="">미점용</option>
                                         </select>
                                     </div>
                                     <!--보여지는 셀렉박스-->
@@ -53,10 +53,10 @@
                                 </p>
                                 <div class="selectContentArea">
                                     <div class="hiddenSelectBox">
-                                        <select name="contract" id="issueStatusSelectBox01_2" hidden>
-                                            <option value="전체">전체</option>
-                                            <option value="전체1">계약 체결/허가증 보유</option>
-                                            <option value="전체2">계약 미체결/허가증 미보유</option>
+                                        <select name="SEARCH_REGISTED" id="issueStatusSelectBox01_2" hidden>
+                                            <option value="">전체</option>
+                                            <option value="Y">계약 체결/허가증 보유</option>
+                                            <option value="N">계약 미체결/허가증 미보유</option>
                                         </select>
                                     </div>
                                     <!--보여지는 셀렉박스-->
@@ -73,11 +73,11 @@
 
                                 <div class="dateInputBox">
                                     <div class="dateInputWrap">
-                                        <input type="date" name="date1" data-placeholder="24/01/01" />
+                                        <input type="date" name="SEARCH_START_DAY" data-placeholder="24/01/01" />
                                     </div>
                                     <span class="dateBar"></span>
                                     <div class="dateInputWrap">
-                                        <input type="date" name="date2" data-placeholder="24/06/26" />
+                                        <input type="date" name="SEARCH_END_DAY" data-placeholder="24/06/26" />
                                     </div>
                                 </div>
                             </div>
@@ -87,9 +87,9 @@
                                 </p>
                                 <div class="selectContentArea">
                                     <div class="hiddenSelectBox">
-                                        <select name="jisa" id="issueStatusSelectBox01_3" hidden>
-                                            <option value="전체">전체</option>
-                                            <option value="전체1" th:each="val:${jisaList}" th:value="${val.jm_jisa_name}" th:text="${val.jm_jisa_name}"></option>
+                                        <select name="SEARCH_JISA" id="issueStatusSelectBox01_3" hidden>
+                                            <option value="">전체</option>
+                                            <option th:each="val:${jisaList}" th:value="${val.jm_jisa_name}" th:text="${val.jm_jisa_name}"></option>
                                         </select>
                                     </div>
                                     <!--보여지는 셀렉박스-->
@@ -105,13 +105,13 @@
                                 </p>
                                 <div class="selectContentArea">
                                     <div class="hiddenSelectBox">
-                                        <select name="minwon" id="issueStatusSelectBox01_4" hidden>
-                                            <option value="전체">전체</option>
-                                            <option value="임시저장">임시저장</option>
-                                            <option value="민원발생">민원발생</option>
-                                            <option value="대응방안수립">대응방안수립</option>
-                                            <option value="협의중">협의중</option>
-                                            <option value="완료">완료</option>
+                                        <select name="SEARCH_STATUS" id="issueStatusSelectBox01_4" hidden>
+                                            <option value="">전체</option>
+                                            <option value="">임시저장</option>
+                                            <option value="">민원발생</option>
+                                            <option value="">대응방안수립</option>
+                                            <option value="">협의중</option>
+                                            <option value="">완료</option>
                                         </select>
                                     </div>
                                     <!--보여지는 셀렉박스-->
@@ -132,7 +132,7 @@
                                 <div class="selectWrap">
                                     <div class="selectContentArea">
                                         <div class="hiddenSelectBox">
-                                            <select name="depth1" id="issueStatusSelectBox02_1" hidden>
+                                            <select name="SEARCH_CODE_1" id="issueStatusSelectBox02_1" hidden>
                                                 <option value="전체">대분류</option>
                                             </select>
                                         </div>
@@ -146,7 +146,7 @@
                                 <div class="selectWrap">
                                     <div class="selectContentArea">
                                         <div class="hiddenSelectBox">
-                                            <select name="depth2" id="issueStatusSelectBox02_2" hidden>
+                                            <select name="SEARCH_CODE_2" id="issueStatusSelectBox02_2" hidden>
                                                 <option value="">중분류</option>
                                             </select>
                                         </div>
@@ -160,7 +160,7 @@
                                 <div class="selectWrap">
                                     <div class="selectContentArea">
                                         <div class="hiddenSelectBox">
-                                            <select name="depth3" id="issueStatusSelectBox02_3" hidden>
+                                            <select name="SEARCH_CODE_3" id="issueStatusSelectBox02_3" hidden>
                                                 <option value="">세분류</option>
                                             </select>
                                         </div>
@@ -188,7 +188,7 @@
             <!-- table부분 -->
             <div class="tableArea">
                 <div class="contWrap contentScr">
-                    <div class="depth1">
+                    <div class="depth1" id="depth1Div">
                         <table>
                             <caption class="hiddenCaption">이슈 및 민원현황 통계</caption>
 
@@ -223,51 +223,11 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
-                                <tr>
-                                    <td rowspan="2">
-                                        <p>지상권 설정</p>
-                                    </td>
-                                    <td rowspan="2">
-                                        <p>계약 체결</p>
-                                    </td>
-                                    <td>
-                                        <p>계약조건 불만족</p>
-                                    </td>
-                                    <td>
-                                        <p>지가상승으로 인한 과거설정지료 과소</p>
-                                    </td>
-                                    <td>
-                                        <p>추가보상 요구</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">4,555</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">2</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>지상권설정 오류</p>
-                                    </td>
-                                    <td>
-                                        <p>오류매설 및 존치기간 이의제기</p>
-                                    </td>
-                                    <td>
-                                        <p>철거 또는 추가보상 요구</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">0</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">0</p>
-                                    </td>
-                                </tr>
+                            <tbody id="tbody1">
                             </tbody>
                         </table>
                     </div>
-                    <div class="depth2">
+                    <div class="depth2" id="depth2Div" hidden>
                         <table>
                             <caption class="hiddenCaption">이슈 및 민원현황 통계</caption>
 
@@ -302,300 +262,13 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody id="tbody2">
                                 <!-- 지상권 미설정 -->
-                                <tr>
-                                    <td rowspan="21">
-                                        <p>지상권 미설정</p>
-                                    </td>
-                                    <td rowspan="13">
-                                        <p>계약 체결</p>
-                                    </td>
-                                    <td rowspan="9">
-                                        <p>토지 소유자와 계약</p>
-                                    </td>
-                                    <td rowspan="3">
-                                        <p>소유자 변경 없음</p>
-                                    </td>
-                                    <td>
-                                        <p>등기진행 누락</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>타권리와의 충돌</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>계약서 미날인</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <!-- 소유자 변경없음 끝, 소유자 변경 발생 시작 -->
-                                <tr>
-                                    <td rowspan="3">
-                                        <p>소유자 변경 발생</p>
-                                    </td>
-                                    <td>
-                                        <p>변경일로 부터 5년 이내</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>변경일로 부터 20년 이내</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>변경일로 부터 20년 초과</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <!-- 소유자 변경 발생 끝, 권리상실 시작 -->
-                                <tr>
-                                    <td rowspan="3">
-                                        <p>권리상실</p>
-                                    </td>
-                                    <td>
-                                        <p>토지개발사업 편입 / 지상권 소멸</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>등기공무원의 지상권 이기누락(소실)</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>해지업무 착오로 인한 지상권 소실</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <!-- 권리상실, 토지 소유자와 계약 끝, 토지 소유자가 아닌 자와 계약 시작 -->
-                                <tr>
-                                    <td rowspan="4">
-                                        <p>토지소유자가 아닌자와 계약</p>
-                                    </td>
-                                    <td rowspan="4">
-                                        <p>계약자 변경 발생</p>
-                                    </td>
-                                    <td>
-                                        <p>사실을 안날, 3년 이내</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>계약일로 부터 10년 이내</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>계약일로 부터 20년 이내</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>계약일로 부터 20년 초과</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <!-- 계약자 변경 발생, 토지 소유자가 아닌 자와 계약, 계약체결 끝 , 계약 미체결 시작 -->
-                                <tr>
-                                    <td rowspan="8">
-                                        <p>계약 미체결</p>
-                                    </td>
-                                    <td rowspan="3">
-                                        <p>기공승낙서 존재</p>
-                                    </td>
-                                    <td rowspan="2">
-                                        <p>소유자 변경 없음</p>
-                                    </td>
-                                    <td>
-                                        <p>보상금 지급(일부지급 포함)</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>보상금 미지급</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <!-- 소유자변경 없음 끝, 소유자 변경 발생 시작 -->
-                                <tr>
-                                    <td>
-                                        <p>소유자 변경 발생</p>
-                                    </td>
-                                    <td>
-                                        <p>보상금 지급 / 미지급</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td rowspan="5">
-                                        <p>기공승낙서 미존재</p>
-                                    </td>
-                                    <td>
-                                        <p>토지소유자 협의없이 매설</p>
-                                    </td>
-                                    <td>
-                                        <p>오류 / 무단매설</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>토지개발사업 편입</p>
-                                    </td>
-                                    <td>
-                                        <p>송유관 매설부지의 권리 변경</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>토지소유자 변경</p>
-                                    </td>
-                                    <td>
-                                        <p>국유지의 용도폐지(사유지)</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td rowspan="2">
-                                        <p>등기불가사유 존재</p>
-                                    </td>
-                                    <td>
-                                        <p>지번 확인 불가</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>소유자 확인 불가</p>
-                                    </td>
-                                    <td class="parcelPopupOpen">
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td class="complaintPopupOpen">
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
                                 <!-- 등기불가사유 존재 끝 -->
                             </tbody>
                         </table>
                     </div>
-                    <div class="depth3">
+                    <div class="depth3" id="depth3Div" hidden>
                         <table>
                             <caption class="hiddenCaption">이슈 및 민원현황 통계</caption>
 
@@ -629,119 +302,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td rowspan="4">
-                                        <p>점용</p>
-                                    </td>
-                                    <td rowspan="4">
-                                        <p>허가증 보유</p>
-                                    </td>
-                                    <td rowspan="4">
-                                        <p>점용료 미납부</p>
-                                    </td>
-                                    <td rowspan="2">
-                                        <p>미 부과</p>
-                                    </td>
-                                    <td>
-                                        <p>영구 무상점용</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>소액 미청구</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <!-- 미부과 끝 -->
-                                <tr>
-                                    <td rowspan="2">
-                                        <p>미 고지</p>
-                                    </td>
-                                    <td>
-                                        <p>점용기간 미경과, 연납부 기한 경과</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>점용기간 경과</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <!-- 미고지 끝 -->
-                                <tr>
-                                    <td rowspan="3">
-                                        <p>미점용</p>
-                                    </td>
-                                    <td rowspan="3">
-                                        <p>허가증 미보유</p>
-                                    </td>
-                                    <td rowspan="3">
-                                        <p>점용료 미납부</p>
-                                    </td>
-                                    <td>
-                                        <p>미 고지</p>
-                                    </td>
-                                    <td>
-                                        <p>점용허가 재검증</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>토지소유자 변경</p>
-                                    </td>
-                                    <td>
-                                        <p>사지의 국유지 편입</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>신규발견</p>
-                                    </td>
-                                    <td>
-                                        <p>ILI 조사결과 확인</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">1,000</p>
-                                    </td>
-                                    <td>
-                                        <p class="textunderline">10</p>
-                                    </td>
-                                </tr>
+                            <tbody id="tbody3">
                             </tbody>
                         </table>
                     </div>
