@@ -1563,7 +1563,7 @@ SELECT TTT.TYPE,
 	
 	
 	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 필지수 - 사유지 미등기 클릭 했을 때 -->
-	<select id="selectFieldInDeStatusBoardListPrivateUnRegistered" parameterType="HashMap" resultType="HashMap">
+	<select id="selectFieldInDeStatusBoardListFieldPrivateUnRegistered" parameterType="HashMap" resultType="HashMap">
 		select
 			desc1, juso, jisang_status
 		from 
@@ -1694,7 +1694,7 @@ SELECT TTT.TYPE,
 	
 	
 	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 사유지 미설정 클릭 했을 때 -->
-	<select id="selectFieldInDeStatusBoardListPrivateUnSetting" parameterType="HashMap" resultType="HashMap">	
+	<select id="selectFieldInDeStatusBoardListFieldPrivateUnSetting" parameterType="HashMap" resultType="HashMap">	
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
@@ -1714,7 +1714,7 @@ SELECT TTT.TYPE,
 	
 	
 	<!-- 통계 > 권리필지 증감현황 > 현황상세정보 메인 조회 > (기준년월, 비교년월) 분기 - 사유지 계 클릭 했을 때 -->
-	<select id="selectFieldInDeStatusBoardListPrivateProperty" parameterType="HashMap" resultType="HashMap">
+	<select id="selectFieldInDeStatusBoardListFieldPrivateProperty" parameterType="HashMap" resultType="HashMap">
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
