@@ -243,6 +243,7 @@ function findProgStatus(input) {
 
 
 function commonCurrentPagePrint(id) {
+	/*
 	let prtContent = document.getElementById('id');
 	let initBody; 
 	
@@ -257,7 +258,21 @@ function commonCurrentPagePrint(id) {
 	window.onafterprint = function() {
 		document.body.innerHTML = initBody;
 	}
-	
+	*/
+	let printStyle = `
+		<style>
+		@media print {
+			header {
+				display: none;
+			}
+			.dopcoAllwrappersBoxs > div {
+				margin-left: 0px !important;
+				width: 100% !important;
+			}
+		}
+		</style>
+	`;
+	$('head').append(printStyle);
 	window.print();
 }
 

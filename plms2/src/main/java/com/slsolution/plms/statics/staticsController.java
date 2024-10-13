@@ -1313,11 +1313,45 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		response.getWriter().print(jo);
 		response.getWriter().flush();
 	}
+	
 	//통계 > 권리별 증감현황 > 년,월
-	@PostMapping(path="/selectByRightInDeListYYYYMM")
-	public void selectByRightInDeListYMD(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@PostMapping(path="/selectByRightInDeListYYYY")
+	public void selectByRightInDeListYYYY(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		ParameterParser parser = new ParameterParser(request);
+		String JISA = parser.getString("JISA", "");
+		
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			HashMap params = new HashMap();
+			params.put("JISA", JISA);
+			
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListYYYY", params);
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	//통계 > 권리별 증감현황 > 년,월
+	@PostMapping(path="/selectByRightInDeListYYYYMM")
+	public void selectByRightInDeListYYYYMM(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		ParameterParser parser = new ParameterParser(request);
+		String JISA = parser.getString("JISA", "");
 		String SELECT_YYYY = parser.getString("SELECT_YYYY", "");
 		
 		ArrayList dataList = new ArrayList();
@@ -1325,9 +1359,11 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		try {
 	
 			HashMap params = new HashMap();
+			params.put("JISA", JISA);
 			params.put("SELECT_YYYY", SELECT_YYYY);
 			
-			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListYMD", params);
+			
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListYYYYMM", params);
 	
 			map.put("message", "success");
 			map.put("dataList", dataList);
@@ -1478,17 +1514,48 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	}
 	
 	//통계 > 관리필지 증감현황 > 년,월
+	@PostMapping(path="/selectFieldInDeListYYYY")
+	public void selectFieldInDeListYYYY(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeListYYYY", null);
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+	//통계 > 관리필지 증감현황 > 년,월
 	@PostMapping(path="/selectFieldInDeListYYYYMM")
 	public void selectFieldInDeListYYYYMM(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
-		String SELECT_YYYY = parser.getString("SELECT_YYYY", "2024");
+		String SELECT_YYYY = parser.getString("SELECT_YYYY", "");
 		
 		ArrayList dataList = new ArrayList();
 		HashMap map = new HashMap();
 		try {
 	
 			HashMap params = new HashMap();
-			params.put("SELECT_YYYY", Integer.parseInt(SELECT_YYYY));
+			if(!"".equals(SELECT_YYYY)) {
+				params.put("SELECT_YYYY", Integer.parseInt(SELECT_YYYY));
+			}
+			
 			
 			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeListYYYYMM", params);
 	
@@ -1513,10 +1580,10 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	@PostMapping(path="/selectFieldInDeList")
 	public void selectFieldInDeList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
-		String YYYY_REF = parser.getString("YYYY_REF", "2024");
-		String MM_REF = parser.getString("MM_REF", "9");
-		String YYYY_TG = parser.getString("YYYY_TG", "2024");
-		String MM_TG = parser.getString("MM_TG", "8");
+		String YYYY_REF = parser.getString("YYYY_REF", "0");
+		String MM_REF = parser.getString("MM_REF", "0");
+		String YYYY_TG = parser.getString("YYYY_TG", "0");
+		String MM_TG = parser.getString("MM_TG", "0");
 		
 	
 		ArrayList dataList = new ArrayList();
@@ -1554,8 +1621,8 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	public void selectFieldInDeListDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
 		String JISA = parser.getString("JISA", ""); // 지사
-		String YYYY = parser.getString("YYYY", ""); // 클릭한 년도
-		String MM = parser.getString("MM", "");		// 클릭한 월
+		String YYYY = parser.getString("YYYY", "0"); // 클릭한 년도
+		String MM = parser.getString("MM", "0");		// 클릭한 월
 		String GUBUN = parser.getString("GUBUN", "");// 등기, 미등기계약, 미등기미계약, 소계, 전체
 		
 	
@@ -1565,8 +1632,8 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	
 			HashMap params = new HashMap();
 			params.put("JISA", JISA);
-			params.put("YYYY", YYYY);
-			params.put("MM", MM);
+			params.put("YYYY", Integer.parseInt(YYYY));
+			params.put("MM", Integer.parseInt(MM));
 	
 			if("등기".equals(GUBUN)){
 				dataList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeListDetailRegistered", params);
@@ -1603,10 +1670,10 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	@PostMapping(path="/selectFieldInDeStatusBoardList")
 	public void selectFieldInDeStatusBoardList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
-		String YYYY_REF = parser.getString("YYYY_REF", "");
-		String MM_REF = parser.getString("MM_REF", "");
-		String YYYY_TG = parser.getString("YYYY_TG", "");
-		String MM_TG = parser.getString("MM_TG", "");
+		String YYYY_REF = parser.getString("YYYY_REF", "0");
+		String MM_REF = parser.getString("MM_REF", "0");
+		String YYYY_TG = parser.getString("YYYY_TG", "0");
+		String MM_TG = parser.getString("MM_TG", "0");
 		
 	
 		ArrayList dataList = new ArrayList();
@@ -1614,10 +1681,10 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		try {
 	
 			HashMap params = new HashMap();
-			params.put("YYYY_REF", YYYY_REF); 	// 기준년
-			params.put("MM_REF", MM_REF);		// 기준월
-			params.put("YYYY_TG", YYYY_TG);		// 비교년
-			params.put("MM_TG", MM_TG);			// 비교월
+			params.put("YYYY_REF", Integer.parseInt(YYYY_REF)); 	// 기준년
+			params.put("MM_REF", Integer.parseInt(MM_REF));		// 기준월
+			params.put("YYYY_TG", Integer.parseInt(YYYY_TG));		// 비교년
+			params.put("MM_TG", Integer.parseInt(MM_TG));			// 비교월
 	
 			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeStatusBoardList", params);
 			
@@ -1644,12 +1711,12 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	public void selectFieldInDeStatusBoardListDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
 		String JISA = parser.getString("JISA", "");
-		String YYYY = parser.getString("YYYY", "");
-		String MM = parser.getString("MM", "");
-		String YYYY_REF = parser.getString("YYYY_REF", "");
-		String MM_REF = parser.getString("MM_REF", "");
-		String YYYY_TG = parser.getString("YYYY_TG", "");
-		String MM_TG = parser.getString("MM_TG", "");
+		String YYYY = parser.getString("YYYY", "0");
+		String MM = parser.getString("MM", "0");
+		String YYYY_REF = parser.getString("YYYY_REF", "0");
+		String MM_REF = parser.getString("MM_REF", "0");
+		String YYYY_TG = parser.getString("YYYY_TG", "0");
+		String MM_TG = parser.getString("MM_TG", "0");
 		String GUBUN = parser.getString("GUBUN", "");
 		String GOVER_OWN = parser.getString("GOVER_OWN", "");
 		String JISANG_STATUS = parser.getString("JISANG_STATUS", "");
@@ -1662,12 +1729,12 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	
 			HashMap params = new HashMap();
 			params.put("JISA", JISA); 	// 기준년
-			params.put("YYYY", YYYY);		// 기준월
-			params.put("MM", MM);		// 비교년
-			params.put("YYYY_REF", YYYY_REF); 	// 기준년
-			params.put("MM_REF", MM_REF);		// 기준월
-			params.put("YYYY_TG", YYYY_TG);		// 비교년
-			params.put("MM_TG", MM_TG);			// 비교월
+			params.put("YYYY", Integer.parseInt(YYYY));		// 기준월
+			params.put("MM", Integer.parseInt(MM));		// 비교년
+			params.put("YYYY_REF", Integer.parseInt(YYYY_REF)); 	// 기준년
+			params.put("MM_REF", Integer.parseInt(MM_REF));		// 기준월
+			params.put("YYYY_TG", Integer.parseInt(YYYY_TG));		// 비교년
+			params.put("MM_TG", Integer.parseInt(MM_TG));			// 비교월
 			params.put("GUBUN", GUBUN);			// 필지, 분기
 			params.put("GOVER_OWN", GOVER_OWN);	// 사유지, 국유지, ""
 			params.put("JISANG_STATUS", JISANG_STATUS);	// 지상권, 미등기, 미설정, 계

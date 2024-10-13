@@ -702,7 +702,7 @@ log.info("resultData:"+resultData);
 		
 		params.put("start_date", start_date);
 		params.put("end_date", end_date);
-
+		params.put("length", length);
 //		String[] right_arr= {};
 //		right_arr=right_type.split(",");
 //		params.put("right_type", right_arr);
@@ -776,7 +776,14 @@ log.info("resultData:"+resultData);
 		String cancel_yn = req.getParameter("cancel_yn");
 		String start_date=req.getParameter("start_date"); //취득기간
 		String end_date=req.getParameter("end_date");
-
+		if ("처분".equals(cancel_yn)) {
+			cancel_yn = "Y";
+		}
+		else if ("미처분".equals(cancel_yn)) {
+			cancel_yn = "";
+		}else {
+			cancel_yn = null;
+		}
 		Map map = req.getParameterMap();
 
 		HashMap params = new HashMap();
@@ -788,7 +795,7 @@ log.info("resultData:"+resultData);
 		params.put("start_date", start_date);
 		params.put("end_date", end_date);
 		params.put("cancel_yn", cancel_yn);
-
+		params.put("length", length);
 //		String[] right_arr= {};
 //		right_arr=right_type.split(",");
 //		params.put("right_type", right_arr);
@@ -809,12 +816,11 @@ log.info("resultData:"+resultData);
 		}
 		log.info("params:"+params);
 
-		Object count= mainService.selectCountQuery("dopcoSQL.selectcancelTotalCount", params);
-		int total=(int)count;
+		Object count= (int) mainService.selectCountQuery("dopcoSQL.selectcancelTotalCount", params);
+		int total = (int) count;
 
 		ArrayList<HashMap> list = mainService.selectQuery("dopcoSQL.selectDopcoCancelList",params);
 		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
-		log.info("list:"+list);
 
 
 		HashMap<String,Object> resultmap=new HashMap();
