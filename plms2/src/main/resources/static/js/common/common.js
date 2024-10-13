@@ -322,7 +322,7 @@ function positionView(objInfo) {
 	
 	const coordList = $("#jijukCoordList").val();
 	const coordSize = $("#jijukCoordSize").val();
-	//console.log("coordList: " + coordList+", coordSize" + coordSize);
+	console.log("coordList: " + coordList+", coordSize" + coordSize);
 	
 	let firstCoordLng = '';
 	let firstCoordLat = '';
@@ -345,7 +345,7 @@ function positionView(objInfo) {
 			markerList.push(coordArr);
 			//console.log(i+' :: '+trimArrCoord[i]);
 		}
-		//console.log(markerList);
+		console.log(markerList);
 	}
 	
 	let message;
@@ -374,37 +374,46 @@ function positionView(objInfo) {
 	if (window.opener) {
 		window.opener.postMessage(message, '*');  // 부모 창으로 메시지 전송
 	}
-}	
+}
+
 
 function onePositionView(obj) {
-	console.log('1개 위치보기');
-	console.log(obj);
-	
-	if(typeof(obj) == 'undefined' || obj.x == null || obj.y == null) {
-		alert('위치 정보가 없습니다.');
-		return false;
-	}
-	
-	let firstCoordLng = obj.x;
-	let firstCoordLat = obj.y;
-	
-	if(typeof(firstCoordLat) == 'undefined') {
-		firstCoordLng = obj.lng;
-		firstCoordLat = obj.lat;
-	}
-	
-	const message = {
-		type: "setCenter",
-		lon: firstCoordLng,
-		lat: firstCoordLat,
-		markers:[[firstCoordLng, firstCoordLat]],
-		zoom: 19,
-	};
-	// 자식 창에서 부모 창으로 메시지 보내기
-	if (window.opener) {
-		window.opener.postMessage(message, '*');  // 부모 창으로 메시지 전송
-	}
+    console.log('1개 위치보기');
+    console.log(obj);
+    
+    let markerList = [];
+
+    if(typeof(obj) == 'undefined' || obj.x == null || obj.y == null) {
+        alert('위치 정보가 없습니다.');
+        return false;
+    }
+    
+    let firstCoordLng = obj.x;
+    let firstCoordLat = obj.y;
+    
+    if(typeof(firstCoordLat) == 'undefined') {
+        firstCoordLng = obj.lng;
+        firstCoordLat = obj.lat;
+    }
+    
+    // markerList에 배열로 좌표를 추가
+    markerList.push([firstCoordLng, firstCoordLat]);
+		console.log(markerList);
+		
+    const message = {
+        type: "setCenter",
+        lon: firstCoordLng,
+        lat: firstCoordLat,
+        markers: markerList,  // markerList를 markers로 추가
+        zoom: 19,
+    };
+    
+    // 자식 창에서 부모 창으로 메시지 보내기
+    if (window.opener) {
+        window.opener.postMessage(message, '*');  // 부모 창으로 메시지 전송
+    }
 }
+
 
 function commonJisaInfoCheck() {
 	let jisaName = $("#loginJisa").val();	//각 해당 페이지의 hidden type으로 되있는 값 존재
