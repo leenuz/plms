@@ -316,7 +316,7 @@ function getFullAddress(data) {
 function onDataLoad() {
 
 	var allData = { "MW_SEQ": mw_seq };
-
+	let noDataUl = '<ul class="contents"><li class="content">조회된 정보가 없습니다.</li></ul>';
 	$.ajax({
 		url: "/issue/selectMinwonDetail",
 		data: JSON.stringify(allData),
@@ -359,7 +359,50 @@ function onDataLoad() {
 			$('#dopcoAllWrappers .land_history').text(""); //토지이력
 			$('#dopcoAllWrappers .requirements').text(""); //요구사항
 			$('#dopcoAllWrappers .land_contents').text(result.mw_contents); //내용
-
+			
+			// 민원인/토지주
+			let minwontojijus = result.minwonin_tojiju_nm.split("|"); // 성명
+			if (minwontojijus.length > 0) {
+				let minwontojiju_birth = result.minwonin_tojiju_birth.split("|"); // 생년월일
+				let tojiju_relation = result.tojiju_relation.split("|"); // 토지주와의 관계
+				let minwonin_phone = result.minwonin_phone.split("|"); // 연락처
+				let field_presence = result.field_presence.split("|"); // 현장입회
+				
+				$.each(minwontojijus, function(index, item) {
+				let newHtml = `
+					 <ul class="contents">
+						<li class="content smallWidth">
+							<input type="text" class="notWriteInput" placeholder="${index + 1}" readonly />
+						</li>
+						<li class="content smallWidth">
+							<input type="text" class="notWriteInput" readonly placeholder="${item}" />
+						</li>
+						<li class="content">
+							<input type="text" class="notWriteInput" readonly placeholder="${minwontojiju_birth[index]}"/>
+						</li>
+						<li class="content largeWidth">
+							<input type="text" class="notWriteInput" readonly placeholder="${tojiju_relation[index]}" />
+						</li>
+						<li class="content largeWidth">
+							<input type="text" class="notWriteInput" readonly placeholder="${minwonin_phone[index]}"/>
+						</li>
+						<li class="content">
+							<input type="text" class="notWriteInput" readonly placeholder="${field_presence[index]}" />
+						</li>
+					</ul>`;
+				$('#minwonin_tojiju_body').append(newHtml);	
+				});
+					
+			} else {
+				$('#minwonin_tojiju_body').append(noDataUl);
+			}
+			
+			// 토지이력
+			$('#toji_history').val(result.toji_history);
+			
+			// 요구사항
+			$('#minwon_requirement').val(result.minwon_requirement);
+			
 			//민원 토지 ul 추가
 			if (tojiList != null && tojiList != undefined && tojiList.length > 0) {
 				$('#dopcoAllWrappers .complaintLand .depth1 .contents').remove();
@@ -370,7 +413,7 @@ function onDataLoad() {
                     <input type="text" readonly class="notWriteInput" value="${item.rep_yn}">
                 </li>
                 <li class="content largeWidth">
-                    <input type="text" readonly class="notWriteInput" value="${getFullAddress(item)}">
+                    <input type="text" readonly class="notWriteInput" value="${minwontojijus[index]}">
                 </li>
                 <li class="content">
                     <input type="text" readonly class="notWriteInput" value="${item.registed_yn}">
@@ -382,6 +425,8 @@ function onDataLoad() {
                  `;
 					$('#dopcoAllWrappers .complaintLand .depth1').append(newItem);
 				});
+			} else {
+				$('#dopcoAllWrappers .complaintLand .depth1').append(noDataUl);
 			}
 
 			//첨부파일 ul 추가
@@ -405,6 +450,8 @@ function onDataLoad() {
                 `;
 					$('#dopcoAllWrappers .attachFileInfo .depth1').append(newItem);
 				});
+			} else {
+				$('#dopcoAllWrappers .attachFileInfo .depth1').append(noDataUl);
 			}
 
 			//협의내용 ul 추가
@@ -429,6 +476,8 @@ function onDataLoad() {
                 `;
 					$('#dopcoAllWrappers .consultDetails .depth1').append(newItem);
 				});
+			} else {
+				$('#dopcoAllWrappers .consultDetails .depth1').append(noDataUl);
 			}
 		},
 		beforeSend: function() {
@@ -450,3 +499,7 @@ function onDataLoad() {
 		}
 	}) //end ajax
 }
+/*
+===========================================================================================================
+===========================================================================================================
+*/
