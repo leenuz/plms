@@ -18,11 +18,12 @@ const createCustomLiRightChangeStat = () => {
 
         for (let i = 0; i < notsetAddSelectBox.length; i++) {
             const optionValue = notsetAddSelectBox.options[i].value;
+            const optionText = notsetAddSelectBox.options[i].text;
             const li = document.createElement('li');
             const button = document.createElement('button');
             button.classList.add('moreSelectBtn');
             button.type = 'button';
-            button.textContent = optionValue;
+            button.textContent = optionText;
             li.appendChild(button);
             customSelectBtns.appendChild(li);
         }
@@ -233,4 +234,44 @@ $(document).on("click","#popupCloseBtn",function(){
 	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
 	$(".popupWrap").removeClass("active");
 //	$(".popupWrap").toggleClass("active");
+});
+
+
+//조회하기 버튼 클릭
+$(document).on("click","#rightChangeStatSearchBtn",function(){
+	
+	var requestUrl = '/statics/selectByRightInDeList';
+	
+	const jisa = $("#selectedJisa").text();//지사
+	const jisangStatus = $("#selectedJisangStatus").text();//권리확보현황
+	
+	var params = {
+			"JISA" : jisa 				// 지사
+			,"STATUS" : jisangStatus	// 권리확보유형 ( 지상권, 미설정 등등.. )
+			,"YYYY_REF" : 2024		// 기준년
+			,"MM_REF" : 9				// 기준월
+			,"YYYY_TG" : 2024			// 비교년
+			,"MM_TG" : 8				// 비교월
+			
+	};
+	
+	console.log(params);
+	
+	$.ajax({
+			data : params,
+		    type: 'POST',
+		    url: requestUrl,
+			success : function(response) {
+				console.log(response);
+			},
+			error:function(request,status,error){
+	 			alert("code:"+request.resultCode+"\n"+"message:"+request.resultMessage+"\n"+"error:"+error);
+	 		}	
+		});
+		
+	$("#resultSdate").text("2024-01");//검색기준년월
+	$("#resultEdate").text("2024-10");//비교기준년월
+	
+	//모든 데이터를 로드후 실행
+	$(".depth1").css("display","block");
 });

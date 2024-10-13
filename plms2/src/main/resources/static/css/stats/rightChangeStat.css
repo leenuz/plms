@@ -363,6 +363,7 @@ button {
 
 /* table 부분 */
 #rightChangeStat .tableArea {
+/*	display: none;*/
     width: 100%;
     margin-top: 18px;
     box-sizing: border-box;
@@ -434,6 +435,9 @@ button {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+#rightChangeStat .depth1{
+	display: none;
+}
 #rightChangeStat .depth1 table thead tr:first-of-type {
     border-radius: 5px 5px 0 0;
     height: 34px;
@@ -443,16 +447,19 @@ button {
 }
 /* 맨 오른쪽 보더 빼기 */
 #rightChangeStat table thead tr:first-of-type th:last-of-type {
-    border-right: 0;
+/*    border-right: 0;*/
+    border-right: 1px solid #CDDBF0;;
 }
 
 #rightChangeStat table tbody tr td:last-of-type {
-    border-right: 0;
+/*    border-right: 0;*/
+    border-right: 1px solid #CDDBF0;;
 }
 
 /* 맨 밑 보더 빼기 */
 #rightChangeStat .contWrap > div:last-child table tbody tr:last-of-type {
-    border-bottom: 0;
+/*    border-bottom: 0;*/
+    border-bottom: 1px solid #CDDBF0;;
 }
 
 #rightChangeStat .tableArea table th {
