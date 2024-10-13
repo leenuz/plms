@@ -547,7 +547,7 @@ $(document).on("click", "#newcomplaint_Popup .approveBtn", function() {
 	
 	//alert('신규 민원 등록 저장');
 	
-	/*
+
 	$.ajax({
 		url: "/issue/saveMinwonData",
 		data: JSON.stringify(data),
@@ -582,7 +582,7 @@ $(document).on("click", "#newcomplaint_Popup .approveBtn", function() {
 			console.log(jqXHR.responseJSON);
 		}
 	}); //end ajax
-	*/
+	
 });
 //신규민원 -> 상신
 $(document).on("click", "#newcomplaint_Popup .sangsinBtn", function() {
