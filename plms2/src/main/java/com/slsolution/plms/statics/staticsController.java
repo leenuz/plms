@@ -6,19 +6,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,6 +52,15 @@ public class staticsController {
 	
 	@Autowired
 	 private GlobalConfig GC;
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * 권리확보현황 마감처리
@@ -216,7 +230,152 @@ public class staticsController {
 		response.getWriter().flush();
 	}
 	
+	
+	@RequestMapping(value="/selectStatisticsDeadlineListTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+	public ResponseEntity<?> selectStatisticsDeadlineListTableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		//일반웹형식
+		Properties requestParams = CommonUtil.convertToProperties(req);
+		log.info("req:"+req);
+		HashMap<String, String> returnHash = new HashMap<String, String>();
+		Enumeration<String> obj1 = req.getParameterNames();
+		int cnt=0;
+		 
+		while (obj1.hasMoreElements())
+		{
+			String paramName = obj1.nextElement();
+			String paramValue = req.getParameter(paramName);
+			returnHash.put(paramName, paramValue);
+			log.info("paramName:"+paramName);
+			log.info("paramValue:"+paramValue);
+		}
+
+		int draw = Integer.parseInt(req.getParameter("draw"));
+		int start = Integer.parseInt(req.getParameter("start"));
+		int length = Integer.parseInt(req.getParameter("length"));
+		String orderColumn=req.getParameter("order[0][column]");
+		String orderDirection = req.getParameter("order[0][dir]");
+		String orderColumnName=req.getParameter("columns[" + orderColumn + "][data]");
+
+		String[] order_cols=req.getParameterValues("order");
+
+		String jisa = req.getParameter("jisa");
+		String SAVE_YEAR = req.getParameter("SAVE_YEAR");
+		String SAVE_QUARTER = req.getParameter("SAVE_QUARTER");
+//		String dosiplan = req.getParameter("dosiplan");
+//		String address = req.getParameter("saddr");
+//		
+//		String sido_nm = req.getParameter("sido_nm");
+//		String sgg_nm = req.getParameter("sgg_nm");
+//		String emd_nm = req.getParameter("emd_nm");
+//		String ri_nm = req.getParameter("ri_nm");
+//		String jibun = req.getParameter("jibun");
+//
+//		String souja = req.getParameter("souja");
+//		String jasan_no = req.getParameter("jasan_no");
+//		String jimok_text = req.getParameter("jimok_text")==null?"":req.getParameter("jimok_text");
+//		List<String> jimokTexts=new ArrayList<String>();
+//		if (jimok_text!=null && !jimok_text.trim().isEmpty())	 jimokTexts = Arrays.asList(jimok_text.split(","));
+//		
+//		//String[] jimokArray = jimok_text != null && !jimok_text.trim().isEmpty() ? jimok_text.split(",") : new String[0]; // 빈 배열로 초기화
+//
+//		String comple_yn = req.getParameter("comple_yn");
+//		String cancel_yn = req.getParameter("cancel_yn");
+//		String deunggi_date = req.getParameter("deunggi_date");
+//		String account_yn = req.getParameter("account_yn"); //회계처리 필요여부
+//		String start_date = req.getParameter("start_date");
+//		String end_date = req.getParameter("end_date");
+
+		Map map=req.getParameterMap();
+
+		HashMap params = new HashMap();
+		params.put("draw",draw);
+		params.put("start",start);
+		params.put("length",length);
+		params.put("jisa",jisa);
+		params.put("SAVE_YEAR",SAVE_YEAR);
+		//params.put("SAVE_YEAR", SAVE_YEAR);
+		params.put("SAVE_QUARTER",SAVE_QUARTER);
+		params.put("PROCESS_DATE", "");
+		params.put("PAGE_NUM", "");
+		params.put("PAGE_CNT", "");
+//		params.put("dosiplan",dosiplan);
+//		params.put("address",address);
+//		params.put("sido_nm",sido_nm);
+//		params.put("sgg_nm",sgg_nm);
+//		params.put("emd_nm",emd_nm);
+//		params.put("ri_nm",ri_nm);
+//		params.put("jibun",jibun);
+//
+//		params.put("souja",souja);
+//		params.put("jasan_no",jasan_no);
+//
+//		//params.put("jimokArray", jimokArray);
+//		params.put("comple_yn", comple_yn);
+//		params.put("cancel_yn", cancel_yn);
+//		params.put("deunggi_date", deunggi_date);
+//		params.put("account_yn", account_yn);
+//		params.put("start_date", start_date);
+//		params.put("end_date", end_date);
+//		log.info("jimokTexts.size:"+jimokTexts.size());
+//		if (jimokTexts.size()>0) params.put("JIMOK_TEXT", jimokTexts);	//지목 추가
+//		else params.put("JIMOK_TEXT", null);	
+
+//		String[] right_arr= {};
+//		right_arr=right_type.split(",");
+//		params.put("right_type", right_arr);
+
+//		params.put("manageYn","Y");
+		if (orderColumn==null || orderColumn.equals("null")) {
+			log.info("----------null--------");
+			orderColumn="0";
+		}
+		if (Integer.parseInt(orderColumn)>0  ) {
+			params.put("orderCol",orderColumnName);
+			params.put("desc",orderDirection);
+
+		}
+		else {
+			params.put("orderCol","");
+			params.put("desc","");
+		}
+		log.info("params:"+params);
+
+//		Object count= mainService.selectCountQuery("jisangSQL.selectJisangListCount", params);
+//		int total=(int)count;
+
+//		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListOrg",params);
+		ArrayList dataList = new ArrayList();
+		Integer totalcnt = 0;
+		
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectStatisticsDeadlineData", params);
+			totalcnt = (Integer) mainService.selectCountQuery("staticSQL.selectStatisticsDeadlineDataCnt", params);
+			int total=totalcnt;
+		
+		log.info("dataList: " + dataList);
+		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangList",params);
+		//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
+		//log.info("list:"+list);
+
+
+		HashMap<String,Object> resultmap=new HashMap();
+		resultmap.put("draw",draw);
+		resultmap.put("recordsTotal",total);
+		resultmap.put("recordsFiltered",total);
+		resultmap.put("data",dataList);
+
+		JSONObject obj =new JSONObject(resultmap);
+		//log.info("obj:"+obj);
+		return ResponseEntity.ok(obj.toString());
+
+	}
+	
+	
+	
+	
+	
 	//권리확보현황 마감관리 조회
+	@PostMapping(path="/selectStatisticsDeadlineList")
 	public void selectStatisticsDeadlineList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
 		String SAVE_YEAR = parser.getString("SAVE_YEAR", "");
@@ -1155,6 +1314,387 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		response.getWriter().flush();
 	}
 	
+	
+	//통계 > 권리별증감현황
+		@PostMapping(path="/selectRightChangeStatisticsList")
+		public void selectRightChangeStatisticsList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			ParameterParser parser = new ParameterParser(request);
+			String SEARCH_START_DAY = parser.getString("SEARCH_START_DAY", "");
+			String SEARCH_END_DAY = parser.getString("SEARCH_END_DAY", "");
+			String SEARCH_STATUS = parser.getString("SEARCH_STATUS", "");
+			String SEARCH_REGISTED = parser.getString("SEARCH_REGISTED", "");
+			String SEARCH_PERMITTED = parser.getString("SEARCH_PERMITTED", "");
+			String SEARCH_JISA = parser.getString("SEARCH_JISA", "");
+			String SEARCH_CODE_1 = parser.getString("SEARCH_CODE_1", "");
+			String SEARCH_CODE_2 = parser.getString("SEARCH_CODE_2", "");
+			String SEARCH_CODE_3 = parser.getString("SEARCH_CODE_3", "");
+		
+			ArrayList dataList = new ArrayList();
+			HashMap map = new HashMap();
+			try {
+		
+				HashMap params = new HashMap();
+				params.put("SEARCH_START_DAY", SEARCH_START_DAY);
+				params.put("SEARCH_END_DAY", SEARCH_END_DAY);
+				params.put("SEARCH_STATUS", SEARCH_STATUS);
+				params.put("SEARCH_REGISTED", SEARCH_REGISTED);
+				params.put("SEARCH_PERMITTED", SEARCH_PERMITTED);
+				params.put("SEARCH_JISA", SEARCH_JISA);
+				params.put("SEARCH_CODE_1", SEARCH_CODE_1);
+				params.put("SEARCH_CODE_2", SEARCH_CODE_2);
+				params.put("SEARCH_CODE_3", SEARCH_CODE_3);
+		
+				dataList = (ArrayList) mainService.selectQuery("staticSQL.selectIssueStatisticsData", params);
+		
+				map.put("message", "success");
+				map.put("dataList", dataList);
+			} catch (Exception e) {
+				map.put("message", "처리 중 오류가 발생했습니다.");
+				e.printStackTrace();
+			}
+		
+			JSONObject jo = new JSONObject(map);
+		
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
+		
+		
+		@RequestMapping(value="/selectRightChangeListTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+		public ResponseEntity<?> selectRightChangeListTableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
+			
+			//일반웹형식
+			Properties requestParams = CommonUtil.convertToProperties(req);
+			log.info("req:"+req);
+			HashMap<String, String> returnHash = new HashMap<String, String>();
+			Enumeration<String> obj1 = req.getParameterNames();
+			int cnt=0;
+			 
+			while (obj1.hasMoreElements())
+			{
+				String paramName = obj1.nextElement();
+				String paramValue = req.getParameter(paramName);
+				returnHash.put(paramName, paramValue);
+				log.info("paramName:"+paramName);
+				log.info("paramValue:"+paramValue);
+			}
+
+			int draw = Integer.parseInt(req.getParameter("draw"));
+			int start = Integer.parseInt(req.getParameter("start"));
+			int length = Integer.parseInt(req.getParameter("length"));
+			String orderColumn=req.getParameter("order[0][column]");
+			String orderDirection = req.getParameter("order[0][dir]");
+			String orderColumnName=req.getParameter("columns[" + orderColumn + "][data]");
+
+			String[] order_cols=req.getParameterValues("order");
+
+			String jisa = req.getParameter("jisa");
+			String SAVE_YEAR = req.getParameter("SAVE_YEAR");
+			String SAVE_QUARTER = req.getParameter("SAVE_QUARTER");
+//			String dosiplan = req.getParameter("dosiplan");
+//			String address = req.getParameter("saddr");
+//			
+//			String sido_nm = req.getParameter("sido_nm");
+//			String sgg_nm = req.getParameter("sgg_nm");
+//			String emd_nm = req.getParameter("emd_nm");
+//			String ri_nm = req.getParameter("ri_nm");
+//			String jibun = req.getParameter("jibun");
+	//
+//			String souja = req.getParameter("souja");
+//			String jasan_no = req.getParameter("jasan_no");
+//			String jimok_text = req.getParameter("jimok_text")==null?"":req.getParameter("jimok_text");
+//			List<String> jimokTexts=new ArrayList<String>();
+//			if (jimok_text!=null && !jimok_text.trim().isEmpty())	 jimokTexts = Arrays.asList(jimok_text.split(","));
+//			
+//			//String[] jimokArray = jimok_text != null && !jimok_text.trim().isEmpty() ? jimok_text.split(",") : new String[0]; // 빈 배열로 초기화
+	//
+//			String comple_yn = req.getParameter("comple_yn");
+//			String cancel_yn = req.getParameter("cancel_yn");
+//			String deunggi_date = req.getParameter("deunggi_date");
+//			String account_yn = req.getParameter("account_yn"); //회계처리 필요여부
+//			String start_date = req.getParameter("start_date");
+//			String end_date = req.getParameter("end_date");
+
+			Map map=req.getParameterMap();
+
+			HashMap params = new HashMap();
+			params.put("draw",draw);
+			params.put("start",start);
+			params.put("length",length);
+			params.put("jisa",jisa);
+			params.put("SAVE_YEAR",SAVE_YEAR);
+			//params.put("SAVE_YEAR", SAVE_YEAR);
+			params.put("SAVE_QUARTER",SAVE_QUARTER);
+			params.put("PROCESS_DATE", "");
+			params.put("PAGE_NUM", "");
+			params.put("PAGE_CNT", "");
+//			params.put("dosiplan",dosiplan);
+//			params.put("address",address);
+//			params.put("sido_nm",sido_nm);
+//			params.put("sgg_nm",sgg_nm);
+//			params.put("emd_nm",emd_nm);
+//			params.put("ri_nm",ri_nm);
+//			params.put("jibun",jibun);
+	//
+//			params.put("souja",souja);
+//			params.put("jasan_no",jasan_no);
+	//
+//			//params.put("jimokArray", jimokArray);
+//			params.put("comple_yn", comple_yn);
+//			params.put("cancel_yn", cancel_yn);
+//			params.put("deunggi_date", deunggi_date);
+//			params.put("account_yn", account_yn);
+//			params.put("start_date", start_date);
+//			params.put("end_date", end_date);
+//			log.info("jimokTexts.size:"+jimokTexts.size());
+//			if (jimokTexts.size()>0) params.put("JIMOK_TEXT", jimokTexts);	//지목 추가
+//			else params.put("JIMOK_TEXT", null);	
+
+//			String[] right_arr= {};
+//			right_arr=right_type.split(",");
+//			params.put("right_type", right_arr);
+
+//			params.put("manageYn","Y");
+			if (orderColumn==null || orderColumn.equals("null")) {
+				log.info("----------null--------");
+				orderColumn="0";
+			}
+			if (Integer.parseInt(orderColumn)>0  ) {
+				params.put("orderCol",orderColumnName);
+				params.put("desc",orderDirection);
+
+			}
+			else {
+				params.put("orderCol","");
+				params.put("desc","");
+			}
+			log.info("params:"+params);
+
+//			Object count= mainService.selectCountQuery("jisangSQL.selectJisangListCount", params);
+//			int total=(int)count;
+
+//			ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListOrg",params);
+			ArrayList dataList = new ArrayList();
+			Integer totalcnt = 0;
+			
+				dataList = (ArrayList) mainService.selectQuery("staticSQL.selectStatisticsDeadlineData", params);
+				totalcnt = (Integer) mainService.selectCountQuery("staticSQL.selectStatisticsDeadlineDataCnt", params);
+				int total=totalcnt;
+			
+			log.info("dataList: " + dataList);
+			//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangList",params);
+			//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
+			//log.info("list:"+list);
+
+
+			HashMap<String,Object> resultmap=new HashMap();
+			resultmap.put("draw",draw);
+			resultmap.put("recordsTotal",total);
+			resultmap.put("recordsFiltered",total);
+			resultmap.put("data",dataList);
+
+			JSONObject obj =new JSONObject(resultmap);
+			//log.info("obj:"+obj);
+			return ResponseEntity.ok(obj.toString());
+
+		}
+		
+		
+		
+		
+		//통계 > 관리필지증감현황
+				@PostMapping(path="/selectParcelChangeStatisticsList")
+				public void selectParcelChangeStatisticsList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+					ParameterParser parser = new ParameterParser(request);
+					String SEARCH_START_DAY = parser.getString("SEARCH_START_DAY", "");
+					String SEARCH_END_DAY = parser.getString("SEARCH_END_DAY", "");
+					String SEARCH_STATUS = parser.getString("SEARCH_STATUS", "");
+					String SEARCH_REGISTED = parser.getString("SEARCH_REGISTED", "");
+					String SEARCH_PERMITTED = parser.getString("SEARCH_PERMITTED", "");
+					String SEARCH_JISA = parser.getString("SEARCH_JISA", "");
+					String SEARCH_CODE_1 = parser.getString("SEARCH_CODE_1", "");
+					String SEARCH_CODE_2 = parser.getString("SEARCH_CODE_2", "");
+					String SEARCH_CODE_3 = parser.getString("SEARCH_CODE_3", "");
+				
+					ArrayList dataList = new ArrayList();
+					HashMap map = new HashMap();
+					try {
+				
+						HashMap params = new HashMap();
+						params.put("SEARCH_START_DAY", SEARCH_START_DAY);
+						params.put("SEARCH_END_DAY", SEARCH_END_DAY);
+						params.put("SEARCH_STATUS", SEARCH_STATUS);
+						params.put("SEARCH_REGISTED", SEARCH_REGISTED);
+						params.put("SEARCH_PERMITTED", SEARCH_PERMITTED);
+						params.put("SEARCH_JISA", SEARCH_JISA);
+						params.put("SEARCH_CODE_1", SEARCH_CODE_1);
+						params.put("SEARCH_CODE_2", SEARCH_CODE_2);
+						params.put("SEARCH_CODE_3", SEARCH_CODE_3);
+				
+						dataList = (ArrayList) mainService.selectQuery("staticSQL.selectIssueStatisticsData", params);
+				
+						map.put("message", "success");
+						map.put("dataList", dataList);
+					} catch (Exception e) {
+						map.put("message", "처리 중 오류가 발생했습니다.");
+						e.printStackTrace();
+					}
+				
+					JSONObject jo = new JSONObject(map);
+				
+					response.setCharacterEncoding("UTF-8");
+					response.setHeader("Access-Control-Allow-Origin", "*");
+					response.resetBuffer();
+					response.setContentType("application/json");
+					response.getWriter().print(jo);
+					response.getWriter().flush();
+				}
+	
+				//통계 > 관리필지증감현황 테이블 에서 조회
+				@RequestMapping(value="/selectParcelChangeListTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
+				public ResponseEntity<?> selectParcelChangeListTableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
+					
+					//일반웹형식
+					Properties requestParams = CommonUtil.convertToProperties(req);
+					log.info("req:"+req);
+					HashMap<String, String> returnHash = new HashMap<String, String>();
+					Enumeration<String> obj1 = req.getParameterNames();
+					int cnt=0;
+					 
+					while (obj1.hasMoreElements())
+					{
+						String paramName = obj1.nextElement();
+						String paramValue = req.getParameter(paramName);
+						returnHash.put(paramName, paramValue);
+						log.info("paramName:"+paramName);
+						log.info("paramValue:"+paramValue);
+					}
+
+					int draw = Integer.parseInt(req.getParameter("draw"));
+					int start = Integer.parseInt(req.getParameter("start"));
+					int length = Integer.parseInt(req.getParameter("length"));
+					String orderColumn=req.getParameter("order[0][column]");
+					String orderDirection = req.getParameter("order[0][dir]");
+					String orderColumnName=req.getParameter("columns[" + orderColumn + "][data]");
+
+					String[] order_cols=req.getParameterValues("order");
+
+					String jisa = req.getParameter("jisa");
+					String SAVE_YEAR = req.getParameter("SAVE_YEAR");
+					String SAVE_QUARTER = req.getParameter("SAVE_QUARTER");
+//					String dosiplan = req.getParameter("dosiplan");
+//					String address = req.getParameter("saddr");
+//					
+//					String sido_nm = req.getParameter("sido_nm");
+//					String sgg_nm = req.getParameter("sgg_nm");
+//					String emd_nm = req.getParameter("emd_nm");
+//					String ri_nm = req.getParameter("ri_nm");
+//					String jibun = req.getParameter("jibun");
+			//
+//					String souja = req.getParameter("souja");
+//					String jasan_no = req.getParameter("jasan_no");
+//					String jimok_text = req.getParameter("jimok_text")==null?"":req.getParameter("jimok_text");
+//					List<String> jimokTexts=new ArrayList<String>();
+//					if (jimok_text!=null && !jimok_text.trim().isEmpty())	 jimokTexts = Arrays.asList(jimok_text.split(","));
+//					
+//					//String[] jimokArray = jimok_text != null && !jimok_text.trim().isEmpty() ? jimok_text.split(",") : new String[0]; // 빈 배열로 초기화
+			//
+//					String comple_yn = req.getParameter("comple_yn");
+//					String cancel_yn = req.getParameter("cancel_yn");
+//					String deunggi_date = req.getParameter("deunggi_date");
+//					String account_yn = req.getParameter("account_yn"); //회계처리 필요여부
+//					String start_date = req.getParameter("start_date");
+//					String end_date = req.getParameter("end_date");
+
+					Map map=req.getParameterMap();
+
+					HashMap params = new HashMap();
+					params.put("draw",draw);
+					params.put("start",start);
+					params.put("length",length);
+					params.put("jisa",jisa);
+					params.put("SAVE_YEAR",SAVE_YEAR);
+					//params.put("SAVE_YEAR", SAVE_YEAR);
+					params.put("SAVE_QUARTER",SAVE_QUARTER);
+					params.put("PROCESS_DATE", "");
+					params.put("PAGE_NUM", "");
+					params.put("PAGE_CNT", "");
+//					params.put("dosiplan",dosiplan);
+//					params.put("address",address);
+//					params.put("sido_nm",sido_nm);
+//					params.put("sgg_nm",sgg_nm);
+//					params.put("emd_nm",emd_nm);
+//					params.put("ri_nm",ri_nm);
+//					params.put("jibun",jibun);
+			//
+//					params.put("souja",souja);
+//					params.put("jasan_no",jasan_no);
+			//
+//					//params.put("jimokArray", jimokArray);
+//					params.put("comple_yn", comple_yn);
+//					params.put("cancel_yn", cancel_yn);
+//					params.put("deunggi_date", deunggi_date);
+//					params.put("account_yn", account_yn);
+//					params.put("start_date", start_date);
+//					params.put("end_date", end_date);
+//					log.info("jimokTexts.size:"+jimokTexts.size());
+//					if (jimokTexts.size()>0) params.put("JIMOK_TEXT", jimokTexts);	//지목 추가
+//					else params.put("JIMOK_TEXT", null);	
+
+//					String[] right_arr= {};
+//					right_arr=right_type.split(",");
+//					params.put("right_type", right_arr);
+
+//					params.put("manageYn","Y");
+					if (orderColumn==null || orderColumn.equals("null")) {
+						log.info("----------null--------");
+						orderColumn="0";
+					}
+					if (Integer.parseInt(orderColumn)>0  ) {
+						params.put("orderCol",orderColumnName);
+						params.put("desc",orderDirection);
+
+					}
+					else {
+						params.put("orderCol","");
+						params.put("desc","");
+					}
+					log.info("params:"+params);
+
+//					Object count= mainService.selectCountQuery("jisangSQL.selectJisangListCount", params);
+//					int total=(int)count;
+
+//					ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListOrg",params);
+					ArrayList dataList = new ArrayList();
+					Integer totalcnt = 0;
+					
+						dataList = (ArrayList) mainService.selectQuery("staticSQL.selectStatisticsDeadlineData", params);
+						totalcnt = (Integer) mainService.selectCountQuery("staticSQL.selectStatisticsDeadlineDataCnt", params);
+						int total=totalcnt;
+					
+					log.info("dataList: " + dataList);
+					//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangList",params);
+					//ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangListDemo",params); //demo
+					//log.info("list:"+list);
+
+
+					HashMap<String,Object> resultmap=new HashMap();
+					resultmap.put("draw",draw);
+					resultmap.put("recordsTotal",total);
+					resultmap.put("recordsFiltered",total);
+					resultmap.put("data",dataList);
+
+					JSONObject obj =new JSONObject(resultmap);
+					//log.info("obj:"+obj);
+					return ResponseEntity.ok(obj.toString());
+
+				}
+	
+	
 //	// 토지 종합 정보 조회 > Excel 다운로드
 //		public ModelAndView tsExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //
@@ -1204,3 +1744,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 //		}
 
 }
+
+
+
+

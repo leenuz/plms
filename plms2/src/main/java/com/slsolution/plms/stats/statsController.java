@@ -5,6 +5,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +29,11 @@ public class statsController {
 	@GetMapping(path="/rightCloseMng") //http://localhost:8080/api/get/dbTest
 	public ModelAndView rightCloseMng(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
+		
+		
+		
+		
+		
 		mav.setViewName("content/stats/rightCloseMng");
 		return mav;
 	}
