@@ -1022,7 +1022,9 @@ WHERE 1=1;
 			and year= #{YYYY}
 			and month = #{MM}
 			and desc1 = #{JISA}
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STATUS)" > 
 			and jisang_status = #{STATUS}
+			</if>
 	</select>
 	
 	<!-- 통계 > 권리별 증감현황 > 조회 상세 총 수-->
@@ -1036,7 +1038,9 @@ WHERE 1=1;
 			and year= #{YYYY}
 			and month = #{MM}
 			and desc1 = #{JISA}
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STATUS)" > 
 			and jisang_status = #{STATUS}
+			</if>
 	</select>
 	
 	<!-- 통계 > 권리별 증감현황 > 조회 상세 > 증감현황 > 증가 -->

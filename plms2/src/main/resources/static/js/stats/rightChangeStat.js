@@ -268,6 +268,8 @@ function iotPopup(year,month,desc,jisangStatus){
 	
 	var requestUrl = '/statics/selectByRightInDeListDetail';
 	
+	if(jisangStatus == "ALL"){jisangStatus = "";}
+	
 	var params = {
 			"YYYY" : year 			
 			,"MM" : month	
