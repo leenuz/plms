@@ -1226,6 +1226,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		String SEARCH_CODE_1 = parser.getString("SEARCH_CODE_1", "");
 		String SEARCH_CODE_2 = parser.getString("SEARCH_CODE_2", "");
 		String SEARCH_CODE_3 = parser.getString("SEARCH_CODE_3", "");
+		String JISA = parser.getString("JISA", "");
 	
 		ArrayList dataList = new ArrayList();
 		HashMap map = new HashMap();
@@ -1241,6 +1242,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 			params.put("SEARCH_CODE_1", SEARCH_CODE_1);
 			params.put("SEARCH_CODE_2", SEARCH_CODE_2);
 			params.put("SEARCH_CODE_3", SEARCH_CODE_3);
+			params.put("JISA", JISA);
 	
 			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectIssueStatisticsData", params);
 	
@@ -1316,6 +1318,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		String SEARCH_CODE_3 = parser.getString("SEARCH_CODE_3", "");
 		String pageNum = parser.getString("pageNum", ""); // 페이지 번호
 		String pageCnt = parser.getString("pageCnt", ""); // 한 페이지 갯수
+		String JISA = parser.getString("JISA", ""); // 한 페이지 갯수
 
 		ArrayList dataList = new ArrayList();
 		HashMap map = new HashMap();
@@ -1328,6 +1331,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 			params.put("CODE3", SEARCH_CODE_3);
 			params.put("PAGE_NUM", pageNum);
 			params.put("PAGE_CNT", pageCnt);
+			params.put("JISA", JISA);
 
 			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectMinwonPnuByCode", params);
 			totalcnt = (Integer) mainService.selectCountQuery("staticSQL.selectMinwonPnuByCodeTotalcnt", params);
@@ -2332,6 +2336,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 					String SEARCH_CODE_1 = parser.getString("SEARCH_CODE_1", "");
 					String SEARCH_CODE_2 = parser.getString("SEARCH_CODE_2", "");
 					String SEARCH_CODE_3 = parser.getString("SEARCH_CODE_3", "");
+					String JISA = parser.getString("JISA", "");
 				
 					ArrayList dataList = new ArrayList();
 					HashMap map = new HashMap();
@@ -2347,6 +2352,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 						params.put("SEARCH_CODE_1", SEARCH_CODE_1);
 						params.put("SEARCH_CODE_2", SEARCH_CODE_2);
 						params.put("SEARCH_CODE_3", SEARCH_CODE_3);
+						params.put("JISA", JISA);
 				
 						dataList = (ArrayList) mainService.selectQuery("staticSQL.selectIssueStatisticsData", params);
 				
