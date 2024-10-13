@@ -41,7 +41,12 @@ public class statsController {
 
 	@GetMapping(path="/rightStatus") //http://localhost:8080/api/get/dbTest
 	public ModelAndView rightStatus(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		//지사코드
+	    ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList", null);
+		log.info("jisaList:" + jisalist);
+
 		ModelAndView mav=new ModelAndView();
+		mav.addObject("jisaList", jisalist);
 		mav.setViewName("content/stats/rightStatus");
 		return mav;
 	}
@@ -60,7 +65,12 @@ public class statsController {
 
 	@GetMapping(path="/rightChangeStat") //http://localhost:8080/api/get/dbTest
 	public ModelAndView rightChangeStat(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		//지사코드
+	    ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList", null);
+		log.info("jisaList:" + jisalist);
+
 		ModelAndView mav=new ModelAndView();
+		mav.addObject("jisaList", jisalist);
 		mav.setViewName("content/stats/rightChangeStat");
 		return mav;
 	}
