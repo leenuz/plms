@@ -171,7 +171,6 @@ function loadDataTable(params) {
 		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
 		dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
 		buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
-
 		pageLength: 20,
 		bPaginate: true,
 		bLengthChange: true,
@@ -184,7 +183,6 @@ function loadDataTable(params) {
 		searching: false,
 		destroy: true,
 		order: [[12, 'desc']],
-
 		rowReorder: {
 			dataSrc: 'b_seq'
 		},
@@ -216,7 +214,6 @@ function loadDataTable(params) {
 					d.saddr = (addrs == undefined || addrs == null) ? '' : addrs;
 					//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
 				}
-
 				console.log("-----------d-----------");
 				console.log(d);
 			},
@@ -230,7 +227,6 @@ function loadDataTable(params) {
 		initComplete: function() {
 			console.log(this.api().data().length);
 		},
-
 		columns: [
 			{ data: "no", "orderable": false },          // 순번
 			{ data: "dom_jisa", "defaultContent": "" },      // 담당지사
@@ -265,6 +261,7 @@ function loadDataTable(params) {
 			{
 				targets: [10], width: "100px"
 				, render: function(data, type, row, meta) {
+					// console.log("x:", row.x, "y:", row.y); // 주석 풀면 로드 되면서 조회된 테이블 전체 x,y 오는지 확인 가능
 					return `<button class="btnDesign viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}, //지도보기

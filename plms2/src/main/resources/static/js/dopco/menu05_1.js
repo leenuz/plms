@@ -213,7 +213,6 @@ function loadDataTable(params) {
 					d.saddr = (addrs == undefined || addrs == null) ? '' : addrs;
 					//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
 				}
-
 				console.log("-----------d-----------");
 				console.log(d);
 			},
@@ -253,6 +252,7 @@ function loadDataTable(params) {
 			{
 				targets: [8], width: "100px"
 				, render: function(data, type, row, meta) {
+					// console.log("x:", row.x, "y:", row.y); // 주석 풀면 로드 되면서 조회된 테이블 전체 x,y 오는지 확인 가능
 					return `<button class="btnDesign viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}, //지도보기
@@ -290,7 +290,7 @@ function loadDataTable(params) {
 	    console.log("x, y:", x, y);
 	    
 	    // 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
-	    if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
+	    if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined' && x !== null && y !== null) {
 	        // 좌표가 있을 때는 좌표를 전달
 	        onePositionView({ x, y });
 	    } else {

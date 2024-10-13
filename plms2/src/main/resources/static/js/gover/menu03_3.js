@@ -219,7 +219,6 @@ function loadDataTable(params) {
 				d.adm_office = params.adm_office;
 				console.log(params.adm_office);
 				// d.adm_office = ljsIsNull(params.adm_office) ? '' : params.adm_office;
-
 				// 해지 여부 조건 추가
 				if (params.cancel_yn === "해지") {
 					d.cancel_yn = "Y";
@@ -375,7 +374,7 @@ function loadDataTable(params) {
 	    console.log("x, y:", x, y);
 	    
 	    // 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
-	    if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
+	    if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined' && x !== null && y !== null) {
 	        // 좌표가 있을 때는 좌표를 전달
 	        onePositionView({ x, y });
 	    } else {
