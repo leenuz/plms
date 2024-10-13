@@ -254,7 +254,12 @@ function loadDataTable(params) {
 			{
 				targets: [8], width: "100px",
 				render: function(data, type, row, meta) {
-					return data == null || '' ? '미처분' : '처분';
+					console.log("data :: ",data);
+					console.log("type :: ",type);
+					console.log("row :: ",row);
+					console.log("meta :: ",meta);
+					let cancelYn = row.dom_cancle_yn;
+					return cancelYn == 'Y' ? '처분' : '마처분';
 				}
 			},  // 처분여부 칼럼
 			{ targets: [9], width: "100px" },  // 처분일 칼럼
