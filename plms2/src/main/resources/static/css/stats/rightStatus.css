@@ -2,6 +2,7 @@
 
 * {margin: 0;padding: 0;}
 body * {font-family: pretendard;}
+.content{ height:auto !important}
 a {text-decoration: none; color: #3c3c3c;}
 li {list-style: none;}
 button {border: 0; outline: none;cursor: pointer;}
@@ -347,14 +348,14 @@ button {border: 0; outline: none;cursor: pointer;}
     position: relative;
     width: 64%;
 }
-#rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .graphHere {
+/* #rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .graphHere {
     position: absolute;
-}
-#rightStatus .dataArea .privateLand .dataContWrap .dataContentGraph .graphHere {
+} */
+/* #rightStatus .dataArea .privateLand .dataContWrap .dataContentGraph .graphHere {
     width: 402px;
     top: 68px;
     left: 33px;
-}
+} */
 #rightStatus .dataArea .dataWrap .dataContWrap .dataContentGraph .graphHere img {
     width: 100%;
 }
@@ -462,11 +463,11 @@ button {border: 0; outline: none;cursor: pointer;}
 #rightStatus .dataArea .publicLand .dataContWrap .dataListbox:first-of-type .title {
     border-radius: 5px 0 0 0;
 }
-#rightStatus .dataArea .publicLand .dataContWrap .dataContentGraph .graphHere {
+/* #rightStatus .dataArea .publicLand .dataContWrap .dataContentGraph .graphHere {
     width: 340px;
     top: 48px;
     left: 99px;
-}
+} */
 #rightStatus .dataArea .publicLand .dataContWrap .dataContentGraph .cir01 {
     background: #AFC2D9;
 }
@@ -475,4 +476,8 @@ button {border: 0; outline: none;cursor: pointer;}
 }
 #rightStatus .dataArea .publicLand .dataContWrap .dataContentGraph .cir03 {
     background: #FF6943;
+}
+
+#rightStatus .graphHere {
+    margin-top: 20px;
 }
