@@ -23,7 +23,7 @@ $(document).on("click", ".registBtn", function () {
         console.log(json); // JSON 문자열 출력*/
 
     url = "/land/dopco/insertDopcoTerminationAdd";
-    returnUrl = '/dopco/compLandDispReg?idx=' + dataObj.idx + '&dopcoNo=' + dataObj.dopcoNo + '&cancel=Y';
+    returnUrl = '/land/dopco/menu05_2';
     $.ajax({
         url: url,
         type: 'POST',
