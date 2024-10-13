@@ -316,7 +316,7 @@ function getFullAddress(data) {
 function onDataLoad() {
 
 	var allData = { "MW_SEQ": mw_seq };
-	let noDataUl = '<ul class="contents"><li class="content">조회된 정보가 없습니다.</li></ul>';
+	let noDataUl = '<ul class="contents" style="justify-content:center; align-items:center;"><li>조회된 정보가 없습니다.</li></ul>';
 	$.ajax({
 		url: "/issue/selectMinwonDetail",
 		data: JSON.stringify(allData),
@@ -361,13 +361,37 @@ function onDataLoad() {
 			$('#dopcoAllWrappers .land_contents').text(result.mw_contents); //내용
 			
 			// 민원인/토지주
-			let minwontojijus = result.minwonin_tojiju_nm.split("|"); // 성명
-			if (minwontojijus.length > 0) {
-				let minwontojiju_birth = result.minwonin_tojiju_birth.split("|"); // 생년월일
-				let tojiju_relation = result.tojiju_relation.split("|"); // 토지주와의 관계
-				let minwonin_phone = result.minwonin_phone.split("|"); // 연락처
-				let field_presence = result.field_presence.split("|"); // 현장입회
-				
+			let minwontojijus = '';
+			if (result.minwonin_tojiju_nm != null) {
+				minwontojijus = result.minwonin_tojiju_nm.split("|");
+			}
+			
+			let minwontojiju_birth = '';
+			if (result.minwonin_tojiju_birth != null) {
+				minwontojiju_birth = result.minwonin_tojiju_birth.split("|");
+			}
+			
+			let tojiju_relation = '';
+			if (result.tojiju_relation != null) {
+				tojiju_relation = result.tojiju_relation.split("|");
+			}
+			
+			let minwonin_phone = '';
+			if (result.minwonin_phone != null) {
+				minwonin_phone = result.minwonin_phone.split("|");
+			}
+			
+			let field_presence = '';
+			if (result.field_presence != null) {
+				field_presence = result.field_presence.split("|");
+			}
+			/*
+			minwontojijus = result.minwonin_tojiju_nm.split("|"); // 성명
+			minwontojiju_birth = result.minwonin_tojiju_birth.split("|"); // 생년월일
+			tojiju_relation = result.tojiju_relation.split("|"); // 토지주와의 관계
+			minwonin_phone = result.minwonin_phone.split("|"); // 연락처
+			field_presence = result.field_presence.split("|"); // 현장입회
+				*/	
 				$.each(minwontojijus, function(index, item) {
 				let newHtml = `
 					 <ul class="contents">
@@ -375,33 +399,37 @@ function onDataLoad() {
 							<input type="text" class="notWriteInput" placeholder="${index + 1}" readonly />
 						</li>
 						<li class="content smallWidth">
-							<input type="text" class="notWriteInput" readonly placeholder="${item}" />
+							<input type="text" class="notWriteInput" readonly placeholder="${item || '-'}" />
 						</li>
 						<li class="content">
-							<input type="text" class="notWriteInput" readonly placeholder="${minwontojiju_birth[index]}"/>
+							<input type="text" class="notWriteInput" readonly placeholder="${minwontojiju_birth[index] || '-'}"/>
 						</li>
 						<li class="content largeWidth">
-							<input type="text" class="notWriteInput" readonly placeholder="${tojiju_relation[index]}" />
+							<input type="text" class="notWriteInput" readonly placeholder="${tojiju_relation[index] || '-'}" />
 						</li>
 						<li class="content largeWidth">
-							<input type="text" class="notWriteInput" readonly placeholder="${minwonin_phone[index]}"/>
+							<input type="text" class="notWriteInput" readonly placeholder="${minwonin_phone[index] || '-'}"/>
 						</li>
 						<li class="content">
-							<input type="text" class="notWriteInput" readonly placeholder="${field_presence[index]}" />
+							<input type="text" class="notWriteInput" readonly placeholder="${field_presence[index] || '-'}" />
 						</li>
 					</ul>`;
 				$('#minwonin_tojiju_body').append(newHtml);	
 				});
 					
-			} else {
-				$('#minwonin_tojiju_body').append(noDataUl);
-			}
+					//$('#minwonin_tojiju_body').append(noDataUl);
+				
+			
+				
+				
+				
+			
 			
 			// 토지이력
-			$('#toji_history').val(result.toji_history);
+			$('#toji_history').val(result.toji_history || '-');
 			
 			// 요구사항
-			$('#minwon_requirement').val(result.minwon_requirement);
+			$('#minwon_requirement').val(result.minwon_requirement || '-');
 			
 			//민원 토지 ul 추가
 			if (tojiList != null && tojiList != undefined && tojiList.length > 0) {
@@ -410,16 +438,16 @@ function onDataLoad() {
 					var newItem = `
                 <ul class="contents">
                 <li class="content">
-                    <input type="text" readonly class="notWriteInput" value="${item.rep_yn}">
+                    <input type="text" readonly class="notWriteInput" value="${item.rep_yn || '-'}">
                 </li>
                 <li class="content largeWidth">
-                    <input type="text" readonly class="notWriteInput" value="${minwontojijus[index]}">
+                    <input type="text" readonly class="notWriteInput" value="${minwontojijus[index] || '-'}">
                 </li>
                 <li class="content">
-                    <input type="text" readonly class="notWriteInput" value="${item.registed_yn}">
+                    <input type="text" readonly class="notWriteInput" value="${item.registed_yn || '-'}">
                 </li>
                 <li class="content">
-                    <input type="text" readonly class="notWriteInput" value="${item.permitted_yn}">
+                    <input type="text" readonly class="notWriteInput" value="${item.permitted_yn || '-'}">
                 </li>
                 </ul>
                  `;
@@ -436,10 +464,10 @@ function onDataLoad() {
 					var newItem = `
                 <ul class="contents">
                 <li class="content">
-                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.file_regdate}">
+                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.file_regdate || '-'}">
                 </li>
                 <li class="content fileNameWidth">
-                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.file_nm}">
+                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.file_nm || '-'}">
                 </li>
                 <li class="content btnsWrap">
                     <button class="fileDownloadBtn">
@@ -461,13 +489,13 @@ function onDataLoad() {
 					var newItem = `
                 <ul class="contents">
                 <li class="content">
-                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.agree_date}">
+                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.agree_date || '-'}">
                 </li>
                 <li class="content smallWidth">
-                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.status_str}">
+                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.status_str || '-'}">
                 </li>
                 <li class="content fileNameWidth">
-                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.agree_title}">
+                    <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.agree_title || '-'}">
                 </li>
                 <li class="content btnsWrap">
                     <button class="viewDetailButton">문서보기</button>

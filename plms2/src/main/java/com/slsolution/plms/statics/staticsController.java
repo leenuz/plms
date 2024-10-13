@@ -1232,8 +1232,8 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		try {
 	
 			HashMap params = new HashMap();
-			params.put("SEARCH_START_DAY", SEARCH_START_DAY);
-			params.put("SEARCH_END_DAY", SEARCH_END_DAY);
+			params.put("SEARCH_START_DAY", SEARCH_START_DAY.replaceAll("-", ""));
+			params.put("SEARCH_END_DAY", SEARCH_END_DAY.replaceAll("-", ""));
 			params.put("SEARCH_STATUS", SEARCH_STATUS);
 			params.put("SEARCH_REGISTED", SEARCH_REGISTED);
 			params.put("SEARCH_PERMITTED", SEARCH_PERMITTED);
@@ -1427,7 +1427,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	}
 	
 	//통계 > 권리별 증감현황 > 조회 > 엑셀
-	@PostMapping(path="/selectByRightInDeListExcel")
+	@RequestMapping(path="/selectByRightInDeListExcel")
 	public void selectByRightInDeListExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
 		String JISA = parser.getString("JISA", "");
@@ -1661,7 +1661,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	}
 	
 	//통계 > 관리필지 증감현황 > 메인 조회 > 엑셀다운로드
-	@PostMapping(path="/selectFieldInDeListExcel")
+	@RequestMapping(path="/selectFieldInDeListExcel")
 	public void selectFieldInDeListExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
 		String YYYY_REF = parser.getString("YYYY_REF", "0");
