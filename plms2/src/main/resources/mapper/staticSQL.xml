@@ -820,6 +820,183 @@ SELECT TTT.TYPE,
 ) TTT
 
 	</select>
+	
+	<!-- 통계 > 권리별 증감현황 > 지사 -->
+	<select id="selectByRightInDeListJisa" parameterType="HashMap" resultType="HashMap">
+		select desc1 from static_deadline_info group by desc1,desc1_num order by desc1_num
+	</select>
+	
+	<!-- 통계 > 권리별 증감현황 > 권리확보 -->
+	<select id="selectByRightInDeListByRight" parameterType="HashMap" resultType="HashMap">
+		select jisang_status from static_deadline_info where jisang_status <![CDATA[<>]]> 'ALL' group by jisang_status,status_num order by status_num
+	</select>
+	
+	<!-- 통계 > 권리별 증감현황 > 년,월 -->
+	<select id="selectByRightInDeListYYYYMM" parameterType="HashMap" resultType="HashMap">
+		select month from static_deadline 
+		where desc1 is not null 
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SELECT_YYYY)" > 
+			and year = #{SELECT_YYYY} 
+		</if>
+		group by month order by month
+	</select>
+	
+	<!-- 통계 > 권리별 증감현황 > 조회 -->
+	<select id="selectByRightInDeList" parameterType="HashMap" resultType="HashMap">
+		with
+			all_tb as (
+				select * 
+				from static_deadline_info 
+				where
+					1=1
+					<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
+						and desc1 = #{JISA} 
+					</if>
+					<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STATUS)" > 
+						and jisang_status = #{STATUS} 
+					</if>
+					),
+			ref_tb as (select * from static_deadline where YEAR = {YYYY_REF} and month = {MM_REF} and desc1 is not null),
+			tg_tb as (select * from static_deadline where year = {YYYY_TG} and month = {MM_TG}  and desc1 is not null),
+			add_cnt as (
+				select 
+					a.desc1,a.jisang_status, 'NEW' as gubun, count(*) as cnt 
+				from 
+					ref_tb a
+				left join
+					tg_tb b
+				on
+					a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+				where 
+					b.juso is null
+				group by
+					a.desc1,a.jisang_status
+				union all
+				select 
+					a.desc1,'ALL', 'NEW' as gubun, count(*) as cnt 
+				from 
+					ref_tb a
+				left join
+					tg_tb b
+				on
+					a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+				where 
+					b.juso is null
+				group by
+					a.desc1
+				),
+			rm_cnt as (
+				select 
+					a.desc1,a.jisang_status, 'DEL' as gubun, count(*) as cnt
+				from 
+					tg_tb a
+				left join
+					ref_tb b
+				on
+					a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+				where 
+					b.juso is null
+				group by
+					a.desc1,a.jisang_status
+				union all 
+				select 
+					a.desc1,'ALL', 'NEW' as gubun, count(*) as cnt 
+				from 
+					tg_tb a
+				left join
+					ref_tb b
+				on
+					a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+				where 
+					b.juso is null
+				group by
+					a.desc1
+			)
+			,
+			ref_stat as (
+				select desc1,jisang_status,count(*) as cnt from ref_tb group by desc1,jisang_status
+				union all 
+				select desc1,'ALL' as jisang_status,count(*) from ref_tb group by desc1
+				),
+			tg_stat as (
+				select desc1,jisang_status,count(*) as cnt from tg_tb group by desc1,jisang_status
+				union all 
+				select desc1,'ALL' as jisang_status,count(*) from tg_tb group by desc1
+				)
+			select 
+				a.desc1,a.jisang_status, coalesce(b.cnt,0) as ref_cnt , coalesce(c.cnt,0) as tg_cnt,coalesce(d.cnt,0) add_cnt,coalesce(e.cnt,0) as del_cnt
+			from 
+				all_tb a
+			left join
+				ref_stat b
+			on
+				a.desc1= b.desc1 and a.jisang_status = b.jisang_status
+			left join 
+				tg_stat c
+			on
+				a.desc1= c.desc1 and a.jisang_status = c.jisang_status
+			left join 
+				add_cnt d
+			on
+				a.desc1= d.desc1 and a.jisang_status = d.jisang_status
+			left join 
+				rm_cnt e
+			on
+				a.desc1= e.desc1 and a.jisang_status = e.jisang_status
+			order by 
+				a.desc1_num, a.status_num
+	</select>
+	
+	<!-- 통계 > 권리별 증감현황 > 조회 상세 -->
+	<select id="selectByRightInDeListDetail" parameterType="HashMap" resultType="HashMap">
+		select
+			desc1,
+			juso,
+			jisang_status
+		from 
+			static_deadline 
+		where 
+			1=1
+			and year= {YYYY}
+			and month = {MM}
+			and desc1 = {JISA}
+			and jisang_status = {STATUS}
+	</select>
+	
+	<!-- 통계 > 권리별 증감현황 > 조회 상세 > 증감현황 > 증가 -->
+	<select id="selectByRightInDeListDetailUp" parameterType="HashMap" resultType="HashMap">
+		select 
+			a.desc1,a.juso, a.jisang_status
+		from 
+			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF} and desc1 is not null) a
+		left join
+			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG} and desc1 is not null) b
+		on
+			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+		where 
+			1=1
+			and a.desc1 = {JISA}
+			and a.jisang_status = {STATUS}
+			and b.juso is null
+	</select>
+	
+	<!-- 통계 > 권리별 증감현황 > 조회 상세 > 증감현황 > 증가 -->
+	<select id="selectByRightInDeListDetailDown" parameterType="HashMap" resultType="HashMap">
+		select 
+			a.desc1,a.juso, a.jisang_status
+		from 
+			(select * from static_deadline where year = {YYYY_REF} and month = {MM_REF} and desc1 is not null) a
+		left join
+			(select * from static_deadline where year = {YYYY_TG} and month = {MM_TG} and desc1 is not null) b
+		on
+			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+		where 
+			1=1
+			and a.desc1 = {JISA}
+			and a.jisang_status = {STATUS}
+			and b.juso is null
+	</select>
+	
 	<select id="selectMinwonStatusStatic" parameterType="HashMap" resultType="HashMap">
 			SELECT 
 		    mm.mm_jisa,

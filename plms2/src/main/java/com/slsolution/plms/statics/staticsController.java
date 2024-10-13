@@ -1261,6 +1261,222 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		response.getWriter().flush();
 	}
 	
+	//통계 > 권리별 증감현황 > 지사
+	@PostMapping(path="/selectByRightInDeListJisa")
+	public void selectByRightInDeListJisa(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListJisa", null);
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	//통계 > 권리별 증감현황 > 권리확보
+	@PostMapping(path="/selectByRightInDeListByRight")
+	public void selectByRightInDeListByRight(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListByRight", null);
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	//통계 > 권리별 증감현황 > 년,월
+	@PostMapping(path="/selectByRightInDeListYYYYMM")
+	public void selectByRightInDeListYMD(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		ParameterParser parser = new ParameterParser(request);
+		String SELECT_YYYY = parser.getString("SELECT_YYYY", "");
+		
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			HashMap params = new HashMap();
+			params.put("SELECT_YYYY", SELECT_YYYY);
+			
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListYMD", params);
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+	//통계 > 권리별 증감현황 > 조회
+	@PostMapping(path="/selectByRightInDeList")
+	public void selectByRightInDeList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String JISA = parser.getString("JISA", "");
+		String STATUS = parser.getString("STATUS", "");
+		String YYYY_REF = parser.getString("YYYY_REF", "");
+		String MM_REF = parser.getString("MM_REF", "");
+		String YYYY_TG = parser.getString("YYYY_TG", "");
+		String MM_TG = parser.getString("MM_TG", "");
+		
+	
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			HashMap params = new HashMap();
+			params.put("JISA", JISA);
+			params.put("STATUS", STATUS);
+			params.put("YYYY_REF", YYYY_REF);
+			params.put("MM_REF", MM_REF);
+			params.put("YYYY_TG", YYYY_TG);
+			params.put("MM_TG", MM_TG);
+	
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeList", params);
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+	//통계 > 권리별 증감현황 > 조회 > 필지수 클릭 > 상세
+	@PostMapping(path="/selectByRightInDeListDetail")
+	public void selectByRightInDeListDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String YYYY = parser.getString("YYYY", "");
+		String MM = parser.getString("MM", "");
+		String JISA = parser.getString("JISA", "");
+		String STATUS = parser.getString("STATUS", "");
+		
+	
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			HashMap params = new HashMap();
+			params.put("YYYY", YYYY);
+			params.put("MM", MM);
+			params.put("JISA", JISA);
+			params.put("STATUS", STATUS);
+	
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListDetail", params);
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+	//통계 > 권리별 증감현황 > 조회 > 상세 - 증감현황
+	@PostMapping(path="/selectByRightInDeListDetailUpDown")
+	public void selectByRightInDeListDetailUpDown(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String TYPE = parser.getString("TYPE", "UP"); // 증가 : UP , 감소 : DOWN
+		String JISA = parser.getString("JISA", "");
+		String STATUS = parser.getString("STATUS", "");
+		String YYYY_REF = parser.getString("YYYY_REF", "");
+		String MM_REF = parser.getString("MM_REF", "");
+		String YYYY_TG = parser.getString("YYYY_TG", "");
+		String MM_TG = parser.getString("MM_TG", "");
+		
+	
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			HashMap params = new HashMap();
+			params.put("JISA", JISA);
+			params.put("STATUS", STATUS);
+			params.put("YYYY_REF", YYYY_REF);
+			params.put("MM_REF", MM_REF);
+			params.put("YYYY_TG", YYYY_TG);
+			params.put("MM_TG", MM_TG);
+	
+			if("UP".equals(TYPE)) {
+				dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListDetailUp", params);
+			}else {
+				dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListDetailDown", params);
+			}
+			
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
 	//민원관리 현황통계 데이터 조회
 	@PostMapping(path="/selectMinwonStatusStatis")
 	public void selectMinwonStatusStatis(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -1319,6 +1535,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	
 	
 	//통계 > 권리별증감현황
+	/*
 		@PostMapping(path="/selectRightChangeStatisticsList")
 		public void selectRightChangeStatisticsList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			ParameterParser parser = new ParameterParser(request);
@@ -1365,7 +1582,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 			response.getWriter().print(jo);
 			response.getWriter().flush();
 		}
-		
+		*/
 		
 		@RequestMapping(value="/selectRightChangeListTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 		public ResponseEntity<?> selectRightChangeListTableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
