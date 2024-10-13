@@ -361,8 +361,11 @@ const loadDepth3Codes = () => {
 	});
 };
 
+var jisa = '';
+
 $('.issueStatusBtn').click(function () {
   var allData = $("#queryForm").serialize();
+  jisa = $('#issueStatusSelectBox01_3').val();
 
   console.log(allData);
   
@@ -486,8 +489,8 @@ $('.issueStatusBtn').click(function () {
             trStr += '<td rowspan="' + (depth2IdxArr[0] - i) + '"><p>' + row.depth2_name + '</p></td>';
           }
           trStr += '<td><p>' + row.depth3_name + '</p></td>';
-          trStr += '<td><p class="textunderline" onclick="showPopup()">' + row.potential_issue_cnt + '</p></td>';
-          trStr += '<td><p class="textunderline" onclick="showPopup()">' + row.minwon_total_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.potential_issue_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup2(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.minwon_total_cnt + '</p></td>';
           trStr += '</tr>';
 
           tbodyStr += trStr;
@@ -540,8 +543,8 @@ $('.issueStatusBtn').click(function () {
             trStr += '<td rowspan="' + (depth2IdxArr[0] - i) + '"><p>' + row.depth2_name + '</p></td>';
           }
           trStr += '<td><p>' + row.depth3_name + '</p></td>';
-          trStr += '<td><p class="textunderline" onclick="showPopup()">' + row.potential_issue_cnt + '</p></td>';
-          trStr += '<td><p class="textunderline" onclick="showPopup2()">' + row.minwon_total_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.potential_issue_cnt + '</p></td>';
+          trStr += '<td><p class="textunderline" onclick="showPopup2(\'' + row.depth1 + '\', \'' + row.depth2 + '\', \'' + row.depth3 + '\', \'' + row.depth1_name + '\', \'' + row.depth2_name + '\', \'' + row.depth3_name + '\')">' + row.minwon_total_cnt + '</p></td>';
           trStr += '</tr>';
 
           tbodyStr += trStr;
@@ -555,8 +558,9 @@ $('.issueStatusBtn').click(function () {
 });
 
 function showPopup(depth1_code, depth2_code, depth3_code, depth1_name, depth2_name, depth3_name) {
-    var param = '';
-    param += 'DEPTH1NAME=' + depth1_name + '&DEPTH2NAME=' + depth2_name + '&DEPTH3NAME=' + depth3_name;
+    var param = 'JISA=' + jisa;
+    param += '&DEPTH1NAME=' + depth1_name + '&DEPTH2NAME=' + depth2_name + '&DEPTH3NAME=' + depth3_name;
+    param += '&DEPTH1CODE=' + depth1_code + '&DEPTH2CODE=' + depth2_code + '&DEPTH3CODE=' + depth3_code;
 
     $.ajax({
         url: "/stats/issuePopup?" + param,
@@ -575,8 +579,9 @@ function showPopup(depth1_code, depth2_code, depth3_code, depth1_name, depth2_na
 }
 
 function showPopup2(depth1_code, depth2_code, depth3_code, depth1_name, depth2_name, depth3_name) {
-    var param = '';
-    param += 'DEPTH1NAME=' + depth1_name + '&DEPTH2NAME=' + depth2_name + '&DEPTH3NAME=' + depth3_name;
+    var param = 'JISA=' + jisa;
+    param += '&DEPTH1NAME=' + depth1_name + '&DEPTH2NAME=' + depth2_name + '&DEPTH3NAME=' + depth3_name;
+    param += '&DEPTH1CODE=' + depth1_code + '&DEPTH2CODE=' + depth2_code + '&DEPTH3CODE=' + depth3_code;
 
     $.ajax({
         url: "/stats/issuePopup2?" + param,
