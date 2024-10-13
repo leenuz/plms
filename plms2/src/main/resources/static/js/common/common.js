@@ -302,12 +302,12 @@ function largeMenuClick(obj, id){
 //지도보기(이동,위치) 공통
 function positionView(objInfo) {
 	console.log('1개 이상 위치보기');
-	console.log(objInfo);
 	//({'lon':mapCoordLng, 'lat':mapCoordLat, 'zoom':'15'});
 	//({'lon':mapCoordLng, 'lat':mapCoordLat});
 	
 	const coordList = $("#jijukCoordList").val();
 	const coordSize = $("#jijukCoordSize").val();
+	//console.log("coordList: " + coordList+", coordSize" + coordSize);
 	
 	let firstCoordLng = '';
 	let firstCoordLat = '';
@@ -327,9 +327,7 @@ function positionView(objInfo) {
 				firstCoordLng = Number(coordInfo[0]);
 				firstCoordLat = Number(coordInfo[1]);
 			}
-			
 			markerList.push(coordArr);
-			
 			//console.log(i+' :: '+trimArrCoord[i]);
 		}
 		//console.log(markerList);
