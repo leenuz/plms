@@ -214,12 +214,26 @@ rightCloseMngOffPopEvet();
 
 
 
-$(document).on("click","#deadlineBtn",function(){
+$(document).on("click",".deadbtn",function(){
 	
-	var year=$("#rightCloseMngSelectBox01_1").val();
-	var month=$("#rightCloseMngSelectBox01_2").val();
-	
-	var params={"SAVE_YEAR":year,"SAVE_QUARTER":month}
+	var year=$("#popupSelectBox01_1").val().replace('년', '').replace('선택', '');
+	var month=$("#popupSelectBox01_2").val().replace('월', '').replace('선택', '');
+	var date = $('#processDate').val();
+
+	if (year == '') {
+	    alert('기준 년도를 선택해 주세요.');
+	    return;
+	}
+	if (month == '') {
+	    alert('기준 월을 선택해 주세요.');
+	    return;
+	}
+	if (date == '') {
+	    alert('마감처리 일자를 선택해 주세요.');
+	    return;
+	}
+
+	var params={"SAVE_YEAR":year,"SAVE_QUARTER":month, "PROCESS_DATE":date}
 	console.log(params);
 	//loadDataTable(params);
 	//임시 저장 Go
