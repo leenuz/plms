@@ -204,7 +204,7 @@ function getPopupJsonData() {
 	}
 
 	dataObj.MW_SEQ = mw_seq;
-	dataObj.STATUS = findProgStatus(dataObj.STATUS);
+	//dataObj.STATUS = findProgStatus(dataObj.STATUS);
 
 	//첨부파일
 	const complaintRegiPopup_myPcFiles = document.getElementById('complaint_register_Popup_file');

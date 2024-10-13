@@ -3287,6 +3287,7 @@ log.info("jisangMergeList:"+jisangMergeList);
 	 * @return
 	 */
 	public String getMinwonGenerateHTML(String MW_SEQ, String NextSeq, HttpServletRequest request, HttpServletResponse response) {
+		GlobalConfig GC = context.getBean(GlobalConfig.class);
 		log.info("--------------getMinwonGenerateHTML----------------------");
 		MainService mainService = context.getBean(MainService.class);
 		/** 조회 시작 **/
@@ -3384,8 +3385,8 @@ log.info("dataMap:"+detailMap);
 
 		if (file_list.size() > 0) {
 			for (int i = 0; i < file_list.size(); i++) {
-				String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("FILE_SEQ")), "");
-				String str_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("SEQ")), "");
+				String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("file_seq")), "");
+				String str_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("seq")), "");
 				sbHtml.append("<form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
 				sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
 				sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
@@ -3497,47 +3498,48 @@ log.info("dataMap:"+detailMap);
 		sbHtml.append("			 	<tbody>");
 		if (file_list.size() > 0) {
 			for (int i = 0; i < file_list.size(); i++) {
+				 HashMap fmap= (HashMap) file_list.get(i);
 				sbHtml.append("			 		<tr>");
-				sbHtml.append("			 			<td>" + file_map.get("file_nm" + i) + "</td>");
-				String str_FILE_PATH = str_FILE_URL + file_map.get("file_path" + i);
+				sbHtml.append("			 			<td>" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "")  + "</td>");
+				String str_FILE_PATH = str_FILE_URL + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") ;
 				sbHtml.append("            <td>                \n");
 				//개발
-//				if ("DEV".equals(GC.getServerName())) {
-//				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
-//					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") 
-//					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "") 
-//					    + "&fileJisangNo=" + JISANG_NO 
-//					    + "&fileSeq=" + cu.evl(
-//					        ((HashMap) file_list.get(i)).get("file_gubun") != null ? 
-//					        ((HashMap) file_list.get(i)).get("file_gubun").toString() : "", 
-//					        "") 
-//					    + "&fileGubun=jisang', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
-//				}
-//				else if ("LIVE".equals(GC.getServerName())) {
-//				//운영
-//				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
-//					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") 
-//					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "") 
-//					    + "&fileJisangNo=" + JISANG_NO
-//					    + "&fileSeq=" + cu.evl(
-//					        ((HashMap) file_list.get(i)).get("file_gubun") != null ? 
-//					        ((HashMap) file_list.get(i)).get("file_gubun").toString() : "", 
-//					        "") 
-//					    + "&fileGubun=jisang', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
-//
-//				
-//				}
-//				else {
-//					sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
-//						    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") 
-//						    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "") 
-//						    + "&fileJisangNo=" + JISANG_NO 
-//						    + "&fileSeq=" + cu.evl(
-//						        ((HashMap) file_list.get(i)).get("file_gubun") != null ? 
-//						        ((HashMap) file_list.get(i)).get("file_gubun").toString() : "", 
-//						        "") 
-//						    + "&fileGubun=jisang', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
-//				}
+				if ("DEV".equals(GC.getServerName())) {
+				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") 
+					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "") 
+					    + "&fileJisangNo=" + MW_SEQ 
+					    + "&fileSeq=" + cu.evl(
+					        ((HashMap) file_list.get(i)).get("file_gubun") != null ? 
+					        ((HashMap) file_list.get(i)).get("file_gubun").toString() : "", 
+					        "") 
+					    + "&fileGubun=jisang', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+				}
+				else if ("LIVE".equals(GC.getServerName())) {
+				//운영
+				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+					    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") 
+					    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "") 
+					    + "&fileJisangNo=" + MW_SEQ
+					    + "&fileSeq=" + cu.evl(
+					        ((HashMap) file_list.get(i)).get("file_gubun") != null ? 
+					        ((HashMap) file_list.get(i)).get("file_gubun").toString() : "", 
+					        "") 
+					    + "&fileGubun=jisang', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
+				
+				}
+				else {
+					sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+						    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") 
+						    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "") 
+						    + "&fileJisangNo=" + MW_SEQ 
+						    + "&fileSeq=" + cu.evl(
+						        ((HashMap) file_list.get(i)).get("file_gubun") != null ? 
+						        ((HashMap) file_list.get(i)).get("file_gubun").toString() : "", 
+						        "") 
+						    + "&fileGubun=jisang', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+				}
 
 				sbHtml.append("            </td>               \n");
 				sbHtml.append("				 	</tr>");
