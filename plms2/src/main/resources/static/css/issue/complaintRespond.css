@@ -1,0 +1,414 @@
+@charset "UTF-8";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  margin: 0;
+  overflow-y: hidden;
+  font-family: Pretendard;
+}
+
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+span {
+  margin: 0;
+  font-family: Pretendard;
+}
+ul li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  font-family: Pretendard;
+}
+button {
+  border: none;
+  background: transparent;
+  text-align: center;
+}
+button:hover {
+  cursor: pointer;
+}
+input {
+  border: none;
+}
+select {
+  outline: none;
+}
+
+#complainRespondContentBoxs input[type="text"]:focus{ outline: none;}
+#complainRespondContentBoxs textarea:focus{ outline: none;}
+#complainRespondContentBoxs{ 
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin:0 auto;
+  display:none;
+  align-items: center;
+  justify-content: center;
+
+
+}
+#complainRespondContentBoxs.active{ 
+  display:flex; 
+  z-index:9999;}
+
+.complainRespondPopWrap {
+
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Pretendard;
+}
+
+
+.complainRespondPopWrap .complainRespondPopContent {
+  width: 1234px;
+  /* height: 498px; */
+  padding: 15px;
+  border-radius: 20px;
+  background-color: #fff;
+  margin: 0 auto;
+  box-shadow: 1px 1px 15px #6c6c6c40;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondPopTitles {
+  padding: 0px 12px;
+  height: 44px;
+  background-color: #f7f9fc;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondPopTitles h5 {
+  font-size: 16px;
+  color: #4f5871;
+  padding: 0px 0px 0px 5px;
+  font-family: Pretendard;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondPopTitles .complainRespondcloseBtn{ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px; 
+  height: 24px;
+  margin-right:10px;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondPopTitles .complainRespondcloseBtn img {
+  height: 24px;
+}
+
+
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs{
+
+ width:100%;
+ margin-top:11px;
+ border-radius: 5px;
+ border:1px solid #CDDBF0;
+ overflow: hidden;
+
+
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas{
+
+   width: 100%;
+   height: 100%;
+   margin:0 auto;
+
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont{
+
+   width: 100%;
+   margin:0 auto;
+   display: flex;
+   align-items: center;
+   justify-content: flex-start;
+   border-bottom:1px solid #CDDBF0;
+
+}
+
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont:last-child{
+
+   border-bottom: 0px;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont li{ 
+   padding:15px; 
+   height:100%;
+}
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont .complainRespondDataTitle{
+
+   min-width:200px;
+   background-color: #F7F9FC;
+   border-right:1px solid #CDDBF0;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont .complainRespondDataTitle p{
+
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 16.8px;
+}
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont .complainRespondNameBox{ width:calc(100% - 200px);}
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont li input[type="text"]{
+
+    font-size:14px;
+    font-weight: 400;
+    line-height: 16.8px;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont li .complainRespondRadioBoxs { 
+   display: flex;
+   align-items: center;
+   justify-content: space-evenly;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont li .complainRespondRadioBoxs input[type="radio"]{
+
+  margin:0px 0px 0px 23px;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont li .complainRespondRadioBoxs input[type="radio"]:first-child{
+
+   margin:0px;
+}
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont li .complainRespondRadioBoxs span{
+
+   font-size: 14px;
+   font-weight: 400;
+   padding-left:6px;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont .complainRespondDataSelectWrapper{ padding:5px;}
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont .complainRespondDataTextWrap { 
+   width: calc(100% - 200px);
+   padding:5px;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont .complainRespondTextareaTitle {
+
+   min-height:198px;
+}
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont li textarea{
+
+   padding:10px;
+   width: calc(100% - 20px);
+   min-height:198px;
+   border-radius: 10px;
+   background-color: #EDF2F9;
+   font-size: 14px;
+   font-weight: 400;
+   line-height: 16.8px;
+   border:none;
+   resize: none;
+
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont li textarea::-webkit-scrollbar {
+  width: 4px;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBoxs .complainRespondDatas .complainRespondDataCont li textarea::-webkit-scrollbar-thumb{
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBtnBoxs {
+
+   width: 100%;
+   margin:0 auto;
+   padding:12px 0px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBtnBoxs button{
+
+   width: 116px;
+   height: 44px;
+   border-radius: 10px;
+   margin-right: 10px;
+   color:#fff;
+   font-size: 15px;
+   font-weight: 600;
+   line-height: 18px;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBtnBoxs button:last-child{
+   margin-right: none;
+}
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBtnBoxs button.complainRespondDelete{ background-color:#666666;}
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBtnBoxs button.complainRespondSave{background-color:#2B7DE1;}
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBtnBoxs button.complainRespondReport{background-color:#E0EDFF; color:#2B7DE1;}
+.complainRespondPopWrap .complainRespondPopContent .complainRespondBtnBoxs button.complainRespondClose{background-color:#919191;}
+
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondSelectBoxs { 
+   display: flex; 
+   align-items: flex-start; 
+   justify-content: flex-start;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondSelectBoxs .complainRespondSelectContent{
+
+   padding:0px 5px;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondSelectBoxs .complainRespondSelectContent:first-child{
+   padding:0px 5px 0px 0px;
+}
+
+
+/* 공통 셀렉박스 */
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondSelectBoxs .surfaceSelects {
+  width: 220px;
+  height: 36px;
+  border-radius: 10px;
+  background-color: #fff;
+  position: relative;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .complainRespondSelectBoxs .surfaceSelects .complainRespondSelectTitleBtn {
+  width: 100%;
+  padding: 0px 15px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  display: block;
+  background-color: transparent;
+  text-align: left;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #cfddf2;
+  background-image: url(/complaintResponMedia/surfaceNavArrowdown.png);
+  background-size: 20px;
+  background-position: 94% center;
+  background-repeat: no-repeat;
+  color: #6e7d88;
+  filter: grayscale(100);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .surfaceSelects .complainRespondSelectTitleBtn.active {
+  color: #2b7de1;
+  border: 1px solid #2b7de1;
+  filter: grayscale(0);
+}
+
+.complainRespondPopWrap .complainRespondPopContent .surfaceSelects .sufaceSelectList {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  height: 0px;
+  border-radius: 10px;
+  border: none;
+  background-color: #fff;
+  opacity: 0;
+  transition: 300ms;
+  overflow: hidden;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .surfaceSelects .sufaceSelectList.active {
+  border: 1px solid #acbdd7;
+  height: 135px;
+  z-index: 9999;
+  opacity: 1;
+  transition: height 500ms;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .surfaceSelects .sufaceSelectList.smallHeight.active {
+  opacity: 1;
+  display: block;
+  height: 45px;
+  transition: height 500ms;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .surfaceSelects .sufaceSelectList .surfaceSelectListMember {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background-color: transparent;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+/* 셀릭박스 스크롤바 */
+
+.complainRespondPopWrap .complainRespondPopContent .surfaceSelects .sufaceSelectList .surfaceSelectListMember::-webkit-scrollbar {
+  width: 4px;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .surfaceSelects
+  .sufaceSelectList
+  .surfaceSelectListMember::-webkit-scrollbar-track {
+}
+
+
+.complainRespondPopWrap .complainRespondPopContent .surfaceSelects .sufaceSelectList .surfaceSelectListMember li {
+  padding: 0px 10px!important;
+  height: 33px!important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 5px;
+  margin: 6px 5px;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .surfaceSelects .sufaceSelectList .surfaceSelectListMember li:hover {
+  background-color: #edf2f9;
+}
+
+.complainRespondPopWrap .complainRespondPopContent .surfaceSelects .sufaceSelectList .surfaceSelectListMember li p {
+  color: #4e5871;
+  font-size: 15px;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
