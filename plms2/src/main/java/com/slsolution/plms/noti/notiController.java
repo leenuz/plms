@@ -94,16 +94,14 @@ public class notiController {
 		// 검색 조건
 		String jisa = req.getParameter("jisa"); // 지사
 		String gubun = req.getParameter("gubun"); // 구분
-		String juso = req.getParameter("juso"); 
+		String start_date = req.getParameter("start_date"); // 이설반영일자 시작일
+		String end_date = req.getParameter("end_date"); // 이설반영일자 종료일
+		String juso = req.getParameter("saddr"); // 입력형 주소
 		String sido_nm = req.getParameter("sido_nm");
 		String sgg_nm = req.getParameter("sgg_nm");
 		String emd_nm = req.getParameter("emd_nm");
 		String ri_nm = req.getParameter("ri_nm");
 		String jibun = req.getParameter("jibun");
-
-		// 검색 조건 - 날짜 필터
-		String start_date = req.getParameter("start_date");
-		String end_date = req.getParameter("end_date");
 
 		// 검색 파라미터 설정
 		HashMap params = new HashMap();
@@ -112,9 +110,10 @@ public class notiController {
 		params.put("length", length);
 		
 		params.put("jisa", jisa);
+		params.put("start_date", start_date);
+		params.put("end_date", end_date);
 		params.put("gubun", gubun);
 		params.put("juso", juso);
-		params.put("sido_nm", sido_nm);
 		params.put("sgg_nm", sgg_nm);
 		params.put("emd_nm", emd_nm);
 		params.put("ri_nm", ri_nm);
