@@ -2001,7 +2001,10 @@ SELECT TTT.TYPE,
 			del_tb_fin
 		where
 			1=1
-			and desc1 = #{JISA} -- 지사명칭 / " " ( 제거시 전체(=계) )
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
+				and desc1 = #{JISA} -- 지사명칭 / " " ( 제거시 전체(=계) )
+			</if>
+			
 			and gubun_del = #{STATUS};  --분할/해지/합필/권리전환
 
 	</select>
@@ -2060,7 +2063,9 @@ SELECT TTT.TYPE,
 			add_tb_fin
 		where
 			1=1
-			and desc1 = #{JISA} -- 지사명칭 / " " ( 제거시 전체(=계) )
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
+				and desc1 = #{JISA} -- 지사명칭 / " " ( 제거시 전체(=계) )
+			</if>
 			and gubun_add = #{STATUS};  --분할 / 사유지 / 권리전환 
 	</select>
 	
