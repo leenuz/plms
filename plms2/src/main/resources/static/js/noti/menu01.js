@@ -95,7 +95,9 @@ function loadDataTable(params) {
 			data: function(d) {
 				d.jisa = ljsIsNull(jisaCheck) ? ljsIsNull(params.jisa) ? '' : params.jisa : jisaCheck;
 				d.gubun = params.gubun;
-
+				d.start_date = params.start_date;
+				d.end_date = params.end_date;
+				
 				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
 				console.log("askmenu:" + ask);
 
@@ -120,7 +122,6 @@ function loadDataTable(params) {
 				console.log("-------------json---------------");
 				console.log(json);
 				$("#dataTableTotalCount").html(json.recordsTotal.toLocaleString());
-				//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
 				return json.data;
 			}
 		},
