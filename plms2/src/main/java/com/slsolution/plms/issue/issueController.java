@@ -406,10 +406,11 @@ public class issueController {
 	// 민원관리 목록 조회
 	@PostMapping(path = "/selectMinwonDetail")
 	public void selectMinwonDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		JSONObject requestParamObj = new JSONObject(requestParams);
 		ParameterParser parser = new ParameterParser(request);
-//			String MW_SEQ = parser.getString("MW_SEQ", "");
+		
 		String MW_SEQ = requestParamObj.getString("MW_SEQ");
 		String loginKey = String.valueOf(request.getSession().getAttribute("loginKey"));
 
@@ -430,6 +431,7 @@ public class issueController {
 //				agreeList = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDetailAgree", params);
 //				fileList = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDetailFile", params);
 //				detailMap = (HashMap) mainService.selectHashmapQuery("issueSQL.selectMinwonDetail", params);
+			
 			tmpList = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetail", params);
 			log.info("detailMap:" + tmpList.get(0));
 			detailMap = (HashMap) tmpList.get(0);

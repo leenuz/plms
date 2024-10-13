@@ -181,103 +181,106 @@ function datatablebasic(){
 }
 
 function loadDataTable(params) {
-    console.log("-----start loadDataTable----------");
-    console.log("Params:", params); // params 객체 출력
+	console.log("-----start loadDataTable----------");
+	console.log("Params:", params); // params 객체 출력
 
-    table = $('#userTable').DataTable({
-        fixedColumns: { start: 3 },
-        scrollCollapse: true,
-        scrollX: true,
-        scrollY: 600,
-        paging: true,
-        "oLanguage": { "sLengthMenu": "_MENU_" },
-        dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
-        buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
-        pageLength: 50,
-        bPaginate: true,
-        bLengthChange: true,
-        bInfo: false,
-        lengthMenu: [[10, 50, 100, -1], ["10건", "50건", "100건", "All"]],
-        bAutoWidth: false,
-        processing: true,
-        ordering: true,
-        bServerSide: true,
-        searching: false,
-        destroy: true,
-        order: [[12, 'desc']],
-        rowReorder: { dataSrc: 'b_seq' },
-        ajax: {
-            url: "/land/gover/menu03_2DataTableList",
-            type: "POST",
-            datatype: "json",
-            data: function(d) {
-                d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
-                d.gover_no = params.gover_no;
-                d.use_purpos = params.use_purpos;
-                d.pmt_office = params.pmt_office;
-                d.adm_office = ljsIsNull(params.adm_office) ? '' : params.adm_office;
-								d.pay_date_start = params.pay_date_start;
-								d.pay_date_end = params.pay_date_end;
-                d.idx = params.idx;
+	table = $('#userTable').DataTable({
+		fixedColumns: { start: 3 },
+		scrollCollapse: true,
+		scrollX: true,
+		scrollY: 600,
+		paging: true,
+		"oLanguage": { "sLengthMenu": "_MENU_" },
+		dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
+		buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
+		pageLength: 50,
+		bPaginate: true,
+		bLengthChange: true,
+		bInfo: false,
+		lengthMenu: [[10, 50, 100, -1], ["10건", "50건", "100건", "All"]],
+		bAutoWidth: false,
+		processing: true,
+		ordering: true,
+		bServerSide: true,
+		searching: false,
+		destroy: true,
+		order: [[12, 'desc']],
+		rowReorder: { dataSrc: 'b_seq' },
+		ajax: {
+			url: "/land/gover/menu03_2DataTableList",
+			type: "POST",
+			datatype: "json",
+			data: function(d) {
+				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.gover_no = params.gover_no;
+				d.use_purpos = params.use_purpos;
+				d.pmt_office = params.pmt_office;
+				d.adm_office = ljsIsNull(params.adm_office) ? '' : params.adm_office;
+				d.pay_date_start = params.pay_date_start;
+				d.pay_date_end = params.pay_date_end;
+				d.idx = params.idx;
 
-                // 주소
-                var ask = (params.privateUseRadio02 == undefined || params.privateUseRadio02 == null) ? '0' : params.privateUseRadio02;
-                console.log("privateUseRadio02:" + ask);
+				// 주소
+				var ask = (params.privateUseRadio02 == undefined || params.privateUseRadio02 == null) ? '0' : params.privateUseRadio02;
+				console.log("privateUseRadio02:" + ask);
 
-                // 입력형 주소 입력 시
-                if (ask == "0") {
-                    d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
-                }
-                // 선택형 주소 입력 시
-                else {
-                    var addrs = params.sido_nm || '';
-                    if (!ljsIsNull(params.sgg)) addrs += " " + params.sgg;
-                    if (!ljsIsNull(params.emd)) addrs += " " + params.emd;
-                    if (!ljsIsNull(params.ri)) addrs += " " + params.ri;
-                    if (!ljsIsNull(params.jibun)) addrs += " " + params.jibun;
-                    d.saddr = (addrs == undefined || addrs == null || addrs == "undefined") ? '' : addrs;
-										
-										/* 2024.10.04 손지민 - 선택행 주소 검색 시 시도/시군구/읍면동/리/지번 분리 검색
-										d.sido_nm = params.sido_nm;
-										d.sgg_nm = params.sgg;
-										d.emd_nm = params.emd;
-										d.ri_nm = params.ri;
-										d.jibun = params.jibun;
-										*/
-                }
-                console.log("saddr:" + d.saddr);
-            },
-            dataSrc: function(json) {
-                console.log("-------------json---------------");
-                console.log(json);
-                $("#dataTableTotalCount").html(json.recordsTotal.toLocaleString());
-                return json.data;
-            }
-        },
-        columns: [
-            { data: "no", "orderable": false }, // 0
-            { data: "jisa", "defaultContent": "" },
-            { data: "address", "defaultContent": "" },
-            { data: "gover_no", "defaultContent": "" },
+				// 입력형 주소 입력 시
+				if (ask == "0") {
+					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
+				}
+				// 선택형 주소 입력 시
+				else {
+					var addrs = params.sido_nm || '';
+					if (!ljsIsNull(params.sgg)) addrs += " " + params.sgg;
+					if (!ljsIsNull(params.emd)) addrs += " " + params.emd;
+					if (!ljsIsNull(params.ri)) addrs += " " + params.ri;
+					if (!ljsIsNull(params.jibun)) addrs += " " + params.jibun;
+					d.saddr = (addrs == undefined || addrs == null || addrs == "undefined") ? '' : addrs;
+
+					/* 2024.10.04 손지민 - 선택행 주소 검색 시 시도/시군구/읍면동/리/지번 분리 검색
+					d.sido_nm = params.sido_nm;
+					d.sgg_nm = params.sgg;
+					d.emd_nm = params.emd;
+					d.ri_nm = params.ri;
+					d.jibun = params.jibun;
+					*/
+				}
+				console.log("saddr:" + d.saddr);
+			},
+			dataSrc: function(json) {
+				console.log("-------------json---------------");
+				console.log(json);
+				$("#dataTableTotalCount").html(json.recordsTotal.toLocaleString());
+				return json.data;
+			}
+		},
+		columns: [
+			{ data: "no", "orderable": false }, // 0
+			{ data: "jisa", "defaultContent": "" },
+			{ data: "address", "defaultContent": "" },
+			{ data: "gover_no", "defaultContent": "" },
 			{ data: "pnu_count", "defaultContent": "" },
 			{ data: "jimok_text", "defaultContent": "" }, //5
 			{ data: "use_purpos", "defaultContent": "" },
 			{ data: "period", "defaultContent": "" },
 			{ data: "gover_length", "defaultContent": "" },
 			{ data: "gover_area", "defaultContent": "" },
-            { data: "pmt_office", "defaultContent": "" }, //10
-            { data: "adm_office", "defaultContent": "" },
+			{ data: "pmt_office", "defaultContent": "" }, //10
+			{ data: "adm_office", "defaultContent": "" },
 			{ data: "pay_date", "defaultContent": "" },
 			{ data: "pay_money", "defaultContent": "" },
-            {
-                data: "idx", "defaultContent": "",
-                render: function(data, type, row, meta) {
-                    return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
-                }
-            },
-			{ data: "echo_no", "defaultContent": "",
+			{
+				data: "idx", "defaultContent": "",
+				render: function(data, type, row, meta) { // 지도 위치보기
+					// console.log("x:", row.x, "y:", row.y); // 주석 풀면 로드 되면서 x,y 오는지 확인 가능
+					return `<button class="viewDetailButton" data-x=${row.x} data-y=${row.y}>위치보기</button> `;
+				}
+			},
+			{
+				// 문서보기로 수정 필요
+				data: "echo_no", "defaultContent": "",
 				render: function(data, type, row, meta) {
-					return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
+					//return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}	 // 15
 		],
@@ -286,58 +289,58 @@ function loadDataTable(params) {
 			{ className: 'dt-center', "targets": "_all" },
 			{ targets: [0], width: "50px" },
 			{ targets: [1], width: "150px" },
-	        { targets: [2], width: "400px" },
-	        { targets: [3], width: "150px" },
-	        { targets: [4], width: "100px" },
-	        { targets: [5], width: "200px" },
-	        { targets: [6], width: "150px" },
-	        { targets: [7], width: "150px" },
-	        { targets: [8], width: "200px" },
-	        { targets: [9], width: "100px" },
-	        { targets: [10], width: "200px" },
-	        { targets: [11], width: "100px" },
-	        { targets: [12], width: "100px" },
-	        { targets: [13], width: "100px" },
-	        { targets: [14], width: "100px" },
+			{ targets: [2], width: "400px" },
+			{ targets: [3], width: "150px" },
+			{ targets: [4], width: "100px" },
+			{ targets: [5], width: "200px" },
+			{ targets: [6], width: "150px" },
+			{ targets: [7], width: "150px" },
+			{ targets: [8], width: "200px" },
+			{ targets: [9], width: "100px" },
+			{ targets: [10], width: "200px" },
+			{ targets: [11], width: "100px" },
+			{ targets: [12], width: "100px" },
+			{ targets: [13], width: "100px" },
+			{ targets: [14], width: "100px" },
 			{ targets: [15], width: "100px" }
 		]
 	});
 
 	table.on('click', 'tr', function(event) {
 		var target = $(event.target);
-	    var isButtonCell = target.closest('td').index() === 14;
-	
-	    if (isButtonCell) {
-				event.stopPropagation(); // 버튼 클릭 시에는 동작하지 않도록 이벤트 전파 차단
-				return;
-	    } else {
+		var isButtonCell = target.closest('td').index() === 14;
+
+		if (isButtonCell) {
+			event.stopPropagation(); // 버튼 클릭 시에는 동작하지 않도록 이벤트 전파 차단
+			return;
+		} else {
 			var data = table.row(this).data();
-	        console.log(data);
-	        console.log(data.idx);
-	
-	        var url = "/land/gover/feeDetail?idx=" + data.idx;
+			console.log(data);
+			console.log(data.idx);
+
+			var url = "/land/gover/feeDetail?idx=" + data.idx;
 			window.location = url;
 		}
 	});
-	
+
 	// 위치보기 버튼 클릭 이벤트 처리
 	$('#userTable').on('click', '.viewDetailButton', function(event) {
-	    event.stopPropagation(); // 이벤트 전파 차단
+		event.stopPropagation(); // 이벤트 전파 차단
 
-	    // 버튼의 data 속성에서 x, y 좌표 가져오기
-	    const x = $(this).data('x');
-	    const y = $(this).data('y');
-	    
-	    console.log("x, y:", x, y);
-	    
-	    // 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
-	    if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
-	        // 좌표가 있을 때는 좌표를 전달
-	        onePositionView({ x, y });
-	    } else {
-	        // 좌표가 없을 때는 빈 객체를 전달하여 onePositionView 내부에서 처리
-	        onePositionView(undefined);
-	    }
+		// 버튼의 data 속성에서 x, y 좌표 가져오기
+		const x = $(this).data('x');
+		const y = $(this).data('y');
+
+		console.log("x, y:", x, y);
+
+		// 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
+		if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined' && x !== null && y !== null) {
+			// 좌표가 있을 때는 좌표를 전달
+			onePositionView({ x, y });
+		} else {
+			// 좌표가 없을 때는 빈 객체를 전달하여 onePositionView 내부에서 처리
+			onePositionView(undefined);
+		}
 	});
 }
 

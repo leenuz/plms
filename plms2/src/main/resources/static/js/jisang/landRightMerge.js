@@ -887,6 +887,8 @@ console.log(object);
             if (response.success="Y"){
                 console.log("response.success Y");
                 alert("정상적으로 등록 되었습니다.");
+				$("#save_status").val("TSAVE");
+				$("#tmp_jisang_no").val(response.JISANGNO);
                 /*$("#popup_bg").show();
                 $("#popup").show(500);
                 //$("#addrPopupLayer tbody td").remove();
@@ -1234,7 +1236,8 @@ $(document).on("click","#sangsinBtn",function(){
 	            if (response.success="Y"){
 	                console.log("response.success Y");
 					alert("정상적으로 상신 되었습니다.");
-												
+					$("#save_status").val("TSAVE");
+					$("#tmp_jisang_no").val(response.JISANGNO);							
 																			
 												//var url=response.OUT_URL;
 					var urls = response.OUT_URL;

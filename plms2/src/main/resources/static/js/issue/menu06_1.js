@@ -18,6 +18,10 @@ $(function() {
 
 	//loadDataTable(object);
 	console.log("-----------------------");
+	
+	//드래그 앤 드롭 영역 파일 첨부 관련 코드
+	//let objDragAndDrop = $(".fileUploadBox");
+	//let objDragAndDropExcel = $(".popfileUploadBox");
 })
 
 /* 이슈보기팝업 */
@@ -441,6 +445,33 @@ function getPopupJsonData() {
 	
 	dataObj.MW_OCCUR_DATE = dateCheck;
 	dataObj.SANGSIN_FLAG = 'N';
+	
+	let min_to_nameArr = [];
+	let min_to_birhArr = [];
+	let min_to_relationArr = [];
+	let min_to_phoneArr = [];
+	let min_to_presenceArr = [];
+	
+	//신규
+	for(let p = 0 ; p < $("#minwonin_totiju_body").children().length ; p++) {
+		let ownerNm = commonNvl( $("#landowner_name_"+(p+1)).val() , "-" );
+		let ownerBirth = commonNvl( $("#landowner_birthday_"+(p+1)).val(), "-" );
+		let ownerRelation = commonNvl( $("#landowner_relation_"+(p+1)).val(), "-" );
+		let ownerPhone = commonNvl( $("#landowner_phone_"+(p+1)).val(), "-" );
+		let owerPresence = commonNvl( $("#landowner_presence"+(p+1)).val(), "N" );
+		
+		min_to_nameArr.push(ownerNm);
+		min_to_birhArr.push(ownerBirth);
+		min_to_relationArr.push(ownerRelation);
+		min_to_phoneArr.push(ownerPhone);
+		min_to_presenceArr.push(owerPresence);
+	}
+	
+	dataObj.min_to_nameArr = min_to_nameArr.toString();
+	dataObj.min_to_birhArr = min_to_birhArr.toString();
+	dataObj.min_to_relationArr = min_to_relationArr.toString();
+	dataObj.min_to_phoneArr = min_to_phoneArr.toString();
+	dataObj.min_to_presenceArr = min_to_presenceArr.toString();
 
 	return dataObj;
 }

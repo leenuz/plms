@@ -275,15 +275,12 @@ function loadDataTable(params) {
 			datatype: "json",
 			data: function(d) {
 				//d=params;
-
 				d.jisa = ljsIsNull(params.jisa) ? ljsIsNull(params.jisa) ? '' : params.jisa : params.jisa;
 				d.status = ljsIsNull(params.status) ? '' : params.status;
 				d.jibun = ljsIsNull(params.jibun) ? '' : params.jibun;
 
 				var ask = (params.askMenu01 == undefined || params.askMenu01 == null) ? '0' : params.askMenu01;
 				console.log("askmenu:" + ask);
-
-
 				if (ask == "0") {
 					console.log("---------3--------------");
 					d.saddr = (params.addressFull == undefined || params.addressFull == null) ? '' : params.addressFull;
@@ -296,7 +293,6 @@ function loadDataTable(params) {
 					d.ri_nm = params.ri;
 					d.jibun = params.jibun;
 				}
-
 				console.log("saddr:" + d.saddr);
 				console.log(params);
 				console.log("-----------d-----------");
@@ -316,9 +312,7 @@ function loadDataTable(params) {
 		},
 		drwaCallback: function(settings) {
 			console.log("--------------데이터가 로드되고 테이블이 다시 그려졌습니다.----------------");
-
 			MergeGridCells1("userTable", rCols);
-
 		},
 		//        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 		//        //	console.log(aData);
@@ -326,7 +320,6 @@ function loadDataTable(params) {
 		//            $('td:eq(0)', nRow).html(iDisplayIndexFull +1);
 		//            return nRow;
 		//        },
-
 		columns: [
 			{ data: "no", "orderable": false },//0
 			{ data: "jisa", "defaultContent": "", name: "jisa" },
@@ -416,7 +409,7 @@ function loadDataTable(params) {
 		console.log("x, y:", x, y);
 
 		// 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
-		if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
+		if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined' && x !== null && y !== null) {
 			// 좌표가 있을 때는 좌표를 전달
 			onePositionView({ x, y });
 		} else {

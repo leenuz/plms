@@ -309,9 +309,7 @@ function loadDataTable(params) {
 			}
 		},
 		initComplete: function() {
-
 			console.log(this.api().data().length);
-
 		},
 		/*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 //	console.log(aData);
