@@ -7,6 +7,9 @@
 
     <link th:href="@{/css/common.css}" rel="stylesheet" />
     <link rel="stylesheet" href="/css/stats/rightStatus.css">
+    
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
     <title>권리확보현황 통계</title>
 </head>
 
@@ -127,8 +130,8 @@
                             <!-- 오른쪽 -->
                             <div class="dataContentGraph">
                                 <button class="hamBtn"></button>
-                                <figure class="graphHere">
-                                </figure>
+                                <div id="SAYUJI_Chart"  class="graphHere">
+                                </div >
                                 <ul class="graphNav">
                                     <li class="graphContent">
                                         <span class="cirColor cir01"></span>
@@ -190,7 +193,7 @@
                                             <p class="dataText">지상권</p>
                                         </li>
                                         <li class="content">
-                                            <p class="dataText" id="GUKYUJI_Y">0 건</p>
+                                            <p class="dataText" id="GUKYUJI_J">0 건</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -201,7 +204,7 @@
                                             <p class="dataText">점용</p>
                                         </li>
                                         <li class="content">
-                                            <p class="dataText" id="GUKYUJI_J">0 건</p>
+                                            <p class="dataText" id="GUKYUJI_Y">0 건</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -223,7 +226,7 @@
                                             <p class="dataText">계</p>
                                         </li>
                                         <li class="content">
-                                            <p class="dataText" id="SAYUJI_SUM">0 건</p>
+                                            <p class="dataText" id="GUKYUJI_SUM">0 건</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -232,9 +235,8 @@
                             <div class="dataContentGraph">
                                 <button class="hamBtn"></button>
                                 <button class="permitExcelBtn"></button>
-                                <figure class="graphHere">
-
-                                </figure>
+                                <div id="GUKYUJI_Chart"  class="graphHere">
+                                </div>
                                 <ul class="graphNav">
                                     <li class="graphContent">
                                         <span class="cirColor cir01"></span>

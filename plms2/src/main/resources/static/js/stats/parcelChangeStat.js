@@ -152,98 +152,98 @@ const findMonthForparcelChangeStat = () => {
 findMonthForparcelChangeStat();
 
 // 현황 상세정보 팝업
-//const parcelCurrentPopEvet = () => {
-//
-//    const parcelChangeStatBtn = document.querySelector("#parcelChangeStat .nowDetailBtn");
-//    const parcelCurrentDetailPopupWrapper = document.querySelector(".parcelCurrentDetailPopupWrapper");
-//    let approvalFilePath = '/components/popuphtml/superficies_statistics_Popup/current_detail_info_Popup.html'; // 현황 상세정보
-//
-//    if (parcelChangeStatBtn) {
-//
-//        let xhr = new XMLHttpRequest();
-//        xhr.open('GET', approvalFilePath, true);
-//        xhr.onreadystatechange = function () {
-//            if (xhr.readyState == 4 && xhr.status == 200) {
-//                parcelCurrentDetailPopupWrapper.innerHTML = xhr.responseText;
-//                runScriptsInElement(parcelCurrentDetailPopupWrapper); // 삽입된 html내 스크립트 실행 함수 호출
-//            }
-//        };
-//        xhr.send();
-//        console.log('parcelCurrentDetailPopupWrapper 작동');
-//
-//        parcelChangeStatBtn.addEventListener('click', function () {
-//
-//            const popupOpen = document.getElementById("current_detail_info_Popup");
-//            if (popupOpen) {
-//
-//                popupOpen.classList.add("active");
-//            }
-//        })
-//
-//        // 삽입된 html내 스크립트 실행 함수
-//        const runScriptsInElement = (element) => {
-//            const scripts = element.getElementsByTagName('script');
-//            for (let i = 0; i < scripts.length; i++) {
-//                const script = document.createElement('script');
-//                script.textContent = scripts[i].textContent;
-//                document.body.appendChild(script).parentNode.removeChild(script);
-//            }
-//        }
-//
-//
-//    }
-//
-//}
-//
-//parcelCurrentPopEvet();
-//
-//
-//// 필지정보 팝업
-//const parcelInfoPopEvet = () => {
-//
-//    const parcelNumArea = document.querySelectorAll("#parcelChangeStat .parcelNumArea");
-//    const parcelChangeParcelDetailPopWrapper = document.querySelector(".parcelChangeParcelDetailPopWrapper");
-//    let approvalFilePath = '/components/popuphtml/superficies_statistics_Popup/pilji_info_Popup.html'; // 필지 정보
-//
-//    if (parcelNumArea) {
-//
-//        let xhr = new XMLHttpRequest();
-//        xhr.open('GET', approvalFilePath, true);
-//        xhr.onreadystatechange = function () {
-//            if (xhr.readyState == 4 && xhr.status == 200) {
-//                parcelChangeParcelDetailPopWrapper.innerHTML = xhr.responseText;
-//                runScriptsInElement(parcelChangeParcelDetailPopWrapper); // 삽입된 html내 스크립트 실행 함수 호출
-//            }
-//        };
-//        xhr.send();
-//        console.log('parcelChangeParcelDetailPopWrapper 작동');
-//
-//        parcelNumArea.forEach((parcelBtn) => {
-//            parcelBtn.addEventListener("click", function(){
-//
-//                const popupOpen = document.getElementById("pilji_info_Popup");
-//                if (popupOpen) {
-//
-//                    popupOpen.classList.add("active");
-//                }
-//            })
-//        })
-//        // 삽입된 html내 스크립트 실행 함수
-//        const runScriptsInElement = (element) => {
-//            const scripts = element.getElementsByTagName('script');
-//            for (let i = 0; i < scripts.length; i++) {
-//                const script = document.createElement('script');
-//                script.textContent = scripts[i].textContent;
-//                document.body.appendChild(script).parentNode.removeChild(script);
-//            }
-//        }
-//
-//
-//    }
-//
-//}
-//
-//parcelInfoPopEvet();
+const parcelCurrentPopEvet = () => {
+
+   const parcelChangeStatBtn = document.querySelector("#parcelChangeStat .nowDetailBtn");
+   const parcelCurrentDetailPopupWrapper = document.querySelector(".parcelCurrentDetailPopupWrapper");
+   let approvalFilePath = '/components/popuphtml/superficies_statistics_Popup/current_detail_info_Popup.html'; // 현황 상세정보
+
+   if (parcelChangeStatBtn) {
+
+       let xhr = new XMLHttpRequest();
+       xhr.open('GET', approvalFilePath, true);
+       xhr.onreadystatechange = function () {
+           if (xhr.readyState == 4 && xhr.status == 200) {
+               parcelCurrentDetailPopupWrapper.innerHTML = xhr.responseText;
+               runScriptsInElement(parcelCurrentDetailPopupWrapper); // 삽입된 html내 스크립트 실행 함수 호출
+           }
+       };
+       xhr.send();
+       console.log('parcelCurrentDetailPopupWrapper 작동');
+
+       parcelChangeStatBtn.addEventListener('click', function () {
+
+           const popupOpen = document.getElementById("current_detail_info_Popup");
+           if (popupOpen) {
+
+               popupOpen.classList.add("active");
+           }
+       })
+
+       // 삽입된 html내 스크립트 실행 함수
+       const runScriptsInElement = (element) => {
+           const scripts = element.getElementsByTagName('script');
+           for (let i = 0; i < scripts.length; i++) {
+               const script = document.createElement('script');
+               script.textContent = scripts[i].textContent;
+               document.body.appendChild(script).parentNode.removeChild(script);
+           }
+       }
+
+
+   }
+
+}
+
+parcelCurrentPopEvet();
+
+
+// 필지정보 팝업
+const parcelInfoPopEvet = () => {
+
+   const parcelNumArea = document.querySelectorAll("#parcelChangeStat .parcelNumArea");
+   const parcelChangeParcelDetailPopWrapper = document.querySelector(".parcelChangeParcelDetailPopWrapper");
+   let approvalFilePath = '/components/popuphtml/superficies_statistics_Popup/pilji_info_Popup.html'; // 필지 정보
+
+   if (parcelNumArea) {
+
+       let xhr = new XMLHttpRequest();
+       xhr.open('GET', approvalFilePath, true);
+       xhr.onreadystatechange = function () {
+           if (xhr.readyState == 4 && xhr.status == 200) {
+               parcelChangeParcelDetailPopWrapper.innerHTML = xhr.responseText;
+               runScriptsInElement(parcelChangeParcelDetailPopWrapper); // 삽입된 html내 스크립트 실행 함수 호출
+           }
+       };
+       xhr.send();
+       console.log('parcelChangeParcelDetailPopWrapper 작동');
+
+       parcelNumArea.forEach((parcelBtn) => {
+           parcelBtn.addEventListener("click", function(){
+
+               const popupOpen = document.getElementById("pilji_info_Popup");
+               if (popupOpen) {
+
+                   popupOpen.classList.add("active");
+               }
+           })
+       })
+       // 삽입된 html내 스크립트 실행 함수
+       const runScriptsInElement = (element) => {
+           const scripts = element.getElementsByTagName('script');
+           for (let i = 0; i < scripts.length; i++) {
+               const script = document.createElement('script');
+               script.textContent = scripts[i].textContent;
+               document.body.appendChild(script).parentNode.removeChild(script);
+           }
+       }
+
+
+   }
+
+}
+
+parcelInfoPopEvet();
 
 
 //페이지네이션
