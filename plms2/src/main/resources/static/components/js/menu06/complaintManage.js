@@ -15,6 +15,9 @@ $(function() {
 	
 	//페이지 로드시 상세화면 내용 불러오기
 	self.onDataLoad();
+	
+	
+	
 })
 
 // 커스텀 selectbox
