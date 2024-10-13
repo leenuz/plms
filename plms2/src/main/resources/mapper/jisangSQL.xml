@@ -13,25 +13,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and jm_idx=cast(${index} as varchar)
 		</if>
 	</select>
+	
 	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select *
-		,concat(jm_sido_nm,' ',jm_sgg_nm,' ',jm_emd_nm,' ',jm_ri_nm,' ',jm_jibun) as address
-		from jisang_master jm 
-		left join
+		SELECT *
+			,concat(jm_sido_nm,' ',jm_sgg_nm,' ',jm_emd_nm,' ',jm_ri_nm,' ',jm_jibun) as address
+		FROM jisang_master jm 
+		LEFT JOIN
 			jisang_bunhal jb 
-		on jb.jb_jisang_no=jm.jm_jisang_no
-		left outer join
-			jijuk_2024 jj
-		on jj.pnu = jm.JM_PNU 
-		where 1=1
+		ON jb.jb_jisang_no = jm.jm_jisang_no
+		LEFT OUTER JOIN jijuk_2024 jj ON jj.pnu = jm.JM_PNU 
+		WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 		and jm.jm_jisang_no=#{idx}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(index)" >
 		and jm.jm_idx=cast(#{index} as integer)
 		</if>
-		
 	</select>
+	
 	<select id="selectSoyujaData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *,(row_number() over()) as no 
 		from jisang_souja 

@@ -41,7 +41,7 @@
 								<h2>・참고 지적도</h2>
 							</div>
 							<div style="display: inline-block; float: right;">
-								<button class="viewDetailButton" onclick="positionView()">이동</button>
+								<button class="viewDetailButton" th:onclick="|onePositionView({x: ${resultData.x}, y: ${resultData.y}})|">이동</button>
 							</div>
 							<div style="display: inline-block; float: right;">
 								<button class="viewDetailButton" id="jijukNewWindowBtn">크게보기</button>
@@ -96,8 +96,8 @@
 								<ul class="contents">
 									<li class="content01 content"><input type="hidden"
 										name="manage_no" id="manage_no"
-										th:value="${resultData.jm_jisang_no}" /> <input type="hidden"
-										name="pnu" id="pnu" th:value="${resultData.jm_pnu}" />
+										th:value="${resultData.jm_jisang_no}" />
+										<input type="hidden" name="pnu" id="pnu" th:value="${resultData.jm_pnu}" />
 										[[${resultData.jm_jisang_no}]]</li>
 									<li class="content02 content">[[${resultData.jm_jisa}]]</li>
 									<li class="content03 content">
