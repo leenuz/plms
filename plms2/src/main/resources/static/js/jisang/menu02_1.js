@@ -328,9 +328,7 @@ function loadDataTable(params) {
 			}
 		},
 		initComplete: function() {
-
 			console.log(this.api().data().length);
-
 		},
 		/*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 //	console.log(aData);
@@ -373,6 +371,7 @@ return nRow;
 				targets: [12]
 				, width: "100px"
 				, render: function(data, type, row, meta) {
+					console.log("x:", row.x, "y:", row.y);
 					return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}, //지도보기
@@ -410,6 +409,8 @@ return nRow;
 	    const x = $(this).data('x');
 	    const y = $(this).data('y');
 	    
+			console.log("x, y:", x, y);
+			
 	    // 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
 	    if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined') {
 	        // 좌표가 있을 때는 좌표를 전달

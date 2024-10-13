@@ -282,7 +282,7 @@ function loadDataTable(params) {
 	console.log(params);
 
 	//var json=JSON.stringify(params);
-	
+
 	//지사정보
 	let jisaCheck = $("#loginJisa").val();
 
@@ -364,9 +364,7 @@ function loadDataTable(params) {
 			}
 		},
 		initComplete: function() {
-
 			console.log(this.api().data().length);
-
 		},
 		/*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 //	console.log(aData);
@@ -435,10 +433,10 @@ function loadDataTable(params) {
 			{ targets: [14], width: "150px" }, // 문서보기
 		],
 		headerCallback: function(thead, data, start, end, display) { //순번 헤더에 스타일 적용
-            $(thead).find('th').eq(1).css('background-color', '#f7f9fc'); // 스타일 추가
-            $(thead).find('th').eq(1).css('border-top', '1px solid #cddbf0'); // 스타일 추가
-            $(thead).find('th').eq(1).css('border-right', '1px solid #cddbf0'); // 스타일 추가
-        }
+			$(thead).find('th').eq(1).css('background-color', '#f7f9fc'); // 스타일 추가
+			$(thead).find('th').eq(1).css('border-top', '1px solid #cddbf0'); // 스타일 추가
+			$(thead).find('th').eq(1).css('border-right', '1px solid #cddbf0'); // 스타일 추가
+		}
 	});
 
 	table.on('click', 'tr', function() {
@@ -453,24 +451,24 @@ function loadDataTable(params) {
 				const buttonClass = event.target.className;
 
 				var clickData = {
-                    idx: data.idx
-                };
-                $.ajax({
-                  url: "/land/jisang/getJisangCancelListData",
-                  type: "POST",
-                  data: JSON.stringify(clickData),
-               })
-               .done(function (fragment) {
-               console.log("##################");
-               console.log(fragment);
-                //runScriptsInElement(landRightSearchResultPop); // 삽입된 html내 스크립트 실행 함수 호출
-                //console.log($("#searchResultPopDiv").html());
-                $(".popContents li").remove();
-                  $('#searchResultsPopup').replaceWith(fragment);
-                  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
-                       $(popupOpen).addClass("open");
-                       popupOpen.classList.add("active");
-                });
+					idx: data.idx
+				};
+				$.ajax({
+					url: "/land/jisang/getJisangCancelListData",
+					type: "POST",
+					data: JSON.stringify(clickData),
+				})
+					.done(function(fragment) {
+						console.log("##################");
+						console.log(fragment);
+						//runScriptsInElement(landRightSearchResultPop); // 삽입된 html내 스크립트 실행 함수 호출
+						//console.log($("#searchResultPopDiv").html());
+						$(".popContents li").remove();
+						$('#searchResultsPopup').replaceWith(fragment);
+						const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+						$(popupOpen).addClass("open");
+						popupOpen.classList.add("active");
+					});
 			} else if (target.closest('td').index() === 13) {
 				//지도보기 클릭
 				event.stopPropagation(); // 버튼 클릭 시에는 동작하지 않도록 이벤트 전파 차단
@@ -484,7 +482,7 @@ function loadDataTable(params) {
 			window.location = url;
 		}
 	});
-	
+
 	// 위치보기 버튼 클릭 이벤트 처리
 	$('#userTable').on('click', '.viewDetailButton', function(event) {
 		event.stopPropagation(); // 이벤트 전파 차단

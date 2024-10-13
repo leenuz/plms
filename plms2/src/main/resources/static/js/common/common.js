@@ -367,7 +367,7 @@ function onePositionView(obj) {
 	console.log('1개 위치보기');
 	console.log(obj);
 	
-	if(typeof(obj) == 'undefined') {
+	if(typeof(obj) == 'undefined' || obj.x == null || obj.y == null) {
 		alert('위치 정보가 없습니다.');
 		return false;
 	}

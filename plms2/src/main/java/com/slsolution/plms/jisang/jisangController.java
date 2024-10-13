@@ -3985,7 +3985,6 @@ log.info("data:"+data.get(0));
 		ArrayList<HashMap> list = mainService.selectQuery("jisangSQL.selectJisangPermitList",params);
 		log.info("list:"+list);
 
-
 		HashMap<String,Object> resultmap=new HashMap();
 		resultmap.put("draw",draw);
 		resultmap.put("recordsTotal",total);

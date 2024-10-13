@@ -274,7 +274,6 @@ function loadDataTable(params) {
 				d.toji_type = params.toji_type;
 				d.toji_plan_type = params.toji_plan_type;
 				d.right_overlap = params.OverlapCheck01;
-
 				d.souja = params.souja;
 				d.jasan_no = params.jasan_no;
 				d.dosiplan = params.dosiplan;
