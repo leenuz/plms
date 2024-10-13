@@ -102,6 +102,17 @@ public class issueController {
 		mav.setViewName("content/issue/complaintManage");
 		return mav;
 	}
+	
+	// 컨트롤러
+	
+	//지상권사용승락 주소 검색
+	@PostMapping(path = "/test1")
+	public ModelAndView getPermitJisangSelect1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+	    log.info("test1 컨트롤러 동작");
+	    ModelAndView mav = new ModelAndView();
+	    mav.setViewName("content/issue/complaintManage :: #complainRespondContentBoxs");
+	    return mav;
+	}
 
 	@PostMapping(path = "/getBunhalJIjukSelect")
 	@ResponseBody // 데이터를 JSON으로 반환
