@@ -1939,10 +1939,130 @@ SELECT TTT.TYPE,
 				sum(add_merge_cnt),
 				sum(add_all_cnt),
 				sum(bunhal_dif)
-			from fin_1;
+			from fin_1
+	</select>
+
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 > 변동사유 > 메인 > 상세 > 감소 조회 -->
+	<select id="selectFieldInDeStatusBoardChangeListDetailDown" parameterType="HashMap" resultType="HashMap">
+		with
+			all_tb as (
+				select desc1,desc1_num 
+				from static_deadline_info group by desc1,desc1_num),
+			ref_tb as (select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null), --기준년월
+			tg_tb as (select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and desc1 is not null), --비교년월
+			del_tb as (
+				select 
+				a.jisang_no,a.desc1,a.juso,a.jibun, a.jisang_status, b.jisang_status as jisang_status_new,b.juso as juso_new
+				from	
+				ref_tb a
+				left join
+				tg_tb b
+				on
+				a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+				where 
+				1=1
+				and a.jisang_status = '지상권'
+				and b.juso is null
+			)
+			,del_tb_fin as (
+				select 
+				*
+				from (
+				select
+					a.*,
+					case
+						when b.jm_cancle_yn = 'Y' then '해지'
+						when b.jm_bunhal_yn = 'Y' then '분할'
+						when c.jm_jisang_no is not null then '합필'
+						when a.jibun = d.jibun then '명칭변경'
+						else '권리전환'
+					end as gubun_del
+				from 
+					del_tb a
+				left join
+					jisang_master b
+				on
+					a.jisang_no =	b.jm_jisang_no 
+				left join 
+					jisang_merge c
+				on
+					a.jisang_no = c.jm_jisang_no 
+				left join 
+					tg_tb d
+				on
+					a.jisang_no = d.jisang_no
+				) t1
+				where 
+				gubun_del <![CDATA[<>]]> '명칭변경'
+			)
+		select
+			desc1, juso, jisang_status
+		from
+			del_tb_fin
+		where
+			1=1
+			and desc1 = #{JISA} -- 지사명칭 / " " ( 제거시 전체(=계) )
+			and gubun_del = #{STATUS};  --분할/해지/합필/권리전환
+
 	</select>
 
 
+	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 > 변동사유 > 메인 > 상세 > 증가 조회 -->
+	<select id="selectFieldInDeStatusBoardChangeListDetailUp" parameterType="HashMap" resultType="HashMap">
+		with
+			all_tb as (
+				select desc1,desc1_num 
+				from static_deadline_info group by desc1,desc1_num),
+			ref_tb as (select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null), --기준년월
+			tg_tb as (select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and desc1 is not null), --비교년월
+			add_tb as (
+				select 
+				a.jisang_no,a.desc1,a.juso, a.jisang_status,a.jibun, b.jisang_status as jisang_status_new,b.juso as juso_new
+				from	
+				tg_tb a
+				left join
+				ref_tb b
+				on
+				a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+				where 
+				1=1
+				and a.jisang_status = '지상권'
+				and b.juso is null
+			)
+			,add_tb_fin as (
+			select 
+				*
+			from
+				(select
+				a.*,
+				case 
+					when b.jm_bunhal_org_no <![CDATA[<>]]> '' and b.jm_bunhal_org_no is not null then '분할'
+					when a.jibun = c.jibun then '명칭변경'
+					when a.jibun <![CDATA[<>]]> c.jibun then '권리전환'
+					else '사유지'
+				end as gubun_add
+				from 
+				add_tb a
+				left join
+				jisang_master b
+				on
+				a.jisang_no = b.jm_jisang_no
+				left join 
+				ref_tb c
+				on
+				a.jisang_no = c.jisang_no
+				) t1
+			where gubun_add <![CDATA[<>]]> '명칭변경'
+			)
+		select
+			desc1, juso, jisang_status
+		from
+			add_tb_fin
+		where
+			1=1
+			and desc1 = #{JISA} -- 지사명칭 / " " ( 제거시 전체(=계) )
+			and gubun_add = #{STATUS};  --분할 / 사유지 / 권리전환 
+	</select>
 	
 		
 		
