@@ -591,7 +591,7 @@ function showPopup2(depth1_code, depth2_code, depth3_code, depth1_name, depth2_n
         contentType: 'html/text; charset=utf-8',
         success: function (response) {
           console.log(response);
-          $('#issueStatusComplaintPopupWrapper').html(response);
+          $('#issueStatusParcelPopupWrapper').html(response);
         },
         error: function (error) {
             console.log(error);
