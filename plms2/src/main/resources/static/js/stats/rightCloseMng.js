@@ -1,3 +1,16 @@
+var table;
+$(document).ready(function() {
+	
+	/*$('#jisa').niceSelect();*/
+	//testAjax();
+	//init_Table();
+	var params={"SAVE_YEAR":"2024"}
+	loadDataTable(params);
+});
+
+
+
+
 // 커스텀 selectbox
 
 const createCustomLiRightCloseMng = () => {
@@ -113,10 +126,10 @@ const findYear = () => {
 
         if (z == 0) {
             yearOptuion.textContent = '전체';
-            yearOptuion.value = '전체';
+            yearOptuion.value = '';
         } else {            
             yearOptuion.textContent = yearBox[5-z]+'년';
-            yearOptuion.value = yearBox[5-z]+'년';
+            yearOptuion.value = yearBox[5-z];
         }
 
         yearboxSelectBox.appendChild(yearOptuion);
@@ -136,10 +149,10 @@ const findMonth = () => {
 
         if (y == 0) {
             monthOption.textContent = '전체';
-            monthOption.value = '전체';
+            monthOption.value = '';
         } else {
             monthOption.textContent = y +'월' ;
-            monthOption.value = y+'월' ;
+            monthOption.value = y ;
         }
 
         monthSelectBox.appendChild(monthOption);
@@ -196,3 +209,212 @@ const rightCloseMngOffPopEvet = () => {
 }
 
 rightCloseMngOffPopEvet();
+
+
+
+
+
+$(document).on("click","#deadlineBtn",function(){
+	
+	var year=$("#rightCloseMngSelectBox01_1").val();
+	var month=$("#rightCloseMngSelectBox01_2").val();
+	
+	var params={"SAVE_YEAR":year,"SAVE_QUARTER":month}
+	console.log(params);
+	//loadDataTable(params);
+	//임시 저장 Go
+		url = "/statics/deadlineProcess";
+		
+		$.ajax({
+
+			url: url,
+			type: 'POST',
+			contentType: "application/json",
+			data: JSON.stringify(params),
+
+			dataType: "json",
+			beforeSend: function(request) {
+				console.log("beforesend ........................");
+				loadingShow();
+			},
+			success: function(response) {
+				loadingHide();
+				console.log(response);
+				if (response.success = "Y") {
+					console.log("response.success Y");
+					//console.log("response.resultData length:" + response.resultData.length);
+					$("#save_status").val("TSAVE");
+					alert("정상적으로 등록 되었습니다.");
+					$("#popup_bg").show();
+					$("#popup").show(500);
+					//$("#addrPopupLayer tbody td").remove();
+					for(var i=0;i<response.resultData.length;i++){
+						$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+					}
+				}
+				else {
+					console.log("response.success N");
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
+				return false;
+			}
+
+		});
+
+})
+
+
+
+
+
+
+$(document).on("click","#searchBtn",function(){
+	
+	var year=$("#rightCloseMngSelectBox01_1").val();
+	var month=$("#rightCloseMngSelectBox01_2").val();
+	
+	var params={"SAVE_YEAR":year,"SAVE_QUARTER":month}
+	console.log(params);
+	loadDataTable(params);
+})
+
+
+
+
+
+
+function loadDataTable(params) {
+	console.log("-----start loadDataTable----------");
+	console.log(params);
+
+	//var json=JSON.stringify(params);
+	
+	//지사정보
+	let jisaCheck = $("#loginJisa").val();
+
+	table = $('#userTable').DataTable({
+		/*fixedColumns: {
+			start: 3,
+		},*/
+		scrollCollapse: true,
+		scrollX: true,
+		scrollY: 600,
+		paging: true,
+		"oLanguage": { "sLengthMenu": "_MENU_" },
+		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
+		dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
+		buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
+		pageLength: 20,
+		bPaginate: true,
+		bLengthChange: true,
+		bInfo: false,
+		lengthMenu: [[10, 20, 50, -1], ["10건", "20건", "50건", "All"]],
+		bAutoWidth: false,
+		processing: true,
+		ordering: true,
+		bServerSide: true,
+		searching: false,
+		destroy: true,
+		order: [[1, 'desc']],
+		rowReorder: {
+			dataSrc: 'b_seq'
+		},
+		//	sAjaxSources:"/land/songyu/menu01DataTableList",
+		//	sServerMethod:"POST",
+		ajax: {
+			url: "/statics/selectStatisticsDeadlineListTableList",
+			type: "POST",
+			datatype: "json",
+			data: function(d) {
+				//d=params;
+				d.jisa = ljsIsNull(jisaCheck) ? ljsIsNull(params.jisa) ? '' : params.jisa : jisaCheck;
+				d.SAVE_YEAR=params.SAVE_YEAR;
+				d.SAVE_QUARTER=params.SAVE_QUARTER;
+				
+				console.log(params);
+				console.log("-----------d-----------");
+				console.log(d);
+			},
+			dataSrc: function(json) {
+				console.log("-------------json---------------");
+				console.log(json);
+				//$("#dataTableTotalCount").html(json.recordsTotal.toLocaleString());
+				//$("div.dt-title").html('<div class="dataTitles"><h5>총 검색 건 수</h5></div>');
+				return json.data;
+			}
+		},
+		initComplete: function() {
+
+			console.log(this.api().data().length);
+
+		},
+		/*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+//	console.log(aData);
+	$('td:eq(0)', nRow).html(iDisplayIndexFull +1);
+return nRow;
+},*/
+
+		columns: [
+			{ data: "save_year", "orderable": false },//0
+			{ data: "save_quarter", "defaultContent": "" },
+			{ data: "save_date"},
+			{ data: "sayuji_y_y", "defaultContent": "" },
+			{ data: "sayuji_y_n", "defaultContent": "" },
+			{ data: "sayuji_n", "defaultContent": "" },//5
+			{ data: "sayuji_total", "defaultContent": "" },
+			{ data: "gukyuji_j", "defaultContent": "" },
+			{ data: "gukyuji_y", "defaultContent": "" },
+			{ data: "gukyuji_n", "defaultContent": "" },
+			{ data: "gukyuji_total", "defaultContent": "" },//10
+			
+		],
+		columnDefs: [
+
+			{ "className": "dt-head-center", "targets": "_all" },
+			{ className: 'dt-center', "targets": "_all" },
+			{ targets: [0], width: "50px" },
+			{ targets: [1], width: "30px" },
+			{ targets: [2], width: "50px" }, //주소
+			{ targets: [3], width: "50px" },
+			{ targets: [4], width: "50px" },
+			{ targets: [5], width: "50px" }, //소유자
+			{ targets: [6], width: "50px" },
+			{ targets: [7], width: "50px" },
+			{ targets: [8], width: "50px" },
+			{ targets: [9], width: "100px" }, //등기여부
+			{ targets: [10], width: "100px" }, //등기일
+		
+			{
+				targets: [11]
+				, width: "100px"
+				, render: function(data, type, row, meta) {
+					return ` <button class="downloadBtn">다운로드</button>`;
+				}
+			}, //지도보기
+		]
+	});
+
+	}
+	/*table.on('click', 'tr', function() {
+		var target = $(event.target);
+
+		var isButtonCell = target.closest('td').index() === 12;
+
+		if (isButtonCell) {
+			event.stopPropagation(); // 버튼 클릭 시에는 동작하지 않도록 이벤트 전파 차단
+			return;
+		} else {
+			// 다른 열을 클릭했을 때만 상세 페이지로 이동
+			console.log("--------------tr click---------------------");
+
+			var data = table.row(this).data();
+			console.log(data);
+			console.log(data.idx);
+
+			var url = "/land/jisang/easementDetails?idx=" + data.idx;
+			window.location = url;
+		}
+
+	});*/

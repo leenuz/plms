@@ -1,0 +1,175 @@
+
+  <link rel="stylesheet" href="/assets/css/popup/deadline_Popup.css" />
+    <div id="deadline_Popup" class="deadline_Popup">
+      <div class="popupWrap">
+        <h2>
+          <p>마감 처리</p>
+          <span class="topCloseBtn"></span>
+        </h2>
+        <section class="deadline_Popup_sec1">
+          <ul>
+            <li>
+              <h3 class="deadline_Popup_top">기준 년도</h3>
+            </li>
+            <li class="popupCont">
+              <div class="popSelectWrap">
+                <div class="hiddenSelectBox">
+                  <select hidden>
+                    <option value="선택">선택</option>
+                    <option value="2024년">2024년</option>
+                    <option value="2023년">2023년</option>
+                    <option value="2022년">2022년</option>
+                    <option value="2021년">2021년</option>
+                  </select>
+                </div>
+                <div class="PopupCustomSelectBox">
+                  <button class="PopupCustomSelectView">선택</button>
+
+                  <ul class="PopupCustomSelectBtns"></ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <ul>
+            <li class="deadline_Popup_title">
+              <h3>기준 월</h3>
+            </li>
+            <li class="popupCont">
+              <div class="popSelectWrap">
+                <div class="hiddenSelectBox">
+                  <select hidden>
+                    <option value="선택">선택</option>
+                    <option value="1월">1월</option>
+                    <option value="2월">2월</option>
+                    <option value="3월">3월</option>
+                    <option value="4월">4월</option>
+                    <option value="5월">5월</option>
+                    <option value="6월">6월</option>
+                    <option value="7월">7월</option>
+                    <option value="8월">8월</option>
+                    <option value="9월">9월</option>
+                    <option value="10월">10월</option>
+                    <option value="11월">11월</option>
+                    <option value="12월">12월</option>
+                  </select>
+                </div>
+                <div class="PopupCustomSelectBox">
+                  <button class="PopupCustomSelectView">선택</button>
+
+                  <ul class="PopupCustomSelectBtns"></ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <h3 class="deadline_Popup_bot">마감처리 일자</h3>
+            </li>
+            <li class="popup_calender">
+              <div class="complaint_calender_wrap">
+                <input
+                  type="date"
+                  data-placeholder="24/08/14"
+                  required
+                  aria-required="true"
+                />
+              </div>
+            </li>
+          </ul>
+        </section>
+        <div class="dead_btns_wrap">
+          <button class="deadbtn finalBtn">마감</button>
+          <button class="backbtn finalBtn">닫기</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 팝업 select
+
+        const createPopCustomLicreatePopupAppResult = () => {
+          const popSelectWrapItems = document.querySelectorAll('.popSelectWrap');
+
+          popSelectWrapItems.forEach(contentItem => {
+            const nowIssueSelectBox = contentItem.querySelector('select');
+            if (!nowIssueSelectBox) return;
+
+            const popCustomSelectBox = contentItem.querySelector('.PopupCustomSelectBox');
+            const popCustomSelectBtns = popCustomSelectBox.querySelector('.PopupCustomSelectBtns');
+
+            for (let i = 0; i < nowIssueSelectBox.length; i++) {
+              const optionValue = nowIssueSelectBox.options[i].value;
+              const li = document.createElement('li');
+              const button = document.createElement('button');
+              button.classList.add('PopupMoreSelectBtn');
+              button.type = 'button';
+              button.textContent = optionValue;
+              li.appendChild(button);
+              popCustomSelectBtns.appendChild(li);
+            }
+          });
+        }
+        createPopCustomLicreatePopupAppResult();
+
+        const popCustomSelectView = document.querySelectorAll('.PopupCustomSelectView');
+
+        popCustomSelectView.forEach((btn) => {
+          btn.addEventListener('click', function () {
+            btn.classList.toggle('active')
+            if (btn.nextElementSibling) {
+              btn.nextElementSibling.classList.toggle('active');
+
+            }
+          });
+        });
+
+        const PopupMoreSelectBtn = document.querySelectorAll('.PopupMoreSelectBtn')
+
+        PopupMoreSelectBtn.forEach((moreBtn) => {
+          moreBtn.addEventListener('click', function () {
+            var moreBtnText = moreBtn.innerText;
+            console.log(moreBtnText);
+            const parentMoreBtn = moreBtn.closest('.PopupCustomSelectBtns')
+            const editViewBtn = parentMoreBtn.previousElementSibling;
+
+            while (editViewBtn.firstChild) {
+              editViewBtn.removeChild(editViewBtn.firstChild);
+            }
+
+            const textNode = document.createTextNode(moreBtnText);
+            editViewBtn.appendChild(textNode);
+
+
+            editViewBtn.classList.remove('active')
+            parentMoreBtn.classList.remove('active')
+
+            const nearByContent = moreBtn.closest('.popSelectWrap');
+            const nearBySelectBox = nearByContent.querySelector('select');
+            nearBySelectBox.value = moreBtn.textContent;
+            console.log(`Selected value: ${nearBySelectBox.value}`);
+          })
+        })
+
+        // 저장, 닫기 버튼 click시 팝업 사라지게
+
+        const deadlinePopup = document.getElementById('deadline_Popup');
+        const PopupFinalBtns = deadlinePopup.querySelectorAll('.popupWrap .finalBtn');
+
+
+        
+        PopupFinalBtns.forEach((button) => {
+          button.addEventListener('click', function () {
+            deadlinePopup.classList.remove('active');
+          })
+        })
+
+        // x 버튼 click시 팝업 사라지게
+
+        const topCloseBtn = deadlinePopup.querySelectorAll('.topCloseBtn');
+
+        topCloseBtn.forEach((topClosebutton) => {
+          topClosebutton.addEventListener('click', function () {
+            deadlinePopup.classList.remove('active');
+          })
+        })
+    </script>

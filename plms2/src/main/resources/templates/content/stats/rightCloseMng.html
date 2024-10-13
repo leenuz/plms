@@ -5,8 +5,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/css/common.css}" rel="stylesheet" />
-    <link rel="stylesheet" href="/css/stats/rightCloseMng.css">
+    <link rel="stylesheet" th:href="@{/css/stats/rightCloseMng.css}">
     <title>권리확보현황 마감관리</title>
+    <style>
+			div.dt-top-container {
+				display: grid;
+				grid-template-columns: auto auto auto;
+			}
+			div.dt-center-in-div {
+			  margin: 0 auto;
+			      float: right;
+			    margin-right: 30px;
+			}
+			div.dt-center-in-div>div{
+			display:inline;
+			}
+			div.dt-filter-spacer {
+			  margin: 10px 0;
+			  border:1px solid red;
+			}
+			.dt-title{
+			text-align:center;
+			width:180px;
+			float:left;
+			}
+			.dt-buttons{
+			display:inline-block;
+			width:180px;
+			}
+			.dt-length{
+			display:inline-block;
+			}
+			.dt-button{
+			color:white;
+			background-color:#4e5871;
+			font-size:15px;
+			font-weight:600;
+			border-radius:10px;
+			background-image:url(/assets/media/menu01/download.png);
+			background-size:11px;
+			background-repeat:no-repeat;
+			background-position:123px center;
+			/*text-align:left;*/
+			margin-right:10px;
+			width:159px;
+			height:38px;
+			}			
+			.dt-paging {
+			text-align: center;
+			}			
+			.dt-paging-button {
+			  box-sizing: border-box;
+			  display: inline-block;
+			  min-width: 1.5em;
+			  padding: 0.5em 1em;
+			  margin-left: 2px;
+			  text-align: center;
+			  text-decoration: none !important;
+			  cursor: pointer;
+			  border: 1px solid transparent;
+			  border-radius: 2px;
+			  background: transparent;
+			  color: #007bff !important;
+			  font-size: 15px;
+			  font-weight: 600;
+			}			
+			.bottom{
+			text-align:center;
+			}
+			.top{
+			text-align:right;
+			margin:10px;
+			}
+		</style>
 </head>
 
 <th:block layout:fragment="content">
@@ -62,8 +133,8 @@
                             </div>
                         </div>
                         <div class="privateUseSectionBtnBoxs">
-                            <button class="offBtn">마감</button>
-                            <button class="searchBtn">조회하기</button>
+                            <button class="offBtn" id="openDeadlinePopup">마감</button>
+                            <button class="searchBtn" id="searchBtn">조회하기</button>
                         </div>
                     </div>
                 </section>
@@ -75,8 +146,47 @@
                         <h5>총 검색 건 수<span>31</span>건</h5>
                     </div>
 
-
-                    <div class="dataContWrap">
+						
+						
+						
+					 <div class="dataContWrap">
+				<table id="userTable" class="cell-border nowrap" style="width:100%;" >
+				     <thead>
+        <tr>
+            <th rowspan="3">기준년도</th>
+            <th rowspan="3">기준월</th>
+            <th rowspan="3">마감처리일자</th>
+            <th colspan="4">사유지</th>
+            <th colspan="4">국유지</th>
+            <th rowspan="3">엑셀 다운로드</th>
+        </tr>
+        <tr>
+            <th colspan="2">지상권 설정</th>
+            <th rowspan="2">지상권 미설정</th>
+            <th rowspan="2">계</th>
+            <th rowspan="2">지상권</th>
+            <th rowspan="2">전용</th>
+            <th rowspan="2">미전용</th>
+            <th rowspan="2">계</th>
+        </tr>
+        <tr>
+            <th>등기</th>
+            <th>미등기</th>
+        </tr>
+    </thead>
+				    <!-- tbody 태그 필요 없다. -->
+				</table>
+			  </div>	
+						
+						
+						
+						
+						
+						
+						
+						
+						
+                    <!-- <div class="dataContWrap">
                         <ul class="titles">
                             <li class="title verti3">기준년도</li>
                             <li class="title verti3">기준월</li>
@@ -816,7 +926,7 @@
                                 <button class="downloadBtn">다운로드</button>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </main>
