@@ -363,7 +363,7 @@
 									<li class="content06 content"><span
 										th:text="${val.jm_set_money}"></span> <!-- 설정금액 --></li>
 									<li class="content06 content">
-										<button class="viewDetailButton" th:onclick="onePositionView()">위치보기</button> <!-- 위치보기 -->
+										<button class="viewDetailButton" th:onclick="|onePositionView({x: ${val.x}, y: ${val.y}})|">위치보기</button>
 									</li>
 								</ul>
 							</div>

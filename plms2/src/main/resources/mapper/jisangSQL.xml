@@ -3142,8 +3142,11 @@ VALUES (
 	</select>
 	
 	<select id="selectJisangRowDetail_Merge" resultType="HashMap" parameterType="HashMap">
-		SELECT *
+		SELECT *,
+			JKM.x AS x,
+			JKM.y AS y
 		FROM JISANG_MERGE
+		LEFT JOIN JIJUK_2024 JKM ON TRIM(JISANG_MERGE.jm_pnu) = JKM.pnu
 		WHERE jm_REP_JISANG_NO = #{JISANG_NO}
 		ORDER BY jm_JISANG_NO ASC
 	</select>
