@@ -20,6 +20,7 @@
                 <h1>이슈 및 민원현황 통계</h1>
             </div>
             <!-- 상단부분 -->
+            <form id="queryForm" onSubmit="return false;">
             <section class="privateUseSectionBoxs">
                 <div class="privateUseSectionCont">
                     <div class="privateUseSectionContDevide selectSection">
@@ -31,7 +32,7 @@
                                 </p>
                                 <div class="selectContentArea">
                                     <div class="hiddenSelectBox">
-                                        <select id="issueStatusSelectBox01_1" hidden>
+                                        <select name="permit" id="issueStatusSelectBox01_1" hidden>
                                             <option value="전체">전체</option>
                                             <option value="전체1">지상권설정</option>
                                             <option value="전체2">지상권미설정</option>
@@ -52,7 +53,7 @@
                                 </p>
                                 <div class="selectContentArea">
                                     <div class="hiddenSelectBox">
-                                        <select id="issueStatusSelectBox01_2" hidden>
+                                        <select name="contract" id="issueStatusSelectBox01_2" hidden>
                                             <option value="전체">전체</option>
                                             <option value="전체1">계약 체결/허가증 보유</option>
                                             <option value="전체2">계약 미체결/허가증 미보유</option>
@@ -72,11 +73,11 @@
 
                                 <div class="dateInputBox">
                                     <div class="dateInputWrap">
-                                        <input type="date" data-placeholder="24/01/01" required aria-required="true" />
+                                        <input type="date" name="date1" data-placeholder="24/01/01" />
                                     </div>
                                     <span class="dateBar"></span>
                                     <div class="dateInputWrap">
-                                        <input type="date" data-placeholder="24/06/26" required aria-required="true" />
+                                        <input type="date" name="date2" data-placeholder="24/06/26" />
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +87,7 @@
                                 </p>
                                 <div class="selectContentArea">
                                     <div class="hiddenSelectBox">
-                                        <select id="issueStatusSelectBox01_3" hidden>
+                                        <select name="jisa" id="issueStatusSelectBox01_3" hidden>
                                             <option value="전체">전체</option>
                                             <option value="전체1" th:each="val:${jisaList}" th:value="${val.jm_jisa_name}" th:text="${val.jm_jisa_name}"></option>
                                         </select>
@@ -104,7 +105,7 @@
                                 </p>
                                 <div class="selectContentArea">
                                     <div class="hiddenSelectBox">
-                                        <select id="issueStatusSelectBox01_4" hidden>
+                                        <select name="minwon" id="issueStatusSelectBox01_4" hidden>
                                             <option value="전체">전체</option>
                                             <option value="임시저장">임시저장</option>
                                             <option value="민원발생">민원발생</option>
@@ -131,7 +132,7 @@
                                 <div class="selectWrap">
                                     <div class="selectContentArea">
                                         <div class="hiddenSelectBox">
-                                            <select id="issueStatusSelectBox02_1" hidden>
+                                            <select name="depth1" id="issueStatusSelectBox02_1" hidden>
                                                 <option value="전체">대분류</option>
                                             </select>
                                         </div>
@@ -145,7 +146,7 @@
                                 <div class="selectWrap">
                                     <div class="selectContentArea">
                                         <div class="hiddenSelectBox">
-                                            <select id="issueStatusSelectBox02_2" hidden>
+                                            <select name="depth2" id="issueStatusSelectBox02_2" hidden>
                                                 <option value="">중분류</option>
                                             </select>
                                         </div>
@@ -159,7 +160,7 @@
                                 <div class="selectWrap">
                                     <div class="selectContentArea">
                                         <div class="hiddenSelectBox">
-                                            <select id="issueStatusSelectBox02_3" hidden>
+                                            <select name="depth3" id="issueStatusSelectBox02_3" hidden>
                                                 <option value="">세분류</option>
                                             </select>
                                         </div>
@@ -182,6 +183,7 @@
 
                 </div>
             </section>
+            </form>
 
             <!-- table부분 -->
             <div class="tableArea">

@@ -361,3 +361,184 @@ const loadDepth3Codes = () => {
 	});
 };
 
+$('.issueStatusBtn').click(function () {
+  var allData = $("#queryForm").serialize();
+
+  console.log(allData);
+  
+  $.ajax({
+    url: "/issue/selectIssueCodeList",
+    data: JSON.stringify(allData),
+    async: true,
+    type: "POST",
+    dataType: "json",
+    contentType: 'application/json; charset=utf-8',
+    success: function (response) {
+      console.log(response);
+      if (response.success = "Y") {
+        const resultData = response.result;
+
+        var table1Data = []; // 지상권 설정
+        var table2Data = []; // 지상권 미설정
+        var table3Data = []; // 점용/미점용
+
+        // 데이터 분류
+        for (var i = 0; i < resultData.length; i++) {
+          var codeData = resultData[i];
+          var prefix = codeData.depth1_code.substr(0, 2);
+          if (prefix == 'DY') {
+            table1Data.push(codeData);
+          } else if (prefix == 'DN') {
+            table2Data.push(codeData);
+          } else {
+            table3Data.push(codeData);
+          }
+        }
+
+        if (table1Data.length > 0) {
+          $('#depth1Div').show();
+        } else {
+          $('#depth1Div').hide();
+        }
+        if (table2Data.length > 0) {
+          $('#depth2Div').show();
+        } else {
+          $('#depth2Div').hide();
+        }
+        if (table3Data.length > 0) {
+          $('#depth3Div').show();
+        } else {
+          $('#depth3Div').hide();
+        }
+
+        var tbodyStr = '';
+
+        // ### 지상권 설정 테이블
+        for (var i = 0; i < table1Data.length; i++) {
+          var row = table1Data[i];
+
+          var trStr = '<tr>';
+          if (i == 0) {
+            trStr += '<td rowspan="' + table1Data.length + '"><p>지상권 설정</p></td>';
+            trStr += '<td rowspan="' + table1Data.length + '"><p>계약 체결</p></td>';
+          }
+          trStr += '<td><p>' + row.depth1_name + '</p></td>';
+          trStr += '<td><p>' + row.depth2_name + '</p></td>';
+          trStr += '<td><p><a href="/issue/issueCodeDetail?CODE=' + row.depth3_code + '">' + row.depth3_name + '</a></p></td>';
+          trStr += '</tr>';
+
+          tbodyStr += trStr;
+        }
+        $('#tbody1').html(tbodyStr);
+
+        // ### 지상권 미설정 테이블
+        tbodyStr = '';
+        var registedIdxArr = []; // 계약체결 카운트
+        var depth1IdxArr = [];
+        var depth2IdxArr = [];
+        var rComp = '';
+        var depth1Comp = '';
+        var depth2Comp = '';
+        for (var i = 0; i < table2Data.length; i++) {
+          var row = table2Data[i];
+
+          if (row.registed_yn != rComp) {
+            registedIdxArr.push(i);
+            rComp = row.registed_yn;
+          }
+          if (row.depth1_code != depth1Comp) {
+            depth1IdxArr.push(i);
+            depth1Comp = row.depth1_code;
+          }
+          if (row.depth2_code != depth2Comp) {
+            depth2IdxArr.push(i);
+            depth2Comp = row.depth2_code;
+          }
+        }
+        registedIdxArr.push(table2Data.length);
+        depth1IdxArr.push(table2Data.length);
+        depth2IdxArr.push(table2Data.length);
+
+        for (var i = 0; i < table2Data.length; i++) {
+          var row = table2Data[i];
+
+          var trStr = '<tr>';
+          if (i == 0) {
+            trStr += '<td rowspan="' + table2Data.length + '"><p>지상권 미설정</p></td>';
+          }
+          if (i == registedIdxArr[0]) {
+            registedIdxArr.shift();
+            trStr += '<td rowspan="' + (registedIdxArr[0] - i) + '"><p>계약 ' + ((row.registed_yn != 'Y') ? '미' : '') + '체결</p></td>';
+          }
+          if (i == depth1IdxArr[0]) {
+            depth1IdxArr.shift();
+            trStr += '<td rowspan="' + (depth1IdxArr[0] - i) + '"><p>' + row.depth1_name + '</p></td>';
+          }
+          if (i == depth2IdxArr[0]) {
+            depth2IdxArr.shift();
+            trStr += '<td rowspan="' + (depth2IdxArr[0] - i) + '"><p>' + row.depth2_name + '</p></td>';
+          }
+          trStr += '<td><p><a href="/issue/issueCodeDetail?CODE=' + row.depth3_code + '">' + row.depth3_name + '</a></p></td>';
+          trStr += '</tr>';
+
+          tbodyStr += trStr;
+        }
+        $('#tbody2').html(tbodyStr);
+
+        // ### 점용 테이블
+        tbodyStr = '';
+        registedIdxArr = []; // 허가증 보유여부 카운트
+        depth1IdxArr = [];
+        depth2IdxArr = [];
+        rComp = '';
+        depth1Comp = '';
+        depth2Comp = '';
+        for (var i = 0; i < table3Data.length; i++) {
+          var row = table3Data[i];
+
+          if (row.permitted_yn != rComp) {
+            registedIdxArr.push(i);
+            rComp = row.permitted_yn;
+          }
+          if (row.depth1_code != depth1Comp) {
+            depth1IdxArr.push(i);
+            depth1Comp = row.depth1_code;
+          }
+          if (row.depth2_code != depth2Comp) {
+            depth2IdxArr.push(i);
+            depth2Comp = row.depth2_code;
+          }
+        }
+        registedIdxArr.push(table3Data.length);
+        depth1IdxArr.push(table3Data.length);
+        depth2IdxArr.push(table3Data.length);
+
+        for (var i = 0; i < table3Data.length; i++) {
+          var row = table3Data[i];
+
+          var trStr = '<tr>';
+          if (i == registedIdxArr[0]) {
+            registedIdxArr.shift();
+            trStr += '<td rowspan="' + (registedIdxArr[0] - i) + '"><p>' + ((row.permitted_yn != 'Y') ? '미점용' : '점용') + '</p></td>';
+            trStr += '<td rowspan="' + (registedIdxArr[0] - i) + '"><p>허가증 ' + ((row.permitted_yn != 'Y') ? '미' : '') + '보유</p></td>';
+          }
+          if (i == depth1IdxArr[0]) {
+            depth1IdxArr.shift();
+            trStr += '<td rowspan="' + (depth1IdxArr[0] - i) + '"><p>' + row.depth1_name + '</p></td>';
+          }
+          if (i == depth2IdxArr[0]) {
+            depth2IdxArr.shift();
+            trStr += '<td rowspan="' + (depth2IdxArr[0] - i) + '"><p>' + row.depth2_name + '</p></td>';
+          }
+          trStr += '<td><p><a href="/issue/issueCodeDetail?CODE=' + row.depth3_code + '">' + row.depth3_name + '</a></p></td>';
+          trStr += '</tr>';
+
+          tbodyStr += trStr;
+        }
+        $('#tbody3').html(tbodyStr);
+      }
+    },
+    error: function () {
+    }
+  });
+});
