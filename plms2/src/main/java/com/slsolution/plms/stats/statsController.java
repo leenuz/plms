@@ -89,7 +89,7 @@ public class statsController {
 		return mav;
 	}
 
-	@GetMapping(path="/parcelPopup") //http://localhost:8080/api/get/dbTest
+	@GetMapping(path="/parcelPopup") //http://localhost:8081/stats/parcelPopup?JISA=서울지사&YYYY=2024&MM=9&GUBUN=등기
 	public ModelAndView parcelPopup(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 
 		ParameterParser parser = new ParameterParser(httpRequest);
@@ -107,7 +107,7 @@ public class statsController {
 		return mav;
 	}
 
-	@GetMapping(path="/parcelPopup2") //http://localhost:8080/api/get/dbTest
+	@GetMapping(path="/parcelPopup2") //http://localhost:8081/stats/parcelPopup2?JISA=서울지사&YYYY=2024&MM=9&GUBUN=필지&YYYY_REF=2024&MM_REF=9&YYYY_TG=2024&MM_TG=8&GOVER_OWN=사유지&JISANG_STATUS=지상권
 	public ModelAndView parcelPopup2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 
 		ParameterParser parser = new ParameterParser(httpRequest);
