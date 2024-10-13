@@ -226,9 +226,7 @@
 								<input type="text" readonly class="notWriteInput" th:value="${sosok.dm_soyouja}" />
 							</li>
 							<li class="content middleWidth btnBox">
-								<button class="viewDetailButton lightBlueBtn" th:onclick="onePositionView()">
-									위치보기
-								</button>
+								<button class="viewDetailButton lightBlueBtn" th:onclick="|onePositionView({x: ${sosok.x}, y: ${sosok.y}})|">위치보기</button>
 							</li>
 						</ul>
 						<ul class="contents" style="justify-content:center" th:if="${masterSosokList == null || masterSosokList.isEmpty()}">
@@ -285,9 +283,7 @@
 								<input type="text" readonly class="notWriteInput" th:value="${val.dm_soyouja}" />
 							</li>
 							<li class="content middleWidth btnBox">
-								<button class="viewDetailButton lightBlueBtn" th:onclick="onePositionView()">
-									위치보기
-								</button>
+								<button class="viewDetailButton lightBlueBtn" th:onclick="|onePositionView({x: ${val.x}, y: ${val.y}})|">위치보기</button>
 							</li>
 						</ul>
 					</div>

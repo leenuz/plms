@@ -152,10 +152,11 @@
 	</select>
 	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
-		,concat(dm_sido_nm,' ',dm_sgg_nm,' ',dm_emd_nm,' ',dm_ri_nm,' ',dm_jibun) as address
+			,concat(dm_sido_nm,' ',dm_sgg_nm,' ',dm_emd_nm,' ',dm_ri_nm,' ',dm_jibun) as address
 		FROM dosi_master dm
 		LEFT JOIN dosi_info di ON dm.dm_dosi_no=di.di_dosi_no
 		LEFT JOIN dosi_dept dd ON dm.dm_dosi_no=dd.dd_dosi_no
+		LEFT JOIN JIJUK_2024 JJ ON TRIM(dm.dm_pnu) = JJ.pnu 
 		where 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and dm_dosi_no=#{idx}
@@ -164,10 +165,11 @@
 
 	<select id="selectDaepyoData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
-		,concat(dm_sido_nm,' ',dm_sgg_nm,' ',dm_emd_nm,' ',dm_ri_nm,' ',dm_jibun) as address
+			,concat(dm_sido_nm,' ',dm_sgg_nm,' ',dm_emd_nm,' ',dm_ri_nm,' ',dm_jibun) as address
 		FROM dosi_master dm
 		LEFT JOIN dosi_info di ON dm.dm_dosi_no=di.di_dosi_no
 		LEFT JOIN dosi_dept dd ON dm.dm_dosi_no=dd.dd_dosi_no
+		LEFT JOIN JIJUK_2024 JJ ON TRIM(dm.dm_pnu) = JJ.pnu 
 		where 1=1
 		and dm_master_yn ='Y'
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
@@ -180,12 +182,13 @@
 
 	<select id="selectSosokData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
-		,concat(dm_sido_nm,' ',dm_sgg_nm,' ',dm_emd_nm,' ',dm_ri_nm,' ',dm_jibun) as address
+			,concat(dm_sido_nm,' ',dm_sgg_nm,' ',dm_emd_nm,' ',dm_ri_nm,' ',dm_jibun) as address
 		FROM dosi_master dm
 		LEFT JOIN dosi_info di ON dm.dm_dosi_no=di.di_dosi_no
 		LEFT JOIN dosi_dept dd ON dm.dm_dosi_no=dd.dd_dosi_no
-		where 1=1
---		and dm_master_yn ='N'
+		LEFT JOIN JIJUK_2024 JKM ON TRIM(dm.dm_pnu) = JKM.pnu
+		WHERE 1=1
+--		AND dm_master_yn ='N'
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and dm_dosi_no=#{idx}
 		</if>
