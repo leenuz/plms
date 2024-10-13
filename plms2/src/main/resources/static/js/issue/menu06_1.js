@@ -590,7 +590,7 @@ $(document).on("click", "#newcomplaint_Popup .sangsinBtn", function() {
 
 	$.ajax({
 		url: "/issue/saveMinwonData",
-		data: data,
+		data: JSON.stringify(data),
 		async: true,
 		type: "POST",
 		dataType: "json",

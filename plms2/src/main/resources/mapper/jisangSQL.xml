@@ -2431,48 +2431,51 @@ LEFT JOIN JIJUK_2024 JIJUK_MST ON JM.jm_PNU = JIJUK_MST.PNU
 	</select>
 	
 	<select id="selectJisangBunhalTmpList" parameterType="HashMap" resultType="java.util.HashMap">
-		SELECT
-		JB.jb_JISANG_NO,
-		JB.jb_SIDO_NM,
-		JB.jb_SGG_NM,
-		JB.jb_EMD_NM,
-		JB.jb_RI_NM,
-		JB.jb_JIBUN,
-		JB.jb_JISA,
-		JB.jb_JIJUK_AREA,
-		JB.jb_YONGDO,
-		JB.jb_PYEONIB_AREA,
-		JB.jb_JASAN_NO,
-		
-		JB.jb_CANCLE_YN,
-		JB.jb_GOVER_OWN_YN,
-		JB.jb_BUNHAL_YN,
-		TO_CHAR(JB.jb_BUNHAL_DATE, 'YYYY-MM-DD') as BUNHAL_DATE,
-		JB.jb_BUNHAL_REASON,
-		JB.jb_BUNHAL_ORG_NO,
-		JB.jb_ADDRCODE,
-		JB.jb_PNU,
-		JB.jb_REMAINDER_MONEY,
-		JB.jb_JIMOK_TEXT,
-		JB.jb_DOCKEY,
-		JB.jb_TOJI_TYPE,
-		JB.jb_PIPE_YN,
-		JB.jb_BUNHAL_COMMENT,
-		JB.jb_SET_MONEY,
-		JB.jb_BUNHAL_STATUS,
-		JB.jb_CHUIDEUK_MONEY,
-		JB.jb_GAMMONEY,
-		JB.jb_BOSANG_MONEY,
-		JB.jb_PROFIT_LOSS,
-		JB.jb_DEMISE,
-		PA.pa_STATUS
-		FROM
-		JISANG_BUNHAL JB
-		LEFT JOIN PLMS_APPROVAL PA ON JB.jb_dockey=PA.pa_dockey
-		WHERE
-		JB.jb_BUNHAL_ORG_NO =#{JISANGNO}
-		
-		ORDER BY JB.jb_jisang_no
+		SELECT * FROM (
+		    SELECT
+		        JB.jb_JISANG_NO,
+		        JB.jb_SIDO_NM,
+		        JB.jb_SGG_NM,
+		        JB.jb_EMD_NM,
+		        JB.jb_RI_NM,
+		        JB.jb_JIBUN,
+		        JB.jb_JISA,
+		        JB.jb_JIJUK_AREA,
+		        JB.jb_YONGDO,
+		        JB.jb_PYEONIB_AREA,
+		        JB.jb_JASAN_NO,
+		        JB.jb_CANCLE_YN,
+		        JB.jb_GOVER_OWN_YN,
+		        JB.jb_BUNHAL_YN,
+		        TO_CHAR(JB.jb_BUNHAL_DATE, 'YYYY-MM-DD') as BUNHAL_DATE,
+		        JB.jb_BUNHAL_REASON,
+		        JB.jb_BUNHAL_ORG_NO,
+		        JB.jb_ADDRCODE,
+		        JB.jb_PNU,
+		        JB.jb_REMAINDER_MONEY,
+		        JB.jb_JIMOK_TEXT,
+		        JB.jb_DOCKEY,
+		        JB.jb_TOJI_TYPE,
+		        JB.jb_PIPE_YN,
+		        JB.jb_BUNHAL_COMMENT,
+		        JB.jb_SET_MONEY,
+		        JB.jb_BUNHAL_STATUS,
+		        JB.jb_CHUIDEUK_MONEY,
+		        JB.jb_GAMMONEY,
+		        JB.jb_BOSANG_MONEY,
+		        JB.jb_PROFIT_LOSS,
+		        JB.jb_DEMISE,
+		        PA.pa_STATUS,
+		        ROW_NUMBER() OVER (PARTITION BY JB.jb_JISANG_NO ORDER BY JB.jb_jisang_no) AS rn
+		    FROM
+		        JISANG_BUNHAL JB
+		    LEFT JOIN PLMS_APPROVAL PA ON JB.jb_dockey = PA.pa_dockey
+		    WHERE
+		        JB.jb_BUNHAL_ORG_NO = #{JISANGNO}
+		) AS subquery
+		WHERE rn = 1
+		ORDER BY jb_jisang_no
+
 	</select>
 	
 	<select id="selectJisangDetailSoyu" parameterType="HashMap" resultType="java.util.HashMap">

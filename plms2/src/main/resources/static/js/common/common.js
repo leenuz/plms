@@ -521,5 +521,52 @@ function commonNvl(str, defaultVal) {
     return str;
 }
 
+function dateFormat(targetDate, format) {
+	if (typeof targetDate == 'undefined' || typeof targetDate == 'string' || targetDate == null ) {
+		return '';
+	}
+	var weekName = [ "일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일" ];
+
+	return format.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+		switch ($1) {
+		case "yyyy":
+			return targetDate.getFullYear();
+		case "yy":
+			return (targetDate.getFullYear() % 1000).zf(2);
+		case "MM":
+			return (targetDate.getMonth() + 1).zf(2);
+		case "dd":
+			return targetDate.getDate().zf(2);
+		case "E":
+			return weekName[targetDate.getDay()];
+		case "HH":
+			return targetDate.getHours().zf(2);
+		case "hh":
+			return ((h = targetDate.getHours() % 12) ? h : 12).zf(2);
+		case "mm":
+			return targetDate.getMinutes().zf(2);
+		case "ss":
+			return targetDate.getSeconds().zf(2);
+		case "a/p":
+			return targetDate.getHours() < 12 ? "오전" : "오후";
+		default:
+			return $1;
+		}
+	});
+}
+
+function chageStringToHyphen (targetStr){
+	var hyphenStr = '';
+	if(targetStr =='' || targetStr =='null' || targetStr =='undefined'){
+		return;
+	}
+	if(targetStr.length == 8){
+		hyphenStr = targetStr.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+	} else if(targetStr.length ==6){
+		hyphenStr = targetStr.replace(/(\d{4})(\d{2})/, '$1-$2');
+	}
+	
+	return hyphenStr;
+}
 /***************************************************************************/
 /***************************************************************************/

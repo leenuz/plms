@@ -2257,7 +2257,7 @@ function setting_TD_Data(jisaStr, td_obj, dataList){
 }
 
 //데이터 추가
-function loadData(yyyy_ref, mm_ref, yyyy_tg, mm_tg){
+function loadCurrent_detail(yyyy_ref, mm_ref, yyyy_tg, mm_tg){
     // FormData 객체 생성
   var formData = new FormData();
   // FormData에 데이터 추가 (key-value 형태로 추가)
@@ -2276,10 +2276,10 @@ function loadData(yyyy_ref, mm_ref, yyyy_tg, mm_tg){
 		dataType: "json",
 		beforeSend: function(request) {
 			console.log("beforesend ........................");
-			loadingShow();
+			//loadingShow();
 		},
 		success: function(response) {
-			loadingHide();
+			//loadingHide();
             console.log(response);
             if(response!= null && response.message === 'success'){
                 const dataList = response.dataList;
@@ -2308,7 +2308,7 @@ function loadData(yyyy_ref, mm_ref, yyyy_tg, mm_tg){
             }
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-            loadingHide();
+            //loadingHide();
 			console.log(jqXHR);
 			console.log(jqXHR.readyState);
 			console.log(jqXHR.responseText);

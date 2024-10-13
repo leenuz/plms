@@ -305,7 +305,14 @@ FROM (
 		       C.pa_DOCKEY AS HANDLING_DOCKEY,
 		       PA.pa_URL AS ECHO_URL,
 		       C.pa_URL AS HANDLE_URL,
-		       D.pa_URL AS COMPLE_URL
+		       D.pa_URL AS COMPLE_URL,
+		       A.MINWONIN_TOJIJU_NM,	-- 토지주 명
+		       A.MINWONIN_TOJIJU_BIRTH, -- 토지주 생년월일
+		       A.TOJIJU_RELATION, -- 토지주 관계
+		       A.MINWONIN_PHONE, -- 토지주 연락처
+		       A.FIELD_PRESENCE, -- 현장입회
+		       A.TOJI_HISTORY, -- 토지이력
+		       A.MINWON_REQUIREMENT  -- 요구사항
 		FROM MINWON_MASTER A
 		LEFT JOIN MINWON_HANDLING_TMP B ON A.mm_mw_seq = B.mht_MW_SEQ
 		LEFT JOIN PLMS_APPROVAL PA ON A.mm_DOCKEY = PA.pa_DOCKEY
@@ -501,7 +508,7 @@ ORDER BY A.PNU ASC LIMIT 1
 		) VALUES (
 		        #{MW_SEQ},
 		        #{MW_TITLE},
-		        #{MW_CONTENTS},
+		        #{MINWON_CONTENT},
 		        TO_DATE(#{MW_OCCUR_DATE}, 'yyyy-MM-dd'),
 		        #{JISA},
 		        CURRENT_TIMESTAMP,

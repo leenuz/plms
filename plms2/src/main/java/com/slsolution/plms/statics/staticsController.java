@@ -1320,6 +1320,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		
 		ParameterParser parser = new ParameterParser(request);
 		String JISA = parser.getString("JISA", "");
+		System.out.println("JISA:"+JISA);
 		
 		ArrayList dataList = new ArrayList();
 		HashMap map = new HashMap();
@@ -1385,6 +1386,49 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	//통계 > 권리별 증감현황 > 조회
 	@PostMapping(path="/selectByRightInDeList")
 	public void selectByRightInDeList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String JISA = parser.getString("JISA", "");
+		String STATUS = parser.getString("STATUS", "");
+		int YYYY_REF = parser.getInt("YYYY_REF");
+		int MM_REF = parser.getInt("MM_REF");
+		int YYYY_TG = parser.getInt("YYYY_TG");
+		int MM_TG = parser.getInt("MM_TG");
+		
+	
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			HashMap params = new HashMap();
+			params.put("JISA", JISA);
+			params.put("STATUS", STATUS);
+			params.put("YYYY_REF", YYYY_REF);
+			params.put("MM_REF", MM_REF);
+			params.put("YYYY_TG", YYYY_TG);
+			params.put("MM_TG", MM_TG);
+	
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeList", params);
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+	//통계 > 권리별 증감현황 > 조회 > 엑셀
+	@PostMapping(path="/selectByRightInDeListExcel")
+	public void selectByRightInDeListExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
 		String JISA = parser.getString("JISA", "");
 		String STATUS = parser.getString("STATUS", "");
@@ -1579,6 +1623,46 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	//통계 > 관리필지 증감현황 > 메인 조회
 	@PostMapping(path="/selectFieldInDeList")
 	public void selectFieldInDeList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String YYYY_REF = parser.getString("YYYY_REF", "0");
+		String MM_REF = parser.getString("MM_REF", "0");
+		String YYYY_TG = parser.getString("YYYY_TG", "0");
+		String MM_TG = parser.getString("MM_TG", "0");
+		
+	
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		try {
+	
+			HashMap params = new HashMap();
+			params.put("YYYY_REF", Integer.parseInt(YYYY_REF) ); 	// 기준년
+			params.put("MM_REF", Integer.parseInt(MM_REF));		// 기준월
+			params.put("YYYY_TG", Integer.parseInt(YYYY_TG));		// 비교년
+			params.put("MM_TG", Integer.parseInt(MM_TG));			// 비교월
+	
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeList", params);
+			
+	
+			map.put("message", "success");
+			map.put("dataList", dataList);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+	
+		JSONObject jo = new JSONObject(map);
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+	//통계 > 관리필지 증감현황 > 메인 조회 > 엑셀다운로드
+	@PostMapping(path="/selectFieldInDeListExcel")
+	public void selectFieldInDeListExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
 		String YYYY_REF = parser.getString("YYYY_REF", "0");
 		String MM_REF = parser.getString("MM_REF", "0");
