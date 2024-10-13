@@ -296,7 +296,6 @@ function loadDataTable(params) {
 					d.jibun = params.jibun;
 					*/
 				}
-
 				console.log("saddr:" + d.saddr);
 				console.log(params);
 				console.log("-----------d-----------");
@@ -358,6 +357,7 @@ function loadDataTable(params) {
 				, width: "100px"
 				, render: function(data, type, row, meta) {
 					//쿼리수정이 필요합니다.
+					console.log("x:", row.x, "y:", row.y);
 					return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}, //지도보기

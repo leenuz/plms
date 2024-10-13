@@ -707,7 +707,7 @@ SELECT AA.RN AS no
      , AA.USE_PURPOS_PNU
      , TO_CHAR(AA.GOVER_ST_DATE, 'YYYY-MM-DD') AS GOVER_ST_DATE
      , TO_CHAR(AA.GOVER_ED_DATE, 'YYYY-MM-DD') AS GOVER_ED_DATE
-     ,CONCAT(AA.gover_st_date, ' ~ ', AA.gover_ed_date) AS period
+     , CONCAT(AA.gover_st_date, ' ~ ', AA.gover_ed_date) AS period
      , BB.PAY_MONEY
      , BB.PAY_WAY
      , TO_CHAR(BB.PAY_DATE, 'YYYY-MM-DD')      AS PAY_DATE
@@ -717,7 +717,8 @@ SELECT AA.RN AS no
      , BB.DEPTCD
      ,(SELECT COUNT(*) FROM gover_pnu WHERE gp_gover_no = AA.gover_no) AS pnu_count  <!-- 필지수 계산 -->
      ,AA.SAVE_STATUS
-     
+     ,AA.x AS x
+     ,AA.y AS y
   FROM (SELECT ROW_NUMBER() OVER (ORDER BY GM.gm_GOVER_NO ASC, GP.PNU DESC) AS RN
              , ROW_NUMBER() OVER (ORDER BY GM.gm_GOVER_NO DESC, GP.PNU ASC) AS RNO
              , COUNT(*) OVER ()                                          AS TOTALCNT
@@ -742,9 +743,10 @@ SELECT AA.RN AS no
              , GM.gm_gover_ed_date as GOVER_ED_DATE
              ,CASE 
 		       	WHEN GM.gm_SAVE_STATUS = 'A' THEN 'Y'
-		      ELSE 'N'
-			  END AS SAVE_STATUS
-            
+		      	ELSE 'N'
+			  		END AS SAVE_STATUS
+            , JKM.x AS x
+            , JKM.y AS y
           FROM GOVER_MASTER GM
           LEFT JOIN (SELECT C.GOVER_NO
 					     , C.PNU
@@ -767,7 +769,7 @@ SELECT AA.RN AS no
 					           , gp_jimok_text AS JIMOK_TEXT
 					           , gp_use_purpos AS USE_PURPOS_PNU
 					        FROM GOVER_PNU
-					       WHERE gp_idx IN (SELECT RID
+					       	WHERE gp_idx IN (SELECT RID
 					                         FROM (SELECT gp_idx AS RID
 					                                    , ROW_NUMBER() OVER (PARTITION BY S.gp_GOVER_NO ORDER BY S.gp_REP_FLAG DESC, gp_idx ASC) AS RNK
 					                                 FROM GOVER_PNU S) sub1
@@ -785,8 +787,8 @@ SELECT AA.RN AS no
 					        FROM GOVER_PNU 
 					       GROUP BY gp_GOVER_NO) D
 					  ON C.GOVER_NO = D.GOVER_NO 
-					) GP
-            ON GM.gm_GOVER_NO = GP.GOVER_NO
+					) GP ON GM.gm_GOVER_NO = GP.GOVER_NO
+            LEFT JOIN JIJUK_2024 JKM ON trim(GP.PNU) = JKM.PNU
             
          WHERE 1=1 
 		
