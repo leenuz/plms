@@ -1319,12 +1319,16 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	public void selectByRightInDeListYYYY(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		ParameterParser parser = new ParameterParser(request);
+		String JISA = parser.getString("JISA", "");
 		
 		ArrayList dataList = new ArrayList();
 		HashMap map = new HashMap();
 		try {
 	
-			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListYYYY", null);
+			HashMap params = new HashMap();
+			params.put("JISA", JISA);
+			
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListYYYY", params);
 	
 			map.put("message", "success");
 			map.put("dataList", dataList);
@@ -1347,6 +1351,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	public void selectByRightInDeListYYYYMM(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		ParameterParser parser = new ParameterParser(request);
+		String JISA = parser.getString("JISA", "");
 		String SELECT_YYYY = parser.getString("SELECT_YYYY", "");
 		
 		ArrayList dataList = new ArrayList();
@@ -1354,7 +1359,9 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		try {
 	
 			HashMap params = new HashMap();
+			params.put("JISA", JISA);
 			params.put("SELECT_YYYY", SELECT_YYYY);
+			
 			
 			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListYYYYMM", params);
 	
