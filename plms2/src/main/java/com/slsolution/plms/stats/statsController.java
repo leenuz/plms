@@ -108,7 +108,7 @@ public class statsController {
 		mav.addObject("depth1name", DEPTH1NAME);
 		mav.addObject("depth2name", DEPTH2NAME);
 		mav.addObject("depth3name", DEPTH3NAME);
-		mav.setViewName("content/stats/issuePopup");
+		mav.setViewName("content/stats/issuePopup2");
 		return mav;
 	}
 

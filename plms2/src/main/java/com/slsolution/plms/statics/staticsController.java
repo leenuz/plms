@@ -1261,6 +1261,96 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		response.getWriter().flush();
 	}
 	
+	//통계 > 이슈 및 민원현황 조회 > 잠재여부 관리필지
+	@PostMapping(path="/selectPotentialIssuePnuListByCode")
+	public void selectPotentialIssuePnuListByCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String SEARCH_CODE_1 = parser.getString("SEARCH_CODE_1", "");
+		String SEARCH_CODE_2 = parser.getString("SEARCH_CODE_2", "");
+		String SEARCH_CODE_3 = parser.getString("SEARCH_CODE_3", "");
+		String pageNum = parser.getString("pageNum", ""); // 페이지 번호
+		String pageCnt = parser.getString("pageCnt", ""); // 한 페이지 갯수
+		String JISA = parser.getString("jisa", ""); // 발생지사
+
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		Integer totalcnt = 0;
+		try {
+
+			HashMap params = new HashMap();
+			params.put("CODE1", SEARCH_CODE_1);
+			params.put("CODE2", SEARCH_CODE_2);
+			params.put("CODE3", SEARCH_CODE_3);
+			params.put("PAGE_NUM", Integer.parseInt(pageNum));
+			params.put("PAGE_CNT", Integer.parseInt(pageCnt));
+			params.put("JISA", JISA);
+
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectPotentialIssuePnuListByCode", params);
+			totalcnt = (Integer) mainService.selectCountQuery("staticSQL.selectPotentialIssuePnuListByCodeTotalCnt", params);
+
+			map.put("message", "success");
+			map.put("dataList", dataList);
+			map.put("TOTALCNT", totalcnt);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			map.put("TOTALCNT", 0);
+			e.printStackTrace();
+		}
+
+		JSONObject jo = new JSONObject(map);
+
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
+	//통계 > 이슈 및 민원현황 조회 > 민원발생건수
+	@PostMapping(path="/selectMinwonPnuByCode")
+	public void selectMinwonPnuByCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ParameterParser parser = new ParameterParser(request);
+		String SEARCH_CODE_1 = parser.getString("SEARCH_CODE_1", "");
+		String SEARCH_CODE_2 = parser.getString("SEARCH_CODE_2", "");
+		String SEARCH_CODE_3 = parser.getString("SEARCH_CODE_3", "");
+		String pageNum = parser.getString("pageNum", ""); // 페이지 번호
+		String pageCnt = parser.getString("pageCnt", ""); // 한 페이지 갯수
+
+		ArrayList dataList = new ArrayList();
+		HashMap map = new HashMap();
+		Integer totalcnt = 0;
+		try {
+
+			HashMap params = new HashMap();
+			params.put("CODE1", SEARCH_CODE_1);
+			params.put("CODE2", SEARCH_CODE_2);
+			params.put("CODE3", SEARCH_CODE_3);
+			params.put("PAGE_NUM", pageNum);
+			params.put("PAGE_CNT", pageCnt);
+
+			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectMinwonPnuByCode", params);
+			totalcnt = (Integer) mainService.selectCountQuery("staticSQL.selectMinwonPnuByCodeTotalcnt", params);
+
+			map.put("message", "success");
+			map.put("dataList", dataList);
+			map.put("TOTALCNT", totalcnt);
+		} catch (Exception e) {
+			map.put("message", "처리 중 오류가 발생했습니다.");
+			map.put("TOTALCNT", 0);
+			e.printStackTrace();
+		}
+
+		JSONObject jo = new JSONObject(map);
+
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
+	
 	//통계 > 권리별 증감현황 > 지사
 	@PostMapping(path="/selectByRightInDeListJisa")
 	public void selectByRightInDeListJisa(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -1473,8 +1563,8 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	@PostMapping(path="/selectByRightInDeListDetail")
 	public void selectByRightInDeListDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
-		String YYYY = parser.getString("YYYY", "");
-		String MM = parser.getString("MM", "");
+		int YYYY = parser.getInt("YYYY");
+		int MM = parser.getInt("MM");
 		String JISA = parser.getString("JISA", "");
 		String STATUS = parser.getString("STATUS", "");
 		
@@ -1489,10 +1579,13 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 			params.put("JISA", JISA);
 			params.put("STATUS", STATUS);
 	
+			int dataTotalCnt = (int) mainService.selectCountQuery("staticSQL.selectByRightInDeListDetailCnt", params);
+			
 			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListDetail", params);
 	
 			map.put("message", "success");
 			map.put("dataList", dataList);
+			map.put("dataTotalCnt", dataTotalCnt);
 		} catch (Exception e) {
 			map.put("message", "처리 중 오류가 발생했습니다.");
 			e.printStackTrace();
@@ -1515,10 +1608,10 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		String TYPE = parser.getString("TYPE", "UP"); // 증가 : UP , 감소 : DOWN
 		String JISA = parser.getString("JISA", "");
 		String STATUS = parser.getString("STATUS", "");
-		String YYYY_REF = parser.getString("YYYY_REF", "");
-		String MM_REF = parser.getString("MM_REF", "");
-		String YYYY_TG = parser.getString("YYYY_TG", "");
-		String MM_TG = parser.getString("MM_TG", "");
+		int YYYY_REF = parser.getInt("YYYY_REF");
+		int MM_REF = parser.getInt("MM_REF");
+		int YYYY_TG = parser.getInt("YYYY_TG");
+		int MM_TG = parser.getInt("MM_TG");
 		
 	
 		ArrayList dataList = new ArrayList();

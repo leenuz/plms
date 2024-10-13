@@ -12,12 +12,12 @@
                 <span class="total_blue" id="totalCount">0</span>
                 <span>건</span>
             </p>
-            <button>
-                <p>엑셀 다운로드</p>
-                <figure>
-                    <img src="/assets/media/popup/images/download.png" alt="download" />
-                </figure>
-            </button>
+<!--            <button>-->
+<!--                <p>엑셀 다운로드</p>-->
+<!--                <figure>-->
+<!--                    <img src="/assets/media/popup/images/download.png" alt="download" />-->
+<!--                </figure>-->
+<!--            </button>-->
         </div>
         <section>
             <div class="popupCont">
@@ -121,9 +121,13 @@
         // pagination
         var pagiStr = '';
         var startNo = Math.floor((pageNo - 1) / 5) * 5 + 1;
-        var endNo = startNo + 5;
+        var endNo = startNo + 5 < pageNum + 1 ? startNo + 5 : pageNum + 1;
         for (var i = startNo; i < endNo; i++) {
-            pagiStr += '<p onclick="goPage(' + i + ')">' + i + '</p>';
+            if (i == pageNo) {
+                pagiStr += '<p class="active" onclick="goPage(' + i + ')">' + i + '</p>';
+            } else {
+                pagiStr += '<p onclick="goPage(' + i + ')">' + i + '</p>';
+            }
         }
         $('#pagination').html(pagiStr);
     }

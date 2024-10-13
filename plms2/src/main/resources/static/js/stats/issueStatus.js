@@ -574,7 +574,7 @@ function showPopup(depth1_code, depth2_code, depth3_code, depth1_name, depth2_na
       });
 }
 
-function showPopup2() {
+function showPopup2(depth1_code, depth2_code, depth3_code, depth1_name, depth2_name, depth3_name) {
     var param = '';
     param += 'DEPTH1NAME=' + depth1_name + '&DEPTH2NAME=' + depth2_name + '&DEPTH3NAME=' + depth3_name;
 
