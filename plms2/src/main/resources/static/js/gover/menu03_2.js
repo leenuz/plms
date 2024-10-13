@@ -266,23 +266,23 @@ function loadDataTable(params) {
 			{ data: "gover_length", "defaultContent": "" },
 			{ data: "gover_area", "defaultContent": "" },
 			{ data: "pmt_office", "defaultContent": "" }, //10
-			{ data: "adm_office", "defaultContent": "" },
-			{ data: "pay_date", "defaultContent": "" },
-			{ data: "pay_money", "defaultContent": "" },
+			{ data: "adm_office", "defaultContent": "" }, //11. 관리기관
+			{ data: "pay_date", "defaultContent": "" }, //12. 납부일
+			{ data: "pay_money", "defaultContent": "" }, //13. 납부금액
 			{
 				data: "idx", "defaultContent": "",
 				render: function(data, type, row, meta) { // 지도 위치보기
 					// console.log("x:", row.x, "y:", row.y); // 주석 풀면 로드 되면서 x,y 오는지 확인 가능
-					return `<button class="viewDetailButton" data-x=${row.x} data-y=${row.y}>위치보기</button> `;
+					return `<button class="viewDetailButton" id="mapBtn" data-x=${row.x} data-y=${row.y}>위치보기</button> `;
 				}
-			},
+			}, //14. 지도
 			{
 				// 문서보기로 수정 필요
 				data: "echo_no", "defaultContent": "",
 				render: function(data, type, row, meta) {
-					//return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
+					return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
-			}	 // 15
+			} // 15. ECHO 문서보기
 		],
 		columnDefs: [
 			{ "className": "dt-head-center", "targets": "_all" },
@@ -308,7 +308,7 @@ function loadDataTable(params) {
 
 	table.on('click', 'tr', function(event) {
 		var target = $(event.target);
-		var isButtonCell = target.closest('td').index() === 14;
+		var isButtonCell = target.closest('td').index() === 14 || target.closest('td').index() === 15;
 
 		if (isButtonCell) {
 			event.stopPropagation(); // 버튼 클릭 시에는 동작하지 않도록 이벤트 전파 차단
@@ -324,7 +324,7 @@ function loadDataTable(params) {
 	});
 
 	// 위치보기 버튼 클릭 이벤트 처리
-	$('#userTable').on('click', '.viewDetailButton', function(event) {
+	$('#userTable').on('click', '#mapBtn', function(event) {
 		event.stopPropagation(); // 이벤트 전파 차단
 
 		// 버튼의 data 속성에서 x, y 좌표 가져오기
