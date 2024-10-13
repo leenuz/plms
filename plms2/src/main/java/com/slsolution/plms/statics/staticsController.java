@@ -1473,8 +1473,8 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 	@PostMapping(path="/selectByRightInDeListDetail")
 	public void selectByRightInDeListDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ParameterParser parser = new ParameterParser(request);
-		String YYYY = parser.getString("YYYY", "");
-		String MM = parser.getString("MM", "");
+		int YYYY = parser.getInt("YYYY");
+		int MM = parser.getInt("MM");
 		String JISA = parser.getString("JISA", "");
 		String STATUS = parser.getString("STATUS", "");
 		
@@ -1489,10 +1489,13 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 			params.put("JISA", JISA);
 			params.put("STATUS", STATUS);
 	
+			int dataTotalCnt = (int) mainService.selectCountQuery("staticSQL.selectByRightInDeListDetailCnt", params);
+			
 			dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListDetail", params);
 	
 			map.put("message", "success");
 			map.put("dataList", dataList);
+			map.put("dataTotalCnt", dataTotalCnt);
 		} catch (Exception e) {
 			map.put("message", "처리 중 오류가 발생했습니다.");
 			e.printStackTrace();
@@ -1515,10 +1518,10 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		String TYPE = parser.getString("TYPE", "UP"); // 증가 : UP , 감소 : DOWN
 		String JISA = parser.getString("JISA", "");
 		String STATUS = parser.getString("STATUS", "");
-		String YYYY_REF = parser.getString("YYYY_REF", "");
-		String MM_REF = parser.getString("MM_REF", "");
-		String YYYY_TG = parser.getString("YYYY_TG", "");
-		String MM_TG = parser.getString("MM_TG", "");
+		int YYYY_REF = parser.getInt("YYYY_REF");
+		int MM_REF = parser.getInt("MM_REF");
+		int YYYY_TG = parser.getInt("YYYY_TG");
+		int MM_TG = parser.getInt("MM_TG");
 		
 	
 		ArrayList dataList = new ArrayList();

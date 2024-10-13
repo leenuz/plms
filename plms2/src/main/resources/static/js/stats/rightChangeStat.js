@@ -236,14 +236,14 @@ const pageCountEvetForPotentialIssue = () => {
   };
   pageCountEvetForPotentialIssue();
 
-$(document).on("click",".parcelNumArea",function(){
-
-						  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
-						  	   $(popupOpen).addClass("open");
-						  	   popupOpen.classList.add("active");
-
-				   	   	});
-
+//$(document).on("click",".parcelNumArea",function(){
+//
+//						  const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+//						  	   $(popupOpen).addClass("open");
+//						  	   popupOpen.classList.add("active");
+//
+//				   	   	});
+//
 $(document).on("click",".topCloseBtn",function(){
 
 	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
@@ -259,6 +259,162 @@ $(document).on("click","#popupCloseBtn",function(){
 });
 
 //2024-10-14 소스 수정-----------------------------------------------------------------------------------------------
+//필지 팝업
+function iotPopup(year,month,desc,jisangStatus){
+	
+	//표를 비우기
+	$("#popContentBox").empty();
+	
+	var requestUrl = '/statics/selectByRightInDeListDetail';
+	
+	var params = {
+			"YYYY" : year 			
+			,"MM" : month	
+			,"JISA" : desc		
+			,"STATUS" : jisangStatus		
+			
+	};
+	
+	console.log(params);
+	
+	$.ajax({
+			data : params,
+		    type: 'POST',
+		    url: requestUrl,
+			success : function(response) {
+				resultData = response.dataList;
+
+                $('#totalCount').html(resultData.length);
+                pageNum = Math.floor(resultData.length / 10);
+                if (resultData.length % 10 > 0) {
+                    pageNum += 1;
+                }
+
+                display();			
+				
+				$("#popupNm").text("필지 정보");//검색기준년월
+				$("#popupCnt").text(response.dataTotalCnt);//비교기준년월
+				
+				const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+		  	   $(popupOpen).addClass("open");
+		  	   popupOpen.classList.add("active");
+			},
+			error:function(request,status,error){
+	 			alert("code:"+request.resultCode+"\n"+"message:"+request.resultMessage+"\n"+"error:"+error);
+	 		}	
+		});
+	
+}
+
+//증가 & 감소 팝업
+function upDownPopup(type,yearRef,monthRef,yearTg,monthTg,desc,jisangStatus){
+	//표를 비우기
+	$("#popContentBox").empty();
+	
+	var requestUrl = '/statics/selectByRightInDeListDetailUpDown';
+	
+	var params = {
+			"TYPE" : type 			
+			,"JISA" : desc	
+			,"STATUS" : jisangStatus	
+			,"YYYY_REF" : yearRef		
+			,"MM_REF" : monthRef		
+			,"YYYY_TG" : yearTg		
+			,"MM_TG" : monthTg		
+			
+	};
+	
+	console.log(params);
+	
+	$.ajax({
+			data : params,
+		    type: 'POST',
+		    url: requestUrl,
+			success : function(response) {
+				resultData = response.dataList;
+
+                $('#totalCount').html(resultData.length);
+                pageNum = Math.floor(resultData.length / 10);
+                if (resultData.length % 10 > 0) {
+                    pageNum += 1;
+                }
+
+                display();			
+				
+				$("#popupNm").text("증감 정보");//검색기준년월
+				$("#popupCnt").text(response.dataTotalCnt);//비교기준년월
+				
+				const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
+		  	   $(popupOpen).addClass("open");
+		  	   popupOpen.classList.add("active");
+			},
+			error:function(request,status,error){
+	 			alert("code:"+request.resultCode+"\n"+"message:"+request.resultMessage+"\n"+"error:"+error);
+	 		}	
+		});
+}
+
+var pageNum = 0;
+var pageNo = 1;
+var resultData = [];
+
+//페이징
+function display() {
+        var startIdx = (pageNo - 1) * 10;
+
+        var resultStr = '';
+        for (var i = startIdx; i < startIdx + 10; i++) {
+            if (i > resultData.length - 1) break;
+            var row = resultData[i];
+
+            resultStr += '<ul class="popContents">';
+            resultStr += '<li class="popContent05"><p>'+(i + 1)+'</p></li>';
+            resultStr += '<li class="popContent03"><p>'+row.desc1+'</p></li>';
+            resultStr += '<li class="popContent06"><p>'+row.juso+'</p></li>';
+            resultStr += '<li class="popContent01"><p>'+row.jisang_status+'</p></li>';
+            resultStr += '</ul>';
+        }
+
+        $('#popContentBox').html(resultStr);
+
+        // pagination
+        var pagiStr = '';
+        var startNo = Math.floor((pageNo - 1) / 5) * 5 + 1;
+        var endNo = startNo + 5;
+        for (var i = startNo; i < endNo; i++) {
+            pagiStr += '<p onclick="goPage(' + i + ')">' + i + '</p>';
+        }
+        $('#pagination').html(pagiStr);
+    }
+
+    function prevPage() {
+        if (pageNo > 1) {
+            pageNo -= 1;
+            display();
+        }
+    }
+
+    function nextPage() {
+        if (pageNo < pageNum) {
+            pageNo += 1;
+            display();
+        }
+    }
+
+    function firstPage() {
+        pageNo = 1;
+        display();
+    }
+
+    function lastPage() {
+        pageNo = pageNum;
+        display();
+    }
+
+    function goPage(no) {
+        pageNo = no;
+        display();
+    }
 
 //기준 연도 & 월
 function findYearAction(){
@@ -490,22 +646,22 @@ $(document).on("click","#rightChangeStatSearchBtn",function(){
                     tags += '       <p>'+resultJisangStatus+'</p>';
                     tags += '   </td>';
                     tags += '   <td class="parcelNumArea">';
-                    tags += '       <p class="textunderline">'+dataList[i].ref_cnt+'</p>';
+                    tags += '       <p class="textunderline" onclick=\'iotPopup('+YYYY_REF+','+MM_REF+',\"'+dataList[i].desc1+'\",\"'+dataList[i].jisang_status+'\")\'>'+dataList[i].ref_cnt+'</p>';
                     tags += '   </td>';
                     tags += '   <td>';
                     tags += '       <p>'+resultJisangStatus+'</p>';
                     tags += '   </td>';
                     tags += '   <td class="parcelNumArea">';
-                    tags += '       <p class="textunderline">'+dataList[i].tg_cnt+'</p>';
+                    tags += '       <p class="textunderline" onclick=\'iotPopup('+YYYY_TG+','+MM_TG+',\"'+dataList[i].desc1+'\",\"'+dataList[i].jisang_status+'\")\'>'+dataList[i].tg_cnt+'</p>';
                     tags += '   </td>';
                     tags += '   <td>';
                     tags += '       <p>'+resultJisangStatus+'</p>';
                     tags += '   </td>';
                     tags += '   <td class="parcelNumArea">';
-                    tags += '       <p class="textunderline">'+dataList[i].add_cnt+'</p>';
+                    tags += '       <p class="textunderline" onclick=\'upDownPopup(\"UP\",'+YYYY_REF+','+MM_REF+','+YYYY_TG+','+MM_TG+',\"'+dataList[i].desc1+'\",\"'+dataList[i].jisang_status+'\")\'>'+dataList[i].add_cnt+'</p>';
                     tags += '   </td>';
                     tags += '   <td class="parcelNumArea">';
-                    tags += '       <p class="textunderline">'+dataList[i].del_cnt+'</p>';
+                    tags += '       <p class="textunderline" onclick=\'upDownPopup(\"DOWN\",'+YYYY_REF+','+MM_REF+','+YYYY_TG+','+MM_TG+',\"'+dataList[i].desc1+'\",\"'+dataList[i].jisang_status+'\")\'>'+dataList[i].del_cnt+'</p>';
                     tags += '   </td>';
 					tags += '</tr>';
 				}

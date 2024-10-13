@@ -962,9 +962,24 @@ SELECT TTT.TYPE,
 	<!-- 통계 > 권리별 증감현황 > 조회 상세 -->
 	<select id="selectByRightInDeListDetail" parameterType="HashMap" resultType="HashMap">
 		select
+			(ROW_NUMBER() OVER(ORDER BY juso ASC)) AS seq,
 			desc1,
 			juso,
 			jisang_status
+		from 
+			static_deadline 
+		where 
+			1=1
+			and year= #{YYYY}
+			and month = #{MM}
+			and desc1 = #{JISA}
+			and jisang_status = #{STATUS}
+	</select>
+	
+	<!-- 통계 > 권리별 증감현황 > 조회 상세 총 수-->
+	<select id="selectByRightInDeListDetailCnt" parameterType="HashMap" resultType="int">
+		select
+			count(*) cnt
 		from 
 			static_deadline 
 		where 
@@ -997,9 +1012,9 @@ SELECT TTT.TYPE,
 		select 
 			a.desc1,a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null) a
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and desc1 is not null) a
 		left join
-			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and desc1 is not null) b
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null) b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
