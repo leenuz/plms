@@ -18,6 +18,7 @@
         SELECT *
         	,concat(nm_sido_nm,' ',nm_sgg_nm,' ',nm_ri_nm,' ',nm_jibun) as address
         FROM notset_master
+        LEFT JOIN JIJUK_2024 JJ ON TRIM(notset_master.nm_pnu) = jj.pnu
         WHERE 1=1
         <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)">
             and nm_notset_no=#{idx}

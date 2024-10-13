@@ -140,7 +140,7 @@ function loadDataTable(params) {
 				data: "idx",
 				render: function(data, type, row, meta) {
 					// return `<button class="viewDetailButton" >위치보기</button> `;
-					return `<button class="viewDetailButton" id='moveMap' x=${row.x} y=${row.y}>위치보기</button> `;
+					return `<button class="viewDetailButton" id="mapBtn" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}, //8. 지도보기 데이터 수정필요 
 			{
@@ -166,16 +166,27 @@ function loadDataTable(params) {
 			{ targets: [9], width: "100px" }, //9. 확인
 		]
 	});
-}
+	
+	// 위치보기 버튼 클릭 이벤트 처리
+	$('#userTable').on('click', '#mapBtn', function(event) {
+		event.stopPropagation(); // 이벤트 전파 차단
 
-// 지도보기 버튼
-$(document).on("click", "#moveMap", function() {
-	//openMapWindow();
-	//	mapWindow = window.open('', 'mapWindow', 'width=2000,height=1000');
-	const x = $(this).attr('x')
-	const y = $(this).attr('y')
-	moveToCityHall(x, y);
-})
+		// 버튼의 data 속성에서 x, y 좌표 가져오기
+		const x = $(this).data('x');
+		const y = $(this).data('y');
+
+		console.log("x, y:", x, y);
+
+		// 좌표가 존재하는지 확인하고, 없으면 undefined를 전달
+		if (typeof x !== 'undefined' && typeof y !== 'undefined' && x !== 'undefined' && y !== 'undefined' && x !== null && y !== null) {
+			// 좌표가 있을 때는 좌표를 전달
+			onePositionView({ x, y });
+		} else {
+			// 좌표가 없을 때는 빈 객체를 전달하여 onePostionView 내부에서 처리
+			onePositionView(undefined);
+		}
+	});
+}
 
 // 삭제 버튼 클릭 이벤트 (삭제 API 호출)
 $(document).on('click', '.regisRemoveBtn', function() {

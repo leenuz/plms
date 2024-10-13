@@ -599,7 +599,7 @@ $(document).on("click",".temporarySaveBtn",function(){
 */
 
 	//임시 저장 Go
-	url = "/land/jisang/divisionRegisterSave";
+	url = "/land/jisang/insertJisangBunhalTmp";
 	
 	$.ajax({
 
