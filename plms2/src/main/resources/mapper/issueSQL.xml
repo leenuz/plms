@@ -508,7 +508,7 @@ ORDER BY A.PNU ASC LIMIT 1
 		) VALUES (
 		        #{MW_SEQ},
 		        #{MW_TITLE},
-		        #{MW_CONTENTS},
+		        #{MINWON_CONTENT},
 		        TO_DATE(#{MW_OCCUR_DATE}, 'yyyy-MM-dd'),
 		        #{JISA},
 		        CURRENT_TIMESTAMP,
