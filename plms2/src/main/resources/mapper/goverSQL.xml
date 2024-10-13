@@ -88,9 +88,10 @@ LEFT JOIN plms_approval PA
 	</select>
 
 	<select id="selectPnuTargetList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select *,(row_number() over()) as no
-		from gover_pnu
-		where 1=1
+		SELECT *,(row_number() over()) as no
+		FROM gover_pnu
+		LEFT JOIN jijuk_2024 jj ON TRIM(gover_pnu.gp_pnu) = jj.pnu
+		WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
 			and gp_idx=#{idx}
 		</if>
