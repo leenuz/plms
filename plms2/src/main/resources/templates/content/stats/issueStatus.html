@@ -33,12 +33,10 @@
                                     <div class="hiddenSelectBox">
                                         <select id="issueStatusSelectBox01_1" hidden>
                                             <option value="전체">전체</option>
-                                            <option value="전체1">전체1</option>
-                                            <option value="전체2">전체2</option>
-                                            <option value="전체3">전체3</option>
-                                            <option value="전체4">전체4</option>
-                                            <option value="전체5">전체5</option>
-                                            <option value="전체6">전체6</option>
+                                            <option value="전체1">지상권설정</option>
+                                            <option value="전체2">지상권미설정</option>
+                                            <option value="전체3">점용</option>
+                                            <option value="전체4">미점용</option>
                                         </select>
                                     </div>
                                     <!--보여지는 셀렉박스-->
@@ -56,12 +54,8 @@
                                     <div class="hiddenSelectBox">
                                         <select id="issueStatusSelectBox01_2" hidden>
                                             <option value="전체">전체</option>
-                                            <option value="전체1">전체1</option>
-                                            <option value="전체2">전체2</option>
-                                            <option value="전체3">전체3</option>
-                                            <option value="전체4">전체4</option>
-                                            <option value="전체5">전체5</option>
-                                            <option value="전체6">전체6</option>
+                                            <option value="전체1">계약 체결/허가증 보유</option>
+                                            <option value="전체2">계약 미체결/허가증 미보유</option>
                                         </select>
                                     </div>
                                     <!--보여지는 셀렉박스-->
@@ -94,12 +88,7 @@
                                     <div class="hiddenSelectBox">
                                         <select id="issueStatusSelectBox01_3" hidden>
                                             <option value="전체">전체</option>
-                                            <option value="전체1">전체1</option>
-                                            <option value="전체2">전체2</option>
-                                            <option value="전체3">전체3</option>
-                                            <option value="전체4">전체4</option>
-                                            <option value="전체5">전체5</option>
-                                            <option value="전체6">전체6</option>
+                                            <option value="전체1" th:each="val:${jisaList}" th:value="${val.jm_jisa_name}" th:text="${val.jm_jisa_name}"></option>
                                         </select>
                                     </div>
                                     <!--보여지는 셀렉박스-->
@@ -117,12 +106,11 @@
                                     <div class="hiddenSelectBox">
                                         <select id="issueStatusSelectBox01_4" hidden>
                                             <option value="전체">전체</option>
-                                            <option value="전체1">전체1</option>
-                                            <option value="전체2">전체2</option>
-                                            <option value="전체3">전체3</option>
-                                            <option value="전체4">전체4</option>
-                                            <option value="전체5">전체5</option>
-                                            <option value="전체6">전체6</option>
+                                            <option value="임시저장">임시저장</option>
+                                            <option value="민원발생">민원발생</option>
+                                            <option value="대응방안수립">대응방안수립</option>
+                                            <option value="협의중">협의중</option>
+                                            <option value="완료">완료</option>
                                         </select>
                                     </div>
                                     <!--보여지는 셀렉박스-->
@@ -144,19 +132,13 @@
                                     <div class="selectContentArea">
                                         <div class="hiddenSelectBox">
                                             <select id="issueStatusSelectBox02_1" hidden>
-                                                <option value="전체">전체</option>
-                                                <option value="전체1">전체1</option>
-                                                <option value="전체2">전체2</option>
-                                                <option value="전체3">전체3</option>
-                                                <option value="전체4">전체4</option>
-                                                <option value="전체5">전체5</option>
-                                                <option value="전체6">전체6</option>
+                                                <option value="전체">대분류</option>
                                             </select>
                                         </div>
                                         <!--보여지는 셀렉박스-->
                                         <div class="customSelectBox">
                                             <button class="customSelectView">대분류</button>
-                                            <ul class="customSelectBtns"></ul>
+                                            <ul class="customSelectBtns" id="depth1Codes"></ul>
                                         </div>
                                     </div>
                                 </div>
@@ -164,19 +146,13 @@
                                     <div class="selectContentArea">
                                         <div class="hiddenSelectBox">
                                             <select id="issueStatusSelectBox02_2" hidden>
-                                                <option value="전체">전체</option>
-                                                <option value="전체1">전체1</option>
-                                                <option value="전체2">전체2</option>
-                                                <option value="전체3">전체3</option>
-                                                <option value="전체4">전체4</option>
-                                                <option value="전체5">전체5</option>
-                                                <option value="전체6">전체6</option>
+                                                <option value="">중분류</option>
                                             </select>
                                         </div>
                                         <!--보여지는 셀렉박스-->
                                         <div class="customSelectBox">
                                             <button class="customSelectView">중분류</button>
-                                            <ul class="customSelectBtns"></ul>
+                                            <ul class="customSelectBtns" id="depth2Codes"></ul>
                                         </div>
                                     </div>
                                 </div>
@@ -184,19 +160,13 @@
                                     <div class="selectContentArea">
                                         <div class="hiddenSelectBox">
                                             <select id="issueStatusSelectBox02_3" hidden>
-                                                <option value="전체">전체</option>
-                                                <option value="전체1">전체1</option>
-                                                <option value="전체2">전체2</option>
-                                                <option value="전체3">전체3</option>
-                                                <option value="전체4">전체4</option>
-                                                <option value="전체5">전체5</option>
-                                                <option value="전체6">전체6</option>
+                                                <option value="">세분류</option>
                                             </select>
                                         </div>
                                         <!--보여지는 셀렉박스-->
                                         <div class="customSelectBox">
                                             <button class="customSelectView">세분류</button>
-                                            <ul class="customSelectBtns"></ul>
+                                            <ul class="customSelectBtns" id="depth3Codes"></ul>
                                         </div>
                                     </div>
                                 </div>
