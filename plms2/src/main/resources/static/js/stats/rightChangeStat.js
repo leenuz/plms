@@ -259,6 +259,11 @@ $(document).on("click","#popupCloseBtn",function(){
 });
 
 //2024-10-14 소스 수정-----------------------------------------------------------------------------------------------
+
+var pageNum = 0;
+var pageNo = 1;
+var resultData = [];
+
 //필지 팝업
 function iotPopup(year,month,desc,jisangStatus){
 	
@@ -292,7 +297,8 @@ function iotPopup(year,month,desc,jisangStatus){
                 if (resultData.length % 10 > 0) {
                     pageNum += 1;
                 }
-
+				
+				pageNo = 1;
                 display();			
 				
 				$("#popupNm").text("필지 정보");//검색기준년월
@@ -342,7 +348,8 @@ function upDownPopup(type,yearRef,monthRef,yearTg,monthTg,desc,jisangStatus){
                 if (resultData.length % 10 > 0) {
                     pageNum += 1;
                 }
-
+				
+				pageNo = 1;
                 display();			
 				
 				$("#popupNm").text("증감 정보");//검색기준년월
@@ -358,9 +365,7 @@ function upDownPopup(type,yearRef,monthRef,yearTg,monthTg,desc,jisangStatus){
 		});
 }
 
-var pageNum = 0;
-var pageNo = 1;
-var resultData = [];
+
 
 //페이징
 function display() {
