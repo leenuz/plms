@@ -1249,6 +1249,22 @@ SELECT A.mm_mw_seq as MW_SEQ
    AND B.pa_STATUS = 'C'
 	]]></select>
 	
+	
+	
+<!-- 민원발생보고 전자결재 결과값 확인쿼리 -->
+	<select id="selectApprovalMinwonMasterTest" parameterType="HashMap" resultType="HashMap"><![CDATA[ 
+SELECT A.mm_mw_seq as MW_SEQ
+       , A.mm_STATUS AS MINWON_STATUS
+       , 'C' as STATUS
+  FROM MINWON_MASTER   A
+  --     , PLMS_APPROVAL       B
+ WHERE 1=1
+ --and  A.mm_DOCKEY = B.pa_DOCKEY
+   AND A.mm_STATUS = '1'
+   AND A.mm_SANGSIN_YN = 'Y'
+   --AND B.pa_STATUS = 'C'
+	]]></select>
+	
 	<update id="updateMinwonMasterApprovalStatus" parameterType="HashMap"><![CDATA[
 UPDATE MINWON_MASTER
    SET mm_STATUS = #{STATUS}

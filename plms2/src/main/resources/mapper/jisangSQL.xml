@@ -4648,6 +4648,29 @@ SELECT B.DOCKEY
    AND C.pa_STATUS = 'C'
 	</select>
 	
+	
+	<!-- 지상권 해지 전자결재 결과값 확인쿼리 test -->
+	<select id="selectApprovalTerminationTest" parameterType="HashMap" resultType="HashMap">
+SELECT B.DOCKEY
+       , A.jm_jisang_no as JISANG_NO
+       , C.pa_status as STATUS
+       , A.jm_pnu as PNU
+       , A.jm_addrcode as ADDRCODE
+       , A.jm_jibun as JIBUN
+       , TO_CHAR(B.CANCLE_DATE,'YYYY-MM-DD') AS CANCLE_DATE
+       , B.cancle_empcd as CANCLE_EMPCD
+       , B.cancle_name as CANCLE_NAME
+  FROM JISANG_MASTER        A
+       , JISANG_TERMINATION   B
+       , PLMS_APPROVAL            C
+ WHERE A.jm_JISANG_NO = B.JISANG_NO
+   AND ( A.jm_CANCLE_YN != 'Y'
+    OR A.jm_CANCLE_YN IS NULL )
+   AND B.DOCKEY IS NOT NULL
+   AND C.pa_DOCKEY = B.DOCKEY
+   AND C.pa_STATUS = 'C'
+	</select>
+	
 	<update id="UpdateJisangCancleDate" parameterType="HashMap">
 		UPDATE JISANG_TERMINATION 
 		SET
@@ -4694,6 +4717,27 @@ UPDATE PLMS_POTENTIAL_ISSUE
    AND C.pa_STATUS = 'C'
    AND B.jb_BUNHAL_COMPLETE = 'N'
 	</select>
+	
+	
+	<!-- 지상권 분할 전자결재 결과값 확인쿼리 테스트용 -->
+	<select id="selectApprovalbunhalTest" parameterType="HashMap" resultType="HashMap">
+   SELECT A.jm_jisang_no as JISANG_NO
+       ,'C' as STATUS
+       , B.jb_dockey as DOCKEY
+       , '홍길동' as USERNM
+       , A.jm_pnu as PNU
+       , A.jm_addrcode as ADDRCODE
+       , A.jm_jibun as JIBUN
+  FROM JISANG_MASTER   A
+       , JISANG_BUNHAL   B
+     --  , PLMS_APPROVAL       C
+ WHERE A.jm_JISANG_NO = B.jb_JISANG_NO
+  -- AND B.jb_DOCKEY = C.pa_DOCKEY
+   --AND C.pa_STATUS = 'C' or C.pa_status='I'
+   AND B.jb_BUNHAL_COMPLETE = 'N'
+	</select>
+	
+	
 	<update id="updateJisangJibun" parameterType="HashMap">
 		UPDATE
 		JISANG_MASTER
@@ -4739,6 +4783,31 @@ UPDATE PLMS_POTENTIAL_ISSUE
 	</select>
 	
 	
+	<!-- 지상권 합필 전자결재 결과값 상신만 해도 완료로 인식하도록  -->
+	<select id="selectApprovalmergeTest" parameterType="HashMap" resultType="HashMap">
+		SELECT
+		AA.REP_JISANG_NO,
+		BB.pa_status as STATUS,
+		BB.pa_dockey as DOCKEY,
+		BB.pa_usernm as USERNM
+		FROM
+		(
+		SELECT
+		jmt_rep_jisang_no as REP_JISANG_NO,
+		jmt_dockey as DOCKEY
+		FROM
+		JISANG_MERGE_TMP A
+		GROUP BY
+		jmt_REP_JISANG_NO,
+		jmt_DOCKEY
+		) AA,
+		PLMS_APPROVAL BB
+		WHERE
+		AA.DOCKEY = BB.pa_DOCKEY
+		AND BB.pa_STATUS = 'C' or BB.pa_status = 'I'
+	</select>
+	
+	
 	<!-- 지상권 사용수락 전자결재 결과값 확인쿼리 -->
 	<select id="selectApprovaljisangPermit" parameterType="HashMap" resultType="HashMap">
 		SELECT
@@ -4751,6 +4820,21 @@ UPDATE PLMS_POTENTIAL_ISSUE
 	    PLMS_APPROVAL PA ON PM.DOCKEY = PA.pa_DOCKEY
 	WHERE
 	    PA.pa_STATUS IS NOT NULL  AND PA.pa_status !=''
+	    AND PM.PMT_STATUS != '결재완료'
+	</select>
+	
+	<!-- 지상권 사용수락 전자결재 결과값 확인쿼리 -->
+	<select id="selectApprovaljisangPermitTest" parameterType="HashMap" resultType="HashMap">
+		SELECT
+	    PM.PMT_NO,
+	    PM.PMT_STATUS
+	    --,PA.pa_status as STATUS
+	FROM
+	    PERMIT_MASTER PM
+	-- 	LEFT JOIN
+	--    PLMS_APPROVAL PA ON PM.DOCKEY = PA.pa_DOCKEY 
+	WHERE 1=1
+	    -- and PA.pa_STATUS IS NOT NULL  AND PA.pa_status !=''
 	    AND PM.PMT_STATUS != '결재완료'
 	</select>
 	
