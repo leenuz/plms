@@ -35,6 +35,8 @@ public class GlobalConfig {
 	private static String minwonFileTempDir;
 	private static String minwonFileDataDir;
 	
+	private static String sampleFileDataDir;
+	
 	private static String serverName;
 	
 	// 필지 임시저장 디렉토리
@@ -202,6 +204,15 @@ public class GlobalConfig {
 		return minwonFileDataDir;
 	}
 	
+	// 지상권 해지등록 양식 샘플 다운로드
+    @Value("${plms.sampleFileDataDir}")
+    public void setSampleFileDataDir(String sampleFileDataDir) {
+        this.sampleFileDataDir = sampleFileDataDir;
+    }
+
+    public static String getSampleFileDataDir() {
+        return sampleFileDataDir;
+    }
 	
 	@Value("${server.name}")
 	public void setServerName(String sn) {

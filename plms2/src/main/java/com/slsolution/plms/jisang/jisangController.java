@@ -3081,6 +3081,9 @@ log.info("data:"+data.get(0));
 			log.info("jisangPnuAtcFileList:"+jisangPnuAtcFileList);
 			log.info("jisangDoc1list:"+reqDoc1list);
 			log.info("dataAccountYn:"+data.get(0).get("account_yn"));
+			
+			
+			log.info("GC.getSampleFileDataDir(): " + GC.getSampleFileDataDir());
 			ModelAndView mav=new ModelAndView();
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);
@@ -3096,6 +3099,7 @@ log.info("data:"+data.get(0));
 			mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
 			
 			mav.addObject("reqDoc1list",reqDoc1list);
+			mav.addObject("sampleFileDataDir", GC.getSampleFileDataDir()); // 첨부 서류 샘플양식 다운로드 경로
 			
 			mav.setViewName("content/jisang/landTerminationRegistration");
 			return mav;
