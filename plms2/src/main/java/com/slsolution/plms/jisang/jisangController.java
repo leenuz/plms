@@ -1034,6 +1034,11 @@ public class jisangController {
 					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
 					String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
 					String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+					System.out.println("@@@SESSION userId:"+str_UserId);
+					System.out.println("@@@SESSION str_userName:"+str_userName);
+					System.out.println("@@@SESSION str_userDeptcd:"+str_userDeptcd);
+					System.out.println("@@@SESSION str_userDeptnm:"+str_userDeptnm);
+					System.out.println("@@@SESSION str_userUPDeptcd:"+str_userUPDeptcd);
 //					String str_UserId = "034599";
 //					String str_userName = "장우형";
 //					String str_userDeptcd = "D250500";
@@ -1334,6 +1339,11 @@ public class jisangController {
 							String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
 							String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
 							String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+							System.out.println("@@@SESSION userId:"+str_UserId);
+							System.out.println("@@@SESSION str_userName:"+str_userName);
+							System.out.println("@@@SESSION str_userDeptcd:"+str_userDeptcd);
+							System.out.println("@@@SESSION str_userDeptnm:"+str_userDeptnm);
+							System.out.println("@@@SESSION str_userUPDeptcd:"+str_userUPDeptcd);
 //							String str_UserId = "034599";
 //							String str_userName = "장우형";
 //							String str_userDeptcd = "D250500";
@@ -1540,6 +1550,11 @@ log.info("PMT_NO:"+PMT_NO);
 				String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
 				String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
 				String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+				System.out.println("@@@SESSION userId:"+str_UserId);
+				System.out.println("@@@SESSION str_userName:"+str_userName);
+				System.out.println("@@@SESSION str_userDeptcd:"+str_userDeptcd);
+				System.out.println("@@@SESSION str_userDeptnm:"+str_userDeptnm);
+				System.out.println("@@@SESSION str_userUPDeptcd:"+str_userUPDeptcd);
 //				String str_UserId = "034599";
 //				String str_userName = "장우형";
 //				String str_userDeptcd = "D250500";
@@ -3082,9 +3097,8 @@ log.info("data:"+data.get(0));
 			log.info("jisangDoc1list:"+reqDoc1list);
 			log.info("dataAccountYn:"+data.get(0).get("account_yn"));
 			
-			
-			log.info("GC.getSampleFileDataDir(): " + GC.getSampleFileDataDir());
 			ModelAndView mav=new ModelAndView();
+			
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);

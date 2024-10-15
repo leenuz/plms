@@ -4722,18 +4722,18 @@ UPDATE PLMS_POTENTIAL_ISSUE
 	<!-- 지상권 분할 전자결재 결과값 확인쿼리 테스트용 -->
 	<select id="selectApprovalbunhalTest" parameterType="HashMap" resultType="HashMap">
    SELECT A.jm_jisang_no as JISANG_NO
-       ,'C' as STATUS
+       ,C.pa_status as STATUS
        , B.jb_dockey as DOCKEY
-       , '홍길동' as USERNM
+       ,  C.pa_usernm as USERNM
        , A.jm_pnu as PNU
        , A.jm_addrcode as ADDRCODE
        , A.jm_jibun as JIBUN
   FROM JISANG_MASTER   A
        , JISANG_BUNHAL   B
-     --  , PLMS_APPROVAL       C
+       , PLMS_APPROVAL       C
  WHERE A.jm_JISANG_NO = B.jb_JISANG_NO
-  -- AND B.jb_DOCKEY = C.pa_DOCKEY
-   --AND C.pa_STATUS = 'C' or C.pa_status='I'
+   AND B.jb_DOCKEY = C.pa_DOCKEY
+   AND C.pa_STATUS = 'C' or C.pa_status='I'
    AND B.jb_BUNHAL_COMPLETE = 'N'
 	</select>
 	
@@ -4826,15 +4826,15 @@ UPDATE PLMS_POTENTIAL_ISSUE
 	<!-- 지상권 사용수락 전자결재 결과값 확인쿼리 -->
 	<select id="selectApprovaljisangPermitTest" parameterType="HashMap" resultType="HashMap">
 		SELECT
-	    PM.PMT_NO,
-	    PM.PMT_STATUS
-	    --,PA.pa_status as STATUS
+	    PM.PMT_NO
+	    ,PM.PMT_STATUS
+	    ,PA.pa_status as STATUS
 	FROM
 	    PERMIT_MASTER PM
-	-- 	LEFT JOIN
-	--    PLMS_APPROVAL PA ON PM.DOCKEY = PA.pa_DOCKEY 
+	 	LEFT JOIN
+	    PLMS_APPROVAL PA ON PM.DOCKEY = PA.pa_DOCKEY 
 	WHERE 1=1
-	    -- and PA.pa_STATUS IS NOT NULL  AND PA.pa_status !=''
+	     and PA.pa_STATUS IS NOT NULL  AND PA.pa_status !=''
 	    AND PM.PMT_STATUS != '결재완료'
 	</select>
 	

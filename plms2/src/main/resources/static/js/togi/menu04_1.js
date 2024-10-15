@@ -21,10 +21,9 @@ landDevelopmentDateBoxsClicEvet();
 
 
 $(document).ready(function() {
-  console.log("*** menu04_1.js ***");
-  commonJisaInfoCheck();
-loadDataTable("");
-
+	console.log("*** menu04_1.js ***");
+	commonJisaInfoCheck();
+	loadDataTable("");
 });
 
 $(document).on("click",".sido li",function(){

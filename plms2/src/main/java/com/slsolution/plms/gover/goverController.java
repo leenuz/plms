@@ -679,7 +679,14 @@ public class goverController {
 	public ModelAndView menu03_3(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //			response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		
+		/*******************************/
+        //받은 세션 Map으로 전환
+        Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+        /*******************************/
+		
 		HashMap params = new HashMap();
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList", params);
 		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList", params);
@@ -692,6 +699,9 @@ public class goverController {
 		mav.addObject("sidoList", sidolist);
 		mav.addObject("usePurposlist", usePurposlist);
 
+		//241006 - 지사정보 추가
+		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
+		
 		mav.setViewName("content/gover/menu03_3");
 
 		return mav;
@@ -801,6 +811,11 @@ public class goverController {
 	@RequestMapping(value = "/menu03_2DataTableList", method = { RequestMethod.GET, RequestMethod.POST }) // http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> datatableList03_2(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
+		/*******************************/
+        //받은 세션 Map으로 전환
+        Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(req);
+        /*******************************/
+		
 		// 일반웹형식
 		Properties requestParams = CommonUtil.convertToProperties(req);
 
@@ -817,13 +832,15 @@ public class goverController {
 		int draw = Integer.parseInt(req.getParameter("draw"));
 		int start = Integer.parseInt(req.getParameter("start"));
 		int length = Integer.parseInt(req.getParameter("length"));
+		
 		String orderColumn = req.getParameter("order[0][column]");
 		String orderDirection = req.getParameter("order[0][dir]");
 		String orderColumnName = req.getParameter("columns[" + orderColumn + "][data]");
 
 		String[] order_cols = req.getParameterValues("order");
 
-		String jisa = req.getParameter("jisa");
+//		String jisa = req.getParameter("jisa");
+		String jisa = (String)sessionMap.get("jisa");
 		String gover_no = req.getParameter("gover_no");
 		String use_purpos = req.getParameter("use_purpos");
 		String pmt_office = req.getParameter("pmt_office");
@@ -899,6 +916,12 @@ public class goverController {
 
 		// 일반웹형식
 		Properties requestParams = CommonUtil.convertToProperties(req);
+		
+		/*******************************/
+        //받은 세션 Map으로 전환
+        Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(req);
+        /*******************************/
+		
 
 		HashMap<String, String> returnHash = new HashMap<String, String>();
 		Enumeration<String> obj1 = req.getParameterNames();
@@ -919,7 +942,8 @@ public class goverController {
 
 		String[] order_cols = req.getParameterValues("order");
 
-		String jisa = req.getParameter("jisa");
+//		String jisa = req.getParameter("jisa");
+		String jisa = (String)sessionMap.get("jisa");
 		String gover_no = req.getParameter("gover_no");
 		String use_purpos = req.getParameter("use_purpos");
 		String pmt_office = req.getParameter("pmt_office");
