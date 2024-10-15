@@ -759,10 +759,10 @@ public class SchedulerController {
 		log.info("##############PERMIT#################");
 		ArrayList<HashMap> jisnagPermitTargetList=new ArrayList<HashMap>();
 		if ("DEV".equals(GC.getServerName()) || "LOCAL".equals(GC.getServerName())) {
-			jisnagPermitTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovaljisangPermit",null);
+			jisnagPermitTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovaljisangPermitTest",null);
 		}
 		else {
-			jisnagPermitTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovaljisangPermitTest",null);
+			jisnagPermitTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovaljisangPermit",null);
 			
 		}
 		
@@ -795,10 +795,10 @@ public class SchedulerController {
 //		// 1. 민원발생보고
 		ArrayList<HashMap> minwonMasterList=new ArrayList<HashMap>();
 		if ("DEV".equals(GC.getServerName()) || "LOCAL".equals(GC.getServerName())) {
-			minwonMasterList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonMaster",null);
+			minwonMasterList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonMasterTest",null);
 		}
 		else {
-			minwonMasterList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonMasterTest",null);
+			minwonMasterList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonMaster",null);
 			
 		}
 		

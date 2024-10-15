@@ -87,10 +87,10 @@ public class ApprovalUtil implements ApplicationContextAware {
 		//String url="http://localhost:8081/land/api/dopcoApprovalTest"; //로컬 테스트
 
 		 String url="";
-		if ("DEV".equals(GC.getServerName())) {
+		if ("DEV".equals(GC.getServerName().trim())) {
 			 url="http://devmos.dopcodev.com/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //새 개발기 테스트
 		}
-		else if ("LIVE".equals(GC.getServerName())) {
+		else if ("LIVE".equals(GC.getServerName().trim())) {
 			 url="http://echo.dopco.co.kr/SmartTalk/CustomExt/Service/PLMSWebService.asmx"; //운영
 		}
 		else url="http://localhost:8081/land/api/dopcoApprovalTest";
@@ -102,7 +102,7 @@ public class ApprovalUtil implements ApplicationContextAware {
 		
 		System.out.println("@@@@@@ Send url : "+url);
 		System.out.println("@@@@@@ xmlString : "+xmlString);
-		
+		//log.info("### URL:"+url);
 		//전송
 		HttpURLConnection urlConnection=null;
 		urlConnection=(HttpURLConnection) new URL(url).openConnection();

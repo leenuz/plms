@@ -451,7 +451,7 @@ public class ApprovalHtmlUtil implements ApplicationContextAware {
 						    + "&fileSeq=" + cu.evl(str_FILE_SEQ,"") 
 						    + "&fileGubun=gover', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
 				}
-				else if ("DEV".equals(GC.getServerName())) {
+				else if ("LIVE".equals(GC.getServerName())) {
 				//운영
 				sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
 					    + "filePath=" + cu.evl(str_FILE_PATH, "") 
