@@ -1272,7 +1272,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		String SEARCH_CODE_3 = parser.getString("SEARCH_CODE_3", "");
 		String pageNum = parser.getString("pageNum", ""); // 페이지 번호
 		String pageCnt = parser.getString("pageCnt", ""); // 한 페이지 갯수
-		String JISA = parser.getString("jisa", ""); // 발생지사
+		String JISA = parser.getString("JISA", ""); // 발생지사
 
 		ArrayList dataList = new ArrayList();
 		HashMap map = new HashMap();

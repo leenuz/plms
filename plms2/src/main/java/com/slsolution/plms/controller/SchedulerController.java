@@ -67,9 +67,17 @@ public class SchedulerController {
 		
 		
 		
+		log.info("#################TERMINATION##################");
 		
 		HashMap param=new HashMap();
-		ArrayList<HashMap> terminationList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalTermination",param);
+		ArrayList<HashMap> terminationList=new ArrayList<HashMap>();
+		if ("DEV".equals(GC.getServerName()) || "LOCAL".equals(GC.getServerName())) {
+			terminationList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalTerminationTest",param);
+		}
+		else {
+			terminationList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalTermination",param);
+		}
+		
 		System.out.println("terminationList.size()="+terminationList.size());
 		// 1.1 해지 상신건 결재처리된 건에 대하여 처리
 		for (HashMap targetMap : terminationList) {
@@ -133,8 +141,16 @@ public class SchedulerController {
 		}
 
 //		// 2. 분할 상신건 결재완료내용 조회
-		ArrayList<HashMap> bunhalTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalbunhal",null);
-//		System.out.println("bunhalTargetList.size()="+bunhalTargetList.size());
+		log.info("######BUNHALSTART#######");
+		ArrayList<HashMap> bunhalTargetList=new ArrayList<HashMap>();
+		if ("DEV".equals(GC.getServerName()) || "LOCAL".equals(GC.getServerName())) {
+			 bunhalTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalbunhalTest",null);	
+		}
+		else {
+			 bunhalTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalbunhal",null);
+		}
+		
+		System.out.println("bunhalTargetList.size()="+bunhalTargetList.size());
 		// 2.1 분할 결재완료건 처리
 		int testSize = 0;
 		for (HashMap targetMap : bunhalTargetList) {
@@ -151,17 +167,17 @@ public class SchedulerController {
 				CommonUtil comm = new CommonUtil();
 				HashMap params = new HashMap();
 				params.put("BUNHALYN", "Y");
-				params.put("JISANGNO", targetMap.get("JISANG_NO"));
+				params.put("JISANGNO", targetMap.get("jisang_no"));
 				ArrayList<HashMap> ori_list = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectJisangDetailListNew", params);
 				ArrayList<HashMap> soyu_list = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectJisangDetailSoyu", params);
-				params.put("BUNHAL_ORG_NO", targetMap.get("JISANG_NO"));
+				params.put("BUNHAL_ORG_NO", targetMap.get("jisang_no"));
 				ArrayList<HashMap> bunhal_list = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectJisangBunhalTmpList", params);
 
 				// 분할대상 잠재이슈 조회
 				ArrayList<HashMap> potentialIssue_list = (ArrayList<HashMap>) mainService.selectQuery("commonSQL.selectPnuIssue", targetMap);
 
 				// 분할대상 모지번 첨부파일 정보 조회
-				params.put("FILENO", targetMap.get("JISANG_NO"));
+				params.put("FILENO", targetMap.get("jisang_no"));
 				//ArrayList<HashMap<String, String>> attachList = (ArrayList<HashMap<String, String>>) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Files", params);
 				// 반환된 리스트를 개별 요소에 대해 캐스팅
 				ArrayList<HashMap<String, String>> attachList = new ArrayList<>();
@@ -309,13 +325,13 @@ public class SchedulerController {
 							Addparams.put("PERMITTED_YN", PERMITTED_YN);
 							Addparams.put("PIPE_YN", pipe_yn);
 
-							Addparams.put("BUNHALORGNO", targetMap.get("JISANG_NO")); // 기존
+							Addparams.put("BUNHALORGNO", targetMap.get("jisang_no")); // 기존
 							// 지상권번호
 
 							Addparams.put("GUBUN", "분할");
 							Addparams.put("SAVE_STATUS", "승인");
-							Addparams.put("USER_ID", targetMap.get("USER_ID"));
-							Addparams.put("USER_NAME", targetMap.get("USER_NAME"));
+							Addparams.put("USER_ID", targetMap.get("user_id"));
+							Addparams.put("USER_NAME", targetMap.get("user_name"));
 							Addparams.put("CONT", modifyReason + modifyReason2);
 							System.out.println(Addparams.toString());
 							mainService.InsertQuery("jisangSQL.insertJisangBunhalMasterNew", Addparams); // 기본정보 저장
@@ -325,7 +341,7 @@ public class SchedulerController {
 							for (HashMap<String, String> attachMap : attachList) {
 								System.out.println(attachMap.toString());
 								attachMap.put("JISANGNO", Next_jisangNo);
-								mainService.UpdateQuery("jisangSQL.insertJisangFile", attachMap);
+								mainService.UpdateQuery("jisangSQL.insertJisangFile1", attachMap);
 							}
 
 							// 지적 등록
@@ -351,10 +367,10 @@ public class SchedulerController {
 							if(soyu_list != null && !soyu_list.isEmpty()) {
 								for( HashMap<String, String> soyuMap : soyu_list) {
 									soyuMap.put("JISANGNO", Next_jisangNo);
-									soyuMap.put("NAME", soyuMap.get("SOUJA_NAME"));
-									soyuMap.put("ADDR", soyuMap.get("ADDRESS"));
-									soyuMap.put("HOME_NUMBER", soyuMap.get("HOME_NUMBER"));
-									soyuMap.put("PHNE_NUMBER", soyuMap.get("PONE_NUMBER"));
+									soyuMap.put("NAME", soyuMap.get("js_souja_name"));
+									soyuMap.put("ADDR", soyuMap.get("js_address"));
+									soyuMap.put("HOME_NUMBER", soyuMap.get("js_home_number"));
+									soyuMap.put("PHNE_NUMBER", soyuMap.get("js_pone_number"));
 									mainService.UpdateQuery("jisangSQL.insertJisangSoyu", soyuMap);
 								}
 							}
@@ -509,7 +525,7 @@ public class SchedulerController {
 					}
 				}
 				HashMap map = new HashMap();
-				map.put("JISANGNO", targetMap.get("JISANG_NO"));
+				map.put("JISANGNO", targetMap.get("jisang_no"));
 				mainService.DeleteQuery("jisangSQL.deleteJisangBunhalTmp", map); // 임시저장 삭제 -->> 완료처리
 //				Database.getInstance().update("Json.completeJisangBunhalTmp", map); // 임시저장 삭제 -->> 완료처리 // 삭제에서 플래그 완료처리로 변경. 기록확인을 위한 기능변경.
 
@@ -522,7 +538,17 @@ public class SchedulerController {
 		}
 //		
 //		// 3. 합필 상신건 결재완료내용 조회
-		ArrayList<HashMap> mergeTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalmerge",null);
+		log.info("##########MERGESTART####");
+			ArrayList<HashMap> mergeTargetList=new ArrayList<HashMap>();
+		if ("DEV".equals(GC.getServerName()) || "LOCAL".equals(GC.getServerName())) {
+			mergeTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalbunhalTest",null);	
+		}
+		else {
+			mergeTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalmerge",null);
+			
+		}
+		
+		log.info("#mergeTargetList:"+mergeTargetList);
 		// 3.1. 합필 결재완료건 처리
 		for (HashMap targetMap : mergeTargetList) {
 			try {
@@ -540,6 +566,7 @@ public class SchedulerController {
 				hparam.put("REP_JISANG_NO", REP_JISANG_NO);
 				//ArrayList<HashMap<String, String>> targetList = (ArrayList<HashMap<String, String>>) mainService.selectQuery("Json.selectJisangMergeSaveList", hparam);
 				List<HashMap> resultList = (List<HashMap>) mainService.selectQuery("jisangSQL.selectJisangMergeSaveList", hparam);
+				log.info("resultList:"+resultList);
 				ArrayList<HashMap<String, String>> targetList = new ArrayList<>();
 
 				for (HashMap map : resultList) {
@@ -547,12 +574,13 @@ public class SchedulerController {
 				}
 
 				for (HashMap<String, String> datas : targetList) {
-
+					log.info("##target##");
+					log.info("datas:"+datas);
 					// 합필 등록시 수정했던 내용 지상 마스터에서 수정
 					mainService.UpdateQuery("jisangSQL.updateMergeJisangMaster", datas);
 
 					// 대표지상권이 아닌 기존 지상권 정보를 삭제처리하고 지상권 합필정보 관리 테이블에 삽입한다.
-					if ("N".equals(datas.get("MAIN_FLAG"))) {
+					if ("N".equals(datas.get("main_flag"))) {
 						datas.put("REP_JISANG_NO", (String) targetMap.get("rep_jisang_no")); // 대표지상권 정보
 						mainService.InsertQuery("jisangSQL.insertJisangMerge", datas);
 
@@ -599,9 +627,16 @@ public class SchedulerController {
 						mainService.DeleteQuery("jisangSQL.deletePnuIssueHistory", hparam); // 잠재이슈 내역도 삭제 
 					} else {
 						// 모지번 정보에 합필사유, 검토의견 업데이트
-						mainJisangMap.put("MERGE_REASON", datas.get("merge_reason"));
-						mainJisangMap.put("MERGE_COMMENT", datas.get("merge_comment"));
-						mainService.UpdateQuery("jisangSQL.updateJisangMasterMergeReason", mainJisangMap);
+//						mainJisangMap.put("MERGE_REASON", datas.get("jmt_merge_reason")==null?"합필사유":datas.get("jmt_merge_reason"));
+//						mainJisangMap.put("MERGE_COMMENT", datas.get("merge_comment")==null?"검토의견":datas.get("merge_comment"));
+//						mainJisangMap.put("jisang_no", datas.get("jisang_no"));
+//						mainJisangMap.put("MERGE_REASON","합필사유");
+//						mainJisangMap.put("MERGE_COMMENT","검토의견");
+						HashMap mjMap = new HashMap();
+						mjMap.put("MERGE_REASON","aaa");
+						mjMap.put("MERGE_COMMENT","bbb");
+						mjMap.put("jisang_no",datas.get("jisang_no"));
+						mainService.UpdateQuery("jisangSQL.updateJisangMasterMergeReason", mjMap);
 					}
 
 					// 합필대상 첨부파일 정보 업데이트
@@ -721,7 +756,16 @@ public class SchedulerController {
 //		}
 //
 //		// 5. 지상권사용 승락
-		ArrayList<HashMap> jisnagPermitTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovaljisangPermit",null);
+		log.info("##############PERMIT#################");
+		ArrayList<HashMap> jisnagPermitTargetList=new ArrayList<HashMap>();
+		if ("DEV".equals(GC.getServerName()) || "LOCAL".equals(GC.getServerName())) {
+			jisnagPermitTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovaljisangPermit",null);
+		}
+		else {
+			jisnagPermitTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovaljisangPermitTest",null);
+			
+		}
+		
 		for (HashMap targetMap : jisnagPermitTargetList) {
 			try {
 				//Database.getInstance().startTransaction();
@@ -749,7 +793,15 @@ public class SchedulerController {
 //
 //		// 이슈관리 >> 민원관리 전자결제 체크.
 //		// 1. 민원발생보고
-		ArrayList<HashMap> minwonMasterList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonMaster",null);
+		ArrayList<HashMap> minwonMasterList=new ArrayList<HashMap>();
+		if ("DEV".equals(GC.getServerName()) || "LOCAL".equals(GC.getServerName())) {
+			minwonMasterList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonMaster",null);
+		}
+		else {
+			minwonMasterList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonMasterTest",null);
+			
+		}
+		
 		// 1.1 민원발생보고 상신건 결재처리된 건에 대하여 처리
 		for (HashMap targetMap : minwonMasterList) {
 //			System.out.println("##### "+targetMap.toString());

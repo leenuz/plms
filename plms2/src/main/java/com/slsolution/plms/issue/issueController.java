@@ -621,6 +621,7 @@ public class issueController {
 
 					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
 						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
+
 						mainService.InsertQuery("issueSQL.insertMinwonAtchFileInfo", fileParams);
 					}
 					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
@@ -893,12 +894,20 @@ public class issueController {
 		String AGREE_DATE = requestParamObj.getString("DATE");
 		String STATUS = requestParamObj.getString("STATUS");
 		String SANGSIN_FLAG = requestParamObj.getString("SANGSIN_FLAG");
-
+		
+		JSONArray fileList = requestParamObj.getJSONArray("files");
+		
 		ArrayList list = null;
 		HashMap map = new HashMap();
 		int agreeSeq = 0;
 		try {
 			HashMap params = new HashMap();
+			String stat="";
+			if ("임시저장".equals(STATUS)) stat="1";
+			else if ("민원발생".equals(STATUS)) stat="2";
+			else if ("대응방안수립".equals(STATUS)) stat="3";
+			else if ("협의중".equals(STATUS)) stat="4";
+			else if ("완료".equals(STATUS)) stat="5";
 			// 신규등록시
 			if ("".equals(AGREE_SEQ) || "0".equals(AGREE_SEQ)) {
 
@@ -908,12 +917,7 @@ public class issueController {
 				// 민원 협의 마스터 키 번호 생성
 //					agreeSeq = (int) Database.getInstance().queryForObject("Json.makeMinwonAgreeKey", params);
 				agreeSeq = (int) mainService.selectCountQuery("issueSQL.makeMinwonAgreeKey", params);
-				String stat="";
-				if ("임시저장".equals(STATUS)) stat="1";
-				else if ("민원발생".equals(STATUS)) stat="2";
-				else if ("대응방안수립".equals(STATUS)) stat="3";
-				else if ("협의중".equals(STATUS)) stat="4";
-				else if ("완료".equals(STATUS)) stat="5";
+				
 				
 				
 				params.put("AGREE_SEQ", agreeSeq);
@@ -935,14 +939,39 @@ public class issueController {
 				params.put("AGREE_TITLE", AGREE_TITLE);
 				params.put("AGREE_CONTENTS", AGREE_CONTENTS);
 				params.put("AGREE_DATE", AGREE_DATE);
-				params.put("STATUS", STATUS);
+				params.put("STATUS", stat);
 				params.put("REG_ID", String.valueOf(request.getSession().getAttribute("userName")));
 
 //					Database.getInstance().update("Json.updateMinwonAgree", params);
 				mainService.InsertQuery("issueSQL.updateMinwonAgree", params);
 
 			}
+			
+			
+			// STEP.2 첨부파일 등록 (Table - miwon_atcfile)
+			HashMap fileParams = new HashMap();
+			fileParams.put("MAA_MW_SEQ", MW_SEQ);
+			
+			if(fileList.length() > 0) {
+				for(int y = 0 ; y < fileList.length() ; y++) {
+					String originalFileName = fileList.get(y).toString();
+					String changeFileName = CommonUtil.filenameAutoChange(originalFileName);
+					String tempPath = GC.getMinwonFileTempDir();
+					String dataPath = GC.getMinwonFileDataDir() + "/"+ "m_seq_"+MW_SEQ;
+					
+					fileParams.put("FILE_PATH", dataPath +"/"+ changeFileName);	//파일명이 바뀌기 때문에.
+					fileParams.put("FILE_NAME", originalFileName);
+					fileParams.put("FILE_MINWON_SEQ", (y+1));
 
+					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
+						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
+						//TODO :: param값 추후 수정 해야함. FILE_MINWON_SEQ 수정.
+						mainService.InsertQuery("issueSQL.insertMinwonAgreeAtchFileInfo", fileParams);
+					}
+					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
+				}
+			}
+			
 			// 민원 마스터 상태정보 수정(협의중 : 4)
 			params.put("STATUS", "4");
 //				Database.getInstance().update("Json.updateMinwonMasterStatus", params);
@@ -971,16 +1000,16 @@ public class issueController {
 				if ("".equals(str_appNo)) {
 					map.put("message", "처리 중 오류가 발생했습니다.");
 				} else {
-//						String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
-//						String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
-//						String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
-//						String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
-//						String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
-					String str_UserId = "105681";
-					String str_userName = "박영환";
-					String str_userDeptcd = "D250500";
-					String str_userDeptnm = "IT전략.지원팀";
-					String str_userUPDeptcd = "S250100";
+						String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
+						String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
+						String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
+						String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
+						String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+//					String str_UserId = "105681";
+//					String str_userName = "박영환";
+//					String str_userDeptcd = "D250500";
+//					String str_userDeptnm = "IT전략.지원팀";
+//					String str_userUPDeptcd = "S250100";
 					String XML_GUBUN = "GetConferComplaintsDataforXML";
 					res_Echo = epc.GetPLMSDataforXML(str_appNo,
 							eph.getMinwonAgreeHTML(MW_SEQ, AGREE_SEQ, fileseq, request, response), str_UserId, "", "",
@@ -1001,13 +1030,14 @@ public class issueController {
 //						ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonAgreeDocInfo", map);
 					ArrayList echolist = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonAgreeDocInfo", map);
 					if (null != echolist && echolist.size() > 0) {
-						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("out_url"));
 						System.out.println("str_EchoNo=====" + str_EchoNo);
 						map.put("OUT_URL", str_EchoNo);
 					}
 
 				} else {
-					map.put("message", "처리 중 오류가 발생했습니다.");
+					map.put("message", "상신 처리 중 결과를 받지 못하는 오류가 발생했습니다.");
+					//map.put("mess, str_appNo)
 				}
 			}
 
@@ -1041,6 +1071,8 @@ public class issueController {
 		ParameterParser parser = new ParameterParser(request);
 		String MW_SEQ = requestParamObj.getString("MW_SEQ");
 		String STATUS = requestParamObj.getString("STATUS");
+		
+		JSONArray fileList = requestParamObj.getJSONArray("files");
 
 		ArrayList dataList = new ArrayList();
 		HashMap map = new HashMap();
@@ -1048,6 +1080,32 @@ public class issueController {
 
 			HashMap params = new HashMap();
 			params.put("MW_SEQ", MW_SEQ);
+			
+			//첨부파일 저장
+			HashMap fileParams = new HashMap();
+			fileParams.put("MAA_MW_SEQ", MW_SEQ);
+			
+			if(fileList.length() > 0) {
+				for(int y = 0 ; y < fileList.length() ; y++) {
+					String originalFileName = fileList.get(y).toString();
+					String changeFileName = CommonUtil.filenameAutoChange(originalFileName);
+					String tempPath = GC.getMinwonFileTempDir();
+					String dataPath = GC.getMinwonFileDataDir() + "/"+ "m_seq_"+MW_SEQ;
+					
+					fileParams.put("FILE_PATH", dataPath +"/"+ changeFileName);	//파일명이 바뀌기 때문에.
+					fileParams.put("FILE_NAME", originalFileName);
+					fileParams.put("FILE_MINWON_SEQ", (y+1));
+
+					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
+						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
+						//TODO :: param값 추후 수정 해야함. FILE_MINWON_SEQ 수정.
+						mainService.InsertQuery("issueSQL.insertMinwonAgreeAtchFileInfo", fileParams);
+					}
+					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
+				}
+			}
+			
+			
 
 			// 1. 민원완료 가능한 상태인지 체크 ->> 상태값:협의중, 모든 협의상태가 완결.
 //			int totalcnt = (Integer) Database.getInstance().queryForObject("Json.selectMinwonCompleteBeforeCheck", params);

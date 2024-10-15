@@ -55,16 +55,11 @@ href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/
           </ul>
           <ul class="complaints_contents_minHeight2">
             <li class="complaints_contents_titles">첨부파일</li>
-            <!--<li class="complaints_contents_fileBox">
-               <div class="file_img_wrap"><img src="/assets/media/popup/images/file-upload-line (1) 1.png" alt=""></div> 
-              <div class="file_img_wrap"><img src="/assets/media/popup/images/file-upload.png" alt=""></div>
-              <div>파일을 마우스로 끌어오세요.</div>
-            </li>-->
 
             <!-- class 추가 -->
             <li class="complaints_contents_fileBox complaintRegiFileInfo">
               <!-- multiple 추가 -->
-              <input type="file" id="complaint_register_Popup_file" multiple hidden>
+              <input type="file" name="minwon_consult_fileUpload" id="complaint_register_Popup_file" multiple hidden>
               <!-- <label for="complaint_register_Popup_file" class="complaint_register_Popup_file_wrap">
                       첨부파일 기본값 
                       <div class="file_default active" >
@@ -96,14 +91,14 @@ href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/
               <div class="popfileLargeWrap">
                 <!-- 파일이 첨부되지 않았을 때 모습 -->
                 <div class="popfileUploadWrap popfileUploadDisplay">
-                  <label for="complaint_register_Popup_file" class="popfileUploadBox">
+                  <label for="complaint_register_Popup_file" class="popfileUploadBox" id="minwon_consult_fileUploadBox">
                     <img src="../../../assets/media/popup/images/file-upload.png" alt="파일 업로드 아이콘" class="fileUploadIcon" />
                     <p>파일을 마우스로 끌어오세요.</p>
                   </label>
                 </div>
                 <div class="popfileUploadAfterWrap popfileUploadDisplay">
                   <!-- 추가, 업로드시 나오는 거 -->
-                  <div class="popfileUploadAfter">
+                  <div class="popfileUploadAfter" id="minwon_consult_uploadfileList">
                     <ul class="poptitles">
                       <li class="popBtnbox">
                         <button class="popAllDeleteFileBtn"></button>

@@ -316,13 +316,13 @@ FROM (
 		       PA.pa_URL AS ECHO_URL,
 		       C.pa_URL AS HANDLE_URL,
 		       D.pa_URL AS COMPLE_URL,
-		       A.MINWONIN_TOJIJU_NM,	-- 토지주 명
-		       A.MINWONIN_TOJIJU_BIRTH, -- 토지주 생년월일
-		       A.TOJIJU_RELATION, -- 토지주 관계
-		       A.MINWONIN_PHONE, -- 토지주 연락처
-		       A.FIELD_PRESENCE, -- 현장입회
-		       A.TOJI_HISTORY, -- 토지이력
-		       A.MINWON_REQUIREMENT  -- 요구사항
+		       A.MINWONIN_TOJIJU_NM,	
+		       A.MINWONIN_TOJIJU_BIRTH, 
+		       A.TOJIJU_RELATION, 
+		       A.MINWONIN_PHONE, 
+		       A.FIELD_PRESENCE, 
+		       A.TOJI_HISTORY, 
+		       A.MINWON_REQUIREMENT 
 		FROM MINWON_MASTER A
 		LEFT JOIN MINWON_HANDLING_TMP B ON A.mm_mw_seq = B.mht_MW_SEQ
 		LEFT JOIN PLMS_APPROVAL PA ON A.mm_DOCKEY = PA.pa_DOCKEY
@@ -1259,6 +1259,22 @@ SELECT A.mm_mw_seq as MW_SEQ
    AND B.pa_STATUS = 'C'
 	]]></select>
 	
+	
+	
+<!-- 민원발생보고 전자결재 결과값 확인쿼리 -->
+	<select id="selectApprovalMinwonMasterTest" parameterType="HashMap" resultType="HashMap"><![CDATA[ 
+SELECT A.mm_mw_seq as MW_SEQ
+       , A.mm_STATUS AS MINWON_STATUS
+       , 'C' as STATUS
+  FROM MINWON_MASTER   A
+  --     , PLMS_APPROVAL       B
+ WHERE 1=1
+ --and  A.mm_DOCKEY = B.pa_DOCKEY
+   AND A.mm_STATUS = '1'
+   AND A.mm_SANGSIN_YN = 'Y'
+   --AND B.pa_STATUS = 'C'
+	]]></select>
+	
 	<update id="updateMinwonMasterApprovalStatus" parameterType="HashMap"><![CDATA[
 UPDATE MINWON_MASTER
    SET mm_STATUS = #{STATUS}
@@ -1474,4 +1490,22 @@ INSERT INTO MINWON_ATCFILE (
 
 ]]></insert>
 	
+<!-- 신규 민원협의 내용 첨부파일 저장 -->
+<select id="insertMinwonAgreeAtchFileInfo" parameterType="HashMap"><![CDATA[
+INSERT INTO MINWON_AGREE_ATCFILE (
+	maa_mw_seq
+	, maa_agree_seq
+	, maa_file_nm
+	, maa_file_path
+	, maa_seq
+	, maa_file_seq
+) VALUES (
+	#{MAA_MW_SEQ}::numeric
+	, #{FILE_MINWON_SEQ}
+	, #{FILE_NAME}
+	, #{FILE_PATH}
+	, #{FILE_MINWON_SEQ}
+	, #{FILE_MINWON_SEQ}
+)
+]]></select>
 </mapper>

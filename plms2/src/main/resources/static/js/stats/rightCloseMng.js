@@ -372,7 +372,7 @@ return nRow;
 
 		columns: [
 			{ data: "save_year", "orderable": false },//0
-			{ data: "save_quarter", "defaultContent": "" },
+			{ data: "save_quarter","orderable":false, "defaultContent": "" },
 			{ data: "save_date"},
 			{ data: "sayuji_y_y", "defaultContent": "" },
 			{ data: "sayuji_y_n", "defaultContent": "" },
