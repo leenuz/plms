@@ -191,7 +191,19 @@ console.log("-----------start openMapWindow-----------------");
 
   hiddenMenuOpenEvet();
 
+	//241015
+	function leftbarSelected() {
+		//현재 URL 체크
+		const currentURL = window.location.href;
+		
+		let urlTextArr = currentURL.split('/');
+		
+		let urlCheck = "navi_" + urlTextArr[urlTextArr.length - 2];
 
+		$("#"+urlCheck).addClass('addClick active')
+		
+	}
+	leftbarSelected();
 
 </script>
 <!-- header -->
@@ -227,12 +239,12 @@ console.log("-----------start openMapWindow-----------------");
     
     <ul class="navMenu" >
       <li>
-        <button class="surfaceMenuBtn" >
+        <button class="surfaceMenuBtn">
           <span><img src="/assets/media/nav/surfaceMap.png" alt="mapIcon" onClick="goto2pmsMap();" /></span>지도
         </button>
       </li>
       <li>
-        <button class="surfaceMenuBtn">
+        <button class="surfaceMenuBtn" id="navi_songyu">
           <span><img src="/assets/media/nav/surfaceHammer.png" alt="nowDopco" /></span>송유관로 현황
         </button>
         <div class="hiddenMenuBoxs">
@@ -244,7 +256,7 @@ console.log("-----------start openMapWindow-----------------");
         </div>
       </li>
       <li>
-        <button class="surfaceMenuBtn">
+        <button class="surfaceMenuBtn" id="navi_jisang">
           <span><img src="/assets/media/nav/surfaceMenu.png" alt="surface" /></span>지상권
         </button>
         <div class="hiddenMenuBoxs">
@@ -259,7 +271,7 @@ console.log("-----------start openMapWindow-----------------");
         </div>
       </li>
       <li>
-        <button class="surfaceMenuBtn">
+        <button class="surfaceMenuBtn" id="navi_gover">
           <span><img src="/assets/media/nav/surfacePrivate.png" alt="private" /></span>점용
         </button>
         <div class="hiddenMenuBoxs">
@@ -273,7 +285,7 @@ console.log("-----------start openMapWindow-----------------");
         </div>
       </li>
       <li>
-        <button class="surfaceMenuBtn">
+        <button class="surfaceMenuBtn" id="navi_togi">
           <span><img src="/assets/media/nav/surfaceGround.png" alt="develop" /></span>토지개발
         </button>
         <div class="hiddenMenuBoxs">
@@ -284,7 +296,7 @@ console.log("-----------start openMapWindow-----------------");
         </div>
       </li>
       <li>
-        <button class="surfaceMenuBtn">
+        <button class="surfaceMenuBtn" id="navi_dopco">
           <span><img src="/assets/media/nav/surfaceGround.png" alt="company" /></span>회사토지
         </button>
         <div class="hiddenMenuBoxs">
@@ -296,7 +308,7 @@ console.log("-----------start openMapWindow-----------------");
         </div>
       </li>
       <li>
-        <button class="surfaceMenuBtn">
+        <button class="surfaceMenuBtn" id="navi_issue">
           <span><img src="/assets/media/nav/surfaceIssue.png" alt="issue" /></span>이슈
         </button>
         <div class="hiddenMenuBoxs">
@@ -307,7 +319,7 @@ console.log("-----------start openMapWindow-----------------");
         </div>
       </li>
       <li>
-        <button class="surfaceMenuBtn">
+        <button class="surfaceMenuBtn" id="navi_stats">
           <span><img src="/assets/media/nav/total.png" alt="totalIcon" /></span>통계
         </button>
         <div class="hiddenMenuBoxs">

@@ -3097,9 +3097,8 @@ log.info("data:"+data.get(0));
 			log.info("jisangDoc1list:"+reqDoc1list);
 			log.info("dataAccountYn:"+data.get(0).get("account_yn"));
 			
-			
-			log.info("GC.getSampleFileDataDir(): " + GC.getSampleFileDataDir());
 			ModelAndView mav=new ModelAndView();
+			
 			mav.addObject("jisaList",jisalist);
 			mav.addObject("resultJimokList",jimoklist);
 			mav.addObject("sidoList",sidolist);

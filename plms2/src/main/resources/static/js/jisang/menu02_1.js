@@ -371,7 +371,7 @@ return nRow;
 				targets: [12]
 				, width: "100px"
 				, render: function(data, type, row, meta) {
-					console.log("x:", row.x, "y:", row.y);
+					//console.log("x:", row.x, "y:", row.y);
 					return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}, //지도보기

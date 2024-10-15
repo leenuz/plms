@@ -422,13 +422,8 @@ function commonJisaInfoCheck() {
 		$("#jisaNameDiv").text(jisaName);
 		$("#jisaNameDiv").attr('disabled', true)
 		
-		//점용마스터조회
+		//점용 페이지
 		$("#jisaText").text(jisaName);
-		//$("#privateUseSelectBox01_1").text(jisaName);
-		//$("#privateUseSelectBox01_1").attr('disabled', true);
-		
-		//$("#privateUseSelectBox02_1").text(jisaName);
-		//$("#privateUseSelectBox02_1").attr('disabled', true);
 
 	} else {
 		
@@ -437,14 +432,8 @@ function commonJisaInfoCheck() {
 		$("#jisaNameDiv").text(allOf);
 		$("#jisaNameDiv").attr('disabled', false);
 		
-		//점용마스터조회
+		//점용 페이지
 		$("#jisaText").text(jisaName);
-		//$("#privateUseSelectBox01_1").text(allOf);
-		//$("#privateUseSelectBox01_1").attr('disabled', false);
-		
-		//$("#privateUseSelectBox02_1").text(allOf);
-		//$("#privateUseSelectBox02_1").attr('disabled', false);
-		
 	}
 	
 }
@@ -597,6 +586,20 @@ function chageStringToHyphen (targetStr){
 	}
 	
 	return hyphenStr;
+}
+
+function leftbarSelected() {
+	//현재 URL 체크
+	const currentURL = window.location.href;
+	
+	let urlTextArr = currentURL.split('/');
+	
+	let urlCheck = "navi_" + urlTextArr[urlTextArr.length - 2];
+
+	$("#"+urlCheck).addClass('addClick active')
+	
+	console.log('현재 페이지는 ?? :: ' + currentURL);
+	
 }
 /***************************************************************************/
 /***************************************************************************/
