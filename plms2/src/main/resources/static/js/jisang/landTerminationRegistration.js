@@ -351,7 +351,10 @@ $(document).ready(function(){
         row+='</li>';
         row+='<li class="content registDateWidth"><input type="text" id="filename" th:placeholder="'+'[[${val.pa_file_path}]]'+'" class="notWriteInput" readonly></li>';
         row+='<li class="content fileNameWidth"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li>';
-        row+=`<li class="content"><button class="viewDetailButton" onclick="openFilePopup('${formattedPath}')">보기</button></li></ul>`;
+        row+=`<li class="content">`;
+        /*row+=`<button class="viewDetailButton" onclick="openFilePopup('${formattedPath}')">보기</button>`;*/
+				row += '</li>';
+				row += '</ul>';
         obj.after(row);
 
         var radio=$(row).find('input');
