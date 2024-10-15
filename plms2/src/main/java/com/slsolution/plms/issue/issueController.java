@@ -99,6 +99,7 @@ public class issueController {
 	@GetMapping(path = "/complaintManage") // http://localhost:8080/api/get/dbTest
 	public ModelAndView complaintManage(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("serverName", GC.getServerName());
 		mav.setViewName("content/issue/complaintManage");
 		return mav;
 	}

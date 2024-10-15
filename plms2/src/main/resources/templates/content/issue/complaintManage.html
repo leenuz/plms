@@ -107,7 +107,7 @@ div.dt-filter-spacer {
 <title>민원관리</title>
 </head>
 <th:block layout:fragment="content">
-
+	<input type="hidden" id="serverName" value="${serverName}">
 	<!-- 민원관리 -->
 	<div class="complaintManageWrappers">
 		<div class="complaintManageHeader"></div>
@@ -135,7 +135,10 @@ div.dt-filter-spacer {
 							</section>
 						</div>
 					</div>
-					<button class="toolBtn viewBtn">문서보기</button>
+					<!-- <button class="toolBtn viewBtn">문서보기</button> -->
+					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" onclick="">문서보기</button>
+					<button class="toolBtn viewBtn" th:if="${serverName == 'DEV'}">문서보기</button>
+					<button class="toolBtn viewBtn" th:if="${serverName == 'REAL'}">문서보기</button>
 					<button class="toolBtn completeBtn complainFinBtn">민원완료</button>
 				</section>
 				<section class="codeManagement">
