@@ -633,8 +633,8 @@ public class SchedulerController {
 //						mainJisangMap.put("MERGE_REASON","합필사유");
 //						mainJisangMap.put("MERGE_COMMENT","검토의견");
 						HashMap mjMap = new HashMap();
-						mjMap.put("MERGE_REASON","aaa");
-						mjMap.put("MERGE_COMMENT","bbb");
+						mjMap.put("MERGE_REASON",datas.get("jmt_merge_reason")==null?"합필사유":datas.get("jmt_merge_reason"));
+						mjMap.put("MERGE_COMMENT",datas.get("merge_comment")==null?"검토의견":datas.get("merge_comment"));
 						mjMap.put("jisang_no",datas.get("jisang_no"));
 						mainService.UpdateQuery("jisangSQL.updateJisangMasterMergeReason", mjMap);
 					}

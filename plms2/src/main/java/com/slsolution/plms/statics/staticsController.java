@@ -1619,6 +1619,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		
 	
 		ArrayList dataList = new ArrayList();
+		int dataTotalCnt = 0;
 		HashMap map = new HashMap();
 		try {
 	
@@ -1631,14 +1632,17 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 			params.put("MM_TG", MM_TG);
 	
 			if("UP".equals(TYPE)) {
+				dataTotalCnt = (int) mainService.selectCountQuery("staticSQL.selectByRightInDeListDetailUpCnt", params);
 				dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListDetailUp", params);
 			}else {
+				dataTotalCnt = (int) mainService.selectCountQuery("staticSQL.selectByRightInDeListDetailDownCnt", params);
 				dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListDetailDown", params);
 			}
 			
 	
 			map.put("message", "success");
 			map.put("dataList", dataList);
+			map.put("dataTotalCnt", dataTotalCnt);
 		} catch (Exception e) {
 			map.put("message", "처리 중 오류가 발생했습니다.");
 			e.printStackTrace();
@@ -1944,6 +1948,14 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 			
 			// 분기대비
 			else {
+				// 필지수 합계	
+				if(Integer.parseInt(YYYY) == Integer.parseInt(YYYY_TG) && Integer.parseInt(MM) == Integer.parseInt(MM_TG)){
+					params.put("YYYY_REF", Integer.parseInt(YYYY_TG)); 	// 기준년
+					params.put("MM_REF", Integer.parseInt(MM_TG));		// 기준월
+					params.put("YYYY_TG", Integer.parseInt(YYYY_REF));		// 비교년
+					params.put("MM_TG", Integer.parseInt(MM_REF));			// 비교월
+				}
+
 				if("사유지".equals(GOVER_OWN)){
 					if("지상권".equals(JISANG_STATUS)){
 						dataList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeStatusBoardListPrivateJisang", params);
@@ -1957,9 +1969,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 					
 				}else if("국유지".equals(GOVER_OWN)){
 					dataList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeStatusBoardListPublicJisang", params);
-					
 				}else {
-					// 필지수 합계				
 					dataList = (ArrayList) mainService.selectQuery("staticSQL.selectFieldInDeStatusBoardListBungiSum", params);
 				}
 			}
