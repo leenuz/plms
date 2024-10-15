@@ -3,7 +3,6 @@
 // 함수명 변경
 const createCustomLiCompLandReg = () => {
     const contentItems = document.querySelectorAll('.selectContentArea');
-
     contentItems.forEach(contentItem => {
         // 추가
         if (contentItem.classList.contains('customLiProcessed')) {
@@ -107,7 +106,6 @@ compLandReqSelectboxClickEvent01();
 
 const compLandRegSelectEvent02 = () => {
     const compLandRegContainer = document.querySelectorAll('#compLandReg .contWrap');
-
     compLandRegContainer.forEach((wrap) => {
         wrap.addEventListener('click', function (event) {
             if (event.target.classList.contains('moreSelectBtn')) {

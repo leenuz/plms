@@ -59,14 +59,24 @@ public class togiController {
 	
 	@GetMapping(path="/menu04_1") //http://localhost:8080/api/get/dbTest
     public ModelAndView menu04_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		/*******************************/
+		//받은 세션 Map으로 전환
+		Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+		/*******************************/
+		
+		
 		HashMap params = new HashMap();
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("jisaList",jisalist);
 		mav.addObject("sidoList",sidolist);
-
+		
+		//241006 - 지사정보 추가
+		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
+		
 		mav.setViewName("content/togi/menu04_1");
 		return mav;
 	}
@@ -76,13 +86,18 @@ public class togiController {
 //		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
 		ModelAndView mav=new ModelAndView();
+		/*******************************/
+		//받은 세션 Map으로 전환
+		Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+		/*******************************/
 		HashMap params = new HashMap();
-
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 //		String pnu = httpRequest.getParameter("pnu");
 		params.put("pnu","4423010300100700004");
 
 //		ArrayList<HashMap> searchList = mainService.selectQuery("jisangSQL.selectBasicSearchList", params);
-
+		//241006 - 지사정보 추가
+		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 //		mav.addObject("searchList", searchList);
 		mav.setViewName("content/togi/landReg");
 		return mav;

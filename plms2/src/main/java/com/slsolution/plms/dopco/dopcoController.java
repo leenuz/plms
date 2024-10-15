@@ -51,7 +51,15 @@ public class dopcoController {
     public ModelAndView menu05_1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		/*******************************/
+		//받은 세션 Map으로 전환
+		Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+		/*******************************/
+		
+		
 		HashMap params = new HashMap();
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
+		
 		ArrayList<HashMap> list=new ArrayList<HashMap>();
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
@@ -59,6 +67,9 @@ public class dopcoController {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("jisaList",jisalist);
 		mav.addObject("sidoList",sidolist);
+		
+		//241006 - 지사정보 추가
+		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 		mav.setViewName("content/dopco/menu05_1");
 		return mav;
 	}
@@ -69,34 +80,48 @@ public class dopcoController {
     public ModelAndView compLandReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 //		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 //		response.setHeader("Content-Security-Policy", " frame-ancestors 'self'");
+		/*******************************/
+		//받은 세션 Map으로 전환
+		Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+		/*******************************/
+		
 		HashMap params = new HashMap();
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 		ArrayList<HashMap> addressList = mainService.selectQuery("jisangSQL.bunhalAddressSearch",params);
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
-		
-		
-		
 		
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("content/dopco/compLandReg");
 		mav.addObject("addressList",addressList);
 		mav.addObject("resultJimokList",jimoklist);
 		mav.addObject("jisaList",jisalist);
+		//241006 - 지사정보 추가
+		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 
 		return mav;
 	}
 
 	@GetMapping(path="/compLandEdit") //http://localhost:8080/api/get/dbTest
     public ModelAndView compLandEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		
+		/*******************************/
+        //받은 세션 Map으로 전환
+        Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+        /*******************************/
+        
 		HashMap params = new HashMap();
 		ArrayList<HashMap>  list=new ArrayList<HashMap>();
-
+		
+		//지사정보 param에 싣기
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa")); 
 		ArrayList<HashMap> jimoklist = mainService.selectQuery("commonSQL.selectJimokList",params);
 		ArrayList<HashMap> addressList = mainService.selectQuery("jisangSQL.bunhalAddressSearch",params);
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		String idx = httpRequest.getParameter("idx");
 		String dopco_no = httpRequest.getParameter("dopcoNo");
-
+		
+		   
 		params.put("idx",idx);
 		params.put("manage_no",idx);
 		params.put("dopco_no",dopco_no);
@@ -148,6 +173,7 @@ public class dopcoController {
 		mav.addObject("addressList",addressList);
 		mav.addObject("resultJimokList",jimoklist);
 		mav.addObject("jisaList",jisalist);
+		
 		mav.setViewName("content/dopco/compLandEdit");
 
 		return mav;
@@ -463,7 +489,14 @@ public class dopcoController {
 
 	@GetMapping(path="/menu05_2") //http://localhost:8080/api/get/dbTest
     public ModelAndView menu05_2(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		
+		/*******************************/
+		//받은 세션 Map으로 전환
+		Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+		/*******************************/
+		
 		HashMap params = new HashMap();
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 		ArrayList<HashMap> list=new ArrayList<HashMap>();
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList",params);
 		ArrayList<HashMap> sidolist = mainService.selectQuery("commonSQL.getSidoMaster",params);
@@ -471,6 +504,9 @@ public class dopcoController {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("jisaList",jisalist);
 		mav.addObject("sidoList",sidolist);
+		
+		//241006 - 지사정보 추가
+		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 		mav.setViewName("content/dopco/menu05_2");
 		return mav;
 	}

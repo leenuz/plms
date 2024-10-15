@@ -16,6 +16,7 @@
 
 $(document).ready(function () {
 	console.log("*** menu05_2.js ***");
+	commonJisaInfoCheck();
 	loadDataTable("");
 });
 
@@ -161,7 +162,7 @@ $(document).on("click", "#registerBtn", function () {
 
 function loadDataTable(params) {
 	console.log(params);
-
+	let jisaCheck = $("#loginJisa").val();
 	table = $('#userTable').DataTable({
 		scrollCollapse: true,
 		scrollX: true,
@@ -192,7 +193,7 @@ function loadDataTable(params) {
 			datatype: "json",
 			data: function(d) {
 				//d=params;
-				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.jisa = ljsIsNull(jisaCheck) ? ljsIsNull(params.jisa) ? '' : params.jisa : jisaCheck;
 				d.jasan_no = params.jasan_no;
 				d.chuideuk_date_date = params.start_date + '~' + params.end_date;
 				d.start_date = params.start_date;

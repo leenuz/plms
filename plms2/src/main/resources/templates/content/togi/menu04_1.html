@@ -115,6 +115,7 @@ margin:10px;
     <title>토지개발 관리</title>
   </head>
 <th:block layout:fragment="content">
+	<input type="hidden" id="loginJisa" th:value="${loginJisa}"/>
     <!--토지개발관리-->
     <div id="dopcoLandDevelopmentManage">
       <!--header삽입-->
@@ -145,7 +146,7 @@ margin:10px;
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="landDevelopmentManageSelects">
-                  <button class="landDevelopmentManageSelectsTitleBtn">전체</button>
+                  <button class="landDevelopmentManageSelectsTitleBtn" id="jisaNameDiv">전체</button>
                   <div class="sufaceSelectList">
                     <ul class="surfaceSelectListMember">
                       <li><p>전체</p></li>

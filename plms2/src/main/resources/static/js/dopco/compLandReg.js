@@ -573,6 +573,7 @@ let fileNo = 1;
 let uploadFiles = new Array();
 $(document).ready(function() {
 	let objDragAndDrop = $(".fileUploadBox");
+	commonJisaInfoCheck();
 	
 	$(document).on("dragenter",".fileUploadBox",function(e) {
 		e.stopPropagation();
