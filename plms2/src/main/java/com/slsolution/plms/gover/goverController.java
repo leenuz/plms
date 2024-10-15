@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -348,6 +349,7 @@ public class goverController {
 		if (goverPnuAtcFileList == null || goverPnuAtcFileList.isEmpty()) { // 필지 첨부파일
 		    mav.addObject("goverPnuAtcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(goverPnuAtcFileList);
 		    mav.addObject("goverPnuAtcFileList", goverPnuAtcFileList);
 		}
 		if (goverIssueHistoryList == null || goverIssueHistoryList.isEmpty()) { //잠재이슈 변경이력

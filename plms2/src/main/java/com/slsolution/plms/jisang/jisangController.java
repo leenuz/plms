@@ -2110,6 +2110,8 @@ log.info("PMT_NO:"+PMT_NO);
 		if (jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()) { //필지 첨부파일
 		    mav.addObject("jisangPnuAtcFileList", new ArrayList<>());
 		} else {
+			// 필지 첨부파일 목록을 역순으로 정렬
+		    Collections.reverse(jisangPnuAtcFileList);
 		    mav.addObject("jisangPnuAtcFileList", jisangPnuAtcFileList);
 		}
 		if (jisangIssueHistoryList == null || jisangIssueHistoryList.isEmpty()) { //잠재이슈 변경이력
@@ -2829,24 +2831,33 @@ log.info("data:"+data.get(0));
 		mav.setViewName("content/jisang/groundDetail :: #fileListDiv");
 		return mav;
 	}
+	
+	
 	//아이디를 기준으로 해당 영역만 리플래쉬 되도록 하는 로직
-		@PostMapping(path="/getPnuAtcFileData") //http://localhost:8080/api/get/dbTest
-	    public ModelAndView getPnuAtcFileData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-			ModelAndView mav=new ModelAndView();
-			HashMap params = new HashMap();
-			ArrayList<HashMap>  list=new ArrayList<HashMap>();
-			
-			String idx = httpRequest.getParameter("manage_no");
-			String pnu = httpRequest.getParameter("pnu");
-			
-			params.put("idx",idx);
-			params.put("pnu",pnu);
-			log.info("params:"+params);
-			ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
-			mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
-			mav.setViewName("content/jisang/groundDetail :: #fileListDiv");
-			return mav;
+	@PostMapping(path="/getPnuAtcFileData") //http://localhost:8080/api/get/dbTest
+    public ModelAndView getPnuAtcFileData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		HashMap params = new HashMap();
+		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+		
+		String idx = httpRequest.getParameter("manage_no");
+		String pnu = httpRequest.getParameter("pnu");
+		
+		params.put("idx",idx);
+		params.put("pnu",pnu);
+		log.info("params:"+params);
+		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+		
+		if (jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()) { // 필지 첨부파일
+		    mav.addObject("jisangPnuAtcFileList", new ArrayList<>());
+		} else {
+			Collections.reverse(jisangPnuAtcFileList); // 등록일 기준 desc 정렬
+		    mav.addObject("jisangPnuAtcFileList", jisangPnuAtcFileList);
 		}
+		
+		mav.setViewName("content/jisang/groundDetail :: #fileListDiv");
+		return mav;
+	}
 	
 	
 //	@PostMapping("/getAtcFileData")

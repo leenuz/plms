@@ -330,11 +330,11 @@ $(document).ready(function () {
 		row += '<input type="hidden" name="newFileCheckYn" value="Y">';	//새로운 첨부파일 파악 여부
 		row += '</li>';
 		row += '<li class="content viewBtnBox">';
-		//row += '<button class="viewDetailButton lightBlueBtn">보기</button>'; // 새로 추가한 파일은 보기 버튼 제거?
+		//row += '<button class="viewDetailButton lightBlueBtn">보기</button>'; // 새로 추가한 파일은 보기 버튼 제거
 		row += '</li>';
 		row += '</ul>';
 
-		obj.append(row); // 파일 목록이 있는 DOM 요소 뒤에 파일 정보를 추가
+		obj.prepend(row); // 파일 목록이 있는 DOM 요소 뒤에 파일 정보를 추가
 
 		var radio = $(row).find('input'); // row에서 input 요소를 찾음
 		console.log("---------------radio checkbox----------");
