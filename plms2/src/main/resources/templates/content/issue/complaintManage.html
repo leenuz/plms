@@ -98,27 +98,6 @@ div.dt-filter-spacer {
 	text-align: right;
 	margin: 10px;
 }
-.complaint_completed {
-	width: 100% !important;
-	padding: 0px !important;
-	overflow-y: auto;
-}
-
-.complaintinfo_btns {
-	clear: both !important;
-}
-/*// contentScr*/
-.complaint_completed .popupWrap {
-	height: 100%;
-	overflow-y: auto;
-}
-
-.complaintManage_file,
-.complaintManage_consult,
-.complaintManage_togi {
-	width: 100% !important;
-	padding: 0px !important;
-}
 
 #complaint_completed ::-webkit-scrollbar {
 	width: 4px;
@@ -309,7 +288,7 @@ div.dt-filter-spacer {
 					<div class="subTitle">
 						<div class="subTitleText">협의 내용</div>
 					</div>
-
+					
 					<div class="contWrap">
 						<div class="depth1">
 							<ul class="titles titleScr">
@@ -626,74 +605,22 @@ div.dt-filter-spacer {
                 </ul>
             </div>
         </section>
-        <!-- 민원토지 -->
-		<section id="complaintManage" class="complaintManage_togi">
-			<h3>민원 토지</h3>
-			<div class="complaintLand">
-				<div class="contWrap">
-					<div class="depth1">
-						<ul class="titles">
-							<li class="title">대표토지여부</li>
-							<li class="title largeWidth">주소</li>
-							<li class="title">등기 여부</li>
-							<li class="title">계약 여부</li>
-						</ul>
-						<ul class="contents">
-							<li class="content">
-								<input type="text" readonly placeholder="" class="notWriteInput" />
-							</li>
-							<li class="content largeWidth">
-								<input type="text" readonly placeholder="" class="notWriteInput" />
-							</li>
-							<li class="content">
-								<input type="text" readonly placeholder="" class="notWriteInput" />
-							</li>
-							<li class="content">
-								<input type="text" readonly placeholder="" class="notWriteInput" />
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
+		<section class="complaintinfo_update" id="pop_complaintInfo_togi">
+			<ul class="complaintinfo_update_th">
+				<li>주소</li>
+				<li>업데이트 여부</li>
+				<li class="complaintinfo_update_btn">상세</li>
+			</ul>
+			<ul>
+				<li>경기도 평택시 월곡동 140-7</li>
+				<li>N</li>
+				<li class="complaintinfo_update_btn"><button>상세보기</button></li>
+			</ul>
 		</section>
-		
-		<!-- 첨부파일 -->
-		<section id="complaintManage" class="complaintManage_file">
-			<h3>첨부파일</h3>
-			<div class="attachFileInfo">
-				<div class="contWrap">
-					<div class="depth1">
-						<ul class="titles">
-							<li class="title">날짜</li>
-							<li class="title fileNameWidth">파일명</li>
-							<li class="title">다운로드</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</section>
-		
-		<!-- 협의 내용 -->
-		<section id="complaintManage" class="complaintManage_consult">
-			<h3>협의 내용</h3>
-			<div class="consultDetails">
-				<div class="contWrap">
-					<div class="depth1">
-						<ul class="titles">
-							<li class="title">일시</li>
-							<li class="title smallWidth">진행 현황</li>
-							<li class="title fileNameWidth">협의 내용</li>
-							<li class="title">ECHO 문서보기</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</section>
-		
-        <div class="complaintinfo_btns">
-            <button class="closeBtn finalBtn">닫기</button>
-        </div>
-    </div>
+		<div class="complaintinfo_btns">
+			<button class="closeBtn finalBtn">닫기</button>
+		</div>
+	</div>
 </div>
 	<!-- 민원 완료 보고 [E] -->
 	

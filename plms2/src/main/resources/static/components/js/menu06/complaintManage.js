@@ -507,6 +507,24 @@ function onDataLoad() {
 			} else {
 				$('#dopcoAllWrappers .complaintLand .depth1').append(noDataUl);
 			}
+			
+			// 민원 완료 > 민원 토지 ul 추가
+			if (tojiList != null && tojiList != undefined && tojiList.length > 0) {
+				$('#pop_complaintInfo_togi ul').not(function () {
+					return $(this).hasClass('complaintinfo_update_th');
+				}).remove();
+				
+				$.each(tojiList, function(index, item) {
+					var newItem = `<ul class="complainant_info">
+							<li>${tojiList[index].addr || '-'}</li>
+							<li>N</li>
+							<li class="complaintinfo_update_btn"><button>상세보기</button></li>
+						</ul>`;
+					$('#pop_complaintInfo_togi').append(newItem);
+				});
+			} else {
+				$('#dopcoAllWrappers .complaintLand .depth1').append(noDataUl);
+			}
 
 			//첨부파일 ul 추가
 			if (fileList != null && fileList != undefined && fileList.length > 0) {
@@ -521,7 +539,7 @@ function onDataLoad() {
                     <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.file_nm || '-'}">
                 </li>
                 <li class="content btnsWrap">
-                    <button class="fileDownloadBtn">
+                    <button class="fileDownloadBtn" onclick="attachFileDownload('${item.file_path}', '${item.file_nm}', '${item.mw_seq}', '${item.file_seq}', 'minwon')">
                     다운로드 <span class="downloadIcon"></span>
                     </button>
                 </li>
@@ -549,7 +567,9 @@ function onDataLoad() {
                     <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.agree_title || '-'}">
                 </li>
                 <li class="content btnsWrap">
-                    <button class="viewDetailButton">문서보기</button>
+                    <a href="${item.url}" target="_blank">
+                    	<button class="viewDetailButton">문서보기</button>
+                    </a>
                 </li>
                 </ul>
                 `;
@@ -908,6 +928,9 @@ function complaintPopupOpen() {
 	$('#complaint_completed').addClass('active');
 }
 
+function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
+	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
+}
 
 
 
