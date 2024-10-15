@@ -725,6 +725,10 @@ function minwon_completeReportPop() {
 function minwonConsultPopupOpen() {
 	console.log('팝업오픈');
 	$("#complaint_register_Popup").addClass('active');
+	
+	//팝업오픈하고 날짜 오늘날짜로 기본세팅
+    $("#consult_date_field").val(today_yyyymmdd());
+	
 	minwonConsultInfoSearch();	//민원협의 정보 조회
 }
 
@@ -827,8 +831,63 @@ function sendFileToServer(formData, status) {
 
 
 function minwonConsultInfoSearch() {
-	console.log('민원협의 조회');
+	console.log('민원협의 조회 :: ' + $("#minwonSeq").val());
+	
+	const param = {
+		"mw_seq" : $("#minwonSeq").val()
+	}
+	
+	$.ajax({
+		url : '/issue/minwonConsultSearch',
+		type: 'GET',
+		data: param
+	})
+	.done(function(fragment) {
+		
+	})
+	.fail(function(){
+		console.log('AJAX Error')
+	})
+	;
+	
 }
+
+function complainSelectBoxOpen() {
+	// Step 1. selectbox , ul요소 가져오기
+	let selectBoxElement = $("#complaint_register_Selectbox01");
+	let ulElement = $("#view_complaint_box");
+	
+	if(ulElement.hasClass('active')) {
+		ulElement.removeClass('active');
+		return false;
+	}
+	
+	
+	// Step 2. ul안데 기존 li요소들제거
+	ulElement.empty();
+	
+	// Step 3. option항목들 순회
+	selectBoxElement.find('option').each(function(){
+		let optionText = $(this).text();
+		
+		// Step 4. 새로운 li요소 생성
+		let liElement = $("<li>").text(optionText);
+		
+		//li에 클릭 이벤트 추가 및 버튼 텍스트 변경
+		liElement.on("click", function() {
+			$(".Popup_Custom_SelectView").text(optionText);
+			ulElement.removeClass('active');
+		})
+		
+		// Step 5. ul에 li요소 추가
+		
+		ulElement.append(liElement);
+	});
+	
+	//
+	ulElement.addClass('active');
+}
+
 //========================민원협의 내용 등록/수정 [E]========================
 //************************************************************************
 //==============================================================================================================

@@ -137,6 +137,7 @@ div.dt-filter-spacer {
 	<input type="hidden" id="serverName" th:value="${serverName}">
 	<input type="hidden" id="minwon" th:value="${minwon}">
 	<input type="hidden" id="minwonStatus" th:value="${minwon.mm_status}">
+	<input type="hidden" id="minwonSeq" th:value="${minwon.mm_mw_seq}">
 	<!-- 민원관리 -->
 	<div class="complaintManageWrappers">
 		<div class="complaintManageHeader"></div>
@@ -491,8 +492,8 @@ div.dt-filter-spacer {
                                 </select>
                             </div>
                             <div class="Popup_Custom_SelectBox">
-                                <button class="Popup_Custom_SelectView">전체</button>
-                                <ul class="Popup_Custom_SelectBtns">
+                                <button class="Popup_Custom_SelectView" onclick="complainSelectBoxOpen();">전체</button>
+                                <ul class="Popup_Custom_SelectBtns" id="view_complaint_box">
 
                                 </ul>
                             </div>
@@ -502,7 +503,7 @@ div.dt-filter-spacer {
                         <li class="complaints_contents_titles">협의 날짜</li>
                         <li class="complaints_calender_box">
                             <div class="complaint_calender_wrap">
-                                <input type="date" name="DATE" data-placeholder="날짜선택" required aria-required="true">
+                                <input type="date" name="DATE" id="consult_date_field" data-placeholder="날짜선택" required aria-required="true">
                             </div>
                         </li>
                     </ul>

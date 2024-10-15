@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -2229,6 +2230,30 @@ public class issueController {
 		
 		return resultMap;
 	}
+	
+	/**
+	 * 민원협의 조회
+	 * @param httpRequest
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+	@GetMapping(path="/minwonConsultSearch")
+	public ModelAndView minwonConsultSearch(HttpServletRequest httpRequest, @RequestParam HashMap<String, Object> param) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String target_mw_seq = (String)param.get("mw_seq");
+		
+		//조회
+		HashMap<String, Object> queryParam = new HashMap<String, Object>();
+		queryParam.put("MW_SEQ", target_mw_seq);
+		
+		ArrayList<HashMap> minwonList = mainService.selectQuery("issueSQL.selectMinwonConsultSearch", queryParam);
+		
+		
+		return mav;
+	}
+	
 	
 	// PNU 조회 //민원신규등록시 주소검색에서 사용
 //	@PostMapping(path="/selectMinwonPNUList")
