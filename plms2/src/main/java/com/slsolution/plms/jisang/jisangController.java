@@ -2110,6 +2110,8 @@ log.info("PMT_NO:"+PMT_NO);
 		if (jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()) { //필지 첨부파일
 		    mav.addObject("jisangPnuAtcFileList", new ArrayList<>());
 		} else {
+			// 필지 첨부파일 목록을 역순으로 정렬
+		    Collections.reverse(jisangPnuAtcFileList);
 		    mav.addObject("jisangPnuAtcFileList", jisangPnuAtcFileList);
 		}
 		if (jisangIssueHistoryList == null || jisangIssueHistoryList.isEmpty()) { //잠재이슈 변경이력
