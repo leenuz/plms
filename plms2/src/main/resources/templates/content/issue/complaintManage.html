@@ -137,7 +137,7 @@ div.dt-filter-spacer {
 						</div>
 					</div>
 					<!-- <button class="toolBtn viewBtn">문서보기</button> -->
-					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" onclick="">D_민원대응방안</button>
+					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" id="minwonResponsePopup">D_민원대응방안</button>
 					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" onclick="minwonConsultPopupOpen()">D_민원협의</button>
 					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" onclick="">D_민원완료</button>
 					<button class="toolBtn viewBtn" th:if="${serverName == 'DEV'}">문서보기</button>
@@ -315,12 +315,14 @@ div.dt-filter-spacer {
                 </div>
                 <div class="complainRespondBoxs">
                     <div class="complainRespondDatas">
+                    		<!-- 민원명 -->
                         <ul class="complainRespondDataCont">
                             <li class="complainRespondDataTitle">
                                 <p>민원명</p>
                             </li>
-                            <li class="complainRespondNameBox"><input type="text" readonly value="지상권 미설정 토지 송유관이설 요구" /></li>
+                            <li class="complainRespondNameBox"><input type="text" readonly th:value="${minwon.mm_mw_title}" /></li>
                         </ul>
+                        <!-- 권리확보 -->
                         <ul class="complainRespondDataCont">
                             <li class="complainRespondDataTitle">
                                 <p>권리확보</p>
@@ -334,6 +336,7 @@ div.dt-filter-spacer {
                                 </div>
                             </li>
                         </ul>
+                        <!-- 계약여부 -->
                         <ul class="complainRespondDataCont">
                             <li class="complainRespondDataTitle">
                                 <p>계약여부</p>
@@ -345,6 +348,7 @@ div.dt-filter-spacer {
                                 </div>
                             </li>
                         </ul>
+                        <!-- 이슈유형 -->
                         <ul class="complainRespondDataCont">
                             <li class="complainRespondDataTitle">
                                 <p>이슈유형</p>
@@ -408,13 +412,14 @@ div.dt-filter-spacer {
                                 </div>
                             </li>
                         </ul>
+                        <!-- 민원내용 -->
                         <ul class="complainRespondDataCont">
                             <li class="complainRespondDataTitle complainRespondTextareaTitle">
                                 <p>민원내용</p>
                             </li>
                             <li class="complainRespondDataTextWrap">
                                 <div class="complainRespondTextBoxs">
-                                    <textarea placeholder="민원내용 입력칸입니다."></textarea>
+                                    <textarea placeholder="민원내용 입력칸입니다." th:text="${minwon.minwon_content}"></textarea>
                                 </div>
                             </li>
                         </ul>

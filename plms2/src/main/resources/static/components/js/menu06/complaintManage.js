@@ -638,7 +638,7 @@ function sendFileToServer(formData, status) {
 
 //======================민원 대응방안 수립 팝업 시작========================
 //문서보기 버튼 클릭 시 민원 대응방안 수립 팝업 열기
-$(document).on("click", "#test1", function() {
+$(document).on("click", "#minwonResponsePopup", function() {
 	// 현재 페이지의 URL에서 mw_seq 파라미터 값 추출
 	const urlParams = new URLSearchParams(window.location.search);
 	const mwSeq = urlParams.get('mw_seq');  // 'mw_seq' 파라미터 값 가져옴
@@ -648,8 +648,6 @@ $(document).on("click", "#test1", function() {
 	console.log("문서보기 클릭됨");
 	console.log("mw_seq: ", mwSeq);
 
-	console.log("문서보기 클릭됨");
-
 	// Ajax 요청을 통해 데이터 처리
 	$.ajax({
 		url: "/issue/minwonBangan",
@@ -658,7 +656,7 @@ $(document).on("click", "#test1", function() {
 	})
 		.done(function(fragment) {
 			console.log("*** 데이터 수신 성공 ***");
-			console.log(fragment);
+			//console.log(fragment);
 
 			// 팝업 열기
 			$("#complainRespondContentBoxs").show();  // 팝업을 보이게 함

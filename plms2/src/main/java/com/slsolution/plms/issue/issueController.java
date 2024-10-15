@@ -99,6 +99,19 @@ public class issueController {
 	@GetMapping(path = "/complaintManage") // http://localhost:8080/api/get/dbTest
 	public ModelAndView complaintManage(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
+		
+		String mwSeq = httpRequest.getParameter("mw_seq");
+		log.info("받은 mw_seq 값: " + mwSeq);
+
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("mwSeq", mwSeq);
+		
+		ArrayList<HashMap> minwonList = mainService.selectQuery("issueSQL.selectAllMinwonData", params);
+		log.info("minwonList: " + minwonList);
+		log.info("minwonList.get(0) : " + minwonList.get(0));
+
+		// 필요한 데이터도 추가로 전달 가능
+		mav.addObject("minwon", minwonList.get(0));
 		mav.addObject("serverName", GC.getServerName());
 		mav.setViewName("content/issue/complaintManage");
 		return mav;
@@ -122,7 +135,7 @@ public class issueController {
 
 
 		// 필요한 데이터도 추가로 전달 가능
-		mav.addObject("minwonList", minwonList.get(0));
+		mav.addObject("minwon", minwonList.get(0));
 
 		// 반환할 뷰와 특정 HTML 요소를 업데이트할 태그를 지정 mav.
 		mav.setViewName("content/issue/complaintManage :: #complainRespondContentBoxs");
