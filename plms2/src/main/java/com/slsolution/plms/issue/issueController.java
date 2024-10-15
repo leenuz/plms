@@ -108,8 +108,7 @@ public class issueController {
 		
 		ArrayList<HashMap> minwonList = mainService.selectQuery("issueSQL.selectAllMinwonData", params);
 		log.info("minwonList: " + minwonList);
-		log.info("minwonList.get(0) : " + minwonList.get(0));
-
+		log.info("minwon_status_str", "minwonList.get(0) : " + minwonList.get(0));
 		// 필요한 데이터도 추가로 전달 가능
 		mav.addObject("minwon", minwonList.get(0));
 		mav.addObject("serverName", GC.getServerName());

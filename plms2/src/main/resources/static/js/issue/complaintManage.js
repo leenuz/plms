@@ -124,52 +124,39 @@ complainManageAddComplainPopEvet();
 
 
 /* 민원완료 팝업 */
-
 const complainManageComplainFinPopEvet = () => {
-
-    const complainManageComplainFinBtn = document.querySelector("#complaintManage .complainFinBtn");
-    const complainManageComplainFinishWrapper = document.querySelector(".complainManageComplainFinishWrapper");
-    const complainFinFilePath = '/components/popuphtml/issue_management_Popup/complaint_completed.html'; // 삽입할 html 파일 경로
-
-    if(complainManageComplainFinBtn){
-
-       let xhr = new XMLHttpRequest();
-       xhr.open('GET',  complainFinFilePath , true);
-       xhr.onreadystatechange = function() {
-           if (xhr.readyState == 4 && xhr.status == 200) {
-            complainManageComplainFinishWrapper.innerHTML = xhr.responseText;
-               runScriptsInElement(complainManageComplainFinishWrapper); // 삽입된 html내 스크립트 실행 함수 호출
-           }
-       };
-       xhr.send();
-       console.log('complainManageComplainFinishWrapper 작동');
+	const complainManageComplainFinBtn = document.querySelector("#complaintManage .complainFinBtn");
+	const complainManageComplainFinishWrapper = document.querySelector(".complainManageComplainFinishWrapper");
+	const complainFinFilePath = '/components/popuphtml/issue_management_Popup/complaint_completed.html'; // 삽입할 html 파일 경로
+	if(complainManageComplainFinBtn){
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET',  complainFinFilePath , true);
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				complainManageComplainFinishWrapper.innerHTML = xhr.responseText;
+				runScriptsInElement(complainManageComplainFinishWrapper); // 삽입된 html내 스크립트 실행 함수 호출
+			}
+		};
+		xhr.send();
+		console.log('complainManageComplainFinishWrapper 작동');
+		
+		complainManageComplainFinBtn.addEventListener("click" , () => {
+			const popupOpen = document.getElementById("complaint_completed");
+			if(popupOpen){
+				popupOpen.classList.add("active");
+			}
+		});
   
-  
-       complainManageComplainFinBtn.addEventListener("click" , () => {
-  
-             const popupOpen = document.getElementById("complaint_completed");
-             if(popupOpen){
-                popupOpen.classList.add("active");
-             }
-  
-         })
-            
-  
-          // 삽입된 html내 스크립트 실행 함수
-    const runScriptsInElement = (element) => {
-       const scripts = element.getElementsByTagName('script');
-       for (let i = 0; i < scripts.length; i++) {
-           const script = document.createElement('script');
-           script.textContent = scripts[i].textContent;
-           document.body.appendChild(script).parentNode.removeChild(script);
-       }
-   }
-  
-  
-     }
-     
-
-    
+		// 삽입된 html내 스크립트 실행 함수
+		const runScriptsInElement = (element) => {
+			const scripts = element.getElementsByTagName('script');
+			for (let i = 0; i < scripts.length; i++) {
+				const script = document.createElement('script');
+				script.textContent = scripts[i].textContent;
+				document.body.appendChild(script).parentNode.removeChild(script);
+			}
+		}
+	}
 }
 
 complainManageComplainFinPopEvet();

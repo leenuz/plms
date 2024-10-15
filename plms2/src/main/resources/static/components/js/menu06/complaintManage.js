@@ -376,6 +376,7 @@ function onDataLoad() {
 			$('#dopcoAllWrappers .land_history').text(""); //토지이력
 			$('#dopcoAllWrappers .requirements').text(""); //요구사항
 			$('#dopcoAllWrappers .land_contents').text(result.mw_contents); //내용
+			$('#pop_dopcoAllWrappers .land_contents').text(result.mw_contents); //내용
 			
 			// 민원인/토지주
 			let minwontojijus = '';
@@ -431,7 +432,32 @@ function onDataLoad() {
 							<input type="text" class="notWriteInput" readonly placeholder="${field_presence[index] || '-'}" />
 						</li>
 					</ul>`;
-				$('#minwonin_tojiju_body').append(newHtml);	
+				$('#minwonin_tojiju_body').append(newHtml);
+				});
+				
+				$.each(minwontojijus, function(index, item) {
+				let newHtml = `
+					 <ul class="complainant_info">
+						<li class="content smallWidth">
+							<input type="text" class="notWriteInput" placeholder="${index + 1}" readonly />
+						</li>
+						<li class="content smallWidth">
+							<input type="text" class="notWriteInput" readonly placeholder="${item || '-'}" />
+						</li>
+						<li class="content">
+							<input type="text" class="notWriteInput" readonly placeholder="${minwontojiju_birth[index] || '-'}"/>
+						</li>
+						<li class="content largeWidth">
+							<input type="text" class="notWriteInput" readonly placeholder="${tojiju_relation[index] || '-'}" />
+						</li>
+						<li class="content largeWidth">
+							<input type="text" class="notWriteInput" readonly placeholder="${minwonin_phone[index] || '-'}"/>
+						</li>
+						<li class="content">
+							<input type="text" class="notWriteInput" readonly placeholder="${field_presence[index] || '-'}" />
+						</li>
+					</ul>`;
+				$('#pop_minwonin_tojiju_nm').append(newHtml);
 				});
 					
 					//$('#minwonin_tojiju_body').append(noDataUl);
@@ -444,9 +470,11 @@ function onDataLoad() {
 			
 			// 토지이력
 			$('#toji_history').val(result.toji_history || '-');
+			$('#pop_toji_history').val(result.toji_history || '-');
 			
 			// 요구사항
 			$('#minwon_requirement').val(result.minwon_requirement || '-');
+			$('#pop_minwon_requirement').val(result.minwon_requirement || '-');
 			
 			//민원 토지 ul 추가
 			if (tojiList != null && tojiList != undefined && tojiList.length > 0) {
@@ -806,7 +834,13 @@ function minwonConsultInfoSearch() {
 //==============================================================================================================
 //========================민원 완료 [S]========================
 
+$('.closeBtn, .topCloseBtn').on('click', function(){
+	$('#complaint_completed').removeClass('active');
+});
 
+function complaintPopupOpen() {
+	$('#complaint_completed').addClass('active');
+}
 
 
 

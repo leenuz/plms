@@ -98,6 +98,37 @@ div.dt-filter-spacer {
 	text-align: right;
 	margin: 10px;
 }
+.complaint_completed {
+	width: 100% !important;
+	padding: 0px !important;
+	overflow-y: auto;
+}
+
+.complaintinfo_btns {
+	clear: both !important;
+}
+/*// contentScr*/
+.complaint_completed .popupWrap {
+	height: 100%;
+	overflow-y: auto;
+}
+
+.complaintManage_file,
+.complaintManage_consult,
+.complaintManage_togi {
+	width: 100% !important;
+	padding: 0px !important;
+}
+
+#complaint_completed ::-webkit-scrollbar {
+	width: 4px;
+}
+
+#complaint_completed ::-webkit-scrollbar-thumb {
+	height: 30%;
+	border-radius: 10px;
+	background: #d2d2d2;
+}
 </style>
 
 <title>민원관리</title>
@@ -136,7 +167,7 @@ div.dt-filter-spacer {
 					<!-- <button class="toolBtn viewBtn">문서보기</button> -->
 					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" id="minwonResponsePopup">D_민원대응방안</button>
 					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" onclick="minwonConsultPopupOpen()">D_민원협의</button>
-					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" onclick="">D_민원완료</button>
+					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" onclick="complaintPopupOpen()">D_민원완료</button>
 					<button class="toolBtn viewBtn" th:if="${serverName == 'DEV'}">문서보기</button>
 					<button class="toolBtn viewBtn" th:if="${serverName == 'REAL'}">문서보기</button>
 					<button class="toolBtn completeBtn complainFinBtn">민원완료</button>
@@ -544,23 +575,31 @@ div.dt-filter-spacer {
             <div class="complaint_completed_detail_wrap">
                 <ul>
                     <li class="complaints_title">민원 명</li>
-                    <li>오류로 인한 지상권 해지</li>
+                    <li th:text="${minwon.mm_mw_title}"></li>
                 </ul>
                 <ul>
                     <li class="complaints_title">발생일자</li>
-                    <li>2022-06-22</li>
+                    <li th:text="${minwon.mm_mw_occur_date}">2022-06-22</li>
                 </ul>
                 <ul>
                     <li class="complaints_title">발생지사</li>
-                    <li>서울지사</li>
+                    <li th:text="${minwon.mm_jisa}">서울지사</li>
                 </ul>
                 <ul>
                     <li class="complaints_title">이슈 유형</li>
-                    <li>지소유자와 계약 > 권리상실 > 해지업무 착오로 인한 지상권 소실</li>
+                    <li th:text="(${mm_mw_code1} != null ? ${mm_mw_code1} : '') + 
+             			(${mm_mw_code2} != null ? ${mm_mw_code2} : '') + 
+             			(${mm_mw_code3} != null ? ${mm_mw_code3} : '')"></li>
                 </ul>
                 <ul>
                     <li class="complaints_title">진행현황</li>
-                    <li>협의중</li>
+                    <li th:if="${minwon.mm_status} == 1" th:text="임시저장">
+                    <li th:if="${minwon.mm_status} == 2" th:text="민원발생">
+                    <li th:if="${minwon.mm_status} == 3" th:text="대응방안수립">
+                    <li th:if="${minwon.mm_status} == 4" th:text="협의중">
+                    <li th:if="${minwon.mm_status} == 5" th:text="완료">
+                    
+                    
                 </ul>
                 <ul class="complaint_completed_detail_title">
                     <li class="complaints_title">구분</li>
@@ -573,51 +612,86 @@ div.dt-filter-spacer {
                 </ul>
                 <ul class="complaint_completed_detail_box7">
                     <li class="complaints_title">민원인/토지주</li>
-                    <li class="complainant_info_list">
-                        <ul class="complainant_info">
-                            <li>1</li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li>Y</li>
-                        </ul>
-                        <ul class="complainant_info">
-                            <li>1</li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li>Y</li>
-                        </ul>
-                    </li>
+                    <li class="complainant_info_list" id="pop_minwonin_tojiju_nm">
                 </ul>
                 <ul class="complaint_completed_detail_box8">
                     <li class="complaints_title">토지이력</li>
-                    <li class="complaints_content_box"></li>
+                    <li class="complaints_content_box"><textarea readonly id="pop_toji_history"></textarea></li>
                 </ul>
                 <ul class="complaint_completed_detail_box9">
                     <li class="complaints_title">요구사항</li>
-                    <li class="complaints_content_box"></li>
+                    <li class="complaints_content_box"><textarea readonly id="pop_minwon_requirement"></textarea></li>
                 </ul>
                 <ul class="complaint_completed_detail_box10">
                     <li class="complaints_title">내용</li>
-                    <li class="complaints_content_box"></li>
+                    <li class="complaints_content_box"><textarea readonly class="notWriteInput land_contents"></textarea></li>
                 </ul>
             </div>
         </section>
-        <section class="complaintinfo_update">
-            <ul class="complaintinfo_update_th">
-                <li>주소</li>
-                <li>업데이트 여부</li>
-                <li class="complaintinfo_update_btn">상세</li>
-            </ul>
-            <ul>
-                <li>경기도 평택시 월곡동 140-7</li>
-                <li>N</li>
-                <li class="complaintinfo_update_btn"><button>상세보기</button></li>
-            </ul>
-        </section>
+        <!-- 민원토지 -->
+		<section id="complaintManage" class="complaintManage_togi">
+			<h3>민원 토지</h3>
+			<div class="complaintLand">
+				<div class="contWrap">
+					<div class="depth1">
+						<ul class="titles">
+							<li class="title">대표토지여부</li>
+							<li class="title largeWidth">주소</li>
+							<li class="title">등기 여부</li>
+							<li class="title">계약 여부</li>
+						</ul>
+						<ul class="contents">
+							<li class="content">
+								<input type="text" readonly placeholder="" class="notWriteInput" />
+							</li>
+							<li class="content largeWidth">
+								<input type="text" readonly placeholder="" class="notWriteInput" />
+							</li>
+							<li class="content">
+								<input type="text" readonly placeholder="" class="notWriteInput" />
+							</li>
+							<li class="content">
+								<input type="text" readonly placeholder="" class="notWriteInput" />
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<!-- 첨부파일 -->
+		<section id="complaintManage" class="complaintManage_file">
+			<h3>첨부파일</h3>
+			<div class="attachFileInfo">
+				<div class="contWrap">
+					<div class="depth1">
+						<ul class="titles">
+							<li class="title">날짜</li>
+							<li class="title fileNameWidth">파일명</li>
+							<li class="title">다운로드</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<!-- 협의 내용 -->
+		<section id="complaintManage" class="complaintManage_consult">
+			<h3>협의 내용</h3>
+			<div class="consultDetails">
+				<div class="contWrap">
+					<div class="depth1">
+						<ul class="titles">
+							<li class="title">일시</li>
+							<li class="title smallWidth">진행 현황</li>
+							<li class="title fileNameWidth">협의 내용</li>
+							<li class="title">ECHO 문서보기</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		
         <div class="complaintinfo_btns">
             <button class="closeBtn finalBtn">닫기</button>
         </div>
