@@ -6,7 +6,8 @@ $(document).ready(function() {
   /*$('#jisa').niceSelect();*/
 //testAjax();
 //init_Table();
-//loadDataTable("");
+commonJisaInfoCheck();
+loadDataTable("");
 });
 
 
@@ -228,7 +229,7 @@ function loadDataTable(params) {
 	console.log(params);
 
 	//var json=JSON.stringify(params);
-
+	let jisaCheck = $("#loginJisa").val();
 	table = $('#userTable').DataTable({
 		fixedColumns: {
 			start: 3,
@@ -261,7 +262,7 @@ function loadDataTable(params) {
 			datatype: "json",
 			data: function(d) {
 				//d=params;
-				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.jisa = ljsIsNull(jisaCheck) ? ljsIsNull(params.jisa) ? '' : params.jisa : jisaCheck;
 				d.manage_no = params.manage_no;
 				if (params.toji_type == "국유지") d.toji_type = "Y";
 				else if (params.toji_type == "사유지") d.toji_type = "N";

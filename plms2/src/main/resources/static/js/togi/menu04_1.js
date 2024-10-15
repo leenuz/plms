@@ -22,7 +22,7 @@ landDevelopmentDateBoxsClicEvet();
 
 $(document).ready(function() {
   console.log("*** menu04_1.js ***");
-  //commonJisaInfoCheck();
+  commonJisaInfoCheck();
 loadDataTable("");
 
 });

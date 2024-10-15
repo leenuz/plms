@@ -168,11 +168,14 @@ public class togiController {
 	
 	@GetMapping(path="/landEdit") //http://localhost:8080/api/get/dbTest
     public ModelAndView landEdit(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-
+		/*******************************/
+		//받은 세션 Map으로 전환
+		Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+		/*******************************/
 		ModelAndView mav=new ModelAndView();
 
 		HashMap params = new HashMap();
-
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 		String idx = httpRequest.getParameter("idx");
 
 		params.put("idx",idx);
@@ -190,6 +193,8 @@ public class togiController {
 		mav.addObject("daepyodata",daepyodata);
 		mav.addObject("sosokData",sosokData);
 		mav.addObject("atcFileList",atcFileList);
+		//241006 - 지사정보 추가
+		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 		
 		mav.setViewName("content/togi/landEdit");
 		return mav;

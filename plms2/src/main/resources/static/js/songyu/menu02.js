@@ -7,6 +7,7 @@ $(document).ready(function() {
 	/*$('#jisa').niceSelect();*/
 	//testAjax();
 	//init_Table();
+	commonJisaInfoCheck()
 	loadDataTable("");
 
 });
@@ -263,7 +264,7 @@ function loadDataTable(params) {
 	console.log("***************params***************");
 	console.log(params);
 	//var json=JSON.stringify(params);
-
+	let jisaCheck = $("#loginJisa").val();
 	table = $('#userTable').DataTable({
 		fixedColumns: {
 			start: 3,
@@ -298,7 +299,7 @@ function loadDataTable(params) {
 			datatype: "json",
 			data: function(d) {
 				//d=params;
-				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa; // 지사
+				d.jisa = ljsIsNull(jisaCheck) ? ljsIsNull(params.jisa) ? '' : params.jisa : jisaCheck;
 				if (params.toji_type == "국유지") { // 토지유형
 					d.toji_type = "Y";
 				} else if (params.toji_type == "사유지") {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.slsolution.plms.CommonUtil;
 import com.slsolution.plms.MainService;
 import com.slsolution.plms.ParameterUtil;
 import com.slsolution.plms.config.GlobalConfig;
@@ -305,10 +307,15 @@ public class notsetController {
 	// 미설정/미점용 내역 수정
 	@GetMapping(path="/notsetaddRevise") //http://localhost:8080/api/get/dbTest
     public ModelAndView notsetaddRevise(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		/*******************************/
+		//받은 세션 Map으로 전환
+		Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+		/*******************************/
+		
 		ModelAndView mav=new ModelAndView();
 
 		HashMap params = new HashMap();
-		
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 		String idx = httpRequest.getParameter("idx");
 		String index = httpRequest.getParameter("index");
 
@@ -358,6 +365,8 @@ public class notsetController {
 		mav.addObject("notsetIssueHistoryList",notsetIssueHistoryList);
 		mav.addObject("notsetPnuAtcFileList",notsetPnuAtcFileList);
 		// mav.addObject("memoList",notsetMemoList.get(0));
+		//241006 - 지사정보 추가
+		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 		// null 체크 및 사이즈 확인
 		if (notsetMemoList != null && !notsetMemoList.isEmpty()) {
 		    mav.addObject("memoList", notsetMemoList.get(0));
