@@ -17,10 +17,10 @@ $(function() {
 	//페이지 로드시 상세화면 내용 불러오기
 	self.onDataLoad();
 	
-	let objDragAndDrop = $("#minwon_consult_fileUploadBox");
+	let objDragAndDrop = $("#minwonconsult_fileUploadBox");
 	
 	//민원협의 내용 등록/수정
-	$('input[type=file][name="minwon_consult_fileUpload"]').on('change', function(e) {
+	$('input[type=file][name="fileUpload"]').on('change', function(e) {
 	    var files = e.originalEvent.target.files; // 파일 선택창에서 선택된 파일들
 	    console.log('민원협의 내용 등록/수정 파일업로드');
 	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
@@ -689,3 +689,115 @@ function minwon_completeReportPop() {
 }
 
 
+//************************************************************************
+
+//민원협의 팝업 열기
+function minwonConsultPopupOpen() {
+	console.log('팝업오픈');
+	$("#complaint_register_Popup").addClass('active');
+	minwonConsultInfoSearch();	//민원협의 정보 조회
+}
+
+//민원협의 팝업 닫기
+function minwonConsultPopupClose() {
+	$("#complaint_register_Popup").removeClass('active');
+}
+
+
+//파일 업로드 했을때 step.1
+function handleFileUpload(files, obj) {
+	console.log("-------------handleFileUpload---------------");
+	console.log(files);
+	
+	for (var i = 0; i < files.length; i++) { // 선택된 파일들을 하나씩 처리
+        var fd = new FormData(); // FormData 객체 생성 (파일 업로드를 위한 객체)
+        
+        fd.append('file', files[i]); // 파일 객체를 FormData에 추가
+ 		
+        var status = new createStatusbar($("#fileTitleUl"), files[i].name, files[i].size, fileRowCount); // 파일 업로드 상태바 생성
+        
+        //sendFileToServer(fd,status); // 서버로 파일 전송 함수 호출
+		
+		fileRowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
+   }
+}
+
+//파일 업로드 했을때 step.1.5
+// Status bar 생성 함수
+function createStatusbar(obj, name, size, no){
+	console.log("----------start createStatusBar------------");
+    //console.log(obj.html());
+	
+	var sizeStr="";
+    var sizeKB = size/1024; // 파일 크기를 문자열로 표시하기 위한 변수
+    
+    if(parseInt(sizeKB) > 1024){
+        var sizeMB = sizeKB/1024;
+        sizeStr = sizeMB.toFixed(2)+" MB"; // MB로 변환
+    }else{
+        sizeStr = sizeKB.toFixed(2)+" KB"; // KB로 표시
+    }
+	
+	//보이는 화면 UI 추가 - obj 말고 그냥 div id 정했으니 그냥 추가 해줘도 됨.
+    let rowHtml = '';
+    
+    rowHtml += '<ul class="popcontents" name="fileListUl">';
+	rowHtml += '<li class="popBtnbox">';
+	rowHtml += '	<button class="popAllDeleteFileBtn"></button>';
+	rowHtml += '</li>';
+	rowHtml += '<li class="popcontent popfilenameBox">';
+	rowHtml += '<input type="hidden" value="'+ +'">';
+	rowHtml += '<figure class="poptypeIcon"></figure><p class="popfileNameText" id="minwonFileName_'+no+'">'+name+'</p></li>';
+	rowHtml += '<li class="popcontent"><p>완료</p></li>';
+	rowHtml += '<li class="popcontent"><p class="popfileSizeText">'+sizeStr+'</p></li>';
+	rowHtml += '</ul>';
+    
+    $("#fileTitleUl").append(rowHtml);
+}
+
+
+//파일 업로드 했을때 step.2
+//실제 서버에 파일 업로드 (/temp폴더로...)
+function sendFileToServer(formData, status) {
+	
+    let uploadURL = "/issue/fileUpload/post"; //Upload URL
+    
+    console.log('URL로 던져서 upload');
+    
+    var jqXHR = $.ajax({
+		xhr: function() {
+		    var xhrobj = $.ajaxSettings.xhr(); // 기본 XMLHttpRequest 객체 생성
+		    if (xhrobj.upload) {
+		        xhrobj.upload.addEventListener('progress', function(event) {
+		            var percent = 0;
+		            var position = event.loaded || event.position;
+		            var total = event.total;
+		            if (event.lengthComputable) {
+		                percent = Math.ceil(position / total * 100); // 파일 업로드의 진행 상황을 계산
+		            }
+		            // status.setProgress(percent);  // 업로드 진행 상황을 status에 반영 (현재 주석 처리됨)
+		        }, false);
+		    }
+		    return xhrobj;
+		},
+        url: uploadURL,
+        type: "POST",
+        contentType:false,
+        processData: false,
+        cache: false,
+        data: formData,
+        success: function(data){
+ 			console.log(data);
+ 			console.log(data.resultData);
+        }
+    }); 
+ 	
+    //status.setAbort(jqXHR);
+}
+
+
+function minwonConsultInfoSearch() {
+	console.log('민원협의 조회');
+}
+
+//************************************************************************

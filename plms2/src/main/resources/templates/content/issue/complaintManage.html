@@ -17,10 +17,6 @@
 <link rel="stylesheet" href="/css/issue/complaintManage.css" />
 <link rel="stylesheet" href="/css/issue/complaintRespond.css" />
 
-
-
-<!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 <style>
 div.dt-top-container {
 	display: grid;
@@ -108,7 +104,8 @@ div.dt-filter-spacer {
 </head>
 <th:block layout:fragment="content">
 	<input type="hidden" id="serverName" th:value="${serverName}">
-	<input type="hidden" id="minwonStatus" th:value="${minwonStatus}">
+	<input type="hidden" id="minwon" th:value="${minwon}">
+	<input type="hidden" id="minwonStatus" th:value="${minwon.mm_status}">
 	<!-- 민원관리 -->
 	<div class="complaintManageWrappers">
 		<div class="complaintManageHeader"></div>
