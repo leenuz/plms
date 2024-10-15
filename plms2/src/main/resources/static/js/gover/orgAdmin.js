@@ -386,8 +386,11 @@ $(document).on('click', '#regBtn', function() {
 
 $(document).ready(function() {
 	console.log("-------------orgAdmin load--------------");
+	commonJisaInfoCheck();
 	mergeTableCells("#mainTable", 1);
 	//mergeTableCells("#mainTable",2);
+	
+	
 })
 
 
@@ -796,7 +799,7 @@ function toggleElements03() {
 // 지사 선택 시 허가관청 목록 업데이트 (신규등록 팝업)
 $(document).on("click", "#jisaUl li", function () {
     const selectedJisa = $(this).text().trim(); // 선택한 지사 텍스트
-    $("#jisaText").text(selectedJisa); // 버튼 텍스트 변경
+    $("#jisaText.Popup_Custom_SelectView").text(selectedJisa); // 버튼 텍스트 변경
     $("#jisaSelectBox").val(selectedJisa).change(); // select box 값 설정 후 change 이벤트 트리거
 	
 	// 허가관청 초기화
@@ -804,14 +807,14 @@ $(document).on("click", "#jisaUl li", function () {
 	$("#epmtOfficeSelectBox").val("전체"); // 허가관청 select box 초기화
 	
 	// 셀렉 박스 닫기
-	$("#jisaText").removeClass("active"); // 셀렉 박스를 열고 닫는 클래스 제거
+	$("#jisaText.Popup_Custom_SelectView").removeClass("active"); // 셀렉 박스를 열고 닫는 클래스 제거
 	$("#jisaUl").removeClass("active"); // 드롭다운 목록 닫기
 });
 
 // 지사 선택 시 허가관청 목록 업데이트 (신규등록 팝업)
 $(document).on("click", "#mJisaUl li", function () {
     const selectedJisa = $(this).text().trim(); // 선택한 지사 텍스트
-    $("#mJisaText").text(selectedJisa); // 버튼 텍스트 변경
+    $("#mJisaText.Popup_Custom_SelectView").text(selectedJisa); // 버튼 텍스트 변경
     $("#mJisaSelectBox").val(selectedJisa).change(); // select box 값 설정 후 change 이벤트 트리거
 	
 	// 허가관청 초기화
@@ -819,7 +822,7 @@ $(document).on("click", "#mJisaUl li", function () {
 	//$("#epmtOfficeSelectBox").val("전체"); // 허가관청 select box 초기화
 	
 	// 셀렉 박스 닫기
-	$("#mJisaText").removeClass("active"); // 셀렉 박스를 열고 닫는 클래스 제거
+	$("#mJisaText.Popup_Custom_SelectView").removeClass("active"); // 셀렉 박스를 열고 닫는 클래스 제거
 	$("#mJisaUl").removeClass("active"); // 드롭다운 목록 닫기
 });
 
@@ -962,6 +965,7 @@ function loadData() {
     len = formSerializeArray.length;
     var dataObj = {};
 	var paramStr = '';
+	let jisaCheck = $("#loginJisa").val();
     for (i = 0; i < len; i++) {
 		var name = formSerializeArray[i].name;
 		var value = formSerializeArray[i].value == '전체' ? '' : formSerializeArray[i].value;

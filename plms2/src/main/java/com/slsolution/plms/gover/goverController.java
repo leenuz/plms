@@ -1310,7 +1310,11 @@ public class goverController {
 //			String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
 //			JSONObject requestParamsObj=new JSONObject(requestParams);
 //			log.info("requestParams:"+requestParams);
-//			
+//		
+		/*******************************/
+		//받은 세션 Map으로 전환
+		Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+		/*******************************/
 		ArrayList list = new ArrayList();
 		ArrayList addlist = new ArrayList();
 		ArrayList<HashMap> jisalist = new ArrayList();
@@ -1321,6 +1325,7 @@ public class goverController {
 		try {
 
 			HashMap params = new HashMap();
+			params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 
 //				String JISA = requestParamsObj.getString("JISA");
 			params.put("JISA", "");
@@ -1341,17 +1346,25 @@ public class goverController {
 		mav.addObject("list", list);
 		mav.addObject("jisaList", jisalist);
 		log.info("jisalist:" + jisalist);
+		//241006 - 지사정보 추가
+		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 		mav.setViewName("content/gover/orgAdmin");
 		return mav;
 	}
 
 	@RequestMapping(value = "/orgAdminDataTableList", method = { RequestMethod.GET, RequestMethod.POST }) // http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> orgAdminDataTableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		/*******************************/
+		//받은 세션 Map으로 전환
+		Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(req);
+		/*******************************/
+		
 		String jisa = req.getParameter("jisa");
 		String pmt_office = req.getParameter("pmt_office");
 		String adm_office = req.getParameter("adm_office");
 
 		HashMap params = new HashMap();
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 		params.put("JISA", jisa);
 		params.put("PMT_OFFICE", pmt_office);
 		params.put("ADM_OFFICE", adm_office);
