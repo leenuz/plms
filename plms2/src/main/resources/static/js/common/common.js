@@ -420,10 +420,31 @@ function commonJisaInfoCheck() {
 	
 	if(jisaName != '') {
 		$("#jisaNameDiv").text(jisaName);
-		$("#jisaNameDiv").attr('disabled', true);
+		$("#jisaNameDiv").attr('disabled', true)
+		
+		//점용마스터조회
+		$("#jisaText").text(jisaName);
+		//$("#privateUseSelectBox01_1").text(jisaName);
+		//$("#privateUseSelectBox01_1").attr('disabled', true);
+		
+		//$("#privateUseSelectBox02_1").text(jisaName);
+		//$("#privateUseSelectBox02_1").attr('disabled', true);
+
 	} else {
-		$("#jisaNameDiv").text('전체');
+		
+		const allOf = '전체';
+		
+		$("#jisaNameDiv").text(allOf);
 		$("#jisaNameDiv").attr('disabled', false);
+		
+		//점용마스터조회
+		$("#jisaText").text(jisaName);
+		//$("#privateUseSelectBox01_1").text(allOf);
+		//$("#privateUseSelectBox01_1").attr('disabled', false);
+		
+		//$("#privateUseSelectBox02_1").text(allOf);
+		//$("#privateUseSelectBox02_1").attr('disabled', false);
+		
 	}
 	
 }

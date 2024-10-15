@@ -104,29 +104,28 @@
         <section class="surfaceSectionBoxs">
           <div class="surfacePartSectionCont">
             <div class="surfacePartSectionContDevide">
+            
               <!-- 지사 -->
               <ul class="selectContent sectionMenuListBoxs">
                 <li class="selectTitle"><p>지사</p></li>
                 <div class="selectWrappers">
-                  <select
-                    name="jisa"
-                    class="menuHiddenSelect01"
-                    id="menuHiddenSelectBox01_1"
-                    hidden>
+                  <select name="jisa" class="menuHiddenSelect01" id="menuHiddenSelectBox01_1" hidden>
                     <option value="">전체</option>
                      <th:block th:each="val:${jisaList}">
 	                    <option th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}"></option>
-	                    </th:block>
+	                 </th:block>
                   </select>
                 </div>
                 <div class="surfaceSelects">
                   <button type="button" class="surfaceSelectsTitleBtn" id="jisaNameDiv">전체</button>
                   <div class="sufaceSelectList">
-                    <ul class="surfaceSelectListMember">
-                      <li><p>전체</p></li>
-                      <th:block th:each="val:${jisaList}">
-                          <li><p th:text="${val.jm_jisa_name}">Y</p></li>
-                      </th:block>
+                    <ul class="surfaceSelectListMember" id="jisaUl">
+                      <li>
+                      	<p>전체</p>
+                      </li>
+	                      <th:block th:each="val:${jisaList}">
+	                          <li><p th:text="${val.jm_jisa_name}"></p></li>
+	                      </th:block>
                     </ul>
                   </div>
                 </div>

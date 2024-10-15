@@ -3,6 +3,8 @@ var table;
      
 $(document).ready(function() {
 	console.log("gover/menu03_1.js start");
+	//지사권한
+	commonJisaInfoCheck();
 	loadDataTable("");
 	
 	// 초기 화면에서 허가관청과 관리기관 비활성화
@@ -357,7 +359,7 @@ function loadDataTable(params) {
 				, width: "100px"
 				, render: function(data, type, row, meta) {
 					//쿼리수정이 필요합니다.
-					console.log("x:", row.x, "y:", row.y);
+					//console.log("x:", row.x, "y:", row.y);
 					return `<button class="viewDetailButton" data-x="${row.x}" data-y="${row.y}">위치보기</button>`;
 				}
 			}, //지도보기

@@ -1,8 +1,9 @@
 var table;
      
 $(document).ready(function() {
-  console.log("gover/menu03_2.js start");
-  loadDataTable("");
+	console.log("gover/menu03_2.js start");
+	commonJisaInfoCheck();
+	loadDataTable("");
 });
 
 //조회하기 클릭시 상단 정보 출력
