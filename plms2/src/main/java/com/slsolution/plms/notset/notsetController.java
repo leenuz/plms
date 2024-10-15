@@ -2,6 +2,7 @@ package com.slsolution.plms.notset;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -145,6 +146,7 @@ public class notsetController {
 		if (notsetPnuAtcFileList == null || notsetPnuAtcFileList.isEmpty()) { //필지 첨부파일
 		    mav.addObject("notsetPnuAtcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(notsetPnuAtcFileList);
 		    mav.addObject("notsetPnuAtcFileList", notsetPnuAtcFileList);
 		}
 		if (notsetIssueHistoryList == null || notsetIssueHistoryList.isEmpty()) { //잠재이슈 변경이력
