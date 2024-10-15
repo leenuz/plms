@@ -1073,6 +1073,22 @@ WHERE 1=1;
 	</select>
 	
 	<!-- 통계 > 권리별 증감현황 > 조회 상세 > 증감현황 > 증가 -->
+	<select id="selectByRightInDeListDetailUpCnt" parameterType="HashMap" resultType="int">
+		select 
+			count(*) cnt
+		from 
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null) a
+		left join
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and desc1 is not null) b
+		on
+			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+		where 
+			1=1
+			and a.desc1 = #{JISA}
+			and a.jisang_status = #{STATUS}
+			and b.juso is null
+	</select>
+	
 	<select id="selectByRightInDeListDetailUp" parameterType="HashMap" resultType="HashMap">
 		select 
 			a.desc1,a.juso, a.jisang_status
@@ -1090,6 +1106,22 @@ WHERE 1=1;
 	</select>
 	
 	<!-- 통계 > 권리별 증감현황 > 조회 상세 > 증감현황 > 감소 -->
+	<select id="selectByRightInDeListDetailDownCnt" parameterType="HashMap" resultType="int">
+		select 
+			count(*) cnt
+		from 
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and desc1 is not null) a
+		left join
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null) b
+		on
+			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
+		where 
+			1=1
+			and a.desc1 = #{JISA}
+			and a.jisang_status = #{STATUS}
+			and b.juso is null
+	</select>
+	
 	<select id="selectByRightInDeListDetailDown" parameterType="HashMap" resultType="HashMap">
 		select 
 			a.desc1,a.juso, a.jisang_status
