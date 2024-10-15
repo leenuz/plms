@@ -923,8 +923,8 @@ $(document).on("click","#sangsinBtn",function(){
 	   		var togiaddress=$(togiUls[i]).find("input[name='togiBunhalAddr'").val();
 			var togiTogiType=$(togiUls[i]).find('.customSelectView').text().replace(/[^가-힣]/g, "");
 	   		var togiJimokText=$(togiUls[i]).find("input[name='togiBunhalJimokText']").val();
-	   		//var togiJijukArea=$(togiUls[i]).find("input[name='togiBunhalJiJukArea']").val();
-	   		var togiJijukArea=$($(togiUls[i]).find(".contentBox").children().children()[1]).find('[name="togiBunhalJijukArea"]').val();
+	   		var togiJijukArea=$(togiUls[i]).find("input[name='togiBunhalJiJukArea']").val();
+	   		//var togiJijukArea=$($(togiUls[i]).find(".contentBox").children().children()[1]).find('[name="togiBunhalJijukArea"]').val();
 			
 			console.log("togiJijukArea:"+togiJijukArea);
 	   		

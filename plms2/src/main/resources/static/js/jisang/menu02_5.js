@@ -241,6 +241,9 @@ function loadDataTable(params) {
 		fixedColumns: {
 			start: 3,
 		},
+		/*rowGroup:{
+			dataSrc:1
+		},*/
 		scrollCollapse: true,
 		scrollX: true,
 		scrollY: 600,

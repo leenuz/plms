@@ -1418,9 +1418,9 @@ public class jisangController {
 			ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectDocInfo", params);
 			// System.out.println(" echolist.size()=" + echolist.size());
 			if (null != echolist && echolist.size() > 0) {
-				String str_STATUS = String.valueOf(((HashMap) echolist.get(0)).get("STATUS"));
-				String str_OUT_FLAG = String.valueOf(((HashMap) echolist.get(0)).get("OUT_FLAG"));
-				String str_OUT_URL = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+				String str_STATUS = String.valueOf(((HashMap) echolist.get(0)).get("status"));
+				String str_OUT_FLAG = String.valueOf(((HashMap) echolist.get(0)).get("out_flag"));
+				String str_OUT_URL = String.valueOf(((HashMap) echolist.get(0)).get("out_url"));
 				map.put("STATUS", str_STATUS);
 				map.put("OUT_FLAG", str_OUT_FLAG);
 				map.put("OUT_URL", str_OUT_URL);
@@ -4458,6 +4458,7 @@ log.info("data:"+data.get(0));
 				// 2. 신규 생성된 지상권 정보 등록처리
 				for (int i = 0; i < desangTogis.length(); i++) {
 						JSONObject obj=new JSONObject(desangTogis.get(i).toString());
+						log.info("obj:"+obj);
 					HashMap Addparams = new HashMap();
 					String wonjibeonYn = obj.getString("togiDemise");
 
@@ -7875,7 +7876,7 @@ log.info("gubun:"+gubun);
 						// 문서 URL조회
 						ArrayList echolist = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangTmpDocInfo", map);
 						if (null != echolist && echolist.size() > 0) {
-							String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+							String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("out_url"));
 							System.out.println("str_EchoNo=====" + str_EchoNo);
 							map.put("OUT_URL", str_EchoNo);
 							// 전자결재용 문서 생성 완료시 팝업으로 호출할 전자결재시스팀 URL

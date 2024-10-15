@@ -1044,7 +1044,13 @@ SELECT count(*)
 				LEFT JOIN permit_togi jpt ON jpt.pmt_no = jpm.pmt_no
 				LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jisang_no
 				LEFT JOIN JIJUK_2024 JKM ON TRIM(jm.jm_pnu) = JKM.pnu
-				LEFT OUTER JOIN PLMS_APPROVAL CC on jm.jm_DOCKEY = CC.pa_DOCKEY and (CC.pa_status is null or CC.pa_status not in ('X'))
+				--LEFT OUTER JOIN PLMS_APPROVAL CC on jm.jm_DOCKEY = CC.pa_DOCKEY and (CC.pa_status is null or CC.pa_status not in ('X'))
+				LEFT JOIN (
+				    SELECT *,
+				           ROW_NUMBER() OVER (PARTITION BY pa_dockey ORDER BY pa_dockey) AS row_num
+				    FROM PLMS_APPROVAL
+				    WHERE pa_status IS NULL OR pa_status NOT IN ('X')
+				) CC ON jm.jm_DOCKEY = CC.pa_DOCKEY AND CC.row_num = 1
 				WHERE 1 = 1
 				
 				<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
@@ -2556,6 +2562,7 @@ FROM permit_master
 		SELECT *
 			,pa_out_flag AS OUT_FLAG
 		,pa_out_url AS OUT_URL
+		,pa_status as STATUS
 		 FROM plms_approval where pa_dockey in (select dockey from permit_master where pmt_no = #{PMT_NO}) and (pa_status is null or pa_status not in ('X'))
 	</select>
 	
@@ -2758,11 +2765,15 @@ WHERE
     END AS MAIN_FLAG,
     PA.pa_status as STATUS
 FROM
-    jisang_master JM
-JOIN
-    jisang_merge_tmp  JMT ON JM.jm_jisang_no = JMT.jmt_jisang_no
+    jisang_merge_tmp JMT
 LEFT JOIN
-    plms_approval  PA ON JMT.jmt_dockey = PA.pa_dockey
+      jisang_master  JM ON JM.jm_jisang_no = JMT.jmt_jisang_no
+
+   LEFT JOIN (
+    SELECT PA.*, 
+           ROW_NUMBER() OVER (PARTITION BY PA.pa_dockey ORDER BY PA.pa_dockey) AS row_num
+    FROM plms_approval PA
+	) PA ON JMT.jmt_dockey = PA.pa_dockey AND PA.row_num = 1
 WHERE
     1 = 1
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(REP_JISANG_NO)" >
@@ -3160,6 +3171,81 @@ VALUES (
 	,#{LOCATION}
 	)
 	</insert>
+	<insert id="insertJisangBunhalMasterNewScheduler" parameterType="HashMap"> 
+INSERT INTO JISANG_MASTER (
+	jm_JISANG_NO
+	,jm_SIDO_NM
+	,jm_SGG_NM
+	,jm_EMD_NM
+	,jm_RI_NM
+	,jm_JIBUN
+	,jm_JIMOK_TEXT
+	,jm_JISA
+	,jm_GOVER_OWN_YN
+	,jm_JIJUK_AREA
+	,jm_PIPE_NAME
+	,jm_SUN_GUBUN
+	,jm_YONGDO
+	,jm_DOSIPLAN
+	,jm_COMPLE_YN
+	,jm_PYEONIB_AREA
+	,jm_JASAN_NO
+	,jm_ADDRCODE
+	,jm_PNU
+	,jm_USE_STATE
+	,jm_BUNHAL_ORG_NO
+	,jm_PIPE_YN
+	,jm_SET_MONEY
+	,jm_SAVE_STATUS
+	,jm_CHUIDEUK_DATE
+	,jm_DEUNGGI_DATE
+	,jm_DEUNGGI_NO
+	,jm_DEUNGGISO
+	,jm_SPECIAL_CONT
+	,jm_PERMITTED_YN
+	,jm_LOCATION
+	,jm_bunhal_reason
+	,jm_bunhal_comment
+	,jm_bunhal_date
+	
+	)
+VALUES (
+	#{JISANGNO}
+	,#{SINM}
+	,#{GUNGUNM}
+	,#{DONGNM}
+	,#{RINM}
+	,#{JIBUN}
+	,#{JIMOKTEXT}
+	,#{JISANM}
+	,#{GOVEROWNYN}
+	,#{JIJUKAREA}::numeric
+	,#{ZONE}
+	,#{SUNGUBUN}
+	,#{YONGDO}
+	,#{DOSIPLAN}
+	,#{COMPLEYN}
+	,#{PYEONIBAREA}::numeric
+	,#{JASANNO}
+	,#{ADDRCODE}
+	,#{PNU}
+	,#{USESTATE}
+	,#{BUNHALORGNO}
+	,#{PIPE_YN}
+	,#{SET_MONEY}
+	,#{SAVE_STATUS}
+	,TO_DATE(#{CHUIDEUK_DATE}, 'YYYY-MM-DD')
+	,TO_DATE(#{DGSTARTDAY}, 'YYYY-MM-DD')
+	,#{DEUNGGINO}
+	,#{DEUNGGISO}
+	,#{SPECIAL_CONT}
+	,#{PERMITTED_YN}
+	,#{LOCATION}
+	,#{BUNHAL_REASON}
+	,#{BUNHAL_COMMENT}
+	,#{BUNHAL_DATE}::date
+	)
+	</insert>
 	
 	<delete id="deleteJisangMergeTmp" parameterType="HashMap">
 		DELETE FROM JISANG_MERGE_TMP
@@ -3269,7 +3355,7 @@ DELETE from plms_POTENTIAL_ISSUE
 	<insert id="insertJisangFile1" parameterType="HashMap">
             
 			INSERT INTO JISANG_ATCFILE(ja_JISANG_NO, ja_SEQ, ja_FILE_PATH, ja_FILE_NM, ja_FILE_SEQ)
-			VALUES (#{JISANGNO}, nextVal('jisang_seq'), #{ja_FILE_PATH}, #{ja_FILE_NM}, 0)
+			VALUES (#{JISANGNO}, nextVal('jisang_seq'), #{ja_file_path}, #{ja_file_nm}, 0)
 			
 	</insert>
 	
@@ -4637,15 +4723,15 @@ SELECT B.DOCKEY
        , TO_CHAR(B.CANCLE_DATE,'YYYY-MM-DD') AS CANCLE_DATE
        , B.cancle_empcd as CANCLE_EMPCD
        , B.cancle_name as CANCLE_NAME
-  FROM JISANG_MASTER        A
-       , JISANG_TERMINATION   B
-       , PLMS_APPROVAL            C
+   FROM JISANG_TERMINATION B
+LEFT JOIN JISANG_MASTER A ON A.jm_JISANG_NO = B.JISANG_NO
+       LEFT JOIN PLMS_APPROVAL C ON C.pa_DOCKEY = B.DOCKEY  AND C.pa_STATUS = 'C' 
  WHERE A.jm_JISANG_NO = B.JISANG_NO
    AND ( A.jm_CANCLE_YN != 'Y'
     OR A.jm_CANCLE_YN IS NULL )
    AND B.DOCKEY IS NOT NULL
-   AND C.pa_DOCKEY = B.DOCKEY
-   AND C.pa_STATUS = 'C'
+ 
+  
 	</select>
 	
 	
@@ -4660,15 +4746,37 @@ SELECT B.DOCKEY
        , TO_CHAR(B.CANCLE_DATE,'YYYY-MM-DD') AS CANCLE_DATE
        , B.cancle_empcd as CANCLE_EMPCD
        , B.cancle_name as CANCLE_NAME
-  FROM JISANG_MASTER        A
-       , JISANG_TERMINATION   B
-       , PLMS_APPROVAL            C
+ FROM JISANG_TERMINATION B
+LEFT JOIN JISANG_MASTER A ON A.jm_JISANG_NO = B.JISANG_NO
+       LEFT JOIN PLMS_APPROVAL C ON C.pa_DOCKEY = B.DOCKEY   AND (C.pa_STATUS = 'C' OR C.pa_status = 'I')      
  WHERE A.jm_JISANG_NO = B.JISANG_NO
    AND ( A.jm_CANCLE_YN != 'Y'
     OR A.jm_CANCLE_YN IS NULL )
    AND B.DOCKEY IS NOT NULL
-   AND C.pa_DOCKEY = B.DOCKEY
-   AND C.pa_STATUS = 'C'
+  
+   
+	</select>
+	
+	<!-- 지상권 해지 전자결재 결과값 확인쿼리 test -->
+	<select id="selectApprovalTerminationTestLocal" parameterType="HashMap" resultType="HashMap">
+SELECT B.DOCKEY
+       , A.jm_jisang_no as JISANG_NO
+       , 'C' as STATUS
+       , A.jm_pnu as PNU
+       , A.jm_addrcode as ADDRCODE
+       , A.jm_jibun as JIBUN
+       , TO_CHAR(B.CANCLE_DATE,'YYYY-MM-DD') AS CANCLE_DATE
+       , B.cancle_empcd as CANCLE_EMPCD
+       , B.cancle_name as CANCLE_NAME
+FROM JISANG_TERMINATION B
+LEFT JOIN JISANG_MASTER A ON A.jm_JISANG_NO = B.JISANG_NO
+--LEFT JOIN PLMS_APPROVAL C ON C.pa_DOCKEY = B.DOCKEY
+WHERE 1=1
+  AND (A.jm_CANCLE_YN != 'Y' OR A.jm_CANCLE_YN IS NULL)
+ 
+  AND A.jm_jisang_no IS NOT null
+  AND B.cancle_status='상신'
+  --AND C.pa_STATUS = 'C'
 	</select>
 	
 	<update id="UpdateJisangCancleDate" parameterType="HashMap">
@@ -4736,25 +4844,45 @@ UPDATE PLMS_POTENTIAL_ISSUE
    AND C.pa_STATUS = 'C' or C.pa_status='I'
    AND B.jb_BUNHAL_COMPLETE = 'N'
 	</select>
+	<!-- 지상권 분할 전자결재 결과값 확인쿼리 테스트용 -->
+	<select id="selectApprovalbunhalTestLocal" parameterType="HashMap" resultType="HashMap">
+   SELECT 
+ A.jm_jisang_no as JISANG_NO
+       ,'C' as STATUS
+       , B.jb_dockey as DOCKEY
+       , 'test' as USERNM
+       , A.jm_pnu as PNU
+       , A.jm_addrcode as ADDRCODE
+       , A.jm_jibun as JIBUN
+  FROM JISANG_BUNHAL B
+  LEFT JOIN JISANG_MASTER A ON A.jm_JISANG_NO = B.jb_JISANG_NO
+  --LEFT JOIN PLMS_APPROVAL C ON B.jb_DOCKEY = C.pa_DOCKEY AND  (C.pa_STATUS = 'C' OR C.pa_status = 'I') 
+ WHERE
+ 1=1
+   AND B.jb_BUNHAL_COMPLETE = 'N' OR B.jb_BUNHAL_COMPLETE IS null
+	</select>
 	
 	
 	<update id="updateJisangJibun" parameterType="HashMap">
 		UPDATE
 		JISANG_MASTER
 		SET
-		SIDO_NM = #{SIDO_NM},
-		SGG_NM = #{SGG_NM},
-		EMD_NM = #{EMD_NM},
-		RI_NM = #{RI_NM},
-		JIBUN = #{JIBUN},
-		ADDRCODE = #{ADDRCODE},
-		JIJUK_AREA = nullif(#{JIJUK_AREA},'')::numeric,
-		JASAN_NO = #{JASAN_NO},
-		PYEONIB_AREA = nullif(#PYEONIB_AREA#,'')::numeric,
-		JIMOK_TEXT = #{JIMOK_TEXT},
-		PNU = #{PNU}
+		jm_SIDO_NM = #{SIDO_NM},
+		jm_SGG_NM = #{SGG_NM},
+		jm_EMD_NM = #{EMD_NM},
+		jm_RI_NM = #{RI_NM},
+		jm_JIBUN = #{JIBUN},
+		jm_ADDRCODE = #{ADDRCODE},
+		jm_JIJUK_AREA = nullif(#{JIJUK_AREA},'')::numeric,
+		jm_JASAN_NO = #{JASAN_NO},
+		jm_PYEONIB_AREA = nullif(#{PYEONIB_AREA},'')::numeric,
+		jm_JIMOK_TEXT = #{JIMOK_TEXT},
+		jm_PNU = #{PNU},
+		jm_bunhal_date=#{BUNHAL_DATE}::date
+		,jm_bunhal_reason=#{BUNHAL_REASON}
+		,jm_bunhal_comment=#{BUNHAL_COMMENT}
 		WHERE
-		JISANG_NO = #{orgJisnagNo}
+		jm_JISANG_NO = #{orgJisnagNo}
 
 	</update>
 	
@@ -4807,6 +4935,30 @@ UPDATE PLMS_POTENTIAL_ISSUE
 		AND BB.pa_STATUS = 'C' or BB.pa_status = 'I'
 	</select>
 	
+	<!-- 지상권 합필 전자결재 결과값 상신만 해도 완료로 인식하도록  -->
+	<select id="selectApprovalmergeTestLocal" parameterType="HashMap" resultType="HashMap">
+		SELECT
+		
+		AA.REP_JISANG_NO,
+		'C' as STATUS,
+		'test' as DOCKEY,
+		'test' as USERNM
+		FROM
+		(
+		SELECT
+		
+		jmt_rep_jisang_no as REP_JISANG_NO,
+		jmt_dockey as DOCKEY
+		FROM
+		JISANG_MERGE_TMP A
+		GROUP BY
+		
+		jmt_REP_JISANG_NO,
+		DOCKEY
+		) AA
+	
+	</select>
+	
 	
 	<!-- 지상권 사용수락 전자결재 결과값 확인쿼리 -->
 	<select id="selectApprovaljisangPermit" parameterType="HashMap" resultType="HashMap">
@@ -4835,6 +4987,21 @@ UPDATE PLMS_POTENTIAL_ISSUE
 	    PLMS_APPROVAL PA ON PM.DOCKEY = PA.pa_DOCKEY 
 	WHERE 1=1
 	     and PA.pa_STATUS IS NOT NULL  AND PA.pa_status !=''
+	    AND PM.PMT_STATUS != '결재완료'
+	</select>
+	<!-- 지상권 사용수락 전자결재 결과값 확인쿼리 -->
+	<select id="selectApprovaljisangPermitTestLocal" parameterType="HashMap" resultType="HashMap">
+		SELECT
+	    PM.PMT_NO
+	    ,PM.PMT_STATUS
+	    ,'C' as STATUS
+	    ,pA.pa_status
+	FROM
+	    PERMIT_MASTER PM
+	 	LEFT JOIN
+	    PLMS_APPROVAL PA ON PM.DOCKEY = PA.pa_DOCKEY  
+	WHERE 1=1
+	   -- and PA.pa_STATUS IS NOT NULL  AND PA.pa_status !=''
 	    AND PM.PMT_STATUS != '결재완료'
 	</select>
 	
@@ -4872,5 +5039,13 @@ UPDATE PLMS_POTENTIAL_ISSUE
 
 	    </if>
 	</select>
+	
+	<update id="updateJIsangMeargeAreaInfo" parameterType="java.util.HashMap">
+    UPDATE jisang_master 
+    SET
+       jm_jijuk_area=#{jijuk_area_total}::numeric
+       ,jm_pyeonib_area = #{pyeonib_area_total}::numeric
+    WHERE jm_jisang_no = #{jisang_no}
+</update>
 
 </mapper>
