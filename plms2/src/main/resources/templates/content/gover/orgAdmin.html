@@ -99,6 +99,7 @@
 	<title>관리기관 관리</title>
 </head>
 <th:block layout:fragment="content">
+	<input type="hidden" id="loginJisa" th:value="${loginJisa}"/>
 	<!-- 관리기관 관리 -->
 	<div class="orgAdminWrappers">
 
@@ -116,16 +117,18 @@
 							<li class="selectTitle"><p>지사</p></li>
 							<div class="privateUseSelectWrappers">
 								<select name="jisa" class="privateUseHiddenSelect01" id="privateUseSelectBox01_1" hidden>
-									<option value="전체">전체</option>
+									<option th:if="${#lists.size(jisaList) > 1}" value="전체">전체</option>
 									<option th:each="jisa : ${jisaList}" th:value="${jisa['jm_jisa_name']}" th:text="${jisa['jm_jisa_name']}"></option>
 								</select>
 							</div>
 							<!-- 보여지는 셀렉박스 -->
 							<div class="privateUseSelects">
-								<button class="privateUseSelectsTitleBtn" id="sjisaText">선택</button>
+								<button class="privateUseSelectsTitleBtn" id="jisaText">선택</button>
 								<div class="sufaceSelectList">
 									<ul class="surfaceSelectListMember" id="sjisaUl">
-										<li><p>전체</p></li>
+										<li>
+											<p>전체</p>
+										</li>
 										<th:block th:each="jisa : ${jisaList}">
 											<li><p th:text="${jisa['jm_jisa_name']}"></p></li>
 										</th:block>

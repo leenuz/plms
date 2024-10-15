@@ -87,6 +87,7 @@
   <title>회사토지처분</title>
 </head>
 <th:block layout:fragment="content">
+  <input type="hidden" id="loginJisa" th:value="${loginJisa}"/>
   <!--회사토지처분-->
   <div id="dopcoCompanyLand02">
     <!--header삽입-->
@@ -116,7 +117,7 @@
                 </div>
                 <!--보여지는 셀렉박스-->
                 <div class="companyLandSelects">
-                  <button class="companyLandSelectsTitleBtn">전체</button>
+                  <button class="companyLandSelectsTitleBtn" id="jisaNameDiv">전체</button>
                   <div class="sufaceSelectList">
                     <ul class="surfaceSelectListMember">
                       <li>

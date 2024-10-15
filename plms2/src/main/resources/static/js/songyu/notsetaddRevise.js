@@ -279,7 +279,7 @@ const notsetAddPopEvet = () => {
 
 $(document).ready(function() {
 	console.log("songyu/netsetaddRevise.js start");
-
+	commonJisaInfoCheck();
 	// 페이지 로드 시 초기 관로명 목록 업데이트
 	const initialJisa = $("#jisa").val(); // 선택된 지사 값
 	if (initialJisa) {
@@ -652,7 +652,7 @@ $(document).on("click", "#deleteFileBtn", function () {
 var uploadFiles = new Array();
 $(document).ready(function () {
     var objDragAndDrop = $(".fileUploadBox");
-
+	
     $(document).on("dragenter", ".fileUploadBox", function (e) {
         e.stopPropagation();
         e.preventDefault();

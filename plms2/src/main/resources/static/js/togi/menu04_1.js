@@ -22,6 +22,7 @@ landDevelopmentDateBoxsClicEvet();
 
 $(document).ready(function() {
   console.log("*** menu04_1.js ***");
+  commonJisaInfoCheck();
 loadDataTable("");
 
 });
@@ -214,7 +215,8 @@ function loadDataTable(params) {
 	console.log(params);
 
 	//var json=JSON.stringify(params);
-
+	//지사정보
+	let jisaCheck = $("#loginJisa").val();
 	table = $('#userTable').DataTable({
 
 		fixedColumns: {
@@ -254,7 +256,7 @@ function loadDataTable(params) {
 			datatype: "json",
 			data: function(d) {
 				//d=params;
-				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.jisa = ljsIsNull(jisaCheck) ? ljsIsNull(params.jisa) ? '' : params.jisa : jisaCheck;
 				d.manage_no = params.manage_no;
 				d.souja = params.souja;
 				d.jasan_no = params.jasan_no;

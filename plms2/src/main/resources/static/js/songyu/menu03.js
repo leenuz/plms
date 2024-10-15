@@ -6,6 +6,7 @@ $(document).ready(function() {
 	/*$('#jisa').niceSelect();*/
 	//testAjax();
 	//init_Table();
+	commonJisaInfoCheck()
 	loadDataTable("");
 });
 
@@ -205,6 +206,8 @@ function datatablebasic() {
 function loadDataTable(params) {
 	console.log("-----start loadDataTable----------");
 	console.log(params);
+	let jisaCheck = $("#loginJisa").val();
+	
 	table = $('#userTable').DataTable({
 		fixedColumns: {
 			start: 3,
@@ -236,7 +239,7 @@ function loadDataTable(params) {
 			type: "POST",
 			datatype: "json",
 			data: function(d) {
-				d.jisa = ljsIsNull(params.jisa) ? '' : params.jisa;
+				d.jisa = ljsIsNull(jisaCheck) ? ljsIsNull(params.jisa) ? '' : params.jisa : jisaCheck;
 				d.manage_no = params.manage_no; // 관리번호
 				if (params.toji_type == "국유지") { // 토지유형
 					d.toji_type = "Y";

@@ -1905,9 +1905,9 @@ WHERE 1=1;
 		select
 			a.desc1, a.juso, a.jisang_status
 		from 
-			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF}) a
+			(select * from static_deadline where year = #{YYYY_REF} and month = #{MM_REF} and jisang_manage = 'N') a
 		left join
-			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG}) b
+			(select * from static_deadline where year = #{YYYY_TG} and month = #{MM_TG} and jisang_manage = 'N') b
 		on
 			a.sido_nm = b.sido_nm and a.sgg_nm= b.sgg_nm and a.emd_nm = b.emd_nm and a.ri_nm = b.ri_nm and a.jibun = b.jibun
 		where 
@@ -1916,7 +1916,6 @@ WHERE 1=1;
 			and a.desc1 = #{JISA}
 			and not(a.gover_own_yn = '사유지'
 				and a.jisang_status = '점용')
-			and a.jisang_manage = 'N'
 	</select>
 
 	<!-- 통계 > 관리필지 증감현황 > 현황상세정보 > 변동사유 > 메인 조회 -->

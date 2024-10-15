@@ -88,6 +88,7 @@
 	<title>점용 마스터</title>
 </head>
 <th:block layout:fragment="content">
+	<input type="hidden" id="loginJisa" th:value="${loginJisa}"/>
 	<!--점용마스터-->
 	<div id="dopcoPrivateUse01">
 		<!--header삽입-->
@@ -108,7 +109,7 @@
 								</li>
 								<div class="privateUseSelectWrappers">
 									<select name="jisa" class="privateUseHiddenSelect01" id="privateUseSelectBox01_1" hidden>
-										<option value="전체">전체</option>
+										<option th:if="${#lists.size(jisaList) > 1}" value="전체">전체</option>
 										<option th:each="jisa : ${jisaList}" th:value="${jisa.jm_jisa_name}" th:text="${jisa.jm_jisa_name}"></option>
 									</select>
 								</div>

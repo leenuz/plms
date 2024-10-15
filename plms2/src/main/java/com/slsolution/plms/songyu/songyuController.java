@@ -57,10 +57,15 @@ public class songyuController {
 	@GetMapping(path = "/menu01") // http://localhost:8080/api/get/dbTest
 	public ModelAndView viewMenu01(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-
+		
+		/*******************************/
+		//받은 세션 Map으로 전환
+		Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+		/*******************************/
 //      List<TestDTO> list = new ArrayList<TestDTO>();
 //      list = dbService.getList();
 		HashMap params = new HashMap();
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 		ArrayList<HashMap> list = new ArrayList<HashMap>();
 
 		// List<CountryModel> list = masterDataBaseService.getCountry();
@@ -96,6 +101,9 @@ public class songyuController {
 		mav.addObject("resultYongdoList", yongdolist);
 		mav.addObject("resultJimokList", jimoklist);
 		mav.addObject("sidoList", sidolist);
+		
+		//241006 - 지사정보 추가
+		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 		log.info("jisalist:" + jisalist);
 		log.info("sidolist:" + sidolist);
 
@@ -228,8 +236,13 @@ public class songyuController {
 	// 권리제외필지 조회
 	@GetMapping(path = "/menu02") // http://localhost:8080/api/get/dbTest
 	public ModelAndView viewMenu02(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-
+		/*******************************/
+		//받은 세션 Map으로 전환
+		Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+		/*******************************/
+		
 		HashMap params = new HashMap();
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 		ArrayList<HashMap> list = new ArrayList<HashMap>();
 
 		// List<CountryModel> list = masterDataBaseService.getCountry();
@@ -243,6 +256,9 @@ public class songyuController {
 		mav.addObject("resultYongdoList", yongdolist);
 		mav.addObject("resultJimokList", jimoklist);
 		mav.addObject("sidoList", sidolist);
+		//241006 - 지사정보 추가
+		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
+		
 		mav.setViewName("content/songyu/menu02");
 		return mav;
 	}
@@ -250,8 +266,14 @@ public class songyuController {
 	//권리필지조회
 	@GetMapping(path = "/menu03") // http://localhost:8080/api/get/dbTest
 	public ModelAndView viewMenu03(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-
+		
+		/*******************************/
+		//받은 세션 Map으로 전환
+		Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
+		/*******************************/
+		
 		HashMap params = new HashMap();
+		params.put("LOGIN_JISA", (String)sessionMap.get("jisa"));    //지사정보 param에 싣기
 		ArrayList<HashMap> list = new ArrayList<HashMap>();
 
 		ArrayList<HashMap> jisalist = mainService.selectQuery("commonSQL.selectAllJisaList", params);
@@ -264,6 +286,8 @@ public class songyuController {
 		mav.addObject("resultYongdoList", yongdolist);
 		mav.addObject("resultJimokList", jimoklist);
 		mav.addObject("sidoList", sidolist);
+		//241006 - 지사정보 추가
+		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 		mav.setViewName("content/songyu/menu03");
 		return mav;
 	}
