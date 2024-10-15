@@ -533,37 +533,44 @@ function onDataLoad() {
 //======================민원 대응방안 수립 팝업 시작========================
 //문서보기 버튼 클릭 시 민원 대응방안 수립 팝업 열기
 $(document).on("click", "#test1", function() {
-    var datas = { "address": "example address" }; // 실제 데이터로 변경
+	// 현재 페이지의 URL에서 mw_seq 파라미터 값 추출
+	const urlParams = new URLSearchParams(window.location.search);
+	const mwSeq = urlParams.get('mw_seq');  // 'mw_seq' 파라미터 값 가져옴
 
-    console.log("문서보기 클릭됨");
+	var datas = { "address": "example address", "mw_seq": mwSeq }; // mw_seq를 데이터에 포함
 
-    // Ajax 요청을 통해 데이터 처리
-    $.ajax({
-        url: "/issue/minwonBangan",
-        type: "POST",
-        data: datas
-    })
-    .done(function(fragment) {
-        console.log("*** 데이터 수신 성공 ***");
-        console.log(fragment);
+	console.log("문서보기 클릭됨");
+	console.log("mw_seq: ", mwSeq);
 
-        // 팝업 열기
-        $("#complainRespondContentBoxs").show();  // 팝업을 보이게 함
-        const popupOpen = document.querySelector("#complainRespondContentBoxs .complainRespondPopWrap");
-        $(popupOpen).addClass("open");
-        popupOpen.classList.add("active");
+	console.log("문서보기 클릭됨");
 
-        // 필요한 데이터 바인딩 작업
-        // $('#searchResultPopDiv').replaceWith(fragment);  --> 데이터 업데이트 작업
-    })
-    .fail(function() {
-        console.error("AJAX 요청 실패");
-    });
+	// Ajax 요청을 통해 데이터 처리
+	$.ajax({
+		url: "/issue/minwonBangan",
+		type: "POST",
+		data: datas
+	})
+		.done(function(fragment) {
+			console.log("*** 데이터 수신 성공 ***");
+			console.log(fragment);
+
+			// 팝업 열기
+			$("#complainRespondContentBoxs").show();  // 팝업을 보이게 함
+			const popupOpen = document.querySelector("#complainRespondContentBoxs .complainRespondPopWrap");
+			$(popupOpen).addClass("open");
+			popupOpen.classList.add("active");
+
+			// 필요한 데이터 바인딩 작업
+			// $('#searchResultPopDiv').replaceWith(fragment);  --> 데이터 업데이트 작업
+		})
+		.fail(function() {
+			console.error("AJAX 요청 실패");
+		});
 });
 
 // 민원 대응방안 수립 팝업 닫기 버튼
 $(document).on("click", "#complainRespondContentBoxs .complainRespondcloseBtn", function() {
-    $("#complainRespondContentBoxs").hide();  // 팝업을 다시 숨김
+	$("#complainRespondContentBoxs").hide();  // 팝업을 다시 숨김
 });
 //========================민원 대응방안 수립 팝업 끝========================
 
