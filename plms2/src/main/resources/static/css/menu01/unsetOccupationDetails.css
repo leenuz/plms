@@ -774,7 +774,9 @@ textarea {
 }
 
 #unsetOccupationDetails .parcelAttachments .contentScr {
-    height: 180px;
+    /* height: 180px; */
+    max-height: calc(45px * 4);
+ 		overflow-y: auto; /* 스크롤 활성화 */
 }
 #unsetOccupationDetails .contentScr {
     overflow-y: scroll;

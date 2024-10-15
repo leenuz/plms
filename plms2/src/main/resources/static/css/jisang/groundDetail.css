@@ -491,7 +491,7 @@ button {
 
 #groundDetail .parcelAttachments .contentScr {
     /*height: 90px;*/
-	max-height: calc(45px * 2);
+	max-height: calc(45px * 4);
 	overflow-y: auto; /* 스크롤 활성화 */
 }
 #groundDetail .contentScr {

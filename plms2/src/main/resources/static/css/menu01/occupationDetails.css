@@ -728,7 +728,9 @@ button {
 }
 
 #occupationDetails .parcelAttachments .contentScr {
-    height: 90px;
+    /* height: 90px; */
+    max-height: calc(45px * 4);
+ 		overflow-y: auto; /* 스크롤 활성화 */
 }
 #occupationDetails .contentScr {
     overflow-y: scroll;
