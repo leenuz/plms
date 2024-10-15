@@ -1619,6 +1619,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 		
 	
 		ArrayList dataList = new ArrayList();
+		int dataTotalCnt = 0;
 		HashMap map = new HashMap();
 		try {
 	
@@ -1631,14 +1632,17 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 			params.put("MM_TG", MM_TG);
 	
 			if("UP".equals(TYPE)) {
+				dataTotalCnt = (int) mainService.selectCountQuery("staticSQL.selectByRightInDeListDetailUpCnt", params);
 				dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListDetailUp", params);
 			}else {
+				dataTotalCnt = (int) mainService.selectCountQuery("staticSQL.selectByRightInDeListDetailDownCnt", params);
 				dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListDetailDown", params);
 			}
 			
 	
 			map.put("message", "success");
 			map.put("dataList", dataList);
+			map.put("dataTotalCnt", dataTotalCnt);
 		} catch (Exception e) {
 			map.put("message", "처리 중 오류가 발생했습니다.");
 			e.printStackTrace();

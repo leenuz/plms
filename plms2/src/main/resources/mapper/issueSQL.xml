@@ -173,9 +173,19 @@ FROM (
 		</if>
 		
 		
+		</select>
 		
+<!-- 민원 테이블 조회 seq 로 조회 -->
+		<select id="selectAllMinwonData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	    SELECT *
+	    FROM minwon_master 
+	    WHERE 1=1
+	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(mwSeq)">
+	        AND minwon_master.mm_mw_seq = CAST(#{mwSeq} AS NUMERIC)
+	    </if>
+		</select>
 
-	</select>
+
 	<select id="selectAllData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select *
 		,concat(dom_sido_nm,' ',dom_sgg_nm,' ',dom_emd_nm,' ',dom_ri_nm,' ',dom_jibun) as address

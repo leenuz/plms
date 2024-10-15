@@ -103,13 +103,29 @@ public class issueController {
 		return mav;
 	}
 	
-	//민원관리 - 민원 대응방안 수립 팝업
+	// 민원관리 - 민원 대응방안 수립 팝업
 	@PostMapping(path = "/minwonBangan")
-	public ModelAndView getPermitJisangSelect1(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-	    log.info("test1 컨트롤러 동작");
-	    ModelAndView mav = new ModelAndView();
-	    mav.setViewName("content/issue/complaintManage :: #complainRespondContentBoxs");
-	    return mav;
+	public ModelAndView getMinwonBangan(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		log.info("minwonBangan 컨트롤러 동작");
+
+		String mwSeq = httpRequest.getParameter("mw_seq");
+		log.info("받은 mw_seq 값: " + mwSeq);
+
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("mwSeq", mwSeq);
+
+		ArrayList<HashMap> minwonList = mainService.selectQuery("issueSQL.selectAllMinwonData", params);
+		log.info("minwonList: " + minwonList);
+		log.info("minwonList.get(0) : " + minwonList.get(0));
+
+
+		// 필요한 데이터도 추가로 전달 가능
+		mav.addObject("minwonList", minwonList.get(0));
+
+		// 반환할 뷰와 특정 HTML 요소를 업데이트할 태그를 지정 mav.
+		mav.setViewName("content/issue/complaintManage :: #complainRespondContentBoxs");
+		return mav;
 	}
 
 	@PostMapping(path = "/getBunhalJIjukSelect")
