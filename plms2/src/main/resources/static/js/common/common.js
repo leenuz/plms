@@ -57,6 +57,29 @@ function loadingHide(){
 	$("#loadingBar").hide();
 }
 
+function showDim() {
+	console.log("loading show....");
+	var maskHeight=$(document).height();
+	var maskWidth=window.document.body.clientWidth;
+	
+	var mask = "<div id='mask' style='position:absolute; z-index:100; background-color:#000000; left:0; top:0;'></div>";
+	$('body').append(mask);
+	$("#mask").css({
+		'width': maskWidth,
+		'height':maskHeight,
+		'opacity':'0.4',
+		'z-index': 10
+	})
+	$("#loadingBar").show();
+}
+
+function hideDim(){
+	console.log("dim hide....");
+	$("#mask").remove();
+	$("#loadingBar").hide();
+}
+
+
 function addCommas(nStr)
 {
     nStr += '';

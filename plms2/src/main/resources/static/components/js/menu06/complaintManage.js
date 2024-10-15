@@ -238,6 +238,10 @@ $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 		return
 	}
 
+	let consultInfo = getPopupJsonData();
+
+	console.log(consultInfo);
+/*
 	$.ajax({
 		url: "/issue/saveMinwonAgreeData",
 		data: getPopupJsonData(),
@@ -271,6 +275,8 @@ $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 			console.log(jqXHR.responseJSON);
 		}
 	}); //end ajax
+	
+	*/
 });
 
 //협의추가 ->상신
@@ -725,7 +731,7 @@ function minwon_completeReportPop() {
 function minwonConsultPopupOpen() {
 	console.log('팝업오픈');
 	$("#complaint_register_Popup").addClass('active');
-	
+	showDim();
 	//팝업오픈하고 날짜 오늘날짜로 기본세팅
     $("#consult_date_field").val(today_yyyymmdd());
 	
@@ -735,6 +741,7 @@ function minwonConsultPopupOpen() {
 //민원협의 팝업 닫기
 function minwonConsultPopupClose() {
 	$("#complaint_register_Popup").removeClass('active');
+	hideDim();
 }
 
 
