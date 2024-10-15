@@ -1102,7 +1102,7 @@ public class jisangController {
 						String SPOT_RESULT = requestJsonObj.getString("spot_result"); // 현장확인결과
 						String REVIEW = requestJsonObj.getString("review"); // 검토의견
 						String CONTRACT = requestJsonObj.getString("contract"); // 약정사항
-						String PMT_STATUS = requestJsonObj.getString("PMT_STATUS"); // 등록상태
+						String PMT_STATUS = requestJsonObj.has("PMT_STATUS")?requestJsonObj.getString("PMT_STATUS"):""; // 등록상태
 						String str_result = "Y";
 						String resp_PMT_NO = "";
 						try {
