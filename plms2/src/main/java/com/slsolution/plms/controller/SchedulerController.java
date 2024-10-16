@@ -551,7 +551,7 @@ public class SchedulerController {
 				}
 				HashMap map = new HashMap();
 				map.put("JISANGNO", targetMap.get("jisang_no"));
-				//mainService.DeleteQuery("jisangSQL.deleteJisangBunhalTmp", map); // 임시저장 삭제 -->> 완료처리
+				mainService.DeleteQuery("jisangSQL.deleteJisangBunhalTmp", map); // 임시저장 삭제 -->> 완료처리
 //				Database.getInstance().update("Json.completeJisangBunhalTmp", map); // 임시저장 삭제 -->> 완료처리 // 삭제에서 플래그 완료처리로 변경. 기록확인을 위한 기능변경.
 
 				//Database.getInstance().commitTransaction();
@@ -624,6 +624,8 @@ public class SchedulerController {
 					jijukAreaTotal +=jsonObj.getInt("jijuk_area");
 					pyeonibAreaTotal +=jsonObj.getInt("pyeonib_area");
 					setMoneyTotal +=jsonObj.getInt("set_money");
+					
+					log.info("jijukAreaTotal:"+jijukAreaTotal);
 //					BigDecimal pyeonibArea = new BigDecimal(datas.get("pyeonib_area").toString());
 					//pyeonibAreaTotal = pyeonibAreaTotal.add(pyeonibArea);
 					//jijuk_area_total = jijuk_area_total + ((BigDecimal) datas.get("jijuk_area")).intValue();

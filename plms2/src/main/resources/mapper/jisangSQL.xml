@@ -4725,11 +4725,12 @@ SELECT B.DOCKEY
        , B.cancle_name as CANCLE_NAME
    FROM JISANG_TERMINATION B
 LEFT JOIN JISANG_MASTER A ON A.jm_JISANG_NO = B.JISANG_NO
-       LEFT JOIN PLMS_APPROVAL C ON C.pa_DOCKEY = B.DOCKEY  AND C.pa_STATUS = 'C' 
+       LEFT JOIN PLMS_APPROVAL C ON C.pa_DOCKEY = B.DOCKEY  
  WHERE A.jm_JISANG_NO = B.JISANG_NO
    AND ( A.jm_CANCLE_YN != 'Y'
     OR A.jm_CANCLE_YN IS NULL )
    AND B.DOCKEY IS NOT NULL
+   AND C.pa_STATUS = 'C' 
  
   
 	</select>
@@ -4748,12 +4749,13 @@ SELECT B.DOCKEY
        , B.cancle_name as CANCLE_NAME
  FROM JISANG_TERMINATION B
 LEFT JOIN JISANG_MASTER A ON A.jm_JISANG_NO = B.JISANG_NO
-       LEFT JOIN PLMS_APPROVAL C ON C.pa_DOCKEY = B.DOCKEY   AND (C.pa_STATUS = 'C' OR C.pa_status = 'I')      
+       LEFT JOIN PLMS_APPROVAL C ON C.pa_DOCKEY = B.DOCKEY        
  WHERE A.jm_JISANG_NO = B.JISANG_NO
+ 
    AND ( A.jm_CANCLE_YN != 'Y'
     OR A.jm_CANCLE_YN IS NULL )
    AND B.DOCKEY IS NOT NULL
-  
+  AND (C.pa_STATUS = 'C' OR C.pa_status = 'I') 
    
 	</select>
 	
@@ -4817,11 +4819,11 @@ UPDATE PLMS_POTENTIAL_ISSUE
        , A.jm_pnu as PNU
        , A.jm_addrcode as ADDRCODE
        , A.jm_jibun as JIBUN
-  FROM JISANG_MASTER   A
-       , JISANG_BUNHAL   B
-       , PLMS_APPROVAL       C
- WHERE A.jm_JISANG_NO = B.jb_JISANG_NO
-   AND B.jb_DOCKEY = C.pa_DOCKEY
+  FROM JISANG_BUNHAL   B 
+       left join  JISANG_MASTER   A on A.jm_JISANG_NO = B.jb_JISANG_NO 
+       left join PLMS_APPROVAL C on B.jb_DOCKEY = C.pa_DOCKEY
+ WHERE 1=1
+   
    AND C.pa_STATUS = 'C'
    AND B.jb_BUNHAL_COMPLETE = 'N'
 	</select>
@@ -4836,12 +4838,12 @@ UPDATE PLMS_POTENTIAL_ISSUE
        , A.jm_pnu as PNU
        , A.jm_addrcode as ADDRCODE
        , A.jm_jibun as JIBUN
-  FROM JISANG_MASTER   A
-       , JISANG_BUNHAL   B
-       , PLMS_APPROVAL       C
- WHERE A.jm_JISANG_NO = B.jb_JISANG_NO
-   AND B.jb_DOCKEY = C.pa_DOCKEY
-   AND C.pa_STATUS = 'C' or C.pa_status='I'
+  FROM  JISANG_BUNHAL   B
+       left join  JISANG_MASTER   A on A.jm_JISANG_NO = B.jb_JISANG_NO
+       left join PLMS_APPROVAL C on B.jb_DOCKEY = C.pa_DOCKEY
+ WHERE 1=1
+   
+   AND C.pa_STATUS = 'C' 
    AND B.jb_BUNHAL_COMPLETE = 'N'
 	</select>
 	<!-- 지상권 분할 전자결재 결과값 확인쿼리 테스트용 -->
@@ -4932,7 +4934,7 @@ UPDATE PLMS_POTENTIAL_ISSUE
 		PLMS_APPROVAL BB
 		WHERE
 		AA.DOCKEY = BB.pa_DOCKEY
-		AND BB.pa_STATUS = 'C' or BB.pa_status = 'I'
+		AND BB.pa_STATUS = 'C' 
 	</select>
 	
 	<!-- 지상권 합필 전자결재 결과값 상신만 해도 완료로 인식하도록  -->
