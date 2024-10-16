@@ -149,7 +149,6 @@ public class issueController {
 		
 		// 필요한 데이터도 추가로 전달 가능
 		mav.addObject("minwon", minwonList.get(0));
-		mav.addObject("issuecodeMap", "asdfasdf");
 
 		// 반환할 뷰와 특정 HTML 요소를 업데이트할 태그를 지정 mav.
 		mav.setViewName("content/issue/complaintManage :: #complainRespondContentBoxs");

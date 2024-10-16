@@ -327,7 +327,7 @@ div.dt-filter-spacer {
 	<div id="complainRespondContentBoxs" style="display: none;">
 		<input type="hidden" id="issuecodeList" th:value="${issuecodeList}">
         <div class="complainRespondPopWrap">
-            <div class="complainRespondPopContent"  style="margin-bottom:900px">
+            <div class="complainRespondPopContent"  style="margin-bottom:900px; z-index: 20;">
                 <div class="complainRespondPopTitles">
                     <h5>민원 대응방안 수립</h5>
                     <button class="complainRespondcloseBtn">
@@ -388,9 +388,11 @@ div.dt-filter-spacer {
                                         </div>
                                         <!--보여지는 셀렉박스-->
                                         <div class="surfaceSelects">
-                                            <button class="complainRespondSelectTitleBtn"></button>
-                                            <div class="sufaceSelectList">
-                                                <ul class="surfaceSelectListMember"></ul>
+                                            <button class="complainRespondSelectTitleBtn" id="complainSeletDepth1_Btn" 
+                                            		onclick="complainSeletDepth_optionSelect('complainRespondHiddenSelectBox01', 'complainDepth1_Ul', 'complainSeletDepth1_Btn', 'complainMenuListDepth1_Div')">
+                                            </button>
+                                            <div class="sufaceSelectList" id="complainMenuListDepth1_Div">
+                                            	<ul class="surfaceSelectListMember" id="complainDepth1_Ul"></ul>
                                             </div>
                                         </div>
                                     </ul>
@@ -406,9 +408,10 @@ div.dt-filter-spacer {
                                         </div>
                                         <!--보여지는 셀렉박스-->
                                         <div class="surfaceSelects">
-                                            <button class="complainRespondSelectTitleBtn"></button>
-                                            <div class="sufaceSelectList">
-                                                <ul class="surfaceSelectListMember"></ul>
+                                            <button class="complainRespondSelectTitleBtn" id="complainSeletDepth2_Btn"
+                                            		onclick="complainSeletDepth_optionSelect('complainRespondHiddenSelectBox02', 'complainDepth2_Ul', 'complainSeletDepth2_Btn', 'complainMenuListDepth2_Div')"></button>
+                                            <div class="sufaceSelectList" id="complainMenuListDepth2_Div">
+                                                <ul class="surfaceSelectListMember" id="complainDepth2_Ul"></ul>
                                             </div>
                                         </div>
                                     </ul>
@@ -424,9 +427,10 @@ div.dt-filter-spacer {
                                         </div>
                                         <!--보여지는 셀렉박스-->
                                         <div class="surfaceSelects">
-                                            <button class="complainRespondSelectTitleBtn"></button>
-                                            <div class="sufaceSelectList">
-                                                <ul class="surfaceSelectListMember"></ul>
+                                            <button class="complainRespondSelectTitleBtn" id="complainSeletDepth3_Btn"
+                                            		onclick="complainSeletDepth_optionSelect('complainRespondHiddenSelectBox03', 'complainDepth3_Ul', 'complainSeletDepth3_Btn', 'complainMenuListDepth3_Div')"></button>
+                                            <div class="sufaceSelectList" id="complainMenuListDepth3_Div">
+                                                <ul class="surfaceSelectListMember" id="complainDepth3_Ul"></ul>
                                             </div>
                                         </div>
                                     </ul>

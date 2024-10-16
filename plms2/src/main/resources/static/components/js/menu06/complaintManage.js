@@ -4,7 +4,8 @@ var mw_seq;
 var fileRowCount = 0;
 
 //
-var issueTypeList = '';
+var issueTypeList = '';	//이슈유형
+var selectCodeGroupVal = '';	//선택한 권리확보 유형
 
 // 민원완료 팝업 하나만 띄우기
 let popupWindow = null;
@@ -639,7 +640,7 @@ $(document).on("click", "#minwonResponsePopup", function() {
 	console.log("문서보기 클릭됨");
 	console.log("mw_seq: ", mwSeq);
 
-	// Ajax 요청을 통해 데이터 처리
+	// Ajax 요청을 통해 데이터 처리 (민원 대응방안 내용 및 코드조회까지 해옴)
 	$.ajax({
 		url: "/issue/minwonBangan",
 		type: "POST",
@@ -668,11 +669,14 @@ $(document).on("click", "#minwonResponsePopup", function() {
 		alert('이슈유형 불러오는데 오류가 발생했습니다.');
 	}
 	
+	showDim();
+	
 });
 
 // 민원 대응방안 수립 팝업 닫기 버튼
 $(document).on("click", "#complainRespondContentBoxs .complainRespondcloseBtn", function() {
 	$("#complainRespondContentBoxs").hide();  // 팝업을 다시 숨김
+	hideDim();
 });
 
 //계약여부 메뉴 선택시 스크립트
@@ -682,17 +686,17 @@ function respondContractMenuChange(rightsVal) {
 	//지상권설정 : GY || 지상권미설정 : GN || 점용 : DY || 미점용 : DN
 	
 	let selectIssueArr = [];
-	let selectCodeGroupVal = ''
+	
 	
 	//계약여부 값 판단
 	if(rightsVal == '지상권설정') {
-		selectCodeGroupVal = 'GY';
+		selectCodeGroupVal = 'DY';	//현재 이 변수는 맨위에 있습니다.
 	} else if(rightsVal == '지상권미설정') {
-		selectCodeGroupVal = 'GN';
-	} else if(rightsVal == '점용') {
-		selectCodeGroupVal = 'DY';
-	} else if(rightsVal == '미점용') {
 		selectCodeGroupVal = 'DN';
+	} else if(rightsVal == '점용') {
+		selectCodeGroupVal = 'GY';
+	} else if(rightsVal == '미점용') {
+		selectCodeGroupVal = 'GN';
 	} else {
 		alert('이슈유형 메뉴 오류가 발생했습니다.');
 		return false;
@@ -703,8 +707,66 @@ function respondContractMenuChange(rightsVal) {
 	
 	console.log(selectIssueArr);
 	
-	let targetIssue1Depth = [];
+	let targetIssue1Depth = filter_Depth(selectIssueArr, 1);
 	
+	console.log(targetIssue1Depth);
+	
+	//selectbox 내용 만들어주기
+	makeSelectboxContent(targetIssue1Depth , 'complainRespondHiddenSelectBox01', 1); //정리된 배열, 해당 태그의 id값 필수, depth단계값 필수
+	
+}
+
+//depth 분류
+function filter_Depth(data, opt) {
+	
+	const uniqueDepth1 =[];
+	const seenCodes = new Set();
+	
+	let depthSort;
+	
+	data.forEach(item => {
+		
+		if(opt == 1) {
+			depthSort = item.depth1_code;
+		} else if (opt == 2) {
+			depthSort = item.depth2_code;
+		} else {
+			depthSort = item.depth3_code;
+		}
+		
+		if(!seenCodes.has(depthSort)) {
+			uniqueDepth1.push(item);
+			seenCodes.add(depthSort);
+		}
+	});
+	
+	return uniqueDepth1;
+}
+
+function makeSelectboxContent(targetArr, divId, opt){
+	let selectBox = $("#"+divId);
+	//기존 내용이 있다면 비워주기.
+	selectBox.empty();
+	
+	if(opt == 1) {
+		for(let i = 0 ; i < targetArr.length ; i++) {
+			let depthInfo = targetArr[i];
+			let option = $('<option></option>').val(depthInfo.depth1_code).text(depthInfo.depth1_name);
+			selectBox.append(option);
+		}
+	} else if (opt == 2) {
+		for(let i = 0 ; i < targetArr.length ; i++) {
+		let depthInfo = targetArr[i];
+			let option = $('<option></option>').val(depthInfo.depth2_code).text(depthInfo.depth2_name);
+			selectBox.append(option);
+		}
+	} else {
+		for(let i = 0 ; i < targetArr.length ; i++) {
+			let depthInfo = targetArr[i];
+			let option = $('<option></option>').val(depthInfo.depth3_code).text(depthInfo.depth3_name);
+			selectBox.append(option);
+		}
+	}
 }
 
 //
@@ -726,6 +788,94 @@ function targetIssueTypeSort(sortGroupVal) {
 	return targetResultGroup;
 }
 
+//셀렉트 박스와 ul의 아이디 전달
+function complainSeletDepth_optionSelect(selectBoxId, ulId, btnId, listDivId) {
+	//Step 1.selectbox, ul 요소 가져오기
+	const selectBoxElement = $("#"+selectBoxId);
+	const ulElement = $("#"+ulId);
+	const btnElement = $("#"+btnId);
+	const listDivElement = $("#"+listDivId);
+	const depthCheck = selectBoxId.charAt(selectBoxId.length - 1);
+	
+	// Step 2. ul안데 기존 li요소들제거
+	ulElement.empty();
+	
+	if(btnElement.hasClass('active')) {
+		btnElement.removeClass('active');
+		listDivElement.removeClass('active');
+		return false;
+	}
+	
+	// Step 3. option항목들 순회
+	selectBoxElement.find('option').each(function(){
+		let optionText = $(this).text();
+		let optionVal = $(this).val();
+		
+		// Step 4. 새로운 li요소 생성
+		let liElement = $("<li>").text(optionText);
+		
+		//li에 클릭 이벤트 추가 및 버튼 텍스트 변경
+		liElement.on("click", function() {
+			btnElement.text(optionText);
+			btnElement.attr('data-value', optionVal);
+			
+			btnElement.removeClass('active');
+			ulElement.removeClass('active');
+			listDivElement.removeClass('active');
+			
+			if(depthCheck == 1) {
+				console.log('1depth 선택했으니 2depth change :: '+ optionVal);
+				//선택값을 비교하여 해당 메뉴만 가져옴.
+				let targetIssue2Depth = setingDepth2List(targetIssueTypeSort(selectCodeGroupVal), optionVal);
+				//그리고 selectbox 내용 만들어주기
+				makeSelectboxContent(targetIssue2Depth , 'complainRespondHiddenSelectBox02', 2);
+				//selectedByDepth1(optionVal);
+			} else if(depthCheck == 2){
+				console.log('2depth 선택했으니 3depth change :: ' + optionVal);
+				let targetIssue3Depth = setingDepth3List(targetIssueTypeSort(selectCodeGroupVal), optionVal)
+				makeSelectboxContent(targetIssue3Depth , 'complainRespondHiddenSelectBox03', 3);
+			}
+			
+		});
+		
+		// Step 5. ul에 li요소 추가
+		ulElement.append(liElement);
+	});
+	
+	//
+	btnElement.addClass('active');
+	listDivElement.addClass('active');
+}
+
+
+//depth2 목록 세팅 
+function setingDepth2List(depth1List, depth1Val) {
+	console.log(depth1List);
+	console.log(depth1Val);
+	
+	const depth2ListCheck = depth1List.filter(item => item.depth1_code === depth1Val);
+	
+	const uniqueItems = Array.from(new Set(depth2ListCheck.map(item => JSON.stringify(item))))
+							 .map(item => JSON.parse(item));
+	
+	console.log(uniqueItems);
+	
+	return uniqueItems;
+}
+
+function setingDepth3List(depth2List, depth2Val) {
+	console.log(depth2List);
+	console.log(depth2Val);
+	
+	const depth3ListCheck = depth2List.filter(item => item.depth2_code === depth2Val);
+	
+	const uniqueItems = Array.from(new Set(depth3ListCheck.map(item => JSON.stringify(item))))
+							 .map(item => JSON.parse(item));
+	
+	console.log(uniqueItems);
+	
+	return uniqueItems;
+}
 
 //========================민원 대응방안 수립 팝업 [E]========================
 //==============================================================================================================
