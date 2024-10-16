@@ -3,7 +3,6 @@ var dataInfo = {};
 var mw_seq;
 var fileRowCount = 0;
 
-//
 var issueTypeList = '';
 
 ///start
@@ -261,9 +260,6 @@ function getFullAddress(data) {
 }
 
 
-
-
-
 //민원 현황 상세 내용 조회
 function onDataLoad() {
 
@@ -398,10 +394,6 @@ function onDataLoad() {
 					//$('#minwonin_tojiju_body').append(noDataUl);
 				
 			
-				
-				
-				
-			
 			
 			// 토지이력
 			$('#toji_history').val(result.toji_history || '-');
@@ -489,8 +481,9 @@ function onDataLoad() {
 				$('#dopcoAllWrappers .consultDetails .depth1 .contents').remove();
 				$.each(agreeList, function(index, item) {
 					var newItem = `
-                <ul class="contents">
+                <ul class="contents minwon-agree-row" id="minwonAgreeUl">
                 <li class="content">
+										<input type="hidden" class="agree-seq" value="${item.agree_seq}">
                     <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.agree_date || '-'}">
                 </li>
                 <li class="content smallWidth">
@@ -531,6 +524,7 @@ function onDataLoad() {
 		}
 	}) //end ajax
 }
+
 
 //파일 업로드 했을때 step.1
 function handleFileUpload(files, obj) {
@@ -734,7 +728,6 @@ function minwonConsultPopupOpen() {
 	//팝업오픈하고 날짜 오늘날짜로 기본세팅
 	$("#consult_date_field").val(today_yyyymmdd());
 
-	//minwonConsultInfoSearch();	//민원협의 내용 등록/수정 팝업 조회 - 민원 seq 와 협의seq
 }
 
 //민원협의 내용 등록/수정 팝업 닫기
@@ -884,113 +877,100 @@ $(document).ready(function () {
 });
 
 
-// 민원협의 내용 등록/수정 팝업 - 저장 버튼 - 파일 저장
-$(document).on("click", "#complaintRegisterBtn", function() {
-	console.log("--------------start fileSaveBtn---------");
-	console.log(uploadFiles);
-	//console.log($("#uploadForm").serialize());
-	/*var files=$("input[name='fileUpload']")[0].files;
-	for(var i=0;i<files.length;i++){
-		console.log("filename:"+files[i].name);
-	}*/
+// 협의내용 - 행 클릭 시 팝업 열기
+$(document).on('click', '#minwonAgreeUl', function() {
+    var mwSeq = $('#minwonSeq').val();  // mw_seq는 따로 저장해둔 hidden 값에서 가져옴
+    var agreeSeq = $(this).find('.agree-seq').val();  // 해당 행의 agree_seq 값 추출
 
-	/*const attachFileUls = document.querySelectorAll('input[name="masterEdit_attachFile"]');
-									 console.log(attachFileUls);
-				
-				var files=new Array();
-								 for(var i=0;i<attachFileUls.length;i++){
-								console.log($(attachFileUls[i]).parent().parent().html());
-									var fname=$(attachFileUls[i]).parent().parent().find("#filename").val();
-									var wdate=$(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val();
-									console.log(fname);
-									console.log("wdate:"+wdate);
-									if (wdate==null || wdate=="" || wdate==undefined ) files.push(fname);
-									
-								}*/
-
-	var minwonSeq = $("#minwonSeq").val();
-	if (minwonSeq == null || minwonSeq == "undefined") {
-		alert("민원 관리 번호를 찾을수 없습니다.");
-		return;
-	}
-	console.log(uploadFiles.length);
-	if (uploadFiles.length < 1) {
-		alert("첨부파일이 없습니다.");
-		return;
-	}
-
-	var params = { "minwonSeq": $("#minwonSeq").val(), "minwonAgreeSeq": $("#pnu").val(), "files": uploadFiles, "mode": "asave" };
-	console.log(params);
-	url = "/issue/minwonAgreeAtcUpload";
-	$.ajax({
-
-		url: url,
-		type: 'POST',
-		contentType: "application/json",
-		data: JSON.stringify(params),
-
-		dataType: "json",
-		beforeSend: function(request) {
-			console.log("beforesend ........................");
-			loadingShow();
-		},
-		success: function(response) {
-			loadingHide();
-			console.log(response);
-			if (response.success = "Y") {
-				console.log("response.success Y");
-				console.log("response.resultData length:" + response.resultData.length);
-				/*$("#popup_bg").show();
-				$("#popup").show(500);
-				//$("#addrPopupLayer tbody td").remove();
-				for(var i=0;i<response.resultData.length;i++){
-					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-				}*/
-				console.log(params);
-				//$("#pnuAtcFilesDiv").replaceWith()
-				uploadFiles = [];
-				$("#fileListDiv div").remove();
-				$("#fileListDiv").append("<div id='flist'></div>");
-				$.ajax({
-					url: "/land/issue/getMinwonAgreeAtcFileData",
-					type: "POST",
-					data: params,
-				})
-					.done(function(fragment) {
-						$('#fileListDiv').replaceWith(fragment);
-					});
-			}
-			else {
-				console.log("response.success N");
-			}
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			alert("getAddressData ajax error\n" + textStatus + ":" + errorThrown);
-		}
-
-	})
-
+		console.log("mw_seq: " + mw_seq + "agreeSeq: " + agreeSeq);
+    openExistingAgreePopup(mwSeq, agreeSeq);  // mw_seq와 agree_seq를 넘겨 팝업 열기
 });
 
+// 협의 내용 수정 팝업 열기 함수(기존 데이터 있을 때 행 클릭 시)
+function openExistingAgreePopup(mwSeq, agreeSeq) {
+    $.ajax({
+        url: "/issue/getMinwonAgreeDetail",
+        type: "GET",
+        data: { mwSeq: mwSeq, agreeSeq: agreeSeq },
+        success: function(data) {
+            console.log("Received data:", data); // 전체 데이터를 출력
+            
+            // 팝업을 활성화
+            $("#complaint_register_Popup").addClass('active');
+            showDim();
 
-// 민원협의 내용 등록/수정 팝업 - 저장 버튼 클릭 시 minwon_agreement 테이블 에 저장
+            // 협의 내용을 받아와서 필드에 입력
+            $("input[name='TITLE']").val(data.agree_title);
+            $("textarea[name='CONTENTS']").html(data.agree_contents);  // HTML 태그가 포함된 데이터를 처리
+            $("select[name='STATUS']").val(data.status_str).trigger('change');  // select value 설정 후 change 이벤트 발생
+            $(".Popup_Custom_SelectView").text(data.status_str);  // 커스텀 UI의 텍스트 변경
+            $("#consult_date_field").val(data.agree_date);
+
+            // hidden 필드에 mw_seq와 agree_seq 값 채우기
+            $("input[name='mw_seq']").val(mwSeq);
+            $("input[name='agree_seq']").val(agreeSeq);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error loading agree details:", textStatus, errorThrown);
+        }
+    });
+}
+
+
+// 민원협의 내용 등록/수정 팝업 - 저장 버튼 클릭 시 minwon_agreement , minwon_agree_atcfile 테이블에 저장 후 파일 보이기
 $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 	if (dataInfo == null || dataInfo == undefined) {
+		console.log("dataInfo is null");
 		return
 	}
 	let consultInfo = getPopupJsonData();
-	console.log(consultInfo);
-	/*
+	let minwonSeq = $("#minwonSeq").val();  // minwonSeq 값을 가져옴
+	console.log("consoleInfo: " + consultInfo);
+	console.log(uploadFiles);
+	
+	// FormData 객체 생성
+  let formData = new FormData();
+  
+  // consultInfo의 각 값을 FormData에 추가
+  for (let key in consultInfo) {
+      formData.append(key, consultInfo[key]);
+  }
+	
+	// minwonSeq 값을 FormData에 추가
+	formData.append("MW_SEQ", minwonSeq);
+
+  // 파일 리스트를 FormData에 추가
+  if (uploadFiles && uploadFiles.length > 0) {
+      for (let i = 0; i < uploadFiles.length; i++) {
+          formData.append("files", uploadFiles[i]);
+      }
+  }
+	
 		$.ajax({
 			url: "/issue/saveMinwonAgreeData",
-			data: getPopupJsonData(),
+			data: formData, // FormData 객체 전송
 			async: true,
 			type: "POST",
-			dataType: "json",
-			contentType: 'application/json; charset=utf-8',
-			success: function(data, jqXHR) {
+			/*dataType: "json",
+			contentType: 'application/json; charset=utf-8',*/
+			processData: false,  // FormData를 직렬화하지 않음
+      contentType: false,  // FormData에 맞게 Content-Type 설정
+			success: function(data, jqXHR) { // 새로 만들어진 agree_seq 받아와서 다시 getAgreeAtcfile 요청해서 파일 목록 보여주기. #complaintRegisterBtn 참고
 				console.log(data);
 				if (data.message != null && data.message != undefined && data.message == "success") {
+					let agreeSeq = data.agreeSeq;  // 서버에서 전달된 agreeSeq 사용
+					let mwSeq = consultInfo.mwSeq;  // consultInfo에서 mwSeq 가져오기
+					
+					console.log("agreeSeq: " + agreeSeq + " mwSeq: " + mwSeq);
+					// 새로 생성된 agreeSeq와 함께 파일 목록 조회
+          $.ajax({
+              url: "/issue/getMinwonAgreeAtcFileData",
+              type: "POST",
+              data: { mwSeq: mwSeq, agreeSeq: agreeSeq },
+              success: function(fragment) {
+                  $('#fileListDiv').replaceWith(fragment);
+              }
+          });
 					closeComplaintregisterPopup();
 				} else {
 					alert(data.message);
@@ -1014,7 +994,7 @@ $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 				console.log(jqXHR.responseJSON);
 			}
 		}); //end ajax
-		*/
+		
 });
 
 
@@ -1059,27 +1039,96 @@ $(document).on("click", ".document_add_btnWrap .sangsinBtn", function() {
 });
 
 
-// 민원협의 내용 조회
-function minwonConsultInfoSearch() {
-	console.log('민원협의 조회 :: ' + $("#minwonSeq").val());
-	
-	
-	const param = {
-		"mw_seq" : $("#minwonSeq").val()
+/*
+add. 손지민 - 민원협의 내용 등록/수정 팝업 - 저장 버튼 - 파일 저장 잘 되는 버전. 근데 Transactional 처리 안 되어있어서 기존 코드 사용으로 변경
+$(document).on("click", "#complaintRegisterBtn", function() {
+	console.log("--------------start fileSaveBtn---------");
+	console.log(uploadFiles);
+	//console.log($("#uploadForm").serialize());
+	var files=$("input[name='fileUpload']")[0].files;
+	for(var i=0;i<files.length;i++){
+		console.log("filename:"+files[i].name);
 	}
-	
+
+	const attachFileUls = document.querySelectorAll('input[name="masterEdit_attachFile"]');
+									 console.log(attachFileUls);
+				
+				var files=new Array();
+								 for(var i=0;i<attachFileUls.length;i++){
+								console.log($(attachFileUls[i]).parent().parent().html());
+									var fname=$(attachFileUls[i]).parent().parent().find("#filename").val();
+									var wdate=$(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val();
+									console.log(fname);
+									console.log("wdate:"+wdate);
+									if (wdate==null || wdate=="" || wdate==undefined ) files.push(fname);
+									
+								}
+
+	var minwonSeq = $("#minwonSeq").val();
+	if (minwonSeq == null || minwonSeq == "undefined") {
+		alert("민원 관리 번호를 찾을수 없습니다.");
+		return;
+	}
+	console.log(uploadFiles.length);
+	if (uploadFiles.length < 1) {
+		alert("첨부파일이 없습니다.");
+		return;
+	}
+
+	var params = { "minwonSeq": $("#minwonSeq").val(), "minwonAgreeSeq": $("#pnu").val(), "files": uploadFiles, "mode": "asave" };
+	console.log(params);
+	url = "/issue/minwonAgreeAtcUpload";
 	$.ajax({
-		url : '/issue/minwonConsultSearch',
-		type: 'GET',
-		data: param
+
+		url: url,
+		type: 'POST',
+		contentType: "application/json",
+		data: JSON.stringify(params),
+
+		dataType: "json",
+		beforeSend: function(request) {
+			console.log("beforesend ........................");
+			loadingShow();
+		},
+		success: function(response) {
+			loadingHide();
+			console.log(response);
+			if (response.success = "Y") {
+				console.log("response.success Y");
+				console.log("response.resultData length:" + response.resultData.length);
+				$("#popup_bg").show();
+				$("#popup").show(500);
+				//$("#addrPopupLayer tbody td").remove();
+				for(var i=0;i<response.resultData.length;i++){
+					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+				}
+				console.log(params);
+				//$("#pnuAtcFilesDiv").replaceWith()
+				uploadFiles = [];
+				$("#fileListDiv div").remove();
+				$("#fileListDiv").append("<div id='flist'></div>");
+				$.ajax({
+					url: "/land/issue/getMinwonAgreeAtcFileData",
+					type: "POST",
+					data: params,
+				})
+					.done(function(fragment) {
+						$('#fileListDiv').replaceWith(fragment);
+					});
+			}
+			else {
+				console.log("response.success N");
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert("getAddressData ajax error\n" + textStatus + ":" + errorThrown);
+		}
+
 	})
-	.done(function(fragment) {
-		
-	})
-	.fail(function(){
-		console.log('AJAX Error')
-	});
-}
+
+});
+*/
+
 
 // 셀렉트 박스
 function complainSelectBoxOpen() {

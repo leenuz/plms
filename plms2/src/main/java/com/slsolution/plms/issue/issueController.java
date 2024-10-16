@@ -6,10 +6,12 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.Transactional;
@@ -922,23 +924,39 @@ public class issueController {
 		response.getWriter().flush();
 	}
 
-	// 민원협의 내용저장 상신
+	
+	// 민원협의 내용 등록/수정 팝업 - 저장 상신
 	@Transactional
-	@PostMapping(path = "/saveMinwonAgreeData")
-	public void saveMinwonAgreeData(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String requestParams = ParameterUtil.getRequestBodyToStr(request);
-		JSONObject requestParamObj = new JSONObject(requestParams);
-		ParameterParser parser = new ParameterParser(request);
-		String fileseq =requestParamObj.has("fileseq")?requestParamObj.getString("fileseq"):"0"; // 파일 seq
-		String MW_SEQ = requestParamObj.getString("MW_SEQ");
-		String AGREE_SEQ = requestParamObj.getString("AGREE_SEQ");
-		String AGREE_TITLE = requestParamObj.getString("TITLE");
-		String AGREE_CONTENTS = requestParamObj.getString("CONTENTS");
-		String AGREE_DATE = requestParamObj.getString("DATE");
-		String STATUS = requestParamObj.getString("STATUS");
-		String SANGSIN_FLAG = requestParamObj.getString("SANGSIN_FLAG");
+	@PostMapping(path = "/saveMinwonAgreeData", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	public void saveMinwonAgreeData(MultipartHttpServletRequest request, HttpServletResponse response) throws Exception {
+	    // 텍스트 데이터 파싱
+		/*
+		 * String requestParams = ParameterUtil.getRequestBodyToStr(request); JSONObject
+		 * requestParamObj = new JSONObject(requestParams); ParameterParser parser = new
+		 * ParameterParser(request); String fileseq
+		 * =requestParamObj.has("fileseq")?requestParamObj.getString("fileseq"):"0"; //
+		 * 파일 seq String MW_SEQ = requestParamObj.getString("MW_SEQ"); String AGREE_SEQ
+		 * =
+		 * requestParamObj.has("AGREE_SEQ")?requestParamObj.getString("AGREE_SEQ"):"0";
+		 * String AGREE_TITLE = requestParamObj.getString("TITLE"); String
+		 * AGREE_CONTENTS = requestParamObj.getString("CONTENTS"); String AGREE_DATE =
+		 * requestParamObj.getString("DATE"); String STATUS =
+		 * requestParamObj.getString("STATUS"); String SANGSIN_FLAG =
+		 * requestParamObj.has("SANGSIN_FLAG")?requestParamObj.getString("SANGSIN_FLAG")
+		 * :"0";
+		 */
+	    // 텍스트 데이터 파싱
+		String fileseq = request.getParameter("fileseq") != null ? request.getParameter("fileseq") : "0"; // 파일 seq 기본값 설정
+	    String MW_SEQ = request.getParameter("MW_SEQ");
+	    String AGREE_SEQ =  request.getParameter("AGREE_SEQ") != null ?request.getParameter("AGREE_SEQ"):"0";
+	    String AGREE_TITLE = request.getParameter("TITLE");
+	    String AGREE_CONTENTS = request.getParameter("CONTENTS");
+	    String AGREE_DATE = request.getParameter("DATE");
+	    String STATUS = request.getParameter("STATUS");
+	    String SANGSIN_FLAG = request.getParameter("SANGSIN_FLAG") != null ?request.getParameter("SANGSIN_FLAG"):"0";
 		
-		JSONArray fileList = requestParamObj.getJSONArray("files");
+	    // 파일 처리
+	    List<MultipartFile> files = request.getFiles("files");
 		
 		ArrayList list = null;
 		HashMap map = new HashMap();
@@ -956,7 +974,7 @@ public class issueController {
 
 				// 마스터 등록
 				params.put("MW_SEQ", MW_SEQ);
-
+				log.info("params: " + params);
 				// 민원 협의 마스터 키 번호 생성
 //					agreeSeq = (int) Database.getInstance().queryForObject("Json.makeMinwonAgreeKey", params);
 				agreeSeq = (int) mainService.selectCountQuery("issueSQL.makeMinwonAgreeKey", params);
@@ -990,30 +1008,32 @@ public class issueController {
 
 			}
 			
+			log.info("agreeSeq: "+ agreeSeq);
 			
-			// STEP.2 첨부파일 등록 (Table - miwon_atcfile)
-			HashMap fileParams = new HashMap();
-			fileParams.put("MAA_MW_SEQ", MW_SEQ);
-			
-			if(fileList.length() > 0) {
-				for(int y = 0 ; y < fileList.length() ; y++) {
-					String originalFileName = fileList.get(y).toString();
-					String changeFileName = CommonUtil.filenameAutoChange(originalFileName);
-					String tempPath = GC.getMinwonFileTempDir();
-					String dataPath = GC.getMinwonFileDataDir() + "/"+ "m_seq_"+MW_SEQ;
-					
-					fileParams.put("FILE_PATH", dataPath +"/"+ changeFileName);	//파일명이 바뀌기 때문에.
-					fileParams.put("FILE_NAME", originalFileName);
-					fileParams.put("FILE_MINWON_SEQ", (y+1));
+	        // STEP 2: 첨부파일 등록
+	        if (!files.isEmpty()) {
+	            for (MultipartFile file : files) {
+	                String originalFileName = file.getOriginalFilename();
+	                String changeFileName = CommonUtil.filenameAutoChange(originalFileName);
+	                String tempPath = GC.getMinwonFileTempDir();
+	                String dataPath = GC.getMinwonFileDataDir() + "/m_seq_" + MW_SEQ;
 
-					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
-						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
-						//TODO :: param값 추후 수정 해야함. FILE_MINWON_SEQ 수정.
-						mainService.InsertQuery("issueSQL.insertMinwonAgreeAtchFileInfo", fileParams);
-					}
-					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
-				}
-			}
+	                HashMap<String, Object> fileParams = new HashMap<>();
+	                fileParams.put("MAA_MW_SEQ", MW_SEQ);
+	                fileParams.put("MAA_AGREE_SEQ", agreeSeq);
+	                fileParams.put("FILE_PATH", dataPath + "/" + changeFileName); // 파일명 변경
+	                fileParams.put("FILE_NAME", originalFileName);
+
+	                // 파일 이동 및 DB 저장
+	                if (CommonUtil.isFileExists(tempPath, originalFileName)) {
+	                    CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
+	                    mainService.InsertQuery("issueSQL.insertMinwonAgreeAtchFileInfo", fileParams);
+	                } else {
+	                    log.info("파일을 찾을 수 없습니다: " + dataPath + "/" + changeFileName);
+	                }
+	            }
+	            map.put("agreeSeq", agreeSeq);
+	        }
 			
 			// 민원 마스터 상태정보 수정(협의중 : 4)
 			params.put("STATUS", "4");
@@ -1041,7 +1061,7 @@ public class issueController {
 				String str_appNo = CommonUtil.getNextAppovalSeq();
 				boolean res_Echo = false;
 				if ("".equals(str_appNo)) {
-					map.put("message", "처리 중 오류가 발생했습니다.");
+					map.put("message", "처리 중 오류가 발생했습니다.2");
 				} else {
 						String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
 						String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
@@ -1086,7 +1106,7 @@ public class issueController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			map.put("message", "처리 중 오류가 발생했습니다.");
+			map.put("message", "처리 중 오류가 발생했습니다.1");
 		}
 
 		JSONObject jo = new JSONObject(map);
@@ -2390,7 +2410,7 @@ public class issueController {
     }
     
     /**
-     * 민원협의 내용 등록 수정 팝업 - 저장 후 리스트 다시 조회
+     * 민원협의 내용 등록/수정 팝업 - 저장 후 리스트 다시 조회
      * @param httpRequest - maa_mw_seq(민원 번호), maa_agree_seq(협의 내용)
      * @param response - 첨부 파일 목록
      * @return
@@ -2400,7 +2420,6 @@ public class issueController {
       public ModelAndView getPnuAtcFileData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
   		ModelAndView mav=new ModelAndView();
   		HashMap params = new HashMap();
-  		ArrayList<HashMap>  list=new ArrayList<HashMap>();
   		
   		String idx = httpRequest.getParameter("manage_no");
   		String pnu = httpRequest.getParameter("pnu");
@@ -2420,10 +2439,42 @@ public class issueController {
   		mav.setViewName("content/jisang/groundDetail :: #fileListDiv");
   		return mav;
   	}
+  	
+  	/**
+  	 * 민원 협의 팝업 열기
+  	 * @param request - mwsSeq, agreeSeq
+  	 * @param response - agreeDetail(협의 내용 상세 정보)
+  	 * @throws Exception
+  	 */
+  	@GetMapping("/getMinwonAgreeDetail")
+  	public void getMinwonAgreeDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  	    String mwSeq = request.getParameter("mwSeq");
+  	    String agreeSeq = request.getParameter("agreeSeq");
+
+  	    HashMap<String, String> params = new HashMap<>();
+  	    params.put("MW_SEQ", mwSeq);
+  	    params.put("AGREE_SEQ", agreeSeq);
+
+  	    log.info("params: " + params);
+  	    
+  	    // 협의 내용 상세 정보 조회
+  	    ArrayList<HashMap> agreeDetail = mainService.selectQuery("issueSQL.selectMinwonDetailAgreeBySeq", params);
+  	    log.info("agreeDetail: " + agreeDetail);
+  	    
+  	    // JSONArray로 변환하여 클라이언트로 전송
+  	    JSONArray jsonArray = new JSONArray(agreeDetail);
+
+  	    response.setCharacterEncoding("UTF-8");
+  	    response.setHeader("Access-Control-Allow-Origin", "*");
+  	    response.resetBuffer();
+  	    response.setContentType("application/json");
+  	    response.getWriter().print(jsonArray);
+  	    response.getWriter().flush();
+  	}
 	
 	/**
 	 * 민원협의 조회
-	 * @param httpRequest
+	 * @param httpRequest - minwonSeq 받아서 minwon_agreement 에서 협의 내용 조회하기
 	 * @param param
 	 * @return
 	 * @throws Exception
