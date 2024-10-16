@@ -4831,11 +4831,9 @@ UPDATE PLMS_POTENTIAL_ISSUE
        , A.jm_jibun as JIBUN
   FROM JISANG_BUNHAL   B 
        left join  JISANG_MASTER   A on A.jm_JISANG_NO = B.jb_JISANG_NO 
-       left join PLMS_APPROVAL C on B.jb_DOCKEY = C.pa_DOCKEY
+       left join PLMS_APPROVAL C on B.jb_DOCKEY = C.pa_DOCKEY AND C.pa_STATUS = 'C'
  WHERE 1=1
-   
-   AND C.pa_STATUS = 'C'
-   AND B.jb_BUNHAL_COMPLETE = 'N'
+   AND B.jb_BUNHAL_COMPLETE != 'Y'
 	</select>
 	
 	
@@ -4850,11 +4848,9 @@ UPDATE PLMS_POTENTIAL_ISSUE
        , A.jm_jibun as JIBUN
   FROM  JISANG_BUNHAL   B
        left join  JISANG_MASTER   A on A.jm_JISANG_NO = B.jb_JISANG_NO
-       left join PLMS_APPROVAL C on B.jb_DOCKEY = C.pa_DOCKEY
- WHERE 1=1
-   
-   AND C.pa_STATUS = 'C' 
-   AND B.jb_BUNHAL_COMPLETE = 'N'
+       left join PLMS_APPROVAL C on B.jb_DOCKEY = C.pa_DOCKEY AND C.pa_STATUS = 'C' 
+ 	WHERE 1=1
+   AND B.jb_BUNHAL_COMPLETE != 'Y'
 	</select>
 	<!-- 지상권 분할 전자결재 결과값 확인쿼리 테스트용 -->
 	<select id="selectApprovalbunhalTestLocal" parameterType="HashMap" resultType="HashMap">

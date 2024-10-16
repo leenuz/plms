@@ -45,7 +45,7 @@
 									<li class="content01 content">
 										<div class="selectContentArea">
 											<div class="hiddenSelectBox">
-												<select name="jisa" class="menuHiddenSelect" id="jisa" hidden>
+												<select name="jisa" class="menuHiddenSelect" id="jisa" th:value="${resultData.nm_jisa != null ? resultData.nm_jisa : '전체'}" hidden>
 													<option value="">전체</option>
 													<option th:each="val:${jisaList}" th:text="${val.jm_jisa_name}" th:value="${val.jm_jisa_name}" th:selected="${val.jm_jisa_name == resultData.nm_jisa}"></option>
 												</select>

@@ -4893,6 +4893,14 @@ log.info("data:"+data.get(0));
 						}
 
 					} else {
+						if (GC.getServerName().equals("LOCAL")) {
+							map.put("DOCKEY", str_appNo);
+							map.put("STATUS", "C");
+							map.put("JISANGNO", jisangno);
+							mainService.UpdateQuery("jisangSQL.updateJisangBunhalEchoNo", map);
+							mainService.InsertQuery("jisangSQL.insertLocalApprovalData", map);
+						}
+						
 						str_result = "N";
 					}
 					//Database.getInstance().commitTransaction();

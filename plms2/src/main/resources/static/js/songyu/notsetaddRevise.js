@@ -332,7 +332,7 @@ function updatePipeNameList(jisaValue) {
 	console.log("nmPipeName: " + jmPipeName);
 
 	$.ajax({
-		url: "/gover/getPipeName",  // 관로명 목록을 가져오는 API
+		url: "/land/gover/getPipeName",  // 관로명 목록을 가져오는 API
 		data: JSON.stringify(allData),
 		type: "POST",
 		dataType: "json",
@@ -1001,6 +1001,17 @@ $(document).ready(function () {
              success: function (response) {
                  loadingHide();
                  console.log(response);
+                 let queryString = window.location.search;
+			    let urlParams = new URLSearchParams(queryString);
+			    let backFlag = false;
+			    urlParams.forEach(function(value, key) {
+			        if (key == 'open' && value == 'pop') {
+						if (window.opener && !window.opener.closed) {
+			                window.opener.popupComplete();
+			            }
+			            window.close();
+			        }
+			    });
         //         if (response.success = "Y") {
         //             console.log("response.success Y");
         //             console.log("response.resultData length:" + response.resultData.length);
@@ -1037,11 +1048,11 @@ $(document).on("click", "#jisaUl li", function () {
 $(document).on("change", "#jisa", function () {
     const selectedJisa = $("#jisa").val();
     if (!selectedJisa) return;
-
+	
     const allData = { jisa: selectedJisa };
-
+	console.log(allData);
     $.ajax({
-        url: "/gover/getPipeName", // 관로명 목록을 가져오는 API
+        url: "/land/gover/getPipeName", // 관로명 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -1069,5 +1080,18 @@ $(document).on("change", "#jisa", function () {
             console.error("Error: ", textStatus, errorThrown);
         }
     });
+});
+
+// 이전버튼 클릭시
+$(document).on('click', '#backBtn', function(){
+    let queryString = window.location.search;
+    let urlParams = new URLSearchParams(queryString);
+    let backFlag = false;
+    urlParams.forEach(function(value, key) {
+        if (key == 'open' && value == 'pop') {
+            window.close();
+        }
+    });
+    history.back();
 });
 

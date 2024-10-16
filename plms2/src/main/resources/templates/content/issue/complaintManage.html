@@ -99,14 +99,25 @@ div.dt-filter-spacer {
 	margin: 10px;
 }
 
-#complaint_completed ::-webkit-scrollbar {
+#complaint_completed .popupWrap {
+	height: 95%;
+	overflow-y: auto;
+}
+
+#complaint_completed .popupWrap::-webkit-scrollbar {
 	width: 4px;
 }
 
-#complaint_completed ::-webkit-scrollbar-thumb {
+#complaint_completed .popupWrap::-webkit-scrollbar-thumb {
 	height: 30%;
 	border-radius: 10px;
 	background: #d2d2d2;
+}
+
+.complaintinfo_btns .saveBtn {
+	background-color: #2b7de1;
+	color: #fff;
+	border-radius: 10px;
 }
 </style>
 
@@ -316,7 +327,7 @@ div.dt-filter-spacer {
 	<div id="complainRespondContentBoxs" style="display: none;">
 		<input type="hidden" id="issuecodeList" th:value="${issuecodeList}">
         <div class="complainRespondPopWrap">
-            <div class="complainRespondPopContent"  style="margin-bottom:900px">
+            <div class="complainRespondPopContent"  style="margin-bottom:900px; z-index: 20;">
                 <div class="complainRespondPopTitles">
                     <h5>민원 대응방안 수립</h5>
                     <button class="complainRespondcloseBtn">
@@ -352,9 +363,13 @@ div.dt-filter-spacer {
                                 <p>계약여부</p>
                             </li>
                             <li>
-                                <div class="complainRespondRadioBoxs">
+                                <div class="complainRespondRadioBoxs" id="complainContract_jisang">
                                     <input type="radio" name="complainRespondContract" value="계약체결"><span>계약체결</span>
                                     <input type="radio" name="complainRespondContract" value="계약미체결"><span>계약미체결</span>
+                                </div>
+                                <div class="complainRespondRadioBoxs" id="complainContract_gover" style="display:none;">
+                                    <input type="radio" name="complainRespondContract2" value="허가증보유"><span>허가증보유</span>
+                                    <input type="radio" name="complainRespondContract2" value="허가증미보유"><span>허가증미보유</span>
                                 </div>
                             </li>
                         </ul>
@@ -377,9 +392,11 @@ div.dt-filter-spacer {
                                         </div>
                                         <!--보여지는 셀렉박스-->
                                         <div class="surfaceSelects">
-                                            <button class="complainRespondSelectTitleBtn"></button>
-                                            <div class="sufaceSelectList">
-                                                <ul class="surfaceSelectListMember"></ul>
+                                            <button class="complainRespondSelectTitleBtn" id="complainSeletDepth1_Btn" 
+                                            		onclick="complainSeletDepth_optionSelect('complainRespondHiddenSelectBox01', 'complainDepth1_Ul', 'complainSeletDepth1_Btn', 'complainMenuListDepth1_Div')">
+                                            </button>
+                                            <div class="sufaceSelectList" id="complainMenuListDepth1_Div">
+                                            	<ul class="surfaceSelectListMember" id="complainDepth1_Ul"></ul>
                                             </div>
                                         </div>
                                     </ul>
@@ -395,9 +412,10 @@ div.dt-filter-spacer {
                                         </div>
                                         <!--보여지는 셀렉박스-->
                                         <div class="surfaceSelects">
-                                            <button class="complainRespondSelectTitleBtn"></button>
-                                            <div class="sufaceSelectList">
-                                                <ul class="surfaceSelectListMember"></ul>
+                                            <button class="complainRespondSelectTitleBtn" id="complainSeletDepth2_Btn"
+                                            		onclick="complainSeletDepth_optionSelect('complainRespondHiddenSelectBox02', 'complainDepth2_Ul', 'complainSeletDepth2_Btn', 'complainMenuListDepth2_Div')"></button>
+                                            <div class="sufaceSelectList" id="complainMenuListDepth2_Div">
+                                                <ul class="surfaceSelectListMember" id="complainDepth2_Ul"></ul>
                                             </div>
                                         </div>
                                     </ul>
@@ -413,9 +431,10 @@ div.dt-filter-spacer {
                                         </div>
                                         <!--보여지는 셀렉박스-->
                                         <div class="surfaceSelects">
-                                            <button class="complainRespondSelectTitleBtn"></button>
-                                            <div class="sufaceSelectList">
-                                                <ul class="surfaceSelectListMember"></ul>
+                                            <button class="complainRespondSelectTitleBtn" id="complainSeletDepth3_Btn"
+                                            		onclick="complainSeletDepth_optionSelect('complainRespondHiddenSelectBox03', 'complainDepth3_Ul', 'complainSeletDepth3_Btn', 'complainMenuListDepth3_Div')"></button>
+                                            <div class="sufaceSelectList" id="complainMenuListDepth3_Div">
+                                                <ul class="surfaceSelectListMember" id="complainDepth3_Ul"></ul>
                                             </div>
                                         </div>
                                     </ul>
@@ -668,6 +687,7 @@ div.dt-filter-spacer {
 			</ul>
 		</section>
 		<div class="complaintinfo_btns">
+			<button class="finalBtn saveBtn">상신</button>
 			<button class="closeBtn finalBtn">닫기</button>
 		</div>
 	</div>

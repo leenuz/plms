@@ -153,7 +153,8 @@ public class SchedulerController {
 			 bunhalTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalbunhalTest",null);	
 		}
 		else if ( "LOCAL".equals(GC.getServerName())) {
-			 bunhalTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalbunhalTestLocal",new HashMap<>());
+		//	 bunhalTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalbunhalTestLocal",new HashMap<>());
+			 bunhalTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalbunhalTest",null);
 		}
 		else {
 			 bunhalTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalbunhal",null);
