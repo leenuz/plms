@@ -702,6 +702,15 @@ function respondContractMenuChange(rightsVal) {
 		return false;
 	}
 	
+	if(rightsVal == '지상권설정' || rightsVal == '지상권미설정') {
+		$("#complainContract_jisang").show();
+		$("#complainContract_gover").hide();
+		
+	} else {
+		$("#complainContract_jisang").hide();
+		$("#complainContract_gover").show();
+	}
+	
 	//계약여부 값 판단에 의한 표출될 이슈유형 메뉴 값 세팅
 	selectIssueArr = targetIssueTypeSort(selectCodeGroupVal);
 	
