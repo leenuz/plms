@@ -186,6 +186,7 @@ public class GlobalConfig {
 		return dopcoFileDataDir;
 	}
 	
+	// 민원 첨부서류 임시
 	@Value("${plms.minwonFileTempDir}")
 	public void setMinwonFileTempDir(String str) {
 		minwonFileTempDir = str;
@@ -195,6 +196,7 @@ public class GlobalConfig {
 		return minwonFileTempDir;
 	}
 	
+	// 민원 첨부서류 저장(민원 협의 첨부도)
 	@Value("${plms.minwonFileDataDir}")
 	public void setMinwonFileDataDir(String str) {
 		minwonFileDataDir = str;

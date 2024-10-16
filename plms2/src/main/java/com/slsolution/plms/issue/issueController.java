@@ -926,36 +926,45 @@ public class issueController {
 	
 	// 민원협의 내용 등록/수정 팝업 - 저장 상신
 	@Transactional
-	@PostMapping(path = "/saveMinwonAgreeData", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-	public void saveMinwonAgreeData(MultipartHttpServletRequest request, HttpServletResponse response) throws Exception {
-	    // 텍스트 데이터 파싱
+	@PostMapping(path = "/saveMinwonAgreeData", consumes = {MediaType.APPLICATION_JSON_VALUE})
+	public void saveMinwonAgreeData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// 전체 요청 데이터 파싱
+		String requestParams = ParameterUtil.getRequestBodyToStr(request); // requestBody JSON 전체를 String으로 가져옴
+		JSONObject requestParamObj = new JSONObject(requestParams);   // JSON 전체를 객체로 변환
+		ParameterParser parser = new ParameterParser(request);
+		
+	    String MW_SEQ = requestParamObj.getString("MW_SEQ"); // consultInfo 외부에 있는 MW_SEQ
+	    String fileseq = requestParamObj.has("fileseq")?requestParamObj.getString("fileseq"):"0"; //파일 seq 
+	    String AGREE_SEQ = requestParamObj.has("AGREE_SEQ")?requestParamObj.getString("AGREE_SEQ"):"0";
+	    
+	    // consultInfo 데이터 파싱
+	    JSONObject consultInfoObj = requestParamObj.getJSONObject("consultInfo");
 		/*
-		 * String requestParams = ParameterUtil.getRequestBodyToStr(request); JSONObject
-		 * requestParamObj = new JSONObject(requestParams); ParameterParser parser = new
-		 * ParameterParser(request); String fileseq
-		 * =requestParamObj.has("fileseq")?requestParamObj.getString("fileseq"):"0"; //
-		 * 파일 seq String MW_SEQ = requestParamObj.getString("MW_SEQ"); String AGREE_SEQ
-		 * =
-		 * requestParamObj.has("AGREE_SEQ")?requestParamObj.getString("AGREE_SEQ"):"0";
 		 * String AGREE_TITLE = requestParamObj.getString("TITLE"); String
 		 * AGREE_CONTENTS = requestParamObj.getString("CONTENTS"); String AGREE_DATE =
 		 * requestParamObj.getString("DATE"); String STATUS =
-		 * requestParamObj.getString("STATUS"); String SANGSIN_FLAG =
-		 * requestParamObj.has("SANGSIN_FLAG")?requestParamObj.getString("SANGSIN_FLAG")
-		 * :"0";
+		 * requestParamObj.getString("STATUS");
 		 */
-	    // 텍스트 데이터 파싱
-		String fileseq = request.getParameter("fileseq") != null ? request.getParameter("fileseq") : "0"; // 파일 seq 기본값 설정
-	    String MW_SEQ = request.getParameter("MW_SEQ");
-	    String AGREE_SEQ =  request.getParameter("AGREE_SEQ") != null ?request.getParameter("AGREE_SEQ"):"0";
-	    String AGREE_TITLE = request.getParameter("TITLE");
-	    String AGREE_CONTENTS = request.getParameter("CONTENTS");
-	    String AGREE_DATE = request.getParameter("DATE");
-	    String STATUS = request.getParameter("STATUS");
-	    String SANGSIN_FLAG = request.getParameter("SANGSIN_FLAG") != null ?request.getParameter("SANGSIN_FLAG"):"0";
+	    String AGREE_TITLE = consultInfoObj.getString("TITLE"); // consultInfo 안의 TITLE
+	    String AGREE_CONTENTS = consultInfoObj.getString("CONTENTS"); // consultInfo 안의 CONTENTS
+	    String AGREE_DATE = consultInfoObj.getString("DATE"); // consultInfo 안의 DATE
+	    String STATUS = consultInfoObj.getString("STATUS"); // consultInfo 안의 STATUS
+		String SANGSIN_FLAG = requestParamObj.has("SANGSIN_FLAG")?requestParamObj.getString("SANGSIN_FLAG") :"0";
 		
-	    // 파일 처리
-	    List<MultipartFile> files = request.getFiles("files");
+	    // 파라미터 값 로그 출력
+	    log.info("fileseq: " + fileseq);
+	    log.info("MW_SEQ: " + MW_SEQ);
+	    log.info("AGREE_SEQ: " + AGREE_SEQ);
+	    log.info("AGREE_TITLE: " + AGREE_TITLE);
+	    log.info("AGREE_CONTENTS: " + AGREE_CONTENTS);
+	    log.info("AGREE_DATE: " + AGREE_DATE);
+	    log.info("STATUS: " + STATUS);
+	    log.info("SANGSIN_FLAG: " + SANGSIN_FLAG);
+	    
+	    // 파일 경로 처리
+	    JSONArray filesArray = requestParamObj.getJSONArray("files");
+	    log.info("files: " + filesArray);
+	    
 		
 		ArrayList list = null;
 		HashMap map = new HashMap();
@@ -1009,30 +1018,41 @@ public class issueController {
 			
 			log.info("agreeSeq: "+ agreeSeq);
 			
-	        // STEP 2: 첨부파일 등록
-	        if (!files.isEmpty()) {
-	            for (MultipartFile file : files) {
-	                String originalFileName = file.getOriginalFilename();
-	                String changeFileName = CommonUtil.filenameAutoChange(originalFileName);
-	                String tempPath = GC.getMinwonFileTempDir();
-	                String dataPath = GC.getMinwonFileDataDir() + "/m_seq_" + MW_SEQ;
+			// STEP 2: 첨부파일 등록 (경로를 기준으로 처리)
+			if (filesArray.length() > 0) {
+			    for (int i = 0; i < filesArray.length(); i++) {
+			        // 경로에서 파일 이름만 추출
+			        String fullFilePath = filesArray.getString(i);
+			        String originFileName = fullFilePath.replaceAll("^.*[\\/\\\\]", "");  // 파일 이름만 추출
+			        String changeFileName = CommonUtil.filenameAutoChange(originFileName);
+			        
+			        String tempPath = GC.getMinwonFileTempDir();  // 임시 경로
+			        String dataPath = GC.getMinwonFileDataDir() + "/m_seq_" + MW_SEQ;  // 최종 저장 경로
 
-	                HashMap<String, Object> fileParams = new HashMap<>();
-	                fileParams.put("MAA_MW_SEQ", MW_SEQ);
-	                fileParams.put("MAA_AGREE_SEQ", agreeSeq);
-	                fileParams.put("FILE_PATH", dataPath + "/" + changeFileName); // 파일명 변경
-	                fileParams.put("FILE_NAME", originalFileName);
+			        log.info("Original file name: " + originFileName);
+			        log.info("Temp path: " + tempPath);
+			        log.info("Data path: " + dataPath);
+			        log.info("Changed file name: " + changeFileName);
 
-	                // 파일 이동 및 DB 저장
-	                if (CommonUtil.isFileExists(tempPath, originalFileName)) {
-	                    CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
-	                    mainService.InsertQuery("issueSQL.insertMinwonAgreeAtchFileInfo", fileParams);
-	                } else {
-	                    log.info("파일을 찾을 수 없습니다: " + dataPath + "/" + changeFileName);
-	                }
-	            }
-	            map.put("agreeSeq", agreeSeq);
-	        }
+			        // 파일이 tempPath에 존재하는지 확인한 후, 파일 이동
+			        if (CommonUtil.isFileExists(tempPath, originFileName)) {
+			            CommonUtil.moveFile(originFileName, tempPath, dataPath, changeFileName);
+
+			            // DB에 저장할 파일 정보 설정
+			            HashMap<String, Object> fileParams = new HashMap<>();
+			            fileParams.put("MAA_MW_SEQ", MW_SEQ);
+			            fileParams.put("MAA_AGREE_SEQ", agreeSeq);
+			            fileParams.put("FILE_PATH", dataPath + "/" + changeFileName);
+			            fileParams.put("FILE_NAME", originFileName);
+
+			            // DB에 파일 정보 저장
+			            mainService.InsertQuery("issueSQL.insertMinwonAgreeAtchFileInfo", fileParams);
+			        } else {
+			            log.info("파일을 찾을 수 없습니다: " + tempPath + "/" + originFileName);
+			        }
+			    }
+			}
+
 			
 			// 민원 마스터 상태정보 수정(협의중 : 4)
 			params.put("STATUS", "4");

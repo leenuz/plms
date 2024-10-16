@@ -248,7 +248,8 @@ function getPopupJsonData() {
 	dataObj.filesLength = fileCheck.length;
 
 	console.log(dataObj);
-	return JSON.stringify(dataObj);
+	//return JSON.stringify(dataObj);
+	return dataObj;
 }
 
 
@@ -1087,38 +1088,30 @@ $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 		console.log("dataInfo is null");
 		return
 	}
+	
 	let consultInfo = getPopupJsonData();
 	let minwonSeq = $("#minwonSeq").val();  // minwonSeq 값을 가져옴
 	console.log("consoleInfo: " + consultInfo);
 	console.log(uploadFiles);
 	
-	// FormData 객체 생성
-  let formData = new FormData();
-  
-  // consultInfo의 각 값을 FormData에 추가
-  for (let key in consultInfo) {
-      formData.append(key, consultInfo[key]);
-  }
-	
-	// minwonSeq 값을 FormData에 추가
-	formData.append("MW_SEQ", minwonSeq);
+	// JSON 형태로 consultInfo를 전송하기 위해 문자열로 변환
+	var params = {
+	    "MW_SEQ": minwonSeq,
+	    "minwonAgreeSeq": $("#pnu").val(),
+	    "files": uploadFiles,  // 파일 경로와 이름이 포함된 배열
+	    "consultInfo": consultInfo,  // consultInfo도 포함해서 전송
+	    "mode": "asave"
+	};
 
-  // 파일 리스트를 FormData에 추가
-  if (uploadFiles && uploadFiles.length > 0) {
-      for (let i = 0; i < uploadFiles.length; i++) {
-          formData.append("files", uploadFiles[i]);
-      }
-  }
+	console.log(params);
 	
 		$.ajax({
 			url: "/issue/saveMinwonAgreeData",
-			data: formData, // FormData 객체 전송
+			data: JSON.stringify(params),
 			async: true,
 			type: "POST",
-			/*dataType: "json",
-			contentType: 'application/json; charset=utf-8',*/
-			processData: false,  // FormData를 직렬화하지 않음
-      contentType: false,  // FormData에 맞게 Content-Type 설정
+			dataType: "json",
+			contentType: 'application/json; charset=utf-8',
 			success: function(data, jqXHR) { // 새로 만들어진 agree_seq 받아와서 다시 getAgreeAtcfile 요청해서 파일 목록 보여주기. #complaintRegisterBtn 참고
 				console.log(data);
 				if (data.message != null && data.message != undefined && data.message == "success") {
