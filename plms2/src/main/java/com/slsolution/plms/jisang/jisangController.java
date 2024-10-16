@@ -6860,6 +6860,14 @@ log.info("gubun:"+gubun);
 						map.put("OUT_URL", str_EchoNo);
 					}
 				} else {
+					
+					if (GC.getServerName().equals("LOCAL")) {
+						map.put("DOCKEY", str_appNo);
+						map.put("STATUS", "C");
+						map.put("JISANGNO", mainJisangNo);
+						mainService.InsertQuery("jisangSQL.updateJisangMergeEchoNo", map);
+						mainService.InsertQuery("jisangSQL.insertLocalApprovalData", map);
+					}
 					str_result = "N";
 				}
 			}

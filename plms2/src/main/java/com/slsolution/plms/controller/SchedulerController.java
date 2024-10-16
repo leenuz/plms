@@ -569,7 +569,7 @@ public class SchedulerController {
 			mergeTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalmergeTest",null);	
 		}
 		else if ("LOCAL".equals(GC.getServerName())) {
-			mergeTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalmergeTestLocal",null);
+			mergeTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalmergeTest",null);
 		}
 		else {
 			mergeTargetList = (ArrayList<HashMap>) mainService.selectQuery("jisangSQL.selectApprovalmerge",null);
@@ -621,9 +621,9 @@ public class SchedulerController {
 //					jijukAreaTotal+=jijukArea.intValue();
 //					pyeonibAreaTotal=pyeonibAreaTotal+Integer.parseInt(datas.get("pyeonib_area").toString());
 //					BigDecimal jijukArea = new BigDecimal(datas.get("jijuk_area"));
-					jijukAreaTotal +=jsonObj.getInt("jijuk_area");
-					pyeonibAreaTotal +=jsonObj.getInt("pyeonib_area");
-					setMoneyTotal +=jsonObj.getInt("set_money");
+					jijukAreaTotal +=(jsonObj.getString("jijuk_area")==null || jsonObj.getString("jijuk_area").equals("null"))?0:Integer.parseInt(jsonObj.getString("jijuk_area"));
+					pyeonibAreaTotal +=(jsonObj.getString("pyeonib_area")==null || jsonObj.getString("pyeonib_area").equals("null"))?0:Integer.parseInt(jsonObj.getString("pyeonib_area"));
+					//setMoneyTotal += (jsonObj.has("set_money") || !jsonObj.getString("set_money").equals("null")) ?Integer.parseInt(jsonObj.getString("set_money")):0;
 					
 					log.info("jijukAreaTotal:"+jijukAreaTotal);
 //					BigDecimal pyeonibArea = new BigDecimal(datas.get("pyeonib_area").toString());
@@ -723,7 +723,8 @@ public class SchedulerController {
 				merge_tdata.put("jisang_no", REP_JISANG_NO);
 				merge_tdata.put("jijuk_area_total",String.valueOf(jijukAreaTotal));
 				merge_tdata.put("pyeonib_area_total",String.valueOf(pyeonibAreaTotal));
-				merge_tdata.put("set_money_total",String.valueOf(setMoneyTotal));
+			//	merge_tdata.put("set_money_total",String.valueOf(setMoneyTotal));
+				log.info("merge_tdata:"+merge_tdata);
 				log.info("###LAST area update###");
 				mainService.UpdateQuery("jisangSQL.updateJIsangMeargeAreaInfo", merge_tdata);
 				

@@ -2792,6 +2792,16 @@ WHERE
 		jmt_dockey = #{DOCKEY}
 		WHERE jmt_rep_jisang_no = #{JISANGNO}
 	</update>
+	<update id="updateJisangMergeEchoNoLocal" parameterType="HashMap">
+		UPDATE jisang_merge_tmp SET
+		jmt_dockey = #{DOCKEY}
+		
+		WHERE jmt_rep_jisang_no = #{JISANGNO}
+	</update>
+	<update id="insertLocalApprovalData" parameterType="HashMap">
+		insert into plms_approval (pa_dockey,pa_status)
+		values (#{DOCKEY},#{STATUS})
+	</update>
 	<select id="selectJisangMergeInfo"  parameterType="HashMap" resultType="java.util.HashMap">
 		SELECT * FROM plms_approval where pa_dockey in (select jmt_dockey from jisang_merge_tmp where jmt_jisang_no = #{JISANGNO}) and (pa_status is null or pa_status not in ('X'))
 	</select>

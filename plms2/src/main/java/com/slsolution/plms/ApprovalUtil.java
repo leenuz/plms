@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -142,6 +143,12 @@ public class ApprovalUtil implements ApplicationContextAware {
 			Document rtnXmlDoc=null;
 			
 			try {
+				// XML 문자열을 트림하고 BOM 없이 UTF-8로 인코딩
+//				String cleanedXmlStr = rtnXmlStr.trim();
+//				rtnXmlDoc = DocumentBuilderFactory.newInstance()
+//				                .newDocumentBuilder()
+//				                .parse(new ByteArrayInputStream(cleanedXmlStr.getBytes(StandardCharsets.UTF_8)));
+
 					rtnXmlDoc=DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(rtnXmlStr.getBytes()));
 					XPath xpath=XPathFactory.newInstance().newXPath();
 					

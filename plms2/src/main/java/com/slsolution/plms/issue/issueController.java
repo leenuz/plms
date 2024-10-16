@@ -775,6 +775,19 @@ public class issueController {
 					}
 
 				} else {
+					
+					if("LOCAL".equals(GC.getServerName())) {
+						
+						map.put("DOCKEY", str_appNo);
+						map.put("STATUS", "C");
+						map.put("MW_SEQ", MW_SEQ);
+						mainService.InsertQuery("issueSQL.updateNinwonEchoNo", map);
+						//임시로 결재 처리를 만든다
+						mainService.InsertQuery("jisangSQL.insertLocalApprovalData", map);
+					}
+					
+					
+					
 					map.put("message", "처리 중 오류가 발생했습니다.");
 				}
 //				Database.getInstance().commitTransaction();

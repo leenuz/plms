@@ -3878,6 +3878,10 @@ log.info("dataMap:"+detailMap);
 
 //			agreeMap = (HashMap) Database.getInstance().queryForObject("Json.selectMinwonAgreeData", params); // 민원협의
 			tmp_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonAgreeData", params); // 민원협의
+			
+//			log.info("tmp_list 0:"+tmp_list.get(0).toString());
+//			JSONObject tmpObj=new JSONObject(tmp_list.get(0).toString());
+//			log.info("tmpObj:"+tmpObj);
 			//agreeMap=(HashMap)tmp_list.get(0);
 			agree_file_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonAgreeDetailFile", params); // 첨부파일
 
@@ -4060,23 +4064,29 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">협의 제목</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + ((HashMap) tmp_list.get(0)).get("mw_title").toString() + "</span>	");
+			String mwTitle = (tmp_list != null && !tmp_list.isEmpty() && ((HashMap) tmp_list.get(0)).get("mw_title") != null)
+	                 ? ((HashMap) tmp_list.get(0)).get("mw_title").toString() : "";
+
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" +mwTitle+ "</span>	");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">협의 날짜</th>");
 			sbHtml.append("			 		<td class=\"inner_tag\">");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" +((HashMap)tmp_list.get(0)).get("mw_occur_date") + "</span>	");
+			String mwOccurDate = (tmp_list != null && !tmp_list.isEmpty() && ((HashMap) tmp_list.get(0)).get("mw_occur_date") != null) ? ((HashMap) tmp_list.get(0)).get("mw_occur_date").toString() : "";
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" +mwOccurDate + "</span>	");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 		<th scope=\"row\">진행상태</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\">	");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" +((HashMap)tmp_list.get(0)).get("status_str") + "</span>	");
+			String statusStr = (tmp_list != null && !tmp_list.isEmpty() && ((HashMap) tmp_list.get(0)).get("status_str") != null) ? ((HashMap) tmp_list.get(0)).get("status_str").toString() : "";
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" +statusStr + "</span>	");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>		");
 			sbHtml.append("			 		<th scope=\"row\">협의 내용</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px; \">" + ((HashMap)tmp_list.get(0)).get("mw_contents") + "</span>	");
+			String mwContents = (tmp_list != null && !tmp_list.isEmpty() && ((HashMap) tmp_list.get(0)).get("mw_contents") != null) ? ((HashMap) tmp_list.get(0)).get("mw_contents").toString() : "";
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px; \">" + mwContents+ "</span>	");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>");
