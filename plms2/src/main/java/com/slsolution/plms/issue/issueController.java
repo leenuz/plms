@@ -2,6 +2,7 @@ package com.slsolution.plms.issue;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -2317,10 +2318,10 @@ public class issueController {
 		return resultmap;
 	}
 	
-	/*
-	 *  민원협의 내용 등록/수정 첨부파일 
-	 *  minwon_agree_atcfile 테이블에 저장
-	 *  minwon_master.mw_seq(민원번호) + minwon_agree.seq(협의 내용 번호) 조회해서 저장 ? 
+	/**
+	 * 민원협의 내용 등록/수정 첨부파일 저장
+	 * minwon_agree_atcfile 테이블에 저장
+	 * minwon_master.mw_seq(민원번호) + minwon_agree.seq(협의 내용 번호) 조회해서 저장 ? 
 	 *  
 	 */
     @RequestMapping(value = "/minwonAgreeAtcUpload", method = { RequestMethod.GET, RequestMethod.POST })
@@ -2334,7 +2335,8 @@ public class issueController {
         String getRequestBody = ParameterUtil.getRequestBodyToStr(httpRequest);
         log.info("getRequestBody:" + getRequestBody);
         JSONObject json = new JSONObject(getRequestBody.toString());
-        log.info("minwonSeq:" + json.get("minwonSeq"));
+        int minwonSeq = Integer.parseInt(json.get("minwonSeq").toString());
+        log.info("minwonSeq:" + minwonSeq);
         JSONArray jarr = json.getJSONArray("files");
         log.info("jarr:" + jarr);
         log.info("jarr0:" + jarr.get(0));
@@ -2359,7 +2361,7 @@ public class issueController {
  			CommonUtil.moveFile(originFileName, tempPath, dataPath, chageFileName);
             
             HashMap params = new HashMap();
-            params.put("maa_mw_seq", json.get("minwonSeq"));
+            params.put("maa_mw_seq", minwonSeq);
             params.put("maa_agree_seq", 1);
             params.put("filename", originFileName);
             params.put("filepath", dataPath +"/" + chageFileName);
@@ -2386,6 +2388,38 @@ public class issueController {
         response.getWriter().flush();
         // return new ModelAndView("dbTest", "list", list);
     }
+    
+    /**
+     * 민원협의 내용 등록 수정 팝업 - 저장 후 리스트 다시 조회
+     * @param httpRequest - maa_mw_seq(민원 번호), maa_agree_seq(협의 내용)
+     * @param response - 첨부 파일 목록
+     * @return
+     * @throws Exception
+     */
+  	@PostMapping(path="/getMinwonAgreeAtcFileData") //http://localhost:8080/api/get/dbTest
+      public ModelAndView getPnuAtcFileData(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+  		ModelAndView mav=new ModelAndView();
+  		HashMap params = new HashMap();
+  		ArrayList<HashMap>  list=new ArrayList<HashMap>();
+  		
+  		String idx = httpRequest.getParameter("manage_no");
+  		String pnu = httpRequest.getParameter("pnu");
+  		
+  		params.put("idx",idx);
+  		params.put("pnu",pnu);
+  		log.info("params:"+params);
+  		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+  		
+  		if (jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()) { // 필지 첨부파일
+  		    mav.addObject("jisangPnuAtcFileList", new ArrayList<>());
+  		} else {
+  			Collections.reverse(jisangPnuAtcFileList); // 등록일 기준 desc 정렬
+  		    mav.addObject("jisangPnuAtcFileList", jisangPnuAtcFileList);
+  		}
+  		
+  		mav.setViewName("content/jisang/groundDetail :: #fileListDiv");
+  		return mav;
+  	}
 	
 	/**
 	 * 민원협의 조회

@@ -248,93 +248,6 @@ function getPopupJsonData() {
 	return JSON.stringify(dataObj);
 }
 
-//협의 추가 저장
-$(document).on("click", ".document_add_btnWrap .saveBtn", function() {
-	if (dataInfo == null || dataInfo == undefined) {
-		return
-	}
-
-	let consultInfo = getPopupJsonData();
-
-	console.log(consultInfo);
-/*
-	$.ajax({
-		url: "/issue/saveMinwonAgreeData",
-		data: getPopupJsonData(),
-		async: true,
-		type: "POST",
-		dataType: "json",
-		contentType: 'application/json; charset=utf-8',
-		success: function(data, jqXHR) {
-			console.log(data);
-			if (data.message != null && data.message != undefined && data.message == "success") {
-				closeComplaintregisterPopup();
-			} else {
-				alert(data.message);
-			}
-		},
-		beforeSend: function() {
-			//(이미지 보여주기 처리)
-			//$('#load').show();
-			// loadingShow();
-		},
-		complete: function() {
-			//(이미지 감추기 처리)
-			//$('#load').hide();
-			// loadingHide();
-		},
-		error: function(jqXHR, textStatus, errorThrown, responseText) {
-			//alert("ajax error \n" + textStatus + " : " + errorThrown);
-			console.log(jqXHR);
-			console.log(jqXHR.readyState);
-			console.log(jqXHR.responseText);
-			console.log(jqXHR.responseJSON);
-		}
-	}); //end ajax
-	
-	*/
-});
-
-//협의추가 ->상신
-$(document).on("click", ".document_add_btnWrap .sangsinBtn", function() {
-	if (dataInfo == null || dataInfo == undefined) {
-		return
-	}
-	$.ajax({
-		url: "/issue/minwonCompleteSave",
-		data: getPopupJsonData(),
-		async: true,
-		type: "POST",
-		dataType: "json",
-		contentType: 'application/json; charset=utf-8',
-		success: function(data, jqXHR) {
-			console.log(data);
-			if (data.message != null && data.message != undefined && data.message == "success") {
-				closeComplaintregisterPopup();
-			} else {
-				alert(data.message);
-			}
-		},
-		beforeSend: function() {
-			//(이미지 보여주기 처리)
-			//$('#load').show();
-			// loadingShow();
-		},
-		complete: function() {
-			//(이미지 감추기 처리)
-			//$('#load').hide();
-			// loadingHide();
-		},
-		error: function(jqXHR, textStatus, errorThrown, responseText) {
-			//alert("ajax error \n" + textStatus + " : " + errorThrown);
-			console.log(jqXHR);
-			console.log(jqXHR.readyState);
-			console.log(jqXHR.responseText);
-			console.log(jqXHR.responseJSON);
-		}
-	}); //end ajax
-});
-
 
 //지역명을 조합하는 함수
 function getFullAddress(data) {
@@ -821,7 +734,7 @@ function minwonConsultPopupOpen() {
 	//팝업오픈하고 날짜 오늘날짜로 기본세팅
 	$("#consult_date_field").val(today_yyyymmdd());
 
-	//minwonConsultInfoSearch();	//민원협의 정보 조회
+	//minwonConsultInfoSearch();	//민원협의 내용 등록/수정 팝업 조회 - 민원 seq 와 협의seq
 }
 
 //민원협의 내용 등록/수정 팝업 닫기
@@ -971,7 +884,7 @@ $(document).ready(function () {
 });
 
 
-// 민원협의 내용 등록/수정 팝업 - 저장 버튼
+// 민원협의 내용 등록/수정 팝업 - 저장 버튼 - 파일 저장
 $(document).on("click", "#complaintRegisterBtn", function() {
 	console.log("--------------start fileSaveBtn---------");
 	console.log(uploadFiles);
@@ -1005,7 +918,7 @@ $(document).on("click", "#complaintRegisterBtn", function() {
 		alert("첨부파일이 없습니다.");
 		return;
 	}
-	
+
 	var params = { "minwonSeq": $("#minwonSeq").val(), "minwonAgreeSeq": $("#pnu").val(), "files": uploadFiles, "mode": "asave" };
 	console.log(params);
 	url = "/issue/minwonAgreeAtcUpload";
@@ -1039,7 +952,7 @@ $(document).on("click", "#complaintRegisterBtn", function() {
 				$("#fileListDiv div").remove();
 				$("#fileListDiv").append("<div id='flist'></div>");
 				$.ajax({
-					url: "/land/jisang/getPnuAtcFileData",
+					url: "/land/issue/getMinwonAgreeAtcFileData",
 					type: "POST",
 					data: params,
 				})
@@ -1060,10 +973,96 @@ $(document).on("click", "#complaintRegisterBtn", function() {
 });
 
 
+// 민원협의 내용 등록/수정 팝업 - 저장 버튼 클릭 시 minwon_agreement 테이블 에 저장
+$(document).on("click", ".document_add_btnWrap .saveBtn", function() {
+	if (dataInfo == null || dataInfo == undefined) {
+		return
+	}
+	let consultInfo = getPopupJsonData();
+	console.log(consultInfo);
+	/*
+		$.ajax({
+			url: "/issue/saveMinwonAgreeData",
+			data: getPopupJsonData(),
+			async: true,
+			type: "POST",
+			dataType: "json",
+			contentType: 'application/json; charset=utf-8',
+			success: function(data, jqXHR) {
+				console.log(data);
+				if (data.message != null && data.message != undefined && data.message == "success") {
+					closeComplaintregisterPopup();
+				} else {
+					alert(data.message);
+				}
+			},
+			beforeSend: function() {
+				//(이미지 보여주기 처리)
+				//$('#load').show();
+				// loadingShow();
+			},
+			complete: function() {
+				//(이미지 감추기 처리)
+				//$('#load').hide();
+				// loadingHide();
+			},
+			error: function(jqXHR, textStatus, errorThrown, responseText) {
+				//alert("ajax error \n" + textStatus + " : " + errorThrown);
+				console.log(jqXHR);
+				console.log(jqXHR.readyState);
+				console.log(jqXHR.responseText);
+				console.log(jqXHR.responseJSON);
+			}
+		}); //end ajax
+		*/
+});
+
+
+//협의추가 -> 상신
+$(document).on("click", ".document_add_btnWrap .sangsinBtn", function() {
+	if (dataInfo == null || dataInfo == undefined) {
+		return
+	}
+	$.ajax({
+		url: "/issue/minwonCompleteSave",
+		data: getPopupJsonData(),
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: 'application/json; charset=utf-8',
+		success: function(data, jqXHR) {
+			console.log(data);
+			if (data.message != null && data.message != undefined && data.message == "success") {
+				closeComplaintregisterPopup();
+			} else {
+				alert(data.message);
+			}
+		},
+		beforeSend: function() {
+			//(이미지 보여주기 처리)
+			//$('#load').show();
+			// loadingShow();
+		},
+		complete: function() {
+			//(이미지 감추기 처리)
+			//$('#load').hide();
+			// loadingHide();
+		},
+		error: function(jqXHR, textStatus, errorThrown, responseText) {
+			//alert("ajax error \n" + textStatus + " : " + errorThrown);
+			console.log(jqXHR);
+			console.log(jqXHR.readyState);
+			console.log(jqXHR.responseText);
+			console.log(jqXHR.responseJSON);
+		}
+	}); //end ajax
+});
+
 
 // 민원협의 내용 조회
 function minwonConsultInfoSearch() {
 	console.log('민원협의 조회 :: ' + $("#minwonSeq").val());
+	
 	
 	const param = {
 		"mw_seq" : $("#minwonSeq").val()

@@ -92,20 +92,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	</insert>
 	
-	<insert id="minwonAgreeAtcUpload" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="pa_idx" keyProperty="pa_idx">
+	<insert id="minwonAgreeAtcUpload" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="maa_idx" keyProperty="maa_idx">
 		
 		INSERT INTO  minwon_agree_atcfile
 		(
-		 maa_mw_seq
-		 ,maa_agree_seq
-		 ,maa_file_nm
-		 ,maa_file_path
+			 maa_mw_seq
+			 ,maa_agree_seq
+			 ,maa_file_nm
+			 ,maa_file_path
+			 ,maa_file_regdate
 		 ) 
 		 VALUES (
-		 #{maa_mw_seq}
-		 ,#{maa_agree_seq}
-		 ,#{filename}
-		 ,#{filepath}
+			 #{maa_mw_seq}
+			 ,#{maa_agree_seq}
+			 ,#{filename}
+			 ,#{filepath}
+			 ,date_trunc('second', NOW())
 		)
 	
 	</insert>
