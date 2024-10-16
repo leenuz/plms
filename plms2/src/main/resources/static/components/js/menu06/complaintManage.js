@@ -837,7 +837,8 @@ $(document).ready(function () {
 		row += '<li class="content viewBtnBox">';
 		//row += '<button class="viewDetailButton lightBlueBtn">보기</button>'; // 새로 추가한 파일은 보기 버튼 제거?
 		row += '</li>';
-		row += '<li>삭제버튼';
+		row += '<li>';
+		row += '<button>삭제</button>';
 		row += '</li>';
 		row += '</ul>';
 
@@ -914,9 +915,9 @@ $(document).on("click", "#complaintRegisterBtn", function() {
 									
 								}*/
 
-	var manage_no = $("#manage_no").val();
-	if (manage_no == null || manage_no == "undefined") {
-		alert("지상권 관리 번호를 찾을수 없습니다.");
+	var minwonSeq = $("#minwonSeq").val();
+	if (minwonSeq == null || minwonSeq == "undefined") {
+		alert("민원 관리 번호를 찾을수 없습니다.");
 		return;
 	}
 	console.log(uploadFiles.length);
@@ -924,9 +925,10 @@ $(document).on("click", "#complaintRegisterBtn", function() {
 		alert("첨부파일이 없습니다.");
 		return;
 	}
-	var params = { "manage_no": $("#manage_no").val(), "pnu": $("#pnu").val(), "files": uploadFiles, "mode": "asave" };
+	
+	var params = { "minwonSeq": $("#minwonSeq").val(), "minwonAgreeSeq": $("#pnu").val(), "files": uploadFiles, "mode": "asave" };
 	console.log(params);
-	url = "/land/api/pnuAtcUpload";
+	url = "/issue/minwonAgreeAtcUpload";
 	$.ajax({
 
 		url: url,

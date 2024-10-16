@@ -2232,7 +2232,7 @@ public class issueController {
 	}
 	
 	/*
-	 * complaintManage.js의 sendFileToServer() 함수 탐색기에서 파일 선택했을 때 필지 정보 임시 저장
+	 * complaintManage.js의 sendFileToServer() 함수 탐색기에서 파일 선택했을 때 '/Temp'에 임시 저장
 	 */
 	@RequestMapping(value = "/fileUpload") // ajax에서 호출하는 부분
 	@ResponseBody
@@ -2288,6 +2288,76 @@ public class issueController {
 
 		return resultmap;
 	}
+	
+	/*
+	 *  민원협의 내용 등록/수정 첨부파일 
+	 *  minwon_agree_atcfile 테이블에 저장
+	 *  minwon_master.mw_seq(민원번호) + minwon_agree.seq(협의 내용 번호) 조회해서 저장 ? 
+	 *  
+	 */
+    @RequestMapping(value = "/minwonAgreeAtcUpload", method = { RequestMethod.GET, RequestMethod.POST })
+    public void minwonAgreeAtcUpload(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+
+        // 일반웹형식
+        // Properties requestParams = CommonUtil.convertToProperties(httpRequest);
+        // log.info("requestParams:"+requestParams);
+
+        // //json으로 넘어올때
+        String getRequestBody = ParameterUtil.getRequestBodyToStr(httpRequest);
+        log.info("getRequestBody:" + getRequestBody);
+        JSONObject json = new JSONObject(getRequestBody.toString());
+        log.info("minwonSeq:" + json.get("minwonSeq"));
+        JSONArray jarr = json.getJSONArray("files");
+        log.info("jarr:" + jarr);
+        log.info("jarr0:" + jarr.get(0));
+        // HashMap resParam = new HashMap();
+        // resParam
+
+        int fsize = jarr.length();
+        ArrayList<HashMap> list = new ArrayList<HashMap>();
+        ArrayList<HashMap> param = new ArrayList<HashMap>();
+        for (int i = 0; i < fsize; i++) {
+            log.info("filepath:" + jarr.get(i));
+            log.info("filename:" + jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", ""));
+
+            HashMap filesMap = new HashMap();
+        	
+            String originFileName = jarr.get(i).toString().replaceAll("^.*[\\/\\\\]", "");
+            
+            String chageFileName = CommonUtil.filenameAutoChange(originFileName); 
+ 			String tempPath = GC.getMinwonFileTempDir(); //설정파일로 뺀다.
+ 			String dataPath = GC.getMinwonFileDataDir()+"/"+json.get("minwonSeq"); //설정파일로 뺀다.
+ 			 
+ 			CommonUtil.moveFile(originFileName, tempPath, dataPath, chageFileName);
+            
+            HashMap params = new HashMap();
+            params.put("maa_mw_seq", json.get("minwonSeq"));
+            params.put("maa_agree_seq", 1);
+            params.put("filename", originFileName);
+            params.put("filepath", dataPath +"/" + chageFileName);
+            //params.put("fileseq", i);
+            mainService.InsertQuery("commonSQL.minwonAgreeAtcUpload", params);
+        }
+
+        HashMap<String, Object> resultmap = new HashMap();
+        resultmap.put("resultCode", "0000");
+        resultmap.put("resultData", "");
+        resultmap.put("params", param);
+        resultmap.put("resultMessage", "success");
+        JSONObject obj = new JSONObject(resultmap);
+        // System.out.println(obj);
+
+        // log.info("jo:"+jo);
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Cache-Control", "no-cache");
+        response.resetBuffer();
+        response.setContentType("application/json");
+        // response.getOutputStream().write(jo);
+        response.getWriter().print(obj);
+        response.getWriter().flush();
+        // return new ModelAndView("dbTest", "list", list);
+    }
 	
 	/**
 	 * 민원협의 조회

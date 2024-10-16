@@ -91,6 +91,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	
 	</insert>
+	
+	<insert id="minwonAgreeAtcUpload" parameterType="java.util.HashMap" useGeneratedKeys="true" keyColumn="pa_idx" keyProperty="pa_idx">
+		
+		INSERT INTO  minwon_agree_atcfile
+		(
+		 maa_mw_seq
+		 ,maa_agree_seq
+		 ,maa_file_nm
+		 ,maa_file_path
+		 ) 
+		 VALUES (
+		 #{maa_mw_seq}
+		 ,#{maa_agree_seq}
+		 ,#{filename}
+		 ,#{filepath}
+		)
+	
+	</insert>
 
 	<delete id="pnuAtcDelete" parameterType="java.util.HashMap">
 

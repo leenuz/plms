@@ -456,6 +456,7 @@ div.dt-filter-spacer {
 				<section class="complainant_contents_box">
 					<h3>민원 내용</h3>
 					<div class="complaints_contents_wrap">
+					<input type="text" hidden>
 					
 						<!-- 진행상태 -->
 						<ul>
@@ -511,6 +512,7 @@ div.dt-filter-spacer {
 							<!-- class 추가 -->
 							<li class="complaints_contents_fileBox complaintRegiFileInfo" style="overflow-y: auto;">
 								<input type="file" name="fileUpload" id="complaint_register_Popup_file" multiple hidden>
+								
 								<div class="popfileLargeWrap">
 								
 									<!-- 파일이 첨부되지 않았을 때 모습 -->
@@ -558,11 +560,11 @@ div.dt-filter-spacer {
 																th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.pa_file_path}]], [[${file.pa_file_nm}]], [[${file.pa_pnu}]], [[${file.pa_file_seq}]], 'pnu')">보기</a>
 													</li>
 													<!-- 삭제 버튼 -->
-													<li>삭제
+													<li>
+													<button>삭제</button>
 													</li>
 												</ul>
 											</div>
-											
 										</div>
 									</div>
 								</div>
