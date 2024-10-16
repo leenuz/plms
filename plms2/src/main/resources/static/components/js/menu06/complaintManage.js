@@ -3,6 +3,9 @@ var dataInfo = {};
 var mw_seq;
 var fileRowCount = 0;
 
+//
+var issueTypeList = '';
+
 ///start
 $(function() {
 	console.log("===== complainManage.js start =====");
@@ -25,6 +28,19 @@ $(function() {
 	    console.log('민원협의 내용 등록/수정 파일업로드');
 	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
 	});*/
+	
+	
+	//민원 대응방안 수립 - 권리확보 스크립트
+	$("input[name='complainRespondRights']").on('click', function(){
+		let complainRespondRightsVal = ($(this).val());
+		respondContractMenuChange(complainRespondRightsVal);
+	});
+	
+	//민원 대응방안 수립 - 계약여부 스크립트
+	$("input[name='complainRespondContract']").on('click', function(){
+		let complainRespondContractVal = ($(this).val());
+		issueTypeMenuSetting(complainRespondContractVal);
+	});
 	
 })
 
@@ -712,28 +728,88 @@ $(document).on("click", "#minwonResponsePopup", function() {
 		type: "POST",
 		data: datas
 	})
-		.done(function(fragment) {
-			console.log("*** 데이터 수신 성공 ***");
-			//console.log(fragment);
+	.done(function(fragment) {
+		console.log("*** 데이터 수신 성공 ***");
+		//console.log(fragment);
 
-			// 팝업 열기
-			$("#complainRespondContentBoxs").show();  // 팝업을 보이게 함
-			const popupOpen = document.querySelector("#complainRespondContentBoxs .complainRespondPopWrap");
-			$(popupOpen).addClass("open");
-			popupOpen.classList.add("active");
+		// 팝업 열기
+		$("#complainRespondContentBoxs").show();  // 팝업을 보이게 함
+		const popupOpen = document.querySelector("#complainRespondContentBoxs .complainRespondPopWrap");
+		$(popupOpen).addClass("open");
+		popupOpen.classList.add("active");
 
-			// 필요한 데이터 바인딩 작업
-			// $('#searchResultPopDiv').replaceWith(fragment);  --> 데이터 업데이트 작업
-		})
-		.fail(function() {
-			console.error("AJAX 요청 실패");
-		});
+		// 필요한 데이터 바인딩 작업
+		// $('#searchResultPopDiv').replaceWith(fragment);  --> 데이터 업데이트 작업
+	})
+	.fail(function() {
+		console.error("AJAX 요청 실패");
+	});
+	
+	if($("#issuecodeList").val() != ''){
+		issueTypeList = JSON.parse($("#issuecodeList").val()).codeResultList;
+	} else {
+		alert('이슈유형 불러오는데 오류가 발생했습니다.');
+	}
+	
 });
 
 // 민원 대응방안 수립 팝업 닫기 버튼
 $(document).on("click", "#complainRespondContentBoxs .complainRespondcloseBtn", function() {
 	$("#complainRespondContentBoxs").hide();  // 팝업을 다시 숨김
 });
+
+//계약여부 메뉴 선택시 스크립트
+function respondContractMenuChange(rightsVal) {
+	console.log(rightsVal);
+	
+	//지상권설정 : GY || 지상권미설정 : GN || 점용 : DY || 미점용 : DN
+	
+	let selectIssueArr = [];
+	let selectCodeGroupVal = ''
+	
+	//계약여부 값 판단
+	if(rightsVal == '지상권설정') {
+		selectCodeGroupVal = 'GY';
+	} else if(rightsVal == '지상권미설정') {
+		selectCodeGroupVal = 'GN';
+	} else if(rightsVal == '점용') {
+		selectCodeGroupVal = 'DY';
+	} else if(rightsVal == '미점용') {
+		selectCodeGroupVal = 'DN';
+	} else {
+		alert('이슈유형 메뉴 오류가 발생했습니다.');
+		return false;
+	}
+	
+	//계약여부 값 판단에 의한 표출될 이슈유형 메뉴 값 세팅
+	selectIssueArr = targetIssueTypeSort(selectCodeGroupVal);
+	
+	console.log(selectIssueArr);
+	
+	let targetIssue1Depth = [];
+	
+}
+
+//
+function issueTypeMenuSetting(contractVal) {
+	console.log(contractVal);
+}
+
+//값 판단에 의한 표출될 이슈유형 메뉴 값 sort :: 배열값 return
+function targetIssueTypeSort(sortGroupVal) {
+	let targetResultGroup = [];
+	
+	for(let i = 0; i < issueTypeList.length ; i++) {
+		let codeInfo = issueTypeList[i];
+		if(codeInfo.code_group_1 == sortGroupVal) {
+			targetResultGroup.push(codeInfo);
+		}
+	}
+	
+	return targetResultGroup;
+}
+
+
 //========================민원 대응방안 수립 팝업 [E]========================
 //==============================================================================================================
 //========================민원협의 내용 등록/수정 [S]========================

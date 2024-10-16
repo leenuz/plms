@@ -117,6 +117,7 @@ div.dt-filter-spacer {
 	<input type="hidden" id="minwon" th:value="${minwon}">
 	<input type="hidden" id="minwonStatus" th:value="${minwon.mm_status}">
 	<input type="hidden" id="minwonSeq" th:value="${minwon.mm_mw_seq}">
+	
 	<!-- 민원관리 -->
 	<div class="complaintManageWrappers">
 		<div class="complaintManageHeader"></div>
@@ -313,6 +314,7 @@ div.dt-filter-spacer {
 	
 	<!-- 민원 대응방안 수립[S] -->	
 	<div id="complainRespondContentBoxs" style="display: none;">
+		<input type="hidden" id="issuecodeList" th:value="${issuecodeList}">
         <div class="complainRespondPopWrap">
             <div class="complainRespondPopContent"  style="margin-bottom:900px">
                 <div class="complainRespondPopTitles">

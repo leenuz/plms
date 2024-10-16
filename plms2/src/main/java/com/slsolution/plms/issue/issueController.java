@@ -110,8 +110,20 @@ public class issueController {
 		ArrayList<HashMap> minwonList = mainService.selectQuery("issueSQL.selectAllMinwonData", params);
 		log.info("minwonList: " + minwonList);
 		log.info("minwon_status_str", "minwonList.get(0) : " + minwonList.get(0));
+		
+		//이슈코드 조회
+		ArrayList<HashMap> issueList = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeList", params);
+		
+		HashMap<String, Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("codeResultList", issueList);
+		
+		JSONObject reJo =  new JSONObject(responseMap);
+		
+		log.info("issueList :: "+reJo.toString());
+		
 		// 필요한 데이터도 추가로 전달 가능
 		mav.addObject("minwon", minwonList.get(0));
+		mav.addObject("issuecodeList", reJo);
 		mav.addObject("serverName", GC.getServerName());
 		mav.setViewName("content/issue/complaintManage");
 		return mav;
@@ -130,17 +142,20 @@ public class issueController {
 		params.put("mwSeq", mwSeq);
 
 		ArrayList<HashMap> minwonList = mainService.selectQuery("issueSQL.selectAllMinwonData", params);
+		
 		log.info("minwonList: " + minwonList);
 		log.info("minwonList.get(0) : " + minwonList.get(0));
-
-
+		
 		// 필요한 데이터도 추가로 전달 가능
 		mav.addObject("minwon", minwonList.get(0));
+		mav.addObject("issuecodeMap", "asdfasdf");
 
 		// 반환할 뷰와 특정 HTML 요소를 업데이트할 태그를 지정 mav.
 		mav.setViewName("content/issue/complaintManage :: #complainRespondContentBoxs");
 		return mav;
 	}
+	
+	
 
 	@PostMapping(path = "/getBunhalJIjukSelect")
 	@ResponseBody // 데이터를 JSON으로 반환
