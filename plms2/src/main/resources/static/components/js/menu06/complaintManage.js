@@ -382,7 +382,7 @@ function onDataLoad() {
 			$('#dopcoAllWrappers .land_history').text(""); //토지이력
 			$('#dopcoAllWrappers .requirements').text(""); //요구사항
 			$('#dopcoAllWrappers .land_contents').text(result.mw_contents); //내용
-			$('#pop_dopcoAllWrappers .land_contents').text(result.mw_contents); //내용
+			$('#pop_dopcoAllWrappers .complaints_content_box').text(result.mw_contents); //내용
 			
 			// 민원인/토지주
 			let minwontojijus = '';
@@ -463,7 +463,7 @@ function onDataLoad() {
 							<input type="text" class="notWriteInput" readonly placeholder="${field_presence[index] || '-'}" />
 						</li>
 					</ul>`;
-				$('#pop_minwonin_tojiju_nm').append(newHtml);
+					$('#pop_minwonin_tojiju_nm').append(newHtml);
 				});
 					
 					//$('#minwonin_tojiju_body').append(noDataUl);
@@ -481,11 +481,12 @@ function onDataLoad() {
 			// 요구사항
 			$('#minwon_requirement').val(result.minwon_requirement || '-');
 			$('#pop_minwon_requirement').val(result.minwon_requirement || '-');
-			
+			console.log("토지 리스트 :: " + tojiList);
 			//민원 토지 ul 추가
 			if (tojiList != null && tojiList != undefined && tojiList.length > 0) {
 				$('#dopcoAllWrappers .complaintLand .depth1 .contents').remove();
 				$.each(tojiList, function(index, item) {
+					console.log(item);
 					var newItem = `
                 <ul class="contents">
                 <li class="content">
@@ -515,10 +516,13 @@ function onDataLoad() {
 				}).remove();
 				
 				$.each(tojiList, function(index, item) {
+					
 					var newItem = `<ul class="complainant_info">
 							<li>${tojiList[index].addr || '-'}</li>
 							<li>N</li>
-							<li class="complaintinfo_update_btn"><button>상세보기</button></li>
+							<li class="complaintinfo_update_btn">
+								<button onclick="openPopup()">상세보기</button>
+							</li>
 						</ul>`;
 					$('#pop_complaintInfo_togi').append(newItem);
 				});
@@ -1058,6 +1062,27 @@ function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun
 	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
 }
 
+function openPopup() {
+	
+	let popupWindow = window.open('/land/jisang/easementModification?idx=J_010732', '_blank', 'resizable');
+	
+	// 화면 크기를 기준으로 80%로 팝업 크기 조정
+	const widthPercent = 0.95; // 80% 너비
+	const heightPercent = 0.95; // 80% 높이
+	
+	const screenWidth = window.screen.width;  // 전체 화면 너비
+	const screenHeight = window.screen.height; // 전체 화면 높이
+	
+	const newWidth = screenWidth * widthPercent;
+	const newHeight = screenHeight * heightPercent;
+	
+	popupWindow.resizeTo(newWidth, newHeight);
+	popupWindow.resizeBy(-100, -100);
+	popupWindow.onload = function() {
+		let doc = popupWindow.document;
+	}
+	
+}
 
 
 
