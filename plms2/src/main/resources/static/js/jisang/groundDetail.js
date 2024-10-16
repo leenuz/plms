@@ -82,7 +82,7 @@ $(document).ready(function () {
 		row += '<input type="hidden" name="newFileCheckYn" value="Y">';	//새로운 첨부파일 파악 여부
 		row += '</li>';
 		row += '<li class="content viewBtnBox">';
-		//row += '<button class="viewDetailButton lightBlueBtn">보기</button>'; // 새로 추가한 파일은 보기 버튼 제거?
+		//row += '<button class="viewDetailButton lightBlueBtn">보기</button>'; // 새로 추가한 파일은 다운로드 보기 버튼 제거
 		row += '</li>';
 		row += '</ul>';
 

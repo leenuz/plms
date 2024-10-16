@@ -1509,7 +1509,8 @@ textarea:focus {
 .newcomplaint_Popup .popfileUploadAfter .poptitles 
 {
   display: grid;
-  grid-template-columns: 32fr 1324fr 200fr 200fr ;
+  /* grid-template-columns: 32fr 1324fr 200fr 200fr ; */
+  grid-template-columns: 14% 60% 13% 13%;
   grid-template-rows: 33px;
   background: #F7F9FC;
   border-bottom: 1px solid #CDDBF0;
@@ -1522,6 +1523,7 @@ textarea:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-right: 1px solid #CDDBF0; /* 첨부파일 열 구분 선 */
 }
 .complaint_register_Popup .popfileUploadAfter .popfilenameBox ,
 .newcomplaint_Popup .popfileUploadAfter .popfilenameBox 
@@ -1529,6 +1531,7 @@ textarea:focus {
   padding-left: 25px;
   box-sizing: border-box;
   position: relative;
+  border-right: 1px solid #CDDBF0; /* 첨부파일 열 구분 선 */
 }
 .complaint_register_Popup .popfileUploadAfter p, 
 .newcomplaint_Popup .popfileUploadAfter p 
@@ -1575,7 +1578,8 @@ textarea:focus {
 .complaint_register_Popup .popfileUploadAfter .popcontents ,
 .newcomplaint_Popup .popfileUploadAfter .popcontents {
   display: grid;
-  grid-template-columns: 32fr 1324fr 200fr 200fr;
+  /* grid-template-columns: 32fr 1324fr 200fr 200fr; */
+  grid-template-columns: 14% 60% 13% 13%;
   grid-template-rows: 33px;
 }
 .complaint_register_Popup .popfileUploadAfter .popcontent, 
@@ -1588,3 +1592,42 @@ textarea:focus {
   align-items: center;
 }
 /* 민원협의 내용 등록/수정 끝 */
+
+/* 민원 협의 내용 등록/수정 첨부파일[S] */
+/* 타이틀과 동일한 스타일로 파일 리스트에도 적용 */
+.complaint_register_Popup .popfileUploadAfter .contents, 
+.newcomplaint_Popup .popfileUploadAfter .contents {
+    display: grid;
+    grid-template-columns: 14% 60% 13% 13%; /* 타이틀과 동일한 그리드 레이아웃 */
+    grid-template-rows: auto;
+    border-bottom: 1px solid #CDDBF0;
+    padding: 8px 0; /* 목록 간의 여백 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+
+.complaint_register_Popup .popfileUploadAfter .contents li, 
+.newcomplaint_Popup .popfileUploadAfter .contents li {
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    border-right: 1px solid #CDDBF0;
+}
+
+/* 등록일, 파일명, 다운로드, 삭제 등의 열에 맞는 스타일 추가 */
+.complaint_register_Popup .popfileUploadAfter .contents .registDateWidth,
+.complaint_register_Popup .popfileUploadAfter .contents .fileNameWidth,
+.complaint_register_Popup .popfileUploadAfter .contents .viewBtnBox {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.complaint_register_Popup .popfileUploadAfter .contents .fileNameWidth input,
+.complaint_register_Popup .popfileUploadAfter .contents .registDateWidth input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: center; /* 입력 필드 가운데 정렬 */
+}
+
+/* 민원협의내용 등록/수정 [E] */
