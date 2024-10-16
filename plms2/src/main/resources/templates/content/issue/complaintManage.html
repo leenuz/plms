@@ -99,14 +99,25 @@ div.dt-filter-spacer {
 	margin: 10px;
 }
 
-#complaint_completed ::-webkit-scrollbar {
+#complaint_completed .popupWrap {
+	height: 95%;
+	overflow-y: auto;
+}
+
+#complaint_completed .popupWrap::-webkit-scrollbar {
 	width: 4px;
 }
 
-#complaint_completed ::-webkit-scrollbar-thumb {
+#complaint_completed .popupWrap::-webkit-scrollbar-thumb {
 	height: 30%;
 	border-radius: 10px;
 	background: #d2d2d2;
+}
+
+.complaintinfo_btns .saveBtn {
+	background-color: #2b7de1;
+	color: #fff;
+	border-radius: 10px;
 }
 </style>
 
@@ -667,6 +678,7 @@ div.dt-filter-spacer {
 			</ul>
 		</section>
 		<div class="complaintinfo_btns">
+			<button class="finalBtn saveBtn">상신</button>
 			<button class="closeBtn finalBtn">닫기</button>
 		</div>
 	</div>

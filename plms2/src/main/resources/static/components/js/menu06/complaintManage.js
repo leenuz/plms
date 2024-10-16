@@ -6,6 +6,8 @@ var fileRowCount = 0;
 //
 var issueTypeList = '';
 
+// 민원완료 팝업 하나만 띄우기
+let popupWindow = null;
 ///start
 $(function() {
 	console.log("===== complainManage.js start =====");
@@ -410,7 +412,7 @@ function onDataLoad() {
 			// 요구사항
 			$('#minwon_requirement').val(result.minwon_requirement || '-');
 			$('#pop_minwon_requirement').val(result.minwon_requirement || '-');
-			console.log("토지 리스트 :: " + tojiList);
+
 			//민원 토지 ul 추가
 			if (tojiList != null && tojiList != undefined && tojiList.length > 0) {
 				$('#dopcoAllWrappers .complaintLand .depth1 .contents').remove();
@@ -445,12 +447,14 @@ function onDataLoad() {
 				}).remove();
 				
 				$.each(tojiList, function(index, item) {
-					
+					let jisangNo = tojiList[index].jisang_no;
+					let status = tojiList[index].jisang_status;
+					let updateYn = tojiList[index].update_yn || 'N';
 					var newItem = `<ul class="complainant_info">
 							<li>${tojiList[index].addr || '-'}</li>
-							<li>N</li>
+							<li>${updateYn}</li>
 							<li class="complaintinfo_update_btn">
-								<button onclick="openPopup()">상세보기</button>
+								<button onclick="openPopup('${jisangNo}', '${status}')">상세보기</button>
 							</li>
 						</ul>`;
 					$('#pop_complaintInfo_togi').append(newItem);
@@ -1137,29 +1141,105 @@ function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun
 	commonFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun);
 }
 
-function openPopup() {
-	
-	let popupWindow = window.open('/land/jisang/easementModification?idx=J_010732', '_blank', 'resizable');
-	
-	// 화면 크기를 기준으로 80%로 팝업 크기 조정
-	const widthPercent = 0.95; // 80% 너비
-	const heightPercent = 0.95; // 80% 높이
-	
-	const screenWidth = window.screen.width;  // 전체 화면 너비
-	const screenHeight = window.screen.height; // 전체 화면 높이
-	
-	const newWidth = screenWidth * widthPercent;
-	const newHeight = screenHeight * heightPercent;
-	
-	popupWindow.resizeTo(newWidth, newHeight);
-	popupWindow.resizeBy(-100, -100);
-	popupWindow.onload = function() {
-		let doc = popupWindow.document;
+// 민원완료 > 상세보기 버튼 > 팝업 오픈 이벤트
+function openPopup(no, status) {
+	status = status.toLowerCase();
+	let url = '';
+	if (status == 'jisang') {
+		//지상권
+		url = `/land/${status}/easementModification?idx=${no}&open=pop`;
+	} else if (status == 'gover') {
+		// 점용
+		url = ``;
+	} else if (status == 'dopco') {
+		// 회사토지
+		//http://localhost:8081/land/dopco/compLandEdit?idx=221&dopcoNo=L_000274
+		
+	} else if (status == 'notset') {
+		// 미설정
+		url = `/land/${status}/notsetaddRevise?idx=${no}&open=pop`;
+	}
+	console.log(no.toLowerCase());
+	// 팝업이 열려있는지
+	if (popupWindow && !popupWindow.closed) {
+		// 열려있다면 열려있는 팝업에 포커싱
+		popupWindow.focus();
+	} else {
+		// 열러있지않다면 열기
+		popupWindow = window.open(url, '_blank', 'resizable');
+		// 화면 크기를 기준으로 80%로 팝업 크기 조정
+		const widthPercent = 0.95; // 80% 너비
+		const heightPercent = 0.95; // 80% 높이
+		
+		const screenWidth = window.screen.width;  // 전체 화면 너비
+		const screenHeight = window.screen.height; // 전체 화면 높이
+		
+		const newWidth = screenWidth * widthPercent;
+		const newHeight = screenHeight * heightPercent;
+		
+		popupWindow.resizeTo(newWidth, newHeight);
+		popupWindow.resizeBy(-100, -100);
+		popupWindow.onload = function() {
+			let doc = popupWindow.document.querySelector('#finalBtn');
+		}	
 	}
 	
 }
 
-
-
+// 팝업이 닫히면 실행되는 함수
+function popupComplete () {
+	let dataObj = {'mw_seq' : $('#minwonSeq').val()};
+	$.ajax({
+		url: "/issue/minwonCompleteAfter",
+		data: JSON.stringify(dataObj),
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: 'application/json; charset=utf-8',
+		success: function(res) {
+			if (res.result) {
+				// 민원 완료 > 민원 토지 ul 추가
+				if (res.tojiList != null && res.tojiList != undefined && res.tojiList.length > 0) {
+					$('#pop_complaintInfo_togi ul').not(function () {
+						return $(this).hasClass('complaintinfo_update_th');
+					}).remove();
+					
+					$.each(res.tojiList, function(index, item) {
+						let jisangNo = res.tojiList[index].jisang_no;
+						let status = res.tojiList[index].jisang_status;
+						let updateYn = res.tojiList[index].update_yn || 'N';
+						var newItem = `<ul class="complainant_info">
+								<li>${res.tojiList[index].addr || '-'}</li>
+								<li>${updateYn}</li>
+								<li class="complaintinfo_update_btn">
+									<button onclick="openPopup('${jisangNo}', '${status}')">상세보기</button>
+								</li>
+							</ul>`;
+						$('#pop_complaintInfo_togi').append(newItem);
+					});
+				} else {
+					$('#dopcoAllWrappers .complaintLand .depth1').append(noDataUl);
+				}
+			}
+		},
+		beforeSend: function() {
+			//(이미지 보여주기 처리)
+			//$('#load').show();
+			// loadingShow();
+		},
+		complete: function() {
+			//(이미지 감추기 처리)
+			//$('#load').hide();
+			// loadingHide();
+		},
+		error: function(jqXHR, textStatus, errorThrown, responseText) {
+			//alert("ajax error \n" + textStatus + " : " + errorThrown);
+			console.log(jqXHR);
+			console.log(jqXHR.readyState);
+			console.log(jqXHR.responseText);
+			console.log(jqXHR.responseJSON);
+		}
+	}); //end ajax
+}
 
 //========================민원 완료 [E]========================

@@ -2889,4 +2889,30 @@ public class issueController {
 //			e.printStackTrace();
 //		}
 //	}
+	
+	/**
+	 * 민원 완료 팝업 업데이트 여부 업데이트 및 토지 리스트 조회
+	 * @return
+	 * @throws Exception 
+	 */
+	@Transactional
+	@RequestMapping(value = "/minwonCompleteAfter", method = { RequestMethod.GET, RequestMethod.POST })
+	public HashMap<String, Object> minwonCompleteAfter(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject requestParamObj = new JSONObject(requestParams);
+		ParameterParser parser = new ParameterParser(request);
+		
+		String MW_SEQ = requestParamObj.getString("mw_seq");
+		params.put("MW_SEQ", MW_SEQ);
+		int result = (int) mainService.UpdateQuery("commonSQL.updateUpdateYn", params);
+		ArrayList tojiList = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailToji", params);
+		
+		resultMap.put("tojiList", tojiList);
+		resultMap.put("result", result);
+		
+		return resultMap;
+	}
 }

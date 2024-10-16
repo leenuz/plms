@@ -351,9 +351,11 @@ FROM (
 		       TO_CHAR(A.mp_COMP_DATE, 'YYYY-MM-DD') AS COMP_DATE,
 		       B.JISANG_STATUS,
 		       B.JISANG_NO,
-		       B.juso as addr
+		       B.juso as addr,
+		       MM.UPDATE_YN
 		FROM MINWON_PNU A
 		LEFT JOIN JIJUK_2024 B ON A.mp_PNU = B.PNU
+		LEFT JOIN MINWON_MASTER MM ON A.MP_MINWON_SEQ = MM.MM_MW_SEQ
 		WHERE A.mp_MINWON_SEQ = ${MW_SEQ}
 		ORDER BY CASE A.mp_REP_YN
 		           WHEN 'Y' THEN 0

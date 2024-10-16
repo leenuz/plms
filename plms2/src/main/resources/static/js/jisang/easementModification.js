@@ -4,6 +4,7 @@ $(document).ready(function() {
 	console.log("----지상권 내역 수정 js 동작 --- ");
 	// 페이지 로드 시 초기 관로명 목록 업데이트
 	const initialJisa = $("#easementModifySelectBox01").val(); // 선택된 지사 값
+	
 	if (initialJisa) {
 		console.log("initialJisa: " + initialJisa);
 		updatePipeNameList(initialJisa); // 초기 관로명 목록 업데이트
@@ -877,7 +878,7 @@ $(document).on("click", "#finalBtn", function() {
 	console.log("---------finalBtn class click------------");
 
 	console.log($("#saveForm").serialize());
-
+	
 	//데이터를 가공해서 넘김다
 	var formSerializeArray = $('#saveForm').serializeArray();
 	console.log(formSerializeArray);
@@ -1031,6 +1032,17 @@ $(document).on("click", "#finalBtn", function() {
 				console.log("response.success Y");
 				//	console.log("response.resultData length:"+response.resultData.length);
 				alert("정상적으로 등록 되었습니다.");
+				let queryString = window.location.search;
+				let urlParams = new URLSearchParams(queryString);
+				
+				urlParams.forEach(function(value, key) {
+					if (key == 'open' && value == 'pop') {
+						if (window.opener && !window.opener.closed) {
+							window.opener.popupComplete();
+						}
+						window.close();
+					}
+				});
 				/*$("#popup_bg").show();
 				$("#popup").show(500);
 				//$("#addrPopupLayer tbody td").remove();
@@ -1149,3 +1161,15 @@ function compareChanges(orgValue, newValue, fieldName) {
     return '';
 }
 
+// 이전버튼 클릭시
+$(document).on('click', '#backBtn', function(){
+	let queryString = window.location.search;
+	let urlParams = new URLSearchParams(queryString);
+	let backFlag = false;
+	urlParams.forEach(function(value, key) {
+		if (key == 'open' && value == 'pop') {
+			window.close();
+		}
+	});
+	history.back();
+});

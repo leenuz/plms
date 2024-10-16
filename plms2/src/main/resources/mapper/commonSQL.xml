@@ -633,5 +633,11 @@ SELECT PNU
 	WHERE
 		NM.nm_notset_no = #{jisang_no}
 </select>
-	
+
+<!-- 민원 완료 팝업 > 업데이트 여부 업데이트 -->
+<update id="updateUpdateYn" parameterType="HashMap">
+	UPDATE MINWON_MASTER SET
+		UPDATE_YN = TO_CHAR(NOW(),'YYYY-MM-DD')
+	WHERE mm_mw_seq = #{MW_SEQ}::numeric
+</update>
 </mapper>
