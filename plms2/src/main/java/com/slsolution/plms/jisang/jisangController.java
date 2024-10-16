@@ -32,6 +32,7 @@ import com.slsolution.plms.json.JSONObject;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -1028,7 +1029,15 @@ public class jisangController {
 				if ("".equals(str_appNo)) {
 					map.put("message", "N");
 				} else {
+					HttpSession session = request.getSession();
+					Enumeration<String> attributeNames = session.getAttributeNames();
 
+					while (attributeNames.hasMoreElements()) {
+					    String attributeName = attributeNames.nextElement();
+					    Object attributeValue = session.getAttribute(attributeName);
+					    System.out.println("@@@Session Attribute Name: " + attributeName + ", Value: " + attributeValue);
+					}
+					
 					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
 					String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
 					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
