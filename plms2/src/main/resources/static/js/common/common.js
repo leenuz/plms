@@ -539,15 +539,21 @@ function queryValueToObject(str) {
 		if( value === 'null' ) {
 			parsedValue = null;
 		}
-		// 2. 숫자처리 및 큰 숫자는 문자열로 유지
+		
+		// 2. 빈 문자열 처리
+        else if (value === '') {
+            parsedValue = null;
+        } 
+		
+		// 3. 숫자처리 및 큰 숫자는 문자열로 유지
 		else if (!isNaN(value) && value.length < 16) {
 			parsedValue = Number(value);
 		}
-		// 3. 배열형태로 오는것 처리(쉼표로 구분된 값들을 배열로 인식)
+		// 4. 배열형태로 오는것 처리(쉼표로 구분된 값들을 배열로 인식)
 		else if (value.includes(',')) {
 			parsedValue = value.split(',').map(v => v.trim());
 		}
-		// 4. 나머지 값은 그대로 문자열 처리
+		// 5. 나머지 값은 그대로 문자열 처리
 		else {
 			parsedValue = value;
 		}
