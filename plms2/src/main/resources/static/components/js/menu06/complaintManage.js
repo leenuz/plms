@@ -419,7 +419,7 @@ function onDataLoad() {
                     <input type="text" readonly class="notWriteInput" value="${item.rep_yn || '-'}">
                 </li>
                 <li class="content largeWidth">
-                    <input type="text" readonly class="notWriteInput" value="${minwontojijus[index] || '-'}">
+                    <input type="text" readonly class="notWriteInput" value="${item.addr || '-'}">
                 </li>
                 <li class="content">
                     <input type="text" readonly class="notWriteInput" value="${item.registed_yn || '-'}">
