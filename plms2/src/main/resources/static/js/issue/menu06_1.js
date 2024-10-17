@@ -545,6 +545,12 @@ $(document).on("click", "#newcomplaint_Popup .approveBtn", function() {
 	var data = getPopupJsonData();	//form안의 입력한 깂들 object화하는 function 
 	console.log(data);
 	
+	if(data.MW_TITLE == '' || data.MW_TITLE.length == 0) {
+		alert('민원명을 입력해 주세요.');
+		return false;
+	}
+	
+	
 	$.ajax({
 		url: "/issue/saveMinwonData",
 		data: JSON.stringify(data),

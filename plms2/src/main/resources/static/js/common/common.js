@@ -527,12 +527,22 @@ function commonFileView(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 
 //쿼리 path obeject화
 function queryValueToObject(str) {
-	const cleanedStr = str.slice(1,-1);
+	const cleanedStr = str.slice(1,-1);	//양 끝 괄호 제거
 	
 	const entries = cleanedStr.split(', ').map(entry => {
 		const [key, value] = entry.split('=');
 		
-		let parsedValue = value === 'null' ? null : isNaN(value) ? value : Number(value);
+		//null처리, 숫자 처리, 큰 숫자는 문자열로 유지
+		let parsedValue;
+		
+		if( value === 'null' ) {
+			parsedValue = null;
+		} else if (!isNaN(value) && value.length < 16) {
+			parsedValue = Number(value);
+		} else {
+			parsedValue = value;
+		}
+		
 		return [key, parsedValue];
 	});
 	
