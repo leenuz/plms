@@ -158,6 +158,7 @@ div.dt-filter-spacer {
 					</div>
 					<!-- <button class="toolBtn viewBtn">문서보기</button> -->
 					<th:block th:if="${serverName == 'LOCAL'}">
+						<!-- <button class="toolBtn viewBtn" th:if="${minwon.mm_status == '1'}" onclick="tempSaveMinwonEdit()">민원 수정/상신</button> -->
 						<button class="toolBtn viewBtn" th:if="${minwon.mm_status == '2'}" id="minwonResponsePopup">대응방안 수립</button>
 						<button class="toolBtn completeBtn complainFinBtn" th:if="${minwon.mm_status == '4'}" onclick="complaintPopupOpen()">민원완료</button>
 					</th:block>
@@ -695,6 +696,9 @@ div.dt-filter-spacer {
 </div>
 	<!-- 민원 완료 보고 [E] -->
 	
+	<!-- 민원 수정/상신 [S] -->
+	
+	<!-- 민원 수정/상신 [E] -->
 	
 	<!-- script -->
 	<script type="module" src="/js/module/surfaceMain.js"></script>
