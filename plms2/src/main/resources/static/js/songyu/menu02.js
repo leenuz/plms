@@ -355,7 +355,18 @@ function loadDataTable(params) {
 			{ data: "souja_name", "defaultContent": "" }, //6. 소유자
 			{ data: "jijuk_area", "defaultContent": "" }, //7. 면적
 			{ data: "toji_type", "defaultContent": "" }, //8. 토지유형
-			{ data: "jisang_status" }, //9. 권리확보
+			{
+			    data: "jisang_status",
+			    render: function(data, type, full, meta) {
+			        var rtn;
+			        if (data == "jisang") rtn = "지상권";
+			        else if (data == "gover") rtn = "점용";
+			        else if (data == "dopco") rtn = "회사토지";
+			        else if (data == "notset") rtn = "미설정";
+			        else rtn = data; // 데이터가 없거나 다른 값이 있으면 그대로 출력
+			        return rtn;
+			    }
+			}, //9. 권리확보
 			{ data: "jasan_no" }, //10. 자산번호
 			{ data: "master_no" }, //11. 관리번호
 			{ data: "jisang_comple_yn" }, //12. 등기여부
