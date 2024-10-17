@@ -102,6 +102,15 @@ public class notiController {
 		String emd_nm = req.getParameter("emd_nm");
 		String ri_nm = req.getParameter("ri_nm");
 		String jibun = req.getParameter("jibun");
+		
+	    // 구분 값 처리
+	    if ("전체".equals(gubun)) {
+	        gubun = "";  // 전체는 빈 문자열로 처리
+	    } else if ("신규대상".equals(gubun)) {
+	        gubun = "N";  // 신규대상은 'N'
+	    } else if ("해지대상".equals(gubun)) {
+	        gubun = "C";  // 해지대상은 'C'
+	    }
 
 		// 검색 파라미터 설정
 		HashMap params = new HashMap();
