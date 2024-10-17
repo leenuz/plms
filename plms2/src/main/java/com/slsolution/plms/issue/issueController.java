@@ -983,9 +983,9 @@ public class issueController {
 		try {
 			HashMap params = new HashMap();
 			String stat="";
-			if ("협의 중".equals(STATUS)) stat="1";
-			else if ("소송 중".equals(STATUS)) stat="2";
-			else if ("협의 중단".equals(STATUS)) stat="3";
+			if ("협의중".equals(STATUS)) stat="1";
+			else if ("소송중".equals(STATUS)) stat="2";
+			else if ("협의중단".equals(STATUS)) stat="3";
 			// 신규등록시
 			if ("".equals(AGREE_SEQ) || "0".equals(AGREE_SEQ)) {
 
