@@ -1381,11 +1381,7 @@ $(document).on("click", ".document_add_btnWrap .sangsinBtn", function() {
 });
 
 // 민원 협의 내용 등록/수정 팝업 - 파일 다운로드 버튼
-function minwonAgreefileDownload(fileName) {
-    // HTML 요소에서 data-sample-dir 속성 값을 가져옴
-    var minwonFileDataDir = document.querySelector('#fileListUl').getAttribute('data-minwon-dir');
-		
-    var filePath = minwonFileDataDir + '/' + fileName;  // minwonFileDataDir 와 파일 이름을 결합하여 파일 경로 생성
+function minwonAgreefileDownload(filePath, fileName) {
     commonFileDownload(filePath, fileName, '', '', '');
 }
 

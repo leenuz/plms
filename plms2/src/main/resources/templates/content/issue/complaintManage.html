@@ -577,7 +577,7 @@ div.dt-filter-spacer {
 													</li>
 													<!-- 다운로드 버튼 -->
 													<li class="content viewBtnBox">
-																<button class="viewDetailButton" th:onclick="minwonAgreefileDownload(${file.maa_file_nm})">보기</button>
+														<button class="viewDetailButton" th:onclick="minwonAgreefileDownload([[${file.maa_file_path}]], [[${file.maa_file_nm}]])">보기</button>
 													</li>
 													<!-- 삭제 버튼 -->
 													<li>
