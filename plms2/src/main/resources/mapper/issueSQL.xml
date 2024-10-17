@@ -342,6 +342,7 @@ FROM (
 		       A.mp_ri_nm as RI_NM,
 		       A.mp_jibun as JIBUN,
 		       A.mp_jibun_full as JIBUN_FULL,
+		      TRIM(CONCAT(a.mp_sido_nm,' ',a.mp_sgg_nm,' ',a.mp_emd_nm,' ',a.mp_ri_nm,' ',a.mp_jibun)) AS addr,
 		       A.mp_rep_yn as REP_YN,
 		       A.mp_registed_yn as REGISTED_YN,
 		       A.mp_permitted_yn as PERMITTED_YN,

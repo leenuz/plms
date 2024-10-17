@@ -605,9 +605,21 @@ $(document).on("click", "#newcomplaint_Popup .sangsinBtn", function() {
 		success: function(data, jqXHR) {
 			console.log(data);
 			if (data.message != null && data.message != undefined && data.message == "success") {
-				var urls = data.OUT_URL;
-				window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
-				closeComplaintregisterPopup();
+				
+				
+				if (data.html.length>0){
+					var urls = data.html;
+					var newWindow=window.open("", "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
+					newWindow.document.open();
+					newWindow.document.write(data.html);
+					newWindow.document.close();
+				}
+				else {
+					var urls = data.OUT_URL;
+					window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");	
+				}
+				
+			//	closeComplaintregisterPopup();
 			} else {
 				alert(data.message);
 			}
