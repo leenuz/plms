@@ -45,6 +45,13 @@ $(function() {
 		issueTypeMenuSetting(complainRespondContractVal);
 	});
 	
+	
+	//
+	$('input[type=file][name="newTempMinwon_fileUpload"]').on('change', function(e) {
+	    var files = e.originalEvent.target.files; // 파일 선택창에서 선택된 파일들
+	    console.log('민원 수정/상신 파일업로드');
+	    //handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
+	});
 })
 
 // 커스텀 selectbox
@@ -1105,7 +1112,7 @@ $(document).ready(function () {
 	    complaintsContentsDiv.scrollTop = complaintsContentsDiv.scrollHeight;
 	}
 	
-	$('input[type=file]').on('change', function(e) {
+	$('input[type=file][name="complaint_fileUpload"]').on('change', function(e) {
 		console.log("-------------change 이벤트 트리거");
 	    var files = e.originalEvent.target.files; // 파일 선택창에서 선택된 파일들
 	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
@@ -1677,20 +1684,17 @@ $(document).on('click', '#sangsinBtn', function() {
 //==============================================================================================================
 //========================민원 수정/상신 [S]========================
 
-
-
-
-
-
 //민원 수정 팝업 열기
 function tempSaveMinwonEdit(){
-	console.log($("#minwon").val());
 	$("#newcomplaint_Edit_Popup").show();
+	showDim();
+	newMinwonEditInfoLoad();
 }
 
 //민원 수정 팝업 닫기
 function complaintEditPopupClose() {
 	$("#newcomplaint_Edit_Popup").hide();
+	hideDim();
 }
 
 
@@ -2001,8 +2005,330 @@ $(document).on("click", ".landinfo .landStatusPopOpenBtn", function() {
 		popupOpen.classList.add("active");
 		
 		$('.resultSelectBtn').attr('data-index', targetIdx);
-		$('.saveBtn').attr('data-index', targetIdx);
+		$("#minwinEditPopAddrSearchPopNoPnu").attr('data-index', targetIdx);
    	});
 });
+
+//주소검색 팝업에서 선택 버튼 - 주소 검색한거 선택
+function miwonSearchAddr(obj) {
+	let selectAddrInfo = queryValueToObject($(obj).attr('data-info'));
+	let idxCheck = $(obj).attr('data-index');
+	console.log(selectAddrInfo);
+	console.log(idxCheck);
+	
+	let completeYn = 'N'
+	let permittedYn = 'N';
+	
+	if(selectAddrInfo.jisang_status == 'JISANG') {	//지상
+		//COMPLE_YN - 등기여부
+		//PERMITTED_YN - 계약여부 (파일명으로 올수도? 어쨌든 1개라도 있으면 Y)
+		completeYn = selectAddrInfo.jm_comple_yn;
+		if(selectAddrInfo.jm_permitted_yn.length > 0){
+			permittedYn = 'Y';
+		}
+	} else if(selectAddrInfo.jisang_status == 'GOVER') {	//점용
+		//준비
+	} else if(selectAddrInfo.jisang_status == 'DOPCO') {	//회사토지
+		//COMPLE_YN - 등기여부
+		completeYn = selectAddrInfo.dom_comple_yn;
+	} else if(selectAddrInfo.jisang_status == 'NOTSET') {	//미지정
+		//준비
+	} else {
+		//패스
+	}
+	
+	$("#minwonAddr_"+idxCheck).val(selectAddrInfo.juso);	//주소세팅
+	$("#minwonAddrInfo_"+idxCheck).val(JSON.stringify(selectAddrInfo));
+	$("#minwonRegiYn_"+idxCheck).val(completeYn);	//등기여부
+	$("#minwonContYn_"+idxCheck).val(permittedYn);	//계약여부
+	
+	searchPopClose();	//팝업닫기
+}
+
+
+
+//주소 팝업 닫기 
+function searchPopClose() {
+	
+	let popupOnCheck = $("#minwon_searchPopupWrap").hasClass('active');
+	
+	if(popupOnCheck) {
+		$("#minwon_searchPopupWrap").removeClass('active');
+	} else {
+		$("#minwon_searchPopupWrap").addClass('active');
+	}
+
+}
+
+//민원 수정 정보 세팅
+function newMinwonEditInfoLoad() {
+	
+	let param = {"MW_SEQ" : $("#minwonSeq").val()};
+	
+	$.ajax({
+		url: '/issue/tempsaveMinwonInfoLoad',
+		type: "POST",
+		data: param,
+		success : function(data, jqXHR) {
+			loadTempMinwonDataSetting(data);
+		},
+		error: function(err) {
+			console.log(err);
+		}
+	})
+	.done(function(data){
+		if(data.result) {
+			console.log(data);
+		}
+	})
+	.fail(function() {
+		console.error("AJAX 요청 실패");
+	})
+	;
+	
+	
+}
+
+//불러온 데이터 세팅
+function loadTempMinwonDataSetting(data) {
+	
+	let resultList = data.resultList;	//민원상세정보
+	let tmpList = data.tmpList;		//임시저장할때의정보..?
+	let tojiList = data.tojiList;	//토지정보
+	let fileList = data.fileList;	//첨부파일
+	let agreeList = data.agreeList;
+	
+	//민원정보 세팅
+	if(Object.entries(resultList).length > 0) {
+		$("input[name='MW_TITLE']").val(resultList.mm_mw_title);
+		$("#tempMinwonJisa").text(resultList.mm_jisa);
+		$("input[name='MW_OCCUR_DATE']").val(resultList.mm_mw_occur_date);
+	}
+	
+	//토지정보 세팅
+	if(tojiList.length > 0) {
+		
+		let tojiHtml = '';
+		
+		//for[S]
+		for(let k = 0 ; k < tojiList.length ; k++) {
+			let tojiInfo = tojiList[k];
+			let tojiString = JSON.stringify(tojiInfo).replace(/"/g, '&quot;');
+			
+			tojiHtml += '<ul class="landinfo_content">';
+				
+			tojiHtml += '<li class="landinfo_content_2" id="minwon_'+(k+1)+'">'+(k+1)+'</li>';
+			tojiHtml += '<li class="landinfo_content_3">';
+			tojiHtml += '	<input type="checkbox" id="newcomplaint_checkbox'+(k+1)+'" class="approve_checkbox" />';
+			tojiHtml += '	<label for="newcomplaint_checkbox'+(k+1)+'" class="approve_checkbox_label"></label>';
+			tojiHtml += '</li>';
+			tojiHtml += '<li class="landinfo_content_4">';
+			tojiHtml += '	<input type="text" name="minwonAddr" id="minwonAddr_'+(k+1)+'" value="'+tojiInfo.addr+'" />';
+			tojiHtml += '	<button class="landStatusPopOpenBtn" value="'+(k+1)+'">검색</button>';
+			tojiHtml += '</li>';
+			tojiHtml += '<li class="landinfo_content_5"><input type="text" id="minwonRegiYn_'+(k+1)+'" value="'+tojiInfo.registed_yn+'" readonly/></li>';
+			tojiHtml += '<li class="landinfo_content_6"><input type="text" id="minwonContYn_'+(k+1)+'" value="'+tojiInfo.permitted_yn+'" readonly/></li>';
+			tojiHtml += '<li class="landinfo_content_7"><input type="text" id="minwonActualAreaYn_'+(k+1)+'" onkeyDown="onlyNumberingInput(event)" maxlength="15"/></li>';
+			tojiHtml += '<li class="landinfo_content_8">';
+			tojiHtml += '	<input type="hidden" name="addrInfoStr" id="minwonAddrInfo_'+(k+1)+'" value="'+tojiString+'" />';
+			tojiHtml += '	<button class="complaint_addition">추가</button>';
+			tojiHtml += '</li>';
+			
+			tojiHtml += '</ul>';
+			
+		}//for[E]
+		$("#minwon_tojiInfoList").empty();
+		$("#minwon_tojiInfoList").append(tojiHtml);
+	}
+	
+	//민원내용
+	minwonin_name_Arr = resultList.minwonin_tojiju_nm.split("|");	//성명
+	minwonin_birth_Arr = resultList.minwonin_tojiju_birth.split("|");	//생년월일
+	minwonin_relation_Arr = resultList.tojiju_relation.split("|");	//토지주와 관계
+	minwonin_phone_Arr = resultList.minwonin_phone.split("|");	//연락처
+	minwonin_presence_Arr = resultList.field_presence.split("|");	//현장입회
+	
+	let minwoninHtml = '';
+	
+	//for[S]
+	for(let i = 0  ; i < minwonin_name_Arr.length ; i++) {
+		let m_name = minwonin_name_Arr[i];
+		let m_birth = minwonin_birth_Arr[i];
+		let m_relation = minwonin_relation_Arr[i];
+		let m_phone = minwonin_phone_Arr[i];
+		let m_presence = minwonin_presence_Arr[i];
+		
+		minwoninHtml += '<ul class="landowner_wrap">';
+		
+		minwoninHtml += '	<li class="landowner_num">';
+		minwoninHtml += '		<input type="text" value="'+(i+1)+'" readonly />';
+		minwoninHtml += '	</li>';
+		minwoninHtml += '	<li><input type="text" id="landowner_name_'+(i+1)+'" value="'+m_name+'" maxlength="30"/></li>';
+		minwoninHtml += '	<li><input type="text" id="landowner_birthday_'+(i+1)+'" value="'+m_birth+'" /></li>';
+		minwoninHtml += '	<li><input type="text" id="landowner_relation_'+(i+1)+'" value="'+m_relation+'" maxlength="20" /></li>';
+		minwoninHtml += '	<li><input type="text" id="landowner_phone_'+(i+1)+'" value="'+m_phone+'" maxlength="15" /></li>';
+		minwoninHtml += '	<li class="popSelectWrap">';
+		minwoninHtml += '		<div class="hidden_SelectBox">';
+		minwoninHtml += '			<select hidden>';
+		minwoninHtml += '				<option value="Y">Y</option>';
+		minwoninHtml += '				<option value="N">N</option>';
+		minwoninHtml += '			</select>';
+		minwoninHtml += '		</div>';
+		minwoninHtml += '		<div class="Popup_Custom_SelectBox">';
+		minwoninHtml += '			<button class="Popup_Custom_SelectView" id="landowner_presence_'+(i+1)+'">'+m_presence+'</button>';
+		minwoninHtml += '			<ul class="Popup_Custom_SelectBtns"></ul>';
+		minwoninHtml += '		</div>';
+		minwoninHtml += '	</li>';
+		minwoninHtml += '	<li class="landowner_btns_default">';
+		minwoninHtml += '		<button class="complaint_addition">추가</button>';
+		minwoninHtml += '	</li>';
+		
+		minwoninHtml += '</ul>';
+	}
+	//for[E]
+	
+	$("#minwonin_totiju_body").empty();
+	$("#minwonin_totiju_body").append(minwoninHtml);
+	
+	//토지이력
+	$("textarea[name='MW_HISTORY']").val(resultList.toji_history);
+	//요구사항
+	$("textarea[name='MW_REQUIREMENTS']").val(resultList.minwon_requirement);
+	//내용
+	$("textarea[name='MW_CONTENTS']").val(resultList.minwon_content);
+	//첨부파일
+	
+}
+
+//대표필지 체크박스 스크립트
+$(document).on("change", ".approve_checkbox", function() {
+	// 선택된 체크박스가 체크된 경우
+	if ($(this).is(":checked")) {
+		// 현재 체크박스를 제외한 다른 체크박스의 체크 해제
+		$(".approve_checkbox").not(this).prop("checked", false);
+		const info = $(this).closest("ul");
+		const juso = info.find(".landinfo_content_4 input[type='text']").val()
+		const content_5 = info.find(".landinfo_content_5 input[type='text']").val()
+		const content_6 = info.find(".landinfo_content_6 input[type='text']").val()
+		setReqLand(juso, content_5, content_6);
+	} else {
+		if ($('.landinfo_box input[type="checkbox"]:checked').length === 0) {
+			setReqLand();
+		}
+	}
+});
+
+//대표 필지정보 입력
+function setReqLand(addr = "", reg_yn = "", contract_yn = "") {
+	$('.daepyo_pilji_list_1 input[type="text"]').val(addr); //주소
+	$('.daepyo_pilji_list_2 input[type="text"]').val(reg_yn);  //등기여부
+	$('.daepyo_pilji_list_3 input[type="text"]').val(contract_yn); //계약여부
+}
+
+//신규민원팝업 데이터 json
+function getPopupJsonData2() {
+	
+	var formSerializeArray = $('#newEditMinwonSaveFormPop').serializeArray();
+	len = formSerializeArray.length;
+	
+	var dataObj = {};	//return할 param 내용
+	
+	for(let i = 0; i < len; i++) {
+		dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
+	}
+
+	dataObj.JISA = (ljsIsNull(dataObj.JISA) || dataObj.JISA == "전체") ? '' : dataObj.JISA;
+
+	//토지 정보 세팅
+	dataObj.tojiList = [];
+	
+	$(".landinfo_box .landinfo_content").each(function(index, ul) {
+		let addrInfoStr = $(ul).find('.landinfo_content_8 input').val();
+		
+		if(commonNvl(addrInfoStr, "none") == "none") {
+			alert('주소 정보가 없습니다.');
+			return false;
+		}
+		
+		let obj = JSON.parse(addrInfoStr); // 각 UL에 대한 개별 객체 생성
+		//let obj = {};
+		obj.saddr = $(ul).find('.landinfo_content_4 input').val(); //주소
+		obj.REP_YN = $(ul).find('.landinfo_content_3 input').is(':checked') ? "Y" : "N"; //대표필지여부
+		obj.REGISTED_YN = $(ul).find('.landinfo_content_5 input').val(); //등기여부
+		obj.PERMITTED_YN = $(ul).find('.landinfo_content_6 input').val(); //계약여부
+		obj.AREA = $(ul).find('.landinfo_content_7 input').val(); //실저촉면적
+		dataObj.tojiList.push(JSON.stringify(obj));
+	});
+	
+	dataObj.TOJI_LENGTH = dataObj.tojiList.length;
+
+	//민원인/토지주 정보
+	dataObj.userList = [];
+	
+	$(".com_content_contents_1 .landowner_wrap").each(function(index, ul) {
+		var obj = {}; // 각 UL에 대한 개별 객체 생성
+		obj.num = $(ul).find('input').eq(0).val() //순번
+		obj.name = $(ul).find('input').eq(1).val(); //성명
+		obj.birth_date = $(ul).find('input').eq(2).val(); //생년월일
+		obj.relation = $(ul).find('input').eq(3).val(); //토지주와 관계
+		obj.phone = $(ul).find('input').eq(4).val(); //연락처
+		obj.attendance = $(ul).find('select').val(); //현장입회
+		dataObj.userList.push(obj);
+	});
+
+	//첨부파일
+	let fileCheck = [];
+	
+	for(let t = 0 ; t < $("#edit_fileTitleUl").children().length ; t++){
+		fileCheck.push($("#minwonFileName_"+t).text());
+	}
+	
+	
+	//dataObj.files = newComplaintRegiFiles;
+	//dataObj.filesLength = newComplaintRegiFiles.length;
+	fileCheck.pop();
+	dataObj.files = fileCheck;
+	dataObj.filesLength = fileCheck.length;
+
+	//신규 파일은 SEQ가 없음
+	dataObj.MW_SEQ = "0";
+	
+	let dateCheck = $("input[name='MW_OCCUR_DATE']").val();
+	if( dateCheck == '' ) {
+		dateCheck = today_yyyymmdd();	//오늘 날짜로 변환(yyyymmdd)
+	}
+	
+	dataObj.MW_OCCUR_DATE = dateCheck;
+	dataObj.SANGSIN_FLAG = 'N';
+	
+	let min_to_nameArr = '';
+	let min_to_birthArr = '';
+	let min_to_relationArr = '';
+	let min_to_phoneArr = '';
+	let min_to_presenceArr = '';
+	
+	//신규
+	for(let p = 0 ; p < $("#minwonin_totiju_body").children().length ; p++) {
+		let ownerNm = commonNvl( $("#landowner_name_"+(p+1)).val() , "-" ) + "|";
+		let ownerBirth = commonNvl( $("#landowner_birthday_"+(p+1)).val(), "-" )  + "|";
+		let ownerRelation = commonNvl( $("#landowner_relation_"+(p+1)).val(), "-" )  + "|";
+		let ownerPhone = commonNvl( $("#landowner_phone_"+(p+1)).val(), "-" )  + "|";
+		let owerPresence = commonNvl( $("#landowner_presence"+(p+1)).text(), "N" )  + "|";
+
+		min_to_nameArr += ownerNm;
+		min_to_birthArr += ownerBirth;
+		min_to_relationArr += ownerRelation;
+		min_to_phoneArr += ownerPhone;
+		min_to_presenceArr += owerPresence;
+	}
+	
+	dataObj.min_to_nameArr = min_to_nameArr.slice(0, -1);
+	dataObj.min_to_birthArr = min_to_birthArr.slice(0, -1);
+	dataObj.min_to_relationArr = min_to_relationArr.slice(0, -1);
+	dataObj.min_to_phoneArr = min_to_phoneArr.slice(0, -1);
+	dataObj.min_to_presenceArr = min_to_presenceArr.slice(0, -1);
+
+	return dataObj;
+}
 
 //========================민원 수정/상신 [E]========================

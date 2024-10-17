@@ -189,6 +189,15 @@ textarea:focus {
   border-radius: 10px;
   cursor: pointer;
 }
+.closeBtn2 {
+  width: 120px;
+  height: 35px;
+  font-size: 13px;
+  background-color: #919191;
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+}
 .document_add_btnWrap {
   margin-top: 13px;
   display: flex;

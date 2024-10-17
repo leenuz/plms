@@ -3083,4 +3083,45 @@ public class issueController {
 		
 		return resultMap;
 	}
+	
+	
+	@PostMapping(path = "/tempsaveMinwonInfoLoad")
+	public void tempsaveMinwonInfoLoad(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		
+		String mw_seq = httpRequest.getParameter("MW_SEQ");
+		
+		System.out.println("mw_seq " + mw_seq);
+		
+		HashMap queryParam = new HashMap();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		queryParam.put("mwSeq", mw_seq);
+		queryParam.put("MW_SEQ", mw_seq);
+		
+		ArrayList<HashMap> minwonList = mainService.selectQuery("issueSQL.selectAllMinwonData", queryParam);
+		ArrayList<HashMap> tmpList = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetail", queryParam);
+		ArrayList<HashMap> tojiList = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailToji", queryParam);
+		ArrayList<HashMap> agreeList = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailAgree", queryParam);
+		ArrayList<HashMap> fileList = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailFile", queryParam);
+		
+		log.info("minwonList: " + minwonList);
+		log.info("minwon_status_str", "minwonList.get(0) : " + minwonList.get(0));
+		
+		map.put("result", true);
+		
+		map.put("resultList", minwonList.get(0));
+		map.put("tmpList", tmpList);
+		map.put("tojiList", tojiList);
+		map.put("agreeList", agreeList);
+		map.put("fileList", fileList);
+		
+		JSONObject jo = new JSONObject(map);
+
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+	}
 }
