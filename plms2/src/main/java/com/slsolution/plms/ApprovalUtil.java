@@ -148,7 +148,7 @@ public class ApprovalUtil implements ApplicationContextAware {
 //				rtnXmlDoc = DocumentBuilderFactory.newInstance()
 //				                .newDocumentBuilder()
 //				                .parse(new ByteArrayInputStream(cleanedXmlStr.getBytes(StandardCharsets.UTF_8)));
-
+				
 					rtnXmlDoc=DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(rtnXmlStr.getBytes()));
 					XPath xpath=XPathFactory.newInstance().newXPath();
 					

@@ -669,8 +669,8 @@ INSERT INTO MINWON_HANDLING_TMP (
 	<update id="updateMinwonHandlingTmpEchoNo" parameterType="HashMap">
 UPDATE MINWON_HANDLING_TMP
    SET mht_DOCKEY = #{DOCKEY}
- WHERE mht_MW_SEQ = $MW_SEQ
-	></update>
+ WHERE mht_MW_SEQ = ${MW_SEQ}
+	</update>
 		<select id="selectMinwonHandlingDocInfo" resultType="HashMap" parameterType="HashMap">
 		SELECT * FROM PLMS_APPROVAL WHERE pa_DOCKEY IN (SELECT mht_DOCKEY FROM MINWON_HANDLING_TMP WHERE mht_MW_SEQ = ${MW_SEQ}) AND (pa_STATUS IS NULL OR pa_STATUS NOT IN ('X'))
 	</select>
@@ -774,7 +774,7 @@ SELECT maa_mw_seq as MW_SEQ,
 	
 <update id="updateMinwonAgreeEchoNo" parameterType="HashMap"> 
 UPDATE MINWON_AGREEMENT
-   SET ma_DOCKEY = ${DOCKEY}
+   SET ma_DOCKEY = #{DOCKEY}
  WHERE ma_MW_SEQ = ${MW_SEQ}
    AND ma_AGREE_SEQ = ${AGREE_SEQ}
 </update>	
@@ -1349,6 +1349,17 @@ WHERE
     AND B.pa_STATUS = 'C'
 	]]></select>
 	
+	
+	<!-- 민원관리 대응방안 적용 -->
+	<update id="updateMinwonHandling" parameterType="HashMap"><![CDATA[
+UPDATE MINWON_MASTER
+   SET mm_MW_CODE1 = #{MW_CODE1}
+     , mm_MW_CODE2 = #{MW_CODE2}
+     , mm_MW_CODE3 = #{MW_CODE3}
+     , mm_STATUS = #{STATUS}
+ WHERE mm_MW_SEQ = ${MW_SEQ}
+	]]></update>
+	
 	<update id="updateMinwonHandlingTmp" parameterType="HashMap">
     <![CDATA[
     UPDATE MINWON_HANDLING_TMP
@@ -1368,7 +1379,11 @@ WHERE
     </if>
     <![CDATA[
         mht_COMPLETE_YN = #{COMPLETE_YN}
+<<<<<<< Updated upstream
     WHERE mht_MW_SEQ = #{MW_SEQ}::numeric
+=======
+    WHERE mht_MW_SEQ = ${MW_SEQ}
+>>>>>>> Stashed changes
     ]]>
 </update>
 	<!-- <update id="updateMinwonHandlingTmp" parameterType="HashMap">
@@ -1416,6 +1431,19 @@ UPDATE MINWON_HANDLING_TMP
    SET mht_DOCKEY = ''
  WHERE mht_MW_SEQ = #{MW_SEQ}
 	]]></update>
+	
+	
+	<!-- 민원 협의 전자결재 결과값 확인쿼리 -->
+	<select id="selectApprovalMinwonAgreement" parameterType="HashMap" resultType="HashMap"><![CDATA[ 
+SELECT A.ma_MW_SEQ
+       , A.ma_AGREE_SEQ
+       , B.pa_STATUS
+  FROM MINWON_AGREEMENT   A
+       left join PLMS_APPROVAL B ON A.DOCKEY = B.DOCKEY
+ WHERE 1=1
+   AND B.pa_STATUS = 'C'
+	]]></select>
+	
 	
 	<!-- 민원협의 전자결재 반려 확인쿼리 -->
 	<select id="selectApprovalMinwonAgreementRejected" parameterType="HashMap" resultType="HashMap"><![CDATA[ 
