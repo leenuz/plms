@@ -1102,7 +1102,7 @@ function openExistingAgreePopup(mwSeq, agreeSeq) {
 }
 
 
-// 민원협의 내용 등록/수정 팝업 - 저장 버튼
+// 민원협의 내용 등록/수정 팝업 -> 저장 버튼
 $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 	if (dataInfo == null || dataInfo == undefined) {
 		console.log("dataInfo is null");
@@ -1111,14 +1111,14 @@ $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 	
 	let consultInfo = getPopupJsonData();
 	let minwonSeq = $("#minwonSeq").val();  // minwonSeq 값을 가져옴
-	let agreeSeq = $("#agreeSeq").val();  // minwonSeq 값을 가져옴
+	let agreeSeq = $("input[name='agree_seq']").val(); // name 속성을 사용하여 agree_seq 값을 가져옴
 	console.log("consoleInfo: " + consultInfo);
 	console.log(uploadFiles);
 	
 	// JSON 형태로 consultInfo를 전송하기 위해 문자열로 변환
 	var params = {
 	    "MW_SEQ": minwonSeq,
-	    "agreeSeq": agreeSeq, // 수정일 경우 있음, 신규일 경우 없음.
+	    "AGREE_SEQ": agreeSeq, // 수정일 경우 있음, 신규일 경우 없음.
 	    "files": uploadFiles,  // 파일 경로와 이름이 포함된 배열
 	    "consultInfo": consultInfo,  // consultInfo도 포함해서 전송
 	};
