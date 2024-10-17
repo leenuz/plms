@@ -1513,7 +1513,7 @@ function complainSelectBoxOpen() {
 	ulElement.addClass('active');
 }
 
-// 필수 입력값 체크 함수
+// 민원 협의 팝업 - 필수 입력값 체크 함수
 function validateRequiredFields() {
 	// 진행상태 체크
 	const selectedStatus = $('#statusBtn').text();
