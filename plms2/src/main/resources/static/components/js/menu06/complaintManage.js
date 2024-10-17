@@ -1042,6 +1042,14 @@ function minwonConsultPopupOpen() {
 	console.log('팝업오픈');
 	$("#complaint_register_Popup").addClass('active');
 	showDim();
+	
+	// 기존 입력값 초기화 (날짜 제외)
+	$("input[name='TITLE']").val(''); // 제목 초기화
+	$("textarea[name='CONTENTS']").val(''); // 협의 내용 초기화
+	$("select[name='STATUS']").val(''); // 진행 상태 초기화
+	$(".Popup_Custom_SelectView").text('선택'); // 커스텀 UI 초기화
+	$("#fileListDiv").empty(); // 첨부파일 목록 초기화
+	
 	//팝업오픈하고 날짜 오늘날짜로 기본세팅
 	$("#consult_date_field").val(today_yyyymmdd());
 
