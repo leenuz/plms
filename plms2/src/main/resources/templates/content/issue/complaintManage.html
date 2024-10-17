@@ -159,28 +159,17 @@ div.dt-filter-spacer {
 					<!-- <button class="toolBtn viewBtn">문서보기</button> -->
 					<th:block th:if="${serverName == 'LOCAL'}">
 						<button class="toolBtn viewBtn" th:if="${minwon.mm_status == '2'}" id="minwonResponsePopup">대응방안 수립</button>
-						<button class="toolBtn completeBtn complainFinBtn" th:if="${minwon.mm_status == '4'}">민원완료</button>
-						<!-- 
-						<button class="toolBtn viewBtn" th:if="${minwon.mm_status == 1}" onclick="complaintPopupOpen()">D_민원완료</button>
-						 -->
+						<button class="toolBtn completeBtn complainFinBtn" th:if="${minwon.mm_status == '4'}" onclick="complaintPopupOpen()">민원완료</button>
 					</th:block>
 					
 					<th:block th:if="${serverName == 'DEV'}">
-						<button class="toolBtn viewBtn" th:if="${serverName == 'DEV'}">문서보기</button>12345
-						<button class="toolBtn viewBtn" th:if="${serverName == 'DEV'}">문서보기</button>12345
-						<button class="toolBtn viewBtn" th:if="${serverName == 'DEV'}">문서보기</button>12345
-						<button class="toolBtn viewBtn" th:if="${serverName == 'DEV'}">문서보기</button>12345
-						<button class="toolBtn viewBtn" th:if="${serverName == 'DEV'}">문서보기</button>12345
-						<button class="toolBtn completeBtn complainFinBtn">민원완료</button>
+						<button class="toolBtn viewBtn" th:if="${minwon.mm_status == '2'}" id="minwonResponsePopup">대응방안 수립</button>
+						<button class="toolBtn completeBtn complainFinBtn" th:if="${minwon.mm_status == '4'}" onclick="complaintPopupOpen()">민원완료</button>
 					</th:block>
 					
 					<th:block th:if="${serverName == 'LIVE'}">
-						<button class="toolBtn viewBtn" th:if="${serverName == 'REAL'}">문서보기</button>
-						<button class="toolBtn viewBtn" th:if="${serverName == 'REAL'}">문서보기</button>
-						<button class="toolBtn viewBtn" th:if="${serverName == 'REAL'}">문서보기</button>
-						<button class="toolBtn viewBtn" th:if="${serverName == 'REAL'}">문서보기</button>
-						<button class="toolBtn viewBtn" th:if="${serverName == 'REAL'}">문서보기</button>
-						<button class="toolBtn completeBtn complainFinBtn">민원완료</button>
+						<button class="toolBtn viewBtn" th:if="${minwon.mm_status == '2'}" id="minwonResponsePopup">대응방안 수립</button>
+						<button class="toolBtn completeBtn complainFinBtn" th:if="${minwon.mm_status == '4'}" onclick="complaintPopupOpen()">민원완료</button>
 					</th:block>
 					
 				</section>
