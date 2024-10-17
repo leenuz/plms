@@ -940,6 +940,9 @@ public class SchedulerController {
 				//Database.getInstance().endTransaction();
 			}
 		}
+		
+		
+		log.info("############  대응방안수립 보고 반려###################");
 //		// 2. 대응방안수립 보고 반려일 경우 롤백
 		ArrayList<HashMap> minwonHandlingTmpRejectedList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonHandlingTmpRejected",null);
 		for (HashMap targetMap : minwonHandlingTmpRejectedList) {
@@ -957,6 +960,8 @@ public class SchedulerController {
 			}
 		}
 //
+		
+		log.info("############  협의내용 보고 반려시 처리###################");
 //		// 3. 협의내용 보고 반려시 처리
 		ArrayList<HashMap> minwonAgreementRejectList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonAgreementRejected",null);
 		for (HashMap targetMap : minwonAgreementRejectList) {
@@ -976,6 +981,7 @@ public class SchedulerController {
 			}
 		}
 //
+		log.info("############  민원 완료 보고 ###################");
 //		// 4. 민원 완료 보고
 		ArrayList<HashMap> minwonCompleteList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonComplete",null);
 		System.out.println("LJS:  schedulerController minwonCompleteList-----------------");

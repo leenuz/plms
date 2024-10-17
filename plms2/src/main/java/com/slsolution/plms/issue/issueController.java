@@ -748,6 +748,7 @@ public class issueController {
 
 				String str_appNo = CommonUtil.getNextAppovalSeq();
 				boolean res_Echo = false;
+				
 				String html="";
 				if ("".equals(str_appNo)) {
 					map.put("message", "처리 중 오류가 발생했습니다.");
@@ -899,6 +900,7 @@ public class issueController {
 
 				String str_appNo = CommonUtil.getNextAppovalSeq();
 				boolean res_Echo = false;
+				String html="";
 				if ("".equals(str_appNo)) {
 					map.put("message", "처리 중 오류가 발생했습니다.");
 				} else {
@@ -913,7 +915,8 @@ public class issueController {
 					String str_userDeptnm = "IT전략.지원팀";
 					String str_userUPDeptcd = "S250100";
 					String XML_GUBUN = "GetResponseComplaintsDataforXML";
-					res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getMinwonResponseHTML(MW_SEQ, request, response),
+					html=eph.getMinwonResponseHTML(MW_SEQ, request, response);
+					res_Echo = epc.GetPLMSDataforXML(str_appNo,html,
 							str_UserId, "", "", XML_GUBUN, str_userName, str_userDeptcd, str_userDeptnm,
 							str_userUPDeptcd);
 				}
@@ -938,7 +941,24 @@ public class issueController {
 
 				} else {
 					map.put("result", false);
-					map.put("message", "처리 중 오류가 발생했습니다.");
+					if ("LIVE".equals(GC.getServerName())) {
+						map.put("message", "처리 중 오류가 발생했습니다.");
+					}
+
+					if("LOCAL".equals(GC.getServerName())) {
+						
+						map.put("DOCKEY", str_appNo);
+						map.put("STATUS", "C");
+						map.put("MW_SEQ", MW_SEQ);
+						map.put("html",html);
+						mainService.selectQuery("issueSQL.updateMinwonHandlingTmpEchoNo", map);
+						//임시로 결재 처리를 만든다
+						mainService.InsertQuery("jisangSQL.insertLocalApprovalData", map);
+					}
+					
+				
+				
+					
 				}
 			}
 			map.put("result", true);
@@ -1156,7 +1176,19 @@ public class issueController {
 					if ("LIVE".equals(GC.getServerName())) {
 					map.put("message", "상신 처리 중 결과를 받지 못하는 오류가 발생했습니다.");
 					}
-					map.put("html",html);
+					if("LOCAL".equals(GC.getServerName())) {
+						
+						map.put("DOCKEY", str_appNo);
+						map.put("STATUS", "C");
+						map.put("MW_SEQ", MW_SEQ);
+						map.put("html",html);
+						map.put("AGREE_SEQ", AGREE_SEQ);
+//						Database.getInstance().update("Json.updateMinwonAgreeEchoNo", map);
+						mainService.UpdateQuery("issueSQL.updateMinwonAgreeEchoNo", map);
+
+						//임시로 결재 처리를 만든다
+						mainService.InsertQuery("jisangSQL.insertLocalApprovalData", map);
+					}
 					//map.put("mess, str_appNo)
 				}
 			}
@@ -1245,21 +1277,23 @@ public class issueController {
 
 				String str_appNo = CommonUtil.getNextAppovalSeq();
 				boolean res_Echo = false;
+				String html="";
 				if ("".equals(str_appNo)) {
 					map.put("message", "처리 중 오류가 발생했습니다.");
 				} else {
-//					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
-//					String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
-//					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
-//					String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
-//					String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
-					String str_UserId = "105681";
-					String str_userName = "박영환";
-					String str_userDeptcd = "D250500";
-					String str_userDeptnm = "IT전략.지원팀";
-					String str_userUPDeptcd = "S250100";
+					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
+					String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
+					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
+					String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
+					String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+//					String str_UserId = "105681";
+//					String str_userName = "박영환";
+//					String str_userDeptcd = "D250500";
+//					String str_userDeptnm = "IT전략.지원팀";
+//					String str_userUPDeptcd = "S250100";
 					String XML_GUBUN = "GetEndComplaintsDataforXML";
-					res_Echo = epc.GetPLMSDataforXML(str_appNo, eph.getMinwonCompleteHTML(MW_SEQ, request, response),
+					html=eph.getMinwonCompleteHTML(MW_SEQ, request, response);
+					res_Echo = epc.GetPLMSDataforXML(str_appNo,html,
 							str_UserId, "", "", XML_GUBUN, str_userName, str_userDeptcd, str_userDeptnm,
 							str_userUPDeptcd);
 				}
@@ -1285,7 +1319,19 @@ public class issueController {
 					map.put("message", "success");
 
 				} else {
-					map.put("message", "처리 중 오류가 발생했습니다.");
+					if("LOCAL".equals(GC.getServerName())) {
+						
+						map.put("DOCKEY", str_appNo);
+						map.put("STATUS", "C");
+						map.put("MW_SEQ", MW_SEQ);
+						map.put("html",html);
+						
+						mainService.UpdateQuery("issueSQL.updateMinwonMasterCompleteEchoNo", map);
+
+						//임시로 결재 처리를 만든다
+						mainService.InsertQuery("jisangSQL.insertLocalApprovalData", map);
+					}
+					else map.put("message", "처리 중 오류가 발생했습니다.");
 				}
 
 			}
