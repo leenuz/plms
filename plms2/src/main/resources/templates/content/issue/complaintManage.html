@@ -897,7 +897,7 @@ div.dt-filter-spacer {
 	                                            </div>
 	                                            <div class="popfileUploadAfterWrap popfileUploadDisplay active" style="top:125px;">
 	                                                <!-- 추가, 업로드시 나오는 거 -->
-	                                                <div class="popfileUploadAfter" id="edit_fileTitleUl" style="overflow-y:auto;">
+	                                                <div class="popfileUploadAfter" id="newminwon_fileTitleUl" style="overflow-y:auto;">
 	                                                    <ul class="poptitles">
 	                                                        <li class="popBtnbox">
 	                                                            <button class="popAllDeleteFileBtn"></button>
@@ -924,8 +924,8 @@ div.dt-filter-spacer {
 	            </div>
 	            <!-- 버튼 -->
 	            <div class="complaintinfo_btns">
-	                <button class="approveBtn finalBtn" onclick="">저장</button>
-	                <button class="sangsinBtn finalBtn" onclick="">상신</button>
+	                <button class="approveBtn finalBtn" onclick="editInfoSave()">저장</button>
+	                <button class="sangsinBtn finalBtn" onclick="editInfoSangsin()">상신</button>
 	                <button class="closeBtn2 finalBtn" onclick="complaintEditPopupClose()">닫기</button>
 	            </div>
 	        </div>
@@ -976,6 +976,7 @@ div.dt-filter-spacer {
 	<!-- script -->
 	<script type="module" src="/js/module/surfaceMain.js"></script>
 	<script src="/components/js/menu06/complaintManage.js"></script>
+	<script src="/components/js/menu06/complaintManage2.js"></script>
 	<script src="/js/common/common.js"></script>
 	
 	

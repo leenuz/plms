@@ -354,7 +354,8 @@ FROM (
 		       B.JISANG_NO,
 		       B.juso as addr,
 		       A.update_yn,
-		       A.mp_idx
+		       A.mp_idx,
+		       A.mp_actualarea
 		FROM MINWON_PNU A
 		LEFT JOIN JIJUK_2024 B ON A.mp_PNU = B.PNU
 		WHERE A.mp_MINWON_SEQ = ${MW_SEQ}
@@ -600,6 +601,7 @@ INSERT INTO MINWON_PNU (
         mp_REGISTED_YN,
         mp_PERMITTED_YN,
         mp_TOJI_TYPE,
+        mp_ACTUALAREA,
         mp_REG_DATE,
         mp_REG_ID
 ) VALUES (
@@ -616,6 +618,7 @@ INSERT INTO MINWON_PNU (
         #{REGISTED_YN},
         #{PERMITTED_YN},
         #{TOJI_TYPE},
+        #{AREA},
         CURRENT_TIMESTAMP,
         #{REG_ID}
 )

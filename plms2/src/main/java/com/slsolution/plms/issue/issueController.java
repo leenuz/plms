@@ -700,6 +700,7 @@ public class issueController {
 				params.put("TOJI_TYPE", "");
 				//params.put("REG_ID", "test");
 				params.put("REG_ID", String.valueOf(request.getSession().getAttribute("userName")));
+				params.put("AREA", obj.getString("AREA"));	//실저촉면적
 				// params.put("REG_ID",
 				// String.valueOf((request.getSession().getAttribute("userName")=="null")?"":request.getSession().getAttribute("userName")));
 //				params.put("PNU", parser.getString("PNU_" + i, ""));
