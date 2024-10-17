@@ -313,10 +313,12 @@
 								<input type="text" th:placeholder="${file.file_nm}" readonly class="notWriteInput" />
 							</li>
 							<li class="content btnBox">
-								<button class="viewDetailButton lightBlueBtn">
-									<a href="javascript:void(0);" class="viewDetailButton lightBlueBtn"
-											th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.file_path}]], [[${file.file_nm}]], [[${file.dosi_no}]], [[${file.file_seq}]], 'togi')">보기</a>
-								</button>
+								<a href="javascript:void(0);" class="viewDetailButton lightBlueBtn"
+									th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.file_path}]], [[${file.file_nm}]], [[${file.dosi_no}]], [[${file.file_seq}]], 'togi')">
+									<button class="viewDetailButton lightBlueBtn">
+										보기
+									</button>
+								</a>
 							</li>
 						</ul>
 						
