@@ -490,7 +490,7 @@ function onDataLoad() {
 					var newItem = `
                 <ul class="contents minwon-agree-row" id="minwonAgreeUl">
                 <li class="content">
-										<input type="hidden" class="agree-seq" value="${item.agree_seq}">
+										<input type="hidden" class="agree-seq" id="agreeSeq" value="${item.agree_seq}">
                     <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.agree_date || '-'}">
                 </li>
                 <li class="content smallWidth">
@@ -1051,7 +1051,7 @@ $(document).on('click', '#minwonAgreeUl', function() {
     openExistingAgreePopup(mwSeq, agreeSeq);  // mw_seq와 agree_seq를 넘겨 팝업 열기
 });
 
-// 협의 내용 수정 팝업 열기 함수(기존 데이터 있을 때 행 클릭 시)
+// 협의 내용 수정 팝업 열기 함수(기존 데이터 있을 때 행 클릭 시) - 미완
 function openExistingAgreePopup(mwSeq, agreeSeq) {
     $.ajax({
         url: "/issue/getMinwonAgreeDetail",
@@ -1091,13 +1091,14 @@ $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 	
 	let consultInfo = getPopupJsonData();
 	let minwonSeq = $("#minwonSeq").val();  // minwonSeq 값을 가져옴
+	let agreeSeq = $("#agreeSeq").val();  // minwonSeq 값을 가져옴
 	console.log("consoleInfo: " + consultInfo);
 	console.log(uploadFiles);
 	
 	// JSON 형태로 consultInfo를 전송하기 위해 문자열로 변환
 	var params = {
 	    "MW_SEQ": minwonSeq,
-	    "minwonAgreeSeq": $("#pnu").val(),
+	    "minwonAgreeSeq": agreeSeq, // 수정일 경우 있음, 신규일 경우 없음.
 	    "files": uploadFiles,  // 파일 경로와 이름이 포함된 배열
 	    "consultInfo": consultInfo,  // consultInfo도 포함해서 전송
 	    "mode": "asave"
@@ -1112,23 +1113,20 @@ $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 			type: "POST",
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data, jqXHR) { // 새로 만들어진 agree_seq 받아와서 다시 getAgreeAtcfile 요청해서 파일 목록 보여주기. #complaintRegisterBtn 참고
+			success: function(data, jqXHR) { // 새로 만들어진 agree_seq 받아와서 getAgreeAtcfile 요청해서 파일 목록 보여주기. #complaintRegisterBtn 참고
 				console.log(data);
 				if (data.message != null && data.message != undefined && data.message == "success") {
 					let agreeSeq = data.agreeSeq;  // 서버에서 전달된 agreeSeq 사용
-					let mwSeq = consultInfo.mwSeq;  // consultInfo에서 mwSeq 가져오기
+					let mwSeq = minwonSeq;
 					
-					console.log("agreeSeq: " + agreeSeq + " mwSeq: " + mwSeq);
-					// 새로 생성된 agreeSeq와 함께 파일 목록 조회
-          $.ajax({
-              url: "/issue/getMinwonAgreeAtcFileData",
-              type: "POST",
-              data: { mwSeq: mwSeq, agreeSeq: agreeSeq },
-              success: function(fragment) {
-                  $('#fileListDiv').replaceWith(fragment);
-              }
-          });
+					// 팝업 닫기
 					closeComplaintregisterPopup();
+
+					// "저장되었습니다." alert 띄우기
+					alert('저장되었습니다.');
+					
+					// 페이지 새로고침 - 맨 위에 행 추가 방식 하려다가 시간 상 새로고침으로 임시 적용
+					location.reload();
 				} else {
 					alert(data.message);
 				}
@@ -1142,6 +1140,7 @@ $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 				//(이미지 감추기 처리)
 				//$('#load').hide();
 				// loadingHide();
+				hideDim();
 			},
 			error: function(jqXHR, textStatus, errorThrown, responseText) {
 				//alert("ajax error \n" + textStatus + " : " + errorThrown);
@@ -1195,6 +1194,14 @@ $(document).on("click", ".document_add_btnWrap .sangsinBtn", function() {
 	}); //end ajax
 });
 
+// 민원 협의 내용 등록/수정 팝업 - 파일 다운로드 버튼
+function minwonAgreefileDownload(fileName) {
+    // HTML 요소에서 data-sample-dir 속성 값을 가져옴
+    var minwonFileDataDir = document.querySelector('#fileListUl').getAttribute('data-minwon-dir');
+		
+    var filePath = minwonFileDataDir + '/' + fileName;  // minwonFileDataDir 와 파일 이름을 결합하여 파일 경로 생성
+    commonFileDownload(filePath, fileName, '', '', '');
+}
 
 /*
 add. 손지민 - 민원협의 내용 등록/수정 팝업 - 저장 버튼 - 파일 저장 잘 되는 버전. 근데 Transactional 처리 안 되어있어서 기존 코드 사용으로 변경

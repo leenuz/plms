@@ -1543,4 +1543,22 @@ INSERT INTO MINWON_AGREE_ATCFILE (
 )
 ]]>
 </select>
+
+<select id="selectMinwonAgreeAtcFileListByMwSeqAndAgreeSeq" parameterType="hashmap" resultType="hashmap">
+    SELECT 
+        MAA_FILE_PATH,
+        MAA_FILE_NM,
+        MAA_MW_SEQ,
+        MAA_AGREE_SEQ,
+        MAA_FILE_REGDATE
+    FROM 
+        minwon_agree_atcfile
+    WHERE 
+        MAA_MW_SEQ = #{mwSeq}::numeric
+        AND MAA_AGREE_SEQ = #{agreeSeq}::numeric
+    ORDER BY 
+        MAA_FILE_REGDATE DESC
+</select>
+
+
 </mapper>

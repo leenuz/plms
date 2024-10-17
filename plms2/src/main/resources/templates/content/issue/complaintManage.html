@@ -302,7 +302,7 @@ div.dt-filter-spacer {
 					</div>
 					
 					<div class="contWrap">
-						<div class="depth1">
+						<div class="depth1" >
 							<ul class="titles titleScr">
 								<li class="title">일시</li>
 								<li class="title smallWidth">진행 현황</li>
@@ -559,27 +559,24 @@ div.dt-filter-spacer {
 											<!-- 첨부파일 리스트 [S] -->
 											<div class="contentScr" id="fileListDiv">
 												<!-- 첨부파일 없을 때 -->
-												<ul class="contents" th:if="${jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()}">
+												<ul class="contents" th:if="${minwonAgreeAtcFileList == null || minwonAgreeAtcFileList.isEmpty()}">
 													<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
 												</ul>
 												<!--첨부파일 목록 반복문-->
-												<ul class="contents" id="fileListUl" th:if="${jisangPnuAtcFileList != null && !jisangPnuAtcFileList.isEmpty()}"
-													th:each="file, iterStat : ${jisangPnuAtcFileList}">
+												<ul class="contents" id="fileListUl" th:if="${minwonAgreeAtcFileList != null && !minwonAgreeAtcFileList.isEmpty()}"
+													th:each="file, iterStat : ${minwonAgreeAtcFileList}" th:data-minwon-dir="${minwonFileDataDir}">
 													<!-- 등록일 -->
 													<li class="content registDateWidth">
-														<input type="text" th:value="${#dates.format(file.pa_wdate, 'yyyy-MM-dd HH:mm')}" readonly 
+														<input type="text" th:value="${#dates.format(file.maa_file_regdate, 'yyyy-MM-dd HH:mm')}" readonly 
 														class="notWriteInput" name="registDateWidth" />
 													</li>
 													<!-- 파일명 -->
 													<li class="content fileNameWidth">
-														<input type="text" th:value="${file.pa_file_nm}" id="filename" readonly class="notWriteInput" />
+														<input type="text" th:value="${file.maa_file_nm}" id="filename" readonly class="notWriteInput" />
 													</li>
 													<!-- 다운로드 버튼 -->
 													<li class="content viewBtnBox">
-														<!-- <button class="viewDetailButton"
-															th:onclick="downloadFile([[${file.pa_file_path}]],[[${file.pa_file_nm}]])">보기</button> -->
-														<a href="javascript:void(0);" class="viewDetailButton lightBlueBtn"
-																th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.pa_file_path}]], [[${file.pa_file_nm}]], [[${file.pa_pnu}]], [[${file.pa_file_seq}]], 'pnu')">보기</a>
+																<button class="viewDetailButton" th:onclick="minwonAgreefileDownload(${file.maa_file_nm})">보기</button>
 													</li>
 													<!-- 삭제 버튼 -->
 													<li>

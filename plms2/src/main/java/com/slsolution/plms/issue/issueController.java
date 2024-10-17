@@ -934,16 +934,16 @@ public class issueController {
 		ParameterParser parser = new ParameterParser(request);
 		
 	    String MW_SEQ = requestParamObj.getString("MW_SEQ"); // consultInfo 외부에 있는 MW_SEQ
-	    String fileseq = requestParamObj.has("fileseq")?requestParamObj.getString("fileseq"):"0"; //파일 seq 
-	    String AGREE_SEQ = requestParamObj.has("AGREE_SEQ")?requestParamObj.getString("AGREE_SEQ"):"0";
+	    String fileseq = requestParamObj.has("fileseq")?requestParamObj.getString("fileseq"):"0"; //파일 seq ? 아직 파라미터 안 담음
+	    String AGREE_SEQ = requestParamObj.has("AGREE_SEQ")?requestParamObj.getString("AGREE_SEQ"):"0"; // 있으면 수정, 없으면 신규 등록
 	    
 	    // consultInfo 데이터 파싱
 	    JSONObject consultInfoObj = requestParamObj.getJSONObject("consultInfo");
 		/*
-		 * String AGREE_TITLE = requestParamObj.getString("TITLE"); String
-		 * AGREE_CONTENTS = requestParamObj.getString("CONTENTS"); String AGREE_DATE =
-		 * requestParamObj.getString("DATE"); String STATUS =
-		 * requestParamObj.getString("STATUS");
+		 * String AGREE_TITLE = requestParamObj.getString("TITLE"); 
+		 * String AGREE_CONTENTS = requestParamObj.getString("CONTENTS"); 
+		 * String AGREE_DATE = requestParamObj.getString("DATE"); 
+		 * String STATUS = requestParamObj.getString("STATUS");
 		 */
 	    String AGREE_TITLE = consultInfoObj.getString("TITLE"); // consultInfo 안의 TITLE
 	    String AGREE_CONTENTS = consultInfoObj.getString("CONTENTS"); // consultInfo 안의 CONTENTS
@@ -1122,7 +1122,9 @@ public class issueController {
 					//map.put("mess, str_appNo)
 				}
 			}
-
+			
+			map.put("agreeSeq", agreeSeq); // 파일 목록 다시 조회를 위해 클라이언트로 생성된(수정에 사용된) agreeSeq 반환
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put("message", "처리 중 오류가 발생했습니다.");
@@ -2429,7 +2431,7 @@ public class issueController {
     }
     
     /**
-     * 민원협의 내용 등록/수정 팝업 - 저장 후 리스트 다시 조회
+     * 민원협의 내용 등록/수정 팝업 - 첨부파일 목록 조회 (목적: 파일 저장 후 파일 목록 업데이트)
      * @param httpRequest - maa_mw_seq(민원 번호), maa_agree_seq(협의 내용)
      * @param response - 첨부 파일 목록
      * @return
@@ -2440,22 +2442,31 @@ public class issueController {
   		ModelAndView mav=new ModelAndView();
   		HashMap params = new HashMap();
   		
-  		String idx = httpRequest.getParameter("manage_no");
-  		String pnu = httpRequest.getParameter("pnu");
+  		String mwSeq = httpRequest.getParameter("mwSeq");  // 민원 번호
+  		String agreeSeq = httpRequest.getParameter("agreeSeq");  // 협의 내용 번호
   		
-  		params.put("idx",idx);
-  		params.put("pnu",pnu);
-  		log.info("params:"+params);
-  		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
+  		// 파라미터 로그 출력
+  		log.info("mwSeq: " + mwSeq + ", agreeSeq: " + agreeSeq);
   		
-  		if (jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()) { // 필지 첨부파일
-  		    mav.addObject("jisangPnuAtcFileList", new ArrayList<>());
+  		params.put("mwSeq", mwSeq);
+  		params.put("agreeSeq", agreeSeq);
+  		
+  		// 첨부파일 목록 조회 쿼리 호출
+  		ArrayList<HashMap> minwonAgreeAtcFileList = mainService.selectQuery("issueSQL.selectMinwonAgreeAtcFileListByMwSeqAndAgreeSeq", params);
+  		
+  		// 조회된 파일 목록이 없으면 빈 리스트 전달
+  		if (minwonAgreeAtcFileList == null || minwonAgreeAtcFileList.isEmpty()) {
+  		    mav.addObject("minwonAgreeAtcFileList", new ArrayList<>());
   		} else {
-  			Collections.reverse(jisangPnuAtcFileList); // 등록일 기준 desc 정렬
-  		    mav.addObject("jisangPnuAtcFileList", jisangPnuAtcFileList);
+  			// 등록일 기준 내림차순으로 정렬
+  			Collections.reverse(minwonAgreeAtcFileList);
+  		    mav.addObject("minwonAgreeAtcFileList", minwonAgreeAtcFileList);
   		}
   		
-  		mav.setViewName("content/jisang/groundDetail :: #fileListDiv");
+  		log.info("minwonAgreeAtcFileList: " + minwonAgreeAtcFileList);
+  		
+  		mav.addObject("minwonFileDataDir", GC.getMinwonFileDataDir()); // 첨부 서류 샘플양식 다운로드 경로
+  		mav.setViewName("content/issue/complaintManage :: #fileListDiv");
   		return mav;
   	}
   	
