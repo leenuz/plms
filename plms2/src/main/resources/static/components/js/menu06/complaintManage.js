@@ -1089,10 +1089,19 @@ $(document).ready(function () {
 	});
 	*/
 	 
+	// 첨부파일 리스트에 파일이 추가될 때 스크롤 이동
+	function scrollToBottomOfFileList() {
+	    // 스크롤이 있는 complaints_contents_minHeight2 요소의 스크롤을 맨 아래로 이동시킴
+	    var complaintsContentsDiv = document.querySelector(".complaints_contents_fileBox");
+	    complaintsContentsDiv.scrollTop = complaintsContentsDiv.scrollHeight;
+	}
+	
 	$('input[type=file]').on('change', function(e) {
 		console.log("-------------change 이벤트 트리거");
 	    var files = e.originalEvent.target.files; // 파일 선택창에서 선택된 파일들
 	    handleFileUpload(files, objDragAndDrop);  // 선택된 파일들을 처리하는 함수 호출
+			
+		scrollToBottomOfFileList(); // 파일 업로드 후 리스트로 스크롤 이동
 	});
     
 	var rowCount = document.querySelectorAll("#fileListDiv > ul").length + 1;  // 현재 렌더된 파일 개수 계산
@@ -1109,6 +1118,8 @@ $(document).ready(function () {
 			sendFileToServer(fd, status); // 서버로 파일 전송 함수 호출
 
 			rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
+			
+			scrollToBottomOfFileList(); // 파일이 추가될 때 스크롤 이동
 		}
 	}
 
@@ -1153,6 +1164,8 @@ $(document).ready(function () {
 		console.log("---------------radio checkbox----------");
 		$(radio).find('input').attr("disabled", false); // 체크박스가 비활성화되지 않도록 설정
 		console.log($(radio).parent().html());
+		
+		scrollToBottomOfFileList(); // 파일이 추가될 때 스크롤 이동
 	}
 	                
 	function sendFileToServer(formData, status) {
