@@ -157,11 +157,21 @@ div.dt-filter-spacer {
 						</div>
 					</div>
 					<!-- <button class="toolBtn viewBtn">문서보기</button> -->
-					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" id="minwonResponsePopup">D_민원대응방안</button>
-					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" onclick="complaintPopupOpen()">D_민원완료</button>
-					<button class="toolBtn viewBtn" th:if="${serverName == 'DEV'}">문서보기</button>
-					<button class="toolBtn viewBtn" th:if="${serverName == 'REAL'}">문서보기</button>
-					<button class="toolBtn completeBtn complainFinBtn">민원완료</button>
+					<th:block th:if="${serverName == 'LOCAL'}">
+						<button class="toolBtn viewBtn" th:if="${minwon.mm_status == '2'}" id="minwonResponsePopup">대응방안 수립</button>
+						<button class="toolBtn completeBtn complainFinBtn" th:if="${minwon.mm_status == '4'}" onclick="complaintPopupOpen()">민원완료</button>
+					</th:block>
+					
+					<th:block th:if="${serverName == 'DEV'}">
+						<button class="toolBtn viewBtn" th:if="${minwon.mm_status == '2'}" id="minwonResponsePopup">대응방안 수립</button>
+						<button class="toolBtn completeBtn complainFinBtn" th:if="${minwon.mm_status == '4'}" onclick="complaintPopupOpen()">민원완료</button>
+					</th:block>
+					
+					<th:block th:if="${serverName == 'LIVE'}">
+						<button class="toolBtn viewBtn" th:if="${minwon.mm_status == '2'}" id="minwonResponsePopup">대응방안 수립</button>
+						<button class="toolBtn completeBtn complainFinBtn" th:if="${minwon.mm_status == '4'}" onclick="complaintPopupOpen()">민원완료</button>
+					</th:block>
+					
 				</section>
 				<section class="codeManagement">
 					<div class="subTitle">
@@ -315,7 +325,7 @@ div.dt-filter-spacer {
 
 			<div class="finalBtnBox btnWrap">
 				<button class="backBtn" onclick="history.back();">이전</button>
-				<button class="addBtn addComplainBtn" onclick="minwonConsultPopupOpen()">협의 추가</button>
+				<button class="addBtn addComplainBtn" th:if="${minwon.mm_status == '3'}" onclick="minwonConsultPopupOpen()">협의 추가</button>
 			</div>
 		</main>
 	</div>
