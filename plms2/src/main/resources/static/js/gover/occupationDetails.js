@@ -320,7 +320,7 @@ const allCheckEventMasterEdit = () => {
 	}
 }
 
-//allCheckEventMasterEdit();
+allCheckEventMasterEdit();
 
 // 필지 첨부파일 - 선택파일 삭제 버튼 기능
 $(document).on("click", "#deleteFileBtn", function() {
