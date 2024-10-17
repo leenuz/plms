@@ -158,7 +158,6 @@ div.dt-filter-spacer {
 					</div>
 					<!-- <button class="toolBtn viewBtn">문서보기</button> -->
 					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" id="minwonResponsePopup">D_민원대응방안</button>
-					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" onclick="minwonConsultPopupOpen()">D_민원협의</button>
 					<button class="toolBtn viewBtn" th:if="${serverName == 'LOCAL'}" onclick="complaintPopupOpen()">D_민원완료</button>
 					<button class="toolBtn viewBtn" th:if="${serverName == 'DEV'}">문서보기</button>
 					<button class="toolBtn viewBtn" th:if="${serverName == 'REAL'}">문서보기</button>
@@ -316,7 +315,7 @@ div.dt-filter-spacer {
 
 			<div class="finalBtnBox btnWrap">
 				<button class="backBtn" onclick="history.back();">이전</button>
-				<button class="addBtn addComplainBtn">협의 추가</button>
+				<button class="addBtn addComplainBtn" onclick="minwonConsultPopupOpen()">협의 추가</button>
 			</div>
 		</main>
 	</div>
@@ -496,7 +495,6 @@ div.dt-filter-spacer {
 									<button class="Popup_Custom_SelectView"
 										onclick="complainSelectBoxOpen();">선택</button>
 									<ul class="Popup_Custom_SelectBtns" id="view_complaint_box">
-
 									</ul>
 								</div>
 							</li>
