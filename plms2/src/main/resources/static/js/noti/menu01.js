@@ -38,6 +38,10 @@ $(document).on("click", "#registerBtn", function() {
 	for (var i = 0; i < formSerializeArray.length; i++) {
 		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
 	}
+	
+	// 구분 값 가져오기 (gubunText의 텍스트)
+	var gubunText = $("#gubunText").text().trim();  // 텍스트 값 가져오기
+	object.gubun = gubunText;  // object에 구분 추가
 
 	var json = JSON.stringify(formSerializeArray);
 
