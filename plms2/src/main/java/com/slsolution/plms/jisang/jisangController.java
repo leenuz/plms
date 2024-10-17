@@ -2284,6 +2284,8 @@ log.info("PMT_NO:"+PMT_NO);
 		if (jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()) { //필지 첨부파일
 		    mav.addObject("jisangPnuAtcFileList", new ArrayList<>());
 		} else {
+			// 필지 첨부파일 목록을 역순으로 정렬
+		    Collections.reverse(jisangPnuAtcFileList);
 		    mav.addObject("jisangPnuAtcFileList", jisangPnuAtcFileList);
 		}
 		if (jisangIssueHistoryList == null || jisangIssueHistoryList.isEmpty()) { //잠재이슈 변경이력
@@ -2657,7 +2659,14 @@ log.info("PMT_NO:"+PMT_NO);
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("soujaList",soujaList);
 		mav.addObject("jisangPermitList",jisangPermitList);
-		mav.addObject("atcFileList",atcFileList);
+		if (atcFileList == null || atcFileList.isEmpty()) { // 첨부파일
+		    mav.addObject("atcFileList", new ArrayList<>());
+		} else {
+			// 첨부파일 목록을 등록일 기준 desc로 정렬
+		    Collections.reverse(atcFileList);
+		    mav.addObject("atcFileList", atcFileList);
+		}
+		
 		mav.addObject("jisangModifyList",jisangModifyList);
 		mav.addObject("jisangMergeList",jisangMergeList);
 
@@ -2704,7 +2713,6 @@ log.info("PMT_NO:"+PMT_NO);
 		
 		log.info("jisangPermitList : " +  jisangPermitList);
 		
-		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
 
 		HashMap<String, Object> jijuk = new HashMap<String, Object>();
@@ -2749,10 +2757,15 @@ log.info("PMT_NO:"+PMT_NO);
 		mav.addObject("jijukCoordSize", coordinateSize);
 		mav.addObject("soujaList",soujaList);
 		mav.addObject("jisangPermitList",jisangPermitList);
-		mav.addObject("atcFileList",atcFileList);
+		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
+		    mav.addObject("atcFileList", new ArrayList<>());
+		} else {
+			// 첨부파일 목록을 등록일 desc 순으로 정렬
+		    Collections.reverse(atcFileList);
+		    mav.addObject("atcFileList", atcFileList);
+		}
 		mav.addObject("jisangModifyList",jisangModifyList);
 		mav.addObject("jisangMergeList",jisangMergeList);
-		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
 		mav.addObject("memoList",jisangMemoList);
 		
 		mav.setViewName("content/jisang/easementDetails");
@@ -2789,33 +2802,27 @@ log.info("PMT_NO:"+PMT_NO);
 		//ArrayList<HashMap> jisangMergeList = mainService.selectQuery("jisangSQL.selectMergeList",params); // 합필 구버전
 		ArrayList jisangMergeList = (ArrayList) mainService.selectQuery("jisangSQL.selectJisangRowDetail_Merge", params); // 합필 신버전
 		params.put("pnu", data.get(0).get("jm_pnu"));
-		ArrayList<HashMap> jisangIssueList = mainService.selectQuery("jisangSQL.selectIssueList",params);
-		log.info("jisangIssueList size:"+jisangIssueList.size());
-		if (jisangIssueList.size()>0) {
-			params.put("issueManualCode1", jisangIssueList.get(0).get("pi_code_depth1"));
-			params.put("issueManualCode2", jisangIssueList.get(0).get("pi_code_depth2"));
-			params.put("issueManualCode3", jisangIssueList.get(0).get("pi_code_depth3"));
-		}
-		ArrayList<HashMap> jisangPnuAtcFileList = mainService.selectQuery("jisangSQL.selectPnuAtcFileList",params);
-		ArrayList<HashMap> jisangIssueHistoryList = mainService.selectQuery("jisangSQL.selectIssueHistoryList",params);
-		ArrayList<HashMap> jisangIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params);
 		ArrayList<HashMap> jisangMemoList = mainService.selectQuery("commonSQL.selectMemoList",params);
-log.info("data:"+data.get(0));
-//log.info("atcFileList:"+atcFileList.get(0));
+		
+		log.info("data:"+data.get(0));
+		//log.info("atcFileList:"+atcFileList.get(0));
+		
 		mav.addObject("jisaList",jisaList);
 		mav.addObject("jimoklist",jimoklist);
 		mav.addObject("sidoList",sidolist);
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("soujaList",soujaList);
 		mav.addObject("jisangPermitList",jisangPermitList);
-		mav.addObject("atcFileList",atcFileList);
+		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
+		    mav.addObject("atcFileList", new ArrayList<>());
+		} else {
+			// 첨부파일 목록을 등록일 desc 순으로 정렬
+		    Collections.reverse(atcFileList);
+		    mav.addObject("atcFileList", atcFileList);
+		}
 		mav.addObject("jisangModifyList",jisangModifyList);
 		mav.addObject("jisangMergeList",jisangMergeList);
-		mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
-		mav.addObject("jisangIssueList",jisangIssueList);
-		mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
 		mav.addObject("memoList",jisangMemoList);
-		mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
 		
 		mav.setViewName("content/jisang/easementModification");
 		
