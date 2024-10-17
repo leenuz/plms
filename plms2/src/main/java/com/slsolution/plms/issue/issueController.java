@@ -3072,7 +3072,9 @@ public class issueController {
 		ParameterParser parser = new ParameterParser(request);
 		
 		String MW_SEQ = requestParamObj.getString("mw_seq");
+		String MP_IDX = requestParamObj.getString("mp_idx");
 		params.put("MW_SEQ", MW_SEQ);
+		params.put("MP_IDX", MP_IDX);
 		int result = (int) mainService.UpdateQuery("commonSQL.updateUpdateYn", params);
 		ArrayList tojiList = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailToji", params);
 		

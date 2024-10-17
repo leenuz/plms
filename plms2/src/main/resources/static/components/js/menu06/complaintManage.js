@@ -456,11 +456,12 @@ function onDataLoad() {
 					let jisangNo = tojiList[index].jisang_no;
 					let status = tojiList[index].jisang_status;
 					let updateYn = tojiList[index].update_yn || 'N';
+					let mp_idx = tojiList[index].mp_idx;
 					var newItem = `<ul class="complainant_info">
 							<li>${tojiList[index].addr || '-'}</li>
 							<li>${updateYn}</li>
 							<li class="complaintinfo_update_btn">
-								<button onclick="openPopup('${jisangNo}', '${status}')">상세보기</button>
+								<button onclick="openPopup('${jisangNo}', '${status}', ${mp_idx})">상세보기</button>
 							</li>
 						</ul>`;
 					$('#pop_complaintInfo_togi').append(newItem);
@@ -1522,7 +1523,8 @@ function attachFileDownload(filePath, fileName, fileJisangNo, fileSeq, fileGubun
 }
 
 // 민원완료 > 상세보기 버튼 > 팝업 오픈 이벤트
-function openPopup(no, status) {
+function openPopup(no, status, mp_idx) {
+	$('#mp_idx').val(mp_idx);
 	status = status.toLowerCase();
 	let url = '';
 	if (status == 'jisang') {
@@ -1565,7 +1567,7 @@ function openPopup(no, status) {
 
 // 팝업이 닫히면 실행되는 함수
 function popupComplete () {
-	let dataObj = {'mw_seq' : $('#minwonSeq').val()};
+	let dataObj = {'mw_seq' : $('#minwonSeq').val(), 'mp_idx' : $('#mp_idx').val()};
 	$.ajax({
 		url: "/issue/minwonCompleteAfter",
 		data: JSON.stringify(dataObj),
@@ -1585,11 +1587,12 @@ function popupComplete () {
 						let jisangNo = res.tojiList[index].jisang_no;
 						let status = res.tojiList[index].jisang_status;
 						let updateYn = res.tojiList[index].update_yn || 'N';
+						let mp_idx = res.tojiList[index].mp_idx;
 						var newItem = `<ul class="complainant_info">
 								<li>${res.tojiList[index].addr || '-'}</li>
 								<li>${updateYn}</li>
 								<li class="complaintinfo_update_btn">
-									<button onclick="openPopup('${jisangNo}', '${status}')">상세보기</button>
+									<button onclick="openPopup('${jisangNo}', '${status}', '${mp_idx}')">상세보기</button>
 								</li>
 							</ul>`;
 						$('#pop_complaintInfo_togi').append(newItem);

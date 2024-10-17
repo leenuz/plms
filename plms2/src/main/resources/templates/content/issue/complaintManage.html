@@ -128,7 +128,7 @@ div.dt-filter-spacer {
 	<input type="hidden" id="minwon" th:value="${minwon}">
 	<input type="hidden" id="minwonStatus" th:value="${minwon.mm_status}">
 	<input type="hidden" id="minwonSeq" th:value="${minwon.mm_mw_seq}">
-	
+	<input type="hidden" id="mp_idx">
 	<!-- 민원관리 -->
 	<div class="complaintManageWrappers">
 		<div class="complaintManageHeader"></div>
@@ -325,7 +325,7 @@ div.dt-filter-spacer {
 
 			<div class="finalBtnBox btnWrap">
 				<button class="backBtn" onclick="history.back();">이전</button>
-				<button class="addBtn addComplainBtn" th:if="${minwon.mm_status == '3'}" onclick="minwonConsultPopupOpen()">협의 추가</button>
+				<button class="addBtn addComplainBtn" th:if="${minwon.mm_status == '3' || minwon.mm_status == '4'}" onclick="minwonConsultPopupOpen()">협의 추가</button>
 			</div>
 		</main>
 	</div>

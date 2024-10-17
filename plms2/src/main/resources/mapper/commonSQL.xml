@@ -650,8 +650,10 @@ SELECT PNU
 
 <!-- 민원 완료 팝업 > 업데이트 여부 업데이트 -->
 <update id="updateUpdateYn" parameterType="HashMap">
-	UPDATE MINWON_MASTER SET
+	UPDATE MINWON_PNU SET
 		UPDATE_YN = TO_CHAR(NOW(),'YYYY-MM-DD')
-	WHERE mm_mw_seq = #{MW_SEQ}::numeric
+	WHERE mp_minwon_seq = #{MW_SEQ}::numeric
+	  AND mp_idx = #{MP_IDX}::int
+	
 </update>
 </mapper>
