@@ -119,6 +119,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</delete>
 	
+	<!-- 민원 협의 파일 삭제 -->
+<delete id="minwonAgreeAtcFileDelete" parameterType="java.util.HashMap">
+    DELETE FROM minwon_agree_atcfile
+    WHERE maa_idx = #{maa_idx}::int
+</delete>
+
+<!-- 민원 협의 파일 삭제를 위한 경로 조회 -->
+<select id="selectFilePathByMaaIdx" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    SELECT maa_file_path
+    FROM minwon_agree_atcfile
+    WHERE maa_idx = #{maa_idx}::int
+</select>
+	
+	
 	<select id="selectFilePathByPaIdx" parameterType="java.util.HashMap" resultType="java.util.HashMap">
     SELECT pa_file_path
     FROM pnu_atcfile

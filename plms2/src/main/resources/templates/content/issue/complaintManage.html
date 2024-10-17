@@ -568,6 +568,7 @@ div.dt-filter-spacer {
 													th:each="file, iterStat : ${minwonAgreeAtcFileList}" th:data-minwon-dir="${minwonFileDataDir}">
 													<!-- 등록일 -->
 													<li class="content registDateWidth">
+														<input type="hidden" th:value="${file.maa_idx}" id="fileIdx" /><!-- 첨부파일 삭제를 위한 idx -->
 														<input type="text" th:value="${#dates.format(file.maa_file_regdate, 'yyyy-MM-dd HH:mm')}" readonly 
 														class="notWriteInput" name="registDateWidth" />
 													</li>
@@ -581,7 +582,7 @@ div.dt-filter-spacer {
 													</li>
 													<!-- 삭제 버튼 -->
 													<li>
-													<button>삭제</button>
+													<button class="attachFileBtn grayBtn" id="deleteFileBtn">삭제</button>
 													</li>
 												</ul>
 											</div>

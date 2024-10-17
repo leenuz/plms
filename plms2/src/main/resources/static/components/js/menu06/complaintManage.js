@@ -1385,95 +1385,41 @@ function minwonAgreefileDownload(filePath, fileName) {
     commonFileDownload(filePath, fileName, '', '', '');
 }
 
-/*
-add. 손지민 - 민원협의 내용 등록/수정 팝업 - 저장 버튼 - 파일 저장 잘 되는 버전. 근데 Transactional 처리 안 되어있어서 기존 코드 사용으로 변경
-$(document).on("click", "#complaintRegisterBtn", function() {
-	console.log("--------------start fileSaveBtn---------");
-	console.log(uploadFiles);
-	//console.log($("#uploadForm").serialize());
-	var files=$("input[name='fileUpload']")[0].files;
-	for(var i=0;i<files.length;i++){
-		console.log("filename:"+files[i].name);
-	}
+// 민원 협의 팝업 - 파일 삭제 버튼
+$(document).on("click", "#deleteFileBtn", function() {
+    const parentLi = $(this).closest('ul.contents'); // 버튼이 포함된 ul 요소 찾기
+    const fileName = $(parentLi).find("#filename").val();
+    const idx = $(parentLi).find("#fileIdx").val();
+    
+    const selectedFile = {
+        fileName: fileName,
+        idx: idx
+    };
 
-	const attachFileUls = document.querySelectorAll('input[name="masterEdit_attachFile"]');
-									 console.log(attachFileUls);
-				
-				var files=new Array();
-								 for(var i=0;i<attachFileUls.length;i++){
-								console.log($(attachFileUls[i]).parent().parent().html());
-									var fname=$(attachFileUls[i]).parent().parent().find("#filename").val();
-									var wdate=$(attachFileUls[i]).parent().parent().find("input[name='registDateWidth']").val();
-									console.log(fname);
-									console.log("wdate:"+wdate);
-									if (wdate==null || wdate=="" || wdate==undefined ) files.push(fname);
-									
-								}
+    console.log("Deleting file:", selectedFile);
 
-	var minwonSeq = $("#minwonSeq").val();
-	if (minwonSeq == null || minwonSeq == "undefined") {
-		alert("민원 관리 번호를 찾을수 없습니다.");
-		return;
-	}
-	console.log(uploadFiles.length);
-	if (uploadFiles.length < 1) {
-		alert("첨부파일이 없습니다.");
-		return;
-	}
-
-	var params = { "minwonSeq": $("#minwonSeq").val(), "minwonAgreeSeq": $("#pnu").val(), "files": uploadFiles, "mode": "asave" };
-	console.log(params);
-	url = "/issue/minwonAgreeAtcUpload";
-	$.ajax({
-
-		url: url,
-		type: 'POST',
-		contentType: "application/json",
-		data: JSON.stringify(params),
-
-		dataType: "json",
-		beforeSend: function(request) {
-			console.log("beforesend ........................");
-			loadingShow();
-		},
-		success: function(response) {
-			loadingHide();
-			console.log(response);
-			if (response.success = "Y") {
-				console.log("response.success Y");
-				console.log("response.resultData length:" + response.resultData.length);
-				$("#popup_bg").show();
-				$("#popup").show(500);
-				//$("#addrPopupLayer tbody td").remove();
-				for(var i=0;i<response.resultData.length;i++){
-					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-				}
-				console.log(params);
-				//$("#pnuAtcFilesDiv").replaceWith()
-				uploadFiles = [];
-				$("#fileListDiv div").remove();
-				$("#fileListDiv").append("<div id='flist'></div>");
-				$.ajax({
-					url: "/land/issue/getMinwonAgreeAtcFileData",
-					type: "POST",
-					data: params,
-				})
-					.done(function(fragment) {
-						$('#fileListDiv').replaceWith(fragment);
-					});
-			}
-			else {
-				console.log("response.success N");
-			}
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			alert("getAddressData ajax error\n" + textStatus + ":" + errorThrown);
-		}
-
-	})
-
+    fetch('/land/api/minwonAgreeAtcFileDelete', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ fileIds: [selectedFile] }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.resultMessage == "success") {
+            alert('파일이 삭제되었습니다.');
+            // 성공적으로 삭제되었을 때 UI 갱신
+            $(parentLi).remove();
+        } else {
+            alert('파일 삭제에 실패하였습니다.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('파일 삭제 중 오류가 발생하였습니다.');
+    });
 });
-*/
 
 
 // 셀렉트 박스
