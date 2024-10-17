@@ -1082,10 +1082,12 @@ $(document).ready(function () {
 	});
 
 	// 드래그 앤 드롭 영역을 클릭하면 파일 선택창을 띄움
+	/*
 	objDragAndDrop.on('click', function(e) {
 		console.log("---------------- 파일 클릭 트리거 ---------------");
     $('input[type=file]').trigger('click'); // 파일 선택 창을 띄우는 트리거
 	});
+	*/
 	 
 	$('input[type=file]').on('change', function(e) {
 		console.log("-------------change 이벤트 트리거");

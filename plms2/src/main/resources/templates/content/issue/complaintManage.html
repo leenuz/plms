@@ -557,10 +557,6 @@ div.dt-filter-spacer {
 											
 											<!-- 첨부파일 리스트 [S] -->
 											<div class="contentScr" id="fileListDiv">
-												<!-- 첨부파일 없을 때 -->
-												<ul class="contents" th:if="${minwonAgreeAtcFileList == null || minwonAgreeAtcFileList.isEmpty()}">
-													<li class="content01 " style="width: 100%; text-align: center">데이터가 없습니다.</li>
-												</ul>
 												<!--첨부파일 목록 반복문-->
 												<ul class="contents" id="fileListUl" th:if="${minwonAgreeAtcFileList != null && !minwonAgreeAtcFileList.isEmpty()}"
 													th:each="file, iterStat : ${minwonAgreeAtcFileList}" th:data-minwon-dir="${minwonFileDataDir}">
