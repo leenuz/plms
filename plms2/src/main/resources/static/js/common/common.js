@@ -535,11 +535,20 @@ function queryValueToObject(str) {
 		//null처리, 숫자 처리, 큰 숫자는 문자열로 유지
 		let parsedValue;
 		
+		// 1. null 처리
 		if( value === 'null' ) {
 			parsedValue = null;
-		} else if (!isNaN(value) && value.length < 16) {
+		}
+		// 2. 숫자처리 및 큰 숫자는 문자열로 유지
+		else if (!isNaN(value) && value.length < 16) {
 			parsedValue = Number(value);
-		} else {
+		}
+		// 3. 배열형태로 오는것 처리(쉼표로 구분된 값들을 배열로 인식)
+		else if (value.includes(',')) {
+			parsedValue = value.split(',').map(v => v.trim());
+		}
+		// 4. 나머지 값은 그대로 문자열 처리
+		else {
 			parsedValue = value;
 		}
 		
