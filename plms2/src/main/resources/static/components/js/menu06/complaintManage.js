@@ -1677,8 +1677,332 @@ $(document).on('click', '#sangsinBtn', function() {
 //==============================================================================================================
 //========================민원 수정/상신 [S]========================
 
+
+
+
+
+
+//민원 수정 팝업 열기
 function tempSaveMinwonEdit(){
 	console.log($("#minwon").val());
+	$("#newcomplaint_Edit_Popup").show();
 }
+
+//민원 수정 팝업 닫기
+function complaintEditPopupClose() {
+	$("#newcomplaint_Edit_Popup").hide();
+}
+
+
+/***** 버튼 눌렀을시 ul 추가 삭제 이벤트 (토지 정보) *****/
+function infoadd() {
+    // ul이 들어갈 공간 지정
+    const landinfoList = document.querySelector(".landinfo_box");
+    // 체크박스 시작 id번호
+    let checkboxCounter = 2;
+
+    landinfoList.addEventListener("click", function(event) {
+        if (
+            event.target &&
+            event.target.classList.contains("complaint_addition")
+        ) {
+            addLandInfo();
+        }
+        if (event.target && event.target.classList.contains("complaint_delete")) {
+            deleteLandInfo(event.target);
+        }
+    });
+
+    function addLandInfo() {
+        // ul 추가
+        const newListItem = document.createElement("ul");
+        // 추가 되는 ul에 "landinfo_content" class 이름 붙힘
+        newListItem.classList.add("landinfo_content");
+
+        // ul 추가 될때마다 체크박스 id에 +1씩 더해서 나오게
+        const checkboxId = `newcomplaint_checkbox${checkboxCounter++}`;
+
+        // 추가 버튼 누를시 추가되는 내용
+        newListItem.innerHTML = `
+	              <li class="landinfo_content_2" id="minwon_${document.querySelectorAll(".landinfo_content").length + 1}" value="${document.querySelectorAll(".landinfo_content").length + 1}">
+	              	${document.querySelectorAll(".landinfo_content").length + 1}
+	              </li>
+	              <li class="landinfo_content_3">
+	                <input type="checkbox" id="${checkboxId}" class="approve_checkbox" />
+	                <label for="${checkboxId}" class="approve_checkbox_label"></label>
+	              </li>
+	              <li class="landinfo_content_4">
+	                <input type="text" name="minwonAddr" id="minwonAddr_${document.querySelectorAll(".landinfo_content").length + 1}"/>
+	                <button class="landStatusPopOpenBtn" value="${document.querySelectorAll(".landinfo_content").length + 1}">검색</button>
+	              </li>
+	              <li class="landinfo_content_5"><input type="text" id="minwonRegiYn_${document.querySelectorAll(".landinfo_content").length + 1}" readonly /></li>
+	              <li class="landinfo_content_6"><input type="text" id="minwonContYn_${document.querySelectorAll(".landinfo_content").length + 1}" readonly /></li>
+	              <li class="landinfo_content_7"><input type="text" id="minwonActualAreaYn_${document.querySelectorAll(".landinfo_content").length + 1}" /></li>
+	              <li class="landinfo_content_8">
+	                <div class="landinfocontent_btn_wrap1">
+	                  <input type="hidden" name="addrInfoStr" id="minwonAddrInfo_${document.querySelectorAll(".landinfo_content").length + 1}"/>
+	                  <button class="complaint_addition">추가</button>
+	                </div>
+	                <div class="landinfocontent_btn_wrap2">
+	                  <button class="complaint_delete">삭제</button>
+	                </div>
+	              </li>
+	              `;
+
+        // 검색 버튼에 class명 추가
+        // ul들어갈 공간 div의 자식 요소로 ul지정
+        landinfoList.appendChild(newListItem);
+    }
+
+    // 행 삭제
+    function deleteLandInfo(button) {
+        // 누른 삭제 버튼이 위치한 행
+        const listItem = button.closest(".landinfo_content");
+        // 누른 삭제 버튼이 있는 행 제거
+        if (listItem) {
+            landinfoList.removeChild(listItem);
+        }
+        // 순번 업데이트
+        updateOrderNumbers();
+
+        //대표필지 없으면 대표 필지정보 초기화
+        if ($('.landinfo_box input[type="checkbox"]:checked').length === 0) {
+            setReqLand();
+        }
+    }
+
+    // 순번 업데이트
+    function updateOrderNumbers() {
+        // 모든 .landinfo_content 요소를 선택
+        document.querySelectorAll(".landinfo_content").forEach((item, index) => {
+            // 모든 .landinfo_content의 순번을 업데이트
+            item.querySelector(".landinfo_content_2").textContent = index + 1;
+        });
+    }
+}
+
+infoadd();
+
+
+/***** 민원 내용 민원인/토지주 추가 + 셀렉트 *****/
+function complaintsselect() {
+    function initializeCustomSelect(contentitem) {
+        const nowIssueSelectBox03 = contentitem.querySelector("select");
+
+        if (!nowIssueSelectBox03) return;
+
+        const popCustomSelectBox03 = contentitem.querySelector(
+            ".Popup_Custom_SelectBox"
+        );
+        const popCustomSelectBtns03 = popCustomSelectBox03.querySelector(
+            ".Popup_Custom_SelectBtns"
+        );
+
+        // 중복을 피하기 위해 초기화
+        popCustomSelectBtns03.innerHTML = "";
+
+        nowIssueSelectBox03.querySelectorAll("option").forEach((option) => {
+            const optionValue03 = option.value;
+            const li03 = document.createElement("li");
+            const button03 = document.createElement("button");
+            button03.classList.add("PopupMoreSelectBtn");
+            button03.type = "button";
+            button03.textContent = optionValue03;
+            li03.appendChild(button03);
+            popCustomSelectBtns03.appendChild(li03);
+        });
+
+        const selectViewButton = popCustomSelectBox03.querySelector(
+            ".Popup_Custom_SelectView"
+        );
+        selectViewButton.addEventListener("click", function() {
+            selectViewButton.classList.toggle("active");
+            popCustomSelectBtns03.classList.toggle("active");
+        });
+
+        // 버튼 클릭시 옵션 선택 처리
+        popCustomSelectBtns03
+            .querySelectorAll(".PopupMoreSelectBtn")
+            .forEach((moreBtn) => {
+                moreBtn.addEventListener("click", function() {
+                    const moreBtnText = moreBtn.innerText;
+                    const editViewBtn = popCustomSelectBox03.querySelector(
+                        ".Popup_Custom_SelectView"
+                    );
+                    editViewBtn.textContent = moreBtnText;
+                    editViewBtn.classList.remove("active");
+                    popCustomSelectBtns03.classList.remove("active");
+                    nowIssueSelectBox03.value = moreBtn.textContent;
+
+                    console.log(`Selected value: ${nowIssueSelectBox03.value}`);
+                });
+            });
+    }
+
+    function newcomplaintSelect03() {
+        const newcomplaintSelectWrapitems = document.querySelectorAll(
+            "#newcomplaint_Popup .popSelectWrap"
+        );
+        newcomplaintSelectWrapitems.forEach((contentitem) => {
+            initializeCustomSelect(contentitem);
+        });
+    }
+
+    // 페이지로드시 기존의 select 요소 초기화
+    newcomplaintSelect03();
+
+    const landinfoList = document.querySelector(".com_content_contents_1");
+
+    landinfoList.addEventListener("click", function(event) {
+        if (
+            event.target &&
+            event.target.classList.contains("complaint_addition")
+        ) {
+            addLandInfo();
+        }
+        if (event.target && event.target.classList.contains("complaint_delete")) {
+            deleteLandInfo(event.target);
+        }
+    });
+
+    function addLandInfo() {
+        const newListItem = document.createElement("ul");
+        newListItem.classList.add("landowner_wrap");
+
+        newListItem.innerHTML = `
+	            <li class="landowner_num"><input type="text" value="${document.querySelectorAll(".landowner_wrap").length + 1}" readonly /></li>
+	            <li><input type="text" id="landowner_name_${document.querySelectorAll(".landowner_wrap").length + 1}" /></li>
+	            <li><input type="text" id="landowner_birthday_${document.querySelectorAll(".landowner_wrap").length + 1}" /></li>
+	            <li><input type="text" id="landowner_relation_${document.querySelectorAll(".landowner_wrap").length + 1}" /></li>
+	            <li><input type="text" id="landowner_phone_${document.querySelectorAll(".landowner_wrap").length + 1}"/></li>
+	            <li class="popSelectWrap">
+	                <div class="hidden_SelectBox">
+	                    <select hidden>
+	                        <option value="Y">Y</option>
+	                        <option value="N">N</option>
+	                    </select>
+	                </div>
+	                <div class="Popup_Custom_SelectBox">
+	                    <button class="Popup_Custom_SelectView" id="landowner_presence_${document.querySelectorAll(".landowner_wrap").length + 1}">Y/N</button>
+	                    <ul class="Popup_Custom_SelectBtns"></ul>
+	                </div>
+	            </li>
+	            <li class="landowner_btns">
+	                <div class="landinfocontent_btn_wrap1">
+	                    <button class="complaint_addition">추가</button>
+	                </div>
+	                <div class="landinfocontent_btn_wrap2">
+	                    <button class="complaint_delete">삭제</button>
+	                </div>
+	            </li>
+	        `;
+
+        landinfoList.appendChild(newListItem);
+
+        // 추가된 커스텀 셀렉트 요소 초기화
+        initializeCustomSelect(newListItem.querySelector(".popSelectWrap"));
+    }
+
+    // 행 삭제
+    function deleteLandInfo(button) {
+        const listItem = button.closest(".landowner_wrap");
+        if (listItem) {
+            landinfoList.removeChild(listItem);
+        }
+        updateOrderNumbers();
+    }
+
+    // 순번 업데이트
+    function updateOrderNumbers() {
+        document.querySelectorAll(".landowner_wrap").forEach((item, index) => {
+            item.querySelector(".landowner_num input").value = index + 1;
+        });
+    }
+}
+
+complaintsselect();
+
+//신규민원 -> 주소 검색
+var togiDataList = [];
+$(document).on("click", ".landinfo .landStatusPopOpenBtn", function() {
+	
+	//const targetId = $(this).closest("li").siblings(".landinfo_content_4").attr('id');
+	const targetId = 'minwonAddr_' + ($(this).val());
+	const targetIdx = $(this).val();
+	var addr = $(this).parent().find("input").val().trim();
+	
+	console.log($(this).closest(".landinfo_content_4").val());
+	console.log(targetId);
+	
+	if (addr == null || addr == "" || addr == undefined) {
+		alert("주소를 입력해주세요.");
+		return;
+	}
+	
+	//const popupLayout = $('#landStatusPopup');
+	loadingShow();
+	$.ajax({
+		url: "/issue/getMinwonJijukSelectNotModel",
+		type: "POST",
+		data: { "address": addr },
+		success: function(response) {
+			console.log('아래 .done으로 대체');
+			//console.log(response);
+			/*
+			const datas = response.result;
+			togiDataList = datas;
+			const popContentBox = popupLayout.find('.popContentBox');
+			if (datas.length > 0) {
+				popContentBox.empty(); //자식 요소 모두 제거
+				$.each(datas, function(index, item) {
+					var newItem = `
+                            <ul class="popContents">
+                                <input type="hidden" name="addrInfoStr" value='`+ JSON.stringify(item) + `'/>
+                                <li class="popContent01">
+                                    <p>${item.pnu}</p>
+                                </li>
+                                <li class="popContent02">
+                                    <p>${item.juso}</p>
+                                </li>
+                                <li class="popContent03">
+                                    <p>${item.jibun}</p>
+                                </li>
+                                <li class="popContent04">
+                                    <button class="resultSelectBtn" onclick="resultSelectBtnClick(this, ${idx - 1}, ${index})">선택</button>
+                                </li>
+                                <li class="popContent05">
+                                    <p></p>
+                                </li>
+                            </ul>`;
+					popContentBox.append(newItem);
+				});
+				popupLayout.addClass('active');
+			} else {
+				alert("검색 된 결과가 없습니다.")
+				console.log("response.length = 0");
+			}
+			*/
+		},
+		error: function(xhr, status, error) {
+			console.log("Error: " + error);
+		}
+	}).done(function (fragment) {
+		// var buttonIdx = fragment.find('button#choiceBtn');
+		// buttonIdx.attr('data-index', buttonId);
+		//console.log("***fragment***");
+		//console.log(fragment);
+		loadingHide();
+		$('#minwon_searchResultPopDiv').replaceWith(fragment);
+		
+		const popupOpen = document.querySelector("#minwon_searchResultPopDiv .popupWrap");
+		//console.log($(popupOpen).html());
+		
+		$(popupOpen).addClass("open");
+		popupOpen.classList.add("active");
+		
+		$('.resultSelectBtn').attr('data-index', targetIdx);
+		$('.saveBtn').attr('data-index', targetIdx);
+   	});
+});
 
 //========================민원 수정/상신 [E]========================
