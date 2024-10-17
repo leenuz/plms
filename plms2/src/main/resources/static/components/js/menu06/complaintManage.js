@@ -1277,6 +1277,11 @@ function openExistingAgreePopup(mwSeq, agreeSeq) {
 
 // 민원협의 내용 등록/수정 팝업 -> 저장 버튼
 $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
+	// 필수 입력값 체크
+	if (!validateRequiredFields()) {
+	    return; // 필수값이 없으면 함수 종료
+	}
+	
 	if (dataInfo == null || dataInfo == undefined) {
 		console.log("dataInfo is null");
 		return
@@ -1348,6 +1353,12 @@ $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 
 //민원협의 내용 등록/수정 팝업 -> 상신 버튼
 $(document).on("click", ".document_add_btnWrap .sangsinBtn", function() {
+	
+	// 필수 입력값 체크
+	if (!validateRequiredFields()) {
+	    return; // 필수값이 없으면 함수 종료
+	}
+	
 	if (dataInfo == null || dataInfo == undefined) {
 		console.log("dataInfo is null");
 		return
@@ -1501,6 +1512,42 @@ function complainSelectBoxOpen() {
 	//
 	ulElement.addClass('active');
 }
+
+// 필수 입력값 체크 함수
+function validateRequiredFields() {
+	// 진행상태 체크
+	const selectedStatus = $('#statusBtn').text();
+	if (selectedStatus === '선택') {
+		alert('진행상태를 선택해주세요.');
+		return false;
+	}
+
+	// 협의 날짜 체크
+	const date = $("#consult_date_field").val();
+	if (!date) {
+		alert('협의 날짜를 입력해주세요.');
+		return false;
+	}
+
+	// 협의 제목 체크
+	const title = $("input[name='TITLE']").val();
+	if (!title) {
+		alert('협의 제목을 입력해주세요.');
+		return false;
+	}
+
+	// 협의 내용 체크
+	const contents = $("textarea[name='CONTENTS']").val();
+	if (!contents) {
+		alert('협의 내용을 입력해주세요.');
+		return false;
+	}
+
+	// 모든 필드가 유효하면 true 반환
+	return true;
+}
+
+
 
 //========================민원협의 내용 등록/수정 [E]========================
 //==============================================================================================================
