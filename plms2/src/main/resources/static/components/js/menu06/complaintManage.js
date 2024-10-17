@@ -876,23 +876,149 @@ function setingDepth3List(depth2List, depth2Val) {
 //민원 대응방안 저장
 function minwonComplaintSave() {
 	
-	let responsedRightsVal = $("input[name='complainRespondRights']:checked").val();
-	let complainRespondContract = $("input[name='complainRespondContract']:checked").val();
-	let complainRespondContract2 = $("input[name='complainRespondContract2']:checked").val();
+	let params = minwonComplaintValidation();
 	
-	
-	
-	let paramObj = {
-		"test" : 1
+	if(params.result) {
+		console.log('true면 저장 ㄱㄱ');
+		console.log(params);
+		
+		$.ajax({
+			url: '/issue/saveMinwonHandling',
+			data: JSON.stringify(params),
+			async: true, 
+			type : 'POST',
+			dataType: 'JSON',
+			contentType: 'application/json; charset=utf-8',
+			success: function(data, jqXHR) {
+				 if(data.result) {
+					alert('저장이 완료되었습니다.');
+				 } else {
+					alert('저장이 실패했습니다.');
+				 }
+			},
+			error: function(error) {
+				console.log(error);
+				alert('저장중 오류가 발생했습니다.');
+			}
+		});
+		
+	} else {
+		console.log('validation 통과 못함');
+		console.log(params);
 	}
+	
 }
 
+//민원 대응방안 상신
+function minwonComplaintSangsinGo() {
+	let params = minwonComplaintValidation();
+	
+	param.SANGSIN_FLAG = 'Y';	//상신까지 하도록 FLAG값 전달
+	
+	if(params.result) {
+		console.log('true면 저장 ㄱㄱ');
+		console.log(params);
+		
+		$.ajax({
+			url: '/issue/saveMinwonHandling',
+			data: JSON.stringify(params),
+			async: true, 
+			type : 'POST',
+			dataType: 'JSON',
+			contentType: 'application/json; charset=utf-8',
+			success: function(data, jqXHR) {
+				if(data.result) {
+					alert('상신이 완료 되었습니다.');
+				} else {
+					alert('상신을 실패 했습니다.');
+				}
+			},
+			error: function(error) {
+				console.log(error);
+				alert('상신중 오류가 발생했습니다.');
+			}
+		});
+		
+	} else {
+		console.log('validation 통과 못함');
+		console.log(params);
+	}
+}
 
 //민원 대응방안 삭제
 function minComplaintDel() {
 	
 }
 
+//민원 대응방안 저장전 validation 체크 - return Object
+function minwonComplaintValidation() {
+	
+	let validationObj = {
+		"result" : false
+	}
+	
+	//권리확보
+	let responsedRightsVal = $("input[name='complainRespondRights']:checked").val();
+	
+	//계약여부
+	let complainRespondContract = $("input[name='complainRespondContract']:checked").val();
+	let complainRespondContract2 = $("input[name='complainRespondContract2']:checked").val();
+	let complainRespondContractVal = '';
+	
+	
+	
+	
+	//이슈유형
+	let issueMinwonCode_1 = $("#complainSeletDepth1_Btn").attr('data-value');
+	let issueMinwonCode_2 = $("#complainSeletDepth2_Btn").attr('data-value');
+	let issueMinwonCode_3 = $("#complainSeletDepth3_Btn").attr('data-value');
+	
+	
+	//계약여부 최종값 (권리 여부에 따라 다르게)
+	complainRespondContractVal = complainRespondContract;
+	if(complainRespondContractVal == '' || complainRespondContractVal == null) {
+		complainRespondContractVal == complainRespondContract2;
+	}
+	
+	//저장전 validation 체크
+	//각 항목 선택여부
+	if( commonNvl(responsedRightsVal, -1) == -1) {
+		alert('권리 확보는 필수 선택 항목입니다.');
+		return false;
+	}
+	
+	//
+	if(commonNvl(complainRespondContractVal, -1) == -1) {
+		alert('계약 여부는 필수 선택 항목입니다.');
+		return false;
+	}
+	validationObj.COMPLETE_YN = complainRespondContractVal;
+	
+	if(commonNvl(issueMinwonCode_1, -1) == -1){
+		alert('이슈유형 대분류를 선택하지 않았습니다.');
+		return false;
+	}
+	validationObj.MW_CODE1 = issueMinwonCode_1;
+	
+	
+	if(commonNvl(issueMinwonCode_2, -1) == -1){
+		alert('이슈유형 중분류를 선택하지 않았습니다.');
+		return false;
+	}
+	validationObj.MW_CODE2 = issueMinwonCode_2;
+	
+	if(commonNvl(issueMinwonCode_3, -1) == -1){
+		alert('이슈유형 소분류를 선택하지 않았습니다.');
+		return false;
+	}
+	validationObj.MW_CODE3 = issueMinwonCode_3;
+	
+	validationObj.MW_SEQ = $("#minwonSeq").val();
+	
+	validationObj.result = true;
+	
+	return validationObj;
+}
 
 
 //========================민원 대응방안 수립 팝업 [E]========================

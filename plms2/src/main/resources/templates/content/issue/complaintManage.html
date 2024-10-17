@@ -325,6 +325,7 @@ div.dt-filter-spacer {
 	
 	<!-- 민원 대응방안 수립[S] -->	
 	<div id="complainRespondContentBoxs" style="display: none;">
+	
 		<input type="hidden" id="issuecodeList" th:value="${issuecodeList}">
         <div class="complainRespondPopWrap">
             <div class="complainRespondPopContent"  style="margin-bottom:900px; z-index: 20;">
@@ -457,7 +458,7 @@ div.dt-filter-spacer {
                 <div class="complainRespondBtnBoxs">
                     <button class="complainRespondDelete closeEvetBtn" onclick="minComplaintDel()">삭제</button>
                     <button class="complainRespondSave closeEvetBtn" onclick="minwonComplaintSave()">저장</button>
-                    <button class="complainRespondReport closeEvetBtn" onclick="">상신</button>
+                    <button class="complainRespondReport closeEvetBtn" onclick="minwonComplaintSangsinGo()">상신</button>
                     <button class="complainRespondClose closeEvetBtn complainRespondcloseBtn">닫기</button>
                 </div>
             </div>
