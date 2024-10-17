@@ -1004,14 +1004,14 @@ $(document).ready(function () {
                  let queryString = window.location.search;
 			    let urlParams = new URLSearchParams(queryString);
 			    let backFlag = false;
-			    urlParams.forEach(function(value, key) {
-			        if (key == 'open' && value == 'pop') {
-						if (window.opener && !window.opener.closed) {
+			    if (window.opener && !window.opener.closed) {
+			    	urlParams.forEach(function(value, key) {
+				        if (key == 'open' && value == 'pop') {
 			                window.opener.popupComplete();
-			            }
-			            window.close();
-			        }
-			    });
+				            window.close();
+				        }
+			    	});
+			    }
         //         if (response.success = "Y") {
         //             console.log("response.success Y");
         //             console.log("response.resultData length:" + response.resultData.length);
@@ -1084,14 +1084,17 @@ $(document).on("change", "#jisa", function () {
 
 // 이전버튼 클릭시
 $(document).on('click', '#backBtn', function(){
-    let queryString = window.location.search;
-    let urlParams = new URLSearchParams(queryString);
-    let backFlag = false;
-    urlParams.forEach(function(value, key) {
-        if (key == 'open' && value == 'pop') {
-            window.close();
-        }
-    });
-    history.back();
+	let queryString = window.location.search;
+	let urlParams = new URLSearchParams(queryString);
+	let backFlag = false;
+	if (window.opener && !window.opener.closed) {
+		urlParams.forEach(function(value, key) {
+			if (key == 'open' && value == 'pop') {
+				window.close();
+				return;
+			}
+		});
+	}
+	history.back();
 });
 

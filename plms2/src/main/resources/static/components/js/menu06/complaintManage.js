@@ -1399,16 +1399,13 @@ function openPopup(no, status) {
 	if (status == 'jisang') {
 		//지상권
 		url = `/land/${status}/easementModification?idx=${no}&open=pop`;
-	} else if (status == 'gover') {
-		// 점용
-		url = ``;
-	} else if (status == 'dopco') {
-		// 회사토지
-		//http://localhost:8081/land/dopco/compLandEdit?idx=221&dopcoNo=L_000274
-		
 	} else if (status == 'notset') {
-		// 미설정
+		// 미설정 
 		url = `/land/${status}/notsetaddRevise?idx=${no}&open=pop`;
+	} else {
+		// 그 외
+		alert('지상권/미설정 관련 내용 호출예정');
+		return;
 	}
 	console.log(no.toLowerCase());
 	// 팝업이 열려있는지
