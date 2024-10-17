@@ -826,6 +826,7 @@ public class issueController {
 		String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		JSONObject requestParamObj = new JSONObject(requestParams);
 		ParameterParser parser = new ParameterParser(request);
+		
 //		String MW_SEQ = parser.getString("MW_SEQ", "");
 //		String MW_CODE1 = parser.getString("MW_CODE1", "");
 //		String MW_CODE2 = parser.getString("MW_CODE2", "");
@@ -835,7 +836,14 @@ public class issueController {
 		String MW_CODE1 = requestParamObj.getString("MW_CODE1");
 		String MW_CODE2 = requestParamObj.getString("MW_CODE2");
 		String MW_CODE3 = requestParamObj.getString("MW_CODE3");
-		String SANGSIN_FLAG = requestParamObj.getString("SANGSIN_FLAG");
+		String SANGSIN_FLAG = "N";
+		
+		//상신 여부에 대한 값 체크
+		boolean flgCheck = requestParamObj.has("SANGSIN_FLAG");
+		if(flgCheck) {
+			SANGSIN_FLAG = requestParamObj.getString("SANGSIN_FLAG");
+		}
+		//==========================
 
 		ArrayList list = null;
 		HashMap map = new HashMap();
@@ -845,7 +853,7 @@ public class issueController {
 			params.put("MW_CODE1", MW_CODE1);
 			params.put("MW_CODE2", MW_CODE2);
 			params.put("MW_CODE3", MW_CODE3);
-			params.put("COMPLETE_YN", "N");
+			params.put("COMPLETE_YN", "N");	// <-- 기존소스도 N으로 설정되있음. 송유관 업무 프로세스상 어떤값인지 확인 아직 못함.
 
 //			list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonHandlingTmp", params);
 			list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonHandlingTmp", params);
@@ -904,12 +912,15 @@ public class issueController {
 					}
 
 				} else {
+					map.put("result", false);
 					map.put("message", "처리 중 오류가 발생했습니다.");
 				}
 			}
+			map.put("result", true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			map.put("result", false);
 			map.put("message", "처리 중 오류가 발생했습니다.");
 		}
 
