@@ -883,12 +883,7 @@ function loadDataTable(params) {
 		columns: [
 			{ data: "mm_mw_title", "defaultContent": "" },//0
 			{ data: "address_str", "defaultContent": "" },
-			{
-				data: "mm_status", render: function(data, type, row, meta) {
-					//return findProgStatus(data)
-					return data
-				}
-			},
+			{ data: "status_str", "defaultContent": ""},
 			{ data: "mm_idx", "defaultContent": "" },
 			{ data: "mw_occur_date", "defaultContent": "" },
 			{ data: "mm_comple_date", "defaultContent": "" }//5
