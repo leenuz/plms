@@ -678,7 +678,15 @@ public class issueController {
 				params.put("SIDO_NM", obj.getString("sido_nm"));
 				params.put("SGG_NM", obj.getString("sgg_nm"));
 				params.put("EMD_NM", obj.getString("emd_nm"));
-				params.put("RI_NM", obj.getString("ri_nm"));
+				
+				//ri_nm validation
+				String ri_nm_Check = obj.getString("ri_nm");
+				
+				if(ri_nm_Check == null || ri_nm_Check == "null") {
+					ri_nm_Check = "";
+				}
+				
+				params.put("RI_NM", ri_nm_Check);
 				params.put("JIBUN", obj.getString("jibun"));
 				params.put("JIBUN_FULL", obj.getString("jibun_full"));
 				params.put("REP_YN", obj.getString("REP_YN"));
