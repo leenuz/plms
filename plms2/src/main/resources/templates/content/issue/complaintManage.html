@@ -629,9 +629,7 @@ div.dt-filter-spacer {
                 </ul>
                 <ul>
                     <li class="complaints_title">이슈 유형</li>
-                    <li th:text="(${mm_mw_code1} != null ? ${mm_mw_code1} : '') + 
-             			(${mm_mw_code2} != null ? ${mm_mw_code2} : '') + 
-             			(${mm_mw_code3} != null ? ${mm_mw_code3} : '')"></li>
+                    <li id="pop_mwdetail_issuetype"></li>
                 </ul>
                 <ul>
                     <li class="complaints_title">진행현황</li>
@@ -684,7 +682,7 @@ div.dt-filter-spacer {
 			</ul>
 		</section>
 		<div class="complaintinfo_btns">
-			<button class="finalBtn saveBtn">상신</button>
+			<button class="finalBtn saveBtn" id="sangsinBtn">상신</button>
 			<button class="closeBtn finalBtn">닫기</button>
 		</div>
 	</div>

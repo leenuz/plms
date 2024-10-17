@@ -786,6 +786,7 @@ if (newcomplaintPopupOpen) {
         .querySelectorAll(".topCloseBtn, .finalBtn")
         .forEach(function(btn) {
             btn.addEventListener("click", () => {
+            	loadingHide();
                 newcomplaintPopupOpen.classList.remove("active");
             });
         });
