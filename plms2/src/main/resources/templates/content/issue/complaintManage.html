@@ -16,6 +16,7 @@
 
 <link rel="stylesheet" href="/css/issue/complaintManage.css" />
 <link rel="stylesheet" href="/css/issue/complaintRespond.css" />
+<link rel="stylesheet" href="/assets/css/popup/Issue_development_Popup.css" />
 
 <style>
 div.dt-top-container {
@@ -697,9 +698,351 @@ div.dt-filter-spacer {
 	<!-- 민원 완료 보고 [E] -->
 	
 	<!-- 민원 수정/상신 [S] -->
+	<div id="newcomplaint_Edit_Popup" class="newcomplaint_Popup" style="display:none;">
+	  <div class="popupWrap active">
+	    <h2>
+	      <p>민원 수정</p>
+	      <span class="topCloseBtn" onclick="complaintEditPopupClose()"></span>
+	    </h2>
 	
+	    <!-- 스크롤 박스-->
+	    <div class="newcomplaint_Popup_box">
+	      <!-- 민원 정보 -->
+	      <section class="complaintinfo_wrap">
+	        <h3>민원 정보</h3>
+	        <ul class="complaintinfo">
+	          <li class="complaintinfo_name">민원 명</li>
+	          <li class="complaintinfo_input_name">
+	            <input type="text" placeholder="민원 명" />
+	          </li>
+	          <li class="complaintinfo_input_name2">발생일자</li>
+	          <li class="complaintinfo_input_name3">
+	            <div class="complaint_calender_wrap">
+	              <input
+	                type="date"
+	                data-placeholder="민원발생일자"
+	                required
+	                aria-required="true"
+	              />
+	            </div>
+	          </li>
+	          <li class="complaintinfo_input_name4">발생지사</li>
+	          <li class="popSelectWrap">
+	            <div class="hidden_SelectBox">
+	              <select
+	                name="newcomplaint_Selectbox01"
+	                id="newcomplaint_Selectbox01"
+	                hidden
+	              >
+	                <option value="전체">전체</option>
+	                <option value="전체1">전체1</option>
+	                <option value="전체2">전체2</option>
+	                <option value="전체3">전체3</option>
+	                <option value="전체4">전체4</option>
+	              </select>
+	            </div>
+	            <div class="Popup_Custom_SelectBox">
+	              <button class="Popup_Custom_SelectView">전체</button>
+	              <ul class="Popup_Custom_SelectBtns"></ul>
+	            </div>
+	          </li>
+	        </ul>
+	      </section>
+	      <!-- 토지 정보 -->
+	      <section class="landinfo_wrap">
+	        <h3>토지 정보</h3>
+	        <div class="landinfo">
+	          <div class="landinfo_title_box">
+	            <ul class="landinfo_title">
+	              <li class="landinfo_title_2">
+	                <p>순번</p>
+	              </li>
+	              <li class="landinfo_title_3">
+	                <p>대표필지</p>
+	              </li>
+	              <li class="landinfo_title_4">
+	                <p>주소</p>
+	              </li>
+	              <li class="landinfo_title_5">
+	                <p>등기여부</p>
+	              </li>
+	              <li class="landinfo_title_6">
+	                <p>계약여부</p>
+	              </li>
+	              <li class="landinfo_title_7">
+	                <p>실저촉면적</p>
+	              </li>
+	              <li class="landinfo_title_8">
+	                <p>추가/삭제</p>
+	              </li>
+	            </ul>
+	          </div>
+	
+	          <!-- 토지정보 기본값 + 추가로 나오는 부분-->
+	          <div class="landinfo_box">
+	            <ul class="landinfo_content">
+	              <li class="landinfo_content_2">1</li>
+	              <li class="landinfo_content_3">
+	                <input
+	                  type="checkbox"
+	                  id="newcomplaint_checkbox1"
+	                  class="approve_checkbox"
+	                />
+	                <label
+	                  for="newcomplaint_checkbox1"
+	                  class="approve_checkbox_label"
+	                ></label>
+	              </li>
+	              <li class="landinfo_content_4">
+	                <input type="text" />
+	                <!-- button class 추가 -->
+	                <button class="landStatusPopOpenBtn">검색</button>
+	              </li>
+	              <li class="landinfo_content_5"><input type="text" /></li>
+	              <li class="landinfo_content_6"><input type="text" /></li>
+	              <li class="landinfo_content_7"><input type="text" /></li>
+	              <li class="landinfo_content_8">
+	                <button class="complaint_addition">추가</button>
+	              </li>
+	            </ul>
+	          </div>
+	        </div>
+	      </section>
+	      <!-- 대표 필지정보 -->
+	      <section class="daepyo_pilji_wrap">
+	        <h3>대표 필지정보</h3>
+	        <div class="daepyo_pilji">
+	          <ul class="daepyo_pilji_1">
+	            <li class="daepyo_pilji_list_1">주소</li>
+	            <li class="daepyo_pilji_list_2">등기여부</li>
+	            <li class="daepyo_pilji_list_3">계약여부</li>
+	          </ul>
+	          <ul>
+	            <li class="daepyo_pilji_list_1">
+	              <input
+	                type="text"
+	                placeholder=""
+	              />
+	            </li>
+	            <li class="daepyo_pilji_list_2">
+	              <input type="text" placeholder="N" />
+	            </li>
+	            <li class="daepyo_pilji_list_3">
+	              <input type="text" placeholder="N" />
+	            </li>
+	          </ul>
+	        </div>
+	      </section>
+	      <!-- 민원 내용 -->
+	      <section class="complaint_contents_Details">
+	        <h3>민원 내용</h3>
+	        <div class="complaint_contents_wrap">
+	          <ul class="complaint_contents_title">
+	            <li>구분</li>
+	            <li>순번</li>
+	            <li>성명</li>
+	            <li>생년월일</li>
+	            <li>토지주와의 관계</li>
+	            <li>연락처</li>
+	            <li>현장입회</li>
+	            <li class="com_content_btn">추가/삭제</li>
+	          </ul>
+	
+	          <!-- 민원인 토지주-->
+	          <ul class="complaint_contents_content1">
+	            <li class="com_content_title1">민원인/토지주</li>
+	
+	            <!-- 민원인 토지주 여러내용 들어가는 곳-->
+	            <li class="com_content_contents_1">
+	              <ul class="landowner_wrap">
+	                <li class="landowner_num">
+	                  <input type="text" value="1" readonly />
+	                </li>
+	                <li><input type="text" /></li>
+	                <li><input type="text" /></li>
+	                <li><input type="text" /></li>
+	                <li><input type="text" /></li>
+	                <li class="popSelectWrap">
+	                  <div class="hidden_SelectBox">
+	                    <select hidden>
+	                      <option value="Y">Y</option>
+	                      <option value="N">N</option>
+	                    </select>
+	                  </div>
+	                  <div class="Popup_Custom_SelectBox">
+	                    <button class="Popup_Custom_SelectView">Y/N</button>
+	                    <ul class="Popup_Custom_SelectBtns"></ul>
+	                  </div>
+	                </li>
+	                <li class="landowner_btns_default">
+	                  <button class="complaint_addition">추가</button>
+	                </li>
+	              </ul>
+	            </li>
+	          </ul>
+	
+	          <!-- 민원내용(토지이력 요구사항 내용 첨부파일)-->
+	          <ul class="complaint_contents_content2">
+	            <li class="com_content_title2">토지이력</li>
+	            <li class="com_content_title4">
+	              <textarea class="auto_textarea"></textarea>
+	            </li>
+	          </ul>
+	          <ul class="complaint_contents_content2">
+	            <li class="com_content_title2">요구사항</li>
+	            <li class="com_content_title4">
+	              <textarea class="auto_textarea"></textarea>
+	            </li>
+	          </ul>
+	          <ul class="complaint_contents_content2">
+	            <li class="com_content_title2">내용</li>
+	            <li class="com_content_title4">
+	              <textarea class="auto_textarea"></textarea>
+	            </li>
+	          </ul>
+	          <ul class="complaint_contents_content3">
+	            <li class="com_content_title3">첨부파일</li>
+	            <li class="com_content_title5">
+	              <ul class="complaint_contents_content3_wrap">
+	                <li class="complaint_contents_content3_file">
+	                  <!-- multiple 추가 -->
+	                  <input
+	                    type="file"
+	                    id="complaint_contents_contents3_Popup_file"
+	                    multiple
+	                    hidden
+	                  />
+	                  <!-- <label for="complaint_contents_contents3_Popup_file" class="complaint_contents_contents3_Popup_file_wrap">
+	                    첨부파일 기본값 
+	                    <div class="complaint_contents_contents3_file_default active">
+	                      <div class="file_background_wrap">
+	                        <figure class="complaint_contents_contents3_file_img_wrap"><img src="/assets/media/popup/images/file-upload.png"
+	                            alt="upload"></figure>
+	                        <p>파일을 마우스로 끌어오세요.</p>
+	                      </div>
+	                    </div>
+	                    파일 추가시 나오는 곳 
+	                    <div class="complaint_contents_contents3_file_add_contents">
+	                      <ul class="complaint_contents_contents3_file_add_contents_th">
+	                        <li>
+	                          <figure><img src="/assets/media/popup/images/back_icon.png" alt="xbtn"></figure>
+	                        </li>
+	                        <li class="complaint_contents_contents3_file_add_name">
+	                          <p>파일명</p>
+	                        </li>
+	                        <li>
+	                          <p>업로드 상태</p>
+	                        </li>
+	                        <li>
+	                          <p>용량</p>
+	                        </li>
+	                      </ul>
+	                    </div>
+	                  </label>-->
+	
+	                  <!-- 추가 -->
+	
+	                  <div class="popfileLargeWrap">
+	                    <!-- 파일이 첨부되지 않았을 때 모습 -->
+	                    <div class="popfileUploadWrap popfileUploadDisplay">
+	                      <label
+	                        for="complaint_contents_contents3_Popup_file"
+	                        class="popfileUploadBox"
+	                      >
+	                        <img
+	                          src="../../../assets/media/popup/images/file-upload.png"
+	                          alt="파일 업로드 아이콘"
+	                          class="fileUploadIcon"
+	                        />
+	                        <p>파일을 마우스로 끌어오세요.</p>
+	                      </label>
+	                    </div>
+	                    <div class="popfileUploadAfterWrap popfileUploadDisplay">
+	                      <!-- 추가, 업로드시 나오는 거 -->
+	                      <div class="popfileUploadAfter">
+	                        <ul class="poptitles">
+	                          <li class="popBtnbox">
+	                            <button class="popAllDeleteFileBtn"></button>
+	                          </li>
+	                          <li class="poptitle popfilenameBox">
+	                            <p>파일명</p>
+	                          </li>
+	                          <li class="poptitle">
+	                            <p>업로드 상태</p>
+	                          </li>
+	                          <li class="poptitle">
+	                            <p>용량</p>
+	                          </li>
+	                        </ul>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </li>
+	              </ul>
+	            </li>
+	          </ul>
+	        </div>
+	      </section>
+	    </div>
+	    <!-- 버튼 -->
+	    <div class="complaintinfo_btns">
+	      <button class="approveBtn finalBtn" onclick="">저장</button>
+	      <button class="sangsinBtn finalBtn" onclick="">상신</button>
+	      <button class="closeBtn finalBtn" onclick="complaintEditPopupClose()">닫기</button>
+	    </div>
+	  </div>
+	</div>
 	<!-- 민원 수정/상신 [E] -->
 	
+	<!-- 주소 검색 결과 팝업창 [S] -->
+	<div class="masterRegExcelPopWrapper" id="minwon_searchResultPopDiv" style="display:none;">
+	<link rel="stylesheet" href="/assets/css/popup/issuePopup.css">
+		<div id="searchResultsPopup">
+			<div class="popupWrap" id="minwon_searchPopupWrap">
+				<h2>
+					<p>검색결과</p>
+					<span class="topCloseBtn" onclick="searchPopClose()"></span>
+				</h2>
+	
+				<!-- 검색 결과 grid 헤더 -->
+				<div class="popupCont">
+					<ul class="popTitles">
+						<li class="popTitle01">PNU</li>
+						<li class="popTitle02">주소</li>
+						<li class="popTitle03">지번</li>
+						<li class="popTitle04">선택</li>
+					</ul>
+					<div class="popContentBox">
+						<ul class="popContents" th:each="val:${addressList}">
+							<li class="popContent01" th:value="${val.pnu}">[[ ${val.pnu} ]]</li>
+							<li class="popContent02"  th:value="${val.juso}">[[ ${val.juso} ]]</li>
+							<li class="popContent03" th:value="${val.jibun}">[[ ${val.jibun} ]]</li>
+							<li class="popContent04">
+								<button class="resultSelectBtn" name="addressListInfo" th:data-info="${val}" onclick="miwonSearchAddr(this)">선택</button>
+							</li>
+						</ul>
+						<!--  
+						<ul class="popContents">
+							<li class="popContent01">115001100010010001</li>
+							<li class="popContent02">서울특별시 강서구 타임리프 꺼내야지</li>
+							<li class="popContent03">1-1</li>
+							<li class="popContent04">
+								<button class="resultSelectBtn">선택</button>
+							</li>
+						</ul>
+						-->
+					</div>
+				</div>
+				<div class="lastBtnBox btnWrap">
+					<button class="backBtn finalBtn" onclick="searchPopClose()">닫기</button>
+					<button class="saveBtn finalBtn">PNU 없이 선택</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 주소 검색 결과 팝업창 [E] -->
+	
+		
 	<!-- script -->
 	<script type="module" src="/js/module/surfaceMain.js"></script>
 	<script src="/components/js/menu06/complaintManage.js"></script>
