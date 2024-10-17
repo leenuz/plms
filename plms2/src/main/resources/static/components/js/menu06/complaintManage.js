@@ -247,7 +247,8 @@ function getPopupJsonData() {
 	dataObj.files = fileCheck;
 	dataObj.filesLength = fileCheck.length;
 
-	console.log(dataObj);
+	console.log("dataObj[STATUS]: " + dataObj["STATUS"]);
+	console.log("dataObj 전체 내용:", dataObj);
 	//return JSON.stringify(dataObj);
 	return dataObj;
 }
@@ -1200,9 +1201,6 @@ function openExistingAgreePopup(mwSeq, agreeSeq) {
             console.log("Received data:", data); // 전체 데이터를 출력
             
 						if (data.length > 0) {
-                // 첫 번째 데이터의 agree_title을 로그에 출력
-                console.log("First agree_title:", data[0].agree_title);
-
                 // 팝업을 활성화
                 $("#complaint_register_Popup").addClass('active');
                 showDim();
@@ -1217,6 +1215,19 @@ function openExistingAgreePopup(mwSeq, agreeSeq) {
                 // hidden 필드에 mw_seq와 agree_seq 값 채우기
                 $("input[name='mw_seq']").val(mwSeq);
                 $("input[name='agree_seq']").val(agreeSeq);
+								
+								// 파일 목록 추가 (AJAX)
+	               $.ajax({
+	                   url: "/issue/getMinwonAgreeAtcFileData",
+	                   type: "POST",
+	                   data: { mwSeq: mwSeq, agreeSeq: agreeSeq },
+	                   success: function(fragment) {
+	                       $('#fileListDiv').html(fragment); // 파일 리스트를 파일 영역에 추가
+	                   },
+	                   error: function(jqXHR, textStatus, errorThrown) {
+	                       console.error("Error loading file list:", textStatus, errorThrown);
+	                   }
+	               });
             } else {
                 console.error("No data found.");
             }
