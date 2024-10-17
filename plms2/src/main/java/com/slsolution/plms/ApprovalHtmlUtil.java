@@ -3530,7 +3530,7 @@ log.info("dataMap:"+detailMap);
 				
 				}
 				else {
-					sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+					sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('http://localhost:8081/land/common/downloadfile?"
 						    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") 
 						    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "") 
 						    + "&fileJisangNo=" + MW_SEQ 
@@ -3595,7 +3595,7 @@ log.info("dataMap:"+detailMap);
 			detailMap=(HashMap)tmp_list.get(0);
 			pnu_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailToji", params); // 소속토지정보
 			file_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailFile", params); // 첨부파일
-
+			log.info("pnuList:"+pnu_list);
 //			System.out.println("$$$ params=" + params);
 			if (pnu_list.size() > 0) {
 				for (int i = 0; i < pnu_list.size(); i++) {
@@ -3870,15 +3870,16 @@ log.info("dataMap:"+detailMap);
 			    log.info("tmp_list is null or empty.");
 			    // 에러 처리 로직 추가
 			}
-
+			log.info("deailMap:"+detailMap);
 			//detailMap=(HashMap)tmp_list.get(0));
 //			pnu_list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonDetailToji", params); // 소속토지정보
 			pnu_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailToji", params); // 소속토지정보
 			file_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetailFile", params); // 첨부파일
 
-//			agreeMap = (HashMap) Database.getInstance().queryForObject("Json.selectMinwonAgreeData", params); // 민원협의
-			tmp_list = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonAgreeData", params); // 민원협의
-			
+			//agreeMap = (HashMap) mainService.selectHashmapQuery("issueSQL.selectMinwonAgreeData", params); // 민원협의
+			ArrayList tmp_list1 = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonAgreeData", params); // 민원협의
+			agreeMap= (HashMap)tmp_list1.get(0);
+			log.info("agreeMap:"+agreeMap);
 //			log.info("tmp_list 0:"+tmp_list.get(0).toString());
 //			JSONObject tmpObj=new JSONObject(tmp_list.get(0).toString());
 //			log.info("tmpObj:"+tmpObj);
@@ -3937,27 +3938,31 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' /> \n");
 			sbHtml.append("</form>\n");
 
-			if (file_list.size() > 0) {
-				for (int i = 0; i < file_list.size(); i++) {
-					String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) file_list.get(i)).get("file_seq")), "");
-					sbHtml.append("<form id='file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
-					sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
-					sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
-					sbHtml.append("            <input type='hidden' name='file_gubun' value='minwon' />\n");
-					sbHtml.append("</form> \n");
-				}
-			}
-
-			if (agree_file_list.size() > 0) {
-				for (int i = 0; i < agree_file_list.size(); i++) {
-					String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap) agree_file_list.get(i)).get("file_seq")), "");
-					sbHtml.append("<form id='agree_file_download_form" + i + "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
-					sbHtml.append("            <input type='hidden' name='file_no' value='" + MW_SEQ + "'/>\n");
-					sbHtml.append("            <input type='hidden' name='file_seq' value='" + str_FILE_SEQ + "' />\n");
-					sbHtml.append("            <input type='hidden' name='file_gubun' value='minwonAgree' />\n");
-					sbHtml.append("</form> \n");
-				}
-			}
+			/*
+			 * if (file_list.size() > 0) { for (int i = 0; i < file_list.size(); i++) {
+			 * String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap)
+			 * file_list.get(i)).get("file_seq")), "");
+			 * sbHtml.append("<form id='file_download_form" + i + "' method='post' action='"
+			 * + plmsDomain + "/dcl/jr/downloadFile' > \n");
+			 * sbHtml.append("            <input type='hidden' name='file_no' value='" +
+			 * MW_SEQ + "'/>\n");
+			 * sbHtml.append("            <input type='hidden' name='file_seq' value='" +
+			 * str_FILE_SEQ + "' />\n"); sbHtml.
+			 * append("            <input type='hidden' name='file_gubun' value='minwon' />\n"
+			 * ); sbHtml.append("</form> \n"); } }
+			 * 
+			 * if (agree_file_list.size() > 0) { for (int i = 0; i < agree_file_list.size();
+			 * i++) { String str_FILE_SEQ = cu.evl(String.valueOf(((HashMap)
+			 * agree_file_list.get(i)).get("file_seq")), "");
+			 * sbHtml.append("<form id='agree_file_download_form" + i +
+			 * "' method='post' action='" + plmsDomain + "/dcl/jr/downloadFile' > \n");
+			 * sbHtml.append("            <input type='hidden' name='file_no' value='" +
+			 * MW_SEQ + "'/>\n");
+			 * sbHtml.append("            <input type='hidden' name='file_seq' value='" +
+			 * str_FILE_SEQ + "' />\n"); sbHtml.
+			 * append("            <input type='hidden' name='file_gubun' value='minwonAgree' />\n"
+			 * ); sbHtml.append("</form> \n"); } }
+			 */
 			sbHtml.append("     <!-- wrap -->\n");
 			sbHtml.append("     <div id=\"wrap\">\n");
 			sbHtml.append("         <!-- 컨테이너 -->\n");
@@ -4064,29 +4069,29 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">협의 제목</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-			String mwTitle = (tmp_list != null && !tmp_list.isEmpty() && ((HashMap) tmp_list.get(0)).get("mw_title") != null)
-	                 ? ((HashMap) tmp_list.get(0)).get("mw_title").toString() : "";
+//			String mwTitle = (tmp_list != null && !tmp_list.isEmpty() && ((HashMap) tmp_list.get(0)).get("mw_title") != null)
+//	                 ? ((HashMap) tmp_list.get(0)).get("mw_title").toString() : "";
 
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" +mwTitle+ "</span>	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" +agreeMap.get("agree_title")+ "</span>	");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">협의 날짜</th>");
 			sbHtml.append("			 		<td class=\"inner_tag\">");
-			String mwOccurDate = (tmp_list != null && !tmp_list.isEmpty() && ((HashMap) tmp_list.get(0)).get("mw_occur_date") != null) ? ((HashMap) tmp_list.get(0)).get("mw_occur_date").toString() : "";
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" +mwOccurDate + "</span>	");
+//			String mwOccurDate = (tmp_list != null && !tmp_list.isEmpty() && ((HashMap) tmp_list.get(0)).get("mw_occur_date") != null) ? ((HashMap) tmp_list.get(0)).get("mw_occur_date").toString() : "";
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" +agreeMap.get("agree_date") + "</span>	");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 		<th scope=\"row\">진행상태</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\">	");
-			String statusStr = (tmp_list != null && !tmp_list.isEmpty() && ((HashMap) tmp_list.get(0)).get("status_str") != null) ? ((HashMap) tmp_list.get(0)).get("status_str").toString() : "";
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" +statusStr + "</span>	");
+//			String statusStr = (tmp_list != null && !tmp_list.isEmpty() && ((HashMap) tmp_list.get(0)).get("status_str") != null) ? ((HashMap) tmp_list.get(0)).get("status_str").toString() : "";
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" +agreeMap.get("status_str") + "</span>	");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>		");
 			sbHtml.append("			 		<th scope=\"row\">협의 내용</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-			String mwContents = (tmp_list != null && !tmp_list.isEmpty() && ((HashMap) tmp_list.get(0)).get("mw_contents") != null) ? ((HashMap) tmp_list.get(0)).get("mw_contents").toString() : "";
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px; \">" + mwContents+ "</span>	");
+//			String mwContents = (tmp_list != null && !tmp_list.isEmpty() && ((HashMap) tmp_list.get(0)).get("mw_contents") != null) ? ((HashMap) tmp_list.get(0)).get("mw_contents").toString() : "";
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px; \">" + agreeMap.get("agree_contents")+ "</span>	");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>");
@@ -4115,6 +4120,34 @@ log.info("dataMap:"+detailMap);
 					sbHtml.append("            <td>                \n");
 //					sbHtml.append("                <input type='button' id='file" + i + "' value='파일선택' />\n");
 					String type = "";
+					//개발
+					if ("DEV".equals(GC.getServerName())) {
+					sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+						    + "filePath=" + file_map.get("file_path") 
+						    + "&fileName=" + str_FILE_NM
+						    + "&fileJisangNo=" + MW_SEQ 
+						    + "&fileSeq=" + file_map.get("agree_file_seq") 
+						    + "&fileGubun=minwon', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+					}
+					else if ("LIVE".equals(GC.getServerName())) {
+					//운영
+					sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgis.dopco.co.kr:8443/land/common/downloadfile?"
+							 + "filePath=" + file_map.get("file_path") 
+							    + "&fileName=" + str_FILE_NM
+							    + "&fileJisangNo=" + MW_SEQ 
+							    + "&fileSeq=" + file_map.get("agree_file_seq") 
+							    + "&fileGubun=minwon', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+
+					
+					}
+					else {
+						sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('http://localhost:8081/land/common/downloadfile?"
+								 + "filePath=" + file_map.get("file_path") 
+								    + "&fileName=" + str_FILE_NM
+								    + "&fileJisangNo=" + MW_SEQ 
+								    + "&fileSeq=" + file_map.get("agree_file_seq") 
+								    + "&fileGubun=minwon', '_blank')\">다운로드 <span class=\"downloadIcon\"></span></button>\n");
+					}
 
 //					if (str_FILE_NM != null && !str_FILE_NM.equals("")) {
 //						String pathSplit[] = str_FILE_NM.split("\\.");
@@ -4199,7 +4232,7 @@ log.info("dataMap:"+detailMap);
 						
 						}
 						else {
-							sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('https://dgisdev.dopco.co.kr:8443/land/common/downloadfile?"
+							sbHtml.append("<button class=\"fileDownloadBtn\" onclick=\"window.open('http://localhost:8081/land/common/downloadfile?"
 								    + "filePath=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_path"), "") 
 								    + "&fileName=" + cu.evl((String) ((HashMap) file_list.get(i)).get("file_nm"), "") 
 								    + "&fileJisangNo=" + MW_SEQ 

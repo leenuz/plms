@@ -748,6 +748,7 @@ public class issueController {
 
 				String str_appNo = CommonUtil.getNextAppovalSeq();
 				boolean res_Echo = false;
+				String html="";
 				if ("".equals(str_appNo)) {
 					map.put("message", "처리 중 오류가 발생했습니다.");
 				} else {
@@ -762,9 +763,9 @@ public class issueController {
 //					String str_userDeptnm = "IT전략.지원팀";
 //					String str_userUPDeptcd = "S250100";
 					String XML_GUBUN = "GetOccureComplaintsDataforXML";
-
+					html=eph.getMinwonGenerateHTML(MW_SEQ, fileseq, request, response);
 					res_Echo = epc.GetPLMSDataforXML(str_appNo,
-							eph.getMinwonGenerateHTML(MW_SEQ, fileseq, request, response), str_UserId, "", "",
+							html, str_UserId, "", "",
 							XML_GUBUN, str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
 				}
 
@@ -792,14 +793,16 @@ public class issueController {
 						map.put("DOCKEY", str_appNo);
 						map.put("STATUS", "C");
 						map.put("MW_SEQ", MW_SEQ);
+						map.put("html",html);
 						mainService.InsertQuery("issueSQL.updateNinwonEchoNo", map);
 						//임시로 결재 처리를 만든다
 						mainService.InsertQuery("jisangSQL.insertLocalApprovalData", map);
 					}
 					
 					
-					
-					map.put("message", "처리 중 오류가 발생했습니다.");
+					if(!"LOCAL".equals(GC.getServerName())) {
+						map.put("message", "처리 중 오류가 발생했습니다.");
+					}
 				}
 //				Database.getInstance().commitTransaction();
 				map.put("message", "success");
@@ -969,7 +972,7 @@ public class issueController {
 	    String AGREE_CONTENTS = consultInfoObj.getString("CONTENTS"); // consultInfo 안의 CONTENTS
 	    String AGREE_DATE = consultInfoObj.getString("DATE"); // consultInfo 안의 DATE
 	    String STATUS = consultInfoObj.getString("STATUS"); // consultInfo 안의 STATUS
-		String SANGSIN_FLAG = requestParamObj.has("SANGSIN_FLAG")?requestParamObj.getString("SANGSIN_FLAG") :"0";
+		String SANGSIN_FLAG = requestParamObj.has("SANGSIN_FLAG")?requestParamObj.getString("SANGSIN_FLAG") :"N";
 		
 	    // 파라미터 값 로그 출력
 	    log.info("fileseq: " + fileseq);
@@ -1094,7 +1097,7 @@ public class issueController {
 //					ElectronicPaymentUtil epc = new ElectronicPaymentUtil(); // 전자결재 연계
 				ApprovalHtmlUtil eph = new ApprovalHtmlUtil();
 				ApprovalUtil epc = new ApprovalUtil();
-
+				String html="";
 				String str_appNo = CommonUtil.getNextAppovalSeq();
 				boolean res_Echo = false;
 				if ("".equals(str_appNo)) {
@@ -1111,8 +1114,9 @@ public class issueController {
 //					String str_userDeptnm = "IT전략.지원팀";
 //					String str_userUPDeptcd = "S250100";
 					String XML_GUBUN = "GetConferComplaintsDataforXML";
+					 html=eph.getMinwonAgreeHTML(MW_SEQ, AGREE_SEQ, fileseq, request, response);
 					res_Echo = epc.GetPLMSDataforXML(str_appNo,
-							eph.getMinwonAgreeHTML(MW_SEQ, AGREE_SEQ, fileseq, request, response), str_UserId, "", "",
+							html, str_UserId, "", "",
 							XML_GUBUN, str_userName, str_userDeptcd, str_userDeptnm, str_userUPDeptcd);
 				}
 
@@ -1136,7 +1140,10 @@ public class issueController {
 					}
 
 				} else {
+					if ("LIVE".equals(GC.getServerName())) {
 					map.put("message", "상신 처리 중 결과를 받지 못하는 오류가 발생했습니다.");
+					}
+					map.put("html",html);
 					//map.put("mess, str_appNo)
 				}
 			}
