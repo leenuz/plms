@@ -325,7 +325,7 @@ div.dt-filter-spacer {
 
 			<div class="finalBtnBox btnWrap">
 				<button class="backBtn" onclick="history.back();">이전</button>
-				<button class="addBtn addComplainBtn" th:if="${minwon.mm_status == '3'}" onclick="minwonConsultPopupOpen()">협의 추가</button>
+				<button class="addBtn addComplainBtn" th:if="${minwon.mm_status == '3' || minwon.mm_status == '4'}" onclick="minwonConsultPopupOpen()">협의 추가</button>
 			</div>
 		</main>
 	</div>
