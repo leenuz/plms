@@ -710,11 +710,7 @@ function respondContractMenuChange(rightsVal) {
 	//계약여부 값 판단에 의한 표출될 이슈유형 메뉴 값 세팅
 	selectIssueArr = targetIssueTypeSort(selectCodeGroupVal);
 	
-	console.log(selectIssueArr);
-	
 	let targetIssue1Depth = filter_Depth(selectIssueArr, 1);
-	
-	console.log(targetIssue1Depth);
 	
 	//selectbox 내용 만들어주기
 	makeSelectboxContent(targetIssue1Depth , 'complainRespondHiddenSelectBox01', 1); //정리된 배열, 해당 태그의 id값 필수, depth단계값 필수
@@ -748,6 +744,9 @@ function filter_Depth(data, opt) {
 	return uniqueDepth1;
 }
 
+//셀렉트박스 만듬 : 현재 퍼블로 인한 조치
+// div로 hide한곳에 셀렉트박스를 만들고 그걸 보이는 ul에 뿌려주는 형식이라
+// div로 숨긴곳에 셀렉트박스의 내용이 있어야함.
 function makeSelectboxContent(targetArr, divId, opt){
 	let selectBox = $("#"+divId);
 	//기존 내용이 있다면 비워주기.
@@ -855,32 +854,46 @@ function complainSeletDepth_optionSelect(selectBoxId, ulId, btnId, listDivId) {
 
 //depth2 목록 세팅 
 function setingDepth2List(depth1List, depth1Val) {
-	console.log(depth1List);
-	console.log(depth1Val);
-	
 	const depth2ListCheck = depth1List.filter(item => item.depth1_code === depth1Val);
 	
 	const uniqueItems = Array.from(new Set(depth2ListCheck.map(item => JSON.stringify(item))))
 							 .map(item => JSON.parse(item));
 	
-	console.log(uniqueItems);
-	
 	return uniqueItems;
 }
 
+//depth3 목록 세팅 (로직은 같으나 우선 분리 시켜놓음)
 function setingDepth3List(depth2List, depth2Val) {
-	console.log(depth2List);
-	console.log(depth2Val);
 	
 	const depth3ListCheck = depth2List.filter(item => item.depth2_code === depth2Val);
 	
 	const uniqueItems = Array.from(new Set(depth3ListCheck.map(item => JSON.stringify(item))))
 							 .map(item => JSON.parse(item));
 	
-	console.log(uniqueItems);
-	
 	return uniqueItems;
 }
+
+//민원 대응방안 저장
+function minwonComplaintSave() {
+	
+	let responsedRightsVal = $("input[name='complainRespondRights']:checked").val();
+	let complainRespondContract = $("input[name='complainRespondContract']:checked").val();
+	let complainRespondContract2 = $("input[name='complainRespondContract2']:checked").val();
+	
+	
+	
+	let paramObj = {
+		"test" : 1
+	}
+}
+
+
+//민원 대응방안 삭제
+function minComplaintDel() {
+	
+}
+
+
 
 //========================민원 대응방안 수립 팝업 [E]========================
 //==============================================================================================================
