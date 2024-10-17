@@ -1080,7 +1080,7 @@ public class issueController {
 				String str_appNo = CommonUtil.getNextAppovalSeq();
 				boolean res_Echo = false;
 				if ("".equals(str_appNo)) {
-					map.put("message", "처리 중 오류가 발생했습니다.2");
+					map.put("message", "처리 중 오류가 발생했습니다.");
 				} else {
 						String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
 						String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
@@ -1125,7 +1125,7 @@ public class issueController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			map.put("message", "처리 중 오류가 발생했습니다.1");
+			map.put("message", "처리 중 오류가 발생했습니다.");
 		}
 
 		JSONObject jo = new JSONObject(map);
