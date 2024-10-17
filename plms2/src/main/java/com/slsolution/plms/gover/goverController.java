@@ -1144,8 +1144,21 @@ public class goverController {
 		mav.addObject("jisaList", jisaList);
 		mav.addObject("goverModifyList", goverModifyList);
 		mav.addObject("goverModifyOfficeList", goverModifyOfficeList);
-		mav.addObject("atcFileList", atcFileList);
+		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
+		    mav.addObject("atcFileList", new ArrayList<>());
+		} else {
+			// 첨부파일 목록을 등록일 desc 순으로 정렬
+		    Collections.reverse(atcFileList);
+		    mav.addObject("atcFileList", atcFileList);
+		}
 		mav.addObject("memoList", goverMemoList);
+		if (goverMemoList == null || goverMemoList.isEmpty()) { //메모
+		    mav.addObject("memoList", new ArrayList<>());
+		} else {
+			// 메모 목록을 작성일시 desc 순으로 정렬
+		    Collections.reverse(goverMemoList);
+		    mav.addObject("memoList", goverMemoList);
+		}
 		mav.addObject("jimokList", jimokList);
 		mav.addObject("pnuList", goverPnuList);
 		mav.addObject("pnuListSize", goverPnuListSize);

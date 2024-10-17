@@ -3133,7 +3133,13 @@ log.info("PMT_NO:"+PMT_NO);
 			mav.addObject("resultData",data.get(0));
 			mav.addObject("soujaList",soujaList);
 			mav.addObject("jisangPermitList",jisangPermitList);
-			mav.addObject("atcFileList",atcFileList);
+			if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
+			    mav.addObject("atcFileList", new ArrayList<>());
+			} else {
+				// 첨부파일 목록을 등록일 desc 순으로 정렬
+			    Collections.reverse(atcFileList);
+			    mav.addObject("atcFileList", atcFileList);
+			}
 			mav.addObject("jisangModifyList",jisangModifyList);
 			mav.addObject("jisangMergeList",jisangMergeList);
 			
@@ -3222,7 +3228,13 @@ log.info("PMT_NO:"+PMT_NO);
 			mav.addObject("resultData",data.get(0));
 			mav.addObject("soujaList",soujaList);
 			mav.addObject("jisangPermitList",jisangPermitList);
-			mav.addObject("atcFileList",atcFileList);
+			if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
+			    mav.addObject("atcFileList", new ArrayList<>());
+			} else {
+				// 첨부파일 목록을 등록일 desc 순으로 정렬
+			    Collections.reverse(atcFileList);
+			    mav.addObject("atcFileList", atcFileList);
+			}
 			mav.addObject("jisangModifyList",jisangModifyList);
 			mav.addObject("jisangMergeList",jisangMergeList);
 			
