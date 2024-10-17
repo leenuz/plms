@@ -1073,20 +1073,27 @@ function openExistingAgreePopup(mwSeq, agreeSeq) {
         success: function(data) {
             console.log("Received data:", data); // 전체 데이터를 출력
             
-            // 팝업을 활성화
-            $("#complaint_register_Popup").addClass('active');
-            showDim();
+						if (data.length > 0) {
+                // 첫 번째 데이터의 agree_title을 로그에 출력
+                console.log("First agree_title:", data[0].agree_title);
 
-            // 협의 내용을 받아와서 필드에 입력
-            $("input[name='TITLE']").val(data.agree_title);
-            $("textarea[name='CONTENTS']").html(data.agree_contents);  // HTML 태그가 포함된 데이터를 처리
-            $("select[name='STATUS']").val(data.status_str).trigger('change');  // select value 설정 후 change 이벤트 발생
-            $(".Popup_Custom_SelectView").text(data.status_str);  // 커스텀 UI의 텍스트 변경
-            $("#consult_date_field").val(data.agree_date);
+                // 팝업을 활성화
+                $("#complaint_register_Popup").addClass('active');
+                showDim();
 
-            // hidden 필드에 mw_seq와 agree_seq 값 채우기
-            $("input[name='mw_seq']").val(mwSeq);
-            $("input[name='agree_seq']").val(agreeSeq);
+                // 협의 내용을 받아와서 필드에 입력
+                $("input[name='TITLE']").val(data[0].agree_title);
+                $("textarea[name='CONTENTS']").html(data[0].agree_contents);  // HTML 태그가 포함된 데이터를 처리
+                $("select[name='STATUS']").val(data[0].status_str).trigger('change');  // select value 설정 후 change 이벤트 발생
+                $(".Popup_Custom_SelectView").text(data[0].status_str);  // 커스텀 UI의 텍스트 변경
+                $("#consult_date_field").val(data[0].agree_date);
+
+                // hidden 필드에 mw_seq와 agree_seq 값 채우기
+                $("input[name='mw_seq']").val(mwSeq);
+                $("input[name='agree_seq']").val(agreeSeq);
+            } else {
+                console.error("No data found.");
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error("Error loading agree details:", textStatus, errorThrown);
@@ -1125,7 +1132,7 @@ $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 			type: "POST",
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data, jqXHR) { // 새로 만들어진 agree_seq 받아와서 getAgreeAtcfile 요청해서 파일 목록 보여주기. #complaintRegisterBtn 참고
+			success: function(data, jqXHR) {
 				console.log(data);
 				if (data.message != null && data.message != undefined && data.message == "success") {
 					let agreeSeq = data.agreeSeq;  // 서버에서 전달된 agreeSeq 사용
@@ -1197,7 +1204,7 @@ $(document).on("click", ".document_add_btnWrap .sangsinBtn", function() {
 			type: "POST",
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data, jqXHR) { // 새로 만들어진 agree_seq 받아와서 getAgreeAtcfile 요청해서 파일 목록 보여주기. #complaintRegisterBtn 참고
+			success: function(data, jqXHR) {
 				console.log(data);
 				if (data.message != null && data.message != undefined && data.message == "success") {
 					let agreeSeq = data.agreeSeq;  // 서버에서 전달된 agreeSeq 사용
