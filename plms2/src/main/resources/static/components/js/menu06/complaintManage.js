@@ -1060,7 +1060,7 @@ $(document).on('click', '#minwonAgreeUl', function() {
     var mwSeq = $('#minwonSeq').val();  // mw_seq는 따로 저장해둔 hidden 값에서 가져옴
     var agreeSeq = $(this).find('.agree-seq').val();  // 해당 행의 agree_seq 값 추출
 
-		console.log("mw_seq: " + mw_seq + "agreeSeq: " + agreeSeq);
+		console.log("mw_seq: " + mw_seq + ", agreeSeq: " + agreeSeq);
     openExistingAgreePopup(mwSeq, agreeSeq);  // mw_seq와 agree_seq를 넘겨 팝업 열기
 });
 
@@ -1095,7 +1095,7 @@ function openExistingAgreePopup(mwSeq, agreeSeq) {
 }
 
 
-// 민원협의 내용 등록/수정 팝업 - 저장 버튼 클릭 시 minwon_agreement , minwon_agree_atcfile 테이블에 저장 후 파일 보이기
+// 민원협의 내용 등록/수정 팝업 - 저장 버튼
 $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 	if (dataInfo == null || dataInfo == undefined) {
 		console.log("dataInfo is null");
@@ -1111,10 +1111,9 @@ $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 	// JSON 형태로 consultInfo를 전송하기 위해 문자열로 변환
 	var params = {
 	    "MW_SEQ": minwonSeq,
-	    "minwonAgreeSeq": agreeSeq, // 수정일 경우 있음, 신규일 경우 없음.
+	    "agreeSeq": agreeSeq, // 수정일 경우 있음, 신규일 경우 없음.
 	    "files": uploadFiles,  // 파일 경로와 이름이 포함된 배열
 	    "consultInfo": consultInfo,  // consultInfo도 포함해서 전송
-	    "mode": "asave"
 	};
 
 	console.log(params);
@@ -1167,44 +1166,74 @@ $(document).on("click", ".document_add_btnWrap .saveBtn", function() {
 });
 
 
-//협의추가 -> 상신
+//민원협의 내용 등록/수정 팝업 -> 상신 버튼
 $(document).on("click", ".document_add_btnWrap .sangsinBtn", function() {
 	if (dataInfo == null || dataInfo == undefined) {
+		console.log("dataInfo is null");
 		return
 	}
-	$.ajax({
-		url: "/issue/minwonCompleteSave",
-		data: getPopupJsonData(),
-		async: true,
-		type: "POST",
-		dataType: "json",
-		contentType: 'application/json; charset=utf-8',
-		success: function(data, jqXHR) {
-			console.log(data);
-			if (data.message != null && data.message != undefined && data.message == "success") {
-				closeComplaintregisterPopup();
-			} else {
-				alert(data.message);
+
+	let consultInfo = getPopupJsonData();
+	let minwonSeq = $("#minwonSeq").val();  // minwonSeq 값을 가져옴
+	let agreeSeq = $("#agreeSeq").val();  // minwonSeq 값을 가져옴
+	console.log("consoleInfo: " + consultInfo);
+	console.log(uploadFiles);
+
+	// JSON 형태로 consultInfo를 전송하기 위해 문자열로 변환
+	var params = {
+	    "MW_SEQ": minwonSeq,
+	    "AGREE_SEQ": agreeSeq, // 수정일 경우 있음, 신규일 경우 없음.
+	    "files": uploadFiles,  // 파일 경로와 이름이 포함된 배열
+	    "consultInfo": consultInfo,  // consultInfo도 포함해서 전송
+			"SANGSIN_FLAG":"Y"
+	};
+
+	console.log(params);
+
+		$.ajax({
+			url: "/issue/saveMinwonAgreeData",
+			data: JSON.stringify(params),
+			async: true,
+			type: "POST",
+			dataType: "json",
+			contentType: 'application/json; charset=utf-8',
+			success: function(data, jqXHR) { // 새로 만들어진 agree_seq 받아와서 getAgreeAtcfile 요청해서 파일 목록 보여주기. #complaintRegisterBtn 참고
+				console.log(data);
+				if (data.message != null && data.message != undefined && data.message == "success") {
+					let agreeSeq = data.agreeSeq;  // 서버에서 전달된 agreeSeq 사용
+					let mwSeq = minwonSeq;
+					
+					// 팝업 닫기
+					closeComplaintregisterPopup();
+
+					// "저장되었습니다." alert 띄우기
+					alert('상신되었습니다.');
+					
+					// 페이지 새로고침 - 맨 위에 행 추가 방식 하려다가 시간 상 새로고침으로 임시 적용
+					location.reload();
+				} else {
+					alert(data.message);
+				}
+			},
+			beforeSend: function() {
+				//(이미지 보여주기 처리)
+				//$('#load').show();
+				// loadingShow();
+			},
+			complete: function() {
+				//(이미지 감추기 처리)
+				//$('#load').hide();
+				// loadingHide();
+				hideDim();
+			},
+			error: function(jqXHR, textStatus, errorThrown, responseText) {
+				//alert("ajax error \n" + textStatus + " : " + errorThrown);
+				console.log(jqXHR);
+				console.log(jqXHR.readyState);
+				console.log(jqXHR.responseText);
+				console.log(jqXHR.responseJSON);
 			}
-		},
-		beforeSend: function() {
-			//(이미지 보여주기 처리)
-			//$('#load').show();
-			// loadingShow();
-		},
-		complete: function() {
-			//(이미지 감추기 처리)
-			//$('#load').hide();
-			// loadingHide();
-		},
-		error: function(jqXHR, textStatus, errorThrown, responseText) {
-			//alert("ajax error \n" + textStatus + " : " + errorThrown);
-			console.log(jqXHR);
-			console.log(jqXHR.readyState);
-			console.log(jqXHR.responseText);
-			console.log(jqXHR.responseJSON);
-		}
-	}); //end ajax
+		}); //end ajax
 });
 
 // 민원 협의 내용 등록/수정 팝업 - 파일 다운로드 버튼
