@@ -227,6 +227,10 @@ function getPopupJsonData() {
 
 	dataObj.MW_SEQ = mw_seq;
 	//dataObj.STATUS = findProgStatus(dataObj.STATUS);
+	
+	// STATUS 값 가져오기 (선택된 옵션의 텍스트 값으로 설정)
+	var selectedStatus = $('#statusBtn').text();
+	dataObj.STATUS = selectedStatus;
 
 	//첨부파일
 	//const complaintRegiPopup_myPcFiles = document.getElementById('complaint_register_Popup_file');
@@ -247,6 +251,8 @@ function getPopupJsonData() {
 	dataObj.files = fileCheck;
 	dataObj.filesLength = fileCheck.length;
 
+	// 콘솔 출력 (디버깅용)
+	console.log("선택된 STATUS 텍스트: " + selectedStatus);
 	console.log("dataObj[STATUS]: " + dataObj["STATUS"]);
 	console.log("dataObj 전체 내용:", dataObj);
 	//return JSON.stringify(dataObj);
@@ -1191,7 +1197,7 @@ $(document).on('click', '#minwonAgreeUl', function() {
     openExistingAgreePopup(mwSeq, agreeSeq);  // mw_seq와 agree_seq를 넘겨 팝업 열기
 });
 
-// 협의 내용 수정 팝업 열기 함수(기존 데이터 있을 때 행 클릭 시) - 미완
+// 협의 내용 수정 팝업 열기 함수(기존 데이터 있을 때 행 클릭 시)
 function openExistingAgreePopup(mwSeq, agreeSeq) {
     $.ajax({
         url: "/issue/getMinwonAgreeDetail",
