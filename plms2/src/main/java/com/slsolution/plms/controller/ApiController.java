@@ -965,54 +965,70 @@ public class ApiController {
 		for (int i = 0; i < fileArray.length(); i++) {
 			JSONObject file = fileArray.getJSONObject(i);
 			String fileName = file.getString("fileName");
-			String maa_idx = file.getString("idx");
+			String maa_idx = file.optString("idx", null);  // idx가 없을 경우 null을 반환
 
 			// 파일 경로 및 DB에서 삭제 처리
 			HashMap<String, Object> params = new HashMap<>();
 			params.put("maa_idx", maa_idx);
 
-			// 파일 경로 조회
-			ArrayList<HashMap> filePathResultList = mainService.selectQuery("commonSQL.selectFilePathByMaaIdx", params);
+			if (maa_idx != null && !maa_idx.isEmpty()) {
+				// DB에서 파일 경로 조회
+				ArrayList<HashMap> filePathResultList = mainService.selectQuery("commonSQL.selectFilePathByMaaIdx", params);
 
-			if (filePathResultList != null && !filePathResultList.isEmpty()) {
-				HashMap filePathResult = filePathResultList.get(0);
+				if (filePathResultList != null && !filePathResultList.isEmpty()) {
+					HashMap filePathResult = filePathResultList.get(0);
 
-				if (filePathResult != null && filePathResult.get("maa_file_path") != null) {
-					String maaFilePath = filePathResult.get("maa_file_path").toString();
-					String filePath = "";
+					if (filePathResult != null && filePathResult.get("maa_file_path") != null) {
+						String maaFilePath = filePathResult.get("maa_file_path").toString();
+						String filePath = "";
 
-					// 마지막 슬래시의 위치 찾기
-					int lastSlashIndex = maaFilePath.lastIndexOf('/');
-					int secondLastSlashIndex = maaFilePath.lastIndexOf('/', lastSlashIndex - 1);
-					fileName = maaFilePath.substring(secondLastSlashIndex + 1);
-					filePath = GC.getMinwonFileDataDir();
+						// 파일 경로에서 파일명 추출
+						int lastSlashIndex = maaFilePath.lastIndexOf('/');
+						int secondLastSlashIndex = maaFilePath.lastIndexOf('/', lastSlashIndex - 1);
+						fileName = maaFilePath.substring(secondLastSlashIndex + 1);
+						filePath = GC.getMinwonFileDataDir();
 
-					// 로컬 경로에서 파일 삭제
-					String fileFullPath = filePath + "/" + fileName;
-					File fileToDelete = new File(fileFullPath);
-					if (fileToDelete.exists()) {
-						if (fileToDelete.delete()) {
-							log.info("파일 삭제 성공: " + fileFullPath);
+						// 로컬 경로에서 파일 삭제
+						String fileFullPath = filePath + "/" + fileName;
+						File fileToDelete = new File(fileFullPath);
+						if (fileToDelete.exists()) {
+							if (fileToDelete.delete()) {
+								log.info("파일 삭제 성공: " + fileFullPath);
+							} else {
+								log.error("파일 삭제 실패: " + fileFullPath);
+							}
 						} else {
-							log.error("파일 삭제 실패: " + fileFullPath);
+							log.warn("파일이 존재하지 않음: " + fileFullPath);
 						}
-					} else {
-						log.warn("파일이 존재하지 않음: " + fileFullPath);
-					}
 
-					// DB에서 파일 정보 삭제
-					mainService.DeleteQuery("commonSQL.minwonAgreeAtcFileDelete", params);
+						// DB에서 파일 정보 삭제
+						mainService.DeleteQuery("commonSQL.minwonAgreeAtcFileDelete", params);
+					} else {
+						log.warn("파일 경로를 찾을 수 없음. maa_idx: " + maa_idx);
+					}
 				} else {
 					log.warn("파일 경로를 찾을 수 없음. maa_idx: " + maa_idx);
 				}
 			} else {
-				log.warn("파일 경로를 찾을 수 없음. maa_idx: " + maa_idx);
+				// maa_idx가 없는 경우, 아직 저장되지 않은 파일이므로 /temp 디렉토리에서 삭제
+				String tempFilePath = GC.getMinwonFileTempDir() + "/" + fileName;
+				File tempFile = new File(tempFilePath);
+				if (tempFile.exists()) {
+					if (tempFile.delete()) {
+						log.info("파일 삭제 성공 (/temp): " + tempFilePath);
+					} else {
+						log.error("파일 삭제 실패 (/temp): " + tempFilePath);
+					}
+				} else {
+					log.warn("파일이 존재하지 않음 (/temp): " + tempFilePath);
+				}
 			}
 		}
 
 		// 응답 처리
 		return ResponseEntity.ok().body(Collections.singletonMap("resultMessage", "success"));
 	}
+
 
 	// 파일 읽기 전용 API
 	@GetMapping("/downloadFile")

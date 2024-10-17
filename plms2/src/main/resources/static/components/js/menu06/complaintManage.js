@@ -1129,7 +1129,7 @@ $(document).ready(function () {
 		//row += '<button class="viewDetailButton lightBlueBtn">보기</button>'; // 새로 추가한 파일은 보기 버튼 제거?
 		row += '</li>';
 		row += '<li>';
-		row += '<button>삭제</button>';
+		row += '<button class="attachFileBtn grayBtn" id="deleteFileBtn">삭제</button>';
 		row += '</li>';
 		row += '</ul>';
 
