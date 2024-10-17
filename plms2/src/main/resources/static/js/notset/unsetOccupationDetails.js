@@ -419,6 +419,7 @@ const allCheckEventMasterEdit = () => {
 
     // 전체선택 클릭시 
     function clickedSelectAllMasterEdit(clickedAllinput) {
+			console.log("전체 선택 체크박스2");
         const attachFiles = document.querySelectorAll('input[name="masterEdit_attachFile"]');
 
         attachFiles.forEach((checkbox) => {
@@ -427,7 +428,7 @@ const allCheckEventMasterEdit = () => {
     }
 }
 
-//allCheckEventMasterEdit();
+allCheckEventMasterEdit();
 
 
 // 필지 첨부파일 - 첨부파일 저장 버튼 **********************
