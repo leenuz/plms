@@ -117,7 +117,10 @@ const newIssueRegisterOpenEvet = () => {
 		// };
 		// xhr.send();
 		// console.log('issueManageNewIssuePopWrap 작동');
+		
 		newIssueBtn.addEventListener("click", () => {
+			loadingShow();
+			$('#mask').css('z-index','1');
 			const popupOpen = document.getElementById("newcomplaint_Popup");
 			if (popupOpen) {
 				popupOpen.classList.add("active");

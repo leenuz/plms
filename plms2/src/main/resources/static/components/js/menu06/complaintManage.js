@@ -321,6 +321,10 @@ function onDataLoad() {
 			$('#dopcoAllWrappers .land_contents').text(result.mw_contents); //내용
 			$('#pop_dopcoAllWrappers .complaints_content_box').text(result.mw_contents); //내용
 			
+			// 이슈 유형
+			let issueType = `${result.code_str1} >> ${result.code_str2} >> ${result.code_str3}`;
+			$('#mwdetail_issuetype').val(issueType);
+			$('#pop_mwdetail_issuetype').text(issueType);
 			// 민원인/토지주
 			let minwontojijus = '';
 			if (result.minwonin_tojiju_nm != null) {
@@ -1006,19 +1010,21 @@ function minwonComplaintValidation() {
 		return false;
 	}
 	validationObj.MW_CODE1 = issueMinwonCode_1;
-	
+	validationObj.MW_CODE1_NAME = $("#complainSeletDepth1_Btn").text();	
 	
 	if(commonNvl(issueMinwonCode_2, -1) == -1){
 		alert('이슈유형 중분류를 선택하지 않았습니다.');
 		return false;
 	}
 	validationObj.MW_CODE2 = issueMinwonCode_2;
+	validationObj.MW_CODE2_NAME = $("#complainSeletDepth2_Btn").text();
 	
 	if(commonNvl(issueMinwonCode_3, -1) == -1){
 		alert('이슈유형 소분류를 선택하지 않았습니다.');
 		return false;
 	}
 	validationObj.MW_CODE3 = issueMinwonCode_3;
+	validationObj.MW_CODE3_NAME = $("#complainSeletDepth3_Btn").text();
 	
 	validationObj.MW_SEQ = $("#minwonSeq").val();
 	
@@ -1589,5 +1595,9 @@ function popupComplete () {
 		}
 	}); //end ajax
 }
+
+$(document).on('click', '#sangsinBtn', function() {
+	console.log(dataInfo);
+});
 
 //========================민원 완료 [E]========================

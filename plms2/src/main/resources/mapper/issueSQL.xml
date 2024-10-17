@@ -649,14 +649,20 @@ SELECT mht_mw_seq as MW_SEQ,
 INSERT INTO MINWON_HANDLING_TMP (
         mht_MW_SEQ,
         mht_MW_CODE1,
+        mht_MW_CODE1_NAME,
         mht_MW_CODE2,
+        mht_MW_CODE2_NAME,
         mht_MW_CODE3,
+        mht_MW_CODE3_NAME,
         mht_complete_yn
 ) VALUES (
         ${MW_SEQ},
         #{MW_CODE1},
+        #{MW_CODE1_NAME},
         #{MW_CODE2},
+        #{MW_CODE2_NAME},
         #{MW_CODE3},
+        #{MW_CODE3_NAME},
         #{COMPLETE_YN}
 )
 	</insert>
@@ -1350,16 +1356,19 @@ WHERE
     ]]>
     <if test="MW_CODE1 != null and MW_CODE1 != ''">
         mht_MW_CODE1 = #{MW_CODE1},
+        mht_MW_CODE1_NAME = #{MW_CODE1_NAME},
     </if>
     <if test="MW_CODE2 != null and MW_CODE2 != ''">
         mht_MW_CODE2 = #{MW_CODE2},
+        mht_MW_CODE2_NAME = #{MW_CODE2_NAME},
     </if>
     <if test="MW_CODE3 != null and MW_CODE3 != ''">
         mht_MW_CODE3 = #{MW_CODE3},
+        mht_MW_CODE3_NAME = #{MW_CODE3_NAME},
     </if>
     <![CDATA[
         mht_COMPLETE_YN = #{COMPLETE_YN}
-    WHERE mht_MW_SEQ = #{MW_SEQ}
+    WHERE mht_MW_SEQ = #{MW_SEQ}::numeric
     ]]>
 </update>
 	<!-- <update id="updateMinwonHandlingTmp" parameterType="HashMap">
@@ -1561,5 +1570,15 @@ INSERT INTO MINWON_AGREE_ATCFILE (
     ORDER BY 
         MAA_FILE_REGDATE DESC
 </select>
+
+<!-- 민원 대응방안 접수/수정 시 minwon_master 테이블에도 이슈코드 갱신 -->
+<update id="updateMinwonMasterIssueCodes" parameterType="HashMap">
+UPDATE MINWON_MASTER
+    SET MM_MW_CODE1 = #{MW_CODE1}
+        , MM_MW_CODE2 = #{MW_CODE2}
+        , MM_MW_CODE3 = #{MW_CODE3}
+ WHERE MM_MW_SEQ = #{MW_SEQ}::numeric
+</update>
+
 
 </mapper>

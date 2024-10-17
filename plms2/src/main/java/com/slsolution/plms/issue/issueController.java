@@ -848,6 +848,11 @@ public class issueController {
 		String MW_CODE1 = requestParamObj.getString("MW_CODE1");
 		String MW_CODE2 = requestParamObj.getString("MW_CODE2");
 		String MW_CODE3 = requestParamObj.getString("MW_CODE3");
+		
+		String MW_CODE1_NAME = requestParamObj.getString("MW_CODE1_NAME");
+		String MW_CODE2_NAME = requestParamObj.getString("MW_CODE2_NAME");
+		String MW_CODE3_NAME = requestParamObj.getString("MW_CODE3_NAME");
+		
 		String SANGSIN_FLAG = "N";
 		
 		//상신 여부에 대한 값 체크
@@ -865,6 +870,11 @@ public class issueController {
 			params.put("MW_CODE1", MW_CODE1);
 			params.put("MW_CODE2", MW_CODE2);
 			params.put("MW_CODE3", MW_CODE3);
+			
+			params.put("MW_CODE1_NAME", MW_CODE1_NAME);
+			params.put("MW_CODE2_NAME", MW_CODE2_NAME);
+			params.put("MW_CODE3_NAME", MW_CODE3_NAME);
+			
 			params.put("COMPLETE_YN", "N");	// <-- 기존소스도 N으로 설정되있음. 송유관 업무 프로세스상 어떤값인지 확인 아직 못함.
 
 //			list = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonHandlingTmp", params);
@@ -874,6 +884,9 @@ public class issueController {
 			} else {
 				mainService.InsertQuery("issueSQL.insertMinwonHandling", params);
 			}
+			
+            //민원대응방안 수립시 minwon_master에도 이슈 유형 코드 UPDATE
+            mainService.UpdateQuery("issueSQL.updateMinwonMasterIssueCodes", params);
 
 			map.put("message", "success");
 
