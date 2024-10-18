@@ -1255,12 +1255,14 @@ INSERT INTO PLMS_ISSUE_CODE (
         , CODE_NAME
         , REGISTED_YN
         , PERMITTED_YN
+        , CODE_GROUP_1
 ) VALUES (
         #{CODE}
         , #{CODE_DEPTH}::numeric
         , #{CODE_NAME}
         , #{REGISTED_YN}
         , #{PERMITTED_YN}
+        , #{CODE_GROUP_1}
 )
 	
 	</insert>

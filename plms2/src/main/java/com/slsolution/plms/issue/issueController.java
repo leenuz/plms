@@ -2137,6 +2137,7 @@ public class issueController {
 						newCode = (String) mainService.selectStringQuery("issueSQL.makeIssueNextCodeDepth3", tmpMap);
 					}
 					params.put("CODE", newCode);
+					params.put("CODE_GROUP_1", newCode.substring(0, 2));
 					mainService.InsertQuery("issueSQL.insertIssueCode", params);
 					result++;
 				} else {
