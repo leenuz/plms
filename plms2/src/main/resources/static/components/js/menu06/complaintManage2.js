@@ -2,6 +2,7 @@
 
 var rowCount2 = 0;
 var togiDataList = [];
+var deleteFileListArr = [];
 /****************************
  * 
  * 민원상신 / 수정 팝업 위한 스크립트들
@@ -10,6 +11,8 @@ var togiDataList = [];
 
 $(function() {
 	console.log("===== complainManage2.js start =====");
+	
+	deleteFileListArr = [];
 	
 	let objDragAndDrop = $("#newminwon_fileUploadBox");
 	
@@ -73,7 +76,7 @@ function createStatusbar_minwonEdit (obj, name, size, no) {
     
     rowHtml += '<ul class="popcontents" name="fileListUl">';
 	rowHtml += '<li class="popBtnbox">';
-	rowHtml += '	<button class="popAllDeleteFileBtn"></button>';
+	rowHtml += '	<button class="popAllDeleteFileBtn" onclick="deleteFileListFunc(this, '+nextNo+')"></button>';
 	rowHtml += '</li>';
 	rowHtml += '<li class="popcontent popfilenameBox">';
 	rowHtml += '<input type="hidden" value="'+ +'">';
@@ -318,7 +321,7 @@ function complaintsselect() {
 	                    </select>
 	                </div>
 	                <div class="Popup_Custom_SelectBox">
-	                    <button class="Popup_Custom_SelectView" id="landowner_presence_${document.querySelectorAll(".landowner_wrap").length + 1}">Y/N</button>
+	                    <button class="Popup_Custom_SelectView" id="landowner_presence_${document.querySelectorAll(".landowner_wrap").length + 1}" data-idx="${document.querySelectorAll(".landowner_wrap").length + 1}" onclick="selectPresence(this)">Y/N</button>
 	                    <ul class="Popup_Custom_SelectBtns"></ul>
 	                </div>
 	            </li>
@@ -620,7 +623,7 @@ function loadTempMinwonDataSetting(data) {
 		minwoninHtml += '			</select>';
 		minwoninHtml += '		</div>';
 		minwoninHtml += '		<div class="Popup_Custom_SelectBox">';
-		minwoninHtml += '			<button class="Popup_Custom_SelectView" id="landowner_presence_'+(i+1)+'">'+m_presence+'</button>';
+		minwoninHtml += '			<button class="Popup_Custom_SelectView" id="landowner_presence_'+(i+1)+'" data-idx="'+(i+1)+'" onclick="selectPresence(this)">'+m_presence+'</button>';
 		minwoninHtml += '			<ul class="Popup_Custom_SelectBtns"></ul>';
 		minwoninHtml += '		</div>';
 		minwoninHtml += '	</li>';
@@ -652,10 +655,10 @@ function loadTempMinwonDataSetting(data) {
 			
 			fileHtml += '<ul class="popcontents" name="fileListUl">';
 			fileHtml += '<li class="popBtnbox">';
-			fileHtml += '	<button class="popAllDeleteFileBtn"></button>';
+			fileHtml += '	<button class="popAllDeleteFileBtn" onclick="deleteFileListFunc(this, '+z+')"></button>';
 			fileHtml += '</li>';
 			fileHtml += '<li class="popcontent popfilenameBox">';
-			fileHtml += '<input type="hidden" value="'+ +'">';
+			fileHtml += '<input type="hidden" value="-">';
 			fileHtml += '<figure class="poptypeIcon"></figure><p class="popfileNameText" id="minwonFileName_'+z+'">'+fileInfo.file_nm+'</p></li>';
 			fileHtml += '<li class="popcontent"><p>완료</p></li>';
 			fileHtml += '<li class="popcontent"><p class="popfileSizeText">-</p></li>';
@@ -691,6 +694,53 @@ function setReqLand(addr = "", reg_yn = "", contract_yn = "") {
 	$('.daepyo_pilji_list_3 input[type="text"]').val(contract_yn); //계약여부
 }
 
+//현장입회여부 셀렉트박스
+function selectPresence(obj){
+	console.log($(obj).attr('data-idx'));
+	
+	//select 박스, ul요소 가져오기
+	let selectBox = $(obj).closest('li').find('.hidden_SelectBox select');
+	let customSelectList = $(obj).closest('li').find('.Popup_Custom_SelectBtns');
+	
+	// Step 2. ul안에 기존 li요소들제거
+	customSelectList.empty();
+	
+	if(customSelectList.hasClass('active')) {
+		customSelectList.removeClass('active');
+		return false;
+	}
+	
+	// Step 3. option항목들 순회
+	selectBox.find('option').each(function() {
+		let optionTxt =  $(this).text(); // 옵션의 텍스트;
+		
+		// Step 4. 새로운 li요소 생성하고 붙이고
+		let li = $('<li></li>');
+		let p = $('<p></p>').text(optionTxt);
+		
+		li.append(p);
+		
+		//li에 클릭 이벤트 추가 및 버튼 텍스트 변경
+		li.on('click', function(){
+			$(obj).text(optionTxt);
+			customSelectList.removeClass('active');	//선택하면 사라져야.
+		});
+		
+		// Step 5. ul에 li요소 추가
+		customSelectList.append(li);
+	});
+	
+	customSelectList.addClass('active');
+}
+
+//파일삭제 -  저장 눌러야지 삭제됨. (DB만)
+function deleteFileListFunc(obj, idx) {
+	let deleteFileNm = $("#minwonFileName_"+idx).text();
+	$("[name='fileListUl'").eq(idx).remove();
+	deleteFileListArr.push(deleteFileNm)
+}
+
+
 //신규민원팝업 데이터 json
 function getPopupJsonData2() {
 	
@@ -720,6 +770,7 @@ function getPopupJsonData2() {
 		//let obj = {};
 		obj.saddr = $(ul).find('.landinfo_content_4 input').val(); //주소
 		obj.REP_YN = $(ul).find('.landinfo_content_3 input').is(':checked') ? "Y" : "N"; //대표필지여부
+		obj.rep_yn = $(ul).find('.landinfo_content_3 input').is(':checked') ? "Y" : "N"; //대표필지여부
 		obj.REGISTED_YN = $(ul).find('.landinfo_content_5 input').val(); //등기여부
 		obj.PERMITTED_YN = $(ul).find('.landinfo_content_6 input').val(); //계약여부
 		obj.AREA = $(ul).find('.landinfo_content_7 input').val(); //실저촉면적
@@ -738,7 +789,7 @@ function getPopupJsonData2() {
 		obj.birth_date = $(ul).find('input').eq(2).val(); //생년월일
 		obj.relation = $(ul).find('input').eq(3).val(); //토지주와 관계
 		obj.phone = $(ul).find('input').eq(4).val(); //연락처
-		obj.attendance = $(ul).find('select').val(); //현장입회
+		obj.attendance = $("#landowner_presence_"+index).text() == 'Y/N'? 'N' : $("#landowner_presence_"+index).text(); //현장입회
 		dataObj.userList.push(obj);
 	});
 
@@ -749,6 +800,8 @@ function getPopupJsonData2() {
 		fileCheck.push($("#minwonFileName_"+t).text());
 	}
 	
+	//첨푸파일 삭제 리스트
+	dataObj.deleteFileList = deleteFileListArr;
 	
 	//dataObj.files = newComplaintRegiFiles;
 	//dataObj.filesLength = newComplaintRegiFiles.length;
@@ -779,7 +832,7 @@ function getPopupJsonData2() {
 		let ownerBirth = commonNvl( $("#landowner_birthday_"+(p+1)).val(), "-" )  + "|";
 		let ownerRelation = commonNvl( $("#landowner_relation_"+(p+1)).val(), "-" )  + "|";
 		let ownerPhone = commonNvl( $("#landowner_phone_"+(p+1)).val(), "-" )  + "|";
-		let owerPresence = commonNvl( $("#landowner_presence"+(p+1)).text(), "N" )  + "|";
+		let owerPresence = commonNvl( $("#landowner_presence_"+(p+1)).text(), "N" )  + "|";
 
 		min_to_nameArr += ownerNm;
 		min_to_birthArr += ownerBirth;
@@ -849,6 +902,7 @@ function editInfoSangsin() {
 	paramData.SANGSIN_FLAG = "Y";
 	console.log(paramData);
 	
+	
 	$.ajax({
 		url: "/issue/saveMinwonData",
 		data: JSON.stringify(paramData),
@@ -883,4 +937,5 @@ function editInfoSangsin() {
 			console.log(jqXHR.responseJSON);
 		}
 	}); //end ajax
+	
 }

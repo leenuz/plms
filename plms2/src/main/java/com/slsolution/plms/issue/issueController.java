@@ -583,6 +583,10 @@ public class issueController {
 		//현재 작성타입여부
 		String makeType = requestParamObj.getString("makeType");
 		
+		//삭제 파일리스트
+		String deleteFileList = requestParamObj.getString("deleteFileList");
+		JSONArray deleteFileArr = new JSONArray(deleteFileList);
+		
 		ArrayList list = null;
 		HashMap map = new HashMap();
 		int mwSeq = 0;
@@ -627,8 +631,15 @@ public class issueController {
 
 				params.put("MW_SEQ", mwSeq);
 				params.put("MW_TITLE", MW_TITLE);
+				
+				params.put("MINWONIN_TOJIJU_NM", MIN_TO_NAMEARR);
+				params.put("MINWONIN_TOJIJU_BIRTH", MIN_TO_BIRTHARR);
+				params.put("TOJIJU_RELATION", MIN_TO_RELATIONARR);
+				params.put("MINWONIN_PHONE", MIN_TO_PHONEARR);
+				params.put("FIELD_PRESENCE", MIN_TO_PRESENCEARR);
+				
 				params.put("MW_HISTORY", MW_HISTORY);				//토지이력
-				params.put("MW_REQUIREMENTS", MW_REQUIREMENTS);	//요구사항
+				params.put("MW_REQUIREMENTS", MW_REQUIREMENTS);		//요구사항
 				params.put("MW_CONTENTS", MW_CONTENTS);				//내용
 				params.put("MW_OCCUR_DATE", MW_OCCUR_DATE);
 				params.put("JISA", JISA);
@@ -677,6 +688,19 @@ public class issueController {
 					}
 					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
 
+				}
+			}
+			
+			//Step. 2.5 - 삭제 파일리스트가 있다면 삭제 (DB에서만 삭제 - 실제로는 삭제 X)
+			if(deleteFileArr.length() > 0) {
+				
+				HashMap delParam = new HashMap();
+				delParam.put("MW_SEQ", MW_SEQ);
+				
+				for(int d = 0 ; d < deleteFileArr.length() ; d++) {
+					delParam.put("FILE_NAME", deleteFileArr.get(d));
+					//삭제 쿼리
+					mainService.DeleteQuery("issueSQL.deleteMinwonAtchFile", delParam);
 				}
 			}
 			

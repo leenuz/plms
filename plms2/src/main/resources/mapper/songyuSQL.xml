@@ -456,8 +456,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN_MST.CHUIDEUK_DATE,
         COALESCE(JIJUK_MST.PIPE_OVERLAP_YN, 'N') AS PIPE_OVERLAP_YN,
         JOIN_MST.MASTER_NO,
-        JOIN_MST.COMPLE_YN AS JISANG_COMPLE_YN,
-        JOIN_MST.PERMITTED_YN AS JISANG_PERMITTED_YN,
+        JOIN_MST.COMPLE_YN AS COMPLE_YN,
+        JOIN_MST.PERMITTED_YN AS PERMITTED_YN,
         JOIN_MST.JISA,
         JOIN_MST.PMT_NO,
         JOIN_MST.PAY_MONEY,
@@ -533,6 +533,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             JM.jm_comple_yn as COMPLE_YN,
             JM.jm_permitted_yn as PERMITTED_YN,
             JM.jm_pipe_yn as PIPE_YN,
+            
             JM.jm_JISANG_NO AS idx,
             JM.jm_idx as index,
             0 as gidx
@@ -587,6 +588,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             '' as COMPLE_YN,
             '' as PERMITTED_YN,
             GP.gp_pipe_overlap_yn as PIPE_YN,
+            
             GP.gp_GOVER_NO AS idx,
             GM.gm_idx as index,
             coalesce(GP.gp_idx,0) as gidx
@@ -656,6 +658,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             '' as COMPLE_YN,
             '' as PERMITTED_YN,
             '' as PIPE_YN,
+            
             NM.nm_NOTSET_NO AS idx,
             NM.nm_idx as idx,
             0 as gidx
@@ -710,6 +713,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             '' as COMPLE_YN,
             '' as PERMITTED_YN,
             '' as PIPE_YN,
+            
             DM.dom_DOPCO_NO AS idx,
             DM.dom_idx as index,
             0 as gidx
@@ -856,8 +860,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN_MST.CHUIDEUK_DATE,
         COALESCE(JIJUK_MST.PIPE_OVERLAP_YN, 'N') AS PIPE_OVERLAP_YN,
         JOIN_MST.MASTER_NO,
-        JOIN_MST.COMPLE_YN AS JISANG_COMPLE_YN,
-        JOIN_MST.PERMITTED_YN AS JISANG_PERMITTED_YN,
+        JOIN_MST.COMPLE_YN AS COMPLE_YN,
+        JOIN_MST.PERMITTED_YN AS PERMITTED_YN,
         JOIN_MST.JISA,
         JOIN_MST.PMT_NO,
         JOIN_MST.PAY_MONEY,
@@ -1619,8 +1623,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN_MST.CHUIDEUK_DATE,
         COALESCE(JIJUK_MST.PIPE_OVERLAP_YN, 'N') AS PIPE_OVERLAP_YN,
         JOIN_MST.MASTER_NO,
-        JOIN_MST.COMPLE_YN AS JISANG_COMPLE_YN,
-        JOIN_MST.PERMITTED_YN AS JISANG_PERMITTED_YN,
+        JOIN_MST.COMPLE_YN AS COMPLE_YN,
+        JOIN_MST.PERMITTED_YN AS PERMITTED_YN,
         JOIN_MST.JISA,
         JOIN_MST.PMT_NO,
         JOIN_MST.PAY_MONEY,
@@ -2353,8 +2357,8 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
         JOIN_MST.CHUIDEUK_DATE,
         COALESCE(JIJUK_MST.PIPE_OVERLAP_YN, 'N') AS PIPE_OVERLAP_YN,
         JOIN_MST.MASTER_NO,
-        JOIN_MST.COMPLE_YN AS JISANG_COMPLE_YN,
-        JOIN_MST.PERMITTED_YN AS JISANG_PERMITTED_YN,
+        JOIN_MST.COMPLE_YN AS COMPLE_YN,
+        JOIN_MST.PERMITTED_YN AS PERMITTED_YN,
         JOIN_MST.JISA,
         JOIN_MST.PMT_NO,
         JOIN_MST.PAY_MONEY,

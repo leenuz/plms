@@ -14,12 +14,7 @@ $(function() {
 
 	var json = JSON.stringify(formSerializeArray);
 
-	console.log("----------jsonobj------------");
-	console.log(json);
-	console.log("object issueManageRadio01:" + object.issueManageRadio01);
-
 	//loadDataTable(object);
-	console.log("-----------------------");
 	
 	//드래그 앤 드롭 영역 파일 첨부 관련 코드
 	let objDragAndDrop = $("#newminwon_fileUploadBox");
@@ -783,7 +778,7 @@ function loadDataTable(params) {
 	
 	console.log("-----start loadDataTable----------");
 	
-	console.log("Params:", params); // params 객체 출력
+	//console.log("Params:", params); // params 객체 출력
 
 	//var json=JSON.stringify(params);
 	
@@ -861,16 +856,16 @@ function loadDataTable(params) {
 					//params.sido+" "+params.sgg+" "+ljsIsNull(params.emd)?'':params.emd;//+" "+ljsIsNull(params.ri)?'':params.ri+" "+ljsIsNull(params.jibun)?'':params.jibun;
 				}
 
-				console.log("saddr:" + d.saddr);
-				console.log(params);
-				console.log("-----------d-----------");
-				console.log(d);
+				//console.log("saddr:" + d.saddr);
+				//console.log(params);
+				//console.log("-----------d-----------");
+				//console.log(d);
 
 			},
 
 			dataSrc: function(json) {
-				console.log("-------------json---------------");
-				console.log(json);
+				//console.log("-------------json---------------");
+				//console.log(json);
 				$("#dataTableTotalCount").html(json.recordsTotal);
 
 				saveJsonData = json.data;
@@ -879,7 +874,7 @@ function loadDataTable(params) {
 
 		},
 		initComplete: function() {
-			console.log(this.api().data().length);
+			//console.log(this.api().data().length);
 		},
 		columns: [
 			{ data: "mm_mw_title", "defaultContent": "" },//0
@@ -1351,7 +1346,7 @@ customSelectView.forEach((btn) => {
 		dataType: "json",
 		contentType: 'application/json; charset=utf-8',
 		success: function(response) {
-			console.log(response);
+			//console.log(response);
 			if (response.message = "success") {
 				const resultData = response.result;
 
@@ -1561,13 +1556,13 @@ function minwonListSearch(){
 
 	let json = JSON.stringify(formSerializeArray);
 
-	console.log("----------jsonobj------------");
-	console.log(json);
-	console.log("object issueManageRadio01:" + object.issueManageRadio01);
+	//console.log("----------jsonobj------------");
+	//console.log(json);
+	//console.log("object issueManageRadio01:" + object.issueManageRadio01);
 
-	console.log('조회는 나중에')
+	//console.log('조회는 나중에')
 	loadDataTable(object);
-	console.log("-----------------------");
+	//console.log("-----------------------");
 }
 
 //주소검색 팝업에서 선택 버튼 - 주소 검색한거 선택
