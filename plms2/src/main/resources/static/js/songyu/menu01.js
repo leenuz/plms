@@ -342,7 +342,7 @@ function loadDataTable(params) {
 			}, //9. 권리확보
 			{ data: "jasan_no" }, //10. 자산번호
 			{ data: "master_no" }, //11. 관리번호 
-			{ data: "jisang_comple_yn" }, //12. 등기여부 
+			{ data: "comple_yn" }, //12. 등기여부 
 			{ data: "permitted_yn" }, //13. 계약유형 
 			{ data: "chuideuk_date" }, //14. 취득일 
 			{ data: "gover_date" }, //15. 점용기간
@@ -534,9 +534,20 @@ function loadDataTable(params) {
 		  console.log("----------jsonobj------------");
 		  console.log(json);
 		  console.log("object askMenu01:"+object.askMenu01); 
+		  var right_type = "";
+			if (object.songyu_type_all != undefined && object.songyu_type_all != null) right_type = "";
+			else {
+				if (object.songyu_type_gover != undefined && object.songyu_type_gover != null) right_type += ",gover";
+				if (object.songyu_type_jisang != undefined && object.songyu_type_jisang != null) right_type += ",jisang";
+				if (object.songyu_type_notset != undefined && object.songyu_type_notset != null) right_type += ",notset";
+				if (object.songyu_type_toji != undefined && object.songyu_type_toji != null) right_type += ",dopco";
+			}
+
+			console.log("right_type:" + right_type.substr(1));
+			object.right_type = right_type.substr(1);
 		
 		console.log(object);
-		return;
+		//return;
 		
 		var allData={"excel":""};
 		$.ajax({
@@ -547,9 +558,81 @@ function loadDataTable(params) {
 				dataType: "json",
 				contentType: "application/json; charset=utf-8",
 				success: function(rt) {
-					const data = rt.resultData;
+					const data = rt.result;
 					console.log(data); // 서버에서 받아온 데이터 확인
+					var dataArr=[];
+					var head=['순번','담당지사','관로저촉','관경','시도','시군구','읍면동','리','지번','지목','소유자','면적','토지유형','권리확보','자산번호'
+					 ,'등기여부','겨약유형','취득일','점용기간','점용납부일','설정면적','설정연장','자산금액','납부금액'
+					 ,'PNU','등기/점용여부','계약/허가여부','이슈유형대분류','이슈유형중분류','이슈유형세분류','허가증보유여부','영구무상점유','소액미청구','점용료선납','선납기한'];
+					 dataArr.push(head);	
+					for(var i=0;i<data.length;i++){
+						var togi_type="";
+						if (data[i].gover_own_yn=="Y") togi_type="국유지";
+						else togi_type="사유지";
+						var jisangStatus="";
+						if (data[i].jisang_status=="jisang") jisangStatus="지상권";
+						else if (data[i].jisang_status=="gover") jisangStatus="점용";
+						else if (data[i].jisang_status=="notset") jisangStatus="미설정";
+						else if (data[i].jisang_status=="dopco") jisangStatus="매입";
+						else jisangStatus="";
+						var pmtDate = data[i].pmt_st_date == undefined ? "" : data[i].pmt_st_date + " ~ " + data[i].pmt_ed_date; //점용기간
+						var occunonpayreasonTitle1 ="";
+						var occunonpayreasonTitle2 ="";
+						//var occunonpayreasonTitle3 ="";
+						if (data[i].occunonpayreason==1) occunonpayreasonTitle1="영구 무상점용";
+						if (data[i].occunonpayreason==2) occunonpayreasonTitle1="소액 미청구";
+						//if (data[i].occunonpayreason==2) occunonpayreasonTitle1="소액 미청구";
+						
+						
+						var rowArr=[data[i].no,data[i].jisa,data[i].pipe_overlap_yn,data[i].pipe_meter,data[i].sido_nm,data[i].sgg_nm,data[i].emd_nm,data[i].ri_nm,data[i].jibun,data[i].jimok_text,data[i].souja_name,data[i].jijuk_area,togi_type,jisangStatus,data[i].jasan_no
+							,data[i].comple_yn,data[i].permitted_yn,data[i].chuideuk_date,pmtDate,data[i].pay_date,data[i].gover_area,data[i].gover_length,data[i].jasan_money,data[i].pay_money
+							,data[i].pnu,data[i].registed_yn,data[i].permitted_yn,data[i].code_depth1_name,data[i].code_depth2_name,data[i].code_depth3_name,data[i].permpossyn,occunonpayreasonTitle1,occunonpayreasonTitle2,data[i].occuprepayyn,data[i].occuprepaydate];
+						dataArr.push(rowArr);	
+					}
+					console.log("--------------excel data------------------");
+					console.log(dataArr);
+					var worksheet = XLSX.utils.aoa_to_sheet(dataArr);
+					var workbook = XLSX.utils.book_new();
+					XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+					var colWidths = [];
+					for (var i = 0; i < dataArr[0].length; i++) {
+						if (i==0) colWidths.push({ wpx: 30 });
+						else if (i==19) colWidths.push({ wpx: 200 });
+						else if (i==25) colWidths.push({ wpx: 120 });
+					    else colWidths.push({ wpx: 80 }); // 예시로 열마다 너비를 다르게 설정 (첫 열 100px, 두 번째 열 150px 등)
+					}
+
+					// 열 너비를 설정
+					worksheet['!cols'] = colWidths;
 					
+					var cellStyle = {
+					    font: { sz: 12, bold: true },  // 폰트 크기(sz: 14), 굵게(bold)
+					    border: {                      // 셀 테두리 설정
+					        top: { style: "thin",color:{rgb:"000000"} },
+					        bottom: { style: "thin",color:{rgb:"000000"} },
+					        left: { style: "thin",color:{rgb:"000000"} },
+					        right: { style: "thin",color:{rgb:"000000"} }
+					    }
+					};
+					
+					// 모든 데이터 셀에 스타일 적용
+					for (let row = 0; row < dataArr.length; row++) {
+					    for (let col = 0; col < dataArr[row].length; col++) {
+					        // 열 인덱스(A, B, C 등) 계산
+					        let cellRef = XLSX.utils.encode_cell({ c: col, r: row });
+					        
+					        // 셀 객체가 존재하지 않으면 빈 셀을 생성
+					        if (!worksheet[cellRef]) worksheet[cellRef] = { t: 's', v: '' };
+					        
+					        // 셀에 스타일 적용
+					        worksheet[cellRef].s = cellStyle;
+					    }
+					}
+
+				
+					// 엑셀 파일 다운로드
+					XLSX.writeFile(workbook, "test.xls");
+					//commonDownloadExcel(head,dataArr,"test.xls");
 					// 엑셀에 담을 데이터 준비
 					/*var data1 = [];
 					var rowTitle = ['관리기관', '주소', 'PNU', '점용길이 (m)', '관로면적 (㎡)'];

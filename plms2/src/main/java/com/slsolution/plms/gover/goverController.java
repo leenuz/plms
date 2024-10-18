@@ -2020,6 +2020,7 @@ log.info("file_list:"+file_list);
 
 	// 점용 마스터 등록 수정 실제 상신완료 된 걸로 등록
 	// 초초초이
+	//변경이 있을듯하여 실제 데모용으로 쓰던걸 그냥 적용되도록 변경 차이는  params.put("SAVE_STATUS", "Q"); 와 A를 파라메터로 넘겨 받도록 변경
 	@Transactional
 	@PostMapping(path = "/insertGoverMasterDemo")
 	public void insertGoverMasterDemo(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -2158,8 +2159,8 @@ log.info("file_list:"+file_list);
 			params.put("PMT_STATUS", "임시저장"); // 등록상태
 			params.put("USER_ID", USER_ID);
 			params.put("USER_NAME", USER_NAME);
-			params.put("SAVE_STATUS", "Q");
-			//params.put("SAVE_STATUS", SAVE_STATUS);
+			//params.put("SAVE_STATUS", "Q");
+			params.put("SAVE_STATUS", SAVE_STATUS);
 
 			/**********************
 			 * 다음 지상권 번호 조회 시작

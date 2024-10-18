@@ -867,8 +867,8 @@ $(document).on("click", "#draftSaveBtn", function() {
 					 else if (tobj.trim()=="영구 무상점용") object.occunonpayreason="1";
 					 else if (tobj.trim()=="소액 미청구") object.occunonpayreason="2";
 					 else if (tobj.trim()=="관할관청의 미청구") object.occunonpayreason="3";
-		 }
-	 	  object.occuprepayyn=$('input[name="occuprepayyn"]').is(':checked') ? 'Y' : 'N';
+		 }	                                                 
+	 	  object.occuprepayyn=$('input[type="checkbox"]name="occuprepayyn"]').is(':checked') ? 'Y' : 'N';
 		 object.togiDatas=togiDatas;
 		 object.files=files;
 		 object.fileCnt=files.length;

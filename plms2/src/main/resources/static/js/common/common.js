@@ -661,11 +661,11 @@ function commonDownloadExcel(head,body,filename) {
 			// 엑셀에 담을 데이터 준비
 			var data1 = [];
 			//var rowTitle = ['관리기관', '주소', 'PNU', '점용길이 (m)', '관로면적 (㎡)'];
-			var rowTitle=title
+			//var rowTitle=title
 			data1.push(head);
 			
 			// 서버에서 받아온 데이터를 이용해 행 생성
-			for (var i = 0; i < uls.length; i++) {
+			/*for (var i = 0; i < uls.length; i++) {
 				var addr = $(uls[i]).find("#addr").val(); // 주소 값
 				var pnuNo = $(uls[i]).find("#pnu").val(); // PNU 값
 				
@@ -681,16 +681,17 @@ function commonDownloadExcel(head,body,filename) {
 				// 행 데이터 추가
 				var rowData = [goverNo, addr, pnuNo, contact_length, contact_area];
 				data1.push(rowData);
-			}
+			}*/
+			data1.push(body);
 			
 			// 엑셀 파일 생성
 			console.log(data1);
-			var worksheet = XLSX.utils.aoa_to_sheet(data1);
+			var worksheet = XLSX.utils.aoa_to_sheet(body);
 			var workbook = XLSX.utils.book_new();
 			XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
 			// goverNo를 활용해 파일 이름 동적으로 생성
-			var fileName = goverNo + '_필지정보.xlsx';
+			var fileName = filename;
 
 			// 엑셀 파일 다운로드
 			XLSX.writeFile(workbook, fileName);

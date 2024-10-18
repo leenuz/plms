@@ -300,6 +300,23 @@ public class songyuController {
 			JSONObject requestParamsObj=new JSONObject(requestParams);
 			log.info("requestParams:"+requestParams);
 			
+			
+			String jisa = requestParamsObj.getString("jisa"); //지사
+			String manage_no = requestParamsObj.getString("manage_no"); //관리번호
+			String toji_type = requestParamsObj.getString("toji_type"); //토지유형
+			String right_type = requestParamsObj.has("right_type")?requestParamsObj.getString("right_type"):""; //권리확보유형
+			String dosiplan = requestParamsObj.getString("dosiplan"); // 도시계획유형
+			String toji_plan_type = requestParamsObj.getString("toji_plan_type"); //토지개발대상
+			String right_overlap = requestParamsObj.has("right_overlap")?requestParamsObj.getString("right_overlap"):""; //권리중복필지
+
+			String address = requestParamsObj.has("saddr")?requestParamsObj.getString("saddr"):""; // 입력형 주소
+			String sido_nm = requestParamsObj.has("sido_nm")?requestParamsObj.getString("sido_nm"):"";
+			String sgg_nm = requestParamsObj.has("sgg_nm")?requestParamsObj.getString("sgg_nm"):"";
+			String emd_nm = requestParamsObj.has("emd_nm")?requestParamsObj.getString("emd_nm"):"";
+			String ri_nm = requestParamsObj.has("ri_nm")?requestParamsObj.getString("ri_nm"):"";
+			String jibun = requestParamsObj.has("jibun")?requestParamsObj.getString("jibun"):"";
+			
+			
 				ArrayList list = new ArrayList();
 				ParameterParser parser = new ParameterParser(request);
 

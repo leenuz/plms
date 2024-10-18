@@ -314,7 +314,7 @@ function loadDataTable(params) {
 			}, //9. 권리확보
 			{ data: "jasan_no" }, //10. 자산번호
 			{ data: "master_no" }, //11. 관리번호
-			{ data: "jisang_comple_yn" }, //12. 등기여부
+			{ data: "comple_yn" }, //12. 등기여부
 			{ data: "permitted_yn" }, //13. 계약유형
 			{ data: "chuideuk_date" }, //14. 취득일
 			{ data: "gover_date" }, //15. 점용기간
