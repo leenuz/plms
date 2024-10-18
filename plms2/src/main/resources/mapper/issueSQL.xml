@@ -574,6 +574,8 @@ ORDER BY A.PNU ASC LIMIT 1
 UPDATE MINWON_MASTER
    SET mm_MW_TITLE = #{MW_TITLE}
      , mm_mw_OCCUR_DATE = TO_DATE(#{MW_OCCUR_DATE}, 'yyyy-MM-dd')
+     , toji_history = #{MW_HISTORY}
+     , minwon_requirement = #{MW_REQUIREMENTS}
      , mm_MW_CONTENTS = #{MW_CONTENTS}
      , mm_JISA = #{JISA}
  WHERE mm_MW_SEQ = ${MW_SEQ}

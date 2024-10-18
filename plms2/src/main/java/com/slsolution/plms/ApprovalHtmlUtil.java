@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -3417,7 +3418,13 @@ log.info("dataMap:"+detailMap);
 		sbHtml.append("			 	<tr>");
 		sbHtml.append("			 		<th scope=\"row\">민원 명</th>	");
 		sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("mw_title") + "</span>	");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("mw_title") + "</span>	");
+		sbHtml.append("			 		</td>	");
+		sbHtml.append("			 	</tr>	");
+		sbHtml.append("			 	<tr>");
+		sbHtml.append("			 		<th scope=\"row\">이슈유형</th>");
+		sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("code_str1_tmp") + " &gt; " + detailMap.get("code_str2_tmp") + " &gt; " + detailMap.get("code_str3_tmp") + "</span>	");
 		sbHtml.append("			 		</td>	");
 		sbHtml.append("			 	</tr>	");
 		sbHtml.append("			 	<tr>		");
@@ -3430,7 +3437,6 @@ log.info("dataMap:"+detailMap);
 		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("jisa") + "</span>	");
 		sbHtml.append("			 		</td>	");
 		sbHtml.append("			 	</tr>	");
-		
 		sbHtml.append("			 	<tr>");
 		sbHtml.append("			 		<th scope=\"row\">민원인/토지주</th>	");
 		sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
@@ -3445,11 +3451,17 @@ log.info("dataMap:"+detailMap);
 		sbHtml.append("			                 </colgroup>");
 		sbHtml.append("			                 <tbody>");
 		//토지주 관련 데이터 가공
-		String minwonin_tojijunm_arr[]=detailMap.get("minwonin_tojiju_nm").toString().split("\\|");
-		String minwonin_tojijubirth_arr[]=detailMap.get("minwonin_tojiju_birth").toString().split("\\|");
-		String tojiju_relation_arr[]=detailMap.get("tojiju_relation").toString().split("\\|");
-		String minwonin_phone_arr[]=detailMap.get("minwonin_phone").toString().split("\\|");
-		String field_presence_arr[]=detailMap.get("field_presence").toString().split("\\|");
+		//String tojijuNm[] = 
+		String minwonin_tojijunm_arr[]=((detailMap.get("minwonin_tojiju_nm") != null)? detailMap.get("minwonin_tojiju_nm").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+		String minwonin_tojijubirth_arr[]=((detailMap.get("minwonin_tojiju_birth") != null)? detailMap.get("minwonin_tojiju_birth").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+		String tojiju_relation_arr[]=((detailMap.get("tojiju_relation_arr") != null)? detailMap.get("tojiju_relation_arr").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+		String minwonin_phone_arr[]=((detailMap.get("minwonin_phone") != null)? detailMap.get("minwonin_phone").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+		String field_presence_arr[]=((detailMap.get("field_presence") != null)? detailMap.get("field_presence").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+		
+		//String minwonin_tojijubirth_arr[]=detailMap.get("minwonin_tojiju_birth").toString().split("\\|");
+		//String tojiju_relation_arr[]=detailMap.get("tojiju_relation").toString().split("\\|");
+//		String minwonin_phone_arr[]=detailMap.get("minwonin_phone").toString().split("\\|");
+		//String field_presence_arr[]=detailMap.get("field_presence").toString().split("\\|");
 		// 두 배열의 길이를 확인 (길이가 같다고 가정)
 		int length = Math.min(minwonin_tojijunm_arr.length, minwonin_tojijubirth_arr.length); // 두 배열 중 더 짧은 길이로 맞춤
 
@@ -3457,11 +3469,11 @@ log.info("dataMap:"+detailMap);
 		String[][] combinedArray = new String[length][5];
 
 		for (int i = 0; i < length; i++) {
-		    combinedArray[i][0] = minwonin_tojijunm_arr[i];
-		    combinedArray[i][1] = minwonin_tojijubirth_arr[i];
-		    combinedArray[i][2] = tojiju_relation_arr[i];
-		    combinedArray[i][3] = minwonin_phone_arr[i];
-		    combinedArray[i][4] = field_presence_arr[i];
+			combinedArray[i][0] = (i < minwonin_tojijunm_arr.length)?minwonin_tojijunm_arr[i]:"";
+		    combinedArray[i][1] = (i < minwonin_tojijubirth_arr.length)?minwonin_tojijubirth_arr[i]:"";
+		    combinedArray[i][2] = (i < tojiju_relation_arr.length)?tojiju_relation_arr[i]:"";
+		    combinedArray[i][3] = (i < minwonin_phone_arr.length)?minwonin_phone_arr[i]:"";
+		    combinedArray[i][4] = (i < field_presence_arr.length)?field_presence_arr[i]:"";
 		  
 		}
 		sbHtml.append("			 		<tr>");
@@ -3506,19 +3518,31 @@ log.info("dataMap:"+detailMap);
 		sbHtml.append("			 	<tr>");
 		sbHtml.append("			 		<th scope=\"row\">토지이력</th>	");
 		sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("toji_history") + "</span>");
+		String tojiHistory = (detailMap.get("toji_history") != null && 
+                StringUtils.hasText(detailMap.get("toji_history").toString()) && 
+                !"null".equals(detailMap.get("toji_history").toString())) 
+              ? detailMap.get("toji_history").toString() 
+              : "";
+
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + tojiHistory + "</span>");
 		sbHtml.append("			 		</td>	");
 		sbHtml.append("			 	</tr>	");
 		sbHtml.append("			 	<tr>");
 		sbHtml.append("			 		<th scope=\"row\">요구사항</th>	");
 		sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("minwon_requirement") + "</span>");
+		String tojiRequirement = (detailMap.get("minwon_requirement") != null && 
+                StringUtils.hasText(detailMap.get("minwon_requirement").toString()) && 
+                !"null".equals(detailMap.get("minwon_requirement").toString())) 
+              ? detailMap.get("minwon_requirement").toString() 
+              : "";
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + tojiRequirement + "</span>");
 		sbHtml.append("			 		</td>	");
 		sbHtml.append("			 	</tr>	");
 		sbHtml.append("			 	<tr>");
+		sbHtml.append("			 	<tr>");
 		sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
 		sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + contents + "</span>");
+		sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + contents + "</span>");
 		sbHtml.append("			 		</td>	");
 		sbHtml.append("			 	</tr>	");
 		sbHtml.append("			 </tbody>		");
@@ -3768,7 +3792,13 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">민원 명</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("mw_title") + "</span>	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("mw_title") + "</span>	");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">이슈유형</th>");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("code_str1_tmp") + " &gt; " + detailMap.get("code_str2_tmp") + " &gt; " + detailMap.get("code_str3_tmp") + "</span>	");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>		");
@@ -3795,11 +3825,17 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			                 </colgroup>");
 			sbHtml.append("			                 <tbody>");
 			//토지주 관련 데이터 가공
-			String minwonin_tojijunm_arr[]=detailMap.get("minwonin_tojiju_nm").toString().split("\\|");
-			String minwonin_tojijubirth_arr[]=detailMap.get("minwonin_tojiju_birth").toString().split("\\|");
-			String tojiju_relation_arr[]=detailMap.get("tojiju_relation").toString().split("\\|");
-			String minwonin_phone_arr[]=detailMap.get("minwonin_phone").toString().split("\\|");
-			String field_presence_arr[]=detailMap.get("field_presence").toString().split("\\|");
+			//String tojijuNm[] = 
+			String minwonin_tojijunm_arr[]=((detailMap.get("minwonin_tojiju_nm") != null)? detailMap.get("minwonin_tojiju_nm").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			String minwonin_tojijubirth_arr[]=((detailMap.get("minwonin_tojiju_birth") != null)? detailMap.get("minwonin_tojiju_birth").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			String tojiju_relation_arr[]=((detailMap.get("tojiju_relation_arr") != null)? detailMap.get("tojiju_relation_arr").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			String minwonin_phone_arr[]=((detailMap.get("minwonin_phone") != null)? detailMap.get("minwonin_phone").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			String field_presence_arr[]=((detailMap.get("field_presence") != null)? detailMap.get("field_presence").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			
+			//String minwonin_tojijubirth_arr[]=detailMap.get("minwonin_tojiju_birth").toString().split("\\|");
+			//String tojiju_relation_arr[]=detailMap.get("tojiju_relation").toString().split("\\|");
+//			String minwonin_phone_arr[]=detailMap.get("minwonin_phone").toString().split("\\|");
+			//String field_presence_arr[]=detailMap.get("field_presence").toString().split("\\|");
 			// 두 배열의 길이를 확인 (길이가 같다고 가정)
 			int length = Math.min(minwonin_tojijunm_arr.length, minwonin_tojijubirth_arr.length); // 두 배열 중 더 짧은 길이로 맞춤
 
@@ -3807,11 +3843,13 @@ log.info("dataMap:"+detailMap);
 			String[][] combinedArray = new String[length][5];
 
 			for (int i = 0; i < length; i++) {
-			    combinedArray[i][0] = minwonin_tojijunm_arr[i];
-			    combinedArray[i][1] = minwonin_tojijubirth_arr[i];
-			    combinedArray[i][2] = tojiju_relation_arr[i];
-			    combinedArray[i][3] = minwonin_phone_arr[i];
-			    combinedArray[i][4] = field_presence_arr[i];
+			   
+			    combinedArray[i][0] = (i < minwonin_tojijunm_arr.length)?minwonin_tojijunm_arr[i]:"";
+			    combinedArray[i][1] = (i < minwonin_tojijubirth_arr.length)?minwonin_tojijubirth_arr[i]:"";
+			    combinedArray[i][2] = (i < tojiju_relation_arr.length)?tojiju_relation_arr[i]:"";
+			    combinedArray[i][3] = (i < minwonin_phone_arr.length)?minwonin_phone_arr[i]:"";
+			    combinedArray[i][4] = (i < field_presence_arr.length)?field_presence_arr[i]:"";
+			   
 			  
 			}
 			sbHtml.append("			 		<tr>");
@@ -3856,15 +3894,27 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">토지이력</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("toji_history") + "</span>");
+			String tojiHistory = (detailMap.get("toji_history") != null && 
+                    StringUtils.hasText(detailMap.get("toji_history").toString()) && 
+                    !"null".equals(detailMap.get("toji_history").toString())) 
+                  ? detailMap.get("toji_history").toString() 
+                  : "";
+
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + tojiHistory + "</span>");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">요구사항</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("minwon_requirement") + "</span>");
+			String tojiRequirement = (detailMap.get("minwon_requirement") != null && 
+                    StringUtils.hasText(detailMap.get("minwon_requirement").toString()) && 
+                    !"null".equals(detailMap.get("minwon_requirement").toString())) 
+                  ? detailMap.get("minwon_requirement").toString() 
+                  : "";
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + tojiRequirement + "</span>");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
@@ -4217,11 +4267,17 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			                 </colgroup>");
 			sbHtml.append("			                 <tbody>");
 			//토지주 관련 데이터 가공
-			String minwonin_tojijunm_arr[]=detailMap.get("minwonin_tojiju_nm").toString().split("\\|");
-			String minwonin_tojijubirth_arr[]=detailMap.get("minwonin_tojiju_birth").toString().split("\\|");
-			String tojiju_relation_arr[]=detailMap.get("tojiju_relation").toString().split("\\|");
-			String minwonin_phone_arr[]=detailMap.get("minwonin_phone").toString().split("\\|");
-			String field_presence_arr[]=detailMap.get("field_presence").toString().split("\\|");
+			//String tojijuNm[] = 
+			String minwonin_tojijunm_arr[]=((detailMap.get("minwonin_tojiju_nm") != null)? detailMap.get("minwonin_tojiju_nm").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			String minwonin_tojijubirth_arr[]=((detailMap.get("minwonin_tojiju_birth") != null)? detailMap.get("minwonin_tojiju_birth").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			String tojiju_relation_arr[]=((detailMap.get("tojiju_relation_arr") != null)? detailMap.get("tojiju_relation_arr").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			String minwonin_phone_arr[]=((detailMap.get("minwonin_phone") != null)? detailMap.get("minwonin_phone").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			String field_presence_arr[]=((detailMap.get("field_presence") != null)? detailMap.get("field_presence").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			
+			//String minwonin_tojijubirth_arr[]=detailMap.get("minwonin_tojiju_birth").toString().split("\\|");
+			//String tojiju_relation_arr[]=detailMap.get("tojiju_relation").toString().split("\\|");
+//			String minwonin_phone_arr[]=detailMap.get("minwonin_phone").toString().split("\\|");
+			//String field_presence_arr[]=detailMap.get("field_presence").toString().split("\\|");
 			// 두 배열의 길이를 확인 (길이가 같다고 가정)
 			int length = Math.min(minwonin_tojijunm_arr.length, minwonin_tojijubirth_arr.length); // 두 배열 중 더 짧은 길이로 맞춤
 
@@ -4229,11 +4285,11 @@ log.info("dataMap:"+detailMap);
 			String[][] combinedArray = new String[length][5];
 
 			for (int i = 0; i < length; i++) {
-			    combinedArray[i][0] = minwonin_tojijunm_arr[i];
-			    combinedArray[i][1] = minwonin_tojijubirth_arr[i];
-			    combinedArray[i][2] = tojiju_relation_arr[i];
-			    combinedArray[i][3] = minwonin_phone_arr[i];
-			    combinedArray[i][4] = field_presence_arr[i];
+				combinedArray[i][0] = (i < minwonin_tojijunm_arr.length)?minwonin_tojijunm_arr[i]:"";
+			    combinedArray[i][1] = (i < minwonin_tojijubirth_arr.length)?minwonin_tojijubirth_arr[i]:"";
+			    combinedArray[i][2] = (i < tojiju_relation_arr.length)?tojiju_relation_arr[i]:"";
+			    combinedArray[i][3] = (i < minwonin_phone_arr.length)?minwonin_phone_arr[i]:"";
+			    combinedArray[i][4] = (i < field_presence_arr.length)?field_presence_arr[i]:"";
 			  
 			}
 			sbHtml.append("			 		<tr>");
@@ -4278,13 +4334,24 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">토지이력</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("toji_history") + "</span>");
+			String tojiHistory = (detailMap.get("toji_history") != null && 
+                    StringUtils.hasText(detailMap.get("toji_history").toString()) && 
+                    !"null".equals(detailMap.get("toji_history").toString())) 
+                  ? detailMap.get("toji_history").toString() 
+                  : "";
+
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + tojiHistory + "</span>");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">요구사항</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("minwon_requirement") + "</span>");
+			String tojiRequirement = (detailMap.get("minwon_requirement") != null && 
+                    StringUtils.hasText(detailMap.get("minwon_requirement").toString()) && 
+                    !"null".equals(detailMap.get("minwon_requirement").toString())) 
+                  ? detailMap.get("minwon_requirement").toString() 
+                  : "";
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + tojiRequirement + "</span>");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>");
@@ -4677,16 +4744,16 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">");
 			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("code_str1_tmp") + " &gt; " + detailMap.get("code_str2_tmp") + " &gt; " + detailMap.get("code_str3_tmp") + "</span>	");
 			sbHtml.append("			 		</td>	");
-			sbHtml.append("			 	</tr>");
-			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>		");
 			sbHtml.append("			 		<th scope=\"row\">발생일자</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\">	");
 			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("mw_occur_date") + "</span>	");
-			sbHtml.append("			 		</td>");
+			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 		<th scope=\"row\">발생지사</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\">	");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("jisa") + "</span>");
-			sbHtml.append("			 		</td>");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("jisa") + "</span>	");
+			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">민원인/토지주</th>	");
@@ -4702,11 +4769,17 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			                 </colgroup>");
 			sbHtml.append("			                 <tbody>");
 			//토지주 관련 데이터 가공
-			String minwonin_tojijunm_arr[]=detailMap.get("minwonin_tojiju_nm").toString().split("\\|");
-			String minwonin_tojijubirth_arr[]=detailMap.get("minwonin_tojiju_birth").toString().split("\\|");
-			String tojiju_relation_arr[]=detailMap.get("tojiju_relation").toString().split("\\|");
-			String minwonin_phone_arr[]=detailMap.get("minwonin_phone").toString().split("\\|");
-			String field_presence_arr[]=detailMap.get("field_presence").toString().split("\\|");
+			//String tojijuNm[] = 
+			String minwonin_tojijunm_arr[]=((detailMap.get("minwonin_tojiju_nm") != null)? detailMap.get("minwonin_tojiju_nm").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			String minwonin_tojijubirth_arr[]=((detailMap.get("minwonin_tojiju_birth") != null)? detailMap.get("minwonin_tojiju_birth").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			String tojiju_relation_arr[]=((detailMap.get("tojiju_relation_arr") != null)? detailMap.get("tojiju_relation_arr").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			String minwonin_phone_arr[]=((detailMap.get("minwonin_phone") != null)? detailMap.get("minwonin_phone").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			String field_presence_arr[]=((detailMap.get("field_presence") != null)? detailMap.get("field_presence").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+			
+			//String minwonin_tojijubirth_arr[]=detailMap.get("minwonin_tojiju_birth").toString().split("\\|");
+			//String tojiju_relation_arr[]=detailMap.get("tojiju_relation").toString().split("\\|");
+//			String minwonin_phone_arr[]=detailMap.get("minwonin_phone").toString().split("\\|");
+			//String field_presence_arr[]=detailMap.get("field_presence").toString().split("\\|");
 			// 두 배열의 길이를 확인 (길이가 같다고 가정)
 			int length = Math.min(minwonin_tojijunm_arr.length, minwonin_tojijubirth_arr.length); // 두 배열 중 더 짧은 길이로 맞춤
 
@@ -4714,11 +4787,11 @@ log.info("dataMap:"+detailMap);
 			String[][] combinedArray = new String[length][5];
 
 			for (int i = 0; i < length; i++) {
-			    combinedArray[i][0] = minwonin_tojijunm_arr[i];
-			    combinedArray[i][1] = minwonin_tojijubirth_arr[i];
-			    combinedArray[i][2] = tojiju_relation_arr[i];
-			    combinedArray[i][3] = minwonin_phone_arr[i];
-			    combinedArray[i][4] = field_presence_arr[i];
+				combinedArray[i][0] = (i < minwonin_tojijunm_arr.length)?minwonin_tojijunm_arr[i]:"";
+			    combinedArray[i][1] = (i < minwonin_tojijubirth_arr.length)?minwonin_tojijubirth_arr[i]:"";
+			    combinedArray[i][2] = (i < tojiju_relation_arr.length)?tojiju_relation_arr[i]:"";
+			    combinedArray[i][3] = (i < minwonin_phone_arr.length)?minwonin_phone_arr[i]:"";
+			    combinedArray[i][4] = (i < field_presence_arr.length)?field_presence_arr[i]:"";
 			  
 			}
 			sbHtml.append("			 		<tr>");
@@ -4763,76 +4836,35 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">토지이력</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("toji_history") + "</span>");
+			String tojiHistory = (detailMap.get("toji_history") != null && 
+                    StringUtils.hasText(detailMap.get("toji_history").toString()) && 
+                    !"null".equals(detailMap.get("toji_history").toString())) 
+                  ? detailMap.get("toji_history").toString() 
+                  : "";
+
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + tojiHistory + "</span>");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">요구사항</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("minwon_requirement") + "</span>");
+			String tojiRequirement = (detailMap.get("minwon_requirement") != null && 
+                    StringUtils.hasText(detailMap.get("minwon_requirement").toString()) && 
+                    !"null".equals(detailMap.get("minwon_requirement").toString())) 
+                  ? detailMap.get("minwon_requirement").toString() 
+                  : "";
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + tojiRequirement + "</span>");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
-			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + contents + "</span>");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + contents + "</span>");
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 </tbody>		");
 			sbHtml.append("			 </table>		");
-			sbHtml.append("			 <br>		");
-			sbHtml.append("			 <!-- *민원 토지 -->");
-			sbHtml.append("			 <h4>민원 토지</h4>");
-			sbHtml.append("			 <table class=\'base4\'>");
-			sbHtml.append("			 	<colgroup>");
-			sbHtml.append("			 		<col style=\'width:55%\' />");
-			sbHtml.append("			 		<col style=\'width:15%\' />");
-			sbHtml.append("			 		<col style=\'width:15%\' />");
-			sbHtml.append("			 		<col style=\'width:15%\' />");
-			sbHtml.append("			 	</colgroup>");
-			sbHtml.append("			 	<tbody>");
-			sbHtml.append("			 		<tr>");
-			sbHtml.append("			 			<th scope=\'row\'>주소</th>");
-			sbHtml.append("			 			<th scope=\'row\'>등기여부</th>");
-			sbHtml.append("			 			<th scope=\'row\'>계약여부</th>");
-			sbHtml.append("			 			<th scope=\'row\'>토지수정일자</th>");
-			sbHtml.append("			 		</tr>");
-			if (pnu_list.size() > 0) {
-				for (int i = 0; i < pnu_list.size(); i++) {
-					sbHtml.append("			 		<tr>");
-					sbHtml.append("			 			<td class=\'inner_tag\'>");
-					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("addr") + "</span>");
-					sbHtml.append("			 			</td>");
-					sbHtml.append("			 			<td class=\'inner_tag\'>");
-					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("registed_yn") + "</span>");
-					sbHtml.append("			 			</td>");
-					sbHtml.append("			 			<td class=\'inner_tag\'>");
-					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("permitted_yn") + "</span>");
-					sbHtml.append("			 			</td>");
-					sbHtml.append("			 			<td class=\'inner_tag\'>");
-					sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\">" + ((HashMap<Object, Object>) pnu_list.get(i)).get("comp_date") + "</span>");
-					sbHtml.append("			 			</td>");
-					sbHtml.append("			 		</tr>");
-				}
-			} else {
-				sbHtml.append("			 		<tr>");
-				sbHtml.append("			 			<td class=\'inner_tag\'>");
-				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-				sbHtml.append("			 			</td>");
-				sbHtml.append("			 			<td class=\'inner_tag\'>");
-				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-				sbHtml.append("			 			</td>");
-				sbHtml.append("			 			<td class=\'inner_tag\'>");
-				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-				sbHtml.append("			 			</td>");
-				sbHtml.append("			 			<td class=\'inner_tag\'>");
-				sbHtml.append("			 				<span style=\"width:100%; display:inline-block; text-align:center;\"></span>");
-				sbHtml.append("			 			</td>");
-				sbHtml.append("			 		</tr>");
-			}
-			sbHtml.append("			 	</tbody>");
-			sbHtml.append("			 </table>");
 			sbHtml.append("			 <br />		");
 			sbHtml.append("			 <!-- *민원 협의 -->");
 			sbHtml.append("			 <h4>민원 협의</h4>");
