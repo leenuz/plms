@@ -286,6 +286,20 @@ public class issueController {
 		String code2 = req.getParameter("code2");
 		String code3 = req.getParameter("code3");
 		String status = req.getParameter("status");
+		
+		// status 값에 따라 한글을 숫자로 변환
+		if ("임시저장".equals(status)) {
+		    status = "1";
+		} else if ("민원발생".equals(status)) {
+		    status = "2";
+		} else if ("대응방안수립".equals(status)) {
+		    status = "3";
+		} else if ("협의중".equals(status)) {
+		    status = "4";
+		} else if ("완료".equals(status)) {
+		    status = "5";
+		}
+		
 		String start_date = req.getParameter("start_date");
 		String end_date = req.getParameter("end_date");
 
