@@ -1617,5 +1617,11 @@ UPDATE MINWON_MASTER
  WHERE MM_MW_SEQ = #{MW_SEQ}::numeric
 </update>
 
+<!-- 신규민원 등록후 수정팝업에서의 파일 삭제 : 저장시 파일명이 파라미터 -->
+<delete id="deleteMinwonAtchFile" parameterType="HashMap">
+DELETE FROM MINWON_ATCFILE
+ WHERE ma_MW_SEQ = #{MW_SEQ}::numeric
+   AND ma_file_nm = #{FILE_NAME}
+</delete>
 
 </mapper>

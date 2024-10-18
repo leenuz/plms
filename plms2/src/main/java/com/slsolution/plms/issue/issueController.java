@@ -583,6 +583,10 @@ public class issueController {
 		//현재 작성타입여부
 		String makeType = requestParamObj.getString("makeType");
 		
+		//삭제 파일리스트
+		String deleteFileList = requestParamObj.getString("deleteFileList");
+		JSONArray deleteFileArr = new JSONArray(deleteFileList);
+		
 		ArrayList list = null;
 		HashMap map = new HashMap();
 		int mwSeq = 0;
@@ -677,6 +681,19 @@ public class issueController {
 					}
 					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
 
+				}
+			}
+			
+			//Step. 2.5 - 삭제 파일리스트가 있다면 삭제 (DB에서만 삭제 - 실제로는 삭제 X)
+			if(deleteFileArr.length() > 0) {
+				
+				HashMap delParam = new HashMap();
+				delParam.put("MW_SEQ", MW_SEQ);
+				
+				for(int d = 0 ; d < deleteFileArr.length() ; d++) {
+					delParam.put("FILE_NAME", deleteFileArr.get(d));
+					//삭제 쿼리
+					mainService.DeleteQuery("issueSQL.deleteMinwonAtchFile", delParam);
 				}
 			}
 			

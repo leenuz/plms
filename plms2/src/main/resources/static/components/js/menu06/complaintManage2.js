@@ -2,6 +2,7 @@
 
 var rowCount2 = 0;
 var togiDataList = [];
+var deleteFileListArr = [];
 /****************************
  * 
  * 민원상신 / 수정 팝업 위한 스크립트들
@@ -10,6 +11,8 @@ var togiDataList = [];
 
 $(function() {
 	console.log("===== complainManage2.js start =====");
+	
+	deleteFileListArr = [];
 	
 	let objDragAndDrop = $("#newminwon_fileUploadBox");
 	
@@ -73,7 +76,7 @@ function createStatusbar_minwonEdit (obj, name, size, no) {
     
     rowHtml += '<ul class="popcontents" name="fileListUl">';
 	rowHtml += '<li class="popBtnbox">';
-	rowHtml += '	<button class="popAllDeleteFileBtn"></button>';
+	rowHtml += '	<button class="popAllDeleteFileBtn" onclick="deleteFileListFunc(this, '+nextNo+')"></button>';
 	rowHtml += '</li>';
 	rowHtml += '<li class="popcontent popfilenameBox">';
 	rowHtml += '<input type="hidden" value="'+ +'">';
@@ -652,10 +655,10 @@ function loadTempMinwonDataSetting(data) {
 			
 			fileHtml += '<ul class="popcontents" name="fileListUl">';
 			fileHtml += '<li class="popBtnbox">';
-			fileHtml += '	<button class="popAllDeleteFileBtn"></button>';
+			fileHtml += '	<button class="popAllDeleteFileBtn" onclick="deleteFileListFunc(this, '+z+')"></button>';
 			fileHtml += '</li>';
 			fileHtml += '<li class="popcontent popfilenameBox">';
-			fileHtml += '<input type="hidden" value="'+ +'">';
+			fileHtml += '<input type="hidden" value="-">';
 			fileHtml += '<figure class="poptypeIcon"></figure><p class="popfileNameText" id="minwonFileName_'+z+'">'+fileInfo.file_nm+'</p></li>';
 			fileHtml += '<li class="popcontent"><p>완료</p></li>';
 			fileHtml += '<li class="popcontent"><p class="popfileSizeText">-</p></li>';
@@ -691,6 +694,14 @@ function setReqLand(addr = "", reg_yn = "", contract_yn = "") {
 	$('.daepyo_pilji_list_3 input[type="text"]').val(contract_yn); //계약여부
 }
 
+//파일삭제 -  저장 눌러야지 삭제됨. (DB만)
+function deleteFileListFunc(obj, idx) {
+	let deleteFileNm = $("#minwonFileName_"+idx).text();
+	$("[name='fileListUl'").eq(idx).remove();
+	deleteFileListArr.push(deleteFileNm)
+}
+
+
 //신규민원팝업 데이터 json
 function getPopupJsonData2() {
 	
@@ -720,6 +731,7 @@ function getPopupJsonData2() {
 		//let obj = {};
 		obj.saddr = $(ul).find('.landinfo_content_4 input').val(); //주소
 		obj.REP_YN = $(ul).find('.landinfo_content_3 input').is(':checked') ? "Y" : "N"; //대표필지여부
+		obj.rep_yn = $(ul).find('.landinfo_content_3 input').is(':checked') ? "Y" : "N"; //대표필지여부
 		obj.REGISTED_YN = $(ul).find('.landinfo_content_5 input').val(); //등기여부
 		obj.PERMITTED_YN = $(ul).find('.landinfo_content_6 input').val(); //계약여부
 		obj.AREA = $(ul).find('.landinfo_content_7 input').val(); //실저촉면적
@@ -749,6 +761,8 @@ function getPopupJsonData2() {
 		fileCheck.push($("#minwonFileName_"+t).text());
 	}
 	
+	//첨푸파일 삭제 리스트
+	dataObj.deleteFileList = deleteFileListArr;
 	
 	//dataObj.files = newComplaintRegiFiles;
 	//dataObj.filesLength = newComplaintRegiFiles.length;
@@ -849,6 +863,7 @@ function editInfoSangsin() {
 	paramData.SANGSIN_FLAG = "Y";
 	console.log(paramData);
 	
+	/*
 	$.ajax({
 		url: "/issue/saveMinwonData",
 		data: JSON.stringify(paramData),
@@ -883,4 +898,5 @@ function editInfoSangsin() {
 			console.log(jqXHR.responseJSON);
 		}
 	}); //end ajax
+	*/
 }
