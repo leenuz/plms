@@ -289,14 +289,14 @@ function onDataLoad() {
 		contentType: 'application/json; charset=utf-8',
 		success: function(data, jqXHR) {
 			
-			console.log(data);
+			//console.log(data);
 			dataInfo = data;
 			
 			const result = data.result;
 			const agreeList = data.agreeList;
 			const tojiList = data.tojiList;
 			const fileList = data.fileList;
-			console.log(data);
+			//console.log(data);
 			
 			$("#mwdetail_title").val(result.mw_title); //민원명
 			$("#mwdetail_date").val(result.mw_occur_date); //발생일자
@@ -429,7 +429,7 @@ function onDataLoad() {
 			if (tojiList != null && tojiList != undefined && tojiList.length > 0) {
 				$('#dopcoAllWrappers .complaintLand .depth1 .contents').remove();
 				$.each(tojiList, function(index, item) {
-					console.log(item);
+					//console.log(item);
 					var newItem = `
                 <ul class="contents">
                 <li class="content">

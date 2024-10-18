@@ -902,7 +902,7 @@ function editInfoSangsin() {
 	paramData.SANGSIN_FLAG = "Y";
 	console.log(paramData);
 	
-	/*
+	
 	$.ajax({
 		url: "/issue/saveMinwonData",
 		data: JSON.stringify(paramData),
@@ -937,5 +937,5 @@ function editInfoSangsin() {
 			console.log(jqXHR.responseJSON);
 		}
 	}); //end ajax
-	*/
+	
 }

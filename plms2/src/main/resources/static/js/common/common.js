@@ -52,13 +52,13 @@ function loadingShow(){
 }
 
 function loadingHide(){
-	console.log("loading hide....");
+	//console.log("loading hide....");
 	$("#mask").remove();
 	$("#loadingBar").hide();
 }
 
 function showDim() {
-	console.log("loading show....");
+	//console.log("loading show....");
 	var maskHeight=$(document).height();
 	var maskWidth=window.document.body.clientWidth;
 	
