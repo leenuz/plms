@@ -1639,4 +1639,24 @@ textarea:focus {
     text-align: center; /* 입력 필드 가운데 정렬 */
 }
 
+/* 다운로드 버튼 */
+.viewDetailButtonDownload {
+	width: 74px;
+	height: 23px;
+	border-radius: 20px;
+	cursor: pointer;
+	background: rgba(204, 224, 255, 0.6);
+}
+
+/* 삭제 버튼 */
+.deleteFileBtn {
+	width: 74px;
+	height: 23px;
+	border-radius: 20px;
+	cursor: pointer;
+	background: rgba(204, 224, 255, 0.6);
+	background: #666666;
+	color: #fff;
+}
+
 /* 민원협의내용 등록/수정 [E] */
