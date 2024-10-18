@@ -925,7 +925,7 @@ function minwonComplaintSave() {
 function minwonComplaintSangsinGo() {
 	let params = minwonComplaintValidation();
 	
-	param.SANGSIN_FLAG = 'Y';	//상신까지 하도록 FLAG값 전달
+	params.SANGSIN_FLAG = 'Y';	//상신까지 하도록 FLAG값 전달
 	
 	if(params.result) {
 		console.log('true면 저장 ㄱㄱ');
@@ -940,7 +940,23 @@ function minwonComplaintSangsinGo() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data, jqXHR) {
 				if(data.result) {
-					alert('상신이 완료 되었습니다.');
+					
+
+					if (data.html.length>0){
+						var urls = data.html;
+						var newWindow=window.open("", "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
+						newWindow.document.open();
+						newWindow.document.write(data.html);
+						newWindow.document.close();
+					}
+					else {
+						alert('상신이 완료 되었습니다.');
+						var urls = data.OUT_URL;
+						window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");	
+					}
+					
+					
+					
 				} else {
 					alert('상신을 실패 했습니다.');
 				}
@@ -1366,7 +1382,8 @@ $(document).on("click", ".document_add_btnWrap .sangsinBtn", function() {
 
 	let consultInfo = getPopupJsonData();
 	let minwonSeq = $("#minwonSeq").val();  // minwonSeq 값을 가져옴
-	let agreeSeq = $("#agreeSeq").val();  // minwonSeq 값을 가져옴
+	//let agreeSeq = $("#agreeSeq").val();  // minwonSeq 값을 가져옴
+	let agreeSeq = $("input[name='agree_seq']").val(); // name 속성을 사용하여 agree_seq 값을 가져옴
 	console.log("consoleInfo: " + consultInfo);
 	console.log(uploadFiles);
 
@@ -1670,7 +1687,49 @@ function popupComplete () {
 }
 
 $(document).on('click', '#sangsinBtn', function() {
+	console.log("-----------sangsinBtn완료처리---------------------------------");
 	console.log(dataInfo);
+	$.ajax({
+			url: "/issue/minwonCompleteSave",
+			data: JSON.stringify(dataInfo),
+			async: true,
+			type: "POST",
+			dataType: "json",
+			contentType: 'application/json; charset=utf-8',
+			success: function(res) {
+				console.log(res);
+				if (res.sn!=="LOCAL"){
+					alert(res.message);	
+				}
+				else {
+					if (res.html && res.html.length>0){
+						//var urls = data.html;
+						var newWindow=window.open("", "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
+						newWindow.document.open();
+						newWindow.document.write(res.html);
+						newWindow.document.close();
+					}	
+				}
+				
+			},
+			beforeSend: function() {
+				//(이미지 보여주기 처리)
+				//$('#load').show();
+				// loadingShow();
+			},
+			complete: function() {
+				//(이미지 감추기 처리)
+				//$('#load').hide();
+				// loadingHide();
+			},
+			error: function(jqXHR, textStatus, errorThrown, responseText) {
+				//alert("ajax error \n" + textStatus + " : " + errorThrown);
+				console.log(jqXHR);
+				console.log(jqXHR.readyState);
+				console.log(jqXHR.responseText);
+				console.log(jqXHR.responseJSON);
+			}
+		}); //end ajax
 });
 
 //========================민원 완료 [E]========================

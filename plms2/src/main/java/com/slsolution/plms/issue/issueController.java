@@ -905,16 +905,16 @@ public class issueController {
 				if ("".equals(str_appNo)) {
 					map.put("message", "처리 중 오류가 발생했습니다.");
 				} else {
-//					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
-//					String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
-//					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
-//					String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
-//					String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
-					String str_UserId = "105681";
-					String str_userName = "박영환";
-					String str_userDeptcd = "D250500";
-					String str_userDeptnm = "IT전략.지원팀";
-					String str_userUPDeptcd = "S250100";
+					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
+					String str_userName = String.valueOf(request.getSession().getAttribute("userName"));
+					String str_userDeptcd = String.valueOf(request.getSession().getAttribute("userDeptcd"));
+					String str_userDeptnm = String.valueOf(request.getSession().getAttribute("userDeptnm"));
+					String str_userUPDeptcd = String.valueOf(request.getSession().getAttribute("userUPDeptcd"));
+//					String str_UserId = "105681";
+//					String str_userName = "박영환";
+//					String str_userDeptcd = "D250500";
+//					String str_userDeptnm = "IT전략.지원팀";
+//					String str_userUPDeptcd = "S250100";
 					String XML_GUBUN = "GetResponseComplaintsDataforXML";
 					html=eph.getMinwonResponseHTML(MW_SEQ, request, response);
 					res_Echo = epc.GetPLMSDataforXML(str_appNo,html,
@@ -935,7 +935,7 @@ public class issueController {
 					ArrayList echolist = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonHandlingDocInfo",
 							map);
 					if (null != echolist && echolist.size() > 0) {
-						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("pa_out_url"));
 						System.out.println("str_EchoNo=====" + str_EchoNo);
 						map.put("OUT_URL", str_EchoNo);
 					}
@@ -1224,11 +1224,21 @@ public class issueController {
 		String requestParams = ParameterUtil.getRequestBodyToStr(request);
 		JSONObject requestParamObj = new JSONObject(requestParams);
 		ParameterParser parser = new ParameterParser(request);
-		String MW_SEQ = requestParamObj.getString("MW_SEQ");
-		String STATUS = requestParamObj.getString("STATUS");
+		log.info("requestParamObj:"+requestParamObj);
+		JSONObject dataObj=new JSONObject(requestParamObj.getString("result"));
+		log.info("dataObj:"+dataObj);
+		String MW_SEQ = dataObj.getString("mw_seq");
+		String STATUS = dataObj.getString("status");
 		
-		JSONArray fileList = requestParamObj.getJSONArray("files");
-
+//		JSONArray jsonArray = new JSONArray(requestParamObj.get("fileList").toString());
+//		
+//		log.info("jsonArray:"+jsonArray);
+//		ArrayList fileList = new ArrayList();
+//
+//		for (int i = 0; i < jsonArray.length(); i++) {
+//			fileList.add(jsonArray.getString(i));
+//		}
+		JSONArray fileList = requestParamObj.getJSONArray("fileList");
 		ArrayList dataList = new ArrayList();
 		HashMap map = new HashMap();
 		try {
@@ -1240,33 +1250,37 @@ public class issueController {
 			HashMap fileParams = new HashMap();
 			fileParams.put("MAA_MW_SEQ", MW_SEQ);
 			
-			if(fileList.length() > 0) {
-				for(int y = 0 ; y < fileList.length() ; y++) {
-					String originalFileName = fileList.get(y).toString();
-					String changeFileName = CommonUtil.filenameAutoChange(originalFileName);
-					String tempPath = GC.getMinwonFileTempDir();
-					String dataPath = GC.getMinwonFileDataDir() + "/"+ "m_seq_"+MW_SEQ;
-					
-					fileParams.put("FILE_PATH", dataPath +"/"+ changeFileName);	//파일명이 바뀌기 때문에.
-					fileParams.put("FILE_NAME", originalFileName);
-					fileParams.put("FILE_MINWON_SEQ", (y+1));
-
-					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
-						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
-						//TODO :: param값 추후 수정 해야함. FILE_MINWON_SEQ 수정.
-						mainService.InsertQuery("issueSQL.insertMinwonAgreeAtchFileInfo", fileParams);
-					}
-					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
-				}
-			}
+//			if(fileList.length() > 0) {
+//				for(int y = 0 ; y < fileList.length() ; y++) {
+//					JSONObject obj=new JSONObject(fileList.get(y).toString());
+//					log.info("obj:"+obj);
+//					String originalFileName = obj.getString("file_nm");
+//					log.info("orgfileName:"+originalFileName);
+//					String changeFileName = CommonUtil.filenameAutoChange(originalFileName);
+//					String tempPath = GC.getMinwonFileTempDir();
+//					String dataPath = GC.getMinwonFileDataDir() + "/"+ "m_seq_"+MW_SEQ;
+//					
+//					fileParams.put("FILE_PATH", dataPath +"/"+ changeFileName);	//파일명이 바뀌기 때문에.
+//					fileParams.put("FILE_NAME", originalFileName);
+//					fileParams.put("FILE_MINWON_SEQ", (y+1));
+//
+//					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
+//						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
+//						//TODO :: param값 추후 수정 해야함. FILE_MINWON_SEQ 수정.
+//						//mainService.InsertQuery("issueSQL.insertMinwonAgreeAtchFileInfo", fileParams);
+//					}
+//					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
+//				}
+//			}
 			
 			
 
 			// 1. 민원완료 가능한 상태인지 체크 ->> 상태값:협의중, 모든 협의상태가 완결.
 //			int totalcnt = (Integer) Database.getInstance().queryForObject("Json.selectMinwonCompleteBeforeCheck", params);
 			int totalcnt = (Integer) mainService.selectCountQuery("issueSQL.selectMinwonCompleteBeforeCheck", params);
-
+			map.put("sn",GC.getServerName());
 			if (totalcnt > 0) {
+				
 				map.put("message", "완료상신이 불가능한 민원입니다. 민원상태를 확인해주세요.");
 			} else {
 				// 2. 민원완료정보 상신처리.
@@ -1280,6 +1294,7 @@ public class issueController {
 				boolean res_Echo = false;
 				String html="";
 				if ("".equals(str_appNo)) {
+					
 					map.put("message", "처리 중 오류가 발생했습니다.");
 				} else {
 					String str_UserId = String.valueOf(request.getSession().getAttribute("userId"));
@@ -1313,13 +1328,15 @@ public class issueController {
 					ArrayList echolist = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonCompleteDocInfo",
 							map);
 					if (null != echolist && echolist.size() > 0) {
-						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("OUT_URL"));
+						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("pa_out_url"));
 						System.out.println("str_EchoNo=====" + str_EchoNo);
 						map.put("OUT_URL", str_EchoNo);
 					}
 					map.put("message", "success");
+					
 
 				} else {
+					
 					if("LOCAL".equals(GC.getServerName())) {
 						
 						map.put("DOCKEY", str_appNo);

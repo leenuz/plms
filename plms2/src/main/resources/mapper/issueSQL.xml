@@ -369,7 +369,8 @@ FROM (
 	
 	<select id="selectMinwonDetailAgree" parameterType="java.util.HashMap" resultType="java.util.HashMap">
    
-				SELECT A.ma_mw_seq as MW_SEQ,
+				SELECT DISTINCT ON (A.ma_idx)  
+				A.ma_mw_seq as MW_SEQ,
 		       A.ma_agree_seq as AGREE_SEQ,
 		       CASE 
 		           WHEN A.ma_STATUS = '1' THEN '협의 중'
@@ -390,7 +391,7 @@ FROM (
 		LEFT JOIN PLMS_APPROVAL B ON A.ma_DOCKEY = B.pa_DOCKEY
 		WHERE A.ma_MW_SEQ = ${MW_SEQ}
 		  AND A.ma_DEL_FLAG != 'Y'
-		ORDER BY A.ma_AGREE_SEQ DESC
+		ORDER BY A.ma_idx,A.ma_AGREE_SEQ DESC
 	
 	</select>
 	
@@ -1382,11 +1383,9 @@ UPDATE MINWON_MASTER
     </if>
     <![CDATA[
         mht_COMPLETE_YN = #{COMPLETE_YN}
-<<<<<<< Updated upstream
-    WHERE mht_MW_SEQ = #{MW_SEQ}::numeric
-=======
+
     WHERE mht_MW_SEQ = ${MW_SEQ}
->>>>>>> Stashed changes
+
     ]]>
 </update>
 	<!-- <update id="updateMinwonHandlingTmp" parameterType="HashMap">
@@ -1474,8 +1473,8 @@ SELECT A.mm_mw_seq as MW_SEQ
        , A.mm_STATUS AS MINWON_STATUS
        , B.pa_status as STATUS
   FROM MINWON_MASTER   A
-       , PLMS_APPROVAL       B
- WHERE A.mm_COMPLE_DOCKEY = B.pa_DOCKEY
+       left join PLMS_APPROVAL B on A.mm_COMPLE_DOCKEY = B.pa_DOCKEY
+ WHERE 1=1
    AND A.mm_STATUS = '4'
    AND B.pa_STATUS = 'C'
 	]]></select>
@@ -1485,7 +1484,7 @@ SELECT A.mm_mw_seq as MW_SEQ
 UPDATE MINWON_MASTER
    SET mm_STATUS = '5'
      , mm_COMPLE_YN = 'Y'
-     , mm_COMPLE_DATE = SYSDATE
+     , mm_COMPLE_DATE = CURRENT_DATE
  WHERE mm_MW_SEQ = #{MW_SEQ}
 	]]></update>
 	

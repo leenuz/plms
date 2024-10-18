@@ -1028,7 +1028,7 @@ public class SchedulerController {
 
 					pnuMap.put("ISSUE_COMMENT", "민원완료에 의한 이슈없음 변경.");
 
-					mainService.UpdateQuery("issueSQL.updatePnuIssue2", params);
+					mainService.UpdateQuery("issueSQL.updatePnuIssue2", pnuMap);
 				}
 
 //				Database.getInstance().commitTransaction();
@@ -1039,6 +1039,9 @@ public class SchedulerController {
 //				Database.getInstance().endTransaction();
 			}
 		}
+		
+		
+		log.info("############  민원 완료 반려 인데 의미가? ###################");
 		ArrayList<HashMap> minwonCompleteRejectedList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonCompleteRejected",null);
 		for (HashMap targetMap : minwonCompleteRejectedList) {
 			try {

@@ -258,7 +258,7 @@ public class ApprovalUtil implements ApplicationContextAware {
 		
 		System.out.println("@@@@@ GetPLMSDataforXMLTEST."+gUbun+" END");
 		
-		System.out.println(sb.toString());
+		//System.out.println(sb.toString());
 		
 		
 		return sb.toString();
