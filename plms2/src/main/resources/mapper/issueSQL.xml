@@ -364,28 +364,29 @@ FROM (
 		           WHEN 'N' THEN 1
 		         END ASC
 
-	
 	</select>
 	
+	<!-- 민원관리 협의 내용 조회 -->
 	<select id="selectMinwonDetailAgree" parameterType="java.util.HashMap" resultType="java.util.HashMap">
    
 				SELECT DISTINCT ON (A.ma_idx)  
-				A.ma_mw_seq as MW_SEQ,
-		       A.ma_agree_seq as AGREE_SEQ,
+				A.ma_mw_seq AS MW_SEQ,
+		       A.ma_agree_seq AS AGREE_SEQ,
 		       CASE 
 		           WHEN A.ma_STATUS = '1' THEN '협의 중'
 		           WHEN A.ma_STATUS = '2' THEN '소송 중'
 		           WHEN A.ma_STATUS = '3' THEN '협의 중단'
 		           ELSE 'Unknown'
 		       END AS STATUS_STR,
-		       A.ma_status as STATUS,
-		       A.ma_agree_title as AGREE_TITLE,
-		       A.ma_agree_contents as AGREE_CONTENTS,
+		       A.ma_status AS STATUS,
+		       A.ma_agree_title AS AGREE_TITLE,
+		       A.ma_agree_contents AS AGREE_CONTENTS,
 		       TO_CHAR(A.ma_AGREE_DATE, 'YYYY-MM-DD') AS AGREE_DATE,
-		       A.ma_reg_date as REG_DATE,
-		       A.ma_reg_id as REG_ID,
-		       A.ma_dockey as DOCKEY,
-		       B.pa_url as URL,
+		       A.ma_reg_date AS REG_DATE,
+		       A.ma_reg_id AS REG_ID,
+		       A.ma_dockey AS DOCKEY,
+		       B.pa_url AS URL,
+		       B.pa_out_url AS OUTURL,
 		       B.pa_status AS APPROVAL_STATUS
 		FROM MINWON_AGREEMENT A
 		LEFT JOIN PLMS_APPROVAL B ON A.ma_DOCKEY = B.pa_DOCKEY

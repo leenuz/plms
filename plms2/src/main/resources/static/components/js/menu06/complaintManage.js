@@ -514,11 +514,9 @@ function onDataLoad() {
                 <li class="content fileNameWidth">
                     <input type="text" placeholder="" readonly="" class="notWriteInput" value="${item.agree_title || '-'}">
                 </li>
-                <li class="content btnsWrap">
-                    <a href="${item.url}" target="_blank">
-                    	<button class="viewDetailButton">문서보기</button>
-                    </a>
-                </li>
+								<li class="content btnsWrap">
+								    ${item.outurl ? `<a href="${item.outurl}" target="_blank"><button class="viewDetailButton">문서보기</button></a>` : ''}
+								</li>
                 </ul>
                 `;
 					$('#dopcoAllWrappers .consultDetails .depth1').append(newItem);
