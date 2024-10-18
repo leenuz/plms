@@ -843,7 +843,7 @@ div.dt-filter-spacer {
 	                                    <li><input type="text" id="landowner_relation_1" maxlength="20" /></li>
 	                                    <li><input type="text" id="landowner_phone_1" maxlength="15" /></li>
 	                                    <li class="popSelectWrap">
-	                                        <div class="hidden_SelectBox">
+	                                        <div class="hidden_SelectBox" id="landowner_selectYn_hidden_1">
 	                                            <select hidden>
 	                                                <option value="Y">Y</option>
 	                                                <option value="N">N</option>
@@ -851,7 +851,7 @@ div.dt-filter-spacer {
 	                                        </div>
 	                                        <div class="Popup_Custom_SelectBox">
 	                                            <button class="Popup_Custom_SelectView" id="landowner_presence_1" data-idx="1" onclick="selectPresence(this)">Y/N</button>
-	                                            <ul class="Popup_Custom_SelectBtns"></ul>
+	                                            <ul class="Popup_Custom_SelectBtns" id="landowner_selectYn_show_1"></ul>
 	                                        </div>
 	                                    </li>
 	                                    <li class="landowner_btns_default">
