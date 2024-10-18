@@ -676,27 +676,30 @@ $(document).on("click",".registBtn",function(){
 				            inputs.forEach(input => {
 				                input.setAttribute('readonly', 'readonly');
 				            });
-							
-							
-							
-							
 							console.log("------------registBtn start-------------");
 							console.log($(thisContent).find("#wname").val());
 							console.log($(thisContent).find("#wmemo").val());
 							console.log($(thisContent).find("#idx").val());
-							var wname=$(thisContent).find("#wname").val();
-							var wmemo=$(thisContent).find("#wmemo").val();
 							var idx=$(thisContent).find("#idx").val();
 							var manage_no=$("#manage_no").val();
 							var mode="";
+							
+							// 메모 필수값 체크
+							var wname=$(thisContent).find("#wname").val();
+							var wmemo=$(thisContent).find("#wmemo").val();
 							if (manage_no=="undefined" || manage_no==null || manage_no=="") {
 								alert("입력한 데이터가 없습니다.");
 								return;
 							}
 							if (wname=="undefined" || wname==null || wname=="" || wname==undefined){
+								alert("작성자를 확인해주세요.");
+								return;
+							}
+							if (wmemo=="undefined" || wmemo==null || wmemo=="" || wmemo==undefined){
 								alert("내용을 확인해주세요.");
 								return;
 							}
+							
 							if (idx==0 || idx=="undefined" ||idx==null) mode="insert";
 							else mode="update";
 							var mparams={"mode":mode,"idx":idx,"manage_no":$("#manage_no").val(), "wname":$(thisContent).find("#wname").val(),"wmemo":$(thisContent).find("#wmemo").val()};

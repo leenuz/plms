@@ -225,6 +225,7 @@ public class goverController {
 
 		params.put("idx", idx);
 		params.put("index", index);
+		params.put("manage_no", idx);
 //			log.info("params:"+params);
 		ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData", params);
 		ArrayList<HashMap> permitList = mainService.selectQuery("goverSQL.selectPermitList", params);
@@ -318,7 +319,6 @@ public class goverController {
 		ArrayList<HashMap> goverIssueCodeAtcFileList = mainService.selectQuery("jisangSQL.selectIssueCodeAtcFileList",params); // 잠재이슈 대응방안 메뉴얼
 		ArrayList<HashMap> goverMemoList = mainService.selectQuery("commonSQL.selectMemoList", params); // 메모
 //			ArrayList<HashMap> jisangMergeList = mainService.selectQuery("goverSQL.selectMergeList",params);
-		params.put("manage_no", idx);
 
 		log.info("params:" + params);
 		log.info("data:" + data.get(0));

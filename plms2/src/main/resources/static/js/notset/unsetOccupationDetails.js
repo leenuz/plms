@@ -235,7 +235,7 @@ function downloadFile(filePath, fileName) {
 
 // 수정 버튼 클릭 이벤트 리스너
 $(document).ready(function() {
-	$('.editBtn').on('click', function() {
+	$('#issueEditBtn').on('click', function() {
 		const urlParams = new URL(location.href).searchParams;
 		const idx = urlParams.get('idx');
 		const index = urlParams.get('index');
@@ -585,7 +585,7 @@ $(document).on("click", ".addBtn", function() {
 
 
 // 메모 수정
-$(document).on("click", ".editBtn", function() {
+$(document).on("click", ".memoSection .editBtn", function() {
 	console.log("--------editBtn click----------------");
 	var thisContent = this.closest('.contents');
 	console.log(thisContent);
@@ -604,7 +604,7 @@ $(document).on("click", ".editBtn", function() {
 });
 
 // 메모 등록
-$(document).on("click", ".registBtn", function() {
+$(document).on("click", ".memoSection .registBtn", function() {
 	var thisContent = this.closest('.contents');
 	thisContent.classList.remove('editing')
 
@@ -618,6 +618,19 @@ $(document).on("click", ".registBtn", function() {
 	console.log($(thisContent).find("#wmemo").val());
 	console.log($(thisContent).find("#idx").val());
 	var idx = $(thisContent).find("#idx").val();
+	
+	// 메모 필수값 체크
+	var wname=$(thisContent).find("#wname").val();
+	var wmemo=$(thisContent).find("#wmemo").val();
+	if (wname=="undefined" || wname==null || wname=="" || wname==undefined){
+		alert("작성자를 확인해주세요.");
+		return;
+	}
+	if (wmemo=="undefined" || wmemo==null || wmemo=="" || wmemo==undefined){
+		alert("내용을 확인해주세요.");
+		return;
+	}
+	
 	var mode = "";
 	if (idx == 0 || idx == "undefiled" || idx == null) mode = "insert";
 	else mode = "update";
@@ -636,7 +649,7 @@ $(document).on("click", ".registBtn", function() {
 
 
 // 메모 삭제
-$(document).on("click", ".delBtn", function() {
+$(document).on("click", ".memoSection .delBtn", function() {
 	var thisContent = this.closest('.contents');
 
 	console.log("------------delBtn end-------------");

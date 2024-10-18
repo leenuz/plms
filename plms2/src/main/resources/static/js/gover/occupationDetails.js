@@ -509,6 +509,19 @@ $(document).on("click", ".registBtn", function() {
 	console.log($(thisContent).find("#wmemo").val());
 	console.log($(thisContent).find("#idx").val());
 	var idx = $(thisContent).find("#idx").val();
+	
+	// 메모 필수값 체크
+	var wname=$(thisContent).find("#wname").val();
+	var wmemo=$(thisContent).find("#wmemo").val();
+	if (wname=="undefined" || wname==null || wname=="" || wname==undefined){
+		alert("작성자를 확인해주세요.");
+		return;
+	}
+	if (wmemo=="undefined" || wmemo==null || wmemo=="" || wmemo==undefined){
+		alert("내용을 확인해주세요.");
+		return;
+	}
+	
 	var mode = "";
 	if (idx == 0 || idx == "undefiled" || idx == null) mode = "insert";
 	else mode = "update";

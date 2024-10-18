@@ -464,7 +464,7 @@ div.dt-filter-spacer {
 									<!-- 편집 -->
 									<li class="content04 content btnBox">
 										<div class="btnWrap">
-											<button class="editBtn miniBtn groundIssueReviseBtn">수정</button>
+											<button class="editBtn miniBtn groundIssueReviseBtn" id="issueEditBtn">수정</button>
 										</div>
 										<div class="btnWrap">
 											<button class="delBtn miniBtn">삭제</button>
@@ -558,18 +558,16 @@ div.dt-filter-spacer {
 									<li class="title05 title">추가/삭제</li>
 								</ul>
 								<div class="contentScr" id="memoDiv">
-									<ul class="contents nullContents" id="nullContents"
-										style="display: none;">
+									<ul class="contents nullContents" id="nullContents" style="display: none;">
 										<li class="content01 content">
-											<!-- 2022-11-01 --> <!-- input 추가 --> <input type="text"
-											readonly placeholder="" class="notWriteInput">
+											<input type="text" readonly placeholder="" class="notWriteInput">
 										</li>
-										<li class="content02 content editSpace"><input
-											type="text" readonly placeholder="" id="wname"
-											class="editingContent"></li>
-										<li class="content03 content editSpace"><input
-											type="text" readonly placeholder="" id="wmemo"
-											class="editingContent"></li>
+										<li class="content02 content editSpace">
+											<input type="text" readonly id="wname" class="editingContent">
+										</li>
+										<li class="content03 content editSpace">
+											<input type="text" readonly id="wmemo" class="editingContent">
+										</li>
 										<li class="content04 content editSpace">
 											<div class="btnsWrap">
 												<button class="editBtn miniBtn">수정</button>
@@ -596,17 +594,16 @@ div.dt-filter-spacer {
 									</ul>
 									<ul class="contents" th:each="val:${memoList}">
 										<li class="content01 content">
-											<!-- 2022-11-01 --> <!-- input 추가 --> <input type="hidden"
-											th:value="${val.get('mm_idx')}" id="idx"> <input
-											type="text" readonly placeholder="2022-11-01" id="wdate"
+											<input type="hidden" th:value="${val.get('mm_idx')}" id="idx">
+											<input type="text" readonly placeholder="" id="wdate"
 											th:value="${val.get('mm_wdate')}" class="notWriteInput">
 										</li>
-										<li class="content02 content editSpace"><input
-											type="text" readonly placeholder="김철수" id="wname"
+										<li class="content02 content editSpace">
+											<input type="text" readonly placeholder="" id="wname"
 											th:value="${val.get('mm_user_name')}" class="editingContent">
 										</li>
-										<li class="content03 content editSpace"><input
-											type="text" readonly placeholder="협의중" id="wmemo"
+										<li class="content03 content editSpace">
+											<input type="text" readonly placeholder="" id="wmemo"
 											th:value="${val.get('mm_memo')}" class="editingContent">
 										</li>
 										<li class="content04 content editSpace">
@@ -636,15 +633,14 @@ div.dt-filter-spacer {
 
 									<ul class="contents" th:if="${memoList.size()==0}">
 										<li class="content01 content">
-											<!-- 2022-11-01 --> <!-- input 추가 --> <input type="text"
-											readonly placeholder="" class="notWriteInput">
+											<input type="text" readonly placeholder="" class="notWriteInput">
 										</li>
-										<li class="content02 content editSpace"><input
-											type="text" readonly placeholder="" id="wname"
-											class="editingContent"></li>
-										<li class="content03 content editSpace"><input
-											type="text" readonly placeholder="" id="wmemo"
-											class="editingContent"></li>
+										<li class="content02 content editSpace">
+											<input type="text" readonly placeholder="" id="wname" class="editingContent">
+										</li>
+										<li class="content03 content editSpace">
+											<input type="text" readonly placeholder="" id="wmemo" class="editingContent">
+										</li>
 										<li class="content04 content editSpace">
 											<div class="btnsWrap">
 												<button class="editBtn miniBtn">수정</button>

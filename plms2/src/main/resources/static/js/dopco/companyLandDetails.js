@@ -214,9 +214,13 @@ $(document).on("click", ".registBtn", function() {
 		return;
 	}
 	if (wname == "undefined" || wname == null || wname == "" || wname == undefined) {
-		alert("내용을 확인해주세요.");
+		alert("작성자를 확인해주세요.");
 		return;
 	}
+	if (wmemo == "undefined" || wmemo == null || wmemo == "" || wmemo == undefined) {
+			alert("내용을 확인해주세요.");
+			return;
+		}
 	if (idx == 0 || idx == "undefined" || idx == null) mode = "insert";
 	else mode = "update";
 	var mparams = { "mode": mode, "idx": idx, "manage_no": $("#manage_no").val(), "wname": $(thisContent).find("#wname").val(), "wmemo": $(thisContent).find("#wmemo").val() };
