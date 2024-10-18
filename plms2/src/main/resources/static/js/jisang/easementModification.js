@@ -1032,17 +1032,10 @@ $(document).on("click", "#finalBtn", function() {
 				console.log("response.success Y");
 				//	console.log("response.resultData length:"+response.resultData.length);
 				alert("정상적으로 등록 되었습니다.");
-				let queryString = window.location.search;
-				let urlParams = new URLSearchParams(queryString);
-				console.log()
-				if (window.opener && !window.opener.closed) {
-					
-					urlParams.forEach(function(value, key) {
-						if (key == 'open' && value == 'pop') {
-							window.opener.popupComplete();
-							window.close();
-						}
-					});
+				
+				if (window.name == 'minwonCompletePopup') {
+					window.opener.popupComplete();
+					window.close();
 				}
 				/*$("#popup_bg").show();
 				$("#popup").show(500);
@@ -1167,13 +1160,9 @@ $(document).on('click', '#backBtn', function(){
 	let queryString = window.location.search;
 	let urlParams = new URLSearchParams(queryString);
 	let backFlag = false;
-	if (window.opener && !window.opener.closed) {
-		urlParams.forEach(function(value, key) {
-			if (key == 'open' && value == 'pop') {
-				window.close();
-				return;
-			}
-		});
+	if (window.name == 'minwonCompletePopup') {
+		window.close();
+		return;
 	}
 	history.back();
 });

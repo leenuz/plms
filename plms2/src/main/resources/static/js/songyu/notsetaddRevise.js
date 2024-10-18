@@ -1001,16 +1001,9 @@ $(document).ready(function () {
              success: function (response) {
                  loadingHide();
                  console.log(response);
-                 let queryString = window.location.search;
-			    let urlParams = new URLSearchParams(queryString);
-			    let backFlag = false;
-			    if (window.opener && !window.opener.closed) {
-			    	urlParams.forEach(function(value, key) {
-				        if (key == 'open' && value == 'pop') {
-			                window.opener.popupComplete();
-				            window.close();
-				        }
-			    	});
+			    if (window.name == 'minwonCompletePopup') {
+	                window.opener.popupComplete();
+		            window.close();
 			    }
         //         if (response.success = "Y") {
         //             console.log("response.success Y");
@@ -1087,13 +1080,9 @@ $(document).on('click', '#backBtn', function(){
 	let queryString = window.location.search;
 	let urlParams = new URLSearchParams(queryString);
 	let backFlag = false;
-	if (window.opener && !window.opener.closed) {
-		urlParams.forEach(function(value, key) {
-			if (key == 'open' && value == 'pop') {
-				window.close();
-				return;
-			}
-		});
+	if (window.name == 'minwonCompletePopup') {
+		window.close();
+		return;
 	}
 	history.back();
 });

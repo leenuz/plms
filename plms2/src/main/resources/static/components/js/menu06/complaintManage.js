@@ -1612,7 +1612,7 @@ function openPopup(no, status, mp_idx) {
 		popupWindow.focus();
 	} else {
 		// 열러있지않다면 열기
-		popupWindow = window.open(url, '_blank', 'resizable');
+		popupWindow = window.open(url, 'minwonCompletePopup', 'resizable');
 		// 화면 크기를 기준으로 80%로 팝업 크기 조정
 		const widthPercent = 0.95; // 80% 너비
 		const heightPercent = 0.95; // 80% 높이
@@ -1670,17 +1670,10 @@ function popupComplete () {
 			}
 		},
 		beforeSend: function() {
-			//(이미지 보여주기 처리)
-			//$('#load').show();
-			// loadingShow();
 		},
 		complete: function() {
-			//(이미지 감추기 처리)
-			//$('#load').hide();
-			// loadingHide();
 		},
 		error: function(jqXHR, textStatus, errorThrown, responseText) {
-			//alert("ajax error \n" + textStatus + " : " + errorThrown);
 			console.log(jqXHR);
 			console.log(jqXHR.readyState);
 			console.log(jqXHR.responseText);
