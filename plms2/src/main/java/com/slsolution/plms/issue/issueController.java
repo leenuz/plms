@@ -1168,7 +1168,7 @@ public class issueController {
 //						ArrayList echolist = (ArrayList) Database.getInstance().queryForList("Json.selectMinwonAgreeDocInfo", map);
 					ArrayList echolist = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonAgreeDocInfo", map);
 					if (null != echolist && echolist.size() > 0) {
-						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("out_url"));
+						String str_EchoNo = String.valueOf(((HashMap) echolist.get(0)).get("pa_out_url"));
 						System.out.println("str_EchoNo=====" + str_EchoNo);
 						map.put("OUT_URL", str_EchoNo);
 					}
