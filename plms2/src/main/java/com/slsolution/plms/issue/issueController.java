@@ -613,7 +613,9 @@ public class issueController {
 
 				params.put("MW_SEQ", mwSeq);
 				params.put("MW_TITLE", MW_TITLE);
-				params.put("MW_CONTENTS", MW_CONTENTS);
+				params.put("MW_HISTORY", MW_HISTORY);				//토지이력
+				params.put("MW_REQUIREMENTS", MW_REQUIREMENTS);	//요구사항
+				params.put("MW_CONTENTS", MW_CONTENTS);				//내용
 				params.put("MW_OCCUR_DATE", MW_OCCUR_DATE);
 				params.put("JISA", JISA);
 				params.put("STATUS", "1");
@@ -681,16 +683,19 @@ public class issueController {
 				String addrcodeCheck = "";	// 주소코드
 				String registedCheck = "";  // 등기여부
 				String permitCheck = "";	// 계약여부
+				String repCheck = "";
 				
 				// 신규작성이라면...
 				if("NEW".equals(makeType)) {
 					addrcodeCheck = obj.getString("bcode");
 					registedCheck = obj.getString("REGISTED_YN");	//REGISTED_YN validation 처리
 					permitCheck = obj.getString("PERMITTED_YN");	//PERMITTED_YN validation 처리
+					repCheck = obj.getString("REP_YN");
 				} else { // 수정이라면...
 					addrcodeCheck = obj.getString("addrcode");
 					registedCheck = obj.getString("registed_yn");
 					permitCheck = obj.getString("permitted_yn");
+					repCheck = obj.getString("rep_yn");
 				}
 				
 				params = new HashMap();
@@ -712,7 +717,7 @@ public class issueController {
 				params.put("RI_NM", ri_nm_Check);
 				params.put("JIBUN", obj.getString("jibun"));
 				params.put("JIBUN_FULL", obj.getString("jibun_full"));
-				params.put("REP_YN", obj.getString("REP_YN"));
+				params.put("REP_YN", repCheck);
 				
 				//빈값이면 빈값으로 - REGISTED_YN
 				if(registedCheck == null || registedCheck == "null") {

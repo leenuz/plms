@@ -44,7 +44,7 @@ function handleFileUpload2(files, obj) {
 
 		// var status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,rowCount); // 파일 업로드 상태바 생성
 		var status = new createStatusbar_minwonEdit($("#newminwon_fileTitleUl"), files[i].name, files[i].size, files[i].nfname); // 파일 업로드 상태바 생성
-		//sendFileToServer_minwonEdit(fd, status); // 서버로 파일 전송 함수 호출
+		sendFileToServer_minwonEdit(fd, status); // 서버로 파일 전송 함수 호출
 
 		rowCount2++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
 		
@@ -66,6 +66,8 @@ function createStatusbar_minwonEdit (obj, name, size, no) {
 		sizeStr = sizeKB.toFixed(2) + " KB"; // KB로 표시
 	}
 
+	let nextNo = ($("#newminwon_fileTitleUl").children().length) - 1;
+
 	//보이는 화면 UI 추가 - obj 말고 그냥 div id 정했으니 그냥 추가 해줘도 됨.
     let rowHtml = '';
     
@@ -75,7 +77,7 @@ function createStatusbar_minwonEdit (obj, name, size, no) {
 	rowHtml += '</li>';
 	rowHtml += '<li class="popcontent popfilenameBox">';
 	rowHtml += '<input type="hidden" value="'+ +'">';
-	rowHtml += '<figure class="poptypeIcon"></figure><p class="popfileNameText" id="minwonFileName_'+no+'">'+name+'</p></li>';
+	rowHtml += '<figure class="poptypeIcon"></figure><p class="popfileNameText" id="minwonFileName_'+nextNo+'">'+name+'</p></li>';
 	rowHtml += '<li class="popcontent"><p>완료</p></li>';
 	rowHtml += '<li class="popcontent"><p class="popfileSizeText">'+sizeStr+'</p></li>';
 	rowHtml += '</ul>';
@@ -539,6 +541,7 @@ function loadTempMinwonDataSetting(data) {
 		let tojiHtml = '';
 		
 		let repToji = null;	//대표필지
+		let repTojiIdx = 0;
 		
 		//for[S]
 		for(let k = 0 ; k < tojiList.length ; k++) {
@@ -548,6 +551,7 @@ function loadTempMinwonDataSetting(data) {
 			//대표필지 찾기
 			if(tojiInfo.rep_yn == 'Y') {
 				repToji = tojiInfo;
+				repTojiIdx = (k+1);
 			}
 			
 			tojiHtml += '<ul class="landinfo_content">';
@@ -580,6 +584,9 @@ function loadTempMinwonDataSetting(data) {
 			$("input[name='REP_ADDRESS']").val(repToji.addr);
 			$("input[name='REGISTED_YN']").val(repToji.registed_yn);
 			$("input[name='PERMITTED_YN']").val(repToji.permitted_yn);
+			
+			$("#newcomplaint_checkbox"+repTojiIdx).prop("checked", true);
+			
 		}
 	}
 	
@@ -700,7 +707,7 @@ function getPopupJsonData2() {
 		dataObj[formSerializeArray[i].name] = formSerializeArray[i].value;
 	}
 
-	dataObj.JISA = (ljsIsNull(dataObj.JISA) || dataObj.JISA == "전체") ? '' : dataObj.JISA;
+	dataObj.JISA = $("#tempMinwonJisa").text();
 
 	//토지 정보 세팅
 	dataObj.tojiList = [];
@@ -803,7 +810,7 @@ function editInfoSave() {
 	console.log(paramData);
 	alert('구현중');
 	
-	/*
+	
 	$.ajax({
 		url: "/issue/saveMinwonData",
 		data: JSON.stringify(paramData),
@@ -839,12 +846,49 @@ function editInfoSave() {
 			console.log(jqXHR.responseJSON);
 		}
 	}); //end ajax
-	*/
+	
 }
 
 //저장버튼
 function editInfoSangsin() {
 	let paramData = getPopupJsonData2();
+	//상신할땐 Flag 값 Y로 전달. 임시저장땐 전달 안해도 OK
+	paramData.SANGSIN_FLAG = "Y";
 	console.log(paramData);
-	alert('구현중');
+	
+	$.ajax({
+		url: "/issue/saveMinwonData",
+		data: JSON.stringify(paramData),
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: 'application/json; charset=utf-8',
+		processData: false,
+		success: function(data, jqXHR) {
+			console.log(data);
+			if (data.message != null && data.message != undefined && data.message == "success") {
+				alert('저장하였습니다.');
+				//closeComplaintregisterPopup();
+			} else {
+				alert(data.message);
+			}
+		},
+		beforeSend: function() {
+			//(이미지 보여주기 처리)
+			//$('#load').show();
+			// loadingShow();
+		},
+		complete: function() {
+			//(이미지 감추기 처리)
+			//$('#load').hide();
+			// loadingHide();
+		},
+		error: function(jqXHR, textStatus, errorThrown, responseText) {
+			//alert("ajax error \n" + textStatus + " : " + errorThrown);
+			console.log(jqXHR);
+			console.log(jqXHR.readyState);
+			//console.log(jqXHR.responseText);
+			console.log(jqXHR.responseJSON);
+		}
+	}); //end ajax
 }
