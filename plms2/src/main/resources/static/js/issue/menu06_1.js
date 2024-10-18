@@ -539,6 +539,8 @@ function getPopupJsonData() {
 	dataObj.min_to_relationArr = min_to_relationArr.slice(0, -1);
 	dataObj.min_to_phoneArr = min_to_phoneArr.slice(0, -1);
 	dataObj.min_to_presenceArr = min_to_presenceArr.slice(0, -1);
+	
+	dataObj.makeType = "NEW";
 
 	return dataObj;
 }
@@ -552,7 +554,6 @@ $(document).on("click", "#newcomplaint_Popup .approveBtn", function() {
 		alert('민원명을 입력해 주세요.');
 		return false;
 	}
-	
 	
 	$.ajax({
 		url: "/issue/saveMinwonData",

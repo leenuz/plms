@@ -240,8 +240,14 @@ function loadDataTable(params) {
 		paging: true,
 		"oLanguage": { "sLengthMenu": "_MENU_" },
 		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
+		//dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
 		dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
-		buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
+		//buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
+		buttons: [],
+		initComplete: function() {
+			$('.dt-title').html('<button style="float:right" class="dt-button buttons-excel button-html5" id="excelDownloadBtn">엑셀다운로드</button>');
+			console.log(this.api().data().length);
+		},
 		pageLength: 20,
 		bPaginate: true,
 		bLengthChange: true,
@@ -311,9 +317,7 @@ function loadDataTable(params) {
 				return json.data;
 			}
 		},
-		initComplete: function() {
-			console.log(this.api().data().length);
-		},
+		
 		columns: [
 			{ data: "no", "orderable": false }, //0. 순번
 			{ data: "jisa" }, //1. 지사 
@@ -511,5 +515,63 @@ function loadDataTable(params) {
 			.draw();*/
 
 	// console.log($('#userTable').DataTable().page.info().recordsTotal);
+	
+	
+	
+	$(document).on("click","#excelDownloadBtn",function(){
+		console.log("권리확보현황 엑셀 다운로드 ");
+		var allData={"excel":""};
+		$.ajax({
+				url: "/land/songyu/selectSongyuMenu1ExcelData",  // PNU 기준으로 데이터를 가져오는 API
+				data: JSON.stringify(allData),
+				async: true,
+				type: "POST",
+				dataType: "json",
+				contentType: "application/json; charset=utf-8",
+				success: function(rt) {
+					const data = rt.resultData;
+					console.log(data); // 서버에서 받아온 데이터 확인
+					
+					// 엑셀에 담을 데이터 준비
+					/*var data1 = [];
+					var rowTitle = ['관리기관', '주소', 'PNU', '점용길이 (m)', '관로면적 (㎡)'];
+					data1.push(rowTitle);
+					
+					// 서버에서 받아온 데이터를 이용해 행 생성
+					for (var i = 0; i < uls.length; i++) {
+						var addr = $(uls[i]).find("#addr").val(); // 주소 값
+						var pnuNo = $(uls[i]).find("#pnu").val(); // PNU 값
+						
+						// 서버에서 받아온 데이터를 pnuNo에 맞춰 매칭
+						var matchingData = data.find(function(item) {
+							return item.pnu === pnuNo; // pnu가 일치하는지 확인
+						});
+
+						// 매칭되는 데이터가 있으면 해당 데이터를 사용, 없으면 빈값 처리
+						var contact_length = matchingData ? matchingData.contact_length : "";
+						var contact_area = matchingData ? matchingData.contact_area : "";
+
+						// 행 데이터 추가
+						var rowData = [goverNo, addr, pnuNo, contact_length, contact_area];
+						data1.push(rowData);
+					}
+					
+					// 엑셀 파일 생성
+					console.log(data1);
+					var worksheet = XLSX.utils.aoa_to_sheet(data1);
+					var workbook = XLSX.utils.book_new();
+					XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+					// goverNo를 활용해 파일 이름 동적으로 생성
+					var fileName = goverNo + '_필지정보.xlsx';
+
+					// 엑셀 파일 다운로드
+					XLSX.writeFile(workbook, fileName);*/
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					console.error("Error: ", textStatus, errorThrown);
+				}
+			});
+	})
 }
 

@@ -649,5 +649,55 @@ function leftbarSelected() {
 	console.log('현재 페이지는 ?? :: ' + currentURL);
 	
 }
+
+
+//json으로 데이터를 넘겨받아 엑셀로 다운로드 한다.
+function commonDownloadExcel(head,body,filename) {
+
+
+			const data = body;
+			console.log(data); // 서버에서 받아온 데이터 확인
+			
+			// 엑셀에 담을 데이터 준비
+			var data1 = [];
+			//var rowTitle = ['관리기관', '주소', 'PNU', '점용길이 (m)', '관로면적 (㎡)'];
+			var rowTitle=title
+			data1.push(head);
+			
+			// 서버에서 받아온 데이터를 이용해 행 생성
+			for (var i = 0; i < uls.length; i++) {
+				var addr = $(uls[i]).find("#addr").val(); // 주소 값
+				var pnuNo = $(uls[i]).find("#pnu").val(); // PNU 값
+				
+				// 서버에서 받아온 데이터를 pnuNo에 맞춰 매칭
+				var matchingData = data.find(function(item) {
+					return item.pnu === pnuNo; // pnu가 일치하는지 확인
+				});
+
+				// 매칭되는 데이터가 있으면 해당 데이터를 사용, 없으면 빈값 처리
+				var contact_length = matchingData ? matchingData.contact_length : "";
+				var contact_area = matchingData ? matchingData.contact_area : "";
+
+				// 행 데이터 추가
+				var rowData = [goverNo, addr, pnuNo, contact_length, contact_area];
+				data1.push(rowData);
+			}
+			
+			// 엑셀 파일 생성
+			console.log(data1);
+			var worksheet = XLSX.utils.aoa_to_sheet(data1);
+			var workbook = XLSX.utils.book_new();
+			XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+			// goverNo를 활용해 파일 이름 동적으로 생성
+			var fileName = goverNo + '_필지정보.xlsx';
+
+			// 엑셀 파일 다운로드
+			XLSX.writeFile(workbook, fileName);
+		
+}
+
+
+
 /***************************************************************************/
 /***************************************************************************/

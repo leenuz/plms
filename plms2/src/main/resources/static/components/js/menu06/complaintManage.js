@@ -256,6 +256,9 @@ function getPopupJsonData() {
 	console.log("dataObj[STATUS]: " + dataObj["STATUS"]);
 	console.log("dataObj 전체 내용:", dataObj);
 	//return JSON.stringify(dataObj);
+	
+	dataObj.makeType = "NEW";
+	
 	return dataObj;
 }
 
@@ -1474,7 +1477,12 @@ $(document).on("click", ".document_add_btnWrap .sangsinBtn", function() {
 						newWindow.document.write(data.html);
 						newWindow.document.close();
 					}
-					
+					else {
+						
+						var urls = data.OUT_URL;
+						window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
+						alert('상신이 완료 되었습니다.');	
+					}
 					// 팝업 닫기
 					//closeComplaintregisterPopup();
 
@@ -1748,7 +1756,14 @@ $(document).on('click', '#sangsinBtn', function() {
 			success: function(res) {
 				console.log(res);
 				if (res.sn!=="LOCAL"){
-					alert(res.message);	
+					if (res.message=="success"){
+						alert('상신이 완료 되었습니다.');
+						var urls = res.OUT_URL;
+						window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
+					}
+					else alert(res.message);	
+					
+					
 				}
 				else {
 					if (res.html && res.html.length>0){
@@ -1758,6 +1773,7 @@ $(document).on('click', '#sangsinBtn', function() {
 						newWindow.document.write(res.html);
 						newWindow.document.close();
 					}	
+					
 				}
 				
 			},

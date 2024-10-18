@@ -291,6 +291,50 @@ public class songyuController {
 		mav.setViewName("content/songyu/menu03");
 		return mav;
 	}
+	
+	
+	// 권리확보현황 엑셀 다운로드
+		@PostMapping(path="/selectSongyuMenu1ExcelData")
+			public void selectSongyuMenu1ExcelData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			
+				ArrayList list = new ArrayList();
+				ParameterParser parser = new ParameterParser(request);
+
+				
+				String str_result = "Y";
+				try {
+
+					 list = mainService.selectQuery("songyuSQL.songyuMenu01ExcelData", null);
+
+				} catch (Exception e) {
+					str_result = "N";
+					e.printStackTrace();
+				}
+
+				HashMap map = new HashMap();
+
+				if (list != null)
+					map.put("count", list.size());
+				else
+					map.put("count", 0);
+
+				map.put("message", str_result);
+				map.put("result", list);
+
+				JSONObject jo = new JSONObject(map);
+
+				response.setCharacterEncoding("UTF-8");
+				response.setHeader("Access-Control-Allow-Origin", "*");
+				response.resetBuffer();
+				response.setContentType("application/json");
+				response.getWriter().print(jo);
+				response.getWriter().flush();
+
+			}
+	
 
 	// 권리확보현황 데이터테이블
 	@RequestMapping(value = "/menu01DataTableList", method = { RequestMethod.GET, RequestMethod.POST }) // http://localhost:8080/api/get/dbTest
