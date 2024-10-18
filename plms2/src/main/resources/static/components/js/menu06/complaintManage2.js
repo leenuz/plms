@@ -74,7 +74,7 @@ function createStatusbar_minwonEdit (obj, name, size, no) {
 	//보이는 화면 UI 추가 - obj 말고 그냥 div id 정했으니 그냥 추가 해줘도 됨.
     let rowHtml = '';
     
-    rowHtml += '<ul class="popcontents" name="fileListUl">';
+    rowHtml += '<ul class="popcontents" name="fileListUl" data-value="'+nextNo+'">';
 	rowHtml += '<li class="popBtnbox">';
 	rowHtml += '	<button class="popAllDeleteFileBtn" onclick="deleteFileListFunc(this, '+nextNo+')"></button>';
 	rowHtml += '</li>';
@@ -230,7 +230,7 @@ function complaintsselect() {
         if (!nowIssueSelectBox03) return;
 
         const popCustomSelectBox03 = contentitem.querySelector(
-            ".Popup_Custom_SelectBox"
+            "."
         );
         const popCustomSelectBtns03 = popCustomSelectBox03.querySelector(
             ".Popup_Custom_SelectBtns"
@@ -315,14 +315,14 @@ function complaintsselect() {
 	            <li><input type="text" id="landowner_phone_${document.querySelectorAll(".landowner_wrap").length + 1}"/></li>
 	            <li class="popSelectWrap">
 	                <div class="hidden_SelectBox">
-	                    <select hidden>
+	                    <select hidden id="landowner_selectYn_hidden_${document.querySelectorAll(".landowner_wrap").length + 1}">
 	                        <option value="Y">Y</option>
 	                        <option value="N">N</option>
 	                    </select>
 	                </div>
 	                <div class="Popup_Custom_SelectBox">
 	                    <button class="Popup_Custom_SelectView" id="landowner_presence_${document.querySelectorAll(".landowner_wrap").length + 1}" data-idx="${document.querySelectorAll(".landowner_wrap").length + 1}" onclick="selectPresence(this)">Y/N</button>
-	                    <ul class="Popup_Custom_SelectBtns"></ul>
+	                    <ul class="Popup_Custom_SelectBtns" id="landowner_selectYn_show_${document.querySelectorAll(".landowner_wrap").length + 1}"></ul>
 	                </div>
 	            </li>
 	            <li class="landowner_btns">
@@ -617,14 +617,14 @@ function loadTempMinwonDataSetting(data) {
 		minwoninHtml += '	<li><input type="text" id="landowner_phone_'+(i+1)+'" value="'+m_phone+'" maxlength="15" /></li>';
 		minwoninHtml += '	<li class="popSelectWrap">';
 		minwoninHtml += '		<div class="hidden_SelectBox">';
-		minwoninHtml += '			<select hidden>';
+		minwoninHtml += '			<select hidden id="landowner_selectYn_hidden_'+(i+1)+'">';
 		minwoninHtml += '				<option value="Y">Y</option>';
 		minwoninHtml += '				<option value="N">N</option>';
 		minwoninHtml += '			</select>';
 		minwoninHtml += '		</div>';
 		minwoninHtml += '		<div class="Popup_Custom_SelectBox">';
 		minwoninHtml += '			<button class="Popup_Custom_SelectView" id="landowner_presence_'+(i+1)+'" data-idx="'+(i+1)+'" onclick="selectPresence(this)">'+m_presence+'</button>';
-		minwoninHtml += '			<ul class="Popup_Custom_SelectBtns"></ul>';
+		minwoninHtml += '			<ul class="Popup_Custom_SelectBtns" id="landowner_selectYn_show_'+(i+1)+'"></ul>';
 		minwoninHtml += '		</div>';
 		minwoninHtml += '	</li>';
 		minwoninHtml += '	<li class="landowner_btns_default">';
@@ -653,7 +653,7 @@ function loadTempMinwonDataSetting(data) {
 			let fileInfo = fileList[z];
 			
 			
-			fileHtml += '<ul class="popcontents" name="fileListUl">';
+			fileHtml += '<ul class="popcontents" name="fileListUl" data-value="'+z+'">';
 			fileHtml += '<li class="popBtnbox">';
 			fileHtml += '	<button class="popAllDeleteFileBtn" onclick="deleteFileListFunc(this, '+z+')"></button>';
 			fileHtml += '</li>';
@@ -698,9 +698,11 @@ function setReqLand(addr = "", reg_yn = "", contract_yn = "") {
 function selectPresence(obj){
 	console.log($(obj).attr('data-idx'));
 	
+	let idx = $(obj).attr('data-idx');
+	
 	//select 박스, ul요소 가져오기
-	let selectBox = $(obj).closest('li').find('.hidden_SelectBox select');
-	let customSelectList = $(obj).closest('li').find('.Popup_Custom_SelectBtns');
+	let selectBox = $('#landowner_selectYn_hidden_' + idx);  // select 박스
+	let customSelectList = $('#landowner_selectYn_show_' + idx); // ul 요소
 	
 	// Step 2. ul안에 기존 li요소들제거
 	customSelectList.empty();
@@ -729,6 +731,13 @@ function selectPresence(obj){
 		// Step 5. ul에 li요소 추가
 		customSelectList.append(li);
 	});
+	
+	// 외부 클릭 시 닫힘 이벤트 추가
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.Popup_Custom_SelectBox').length) {
+            customSelectList.removeClass('active');
+        }
+    });
 	
 	customSelectList.addClass('active');
 }
@@ -796,8 +805,11 @@ function getPopupJsonData2() {
 	//첨부파일
 	let fileCheck = [];
 	
-	for(let t = 0 ; t < $("#newminwon_fileTitleUl").children().length ; t++){
-		fileCheck.push($("#minwonFileName_"+t).text());
+	for(let t = 0 ; t < $("[name='fileListUl']").length ; t++){
+		
+		let existIdx = $("[name=fileListUl]").eq(t).attr('data-value');
+		
+		fileCheck.push( $("#minwonFileName_"+existIdx).text() );
 	}
 	
 	//첨푸파일 삭제 리스트

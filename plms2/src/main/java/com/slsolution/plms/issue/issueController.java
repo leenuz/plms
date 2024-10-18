@@ -730,10 +730,20 @@ public class issueController {
 					permitCheck = obj.getString("PERMITTED_YN");	//PERMITTED_YN validation 처리
 					repCheck = obj.getString("REP_YN");
 				} else { // 수정이라면...
-					addrcodeCheck = obj.getString("addrcode");
-					registedCheck = obj.getString("registed_yn");
-					permitCheck = obj.getString("permitted_yn");
-					repCheck = obj.getString("rep_yn");
+					boolean addrCodeKeyCheck = obj.has("bcode");
+					
+					if(addrCodeKeyCheck) {	//주소를 추가했다면
+						addrcodeCheck = obj.getString("bcode");
+						registedCheck = obj.getString("REGISTED_YN");	//REGISTED_YN validation 처리
+						permitCheck = obj.getString("PERMITTED_YN");	//PERMITTED_YN validation 처리
+						repCheck = obj.getString("REP_YN");
+					} else {
+						addrcodeCheck = obj.getString("addrcode");
+						registedCheck = obj.getString("registed_yn");
+						permitCheck = obj.getString("permitted_yn");
+						repCheck = obj.getString("rep_yn");
+					}
+					
 				}
 				
 				params = new HashMap();
