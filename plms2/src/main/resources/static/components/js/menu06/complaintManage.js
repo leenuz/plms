@@ -942,7 +942,7 @@ function minwonComplaintSangsinGo() {
 				if(data.result) {
 					
 
-					if (data.html.length>0){
+					if (data.html && data.html.length>0){
 						var urls = data.html;
 						var newWindow=window.open("", "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
 						newWindow.document.open();
@@ -1411,7 +1411,7 @@ $(document).on("click", ".document_add_btnWrap .sangsinBtn", function() {
 					/*let agreeSeq = data.agreeSeq;  // 서버에서 전달된 agreeSeq 사용
 					let mwSeq = minwonSeq;*/
 					//alert('상신되었습니다.');
-					if (data.html.length>0){
+					if (data.html && data.html.length>0){
 						var urls = data.html;
 						var newWindow=window.open("", "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
 						newWindow.document.open();
