@@ -152,12 +152,11 @@ div.dt-filter-spacer {
 							</div>
 							<section class="customSelectBox">
 								<button class="customSelectView">문서선택</button>
-
 								<ul class="customSelectBtns"></ul>
 							</section>
 						</div>
 					</div>
-					<!-- <button class="toolBtn viewBtn">문서보기</button> -->
+					<button th:if="${minwon.mm_status != '1'}" class="toolBtn viewBtn">문서보기</button>
 					<th:block th:if="${serverName == 'LOCAL'}">
 						<button class="toolBtn viewBtn" th:if="${minwon.mm_status == '1'}" onclick="tempSaveMinwonEdit()">민원 수정/상신</button>
 						<button class="toolBtn viewBtn" th:if="${minwon.mm_status == '2'}" id="minwonResponsePopup">대응방안 수립</button>
