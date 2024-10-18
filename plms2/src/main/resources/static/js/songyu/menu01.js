@@ -520,10 +520,28 @@ function loadDataTable(params) {
 	
 	$(document).on("click","#excelDownloadBtn",function(){
 		console.log("권리확보현황 엑셀 다운로드 ");
+		
+		
+		var formSerializeArray = $('#searchForm').serializeArray();
+		   console.log(formSerializeArray)
+		   var object = {};
+		   for (var i = 0; i < formSerializeArray.length; i++){
+		       object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+		   }
+		   
+		   var json = JSON.stringify(formSerializeArray);
+		  
+		  console.log("----------jsonobj------------");
+		  console.log(json);
+		  console.log("object askMenu01:"+object.askMenu01); 
+		
+		console.log(object);
+		return;
+		
 		var allData={"excel":""};
 		$.ajax({
 				url: "/land/songyu/selectSongyuMenu1ExcelData",  // PNU 기준으로 데이터를 가져오는 API
-				data: JSON.stringify(allData),
+				data: JSON.stringify(object),
 				async: true,
 				type: "POST",
 				dataType: "json",
