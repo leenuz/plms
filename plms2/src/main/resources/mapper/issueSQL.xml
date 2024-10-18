@@ -1297,8 +1297,8 @@ SELECT A.mm_mw_seq as MW_SEQ
        , A.mm_STATUS AS MINWON_STATUS
        , B.pa_status as STATUS
   FROM MINWON_MASTER   A
-       , PLMS_APPROVAL       B
- WHERE A.mm_DOCKEY = B.pa_DOCKEY
+       left join  PLMS_APPROVAL B on A.mm_DOCKEY = B.pa_DOCKEY 
+ WHERE 1=1
    AND A.mm_STATUS = '1'
    AND A.mm_SANGSIN_YN = 'Y'
    AND B.pa_STATUS = 'C'
