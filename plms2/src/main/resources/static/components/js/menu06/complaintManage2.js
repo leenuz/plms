@@ -519,7 +519,7 @@ function newMinwonEditInfoLoad() {
 
 //불러온 데이터 세팅
 function loadTempMinwonDataSetting(data) {
-	
+	console.log(data);
 	let resultList = data.resultList;	//민원상세정보
 	let tmpList = data.tmpList;		//임시저장할때의정보..?
 	let tojiList = data.tojiList;	//토지정보
@@ -538,10 +538,17 @@ function loadTempMinwonDataSetting(data) {
 		
 		let tojiHtml = '';
 		
+		let repToji = null;	//대표필지
+		
 		//for[S]
 		for(let k = 0 ; k < tojiList.length ; k++) {
 			let tojiInfo = tojiList[k];
 			let tojiString = JSON.stringify(tojiInfo).replace(/"/g, '&quot;');
+			console.log(tojiInfo);
+			//대표필지 찾기
+			if(tojiInfo.rep_yn == 'Y') {
+				repToji = tojiInfo;
+			}
 			
 			tojiHtml += '<ul class="landinfo_content">';
 				
@@ -567,6 +574,13 @@ function loadTempMinwonDataSetting(data) {
 		}//for[E]
 		$("#minwon_tojiInfoList").empty();
 		$("#minwon_tojiInfoList").append(tojiHtml);
+		
+		//대표필지
+		if(repToji != null) {
+			$("input[name='REP_ADDRESS']").val(repToji.addr);
+			$("input[name='REGISTED_YN']").val(repToji.registed_yn);
+			$("input[name='PERMITTED_YN']").val(repToji.permitted_yn);
+		}
 	}
 	
 	//민원내용
@@ -624,8 +638,29 @@ function loadTempMinwonDataSetting(data) {
 	$("textarea[name='MW_REQUIREMENTS']").val(resultList.minwon_requirement);
 	//내용
 	$("textarea[name='MW_CONTENTS']").val(resultList.minwon_content);
-	//첨부파일
 	
+	//첨부파일
+	if(fileList.length > 0) {
+		let fileHtml = '';
+		
+		for(let z = 0 ; z < fileList.length ; z++) {
+			let fileInfo = fileList[z];
+			
+			
+			fileHtml += '<ul class="popcontents" name="fileListUl">';
+			fileHtml += '<li class="popBtnbox">';
+			fileHtml += '	<button class="popAllDeleteFileBtn"></button>';
+			fileHtml += '</li>';
+			fileHtml += '<li class="popcontent popfilenameBox">';
+			fileHtml += '<input type="hidden" value="'+ +'">';
+			fileHtml += '<figure class="poptypeIcon"></figure><p class="popfileNameText" id="minwonFileName_'+z+'">'+fileInfo.file_nm+'</p></li>';
+			fileHtml += '<li class="popcontent"><p>완료</p></li>';
+			fileHtml += '<li class="popcontent"><p class="popfileSizeText">-</p></li>';
+			fileHtml += '</ul>';
+			
+		}
+		$("#newminwon_fileTitleUl").append(fileHtml);
+	}
 }
 
 //대표필지 체크박스 스크립트
@@ -707,7 +742,7 @@ function getPopupJsonData2() {
 	//첨부파일
 	let fileCheck = [];
 	
-	for(let t = 0 ; t < $("#edit_fileTitleUl").children().length ; t++){
+	for(let t = 0 ; t < $("#newminwon_fileTitleUl").children().length ; t++){
 		fileCheck.push($("#minwonFileName_"+t).text());
 	}
 	
@@ -719,7 +754,7 @@ function getPopupJsonData2() {
 	dataObj.filesLength = fileCheck.length;
 
 	//신규 파일은 SEQ가 없음
-	dataObj.MW_SEQ = "0";
+	dataObj.MW_SEQ = $("#minwonSeq").val()
 	
 	let dateCheck = $("input[name='MW_OCCUR_DATE']").val();
 	if( dateCheck == '' ) {
@@ -756,20 +791,60 @@ function getPopupJsonData2() {
 	dataObj.min_to_phoneArr = min_to_phoneArr.slice(0, -1);
 	dataObj.min_to_presenceArr = min_to_presenceArr.slice(0, -1);
 
+	dataObj.makeType = "EDIT";
+
 	return dataObj;
 }
 
 
 //저장버튼
 function editInfoSave() {
-	let aa = getPopupJsonData2();
-	console.log(aa);
+	let paramData = getPopupJsonData2();
+	console.log(paramData);
 	alert('구현중');
+	
+	/*
+	$.ajax({
+		url: "/issue/saveMinwonData",
+		data: JSON.stringify(paramData),
+		async: true,
+		type: "POST",
+		dataType: "json",
+		contentType: 'application/json; charset=utf-8',
+		processData: false,
+		success: function(data, jqXHR) {
+			console.log(data);
+			if (data.message != null && data.message != undefined && data.message == "success") {
+				alert('저장하였습니다.');
+				//closeComplaintregisterPopup();
+			} else {
+				alert(data.message);
+			}
+		},
+		beforeSend: function() {
+			//(이미지 보여주기 처리)
+			//$('#load').show();
+			// loadingShow();
+		},
+		complete: function() {
+			//(이미지 감추기 처리)
+			//$('#load').hide();
+			// loadingHide();
+		},
+		error: function(jqXHR, textStatus, errorThrown, responseText) {
+			//alert("ajax error \n" + textStatus + " : " + errorThrown);
+			console.log(jqXHR);
+			console.log(jqXHR.readyState);
+			//console.log(jqXHR.responseText);
+			console.log(jqXHR.responseJSON);
+		}
+	}); //end ajax
+	*/
 }
 
 //저장버튼
 function editInfoSangsin() {
-	let aa = getPopupJsonData2();
-	console.log(aa);
+	let paramData = getPopupJsonData2();
+	console.log(paramData);
 	alert('구현중');
 }

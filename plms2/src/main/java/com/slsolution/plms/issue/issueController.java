@@ -566,6 +566,9 @@ public class issueController {
 		//첨부파일명 배열 
 		JSONArray fileList = requestParamObj.getJSONArray("files");
 		
+		//현재 작성타입여부
+		String makeType = requestParamObj.getString("makeType");
+		
 		ArrayList list = null;
 		HashMap map = new HashMap();
 		int mwSeq = 0;
@@ -665,22 +668,41 @@ public class issueController {
 			mainService.DeleteQuery("issueSQL.deleteMinwonPnu", params);
 
 			// 토지정보 등록
-//			for (int i = 0; i < Integer.parseInt(TOJI_LENGTH); i++) {
+			/***********
+			 * 
+			 * !! 토지등록시 주의점 !!
+			 * 신규등록할때와 수정할때의 Param으로 넘어오는 key값이 다릅니다...ㅠㅠ !!!!!
+			 * 
+			 ***********/
 			for (int i = 0; i < tojiList.length(); i++) {
 
 				JSONObject obj = new JSONObject(tojiList.get(i).toString());
+				
+				String addrcodeCheck = "";	// 주소코드
+				String registedCheck = "";  // 등기여부
+				String permitCheck = "";	// 계약여부
+				
+				// 신규작성이라면...
+				if("NEW".equals(makeType)) {
+					addrcodeCheck = obj.getString("bcode");
+					registedCheck = obj.getString("REGISTED_YN");	//REGISTED_YN validation 처리
+					permitCheck = obj.getString("PERMITTED_YN");	//PERMITTED_YN validation 처리
+				} else { // 수정이라면...
+					addrcodeCheck = obj.getString("addrcode");
+					registedCheck = obj.getString("registed_yn");
+					permitCheck = obj.getString("permitted_yn");
+				}
 				
 				params = new HashMap();
 				params.put("MW_SEQ", mwSeq);
 				params.put("MINWON_SEQ", mwSeq);
 				params.put("PNU", obj.getString("pnu"));
-				params.put("ADDRCODE", (obj.getString("bcode") == null || obj.getString("bcode") == "null") ? ""
-						: obj.getString("bcode"));
+				params.put("ADDRCODE", addrcodeCheck);
 				params.put("SIDO_NM", obj.getString("sido_nm"));
 				params.put("SGG_NM", obj.getString("sgg_nm"));
 				params.put("EMD_NM", obj.getString("emd_nm"));
 				
-				//ri_nm validation
+				//ri_nm validation 처리
 				String ri_nm_Check = obj.getString("ri_nm");
 				
 				if(ri_nm_Check == null || ri_nm_Check == "null") {
@@ -691,32 +713,25 @@ public class issueController {
 				params.put("JIBUN", obj.getString("jibun"));
 				params.put("JIBUN_FULL", obj.getString("jibun_full"));
 				params.put("REP_YN", obj.getString("REP_YN"));
-				params.put("REGISTED_YN",
-						(obj.getString("REGISTED_YN") == null || obj.getString("REGISTED_YN") == "null") ? "N"
-								: obj.getString("REGISTED_YN"));
-				params.put("PERMITTED_YN",
-						(obj.getString("PERMITTED_YN") == null || obj.getString("PERMITTED_YN") == "null") ? "N"
-								: obj.getString("PERMITTED_YN"));
-				params.put("TOJI_TYPE", "");
-				//params.put("REG_ID", "test");
+				
+				//빈값이면 빈값으로 - REGISTED_YN
+				if(registedCheck == null || registedCheck == "null") {
+					registedCheck = "";
+				}
+				
+				params.put("REGISTED_YN",registedCheck);
+				
+				//빈값이면 빈값으로 - PERMITTED_YN
+				if(permitCheck == null || permitCheck == "null") {
+					permitCheck = "N";
+				}
+				
+				params.put("PERMITTED_YN", permitCheck);
+				
+				params.put("TOJI_TYPE", "");	//tojiType 설정에 관하여
 				params.put("REG_ID", String.valueOf(request.getSession().getAttribute("userName")));
 				params.put("AREA", obj.getString("AREA"));	//실저촉면적
-				// params.put("REG_ID",
-				// String.valueOf((request.getSession().getAttribute("userName")=="null")?"":request.getSession().getAttribute("userName")));
-//				params.put("PNU", parser.getString("PNU_" + i, ""));
-//				params.put("ADDRCODE", parser.getString("ADDRCODE_" + i, ""));
-//				params.put("SIDO_NM", parser.getString("SIDO_NM_" + i, ""));
-//				params.put("SGG_NM", parser.getString("SGG_NM_" + i, ""));
-//				params.put("EMD_NM", parser.getString("EMD_NM_" + i, ""));
-//				params.put("RI_NM", parser.getString("RI_NM_" + i, ""));
-//				params.put("JIBUN", parser.getString("JIBUN_" + i, ""));
-//				params.put("JIBUN_FULL", parser.getString("JIBUN_FULL_" + i, ""));
-//				params.put("REP_YN", parser.getString("REP_YN_" + i, ""));
-//				params.put("REGISTED_YN", parser.getString("REGISTED_YN_" + i, "N"));
-//				params.put("PERMITTED_YN", parser.getString("PERMITTED_YN_" + i, "N"));
-//				params.put("REG_ID", String.valueOf(request.getSession().getAttribute("userName")));
-
-//				Database.getInstance().insert("Json.insertMinwonPnu", params);
+				
 				mainService.InsertQuery("issueSQL.insertMinwonPnu", params);
 			}
 

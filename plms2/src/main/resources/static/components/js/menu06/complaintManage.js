@@ -256,6 +256,9 @@ function getPopupJsonData() {
 	console.log("dataObj[STATUS]: " + dataObj["STATUS"]);
 	console.log("dataObj 전체 내용:", dataObj);
 	//return JSON.stringify(dataObj);
+	
+	dataObj.makeType = "NEW";
+	
 	return dataObj;
 }
 
