@@ -37,7 +37,7 @@ function complaintEditPopupClose() {
 //파일 업로드 Step.1
 function handleFileUpload2(files, obj) {
 	console.log("-------------handleFileUpload---------------");
-	console.log(files);
+	//console.log(files);
 	for (var i = 0; i < files.length; i++) { // 선택된 파일들을 하나씩 처리
 		var fd = new FormData(); // FormData 객체 생성 (파일 업로드를 위한 객체)
 		fd.append('file', files[i]); // 파일 객체를 FormData에 추가
@@ -269,7 +269,7 @@ function complaintsselect() {
                     popCustomSelectBtns03.classList.remove("active");
                     nowIssueSelectBox03.value = moreBtn.textContent;
 
-                    console.log(`Selected value: ${nowIssueSelectBox03.value}`);
+                    //console.log(`Selected value: ${nowIssueSelectBox03.value}`);
                 });
             });
     }
@@ -360,13 +360,9 @@ complaintsselect();
 //신규민원 -> 주소 검색
 $(document).on("click", ".landinfo .landStatusPopOpenBtn", function() {
 	
-	//const targetId = $(this).closest("li").siblings(".landinfo_content_4").attr('id');
 	const targetId = 'minwonAddr_' + ($(this).val());
 	const targetIdx = $(this).val();
 	var addr = $(this).parent().find("input").val().trim();
-	
-	console.log($(this).closest(".landinfo_content_4").val());
-	console.log(targetId);
 	
 	if (addr == null || addr == "" || addr == undefined) {
 		alert("주소를 입력해주세요.");
@@ -443,8 +439,8 @@ $(document).on("click", ".landinfo .landStatusPopOpenBtn", function() {
 function miwonSearchAddr(obj) {
 	let selectAddrInfo = queryValueToObject($(obj).attr('data-info'));
 	let idxCheck = $(obj).attr('data-index');
-	console.log(selectAddrInfo);
-	console.log(idxCheck);
+	//console.log(selectAddrInfo);
+	//console.log(idxCheck);
 	
 	let completeYn = 'N'
 	let permittedYn = 'N';
@@ -521,7 +517,7 @@ function newMinwonEditInfoLoad() {
 
 //불러온 데이터 세팅
 function loadTempMinwonDataSetting(data) {
-	console.log(data);
+	//console.log(data);
 	let resultList = data.resultList;	//민원상세정보
 	let tmpList = data.tmpList;		//임시저장할때의정보..?
 	let tojiList = data.tojiList;	//토지정보
@@ -547,7 +543,7 @@ function loadTempMinwonDataSetting(data) {
 		for(let k = 0 ; k < tojiList.length ; k++) {
 			let tojiInfo = tojiList[k];
 			let tojiString = JSON.stringify(tojiInfo).replace(/"/g, '&quot;');
-			console.log(tojiInfo);
+			
 			//대표필지 찾기
 			if(tojiInfo.rep_yn == 'Y') {
 				repToji = tojiInfo;
@@ -808,8 +804,6 @@ function getPopupJsonData2() {
 function editInfoSave() {
 	let paramData = getPopupJsonData2();
 	console.log(paramData);
-	alert('구현중');
-	
 	
 	$.ajax({
 		url: "/issue/saveMinwonData",
@@ -820,7 +814,6 @@ function editInfoSave() {
 		contentType: 'application/json; charset=utf-8',
 		processData: false,
 		success: function(data, jqXHR) {
-			console.log(data);
 			if (data.message != null && data.message != undefined && data.message == "success") {
 				alert('저장하였습니다.');
 				//closeComplaintregisterPopup();
@@ -840,7 +833,7 @@ function editInfoSave() {
 		},
 		error: function(jqXHR, textStatus, errorThrown, responseText) {
 			//alert("ajax error \n" + textStatus + " : " + errorThrown);
-			console.log(jqXHR);
+			//console.log(jqXHR);
 			console.log(jqXHR.readyState);
 			//console.log(jqXHR.responseText);
 			console.log(jqXHR.responseJSON);
@@ -865,7 +858,6 @@ function editInfoSangsin() {
 		contentType: 'application/json; charset=utf-8',
 		processData: false,
 		success: function(data, jqXHR) {
-			console.log(data);
 			if (data.message != null && data.message != undefined && data.message == "success") {
 				alert('저장하였습니다.');
 				//closeComplaintregisterPopup();
