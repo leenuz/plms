@@ -545,6 +545,61 @@ function onDataLoad() {
 	}) //end ajax
 }
 
+// minwon.mm_status 값에 따른 셀렉 박스 옵션 동적 생성
+function updateDocumentSelectBox(minwonStatus) {
+    const $ul = $('.customSelectBtns');
+    $ul.empty();  // 기존 항목 초기화
+
+    if (minwonStatus === '2') {
+        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${minwon.ECHO_URL}">민원발생보고</button></li>`);
+    } else if (minwonStatus === '3' || minwonStatus === '4') {
+        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${minwon.ECHO_URL}">민원발생보고</button></li>`);
+        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${minwon.HANDLE_URL}">민원대응방안수립보고</button></li>`);
+    } else if (minwonStatus === '5') {
+        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${minwon.ECHO_URL}">민원발생보고</button></li>`);
+        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${minwon.HANDLE_URL}">민원대응방안수립보고</button></li>`);
+        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${minwon.COMPLE_URL}">민원완료보고</button></li>`);
+    }
+
+    // 각 버튼에 클릭 이벤트 추가
+    const $buttons = $ul.find('.moreSelectBtn');
+    $buttons.each(function() {
+        $(this).on('click', function() {
+            // 모든 버튼에서 active 클래스 제거
+            $buttons.removeClass('active');
+            // 현재 선택한 버튼에 active 클래스 추가
+            $(this).addClass('active');
+            // 선택한 버튼의 텍스트를 customSelectView 버튼에 반영
+            $('.customSelectView').text($(this).text());
+            // 셀렉 박스 닫기 (선택한 후 닫힘)
+            $ul.removeClass('open');
+        });
+    });
+}
+
+// 문서 보기 버튼 클릭 시 팝업 열기
+$('.viewBtn').on('click', function() {
+    const $selectedButton = $('.customSelectBtns .active');
+    if ($selectedButton.length > 0) {
+        const url = $selectedButton.data('url');
+        window.open(url, "문서보기", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");
+    } else {
+        alert("문서를 선택해주세요.");
+    }
+});
+
+// customSelectView 버튼 클릭 시 셀렉 박스 열기/닫기
+$('.customSelectView').on('click', function() {
+    const $ul = $('.customSelectBtns');
+    $ul.toggleClass('open');  // 셀렉 박스 열림/닫힘
+});
+
+// 페이지 로드 시 실행
+$(document).ready(function() {
+    const minwonStatus = $('#minwonStatus').val();
+    updateDocumentSelectBox(minwonStatus);
+});
+
 
 //파일 업로드 했을때 step.1
 function handleFileUpload(files, obj) {
