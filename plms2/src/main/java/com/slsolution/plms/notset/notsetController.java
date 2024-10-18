@@ -45,9 +45,7 @@ public class notsetController {
 	@GetMapping(path="/unsetOccupationDetails") //http://localhost:8080/api/get/dbTest
     public ModelAndView unsetOccupationDetails(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
-		
 		HashMap params = new HashMap();
-		ArrayList<HashMap> list=new ArrayList<HashMap>();
 
 		String idx = httpRequest.getParameter("idx");
 		String index = httpRequest.getParameter("index");
@@ -136,6 +134,7 @@ public class notsetController {
 		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
 			mav.addObject("atcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(atcFileList); // 등록일 기준으로 desc 정렬
 			mav.addObject("atcFileList", atcFileList);
 		}
 		if (notsetModifyList == null || notsetModifyList.isEmpty()) { //변경이력
@@ -269,6 +268,7 @@ public class notsetController {
 		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
 			mav.addObject("atcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(atcFileList); // 등록일 desc
 			mav.addObject("atcFileList", atcFileList);
 		}
 		if (notsetModifyList == null || notsetModifyList.isEmpty()) { //변경이력
@@ -279,6 +279,7 @@ public class notsetController {
 		if (notsetPnuAtcFileList == null || notsetPnuAtcFileList.isEmpty()) { //필지 첨부파일
 		    mav.addObject("notsetPnuAtcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(notsetPnuAtcFileList); // 등록일 desc
 		    mav.addObject("notsetPnuAtcFileList", notsetPnuAtcFileList);
 		}
 		if (notsetIssueHistoryList == null || notsetIssueHistoryList.isEmpty()) { //잠재이슈 변경이력

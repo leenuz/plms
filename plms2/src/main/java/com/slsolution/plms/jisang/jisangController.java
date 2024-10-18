@@ -2099,6 +2099,7 @@ log.info("PMT_NO:"+PMT_NO);
 		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
 			mav.addObject("atcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(atcFileList);
 			mav.addObject("atcFileList", atcFileList);
 		}
 		if (jisangPermitList == null || jisangPermitList.isEmpty()) { //사용승락
@@ -2264,6 +2265,7 @@ log.info("PMT_NO:"+PMT_NO);
 		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
 			mav.addObject("atcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(atcFileList);
 			mav.addObject("atcFileList", atcFileList);
 		}
 		if (jisangPermitList == null || jisangPermitList.isEmpty()) { //사용승락
@@ -2284,8 +2286,7 @@ log.info("PMT_NO:"+PMT_NO);
 		if (jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()) { //필지 첨부파일
 		    mav.addObject("jisangPnuAtcFileList", new ArrayList<>());
 		} else {
-			// 필지 첨부파일 목록을 역순으로 정렬
-		    Collections.reverse(jisangPnuAtcFileList);
+		    Collections.reverse(jisangPnuAtcFileList); // 필지 첨부파일 목록을 역순으로 정렬
 		    mav.addObject("jisangPnuAtcFileList", jisangPnuAtcFileList);
 		}
 		if (jisangIssueHistoryList == null || jisangIssueHistoryList.isEmpty()) { //잠재이슈 변경이력
@@ -2429,6 +2430,7 @@ log.info("PMT_NO:"+PMT_NO);
 		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
 			mav.addObject("atcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(atcFileList);
 			mav.addObject("atcFileList", atcFileList);
 		}
 		if (jisangPermitList == null || jisangPermitList.isEmpty()) { //사용승락
@@ -2449,6 +2451,7 @@ log.info("PMT_NO:"+PMT_NO);
 		if (jisangPnuAtcFileList == null || jisangPnuAtcFileList.isEmpty()) { //필지 첨부파일
 		    mav.addObject("jisangPnuAtcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(jisangPnuAtcFileList);
 		    mav.addObject("jisangPnuAtcFileList", jisangPnuAtcFileList);
 		}
 		if (jisangIssueHistoryList == null || jisangIssueHistoryList.isEmpty()) { //잠재이슈 변경이력

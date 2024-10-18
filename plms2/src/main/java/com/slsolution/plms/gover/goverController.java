@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -507,6 +508,7 @@ public class goverController {
 		if (atcFileList == null || atcFileList.isEmpty()) { // 첨부파일
 		    mav.addObject("atcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(atcFileList);
 		    mav.addObject("atcFileList", atcFileList);
 		}
 		if (goverModifyList == null || goverModifyList.isEmpty()) { // 변경이력
@@ -517,6 +519,7 @@ public class goverController {
 		if (goverPnuAtcFileList == null || goverPnuAtcFileList.isEmpty()) { // 필지 첨부파일
 		    mav.addObject("goverPnuAtcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(goverPnuAtcFileList);
 		    mav.addObject("goverPnuAtcFileList", goverPnuAtcFileList);
 		}
 		if (goverIssueHistoryList == null || goverIssueHistoryList.isEmpty()) { //잠재이슈 변경이력
@@ -1252,6 +1255,7 @@ public class goverController {
 		if (atcFileList == null || atcFileList.isEmpty()) {
 			mav.addObject("atcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(atcFileList);
 			mav.addObject("atcFileList", atcFileList);
 		}
 
@@ -1300,7 +1304,13 @@ public class goverController {
 		mav.addObject("resultData", data.get(0));
 		mav.addObject("goverModifyList", goverModifyList);
 		mav.addObject("goverModifyOfficeList", goverModifyOfficeList);
-		mav.addObject("atcFileList", atcFileList);
+		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
+		    mav.addObject("atcFileList", new ArrayList<>());
+		} else {
+			// 첨부파일 목록을 등록일 desc 순으로 정렬
+		    Collections.reverse(atcFileList);
+		    mav.addObject("atcFileList", atcFileList);
+		}
 		mav.addObject("goverPnuList", goverPnuList);
 		mav.addObject("goverPermitList", goverPermitList);
 

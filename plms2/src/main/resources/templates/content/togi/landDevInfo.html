@@ -302,10 +302,10 @@
 							<li class="title fileNameWidth">파일명</li>
 							<li class="title">파일보기</li>
 						</ul>
-						<ul class="contents" style="justify-content:center" th:if="${fileList == null || fileList.isEmpty()}">
+						<ul class="contents" style="justify-content:center" th:if="${atcFileList == null || atcFileList.isEmpty()}">
 							<li>데이터가 없습니다.</li>
 						</ul>
-						<ul class="contents" th:each="file, iterStat : ${fileList}">
+						<ul class="contents" th:each="file, iterStat : ${atcFileList}">
 							<li class="content">
 								<input type="text" th:placeholder="${file.wdate}" readonly class="notWriteInput" />
 							</li>

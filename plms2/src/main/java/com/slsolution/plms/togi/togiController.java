@@ -3,6 +3,7 @@ package com.slsolution.plms.togi;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -117,7 +118,7 @@ public class togiController {
 		ArrayList<HashMap>  list=new ArrayList<HashMap>();
 		ArrayList<HashMap> data = mainService.selectQuery("togiSQL.selectAllData",params);
 		ArrayList<HashMap> sosokData = mainService.selectQuery("togiSQL.selectSosokData",params);
-		ArrayList<HashMap> fileList = mainService.selectQuery("togiSQL.selectAtcFileList",params);
+		ArrayList<HashMap> atcFileList = mainService.selectQuery("togiSQL.selectAtcFileList",params);
 		ArrayList<HashMap> deptData = mainService.selectQuery("togiSQL.selectDeptData",params);
 		ArrayList<HashMap> sosokList = (ArrayList<HashMap>) sosokData.stream()
 			    .filter(sosok -> "N".equals(sosok.get("dm_master_yn")))
@@ -131,7 +132,13 @@ public class togiController {
 		mav.addObject("resultData",data.get(0));
 		mav.addObject("sosokData",sosokData);
 		mav.addObject("deptData",deptData);
-		mav.addObject("fileList",fileList);
+		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
+		    mav.addObject("atcFileList", new ArrayList<>());
+		} else {
+			// 첨부파일 목록을 등록일 desc 순으로 정렬
+		    Collections.reverse(atcFileList);
+		    mav.addObject("atcFileList", atcFileList);
+		}
 		mav.addObject("masterSosokList", masterSosokData);
 		mav.addObject("dosiApprovalList", dosiApprovalList);
 
@@ -192,7 +199,13 @@ public class togiController {
 		mav.addObject("deptdata",deptdata);
 		mav.addObject("daepyodata",daepyodata);
 		mav.addObject("sosokData",sosokData);
-		mav.addObject("atcFileList",atcFileList);
+		if (atcFileList == null || atcFileList.isEmpty()) { //첨부파일
+		    mav.addObject("atcFileList", new ArrayList<>());
+		} else {
+			// 첨부파일 목록을 등록일 desc 순으로 정렬
+		    Collections.reverse(atcFileList);
+		    mav.addObject("atcFileList", atcFileList);
+		}
 		//241006 - 지사정보 추가
 		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 		

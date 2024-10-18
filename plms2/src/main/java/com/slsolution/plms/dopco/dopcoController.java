@@ -3,6 +3,7 @@ package com.slsolution.plms.dopco;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -168,6 +169,13 @@ public class dopcoController {
 		mav.addObject("right_list", right_list);
 		mav.addObject("modify_list", modify_list);
 		mav.addObject("file_list", file_list);
+		if (file_list == null || file_list.isEmpty()) { //첨부파일
+		    mav.addObject("file_list", new ArrayList<>());
+		} else {
+			// 첨부파일 목록을 등록일 desc 순으로 정렬
+		    Collections.reverse(file_list);
+		    mav.addObject("file_list", file_list);
+		}
 		mav.addObject("memo_list", new ArrayList<>());
 		mav.addObject("jijuk", jijuk);
 		mav.addObject("addressList",addressList);
@@ -612,7 +620,13 @@ public class dopcoController {
 		mav.addObject("toja_list", toja_list);
 		mav.addObject("right_list", right_list);
 		mav.addObject("modify_list", modify_list);
-		mav.addObject("file_list", file_list);
+		if (file_list == null || file_list.isEmpty()) {
+			mav.addObject("file_list", new ArrayList<>());
+		} else {
+			// 첨부파일 목록을 등록일 desc 순으로 정렬
+			Collections.reverse(file_list);
+			mav.addObject("file_list", file_list);
+		}
 		mav.addObject("memo_list", jisangMemoList);
 		mav.addObject("jijuk", jijuk);
 		log.info("resultData:"+resultData);

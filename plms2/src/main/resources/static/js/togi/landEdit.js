@@ -542,7 +542,7 @@ $(document).on('click', '.moreSelectBtn', function() {
 		row += '</li>';
 		row += '</ul>';
 		
-        obj.append(row); // 파일 목록이 있는 DOM 요소 뒤에 파일 정보를 추가
+        obj.prepend(row); // 파일 목록이 있는 DOM 요소 위에 파일 정보를 추가
 		
 		var radio=$(row).find('input'); // row에서 input 요소를 찾음
 		$(radio).find('input').attr("disabled",false); // 체크박스가 비활성화되지 않도록 설정

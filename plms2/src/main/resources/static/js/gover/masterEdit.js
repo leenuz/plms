@@ -217,7 +217,7 @@ $(document).ready(function() {
 		row += '</li>';
 		row += '</ul>';
 		
-        obj.append(row); // 파일 목록이 있는 DOM 요소 뒤에 파일 정보를 추가
+        obj.prepend(row); // 파일 목록이 있는 DOM 요소 위에 파일 정보를 추가
 		
 		var radio=$(row).find('input'); // row에서 input 요소를 찾음
 		console.log("---------------radio checkbox----------");

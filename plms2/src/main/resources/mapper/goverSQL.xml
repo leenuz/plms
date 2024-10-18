@@ -108,12 +108,13 @@ LEFT JOIN plms_approval PA
 	</select>
 
 	<select id="selectAtcFileList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select *,(row_number() over()) as no
-		from gover_atcfile
-		where 1=1
+		SELECT *,(row_number() over()) as no
+		FROM gover_atcfile
+		WHERE 1=1
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-			and ga_gover_no=#{idx}
+			AND ga_gover_no=#{idx}
 		</if>
+		ORDER BY ga_wdate
 	</select>
 	
 	<select id="selectModifyList" parameterType="java.util.HashMap" resultType="java.util.HashMap">

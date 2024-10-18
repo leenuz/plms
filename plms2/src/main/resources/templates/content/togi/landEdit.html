@@ -388,67 +388,72 @@
 				</div>
 			</div>
 		</section>
-		<!-- 첨부파일 -->
-			<section class="attachFileInfo">
-				<div class="subTitle">
-					<div class="subTitleText">필지 첨부파일</div>
-					<div class="fileBtnWrap">
-						<input type="file" name="fileUpload" id="landEdit_myPcFiles" />
-						<label for="landEdit_myPcFiles">내 PC</label>
-					</div>
+		
+		<!-- 필지 첨부파일 -->
+		<section class="attachFileInfo">
+			<div class="subTitle">
+				<div class="subTitleText">필지 첨부파일</div>
+				<div class="fileBtnWrap">
+					<input type="file" name="fileUpload" id="landEdit_myPcFiles" />
+					<label for="landEdit_myPcFiles">내 PC</label>
 				</div>
-				<div class="fileUploadWrap">
-					<div class="fileUploadBox">
-						<img
-							src="/assets/media/menu04/images/file-upload.png"
-							alt="파일 업로드 아이콘"
-							class="fileUploadIcon" />
-						<p>파일을 마우스로 끌어오세요.</p>
-					</div>
+			</div>
+			<div class="fileUploadWrap">
+				<div class="fileUploadBox">
+					<img
+						src="/assets/media/menu04/images/file-upload.png"
+						alt="파일 업로드 아이콘"
+						class="fileUploadIcon" />
+					<p>파일을 마우스로 끌어오세요.</p>
 				</div>
-				<div class="contWrap">
-					<div class="depth1" id="fileListDiv">
-						<ul class="titles" id="fileTitleUl">
-							<li class="title01 allSelectCheck">
-								<input type="checkbox" id="landEdit_file_select_all" name="landEdit_file_select_all">
-								<label for="landEdit_file_select_all"></label>
+			</div>
+			<div class="contWrap">
+				<div class="depth1" id="fileDiv">
+					<ul class="titles" id="fileTitleUl">
+						<li class="title01 allSelectCheck">
+							<input type="checkbox" id="landEdit_file_select_all" name="landEdit_file_select_all">
+							<label for="landEdit_file_select_all"></label>
+						</li>
+						<li class="title">등록일</li>
+						<li class="title fileNameWidth">파일명</li>
+						<li class="title">파일보기</li>
+					</ul>
+					
+					<div class="contentScr" id="fileListDiv">
+						<!--첨부파일 목록 반복문-->
+						<ul class="contents" id="fileListUl" th:each="file, iterStat : ${atcFileList}">
+							<li class="selectWidth content checkboxWrap">
+							<input type="hidden" name="idx" th:id="'idx'" th:value="${file.idx}">
+							<input type="hidden" name="seq" th:id="'seq'" th:value="${file.seq}">
+							<input type="hidden" name="file_seq" th:id="'file_seq'" th:value="${file.file_seq}">
+							<input type="hidden" name="file_path" th:id="'file_path'" th:value="${file.file_path}">
+							<input type="hidden" name="newFileCheckYn" value="N">
+							<input type="checkbox" th:id="'landEdit_attachFile' + ${iterStat.index + 1}"
+								name="landEdit_attachFile" />
+							<label th:for="'landEdit_attachFile' + ${iterStat.index + 1}"></label>
 							</li>
-							<li class="title">등록일</li>
-							<li class="title fileNameWidth">파일명</li>
-							<li class="title">파일보기</li>
+							<li class="content registDateWidth">
+								<input type="text" th:value="${file.wdate}" readonly
+									class="notWriteInput" name="registDateWidth" />
+							</li>
+							<li class="content fileNameWidth">
+								<input type="text" th:value="${file.file_nm}" id="filename" readonly class="notWriteInput" />
+							</li>
+							<li class="content viewBtnBox">
+								<!-- <a th:href="@{${file.ga_file_path}}" class="viewDetailButton lightBlueBtn" th:data-filepath="${file.ga_file_path}" target="_blank" onclick="attachFileDownload(this)">보기</a> -->
+								<button class="viewDetailButton lightBlueBtn"><a href="javascript:void(0);"
+										th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.file_path}]], [[${file.file_nm}]], [[${file.dosi_no}]], [[${file.file_seq}]], 'togi')">보기</a>
+										</button>
+							</li>
 						</ul>
-							<!--첨부파일 목록 반복문-->
-							<ul class="contents" id="fileListUl" th:each="file, iterStat : ${atcFileList}">
-								<li class="selectWidth content checkboxWrap">
-								<input type="hidden" name="idx" th:id="'idx'" th:value="${file.idx}">
-								<input type="hidden" name="seq" th:id="'seq'" th:value="${file.seq}">
-								<input type="hidden" name="file_seq" th:id="'file_seq'" th:value="${file.file_seq}">
-								<input type="hidden" name="file_path" th:id="'file_path'" th:value="${file.file_path}">
-								<input type="hidden" name="newFileCheckYn" value="N">
-								<input type="checkbox" th:id="'landEdit_attachFile' + ${iterStat.index + 1}"
-									name="landEdit_attachFile" />
-								<label th:for="'landEdit_attachFile' + ${iterStat.index + 1}"></label>
-								</li>
-								<li class="content registDateWidth">
-									<input type="text" th:value="${file.wdate}" readonly
-										class="notWriteInput" name="registDateWidth" />
-								</li>
-								<li class="content fileNameWidth">
-									<input type="text" th:value="${file.file_nm}" id="filename" readonly class="notWriteInput" />
-								</li>
-								<li class="content viewBtnBox">
-									<!-- <a th:href="@{${file.ga_file_path}}" class="viewDetailButton lightBlueBtn" th:data-filepath="${file.ga_file_path}" target="_blank" onclick="attachFileDownload(this)">보기</a> -->
-									<button class="viewDetailButton lightBlueBtn"><a href="javascript:void(0);"
-											th:data-info="${file}" target="_blank" th:onclick="attachFileDownload([[${file.file_path}]], [[${file.file_nm}]], [[${file.dosi_no}]], [[${file.file_seq}]], 'togi')">보기</a>
-											</button>
-								</li>
-							</ul>
 					</div>
 				</div>
-				<div class="btnWrap">
-					<button class="fileBtn fileDelBtn delBtn" id="deleteSelectedBtn">선택파일 삭제</button>
-				</div>
-			</section>
+			</div>
+			<div class="btnWrap">
+				<button class="fileBtn fileDelBtn delBtn" id="deleteSelectedBtn">선택파일 삭제</button>
+			</div>
+		</section>
+			
 			<div class="finalBtnBox btnWrap">
 				<button class="finalBtn prevBtn" onclick="history.back();">이전</button>
 				<button class="finalBtn saveBtn">저장</button>
