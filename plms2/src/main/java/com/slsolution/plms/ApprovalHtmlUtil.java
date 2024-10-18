@@ -4204,6 +4204,91 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			 		</td>	");
 			sbHtml.append("			 	</tr>	");
 			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">민원인/토지주</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			              <table >		");
+			sbHtml.append("			                  <colgroup>		");
+			sbHtml.append("			 	              <col style=\"width:5%\" />	");
+			sbHtml.append("			 	              <col style=\"width:20%\" />	");
+			sbHtml.append("			 	              <col style=\"width:20%\" />	");
+			sbHtml.append("			 	              <col style=\"width:20%\" />	");
+			sbHtml.append("			 	              <col style=\"width:20%\" />	");
+			sbHtml.append("			 	              <col style=\"width:15%\" />	");
+			sbHtml.append("			                 </colgroup>");
+			sbHtml.append("			                 <tbody>");
+			//토지주 관련 데이터 가공
+			String minwonin_tojijunm_arr[]=detailMap.get("minwonin_tojiju_nm").toString().split("\\|");
+			String minwonin_tojijubirth_arr[]=detailMap.get("minwonin_tojiju_birth").toString().split("\\|");
+			String tojiju_relation_arr[]=detailMap.get("tojiju_relation").toString().split("\\|");
+			String minwonin_phone_arr[]=detailMap.get("minwonin_phone").toString().split("\\|");
+			String field_presence_arr[]=detailMap.get("field_presence").toString().split("\\|");
+			// 두 배열의 길이를 확인 (길이가 같다고 가정)
+			int length = Math.min(minwonin_tojijunm_arr.length, minwonin_tojijubirth_arr.length); // 두 배열 중 더 짧은 길이로 맞춤
+
+			// 각 인덱스의 요소를 합친 새로운 배열 생성
+			String[][] combinedArray = new String[length][5];
+
+			for (int i = 0; i < length; i++) {
+			    combinedArray[i][0] = minwonin_tojijunm_arr[i];
+			    combinedArray[i][1] = minwonin_tojijubirth_arr[i];
+			    combinedArray[i][2] = tojiju_relation_arr[i];
+			    combinedArray[i][3] = minwonin_phone_arr[i];
+			    combinedArray[i][4] = field_presence_arr[i];
+			  
+			}
+			sbHtml.append("			 		<tr>");
+			sbHtml.append("			 			<th scope=\'row\'>순번</th>");
+			sbHtml.append("			 			<th scope=\'row\'>성명</th>");
+			sbHtml.append("			 			<th scope=\'row\'>생년월일</th>");
+			sbHtml.append("			 			<th scope=\'row\'>토지주와의관계</th>");
+			sbHtml.append("			 			<th scope=\'row\'>연락처</th>");
+			sbHtml.append("			 			<th scope=\'row\'>현장입회</th>");
+			sbHtml.append("			 		</tr>\n");
+			for(int i=0;i<combinedArray.length;i++) {
+				log.info("combinedArray["+i+"]"+combinedArray[i][0]);
+				log.info("combinedArray["+i+"]"+combinedArray[i][1]);
+				sbHtml.append("			 	               <tr>");
+				sbHtml.append("			 		               <td class=\"inner_tag\">	");
+				sbHtml.append("			 			              <span style=\"width:100%; display:inline-block; text-align:center;\">" + (i+1) + "</span>	");
+				sbHtml.append("			 		               </td>	");
+				sbHtml.append("			 		               <td class=\"inner_tag\">	");
+				sbHtml.append("			 			              <span style=\"width:100%; display:inline-block; text-align:center;\">" + combinedArray[i][0] + "</span>	");
+				sbHtml.append("			 		               </td>	");
+				sbHtml.append("			 		               <td class=\"inner_tag\">	");
+				sbHtml.append("			 			              <span style=\"width:100%; display:inline-block; text-align:center;\">" + combinedArray[i][1] + "</span>	");
+				sbHtml.append("			 		               </td>	");
+				sbHtml.append("			 		               <td class=\"inner_tag\">	");
+				sbHtml.append("			 			              <span style=\"width:100%; display:inline-block; text-align:center;\">" + combinedArray[i][2] + "</span>	");
+				sbHtml.append("			 		               </td>	");
+				sbHtml.append("			 		               <td class=\"inner_tag\">	");
+				sbHtml.append("			 			              <span style=\"width:100%; display:inline-block; text-align:center;\">" + combinedArray[i][3] + "</span>	");
+				sbHtml.append("			 		               </td>	");
+				sbHtml.append("			 		               <td class=\"inner_tag\">	");
+				sbHtml.append("			 			              <span style=\"width:100%; display:inline-block; text-align:center;\">" + combinedArray[i][4] + "</span>	");
+				sbHtml.append("			 		               </td>	");
+				
+				sbHtml.append("			 	               </tr>");
+			}
+			
+			sbHtml.append("			                 <tbody>");
+			sbHtml.append("			              </table>");
+//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + contents + "</span>");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">토지이력</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("toji_history") + "</span>");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">요구사항</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("minwon_requirement") + "</span>");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
 			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;padding-left: 10px;\">" + contents + "</span>");
@@ -4603,6 +4688,91 @@ log.info("dataMap:"+detailMap);
 			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:center;\">" + detailMap.get("jisa") + "</span>");
 			sbHtml.append("			 		</td>");
 			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">민원인/토지주</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			              <table >		");
+			sbHtml.append("			                  <colgroup>		");
+			sbHtml.append("			 	              <col style=\"width:5%\" />	");
+			sbHtml.append("			 	              <col style=\"width:20%\" />	");
+			sbHtml.append("			 	              <col style=\"width:20%\" />	");
+			sbHtml.append("			 	              <col style=\"width:20%\" />	");
+			sbHtml.append("			 	              <col style=\"width:20%\" />	");
+			sbHtml.append("			 	              <col style=\"width:15%\" />	");
+			sbHtml.append("			                 </colgroup>");
+			sbHtml.append("			                 <tbody>");
+			//토지주 관련 데이터 가공
+			String minwonin_tojijunm_arr[]=detailMap.get("minwonin_tojiju_nm").toString().split("\\|");
+			String minwonin_tojijubirth_arr[]=detailMap.get("minwonin_tojiju_birth").toString().split("\\|");
+			String tojiju_relation_arr[]=detailMap.get("tojiju_relation").toString().split("\\|");
+			String minwonin_phone_arr[]=detailMap.get("minwonin_phone").toString().split("\\|");
+			String field_presence_arr[]=detailMap.get("field_presence").toString().split("\\|");
+			// 두 배열의 길이를 확인 (길이가 같다고 가정)
+			int length = Math.min(minwonin_tojijunm_arr.length, minwonin_tojijubirth_arr.length); // 두 배열 중 더 짧은 길이로 맞춤
+
+			// 각 인덱스의 요소를 합친 새로운 배열 생성
+			String[][] combinedArray = new String[length][5];
+
+			for (int i = 0; i < length; i++) {
+			    combinedArray[i][0] = minwonin_tojijunm_arr[i];
+			    combinedArray[i][1] = minwonin_tojijubirth_arr[i];
+			    combinedArray[i][2] = tojiju_relation_arr[i];
+			    combinedArray[i][3] = minwonin_phone_arr[i];
+			    combinedArray[i][4] = field_presence_arr[i];
+			  
+			}
+			sbHtml.append("			 		<tr>");
+			sbHtml.append("			 			<th scope=\'row\'>순번</th>");
+			sbHtml.append("			 			<th scope=\'row\'>성명</th>");
+			sbHtml.append("			 			<th scope=\'row\'>생년월일</th>");
+			sbHtml.append("			 			<th scope=\'row\'>토지주와의관계</th>");
+			sbHtml.append("			 			<th scope=\'row\'>연락처</th>");
+			sbHtml.append("			 			<th scope=\'row\'>현장입회</th>");
+			sbHtml.append("			 		</tr>\n");
+			for(int i=0;i<combinedArray.length;i++) {
+				log.info("combinedArray["+i+"]"+combinedArray[i][0]);
+				log.info("combinedArray["+i+"]"+combinedArray[i][1]);
+				sbHtml.append("			 	               <tr>");
+				sbHtml.append("			 		               <td class=\"inner_tag\">	");
+				sbHtml.append("			 			              <span style=\"width:100%; display:inline-block; text-align:center;\">" + (i+1) + "</span>	");
+				sbHtml.append("			 		               </td>	");
+				sbHtml.append("			 		               <td class=\"inner_tag\">	");
+				sbHtml.append("			 			              <span style=\"width:100%; display:inline-block; text-align:center;\">" + combinedArray[i][0] + "</span>	");
+				sbHtml.append("			 		               </td>	");
+				sbHtml.append("			 		               <td class=\"inner_tag\">	");
+				sbHtml.append("			 			              <span style=\"width:100%; display:inline-block; text-align:center;\">" + combinedArray[i][1] + "</span>	");
+				sbHtml.append("			 		               </td>	");
+				sbHtml.append("			 		               <td class=\"inner_tag\">	");
+				sbHtml.append("			 			              <span style=\"width:100%; display:inline-block; text-align:center;\">" + combinedArray[i][2] + "</span>	");
+				sbHtml.append("			 		               </td>	");
+				sbHtml.append("			 		               <td class=\"inner_tag\">	");
+				sbHtml.append("			 			              <span style=\"width:100%; display:inline-block; text-align:center;\">" + combinedArray[i][3] + "</span>	");
+				sbHtml.append("			 		               </td>	");
+				sbHtml.append("			 		               <td class=\"inner_tag\">	");
+				sbHtml.append("			 			              <span style=\"width:100%; display:inline-block; text-align:center;\">" + combinedArray[i][4] + "</span>	");
+				sbHtml.append("			 		               </td>	");
+				
+				sbHtml.append("			 	               </tr>");
+			}
+			
+			sbHtml.append("			                 <tbody>");
+			sbHtml.append("			              </table>");
+//			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + contents + "</span>");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">토지이력</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("toji_history") + "</span>");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
+			sbHtml.append("			 		<th scope=\"row\">요구사항</th>	");
+			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
+			sbHtml.append("			 			<span style=\"width:100%; display:inline-block; text-align:left;\">" + detailMap.get("minwon_requirement") + "</span>");
+			sbHtml.append("			 		</td>	");
+			sbHtml.append("			 	</tr>	");
+			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 	<tr>");
 			sbHtml.append("			 		<th scope=\"row\">민원 내용</th>	");
 			sbHtml.append("			 		<td class=\"inner_tag\" colspan=\"3\">	");
