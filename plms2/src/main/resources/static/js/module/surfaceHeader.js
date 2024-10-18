@@ -1,6 +1,4 @@
 const surfaceHeaderEvet = () => {
-	if (!window.opener) {
-	
      let surfaceHeader = document.querySelector(".surfaceHeader");
      let htmlFilePath = '/components/subHtml/surfaceheader.html'; // 삽입할 HTML 파일 경로
 
@@ -27,7 +25,6 @@ const surfaceHeaderEvet = () => {
      };
      xhr.send();
      //console.log('header작동');
-     }
 }
 
 
