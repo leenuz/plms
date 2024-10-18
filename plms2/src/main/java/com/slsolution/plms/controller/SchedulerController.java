@@ -865,11 +865,12 @@ public class SchedulerController {
 		
 		
 		log.info("############ 민원발생보고 상신건 결재처리된 건에 대하여 처리###################");
+		log.info("####MINWONSTEP1####");
 //
 //		// 이슈관리 >> 민원관리 전자결제 체크.
 //		// 1. 민원발생보고
 		ArrayList<HashMap> minwonMasterList=new ArrayList<HashMap>();
-		if ("DEV".equals(GC.getServerName()) || "LOCAL".equals(GC.getServerName())) {
+		if ( "LOCAL".equals(GC.getServerName())) {
 			minwonMasterList = (ArrayList<HashMap>) mainService.selectQuery("issueSQL.selectApprovalMinwonMasterTest",null);
 		}
 		else {
