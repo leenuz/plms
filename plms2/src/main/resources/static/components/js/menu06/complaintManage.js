@@ -322,9 +322,12 @@ function onDataLoad() {
 			$('#pop_dopcoAllWrappers .complaints_content_box').text(result.mw_contents); //내용
 			
 			// 이슈 유형
-			let issueType = `${result.code_str1} >> ${result.code_str2} >> ${result.code_str3}`;
-			$('#mwdetail_issuetype').val(issueType);
-			$('#pop_mwdetail_issuetype').text(issueType);
+			if (result.code_str1 && result.code_str2 && result.code_str3) {
+				let issueType = `${result.code_str1} >> ${result.code_str2} >> ${result.code_str3}`;
+				$('#mwdetail_issuetype').val(issueType);
+				$('#pop_mwdetail_issuetype').text(issueType);	
+			}
+			
 			// 민원인/토지주
 			let minwontojijus = '';
 			if (result.minwonin_tojiju_nm != null) {
