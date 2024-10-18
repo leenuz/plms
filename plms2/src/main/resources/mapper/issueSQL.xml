@@ -574,6 +574,11 @@ ORDER BY A.PNU ASC LIMIT 1
 UPDATE MINWON_MASTER
    SET mm_MW_TITLE = #{MW_TITLE}
      , mm_mw_OCCUR_DATE = TO_DATE(#{MW_OCCUR_DATE}, 'yyyy-MM-dd')
+     , minwonin_tojiju_nm = #{MINWONIN_TOJIJU_NM}
+     , minwonin_tojiju_birth = #{MINWONIN_TOJIJU_BIRTH}
+     , tojiju_relation = #{TOJIJU_RELATION}
+     , minwonin_phone = #{MINWONIN_PHONE}
+     , field_presence = #{FIELD_PRESENCE}
      , toji_history = #{MW_HISTORY}
      , minwon_requirement = #{MW_REQUIREMENTS}
      , mm_MW_CONTENTS = #{MW_CONTENTS}

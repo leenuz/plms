@@ -581,7 +581,7 @@ function updateDocumentSelectBox(minwonStatus) {
 }
 
 // 문서 보기 버튼 클릭 시 팝업 열기
-$('.viewBtn').on('click', function() {
+$('#minwonDocumentViewBtn').on('click', function() {
     const $selectedButton = $('.customSelectBtns .active');
     if ($selectedButton.length > 0) {
         const url = $selectedButton.data('url');
@@ -872,7 +872,7 @@ function complainSeletDepth_optionSelect(selectBoxId, ulId, btnId, listDivId) {
 	const listDivElement = $("#"+listDivId);
 	const depthCheck = selectBoxId.charAt(selectBoxId.length - 1);
 	
-	// Step 2. ul안데 기존 li요소들제거
+	// Step 2. ul안에 기존 li요소들제거
 	ulElement.empty();
 	
 	if(btnElement.hasClass('active')) {

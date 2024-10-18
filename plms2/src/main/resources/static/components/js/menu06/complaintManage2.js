@@ -321,7 +321,7 @@ function complaintsselect() {
 	                    </select>
 	                </div>
 	                <div class="Popup_Custom_SelectBox">
-	                    <button class="Popup_Custom_SelectView" id="landowner_presence_${document.querySelectorAll(".landowner_wrap").length + 1}">Y/N</button>
+	                    <button class="Popup_Custom_SelectView" id="landowner_presence_${document.querySelectorAll(".landowner_wrap").length + 1}" data-idx="${document.querySelectorAll(".landowner_wrap").length + 1}" onclick="selectPresence(this)">Y/N</button>
 	                    <ul class="Popup_Custom_SelectBtns"></ul>
 	                </div>
 	            </li>
@@ -623,7 +623,7 @@ function loadTempMinwonDataSetting(data) {
 		minwoninHtml += '			</select>';
 		minwoninHtml += '		</div>';
 		minwoninHtml += '		<div class="Popup_Custom_SelectBox">';
-		minwoninHtml += '			<button class="Popup_Custom_SelectView" id="landowner_presence_'+(i+1)+'">'+m_presence+'</button>';
+		minwoninHtml += '			<button class="Popup_Custom_SelectView" id="landowner_presence_'+(i+1)+'" data-idx="'+(i+1)+'" onclick="selectPresence(this)">'+m_presence+'</button>';
 		minwoninHtml += '			<ul class="Popup_Custom_SelectBtns"></ul>';
 		minwoninHtml += '		</div>';
 		minwoninHtml += '	</li>';
@@ -694,6 +694,45 @@ function setReqLand(addr = "", reg_yn = "", contract_yn = "") {
 	$('.daepyo_pilji_list_3 input[type="text"]').val(contract_yn); //계약여부
 }
 
+//현장입회여부 셀렉트박스
+function selectPresence(obj){
+	console.log($(obj).attr('data-idx'));
+	
+	//select 박스, ul요소 가져오기
+	let selectBox = $(obj).closest('li').find('.hidden_SelectBox select');
+	let customSelectList = $(obj).closest('li').find('.Popup_Custom_SelectBtns');
+	
+	// Step 2. ul안에 기존 li요소들제거
+	customSelectList.empty();
+	
+	if(customSelectList.hasClass('active')) {
+		customSelectList.removeClass('active');
+		return false;
+	}
+	
+	// Step 3. option항목들 순회
+	selectBox.find('option').each(function() {
+		let optionTxt =  $(this).text(); // 옵션의 텍스트;
+		
+		// Step 4. 새로운 li요소 생성하고 붙이고
+		let li = $('<li></li>');
+		let p = $('<p></p>').text(optionTxt);
+		
+		li.append(p);
+		
+		//li에 클릭 이벤트 추가 및 버튼 텍스트 변경
+		li.on('click', function(){
+			$(obj).text(optionTxt);
+			customSelectList.removeClass('active');	//선택하면 사라져야.
+		});
+		
+		// Step 5. ul에 li요소 추가
+		customSelectList.append(li);
+	});
+	
+	customSelectList.addClass('active');
+}
+
 //파일삭제 -  저장 눌러야지 삭제됨. (DB만)
 function deleteFileListFunc(obj, idx) {
 	let deleteFileNm = $("#minwonFileName_"+idx).text();
@@ -750,7 +789,7 @@ function getPopupJsonData2() {
 		obj.birth_date = $(ul).find('input').eq(2).val(); //생년월일
 		obj.relation = $(ul).find('input').eq(3).val(); //토지주와 관계
 		obj.phone = $(ul).find('input').eq(4).val(); //연락처
-		obj.attendance = $(ul).find('select').val(); //현장입회
+		obj.attendance = $("#landowner_presence_"+index).text() == 'Y/N'? 'N' : $("#landowner_presence_"+index).text(); //현장입회
 		dataObj.userList.push(obj);
 	});
 
@@ -793,7 +832,7 @@ function getPopupJsonData2() {
 		let ownerBirth = commonNvl( $("#landowner_birthday_"+(p+1)).val(), "-" )  + "|";
 		let ownerRelation = commonNvl( $("#landowner_relation_"+(p+1)).val(), "-" )  + "|";
 		let ownerPhone = commonNvl( $("#landowner_phone_"+(p+1)).val(), "-" )  + "|";
-		let owerPresence = commonNvl( $("#landowner_presence"+(p+1)).text(), "N" )  + "|";
+		let owerPresence = commonNvl( $("#landowner_presence_"+(p+1)).text(), "N" )  + "|";
 
 		min_to_nameArr += ownerNm;
 		min_to_birthArr += ownerBirth;

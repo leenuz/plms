@@ -631,8 +631,15 @@ public class issueController {
 
 				params.put("MW_SEQ", mwSeq);
 				params.put("MW_TITLE", MW_TITLE);
+				
+				params.put("MINWONIN_TOJIJU_NM", MIN_TO_NAMEARR);
+				params.put("MINWONIN_TOJIJU_BIRTH", MIN_TO_BIRTHARR);
+				params.put("TOJIJU_RELATION", MIN_TO_RELATIONARR);
+				params.put("MINWONIN_PHONE", MIN_TO_PHONEARR);
+				params.put("FIELD_PRESENCE", MIN_TO_PRESENCEARR);
+				
 				params.put("MW_HISTORY", MW_HISTORY);				//토지이력
-				params.put("MW_REQUIREMENTS", MW_REQUIREMENTS);	//요구사항
+				params.put("MW_REQUIREMENTS", MW_REQUIREMENTS);		//요구사항
 				params.put("MW_CONTENTS", MW_CONTENTS);				//내용
 				params.put("MW_OCCUR_DATE", MW_OCCUR_DATE);
 				params.put("JISA", JISA);
