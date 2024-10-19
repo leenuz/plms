@@ -7,6 +7,11 @@
 <title>index1</title>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+
+
+
+
 <body>
 //민원관리 현황통계 데이터 조회
 	@PostMapping(path="/selectMinwonStatusStatis")
@@ -575,9 +580,44 @@ function test() {
 }
 
 
+$(document).on("click","#exceltest",function(){
 
+	var workbook = new ExcelJS.Workbook();
+    var worksheet = workbook.addWorksheet('Sheet1');
+
+    // 데이터 추가
+    worksheet.columns = [
+        { header: '이름', key: 'name', width: 15 },
+        { header: '이메일', key: 'email', width: 25 },
+        { header: '전화번호', key: 'phone', width: 15 }
+    ];
+
+    worksheet.addRow({ name: '홍길동', email: 'hong@example.com', phone: '010-1234-5678' });
+    worksheet.addRow({ name: '김철수', email: 'kim@example.com', phone: '010-8765-4321' });
+
+    // 스타일 적용
+    worksheet.getRow(1).font = { bold: true };  // 첫 번째 행(헤더)에 볼드체 적용
+    worksheet.getCell('A1').fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FFFF00' }  // 배경색 노란색
+    };
+    worksheet.getCell('A1').alignment = { horizontal: 'center' };  // 가운데 정렬
+
+    // 엑셀 파일 다운로드
+    workbook.xlsx.writeBuffer().then(function (buffer) {
+        var blob = new Blob([buffer], { type: 'application/octet-stream' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'styled_excel.xlsx';
+        link.click();
+    });
+
+
+})
 
 </script>
 <button onclick="test()" type="button">Ajax</button>
+<button id="exceltest" type="button">exceltest</button>
 </body>
 </html>

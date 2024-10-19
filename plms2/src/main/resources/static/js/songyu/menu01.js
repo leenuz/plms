@@ -547,7 +547,11 @@ function loadDataTable(params) {
 			object.right_type = right_type.substr(1);
 		
 		console.log(object);
-		//return;
+		
+		
+
+		         	
+
 		
 		var allData={"excel":""};
 		$.ajax({
@@ -591,28 +595,64 @@ function loadDataTable(params) {
 					}
 					console.log("--------------excel data------------------");
 					console.log(dataArr);
-					var worksheet = XLSX.utils.aoa_to_sheet(dataArr);
+					
+					
+					// ExcelJS를 이용해 워크북과 워크시트 생성
+			          var workbook = new ExcelJS.Workbook();
+			          var worksheet = workbook.addWorksheet('Sheet1');
+
+			          // 헤더와 데이터 추가 (빈 셀도 미리 생성)
+			          worksheet.columns = head.map(h => ({ header: h, key: h, width: 20 }));
+					  dataArr.slice(1).forEach(row => {
+					          var rowObject = worksheet.addRow(row);
+					          rowObject.eachCell({ includeEmpty: true }, function(cell, colNumber) {
+					              cell.value = cell.value || '';  // 공백일 경우 빈 문자열로 초기화
+					          });
+					      });
+
+			          // 스타일 정의 (글꼴, 테두리, 정렬)
+			          worksheet.eachRow((row, rowNumber) => {
+			              row.eachCell((cell, colNumber) => {
+			                  cell.font = { size: 10, bold: true };
+			                  cell.alignment = { vertical: 'middle', horizontal: 'center' };
+			                  cell.border = {
+			                      top: { style: 'thin' },
+			                      left: { style: 'thin' },
+			                      bottom: { style: 'thin' },
+			                      right: { style: 'thin' }
+			                  };
+			              });
+			          });
+
+					  
+					  var unixTime = Date.now();
+					      var fileName = '송유관현황_' + unixTime + '.xlsx';  // 파일명 생성
+			          // 엑셀 파일 다운로드
+			          workbook.xlsx.writeBuffer().then(function (buffer) {
+			              var blob = new Blob([buffer], { type: 'application/octet-stream' });
+			              var link = document.createElement('a');
+			              link.href = URL.createObjectURL(blob);
+			              link.download = fileName;
+			              link.click();
+			          });
+					
+					
+					/*var worksheet = XLSX.utils.aoa_to_sheet(dataArr);
 					var workbook = XLSX.utils.book_new();
 					XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-					var colWidths = [];
-					for (var i = 0; i < dataArr[0].length; i++) {
-						if (i==0) colWidths.push({ wpx: 30 });
-						else if (i==19) colWidths.push({ wpx: 200 });
-						else if (i==25) colWidths.push({ wpx: 120 });
-					    else colWidths.push({ wpx: 80 }); // 예시로 열마다 너비를 다르게 설정 (첫 열 100px, 두 번째 열 150px 등)
-					}
-
-					// 열 너비를 설정
-					worksheet['!cols'] = colWidths;
 					
 					var cellStyle = {
-					    font: { sz: 12, bold: true },  // 폰트 크기(sz: 14), 굵게(bold)
+					    font: { sz: 10, bold: true },  // 폰트 크기(sz: 14), 굵게(bold)
 					    border: {                      // 셀 테두리 설정
-					        top: { style: "thin",color:{rgb:"000000"} },
-					        bottom: { style: "thin",color:{rgb:"000000"} },
-					        left: { style: "thin",color:{rgb:"000000"} },
-					        right: { style: "thin",color:{rgb:"000000"} }
-					    }
+					        top: { style: "thick",color:{rgb:"000000"} },
+					        bottom: { style: "thick",color:{rgb:"000000"} },
+					        left: { style: "thick",color:{rgb:"000000"} },
+					        right: { style: "thick",color:{rgb:"000000"} }
+					    },
+						alignment: {
+						        horizontal: "center",  // Horizontal center alignment
+						        vertical: "center"     // Vertical center alignment
+						    }
 					};
 					
 					// 모든 데이터 셀에 스타일 적용
@@ -628,10 +668,24 @@ function loadDataTable(params) {
 					        worksheet[cellRef].s = cellStyle;
 					    }
 					}
+					
+					var colWidths = [];
+					for (var i = 0; i < dataArr[0].length; i++) {
+						if (i==0) colWidths.push({ wpx: 30 });
+						else if (i==19) colWidths.push({ wpx: 200 });
+						else if (i==25) colWidths.push({ wpx: 120 });
+					    else colWidths.push({ wpx: 80 }); // 예시로 열마다 너비를 다르게 설정 (첫 열 100px, 두 번째 열 150px 등)
+					}
+
+					// 열 너비를 설정
+					worksheet['!cols'] = colWidths;
+					
+					
+					
 
 				
 					// 엑셀 파일 다운로드
-					XLSX.writeFile(workbook, "test.xls");
+					XLSX.writeFile(workbook, "test.xls");*/
 					//commonDownloadExcel(head,dataArr,"test.xls");
 					// 엑셀에 담을 데이터 준비
 					/*var data1 = [];

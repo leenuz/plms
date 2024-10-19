@@ -1,6 +1,7 @@
 package com.slsolution.plms.songyu;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -9,7 +10,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.OutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -292,6 +295,121 @@ public class songyuController {
 		return mav;
 	}
 	
+	@GetMapping("/download-excel")
+	public void downloadExcel(HttpServletResponse response) throws IOException {
+	    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+	    response.setHeader("Content-Disposition", "attachment; filename=\"styled_example.xlsx\"");
+	    
+	    Workbook workbook = new XSSFWorkbook();
+	    Sheet sheet = workbook.createSheet("Styled Sheet");
+
+	    // 스타일 생성
+	    CellStyle style = workbook.createCellStyle();
+	    Font font = workbook.createFont();
+	    font.setBold(true); // 글씨를 굵게
+	    font.setColor(IndexedColors.RED.getIndex()); // 글씨 색상을 빨강으로 설정
+	    style.setFont(font);
+
+	    style.setFillForegroundColor(IndexedColors.YELLOW.getIndex()); // 배경색 노란색으로 설정
+	    style.setFillPattern(FillPatternType.SOLID_FOREGROUND); // 배경색 패턴 설정
+
+	    style.setAlignment(HorizontalAlignment.CENTER); // 가운데 정렬
+	    style.setVerticalAlignment(VerticalAlignment.CENTER); // 세로 가운데 정렬
+
+	    // 셀 생성 및 스타일 적용
+	    Row row = sheet.createRow(0);
+	    Cell cell = row.createCell(0);
+	    cell.setCellValue("Styled Text");
+	    cell.setCellStyle(style);
+
+	    // 엑셀 파일 출력
+	    workbook.write(response.getOutputStream());
+	    workbook.close();
+	}	
+
+@PostMapping(path = "/selectSongyuMenu1ExcelData1")
+public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    String requestParams = ParameterUtil.getRequestBodyToStr(request);
+    JSONObject requestParamsObj = new JSONObject(requestParams);
+    log.info("requestParams:" + requestParams);
+
+    // Retrieve parameters from the request
+    String jisa = requestParamsObj.getString("jisa"); //지사
+	String manage_no = requestParamsObj.getString("manage_no"); //관리번호
+	String toji_type = requestParamsObj.getString("toji_type"); //토지유형
+	String right_type = requestParamsObj.has("right_type")?requestParamsObj.getString("right_type"):""; //권리확보유형
+	String dosiplan = requestParamsObj.getString("dosiplan"); // 도시계획유형
+	String toji_plan_type = requestParamsObj.getString("toji_plan_type"); //토지개발대상
+	String right_overlap = requestParamsObj.has("right_overlap")?requestParamsObj.getString("right_overlap"):""; //권리중복필지
+
+	String address = requestParamsObj.has("saddr")?requestParamsObj.getString("saddr"):""; // 입력형 주소
+	String sido_nm = requestParamsObj.has("sido_nm")?requestParamsObj.getString("sido_nm"):"";
+	String sgg_nm = requestParamsObj.has("sgg_nm")?requestParamsObj.getString("sgg_nm"):"";
+	String emd_nm = requestParamsObj.has("emd_nm")?requestParamsObj.getString("emd_nm"):"";
+	String ri_nm = requestParamsObj.has("ri_nm")?requestParamsObj.getString("ri_nm"):"";
+	String jibun = requestParamsObj.has("jibun")?requestParamsObj.getString("jibun"):"";
+
+    HashMap params = new HashMap();
+	
+	
+	params.put("jisa", jisa);
+	params.put("idx", manage_no);
+	params.put("toji_type", toji_type);
+	params.put("dosiplan", dosiplan);
+	params.put("toji_plan_type", toji_plan_type);
+	params.put("right_overlap", right_overlap);
+	
+	params.put("address", address);
+	params.put("sido_nm",sido_nm);
+	params.put("sgg_nm",sgg_nm);
+	params.put("emd_nm",emd_nm);
+	params.put("ri_nm",ri_nm);
+	params.put("jibun",jibun);
+    ArrayList list = new ArrayList();
+    try {
+        // Retrieve data (assuming it returns a list of maps or similar structure)
+        list = mainService.selectQuery("songyuSQL.songyuMenu01ExcelData", null);
+    } catch (Exception e) {
+        log.error("Error retrieving data", e);
+    }
+
+    // Create an Excel workbook and sheet
+    Workbook workbook = new XSSFWorkbook();
+    Sheet sheet = workbook.createSheet("Songyu Data");
+
+    // Create header row
+    Row headerRow = sheet.createRow(0);
+    String[] headers = {"Column1", "Column2", "Column3"}; // Replace with actual column names
+    for (int i = 0; i < headers.length; i++) {
+        Cell cell = headerRow.createCell(i);
+        cell.setCellValue(headers[i]);
+    }
+
+    // Populate data rows
+    int rowNum = 1;  // Start from the second row (first row is for headers)
+    for (Object item : list) {
+        Row row = sheet.createRow(rowNum++);
+        HashMap<String, Object> data = (HashMap<String, Object>) item;
+        
+        // Assuming the data has keys corresponding to headers
+        row.createCell(0).setCellValue(data.get("Column1").toString()); // Replace with actual keys
+        row.createCell(1).setCellValue(data.get("Column2").toString());
+        row.createCell(2).setCellValue(data.get("Column3").toString());
+    }
+
+    // Set headers for file download
+    response.setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode("SongyuData.xlsx", "UTF-8") + ";");
+    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+    // Write the workbook to the response output stream
+    try (OutputStream outputStream = response.getOutputStream()) {
+        workbook.write(outputStream);
+    } catch (Exception e) {
+        log.error("Error writing Excel file", e);
+    } finally {
+        workbook.close();  // Ensure workbook is closed to free resources
+    }
+}
 	
 	// 권리확보현황 엑셀 다운로드
 		@PostMapping(path="/selectSongyuMenu1ExcelData")
@@ -315,7 +433,22 @@ public class songyuController {
 			String emd_nm = requestParamsObj.has("emd_nm")?requestParamsObj.getString("emd_nm"):"";
 			String ri_nm = requestParamsObj.has("ri_nm")?requestParamsObj.getString("ri_nm"):"";
 			String jibun = requestParamsObj.has("jibun")?requestParamsObj.getString("jibun"):"";
+			HashMap params = new HashMap();
 			
+			
+			params.put("jisa", jisa);
+			params.put("idx", manage_no);
+			params.put("toji_type", toji_type);
+			params.put("dosiplan", dosiplan);
+			params.put("toji_plan_type", toji_plan_type);
+			params.put("right_overlap", right_overlap);
+			
+			params.put("address", address);
+			params.put("sido_nm",sido_nm);
+			params.put("sgg_nm",sgg_nm);
+			params.put("emd_nm",emd_nm);
+			params.put("ri_nm",ri_nm);
+			params.put("jibun",jibun);
 			
 				ArrayList list = new ArrayList();
 				ParameterParser parser = new ParameterParser(request);
@@ -324,7 +457,7 @@ public class songyuController {
 				String str_result = "Y";
 				try {
 
-					 list = mainService.selectQuery("songyuSQL.songyuMenu01ExcelData", null);
+					 list = mainService.selectQuery("songyuSQL.songyuMenu01ExcelData", params);
 
 				} catch (Exception e) {
 					str_result = "N";

@@ -29,6 +29,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 @Slf4j
 @Controller
 
@@ -196,5 +205,65 @@ public class MainController {
 		mav.setViewName("content/board");
 		return mav;
 	}
+	
+	@GetMapping("/download/excel1")
+    public ResponseEntity<byte[]> downloadExcel1() throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Sample Sheet");
+        Row row = sheet.createRow(0);
+        Cell cell = row.createCell(0);
+        cell.setCellValue("Hello, Excel!");
+
+        // 엑셀 파일을 ByteArrayOutputStream에 쓰기
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+
+        // HttpHeaders 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=sample.xlsx");
+        
+        return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
+    }
+    
+    @GetMapping("/downloadExcel2")
+    public void downloadExcel2(HttpServletResponse response) throws IOException {
+        // 엑셀 워크북 및 시트 생성
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("데이터");
+
+        // 헤더 행 작성
+        Row headerRow = sheet.createRow(0);
+        String[] headers = {"ID", "이름", "이메일"};
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+        }
+
+        // 샘플 데이터 작성
+        Object[][] data = {
+            {1, "홍길동", "hong@example.com"},
+            {2, "김철수", "kim@example.com"},
+            {3, "이영희", "lee@example.com"}
+        };
+
+        int rowNum = 1;
+        for (Object[] rowData : data) {
+            Row row = sheet.createRow(rowNum++);
+            for (int i = 0; i < rowData.length; i++) {
+                Cell cell = row.createCell(i);
+                cell.setCellValue(rowData[i].toString());
+            }
+        }
+
+        // 파일 다운로드를 위한 응답 설정
+        response.setHeader("Content-Disposition", "attachment;filename=sample.xlsx");
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+        // 엑셀 파일을 응답으로 출력
+        OutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+    }
 
 }

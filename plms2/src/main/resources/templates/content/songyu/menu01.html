@@ -7,11 +7,19 @@
  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <script src="/vendor/xlsx.min.js"></script>
+
+
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script> -->
+	 <script src="/vendor/exceljs.min.js"></script> 
+    <!-- <script src="/vendor/xlsx.min.js"></script> -->
 	  <link th:href="@{/css/common.css}" rel="stylesheet" />
+	  
 	  <link rel="stylesheet" th:href="@{/css/menu01/menu01_1.css}" /> 
 	  
 	  <script th:src=@{/js/songyu/menu01.js}></script>	
+	 <!-- <script src="/vendor/xlsx.min.js"></script>  -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/xlsx-style/dist/xlsx.full.min.js"></script> -->
 	  <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 		<style>
@@ -454,5 +462,6 @@
     <script th:src=@{/js/menu01/menuLinkEvet.js}></script>
     <script th:src=@{/js/menu01/radioEvet.js}></script>
     <script th:src=@{/js/menu01/resultPageEvet.js}></script>
+ 
 </th:block>
 </html>
