@@ -246,7 +246,12 @@ function loadDataTable(params) {
 		"oLanguage": { "sLengthMenu": "_MENU_" },
 		//dom: '<"dt-center-in-div"l>B<f>r>t<>p',
 		dom: '<"top"<"dt-title">Bl><"dt-center-in-div"r><"bottom"tp><"clear">',
-		buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
+		//buttons: [{ extend: 'excel', text: '엑셀 다운로드' }],
+		buttons: [],
+		initComplete: function() {
+			$('.dt-title').html('<button style="float:right" class="dt-button buttons-excel button-html5" id="excelDownloadBtn">엑셀다운로드</button>');
+			console.log(this.api().data().length);
+		},
 		pageLength: 20,
 		bPaginate: true,
 		bLengthChange: true,
@@ -311,9 +316,7 @@ function loadDataTable(params) {
 				return json.data;
 			}
 		},
-		initComplete: function() {
-			console.log(this.api().data().length);
-		},
+		
 		/*"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 //	console.log(aData);
 	$('td:eq(0)', nRow).html(iDisplayIndexFull +1);
@@ -457,3 +460,239 @@ return nRow;
 
 /******************************************/
 /******************************************/
+
+
+
+
+//엑셀 다운로드
+
+$(document).on("click","#excelDownloadBtn",function(){
+		console.log("지상권내역조회 엑셀 다운로드 ");
+		
+		let jisaCheck = $("#loginJisa").val();
+		var formSerializeArray = $('#searchForm').serializeArray();
+			console.log(formSerializeArray)
+			var object = {};
+			for (var i = 0; i < formSerializeArray.length; i++) {
+				object[formSerializeArray[i]['name']] = formSerializeArray[i]['value'];
+			}
+
+			var json = JSON.stringify(formSerializeArray);
+
+			console.log("----------jsonobj------------");
+			console.log(json);
+			console.log("object askMenu01:" + object.askMenu01);
+		  
+		
+			object.jisa = ljsIsNull(jisaCheck) ? ljsIsNull(object.jisa) ? '' : object.jisa : jisaCheck;
+							object.manage_no = object.manage_no;
+							object.toji_type = object.toji_type;
+							object.toji_plan_type = object.toji_plan_type;
+							object.right_overlap = object.OverlapCheck01;
+							object.souja = object.souja;
+							object.jasan_no = object.jasan_no;
+							object.dosiplan = object.dosiplan;
+							object.cancel_yn = object.cancel_yn;
+							object.deunggi_date = object.start_date + '~' + object.end_date;
+							object.account_yn = object.account_yn;
+							object.start_date = object.start_date;
+							object.end_date = object.end_date;
+							var ask = (object.askMenu01 == undefined || object.askMenu01 == null) ? '0' : object.askMenu01;
+							console.log("askmenu:" + ask);
+
+							if (ask == "0") {
+								console.log("---------3--------------");
+								object.saddr = (object.addressFull == undefined || object.addressFull == null) ? '' : object.addressFull;
+							}
+							else {
+								console.log("----------------------------1--------------");
+								
+								object.sido_nm = object.sido;
+								object.sgg_nm = object.sgg;
+								object.emd_nm = object.emd;
+								object.ri_nm = object.ri;
+								object.jibun = object.jibun;
+							}
+
+		      console.log(object);  
+			   	
+
+	
+		var allData={"excel":""};
+		$.ajax({
+				url: "/land/jisang/menu02_2ExcelDownload",  // PNU 기준으로 데이터를 가져오는 API
+				data: JSON.stringify(object),
+				async: true,
+				type: "POST",
+				dataType: "json",
+				contentType: "application/json; charset=utf-8",
+				success: function(rt) {
+					const data = rt.result;
+					console.log(data); // 서버에서 받아온 데이터 확인
+					var dataArr=[];
+					var head=['순번','자산분류번호','시도','시군구','읍면동','리','지번','취득일','등기일','담당지사','소유자명','여부','헤지일','PNU'];
+					 dataArr.push(head);	
+					for(var i=0;i<data.length;i++){
+						var cancle_str=""
+						if (data[i].cancel_yn=="Y") cancle_str="해지";
+						else cancle_str="미해지";
+						
+						
+						var rowArr=[data[i].no,data[i].jasan_no,data[i].sido_nm,data[i].sgg_nm,data[i].emd_nm,data[i].ri_nm,data[i].jibun,data[i].chuideuk_date,data[i].deunggi_date,data[i].jisa,data[i].souja_name,cancle_str,data[i].cancle_date,data[i].pnu];
+						dataArr.push(rowArr);	
+					}
+					console.log("--------------excel data------------------");
+					console.log(dataArr);
+					
+					
+					// ExcelJS 워크북과 워크시트 생성
+					   var workbook = new ExcelJS.Workbook();
+					   var worksheet = workbook.addWorksheet('Sheet1');
+
+					  /* // 헤더 병합
+					   worksheet.mergeCells('A1:A2');  // '순번' 열
+					   worksheet.mergeCells('B1:K1');  // '토지 기본 정보' 병합
+					   worksheet.mergeCells('L1:S1');  // '권리 확보 여부' 병합
+
+					   // 첫 번째 행의 병합된 셀 값 설정
+					   worksheet.getCell('A1').value = '순번';
+					   worksheet.getCell('B1').value = '토지 기본 정보';
+					   worksheet.getCell('L1').value = '권리 확보 여부';*/
+
+					   // 두 번째 행의 구체적인 열 제목 설정
+					  /* const headers = ['담당지사', '자산분류번호', '관리번호', '시도', '시군구', '읍면동', '리', '지번', '지목', '지적면적', '소유자명', '등기여부', '계약유형', '편입면적', '취득일', '등기일', '사용승락여부', 'PNU'];
+					   worksheet.getRow(2).values = ['순번', ...headers];
+*/
+// ExcelJS를 이용해 워크북과 워크시트 생성
+			          var workbook = new ExcelJS.Workbook();
+			          var worksheet = workbook.addWorksheet('Sheet1');
+
+			          // 헤더와 데이터 추가 (빈 셀도 미리 생성)
+			          worksheet.columns = head.map(h => ({ header: h, key: h, width: 20 }));
+					  dataArr.slice(1).forEach(row => {
+					          var rowObject = worksheet.addRow(row);
+					          rowObject.eachCell({ includeEmpty: true }, function(cell, colNumber) {
+					              cell.value = cell.value || '';  // 공백일 경우 빈 문자열로 초기화
+					          });
+					      });
+
+						  
+						
+						  
+			          // 스타일 정의 (글꼴, 테두리, 정렬)
+			          worksheet.eachRow((row, rowNumber) => {
+			              row.eachCell((cell, colNumber) => {
+			                  cell.font = { size: 10, bold: true };
+			                  cell.alignment = { vertical: 'middle', horizontal: 'center' };
+			                  cell.border = {
+			                      top: { style: 'thin' },
+			                      left: { style: 'thin' },
+			                      bottom: { style: 'thin' },
+			                      right: { style: 'thin' }
+			                  };
+			              });
+			          });
+					   // Unix time을 사용한 파일명 생성
+					   var unixTime = Date.now();
+					   var fileName = '지상권내역해지조회_' + unixTime + '.xlsx';
+
+					   // 엑셀 파일 다운로드
+					   workbook.xlsx.writeBuffer().then(function (buffer) {
+					       var blob = new Blob([buffer], { type: 'application/octet-stream' });
+					       var link = document.createElement('a');
+					       link.href = URL.createObjectURL(blob);
+					       link.download = fileName;
+					       link.click();
+					   });
+					
+					/*var worksheet = XLSX.utils.aoa_to_sheet(dataArr);
+					var workbook = XLSX.utils.book_new();
+					XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+					
+					var cellStyle = {
+					    font: { sz: 10, bold: true },  // 폰트 크기(sz: 14), 굵게(bold)
+					    border: {                      // 셀 테두리 설정
+					        top: { style: "thick",color:{rgb:"000000"} },
+					        bottom: { style: "thick",color:{rgb:"000000"} },
+					        left: { style: "thick",color:{rgb:"000000"} },
+					        right: { style: "thick",color:{rgb:"000000"} }
+					    },
+						alignment: {
+						        horizontal: "center",  // Horizontal center alignment
+						        vertical: "center"     // Vertical center alignment
+						    }
+					};
+					
+					// 모든 데이터 셀에 스타일 적용
+					for (let row = 0; row < dataArr.length; row++) {
+					    for (let col = 0; col < dataArr[row].length; col++) {
+					        // 열 인덱스(A, B, C 등) 계산
+					        let cellRef = XLSX.utils.encode_cell({ c: col, r: row });
+					        
+					        // 셀 객체가 존재하지 않으면 빈 셀을 생성
+					        if (!worksheet[cellRef]) worksheet[cellRef] = { t: 's', v: '' };
+					        
+					        // 셀에 스타일 적용
+					        worksheet[cellRef].s = cellStyle;
+					    }
+					}
+					
+					var colWidths = [];
+					for (var i = 0; i < dataArr[0].length; i++) {
+						if (i==0) colWidths.push({ wpx: 30 });
+						else if (i==19) colWidths.push({ wpx: 200 });
+						else if (i==25) colWidths.push({ wpx: 120 });
+					    else colWidths.push({ wpx: 80 }); // 예시로 열마다 너비를 다르게 설정 (첫 열 100px, 두 번째 열 150px 등)
+					}
+
+					// 열 너비를 설정
+					worksheet['!cols'] = colWidths;
+					
+					
+					
+
+				
+					// 엑셀 파일 다운로드
+					XLSX.writeFile(workbook, "test.xls");*/
+					//commonDownloadExcel(head,dataArr,"test.xls");
+					// 엑셀에 담을 데이터 준비
+					/*var data1 = [];
+					var rowTitle = ['관리기관', '주소', 'PNU', '점용길이 (m)', '관로면적 (㎡)'];
+					data1.push(rowTitle);
+					
+					// 서버에서 받아온 데이터를 이용해 행 생성
+					for (var i = 0; i < uls.length; i++) {
+						var addr = $(uls[i]).find("#addr").val(); // 주소 값
+						var pnuNo = $(uls[i]).find("#pnu").val(); // PNU 값
+						
+						// 서버에서 받아온 데이터를 pnuNo에 맞춰 매칭
+						var matchingData = data.find(function(item) {
+							return item.pnu === pnuNo; // pnu가 일치하는지 확인
+						});
+
+						// 매칭되는 데이터가 있으면 해당 데이터를 사용, 없으면 빈값 처리
+						var contact_length = matchingData ? matchingData.contact_length : "";
+						var contact_area = matchingData ? matchingData.contact_area : "";
+
+						// 행 데이터 추가
+						var rowData = [goverNo, addr, pnuNo, contact_length, contact_area];
+						data1.push(rowData);
+					}
+					
+					// 엑셀 파일 생성
+					console.log(data1);
+					var worksheet = XLSX.utils.aoa_to_sheet(data1);
+					var workbook = XLSX.utils.book_new();
+					XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+					// goverNo를 활용해 파일 이름 동적으로 생성
+					var fileName = goverNo + '_필지정보.xlsx';
+
+					// 엑셀 파일 다운로드
+					XLSX.writeFile(workbook, fileName);*/
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					console.error("Error: ", textStatus, errorThrown);
+				}
+			});
+	})
