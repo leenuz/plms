@@ -215,6 +215,79 @@ public class togiController {
 	
 	
 	
+	
+	//점용마스터 엑셀 다운로드
+		@PostMapping(path="/menu04_1ExcelDownload")
+		public void menu04_1ExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject requestParamsObj=new JSONObject(requestParams);
+		log.info("requestParams:"+requestParams);
+		
+		String jisa = requestParamsObj.has("jisa")?requestParamsObj.getString("jisa"):"";
+		String address = requestParamsObj.has("saddr")?requestParamsObj.getString("saddr"):"";
+		String complete_yn = requestParamsObj.has("complete_yn")?requestParamsObj.getString("complete_yn"):"";
+		String start_date = requestParamsObj.has("start_date")?requestParamsObj.getString("start_date"):"";
+		String end_date = requestParamsObj.has("end_date")?requestParamsObj.getString("end_date"):"";
+		
+		
+
+		
+
+		HashMap params = new HashMap();
+		
+		params.put("jisa",jisa);
+		params.put("address",address);
+		params.put("complete_yn", complete_yn);
+		params.put("start_date", start_date);
+		params.put("end_date", end_date);
+
+//		String[] right_arr= {};
+//		right_arr=right_type.split(",");
+//		params.put("right_type", right_arr);
+
+		
+		
+		log.info("params:"+params);
+		
+
+		
+		
+			ArrayList list = new ArrayList();
+			ParameterParser parser = new ParameterParser(request);
+
+			
+			String str_result = "Y";
+			try {
+
+				 list = mainService.selectQuery("togiSQL.selectDosiListExcelData", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		}
+
+	
 	//토지조회리스트
 	@RequestMapping(value="/menu04_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> datatableList04_1(HttpServletRequest req, HttpServletResponse res) throws Exception {

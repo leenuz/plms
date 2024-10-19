@@ -712,6 +712,262 @@ public class goverController {
 		return mav;
 	}
 
+	//점용마스터 엑셀 다운로드
+	@PostMapping(path="/menu03_1ExcelDownload")
+	public void menu03_1ExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	String requestParams = ParameterUtil.getRequestBodyToStr(request);
+	JSONObject requestParamsObj=new JSONObject(requestParams);
+	log.info("requestParams:"+requestParams);
+	
+	String jisa = requestParamsObj.has("jisa")?requestParamsObj.getString("jisa"):"";
+	String gover_no = requestParamsObj.has("gover_no")?requestParamsObj.getString("gover_no"):"";
+	String use_purpos = requestParamsObj.has("use_purpos")?requestParamsObj.getString("use_purpos"):"";
+	String pmt_office = requestParamsObj.has("pmt_office")?requestParamsObj.getString("pmt_office"):"";
+	String adm_office = requestParamsObj.has("adm_office")?requestParamsObj.getString("adm_office"):"";
+	String save_status = requestParamsObj.has("save_status")?requestParamsObj.getString("save_status"):"";
+	String address = requestParamsObj.has("saddr")?requestParamsObj.getString("saddr"):"";
+	String sido_nm = requestParamsObj.has("sido_nm")?requestParamsObj.getString("sido_nm"):"";
+	String sgg_nm = requestParamsObj.has("sgg_nm")?requestParamsObj.getString("sgg_nm"):"";
+	String emd_nm = requestParamsObj.has("emd_nm")?requestParamsObj.getString("emd_nm"):"";
+	String ri_nm = requestParamsObj.has("ri_nm")?requestParamsObj.getString("ri_nm"):"";
+	String jibun = requestParamsObj.has("jibun")?requestParamsObj.getString("jibun"):"";
+
+	String idx = requestParamsObj.has("idx")?requestParamsObj.getString("idx"):"";
+
+	
+
+	HashMap params = new HashMap();
+	
+
+	params.put("jisa", jisa);
+	params.put("gover_no", gover_no);
+	params.put("use_purpos", use_purpos);
+	params.put("pmt_office", pmt_office);
+	params.put("adm_office", adm_office);
+	params.put("save_status", save_status);
+	params.put("idx", idx);
+	params.put("address", address);
+	params.put("sido_nm", sido_nm);
+	params.put("sgg_nm", sgg_nm);
+	params.put("emd_nm", emd_nm);
+	params.put("ri_nm", ri_nm);
+	params.put("jibun", jibun);
+
+	params.put("manageYn", "Y");
+	
+		ArrayList list = new ArrayList();
+		ParameterParser parser = new ParameterParser(request);
+
+		
+		String str_result = "Y";
+		try {
+
+			 list = mainService.selectQuery("goverSQL.selectGoverMasterSearchListExcelData", params);
+
+		} catch (Exception e) {
+			str_result = "N";
+			e.printStackTrace();
+		}
+
+		HashMap map = new HashMap();
+
+		if (list != null)
+			map.put("count", list.size());
+		else
+			map.put("count", 0);
+
+		map.put("message", str_result);
+		map.put("result", list);
+
+		JSONObject jo = new JSONObject(map);
+
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.resetBuffer();
+		response.setContentType("application/json");
+		response.getWriter().print(jo);
+		response.getWriter().flush();
+
+	}
+
+	//점용마스터 엑셀 다운로드
+		@PostMapping(path="/menu03_2ExcelDownload")
+		public void menu03_2ExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject requestParamsObj=new JSONObject(requestParams);
+		log.info("requestParams:"+requestParams);
+		
+		
+		
+	
+		
+
+//		String jisa = requestParamsObj.getString("jisa");
+		String jisa = requestParamsObj.has("jisa")?requestParamsObj.getString("jisa"):"";
+		String gover_no = requestParamsObj.has("gover_no")?requestParamsObj.getString("gover_no"):"";
+		String use_purpos = requestParamsObj.has("use_purpos")?requestParamsObj.getString("use_purpos"):"";
+		String pmt_office = requestParamsObj.has("pmt_office")?requestParamsObj.getString("pmt_office"):"";
+		String adm_office = requestParamsObj.has("adm_office")?requestParamsObj.getString("adm_office"):"";
+		String pay_date_start = requestParamsObj.has("pay_date_start")?requestParamsObj.getString("pay_date_start"):"";
+		String pay_date_end = requestParamsObj.has("pay_date_end")?requestParamsObj.getString("pay_date_end"):"";
+		String address = requestParamsObj.has("saddr")?requestParamsObj.getString("saddr"):"";
+		String idx = requestParamsObj.has("idx")?requestParamsObj.getString("idx"):"";
+
+		
+
+		HashMap params = new HashMap();
+	
+
+		params.put("jisa", jisa);
+		params.put("gover_no", gover_no);
+		params.put("use_purpos", use_purpos);
+		params.put("pmt_office", pmt_office);
+		params.put("adm_office", adm_office);
+		params.put("pay_date_start", pay_date_start);
+		params.put("pay_date_end", pay_date_end);
+		params.put("address", address);
+		params.put("idx", idx);
+
+//			String[] right_arr= {};
+//			right_arr=right_type.split(",");
+//			params.put("right_type", right_arr);
+
+		params.put("manageYn", "Y");
+		
+		log.info("params:" + params);
+		
+			ArrayList list = new ArrayList();
+			ParameterParser parser = new ParameterParser(request);
+
+			
+			String str_result = "Y";
+			try {
+
+				 list = mainService.selectQuery("goverSQL.selectGoverMasterSearchListExcelData", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		}
+	
+		//점용마스터 엑셀 다운로드
+		@PostMapping(path="/menu03_3ExcelDownload")
+		public void menu03_3ExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject requestParamsObj=new JSONObject(requestParams);
+		log.info("requestParams:"+requestParams);
+		
+		
+		
+		
+
+//		
+		
+		String jisa = requestParamsObj.has("jisa")?requestParamsObj.getString("jisa"):"";	
+//		}
+//		else {
+//			jisa = (String)sessionMap.get("jisa");	
+//		}
+		
+		String gover_no = requestParamsObj.has("gover_no")?requestParamsObj.getString("gover_no"):"";
+		String use_purpos = requestParamsObj.has("use_purpos")?requestParamsObj.getString("use_purpos"):"";
+		String pmt_office = requestParamsObj.has("pmt_office")?requestParamsObj.getString("pmt_office"):"";
+		String adm_office = requestParamsObj.has("adm_office")?requestParamsObj.getString("adm_office"):"";
+		String cancel_yn = requestParamsObj.has("cancel_yn")?requestParamsObj.getString("cancel_yn"):"";
+
+		String pay_date_start = requestParamsObj.has("pay_date_start")?requestParamsObj.getString("pay_date_start"):"";
+		String pay_date_end = requestParamsObj.has("pay_date_end")?requestParamsObj.getString("pay_date_end"):"";
+		String address = requestParamsObj.has("saddr")?requestParamsObj.getString("saddr"):"";
+		String idx = requestParamsObj.has("idx")?requestParamsObj.getString("idx"):"";
+
+		
+		HashMap params = new HashMap();
+	
+
+		params.put("jisa", jisa);
+		params.put("gover_no", gover_no);
+		params.put("use_purpos", use_purpos);
+		params.put("pmt_office", pmt_office);
+		params.put("adm_office", adm_office);
+		// params.put("cancel_yn",cancel_yn);
+		if ("N".equals(cancel_yn)) {
+			params.put("cancel_yn", null); // null 조건을 추가하기 위해 cancel_yn에 null 값을 전달
+			params.put("cancel_yn_condition", "'N'  OR GM.gm_cancle_yn IS NULL or GM.gm_cancle_yn = ''");
+		} else {
+			params.put("cancel_yn", cancel_yn);
+		}
+		// params.put("cancel_yn","N");
+		params.put("TEST", "Y");
+		params.put("pay_date_start", pay_date_start);
+		params.put("pay_date_end", pay_date_end);
+		params.put("address", address);
+		params.put("idx", idx);
+
+//			String[] right_arr= {};
+//			right_arr=right_type.split(",");
+//			params.put("right_type", right_arr);
+
+		params.put("manageYn", "Y");
+	
+		log.info("params:" + params);
+		
+			ArrayList list = new ArrayList();
+			ParameterParser parser = new ParameterParser(request);
+
+			
+			String str_result = "Y";
+			try {
+
+				 list = mainService.selectQuery("goverSQL.selectGoverMasterCancelSearchListExcelData", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		}
+
+	
 	@RequestMapping(value = "/menu03_1DataTableList", method = { RequestMethod.GET, RequestMethod.POST }) // http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> datatableList03_1(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// 일반웹형식

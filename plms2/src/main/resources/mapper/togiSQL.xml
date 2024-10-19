@@ -4,6 +4,77 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="togiSQL">
 
+<select id="selectDosiListExcelData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *,
+		(row_number() OVER()) AS no
+		FROM (
+			SELECT DISTINCT ON (dm.dm_dosi_no) -- 동일한 dosi_no에 대해 대표토지를 우선 반환 (수정)
+				dm.dm_idx AS index,
+				dm.dm_dosi_no AS idx,
+				dm.dm_dosi_no AS dosi_no,
+				dm.dm_sido_nm as sido_nm,
+				dm.dm_sgg_nm as sgg_nm,
+				dm.dm_emd_nm as emd_nm,
+				dm.dm_ri_nm as ri_nm,
+				dm.dm_jibun as jibun,
+				dm.dm_jisa AS jisa,
+				COALESCE(dm.dm_jijuk_area, NULL) AS jijuk_area,
+				dm.dm_dosiplan AS dosiplan,
+				dm.dm_addrcode as addrcode,
+				dm.dm_pnu as pnu,
+				dm.dm_jimok_text as jimok_text,
+				dm.dm_toji_type AS toji_type,
+				COALESCE(dm.dm_pipe_yn, 'N') AS pipe_yn,
+				dm.dm_length as length,
+				dm.dm_soyouja as souja,
+				dm.dm_master_yn as master_yn,
+				dm_dosi_seq as dosi_seq,
+				di.di_business_nm AS business_nm,
+				di.di_strdate AS strdate,
+				di.di_enddate AS enddate,
+				di.di_adm_office AS adm_office,
+				di.di_business_oper AS business_oper,
+				di.di_complete_date AS complete_date,
+				di.di_complete_yn AS complete_yn,
+				j.dd_dept_nm AS dept_nm,
+				j.dd_manager AS manager,
+				j.dd_contact_num AS contact_num,
+				TRIM(CONCAT(dm.dm_sido_nm, ' ', dm.dm_sgg_nm, ' ', dm.dm_emd_nm, ' ', dm.dm_ri_nm, ' ', dm.dm_jibun)) AS address
+	
+			FROM dosi_master dm
+			LEFT JOIN dosi_info di ON di.di_dosi_no=dm.dm_dosi_no
+			LEFT JOIN (
+				SELECT dd.dd_dosi_no,dd.dd_dept_nm,dd.dd_manager,dd.dd_contact_num,dd.dd_dept_seq,(row_number() over()) as NO 
+				FROM dosi_dept dd
+			) j ON dm.dm_dosi_no=j.dd_dosi_no AND j.no=1
+      WHERE 1=1
+      -- dm_master_yn='Y'인 대표토지를 우선적으로 정렬
+      ORDER BY dm.dm_dosi_no, dm.dm_master_yn DESC
+		) AS r
+		WHERE 1=1
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and r.jisa=#{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(complete_yn)" >
+			and r.complete_yn=#{complete_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date)">
+			and r.strdate::date >= #{start_date}::date
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(end_date)" ><![CDATA[
+			and r.enddate::date <= #{end_date}::date
+		]]></if>
+    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)">
+        -- 주소에 해당하는 소속토지 검색 시에도 대표토지를 반환하도록 EXISTS 조건 추가 (수정)
+        AND (r.address LIKE '%${address}%' OR EXISTS (
+            SELECT 1 
+            FROM dosi_master dm_sub 
+            WHERE dm_sub.dm_dosi_no = r.dosi_no 
+            AND TRIM(CONCAT(dm_sub.dm_sido_nm, ' ', dm_sub.dm_sgg_nm, ' ',dm_sub.dm_emd_nm, ' ', dm_sub.dm_ri_nm, ' ', dm_sub.dm_jibun)) LIKE '%${address}%'
+        ))
+    </if>
+		
+	</select>
 
 	<select id="selectDosiList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *,

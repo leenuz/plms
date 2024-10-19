@@ -3714,8 +3714,8 @@ log.info("PMT_NO:"+PMT_NO);
 			String jibun = requestParamsObj.has("jibun")?requestParamsObj.getString("jibun"):"";
 
 			String souja = requestParamsObj.getString("souja");
-			String jasan_no = requestParamsObj.getString("jasan_no");
-			String jimok_text = requestParamsObj.getString("jimok_text")==null?"":requestParamsObj.getString("jimok_text");
+			String jasan_no = requestParamsObj.has("jasan_no")?requestParamsObj.getString("jasan_no"):"";
+			String jimok_text = requestParamsObj.has("jimok_text")?requestParamsObj.getString("jimok_text"):"";
 			List<String> jimokTexts=new ArrayList<String>();
 			if (jimok_text!=null && !jimok_text.trim().isEmpty())	 jimokTexts = Arrays.asList(jimok_text.split(","));
 			
@@ -3916,6 +3916,168 @@ log.info("PMT_NO:"+PMT_NO);
 
 			}	
 		
+// 지상권내역 엑셀 다운로드
+		@PostMapping(path="/menu02_3ExcelDownload")
+			public void menu02_3ExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			
+		
+		
+
+			String jisa = requestParamsObj.has("jisa")?requestParamsObj.getString("jisa"):"";
+			String manage_no = requestParamsObj.has("manage_no")?requestParamsObj.getString("manage_no"):"";
+			String address = requestParamsObj.has("saddr")?requestParamsObj.getString("saddr"):"";
+			String sido_nm = requestParamsObj.has("sido_nm")?requestParamsObj.getString("sido_nm"):"";
+			String sgg_nm = requestParamsObj.has("sgg")?requestParamsObj.getString("sgg"):"";
+			String emd_nm = requestParamsObj.has("emd")?requestParamsObj.getString("emd"):"";
+			String ri_nm = requestParamsObj.has("ri")?requestParamsObj.getString("ri"):"";
+			String jibun = requestParamsObj.has("jibun")?requestParamsObj.getString("jibun"):"";
+			String souja = requestParamsObj.has("souja")?requestParamsObj.getString("souja"):"";
+			String jasan_no = requestParamsObj.has("jasan_no")?requestParamsObj.getString("jasan_no"):"";
+			String account_yn=requestParamsObj.has("account_yn")?requestParamsObj.getString("account_yn"):""; //회계처리 필요여부
+
+		//	Map map=req.getParameterMap();
+
+			HashMap params = new HashMap();
+			
+			params.put("jisa",jisa);
+			params.put("idx",manage_no);
+			params.put("address",address);
+			params.put("sido_nm",sido_nm);
+			params.put("sgg_nm",sgg_nm);
+			params.put("emd_nm",emd_nm);
+			params.put("ri_nm",ri_nm);
+			params.put("jibun",jibun);
+			params.put("souja",souja);
+			params.put("jasan_no",jasan_no);
+			params.put("account_yn", account_yn);
+			
+			//241006
+			params.put("JISA", jisa);
+
+			params.put("manageYn","Y");
+			
+			log.info("params:"+params);
+
+			
+				ArrayList list = new ArrayList();
+				ParameterParser parser = new ParameterParser(request);
+
+				
+				String str_result = "Y";
+				try {
+
+					 list = mainService.selectQuery("jisangSQL.selectJisangDivisionListExcelData", params);
+
+				} catch (Exception e) {
+					str_result = "N";
+					e.printStackTrace();
+				}
+
+				HashMap map = new HashMap();
+
+				if (list != null)
+					map.put("count", list.size());
+				else
+					map.put("count", 0);
+
+				map.put("message", str_result);
+				map.put("result", list);
+
+				JSONObject jo = new JSONObject(map);
+
+				response.setCharacterEncoding("UTF-8");
+				response.setHeader("Access-Control-Allow-Origin", "*");
+				response.resetBuffer();
+				response.setContentType("application/json");
+				response.getWriter().print(jo);
+				response.getWriter().flush();
+
+			}
+		// 사용승락 엑셀 다운로드
+	@PostMapping(path="/menu02_5ExcelDownload")
+		public void menu02_5ExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject requestParamsObj=new JSONObject(requestParams);
+		log.info("requestParams:"+requestParams);
+		
+		
+		
+	
+
+		String jisa = requestParamsObj.has("jisa")?requestParamsObj.getString("jisa"):"";
+		//String manage_no = requestParamsObj.has("manage_no")?requestParamsObj.getString("manage_no"):"";
+		String address = requestParamsObj.has("saddr")?requestParamsObj.getString("saddr"):"";
+		String sido_nm = requestParamsObj.has("sido_nm")?requestParamsObj.getString("sido_nm"):"";
+		String sgg_nm = requestParamsObj.has("sgg")?requestParamsObj.getString("sgg"):"";
+		String emd_nm = requestParamsObj.has("emd")?requestParamsObj.getString("emd"):"";
+		String ri_nm = requestParamsObj.has("ri")?requestParamsObj.getString("ri"):"";
+		String jibun = requestParamsObj.has("jibun")?requestParamsObj.getString("jibun"):"";
+		String souja = requestParamsObj.has("souja")?requestParamsObj.getString("souja"):"";
+		String jasan_no = requestParamsObj.has("jasan_no")?requestParamsObj.getString("jasan_no"):"";
+		//String account_yn=requestParamsObj.has("account_yn")?requestParamsObj.getString("account_yn"):""; //회계처리 필요여부
+		String status = requestParamsObj.has("jasan_no")?requestParamsObj.getString("status"):"";
+	//	Map map=req.getParameterMap();
+
+		HashMap params = new HashMap();
+		
+		params.put("jisa",jisa);
+		//params.put("idx",manage_no);
+		params.put("address",address);
+		params.put("sido_nm",sido_nm);
+		params.put("sgg_nm",sgg_nm);
+		params.put("emd_nm",emd_nm);
+		params.put("ri_nm",ri_nm);
+		params.put("jibun",jibun);
+		params.put("souja",souja);
+		params.put("jasan_no",jasan_no);
+		params.put("status",status);
+		//params.put("account_yn", account_yn);
+		
+		//241006
+		params.put("JISA", jisa);
+
+		params.put("manageYn","Y");
+		
+		log.info("params:"+params);
+
+		
+			ArrayList list = new ArrayList();
+			ParameterParser parser = new ParameterParser(request);
+
+			
+			String str_result = "Y";
+			try {
+
+				 list = mainService.selectQuery("jisangSQL.selectJisangPermitListExcelData", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		}
 	@RequestMapping(value="/menu02_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> datatableList02_1(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		

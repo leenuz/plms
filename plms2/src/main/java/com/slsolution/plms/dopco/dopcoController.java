@@ -697,6 +697,84 @@ log.info("resultData:"+resultData);
 		mav.setViewName("content/dopco/compLandDispReg");
 		return mav;
 	}
+	
+	
+	//회사토지조회 엑셀 다운로드
+		@PostMapping(path="/menu05_1ExcelDownload")
+		public void menu05_1ExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject requestParamsObj=new JSONObject(requestParams);
+		log.info("requestParams:"+requestParams);
+		
+		String jisa = requestParamsObj.has("jisa")?requestParamsObj.getString("jisa"):"";
+		
+		String address = requestParamsObj.has("saddr")?requestParamsObj.getString("saddr"):"";
+		
+
+		String idx = requestParamsObj.has("idx")?requestParamsObj.getString("idx"):"";
+
+		String jasan_no = requestParamsObj.has("jasan_no")?requestParamsObj.getString("jasan_no"):"";
+		String start_date = requestParamsObj.has("start_date")?requestParamsObj.getString("start_date"):"";
+		String end_date = requestParamsObj.has("end_date")?requestParamsObj.getString("end_date"):"";
+		
+		
+		
+
+
+
+		HashMap params = new HashMap();
+		
+		
+		params.put("jisa",jisa);
+		
+		params.put("address",address);
+
+		
+		params.put("jasan_no",jasan_no);
+
+		
+		params.put("start_date", start_date);
+		params.put("end_date", end_date);
+		
+		
+		
+			ArrayList list = new ArrayList();
+			ParameterParser parser = new ParameterParser(request);
+
+			
+			String str_result = "Y";
+			try {
+
+				 list = mainService.selectQuery("dopcoSQL.selectDopcoListExcelData", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		}
+
+	
+	
 
 	@RequestMapping(value="/menu05_1DataTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> menu05_1DataTableList(HttpServletRequest req, HttpServletResponse res) throws Exception {

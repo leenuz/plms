@@ -1179,6 +1179,82 @@ SELECT count(*)
 			AND r.jibun LIKE '%${jibun}%'
 		</if>
 	</select>
+	<select id="selectJisangPermitListExcelData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+			SELECT *,
+				(row_number() OVER()) AS no
+			FROM (
+				SELECT jpm.idx AS index,
+					jpm.pmt_no AS idx,
+					jpm.echo_no as echo_no,
+					jpm.use_purpos as use_purpos,
+					jpm.use_st_date as use_st_date,
+					jpm.use_ed_date as use_ed_date,
+					jpm.spot_result as spot_result,
+					jpm.rivew as review,
+					jpm.contract as contract,
+					jpm.pmt_status as pmt_status,
+					jpm.dockey as dockey,
+					jpt.jisang_no AS jisang_no,
+					jpt.pmt_user as pmt_user
+					,jpt.soyuja as soyuja
+					,jpt.jimok as jimok
+					,jpt.jasan_no as jasan_no
+					,jpt.addr as addr
+					,jpt.jibun as jibun
+					,jm.jm_jisa as jisa
+					,jm.jm_sido_nm as sido_nm
+					,jm.jm_sgg_nm as sgg_nm
+					,jm.jm_emd_nm as emd_nm
+					,jm.jm_ri_nm as ri_nm
+					,JKM.x AS x
+					,JKM.pnu
+          ,JKM.y AS y
+					,CC.*
+				FROM permit_master jpm
+				LEFT JOIN permit_togi jpt ON jpt.pmt_no = jpm.pmt_no
+				LEFT JOIN jisang_master jm ON jm.jm_jisang_no=jpt.jisang_no
+				LEFT JOIN JIJUK_2024 JKM ON TRIM(jm.jm_pnu) = JKM.pnu
+				--LEFT OUTER JOIN PLMS_APPROVAL CC on jm.jm_DOCKEY = CC.pa_DOCKEY and (CC.pa_status is null or CC.pa_status not in ('X'))
+				LEFT JOIN (
+				    SELECT *,
+				           ROW_NUMBER() OVER (PARTITION BY pa_dockey ORDER BY pa_dockey) AS row_num
+				    FROM PLMS_APPROVAL
+				    WHERE pa_status IS NULL OR pa_status NOT IN ('X')
+				) CC ON jm.jm_DOCKEY = CC.pa_DOCKEY AND CC.row_num = 1
+				WHERE 1 = 1
+				
+				
+			
+			) AS r
+			
+			where 1=1
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			and r.jisa=#{jisa}
+			</if>
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(status)" >
+			and r.pmt_status=#{status}
+			</if>
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			and r.addr like '%${address}%'
+			</if>
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+				AND r.sido_nm = #{sido_nm}
+			</if>
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+				AND r.sgg_nm = #{sgg_nm}
+			</if>
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+				AND r.emd_nm = #{emd_nm}
+			</if>
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+				AND r.ri_nm = #{ri_nm}
+			</if>
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+				AND r.jibun LIKE '%${jibun}%'
+			</if>
+			
+			
+	</select>
 	
 	
 	 <select id="selectJisangPermitList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -4095,6 +4171,108 @@ AND jmt.jmt_rep_jisang_no=#{idx}
 		
 	</select>
 	
+	<select id="selectJisangDivisionListExcelData" parameterType="HashMap" resultType="java.util.HashMap">
+		SELECT * 
+		FROM (
+				SELECT
+					ROW_NUMBER() OVER(
+					ORDER BY
+					JM.jm_JISANG_NO DESC
+					) RN
+					,(row_number() OVER()) AS no
+					,JM.jm_idx AS index
+					,JM.jm_jisang_no AS idx
+					,0 AS gidx
+					,JM.jm_jisang_no as JISANG_NO
+					,JM.jm_sido_nm as SIDO_NM
+					,JM.jm_sgg_nm as SGG_NM
+					,JM.jm_emd_nm as EMD_NM
+					,JM.jm_ri_nm as RI_NM
+					,JM.jm_jibun as JIBUN
+					,TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address
+					,JM.jm_jasan_no as JASAN_NO
+					,JM.jm_jisa as JISA
+					,JM.jm_jimok_text AS jimok_text
+					,TO_CHAR(JM.jm_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE
+					,JM.jm_chuideuk_money as CHUIDEUK_MONEY
+					,TO_CHAR(JM.jm_DEUNGGI_DATE, 'YYYY-MM-DD') AS DEUNGGI_DATE
+					,JM.jm_cancle_yn as CANCLE_YN
+					,JM.jm_cancle_yn AS cancel_yn
+					,JM.jm_manage_yn AS manage_yn
+					,TO_CHAR(JM.jm_CANCLE_DATE, 'YYYY-MM-DD') AS CANCLE_DATE
+					,COALESCE(jm.jm_jijuk_area, NULL) AS jijuk_area
+					,COALESCE(jm.jm_pyeonib_area, NULL) AS pyeonib_area
+					, JM.jm_pnu as PNU
+					, JS.js_souja_name as SOUJA_NAME
+					, JS.js_idx
+					, (SELECT COUNT(*)-1 FROM JISANG_SOUJA WHERE js_JISANG_NO = JM.jm_JISANG_NO) AS SOUJA_CNT
+					, (CASE WHEN JB.jb_JISANG_NO IS NOT NULL THEN 1 ELSE 0 END) AS BUNHAL_CHECK
+					, PA.pa_status as STATUS
+					, JB.jb_bunhal_date as bunhal_date
+					,JKM.x as x
+					,JKM.y as y
+				FROM JISANG_MASTER JM 
+				LEFT JOIN JIJUK_2024 JKM ON trim(JM.jm_pnu) = JKM.PNU
+				LEFT OUTER JOIN (
+					SELECT *
+					FROM (
+						SELECT
+							js_JISANG_NO,
+							js_JIBUN,
+							js_SOUJA_NAME,
+							js_ADDRESS,
+							js_PONE_NUMBER,
+							js_HOME_NUMBER,
+							js_idx,
+							ROW_NUMBER() OVER(PARTITION BY js_JISANG_NO	ORDER BY js_JISANG_NO ASC ) AS ROW_IDX
+						FROM JISANG_SOUJA
+					) sub1
+					WHERE ROW_IDX = 1
+				) JS on JM.jm_JISANG_NO = JS.js_JISANG_NO
+				LEFT OUTER JOIN JISANG_BUNHAL JB ON JM.jm_JISANG_NO = JB.jb_JISANG_NO AND JB.jb_BUNHAL_COMPLETE != 'Y'
+				LEFT OUTER JOIN PLMS_APPROVAL PA ON JB.jb_DOCKEY = PA.pa_DOCKEY
+		WHERE 1=1
+		AND (JM.jm_CANCLE_YN IS NULL OR JM.jm_CANCLE_YN != 'Y')
+		AND JM.jm_SAVE_STATUS = '승인'
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESSCODE)">
+			AND JM.jm_ADDRCODE LIKE '${ADDRESSCODE}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)">
+			AND JM.jm_JISA = #{jisa}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(souja)">
+			AND JS.js_SOUJA_NAME LIKE '%${souja}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jasan_no)">
+			AND JM.jm_JASAN_NO LIKE '%'|| #{jasan_no} ||'%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
+			and JM.jm_account_yn=#{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			AND TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) LIKE '%${address}%'
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND JM.jm_sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND JM.jm_sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND JM.jm_emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND JM.jm_ri_nm = #{ri_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)">
+			AND JM.jm_JIBUN LIKE '${jibun}%'
+		</if>
+		
+		) AA WHERE 1=1
+		
+	
+		
+	</select>
 	
 	<select id="selectJisangDivisionList" parameterType="HashMap" resultType="java.util.HashMap">
 		SELECT * 
