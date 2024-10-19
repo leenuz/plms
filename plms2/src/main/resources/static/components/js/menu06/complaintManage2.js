@@ -812,7 +812,7 @@ function getPopupJsonData2() {
 		fileCheck.push( $("#minwonFileName_"+existIdx).text() );
 	}
 	
-	//첨푸파일 삭제 리스트
+	//첨부파일 삭제 리스트
 	dataObj.deleteFileList = deleteFileListArr;
 	
 	//dataObj.files = newComplaintRegiFiles;
