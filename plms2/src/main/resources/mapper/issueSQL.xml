@@ -72,6 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             MM.mm_status,
             MM.mm_reg_date,
             MM.mm_reg_id,
+            MM.mm_jisa,
             (SELECT S.code_name FROM plms_issue_code S WHERE MM.mm_mw_code1 = S.code) AS code_str1,
             (SELECT S.code_name FROM plms_issue_code S WHERE MM.mm_mw_code2 = S.code) AS code_str2,
             (SELECT S.code_name FROM plms_issue_code S WHERE MM.mm_mw_code3 = S.code) AS code_str3,
