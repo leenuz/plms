@@ -8,6 +8,10 @@
 
     <link th:href="@{/css/common.css}" rel="stylesheet" />
     <link rel="stylesheet" href="/css/jisang/landRightsRegistration.css" />
+    
+	<!-- 팝업 공통 css 00003 -->
+	<link rel="stylesheet" href="/css/jisang/popupEasementModification2.css" />    
+    
     <!-- <script src="/js/songyu/menu01.js"></script> -->
     <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
@@ -97,6 +101,7 @@
 </head>
 
 <th:block layout:fragment="content">
+	
     <input type="hidden" id="loginJisa" th:value="${loginJisa}" />
     <div class="landRightsRegistrationWrappers">
 
@@ -359,6 +364,11 @@
                                     </ul>
                                     <div class="inputBtnArea">
                                         <button class="SearchAddressBtn active landRightsSearchBtn" id="basicSearchBtn">검색</button>
+                                        <!-- 버튼 테스트 -->
+                                        <!--  
+                                        <button class="SearchAddressBtn active landRightsSearchBtn" 
+                                        		onclick="commonAddressSearchPopupOpen('jisang', 'landRightsRegistration', 'commonAddressPopupDiv')">검색2</button>
+                                        -->
                                     </div>
                                 </li>
                             </ul>
@@ -644,8 +654,16 @@
             </div>
         </div>
     </div>
+    
+    <!-- 새로운 주소검색 팝업 [S] -->
+    <div id="commonAddressPopupDiv">
+    	<div id="commonAddressPopup"></div>
+    </div>
+    
+    <!-- 새로운 주소검색 팝업 [E] -->
     <!-- script -->
     <script src="/js/jisang/landRightsRegistration.js"></script>
+    <script src="/js/common/common.js"></script>
     <!-- <script type="module" src="/js/module/surfaceMain.js"></script> -->
 </th:block>
 

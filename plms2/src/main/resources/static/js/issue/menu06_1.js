@@ -1,10 +1,15 @@
 var fileRowCount = 0;	//첨부파일카운트
 
+var deleteFileListArr = [];
 //일반 실행 == $(document).ready(function(){})
 $(function() {
 	console.log("---------- start menu06_1.js ------------");
+	
+	deleteFileListArr = [];
+	
 	var formSerializeArray = $('#searchForm').serializeArray();
 	var object = {};
+	
 	for (var i = 0; i < formSerializeArray.length; i++) {
 		if (formSerializeArray[i]['value'] === '전체') {
 			continue; // "전체"가 선택된 경우, 해당 파라미터를 넘기지 않음
@@ -484,6 +489,8 @@ function getPopupJsonData() {
 		fileCheck.push($("#minwonFileName_"+t).text());
 	}
 	
+	//첨부파일 삭제 리스트
+	dataObj.deleteFileList = deleteFileListArr;
 	
 	//dataObj.files = newComplaintRegiFiles;
 	//dataObj.filesLength = newComplaintRegiFiles.length;
@@ -1480,9 +1487,9 @@ function createStatusbar(obj, name, size, no){
 	//보이는 화면 UI 추가 - obj 말고 그냥 div id 정했으니 그냥 추가 해줘도 됨.
     let rowHtml = '';
     
-    rowHtml += '<ul class="popcontents" name="fileListUl">';
+    rowHtml += '<ul class="popcontents" name="fileListUl" data-value="'+no+'">';
 	rowHtml += '<li class="popBtnbox">';
-	rowHtml += '	<button class="popAllDeleteFileBtn"></button>';
+	rowHtml += '	<button class="popAllDeleteFileBtn" onclick="deleteFileListFunc(this, '+no+')"></button>';
 	rowHtml += '</li>';
 	rowHtml += '<li class="popcontent popfilenameBox">';
 	rowHtml += '<input type="hidden" value="'+ +'">';
@@ -1538,6 +1545,13 @@ function sendFileToServer(formData, status) {
     }); 
  	
     //status.setAbort(jqXHR);
+}
+
+//파일삭제 -  저장 눌러야지 삭제됨. (DB만)
+function deleteFileListFunc(obj, idx) {
+	let deleteFileNm = $("#minwonFileName_"+idx).text();
+	$("[name='fileListUl'").eq(idx).remove();
+	deleteFileListArr.push(deleteFileNm)
 }
 
 /*********************************************/

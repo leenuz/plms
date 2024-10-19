@@ -33,6 +33,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +41,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.slsolution.plms.MainService;
+import com.slsolution.plms.ParameterUtil;
 import com.slsolution.plms.config.GlobalConfig;
 import com.slsolution.plms.json.JSONArray;
 import com.slsolution.plms.json.JSONObject;
@@ -382,5 +384,29 @@ public class commonController {
 				ee.printStackTrace();
 			}
 		}
+	}
+	
+	
+	//Post맵핑
+	@PostMapping(path="/addressSearch")
+	public ModelAndView commonAddressSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String reqParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject reqParamsObj = new JSONObject(reqParams);
+		
+		String menuName = reqParamsObj.getString("MENU_NAME");
+		String pageName = reqParamsObj.getString("PAGE_NAME");
+		
+		//이제 이거 굳이 필요 한가? - 그래도 우선 고민.
+		System.out.println(menuName);
+		System.out.println(pageName);
+		
+		mav.addObject("test", "Controller Success");
+		
+		
+		mav.setViewName("content/jisang/land_searchResultsPopup2 :: #land_searchResultsPopup");
+		
+		return mav;
 	}
 }

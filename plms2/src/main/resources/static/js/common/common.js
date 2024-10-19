@@ -699,6 +699,30 @@ function commonDownloadExcel(head,body,filename) {
 }
 
 
+function commonAddressSearchPopupOpen (menuId, pageId, fragmentId) {
+	console.log(menuId);
+	console.log(pageId);
+	
+	let params = {
+		"MENU_NAME" : menuId,
+		"PAGE_NAME" : pageId
+	}
+	
+	$.ajax({
+		url : "/land/common/addressSearch",
+		data : JSON.stringify(params),
+		type : "POST"
+	})
+	.done(function(fragment){
+		console.log('그런가???');
+		//$("#"+fragmentId).replaceWith(fragment);
+		$("#commonAddressPopupDiv").html(fragment);
+		$("#commonAddressPopupDiv .popupWrap").addClass('open active');
+		
+	})
+	;
+	
+}
 
 /***************************************************************************/
 /***************************************************************************/
