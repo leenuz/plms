@@ -68,6 +68,71 @@ const occupationIssueReviseOpen = () => {
 }
 occupationIssueReviseOpen();
 
+
+// add. SON 241019 점용상세 정보 소속 토지 목록 보이기, 숨기기
+
+const contentScrEvent = () => {
+
+    const landListViewBtn = document.querySelector('#occupationDetails .landListViewBtn'); // 토지목록 보이기 버튼
+    const landListHideBtn = document.querySelector('#occupationDetails .landListHideBtn'); // 토지목록 숨기기 버튼
+    const contentDetailBox = document.querySelector('#occupationDetails .landInfoEdit .contBoxMini04 .contentDetailBox');
+    const contentScr = document.querySelector('.contBoxMini04 .contentScr');
+    const titles = document.querySelector('#occupationDetails .landInfoEdit .contBoxMini04 .contentDetailBox .depth1 .titles');
+
+    // 초기값 설정
+
+    if (landListHideBtn.classList.contains('active')) {
+        landListHideBtn.classList.remove('active');
+    }
+    contentDetailBox.classList.remove('showContent');
+    contentScr.classList.remove('scrollable');
+    titles.classList.remove('titleScr');
+
+
+    // 토지목록 보기 버튼을 눌렀을 때
+
+    landListViewBtn.addEventListener('click', function () {
+        // 내용에 맞는 버튼 보이기
+        landListHideBtn.classList.add('active');
+
+        // 내용 높이 auto로 만들기
+        contentDetailBox.classList.add('showContent');
+
+        if (contentDetailBox.classList.contains('showContent')) {
+            const contents = document.querySelectorAll('.contBoxMini04 .contentScr .contents');
+
+
+            if (contents.length >= 20) {
+                contentScr.classList.add('scrollable');
+                titles.classList.add('titleScr');
+
+            } else {
+                contentScr.classList.remove('scrollable');
+                titles.classList.remove('titleScr');
+            }
+        }
+
+
+    });
+
+    // 토지목록 숨기기 버튼을 눌렀을 때
+    landListHideBtn.addEventListener('click', function () {
+        // 내용에 맞는 버튼 보이게하기
+        landListHideBtn.classList.remove('active');
+        // 높이 다시 고정시키기
+        contentDetailBox.classList.remove('showContent');
+        // contents 스크롤 안되게하기
+        contentScr.classList.remove('scrollable');
+        titles.classList.remove('titleScr');
+    })
+
+}
+
+contentScrEvent();
+
+
+/*
+// 전체 위치보기 버튼 높이 조절?
 document.addEventListener("DOMContentLoaded", function() {
 	// 1. 모든 depth2의 ul 요소를 선택
 	const depth2UlElements = document.querySelectorAll(".contBoxMini04 .contentDetailBox .depth2 .contents");
@@ -117,7 +182,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	});
 });
-
+*/
 
 //보기 클릭 시 팝업 기능
 function openFilePopup(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
