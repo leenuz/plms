@@ -506,9 +506,9 @@
 									<input id="pay_date" type="date" data-placeholder="날짜선택" required aria-required="true" />
 								</div>
 							</li>
-							<li class="payinfotitle_td_3"><input type="text" id="pay_money" /></li>
-							<li class="payinfotitle_td_4"><input type="text" id="pay_vat" /></li>
-							<li class="payinfotitle_td_5"><input type="text" /></li>
+							<li class="payinfotitle_td_3"><input type="text" id="pay_money" oninput="onlyNumber(this)"/></li>
+							<li class="payinfotitle_td_4"><input type="text" id="pay_vat" oninput="onlyNumber(this)" /></li>
+							<li class="payinfotitle_td_5"><input type="text" id="pay_total" readonly/></li>
 							<li class="date_around" id="payinfotitle_td_6">
 								<div class="dateInputBox">
 									<div class="complaint_calender_wrap">

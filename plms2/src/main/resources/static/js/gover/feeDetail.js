@@ -1,17 +1,40 @@
 
 $(document).ready(function() {
-  // 허가관청 이력보기 버튼 클릭 시 팝업 열기
-  $('.authHistBtn').on('click', function() {
-    $('#changehistoryPopupDiv').fadeIn();
-    $('#changehistoryPopup').addClass('active');
-  });
+	// 허가관청 이력보기 버튼 클릭 시 팝업 열기
+	$('.authHistBtn').on('click', function() {
+		$('#changehistoryPopupDiv').fadeIn();
+		$('#changehistoryPopup').addClass('active');
+	});
 
-  // 닫기 버튼 또는 상단 X 버튼 클릭 시 팝업 닫기
-  $('#changehistoryPopup').on('click', '.closeBtn, .topCloseBtn', function() {
-    $('#changehistoryPopupDiv').fadeOut();
-    $('#changehistoryPopup').removeClass('active');
-  });
+	// 닫기 버튼 또는 상단 X 버튼 클릭 시 팝업 닫기
+	$('#changehistoryPopup').on('click', '.closeBtn, .topCloseBtn', function() {
+		$('#changehistoryPopupDiv').fadeOut();
+		$('#changehistoryPopup').removeClass('active');
+	});
+	
+	// 금액 입력시 VAT의 값이 있으면 합계금액 계산
+	const element = document.getElementById('pay_money');
+	element.addEventListener('input', () => {
+		if ($('#pay_vat').val()) {
+			let total = (Number($(element).val().replace(/,/g, '')) + Number($('#pay_vat').val().replace(/,/g, '')));
+			$('#pay_total').val(total.toLocaleString());
+		}
+	});
+	
+	// VAT 입력시 금액에 값이 있으면 합계금액 계산
+	const element2 = document.getElementById('pay_vat');
+	element2.addEventListener('input', () => {
+		if ($('#pay_money').val()) {
+			let total = (Number($(element2).val().replace(/,/g, '')) + Number($('#pay_money').val().replace(/,/g, '')));
+			$('#pay_total').val(total.toLocaleString());
+		}  
+	});
 });
+
+function onlyNumber(input) {
+	  input.value = input.value.replace(/[^0-9]/g, '');  // 숫자 이외의 문자를 제거
+	  input.value = input.value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 
 // 허가관청 이력보기
