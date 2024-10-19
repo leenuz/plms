@@ -221,9 +221,6 @@
             AND TRIM(CONCAT(dm_sub.dm_sido_nm, ' ', dm_sub.dm_sgg_nm, ' ', dm_sub.dm_emd_nm, ' ', dm_sub.dm_ri_nm, ' ', dm_sub.dm_jibun)) LIKE '%${address}%'
         ))
     </if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
-			ORDER BY ${orderCol} ${desc}
-		</if>
 	</select>
 	
 	
