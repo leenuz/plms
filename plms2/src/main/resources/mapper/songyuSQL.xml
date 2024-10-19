@@ -1183,14 +1183,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and r.jisa=#{jisa}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-		and (SELECT COUNT(o.pnu) AS overlap 
+		AND (SELECT COUNT(o.pnu) AS overlap 
 			FROM
 			  (
 		  		(
 						SELECT jm.jm_pnu AS pnu
 						FROM jisang_master jm 
 						LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-						where 1=1
+						WHERE 1=1
 					)
 					UNION ALL 
 					(
@@ -1200,16 +1200,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
 						WHERE 1=1 
 						AND gp.gp_gover_no = gm.gm_gover_no
-						and gp.gp_pnu is not null
+						AND gp.gp_pnu is not null
 					)
 					UNION ALL
 					(
 						SELECT nm.nm_pnu AS pnu
 						FROM notset_master nm 
 						LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-						where 1=1
+						WHERE 1=1
 					)
-			  ) as o WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
+					UNION ALL
+					(
+						SELECT dom.dom_pnu AS pnu
+						FROM dopco_master dom 
+						WHERE 1=1
+					)
+			  ) AS o 
+			  WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
 		</if>
 	  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 			ORDER BY r.${orderCol} ${desc}
@@ -1583,6 +1590,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						FROM notset_master nm 
 						LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
 						where 1=1
+					)
+					UNION ALL
+					(
+						SELECT dom.dom_pnu AS pnu
+						FROM dopco_master dom 
+						WHERE 1=1
 					)
 			  ) as o WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
 			</if>
@@ -1969,10 +1982,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 권리제외필지 건 수 조회 -->
 <select id="selectTotalCount4" parameterType="java.util.HashMap" resultType="Integer">
-	select  
+	SELECT  
 	count(*)
-FROM (
-SELECT   NEWREGREASON,
+	FROM (
+		SELECT   NEWREGREASON,
         OCCUNONPAYREASON,
         PERMPOSSYN,
         OCCUPREPAYYN,
@@ -2254,17 +2267,17 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     )r
     
     WHERE 1=1
-    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-	and r.master_no=#{idx}
+  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
+		AND r.master_no=#{idx}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
-	and r.dosiplan=#{dosiplan}
+		AND r.dosiplan=#{dosiplan}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	and replace(trim(r.juso),'  ',' ') like '%${address}%'
+		AND replace(trim(r.juso),'  ',' ') like '%${address}%'
 	</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)">
-	and r.sido_nm=#{sido_nm}
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)">
+		AND r.sido_nm=#{sido_nm}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
 		AND r.sgg_nm = #{sgg_nm}
@@ -2279,46 +2292,45 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 		AND r.jibun LIKE '%${jibun}%'
 	</if>
 	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
-	and r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
+		AND r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
 	</if> 
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
-  AND r.toji_plan_type =#{toji_plan_type}
+  	AND r.toji_plan_type =#{toji_plan_type}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
-	and r.gover_own_yn=#{toji_type}
+		AND r.gover_own_yn=#{toji_type}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
-	and r.master_no=#{manage_no}
+		AND r.master_no=#{manage_no}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-	and r.jisa=#{jisa}
+		AND r.jisa=#{jisa}
 	</if>
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-	and (SELECT COUNT(o.address) AS overlap 
+	AND (SELECT COUNT(o.address) AS overlap 
 		FROM
 		  (
-		  		(
-					SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_emd_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
+	  		(
+					SELECT TRIM(CONCAT(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_emd_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) AS address
 					FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-					where 1=1
-		
+					WHERE 1=1
 				)
 				UNION ALL 
 				(
-					SELECT trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_emd_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
+					SELECT TRIM(CONCAT(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_emd_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) AS address
 					FROM gover_master gm 
 					LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
 					LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-					where 1=1 and gp.gp_gover_no = gm.gm_gover_no
-					and gp.gp_pnu is not null
+					WHERE 1=1 and gp.gp_gover_no = gm.gm_gover_no
+					AND gp.gp_pnu is not null
 				)
 				UNION ALL
 				(
-					SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
+					SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) AS address
 					FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-					where 1=1
+					WHERE 1=1
 				)
-		  ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+		  ) AS o  WHERE o.address = r.address GROUP BY o.address ) >1
 	</if>
 </select>
 	
@@ -2328,8 +2340,8 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 	    , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH1) AS CODE_DEPTH1_NAME
 	    , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH2) AS CODE_DEPTH2_NAME
 	    , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH3) AS CODE_DEPTH3_NAME
-	    ,(row_number() over()) as no
-	    ,trim(concat(r.sido_nm,' ',r.sgg_nm,' ',r.emd_nm,' ',r.ri_nm,' ',r.jibun)) as address
+	    ,(row_number() over()) AS no
+	    ,TRIM(CONCAT(r.sido_nm,' ',r.sgg_nm,' ',r.emd_nm,' ',r.ri_nm,' ',r.jibun)) AS address
 		FROM (
 		SELECT   NEWREGREASON,
         OCCUNONPAYREASON,
@@ -2343,7 +2355,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
         JOIN_MST.EMD_NM,
         JOIN_MST.RI_NM,
         JOIN_MST.JIBUN,
-         trim(concat(JOIN_MST.sido_nm,' ',JOIN_MST.sgg_nm,' ',JOIN_MST.emd_nm,' ',JOIN_MST.ri_nm,' ',JOIN_MST.jibun)) as address,
+        TRIM(CONCAT(JOIN_MST.sido_nm,' ',JOIN_MST.sgg_nm,' ',JOIN_MST.emd_nm,' ',JOIN_MST.ri_nm,' ',JOIN_MST.jibun)) AS address,
         JIJUK_MST.JIBUN_FULL,
         JIJUK_MST.JIMOK_TEXT,
         JOIN_MST.PNU,
@@ -2636,22 +2648,22 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
     WHERE 1=1
     AND r.jisang_status IN ('jisang', 'notset')
    	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-			and r.jisa=#{jisa}
+			AND r.jisa=#{jisa}
 		</if>
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-			and r.master_no LIKE '%${idx}%'
+			AND r.master_no LIKE '%${idx}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
-			and r.gover_own_yn=#{toji_type}
+			AND r.gover_own_yn=#{toji_type}
 		</if>
 		<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
-			and r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
+			AND r.jisang_status in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
 		</if> 
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
-		and r.dosiplan=#{dosiplan}
+			AND r.dosiplan=#{dosiplan}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-		and replace(trim(r.juso),'  ',' ') like '%${address}%'
+			AND replace(trim(r.juso),'  ',' ') like '%${address}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
 			AND r.sido_nm = #{sido_nm}
@@ -2669,14 +2681,13 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 			AND r.jibun LIKE '%${jibun}%'
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >	
-			
-			    AND r.toji_plan_type = #{toji_plan_type}
+	    AND r.toji_plan_type = #{toji_plan_type}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manage_no)" >
-		and r.master_no=#{manage_no}
+			AND r.master_no=#{manage_no}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-			and (
+			AND (
 				SELECT COUNT(o.pnu) AS overlap 
 						FROM
 						  (
@@ -2684,7 +2695,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 									SELECT jm.jm_pnu AS pnu
 									FROM jisang_master jm 
 									LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-									where 1=1
+									WHERE 1=1
 								)
 								UNION ALL 
 								(
@@ -2694,16 +2705,16 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 									LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
 									WHERE 1=1 
 									AND gp.gp_gover_no = gm.gm_gover_no
-									and gp.gp_pnu is not null
+									AND gp.gp_pnu is not null
 								)
 								UNION ALL
 								(
 									SELECT nm.nm_pnu AS pnu
 									FROM notset_master nm 
 									LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-									where 1=1
+									WHERE 1=1
 								)
-						  ) as o WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
+						  ) AS o WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
 		</if>
 	  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 		ORDER BY r.${orderCol} ${desc}
