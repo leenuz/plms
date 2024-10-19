@@ -901,6 +901,8 @@ function loadDataTable(params) {
 			{
 				targets: [3]
 				, width: "50px"
+				, orderable: false
+				, className: "dt-center"
 				, render: function(data, type, row, meta) {
 					return `<button class="btnDesign issuePopBtn" onclick="issuePop(${row.no})" >이슈보기</button>`;
 				}

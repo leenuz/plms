@@ -329,7 +329,7 @@ public class issueController {
 			log.info("----------null--------");
 			orderColumn = "0";
 		}
-		if (Integer.parseInt(orderColumn) > 0) {
+		if (Integer.parseInt(orderColumn) > -1) {
 			params.put("orderCol", orderColumnName);
 			params.put("desc", orderDirection);
 
