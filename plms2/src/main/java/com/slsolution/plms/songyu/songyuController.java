@@ -948,19 +948,20 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 		return ResponseEntity.ok(obj.toString());
 	}
 
-	//TODO: 미설정(notset) temp 로 저장 - notsetController 에서 처리하도록 수정 필요
 	@RequestMapping(value = "/fileUpload/post") // ajax에서 호출하는 부분
 	@ResponseBody
 	public HashMap upload(MultipartHttpServletRequest multipartRequest) { // Multipart로 받는다.
 
 		Iterator<String> itr = multipartRequest.getFileNames();
 
-		String filePath = GC.getNotsetFileTempDir(); // 설정파일로 뺀다.
+		String filePath = GC.getSongyuFileTempDir(); // 설정파일로 뺀다.
+
 		HashMap<String, Object> resultmap = new HashMap();
 		ArrayList<HashMap> resultdataarr = new ArrayList<HashMap>();
 		HashMap resultdata = new HashMap();
 		String resultCode = "0000";
 		String resultMessage = "success";
+		
 		while (itr.hasNext()) { // 받은 파일들을 모두 돌린다.
 
 			/*
@@ -972,7 +973,12 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 			MultipartFile mpf = multipartRequest.getFile(itr.next());
 
 			String originalFilename = mpf.getOriginalFilename(); // 파일명
-
+			
+			int lastIndex = originalFilename.lastIndexOf(".");
+			
+			String justFileName = originalFilename.substring(0, lastIndex);	//파일명
+			String justFileType = originalFilename.substring(lastIndex +1); //확장자명
+			
 			String fileFullPath = filePath + "/" + originalFilename; // 파일 전체 경로
 
 			try {
@@ -981,8 +987,10 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 
 				resultdata.put("fname", originalFilename);
 				resultdata.put("fpath", fileFullPath);
+				
 				System.out.println("originalFilename => " + originalFilename);
 				System.out.println("fileFullPath => " + fileFullPath);
+				
 				// resultdataarr.add(resultdata);
 			} catch (Exception e) {
 				resultCode = "4001";
@@ -993,18 +1001,6 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 				System.out.println("postTempFile_ERROR======>" + fileFullPath);
 				e.printStackTrace();
 			}
-
-//            System.out.println(obj);
-
-			// log.info("jo:"+jo);
-//          			response.setCharacterEncoding("UTF-8");
-//          			response.setHeader("Access-Control-Allow-Origin", "*");
-//          			response.setHeader("Cache-Control", "no-cache");
-//          			response.resetBuffer();
-//          			response.setContentType("application/json");
-//          			//response.getOutputStream().write(jo);
-//          			response.getWriter().print(obj);
-//          			response.getWriter().flush();
 
 		}
 		resultmap.put("resultCode", resultCode);
@@ -1101,7 +1097,7 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 		CommonUtil comm = new CommonUtil();
 
 		ParameterParser parser = new ParameterParser(request);
-
+		HashMap<String, Object> params = new HashMap<>();
 //			String notsetNo = (parser.getString("notsetNo", "")); // 수정할 미설정/미점용 번호
 //
 //			String sinm = (parser.getString("sidoNm", "")).replaceAll("전체", ""); // 시
@@ -1180,13 +1176,18 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 
 		String tojiType = requestParamObj.has("tojiType") ? requestParamObj.getString("tojiType") : ""; // 관로일치여부
 		String pipeYn = requestParamObj.getString("overlap_yn"); // 관로일치여부
-		String memo = requestParamObj.getString("memo"); // 메모
+		String manageYn = requestParamObj.getString("nm_manage");
+		String memo = "";
 
 		// String soyunumber = requestParamObj.getString("soyunumber"); // 소유자 수
 		// System.out.println(requestParamObj.getString("soyunumber"));
 		// String filenumber = requestParamObj.getString("filenumber"); // 파일 수
 
 		String gubun = requestParamObj.getString("gubun"); // 구분( modify : 수정, insert
+		if ("insert".equals(gubun)) {
+			memo = requestParamObj.getString("memo"); // 메모
+			
+		}
 		// : 등록 )
 		// String fileseq = requestParamObj.getString("fileSeq"); // 파일 seq
 		// int FILE_CNT = Integer.parseInt(parser.getString("flieCnt", "0")); //
@@ -1202,6 +1203,7 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 		}
 		String modifyReason1 = requestParamObj.has("modifyReason1") ? requestParamObj.getString("modifyReason1") : ""; // 변경이력-기본정보
 		String modifyReason2 = requestParamObj.has("modifyReason2") ? requestParamObj.getString("modifyReason2") : ""; // 변경이력-소유자정보
+		String modifyReason3 = requestParamObj.has("modifyReason3") ? requestParamObj.getString("modifyReason3") : ""; // 변경이력-파일정보
 
 		String USER_ID = String.valueOf(request.getSession().getAttribute("userId"));
 		String USER_NAME = String.valueOf(request.getSession().getAttribute("userName"));
@@ -1220,14 +1222,13 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 		log.info("notsetNo:" + notsetNo);
 
 		JSONArray soujaArr = new JSONArray(requestParamObj.getString("soujaInfo"));
-		JSONArray fileArr = new JSONArray(requestParamObj.getString("uploadFiles"));
+		JSONArray fileArr = new JSONArray(requestParamObj.getString("files"));
 		log.info("soujaArrsize:" + soujaArr.length());
 
 		try {
 
 //				ArrayList NotsetList = (ArrayList) Database.getInstance().queryForList("Json.selectNotsetNextNo", null);
 			ArrayList NotsetList = (ArrayList) mainService.selectQuery("songyuSQL.selectNotsetNextNo", null);
-			HashMap params = new HashMap();
 
 			// params.put("FILESEQ", fileseq);
 			params.put("NOTSET_NO", notsetNo);
@@ -1252,6 +1253,7 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 			params.put("USER_ID", USER_ID);
 			params.put("USER_NAME", USER_NAME);
 			params.put("MINWON_SEQ", minwonSeq);
+			params.put("MANAGE_YN", manageYn);
 
 //log.info("params:"+params);
 
@@ -1350,11 +1352,14 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 
 				// 메모등록
 				// 메모도 여기서 등록한다.
-				HashMap memoParam = new HashMap();
-				memoParam.put("manage_no", params.get("NOTSET_NO"));
-				memoParam.put("wmemo", memo);
-				memoParam.put("wname", (USER_NAME == null || USER_NAME == "null") ? "" : USER_NAME);
-				mainService.InsertQuery("commonSQL.updateMemoData", memoParam);
+				if ("insert".equals(gubun)) {
+					HashMap memoParam = new HashMap();
+					memoParam.put("manage_no", params.get("NOTSET_NO"));
+					memoParam.put("wmemo", memo);
+					memoParam.put("wname", (USER_NAME == null || USER_NAME == "null") ? "" : USER_NAME);
+					mainService.InsertQuery("commonSQL.updateMemoData", memoParam);
+				}
+				
 
 				// 변경이력 등록
 				if (!modifyReason1.equals("")) {
@@ -1365,6 +1370,11 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 				if (!modifyReason2.equals("")) {
 					params.put("GUBUN", "소유자 정보");
 					params.put("CONT", modifyReason2);
+					mainService.InsertQuery("songyuSQL.insertNotsetModifyHistory", params);
+				}
+				if (!modifyReason2.equals("")) {
+					params.put("GUBUN", "파일정보");
+					params.put("CONT", modifyReason3);
 					mainService.InsertQuery("songyuSQL.insertNotsetModifyHistory", params);
 				}
 
@@ -1402,38 +1412,80 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 				// !ADDR.equals("")|| !TEL.equals("")|| !HP.equals(""))
 				mainService.InsertQuery("songyuSQL.insertNotsetSoyu", params); // 소유자 저장
 			}
+			
+			if (gubun.equals("insert")) {
+				for (int i = 0; i < fileArr.length(); i++)  {
+					String file_name = fileArr.getString(i);
+					String str_NOTSETNO = (String) params.get("NOTSET_NO");
+					HashMap<String, Object> filesMap = new HashMap<>();
+					String chageFileName = CommonUtil.filenameAutoChange(file_name); // 파일명 교체
+					
+//					filesMap.put("dosiNo", str_DOSINO);
+					filesMap.put("seq", String.format("%06d", i));
+					filesMap.put("fseq", i);
+					filesMap.put("fname", file_name);
+					
+					String tempPath = GC.getSongyuFileTempDir(); // 설정파일로 뺀다.
+					String dataPath = GC.getSongyuFileDataDir() + "/" + str_NOTSETNO; // 설정파일로 뺀다.
+					filesMap.put("fpath", dataPath + "/" + chageFileName);
+					filesMap.put("notsetNo", str_NOTSETNO);
+					CommonUtil.moveFile(file_name, tempPath, dataPath, chageFileName);
+					
+	                mainService.InsertQuery("notsetSQL.insertNotsetUploadData", filesMap);
+					
+				}
+			}
+			
+			if (gubun.equals("modify")) {
+//				log.info("param:" + params);
+				// 기존 등록된 파일리스트 삭제 - 이 로직 필요 없어짐.
+				// 이제 새파일을 구분할수 있는 플래그도 값이 넘어옴.
+				//mainService.DeleteQuery("goverSQL.deleteBeforeGoverAtcFileList", params);
+				
+				// seq 가져오기
+				int nseq = (int) mainService.selectCountQuery("togiSQL.getTogiAtcFileSeq", params);
+				log.info("nseq:" + nseq);
+				String str_NOTSETNO = (String) params.get("NOTSET_NO");
+				// fileseq 가져오기
+				for (int i = 0; i < fileArr.length(); i++) {
+					
+					JSONObject fobj = new JSONObject(fileArr.get(i).toString());
+					
+					//새파일일 경우에만 등록 로직이 이루어짐
+					if("Y".equals(fobj.get("newFileCheckYn"))) {
+						
+						String fileName = fobj.getString("fname");
+						
+						HashMap<String, Object> filesMap = new HashMap<>();
 
-			for (int i = 0; i < fileArr.length(); i++) {
-				// JSONObject fobj=new JSONObject(fileArr.get(i).toString());
-				String file_name = fileArr.getString(i);
-				log.info("file_name:" + file_name);
-				HashMap<String, Object> filesMap = new HashMap<>();
-				//
-//						     			filesMap=CommonUtil.JsonArraytoMap(obj);
-				//
-				filesMap.put("notsetNo", String.valueOf((params.get("NOTSET_NO"))));
-				filesMap.put("seq", i);
-				filesMap.put("fseq", i);
-				filesMap.put("fname", file_name);
-				
-				String chageFileName = CommonUtil.filenameAutoChange(file_name);
-				String tempPath = GC.getJisangFileTempDir(); // 설정파일로 뺀다.
-				String dataPath = GC.getNotsetFileDataDir() + "/" + String.valueOf((params.get("NOTSET_NO"))); // 설정파일로 뺀다.
-				filesMap.put("fpath", dataPath + "/" + chageFileName);
-				
-				CommonUtil.moveFile(file_name, tempPath, dataPath, chageFileName);
-				log.info("filesMap:" + filesMap);
-				
-				mainService.InsertQuery("notsetSQL.insertNotsetUploadData", filesMap);
-				
-				HashMap historyParam = new HashMap();
-				
-				params.put("GUBUN", "파일정보");
-				params.put("CONT", "파일등록(" + file_name + ")");
-				
-				log.info("params:" + params);
-				mainService.InsertQuery("songyuSQL.insertNotsetModifyHistory", params);
-
+						filesMap.put("notsetNo", str_NOTSETNO);
+						
+						filesMap.put("fname", fileName);
+						
+						String chageFileName = CommonUtil.filenameAutoChange(fileName); 
+						String tempPath = GC.getSongyuFileTempDir(); // 설정파일로 뺀다.
+						String dataPath = GC.getSongyuFileDataDir() + "/" + str_NOTSETNO; // 설정파일로 뺀다.
+						
+						filesMap.put("fpath", dataPath + chageFileName);
+						filesMap.put("seq", String.format("%06d", i));
+						filesMap.put("fseq", nseq + i);
+						
+						CommonUtil.moveFile(fileName, tempPath, dataPath, chageFileName);
+						
+						log.info("filesMap:" + filesMap);
+						mainService.InsertQuery("notsetSQL.insertNotsetUploadData", filesMap);
+					} else if ("D".equals(fobj.get("newFileCheckYn"))) {
+						HashMap<String, Object> filesMap = new HashMap<>();
+						String filePath = fobj.getString("fpath");
+						String fileName = fobj.getString("fname");
+						String fileIdx = fobj.getString("idx");
+						filesMap.put("notsetNo", str_NOTSETNO);
+						filesMap.put("idx", fileIdx);
+						mainService.InsertQuery("notsetSQL.deleteNotsetAtcFile", filesMap);
+						
+						
+					}
+				}
 			}
 
 //				if (gubun.equals("modify")) {

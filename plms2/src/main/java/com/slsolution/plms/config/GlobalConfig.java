@@ -35,6 +35,9 @@ public class GlobalConfig {
 	private static String minwonFileTempDir;
 	private static String minwonFileDataDir;
 	
+	private static String songyuFileTempDir;
+	private static String songyuFileDataDir;
+	
 	private static String sampleFileDataDir;
 	
 	private static String serverName;
@@ -215,6 +218,26 @@ public class GlobalConfig {
     public static String getSampleFileDataDir() {
         return sampleFileDataDir;
     }
+    
+    // 미설정/미점용 첨부파일 임시
+ 	@Value("${plms.songyuFileTempDir}")
+ 	public void setSongyuFileTempDir(String str) {
+ 		songyuFileTempDir = str;
+ 	}
+ 	
+ 	public static String getSongyuFileTempDir() {
+ 		return songyuFileTempDir;
+ 	}
+ 	
+ 	// 미설정/미점용 첨부파일
+ 	@Value("${plms.songyuFileDataDir}")
+ 	public void setSongyuFileDataDir(String str) {
+ 		songyuFileDataDir = str;
+ 	}
+ 	
+ 	public static String getSongyuFileDataDir() {
+ 		return songyuFileDataDir;
+ 	}
 	
 	@Value("${server.name}")
 	public void setServerName(String sn) {

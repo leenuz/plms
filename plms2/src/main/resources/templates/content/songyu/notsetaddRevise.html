@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}"
+	th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8" />
@@ -14,7 +15,10 @@
 </head>
 
 <th:block layout:fragment="content">
+	<input type="hidden" id="dataInfo" th:value="${resultData}"/>
+	<input type="hidden" id="soujaInfo" th:value="${soujaList}"/>
 	<input type="hidden" id="loginJisa" th:value="${loginJisa}"/>
+	
 	<body>
 		<div class="mainContentWrappers">
 			<!--header삽입-->
@@ -24,6 +28,7 @@
 					<h1>미설정/미점용 내역 수정</h1>
 				</div>
 				<form name="saveForm" id="saveForm" onSubmit="return false;">
+				<input type="hidden" name="notset_no" id="notset_no" th:value="${resultData.nm_notset_no}">
 					<section class="defaultInfo">
 						<div class="subTitle">기본 정보</div>
 						<div class="contWrap">
@@ -160,7 +165,7 @@
 									
 									<!-- 관리제외필지 체크 -->
 									<li class="content10 content checkboxWrap">
-										<input type="checkbox" id="notsetAddCheckbox01" />
+										<input type="checkbox" id="notsetAddCheckbox01" name="nm_manage" th:checked="${resultData.nm_manage_yn != null and resultData.nm_manage_yn == 'Y'}"/>
 										<label for="notsetAddCheckbox01" class="customCheckBoxLabel01"></label>
 									</li>
 								</ul>
@@ -176,7 +181,6 @@
 								<ul class="contents">
 									<li class="content01" id="addressSearchResult">
 									<input type="hidden" name="addrcode" id="addrcode" th:value="${resultData.nm_addrcode}"/>
-									<input type="hidden" name="notset_no" id="notset_no" th:value="${resultData.nm_notset_no}" />
 										<input type="hidden" name="maddress" id="maddress" th:value="${#strings.concat(
 																										                        resultData.nm_sido_nm != null ? resultData.nm_sido_nm + ' ' : '', 
 																										                        resultData.nm_sgg_nm != null ? resultData.nm_sgg_nm + ' ' : '', 
@@ -184,15 +188,15 @@
 																										                        resultData.nm_ri_nm != null ? resultData.nm_ri_nm + ' ' : '', 
 																										                        resultData.nm_jibun != null ? resultData.nm_jibun : ''
 																										                      )}" />
-										<input type="hidden" name="mpnu" id="mpnu" th:value="${resultData.nm_pnu}" />
-										<input type="hidden" name="pnu" id="mpnu" th:value="${resultData.nm_pnu}" />
-										<input type="hidden" name="jibun" id="mjibun" th:value="${resultData.nm_jibun}" />
-										<input type="hidden" name="sido_nm" id="sido_nm" th:value="${resultData.nm_sido_nm}"></input>
-										<input type="hidden" name="sgg_nm" id="sgg_nm" th:value="${resultData.nm_sgg_nm}"></input>
-										<input type="hidden" name="emd_nm" id="emd_nm" th:value="${resultData.nm_emd_nm}"></input>
-										<input type="hidden" name="ri_nm" id="ri_nm" th:value="${resultData.nm_ri_nm}"></input>
+										<input type="hidden" name="mpnu" th:value="${resultData.nm_pnu}" />
+										<input type="hidden" name="pnu" th:value="${resultData.nm_pnu}" />
+										<input type="hidden" name="jibun" th:value="${resultData.nm_jibun}" />
+										<input type="hidden" name="sido_nm" th:value="${resultData.nm_sido_nm}"></input>
+										<input type="hidden" name="sgg_nm" th:value="${resultData.nm_sgg_nm}"></input>
+										<input type="hidden" name="emd_nm" th:value="${resultData.nm_emd_nm}"></input>
+										<input type="hidden" name="ri_nm" th:value="${resultData.nm_ri_nm}"></input>
 									
-										<input type="text" id="raddress" readonly class="notWriteInput" th:value="${#strings.concat(
+										<input type="text" readonly class="notWriteInput" th:value="${#strings.concat(
 																										                        resultData.nm_sido_nm != null ? resultData.nm_sido_nm + ' ' : '', 
 																										                        resultData.nm_sgg_nm != null ? resultData.nm_sgg_nm + ' ' : '', 
 																										                        resultData.nm_emd_nm != null ? resultData.nm_emd_nm + ' ' : '', 
@@ -296,13 +300,13 @@
 							소유자 정보*
 						</div>
 						
-						<!-- <input type="hidden" name="mpnu" id="mpnu" />
+						<input type="hidden" name="pnu" id="mpnu" />
 						<input type="hidden" name="mjibun" id="mjibun" />
 						<input type="hidden" name="sido_nm" id="sido_nm" />
 						<input type="hidden" name="sgg_nm" id="sgg_nm" />
 						<input type="hidden" name="emd_nm" id="emd_nm" />
 						<input type="hidden" name="ri_nm" id="ri_nm" />
-						<input type="hidden" name="addrcode" id="addrcode" /> -->
+						<input type="hidden" name="addrcode" id="addrcode" />
 
 						<div class="contWrap">
 							<div class="depth1" id="soujaDiv">
@@ -316,6 +320,7 @@
 								</ul>
 								<ul class="contents editing" id="soujaHiddenUl" style="display:none;">
 									<li class="content01 content editSpace">
+										<input type="hidden" name="addKey" value="N" >
 										<input type="text" class="editingContent" name="soujaJibun" placeholder="ex)1/2">
 									</li>
 									<li class="content02 content editSpace">
@@ -333,9 +338,9 @@
 									<li class="content06 content btnBox">
 										<!-- 수정입력할때 -->
 
-										<div class="editBefore">
+										<div class="editAfter">
 											<div class="btnWrap">
-												<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
+												<button class="addBtn miniBtn" id="completeSoujaBtn">추가</button>
 											</div>
 											<div class="btnWrap">
 												<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
@@ -343,12 +348,13 @@
 										</div>
 
 										<!-- 수정완료할 때 -->
-
+										<!-- 
 										<div class="editAfter">
 											<div class="newBtnWrap">
 												<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
 											</div>
 										</div>
+										 -->
 									</li>
 								</ul>
 								
@@ -374,7 +380,7 @@
 										<!-- 수정입력할때 -->
 										<div class="editBefore">
 											<div class="btnWrap">
-												<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
+												<button class="addBtn miniBtn" id="completeSoujaBtn">추가</button>
 											</div>
 											<div class="btnWrap">
 												<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
@@ -389,9 +395,8 @@
 										</div>
 									</li>
 								</ul>
-								
 								<!--데이터가 1개 이상일 때-->
-								<ul class="contents editing" th:if="${soujaList.size() > 0}" th:each="souja : ${soujaList}" id="soujaUl">
+								<ul class="contents editing" th:if="${soujaList.size() > 0}" th:each="souja, iterStat : ${soujaList}" id="soujaUl">
 									<li class="content01 content editSpace">
 										<input type="text" class="editingContent" name="soujaJibun" id="soujaJibun"
 											th:value="${souja.ns_jibun}">
@@ -412,19 +417,20 @@
 										<input type="text" class="editingContent" name="soujaContact2" id="soujaContact2"
 											th:value="${souja.ns_home_number}">
 									</li>
+									
+									
 									<li class="content06 content btnBox">
 										<!-- 수정입력할때 -->
-										<div class="editBefore">
+										<div class="editAfter" th:if="${iterStat.index != 0}">
 											<div class="btnWrap">
-												<button class="addBtn miniBtn" id="editSoujaBtn">추가</button>
+												<button class="addBtn miniBtn" id="completeSoujaBtn">추가</button>
 											</div>
 											<div class="btnWrap">
 												<button class="delBtn miniBtn" id="deleteSoujaBtn">삭제</button>
 											</div>
 										</div>
 
-										<!-- 수정완료할 때 -->
-										<div class="editAfter">
+										<div class="editAfter" th:if="${iterStat.index == 0}">
 											<div class="newBtnWrap">
 												<button class="registBtn miniBtn" id="completeSoujaBtn">추가</button>
 											</div>
@@ -470,15 +476,18 @@
 								    <!--첨부파일 목록 반복문-->
 								    <ul class="contents" id="fileListUl" th:each="file, iterStat : ${atcFileList}">
 								        <li class="content01 content checkboxWrap">
-								        	<input type="hidden" id="ftype" name="ftype" value="old">
-								        	<input type="hidden" id="oidx" name="oidx" th:value="${file.na_idx}">
-								            <input type="checkbox" th:id="'attachFile' + ${iterStat.index + 1}" name="attachFile" />
-								            <label th:for="'attachFile' + ${iterStat.index + 1}"></label>
+											<input type="hidden" name="na_idx" th:value="${file.na_idx}">
+											<input type="hidden" name="na_seq" th:value="${file.na_seq}">
+											<input type="hidden" name="na_file_seq" th:value="${file.na_file_seq}">
+											<input type="hidden" name="na_file_path" th:value="${file.na_file_path}">
+											<input type="hidden" name="name" th:value="${file.na_file_nm}">
+											<input type="hidden" name="newFileCheckYn" value="N">
+											<input type="checkbox" th:id="'attachFile' + ${iterStat.index + 1}" name="attachFile" />
+											<label th:for="'attachFile' + ${iterStat.index + 1}"></label>
 								        </li>
-								        <li class="content02 content">
-								        	
-								            <input type="text" th:value="${file.na_file_nm}" id="filename" class="notWriteInput" readonly />
-								        </li>
+										<li class="content02 content">
+											<input type="text" th:value="${file.na_file_nm}" id="filename" class="notWriteInput" readonly />
+										</li>
 								    </ul>
 								<!-- </div> -->
 							</div>
@@ -488,7 +497,7 @@
 						</div>
 					</section>
 
-					<!-- 메모 -->
+					<!-- 메모 
 					<section class="memoSection">
 						<div class="subTitle">메모</div>
 						<textarea name="memo" id="memo"
@@ -496,7 +505,7 @@
 							th:text="${memoList != null && memoList['mm_memo'] != null ? memoList['mm_memo'] : ''}">
 							</textarea>
 					</section>
-
+					-->
 					<div class="finalBtnBox btnWrap">
 						<button class="backBtn finalBtn" id="backBtn" onclick="history.back();">이전</button>
 						<button class="saveBtn finalBtn" id="finalBtn">수정</button>
@@ -532,7 +541,7 @@
 								<ii class="popContent0205" hidden>[[${val.bcode}]]</ii>
 								<li class="popContent03">[[${val.jibun}]]</li>
 								<li class="popContent04">
-									<button class="resultSelectBtn addressResultSelectBtn">선택</button>
+									<button class="resultSelectBtn addressSearchResult">선택</button>
 								</li>
 							</ul>
 						</div>

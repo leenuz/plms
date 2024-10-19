@@ -1,5 +1,5 @@
 // 커스텀 selectbox
-
+let dataInfo = {};
 createCustomLiNotsetAdd();
 
 function createCustomLiNotsetAdd() {
@@ -476,7 +476,7 @@ $(document).on("click", ".addBtn", function () {
     console.log(thisEditContent);
     //			thisEditContent.classList.add('editing');
     const inputs = thisEditContent.querySelectorAll('input');
-
+	/*
     if (thisEditContent.classList.contains('editing')) {
         inputs.forEach(input => {
             input.setAttribute('readonly', 'readonly');
@@ -487,6 +487,7 @@ $(document).on("click", ".addBtn", function () {
             input.removeAttribute('readonly');
         });
     }
+    */
 });
 
 
@@ -512,11 +513,9 @@ $(document).on("click", "#completeSoujaBtn", function () {
 
     if ($(input).eq(0).val() != "" && $(input).eq(1).val() != "" && $(input).eq(2).val() != "" && $(input).eq(3).val() != "") {
         //	alert("소유자 정보를 정확하게 입력해주세요!");
-        $(thisUl).removeClass("editing");
-        $(thisUl).find('li input').attr('readonly', true);
-        if (editingCount < 3) {
-            $("#soujaDiv").append('<ul class="contents editing" id="soujaUl">' + addUl + '</ul>');
-        }
+        let addTargetUl = '<ul class="contents editing" id="soujaUl">' + addUl + '</ul>';
+        $(thisUl).find('li input').attr('readonly', false);
+        $("#soujaDiv").append(addTargetUl);
         //return;
     }
     //if ($(input).eq(0).html()=="" || )
@@ -586,67 +585,20 @@ const allCheckEventLandRightsRegist = () => {
 
 allCheckEventLandRightsRegist();
 
+// 체크된 첨부파일 삭제
 $(document).on("click", "#deleteFileBtn", function () {
-    //const attachFiles = document.querySelectorAll('input:checkbox[name="attachFile"]:checked');
-    /*$('input:checkbox[name=attachFile]').each(function (index) {
-        if($(this).is(":checked")==true){
-            console.log($(this).val());
-        }
-    })*/
-    const clickedAttachFiles = document.querySelectorAll('input[name="attachFile"]:checked');
-    console.log(clickedAttachFiles);
-    console.log(uploadFiles);
-	var dids=[];
-    for (var i = 0; i < clickedAttachFiles.length; i++) {
-        var delEle = $(clickedAttachFiles[i]).closest("#fileListUl");
-        console.log($(clickedAttachFiles[i]).closest("#fileListUl").html());
-		var ids={"notset_no":$("#notset_no").val(),"idx":$(clickedAttachFiles[i]).closest("#fileListUl").find("#oidx").val(),"filename":$(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val()};
-		//var filename={"idx":$(clickedAttachFiles[i]).closest("#fileListUl").find("#filename").val()};
-		console.log("idx:"+ids);
-		dids.push(ids);
+	const clickedAttachFiles = document.querySelectorAll('input[name="attachFile"]:checked');
+	for (var i = 0; i < clickedAttachFiles.length; i++) {
+		let delEle = $(clickedAttachFiles[i]).closest("#fileListUl");
+		let checkFlag = $(delEle).find('[name="newFileCheckYn"]').val(); 
+		if (checkFlag == 'Y'){
+			$(delEle).remove();
+		} else {
+			$(delEle).find('[name="newFileCheckYn"]').val('D');
+			$(delEle).hide();	
+		}
 		
-		
-        $(delEle).remove();
-    }
-	console.log(dids);
-	var param={"fileIds":dids};
-
-	
-	url = "/land/notset/deleteNotsetAtcFile";
-	         $.ajax({
-	             url: url,
-	             type: 'POST',
-	             contentType: "application/json",
-	             data: JSON.stringify(param),
-
-	             dataType: "json",
-	             beforeSend: function (request) {
-	                 console.log("beforesend ........................");
-	                 loadingShow();
-	             },
-	             success: function (response) {
-	                 loadingHide();
-	                 console.log(response);
-	        //         if (response.success = "Y") {
-	        //             console.log("response.success Y");
-	        //             console.log("response.resultData length:" + response.resultData.length);
-	        //             alert("정상적으로 등록 되었습니다.");
-	        //             /*$("#popup_bg").show();
-	        //             $("#popup").show(500);
-	        //             //$("#addrPopupLayer tbody td").remove();
-	        //             for(var i=0;i<response.resultData.length;i++){
-	        //                 $("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-	        //             }*/
-	        //         }
-	        //         else {
-	        //             console.log("response.success N");
-	        //         }
-	             },
-	             error: function (jqXHR, textStatus, errorThrown) {
-	                 alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
-	                 return false;
-	             }
-	         });
+	}
 })
 
 var uploadFiles = new Array();
@@ -732,7 +684,10 @@ $(document).ready(function () {
 
 	        var row = '<ul class="contents" id="fileListUl">';
 	        row += '<li class="content01 content checkboxWrap">';
-			row += '<input type="hidden" name="ftype" id="ftype" value="new">';
+			row += `	<input type="hidden" name="no" value="${no}">`;
+			row += `	<input type="hidden" name="name" value="${name}">`;
+			row += `	<input type="hidden" name="nfname" value="">`;
+			row += '	<input type="hidden" name="newFileCheckYn" value="Y">';
 	        row += '<input type="checkbox" id="attachFile' + no + '" name="attachFile" >';
 	        row += '<label for="attachFile' + no + '"></label>';
 	        row += '</li>';
@@ -893,6 +848,7 @@ $(document).ready(function () {
 		
     // 수정 버튼([참고]미설정/미점용 내역 등록 내용 복사, 붙여넣기 한 내용 - 아직 수정 안함.)
     $(document).on("click", "#finalBtn", function () {
+		
         console.log("---------finalBtn class click------------");
         console.log($("#saveForm").serialize());
 
@@ -911,7 +867,12 @@ $(document).ready(function () {
         console.log(dataObj);
 
         const soujaUls = document.querySelectorAll('#soujaUl');
-       
+        let manageFlag = ('nm_manage' in dataObj);
+        if (manageFlag) {
+			dataObj.nm_manage = 'Y';
+		} else {
+			dataObj.nm_manage = 'N';
+		}
 
            console.log(soujaUls);
         var soujaArr = new Array();
@@ -923,7 +884,7 @@ $(document).ready(function () {
             var soujaAddress = $(soujaUls[i]).find("input[name='soujaAddress']").val();
             var soujaContact1 = $(soujaUls[i]).find("input[name='soujaContact1']").val();
             var soujaContact2 = $(soujaUls[i]).find("input[name='soujaContact2']").val();
-
+            
             soujaJibun = (soujaJibun == "undefined" || soujaJibun == "" || soujaJibun == null) ? "" : soujaJibun;
             soujaName = (soujaName == "undefined" || soujaName == "" || soujaName == null) ? "" : soujaName;
             soujaAddress = (soujaAddress == "undefined" || soujaAddress == "" || soujaAddress == null) ? "" : soujaAddress;
@@ -940,21 +901,29 @@ $(document).ready(function () {
 		const attachFileUls = document.querySelectorAll('input[name="attachFile"]');
 		       console.log(attachFileUls);
         var files = new Array();
-        for (var i = 0; i < attachFileUls.length; i++) {
-            console.log($(attachFileUls[i]).parent().parent().html());
-			var idx=$(attachFileUls[i]).parent().parent().find("#oidx").val();
-			var ftype=$(attachFileUls[i]).parent().parent().find("#ftype").val();
-            var fname = $(attachFileUls[i]).parent().parent().find("#filename").val();
-            console.log(fname);
-			console.log(ftype);
-			if (ftype=="new") files.push(fname);
+        var fileObj = {};
+        for (let i = 0; i < attachFileUls.length; i++) {
+			fileObj = {};
+			let na_idx = $(attachFileUls[i]).parent().find('[name="na_idx"]').val();
+			let seq = $(attachFileUls[i]).parent().find('[name="na_seq"]').val();
+			let fseq = $(attachFileUls[i]).parent().find('[name="na_file_seq"]').val();
+			let fpath = $(attachFileUls[i]).parent().find('[name="na_file_path"]').val();
+            let fname = $(attachFileUls[i]).parent().find("[name='name']").val();
+            let newFileCheck = $(attachFileUls[i]).parent().find("[name='newFileCheckYn']").val();
+            fileObj.idx = na_idx;
+            fileObj.seq = seq;
+            fileObj.fseq = fseq;
+            fileObj.fpath = fpath;
+            fileObj.fname = fname;
+            fileObj.newFileCheckYn = newFileCheck;
+            files.push(fileObj);
         }
 
        
         console.log(files);
 
         dataObj.soujaInfo = soujaArr;
-        dataObj.uploadFiles = files;
+        dataObj.files = files;
 
         //필수정보체크
         console.log("jisa:" + dataObj.jisa);
@@ -983,8 +952,16 @@ $(document).ready(function () {
 		dataObj.sunGubun=dataObj.sun_gubun;
 		dataObj.gubun="modify";
         console.log("------dataObj--------");
+        let modifyReason1 = changeStatus1(dataObj);
+        let modifyReason2 = changeStatus2(dataObj);
+        let modifyReason3 = changeStatus3();
+        
+        dataObj.modifyReason1 = modifyReason1;
+        dataObj.modifyReason2 = modifyReason2;
+        dataObj.modifyReason3 = modifyReason3;
         console.log(dataObj);
-
+        
+        
         // 서버 전송
          url = "/land/songyu/insertSonguList";
          $.ajax({
@@ -1087,3 +1064,118 @@ $(document).on('click', '#backBtn', function(){
 	history.back();
 });
 
+function changeStatus1 (modifyObj) {
+	let oldData = $('#dataInfo').val();
+	let oldObj = queryValueToObject(oldData);
+	let changeStr = '';
+	
+	// 지사
+	changeStr += compareChanges(String(oldObj.jisa), String(modifyObj.jisa), '지사');
+	changeStr += compareChanges(String(oldObj.pipe_overlap_yn), String(modifyObj.overlap_yn), '관로일치여부');
+	changeStr += compareChanges(String(oldObj.nm_pipe_name), String(modifyObj.pipe_name), '관로명(구간)');
+	changeStr += compareChanges(String(oldObj.nm_sun_gubun), String(modifyObj.sun_gubun), '단/복선');
+	changeStr += compareChanges(String(oldObj.nm_pipe_meter), String(modifyObj.pipe_diameter1), '관경1');
+	changeStr += compareChanges(String(oldObj.nm_pipe_meter2), String(modifyObj.pipe_diameter2), '관경2');
+	changeStr += compareChanges(String(oldObj.gover_own_yn), String(modifyObj.gover_own_yn), '국공유지여부');
+	changeStr += compareChanges(String(oldObj.nm_jijuk_area), String(modifyObj.jijuk_area), '지적면적(㎡)');
+	changeStr += compareChanges(String(oldObj.nm_jimok_text), String(modifyObj.jimok_text), '지목');
+	changeStr += compareChanges(String(oldObj.nm_jimok_text), String(modifyObj.jimok_text), '지목');
+	changeStr += compareChanges(String(oldObj.nm_manage_yn), String(modifyObj.nm_manage), '관리제외필지');
+	
+	let juso = '';
+	juso += oldObj.nm_sido_nm != null ? oldObj.nm_sido_nm + ' ' : '';
+	juso += oldObj.nm_sgg_nm != null ? oldObj.nm_sgg_nm + ' ' : '';
+	juso += oldObj.nm_emd_nm != null ? oldObj.nm_emd_nm + ' ' : '';
+	juso += oldObj.nm_ri_nm != null ? oldObj.nm_ri_nm + ' ' : '';
+	juso += oldObj.nm_jibun != null ? oldObj.nm_jibun : '';
+	changeStr += compareChanges(juso, modifyObj.maddress, '주소');
+	
+	return changeStr;
+}
+
+function changeStatus2 (modifyObj) {
+	
+	// 소유자
+	let soyujaStr = $('#soujaInfo').val();
+	let jsonStr = soyujaStr.replace(/([a-zA-Z0-9_]+)=/g, '"$1":').replace(/N_([0-9]+)/g, '"N_$1"');
+	let soyujaObj = JSON.parse(jsonStr);
+	let changeStr = '';
+	
+	let soyujaCnt = $('#soujaDiv #soujaUl').length; // 소유자 정보 행 개수
+	
+	for (let i = 0; i < soyujaCnt; i++) {
+		if($('#soujaDiv #soujaUl').eq(i).find('[name="addKey"]').length > 0){
+			changeStr += '소유자 정보 추가 ';
+			changeStr += ' 공유지분: ' + modifyObj.soujaInfo[i].jibun;
+			changeStr += ' 성명: ' + modifyObj.soujaInfo[i].soujaName;
+			changeStr += ' 주소: ' + modifyObj.soujaInfo[i].soujaAddress;
+			changeStr += ' 연락처1: ' + modifyObj.soujaInfo[i].soujaContact1;
+			changeStr += ' 연락처2: ' + modifyObj.soujaInfo[i].soujaContact2;
+		} else {
+			changeStr += compareChanges(String(soyujaObj[i].ns_jibun), modifyObj.soujaInfo[i].jibun, '소유자 정보 공유지분');
+			changeStr += compareChanges(String(soyujaObj[i].ns_souja_name), modifyObj.soujaInfo[i].soujaName, '소유자 정보 성명');
+			changeStr += compareChanges(String(soyujaObj[i].ns_address), modifyObj.soujaInfo[i].soujaAddress, '소유자 정보 주소');
+			changeStr += compareChanges(String(soyujaObj[i].ns_phone_number), modifyObj.soujaInfo[i].soujaContact1, '소유자 정보 연락처1');
+			changeStr += compareChanges(String(soyujaObj[i].ns_home_number), modifyObj.soujaInfo[i].soujaContact2, '소유자 정보 연락처2');	
+		}
+	}
+	return changeStr;
+}
+
+function changeStatus3 () {
+	let changeStr = '';
+	let fileCnt = $('#fileListDiv #fileListUl').length; // 소유자 정보 행 개수
+	for (let i = 0; i < fileCnt; i++) {
+		let fileCheckYn = $('#fileListDiv #fileListUl').eq(i).find('[name="newFileCheckYn"]');
+		let fileName = $('#fileListDiv #fileListUl').eq(i).find('[name="name"]').val();
+		if (fileCheckYn.val() == 'Y') {
+			changeStr += ` 파일 추가 (${fileName})`;
+		} else if (fileCheckYn.val() == 'D') {
+			changeStr += ` 파일 삭제 (${fileName})`;
+		}
+	}
+	return changeStr;
+}
+
+// 변경이력 비교 함수
+function compareChanges(orgValue, newValue, fieldName) {
+    // null과 undefined를 빈 문자열로 처리
+    orgValue = orgValue === undefined || orgValue === null ? '' : orgValue;
+    newValue = newValue === undefined || newValue === null ? '' : newValue;
+    console.log("orgValue:"+orgValue);
+	console.log("newValue:"+newValue);
+	if (orgValue.trim() != newValue.trim() && newValue.trim() != '') {
+	    return `${fieldName} 변경 ('${orgValue.trim()}' > '${newValue.trim()}'); `;
+	}
+
+    return '';
+}
+
+$(document).on("click", "#addressResultSelectBtn", function () {
+    console.log("----------addressResultSelectBtn-click22222-------");
+    console.log($(this).parent().parent().html());
+    var pnu = $(this).parent().parent().find(".popContent01").html();
+    var address = $(this).parent().parent().find(".popContent02").html();
+    var jibun = $(this).parent().parent().find(".popContent03").html();
+    var sido_nm = $(this).parent().parent().find(".popContent0201").html();
+    var sgg_nm = $(this).parent().parent().find(".popContent0202").html();
+    var emd_nm = $(this).parent().parent().find(".popContent0203").html();
+    var ri_nm = $(this).parent().parent().find(".popContent0204").html();
+	var bcode = $(this).parent().parent().find(".popContent0205").html();
+    console.log("pnu:" + pnu);
+    console.log("address:" + address);
+    console.log("jibun:" + jibun);
+    $("#maddress").val(address + " " + jibun);
+    $("#raddress").val(address + " " + jibun);
+    $("#mpnu").val(pnu);
+    $("#mjibun").val(jibun);
+    $("#sido_nm").val(sido_nm);
+    $("#sgg_nm").val(sgg_nm);
+    $("#emd_nm").val(emd_nm);
+    $("#ri_nm").val(ri_nm);
+	$("#addrcode").val(bcode);
+
+    //$('#addressSearchResult').html(address + ' ' + jibun);
+    var targetDiv = $("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
+    $(".popupWrap").removeClass("active");
+})

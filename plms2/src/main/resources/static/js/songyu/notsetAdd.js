@@ -372,24 +372,27 @@ $(document).on("click", "#searchBtn", function () {
 */
 
 /* 소유자 정보 입력 버튼 */
-$(document).on("click", ".addBtn", function () {
-    console.log("---------addBtn click-----------");
+$(document).on("click", ".addBtn", function() {
+	console.log("---------addBtn click-----------");
 
-    var thisEditContent = this.closest('.contents');
-    console.log(thisEditContent);
-    //			thisEditContent.classList.add('editing');
-    const inputs = thisEditContent.querySelectorAll('input');
-
-    if (thisEditContent.classList.contains('editing')) {
-        inputs.forEach(input => {
-            input.setAttribute('readonly', 'readonly');
-        });
-    } else {
-        inputs.forEach(input => {
-            thisEditContent.classList.add('editing');
-            input.removeAttribute('readonly');
-        });
-    }
+	var thisEditContent = this.closest('.contents');
+	console.log(thisEditContent);
+	//			thisEditContent.classList.add('editing');
+	const inputs = thisEditContent.querySelectorAll('input');
+	/*
+	if (thisEditContent.classList.contains('editing')) {
+		inputs.forEach(input => {
+			input.setAttribute('readonly', 'readonly');
+		});
+	} else {
+		
+		inputs.forEach(input => {
+			thisEditContent.classList.add('editing');
+			input.removeAttribute('readonly');
+		});
+		
+	}
+	*/
 });
 $(document).on("click", "#completeSoujaBtn", function () {
     console.log("------------completeSoujaBtn click---------");
@@ -413,11 +416,9 @@ $(document).on("click", "#completeSoujaBtn", function () {
 
     if ($(input).eq(0).val() != "" && $(input).eq(1).val() != "" && $(input).eq(2).val() != "" && $(input).eq(3).val() != "") {
         //	alert("소유자 정보를 정확하게 입력해주세요!");
-        $(thisUl).removeClass("editing");
-        $(thisUl).find('li input').attr('readonly', true);
-        if (editingCount < 3) {
-            $("#soujaDiv").append('<ul class="contents editing" id="soujaUl">' + addUl + '</ul>');
-        }
+        let addTargetUl = '<ul class="contents editing" id="soujaUl">' + addUl + '</ul>';
+        $(thisUl).find('li input').attr('readonly', false);
+        $("#soujaDiv").append(addTargetUl);
         //return;
     }
     //if ($(input).eq(0).html()=="" || )
@@ -446,9 +447,9 @@ $(document).on("click", "#deleteSoujaBtn", function () {
 // 첨부파일 전체 선택 체크박스
 const allCheckEventLandRightsRegist = () => {
     // 첨부파일 리스트들
-    const attachFiles = document.querySelectorAll('input[name="attachFile"]');
+    const attachFiles = document.querySelectorAll('input[name="landRegistration_attachFile"]');
     // checked가 된 첨부파일 리스트
-    const clickedAttachFiles = document.querySelectorAll('input[name="attachFile"]:checked');
+    const clickedAttachFiles = document.querySelectorAll('input[name="landRegistration_attachFile"]:checked');
     // 전체선택 input
     const clickedAllinput = document.querySelector('input[name="landRightsRegistration_file_select_all"]');
 
@@ -477,7 +478,7 @@ const allCheckEventLandRightsRegist = () => {
 
     // 전체선택 클릭시
     function clickedSelectAllLandRightsRegist(clickedAllinput) {
-        const attachFiles = document.querySelectorAll('input[name="attachFile"]');
+        const attachFiles = document.querySelectorAll('input[name="landRegistration_attachFile"]');
 
         attachFiles.forEach((checkbox) => {
             checkbox.checked = clickedAllinput.checked;
@@ -494,7 +495,7 @@ $(document).on("click", "#deleteFileBtn", function () {
             console.log($(this).val());
         }
     })*/
-    const clickedAttachFiles = document.querySelectorAll('input[name="attachFile"]:checked');
+    const clickedAttachFiles = document.querySelectorAll('input[name="landRegistration_attachFile"]:checked');
     console.log(clickedAttachFiles);
     console.log(uploadFiles);
     for (var i = 0; i < clickedAttachFiles.length; i++) {
@@ -504,172 +505,138 @@ $(document).on("click", "#deleteFileBtn", function () {
     }
 })
 
-var uploadFiles = new Array();
+// 첨부파일 [S]
+let fileNo = 1;
+let uploadFiles = new Array();
 $(document).ready(function () {
-    var objDragAndDrop = $(".fileUploadBox");
+    let objDragAndDrop = $(".fileUploadBox");
+	
+	$(document).on("dragenter",".fileUploadBox",function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+		$(this).css('border', '2px solid #0B85A1');
+	});
+	
+	$(document).on("dragover",".fileUploadBox",function(e){
+		e.stopPropagation();
+		e.preventDefault();
+	});
+	
+	$(document).on("drop",".fileUploadBox",function(e){
+		$(this).css('border', '2px dotted #0B85A1');
+		e.preventDefault();
+		let files = e.originalEvent.dataTransfer.files;
+		handleFileUpload(files,objDragAndDrop);
+	});
+	
+	$(document).on('dragenter', function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+	});
+	
+	$(document).on('dragover', function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+		objDragAndDrop.css('border', '2px dotted #0B85A1');
+	});
+	
+	$(document).on('drop', function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+	});
+	
+	//drag 영역 클릭시 파일 선택창
+	objDragAndDrop.on('click',function (e) {
+		$('input[type=file]').trigger('click');
+	});
+	
+	$('input[type=file]').on('change', function(e) {
+		const fileListDiv = document.getElementById('fileListDiv');
+		const listItems = fileListDiv.getElementsByTagName('ul');
+		const itemCount = listItems.length; // ul 요소의 갯수
+		let files = e.originalEvent.target.files;
+		handleFileUpload(files,objDragAndDrop);
+	});
+	
+	function handleFileUpload(files,obj) {
+		for (let i = 0; i < files.length; i++) {
+			let fd = new FormData();
+			fd.append('file', files[i]);
+			let status = new createStatusbar($("#fileTitleUl"),files[i].name,files[i].size,fileNo); //Using this we can set progress.
+			//status.setFileNameSize(files[i].name,files[i].size);
+			sendFileToServer(fd,status);
+		}
+		fileNo++;
+	}
+	
+	let rowCount = 0;
+	function createStatusbar(obj,name,size,no) {
+		let sizeStr = "";
+		let sizeKB = size/1024;
+		if (parseInt(sizeKB) > 1024) {
+			let sizeMB = sizeKB/1024;
+			sizeStr = sizeMB.toFixed(2) + " MB";
+		} else {
+			sizeStr = sizeKB.toFixed(2) + " KB";
+		}
+		// var row='<ul class="contents" id="fileListUl">';
+		// row+='<li class="content01 content checkboxWrap">';
+		// row+='<input type="checkbox" id="landRegistration_attachFile'+no+'" name="landRegistration_attachFile" >';
+		// row+='<label for="landRegistration_attachFile'+no+'"></label>';
+		// row+='</li>';
+		// row+='<li class="content02 content"><input type="text" id="filename" placeholder="'+name+'" class="notWriteInput" readonly></li></ul>';
+		// obj.after(row);
+		let now = new Date();
+		let formattedDate = now.toLocaleString();
+		let row = ``;
+		row += `<ul class="contents" id="fileListUl">`;
+		row += `	<input type="hidden" name="no" value="${no}">`;
+		row += `	<input type="hidden" name="name" value="${name}">`;
+		row += `	<input type="hidden" name="nfname" value="">`;
+		row += `	<li class="content01 content checkboxWrap">`;
+		row += `		<input type="checkbox" id="landRegistration_attachFile${no}" name="landRegistration_attachFile" >`;
+		row += `		<label for="landRegistration_attachFile${no}"></label>`;
+		row += `	</li>`;
+		row += `	<li class="content02">`;
+		row += `		<input type="text" value="${name}" id="filename" readonly class="notWriteInput" />`;
+		row += `	</li>`;
+		row += `</ul>`;
+		
+		obj.after(row);
+	
+		let radio = $(row).find('input');
+		$(radio).find('input').attr("disabled",false);
+	}
 
-    $(document).on("dragenter", ".fileUploadBox", function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        $(this).css('border', '2px solid #0B85A1');
-    });
-    $(document).on("dragover", ".fileUploadBox", function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    $(document).on("drop", ".fileUploadBox", function (e) {
-        $(this).css('border', '2px dotted #0B85A1');
-        e.preventDefault();
-        var files = e.originalEvent.dataTransfer.files;
-
-        handleFileUpload(files, objDragAndDrop);
-    });
-    $(document).on('dragenter', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    $(document).on('dragover', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        objDragAndDrop.css('border', '2px dotted #0B85A1');
-    });
-    $(document).on('drop', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    //drag 영역 클릭시 파일 선택창
-    objDragAndDrop.on('click', function (e) {
-        $('input[type=file]').trigger('click');
-    });
-    $('input[type=file]').on('change', function (e) {
-        var files = e.originalEvent.target.files;
-        handleFileUpload(files, objDragAndDrop);
-    });
-
-	var rowCount = 0;
-    function handleFileUpload(files, obj) {
-        console.log("-------------handleFileUpload---------------");
-        console.log(files);
-        for (var i = 0; i < files.length; i++) {
-            var fd = new FormData();
-            fd.append('file', files[i]);
-
-            var status = new createStatusbar($("#fileTitleUl"), files[i].name, files[i].size, rowCount); //Using this we can set progress.
-            //  status.setFileNameSize(files[i].name,files[i].size);
-            sendFileToServer(fd, status);
-
-			rowCount++; // 파일이 추가될 때마다 rowCount를 증가시켜 고유한 id를 유지
-        }
-    }
-
-    function createStatusbar(obj, name, size, no) {
-        console.log("----------start createStatusBar------------");
-        console.log(obj.html());
-        /*var uobj=obj.parent().parent().find("#status");	
-        rowCount++;
-        var row="";
-        //if(rowCount %2 ==0) row ="even";
-        this.statusbar = $('<ul class="contents" id="fileListUl">');
-        this.filename = $('<div class='filename'></div>').appendTo(this.statusbar);
-        this.size = $("<div class='filesize'></div>").appendTo(this.statusbar);
-       // this.progressBar = $("<div class='progressBar'><div></div></div>").appendTo(this.statusbar);
-        this.abort = $("<div class='abort'>중지</div>").appendTo(this.statusbar);*/
-
-        var sizeStr = "";
-        var sizeKB = size / 1024;
-        if (parseInt(sizeKB) > 1024) {
-            var sizeMB = sizeKB / 1024;
-            sizeStr = sizeMB.toFixed(2) + " MB";
-        } else {
-            sizeStr = sizeKB.toFixed(2) + " KB";
-        }
-
-        var row = '<ul class="contents" id="fileListUl">';
-        row += '<li class="content01 content checkboxWrap">';
-        row += '<input type="checkbox" id="attachFile' + no + '" name="attachFile" >';
-        row += '<label for="attachFile' + no + '"></label>';
-        row += '</li>';
-        row += '<li class="content02 content"><input type="text" id="filename" placeholder="' + name + '" class="notWriteInput" readonly></li></ul>';
-        obj.after(row);
-
-        var radio = $(row).find('input');
-        console.log("---------------radio checkbox----------");
-        $(radio).find('input').attr("disabled", false);
-        console.log($(radio).parent().html());
-
-        /* this.setFileNameSize = function(name,size){
-             var sizeStr="";
-             var sizeKB = size/1024;
-             if(parseInt(sizeKB) > 1024){
-                 var sizeMB = sizeKB/1024;
-                 sizeStr = sizeMB.toFixed(2)+" MB";
-             }else{
-                 sizeStr = sizeKB.toFixed(2)+" KB";
-             }
-      
-             $(#)
-             this.size.html(sizeStr);
-         }*/
-
-        /*this.setProgress = function(progress){       
-            var progressBarWidth =progress*this.progressBar.width()/ 100;  
-            this.progressBar.find('div').animate({ width: progressBarWidth }, 10).html(progress + "% ");
-            if(parseInt(progress) >= 100)
-            {
-                this.abort.hide();
-            }
-        }
-        
-        this.setAbort = function(jqxhr){
-            var sb = this.statusbar;
-            this.abort.click(function()
-            {
-                jqxhr.abort();
-                sb.hide();
-            });
-        }*/
-    }
-
-    function sendFileToServer(formData, status) {
-        var uploadURL = "/notset/fileUpload/post"; //Upload URL
-        var extraData = {}; //Extra Data.
-        var jqXHR = $.ajax({
-            xhr: function () {
-                var xhrobj = $.ajaxSettings.xhr();
-                if (xhrobj.upload) {
-                    xhrobj.upload.addEventListener('progress', function (event) {
-                        var percent = 0;
-                        var position = event.loaded || event.position;
-                        var total = event.total;
-                        if (event.lengthComputable) {
-                            percent = Math.ceil(position / total * 100);
-                        }
-                        //Set progress
-                        //  status.setProgress(percent);
-                    }, false);
-                }
-                return xhrobj;
-            },
-            url: uploadURL,
-            type: "POST",
-            contentType: false,
-            processData: false,
-            cache: false,
-            data: formData,
-            success: function (data) {
-                // status.setProgress(100);
-                console.log(data);
-                console.log(data.resultData);
-                //console.log("-------------sendFileToServer-----------------------");
-                //console.log($(this).parent().parent().parent().parent());
-                //$("#status1").append("File upload Done<br>");    
-                //uploadFiles.push(data.resultData.fpath);    
-                //allCheckEventLandRightsRegist();   
-            }
-        });
-
-        //status.setAbort(jqXHR);
-    }
+	function sendFileToServer(formData,status){
+		let uploadURL = "/land/songyu/fileUpload/post"; //Upload URL
+		let extraData = {}; //Extra Data.
+		let jqXHR=$.ajax({
+			xhr: function() {
+				let xhrobj = $.ajaxSettings.xhr();
+				if (xhrobj.upload) {
+					xhrobj.upload.addEventListener('progress', function(event) {
+						let percent = 0;
+						let position = event.loaded || event.position;
+						let total = event.total;
+						if (event.lengthComputable) {
+							percent = Math.ceil(position / total * 100);
+						}
+					}, false);
+				}
+				return xhrobj;
+			},
+			url: uploadURL,
+			type: "POST",
+			contentType:false,
+			processData: false,
+			cache: false,
+			data: formData,
+			success: function(data){
+				
+			}
+		});
+	}
 
     //저장버튼
     $(document).on("click", "#finalBtn", function () {
@@ -698,12 +665,12 @@ $(document).ready(function () {
         var soujaArr = new Array();
         for (var i = 0; i < soujaUls.length; i++) {
             console.log(soujaUls[i]);
-            console.log($(soujaUls[i]).find("#soujaJibun").val());
-            var soujaJibun = $(soujaUls[i]).find("#soujaJibun").val();
-            var soujaName = $(soujaUls[i]).find("#soujaName").val();
-            var soujaAddress = $(soujaUls[i]).find("#soujaAddress").val();
-            var soujaContact1 = $(soujaUls[i]).find("#soujaContact1").val();
-            var soujaContact2 = $(soujaUls[i]).find("#soujaContact2").val();
+            console.log($(soujaUls[i]).find("[name='soujaJibun']").val());
+            var soujaJibun = $(soujaUls[i]).find("[name='soujaJibun']").val();
+            var soujaName = $(soujaUls[i]).find("[name='soujaName']").val();
+            var soujaAddress = $(soujaUls[i]).find("[name='soujaAddress']").val();
+            var soujaContact1 = $(soujaUls[i]).find("[name='soujaContact1']").val();
+            var soujaContact2 = $(soujaUls[i]).find("[name='#soujaContact2']").val();
 
             soujaJibun = (soujaJibun == "undefined" || soujaJibun == "" || soujaJibun == null) ? "" : soujaJibun;
             soujaName = (soujaName == "undefined" || soujaName == "" || soujaName == null) ? "" : soujaName;
@@ -713,12 +680,12 @@ $(document).ready(function () {
             var soujaInfo = { "jibun": soujaJibun, "soujaName": soujaName, "soujaAddress": soujaAddress, "soujaContact1": soujaContact1, "soujaContact2": soujaContact2 };
             if (soujaJibun != "" && soujaName != "" && soujaAddress != "" && soujaContact1 != "") soujaArr.push(soujaInfo);
         }
-		const attachFileUls = document.querySelectorAll('input[name="attachFile"]');
+		const attachFileUls = document.querySelectorAll('input[name="landRegistration_attachFile"]');
 		console.log(attachFileUls);
         var files = new Array();
         for (var i = 0; i < attachFileUls.length; i++) {
             console.log($(attachFileUls[i]).parent().parent().html());
-            var fname = $(attachFileUls[i]).parent().parent().find("#filename").attr('placeholder');
+            var fname = $(attachFileUls[i]).parent().parent().find("[name='name']").val();
             console.log(fname);
             files.push(fname);
         }
@@ -729,7 +696,7 @@ $(document).ready(function () {
         console.log("--------soujaArr------");
         console.log(soujaArr);
         dataObj.soujaInfo = soujaArr;
-        dataObj.uploadFiles = files;
+        dataObj.files = files;
 
         //필수정보체크
         console.log("jisa:" + dataObj.jisa);
@@ -759,7 +726,6 @@ $(document).ready(function () {
 		dataObj.gubun="insert";
         console.log("------dataObj--------");
         console.log(dataObj);
-
         // 서버 전송
          url = "/land/songyu/insertSonguList";
          $.ajax({
@@ -775,7 +741,7 @@ $(document).ready(function () {
              },
              success: function (response) {
                  loadingHide();
-                 console.log(response);
+                 alert('정상적으로 등록 되었습니다.');
         //         if (response.success = "Y") {
         //             console.log("response.success Y");
         //             console.log("response.resultData length:" + response.resultData.length);
@@ -798,7 +764,6 @@ $(document).ready(function () {
          });
 
     });
-
 });
 
 // 지사 선택 시 관로명 목록 업데이트를 위한 change 트리거
@@ -816,7 +781,7 @@ $(document).on("change", "#jisa", function () {
     const allData = { jisa: selectedJisa };
 
     $.ajax({
-        url: "/gover/getPipeName", // 관로명 목록을 가져오는 API
+        url: "/land/gover/getPipeName", // 관로명 목록을 가져오는 API
         data: JSON.stringify(allData),
         async: true,
         type: "POST",
@@ -846,3 +811,56 @@ $(document).on("change", "#jisa", function () {
     });
 });
 
+// 관로명 목록 업데이트 함수
+function updatePipeNameList(jisaValue) {
+	const allData = { jisa: jisaValue };
+
+	// 숨겨진 필드에서 resultData.jm_pipe_name 값을 가져옴
+	const jmPipeName = $("#nm_pipe_name_hidden").val();  // hidden input의 값 읽기
+	console.log("nmPipeName: " + jmPipeName);
+
+	$.ajax({
+		url: "/land/gover/getPipeName",  // 관로명 목록을 가져오는 API
+		data: JSON.stringify(allData),
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function(rt) {
+			const data = rt.resultData;
+			console.log("관로명 목록 데이터:", data);
+
+			// 기존 셀렉트 박스와 커스텀 UI 초기화
+			$("#pipeNameSelectBox option").remove();  // <select> 내부 옵션 제거
+			$("#pipe_name_ul").empty();  // 커스텀 <ul> 리스트 초기화
+
+			// 받은 데이터로 관로명 목록 업데이트
+			for (let i = 0; i < data.length; i++) {
+				const pipeName = data[i].jzn_zone_name;
+				const isSelected = pipeName === jmPipeName ? "selected" : "";  // 숨겨진 필드의 값과 비교
+
+				console.log("pipeName: "+ pipeName);
+				console.log("isSelected: "+ isSelected);
+				// 실제 <select> 태그에 옵션 추가
+				$("#pipeNameSelectBox").append("<option value='" + pipeName + "' " + isSelected + ">" + pipeName + "</option>");
+				console.log("SelectBox 내용:", $("#pipeNameSelectBox").html());  // 추가된 option들을 출력
+				// 커스텀 드롭다운 UI에 <li> 항목 추가
+				$("#pipe_name_ul").append("<li class='customSelectItem moreSelectBtn' data-value='" + pipeName + "'>" + pipeName + "</li>");
+				console.log("Custom UI 내용:", $("#pipe_name_ul").html());  // 추가된 <li> 항목들을 출력
+			}
+
+			// 관로명 선택값을 커스텀 버튼에 반영
+			$("#pipeNameText").text(jmPipeName || "선택");
+
+			// <li> 항목 클릭 시 <select> 업데이트 및 커스텀 UI 반영
+			$(".customSelectItem").on("click", function() {
+				const selectedPipeName = $(this).data("value");
+				$("#pipeNameSelectBox").val(selectedPipeName).change();  // <select> 값 설정
+				$("#pipeNameText").text(selectedPipeName);  // 버튼 텍스트 업데이트
+			});
+
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.error("관로명 목록 업데이트 실패:", textStatus, errorThrown);
+		}
+	});
+}

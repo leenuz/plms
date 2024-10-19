@@ -719,6 +719,7 @@ $(document).on("click", ".addBtn", function() {
 		});
 	}
 });
+
 $(document).on("click", "#completeSoujaBtn", function() {
 	console.log("------------completeSoujaBtn click---------");
 	const soujaDiv = document.getElementById('soujaDiv');

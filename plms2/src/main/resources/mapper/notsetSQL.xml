@@ -116,4 +116,7 @@
 		where na_idx = #{idx}::int
 
 	</delete>
+	<select id="getNotsetAtcFileSeq" parameterType="java.util.HashMap" resultType="integer">
+		SELECT COALESCE(MAX(file_seq), 0)+1  FROM notset_atcfile WHERE na_notset_no=#{NOTSET_NO};
+	</select>
 </mapper>

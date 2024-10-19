@@ -3171,6 +3171,7 @@ FROM NOTSET_MASTER
 		, nm_PIPE_METER
 		, nm_PIPE_METER2
 		, nm_TOJI_TYPE
+		, nm_manage_yn
 		)
 		Values
 		(
@@ -3194,6 +3195,7 @@ FROM NOTSET_MASTER
 		, nullif(#{PIPE_METER},'')::numeric
 		, nullif(#{PIPE_METER2},'')::numeric
 		, #{TOJI_TYPE}
+		, #{MANAGE_YN}
 		)
 	</insert>
 	<update id="updateTogiJisang_Status2Null" parameterType="HashMap">
@@ -3292,6 +3294,7 @@ FROM NOTSET_MASTER
 		, nm_PNU = #{PNU}
 		, nm_GOVER_OWN_YN = #{GOVER_OWN_YN}
 		, nm_JIMOK_TEXT = #{JIMOK_TEXT}
+		, nm_MANAGE_YN = #{MANAGE_YN}
 
 		WHERE nm_NOTSET_NO = #{NOTSET_NO}
 
