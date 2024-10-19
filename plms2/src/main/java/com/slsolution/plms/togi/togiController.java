@@ -816,7 +816,14 @@ public class togiController {
 	    param.put("dockey", dockey);
 	    param.put("doc_date", doc_date);
 	    param.put("doc_url", doc_url);
+	    
 	    int result = (int) mainService.InsertQuery("togiSQL.insertDosiApproval", param);
+	    
+	    if (result > 0) {
+	    	param.put("idx", doc_no);
+	    	ArrayList<HashMap> dosiApprovalList = mainService.selectQuery("togiSQL.selectDosiApproval",param);
+	    	resultMap.put("approvalList", dosiApprovalList);
+	    }
 	    resultMap.put("result", result);
 		JSONObject obj = new JSONObject(resultMap);
 		return resultMap;

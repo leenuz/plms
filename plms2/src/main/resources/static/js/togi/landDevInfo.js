@@ -89,9 +89,39 @@ $(document).on("click","#saveBtn",function(){
 			loadingHide();
 			console.log(response);
 			if (response.success="Y"){
+				let approvalHtml = '';
+				let approvalCnt = response.approvalList.length;
+				for (let i = 0; i < approvalCnt; i++) {
+					let approvalInfo = response.approvalList[i];
+					approvalHtml += `<ul class="contents" id="fileListUl">`;
+					approvalHtml += `	<li class="content smallWidth checkboxWrap">`;
+					approvalHtml += `		<input type="hidden" value="${approvalInfo.dosi_no}">`;
+					approvalHtml += `		<input type="hidden" value="${approvalInfo.doc_seq}">`;
+					approvalHtml += `		<input type="checkbox" id="landDevInfo_eDocView_Checkbox_${i}" name="landDevInfo_eDocFile">`;
+					approvalHtml += `		<label for="landDevInfo_eDocView_Checkbox_${i}"></label>`;
+					approvalHtml += `	</li>`;
+					approvalHtml += `	<li class="content middleWidth">`;
+					approvalHtml += `		<input id="docNum_${i}" type="text" name="docNum_${i}" readonly placeholder="${approvalInfo.dockey}" class="nowWriteInput">`;
+					approvalHtml += `	</li>`;
+					approvalHtml += `	<li class="content">`;
+					approvalHtml += `		<a href="${approvalInfo.doc_url}" target="_blank">`;
+					approvalHtml += `			<input id="docTitle_${i}" name="docTitle_${i}" type="text" readonly placeholder="${approvalInfo.doc_title}" class="notWriteInput" style="cursor: pointer;">`;
+					approvalHtml += `		</a>`;
+					approvalHtml += `	</li>`;
+					approvalHtml += `	<li class="content">`;
+					approvalHtml += `		<input name="docDate_${i}" type="text" readonly placeholder="${approvalInfo.doc_date}" id="docDate_${i}" class="notWriteInput">`;
+					approvalHtml += `		<input type="hidden" id="docURL_${i}" name="docURL_${i}">`;
+					approvalHtml += `	</li>`;
+					approvalHtml += `</ul>`;	
+				}
+				$('#approvalList').empty().html(approvalHtml);
+				
+				
+				
+				/*
 				let infoUl = document.createElement('ul');
-	infoUl.classList.add('contents');
-	infoUl.id='fileListUl';
+				infoUl.classList.add('contents');
+				infoUl.id='fileListUl';
 
 	for (let i = 1; i <= 4; i++) {
 		// li 만들기
@@ -165,6 +195,7 @@ $(document).on("click","#saveBtn",function(){
 	$("input[name='documentURL']").val('');
 	$("input[name='documentdate']").val('2024-01-01');
 	$(".popupWrap").removeClass("active");
+	*/
 			} else {
 				console.log("response.success N");
 			}
