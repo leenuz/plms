@@ -121,7 +121,6 @@ div.dt-filter-spacer {
 	border-radius: 10px;
 }
 </style>
-
 <title>민원관리</title>
 </head>
 <th:block layout:fragment="content">
@@ -130,6 +129,7 @@ div.dt-filter-spacer {
 	<input type="hidden" id="minwonStatus" th:value="${minwon.mm_status}">
 	<input type="hidden" id="minwonSeq" th:value="${minwon.mm_mw_seq}">
 	<input type="hidden" id="mp_idx">
+	<input type="hidden" id="approvalList" th:value="${approvalList}">
 	<!-- 민원관리 -->
 	<div class="complaintManageWrappers">
 		<div class="complaintManageHeader"></div>

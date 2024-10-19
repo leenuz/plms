@@ -552,16 +552,17 @@ function onDataLoad() {
 function updateDocumentSelectBox(minwonStatus) {
     const $ul = $('.customSelectBtns');
     $ul.empty();  // 기존 항목 초기화
-
+	let approvalInfo = queryValueToObject($('#approvalList').val());
+	
     if (minwonStatus === '2') { // 발생
-        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${minwon.ECHO_URL}">민원발생보고</button></li>`);
+        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${approvalInfo.echo_url}">민원발생보고</button></li>`);
     } else if (minwonStatus === '3' || minwonStatus === '4') { // 대응
-        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${minwon.ECHO_URL}">민원발생보고</button></li>`);
-        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${minwon.HANDLE_URL}">민원대응방안수립보고</button></li>`);
+        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${approvalInfo.echo_url}">민원발생보고</button></li>`);
+        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${approvalInfo.handle_url}">민원대응방안수립보고</button></li>`);
     } else if (minwonStatus === '5') { // 완료
-        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${minwon.ECHO_URL}">민원발생보고</button></li>`);
-        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${minwon.HANDLE_URL}">민원대응방안수립보고</button></li>`);
-        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${minwon.COMPLE_URL}">민원완료보고</button></li>`);
+        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${approvalInfo.echo_url}">민원발생보고</button></li>`);
+        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${approvalInfo.handle_url}">민원대응방안수립보고</button></li>`);
+        $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${approvalInfo.comple_url}">민원완료보고</button></li>`);
     }
 
     // 각 버튼에 클릭 이벤트 추가

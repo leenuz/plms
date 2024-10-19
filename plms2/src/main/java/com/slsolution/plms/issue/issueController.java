@@ -110,24 +110,24 @@ public class issueController {
 
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("mwSeq", mwSeq);
-		
+		params.put("MW_SEQ", mwSeq);
 		ArrayList<HashMap> minwonList = mainService.selectQuery("issueSQL.selectAllMinwonData", params);
 		log.info("minwonList: " + minwonList);
 		log.info("minwon_status_str", "minwonList.get(0) : " + minwonList.get(0));
 		
 		//이슈코드 조회
 		ArrayList<HashMap> issueList = (ArrayList) mainService.selectQuery("issueSQL.selectIssueCodeList", params);
-		
+		ArrayList<HashMap> approvalList = (ArrayList) mainService.selectQuery("issueSQL.selectMinwonDetail", params);
 		HashMap<String, Object> responseMap = new HashMap<String, Object>();
 		responseMap.put("codeResultList", issueList);
 		
 		JSONObject reJo =  new JSONObject(responseMap);
 		
 		log.info("issueList :: "+reJo.toString());
-		
 		// 필요한 데이터도 추가로 전달 가능
 		mav.addObject("minwon", minwonList.get(0));
 		mav.addObject("issuecodeList", reJo);
+		mav.addObject("approvalList", approvalList.get(0));
 		mav.addObject("serverName", GC.getServerName());
 		mav.setViewName("content/issue/complaintManage");
 		return mav;
