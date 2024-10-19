@@ -483,6 +483,7 @@
 					DOSI_APPROVAL
 		WHERE		DOSI_NO		= #{idx}
 		  AND		DEL_FLAG	= 'N'
+	 ORDER BY DOC_DATE DESC
 	</select>
 	
 	<update id="updateDosiApproval" parameterType="HashMap">
