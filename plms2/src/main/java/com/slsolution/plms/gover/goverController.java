@@ -967,7 +967,7 @@ public class goverController {
 
 		}
 
-	
+	// 점용 마스터 조회 데이터 테이블
 	@RequestMapping(value = "/menu03_1DataTableList", method = { RequestMethod.GET, RequestMethod.POST }) // http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> datatableList03_1(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// 일반웹형식

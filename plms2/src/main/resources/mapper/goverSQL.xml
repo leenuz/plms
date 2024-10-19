@@ -896,6 +896,8 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 		
 			
 	</select>
+	
+	<!-- 점용 마스터 조회 데이터테이블 -->
 	<select id="selectGoverMasterSearchList" resultType="HashMap" parameterType="HashMap">
 		SELECT AA.RN AS no
 	     , AA.RNO
@@ -932,114 +934,126 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 	     ,AA.x AS x
 	     ,AA.y AS y
 	  FROM (
-	  				SELECT ROW_NUMBER() OVER (ORDER BY GM.gm_GOVER_NO ASC, GP.PNU DESC) AS RN
-	             , ROW_NUMBER() OVER (ORDER BY GM.gm_GOVER_NO DESC, GP.PNU ASC) AS RNO
-	             , COUNT(*) OVER ()                                          AS TOTALCNT
-	             , GM.gm_gover_no as GOVER_NO
-	             , GM.gm_jisa as JISA
-	             , GM.gm_yongdo as YONGDO
-	             , GP.JUSO
-	             , GM.gm_pmt_status as PMT_STATUS
-	             , GP.PNU
-	             , GP.JIMOK_TEXT
-	             , GM.gm_use_purpos as USE_PURPOS
-	             , GM.gm_pmt_office as PMT_OFFICE
-	             , GM.gm_adm_office as ADM_OFFICE
-	             , GM.gm_office_depart as OFFICE_DEPART
-	             , GM.gm_office_charege as OFFICE_CHARGE
-	             , GM.gm_office_contact as OFFICE_CONTACT
-	             , GP.LENGTH AS GOVER_LENGTH
-	             , GP.AREA AS GOVER_AREA
-	             
-	             , GP.USE_PURPOS_PNU
-	             , GM.gm_gover_st_date as GOVER_ST_DATE
-	             , GM.gm_gover_ed_date as GOVER_ED_DATE
-	             ,CASE 
-			       	WHEN GM.gm_SAVE_STATUS = 'A' THEN 'Y'
-			      	ELSE 'N'
-				  		END AS SAVE_STATUS
-	            , JKM.x AS x
-	            , JKM.y AS y
-	          FROM GOVER_MASTER GM
-	          LEFT JOIN (SELECT C.GOVER_NO
-						     , C.PNU
-						     , C.JIMOK_TEXT
-						     , D.LENGTH
-						     , D.AREA
-						     , CASE
-						           WHEN D.CNT = 1
-						               THEN C.SIDO_NM || ' ' || SGG_NM || ' ' || EMD_NM || ' ' || RI_NM || ' ' || JIBUN
-						           WHEN D.CNT > 1 THEN C.SIDO_NM || ' ' || SGG_NM || ' ' || EMD_NM || ' ' || RI_NM || ' ' || JIBUN || ' 외 ' || (D.CNT - 1)::text || '필지'
-						           ELSE D.CNT::text END AS JUSO
-						     , C.USE_PURPOS_PNU
-						FROM (SELECT gp_gover_no AS GOVER_NO
-						           , gp_sido_nm AS SIDO_NM
-						           , gp_sgg_nm AS SGG_NM
-						           , gp_emd_nm AS EMD_NM
-						           , gp_ri_nm AS RI_NM
-						           , gp_jibun AS JIBUN
-						           , gp_PNU AS PNU
-						           , gp_jimok_text AS JIMOK_TEXT
-						           , gp_use_purpos AS USE_PURPOS_PNU
-						        FROM GOVER_PNU
-						       	WHERE gp_idx IN (SELECT RID
-						                         FROM (SELECT gp_idx AS RID
-						                                    , ROW_NUMBER() OVER (PARTITION BY S.gp_GOVER_NO ORDER BY S.gp_REP_FLAG DESC, gp_idx ASC) AS RNK
-						                                 FROM GOVER_PNU S) sub1
-						                        WHERE RNK = 1)
-						         AND gp_GOVER_NO IN (SELECT gp_GOVER_NO FROM GOVER_PNU
-	                                                                 WHERE 1 = 1
-			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESSCODE)" >
-				AND gp_ADDRCODE LIKE '${ADDRESSCODE}%'
-			</if>
-			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
-				AND gp_JIBUN LIKE '%{$jibun}%'
-			</if>
+				SELECT ROW_NUMBER() OVER (ORDER BY GM.gm_GOVER_NO ASC, GP.PNU DESC) AS RN
+           , ROW_NUMBER() OVER (ORDER BY GM.gm_GOVER_NO DESC, GP.PNU ASC) AS RNO
+           , COUNT(*) OVER ()                                          AS TOTALCNT
+           , GM.gm_gover_no AS GOVER_NO
+           , GM.gm_jisa AS JISA
+           , GM.gm_yongdo AS YONGDO
+           , GP.JUSO
+           , GM.gm_pmt_status AS PMT_STATUS
+           , GP.PNU
+           , GP.JIMOK_TEXT
+           , GM.gm_use_purpos AS USE_PURPOS
+           , GM.gm_pmt_office AS PMT_OFFICE
+           , GM.gm_adm_office AS ADM_OFFICE
+           , GM.gm_office_depart AS OFFICE_DEPART
+           , GM.gm_office_charege AS OFFICE_CHARGE
+           , GM.gm_office_contact AS OFFICE_CONTACT
+           , GP.LENGTH AS GOVER_LENGTH
+           , GP.AREA AS GOVER_AREA
+           
+           , GP.USE_PURPOS_PNU
+           , GM.gm_gover_st_date AS GOVER_ST_DATE
+           , GM.gm_gover_ed_date AS GOVER_ED_DATE
+           ,CASE 
+       	WHEN GM.gm_SAVE_STATUS = 'A' THEN 'Y'
+      	ELSE 'N'
+	  		END AS SAVE_STATUS
+          , JKM.x AS x
+          , JKM.y AS y
+        FROM GOVER_MASTER GM
+        LEFT JOIN (
+        	SELECT
+        	 , C.GOVER_NO
+			     , C.PNU
+			     , C.JIMOK_TEXT
+			     , D.LENGTH
+			     , D.AREA
+			     , CASE
+			           WHEN D.CNT = 1
+			               THEN C.SIDO_NM || ' ' || SGG_NM || ' ' || EMD_NM || ' ' || RI_NM || ' ' || JIBUN
+			           WHEN D.CNT > 1 THEN C.SIDO_NM || ' ' || SGG_NM || ' ' || EMD_NM || ' ' || RI_NM || ' ' || JIBUN || ' 외 ' || (D.CNT - 1)::text || '필지'
+			           ELSE D.CNT::text END AS JUSO
+			     , C.USE_PURPOS_PNU
+					FROM (
+							SELECT gp_gover_no AS GOVER_NO
+			           , gp_sido_nm AS SIDO_NM
+			           , gp_sgg_nm AS SGG_NM
+			           , gp_emd_nm AS EMD_NM
+			           , gp_ri_nm AS RI_NM
+			           , gp_jibun AS JIBUN
+			           , gp_PNU AS PNU
+			           , gp_jimok_text AS JIMOK_TEXT
+			           , gp_use_purpos AS USE_PURPOS_PNU
+			        FROM GOVER_PNU
+			       	WHERE gp_idx IN (
+			       		SELECT RID
+			          FROM (
+			          	SELECT gp_idx AS RID
+			                 , ROW_NUMBER() OVER (PARTITION BY S.gp_GOVER_NO ORDER BY S.gp_REP_FLAG DESC, gp_idx ASC) AS RNK
+		              FROM GOVER_PNU S
+	              ) sub1
+		            WHERE RNK = 1)
+			         	AND gp_GOVER_NO IN (
+			         		SELECT gp_GOVER_NO 
+			         		FROM GOVER_PNU
+                  WHERE 1 = 1
+									<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ADDRESSCODE)" >
+										AND gp_ADDRCODE LIKE '${ADDRESSCODE}%'
+									</if>
+									<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+										AND gp_JIBUN LIKE '%{$jibun}%'
+									</if>
 				)) C
-						JOIN (SELECT gp_gover_no AS GOVER_NO, COUNT(*) AS CNT, SUM(gp_GOVER_LENGTH) AS LENGTH, SUM(gp_GOVER_AREA) AS AREA 
-						        FROM GOVER_PNU 
-						       GROUP BY gp_GOVER_NO) D
-						  ON C.GOVER_NO = D.GOVER_NO 
-						) GP ON GM.gm_GOVER_NO = GP.GOVER_NO
-	          LEFT JOIN JIJUK_2024 JKM ON trim(GP.PNU) = JKM.PNU
-	            
-	         WHERE 1=1 
-			
+			JOIN (
+				-- 필지 정보
+				SELECT gp_gover_no AS GOVER_NO 
+						 , COUNT(*) AS CNT
+						 , SUM(gp_GOVER_LENGTH) AS LENGTH
+						 , SUM(gp_GOVER_AREA) AS AREA 
+        FROM GOVER_PNU 
+			  GROUP BY gp_GOVER_NO
+			  ) D ON C.GOVER_NO = D.GOVER_NO 
+			) GP ON GM.gm_GOVER_NO = GP.GOVER_NO
+        LEFT JOIN JIJUK_2024 JKM ON trim(GP.PNU) = JKM.PNU
+          
+       WHERE 1=1 
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(addresscode)" >
 				AND GM.GOVER_NO = GP.GOVER_NO
 			</if>
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
 				AND GM.GOVER_NO = GP.GOVER_NO
 			</if>
-	
-			AND GM.gm_CANCLE_YN = 'N' OR GM.gm_CANCLE_YN ='' OR GM.gm_CANCLE_YN is null 
-						) AA
-	LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
-	                 , S.gp_pay_money as PAY_MONEY
-	                 , S.gp_pay_vat as PAY_VAT
-	                 , S.gp_pay_date as PAY_DATE
-	                 , S.gp_pay_way as PAY_WAY
-	                 , PA.pa_dockey as DOCKEY
-	                 , PA.pa_out_url as OUT_URL
-	                 , PA.pa_updeptcd as UPDEPTCD
-	                 , PA.pa_deptcd as DEPTCD
-	                 , PA.pa_url as URL
-	              FROM GOVER_PERMIT S
-	              JOIN (SELECT MAX(SS.gp_SEQ) AS SEQ
-	                         , SS.gp_gover_no as GOVER_NO
-	                      FROM GOVER_PERMIT SS
-	                 LEFT JOIN PLMS_APPROVAL SSS 
-	                        ON SS.gp_DOCKEY = SSS.pa_DOCKEY 
-	                       AND SSS.pa_STATUS IS NOT NULL 
-	                       AND SSS.pa_STATUS != 'X' 
-	                       AND SS.gp_PMT_NO IS NOT NULL
-	                     GROUP BY SS.gp_GOVER_NO) SS
-	                ON S.gp_SEQ = SS.SEQ 
-	               AND S.gp_GOVER_NO = SS.GOVER_NO
-	              JOIN PLMS_APPROVAL PA
-	                ON S.gp_DOCKEY = PA.pa_DOCKEY) BB
-	       ON AA.GOVER_NO = BB.GOVER_NO
-			where 1=1
+				AND GM.gm_CANCLE_YN = 'N' OR GM.gm_CANCLE_YN ='' OR GM.gm_CANCLE_YN is null 
+				) AA
+		
+			LEFT JOIN (
+					SELECT S.gp_gover_no as GOVER_NO
+              , S.gp_pay_money as PAY_MONEY
+              , S.gp_pay_vat as PAY_VAT
+              , S.gp_pay_date as PAY_DATE
+              , S.gp_pay_way as PAY_WAY
+              , PA.pa_dockey as DOCKEY
+              , PA.pa_out_url as OUT_URL
+              , PA.pa_updeptcd as UPDEPTCD
+              , PA.pa_deptcd as DEPTCD
+              , PA.pa_url as URL
+           FROM GOVER_PERMIT S
+           JOIN (
+          		SELECT MAX(SS.gp_SEQ) AS SEQ
+                 		, SS.gp_gover_no as GOVER_NO
+              FROM GOVER_PERMIT SS
+              LEFT JOIN PLMS_APPROVAL SSS ON SS.gp_DOCKEY = SSS.pa_DOCKEY 
+                    AND SSS.pa_STATUS IS NOT NULL 
+                    AND SSS.pa_STATUS != 'X' 
+                    AND SS.gp_PMT_NO IS NOT NULL
+               GROUP BY SS.gp_GOVER_NO
+               ) SS ON S.gp_SEQ = SS.SEQ 
+            		AND S.gp_GOVER_NO = SS.GOVER_NO
+           JOIN PLMS_APPROVAL PA ON S.gp_DOCKEY = PA.pa_DOCKEY
+           ) BB ON AA.GOVER_NO = BB.GOVER_NO
+			WHERE 1=1
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(save_status)" >
 				AND AA.SAVE_STATUS = #{save_status}
 			</if>
@@ -1047,18 +1061,18 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 				AND AA.JISA = #{jisa}
 			</if>
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
-		        and AA.gover_no LIKE '%${gover_no}%'
-		    </if>
-		    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(save_status)" >
+        AND AA.gover_no LIKE '%${gover_no}%'
+	    </if>
+	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(save_status)" >
 				AND AA.SAVE_STATUS = #{save_status}
 			</if>
-		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
 				AND AA.JISA = #{jisa}
 			</if>
-			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
-		        and AA.gover_no LIKE '%${gover_no}%'
-		    </if>
-		    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(gover_no)" >
+        AND AA.gover_no LIKE '%${gover_no}%'
+     	</if>
+	    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
 				AND AA.GOVER_NO LIKE '%${gover_no}%'
 			</if>
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(use_purpos)" >
@@ -1071,41 +1085,48 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 				AND AA.ADM_OFFICE = #{adm_office}
 			</if>
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_start)" >
-				AND AA.GOVER_NO IN
-				(SELECT S.gp_gover_no as GOVER_NO
-				FROM GOVER_PERMIT S
-				WHERE S.gp_SEQ IN (SELECT MAX(SS.gp_SEQ) FROM GOVER_PERMIT SS GROUP BY SS.gp_GOVER_NO )
-	      AND S.gp_PAY_DATE <![CDATA[ >= ]]>
-	      CAST(#{pay_date_start} AS DATE))
+				AND AA.GOVER_NO IN (
+					SELECT S.gp_gover_no as GOVER_NO
+					FROM GOVER_PERMIT S
+					WHERE S.gp_SEQ IN (
+						SELECT MAX(SS.gp_SEQ) 
+						FROM GOVER_PERMIT SS 
+						GROUP BY SS.gp_GOVER_NO
+					)
+	      	AND S.gp_PAY_DATE <![CDATA[ >= ]]>
+	     	  CAST(#{pay_date_start} AS DATE))
 			</if>
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(pay_date_end)" >
-				AND AA.GOVER_NO IN
-				(SELECT S.gp_gover_no as GOVER_NO
-				FROM GOVER_PERMIT S
-				WHERE S.gp_SEQ IN (SELECT MAX(SS.gp_SEQ) FROM GOVER_PERMIT SS GROUP BY SS.gp_GOVER_NO )
-		    AND S.gp_PAY_DATE <![CDATA[ <= ]]>
+				AND AA.GOVER_NO IN (
+					SELECT S.gp_gover_no as GOVER_NO
+					FROM GOVER_PERMIT S
+					WHERE S.gp_SEQ IN (
+						SELECT MAX(SS.gp_SEQ) 
+						FROM GOVER_PERMIT SS 
+						GROUP BY SS.gp_GOVER_NO 
+					)
+		    	AND S.gp_PAY_DATE <![CDATA[ <= ]]>
 	      CAST(#{pay_date_end} AS DATE))
 			</if>
 			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
 				AND regexp_replace(AA.juso,'\s+',' ') LIKE '%${address}%' 
 			</if>
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-				and (SELECT COUNT(o.address) AS overlap
-				FROM(
+				AND (SELECT COUNT(o.address) AS overlap
+				FROM (
 					(
 					SELECT trim(concat(gm.gm_sido_nm,' ',gm.gm_sgg_nm,' ',gm.gm_ri_nm,' ',gm.gm_jibun)) as address
 					FROM gover_master gm 
 					LEFT JOIN GOVER_PNU gp ON gm.gm_gover_no = gp.gp_gover_no
 					where 1=1
 					)
-				) as o  WHERE o.address = r.address GROUP BY o.address ) >1
+				) AS o  WHERE o.address = r.address GROUP BY o.address ) >1
 			</if>
-		
-			 <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
-		        ORDER BY ${orderCol} ${desc}
-		        </if>
-			
-				<if test="length>0">
+		  
+		  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
+	        ORDER BY ${orderCol} ${desc}
+      </if>
+			<if test="length>0">
 				limit #{length} offset #{start}
 			</if>
 	</select>
