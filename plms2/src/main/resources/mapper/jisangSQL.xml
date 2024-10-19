@@ -4545,7 +4545,158 @@ SELECT count(*)
 		) AA WHERE 1=1
 	</select>
 	
-	
+	<select id="selectJisangTerminationListExcelData" resultType="HashMap" parameterType="HashMap">
+   SELECT *
+    FROM (
+        SELECT
+        ROW_NUMBER() OVER(
+                     ORDER BY JM.jm_JISANG_NO DESC
+                ) as no
+                ,jm.jm_idx AS index
+				,jm.jm_jisang_no AS idx
+				,0 AS gidx,
+            ROW_NUMBER() OVER(ORDER BY JM.jm_JISANG_NO DESC) AS RN,
+            JM.jm_jisang_no as JISANG_NO,
+            JM.jm_sido_nm as SIDO_NM,
+            JM.jm_sgg_nm as SGG_NM,
+            JM.jm_emd_nm as EMD_NM,
+            JM.jm_ri_nm as RI_NM,
+            JM.jm_jibun as JIBUN,
+            JM.jm_jimok_text as jimok_text,
+            JM.jm_jasan_no as JASAN_NO,
+            JM.jm_jisa as JISA,
+            TO_CHAR(JM.jm_CHUIDEUK_DATE, 'YYYY-MM-DD') AS CHUIDEUK_DATE,
+            JM.jm_chuideuk_money as CHUIDEUK_MONEY,
+            TO_CHAR(JM.jm_DEUNGGI_DATE, 'YYYY-MM-DD') AS DEUNGGI_DATE,
+            JM.jm_cancle_yn as CANCLE_YN,
+            CASE
+                WHEN JM.jm_CANCLE_DATE IS NOT NULL THEN TO_CHAR(JM.jm_CANCLE_DATE, 'YYYY-MM-DD')
+                ELSE TO_CHAR(JT.CANCLE_DATE, 'YYYY-MM-DD')
+            END AS CANCLE_DATE,
+            JM.jm_pnu as PNU,
+            JT.CANCLE_STATUS,
+            JS.js_souja_name as SOUJA_NAME,
+            (SELECT COUNT(*)-1 FROM JISANG_SOUJA WHERE js_JISANG_NO = JM.jm_JISANG_NO) AS SOUJA_CNT,
+            PA.pa_status as STATUS,
+            PA.pa_dockey as DOCKEY,
+            TRIM(CONCAT(jm.jm_sido_nm, ' ', jm.jm_sgg_nm, ' ', jm.jm_emd_nm, ' ', jm.jm_ri_nm, ' ', jm.jm_jibun)) AS address,
+            JM.jm_JIJUK_AREA + COALESCE((SELECT SUM(S.jm_JIJUK_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS JIJUK_AREA,
+            JM.jm_PYEONIB_AREA + COALESCE((SELECT SUM(S.jm_PYEONIB_AREA) FROM JISANG_MERGE S WHERE S.jm_REP_JISANG_NO = JM.jm_JISANG_NO), 0) AS PYEONIB_AREA,
+            JM.jm_cancle_yn as CANCEL_YN
+            ,JKM.x as x
+						,JKM.y as y
+        FROM JISANG_MASTER JM
+        LEFT JOIN JIJUK_2024 JKM ON trim(JM.jm_pnu) = JKM.PNU
+        LEFT JOIN (
+            SELECT *
+            FROM (
+                SELECT
+                    js_JISANG_NO,
+                    js_JIBUN,
+                    js_SOUJA_NAME,
+                    js_ADDRESS,
+                    js_PONE_NUMBER,
+                    js_HOME_NUMBER,
+                    ROW_NUMBER() OVER (PARTITION BY js_JISANG_NO ORDER BY js_JISANG_NO ASC) AS ROW_IDX
+                FROM JISANG_SOUJA
+            ) sub
+            WHERE ROW_IDX = 1
+        ) JS ON JM.jm_JISANG_NO = JS.js_JISANG_NO
+         LEFT JOIN JISANG_TERMINATION JT ON JM.jm_JISANG_NO = JT.JISANG_NO
+        LEFT JOIN PLMS_APPROVAL PA ON JT.DOCKEY = PA.pa_DOCKEY
+       
+        WHERE JM.jm_SAVE_STATUS = '승인'
+        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
+			AND TRIM(CONCAT(
+			    TRIM(jm.jm_sido_nm), ' ', 
+			    TRIM(jm.jm_sgg_nm), ' ', 
+			    TRIM(jm.jm_emd_nm), 
+			    CASE 
+			        WHEN jm.jm_ri_nm IS NOT NULL AND jm.jm_ri_nm != '' 
+			        THEN CONCAT(' ', TRIM(jm.jm_ri_nm)) 
+			        ELSE '' 
+			    END, 
+			    ' ', 
+			    TRIM(jm.jm_jibun)
+			)) LIKE '%${address}%'
+		</if>
+        <if test="ADDRESSCODE != null and ADDRESSCODE != ''">
+            AND JM.ADDRCODE LIKE #{ADDRESSCODE} || '%'
+        </if>
+        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
+			AND JM.jm_sido_nm = #{sido_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
+			AND JM.jm_sgg_nm = #{sgg_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
+			AND JM.jm_emd_nm = #{emd_nm}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
+			AND JM.jm_ri_nm = #{ri_nm}
+		</if>
+        <if test="jibun != null and jibun != ''">
+            AND JM.jm_JIBUN LIKE #{jibun} || '%'
+        </if>
+         <if test="cancle_yn != null and jibun != ''">
+            AND JM.jm_JIBUN LIKE #{jibun} || '%'
+        </if>
+        <if test="jisa != null and jisa != ''">
+            AND JM.jm_JISA = CAST(#{jisa} AS TEXT)
+        </if>
+        <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn)" >
+			AND JM.jm_account_yn = #{account_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(account_yn_condition)" >
+			AND JM.jm_account_yn = ${account_yn_condition}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn)">
+		    AND JM.jm_CANCLE_YN = #{cancel_yn}
+		</if>
+		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancel_yn_condition)" >
+			AND JM.jm_CANCLE_YN = ${cancel_yn_condition}
+		</if>	
+        <if test="souja != null and souja != ''">
+            AND JS.js_SOUJA_NAME LIKE '%' || #{souja} || '%'
+        </if>
+        <if test="start_date != null and start_date != ''">
+            AND JM.jm_CHUIDEUK_DATE >= TO_DATE(#{start_date}, 'yyyy-mm-dd')
+        </if>
+        <if test="end_date != null and end_date != ''">
+           <![CDATA[ AND JM.jm_CHUIDEUK_DATE <= TO_DATE(#{end_date}, 'yyyy-mm-dd') ]]>
+        </if>
+        
+        <if test="HEJI != null and HEJI != ''">
+            <choose>
+                <when test="HEJI == 'Y'">
+                    AND JM.CANCLE_YN = #{HEJI}
+                </when>
+                <when test="HEJI == 'H'">
+                    AND PA.STATUS = 'C'
+                    AND JT.CANCLE_STATUS = '상신'
+                </when>
+                <when test="HEJI == 'A'">
+                    AND PA.STATUS = 'I'
+                    AND JT.CANCLE_STATUS = '상신'
+                </when>
+                <when test="HEJI == 'T'">
+                    AND PA.STATUS IS NULL
+                    AND JT.CANCLE_STATUS = '임시저장'
+                </when>
+                <when test="HEJI == 'N'">
+                    AND (JT.CANCLE_STATUS = '임시저장' OR JT.CANCLE_STATUS IS NULL)
+                </when>
+            </choose>
+        </if>
+        <if test="JASAN_NO != null and JASAN_NO != ''">
+            AND JM.JASAN_NO = #{JASAN_NO}
+        </if>
+        ORDER BY JM.jm_JISANG_NO DESC
+    ) AA
+    WHERE 1=1
+    
+  
+</select>
 	
 	<select id="selectJisangTerminationList" resultType="HashMap" parameterType="HashMap">
    SELECT *
