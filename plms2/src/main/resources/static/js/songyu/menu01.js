@@ -610,6 +610,9 @@ function loadDataTable(params) {
 					          });
 					      });
 
+						  
+						
+						  
 			          // 스타일 정의 (글꼴, 테두리, 정렬)
 			          worksheet.eachRow((row, rowNumber) => {
 			              row.eachCell((cell, colNumber) => {
