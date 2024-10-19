@@ -965,7 +965,7 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
         FROM GOVER_MASTER GM
         LEFT JOIN (
         	SELECT
-        	 , C.GOVER_NO
+        	 C.GOVER_NO
 			     , C.PNU
 			     , C.JIMOK_TEXT
 			     , D.LENGTH
