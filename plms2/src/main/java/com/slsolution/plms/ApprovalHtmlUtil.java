@@ -3454,7 +3454,7 @@ log.info("dataMap:"+detailMap);
 		//String tojijuNm[] = 
 		String minwonin_tojijunm_arr[]=((detailMap.get("minwonin_tojiju_nm") != null)? detailMap.get("minwonin_tojiju_nm").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
 		String minwonin_tojijubirth_arr[]=((detailMap.get("minwonin_tojiju_birth") != null)? detailMap.get("minwonin_tojiju_birth").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
-		String tojiju_relation_arr[]=((detailMap.get("tojiju_relation_arr") != null)? detailMap.get("tojiju_relation_arr").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
+		String tojiju_relation_arr[]=((detailMap.get("tojiju_relation") != null)? detailMap.get("tojiju_relation").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
 		String minwonin_phone_arr[]=((detailMap.get("minwonin_phone") != null)? detailMap.get("minwonin_phone").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
 		String field_presence_arr[]=((detailMap.get("field_presence") != null)? detailMap.get("field_presence").toString(): "&nbsp;").split("\\|");  // null일 경우 공백 문자열로 대체
 		

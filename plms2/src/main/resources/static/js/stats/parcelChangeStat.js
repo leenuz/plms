@@ -418,18 +418,26 @@ $('.parcelChangeStatBtn').click(function () {
   	          var worksheet = workbook.addWorksheet('Sheet1');
 
   			  
-  			  worksheet.getRow(1).values = ['지사구분', '기준년월', '', '비교년월', '', '증감현황', '', ''];
-  	          // 병합 셀 설정
-  	          worksheet.mergeCells('A1:A2');  // '지사구분' 병합
-  	          worksheet.mergeCells('B1:C1');  // '기준년월' 병합
-  	          worksheet.mergeCells('D1:E1');  // '비교년월' 병합
-  	          worksheet.mergeCells('F1:H1');  // '증감현황' 병합
+			  worksheet.getRow(1).values = ['지사구분', '2021년 1월', '', '', '', '2021년 2월', '', '', '', '증감', '', '', ''];
 
+  	          // 병합 셀 설정
+			  worksheet.mergeCells('A1:A2');  // '지사구분'
+			  worksheet.mergeCells('B1:E1');  // '2021년 1월'
+			  worksheet.mergeCells('F1:I1');  // '2021년 2월'
+			  worksheet.mergeCells('J1:M1');  // '증감'
   	         
   			  var yearmon=params.YYYY_REF+"-"+params.MM_REF;
   			  var tyearmon=params.YYYY_TG+"-"+params.MM_TG;
-  	          worksheet.getRow(2).values = ['', yearmon, '필지수', tyearmon, '필지수', '구분', '증가', '감소'];
+			  worksheet.getRow(2).values = ['', '등기', '미등기', '', '전체', '등기', '미등기', '', '전체', '등기', '미등기', '', '전체'];
+			  // Merging cells for sub-headers
+			  worksheet.mergeCells('C2:D2');  // '미등기' under '2021년 1월'
+			  worksheet.mergeCells('G2:H2');  // '미등기' under '2021년 2월'
+			  worksheet.mergeCells('K2:L2');  // '미등기' under '증감'
 
+			  // Set column headers for all the merged regions
+			  worksheet.getCell('C2').value = '미등기';  // for 2021년 1월
+			  worksheet.getCell('G2').value = '미등기';  // for 2021년 2월
+			  worksheet.getCell('K2').value = '미등기';  // for 증감
   	          // 데이터 예시 (서울지사, 경인지사 등)
   	          var data =[];
   			  var jisaTmp="";
