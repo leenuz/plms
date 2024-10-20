@@ -530,7 +530,7 @@ function queryValueToObject(str) {
 	const cleanedStr = str.slice(1,-1);	//양 끝 괄호 제거
 	
 	const entries = cleanedStr.split(', ').map(entry => {
-		const [key, value] = entry.split('=');
+		const [key, value] = entry.split('=').map(v => v.trim()); // key, value 양쪽 공백 제거
 		
 		//null처리, 숫자 처리, 큰 숫자는 문자열로 유지
 		let parsedValue;
@@ -709,7 +709,7 @@ function commonAddressSearchPopupOpen (menuId, pageId, fragmentId) {
 	}
 	
 	$.ajax({
-		url : "/land/common/addressSearch",
+		url : "/land/common/addressSearchSido",
 		data : JSON.stringify(params),
 		type : "POST"
 	})
