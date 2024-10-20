@@ -594,7 +594,7 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 		Object count = mainService.selectCountQuery("songyuSQL.selectTotalCount1", params);
 		int total = (int) count;
 
-		ArrayList<HashMap> list = mainService.selectQuery("songyuSQL.selectAllList3", params);
+		ArrayList<HashMap> list = mainService.selectQuery("songyuSQL.selectAllList1", params);
 		// log.info("list:"+list);
 		// for(int i=0;i<List.size();i++) {
 		// HashMap map=new HashMap();
@@ -729,7 +729,7 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 		Object count = mainService.selectCountQuery("songyuSQL.selectTotalCount1", params);
 		int total = (int) count;
 
-		ArrayList<HashMap> list = mainService.selectQuery("songyuSQL.selectAllList3", params);
+		ArrayList<HashMap> list = mainService.selectQuery("songyuSQL.selectAllList1", params);
 		// log.info("list:"+list);
 //				for(int i=0;i<List.size();i++) {
 //					HashMap map=new HashMap();

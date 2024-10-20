@@ -206,219 +206,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
 	and r.toji_type=#{toji_type}
 	</if>
-	
 </select>
 
-<!-- 관리필지(구) -->
-<select id="selectAllList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-	SELECT *,(row_number() over()) as no
-	 FROM (	
-		(
-			SELECT
-			jm.jm_idx as index 
-			,jm.jm_jisang_no AS idx
-			,0 as gidx
-			,'jisang' as right_type
-			,'지상권' as right
-			,jm.jm_jisa AS jisa 
-			,COALESCE(jm.jm_pipe_yn,'N') AS pipe_yn
-			,jm.jm_toji_type AS toji_type
-			,jm.jm_pipe_meter AS pipe_meter
-			,jm.jm_jimok_text AS jimok_text
-			,js.js_souja_name AS souja_name
-			,COALESCE(jm.jm_jijuk_area,null) AS jijuk_area
-			,jm.jm_sido_nm AS sido_nm
-			,jm.jm_sgg_nm AS sgg_nm
-			,jm.jm_emd_nm AS emd_nm
-			,jm.jm_ri_nm AS ri_nm
-			,jm.jm_jibun AS jibun
-			,trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_emd_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
-			,COALESCE(jm.jm_jasan_no,'') AS jasan_no
-			,COALESCE(jm.jm_comple_yn,'') AS comple_yn
-			,COALESCE(jm.jm_permitted_yn,'') AS permitted_yn
-			,COALESCE(jm.jm_chuideuk_date,null) AS chuideuk_date
-			,COALESCE('','') AS gover_date
-			,null as pay_date
-			,null as gover_area
-			,null as gover_length
-			,jm.jm_jasan_money as jasan_money
-			,null as pay_money
-			,jm.jm_cancle_yn AS cancel_yn
-			,jm.jm_manage_yn as manage_yn
-			,jm.jm_dosiplan as dosiplan
-			,case
-			WHEN (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)>0 THEN 'Y'
-			WHEN  (SELECT count(dm.dm_idx) FROM dosi_master dm WHERE dm.dm_pnu=jm.jm_pnu)=0 THEN 'N'
-		 	END AS toji_plan
-			FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-			where 1=1
-			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-			and jm.jm_jisa=#{jisa}
-			</if>
-		)
-		UNION ALL 
-		(
-			SELECT 
-				gm.gm_idx as index 
-				,gm.gm_gover_no AS idx
-				,coalesce(gp.gp_idx,0) as gidx
-				,'gover' as right_type
-				,'점용' as right
-				,gm.gm_jisa AS jisa
-				,COALESCE(gp.gp_pipe_overlap_yn,'N') AS pipe_yn
-				,null AS toji_type
-				,gm.gm_pipe_meter AS pipe_meter
-				,gp.gp_jimok_text AS jimok_text
-				,gm.gm_adm_office AS souja_name
-				,gp.gp_jijuk_area AS jijuk_area
-				,gp.gp_sido_nm AS sido_nm
-				,gp.gp_sgg_nm AS sgg_nm
-				,gp.gp_emd_nm AS emd_nm
-				,gp.gp_ri_nm AS ri_nm
-				,gp.gp_jibun AS jibun
-				,trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_emd_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
-				,COALESCE('','') AS jasan_no
-				,COALESCE('','') AS comple_yn
-				,COALESCE('','') AS permitted_yn
-				,null AS chuideuk_date
-				,concat(gm.gm_gover_st_date,'~',gm.gm_gover_ed_date) AS gover_date
-				,gpp.gp_pay_date as pay_date
-				,gpp.gp_gover_area as gover_area
-				,gpp.gp_gover_length as gover_length
-				,null as jasan_money
-				,gpp.gp_pay_money as pay_money
-				,gm.gm_cancle_yn AS cancel_yn
-				,null as manage_yn
-				,gp.gp_dosiplan as dosiplan
-				,null as toji_plan
-			FROM gover_master gm 
-			LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
-			LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-			where 1=1 and gp.gp_gover_no = gm.gm_gover_no
-			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-			and gm.gm_jisa=#{jisa}
-			</if>
-			and gp.gp_pnu is not null
-		)
-		UNION ALL
-		(
-			SELECT 
-			nm.nm_idx as index 
-			,nm.nm_notset_no AS idx
-			,0 as gidx
-			,'notset' as right_type
-			,'미설정' as right
-			,nm.nm_jisa AS jisa 
-			,COALESCE(nm.nm_pipe_yn,'N') AS pipe_yn
-			,nm.nm_toji_type AS toji_type
-			,nm.nm_pipe_meter AS pipe_meter
-			,nm.nm_jimok_text AS jimok_text
-			,ns.ns_souja_name AS souja_name
-			,nm.nm_jijuk_area AS jijuk_area
-			,nm.nm_sido_nm AS sido_nm
-		,nm.nm_sgg_nm AS sgg_nm
-		,nm.nm_emd_nm AS emd_nm
-		,nm.nm_ri_nm AS ri_nm
-		,nm.nm_jibun AS jibun
-		,trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
-		,COALESCE('','') AS jasan_no
-		,COALESCE('','') AS comple_yn
-		,COALESCE('','') AS permitted_yn
-		,COALESCE(null::date,null) AS chuideuk_date
-		,COALESCE('','') AS gover_date
-		,null as pay_date
-		,null as gover_area
-		,null as gover_length
-		,null as jasan_money
-		,null as pay_money
-		,null as cancel_yn
-		,nm.nm_manage_yn as manage_yn
-		,NULL AS dosiplan
-		,NULL as toji_plan
-			FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-			where 1=1
-			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" >
-			and nm.nm_jisa=#{jisa}
-			</if>
-		)
-	) as r
-	where 1=1
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(idx)" >
-	and r.idx=#{idx}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cancelYn)" >
-	and r.cancel_yn=#{cancelYn}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(manageYn)" >
-	and r.manage_yn=#{manageYn}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(dosiplan)" >
-	and r.dosiplan=#{dosiplan}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)" >
-	and r.address like '${address}%'
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sido_nm)" >
-		AND r.sido_nm = #{sido_nm}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(sgg_nm)" >
-		AND r.sgg_nm = #{sgg_nm}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(emd_nm)" >
-		AND r.emd_nm = #{emd_nm}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(ri_nm)" >
-		AND r.ri_nm = #{ri_nm}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jibun)" >
-		AND r.jibun LIKE '%${jibun}%'
-	</if>
-	<if test="@com.slsolution.plms.common.CmCodeService@isNotEmpty(right_type)" >
-	and r.right_type in <foreach item="item" index="index" collection="right_type" open="(" separator="," close=")">#{item}</foreach>
-	</if> 
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_plan_type)" >
-	and r.toji_plan=#{toji_plan_type}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(toji_type)" >
-	and r.toji_type=#{toji_type}
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-	and (SELECT COUNT(o.address) AS overlap 
-		FROM
-		  (
-		  		(
-					SELECT trim(concat(jm.jm_sido_nm,' ',jm.jm_sgg_nm,' ',jm.jm_emd_nm,' ',jm.jm_ri_nm,' ',jm.jm_jibun)) as address
-					FROM jisang_master jm LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-					where 1=1
-				)
-				UNION ALL 
-				(
-					SELECT trim(concat(gp.gp_sido_nm,' ',gp.gp_sgg_nm,' ',gp.gp_emd_nm,' ',gp.gp_ri_nm,' ',gp.gp_jibun)) as address
-					FROM gover_master gm 
-					LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
-					LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-					where 1=1 and gp.gp_gover_no = gm.gm_gover_no
-					and gp.gp_pnu is not null
-				)
-				UNION ALL
-				(
-					SELECT trim(concat(nm.nm_sido_nm,' ',nm.nm_sgg_nm,' ',nm.nm_emd_nm,' ',nm.nm_ri_nm,' ',nm.nm_jibun)) as address
-					FROM notset_master nm LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-					where 1=1
-				)
-		  ) as o  WHERE o.address = r.address GROUP BY o.address ) >1
-	</if>
-	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
-	ORDER BY r.${orderCol} ${desc}
-	</if>
-	<if test="length>0"> 
-	 limit #{length} offset #{start}
-	 </if>
-</select>
-
-	<select id="selectAllList2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		select jm_set_money,jm_save_status from jisang_master 
-	</select>
 	
 	<!-- 권리확보현황 엑셀 데이터-->
 	<select id="songyuMenu01ExcelData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -820,12 +609,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	
-	
-	
-	
 	<!-- 권리확보현황 -->
-	<select id="selectAllList3" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<select id="selectAllList1" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT r.*
     , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH1) AS CODE_DEPTH1_NAME
     , (SELECT S.CODE_NAME FROM PLMS_ISSUE_CODE S WHERE S.CODE = r.CODE_DEPTH2) AS CODE_DEPTH2_NAME
@@ -1183,40 +968,103 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and r.jisa=#{jisa}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-		AND (SELECT COUNT(o.pnu) AS overlap 
-			FROM
-			  (
-		  		(
-						SELECT jm.jm_pnu AS pnu
-						FROM jisang_master jm 
-						LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-						WHERE 1=1
-					)
-					UNION ALL 
-					(
-						SELECT gp.gp_pnu AS pnu
-						FROM gover_master gm 
-						LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
-						LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-						WHERE 1=1 
-						AND gp.gp_gover_no = gm.gm_gover_no
-						AND gp.gp_pnu is not null
-					)
-					UNION ALL
-					(
-						SELECT nm.nm_pnu AS pnu
-						FROM notset_master nm 
-						LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-						WHERE 1=1
-					)
-					UNION ALL
-					(
-						SELECT dom.dom_pnu AS pnu
-						FROM dopco_master dom 
-						WHERE 1=1
-					)
-			  ) AS o 
-			  WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
+		AND pnu in (
+					SELECT r.pnu
+		      FROM 
+		      (
+		      	SELECT
+		        JOIN_MST.PNU
+		             FROM 
+		             (   
+		              SELECT
+		            JM.jm_JISANG_NO AS MASTER_NO,
+		            JM.jm_jibun as JIBUN,
+		            JM.jm_pnu as PNU,
+		            JM.jm_addrcode as ADDRCODE
+		        FROM JISANG_MASTER JM
+		        LEFT JOIN (
+		            SELECT *
+		            FROM (
+		                SELECT js_jisang_no as JISANG_NO, js_souja_name as SOUJA_NAME,
+		                    ROW_NUMBER() OVER (PARTITION BY js_JISANG_NO ORDER BY js_JISANG_NO ASC) AS ROW_IDX
+		                FROM JISANG_SOUJA
+		                GROUP BY js_JISANG_NO, js_SOUJA_NAME
+		            ) AS sub1 WHERE ROW_IDX = 1
+		        ) JS ON JM.jm_JISANG_NO = JS.JISANG_NO
+		        WHERE (jm.jm_cancle_yn IS NULL OR jm.jm_cancle_yn != 'Y')
+		        UNION ALL
+		        SELECT
+		            GP.gp_GOVER_NO AS MASTER_NO,
+		            GP.gp_jibun as JIBUN,
+		            GP.gp_pnu as PNU,
+		            GP.gp_addrcode as ADDRCODE
+		        FROM GOVER_PNU GP
+		        LEFT JOIN (
+		            SELECT S.gp_gover_no as GOVER_NO
+		                  , S.gp_pay_money as PAY_MONEY
+		                  , S.gp_pay_vat as PAY_VAT
+		                  , S.gp_pay_date as PAY_DATE
+		                  , S.gp_pay_way as PAY_WAY
+		                  , S.gp_pmt_no as PMT_NO
+		                  , S.gp_pmt_st_date as PMT_ST_DATE
+		                  , S.gp_pmt_ed_date as PMT_ED_DATE
+		            FROM GOVER_PERMIT S
+		            INNER JOIN (
+		                SELECT MAX(SS.gp_SEQ) AS SEQ, SS.gp_gover_no as GOVER_NO
+		                FROM GOVER_PERMIT SS
+		                WHERE SS.gp_PMT_NO IS NOT NULL
+		                AND SS.gp_DOCKEY IN (
+		                    SELECT SSS.pa_dockey as DOCKEY
+		                    FROM PLMS_APPROVAL SSS
+		                    WHERE SSS.pa_STATUS IS NOT NULL
+		                    AND SSS.pa_STATUS != 'X'
+		                )
+		                GROUP BY SS.gp_GOVER_NO
+		            ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.GOVER_NO
+		        ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
+		        LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
+		        WHERE GM.gm_SAVE_STATUS = 'A' AND (GM.gm_CANCLE_YN !='Y' or GM.gm_CANCLE_YN is null)
+		        UNION ALL
+		        SELECT
+		            NM.nm_NOTSET_NO AS MASTER_NO,
+		            NM.nm_jibun as JIBUN,
+		            NM.nm_pnu as PNU,
+		            NM.nm_addrcode as ADDRCODE
+		        FROM NOTSET_MASTER NM
+		        LEFT JOIN (
+		            SELECT *
+		            FROM (
+		                SELECT ns_notset_no as NOTSET_NO, ns_souja_name as SOUJA_NAME,
+		                    ROW_NUMBER() OVER (PARTITION BY ns_NOTSET_NO ORDER BY ns_NOTSET_NO ASC) AS ROW_IDX
+		                FROM NOTSET_SOUJA
+		                GROUP BY ns_NOTSET_NO, ns_SOUJA_NAME
+		            )AS sub2 WHERE ROW_IDX = 1
+		        ) NS ON NM.nm_NOTSET_NO = NS.NOTSET_NO
+		        WHERE 1=1 and  (NM.nm_DEL_FLAG = 'N' OR NM.nm_DEL_FLAG IS NULL)
+		        UNION ALL
+		        SELECT
+		            DM.dom_DOPCO_NO AS MASTER_NO,
+		            DM.dom_jibun as JIBUN,
+		            DM.dom_pnu as PNU,
+		            DM.dom_addrcode as ADDRCODE
+		        FROM DOPCO_MASTER DM
+		        WHERE DM.dom_CANCLE_YN = ''
+		    ) JOIN_MST 
+		    LEFT JOIN jijuk_2024 JIJUK_MST ON JIJUK_MST.pnu=JOIN_MST.pnu
+		    LEFT JOIN (
+		        SELECT S.*
+		        FROM (
+		            SELECT RANK() OVER(PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
+		                RPAD(PPI.addrcode, 10, '0') AS ADDRCODE, PPI.jibun as JIBUN,
+		                PPI.code_depth1 as CODE_DEPTH1, PPI.code_depth2 as CODE_DEPTH2, PPI.code_depth3 as CODE_DEPTH3,
+		                PPI.registed_yn as REGISTED_YN, PPI.permitted_yn as PERMITTED_YN, PPI.pnu as PNU, PPI.del_flag as DEL_FLAG
+		            FROM plms_POTENTIAL_ISSUE PPI
+		            WHERE PPI.DEL_FLAG != 'Y'
+		            LIMIT 1
+		        ) S WHERE S.RANK = 1
+		    ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
+		    LEFT JOIN GOVER_POTENTIAL_ISSUE GPI ON JOIN_MST.MASTER_NO = GPI.GOVER_NO AND GPI.DEL_FLAG != 'Y'
+		    )r group by pnu having count(*) > 1)
 		</if>
 	  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 			ORDER BY r.${orderCol} ${desc}
@@ -1229,7 +1077,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 권리확보현황 건 수 조회 -->
 	<select id="selectTotalCount1" parameterType="java.util.HashMap" resultType="Integer">
 		SELECT  
-		count(*)
+			count(*)
 		FROM (
 		SELECT   NEWREGREASON,
 	        OCCUNONPAYREASON,
@@ -1565,39 +1413,103 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and r.jisa=#{jisa}
 			</if>
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-			and (SELECT COUNT(o.pnu) AS overlap 
-			FROM
-			  (
-		  		(
-						SELECT jm.jm_pnu AS pnu
-						FROM jisang_master jm 
-						LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-						where 1=1
-					)
-					UNION ALL 
-					(
-						SELECT gp.gp_pnu AS pnu
-						FROM gover_master gm 
-						LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
-						LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-						WHERE 1=1 
-						AND gp.gp_gover_no = gm.gm_gover_no
-						and gp.gp_pnu is not null
-					)
-					UNION ALL
-					(
-						SELECT nm.nm_pnu AS pnu
-						FROM notset_master nm 
-						LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-						where 1=1
-					)
-					UNION ALL
-					(
-						SELECT dom.dom_pnu AS pnu
-						FROM dopco_master dom 
-						WHERE 1=1
-					)
-			  ) as o WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
+			AND pnu in (
+					SELECT r.pnu
+		      FROM 
+		      (
+		      	SELECT
+		        JOIN_MST.PNU
+		             FROM 
+		             (   
+		              SELECT
+		            JM.jm_JISANG_NO AS MASTER_NO,
+		            JM.jm_jibun as JIBUN,
+		            JM.jm_pnu as PNU,
+		            JM.jm_addrcode as ADDRCODE
+		        FROM JISANG_MASTER JM
+		        LEFT JOIN (
+		            SELECT *
+		            FROM (
+		                SELECT js_jisang_no as JISANG_NO, js_souja_name as SOUJA_NAME,
+		                    ROW_NUMBER() OVER (PARTITION BY js_JISANG_NO ORDER BY js_JISANG_NO ASC) AS ROW_IDX
+		                FROM JISANG_SOUJA
+		                GROUP BY js_JISANG_NO, js_SOUJA_NAME
+		            ) AS sub1 WHERE ROW_IDX = 1
+		        ) JS ON JM.jm_JISANG_NO = JS.JISANG_NO
+		        WHERE (jm.jm_cancle_yn IS NULL OR jm.jm_cancle_yn != 'Y')
+		        UNION ALL
+		        SELECT
+		            GP.gp_GOVER_NO AS MASTER_NO,
+		            GP.gp_jibun as JIBUN,
+		            GP.gp_pnu as PNU,
+		            GP.gp_addrcode as ADDRCODE
+		        FROM GOVER_PNU GP
+		        LEFT JOIN (
+		            SELECT S.gp_gover_no as GOVER_NO
+		                  , S.gp_pay_money as PAY_MONEY
+		                  , S.gp_pay_vat as PAY_VAT
+		                  , S.gp_pay_date as PAY_DATE
+		                  , S.gp_pay_way as PAY_WAY
+		                  , S.gp_pmt_no as PMT_NO
+		                  , S.gp_pmt_st_date as PMT_ST_DATE
+		                  , S.gp_pmt_ed_date as PMT_ED_DATE
+		            FROM GOVER_PERMIT S
+		            INNER JOIN (
+		                SELECT MAX(SS.gp_SEQ) AS SEQ, SS.gp_gover_no as GOVER_NO
+		                FROM GOVER_PERMIT SS
+		                WHERE SS.gp_PMT_NO IS NOT NULL
+		                AND SS.gp_DOCKEY IN (
+		                    SELECT SSS.pa_dockey as DOCKEY
+		                    FROM PLMS_APPROVAL SSS
+		                    WHERE SSS.pa_STATUS IS NOT NULL
+		                    AND SSS.pa_STATUS != 'X'
+		                )
+		                GROUP BY SS.gp_GOVER_NO
+		            ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.GOVER_NO
+		        ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
+		        LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
+		        WHERE GM.gm_SAVE_STATUS = 'A' AND (GM.gm_CANCLE_YN !='Y' or GM.gm_CANCLE_YN is null)
+		        UNION ALL
+		        SELECT
+		            NM.nm_NOTSET_NO AS MASTER_NO,
+		            NM.nm_jibun as JIBUN,
+		            NM.nm_pnu as PNU,
+		            NM.nm_addrcode as ADDRCODE
+		        FROM NOTSET_MASTER NM
+		        LEFT JOIN (
+		            SELECT *
+		            FROM (
+		                SELECT ns_notset_no as NOTSET_NO, ns_souja_name as SOUJA_NAME,
+		                    ROW_NUMBER() OVER (PARTITION BY ns_NOTSET_NO ORDER BY ns_NOTSET_NO ASC) AS ROW_IDX
+		                FROM NOTSET_SOUJA
+		                GROUP BY ns_NOTSET_NO, ns_SOUJA_NAME
+		            )AS sub2 WHERE ROW_IDX = 1
+		        ) NS ON NM.nm_NOTSET_NO = NS.NOTSET_NO
+		        WHERE 1=1 and  (NM.nm_DEL_FLAG = 'N' OR NM.nm_DEL_FLAG IS NULL)
+		        UNION ALL
+		        SELECT
+		            DM.dom_DOPCO_NO AS MASTER_NO,
+		            DM.dom_jibun as JIBUN,
+		            DM.dom_pnu as PNU,
+		            DM.dom_addrcode as ADDRCODE
+		        FROM DOPCO_MASTER DM
+		        WHERE DM.dom_CANCLE_YN = ''
+		    ) JOIN_MST 
+		    LEFT JOIN jijuk_2024 JIJUK_MST ON JIJUK_MST.pnu=JOIN_MST.pnu
+		    LEFT JOIN (
+		        SELECT S.*
+		        FROM (
+		            SELECT RANK() OVER(PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
+		                RPAD(PPI.addrcode, 10, '0') AS ADDRCODE, PPI.jibun as JIBUN,
+		                PPI.code_depth1 as CODE_DEPTH1, PPI.code_depth2 as CODE_DEPTH2, PPI.code_depth3 as CODE_DEPTH3,
+		                PPI.registed_yn as REGISTED_YN, PPI.permitted_yn as PERMITTED_YN, PPI.pnu as PNU, PPI.del_flag as DEL_FLAG
+		            FROM plms_POTENTIAL_ISSUE PPI
+		            WHERE PPI.DEL_FLAG != 'Y'
+		            LIMIT 1
+		        ) S WHERE S.RANK = 1
+		    ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
+		    LEFT JOIN GOVER_POTENTIAL_ISSUE GPI ON JOIN_MST.MASTER_NO = GPI.GOVER_NO AND GPI.DEL_FLAG != 'Y'
+		    )r group by pnu having count(*) > 1)
 			</if>
 	</select>
 	
@@ -2334,6 +2246,7 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 	</if>
 </select>
 	
+	
 	<!-- 관리필지 조회 -->
 	<select id="selectAllList5" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT r.*
@@ -2687,34 +2600,113 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 			AND r.master_no=#{manage_no}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-			AND (
-				SELECT COUNT(o.pnu) AS overlap 
-						FROM
-						  (
-					  		(
-									SELECT jm.jm_pnu AS pnu
-									FROM jisang_master jm 
-									LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-									WHERE 1=1
-								)
-								UNION ALL 
-								(
-									SELECT gp.gp_pnu AS pnu
-									FROM gover_master gm 
-									LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
-									LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-									WHERE 1=1 
-									AND gp.gp_gover_no = gm.gm_gover_no
-									AND gp.gp_pnu is not null
-								)
-								UNION ALL
-								(
-									SELECT nm.nm_pnu AS pnu
-									FROM notset_master nm 
-									LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-									WHERE 1=1
-								)
-						  ) AS o WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
+			and r.pnu in (
+	          select pnu from (
+			      SELECT r.pnu
+			      FROM (
+			      SELECT
+			        JOIN_MST.PNU,
+			        JOIN_MST.jisang_status
+			             FROM (   
+			           SELECT
+			            JM.jm_JISANG_NO AS MASTER_NO,
+						'jisang' AS JISANG_STATUS,
+			            JM.jm_jibun as JIBUN,
+			            JM.jm_pnu as PNU,
+			            JM.jm_addrcode as ADDRCODE
+			        FROM JISANG_MASTER JM
+			        LEFT JOIN (
+			            SELECT *
+			            FROM (
+			                SELECT js_jisang_no as JISANG_NO, js_souja_name as SOUJA_NAME,
+			                    ROW_NUMBER() OVER (PARTITION BY js_JISANG_NO ORDER BY js_JISANG_NO ASC) AS ROW_IDX
+			                FROM JISANG_SOUJA
+			                GROUP BY js_JISANG_NO, js_SOUJA_NAME
+			            ) AS sub1 WHERE ROW_IDX = 1
+			        ) JS ON JM.jm_JISANG_NO = JS.JISANG_NO
+			        WHERE (jm.jm_cancle_yn IS NULL OR jm.jm_cancle_yn != 'Y')
+			        AND (jm.jm_manage_yn IS NULL OR jm.jm_manage_yn != 'Y')
+			        UNION ALL
+			        SELECT
+			            GP.gp_GOVER_NO AS MASTER_NO,
+			            'gover' AS JISANG_STATUS,
+			            GP.gp_jibun as JIBUN,
+			            GP.gp_pnu as PNU,
+			            GP.gp_addrcode as ADDRCODE
+			        FROM GOVER_PNU GP
+			        LEFT JOIN (
+			            SELECT S.gp_gover_no as GOVER_NO
+			                  , S.gp_pay_money as PAY_MONEY
+			                  , S.gp_pay_vat as PAY_VAT
+			                  , S.gp_pay_date as PAY_DATE
+			                  , S.gp_pay_way as PAY_WAY
+			                  , S.gp_pmt_no as PMT_NO
+			                  , S.gp_pmt_st_date as PMT_ST_DATE
+			                  , S.gp_pmt_ed_date as PMT_ED_DATE
+			            FROM GOVER_PERMIT S
+			            INNER JOIN (
+			                SELECT MAX(SS.gp_SEQ) AS SEQ, SS.gp_gover_no as GOVER_NO
+			                FROM GOVER_PERMIT SS
+			                WHERE SS.gp_PMT_NO IS NOT NULL
+			                AND SS.gp_DOCKEY IN (
+			                    SELECT SSS.pa_dockey as DOCKEY
+			                    FROM PLMS_APPROVAL SSS
+			                    WHERE SSS.pa_STATUS IS NOT NULL
+			                    AND SSS.pa_STATUS != 'X'
+			                )
+			                GROUP BY SS.gp_GOVER_NO
+			            ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.GOVER_NO
+			        ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
+			        LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
+			        WHERE GM.gm_SAVE_STATUS = 'A' 
+			        AND (GM.gm_CANCLE_YN !='Y' or GM.gm_CANCLE_YN is null)
+			        UNION ALL
+			        SELECT
+			            NM.nm_NOTSET_NO AS MASTER_NO,
+			            'notset' AS JISANG_STATUS,
+			            NM.nm_jibun as JIBUN,
+			            NM.nm_pnu as PNU,
+			            NM.nm_addrcode as ADDRCODE
+			        FROM NOTSET_MASTER NM
+			        LEFT JOIN (
+			            SELECT *
+			            FROM (
+			                SELECT ns_notset_no as NOTSET_NO, ns_souja_name as SOUJA_NAME,
+			                    ROW_NUMBER() OVER (PARTITION BY ns_NOTSET_NO ORDER BY ns_NOTSET_NO ASC) AS ROW_IDX
+			                FROM NOTSET_SOUJA
+			                GROUP BY ns_NOTSET_NO, ns_SOUJA_NAME
+			            )AS sub2 WHERE ROW_IDX = 1
+			        ) NS ON NM.nm_NOTSET_NO = NS.NOTSET_NO
+			        WHERE 1=1 
+			        AND (NM.nm_DEL_FLAG = 'N' OR NM.nm_DEL_FLAG IS NULL)
+			        AND (NM.nm_MANAGE_YN !='Y' OR NM.nm_MANAGE_YN IS NULL)
+			        UNION ALL
+			        SELECT
+			            DM.dom_DOPCO_NO AS MASTER_NO,
+			            'dopco' AS JISANG_STATUS,
+			            DM.dom_jibun as JIBUN,
+			            DM.dom_pnu as PNU,
+			            DM.dom_addrcode as ADDRCODE
+			        FROM DOPCO_MASTER DM
+			        WHERE DM.dom_CANCLE_YN = ''
+			    ) JOIN_MST 
+			    LEFT JOIN jijuk_2024 JIJUK_MST ON JIJUK_MST.pnu=JOIN_MST.pnu
+			    LEFT JOIN (
+			        SELECT S.*
+			        FROM (
+			            SELECT RANK() OVER(PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
+			                RPAD(PPI.addrcode, 10, '0') AS ADDRCODE, PPI.jibun as JIBUN,
+			                PPI.code_depth1 as CODE_DEPTH1, PPI.code_depth2 as CODE_DEPTH2, PPI.code_depth3 as CODE_DEPTH3,
+			                PPI.registed_yn as REGISTED_YN, PPI.permitted_yn as PERMITTED_YN, PPI.pnu as PNU, PPI.del_flag as DEL_FLAG
+			            FROM plms_POTENTIAL_ISSUE PPI
+			            WHERE PPI.DEL_FLAG != 'Y'
+			            LIMIT 1
+			        ) S WHERE S.RANK = 1
+			    ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
+			    LEFT JOIN GOVER_POTENTIAL_ISSUE GPI ON JOIN_MST.MASTER_NO = GPI.GOVER_NO AND GPI.DEL_FLAG != 'Y'
+			    )r
+			    WHERE 1=1
+			    AND r.jisang_status IN ('jisang', 'notset')) as ovl group by pnu having count(*) > 1)
 		</if>
 	  <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(orderCol)" >
 		ORDER BY r.${orderCol} ${desc}
@@ -3058,34 +3050,114 @@ WHERE 1=1 AND dm.dm_pnu = JOIN_MST.pnu) AS toji_plan_type
 			and r.master_no=#{manage_no}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(right_overlap)" >
-			and (
-				SELECT COUNT(o.pnu) AS overlap 
-						FROM
-						  (
-					  		(
-									SELECT jm.jm_pnu AS pnu
-									FROM jisang_master jm 
-									LEFT JOIN jisang_souja js ON js.js_jisang_no=jm.jm_jisang_no
-									where 1=1
-								)
-								UNION ALL 
-								(
-									SELECT gp.gp_pnu AS pnu
-									FROM gover_master gm 
-									LEFT JOIN gover_pnu gp ON gp.gp_gover_no = gm.gm_gover_no
-									LEFT JOIN gover_permit gpp ON gpp.gp_gover_no=gm.gm_gover_no
-									WHERE 1=1 
-									AND gp.gp_gover_no = gm.gm_gover_no
-									and gp.gp_pnu is not null
-								)
-								UNION ALL
-								(
-									SELECT nm.nm_pnu AS pnu
-									FROM notset_master nm 
-									LEFT JOIN notset_souja ns ON ns.ns_notset_no=nm.nm_notset_no
-									where 1=1
-								)
-						  ) as o WHERE o.pnu = r.pnu GROUP BY o.pnu) > 1
+			and r.pnu in (
+	          select pnu from (
+			      SELECT r.pnu
+			      FROM (
+			      SELECT
+			        JOIN_MST.PNU,
+			        JOIN_MST.jisang_status
+			             FROM (   
+			           SELECT
+			            JM.jm_JISANG_NO AS MASTER_NO,
+						'jisang' AS JISANG_STATUS,
+			            JM.jm_jibun as JIBUN,
+			            JM.jm_pnu as PNU,
+			            JM.jm_addrcode as ADDRCODE
+			        FROM JISANG_MASTER JM
+			        LEFT JOIN (
+			            SELECT *
+			            FROM (
+			                SELECT js_jisang_no as JISANG_NO, js_souja_name as SOUJA_NAME,
+			                    ROW_NUMBER() OVER (PARTITION BY js_JISANG_NO ORDER BY js_JISANG_NO ASC) AS ROW_IDX
+			                FROM JISANG_SOUJA
+			                GROUP BY js_JISANG_NO, js_SOUJA_NAME
+			            ) AS sub1 WHERE ROW_IDX = 1
+			        ) JS ON JM.jm_JISANG_NO = JS.JISANG_NO
+			        WHERE (jm.jm_cancle_yn IS NULL OR jm.jm_cancle_yn != 'Y')
+			        AND (jm.jm_manage_yn IS NULL OR jm.jm_manage_yn != 'Y')
+			        UNION ALL
+			        SELECT
+			            GP.gp_GOVER_NO AS MASTER_NO,
+			            'gover' AS JISANG_STATUS,
+			            GP.gp_jibun as JIBUN,
+			            GP.gp_pnu as PNU,
+			            GP.gp_addrcode as ADDRCODE
+			        FROM GOVER_PNU GP
+			        LEFT JOIN (
+			            SELECT S.gp_gover_no as GOVER_NO
+			                  , S.gp_pay_money as PAY_MONEY
+			                  , S.gp_pay_vat as PAY_VAT
+			                  , S.gp_pay_date as PAY_DATE
+			                  , S.gp_pay_way as PAY_WAY
+			                  , S.gp_pmt_no as PMT_NO
+			                  , S.gp_pmt_st_date as PMT_ST_DATE
+			                  , S.gp_pmt_ed_date as PMT_ED_DATE
+			            FROM GOVER_PERMIT S
+			            INNER JOIN (
+			                SELECT MAX(SS.gp_SEQ) AS SEQ, SS.gp_gover_no as GOVER_NO
+			                FROM GOVER_PERMIT SS
+			                WHERE SS.gp_PMT_NO IS NOT NULL
+			                AND SS.gp_DOCKEY IN (
+			                    SELECT SSS.pa_dockey as DOCKEY
+			                    FROM PLMS_APPROVAL SSS
+			                    WHERE SSS.pa_STATUS IS NOT NULL
+			                    AND SSS.pa_STATUS != 'X'
+			                )
+			                GROUP BY SS.gp_GOVER_NO
+			            ) SS ON S.gp_SEQ = SS.SEQ AND S.gp_GOVER_NO = SS.GOVER_NO
+			        ) GPE ON GP.gp_GOVER_NO = GPE.GOVER_NO
+			        LEFT JOIN GOVER_MASTER GM ON GP.gp_GOVER_NO = GM.gm_GOVER_NO
+			        WHERE GM.gm_SAVE_STATUS = 'A' 
+			        AND (GM.gm_CANCLE_YN !='Y' or GM.gm_CANCLE_YN is null)
+			        UNION ALL
+			        SELECT
+			            NM.nm_NOTSET_NO AS MASTER_NO,
+			            'notset' AS JISANG_STATUS,
+			            NM.nm_jibun as JIBUN,
+			            NM.nm_pnu as PNU,
+			            NM.nm_addrcode as ADDRCODE
+			        FROM NOTSET_MASTER NM
+			        LEFT JOIN (
+			            SELECT *
+			            FROM (
+			                SELECT ns_notset_no as NOTSET_NO, ns_souja_name as SOUJA_NAME,
+			                    ROW_NUMBER() OVER (PARTITION BY ns_NOTSET_NO ORDER BY ns_NOTSET_NO ASC) AS ROW_IDX
+			                FROM NOTSET_SOUJA
+			                GROUP BY ns_NOTSET_NO, ns_SOUJA_NAME
+			            )AS sub2 WHERE ROW_IDX = 1
+			        ) NS ON NM.nm_NOTSET_NO = NS.NOTSET_NO
+			        WHERE 1=1 
+			        AND (NM.nm_DEL_FLAG = 'N' OR NM.nm_DEL_FLAG IS NULL)
+			        AND (NM.nm_MANAGE_YN !='Y' OR NM.nm_MANAGE_YN IS NULL)
+			        UNION ALL
+			        SELECT
+			            DM.dom_DOPCO_NO AS MASTER_NO,
+			            'dopco' AS JISANG_STATUS,
+			            DM.dom_jibun as JIBUN,
+			            DM.dom_pnu as PNU,
+			            DM.dom_addrcode as ADDRCODE
+			        FROM DOPCO_MASTER DM
+			        WHERE DM.dom_CANCLE_YN = ''
+			    ) JOIN_MST 
+			    LEFT JOIN jijuk_2024 JIJUK_MST ON JIJUK_MST.pnu=JOIN_MST.pnu
+			    LEFT JOIN (
+			        SELECT S.*
+			        FROM (
+			            SELECT RANK() OVER(PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK,
+			                RPAD(PPI.addrcode, 10, '0') AS ADDRCODE, PPI.jibun as JIBUN,
+			                PPI.code_depth1 as CODE_DEPTH1, PPI.code_depth2 as CODE_DEPTH2, PPI.code_depth3 as CODE_DEPTH3,
+			                PPI.registed_yn as REGISTED_YN, PPI.permitted_yn as PERMITTED_YN, PPI.pnu as PNU, PPI.del_flag as DEL_FLAG
+			            FROM plms_POTENTIAL_ISSUE PPI
+			            WHERE PPI.DEL_FLAG != 'Y'
+			            LIMIT 1
+			        ) S WHERE S.RANK = 1
+			    ) PPI ON RPAD(JOIN_MST.ADDRCODE, 10, '0') = PPI.ADDRCODE AND JOIN_MST.JIBUN = PPI.JIBUN
+			    LEFT JOIN GOVER_POTENTIAL_ISSUE GPI ON JOIN_MST.MASTER_NO = GPI.GOVER_NO AND GPI.DEL_FLAG != 'Y'
+			    )r
+			    WHERE 1=1
+			    AND r.jisang_status IN ('jisang', 'notset')) as ovl group by pnu having count(*) > 1)
+
 		</if>
 	</select>
 	
