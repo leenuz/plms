@@ -971,10 +971,10 @@ LEFT JOIN (SELECT S.gp_gover_no as GOVER_NO
 			     , D.LENGTH
 			     , D.AREA
 			     , CASE
-			           WHEN D.CNT = 1
-			               THEN C.SIDO_NM || ' ' || SGG_NM || ' ' || EMD_NM || ' ' || RI_NM || ' ' || JIBUN
-			           WHEN D.CNT > 1 THEN C.SIDO_NM || ' ' || SGG_NM || ' ' || EMD_NM || ' ' || RI_NM || ' ' || JIBUN || ' 외 ' || (D.CNT - 1)::text || '필지'
-			           ELSE D.CNT::text END AS JUSO
+		           WHEN D.CNT = 1 THEN C.SIDO_NM || ' ' || SGG_NM || ' ' || EMD_NM || ' ' || RI_NM || ' ' || JIBUN
+		           WHEN D.CNT > 1 THEN C.SIDO_NM || ' ' || SGG_NM || ' ' || EMD_NM || ' ' || RI_NM || ' ' || JIBUN || ' 외 ' || (D.CNT - 1)::text || '필지'
+		           ELSE D.CNT::text 
+           END AS JUSO
 			     , C.USE_PURPOS_PNU
 					FROM (
 							SELECT gp_gover_no AS GOVER_NO

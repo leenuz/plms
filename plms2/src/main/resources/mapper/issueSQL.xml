@@ -84,23 +84,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 WHEN '5' THEN '민원완료'
                 ELSE 'Unknown Status'
             END AS status_str,
-            TRIM(CONCAT(MP.mp_sido_nm, ' ', MP.mp_sgg_nm, ' ', MP.mp_emd_nm, COALESCE(CONCAT(' ', MP.mp_ri_nm), ''), ' ', MP.mp_jibun)) AS address_str,
-            (SELECT COUNT(*) FROM minwon_pnu S WHERE S.mp_minwon_seq = MM.mm_mw_seq) AS pnu_cnt
+            CASE  -- pnu_cnt를 미리 계산한 값으로 사용
+                WHEN pnu_counts.pnu_cnt > 1 
+                    THEN TRIM(CONCAT(MP.mp_sido_nm, ' ', MP.mp_sgg_nm, ' ', MP.mp_emd_nm, COALESCE(CONCAT(' ', MP.mp_ri_nm), ''), ' ', MP.mp_jibun)) 
+                         || ' 외 ' || (pnu_counts.pnu_cnt - 1)::text || ' 필지'
+                ELSE TRIM(CONCAT(MP.mp_sido_nm, ' ', MP.mp_sgg_nm, ' ', MP.mp_emd_nm, COALESCE(CONCAT(' ', MP.mp_ri_nm), ''), ' ', MP.mp_jibun))
+            END AS address_str,
+            pnu_counts.pnu_cnt -- 이미 조인한 pnu_cnt를 사용
         FROM minwon_master MM
         LEFT JOIN minwon_pnu MP ON MM.mm_mw_seq = MP.mp_minwon_seq
+        -- pnu_count를 미리 계산
+        LEFT JOIN (
+            SELECT mp_minwon_seq, COUNT(*) AS pnu_cnt
+            FROM minwon_pnu
+            GROUP BY mp_minwon_seq
+        ) pnu_counts ON MM.mm_mw_seq = pnu_counts.mp_minwon_seq
         WHERE 1=1
         -- 대표토지가 먼저 보이도록 정렬
         ORDER BY MM.mm_mw_seq, MP.mp_rep_yn DESC
     ) T
     WHERE 1 = 1
-       <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)">
+    <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(address)">
         -- 주소에 해당하는 소속토지 검색 시에도 대표토지를 반환하도록 EXISTS 조건 추가
-        AND (T.address_str LIKE '%' || #{address} || '%' OR EXISTS (
+        AND (
+        	T.address_str LIKE '%' || #{address} || '%' 
+        	OR EXISTS (
             SELECT 1 
             FROM minwon_pnu MP_sub
             WHERE MP_sub.mp_minwon_seq = T.mm_mw_seq
             AND TRIM(CONCAT(MP_sub.mp_sido_nm, ' ', MP_sub.mp_sgg_nm, ' ', MP_sub.mp_emd_nm, COALESCE(CONCAT(' ', MP_sub.mp_ri_nm), ''), ' ', MP_sub.mp_jibun)) LIKE '%' || #{address} || '%'
-        ))
+        	)
+       	)
     </if>
     <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(start_date)"><![CDATA[
         AND T.mw_occur_date >= TO_DATE(#{start_date}, 'yyyy-MM-dd')
