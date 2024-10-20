@@ -15,11 +15,14 @@
 </head>
 
 <th:block layout:fragment="content">
+
 	<input type="hidden" id="dataInfo" th:value="${resultData}"/>
 	<input type="hidden" id="soujaInfo" th:value="${soujaList}"/>
 	<input type="hidden" id="loginJisa" th:value="${loginJisa}"/>
+	<input type="hidden" id="soujaObj" th:value="${soujaListJSON}"/>
 	
 	<body>
+	
 		<div class="mainContentWrappers">
 			<!--header삽입-->
 			<div class="surfaceHeader mainContentHeader"></div>

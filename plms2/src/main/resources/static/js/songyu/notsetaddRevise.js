@@ -1096,9 +1096,8 @@ function changeStatus1 (modifyObj) {
 function changeStatus2 (modifyObj) {
 	
 	// 소유자
-	let soyujaStr = $('#soujaInfo').val();
-	let jsonStr = soyujaStr.replace(/([a-zA-Z0-9_]+)=/g, '"$1":').replace(/N_([0-9]+)/g, '"N_$1"');
-	let soyujaObj = JSON.parse(jsonStr);
+	let soyujaStr = $('#soujaObj').val();
+	let soyujaObj = JSON.parse(soyujaStr);
 	let changeStr = '';
 	
 	let soyujaCnt = $('#soujaDiv #soujaUl').length; // 소유자 정보 행 개수

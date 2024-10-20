@@ -1198,7 +1198,7 @@ public void selectSongyuMenu1ExcelData1(HttpServletRequest request, HttpServletR
 			pnu = requestParamObj.getString("mpnu").trim(); // 검색결과 PNU
 			jibun = requestParamObj.getString("mjibun"); // 지번
 		} else {
-			pnu = requestParamObj.getString("pnu").trim(); // 검색결과 PNU
+			pnu = requestParamObj.getString("mpnu").trim(); // 검색결과 PNU
 			jibun = requestParamObj.getString("jibun"); // 지번
 		}
 		String modifyReason1 = requestParamObj.has("modifyReason1") ? requestParamObj.getString("modifyReason1") : ""; // 변경이력-기본정보

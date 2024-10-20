@@ -186,8 +186,10 @@ const notsetAddCheckBoxsEvet = () => {
         customCheckboxInput01.addEventListener("change", () => {
             if (customCheckboxInput01.checked) {
                 customCheckBoxLabel01.classList.add("active");
+                customCheckboxInput01.value='Y';
             } else {
                 customCheckBoxLabel01.classList.remove("active");
+                customCheckboxInput01.value='N';
             }
         });
     }
@@ -724,6 +726,11 @@ $(document).ready(function () {
 		dataObj.zone=dataObj.pipe_name;
 		dataObj.sunGubun=dataObj.sun_gubun;
 		dataObj.gubun="insert";
+		if(dataObj.nm_manage == 'on') {
+			dataObj.nm_manage = 'Y';
+		}else {
+			dataObj.nm_manage = 'N';
+		}
         console.log("------dataObj--------");
         console.log(dataObj);
         // 서버 전송

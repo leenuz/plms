@@ -127,7 +127,8 @@ public class issueController {
 		// 필요한 데이터도 추가로 전달 가능
 		mav.addObject("minwon", minwonList.get(0));
 		mav.addObject("issuecodeList", reJo);
-		mav.addObject("approvalList", approvalList.get(0));
+		JSONObject jsonObj = new JSONObject(approvalList.get(0));
+		mav.addObject("approvalList", jsonObj);
 		mav.addObject("serverName", GC.getServerName());
 		mav.setViewName("content/issue/complaintManage");
 		return mav;
