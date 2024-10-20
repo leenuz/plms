@@ -231,6 +231,65 @@ public class staticsController {
 	}
 	
 	
+	
+		@PostMapping(path="/rightCloseExcelDownload")
+		public void rightCloseExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject requestParamsObj=new JSONObject(requestParams);
+		log.info("requestParams:"+requestParams);
+		
+		String jisa = requestParamsObj.has("jisa")?requestParamsObj.getString("jisa"):"";
+		String SAVE_YEAR = requestParamsObj.has("SAVE_YEAR")?requestParamsObj.getString("SAVE_YEAR"):"";
+		String SAVE_QUARTER = requestParamsObj.has("SAVE_QUARTER")?requestParamsObj.getString("SAVE_QUARTER"):"";
+		
+		
+
+		HashMap params = new HashMap();
+		
+		params.put("jisa",jisa);
+		params.put("SAVE_YEAR",SAVE_YEAR);
+		//params.put("SAVE_YEAR", SAVE_YEAR);
+		params.put("SAVE_QUARTER",SAVE_QUARTER);
+		params.put("PROCESS_DATE", "");
+		params.put("PAGE_NUM", "");
+		params.put("PAGE_CNT", "");
+		params.put("manageYn", "Y");
+		
+			ArrayList list = new ArrayList();
+			ParameterParser parser = new ParameterParser(request);
+
+			
+			String str_result = "Y";
+			try {
+
+				 list = mainService.selectQuery("staticSQL.selectStatisticsDeadlineDataExcel", params);
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		}
+	
 	@RequestMapping(value="/selectStatisticsDeadlineListTableList", method = {RequestMethod.GET, RequestMethod.POST}) //http://localhost:8080/api/get/dbTest
 	public ResponseEntity<?> selectStatisticsDeadlineListTableList(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
@@ -535,6 +594,92 @@ public class staticsController {
 		}
 		
 		
+		
+		//권리확보통계 국유지 사유지 엑셀 다운로드
+		@PostMapping(path="/TogiMgtStateExcelDownloadNew")
+		public void TogiMgtStateExcelDownloadNew(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject requestParamsObj=new JSONObject(requestParams);
+		log.info("requestParams:"+requestParams);
+		
+		String jisa = requestParamsObj.has("jisa")?requestParamsObj.getString("jisa"):"";
+		String gubun = requestParamsObj.has("gubun")?requestParamsObj.getString("gubun"):"";
+//		String use_purpos = requestParamsObj.has("use_purpos")?requestParamsObj.getString("use_purpos"):"";
+//		String pmt_office = requestParamsObj.has("pmt_office")?requestParamsObj.getString("pmt_office"):"";
+//		String adm_office = requestParamsObj.has("adm_office")?requestParamsObj.getString("adm_office"):"";
+//		String save_status = requestParamsObj.has("save_status")?requestParamsObj.getString("save_status"):"";
+//		String address = requestParamsObj.has("saddr")?requestParamsObj.getString("saddr"):"";
+//		String sido_nm = requestParamsObj.has("sido_nm")?requestParamsObj.getString("sido_nm"):"";
+//		String sgg_nm = requestParamsObj.has("sgg_nm")?requestParamsObj.getString("sgg_nm"):"";
+//		String emd_nm = requestParamsObj.has("emd_nm")?requestParamsObj.getString("emd_nm"):"";
+//		String ri_nm = requestParamsObj.has("ri_nm")?requestParamsObj.getString("ri_nm"):"";
+//		String jibun = requestParamsObj.has("jibun")?requestParamsObj.getString("jibun"):"";
+//
+//		String idx = requestParamsObj.has("idx")?requestParamsObj.getString("idx"):"";
+
+		
+
+		HashMap params = new HashMap();
+		
+
+		params.put("jisa", jisa);
+		params.put("gubun", gubun);
+//		params.put("use_purpos", use_purpos);
+//		params.put("pmt_office", pmt_office);
+//		params.put("adm_office", adm_office);
+//		params.put("save_status", save_status);
+//		params.put("idx", idx);
+//		params.put("address", address);
+//		params.put("sido_nm", sido_nm);
+//		params.put("sgg_nm", sgg_nm);
+//		params.put("emd_nm", emd_nm);
+//		params.put("ri_nm", ri_nm);
+//		params.put("jibun", jibun);
+
+		params.put("manageYn", "Y");
+		
+			ArrayList list = new ArrayList();
+			ParameterParser parser = new ParameterParser(request);
+
+			
+			String str_result = "Y";
+			try {
+				if ("0".equals(gubun)) {
+					list = mainService.selectQuery("staticSQL.selectTogiMgtJisangExcelList", params); //사유지
+				}
+				else {
+					list = mainService.selectQuery("staticSQL.selectTogiMgtGoverExcelList", params); //국유지
+				}
+
+				 
+
+			} catch (Exception e) {
+				str_result = "N";
+				e.printStackTrace();
+			}
+
+			HashMap map = new HashMap();
+
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", str_result);
+			map.put("result", list);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+
+		}
+		
+		
 		// 토지 관리 현황(권리확보현황) > Excel 다운로드
 		@PostMapping(path="/TogiMgtStateExcelDownload")
 		public ModelAndView TogiMgtStateExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -619,9 +764,18 @@ public class staticsController {
 		
 //점용관리현황 
 @PostMapping(path="/landExcelDownload")
-public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+public void landExcelDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			
 			log.info("LJS jsonResultController.java: landExcelDownload");
+			
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			
+			String jisa = requestParamsObj.has("jisa")?requestParamsObj.getString("jisa"):"";
+			String gubun = requestParamsObj.has("gubun")?requestParamsObj.getString("gubun"):"";
+			
+			
 			log.info(""+request);
 			ArrayList<HashMap> list = new ArrayList<HashMap>();
 			ArrayList<HashMap> pList = new ArrayList<HashMap>();
@@ -632,10 +786,9 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 			HashMap<String,Object> pData=new HashMap<>();
 			
 			try {
-				String JISA=parser.getString("JISA","");
-				String JIBUN = parser.getString("JIBUN", "");
+				
 				HashMap params = new HashMap();
-				params.put("JISA", JISA);
+				params.put("jisa", jisa);
 			
 				//통계를 위한 변수 설정
 				int seoulg1=0; //서울정상
@@ -787,7 +940,7 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 				
 				str_Title = "점용허가관리현황.xls";
 				str_pageGubun = "";
-				list = (ArrayList) mainService.selectQuery("Json.selectNewGoverStaticList", params);
+				list = (ArrayList) mainService.selectQuery("staticSQL.selectNewGoverStaticList", params);
 				
 				log.info("list count:"+list.size());
 			//	log.info(list.toString());
@@ -1196,20 +1349,37 @@ public ModelAndView landExcelDownload(HttpServletRequest request, HttpServletRes
 			//pList=map;
 			
 			
-			
-			 
-			//주석 처리하면 페이지로 볼수 있다 페이지로 보이게 만든다음에 주석을 제거 하면 엑셀로 나타난다. by-ljs
-			response.setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(str_Title, "UTF-8") + ";");
-			response.setHeader("Content-Type", "application/octet-stream; charset=utf-8");
-			//mapToJsonResponse(response,map);
-			ModelAndView mav = new ModelAndView();
-			mav.addObject("CommonUtil", new CommonUtil());
-			mav.addObject("list",pData);
-			mav.addObject("pageGubun", str_pageGubun);
-			mav.addObject("nTotalCount", 10);
-			mav.setViewName("statistics/landExcel");
+			HashMap map = new HashMap();
 
-			return mav;
+			if (list != null)
+				map.put("count", list.size());
+			else
+				map.put("count", 0);
+
+			map.put("message", "Y");
+			map.put("result", pData);
+
+			JSONObject jo = new JSONObject(map);
+
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+			 
+//			//주석 처리하면 페이지로 볼수 있다 페이지로 보이게 만든다음에 주석을 제거 하면 엑셀로 나타난다. by-ljs
+//			response.setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(str_Title, "UTF-8") + ";");
+//			response.setHeader("Content-Type", "application/octet-stream; charset=utf-8");
+//			//mapToJsonResponse(response,map);
+//			ModelAndView mav = new ModelAndView();
+//			mav.addObject("CommonUtil", new CommonUtil());
+//			mav.addObject("list",pData);
+//			mav.addObject("pageGubun", str_pageGubun);
+//			mav.addObject("nTotalCount", 10);
+//			mav.setViewName("statistics/landExcel");
+//
+//			return mav;
 		}
 
 

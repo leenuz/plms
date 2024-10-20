@@ -7,7 +7,7 @@
 
     <link th:href="@{/css/common.css}" rel="stylesheet" />
     <link rel="stylesheet" href="/css/stats/rightStatus.css">
-    
+      <script src="/vendor/exceljs.min.js"></script> 
     <script src="https://code.highcharts.com/highcharts.js"></script>
 
     <title>권리확보현황 통계</title>
@@ -48,7 +48,7 @@
                                         </div>
                                         <!--보여지는 셀렉박스-->
                                         <div class="customSelectBox">
-                                            <button class="customSelectView">전체</button>
+                                            <button class="customSelectView" id="jisaText">전체</button>
                                             <ul class="customSelectBtns"></ul>
                                         </div>
                                     </div>
@@ -69,7 +69,7 @@
                         <!-- 상단 제목 -->
                         <div class="dataTitlebox">
                             <h5 class="dataTitle">사유지</h5>
-                            <button class="excelDownBtn">
+                            <button class="excelDownBtn" id="excelDownTogiBtn">
                                 엑셀 다운로드
                             </button>
                         </div>
@@ -177,7 +177,7 @@
                         <!-- 상단 제목 -->
                         <div class="dataTitlebox">
                             <h5 class="dataTitle">국유지</h5>
-                            <button class="excelDownBtn">
+                            <button class="excelDownBtn" id="excelDownGoverTogiBtn">
                                 엑셀 다운로드
                             </button>
                         </div>
@@ -234,7 +234,7 @@
                             <!-- 오른쪽 -->
                             <div class="dataContentGraph">
                                 <button class="hamBtn"></button>
-                                <button class="permitExcelBtn"></button>
+                                <button class="permitExcelBtn" id="permitExcelBtn"></button>
                                 <div id="GUKYUJI_Chart"  class="graphHere">
                                 </div>
                                 <ul class="graphNav">
