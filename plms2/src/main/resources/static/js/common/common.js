@@ -529,8 +529,41 @@ function commonFileView(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 function queryValueToObject(str) {
 	const cleanedStr = str.slice(1,-1);	//양 끝 괄호 제거
 	
-	const entries = cleanedStr.split(', ').map(entry => {
-		const [key, value] = entry.split('=').map(v => v.trim()); // key, value 양쪽 공백 제거
+	const entries = [];
+	let currentKeyValue = '';  // 현재 처리 중인 key-value 저장용 변수
+	
+	for(let i = 0 ; i < cleanedStr.length ; i++) {
+		currentKeyValue += cleanedStr[i];
+		
+		// '='를 만나면 key-value 구분 시작
+		if (cleanedStr[i] === '=') {
+			// key 뒤에 '='이 있다면 현재까지 저장된 내용을 entries에 추가
+            const nextCommaIndex = cleanedStr.indexOf(', ', i);
+            if (nextCommaIndex === -1) {
+                // 남은 부분을 그대로 추가
+                currentKeyValue += cleanedStr.slice(i + 1);
+                break;
+            }
+            const valueCandidate = cleanedStr.slice(i + 1, nextCommaIndex);
+            
+            // 다음 쉼표 전까지의 값을 추출, value에 쉼표가 들어가 있는지 확인
+            if (valueCandidate.includes('=')) {
+                currentKeyValue += ', ';
+            } else {
+                // '=' 다음에 오는 값에 쉼표가 없다면 이 시점에서 key-value 구분 확정
+                entries.push(currentKeyValue);
+                currentKeyValue = ''; // 초기화
+                i = nextCommaIndex; // 다음 탐색 지점으로
+            }
+		}
+		
+	}
+	
+	// 마지막 key-value 추가
+    if (currentKeyValue) entries.push(currentKeyValue);
+	
+	const result = entries.reduce((obj, entry) => {
+        const [key, value] = entry.split('=').map(v => v.trim());
 		
 		//null처리, 숫자 처리, 큰 숫자는 문자열로 유지
 		let parsedValue;
@@ -545,25 +578,34 @@ function queryValueToObject(str) {
             parsedValue = null;
         } 
 		
+		//특정 키값 처리
+		else if (key === 'mw_title' || key === 'mw_contents') {
+            // 쉼표를 기준으로 구분하지만, 쉼표를 그대로 유지한 값을 사용
+            parsedValue = value.split(',').map(v => v.trim());
+        }
+		
 		// 3. 숫자처리 및 큰 숫자는 문자열로 유지
 		else if (!isNaN(value) && value.length < 16) {
 			parsedValue = Number(value);
 		}
+		
 		// 4. 배열형태로 오는것 처리(쉼표로 구분된 값들을 배열로 인식)
 		else if (value.includes(',')) {
 			parsedValue = value.split(',').map(v => v.trim());
 		}
+		
 		// 5. 나머지 값은 그대로 문자열 처리
 		else {
 			parsedValue = value;
 		}
 		
 		return [key, parsedValue];
-	});
+	}, {});
 	
-	const jsonObj = Object.fromEntries(entries);
+	//const jsonObj = Object.fromEntries(entries);
 	
-	return jsonObj;
+	//return jsonObj;
+	return result;
 }
 
 //입력은 숫자만 가능하게끔.(소수점 가능)
