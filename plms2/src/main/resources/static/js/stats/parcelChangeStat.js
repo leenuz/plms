@@ -449,7 +449,7 @@ $('.parcelChangeStatBtn').click(function () {
   					if (dataList[i].desc1==jisaTmp){
   						tmpArray=['',dataList[i].jisang_status,dataList[i].ref_cnt,dataList[i].jisang_status,dataList[i].tg_cnt,dataList[i].jisang_status,dataList[i].add_cnt,dataList[i].del_cnt];
   					}
-  					else tmpArray=[dataList[i].desc1,dataList[i].jisang_status,dataList[i].ref_cnt,dataList[i].jisang_status,dataList[i].tg_cnt,dataList[i].jisang_status,dataList[i].add_cnt,dataList[i].del_cnt];
+  					else tmpArray=[dataList[i].desc1,dataList[i].ref_cmpy,dataList[i].ref_cmpn_pmty,dataList[i].ref_cmpn_pmtn,dataList[i].ref_cmpn,dataList[i].ref_sum,dataList[i].tg_cmpy,dataList[i].tg_cmpn_pmty,dataList[i].tg_cmpn_pmtn,dataList[i].tg_cmpn,dataList[i].tg_sum,dataList[i].cmpy_dif,dataList[i].cmpn_pmty_dif,dataList[i].cmpn_pmtn_dif,dataList[i].cmpn_dif,dataList[i].sum_dif];
   					data.push(tmpArray);
   					jisaTmp=dataList[i].desc1;
   			  }
