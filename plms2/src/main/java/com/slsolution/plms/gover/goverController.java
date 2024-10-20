@@ -226,6 +226,7 @@ public class goverController {
 		params.put("idx", idx);
 		params.put("index", index);
 		params.put("manage_no", idx);
+		params.put("GOVERNO", idx);
 //			log.info("params:"+params);
 		ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData", params);
 		ArrayList<HashMap> permitList = mainService.selectQuery("goverSQL.selectPermitList", params);
@@ -394,6 +395,7 @@ public class goverController {
 
 		params.put("idx", idx);
 		params.put("index", index);
+		params.put("GOVERNO", idx);
 //				log.info("params:"+params);
 		ArrayList<HashMap> data = mainService.selectQuery("goverSQL.selectAllData", params);
 		ArrayList<HashMap> permitList = mainService.selectQuery("goverSQL.selectPermitList", params);
