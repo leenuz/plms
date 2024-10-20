@@ -665,35 +665,6 @@ public class issueController {
 //				}
 
 			}
-
-			// STEP.2 첨부파일 등록 (Table - miwon_atcfile)
-			HashMap fileParams = new HashMap();
-			fileParams.put("MW_SEQ", mwSeq);
-			
-			if(fileList.length() > 0 ) {
-				log.info(fileList.toString());
-				
-				for(int y = 0 ; y < fileList.length() ; y++) {
-					
-					String originalFileName = fileList.get(y).toString();
-					
-					String changeFileName = CommonUtil.filenameAutoChange(originalFileName);
-					String tempPath = GC.getMinwonFileTempDir();
-					String dataPath = GC.getMinwonFileDataDir() + "/"+ "m_seq_"+mwSeq;
-					
-					fileParams.put("FILE_PATH", dataPath +"/"+ changeFileName);	//파일명이 바뀌기 때문에.
-					fileParams.put("FILE_NAME", originalFileName);
-					fileParams.put("FILE_MINWON_SEQ", (y+1));
-
-					if (CommonUtil.isFileExists(tempPath, originalFileName)) {
-						CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
-
-						mainService.InsertQuery("issueSQL.insertMinwonAtchFileInfo", fileParams);
-					}
-					else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
-
-				}
-			}
 			
 			//Step. 2.5 - 삭제 파일리스트가 있다면 삭제 (DB에서만 삭제 - 실제로는 삭제 X)
 			if(deleteFileArr.length() > 0) {
@@ -707,6 +678,39 @@ public class issueController {
 					mainService.DeleteQuery("issueSQL.deleteMinwonAtchFile", delParam);
 				}
 			}
+
+			// STEP.2 첨부파일 등록 (Table - miwon_atcfile)
+			HashMap fileParams = new HashMap();
+			fileParams.put("MW_SEQ", mwSeq);
+			
+			if(fileList.length() > 0 ) {
+				log.info("fileList:"+fileList);
+				
+				for(int y = 0 ; y < fileList.length() ; y++) {
+					
+					String originalFileName = fileList.get(y).toString();
+					log.info("originalFileName:"+originalFileName);
+					if (originalFileName!=null && !originalFileName.equals("")) {
+						String changeFileName = CommonUtil.filenameAutoChange(originalFileName);
+						String tempPath = GC.getMinwonFileTempDir();
+						String dataPath = GC.getMinwonFileDataDir() + "/"+ "m_seq_"+mwSeq;
+						
+						fileParams.put("FILE_PATH", dataPath +"/"+ changeFileName);	//파일명이 바뀌기 때문에.
+						fileParams.put("FILE_NAME", originalFileName);
+						fileParams.put("FILE_MINWON_SEQ", (y+1));
+	
+						if (CommonUtil.isFileExists(tempPath, originalFileName)) {
+							CommonUtil.moveFile(originalFileName, tempPath, dataPath, changeFileName);
+	
+							mainService.InsertQuery("issueSQL.insertMinwonAtchFileInfo", fileParams);
+						}
+						else log.info("파일을 찾을수 없습니다("+dataPath +"/"+ changeFileName+")");
+					}
+
+				}
+			}
+			
+			
 			
 			// ??? 민원PNU 삭제 이유는 ???
 			mainService.DeleteQuery("issueSQL.deleteMinwonPnu", params);

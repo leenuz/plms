@@ -625,7 +625,7 @@ $(document).on("click", "#newcomplaint_Popup .sangsinBtn", function() {
 					window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");	
 				}
 				
-			//	closeComplaintregisterPopup();
+				closeComplaintregisterPopup();
 			} else {
 				alert(data.message);
 			}
