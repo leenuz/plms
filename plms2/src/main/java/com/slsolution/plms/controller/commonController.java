@@ -388,7 +388,7 @@ public class commonController {
 	
 	
 	//Post맵핑
-	@PostMapping(path="/addressSearch")
+	@PostMapping(path="/addressSearchSido")
 	public ModelAndView commonAddressSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
@@ -399,119 +399,81 @@ public class commonController {
 		String pageName = reqParamsObj.getString("PAGE_NAME");
 		
 		//이제 이거 굳이 필요 한가? - 그래도 우선 고민.
-		System.out.println(menuName);
-		System.out.println(pageName);
+//		System.out.println(menuName);
+//		System.out.println(pageName);
+		
+		ArrayList<HashMap> sidoList = mainService.selectQuery("commonSQL.selectSidoList", null);
 		
 		mav.addObject("test", "Controller Success");
+		mav.addObject("sidoList", sidoList);
 		
-		
+		//공통 주소 팝업
 		mav.setViewName("content/jisang/land_searchResultsPopup2 :: #land_searchResultsPopup");
 		
 		return mav;
 	}
 	
-	
-	
-	
-	/************************************
-	 * file 다운로드시 사용 (이걸로 통일!!)
-	 * 해당 메소드로 요청시 참고 스크립트 및 메소드 ( common.js - commonFileDownload )
-	 * @param filePath
-	 * @param fileName
-	 * @return
-	 **********************/
-//	@GetMapping("/downloadfile3")
-//	public ResponseEntity<Resource> downloadFile3(
-//				@RequestParam(name="filePath") String filePath,
-//				@RequestParam(name="fileName") String fileName
-//				
-//				) throws IOException, URISyntaxException{
-//		// 파일을 클라이언트로 반환하기 위해 InputStream으로 변환
-//		InputStream inputStream;
-//		Resource resource;
-//		
-//		// 기본적인 MIME 타입 지정
-//		String contentType = "";
-//		
-//		//파일이름 인코딩
-//		String encodedFileName = "";
-//		
-//		String downloadUrl = "";
-//		boolean filePathcheck = filePath.contains("/uploadfile");
-//		
-//		if(filePathcheck) {	//기존꺼라면 다운로드
-//			downloadUrl = "http://plms.dopco.co.kr/dcl/jr/downloadFile?file_no="+fileJisangNo+"&file_seq="+fileSeq+"&file_gubun="+fileGubun;	//운영
-//			
-//			// RestTemplate를 사용한 외부서버로부터 파일 받아오기
-//			RestTemplate restTemplate = new RestTemplate();
-//			byte[] fileData = restTemplate.getForObject(new URI(downloadUrl), byte[].class);
-//			
-//			log.info("==================================");
-//			log.info("downloadUrl CHECK (download) :: " + downloadUrl);
-//			log.info("==================================");
-//			
-//			if(fileData == null || fileData.length == 0) {
-//				throw new RuntimeException("파일을 가져올 수 없습니다. " + fileName);
-//			}
-//			
-//			inputStream = new ByteArrayInputStream(fileData);
-//			resource = new InputStreamResource(inputStream);
-//			
-//			contentType = "application/octet-stream";
-//		} else {	//신규라면 파일 다운로드
-//			//신규라면
-//			downloadUrl = filePath;
-//			
-//			log.info("==================================");
-//			log.info("downloadUrl CHECK (filepath) :: " + downloadUrl);
-//			log.info("==================================");
-//			
-//			File file = new File(downloadUrl);
-//			
-//			if(!file.exists()) {
-//				throw new RuntimeException("파일이 없습니다. :: " + fileName);				
-//			}
-//			
-//			contentType = Files.probeContentType(file.toPath());
-//			
-//			if(contentType == null) {
-//				contentType = "application/octet-stream";
-//			}
-//			
-//			try {
-//				inputStream = new FileInputStream(file);
-//				resource = new InputStreamResource(inputStream);	
-//			} catch(IOException e) {
-//				log.error("============filedown ERROR [S] ==========");
-//				e.printStackTrace();
-//				log.error("============filedown ERROR [E] ==========");
-//				throw new RuntimeException("파일 읽는 도중 오류가 발생했습니다.");
-//			}
-//			
-//			
-//			contentType = Files.probeContentType(file.toPath());
-//			if (contentType == null) {
-//				contentType = "application/octet-stream";  // 기본 MIME 타입
-//			}
-//		}
-//		
-//		encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
-//		encodedFileName = encodedFileName.replaceAll("\\+", "%20");  // 공백 처리
-//		
-//		log.info("============= FINAL ================");
-//		log.info("filePath :: " + filePath);
-//		log.info("fileName :: " + fileName);
-//		log.info("fileJisangNo :: " + fileJisangNo);
-//		log.info("fileSeq :: " + fileSeq);
-//		log.info("fileGubun :: " + fileGubun);
-//		log.info("file URL :: " + downloadUrl);
-//		log.info("====================================");
-//		
-//		// 클라이언트로 파일 전송(파일 이름 및 다운로드 위한 헤더 설정)
-//		return ResponseEntity.ok()
-//				.contentType(MediaType.parseMediaType(contentType))
-//				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+encodedFileName+"\"; filename*=UTF-8''"+encodedFileName)
-//				.body(resource);
-//	}
-	
+	@PostMapping(path="/searchRemainAddress")
+	public void commonSigunguSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String reqParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject reqParamsObj = new JSONObject(reqParams);
+		
+		String selectOption = reqParamsObj.getString("SELECT_OPTION");
+		String selectSido = reqParamsObj.getString("SELECT_SIDO");
+		
+		String selectSigungu = "";
+		String selectEmd = "";
+		
+		
+		HashMap searchMap = new HashMap();
+		searchMap.put("SELECT_SIDO", selectSido);
+		
+		//시군구 값 확인
+		if(reqParamsObj.has("SELECT_SIGUNGU")) {
+			selectSigungu = reqParamsObj.getString("SELECT_SIGUNGU");
+			searchMap.put("SELECT_SIGUNGU", reqParamsObj.getString("SELECT_SIGUNGU"));
+		}
+		
+		//읍면동 값 확인
+		if(reqParamsObj.has("SELECT_EMD")) {
+			selectEmd = reqParamsObj.getString("SELECT_SIGUNGU");
+			searchMap.put("SELECT_SIGUNGU", reqParamsObj.getString("SELECT_SIGUNGU"));
+			//searchMap.put("SELECT_EMD", reqParamsObj.getString("SELECT_EMD"));
+		}
+		
+		//리 값 확인
+		if(reqParamsObj.has("SELECT_RI")) {
+			searchMap.put("SELECT_SIGUNGU", reqParamsObj.getString("SELECT_SIGUNGU"));
+			searchMap.put("SELECT_EMD", reqParamsObj.getString("SELECT_EMD"));
+			//searchMap.put("SELECT_RI", reqParamsObj.getString("SELECT_RI"));
+		}
+		
+		String targetQuery = "";
+		
+		if("sigungu".equals(selectOption)) {
+			targetQuery = "commonSQL.selectSigunguList";
+		} else if("emd".equals(selectOption)) {
+			targetQuery = "commonSQL.selectEmdList";
+		} else if("ri".equals(selectOption)) {
+			targetQuery = "commonSQL.selectSigunguList";
+		}
+		
+		System.out.println("targetQuery :: " + targetQuery);
+		
+		ArrayList<HashMap> sigunguList = mainService.selectQuery(targetQuery, searchMap);
+		
+		JSONObject resultObj = new JSONObject();
+		
+		resultObj.put("result", "Y");
+		resultObj.put("sigunguList", sigunguList);
+		
+		response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Cache-Control", "no-cache");
+        response.resetBuffer();
+        response.setContentType("application/json");
+        response.getWriter().print(resultObj);
+        response.getWriter().flush();
+	}
 }

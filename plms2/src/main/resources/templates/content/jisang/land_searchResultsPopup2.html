@@ -27,52 +27,38 @@
                                 <li class="title">주소</li>
                             </ul>
                             <ul class="contents">
+                            	<!-- 시도 [S] -->
                                 <li class="content popSelectWrap">
                                     <div class="hiddenSelectBox">
                                         <!-- name도 추가 -->
-                                        <select name="landSearchSelectBox02" id="landSearchSelectBox02" hidden>
-                                            <option value="선택1">선택1</option>
-                                            <option value="선택2">선택2</option>
-                                            <option value="선택3">선택3</option>
-                                            <option value="선택4">선택4</option>
-                                            <option value="선택5">선택5</option>
-                                            <option value="선택6">선택6</option>
-                                            <option value="선택7">선택7</option>
-                                            <option value="선택8">선택8</option>
-                                            <option value="선택9">선택9</option>
-                                            <option value="선택10">선택10</option>
+                                        <select name="landSearchSelectBox02" id="sidoSelectBox" th:each="val:${sidoList}" hidden>
+                                            <option th:value="${val.sido_nm}">[[${val.sido_nm}]]</option>
                                         </select>
                                     </div>
-                                    <section class="PopupCustomSelectBox">
-                                        <button class="PopupCustomSelectView">선택</button>
-
-                                        <ul class="PopupCustomSelectBtns">
+                                    <section class="PopupCustomSelectBox" onclick="selectSido(this)">
+                                        <button class="PopupCustomSelectView" id="sidoSelectValue">선택</button>
+                                        <ul class="PopupCustomSelectBtns" id="sidoSelectUl">
                                             <!-- <li><button class="PopupMoreSelectBtn">선택1</button></li>
                                             <li><button class="PopupMoreSelectBtn">선택2</button></li>
                                             <li><button class="PopupMoreSelectBtn">선택3</button></li> -->
                                         </ul>
                                     </section>
                                 </li>
+                                <!-- 시도 [E] -->
+                                
+                                <!-- 시군구 [S] -->
                                 <li class="content popSelectWrap">
                                     <div class="hiddenSelectBox">
                                         <!-- name도 추가 -->
-                                        <select name="landSearchSelectBox03" id="landSearchSelectBox03" hidden>
+                                        <select name="landSearchSelectBox03" id="sigunguSelectBox" hidden>
                                             <option value="선택1">선택1</option>
                                             <option value="선택2">선택2</option>
                                             <option value="선택3">선택3</option>
-                                            <option value="선택4">선택4</option>
-                                            <option value="선택5">선택5</option>
-                                            <option value="선택6">선택6</option>
-                                            <option value="선택7">선택7</option>
-                                            <option value="선택8">선택8</option>
-                                            <option value="선택9">선택9</option>
-                                            <option value="선택10">선택10</option>
                                         </select>
                                     </div>
-                                    <section class="PopupCustomSelectBox">
-                                        <button class="PopupCustomSelectView">선택</button>
-
-                                        <ul class="PopupCustomSelectBtns">
+                                    <section class="PopupCustomSelectBox" onclick="selectSigungu(this)">
+                                        <button class="PopupCustomSelectView" id="sigunguSelectValue">선택</button>
+                                        <ul class="PopupCustomSelectBtns" id="sigunguSelectUl">
                                             <li>
                                                 <button class="PopupMoreSelectBtn">선택1</button>
                                             </li>
@@ -85,58 +71,50 @@
                                         </ul>
                                     </section>
                                 </li>
+                                <!-- 시군구 [E] -->
+                                
+                                <!-- 읍면동 [S] -->
                                 <li class="content popSelectWrap">
                                     <div class="hiddenSelectBox">
                                         <!-- name도 추가 -->
-                                        <select name="landSearchSelectBox04" id="landSearchSelectBox04" hidden>
+                                        <select name="landSearchSelectBox04" id="emdSelectBox" hidden>
                                             <option value="선택1">선택1</option>
                                             <option value="선택2">선택2</option>
                                             <option value="선택3">선택3</option>
-                                            <option value="선택4">선택4</option>
-                                            <option value="선택5">선택5</option>
-                                            <option value="선택6">선택6</option>
-                                            <option value="선택7">선택7</option>
-                                            <option value="선택8">선택8</option>
-                                            <option value="선택9">선택9</option>
-                                            <option value="선택10">선택10</option>
                                         </select>
                                     </div>
-                                    <section class="PopupCustomSelectBox">
-                                        <button class="PopupCustomSelectView">선택</button>
-
-                                        <ul class="PopupCustomSelectBtns">
+                                    <section class="PopupCustomSelectBox" onclick="selectEmd(this)">
+                                        <button class="PopupCustomSelectView" id="emdSelectValue">선택</button>
+                                        <ul class="PopupCustomSelectBtns" id="emdSelectUl">
                                             <!-- <li><button class="PopupMoreSelectBtn">선택1</button></li>
                                             <li><button class="PopupMoreSelectBtn">선택2</button></li>
                                             <li><button class="PopupMoreSelectBtn">선택3</button></li> -->
                                         </ul>
                                     </section>
                                 </li>
+                                <!-- 읍면동 [E] -->
+                                
+                                <!-- 리 [S] -->
                                 <li class="content popSelectWrap">
                                     <div class="hiddenSelectBox">
                                         <!-- name도 추가 -->
-                                        <select name="landSearchSelectBox05" id="landSearchSelectBox05" hidden>
+                                        <select name="landSearchSelectBox05" id="riSelectBox" hidden>
                                             <option value="선택1">선택1</option>
                                             <option value="선택2">선택2</option>
                                             <option value="선택3">선택3</option>
-                                            <option value="선택4">선택4</option>
-                                            <option value="선택5">선택5</option>
-                                            <option value="선택6">선택6</option>
-                                            <option value="선택7">선택7</option>
-                                            <option value="선택8">선택8</option>
-                                            <option value="선택9">선택9</option>
-                                            <option value="선택10">선택10</option>
                                         </select>
                                     </div>
-                                    <section class="PopupCustomSelectBox">
-                                        <button class="PopupCustomSelectView">선택</button>
+                                    <section class="PopupCustomSelectBox" onclick="selectRi(this)">
+                                        <button class="PopupCustomSelectView" id="riSelectValue">선택</button>
 
-                                        <ul class="PopupCustomSelectBtns">
+                                        <ul class="PopupCustomSelectBtns" id="riSelectUl">
                                             <!-- <li><button class="PopupMoreSelectBtn">선택1</button></li>
                                             <li><button class="PopupMoreSelectBtn">선택2</button></li>
                                             <li><button class="PopupMoreSelectBtn">선택3</button></li> -->
                                         </ul>
                                     </section>
                                 </li>
+                                <!-- 리 [E] -->
                             </ul>
                         </div>
                     </div>
@@ -331,109 +309,112 @@
         </div>
     </div>
     <script>
-        const landcreatePopCustomLiResult = () => {
-            // hiddenSelectBox와 PopupCustomSelectBox를 묶는 큰 wrap
-            const popSelectWrapItems = document.querySelectorAll(
-                "#land_searchResultsPopup .popSelectWrap"
+    /*
+    const landcreatePopCustomLiResult = () => {
+        // hiddenSelectBox와 PopupCustomSelectBox를 묶는 큰 wrap
+        const popSelectWrapItems = document.querySelectorAll(
+            "#land_searchResultsPopup .popSelectWrap"
+        );
+
+        popSelectWrapItems.forEach((contentItem) => {
+            // 그 안에 있는 select를 선택
+            const nowIssueSelectBox = contentItem.querySelector("select");
+            // select가 없으면 return
+            if (!nowIssueSelectBox) return;
+
+            const popCustomSelectBox = contentItem.querySelector(
+                ".PopupCustomSelectBox"
+            );
+            const popCustomSelectBtns = popCustomSelectBox.querySelector(
+                ".PopupCustomSelectBtns"
             );
 
-            popSelectWrapItems.forEach((contentItem) => {
-                // 그 안에 있는 select를 선택
-                const nowIssueSelectBox = contentItem.querySelector("select");
-                // select가 없으면 return
-                if (!nowIssueSelectBox) return;
-
-                const popCustomSelectBox = contentItem.querySelector(
-                    ".PopupCustomSelectBox"
-                );
-                const popCustomSelectBtns = popCustomSelectBox.querySelector(
-                    ".PopupCustomSelectBtns"
-                );
-
-                for (let i = 0; i < nowIssueSelectBox.length; i++) {
-                    const optionValue = nowIssueSelectBox.options[i].value;
-                    const li = document.createElement("li");
-                    const button = document.createElement("button");
-                    button.classList.add("PopupMoreSelectBtn");
-                    button.type = "button";
-                    button.textContent = optionValue;
-                    li.appendChild(button);
-                    popCustomSelectBtns.appendChild(li);
-                }
-            });
-        };
-
-        landcreatePopCustomLiResult();
-
-        // 팝업 select click 시 .PopupCustomSelectBtns 나오게
-
-        const customSelectView = document.querySelectorAll(
-            "#land_searchResultsPopup .PopupCustomSelectView"
-        );
-
-        customSelectView.forEach((btn) => {
-            btn.addEventListener("click", function() {
-                btn.classList.toggle("active");
-                if (btn.nextElementSibling) {
-                    btn.nextElementSibling.classList.toggle("active");
-                }
-            });
+            for (let i = 0; i < nowIssueSelectBox.length; i++) {
+                const optionValue = nowIssueSelectBox.options[i].value;
+                const li = document.createElement("li");
+                const button = document.createElement("button");
+                button.classList.add("PopupMoreSelectBtn");
+                button.type = "button";
+                button.textContent = optionValue;
+                li.appendChild(button);
+                popCustomSelectBtns.appendChild(li);
+            }
         });
+    };
+	*/
+	
+    //landcreatePopCustomLiResult();
 
-        // 대분류, 중분류, 소분류 안에 button click 했을 때 해당 내용으로 바뀌게하기
+    // 팝업 select click 시 .PopupCustomSelectBtns 나오게
+	/*
+    const customSelectView = document.querySelectorAll(
+        "#land_searchResultsPopup .PopupCustomSelectView"
+    );
 
-        const PopupMoreSelectBtn = document.querySelectorAll(
-            "#land_searchResultsPopup .PopupMoreSelectBtn"
-        );
-
-        PopupMoreSelectBtn.forEach((moreBtn) => {
-            moreBtn.addEventListener("click", function() {
-                var moreBtnText = moreBtn.innerText;
-                console.log(moreBtnText);
-                const parentMoreBtn = moreBtn.closest(".PopupCustomSelectBtns");
-                const editViewBtn = parentMoreBtn.previousElementSibling;
-
-                while (editViewBtn.firstChild) {
-                    editViewBtn.removeChild(editViewBtn.firstChild);
-                }
-
-                const textNode = document.createTextNode(moreBtnText);
-                editViewBtn.appendChild(textNode);
-
-                editViewBtn.classList.remove("active");
-                parentMoreBtn.classList.remove("active");
-
-                // 선택한 걸 select의 value값으로 변경하기
-
-                // 팝업은 popSelectWrap로 묶는다
-                const nearByContent = moreBtn.closest(".popSelectWrap");
-                const nearBySelectBox = nearByContent.querySelector("select");
-                nearBySelectBox.value = moreBtn.textContent;
-                console.log(`Selected value: ${nearBySelectBox.value}`);
-            });
+    customSelectView.forEach((btn) => {
+        btn.addEventListener("click", function() {
+            btn.classList.toggle("active");
+            if (btn.nextElementSibling) {
+                btn.nextElementSibling.classList.toggle("active");
+            }
         });
+    });
+	*/
+    // 대분류, 중분류, 소분류 안에 button click 했을 때 해당 내용으로 바뀌게하기
+	/*
+    const PopupMoreSelectBtn = document.querySelectorAll(
+        "#land_searchResultsPopup .PopupMoreSelectBtn"
+    );
 
-        // 저장, 닫기 버튼 click시 팝업 사라지게
+    PopupMoreSelectBtn.forEach((moreBtn) => {
+        moreBtn.addEventListener("click", function() {
+            var moreBtnText = moreBtn.innerText;
+            console.log(moreBtnText);
+            const parentMoreBtn = moreBtn.closest(".PopupCustomSelectBtns");
+            const editViewBtn = parentMoreBtn.previousElementSibling;
 
-        const landPopupFinalBtns = document.querySelector(
-            "#land_searchResultsPopup .popupWrap .lastBtnBox .finalBtn"
-        );
+            while (editViewBtn.firstChild) {
+                editViewBtn.removeChild(editViewBtn.firstChild);
+            }
 
-        landPopupFinalBtns.addEventListener("click", function() {
-            const PopupWrap = landPopupFinalBtns.closest(".popupWrap");
-            PopupWrap.classList.remove("active");
+            const textNode = document.createTextNode(moreBtnText);
+            editViewBtn.appendChild(textNode);
+
+            editViewBtn.classList.remove("active");
+            parentMoreBtn.classList.remove("active");
+
+            // 선택한 걸 select의 value값으로 변경하기
+
+            // 팝업은 popSelectWrap로 묶는다
+            const nearByContent = moreBtn.closest(".popSelectWrap");
+            const nearBySelectBox = nearByContent.querySelector("select");
+            nearBySelectBox.value = moreBtn.textContent;
+            console.log(`Selected value: ${nearBySelectBox.value}`);
         });
+    });
+
+    // 저장, 닫기 버튼 click시 팝업 사라지게
+
+    const landPopupFinalBtns = document.querySelector(
+        "#land_searchResultsPopup .popupWrap .lastBtnBox .finalBtn"
+    );
+
+    landPopupFinalBtns.addEventListener("click", function() {
+        const PopupWrap = landPopupFinalBtns.closest(".popupWrap");
+        PopupWrap.classList.remove("active");
+    });
 
 
-        // x 버튼 click시 팝업 사라지게
-        const landtopCloseBtn = document.querySelector(
-            "#land_searchResultsPopup .popupWrap .topCloseBtn"
-        );
+    // x 버튼 click시 팝업 사라지게
+    const landtopCloseBtn = document.querySelector(
+        "#land_searchResultsPopup .popupWrap .topCloseBtn"
+    );
 
-        landtopCloseBtn.addEventListener("click", function() {
-            const PopupWrap = landtopCloseBtn.closest(".popupWrap");
-            PopupWrap.classList.remove("active");
-        });
+    landtopCloseBtn.addEventListener("click", function() {
+        const PopupWrap = landtopCloseBtn.closest(".popupWrap");
+        PopupWrap.classList.remove("active");
+    });
+    */
     </script>
 </body>
 
