@@ -1117,5 +1117,16 @@ $(document).on("click","#bunhalComplete",function(){
 				   		}); 
 })
 
-
+// 지상권 분할 양식 샘플 다운로드
+function sampleFileDownload(fileName) {
+	alert("샘플 파일 준비 중입니다.");
+	
+    // HTML 요소에서 data-sample-dir 속성 값을 가져옴
+    /*
+		var sampleFileDataDir = document.querySelector('.essentialDocuList').getAttribute('data-sample-dir');
+		
+    var filePath = sampleFileDataDir + '/' + fileName;  // sampleFileDataDir와 파일 이름을 결합하여 파일 경로 생성
+    commonFileDownload(filePath, fileName, '', '', '');
+		*/
+}
 

@@ -4559,6 +4559,7 @@ log.info("PMT_NO:"+PMT_NO);
 		mav.addObject("soujaList",soujaList);
 		mav.addObject("bunhalList",bunhalList);
 		mav.addObject("atcfileList",atcfilelist);
+		mav.addObject("sampleFileDataDir", GC.getSampleFileDataDir()); // 첨부 서류 샘플양식 다운로드 경로
 		
 		log.info("resultData:"+ data.get(0));
 		log.info("soujaList:"+soujaList);
@@ -7489,23 +7490,24 @@ log.info("gubun:"+gubun);
 		 
 
 		
-      			//mav.addObject("resultData",data.get(0));
-      			//mav.addObject("soujaList",soujaList);
-      		//	mav.addObject("jisangPermitList",jisangPermitList);
-      			//mav.addObject("atcFileList",atcFileList);
-      			//mav.addObject("jisangModifyList",jisangModifyList);
-      			//mav.addObject("jisangMergeList",jisangMergeList);
-      			
-      			//mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
-      			//mav.addObject("jisangIssueList",jisangIssueList);
-      			//mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
-      			//mav.addObject("memoList",jisangMemoList);
-      			mav.addObject("jisaList",jisalist);
-      			mav.addObject("sidoList",sidolist);
-      			//mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
-      			mav.addObject("reqDoc2list",fileList);
-      			mav.setViewName("content/jisang/usePermitRegister");
-      			return mav;
+		//mav.addObject("resultData",data.get(0));
+		//mav.addObject("soujaList",soujaList);
+	//	mav.addObject("jisangPermitList",jisangPermitList);
+		//mav.addObject("atcFileList",atcFileList);
+		//mav.addObject("jisangModifyList",jisangModifyList);
+		//mav.addObject("jisangMergeList",jisangMergeList);
+		
+		//mav.addObject("jisangPnuAtcFileList",jisangPnuAtcFileList);
+		//mav.addObject("jisangIssueList",jisangIssueList);
+		//mav.addObject("jisangIssueHistoryList",jisangIssueHistoryList);
+		//mav.addObject("memoList",jisangMemoList);
+		mav.addObject("jisaList",jisalist);
+		mav.addObject("sidoList",sidolist);
+		//mav.addObject("jisangIssueCodeAtcFileList",jisangIssueCodeAtcFileList);
+		mav.addObject("reqDoc2list",fileList);
+		mav.addObject("sampleFileDataDir", GC.getSampleFileDataDir()); // 첨부 서류 샘플양식 다운로드 경로
+		mav.setViewName("content/jisang/usePermitRegister");
+		return mav;
     }
 	@PostMapping(path="/getJibunAddress") //http://localhost:8080/api/get/dbTest
 	public ModelAndView getJibunAddress(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
@@ -7754,8 +7756,9 @@ log.info("gubun:"+gubun);
 		mav.addObject("sidoList",sidolist);
 		mav.addObject("reqDoc2list",fileList);
 		mav.addObject("reqDoc3list",fileProList);
+		mav.addObject("sampleFileDataDir", GC.getSampleFileDataDir()); // 첨부 서류 샘플양식 다운로드 경로
+		
 		mav.setViewName("content/jisang/usePermitEdit");
-
 		return mav;
     }
 	
@@ -7885,6 +7888,8 @@ log.info("gubun:"+gubun);
 		mav.addObject("loginKey", String.valueOf(httpRequest.getSession().getAttribute("loginKey")));
 		mav.addObject("reqDoc1list", reqDoc1list);
 		mav.addObject("repIdx", repIdx);
+		mav.addObject("sampleFileDataDir", GC.getSampleFileDataDir()); // 첨부 서류 샘플양식 다운로드 경로
+		
 		mav.setViewName("content/jisang/landRightMerge");
 		return mav;
 	}
