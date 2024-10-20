@@ -621,6 +621,7 @@ $(document).on("click", "#newcomplaint_Popup .sangsinBtn", function() {
 					newWindow.document.close();
 				}
 				else {
+					alert("상신처리가 되었습니다.");
 					var urls = data.OUT_URL;
 					window.open(urls, "상신", "width=1200, height=700, toolbar=no, menubar=no, scrollbars=yes, resizable=yes");	
 				}
