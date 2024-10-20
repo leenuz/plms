@@ -525,8 +525,49 @@ function commonFileView(filePath, fileName, fileJisangNo, fileSeq, fileGubun) {
 	window.open(url, '_self');  // 새 창이나 새 탭에서 파일 다운로드
 }
 
-//쿼리 path obeject화
+//
 function queryValueToObject(str) {
+	const cleanedStr = str.slice(1,-1);	//양 끝 괄호 제거
+	
+	const entries = cleanedStr.split(', ').map(entry => {
+		const [key, value] = entry.split('=');
+		
+		//null처리, 숫자 처리, 큰 숫자는 문자열로 유지
+		let parsedValue;
+		
+		// 1. null 처리
+		if( value === 'null' ) {
+			parsedValue = null;
+		}
+		
+		// 2. 빈 문자열 처리
+        else if (value === '') {
+            parsedValue = null;
+        } 
+		
+		// 3. 숫자처리 및 큰 숫자는 문자열로 유지
+		else if (!isNaN(value) && value.length < 16) {
+			parsedValue = Number(value);
+		}
+		// 4. 배열형태로 오는것 처리(쉼표로 구분된 값들을 배열로 인식)
+		else if (value.includes(',')) {
+			parsedValue = value.split(',').map(v => v.trim());
+		}
+		// 5. 나머지 값은 그대로 문자열 처리
+		else {
+			parsedValue = value;
+		}
+		
+		return [key, parsedValue];
+	});
+	
+	const jsonObj = Object.fromEntries(entries);
+	
+	return jsonObj;
+}
+
+//쿼리 path obeject화 2
+function queryValueToObject2(str) {
 	const cleanedStr = str.slice(1,-1);	//양 끝 괄호 제거
 	
 	const entries = [];

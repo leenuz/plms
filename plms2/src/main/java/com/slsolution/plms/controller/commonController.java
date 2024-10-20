@@ -456,17 +456,17 @@ public class commonController {
 		} else if("emd".equals(selectOption)) {
 			targetQuery = "commonSQL.selectEmdList";
 		} else if("ri".equals(selectOption)) {
-			targetQuery = "commonSQL.selectSigunguList";
+			targetQuery = "commonSQL.selectRiList";
 		}
 		
 		System.out.println("targetQuery :: " + targetQuery);
 		
-		ArrayList<HashMap> sigunguList = mainService.selectQuery(targetQuery, searchMap);
+		ArrayList<HashMap> selectAddressList = mainService.selectQuery(targetQuery, searchMap);
 		
 		JSONObject resultObj = new JSONObject();
 		
 		resultObj.put("result", "Y");
-		resultObj.put("sigunguList", sigunguList);
+		resultObj.put("selectAddressList", selectAddressList);
 		
 		response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");

@@ -103,7 +103,7 @@ function selectEmd() {
 		$("#emdListBtn_"+index).on('click', function(){
 			let selectedValue = $(this).text();  // 선택된 버튼의 텍스트
 			$("#emdSelectValue").text(selectedValue);  // 선택된 값으로 텍스트 변경
-			searchRemainAddress('emd');	//읍면동 검색
+			searchRemainAddress('ri');	//읍면동 검색
 		});
 		
 	});
@@ -181,7 +181,7 @@ function makeSelectBoxContentFunc(data, nextVal){
 		let sbHtml = '';
 		
 		if(data.result == 'Y') {
-			let sigunguList = data.sigunguList;
+			let sigunguList = data.selectAddressList;
 			
 			if(sigunguList.length > 0) {
 				for(let i = 0 ;i < sigunguList.length ; i++) {
@@ -196,6 +196,24 @@ function makeSelectBoxContentFunc(data, nextVal){
 		
 	} else if(nextVal == 'emd') {
 		console.log('읍면동값 세팅');
+		console.log(data);
+		
+		let sbHtml = '';
+		
+		if(data.result == 'Y') {
+			let emdList = data.selectAddressList;
+			
+			if(emdList.length > 0) {
+				for(let i = 0 ;i < emdList.length ; i++) {
+					let sigunguInfo = emdList[i];
+					sbHtml += '<option value="'+sigunguInfo.emd_nm+'">'+sigunguInfo.emd_nm+'</option>';
+				}
+				$("#emdSelectBox").empty();
+				$("#emdSelectBox").append(sbHtml);
+			}
+		}
+	} else {
+		console.log('리 세팅');
 		console.log(data);
 	}
 }
@@ -213,16 +231,12 @@ function jusoParamValidation() {
 	}
 	
 	if($("#emdSelectValue").text() != '선택') {
-		
+		validationObj.SELECT_EMD = commonNvl($("#emdSelectValue").text(), -1);
 	}
 	
-	if() {
-		
+	if($("#riSelectValue").text() != '선택') {
+		validationObj.SELECT_RI = commonNvl($("#riSelectValue").text(), -1);
 	}
-	
-	
-	validationObj.SELECT_EMD = commonNvl($("#emdSelectValue").text(), -1);
-	validationObj.SELECT_RI = commonNvl($("#riSelectValue").text(), -1);
 	
 	return validationObj;
 }

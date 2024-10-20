@@ -658,14 +658,14 @@ SELECT PNU
 </update>
 
 <!-- 시도 정보 조회 -->
-<select id="selectSidoList" resultType="java.util.HashMap">
+<select id="selectSidoList" parameterType="HashMap" resultType="java.util.HashMap">
 	SELECT A.sido_nm
 	FROM jijuk_addr_2024 A
 	GROUP BY A.sido_nm 
 </select>
 
 <!-- 시군구 정보 조회 -->
-<select id="selectSigunguList" resultType="java.util.HashMap">
+<select id="selectSigunguList" parameterType="HashMap" resultType="java.util.HashMap">
 	SELECT A.sgg_nm
 	  FROM jijuk_addr_2024 A
 	 WHERE A.sido_nm = #{SELECT_SIDO}
@@ -673,15 +673,20 @@ SELECT PNU
 </select>
 
 <!-- 읍면동 조회 -->
-<select id="selectEmdList" resultType="java.util.HashMap">
+<select id="selectEmdList" parameterType="HashMap" resultType="java.util.HashMap">
 	SELECT A.emd_nm
 	  FROM jijuk_addr_2024 A
 	 WHERE A.sido_nm = #{SELECT_SIDO}
 	   AND A.sgg_nm  = #{SELECT_SIGUNGU}
-	   AND A.emd_nm  = #{SELECT_EMD}
+  GROUP BY A.emd_nm
 </select>
 
-
 <!-- 리 조회-->
-
+<select id="selectRiList" resultType="java.util.HashMap">
+	SELECT ri_nm 
+	  FROM jijuk_addr_2024 A
+     WHERE A.sido_nm = #{SELECT_SIDO}
+       AND A.sgg_nm = #{SELECT_SIGUNGU}
+       AND A.emd_nm = #{SELECT_EMD}
+</select>
 </mapper>
