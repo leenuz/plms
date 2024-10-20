@@ -475,7 +475,7 @@ function getPopupJsonData() {
 		obj.birth_date = $(ul).find('input').eq(2).val(); //생년월일
 		obj.relation = $(ul).find('input').eq(3).val(); //토지주와 관계
 		obj.phone = $(ul).find('input').eq(4).val(); //연락처
-		obj.attendance = $(ul).find('select').val(); //현장입회
+		obj.attendance = $("#landowner_presence_"+index).text() == 'Y/N'? 'N' : $("#landowner_presence_"+index).text(); //현장입회
 		dataObj.userList.push(obj);
 	});
 
@@ -521,7 +521,7 @@ function getPopupJsonData() {
 		let ownerBirth = commonNvl( $("#landowner_birthday_"+(p+1)).val(), "-" )  + "|";
 		let ownerRelation = commonNvl( $("#landowner_relation_"+(p+1)).val(), "-" )  + "|";
 		let ownerPhone = commonNvl( $("#landowner_phone_"+(p+1)).val(), "-" )  + "|";
-		let owerPresence = commonNvl( $("#landowner_presence"+(p+1)).text(), "N" )  + "|";
+		let owerPresence = commonNvl( $("#landowner_presence_"+(p+1)).text(), "N" )  + "|";
 		/*
 		min_to_nameArr.push(ownerNm);
 		min_to_birthArr.push(ownerBirth);
