@@ -170,6 +170,7 @@ div.dt-filter-spacer {
 					</th:block>
 					
 					<th:block th:if="${serverName == 'LIVE'}">
+						<button class="toolBtn viewBtn" th:if="${minwon.mm_status == '1'}" onclick="tempSaveMinwonEdit()">민원 수정/상신</button>
 						<button class="toolBtn viewBtn" th:if="${minwon.mm_status == '2'}" id="minwonResponsePopup">대응방안 수립</button>
 						<button class="toolBtn completeBtn complainFinBtn" th:if="${minwon.mm_status == '4'}" onclick="complaintPopupOpen()">민원완료</button>
 					</th:block>
