@@ -235,7 +235,7 @@ function downloadFile(filePath, fileName) {
 
 // 수정 버튼 클릭 이벤트 리스너
 $(document).ready(function() {
-	$('#issueEditBtn').on('click', function() {
+	$('#issueEditBtn_bottom').on('click', function() {
 		const urlParams = new URL(location.href).searchParams;
 		const idx = urlParams.get('idx');
 		const index = urlParams.get('index');

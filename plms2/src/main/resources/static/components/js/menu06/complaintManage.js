@@ -552,7 +552,7 @@ function onDataLoad() {
 function updateDocumentSelectBox(minwonStatus) {
     const $ul = $('.customSelectBtns');
     $ul.empty();  // 기존 항목 초기화
-	let approvalInfo = queryValueToObject2($('#approvalList').val());
+	let approvalInfo = JSON.parse($('#approvalList').val());
 	
     if (minwonStatus === '2') { // 발생
         $ul.append(`<li><button class="moreSelectBtn" type="button" data-url="${approvalInfo.echo_url}">민원발생보고</button></li>`);

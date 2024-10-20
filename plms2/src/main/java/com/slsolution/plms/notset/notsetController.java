@@ -358,7 +358,10 @@ public class notsetController {
 		mav.addObject("sidoList",sidolist);
 		
 		mav.addObject("resultData",data.get(0));
+		JSONArray jsonArray = new JSONArray(soujaList);
 		mav.addObject("soujaList",soujaList);
+		mav.addObject("soujaListJSON",jsonArray);
+		
 		mav.addObject("atcFileList",atcFileList);
 //			mav.addObject("notsetPermitList",notsetPermitList);
 		mav.addObject("notsetModifyList",notsetModifyList);

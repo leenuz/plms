@@ -11,19 +11,19 @@
                     <span class="subject">권리확보</span>
                     <div class="popupInputWrap">
                         <div class="inputArea">
-                            <input type="radio" name="newGroundRight" id="newGroundRightSet">
+                            <input type="radio" name="newGroundRight" id="newGroundRightSet" value="DY" checked />
                             <label for="newGroundRightSet">지상권 설정</label>
                         </div>
                         <div class="inputArea">
-                            <input type="radio" name="newGroundRight" id="newGroundRightUnset">
+                            <input type="radio" name="newGroundRight" id="newGroundRightUnset" value="DN" />
                             <label for="newGroundRightUnset">지상권 미설정</label>
                         </div>
                         <div class="inputArea">
-                            <input type="radio" name="newGroundRight" id="newOccupancy">
+                            <input type="radio" name="newGroundRight" id="newOccupancy" value="GY" />
                             <label for="newOccupancy">점용</label>
                         </div>
                         <div class="inputArea">
-                            <input type="radio" name="newGroundRight" id="newNoOccupancy">
+                            <input type="radio" name="newGroundRight" id="newNoOccupancy" value="GN" >
                             <label for="newNoOccupancy">미점용</label>
                         </div>
                     </div>
@@ -32,11 +32,11 @@
                     <span class="subject">계약여부</span>
                     <div class="popupInputWrap">
                         <div class="inputArea">
-                            <input type="radio" name="newContractStatus" id="NewContractSigned">
+                            <input type="radio" name="newContractStatus" id="NewContractSigned" value="Y" checked />
                             <label for="NewContractSigned">계약 체결</label>
                         </div>
                         <div class="inputArea">
-                            <input type="radio" name="newContractStatus" id="newContractNotSigned">
+                            <input type="radio" name="newContractStatus" id="newContractNotSigned" value="N" />
                             <label for="newContractNotSigned">계약 미체결</label>
                         </div>
                     </div>
@@ -44,12 +44,13 @@
                 <li>
                     <span class="subject">대분류</span>
                     <section class="PopupCustomSelectBox">
-                        <button class="PopupCustomSelectView">
+                        <button class="PopupCustomSelectView" id="popup_custom_select_view_btn">
+                        	<input type="hidden" value="">
                             이슈없음
                             <figure></figure>
                         </button>
 
-                        <ul class="PopupCustomSelectBtns">
+                        <ul class="PopupCustomSelectBtns" id="popup_custom_select_depth1_btns">
                             <li><button class="PopupMoreSelectBtn">이슈없음01</button></li>
                             <li><button class="PopupMoreSelectBtn">이슈없음02</button></li>
                             <li><button class="PopupMoreSelectBtn">이슈없음03</button></li>
@@ -99,7 +100,7 @@
             </ul>
 
             <div class="lastBtnBox btnWrap">
-                <button class="saveBtn finalBtn">저장</button>
+                <button class="saveBtn finalBtn" id="saveBtn">저장</button>
                 <button class="backBtn finalBtn">닫기</button>
             </div>
         </div>
@@ -164,8 +165,8 @@ newIssuePopupMoreSelectBtn .forEach((moreBtn) => {
 
 
 // 저장, 닫기 버튼 click시 팝업 사라지게
-
-const newIssuePopupFinalBtns =  document.querySelectorAll('#newIssuePopup .popupWrap .lastBtnBox .finalBtn');
+/*
+const newIssuePopupFinalBtns =  document.querySelectorAll('#newIssuePopup .popupWrap .lastBtnBox');
 
 newIssuePopupFinalBtns.forEach((button) => {
     button.addEventListener('click',function(){
@@ -173,7 +174,7 @@ newIssuePopupFinalBtns.forEach((button) => {
         PopupWrap.classList.remove('active');
     })
 })
-
+*/
 // x 버튼 click시 팝업 사라지게
 
 const newIssuetopCloseBtn = document.querySelectorAll('#newIssuePopup .popupWrap .topCloseBtn');
