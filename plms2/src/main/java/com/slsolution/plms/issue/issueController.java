@@ -584,8 +584,12 @@ public class issueController {
 		String makeType = requestParamObj.getString("makeType");
 		
 		//삭제 파일리스트
-		String deleteFileList = requestParamObj.getString("deleteFileList");
-		JSONArray deleteFileArr = new JSONArray(deleteFileList);
+		JSONArray deleteFileArr=new JSONArray();
+		String deleteFileList = requestParamObj.has("deleteFileList")?requestParamObj.getString("deleteFileList"):"";
+		if (!deleteFileList.equals("") ) {
+			deleteFileArr = new JSONArray(deleteFileList);
+		}
+		
 		
 		ArrayList list = null;
 		HashMap map = new HashMap();
