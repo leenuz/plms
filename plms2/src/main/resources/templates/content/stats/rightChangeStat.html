@@ -7,6 +7,7 @@
     <title>권리별 증감현황</title>
     <link th:href="@{/css/common.css}" rel="stylesheet" />
     <link rel="stylesheet" href="/css/stats/rightChangeStat.css">
+     <script src="/vendor/exceljs.min.js"></script> 
 <!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
 <!--    <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">-->
 </head>
@@ -145,7 +146,7 @@
             <!-- 엑셀 다운로드 버튼 -->
 
             <div class="dataBtnWrap">
-                <button class="excelDownBtn" type="button">엑셀 다운로드</button>
+                <button class="excelDownBtn" id="rightChangeStatExcelDownloadBtn" type="button">엑셀 다운로드</button>
             </div>
 
             <!-- table부분 -->
@@ -349,6 +350,12 @@
                     <span class="topCloseBtn"></span>
                 </h2>
                 <div class="pilji_total">
+               <input type="hidden" name="hiddenGubun" id="hiddenGubun">
+                <input type="hidden" name="hiddenJisa" id="hiddenDesc">
+                <input type="hidden" name="hiddenYear" id="hiddenYear">
+                <input type="hidden" name="hiddenMonth" id="hiddenMonth">
+                <input type="hidden" name="hiddenJisangStatus" id="hiddenJisangStatus">
+                
                     <p>
                         <span>총 검색 건 수</span>
                         <span class="total_blue" id="popupCnt">130</span>
@@ -415,6 +422,7 @@
 		        </section>
                 <div class="lastBtnBox btnWrap">
                     <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+                    <button class="backbtn finalBtn" id="excelDownloadBtn" style="background: green;">엑셀다운로드</button>
                 </div>
             </div>
         </div>

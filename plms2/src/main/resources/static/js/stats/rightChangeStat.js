@@ -304,6 +304,15 @@ function iotPopup(year,month,desc,jisangStatus){
 				$("#popupNm").text("필지 정보");//검색기준년월
 				$("#popupCnt").text(response.dataTotalCnt);//비교기준년월
 				
+				//excel다운을 위해서 검색조건을 달고 가기 위함
+				$("#hiddenGubun").val("G");//비교기준년월
+				$("#hiddenDesc").val(desc);//비교기준년월
+				$("#hiddenYear").val(year);//비교기준년월
+				$("#hiddenMonth").val(month);//비교기준년월
+				$("#hiddenJisangStatus").val(jisangStatus);//비교기준년월
+
+				
+				
 				const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
 		  	   $(popupOpen).addClass("open");
 		  	   popupOpen.classList.add("active");
@@ -697,3 +706,332 @@ $(document).on("click","#rightChangeStatSearchBtn",function(){
 		});
 	
 });
+
+
+
+//조회하기 버튼 클릭
+$(document).on("click","#rightChangeStatExcelDownloadBtn",function(){
+	
+	/*exportDivToExcel();
+	return;*/
+	
+	//표를 비우기
+	//$("#resultList").empty();
+	
+	var requestUrl = '/statics/selectByRightInDeList';
+	
+	var jisa = $("#selectedJisa").text();//지사
+	if(jisa == "전체"){jisa = '';}
+	var jisangStatus = $("#selectedJisangStatus").text();//권리확보현황
+	if(jisangStatus == "전체"){jisangStatus = '';}
+	
+	var YYYY_REF = $("#customSelectView02_1").text();
+	var MM_REF = $("#customSelectView02_2").text();
+	var YYYY_TG = $("#customSelectView02_3").text();
+	var MM_TG = $("#customSelectView02_4").text();
+	
+	if(YYYY_REF == "연도 선택" || YYYY_TG == "연도 선택" || MM_REF == "연도 선택" || MM_TG == "연도 선택"){
+		alert("날짜를 선택해주세요.");
+		return;
+	}else{
+		YYYY_REF = Number(YYYY_REF.replace("년",""));
+		MM_REF = Number(MM_REF.replace("월",""))	;
+		YYYY_TG =  Number(YYYY_TG.replace("년",""));
+		MM_TG = Number(MM_TG.replace("월",""));
+	}
+	
+	var params = {
+			"JISA" : jisa 				// 지사
+			,"STATUS" : jisangStatus	// 권리확보유형 ( 지상권, 미설정 등등.. )
+			,"YYYY_REF" : YYYY_REF		// 기준년
+			,"MM_REF" : MM_REF				// 기준월
+			,"YYYY_TG" : YYYY_TG			// 비교년
+			,"MM_TG" : MM_TG				// 비교월
+			
+	};
+	
+	console.log(params);
+	
+	$.ajax({
+			data : params,
+		    type: 'POST',
+		    url: requestUrl,
+			success : function(response) {
+//				console.log(response.dataList);
+//				console.log(response.dataList.length);
+				
+				var dataList = response.dataList;
+				console.log(dataList);
+				exportToExcel(params,dataList);
+			},
+			error:function(request,status,error){
+	 			alert("code:"+request.resultCode+"\n"+"message:"+request.resultMessage+"\n"+"error:"+error);
+	 		}	
+		});
+	
+});
+
+
+function exportToExcel(params,dataList) {
+     console.log("-----start exportToExcel-----");
+	 console.log(dataList);
+	   // 워크북 및 시트 생성
+	   // 엑셀 워크북 및 워크시트 생성
+	          var workbook = new ExcelJS.Workbook();
+	          var worksheet = workbook.addWorksheet('Sheet1');
+
+			  
+			  worksheet.getRow(1).values = ['지사구분', '기준년월', '', '비교년월', '', '증감현황', '', ''];
+	          // 병합 셀 설정
+	          worksheet.mergeCells('A1:A2');  // '지사구분' 병합
+	          worksheet.mergeCells('B1:C1');  // '기준년월' 병합
+	          worksheet.mergeCells('D1:E1');  // '비교년월' 병합
+	          worksheet.mergeCells('F1:H1');  // '증감현황' 병합
+
+	         
+			  var yearmon=params.YYYY_REF+"-"+params.MM_REF;
+			  var tyearmon=params.YYYY_TG+"-"+params.MM_TG;
+	          worksheet.getRow(2).values = ['', yearmon, '필지수', tyearmon, '필지수', '구분', '증가', '감소'];
+
+	          // 데이터 예시 (서울지사, 경인지사 등)
+	          var data =[];
+			  var jisaTmp="";
+			  for(var i=0;i<dataList.length;i++){
+				    var tmpArray;
+					console.log("dataList.desc1"+dataList[i].desc1+":"+jisaTmp);
+					//var gubun="";
+					if (dataList[i].jisang_status=="ALL") dataList[i].jisang_status="전체"; 
+					if (dataList[i].desc1==jisaTmp){
+						tmpArray=['',dataList[i].jisang_status,dataList[i].ref_cnt,dataList[i].jisang_status,dataList[i].tg_cnt,dataList[i].jisang_status,dataList[i].add_cnt,dataList[i].del_cnt];
+					}
+					else tmpArray=[dataList[i].desc1,dataList[i].jisang_status,dataList[i].ref_cnt,dataList[i].jisang_status,dataList[i].tg_cnt,dataList[i].jisang_status,dataList[i].add_cnt,dataList[i].del_cnt];
+					data.push(tmpArray);
+					jisaTmp=dataList[i].desc1;
+			  }
+			  console.log("-------------last data---------------");
+			  console.log(data);
+			  
+			  /* [
+	              ['서울지사', '지상권', 767, '지상권', 767, '지상권', 0, 0],
+	              ['', '점용', 1015, '점용', 1015, '점용', 0, 0],
+	              ['', '미설정', 512, '미설정', 512, '미설정', 0, 0],
+	              ['', '회사토지', 111, '회사토지', 0, '회사토지', 111, 0],
+	              ['', '전체', 2405, '전체', 2294, '전체', 111, 0],
+	              ['경인지사', '지상권', 4, '지상권', 4, '지상권', 0, 0],
+	              ['', '점용', 835, '점용', 835, '점용', 0, 0],
+	              ['', '미설정', 70, '미설정', 70, '미설정', 0, 0],
+	              ['', '회사토지', 40, '회사토지', 0, '회사토지', 40, 0],
+	              ['', '전체', 949, '전체', 909, '전체', 40, 0],
+	              // 다른 데이터 추가 가능
+	          ];*/
+			  // 마지막 지사에 대한 병합
+			 // worksheet.mergeCells('A' + startRow + ':A' + (dataList.length + 2));
+
+	          // 각 행에 데이터 추가
+	          data.forEach(row => {
+	              worksheet.addRow(row);
+	          });
+
+	          // 스타일 및 너비 설정
+	          worksheet.columns = [
+	              { width: 15 }, // 지사구분
+	              { width: 10 }, // 기준년월 - 권리
+	              { width: 10 }, // 기준년월 - 필지수
+	              { width: 10 }, // 비교년월 - 권리
+	              { width: 10 }, // 비교년월 - 필지수
+	              { width: 10 }, // 증감현황 - 구분
+	              { width: 10 }, // 증감현황 - 증가
+	              { width: 10 }  // 증감현황 - 감소
+	          ];
+
+	          const headerStyle = {
+	              font: { bold: true, size: 12 },
+	              alignment: { horizontal: 'center', vertical: 'middle' },
+	              border: {
+	                  top: { style: 'thin' },
+	                  left: { style: 'thin' },
+	                  bottom: { style: 'thin' },
+	                  right: { style: 'thin' }
+	              }
+	          };
+
+	          // 헤더 스타일 적용
+	          worksheet.getRow(1).eachCell(cell => {
+	              cell.style = headerStyle;
+	          });
+	          worksheet.getRow(2).eachCell(cell => {
+	              cell.style = headerStyle;
+	          });
+
+	          // 데이터 셀 스타일 적용
+	          worksheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
+	              if (rowNumber > 2) {
+	                  row.eachCell(cell => {
+	                      cell.alignment = { vertical: 'middle', horizontal: 'center' };
+	                      cell.border = {
+	                          top: { style: 'thin' },
+	                          left: { style: 'thin' },
+	                          bottom: { style: 'thin' },
+	                          right: { style: 'thin' }
+	                      };
+	                  });
+	              }
+	          });
+
+	          // 엑셀 파일 다운로드
+	          workbook.xlsx.writeBuffer().then(function (buffer) {
+	              var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+	              var link = document.createElement('a');
+	              link.href = URL.createObjectURL(blob);
+	              link.download = '권리별증감현황.xlsx';
+	              link.click();
+	          });
+   }
+   
+   
+   
+   $(document).on("click","#excelDownloadBtn",function(){
+	console.log("-------------excelDownloadBtn-------------");
+	
+		console.log($("#hiddenGubun").val());//비교기준년월
+					console.log($("#hiddenDesc").val());//비교기준년월
+					console.log($("#hiddenYear").val());//비교기준년월
+					console.log($("#hiddenMonth").val());//비교기준년월
+					console.log($("#hiddenJisangStatus").val());//비교기준년월
+	  var gubun=$("#hiddenGubun").val();
+	  var year = $("#hiddenYear").val();
+	  var month = $("#hiddenMonth").val();
+	  var desc = $("#hiddenDesc").val();
+	  var jisangStatus = $("#hiddenJisangStatus").val();
+	  if (gubun=="G"){
+			excelDownLoad1(year,month,desc,jisangStatus);	
+	  }
+	   
+	
+   })
+   
+   
+   function excelDownLoad1(year,month,desc,jisangStatus){
+		var requestUrl = '/statics/selectByRightInDeListDetail';
+		
+		if(jisangStatus == "ALL"){jisangStatus = "";}
+		
+		var params = {
+				"YYYY" : year 			
+				,"MM" : month	
+				,"JISA" : desc		
+				,"STATUS" : jisangStatus		
+				
+		};
+		
+		console.log(params);
+		
+		$.ajax({
+				data : params,
+			    type: 'POST',
+			    url: requestUrl,
+				success : function(response) {
+					resultData = response.dataList;
+
+	                console.log(response);
+					var data=response.dataList;
+					              
+					                
+	                var dataArr=[];
+					var head=['순번','발생지사','주소','권리확보'];
+					 dataArr.push(head);	
+					for(var i=0;i<data.length;i++){
+						var togi_type="";
+						if (data[i].gover_own_yn=="Y") togi_type="국유지";
+						else togi_type="사유지";
+						var jisangStatus="";
+						var jisangStatusTmp = data[i].jisang_status ? data[i].jisang_status.toLowerCase() : '';
+						if (jisangStatusTmp=="jisang") jisangStatus="지상권";
+						else if (jisangStatusTmp=="gover") jisangStatus="점용";
+						else if (jisangStatusTmp=="notset") jisangStatus="미설정";
+						else if (jisangStatusTmp=="dopco") jisangStatus="매입";
+						else jisangStatus="";
+						var pmtDate = data[i].pmt_st_date == undefined ? "" : data[i].pmt_st_date + " ~ " + data[i].pmt_ed_date; //점용기간
+						var occunonpayreasonTitle1 ="";
+						var occunonpayreasonTitle2 ="";
+						//var occunonpayreasonTitle3 ="";
+						if (data[i].occunonpayreason==1) occunonpayreasonTitle1="영구 무상점용";
+						if (data[i].occunonpayreason==2) occunonpayreasonTitle1="소액 미청구";
+						//if (data[i].occunonpayreason==2) occunonpayreasonTitle1="소액 미청구";
+						var mw_status_title="";
+						//if (data[i].mm_status==)
+						var juso=data[i].mp_sido_nm+" "+data[i].mp_sgg_nm+" "+data[i].mp_emd_nm+" "+data[i].mp_ri_nm+" "+data[i].mp_jibun;
+						var rowArr=[data[i].rn,data[i].mm_jisa,data[i].mw_occur_date,data[i].mm_mw_title,data[i].status_str,juso,data[i].mp_rep_yn,data[i].mp_permitted_yn,data[i].mp_registed_yn];
+						dataArr.push(rowArr);	
+					}
+					console.log("--------------excel data------------------");
+					console.log(dataArr);
+					
+					
+					// ExcelJS를 이용해 워크북과 워크시트 생성
+			          var workbook = new ExcelJS.Workbook();
+			          var worksheet = workbook.addWorksheet('Sheet1');
+
+			          // 헤더와 데이터 추가 (빈 셀도 미리 생성)
+			          worksheet.columns = head.map(h => ({ header: h, key: h, width: 20 }));
+					  dataArr.slice(1).forEach(row => {
+					          var rowObject = worksheet.addRow(row);
+					          rowObject.eachCell({ includeEmpty: true }, function(cell, colNumber) {
+					              cell.value = cell.value || '';  // 공백일 경우 빈 문자열로 초기화
+					          });
+					      });
+
+						  
+						
+						  
+			          // 스타일 정의 (글꼴, 테두리, 정렬)
+			          worksheet.eachRow((row, rowNumber) => {
+						if (rowNumber>1){
+							row.eachCell((cell, colNumber) => {
+				                  cell.font = { size: 10, bold: false };
+				                  cell.alignment = { vertical: 'middle', horizontal: 'center' };
+				                  cell.border = {
+				                      top: { style: 'thin' },
+				                      left: { style: 'thin' },
+				                      bottom: { style: 'thin' },
+				                      right: { style: 'thin' }
+				                  };
+				              });
+						}
+						else{
+							row.eachCell((cell, colNumber) => {
+				                  cell.font = { size: 12, bold: true };
+				                  cell.alignment = { vertical: 'middle', horizontal: 'center' };
+				                  cell.border = {
+				                      top: { style: 'thin' },
+				                      left: { style: 'thin' },
+				                      bottom: { style: 'thin' },
+				                      right: { style: 'thin' }
+				                  };
+				              });
+						}
+			              
+			          });
+
+					  
+					  var unixTime = Date.now();
+					      var fileName = '민원발생필지조회.xlsx';  // 파일명 생성
+			          // 엑셀 파일 다운로드
+			          workbook.xlsx.writeBuffer().then(function (buffer) {
+			              var blob = new Blob([buffer], { type: 'application/octet-stream' });
+			              var link = document.createElement('a');
+			              link.href = URL.createObjectURL(blob);
+			              link.download = fileName;
+			              link.click();
+			          });
+					
+				},
+				error:function(request,status,error){
+		 			alert("code:"+request.resultCode+"\n"+"message:"+request.resultMessage+"\n"+"error:"+error);
+		 		}	
+			});
+	
+	
+   }
+   
+   
