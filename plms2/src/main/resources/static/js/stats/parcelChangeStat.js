@@ -362,3 +362,165 @@ $('.parcelChangeStatBtn').click(function () {
       });
     
   }
+  
+  
+  
+  
+  
+  
+
+  //조회하기 버튼 클릭
+  $(document).on("click","#parcelChangeStatExcelDownloadBtn",function(){
+	var allData = $("#queryForm").serialize();
+	 
+  	/*exportDivToExcel();
+  	return;*/
+  	
+  	//표를 비우기
+  	//$("#resultList").empty();
+	//url: "/statics/selectFieldInDeList?" + allData,
+  	var requestUrl = "/statics/selectFieldInDeList?" + allData;
+  	
+  	
+  	
+  	$.ajax({
+			
+  			
+  		    type: 'POST',
+			data: JSON.stringify(allData),
+  		    url: requestUrl,
+			dataType: "json",
+  			success : function(response) {
+  //				console.log(response.dataList);
+  //				console.log(response.dataList.length);
+  				
+  				var dataList = response.dataList;
+  				console.log(dataList);
+  				exportToExcel(allData,dataList);
+  			},
+  			error:function(request,status,error){
+  	 			alert("code:"+request.resultCode+"\n"+"message:"+request.resultMessage+"\n"+"error:"+error);
+  	 		}	
+  		});
+  	
+  });
+  
+  
+  
+  
+
+  function exportToExcel(params,dataList) {
+       console.log("-----start exportToExcel-----");
+  	 console.log(dataList);
+  	   // 워크북 및 시트 생성
+  	   // 엑셀 워크북 및 워크시트 생성
+  	          var workbook = new ExcelJS.Workbook();
+  	          var worksheet = workbook.addWorksheet('Sheet1');
+
+  			  
+  			  worksheet.getRow(1).values = ['지사구분', '기준년월', '', '비교년월', '', '증감현황', '', ''];
+  	          // 병합 셀 설정
+  	          worksheet.mergeCells('A1:A2');  // '지사구분' 병합
+  	          worksheet.mergeCells('B1:C1');  // '기준년월' 병합
+  	          worksheet.mergeCells('D1:E1');  // '비교년월' 병합
+  	          worksheet.mergeCells('F1:H1');  // '증감현황' 병합
+
+  	         
+  			  var yearmon=params.YYYY_REF+"-"+params.MM_REF;
+  			  var tyearmon=params.YYYY_TG+"-"+params.MM_TG;
+  	          worksheet.getRow(2).values = ['', yearmon, '필지수', tyearmon, '필지수', '구분', '증가', '감소'];
+
+  	          // 데이터 예시 (서울지사, 경인지사 등)
+  	          var data =[];
+  			  var jisaTmp="";
+  			  for(var i=0;i<dataList.length;i++){
+  				    var tmpArray;
+  					console.log("dataList.desc1"+dataList[i].desc1+":"+jisaTmp);
+  					//var gubun="";
+  					if (dataList[i].jisang_status=="ALL") dataList[i].jisang_status="전체"; 
+  					if (dataList[i].desc1==jisaTmp){
+  						tmpArray=['',dataList[i].jisang_status,dataList[i].ref_cnt,dataList[i].jisang_status,dataList[i].tg_cnt,dataList[i].jisang_status,dataList[i].add_cnt,dataList[i].del_cnt];
+  					}
+  					else tmpArray=[dataList[i].desc1,dataList[i].jisang_status,dataList[i].ref_cnt,dataList[i].jisang_status,dataList[i].tg_cnt,dataList[i].jisang_status,dataList[i].add_cnt,dataList[i].del_cnt];
+  					data.push(tmpArray);
+  					jisaTmp=dataList[i].desc1;
+  			  }
+  			  console.log("-------------last data---------------");
+  			  console.log(data);
+  			  
+  			  /* [
+  	              ['서울지사', '지상권', 767, '지상권', 767, '지상권', 0, 0],
+  	              ['', '점용', 1015, '점용', 1015, '점용', 0, 0],
+  	              ['', '미설정', 512, '미설정', 512, '미설정', 0, 0],
+  	              ['', '회사토지', 111, '회사토지', 0, '회사토지', 111, 0],
+  	              ['', '전체', 2405, '전체', 2294, '전체', 111, 0],
+  	              ['경인지사', '지상권', 4, '지상권', 4, '지상권', 0, 0],
+  	              ['', '점용', 835, '점용', 835, '점용', 0, 0],
+  	              ['', '미설정', 70, '미설정', 70, '미설정', 0, 0],
+  	              ['', '회사토지', 40, '회사토지', 0, '회사토지', 40, 0],
+  	              ['', '전체', 949, '전체', 909, '전체', 40, 0],
+  	              // 다른 데이터 추가 가능
+  	          ];*/
+  			  // 마지막 지사에 대한 병합
+  			 // worksheet.mergeCells('A' + startRow + ':A' + (dataList.length + 2));
+
+  	          // 각 행에 데이터 추가
+  	          data.forEach(row => {
+  	              worksheet.addRow(row);
+  	          });
+
+  	          // 스타일 및 너비 설정
+  	          worksheet.columns = [
+  	              { width: 15 }, // 지사구분
+  	              { width: 10 }, // 기준년월 - 권리
+  	              { width: 10 }, // 기준년월 - 필지수
+  	              { width: 10 }, // 비교년월 - 권리
+  	              { width: 10 }, // 비교년월 - 필지수
+  	              { width: 10 }, // 증감현황 - 구분
+  	              { width: 10 }, // 증감현황 - 증가
+  	              { width: 10 }  // 증감현황 - 감소
+  	          ];
+
+  	          const headerStyle = {
+  	              font: { bold: true, size: 12 },
+  	              alignment: { horizontal: 'center', vertical: 'middle' },
+  	              border: {
+  	                  top: { style: 'thin' },
+  	                  left: { style: 'thin' },
+  	                  bottom: { style: 'thin' },
+  	                  right: { style: 'thin' }
+  	              }
+  	          };
+
+  	          // 헤더 스타일 적용
+  	          worksheet.getRow(1).eachCell(cell => {
+  	              cell.style = headerStyle;
+  	          });
+  	          worksheet.getRow(2).eachCell(cell => {
+  	              cell.style = headerStyle;
+  	          });
+
+  	          // 데이터 셀 스타일 적용
+  	          worksheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
+  	              if (rowNumber > 2) {
+  	                  row.eachCell(cell => {
+  	                      cell.alignment = { vertical: 'middle', horizontal: 'center' };
+  	                      cell.border = {
+  	                          top: { style: 'thin' },
+  	                          left: { style: 'thin' },
+  	                          bottom: { style: 'thin' },
+  	                          right: { style: 'thin' }
+  	                      };
+  	                  });
+  	              }
+  	          });
+
+  	          // 엑셀 파일 다운로드
+  	          workbook.xlsx.writeBuffer().then(function (buffer) {
+  	              var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  	              var link = document.createElement('a');
+  	              link.href = URL.createObjectURL(blob);
+  	              link.download = '권리별증감현황.xlsx';
+  	              link.click();
+  	          });
+     }

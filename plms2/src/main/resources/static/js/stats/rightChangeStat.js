@@ -363,6 +363,16 @@ function upDownPopup(type,yearRef,monthRef,yearTg,monthTg,desc,jisangStatus){
 				
 				$("#popupNm").text("증감 정보");//검색기준년월
 				$("#popupCnt").text(response.dataTotalCnt);//비교기준년월
+				//excel다운을 위해서 검색조건을 달고 가기 위함
+				//type,yearRef,monthRef,yearTg,monthTg,desc,jisangStatus
+				$("#hiddenGubun").val("U");//비교기준년월
+				$("#hiddenDesc").val(desc);//비교기준년월
+				$("#hiddenType").val(type);//비교기준년월
+				$("#hiddenYearRef").val(yearRef);//비교기준년월
+				$("#hiddenMonthRef").val(monthRef);//비교기준년월
+				$("#hiddenYearTg").val(yearTg);//비교기준년월
+				$("#hiddenMonthTg").val(monthTg);//비교기준년월
+				$("#hiddenJisangStatus").val(jisangStatus);//비교기준년월
 				
 				const popupOpen = document.querySelector("#searchResultsPopup .popupWrap");
 		  	   $(popupOpen).addClass("open");
@@ -892,6 +902,7 @@ function exportToExcel(params,dataList) {
    
    $(document).on("click","#excelDownloadBtn",function(){
 	console.log("-------------excelDownloadBtn-------------");
+	event.preventDefault();
 	
 		console.log($("#hiddenGubun").val());//비교기준년월
 					console.log($("#hiddenDesc").val());//비교기준년월
@@ -903,8 +914,18 @@ function exportToExcel(params,dataList) {
 	  var month = $("#hiddenMonth").val();
 	  var desc = $("#hiddenDesc").val();
 	  var jisangStatus = $("#hiddenJisangStatus").val();
+	  var type=$("#hiddenType").val();//비교기준년월
+	  var yearRef=$("#hiddenYearRef").val();//비교기준년월
+	  var monthRef=$("#hiddenMonthRef").val();//비교기준년월
+	  var yearTg=$("#hiddenYearTg").val();//비교기준년월
+	  var monthTg=$("#hiddenMonthTg").val();//비교기준년월
 	  if (gubun=="G"){
 			excelDownLoad1(year,month,desc,jisangStatus);	
+	  }
+	  else {
+		//excelDownLoad2(type,yearRef,monthRef,yearTg,monthTg,desc,jisangStatus);
+		console.log("month")
+		excelDownLoad3(type,yearRef,monthRef,yearTg,monthTg,desc,jisangStatus);
 	  }
 	   
 	
@@ -961,7 +982,7 @@ function exportToExcel(params,dataList) {
 						var mw_status_title="";
 						//if (data[i].mm_status==)
 						var juso=data[i].mp_sido_nm+" "+data[i].mp_sgg_nm+" "+data[i].mp_emd_nm+" "+data[i].mp_ri_nm+" "+data[i].mp_jibun;
-						var rowArr=[data[i].rn,data[i].mm_jisa,data[i].mw_occur_date,data[i].mm_mw_title,data[i].status_str,juso,data[i].mp_rep_yn,data[i].mp_permitted_yn,data[i].mp_registed_yn];
+						var rowArr=[data[i].seq,data[i].desc1,data[i].juso,data[i].jisang_status];
 						dataArr.push(rowArr);	
 					}
 					console.log("--------------excel data------------------");
@@ -1015,7 +1036,18 @@ function exportToExcel(params,dataList) {
 
 					  
 					  var unixTime = Date.now();
-					      var fileName = '민원발생필지조회.xlsx';  // 파일명 생성
+					  
+					  var date = new Date(unixTime);  // Unix 타임스탬프를 Date 객체로 변환
+
+					  // 년-월-일 형식으로 변환
+					  var year = date.getFullYear();
+					  var month = String(date.getMonth() + 1).padStart(2, '0');  // 월은 0부터 시작하므로 1을 더함
+					  var day = String(date.getDate()).padStart(2, '0');  // 일
+
+					  var formattedDate = year + '-' + month + '-' + day;
+					  
+					  
+					      var fileName = '권리별증감현황_필지정보.xlsx';  // 파일명 생성
 			          // 엑셀 파일 다운로드
 			          workbook.xlsx.writeBuffer().then(function (buffer) {
 			              var blob = new Blob([buffer], { type: 'application/octet-stream' });
@@ -1033,5 +1065,150 @@ function exportToExcel(params,dataList) {
 	
 	
    }
+   
+   
+   
+   function excelDownLoad3(type,yearRef,monthRef,yearTg,monthTg,desc,jisangStatus){
+   //	var requestUrl = '/statics/selectByRightInDeListDetail';
+   	
+   	if(jisangStatus == "ALL"){jisangStatus = "";}
+   	
+	var requestUrl = '/statics/selectByRightInDeListDetailUpDown';
+		var params = {
+		    "TYPE": type,
+		    "JISA": desc,
+		    "STATUS": jisangStatus,
+		    "YYYY_REF": Number(yearRef),
+		    "MM_REF": Number(monthRef),
+		    "YYYY_TG": Number(yearTg),
+		    "MM_TG": Number(monthTg)
+		};
+
+	   		
+	   		console.log(params);
+	   		
+			console.log(requestUrl);
+			// AJAX 요청
+			$.ajax({
+							data : params,
+						    type: 'POST',
+						    url: requestUrl,
+							success : function(response) {
+								resultData = response.dataList;
+
+				                console.log(response);
+								var data=response.dataList;
+								              
+								                
+				                var dataArr=[];
+								var head=['순번','발생지사','주소','권리확보'];
+								 dataArr.push(head);	
+								for(var i=0;i<data.length;i++){
+									var togi_type="";
+									if (data[i].gover_own_yn=="Y") togi_type="국유지";
+									else togi_type="사유지";
+									var jisangStatus="";
+									var jisangStatusTmp = data[i].jisang_status ? data[i].jisang_status.toLowerCase() : '';
+									if (jisangStatusTmp=="jisang") jisangStatus="지상권";
+									else if (jisangStatusTmp=="gover") jisangStatus="점용";
+									else if (jisangStatusTmp=="notset") jisangStatus="미설정";
+									else if (jisangStatusTmp=="dopco") jisangStatus="매입";
+									else jisangStatus="";
+									var pmtDate = data[i].pmt_st_date == undefined ? "" : data[i].pmt_st_date + " ~ " + data[i].pmt_ed_date; //점용기간
+									var occunonpayreasonTitle1 ="";
+									var occunonpayreasonTitle2 ="";
+									//var occunonpayreasonTitle3 ="";
+									if (data[i].occunonpayreason==1) occunonpayreasonTitle1="영구 무상점용";
+									if (data[i].occunonpayreason==2) occunonpayreasonTitle1="소액 미청구";
+									//if (data[i].occunonpayreason==2) occunonpayreasonTitle1="소액 미청구";
+									var mw_status_title="";
+									//if (data[i].mm_status==)
+									var juso=data[i].mp_sido_nm+" "+data[i].mp_sgg_nm+" "+data[i].mp_emd_nm+" "+data[i].mp_ri_nm+" "+data[i].mp_jibun;
+									var rowArr=[(i+1),data[i].desc1,data[i].juso,data[i].jisang_status];
+									dataArr.push(rowArr);	
+								}
+								console.log("--------------excel data------------------");
+								console.log(dataArr);
+								
+								
+								// ExcelJS를 이용해 워크북과 워크시트 생성
+						          var workbook = new ExcelJS.Workbook();
+						          var worksheet = workbook.addWorksheet('Sheet1');
+
+						          // 헤더와 데이터 추가 (빈 셀도 미리 생성)
+						          worksheet.columns = head.map(h => ({ header: h, key: h, width: 20 }));
+								  dataArr.slice(1).forEach(row => {
+								          var rowObject = worksheet.addRow(row);
+								          rowObject.eachCell({ includeEmpty: true }, function(cell, colNumber) {
+								              cell.value = cell.value || '';  // 공백일 경우 빈 문자열로 초기화
+								          });
+								      });
+
+									  
+									
+									  
+						          // 스타일 정의 (글꼴, 테두리, 정렬)
+						          worksheet.eachRow((row, rowNumber) => {
+									if (rowNumber>1){
+										row.eachCell((cell, colNumber) => {
+							                  cell.font = { size: 10, bold: false };
+							                  cell.alignment = { vertical: 'middle', horizontal: 'center' };
+							                  cell.border = {
+							                      top: { style: 'thin' },
+							                      left: { style: 'thin' },
+							                      bottom: { style: 'thin' },
+							                      right: { style: 'thin' }
+							                  };
+							              });
+									}
+									else{
+										row.eachCell((cell, colNumber) => {
+							                  cell.font = { size: 12, bold: true };
+							                  cell.alignment = { vertical: 'middle', horizontal: 'center' };
+							                  cell.border = {
+							                      top: { style: 'thin' },
+							                      left: { style: 'thin' },
+							                      bottom: { style: 'thin' },
+							                      right: { style: 'thin' }
+							                  };
+							              });
+									}
+						              
+						          });
+
+								  
+								  var unixTime = Date.now();
+								  
+								  var date = new Date(unixTime);  // Unix 타임스탬프를 Date 객체로 변환
+
+								  // 년-월-일 형식으로 변환
+								  var year = date.getFullYear();
+								  var month = String(date.getMonth() + 1).padStart(2, '0');  // 월은 0부터 시작하므로 1을 더함
+								  var day = String(date.getDate()).padStart(2, '0');  // 일
+
+								  var formattedDate = year + '-' + month + '-' + day;
+								  var fileName="";
+								  if (type=="UP") fileName = '권리별증감현황_증가필지정보.xlsx';  // 파일명 생성
+								  else  fileName = '권리별증감현황_감소필지정보.xlsx';  // 파일명 생성
+						          // 엑셀 파일 다운로드
+						          workbook.xlsx.writeBuffer().then(function (buffer) {
+						              var blob = new Blob([buffer], { type: 'application/octet-stream' });
+						              var link = document.createElement('a');
+						              link.href = URL.createObjectURL(blob);
+						              link.download = fileName;
+						              link.click();
+						          });
+								
+							},
+							error:function(request,status,error){
+					 			alert("code:"+request.resultCode+"\n"+"message:"+request.resultMessage+"\n"+"error:"+error);
+					 		}	
+						});
+
+
+
+    }
+   
+   
    
    

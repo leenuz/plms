@@ -1919,6 +1919,66 @@ public void landExcelDownload(HttpServletRequest request, HttpServletResponse re
 		response.getWriter().flush();
 	}
 	
+	
+	//통계 > 권리별 증감현황 > 조회 > 상세 - 증감현황
+		@PostMapping(path="/selectByRightInDeListDetailUpDownExcel")
+		public void selectByRightInDeListDetailUpDownExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			JSONObject requestParamsObj=new JSONObject(requestParams);
+			log.info("requestParams:"+requestParams);
+			ParameterParser parser = new ParameterParser(request);
+			String TYPE = requestParamsObj.getString("TYPE"); // 증가 : UP , 감소 : DOWN
+			String JISA = requestParamsObj.getString("JISA");
+			String STATUS = requestParamsObj.getString("STATUS");
+			int YYYY_REF = requestParamsObj.getInt("YYYY_REF");
+			int MM_REF = requestParamsObj.getInt("MM_REF");
+			int YYYY_TG = requestParamsObj.getInt("YYYY_TG");
+			int MM_TG = requestParamsObj.getInt("MM_TG");
+			
+		
+			ArrayList dataList = new ArrayList();
+			int dataTotalCnt = 0;
+			HashMap map = new HashMap();
+			try {
+		
+				HashMap params = new HashMap();
+				params.put("JISA", JISA);
+				params.put("STATUS", STATUS);
+				params.put("YYYY_REF", YYYY_REF);
+				params.put("MM_REF", MM_REF);
+				params.put("YYYY_TG", YYYY_TG);
+				params.put("MM_TG", MM_TG);
+		
+				if("UP".equals(TYPE)) {
+					dataTotalCnt = (int) mainService.selectCountQuery("staticSQL.selectByRightInDeListDetailUpCnt", params);
+					dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListDetailUp", params);
+				}else {
+					dataTotalCnt = (int) mainService.selectCountQuery("staticSQL.selectByRightInDeListDetailDownCnt", params);
+					dataList = (ArrayList) mainService.selectQuery("staticSQL.selectByRightInDeListDetailDown", params);
+				}
+				
+		
+				map.put("message", "success");
+				map.put("dataList", dataList);
+				map.put("dataTotalCnt", dataTotalCnt);
+			} catch (Exception e) {
+				map.put("message", "처리 중 오류가 발생했습니다.");
+				e.printStackTrace();
+			}
+		
+			JSONObject jo = new JSONObject(map);
+		
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.resetBuffer();
+			response.setContentType("application/json");
+			response.getWriter().print(jo);
+			response.getWriter().flush();
+		}
+	
+	
+	
+	
 	//통계 > 관리필지 증감현황 > 년,월
 	@PostMapping(path="/selectFieldInDeListYYYY")
 	public void selectFieldInDeListYYYY(HttpServletRequest request, HttpServletResponse response) throws Exception {
