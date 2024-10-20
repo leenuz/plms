@@ -340,6 +340,7 @@ public class goverController {
 		if (atcFileList == null || atcFileList.isEmpty()) { // 첨부파일
 		    mav.addObject("atcFileList", new ArrayList<>());
 		} else {
+			Collections.reverse(atcFileList);
 		    mav.addObject("atcFileList", atcFileList);
 		}
 		if (goverModifyList == null || goverModifyList.isEmpty()) { // 변경이력
