@@ -116,8 +116,15 @@
 									<li class="content02 content">
 										[[${resultData.gm_gover_st_date}]] ~
 										[[${resultData.gm_gover_ed_date}]]</li>
+									<!-- 신규등록사유 -->
 									<li class="content03 content">
-										[[${resultData.gm_newregreason}]]</li>
+									    <span th:switch="${resultData.gm_newregreason}">
+									        <span th:case="'0'">선택</span>
+									        <span th:case="'1'">사유지의 국유지 편입</span>
+									        <span th:case="'2'">ILI결과 발견지번</span>
+									        <span th:case="*">값이 없음</span> <!-- 값이 없는 경우 기본값 -->
+									    </span>
+									</li>
 								</ul>
 							</div>
 							<div class="depth3">
@@ -128,12 +135,32 @@
 									<li class="title03 title">선납기한</li>
 								</ul>
 								<ul class="contents">
+									<!-- 점용허가증 보유 여부 -->
 									<li class="content01 content">
-										[[${resultData.gm_permpossyn}]]</li>
+									    <span th:switch="${resultData.gm_permpossyn}">
+									        <span th:case="'Y'">Y</span> <!-- 값이 'Y'인 경우 -->
+									        <span th:case="'N'">N</span> <!-- 값이 'N'인 경우 -->
+									        <span th:case="*">N</span> <!-- 값이 없거나 빈 문자열인 경우 기본값 -->
+									    </span>
+									</li>
+									<!-- 점용료 미납부 사유 -->
 									<li class="content02 content">
-										[[${resultData.gm_occunonpayreason}]]</li>
+									    <span th:switch="${resultData.gm_occunonpayreason}">
+									        <span th:case="'0'">선택</span>
+									        <span th:case="'1'">영구 무상점용</span>
+									        <span th:case="'2'">소액 미청구</span>
+									        <span th:case="'3'">관할관청의 미청구</span>
+									        <span th:case="*">값이 없음</span> <!-- 값이 없는 경우 기본값 -->
+									    </span>
+									</li>
+									<!-- 점용료 선납 여부 -->
 									<li class="content02 content">
-										[[${resultData.gm_occuprepayyn}]]</li>
+									    <span th:switch="${resultData.gm_occuprepayyn.trim()}"><!-- Y 하고 공백 있는 data 있음. -->
+									        <span th:case="'Y'">Y</span>
+									        <span th:case="'N'">N</span>
+									        <span th:case="*">N</span> <!-- 값이 없거나 빈 문자열인 경우 기본값 -->
+									    </span>
+									</li>
 									<li class="content02 content">
 										[[${resultData.gm_occuprepaydate}]]</li>
 								</ul>
