@@ -13,9 +13,6 @@
 <link rel="stylesheet" href="/css/menu01/occupationDetails.css">
 <link rel="stylesheet" href="/css/jisang/write.css">
 
-<script src="/js/gover/occupationDetails.js"></script>
-<script src="/js/common/upload.js"></script>
-<script src="/js/common/common.js"></script>
 <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 <title>점용 상세정보</title>
@@ -203,15 +200,19 @@
 							</div>
 						</div>
 					</div>
-
+					
+					<!-- 소속 토지정보 -->
 					<div class="contBox contBoxMini04">
-
 						<div class="thirdTitle">
 							<h2>・소속 토지정보</h2>
-							<span class="landListViewBtn">토지 목록 보이기</span>
+							<!-- <button class="landListViewBtn">토지 목록 보이기</button> -->
+							<div class="btnBox">
+								<button class="landListViewBtn landListBtn">토지 목록 보이기</button>
+								<button class="landListHideBtn landListBtn">토지 목록 숨기기</button>
+							</div>
 						</div>
 
-						<div class="contentDetailBox" style="align-items: flex-start">
+						<div class="contentDetailBox">
 							<div class="depth1">
 								<ul class="titles">
 									<li class="title01 title">순번</li>
@@ -221,6 +222,8 @@
 									<li class="title05 title">면적(m²)</li>
 									<li class="title06 title">보기</li>
 								</ul>
+								
+								<!-- 무슨 스크립튼지 확인 필요 -->
 								<script>
                     var latArr = [];
                     var lngArr = [];
@@ -265,38 +268,45 @@
                         }
                     };
                 </script>
-								<ul class="contents" id="jijukList" th:each="val:${pnuList}">
-									<input type="hidden" name="pnuLat" th:value="${val.lat}" />
-									<input type="hidden" name="pnuLng" th:value="${val.lng}" />
-									<script>
-                                        var xxx = '[[${val.lng}]]';
-                                        var yyy = '[[${val.lat}]]';
-                                        latArr.push(yyy);
-                                        lngArr.push(xxx);
-                                    </script>
-									<li class="content01 content">[[${val.gp_gover_no}]]</li>
-									<li class="content02 content">[[${val.gp_sido_nm}]]
-										[[${val.gp_sgg_nm}]] [[${val.gp_emd_nm}]] [[${val.gp_ri_nm}]]
-										[[${val.gp_jibun}]]</li>
-									<li class="content03 content">[[${val.gp_jijuk_area}]]</li>
-									<li class="content04 content">[[${val.gp_gover_length}]]</li>
-									<li class="content05 content">[[${val.gp_gover_area}]]</li>
-									<li class="content06 content">
-											<button class="viewDetailButton" th:onclick="|onePositionView({x: ${val.x}, y: ${val.y}})|">위치보기</button>
-									</li>
-								</ul>
+								
+								<div class="contentScr">
+									<ul class="contents" id="jijukList" th:each="val:${pnuList}">
+										<input type="hidden" name="pnuLat" th:value="${val.lat}" />
+										<input type="hidden" name="pnuLng" th:value="${val.lng}" />
+										<script>
+		                    var xxx = '[[${val.lng}]]';
+		                    var yyy = '[[${val.lat}]]';
+		                    latArr.push(yyy);
+		                    lngArr.push(xxx);
+		                </script>
+										<li class="content01 content">[[${val.gp_gover_no}]]</li>
+										<li class="content02 content">[[${val.gp_sido_nm}]]
+											[[${val.gp_sgg_nm}]] [[${val.gp_emd_nm}]] [[${val.gp_ri_nm}]]
+											[[${val.gp_jibun}]]</li>
+										<li class="content03 content">[[${val.gp_jijuk_area}]]</li>
+										<li class="content04 content">[[${val.gp_gover_length}]]</li>
+										<li class="content05 content">[[${val.gp_gover_area}]]</li>
+										<li class="content06 content">
+											<button class="viewDetailButton"
+												th:onclick="|onePositionView({x: ${val.x}, y: ${val.y}})|">위치보기</button>
+										</li>
+									</ul>
+								</div>
 							</div>
+							
+							<!-- 전체 위치보기 세로로 따로 div 존재 -->
 							<div class="depth2">
 								<ul class="titles">
 									<li class="title01 title">전체 위치보기</li>
 								</ul>
-								<ul class="contents" th:each="val:${pnuList}">
+								<ul class="contents">
 									<li class="content01 content">
 										<button class="viewAllBtn" th:onclick="positionView()">전체 위치보기</button>
 									</li>
 								</ul>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</section>
@@ -841,27 +851,22 @@
 						</div>
 					</div>
 				</div>
-
-
 			</section>
 
-
 			<!-- 참고 -->
-
-
 			<div class="finalBtnBox btnWrap">
 				<button class="backBtn finalBtn" onclick="history.back();">이전</button>
 				<button class="printBtn finalBtn">출력</button>
 			</div>
-
-
-
+			
 		</main>
 	</div>
 	<div class="occupationIssueReviseWrappers"></div>
+	
 	<!-- script -->
-	<!--  <script src="/js/gover/occupationDetails.js"></script> -->
 	<script type="module" src="/js/module/surfaceMain.js"></script>
+	<script src="/js/gover/occupationDetails.js"></script>
+	<script src="/js/common/common.js"></script>
 </th:block>
 
 </html>
