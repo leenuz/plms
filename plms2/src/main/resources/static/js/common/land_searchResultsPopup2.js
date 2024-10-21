@@ -171,7 +171,7 @@ function searchRemainAddress(nextVal) {
 	const params = jusoParamValidation();	//validation 체크
 	params.SELECT_OPTION = nextVal;	// 타입값 (시군구, 읍면동, 리)
 	
-	console.log(params);
+	//console.log(params);
 	
 	$.ajax({
 		url: '/land/common/searchRemainAddress',
@@ -189,8 +189,8 @@ function searchRemainAddress(nextVal) {
 function makeSelectBoxContentFunc(data, nextVal){
 	
 	if(nextVal == 'sigungu') {
-		console.log('시군구값 세팅');
-		console.log(data);
+		//console.log('시군구값 세팅');
+		//console.log(data);
 		
 		let sbHtml = '';
 		
@@ -209,8 +209,8 @@ function makeSelectBoxContentFunc(data, nextVal){
 		
 		
 	} else if(nextVal == 'emd') {
-		console.log('읍면동값 세팅');
-		console.log(data);
+		//console.log('읍면동값 세팅');
+		//console.log(data);
 		
 		let sbHtml = '';
 		
@@ -227,8 +227,8 @@ function makeSelectBoxContentFunc(data, nextVal){
 			}
 		}
 	} else {
-		console.log('리 세팅');
-		console.log(data);
+		//console.log('리 세팅');
+		//console.log(data);
 		
 		let sbHtml = '';
 		
@@ -357,7 +357,7 @@ function makeNewPNU_Go() {
 			data: JSON.stringify(newPNU_basicInfo),
 			type: 'POST',
 			success: function(data, jqXHR) {
-				console.log(data);
+				makeNewPnuCheckin(data);
 			},
 			beforeSend: function() {
 				//(이미지 보여주기 처리)
@@ -376,6 +376,18 @@ function makeNewPNU_Go() {
 		});
 		
 	}
+	
+}
+
+function makeNewPnuCheckin(data) {
+	console.log(data);
+	if(data.result == 'Y') {
+		searchTargetAddressInfo = data.justMakeNewPNUInfo;
+		alert('PNU 등록이 완료되었습니다.');
+		commonAddressSearchPopupClose(); //선택하면 우선 닫기
+		
+	}
+	
 	
 }
 

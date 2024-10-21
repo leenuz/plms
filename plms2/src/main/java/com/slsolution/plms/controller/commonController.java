@@ -623,23 +623,34 @@ public class commonController {
 		newPNUMap.put("SELECT_SIDO", SELECT_SIDO);
 		newPNUMap.put("SELECT_SIGUNGU", SELECT_SIGUNGU);
 		newPNUMap.put("SELECT_EMD", SELECT_EMD);
-		newPNUMap.put("SELECT_RI", SELECT_RI);
+		
+		if(!"".equals(SELECT_RI)) {
+			newPNUMap.put("SELECT_RI", SELECT_RI);
+		}
 		newPNUMap.put("SELECT_SAN", SELECT_SAN);
-		newPNUMap.put("SELECT_BON", SELECT_BON);
-		newPNUMap.put("SELECT_BU", SELECT_BU);
+		
+		if(!"".equals(SELECT_BON)) {
+			newPNUMap.put("SELECT_BON", SELECT_BON);
+		}
+		
+		if(!"".equals(SELECT_BU)) {
+			newPNUMap.put("SELECT_BU", SELECT_BU);
+		}
+		
+		
 		
 		/***** QUERY *****/
 		//INSERT - 새로운 PNU 생성
-		mainService.InsertQuery("commonSQL.insertMakedNewPNUInfo", newPNUMap);
-		//방금값 조회
-		ArrayList<HashMap> makedNewPNUInfo = mainService.selectQuery("commonSQL.targetAddressSearch", newPNUMap);
+//		mainService.InsertQuery("commonSQL.insertMakedNewPNUInfo", newPNUMap);
+		
+		//insert 하고 쿼리 마지막 return
+		ArrayList<HashMap> newMakePNUInfo = mainService.selectQuery("commonSQL.insertMakedNewPNUInfo", newPNUMap);
 		
 		/***** result response *****/
 		JSONObject resultObj = new JSONObject();
 		
 		resultObj.put("result", "Y");
-		resultObj.put("makedNewPNUInfo", makedNewPNUInfo);
-//		resultObj.put("targetSearchAddrListSize", targetSearchAddrList.size());
+		resultObj.put("justMakeNewPNUInfo", newMakePNUInfo.get(0));
 		
 		response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
