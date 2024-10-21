@@ -123,20 +123,20 @@ INSERT INTO JISANG_STAT (
         FILE_PATH,
         FILE_NAME
 ) VALUES (
-        (SELECT NVL(MAX(SEQ), 0) + 1 FROM JISANG_STAT S),
+        (SELECT COALESCE(MAX(SEQ), 0) + 1 FROM JISANG_STAT S),
         #{SAVE_YEAR},
         #{SAVE_QUARTER},
         Now(),
         #{PROCESS_DATE},
-        #{SAYUJI_N},
-        #{SAYUJI_Y_Y},
-        #{SAYUJI_Y_N}
-        #{SAYUJI_TOTAL}
-        #{GUKYUJI_Y}
-        #{GUKYUJI_J}
-        #{GUKYUJI_N}
-        #{GUKYUJI_TOTAL}
-        #{FILE_PATH}
+        #{SAYUJI_N}::numeric,
+        #{SAYUJI_Y_Y}::numeric,
+        #{SAYUJI_Y_N}::numeric,
+        #{SAYUJI_TOTAL}::numeric,
+        #{GUKYUJI_Y}::numeric,
+        #{GUKYUJI_J}::numeric,
+        #{GUKYUJI_N}::numeric,
+        #{GUKYUJI_TOTAL}::numeric,
+        #{FILE_PATH},
         #{FILE_NAME}
 )
 	</insert>

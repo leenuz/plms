@@ -216,6 +216,10 @@ rightCloseMngOffPopEvet();
 
 $(document).on("click",".deadbtn",function(){
 	
+	console.log("-------------.deadbtn-----click-----------------"); 
+	
+
+	
 	var year=$("#popupSelectBox01_1").val().replace('년', '').replace('선택', '');
 	var month=$("#popupSelectBox01_2").val().replace('월', '').replace('선택', '');
 	var date = $('#processDate').val();
@@ -234,6 +238,7 @@ $(document).on("click",".deadbtn",function(){
 	}
 
 	var params={"SAVE_YEAR":year,"SAVE_QUARTER":month, "PROCESS_DATE":date}
+	//var params = {JISA: $("#rightStatusSelectBox01").val(),ADDRCODE:"",SGG:"", KIJUN:"", SIDO:""}
 	console.log(params);
 	//loadDataTable(params);
 	//임시 저장 Go
@@ -243,10 +248,9 @@ $(document).on("click",".deadbtn",function(){
 
 			url: url,
 			type: 'POST',
-			contentType: "application/json",
-			data: JSON.stringify(params),
-
-			dataType: "json",
+			//contentType: "application/json",
+			data: params,
+			//dataType: "json",
 			beforeSend: function(request) {
 				console.log("beforesend ........................");
 				loadingShow();
@@ -259,12 +263,12 @@ $(document).on("click",".deadbtn",function(){
 					//console.log("response.resultData length:" + response.resultData.length);
 					$("#save_status").val("TSAVE");
 					alert("정상적으로 등록 되었습니다.");
-					$("#popup_bg").show();
+					/*$("#popup_bg").show();
 					$("#popup").show(500);
 					//$("#addrPopupLayer tbody td").remove();
 					for(var i=0;i<response.resultData.length;i++){
 						$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-					}
+					}*/
 				}
 				else {
 					console.log("response.success N");

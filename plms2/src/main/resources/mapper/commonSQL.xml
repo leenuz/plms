@@ -689,4 +689,99 @@ SELECT PNU
        AND A.sgg_nm = #{SELECT_SIGUNGU}
        AND A.emd_nm = #{SELECT_EMD}
 </select>
+
+
+	<select id="selectAdminUserRightsGroupList" resultType="HashMap" parameterType="HashMap">
+    SELECT *
+    FROM DCL_MEMBER_AUTH
+    WHERE 1=1
+    <if test='EMPCDS != null and EMPCDS != ""'>
+        AND EMPCD in (${EMPCDS})
+    </if>
+    <if test='GROUP != null and GROUP != ""'>
+        AND USER_GROUP in (${GROUP})
+    </if>
+</select>
+
+
+<select id="selectAdminUserRightsList" resultType="HashMap" parameterType="HashMap">
+    SELECT B.EMPCD, B.KORNAME, C.DEPTCD, C.DEPTNM, B.EMAIL_ADDR, C.UPDEPTCD
+    FROM PUBLIC_ZBM020 A
+    LEFT JOIN PUBLIC_EBM100_DAMO B ON A.EMPCD = B.EMPCD
+    LEFT JOIN PUBLIC_EAM400 C ON B.DEPTCD = C.DEPTCD
+    WHERE B.JAJIKGB = '1'
+    <if test='BUSEO != null and BUSEO != ""'>
+        AND B.DEPTCD = TO_CHAR(#{BUSEO})
+    </if>
+    <if test='SEARCHNAME != null and SEARCHNAME != ""'>
+        AND B.KORNAME like '%' || TO_CHAR(#{SEARCHNAME}) || '%'
+    </if>
+    <if test='EMPCD != null and EMPCD != ""'>
+        AND B.EMPCD = #{EMPCD}
+    </if>
+    AND B.EMPCD IS NOT NULL
+</select> 
+
+ <select id="selectAdminUserRightsdList" resultType="HashMap" parameterType="HashMap">
+    SELECT B.EMPCD, B.KORNAME, C.DEPTCD, C.DEPTNM, B.EMAIL_ADDR, C.UPDEPTCD
+    FROM PUBLIC_ZBM020 A
+    LEFT JOIN PUBLIC_EBM100_DAMO B ON A.EMPCD = B.EMPCD
+    LEFT JOIN PUBLIC_EAM400 C ON B.DEPTCD = C.DEPTCD
+    WHERE B.JAJIKGB = '1'
+    <if test='BUSEO != null and BUSEO != ""'>
+        AND B.DEPTCD = CAST(#{BUSEO} AS VARCHAR)
+    </if>
+    <if test='SEARCHNAME != null and SEARCHNAME != ""'>
+        AND B.KORNAME LIKE '%' || #{SEARCHNAME} || '%'
+    </if>
+    <if test='EMPCD != null and EMPCD != ""'>
+        AND B.EMPCD = #{EMPCD}
+    </if>
+    AND B.EMPCD IS NOT NULL
+</select> 
+
+<select id="selectAfterFullMoonDosiMail" parameterType="hashmap" resultType="hashmap">
+<![CDATA[
+    SELECT TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '(' || TO_CHAR(CURRENT_DATE, 'Day') || ')' AS TODAY,
+       A.*,
+       B.*
+FROM DOSI_MASTER A,
+     DOSI_INFO B
+WHERE A.dm_DOSI_NO = B.di_DOSI_NO
+  AND A.dm_MASTER_YN = 'Y'
+  AND B.di_COMPLETE_YN <> 'Y'
+  AND TO_CHAR(B.di_ENDDATE, 'YYYY-MM-DD') = TO_CHAR(CURRENT_DATE + INTERVAL '15 day', 'YYYY-MM-DD');
+]]>
+</select>
+
+<select id="selectDosiRowDetail_deptInfo" parameterType="HashMap" resultType="HashMap">
+		SELECT
+		dd_dosi_no as DOSI_NO
+		,dd_dept_nm as DEPT_NM
+		,dd_manager as MANAGER
+		,dd_contact_num as CONTACT_NUM
+		,dd_dept_seq as DEPT_SEQ
+		FROM
+		DOSI_DEPT
+		WHERE
+		dd_DOSI_NO = #{DOSI_NO}
+		ORDER BY dd_DEPT_SEQ ASC
+</select>
+
+
+<select id="selectOneMonthLaterDosiMail" parameterType="HashMap" resultType="HashMap">
+    <![CDATA[
+   SELECT TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '(' || TO_CHAR(CURRENT_DATE, 'Dy') || ')' AS TODAY,
+       A.*,
+       B.*
+  FROM DOSI_MASTER A,
+       DOSI_INFO B
+ WHERE A.dm_DOSI_NO = B.di_DOSI_NO
+   AND A.dm_MASTER_YN = 'Y'
+   AND B.di_COMPLETE_YN <> 'Y'
+   AND TO_CHAR(B.di_ENDDATE, 'YYYY-MM-DD') = TO_CHAR(CURRENT_DATE + INTERVAL '1 month', 'YYYY-MM-DD')
+    ]]>
+</select>
+
+
 </mapper>
