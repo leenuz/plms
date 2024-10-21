@@ -1422,7 +1422,7 @@ $(document).on("click", "#reqApprovalBtn", function() {
 
 	object.saveStatus = "T";
 	object.goverNo = $('#gover_no').val();
-	object.userId = $('#userId').val();
+	object.groupNmPlms = $('#groupNmPlms').val();
 	console.log(object);
 
 	url = "/land/gover/updateGoverSaveStatus";
@@ -1485,7 +1485,7 @@ $(document).on("click","#approveBtn",function(){
 	
 	object.saveStatus="A";
 	object.goverNo = $('#gover_no').val();
-	object.userId = $('#userId').val();
+	object.groupNmPlms = $('#groupNmPlms').val();
 	console.log(object);
 	
 	   url="/land/gover/updateGoverSaveStatus"; 
@@ -1550,7 +1550,7 @@ $(document).on("click","#rejectBtn",function(){
 */	
 	object.saveStatus="R";
 	object.goverNo = $('#gover_no').val();
-	object.userId = $('#userId').val();
+	object.groupNmPlms = $('#groupNmPlms').val();
 	console.log(object);
 	
 	   url="/land/gover/updateGoverSaveStatus"; 

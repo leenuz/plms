@@ -1332,17 +1332,12 @@ public class goverController {
         //받은 세션 Map으로 전환
         Map<String, Object> sessionMap = CommonUtil.requestSessionToMap(httpRequest);
         /*******************************/
-        /*
-         * add.241021 손지민 세션 받아와서 관리자면 승인,반려 버튼 동작하도록 구성 필요 - 아래 형식으로 받아오는지 모름. 현재 임의 설정
-         * sessionMap 에서 꺼내올 수도 있을 듯(?)
-        String USER_ID = String.valueOf(httpRequest.getSession().getAttribute("userId"));
-		String USER_NAME = String.valueOf(httpRequest.getSession().getAttribute("userName"));
-		log.info("USER_ID: "+USER_ID);
-		log.info("USER_NAME: " + USER_NAME);
-		log.info("sessionMap: " + sessionMap);
-		*/
         
-        String userId = "admin";
+        //add. 20241021 관리자 승인,반려 로직을 위해 세션에서 ADMIN 확인하기
+        String groupNmPlms = String.valueOf(httpRequest.getSession().getAttribute("groupNmPlms"));
+        //String groupNmPlms = (String)sessionMap.get("jisa"); // 위, 아래 둘 중 하나로 꺼내오기 확인
+        //String groupNmPlms = "ADMIN";
+        log.info("groupNmPlms: " + groupNmPlms);
 		
 //		log.info("점용 마스터 수정 컨트롤러 동작");
 		HashMap params = new HashMap();
@@ -1443,7 +1438,7 @@ public class goverController {
 		//241006 - 지사정보 추가
 		mav.addObject("loginJisa", (String)sessionMap.get("jisa"));
 
-		mav.addObject("userId",userId); // 승인,반려버튼을 위해 임의로 전달
+		mav.addObject("groupNmPlms",groupNmPlms); // 승인,반려버튼을 위해 전달
 		
 		mav.setViewName("content/gover/masterEdit");
 		return mav;
@@ -3536,7 +3531,7 @@ log.info("file_list:"+file_list);
 		ParameterParser parser = new ParameterParser(request);
 
 		String goverNo = requestParamsObj.getString("goverNo");
-		String userId = requestParamsObj.getString("userId"); // 승인, 반려일 때는 관리자 일 때만 실행?
+		String groupNmPlms = requestParamsObj.getString("groupNmPlms"); // 승인, 반려일 때는 관리자 일 때만 실행
 		String saveStatus = (!requestParamsObj.has("saveStatus") || requestParamsObj.getString("saveStatus") == null)
 				? ""
 				: requestParamsObj.getString("saveStatus");
@@ -3544,8 +3539,8 @@ log.info("file_list:"+file_list);
 	    // saveStatus에 따른 권한 확인
 	    if ("A".equals(saveStatus) || "R".equals(saveStatus)) {
 	        // 승인 또는 반려는 관리자만 가능하도록 제한
-	        if (!"admin".equals(userId)) {
-	            log.info("Unauthorized access. UserId: " + userId);
+	        if (!"ADMIN".equals(groupNmPlms)) {
+	            log.info("Unauthorized access. groupNmPlms: " + groupNmPlms);
 	            HashMap unauthorizedMap = new HashMap();
 	            unauthorizedMap.put("message", "Unauthorized access: only admin can approve or reject.");
 	            unauthorizedMap.put("success", "N");
