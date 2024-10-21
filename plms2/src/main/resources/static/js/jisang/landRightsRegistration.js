@@ -512,6 +512,20 @@ $(document).on("click", "#finalBtn", function() {
 	dataObj.soujaInfo = soujaArr;
 	dataObj.uploadFiles = files;
 
+	/***** 주소검색 공통화로 인한 parameter세팅 조정 : 241022 *****/
+	//console.log(searchTargetAddressInfo);
+	$("#maddress").val(searchTargetAddressInfo.juso);
+	$("#raddress").val(searchTargetAddressInfo.juso);
+	$("#mpnu").val(searchTargetAddressInfo.pnu);
+	$("#mjibun").val(searchTargetAddressInfo.jibun);
+	$("#sido_nm").val(searchTargetAddressInfo.sido_nm);
+	$("#sgg_nm").val(searchTargetAddressInfo.sgg_nm);
+	$("#emd_nm").val(searchTargetAddressInfo.emd_nm);
+	$("#ri_nm").val(searchTargetAddressInfo.ri_nm);
+	
+	/***************************************************/
+
+
 	//필수정보체크
 	console.log("jisa:" + dataObj.jisa);
 	if (!checkData(dataObj.jisa, "s", "담당지사를 입력해주세요!")) return;
@@ -523,7 +537,7 @@ $(document).on("click", "#finalBtn", function() {
 	else if (!checkData(dataObj.jijuk_area, "s", "지적면적을 입력해주세요!")) return;
 	else if (!checkData(dataObj.jimok_text, "s", "지목을 입력해주세요!")) return;
 	else if (!checkData(dataObj.account_yn, "s", "회계처리필요여부블 입력해주세요!")) return;
-	else if (!checkData(dataObj.maddress, "s", "주소블 입력해주세요!")) return;
+	else if (!checkData(dataObj.maddress, "s", "주소를 입력해주세요!")) return;
 	else if (soujaArr <= 0) {
 		alert("소유자 정보를 입력해주세요!");
 		return;
@@ -537,6 +551,8 @@ $(document).on("click", "#finalBtn", function() {
 	console.log(dataObj);
 
 	url = "/land/jisang/insertJisangList";
+	
+	
 	$.ajax({
 
 		url: url,
@@ -557,12 +573,12 @@ $(document).on("click", "#finalBtn", function() {
 				//	console.log("response.resultData length:"+response.resultData.length);
 				alert("정상적으로 등록 되었습니다.");
 				window.location.href = "/land/jisang/menu02_1";
-				/*$("#popup_bg").show();
+				$("#popup_bg").show();
 				$("#popup").show(500);
 				//$("#addrPopupLayer tbody td").remove();
 				for(var i=0;i<response.resultData.length;i++){
 					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-				}*/
+				}
 			}
 			else {
 				console.log("response.success N");
@@ -573,6 +589,9 @@ $(document).on("click", "#finalBtn", function() {
 			return false;
 		}
 	});
+	
+	
+	
 });
 
 
@@ -624,6 +643,7 @@ $(document).on("click",".topCloseBtn",function(){
 $(document).on("click",".resultSelectBtn",function(){
 	console.log("----------resultSelectBtn-click--------");
 	console.log($(this).parent().parent().html());
+	
 	var pnu=$(this).parent().parent().find(".popContent01").html();
 	var address=$(this).parent().parent().find(".popContent02").html();
 	var jibun=$(this).parent().parent().find(".popContent03").html();
@@ -631,9 +651,11 @@ $(document).on("click",".resultSelectBtn",function(){
 	var sgg_nm=$(this).parent().parent().find(".popContent0202").html();
 	var emd_nm=$(this).parent().parent().find(".popContent0203").html();
 	var ri_nm=$(this).parent().parent().find(".popContent0204").html();
+	
 	console.log("pnu:"+pnu);
 	console.log("address:"+address);
 	console.log("jibun:"+jibun);
+	
 	$("#maddress").val(address+" "+jibun);
 	$("#raddress").val(address+" "+jibun);
 	$("#mpnu").val(pnu);
@@ -645,8 +667,6 @@ $(document).on("click",".resultSelectBtn",function(){
 
 	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
     	$(".popupWrap").removeClass("active");
-	
-	
 })
 
 
