@@ -323,13 +323,15 @@ div.dt-filter-spacer {
 								<ul class="contents" th:if="${notsetModifyList == null || notsetModifyList.isEmpty()}">
 									<li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents" th:if="${notsetModifyList != null && !notsetModifyList.isEmpty()}"
-									th:each="val, iterStat : ${notsetModifyList}">
-									<li class="content01 content">[[${val.nm_idx}]]</li>
-									<li class="content02 content">[[${val.modify_date}]]</li>
-									<li class="content03 content">[[${val.nm_gubun}]]</li>
-									<li class="content04 content">[[${val.nm_cont}]]</li>
-								</ul>
+								<div class="changHistoryScroll">
+									<ul class="contents" th:if="${notsetModifyList != null && !notsetModifyList.isEmpty()}"
+										th:each="val, iterStat : ${notsetModifyList}">
+										<li class="content01 content">[[${val.nm_idx}]]</li>
+										<li class="content02 content">[[${val.modify_date}]]</li>
+										<li class="content03 content">[[${val.nm_gubun}]]</li>
+										<li class="content04 content">[[${val.nm_cont}]]</li>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>

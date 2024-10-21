@@ -1022,3 +1022,18 @@ button {
     width: 100%;
     text-align: center;
 }
+
+
+/* 변경이력 스크롤 */
+.changHistoryScroll {
+	max-height: calc(45px* 10);
+  overflow-y: auto;
+}
+
+#occupationDetails .changHistoryScroll .contents{
+	display: flex;
+  align-items: center;
+  height: auto !important; /* !important로 강제 적용. ul 에 height 고정 제거 */
+  border-bottom: 1px solid #cddbf0;
+  /*align-items: stretch;*/ /* 각 li 높이를 같은 높이로 설정 */
+}

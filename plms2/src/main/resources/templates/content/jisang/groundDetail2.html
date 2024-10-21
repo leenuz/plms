@@ -390,21 +390,23 @@
 								<ul class="contents" th:if="${jisangModifyList == null || jisangModifyList.isEmpty()}">
 									<li class="content01" style="width: 100%; text-align: center">데이터가 없습니다.</li>
 								</ul>
-								<ul class="contents" th:if="${jisangModifyList != null && !jisangModifyList.isEmpty()}"
-									th:each="val, iterStat : ${jisangModifyList}">
-									<li class="content01 content"><span
-										th:text="${iterStat.count}"></span>
-									</li>
-									<li class="content02 content"><span
-										th:text="${val.jm_modify_date}"></span>
-									</li>
-									<li class="content03 content"><span
-										th:text="${val.jm_gubun}"></span>
-									</li>
-									<li class="content04 content"><span
-										th:text="${val.jm_cont}"></span>
-									</li>
-								</ul>
+								<div class="changHistoryScroll">
+									<ul class="contents" th:if="${jisangModifyList != null && !jisangModifyList.isEmpty()}"
+										th:each="val, iterStat : ${jisangModifyList}">
+										<li class="content01 content"><span
+											th:text="${iterStat.count}"></span>
+										</li>
+										<li class="content02 content"><span
+											th:text="${val.jm_modify_date}"></span>
+										</li>
+										<li class="content03 content"><span
+											th:text="${val.jm_gubun}"></span>
+										</li>
+										<li class="content04 content"><span
+											th:text="${val.jm_cont}"></span>
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>
