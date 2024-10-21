@@ -160,9 +160,11 @@ SELECT DISTINCT(MASTER_NO)
     , PMT_ED_DATE
 FROM (
     SELECT T.*
-    FROM (
-        SELECT
-            COALESCE(NEWREGREASON, '') AS NEWREGREASON
+    FROM (	
+		
+		
+		SELECT 
+		COALESCE(NEWREGREASON, '') AS NEWREGREASON
             , COALESCE(OCCUNONPAYREASON, '') AS OCCUNONPAYREASON
             , COALESCE(PERMPOSSYN, 'N') AS PERMPOSSYN
             , COALESCE(OCCUPREPAYYN, '') AS OCCUPREPAYYN
@@ -228,9 +230,9 @@ FROM (
             , GPI.LPERMITIONYN
             , GPI.LOCCUP_FEE
             , GPI.lprepay as LPREPAY
-        FROM JIJUK_2024 JIJUK_MST
-        LEFT JOIN (
-            SELECT 
+		FROM (
+		
+			SELECT 
                 '' AS NEWREGREASON
                 , '' AS OCCUNONPAYREASON
                 , '' AS PERMPOSSYN
@@ -432,8 +434,12 @@ FROM (
                 , '' AS PERMITTED_YN
             FROM DOPCO_MASTER DM
             WHERE DM.dom_CANCLE_YN IS NULL
-        ) JOIN_MST ON JOIN_MST.PNU = JIJUK_MST.PNU
-        LEFT JOIN (
+		
+		
+		
+		) JOIN_MST
+		left join JIJUK_2024 JIJUK_MST ON JOIN_MST.PNU = JIJUK_MST.PNU
+		LEFT JOIN (
             SELECT S.*
             FROM (
                 SELECT RANK() OVER (PARTITION BY RPAD(PPI.addrcode, 10, '0'), PPI.JIBUN ORDER BY PPI.ISSUE_DATE DESC) AS RANK
@@ -453,8 +459,10 @@ FROM (
         LEFT JOIN GOVER_POTENTIAL_ISSUE GPI ON JOIN_MST.MASTER_NO = GPI.GOVER_NO AND GPI.DEL_FLAG != 'Y'
     ) T
     WHERE 1=1
-) R
-WHERE 1=1
+    
+   ) R
+   WHERE 1=1
+
 
   <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(jisa)" > 
    		
