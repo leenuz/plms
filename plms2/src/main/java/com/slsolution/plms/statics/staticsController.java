@@ -2416,6 +2416,19 @@ public void landExcelDownload(HttpServletRequest request, HttpServletResponse re
 		String status = requestParamObj.has("status")?requestParamObj.getString("status"):"";
 		String occurDate = requestParamObj.has("occur_date")?requestParamObj.getString("occur_date"):"";
 		
+		// 진행현황(status) 값에 따라 한글을 숫자로 변환
+		if ("임시저장".equals(status)) {
+		    status = "1";
+		} else if ("민원발생".equals(status)) {
+		    status = "2";
+		} else if ("대응방안수립".equals(status)) {
+		    status = "3";
+		} else if ("협의중".equals(status)) {
+		    status = "4";
+		} else if ("완료".equals(status)) {
+		    status = "5";
+		}
+		
 		// jisa 문자열을 ',' 기준으로 배열로 변환
 		// jisa 문자열을 ',' 기준으로 배열로 변환 (null이 아닌 빈 리스트로 초기화)
 		//String[] jisaArray = (jisa != null && !jisa.isEmpty()) ? jisa.split(",") : new String[0];

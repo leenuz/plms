@@ -1019,6 +1019,8 @@ function initChart(containerID, data) {
 		series: data.charData
 	});
 }
+
+
 function selectMinwonStatusStatis(isAll = true) {
 	var jisa = "";
 	var status = "";

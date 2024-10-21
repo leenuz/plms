@@ -2213,18 +2213,18 @@ WHERE 1=1
 		    COUNT(*) FILTER (WHERE mm.mm_status = '5') AS status_5_count,
 		    '완료' AS status_5_title
 		FROM minwon_master mm
-		where 1=1
+		WHERE 1=1
 		 <if test="jisaList != null and jisaList.size > 0">
-			and mm.mm_jisa in 
+			AND mm.mm_jisa in 
 			 <foreach item="jisa" index="index" collection="jisaList" open="(" separator="," close=")">
         		#{jisa}
     		</foreach>
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(status)" > 
-		and mm.mm_status=#{status}
+		AND mm.mm_status=#{status}
 		</if>
 		<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(occurDate)" > 
-		AND TO_CHAR(mm.mm_occur_date, 'YYYY-MM') = #{occurDate}
+		AND TO_CHAR(mm.mm_mw_occur_date, 'YYYY-MM') = #{occurDate}
 		</if>
 		GROUP BY mm.mm_jisa
 		ORDER BY mm.mm_jisa
