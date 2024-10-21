@@ -518,5 +518,23 @@ public class notsetController {
 	        response.getWriter().flush();
 	        // return new ModelAndView("dbTest", "list", list);
 	    }
-
+	 
+	// 송유관로현황-미설정/미점용 삭제
+	@PostMapping(path="/deleteUnsetOccupation") //http://localhost:8080/api/get/dbTest
+    public HashMap deleteUnsetOccupation(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		HashMap params = new HashMap();
+		HashMap resultMap = new HashMap<>();
+		String requestParams = ParameterUtil.getRequestBodyToStr(httpRequest);
+		JSONObject requestParamObj = new JSONObject(requestParams);
+		
+		String idx = requestParamObj.getString("idx");
+		params.put("idx", idx);
+		int result = (int) mainService.UpdateQuery("notsetSQL.updateNotsetDelFlag", params);
+		if (result > 0) {
+			resultMap.put("result", true);
+		} else {
+			resultMap.put("result", false);
+		}
+		return resultMap;
+    }
 }

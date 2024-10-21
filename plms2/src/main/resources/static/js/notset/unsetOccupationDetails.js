@@ -678,4 +678,37 @@ function jisangRegisterGo () {
 	let params = window.location.search;
 	window.location = '/land/jisang/landRightsRegistration' + params;
 }
+
+// 미설정/미점용 삭제 버튼 클릭시
+$(document).off('click', '#delBtn').on('click', '#delBtn', function() {
+	if(confirm('등록정보를 삭제하시겠습니까?')) {
+		let params = {'idx': $('#manage_no').val()};
+		url = "/land/notset/deleteUnsetOccupation";
+		$.ajax({
+	
+			url: url,
+			type: 'POST',
+			contentType: "application/json",
+			data: JSON.stringify(params),
+	
+			dataType: "json",
+			beforeSend: function(request) {
+				loadingShow();
+			},
+			success: function(res) {
+				loadingHide();
+				if (res.result) {
+					alert('해당 정보가 삭제되었습니다.');
+					window.location = '/land/songyu/menu01';
+				}
+				else {
+					console.log("response.success N");
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert("getAddressData ajax error\n" + textStatus + ":" + errorThrown);
+			}
+		})
+	}
+});
 //****************메모 관련 종료 **************** */

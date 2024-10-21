@@ -119,4 +119,11 @@
 	<select id="getNotsetAtcFileSeq" parameterType="java.util.HashMap" resultType="integer">
 		SELECT COALESCE(MAX(file_seq), 0)+1  FROM notset_atcfile WHERE na_notset_no=#{NOTSET_NO};
 	</select>
+	
+	<!-- 송유관로현황-미설정/미점용 삭제 -->
+	<update id="updateNotsetDelFlag" parameterType="HashMap">
+		UPDATE NOTSET_MASTER SET
+			   NM_DEL_FLAG = 'Y'
+		 WHERE NM_NOTSET_NO = #{idx}
+	</update>
 </mapper>
