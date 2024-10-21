@@ -512,6 +512,20 @@ $(document).on("click", "#finalBtn", function() {
 	dataObj.soujaInfo = soujaArr;
 	dataObj.uploadFiles = files;
 
+	/***** 주소검색 공통화로 인한 parameter세팅 조정 : 241022 *****/
+	//console.log(searchTargetAddressInfo);
+	$("#maddress").val(searchTargetAddressInfo.juso);
+	$("#raddress").val(searchTargetAddressInfo.juso);
+	$("#mpnu").val(searchTargetAddressInfo.pnu);
+	$("#mjibun").val(searchTargetAddressInfo.jibun);
+	$("#sido_nm").val(searchTargetAddressInfo.sido_nm);
+	$("#sgg_nm").val(searchTargetAddressInfo.sgg_nm);
+	$("#emd_nm").val(searchTargetAddressInfo.emd_nm);
+	$("#ri_nm").val(searchTargetAddressInfo.ri_nm);
+	
+	/***************************************************/
+
+
 	//필수정보체크
 	console.log("jisa:" + dataObj.jisa);
 	if (!checkData(dataObj.jisa, "s", "담당지사를 입력해주세요!")) return;
@@ -523,7 +537,7 @@ $(document).on("click", "#finalBtn", function() {
 	else if (!checkData(dataObj.jijuk_area, "s", "지적면적을 입력해주세요!")) return;
 	else if (!checkData(dataObj.jimok_text, "s", "지목을 입력해주세요!")) return;
 	else if (!checkData(dataObj.account_yn, "s", "회계처리필요여부블 입력해주세요!")) return;
-	else if (!checkData(dataObj.maddress, "s", "주소블 입력해주세요!")) return;
+	else if (!checkData(dataObj.maddress, "s", "주소를 입력해주세요!")) return;
 	else if (soujaArr <= 0) {
 		alert("소유자 정보를 입력해주세요!");
 		return;
@@ -537,6 +551,8 @@ $(document).on("click", "#finalBtn", function() {
 	console.log(dataObj);
 
 	url = "/land/jisang/insertJisangList";
+	
+	
 	$.ajax({
 
 		url: url,
@@ -557,12 +573,12 @@ $(document).on("click", "#finalBtn", function() {
 				//	console.log("response.resultData length:"+response.resultData.length);
 				alert("정상적으로 등록 되었습니다.");
 				window.location.href = "/land/jisang/menu02_1";
-				/*$("#popup_bg").show();
+				$("#popup_bg").show();
 				$("#popup").show(500);
 				//$("#addrPopupLayer tbody td").remove();
 				for(var i=0;i<response.resultData.length;i++){
 					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
-				}*/
+				}
 			}
 			else {
 				console.log("response.success N");
@@ -573,6 +589,9 @@ $(document).on("click", "#finalBtn", function() {
 			return false;
 		}
 	});
+	
+	
+	
 });
 
 
@@ -624,6 +643,7 @@ $(document).on("click",".topCloseBtn",function(){
 $(document).on("click",".resultSelectBtn",function(){
 	console.log("----------resultSelectBtn-click--------");
 	console.log($(this).parent().parent().html());
+	
 	var pnu=$(this).parent().parent().find(".popContent01").html();
 	var address=$(this).parent().parent().find(".popContent02").html();
 	var jibun=$(this).parent().parent().find(".popContent03").html();
@@ -631,9 +651,11 @@ $(document).on("click",".resultSelectBtn",function(){
 	var sgg_nm=$(this).parent().parent().find(".popContent0202").html();
 	var emd_nm=$(this).parent().parent().find(".popContent0203").html();
 	var ri_nm=$(this).parent().parent().find(".popContent0204").html();
+	
 	console.log("pnu:"+pnu);
 	console.log("address:"+address);
 	console.log("jibun:"+jibun);
+	
 	$("#maddress").val(address+" "+jibun);
 	$("#raddress").val(address+" "+jibun);
 	$("#mpnu").val(pnu);
@@ -645,8 +667,6 @@ $(document).on("click",".resultSelectBtn",function(){
 
 	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
     	$(".popupWrap").removeClass("active");
-	
-	
 })
 
 
@@ -769,17 +789,23 @@ $(document).ready(function(){
 	
 	insertJisaNameSet();
 	
-	
+	let params = window.location.search;
+	if (params) {
+		let paramArr = params.split('&');
+		let idx = paramArr[0].split('=')[1];
+		let index = paramArr[1].split('=')[1];
+		console.log(idx + '  ' + index);
+		let dataObj = {};
+		dataObj.idx = idx;
+		dataObj.index = index;
+		notsetInfo(dataObj);
+	}
 	
 });
 
 
 function getSidoMaster(){
-	
-	
-	
-			 var url="/land/api/getSidoMaster";
-			 
+	var url="/land/api/getSidoMaster";
 	var requestData={};
 	console.log(requestData);
 		 $.ajax({
@@ -1156,5 +1182,142 @@ function insertJisaNameSet() {
 	//changPipeName();
 	$("#pipe_name_ul li").remove();
 	loadCustomLiLandRegist($("#pipe_name_ul"));
+}
+
+function notsetInfo(dataObj) {
+	$.ajax({
+			url: "/land/jisang/notsetInfo"+window.location.search,
+			type: "GET",
+			dataType: "json",
+			contentType: 'application/json; charset=utf-8',
+			success: function (response) {
+				formSet(response);
+			},
+			error: function () {
+			}
+		});
+}
+
+function formSet (res) {
+	// 지사
+	$('#landRightsRegistSelectBox01').val(res.resultData.jisa);
+	const buttons1 = $('#jisaNameDiv').next().find('li button');
+	buttons1.each(function() {
+	    // this는 현재 반복 중인 버튼 요소를 가리킴
+	    if ($(this).text().trim() === res.resultData.jisa) {
+	        $(this).click(); // 일치하는 버튼 클릭
+	    }
+	});
+	const buttons2 = $('#pipe_yn').next().find('li button');
+	
+	if (res.resultData.nm_pipe_yn) {
+		buttons2.each(function() {
+		    // this는 현재 반복 중인 버튼 요소를 가리킴
+		    if ($(this).text().trim() === res.resultData.nm_pipe_yn) {
+		        $(this).click(); // 일치하는 버튼 클릭
+		    }
+		});		
+	} else {
+		$('#pipe_yn').next().find('li button')[0].click();
+	}
+	
+	//nm_pipe_name
+	const buttons3 = $('#pipe_name').next().find('li button');
+	console.log(res.resultData.nm_pipe_name);
+	if (res.resultData.nm_pipe_name) {
+		buttons3.each(function() {
+		    // this는 현재 반복 중인 버튼 요소를 가리킴
+		    if ($(this).text().trim() === res.resultData.nm_pipe_name) {
+		        $(this).click(); // 일치하는 버튼 클릭
+		    }
+		});		
+	} else {
+		$('#pipe_name').next().find('li button')[0].click();
+	}
+	
+	//nm_sun_gubun
+	const buttons4 = $('#sun_gubun').next().find('li button');
+	console.log(res.resultData.nm_sun_gubun);
+	if (res.resultData.nm_sun_gubun) {
+		buttons4.each(function() {
+		    // this는 현재 반복 중인 버튼 요소를 가리킴
+		    if ($(this).text().trim() === res.resultData.nm_sun_gubun) {
+		        $(this).click(); // 일치하는 버튼 클릭
+		    }
+		});		
+	} else {
+		$('#sun_gubun').next().find('li button')[0].click();
+	}
+	
+	//nm_gover_own_yn
+	const buttons5 = $('#gover_own_yn').next().find('li button');
+	console.log(res.resultData.nm_gover_own_yn);
+	if (res.resultData.nm_gover_own_yn) {
+		buttons5.each(function() {
+		    // this는 현재 반복 중인 버튼 요소를 가리킴
+		    if ($(this).text().trim() === res.resultData.nm_gover_own_yn) {
+		        $(this).click(); // 일치하는 버튼 클릭
+		    }
+		});		
+	} else {
+		$('#gover_own_yn').next().find('li button')[0].click();
+	}
+	
+	//nm_jijuk_area
+	$('#jijuk_area').val(res.resultData.nm_jijuk_area);
+	
+	//nm_gover_own_yn
+	const buttons6 = $('#jimok_text').next().find('li button');
+	console.log(res.resultData.nm_jimok_text);
+	if (res.resultData.nm_jimok_text) {
+		buttons6.each(function() {
+		    // this는 현재 반복 중인 버튼 요소를 가리킴
+		    if ($(this).text().trim() === res.resultData.nm_jimok_text) {
+		        $(this).click(); // 일치하는 버튼 클릭
+		    }
+		});
+	} else {
+		$('#jimok_text').next().find('li button')[0].click();
+	}
+	
+	$('#raddress, #maddress').val(res.resultData.juso);
+	$('#sido_nm').val(res.resultData.nm_sido_nm);
+	$('#sgg_nm').val(res.resultData.nm_sgg_nm);
+	$('#emd_nm').val(res.resultData.nm_emd_nm);
+	$('#ri_nm').val(res.resultData.nm_ri_nm);
+	$('#mjibun').val(res.resultData.nm_jibun);
+	
+	// 소유자 정보
+	if(res.soujaList.length > 0) {
+		for(let i = 0; i<res.soujaList.length; i++) {
+			let soujaInfo = res.soujaList[i];
+			$('#soujaJibun').val(soujaInfo.ns_jibun); // 공유지분
+			$('#soujaName').val(soujaInfo.ns_souja_name); // 성명
+			$('#soujaAddress').val(soujaInfo.ns_address); // 주소
+			$('#soujaContact1').val(soujaInfo.ns_phone_number) // 연락처1
+			$('#soujaContact2').val(soujaInfo.ns_home_number || '') // 연락처1
+		}
+	}
+	
+	// 첨부파일
+	let fileHtml = '';
+	if (res.atcFileList.length > 0) {
+		for (let f = 0; f < res.atcFileList.length; f++) {
+			let fileInfo = res.atcFileList[f];
+			fileHtml += `<ul class="contents" id="fileListUl">`;
+			fileHtml += `	<li class="content01 content checkboxWrap">`;
+			fileHtml += `		<input type="checkbox" id="landRightsRegistration_attachFile${f}" name="landRightsRegistration_attachFile">`;
+			fileHtml += `		<label for="landRightsRegistration_attachFile${f}"></label>`;
+			fileHtml += `	<li>`;
+			fileHtml += `	<li class="content02 content">`;
+			fileHtml += `		<input type="text" id="filename" placeholder="${fileInfo.na_file_nm}" class="notWriteInput" readonly="">`;
+			fileHtml += `		<input type="hidden" name="newFileCheckYn" value="Y">`;
+			fileHtml += `	<li>`;
+			fileHtml += `</ul>`;
+		}
+		$('#fileListDiv').append(fileHtml);
+	}
+	
+	console.log(res);
 }
 /************************/

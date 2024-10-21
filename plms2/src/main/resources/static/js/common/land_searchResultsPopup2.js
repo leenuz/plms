@@ -326,7 +326,6 @@ function makeSearchAdressList(data) {
 				listHtml += '</ul>';
 			}
 			
-			
 			$("#targetSearchAddrList_body").append(listHtml);
 			
 			//HTML에 append하고 나서 적용. (하나만 선택되도록)
