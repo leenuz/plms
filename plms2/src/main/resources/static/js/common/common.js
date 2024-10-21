@@ -40,7 +40,7 @@ function loadingShow(){
 	var maskHeight=$(document).height();
 	var maskWidth=window.document.body.clientWidth;
 	
-	var mask = "<div id='mask' style='position:absolute; z-index:100; background-color:#000000; left:0; top:0;'></div>";
+	var mask = "<div id='mask' style='position:absolute; z-index:9999; background-color:#000000; left:0; top:0;'></div>";
 	$('body').append(mask);
 	$("#mask").css({
 		'width': maskWidth,
@@ -62,9 +62,9 @@ function showDim() {
 	var maskHeight=$(document).height();
 	var maskWidth=window.document.body.clientWidth;
 	
-	var mask = "<div id='mask' style='position:absolute; z-index:100; background-color:#000000; left:0; top:0;'></div>";
+	var mask = "<div id='mask_DIM' style='position:absolute; z-index:100; background-color:#000000; left:0; top:0;'></div>";
 	$('body').append(mask);
-	$("#mask").css({
+	$("#mask_DIM").css({
 		'width': maskWidth,
 		'height':maskHeight,
 		'opacity':'0.4',
@@ -75,7 +75,7 @@ function showDim() {
 
 function hideDim(){
 	console.log("dim hide....");
-	$("#mask").remove();
+	$("#mask_DIM").remove();
 	$("#loadingBar").hide();
 }
 
@@ -781,7 +781,8 @@ function commonDownloadExcel(head,body,filename) {
 		
 }
 
-
+// 공통 주소 검색 팝업 (오픈만)
+// 실제 팝업 안에 동작 스크립트를 확인하시려면 land_searchResultsPopup2.js를 보시기 바랍니다.
 function commonAddressSearchPopupOpen (menuId, pageId, fragmentId) {
 	console.log(menuId);
 	console.log(pageId);
@@ -797,14 +798,17 @@ function commonAddressSearchPopupOpen (menuId, pageId, fragmentId) {
 		type : "POST"
 	})
 	.done(function(fragment){
-		console.log('그런가???');
 		//$("#"+fragmentId).replaceWith(fragment);
 		$("#commonAddressPopupDiv").html(fragment);
 		$("#commonAddressPopupDiv .popupWrap").addClass('open active');
-		
+		showDim();
 	})
 	;
-	
+}
+
+function commonAddressSearchPopupClose() {
+	$("#commonAddressPopupDiv .popupWrap").removeClass('open active');
+	hideDim();
 }
 
 /***************************************************************************/

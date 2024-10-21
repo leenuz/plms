@@ -37,7 +37,7 @@ textarea:focus {
 }
 .popupWrap.active {
     display: block;
-    z-index:99999;
+    z-index:20;
 }
 .popupWrap h2 {
     height: 44px;

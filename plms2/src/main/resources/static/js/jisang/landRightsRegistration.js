@@ -617,6 +617,7 @@ $(document).on("click",".topCloseBtn",function(){
 	var targetDiv=$("#searchResultPopDiv").parent().find("#searchResultPopup").find(".popupWrap");
 	$(".popupWrap").removeClass("active");
 //	$(".popupWrap").toggleClass("active");
+	hideDim();
 });
 
 // 주소 선택 클릭

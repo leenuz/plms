@@ -419,7 +419,13 @@ public class commonController {
 	}
 	//2024-10-21 session -----------------------------------------------------------------------------------------------------
 	
-	//Post맵핑
+	/**
+	 * 처음 시도만 검색
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping(path="/addressSearchSido")
 	public ModelAndView commonAddressSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
@@ -445,6 +451,13 @@ public class commonController {
 		return mav;
 	}
 	
+	/**
+	 * 시군구 (return 읍면동)
+	 * 읍면동 (return 리)
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
 	@PostMapping(path="/searchRemainAddress")
 	public void commonSigunguSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
@@ -454,32 +467,26 @@ public class commonController {
 		String selectOption = reqParamsObj.getString("SELECT_OPTION");
 		String selectSido = reqParamsObj.getString("SELECT_SIDO");
 		
-		String selectSigungu = "";
-		String selectEmd = "";
-		
-		
 		HashMap searchMap = new HashMap();
 		searchMap.put("SELECT_SIDO", selectSido);
 		
 		//시군구 값 확인
 		if(reqParamsObj.has("SELECT_SIGUNGU")) {
-			selectSigungu = reqParamsObj.getString("SELECT_SIGUNGU");
 			searchMap.put("SELECT_SIGUNGU", reqParamsObj.getString("SELECT_SIGUNGU"));
 		}
 		
 		//읍면동 값 확인
 		if(reqParamsObj.has("SELECT_EMD")) {
-			selectEmd = reqParamsObj.getString("SELECT_SIGUNGU");
 			searchMap.put("SELECT_SIGUNGU", reqParamsObj.getString("SELECT_SIGUNGU"));
-			//searchMap.put("SELECT_EMD", reqParamsObj.getString("SELECT_EMD"));
+			searchMap.put("SELECT_EMD", reqParamsObj.getString("SELECT_EMD"));
 		}
 		
 		//리 값 확인
-		if(reqParamsObj.has("SELECT_RI")) {
-			searchMap.put("SELECT_SIGUNGU", reqParamsObj.getString("SELECT_SIGUNGU"));
-			searchMap.put("SELECT_EMD", reqParamsObj.getString("SELECT_EMD"));
-			//searchMap.put("SELECT_RI", reqParamsObj.getString("SELECT_RI"));
-		}
+//		if(reqParamsObj.has("SELECT_RI")) {
+//			searchMap.put("SELECT_SIGUNGU", reqParamsObj.getString("SELECT_SIGUNGU"));
+//			searchMap.put("SELECT_EMD", reqParamsObj.getString("SELECT_EMD"));
+//			searchMap.put("SELECT_RI", reqParamsObj.getString("SELECT_RI"));
+//		}
 		
 		String targetQuery = "";
 		
@@ -491,7 +498,7 @@ public class commonController {
 			targetQuery = "commonSQL.selectRiList";
 		}
 		
-		System.out.println("targetQuery :: " + targetQuery);
+//		log.info("targetQuery :: " + targetQuery);
 		
 		ArrayList<HashMap> selectAddressList = mainService.selectQuery(targetQuery, searchMap);
 		
@@ -499,6 +506,140 @@ public class commonController {
 		
 		resultObj.put("result", "Y");
 		resultObj.put("selectAddressList", selectAddressList);
+		
+		response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Cache-Control", "no-cache");
+        response.resetBuffer();
+        response.setContentType("application/json");
+        response.getWriter().print(resultObj);
+        response.getWriter().flush();
+	}
+	
+	/**
+	 * 공통 주소 검색
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@PostMapping(path="/targetAddressSearch")
+	public void targetAddressSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String reqParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject reqParamsObj = new JSONObject(reqParams);
+		
+		String SELECT_SIDO = reqParamsObj.getString("SELECT_SIDO");
+		String SELECT_SIGUNGU = reqParamsObj.getString("SELECT_SIGUNGU");
+		String SELECT_EMD = reqParamsObj.getString("SELECT_EMD");
+		String SELECT_RI = reqParamsObj.getString("SELECT_RI");
+		String SELECT_SAN = reqParamsObj.getString("SELECT_SAN");
+		String SELECT_BON = reqParamsObj.getString("SELECT_BON");
+		String SELECT_BU = reqParamsObj.getString("SELECT_BU");
+		
+		HashMap searchMap = new HashMap();
+		
+		searchMap.put("SELECT_SIDO", SELECT_SIDO);	//시도는 필수값
+		
+		//시군구 여부
+		if(!"".equals(SELECT_SIGUNGU) && !"선택".equals(SELECT_SIGUNGU)) {
+			searchMap.put("SELECT_SIGUNGU", SELECT_SIGUNGU);
+		}
+		
+		//읍면동 여부
+		if(!"".equals(SELECT_EMD) && !"선택".equals(SELECT_EMD)) {
+			searchMap.put("SELECT_EMD", SELECT_EMD);
+		}
+		
+		//리 여부
+		if(!"".equals(SELECT_RI) && !"선택".equals(SELECT_RI)) {
+			searchMap.put("SELECT_RI", SELECT_RI);
+		}
+		
+		//산 여부
+		searchMap.put("SELECT_SAN", SELECT_SAN);
+		
+		//본번 (본번과 부번은 한쌍이기 때문에 부번값이 있든 없든 본번이 있으면 부번 체크 ㄱㄱ : 부번은 없으면 0으로 처리...<?>)
+		if(!"".equals(SELECT_BON) && !"선택".equals(SELECT_BON)) {
+			searchMap.put("SELECT_BON", SELECT_BON);
+			searchMap.put("SELECT_BU", SELECT_BU);
+			
+			//
+			String BUNJI = SELECT_BON;
+			
+			//부번이 있다면 본번뒤에 "-"와 같이 붙혀주기
+			if(!"".equals(SELECT_BU)) {
+				BUNJI += "-" + SELECT_BU;
+			}
+			
+			searchMap.put("SELECT_BUNJI", BUNJI);
+		}
+		
+		/** QUERY **/
+		// 검색타겟 주소 조회
+		ArrayList<HashMap> targetSearchAddrList = mainService.selectQuery("commonSQL.targetAddressSearch", searchMap);
+		
+		
+		/***** result response *****/
+		
+		JSONObject resultObj = new JSONObject();
+		
+		resultObj.put("result", "Y");
+		resultObj.put("targetSearchAddrList", targetSearchAddrList);
+		resultObj.put("targetSearchAddrListSize", targetSearchAddrList.size());
+		
+		response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Cache-Control", "no-cache");
+        response.resetBuffer();
+        response.setContentType("application/json");
+        response.getWriter().print(resultObj);
+        response.getWriter().flush();
+	}
+	
+	/**
+	 * 새로운 PNU 생성
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@PostMapping(path="/makeNewPNUInfo")
+	public void makeNewPNUInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String reqParams = ParameterUtil.getRequestBodyToStr(request);
+		JSONObject reqParamsObj = new JSONObject(reqParams);
+		
+		System.out.println(reqParamsObj.toString());
+		
+		String SELECT_SIDO = reqParamsObj.getString("SELECT_SIDO");
+		String SELECT_SIGUNGU = reqParamsObj.getString("SELECT_SIGUNGU");
+		String SELECT_EMD = reqParamsObj.getString("SELECT_EMD");
+		String SELECT_RI = reqParamsObj.getString("SELECT_RI");
+		String SELECT_SAN = reqParamsObj.getString("SELECT_SAN");
+		String SELECT_BON = reqParamsObj.getString("SELECT_BON");	//본번
+		String SELECT_BU = reqParamsObj.getString("SELECT_BU");		//부번
+		
+		HashMap newPNUMap = new HashMap();
+		
+		newPNUMap.put("SELECT_SIDO", SELECT_SIDO);
+		newPNUMap.put("SELECT_SIGUNGU", SELECT_SIGUNGU);
+		newPNUMap.put("SELECT_EMD", SELECT_EMD);
+		newPNUMap.put("SELECT_RI", SELECT_RI);
+		newPNUMap.put("SELECT_SAN", SELECT_SAN);
+		newPNUMap.put("SELECT_BON", SELECT_BON);
+		newPNUMap.put("SELECT_BU", SELECT_BU);
+		
+		/***** QUERY *****/
+		//INSERT - 새로운 PNU 생성
+		mainService.InsertQuery("commonSQL.insertMakedNewPNUInfo", newPNUMap);
+		//방금값 조회
+		ArrayList<HashMap> makedNewPNUInfo = mainService.selectQuery("commonSQL.targetAddressSearch", newPNUMap);
+		
+		/***** result response *****/
+		JSONObject resultObj = new JSONObject();
+		
+		resultObj.put("result", "Y");
+		resultObj.put("makedNewPNUInfo", makedNewPNUInfo);
+//		resultObj.put("targetSearchAddrListSize", targetSearchAddrList.size());
 		
 		response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
