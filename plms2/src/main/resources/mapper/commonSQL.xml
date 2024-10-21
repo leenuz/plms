@@ -759,7 +759,8 @@ WHERE A.dm_DOSI_NO = B.di_DOSI_NO
 <select id="selectSidoList" parameterType="HashMap" resultType="java.util.HashMap">
 	SELECT A.sido_nm
 	FROM jijuk_addr_2024 A
-	GROUP BY A.sido_nm 
+	GROUP BY A.sido_nm
+	ORDER BY A.sido_nm 
 </select>
 
 <!-- 시군구 정보 조회 -->
@@ -768,6 +769,7 @@ WHERE A.dm_DOSI_NO = B.di_DOSI_NO
 	  FROM jijuk_addr_2024 A
 	 WHERE A.sido_nm = #{SELECT_SIDO}
   GROUP BY A.sgg_nm
+  ORDER BY A.sgg_nm
 </select>
 
 <!-- 읍면동 조회 -->
@@ -777,6 +779,7 @@ WHERE A.dm_DOSI_NO = B.di_DOSI_NO
 	 WHERE A.sido_nm = #{SELECT_SIDO}
 	   AND A.sgg_nm  = #{SELECT_SIGUNGU}
   GROUP BY A.emd_nm
+  ORDER BY A.emd_nm
 </select>
 
 <!-- 리 조회-->
@@ -786,6 +789,7 @@ WHERE A.dm_DOSI_NO = B.di_DOSI_NO
      WHERE A.sido_nm = #{SELECT_SIDO}
        AND A.sgg_nm = #{SELECT_SIGUNGU}
        AND A.emd_nm = #{SELECT_EMD}
+  ORDER BY A.ri_nm
 </select>
 
 <!-- 검색타겟 주소 조회 -->

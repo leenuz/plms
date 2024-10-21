@@ -1,5 +1,6 @@
 //241005
 var selectDivId;
+var commonAddrTagIndex;
 
 var nowDay = new Date();
 var n_Year = nowDay.getFullYear(); // 연도
@@ -783,9 +784,11 @@ function commonDownloadExcel(head,body,filename) {
 
 // 공통 주소 검색 팝업 (오픈만)
 // 실제 팝업 안에 동작 스크립트를 확인하시려면 land_searchResultsPopup2.js를 보시기 바랍니다.
-function commonAddressSearchPopupOpen (menuId, pageId, fragmentId) {
+function commonAddressSearchPopupOpen (menuId, pageId, tagIdx) {
 	console.log(menuId);
 	console.log(pageId);
+	
+	commonAddrTagIndex = tagIdx;
 	
 	let params = {
 		"MENU_NAME" : menuId,

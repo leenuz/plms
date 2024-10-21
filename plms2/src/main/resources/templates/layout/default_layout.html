@@ -1,33 +1,36 @@
 <!DOCTYPE html>
-<html lang="ko"
-	xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-  <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
 
-  
-    <!-- 공통 헤더-->
-  <th:block th:replace="~{fragments/header :: headFragment}"></th:block>
+<th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
 
-    <body id="contentBody">
-		<div id="dopcoAllWrappers">
-		
-				<div style="float:left;width:150px;">
-					 <th:block th:replace="~{fragments/sidebar :: sidebarFragment}"></th:block>
-				</div>
-		        <div class="dopcoAllwrappersBoxs" >
-					<div style="margin-left:110px;">
-						<!-- 본문-->
-                    	<th:block layout:fragment="content"></th:block>
-					</div>
-				</div>
-			</div>
-		     
-		      
-    	<script type="module" th:src="@{/js/module/surfaceMain.js}"></script>
-   
-    </body>
-    
-    
+
+<!-- 공통 헤더-->
+<th:block th:replace="~{fragments/header :: headFragment}"></th:block>
+
+<body id="contentBody">
+    <div id="dopcoAllWrappers">
+
+        <div style="float:left;width:150px;">
+            <th:block th:replace="~{fragments/sidebar :: sidebarFragment}"></th:block>
+        </div>
+        <div class="dopcoAllwrappersBoxs">
+            <div style="margin-left:110px;">
+                <!-- 본문-->
+                <th:block layout:fragment="content"></th:block>
+            </div>
+        </div>
+    </div>
+
+    <!-- 새로운 주소검색 팝업 [S] -->
+    <div id="commonAddressPopupDiv">
+        <div id="commonAddressPopup"></div>
+    </div>
+    <!-- 새로운 주소검색 팝업 [E] -->
+
+    <script type="module" th:src="@{/js/module/surfaceMain.js}"></script>
+
+</body>
+
+
 </html>

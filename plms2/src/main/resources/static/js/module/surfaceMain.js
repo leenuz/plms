@@ -108,10 +108,13 @@ window.addEventListener("load", () => {
 
 	}
 
-	selecBoxsEvetWrappers();
+	
 
 	//241005
 	menuListLoad();
+	
+	selecBoxsEvetWrappers();
+	
 })
 
 
@@ -146,7 +149,7 @@ function menuListSet(result, result2) {
 	
 	//송유관로현황
 	let songyuImg = ['/assets/media/nav/surfaceHammer.png', 'nowDopco', 'songyuLargeMenuBox'];
-	let songyuUrl = ['/songyu/menu01', '/songyu/menu02', '/songyu/menu03'];
+	let songyuUrl = ['/land/songyu/menu01', '/land/songyu/menu02', '/land/songyu/menu03'];
 	//지상권
 	let jisangImg = ['/assets/media/nav/surfaceMenu.png', 'surface', 'jisangLargeMenuBox']
 	let jisangUrl = ['/land/jisang/menu02_1', '/land/jisang/landRightsRegistration', '/land/jisang/menu02_2', '/land/jisang/menu02_3', '/land/jisang/menu02_4', '/land/jisang/menu02_5'];
@@ -158,7 +161,7 @@ function menuListSet(result, result2) {
 	let togiUrl = ['/togi/menu04_1', '/togi/landReg'];
 	//회사토지
 	let dopcoImg = ['/assets/media/nav/surfaceGround.png', 'company', 'dopcoLargeMenuBox']
-	let dopcoUrl = ['/dopco/menu05_1', '/dopco/compLandReg', '/dopco/menu05_2'];
+	let dopcoUrl = ['/land/dopco/menu05_1', '/land/dopco/compLandReg', '/land/dopco/menu05_2'];
 	//이슈
 	let issueImg = ['/assets/media/nav/surfaceIssue.png', 'issue', 'issueLargeMenuBox'];
 	let issueUrl = ['/issue/issueCodeMgmt', '/issue/menu06_1'];
@@ -166,6 +169,8 @@ function menuListSet(result, result2) {
 	let statsImg = ['/assets/media/nav/total.png', 'totalIcon', 'statsLargeMenuBox'];
 	let statsUrl = ['/stats/rightCloseMng', '/stats/rightStatus', '/stats/issueStatus' , '/stats/rightChangeStat', '/stats/parcelChangeStat'];
 	
+	//버튼ID
+	let btnIdArr = [];
 	/********************/
 	//2pms지도메뉴 권한
 	let menu2PmsList = JSON.parse(result2[0]);
@@ -194,36 +199,43 @@ function menuListSet(result, result2) {
 		if(menuInfo.mnLargeName == '송유관로 현황'){
 			targetImgArr = songyuImg;
 			targetMenuUrlArr = songyuUrl;
+			btnIdArr.push('navi_songyu');
 		} else if(menuInfo.mnLargeName == '지상권') {
 			targetImgArr = jisangImg;
 			targetMenuUrlArr = jisangUrl;
+			btnIdArr.push('navi_jisang');
 		} else if(menuInfo.mnLargeName == '점용') {
 			targetImgArr = goverImg;
 			targetMenuUrlArr = goverUrl;
+			btnIdArr.push('navi_gover');
 		} else if(menuInfo.mnLargeName == '토지개발') {
 			targetImgArr = togiImg;
 			targetMenuUrlArr = togiUrl;
+			btnIdArr.push('navi_togi');
 		} else if(menuInfo.mnLargeName == '회사토지') {
 			targetImgArr = dopcoImg;
 			targetMenuUrlArr = dopcoUrl;
+			btnIdArr.push('navi_dopco');
 		} else if(menuInfo.mnLargeName == '이슈') {
 			targetImgArr = issueImg;
 			targetMenuUrlArr = issueUrl;
+			btnIdArr.push('navi_issue');
 		} else { //통계
 			targetImgArr = statsImg;		
 			targetMenuUrlArr = statsUrl;
+			btnIdArr.push('navi_stats');
 		}
 		
 		//사이드바 큰메뉴 사용여부
 		if(menuInfo.mnLargeYn == 'Y') {
 			
-			if(menuInfo.mnLargeName == '통계') {
-				innerHtml += '<li style="display:none;">';
-			} else {
+			//if(menuInfo.mnLargeName == '통계') {
+			//	innerHtml += '<li style="display:none;">';
+			//} else {
 				innerHtml += '<li>';
-			}
+			//}
 			
-			innerHtml += '	<button class="surfaceMenuBtn" onclick="largeMenuClick(this, \''+ targetImgArr[2] +'\')">';
+			innerHtml += '	<button class="surfaceMenuBtn" id="'+btnIdArr[i]+'" onclick="largeMenuClick(this, \''+ targetImgArr[2] +'\')">';
 			innerHtml += '		<span><img src="'+targetImgArr[0]+'" alt="'+targetImgArr[1]+'" /></span>' + menuInfo.mnLargeName;
 			innerHtml += '	</button>';
 			innerHtml += '	<div class="hiddenMenuBoxs" id="'+targetImgArr[2]+'" >';
@@ -235,13 +247,13 @@ function menuListSet(result, result2) {
 				
 				if(mnInfo.mnYN == 'Y') {
 					
-					if(mnInfo.mnName == '권리제외필지조회' || mnInfo.mnName == '관리필지조회' || mnInfo.mnName == '권리필지조회' || mnInfo.mnName == '토지개발 신규등록'
-					   || mnInfo.mnName == '회사토지 신규등록' || mnInfo.mnName == '처분' || mnInfo.mnName == '민원관리'
-					) {
-						innerHtml += '<a href="'+targetMenuUrlArr[k]+'" style="display:none;">' + mnInfo.mnName + '</a>';
-					} else {
+					//if(mnInfo.mnName == '권리제외필지조회' || mnInfo.mnName == '관리필지조회' || mnInfo.mnName == '권리필지조회' || mnInfo.mnName == '토지개발 신규등록'
+					//   || mnInfo.mnName == '회사토지 신규등록' || mnInfo.mnName == '처분' || mnInfo.mnName == '민원관리'
+					//) {
+					//	innerHtml += '<a href="'+targetMenuUrlArr[k]+'" style="display:none;">' + mnInfo.mnName + '</a>';
+					//} else {
 						innerHtml += '<a href="'+targetMenuUrlArr[k]+'">' + mnInfo.mnName + '</a>';
-					}
+					//}
 				}
 			}
 			
@@ -255,7 +267,19 @@ function menuListSet(result, result2) {
 	
 	$("#naviMenuBar").empty();
 	$("#naviMenuBar").html(innerHtml);
+	leftbarSelected();
+}
+
+//241015
+function leftbarSelected() {
+	//현재 URL 체크
+	const currentURL = window.location.href;
 	
+	let urlTextArr = currentURL.split('/');
+	
+	let urlCheck = "navi_" + urlTextArr[urlTextArr.length - 2];
+	
+	$("#"+urlCheck).addClass('addClick active')
 }
 
 /******************************/

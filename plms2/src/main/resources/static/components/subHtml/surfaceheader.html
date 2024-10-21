@@ -221,19 +221,7 @@ function sessionExtension() {
 
   hiddenMenuOpenEvet();
 
-	//241015
-	function leftbarSelected() {
-		//현재 URL 체크
-		const currentURL = window.location.href;
-		
-		let urlTextArr = currentURL.split('/');
-		
-		let urlCheck = "navi_" + urlTextArr[urlTextArr.length - 2];
-
-		$("#"+urlCheck).addClass('addClick active')
-		
-	}
-	leftbarSelected();
+  
 
 </script>
 <!-- header -->
@@ -265,14 +253,12 @@ function sessionExtension() {
         </li>
     </ul>
     <!-- ul-2 [S] -->
-    
-   <!--  <ul class="navMenu" id="naviMenuBar"></ul> -->
-    
+	<ul class="navMenu" id="naviMenuBar"></ul>
     <!-- ul-2 [E] -->
     
     <!-- 원본 메뉴바 -->
     <!-- ul-1 [S] -->
-    
+    <!-- 
     <ul class="navMenu" >
       <li>
         <button class="surfaceMenuBtn">
@@ -369,7 +355,7 @@ function sessionExtension() {
         </div>
       </li>
     </ul>
-   
+     -->
     <!-- ul-1 [E] -->
     <ul class="login">
       <li>
