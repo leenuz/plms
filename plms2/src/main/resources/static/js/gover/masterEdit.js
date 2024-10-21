@@ -1407,20 +1407,85 @@ function getModifyReasonForLand() {
 }
 
 
-$(document).on("click","#reqApprovalBtn",function(){
+// 승인 요청 버튼 - saveStatus 를 T:승인대기 로 update
+$(document).on("click", "#reqApprovalBtn", function() {
+
+	console.log("승인요청 버튼");
+
+	var formSerializeArray = $('#saveForm').serializeArray(); // 폼 데이터를 직렬화하여 배열로 저장
+	console.log(formSerializeArray); // 배열 형태로 폼 데이터 출력
+
+	var object = {}; // 빈 객체 생성
+	for (var i = 0; i < formSerializeArray.length; i++) {
+		object[formSerializeArray[i]['name']] = formSerializeArray[i]['value']; // 배열의 각 항목을 객체로 변환
+	}
+
+	object.saveStatus = "T";
+	object.goverNo = $('#gover_no').val();
+	object.userId = $('#userId').val();
+	console.log(object);
+
+	url = "/land/gover/updateGoverSaveStatus";
+	$.ajax({
+
+		url: url,
+		type: 'POST',
+		contentType: "application/json",
+		data: JSON.stringify(object),
+
+		dataType: "json",
+		beforeSend: function(request) {
+			console.log("beforesend ........................");
+			loadingShow();
+		},
+		success: function(response) {
+			loadingHide();
+			console.log(response);
+			if (response.success = "Y") {
+				console.log("response.success Y");
+				//console.log("response.resultData length:"+response.resultData.length);
+				alert("정상적으로 등록 되었습니다.");
+				/*$("#popup_bg").show();
+				$("#popup").show(500);
+				//$("#addrPopupLayer tbody td").remove();
+				for(var i=0;i<response.resultData.length;i++){
+					$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+				}*/
+			}
+			else {
+				console.log("response.success N");
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert("finalBtn ajax error\n" + textStatus + ":" + errorThrown);
+			return false;
+		}
+	});
+})
+
+
+// 승인 버튼 - saveStatus 를 A:승인상태(승인처리) 로 update
+$(document).on("click","#approveBtn",function(){
 	
-	console.log("승인요청");
+	console.log("승인 버튼");
 	
+	// confirm 대화상자 표시
+	if (!confirm("승인하시겠습니까?")) {
+	    return;
+	}
+	
+  var object = {}; // 빈 객체 생성
+	/*
 	var formSerializeArray = $('#saveForm').serializeArray(); // 폼 데이터를 직렬화하여 배열로 저장
     console.log(formSerializeArray); // 배열 형태로 폼 데이터 출력
-    
-    var object = {}; // 빈 객체 생성
+  
     for (var i = 0; i < formSerializeArray.length; i++) { 
-        object[formSerializeArray[i]['name']] = formSerializeArray[i]['value']; // 배열의 각 항목을 객체로 변환
-    }
+	    object[formSerializeArray[i]['name']] = formSerializeArray[i]['value']; // 배열의 각 항목을 객체로 변환
+    }*/
 	
-	object.saveStatus="T";
-	object.goverNo=object.gover_no;
+	object.saveStatus="A";
+	object.goverNo = $('#gover_no').val();
+	object.userId = $('#userId').val();
 	console.log(object);
 	
 	   url="/land/gover/updateGoverSaveStatus"; 
@@ -1461,6 +1526,69 @@ $(document).on("click","#reqApprovalBtn",function(){
 	   			
 	   		}); 
 	
+})
+
+
+// 반려 버튼 - saveStatus 를 R:반려 로 update
+$(document).on("click","#rejectBtn",function(){
+	
+	console.log("반려 버튼");
+	
+	// confirm 대화상자 표시
+	if (!confirm("반려하시겠습니까?")) {
+	    return;
+	}
+	
+  var object = {}; // 빈 객체 생성
+/*
+		var formSerializeArray = $('#saveForm').serializeArray(); // 폼 데이터를 직렬화하여 배열로 저장
+    console.log(formSerializeArray); // 배열 형태로 폼 데이터 출력
+    
+    for (var i = 0; i < formSerializeArray.length; i++) { 
+        object[formSerializeArray[i]['name']] = formSerializeArray[i]['value']; // 배열의 각 항목을 객체로 변환
+    }
+*/	
+	object.saveStatus="R";
+	object.goverNo = $('#gover_no').val();
+	object.userId = $('#userId').val();
+	console.log(object);
+	
+	   url="/land/gover/updateGoverSaveStatus"; 
+	   $.ajax({
+	   			
+	   				url:url,
+	   				type:'POST',
+	   				contentType:"application/json",
+	   				data:JSON.stringify(object),
+	   				
+	   				dataType:"json",
+	   				beforeSend:function(request){
+	   					console.log("beforesend ........................");
+	   					loadingShow();
+	   				},
+	   				success:function(response){
+	   					loadingHide();
+	   					console.log(response);
+	   					if (response.success="Y"){
+	   						console.log("response.success Y");
+	   						//console.log("response.resultData length:"+response.resultData.length);
+							alert("정상적으로 등록 되었습니다.");
+	   						/*$("#popup_bg").show();
+	   						$("#popup").show(500);
+	   						//$("#addrPopupLayer tbody td").remove();
+	   						for(var i=0;i<response.resultData.length;i++){
+	   							$("#addrPopupTable tbody").append("<tr><td>"+response.resultData[i].juso+"</td><td><button>선택</button></td></tr>");
+	   						}*/
+	   					}
+	   					else {
+	   						console.log("response.success N");
+	   					}
+	   				},
+	   				error:function(jqXHR,textStatus,errorThrown){
+	   					alert("finalBtn ajax error\n"+textStatus+":"+errorThrown);
+						return false;
+	   				}
+	   		}); 
 })
 
 // 체크박스 상태 변경 시 점용료 선납 여부 처리

@@ -842,6 +842,11 @@ button {
   color: #fff;
 }
 
+.rejectBtn {
+  background: #ff6c2d;
+  color: #fff;
+}
+
 .grayBtn {
   background: #919191;
   color: #fff;

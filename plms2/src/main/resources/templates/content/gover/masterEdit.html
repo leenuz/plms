@@ -133,6 +133,7 @@
 						<input type="hidden" name="occunonpayreason_org" th:value="${resultData.gm_occunonpayreason}" />
 						<input type="hidden" name="occuprepayyn_org" th:value="${resultData.gm_occuprepayyn}" />
 						<input type="hidden" name="occuprepaydate_org" th:value="${resultData.gm_occuprepaydate}" />
+						<input type="hidden" id="saveStatus" th:value="${resultData.gm_save_status}">
 
 					</div>
 
@@ -1145,11 +1146,25 @@
 
 				<div class="finalBtnBox btnWrap">
 					<button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>
-					<button class="newIssueBtn blueBorderBtn finalBtn">
-						이슈신규생성
-					</button>
-					<button class="draftSaveBtn lightBlueBtn finalBtn" id="draftSaveBtn">임시저장</button>
-					<button class="requestBtn vividBlueBtn finalBtn" id="reqApprovalBtn">승인요청</button>
+		    	<!-- USER_ID가 admin이 아닐 때만 임시저장, 승인요청 버튼이 보이도록 설정 -->
+					<button class="newIssueBtn blueBorderBtn finalBtn" th:if="${userId != 'admin'}">이슈신규생성</button>
+					<button class="draftSaveBtn lightBlueBtn finalBtn" id="draftSaveBtn" th:if="${userId != 'admin'}">임시저장</button>
+    			<button class="requestBtn vividBlueBtn finalBtn" id="reqApprovalBtn" th:if="${userId != 'admin'}">승인요청</button>
+    
+			    <!-- USER_ID가 admin일 때만 승인/반려 버튼이 보이도록 설정 -->
+			    <input type="hidden" id="userId" th:value="${userId}">
+			    <button 
+				    id="rejectBtn" 
+				    class="rejectBtn vividBlueBtn finalBtn" 
+				    th:if="${userId == 'admin'} and ${resultData.gm_save_status == 'T'}">
+				    반려
+			    </button>
+			    <button 
+				    id="approveBtn" 
+				    class="approveBtn vividBlueBtn finalBtn" 
+				    th:if="${userId == 'admin'} and ${resultData.gm_save_status == 'T'}">
+				    승인
+			    </button>
 				</div>
 			</form>
 		</main>
