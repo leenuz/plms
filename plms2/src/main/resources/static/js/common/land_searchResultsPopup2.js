@@ -352,6 +352,11 @@ function selectTargetAddress() {
 	
 	searchTargetAddressInfo = searchTargetAddressAll[selectedIdx];
 	console.log(searchTargetAddressInfo);
+	
+	$("#justone_commonAddrSearch_result").text(searchTargetAddressInfo.juso);
+	$("#justone_commonAddrSearch_result_"+commonAddrTagIndex).text(searchTargetAddressInfo.juso);
+	
+	
 	commonAddressSearchPopupClose(); //선택하면 우선 닫기
 	//팝업 초기화(reset)은 고려
 	
