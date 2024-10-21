@@ -295,6 +295,10 @@ button {
   color: #2b7de1;
   font-size: 13px;
   font-weight: 600;
+    vertical-align: middle;
+    display: inline-block;
+    text-align: center;
+    line-height: 27px;
 }
 #occupationDetails .landInfoEdit .contBoxMini03 {
   width: 100%;
