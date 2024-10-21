@@ -7,9 +7,12 @@ var searchTargetAddressInfo;
 
 $(document).ready(function() {
 	init();
-	
-	
 });
+
+$(window).on('load', function(){
+	leftbarSelected();
+})
+
 
 //스크립트 확인
 function init() {
@@ -53,6 +56,13 @@ function selectSido(obj) {
 		ulElement.addClass('active');
 		$("#sidoSelectValue").addClass('active');
 	}
+	
+	//초기화
+	$("#sigunguSelectValue").text('선택');
+	$("#emdSelectValue").text('선택');
+	$("#riSelectValue").text('선택');
+	
+	
 }
 
 //시군구 선택 - 위의 시도 선택 로직과 동일 - 모듈화는 나중에
@@ -89,6 +99,9 @@ function selectSigungu() {
 		ulElement.addClass('active');
 		$("#sigunguSelectValue").addClass('active');
 	}
+	
+	$("#emdSelectValue").text('선택');
+	$("#riSelectValue").text('선택');
 }
 
 //읍면동 선택 - 위의 시도 선택 로직과 동일 - 모듈화는 나중에
@@ -125,6 +138,7 @@ function selectEmd() {
 		ulElement.addClass('active');
 		$("#emdSelectValue").addClass('active');
 	}
+	$("#riSelectValue").text('선택');
 }
 
 //리 선택 - 위의 시도 선택 로직과 동일 - 모듈화는 나중에
@@ -290,6 +304,7 @@ function makeSearchAdressList(data) {
 	console.log(data);
 	
 	if(data.result == 'Y') {
+		$("#targetSearchAddrList_body").empty();
 		
 		if(data.targetSearchAddrListSize > 0) {
 			let resultList = data.targetSearchAddrList;
@@ -311,7 +326,7 @@ function makeSearchAdressList(data) {
 				listHtml += '</ul>';
 			}
 			
-			$("#targetSearchAddrList_body").empty();
+			
 			$("#targetSearchAddrList_body").append(listHtml);
 			
 			//HTML에 append하고 나서 적용. (하나만 선택되도록)
@@ -493,4 +508,22 @@ function onlyNumberInput(obj) {
 //r.e.s.e.t
 function commonAddressSearchPopupReset() {
 	console.log('r.e.s.e.t');
+}
+
+
+//********************************************************
+
+
+function leftbarSelected() {
+	
+	console.log('좌측메뉴박스');
+	
+	//현재 URL 체크
+	const currentURL = window.location.href;
+	
+	let urlTextArr = currentURL.split('/');
+	
+	let urlCheck = "navi_" + urlTextArr[urlTextArr.length - 2];
+
+	$("#"+urlCheck).addClass('addClick active')
 }

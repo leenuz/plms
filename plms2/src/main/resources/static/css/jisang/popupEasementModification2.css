@@ -598,3 +598,11 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+.common_searchAddressBtn {
+	width: 54px;
+    height: 27px;
+    border-radius: 20px;
+    background: #2b7de1;
+    color: #fff;
+}
