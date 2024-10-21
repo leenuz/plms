@@ -12,6 +12,12 @@
 
 	<link rel="stylesheet" href="/css/songyu/notsetAddRevise.css" />
 	<title>미설정/미점용 내역 수정</title>
+	<style>
+		.customInputStyle {
+			width: 100%;
+			text-align: center;
+		}
+	</style>
 </head>
 
 <th:block layout:fragment="content">
@@ -191,15 +197,15 @@
 																										                        resultData.nm_ri_nm != null ? resultData.nm_ri_nm + ' ' : '', 
 																										                        resultData.nm_jibun != null ? resultData.nm_jibun : ''
 																										                      )}" />
-										<input type="hidden" name="mpnu" th:value="${resultData.nm_pnu}" />
+										<!-- <input type="hidden" name="mpnu" th:value="${resultData.nm_pnu}" />
 										<input type="hidden" name="pnu" th:value="${resultData.nm_pnu}" />
 										<input type="hidden" name="jibun" th:value="${resultData.nm_jibun}" />
 										<input type="hidden" name="sido_nm" th:value="${resultData.nm_sido_nm}"></input>
 										<input type="hidden" name="sgg_nm" th:value="${resultData.nm_sgg_nm}"></input>
 										<input type="hidden" name="emd_nm" th:value="${resultData.nm_emd_nm}"></input>
-										<input type="hidden" name="ri_nm" th:value="${resultData.nm_ri_nm}"></input>
+										<input type="hidden" name="ri_nm" th:value="${resultData.nm_ri_nm}"></input> -->
 									
-										<input type="text" readonly class="notWriteInput" th:value="${#strings.concat(
+										<input type="text" readonly class="notWriteInput customInputStyle" th:value="${#strings.concat(
 																										                        resultData.nm_sido_nm != null ? resultData.nm_sido_nm + ' ' : '', 
 																										                        resultData.nm_sgg_nm != null ? resultData.nm_sgg_nm + ' ' : '', 
 																										                        resultData.nm_emd_nm != null ? resultData.nm_emd_nm + ' ' : '', 
@@ -303,12 +309,12 @@
 							소유자 정보*
 						</div>
 						
-						<input type="hidden" name="pnu" id="mpnu" />
-						<input type="hidden" name="mjibun" id="mjibun" />
-						<input type="hidden" name="sido_nm" id="sido_nm" />
-						<input type="hidden" name="sgg_nm" id="sgg_nm" />
-						<input type="hidden" name="emd_nm" id="emd_nm" />
-						<input type="hidden" name="ri_nm" id="ri_nm" />
+						<input type="hidden" name="pnu" id="mpnu" th:value="${resultData.nm_pnu}" />
+						<input type="hidden" name="mjibun" id="mjibun" th:value="${resultData.nm_jibun}" />
+						<input type="hidden" name="sido_nm" id="sido_nm" th:value="${resultData.nm_sido_nm}" />
+						<input type="hidden" name="sgg_nm" id="sgg_nm" th:value="${resultData.nm_sgg_nm}" />
+						<input type="hidden" name="emd_nm" id="emd_nm" th:value="${resultData.nm_emd_nm}" />
+						<input type="hidden" name="ri_nm" id="ri_nm" th:value="${resultData.nm_ri_nm}"/>
 						<input type="hidden" name="addrcode" id="addrcode" />
 
 						<div class="contWrap">
