@@ -809,3 +809,21 @@ function commonAddressSearchPopupOpen (menuId, pageId, fragmentId) {
 
 /***************************************************************************/
 /***************************************************************************/
+
+
+function serializeToJSON(serializedData) {
+	console.log("-----------------serializeToJSON----------------");
+	console.log(serializedData);
+    var data = serializedData.replace(/"/g, '').split("&");
+	console.log(data);
+    var json = {};
+    
+    data.forEach(function(item) {
+        var pair = item.split("=");
+        var key = decodeURIComponent(pair[0]);
+        var value = decodeURIComponent(pair[1]);
+        json[key] = value;
+    });
+    
+    return json;
+}
