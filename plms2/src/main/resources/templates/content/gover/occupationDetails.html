@@ -17,6 +17,17 @@
 <!-- <script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"> -->
 <title>점용 상세정보</title>
+
+<style>
+	@media print {
+		.contWrap {
+			display: block;
+		}
+		.contWrap > div {
+			width: 100%;
+		}
+	}
+</style>
 </head>
 <th:block layout:fragment="content">
 
@@ -861,7 +872,7 @@
 
 			<div class="finalBtnBox btnWrap">
 				<button class="backBtn finalBtn" onclick="history.back();">이전</button>
-				<button class="printBtn finalBtn">출력</button>
+				<button class="printBtn finalBtn" onclick="commonCurrentPagePrint()">출력</button>
 			</div>
 
 		</main>

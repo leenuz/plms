@@ -95,6 +95,15 @@ div.dt-filter-spacer {
 	text-align: right;
 	margin: 10px;
 }
+@media print {
+	.contWrap{
+		display: block;
+	}
+	.contWrap > div {
+		width: 100%;
+	}
+}
+
 </style>
 <title>지상권</title>
 </head>
@@ -677,7 +686,7 @@ div.dt-filter-spacer {
 			<!-- 참고 -->
 
 			<div class="finalBtnBox btnWrap">
-				<button class="printBtn finalBtn">출력</button>
+				<button class="printBtn finalBtn" onclick="commonCurrentPagePrint()">출력</button>
 				<button class="finalBtn switchBtn">지상권 전환</button>
 				<!--                <button class="backBtn finalBtn">이전</button>-->
 				<input class="backBtn finalBtn" type="button" value="이전"
