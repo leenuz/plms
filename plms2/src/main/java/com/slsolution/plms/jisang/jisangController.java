@@ -10236,4 +10236,73 @@ log.info("map:"+map);
 			
 			return mav;
 		}
+		
+		//송유관로현황-미설정/미점용 상세
+		@GetMapping(path="/notsetInfo") //http://localhost:8080/api/get/dbTest
+	    public HashMap notsetInfo(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+			ModelAndView mav=new ModelAndView();
+			HashMap params = new HashMap();
+			HashMap resultMap = new HashMap<>();
+			String idx = httpRequest.getParameter("idx");
+			String index = httpRequest.getParameter("index");
+
+			params.put("idx",idx);
+			params.put("index",index);
+			params.put("manage_no",idx);
+			log.info("idx:"+idx);
+			log.info("index:"+index);
+
+			ArrayList<HashMap> data = mainService.selectQuery("notsetSQL.selectAllData",params); // 기본정보
+			
+			//241009
+			List<String> coordinateVal = new ArrayList<>();
+			Integer coordinateSize = 0;
+			
+			HashMap jijuk = new HashMap<>();
+			jijuk.put("x", 0);
+			jijuk.put("y", 0);
+			
+			if (data.size() > 0) {
+				HashMap jijukParam = new HashMap<>();
+				jijukParam.put("sido_nm", data.get(0).get("nm_sido_nm"));
+				jijukParam.put("sgg_nm", data.get(0).get("nm_sgg_nm"));
+				jijukParam.put("emd_nm", data.get(0).get("nm_emd_nm"));
+				jijukParam.put("ri_nm", data.get(0).get("nm_ri_nm"));
+				jijukParam.put("jibun", data.get(0).get("nm_jibun"));
+				
+				jijukParam.put("TARGET_PNU", data.get(0).get("nm_pnu"));
+
+				ArrayList<HashMap> jijukList = mainService.selectQuery("commonSQL.selectJijuk", jijukParam);
+				ArrayList<HashMap> jijukPNUList2 = mainService.selectQuery("commonSQL.selectJijuk_PNU", jijukParam);
+				
+				coordinateSize += jijukPNUList2.size();
+				
+				if (jijukList.size() > 0) {
+					jijuk = jijukList.get(0);
+				} else {
+					jijuk = new HashMap<>();
+					jijuk.put("x", 0);
+					jijuk.put("y", 0);
+					
+					for(int k = 0 ; k < jijukPNUList2.size() ; k++) {
+						HashMap jijukInfo = jijukPNUList2.get(k);
+						coordinateVal.add(jijukInfo.get("x").toString()+"|"+jijukInfo.get("y").toString());
+					}
+				}
+			}
+			
+			ArrayList<HashMap> soujaList = mainService.selectQuery("notsetSQL.selectSoyujaData",params); //소유자
+			ArrayList<HashMap> atcFileList = mainService.selectQuery("notsetSQL.selectAtcFileList",params); //첨부파일
+			
+			params.put("pnu", data.get(0).get("nm_pnu"));
+			
+			ArrayList<HashMap> notsetMemoList = mainService.selectQuery("commonSQL.selectMemoList",params); // 메모
+			
+			resultMap.put("resultData", data.get(0));
+			resultMap.put("soujaList", soujaList);
+			resultMap.put("atcFileList", atcFileList);
+			resultMap.put("memoList", notsetMemoList);
+			
+			return resultMap;
+	    }
 }

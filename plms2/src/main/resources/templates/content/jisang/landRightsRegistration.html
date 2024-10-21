@@ -158,7 +158,7 @@
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">선택</button>
+                                        <button class="customSelectView" id="pipe_yn">선택</button>
                                         <ul class="customSelectBtns">
                                             <!-- createCustomLiLandRegist() -->
                                         </ul>
@@ -193,7 +193,7 @@
                                         </select>
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">선택</button>
+                                        <button class="customSelectView" id="pipe_name">선택</button>
 
                                         <ul class="customSelectBtns" id="pipe_name_ul">
                                             <!-- createCustomLiLandRegist() -->
@@ -211,7 +211,7 @@
 
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">선택</button>
+                                        <button class="customSelectView" id="sun_gubun">선택</button>
 
                                         <ul class="customSelectBtns">
                                             <!-- <li><button class="moreSelectBtn">복선1</button></li>
@@ -231,14 +231,14 @@
 
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">선택</button>
+                                        <button class="customSelectView" id="gover_own_yn">선택</button>
 
                                         <ul class="customSelectBtns">
                                             <!-- createCustomLiLandRegist() -->
                                         </ul>
                                     </section>
                                 </li>
-                                <li class="content05 content"><input name="jijuk_area" type="text"></li>
+                                <li class="content05 content"><input name="jijuk_area" type="text" id="jijuk_area"></li>
                                 <li class="content05 content selectContentArea">
                                     <div class="hiddenSelectBox">
                                         <!-- name도 추가 -->
@@ -249,7 +249,7 @@
 
                                     </div>
                                     <section class="customSelectBox">
-                                        <button class="customSelectView">선택</button>
+                                        <button class="customSelectView" id="jimok_text">선택</button>
 
                                         <ul class="customSelectBtns">
                                             <!-- createCustomLiLandRegist() -->
@@ -612,7 +612,10 @@
                     <textarea name="jisangMemo" placeholder="내용을 입력해주세요. (200자 이내)" maxlength="200"></textarea>
                 </section>
 
-                <input type="hidden" name="sido_nm" id="sido_nm"></input> <input type="hidden" name="sgg_nm" id="sgg_nm"></input> <input type="hidden" name="emd_nm" id="emd_nm"></input> <input type="hidden" name="ri_nm" id="ri_nm"></input>
+                <input type="hidden" name="sido_nm" id="sido_nm"></input>
+                <input type="hidden" name="sgg_nm" id="sgg_nm"></input>
+                <input type="hidden" name="emd_nm" id="emd_nm"></input>
+                <input type="hidden" name="ri_nm" id="ri_nm"></input>
 
                 <div class="finalBtnBox btnWrap">
                     <button class="backBtn grayBtn finalBtn" onclick="history.back();">이전</button>

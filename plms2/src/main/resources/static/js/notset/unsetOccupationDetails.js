@@ -673,4 +673,9 @@ $(document).on("click", ".memoSection .delBtn", function() {
 
 		});
 });
+
+function jisangRegisterGo () {
+	let params = window.location.search;
+	window.location = '/land/jisang/landRightsRegistration' + params;
+}
 //****************메모 관련 종료 **************** */

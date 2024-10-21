@@ -789,17 +789,23 @@ $(document).ready(function(){
 	
 	insertJisaNameSet();
 	
-	
+	let params = window.location.search;
+	if (params) {
+		let paramArr = params.split('&');
+		let idx = paramArr[0].split('=')[1];
+		let index = paramArr[1].split('=')[1];
+		console.log(idx + '  ' + index);
+		let dataObj = {};
+		dataObj.idx = idx;
+		dataObj.index = index;
+		notsetInfo(dataObj);
+	}
 	
 });
 
 
 function getSidoMaster(){
-	
-	
-	
-			 var url="/land/api/getSidoMaster";
-			 
+	var url="/land/api/getSidoMaster";
 	var requestData={};
 	console.log(requestData);
 		 $.ajax({
@@ -1176,5 +1182,142 @@ function insertJisaNameSet() {
 	//changPipeName();
 	$("#pipe_name_ul li").remove();
 	loadCustomLiLandRegist($("#pipe_name_ul"));
+}
+
+function notsetInfo(dataObj) {
+	$.ajax({
+			url: "/land/jisang/notsetInfo"+window.location.search,
+			type: "GET",
+			dataType: "json",
+			contentType: 'application/json; charset=utf-8',
+			success: function (response) {
+				formSet(response);
+			},
+			error: function () {
+			}
+		});
+}
+
+function formSet (res) {
+	// 지사
+	$('#landRightsRegistSelectBox01').val(res.resultData.jisa);
+	const buttons1 = $('#jisaNameDiv').next().find('li button');
+	buttons1.each(function() {
+	    // this는 현재 반복 중인 버튼 요소를 가리킴
+	    if ($(this).text().trim() === res.resultData.jisa) {
+	        $(this).click(); // 일치하는 버튼 클릭
+	    }
+	});
+	const buttons2 = $('#pipe_yn').next().find('li button');
+	
+	if (res.resultData.nm_pipe_yn) {
+		buttons2.each(function() {
+		    // this는 현재 반복 중인 버튼 요소를 가리킴
+		    if ($(this).text().trim() === res.resultData.nm_pipe_yn) {
+		        $(this).click(); // 일치하는 버튼 클릭
+		    }
+		});		
+	} else {
+		$('#pipe_yn').next().find('li button')[0].click();
+	}
+	
+	//nm_pipe_name
+	const buttons3 = $('#pipe_name').next().find('li button');
+	console.log(res.resultData.nm_pipe_name);
+	if (res.resultData.nm_pipe_name) {
+		buttons3.each(function() {
+		    // this는 현재 반복 중인 버튼 요소를 가리킴
+		    if ($(this).text().trim() === res.resultData.nm_pipe_name) {
+		        $(this).click(); // 일치하는 버튼 클릭
+		    }
+		});		
+	} else {
+		$('#pipe_name').next().find('li button')[0].click();
+	}
+	
+	//nm_sun_gubun
+	const buttons4 = $('#sun_gubun').next().find('li button');
+	console.log(res.resultData.nm_sun_gubun);
+	if (res.resultData.nm_sun_gubun) {
+		buttons4.each(function() {
+		    // this는 현재 반복 중인 버튼 요소를 가리킴
+		    if ($(this).text().trim() === res.resultData.nm_sun_gubun) {
+		        $(this).click(); // 일치하는 버튼 클릭
+		    }
+		});		
+	} else {
+		$('#sun_gubun').next().find('li button')[0].click();
+	}
+	
+	//nm_gover_own_yn
+	const buttons5 = $('#gover_own_yn').next().find('li button');
+	console.log(res.resultData.nm_gover_own_yn);
+	if (res.resultData.nm_gover_own_yn) {
+		buttons5.each(function() {
+		    // this는 현재 반복 중인 버튼 요소를 가리킴
+		    if ($(this).text().trim() === res.resultData.nm_gover_own_yn) {
+		        $(this).click(); // 일치하는 버튼 클릭
+		    }
+		});		
+	} else {
+		$('#gover_own_yn').next().find('li button')[0].click();
+	}
+	
+	//nm_jijuk_area
+	$('#jijuk_area').val(res.resultData.nm_jijuk_area);
+	
+	//nm_gover_own_yn
+	const buttons6 = $('#jimok_text').next().find('li button');
+	console.log(res.resultData.nm_jimok_text);
+	if (res.resultData.nm_jimok_text) {
+		buttons6.each(function() {
+		    // this는 현재 반복 중인 버튼 요소를 가리킴
+		    if ($(this).text().trim() === res.resultData.nm_jimok_text) {
+		        $(this).click(); // 일치하는 버튼 클릭
+		    }
+		});
+	} else {
+		$('#jimok_text').next().find('li button')[0].click();
+	}
+	
+	$('#raddress, #maddress').val(res.resultData.juso);
+	$('#sido_nm').val(res.resultData.nm_sido_nm);
+	$('#sgg_nm').val(res.resultData.nm_sgg_nm);
+	$('#emd_nm').val(res.resultData.nm_emd_nm);
+	$('#ri_nm').val(res.resultData.nm_ri_nm);
+	$('#mjibun').val(res.resultData.nm_jibun);
+	
+	// 소유자 정보
+	if(res.soujaList.length > 0) {
+		for(let i = 0; i<res.soujaList.length; i++) {
+			let soujaInfo = res.soujaList[i];
+			$('#soujaJibun').val(soujaInfo.ns_jibun); // 공유지분
+			$('#soujaName').val(soujaInfo.ns_souja_name); // 성명
+			$('#soujaAddress').val(soujaInfo.ns_address); // 주소
+			$('#soujaContact1').val(soujaInfo.ns_phone_number) // 연락처1
+			$('#soujaContact2').val(soujaInfo.ns_home_number || '') // 연락처1
+		}
+	}
+	
+	// 첨부파일
+	let fileHtml = '';
+	if (res.atcFileList.length > 0) {
+		for (let f = 0; f < res.atcFileList.length; f++) {
+			let fileInfo = res.atcFileList[f];
+			fileHtml += `<ul class="contents" id="fileListUl">`;
+			fileHtml += `	<li class="content01 content checkboxWrap">`;
+			fileHtml += `		<input type="checkbox" id="landRightsRegistration_attachFile${f}" name="landRightsRegistration_attachFile">`;
+			fileHtml += `		<label for="landRightsRegistration_attachFile${f}"></label>`;
+			fileHtml += `	<li>`;
+			fileHtml += `	<li class="content02 content">`;
+			fileHtml += `		<input type="text" id="filename" placeholder="${fileInfo.na_file_nm}" class="notWriteInput" readonly="">`;
+			fileHtml += `		<input type="hidden" name="newFileCheckYn" value="Y">`;
+			fileHtml += `	<li>`;
+			fileHtml += `</ul>`;
+		}
+		$('#fileListDiv').append(fileHtml);
+	}
+	
+	console.log(res);
 }
 /************************/
