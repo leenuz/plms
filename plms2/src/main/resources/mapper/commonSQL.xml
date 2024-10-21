@@ -657,39 +657,6 @@ SELECT PNU
 	
 </update>
 
-<!-- 시도 정보 조회 -->
-<select id="selectSidoList" parameterType="HashMap" resultType="java.util.HashMap">
-	SELECT A.sido_nm
-	FROM jijuk_addr_2024 A
-	GROUP BY A.sido_nm 
-</select>
-
-<!-- 시군구 정보 조회 -->
-<select id="selectSigunguList" parameterType="HashMap" resultType="java.util.HashMap">
-	SELECT A.sgg_nm
-	  FROM jijuk_addr_2024 A
-	 WHERE A.sido_nm = #{SELECT_SIDO}
-  GROUP BY A.sgg_nm
-</select>
-
-<!-- 읍면동 조회 -->
-<select id="selectEmdList" parameterType="HashMap" resultType="java.util.HashMap">
-	SELECT A.emd_nm
-	  FROM jijuk_addr_2024 A
-	 WHERE A.sido_nm = #{SELECT_SIDO}
-	   AND A.sgg_nm  = #{SELECT_SIGUNGU}
-  GROUP BY A.emd_nm
-</select>
-
-<!-- 리 조회-->
-<select id="selectRiList" resultType="java.util.HashMap">
-	SELECT ri_nm 
-	  FROM jijuk_addr_2024 A
-     WHERE A.sido_nm = #{SELECT_SIDO}
-       AND A.sgg_nm = #{SELECT_SIGUNGU}
-       AND A.emd_nm = #{SELECT_EMD}
-</select>
-
 
 	<select id="selectAdminUserRightsGroupList" resultType="HashMap" parameterType="HashMap">
     SELECT *
@@ -783,5 +750,139 @@ WHERE A.dm_DOSI_NO = B.di_DOSI_NO
     ]]>
 </select>
 
+<!-- =============================================================================================== -->
+<!-- =============================================================================================== -->
+<!-- =============================================================================================== -->
+
+
+<!-- 시도 정보 조회 -->
+<select id="selectSidoList" parameterType="HashMap" resultType="java.util.HashMap">
+	SELECT A.sido_nm
+	FROM jijuk_addr_2024 A
+	GROUP BY A.sido_nm 
+</select>
+
+<!-- 시군구 정보 조회 -->
+<select id="selectSigunguList" parameterType="HashMap" resultType="java.util.HashMap">
+	SELECT A.sgg_nm
+	  FROM jijuk_addr_2024 A
+	 WHERE A.sido_nm = #{SELECT_SIDO}
+  GROUP BY A.sgg_nm
+</select>
+
+<!-- 읍면동 조회 -->
+<select id="selectEmdList" parameterType="HashMap" resultType="java.util.HashMap">
+	SELECT A.emd_nm
+	  FROM jijuk_addr_2024 A
+	 WHERE A.sido_nm = #{SELECT_SIDO}
+	   AND A.sgg_nm  = #{SELECT_SIGUNGU}
+  GROUP BY A.emd_nm
+</select>
+
+<!-- 리 조회-->
+<select id="selectRiList" resultType="java.util.HashMap">
+	SELECT ri_nm 
+	  FROM jijuk_addr_2024 A
+     WHERE A.sido_nm = #{SELECT_SIDO}
+       AND A.sgg_nm = #{SELECT_SIGUNGU}
+       AND A.emd_nm = #{SELECT_EMD}
+</select>
+
+<!-- 검색타겟 주소 조회 -->
+<select id="targetAddressSearch" parameterType="HashMap" resultType="HashMap">
+	SELECT A.gid
+		, A.pnu
+		, A.bcode
+		, A.san
+		, A.bon
+		, A.bu
+		, A.jimok_text
+		, A.sido_nm
+		, A.sgg_nm
+		, A.emd_nm
+		, A.ri_nm
+		, A.jibun
+		, A.jibun_full
+		, A.jimok_cd
+		, A.flag
+		, A.gover_own_yn
+		, A.jisang_status
+		, A.x
+		, A.y
+		, A.juso
+		, A.jijuk_status
+		, A.jisang_no
+	FROM jijuk_2024 A
+	WHERE A.sido_nm = #{SELECT_SIDO}
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SELECT_SIGUNGU)" >
+	  AND A.sgg_nm = #{SELECT_SIGUNGU}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SELECT_EMD)" >
+	  AND A.emd_nm = #{SELECT_EMD}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SELECT_RI)" >
+	  AND A.ri_nm = #{SELECT_RI}
+	</if>
+	<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SELECT_BUNJI)" >
+	  AND A.jibun = #{SELECT_BUNJI}
+	</if>
+	LIMIT 300	   
+</select>
+
+<!-- 새로운 PNU 생성 -->
+<select id="insertMakedNewPNUInfo" parameterType="HashMap" resultType="HashMap"><![CDATA[
+INSERT INTO
+    jijuk_2024 (pnu, bcode, san, bon, bu, jimok_text, sido_nm, sgg_nm, emd_nm, ri_nm, jibun, jibun_full, jimok_cd, flag, gover_own_yn, jisang_status, pipe_overlap_yn, tmp, gover_own_yn_bk, juso, jijuk_status, jijuk_update, desc1)
+SELECT
+    CONCAT(b_code,#{SELECT_SAN},LPAD(#{SELECT_BON},4,'0'), LPAD(COALESCE(NULLIF(#{SELECT_BU}, ''), '0'), 4, '0')) AS pnu, --pnu
+    b_code AS bcode, --법정동코드
+    #{SELECT_SAN}::integer AS san, --산여부
+    #{SELECT_BON}::integer AS bon, --지번본번
+    COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) AS bu, -- 지번부번
+    '' AS jimok_text, --지목
+    sido_nm, --시도명칭
+    sgg_nm, --시군구명칭
+    emd_nm, --읍면동명칭
+    ri_nm, --리명칭
+    CASE
+        WHEN #{SELECT_SAN}::integer = 1 AND (COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) = 0) THEN #{SELECT_BON}
+        WHEN #{SELECT_SAN}::integer = 1 AND (COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) <> 0) THEN #{SELECT_BON} || '-' || LTRIM(#{SELECT_BU},'0')
+        WHEN #{SELECT_SAN}::integer = 2 AND (COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) = 0) THEN '산' || #{SELECT_BON}
+        WHEN #{SELECT_SAN}::integer = 2 AND (COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) <> 0) THEN '산' || #{SELECT_BON} || '-' || LTRIM(#{SELECT_BU},'0')
+    END AS jibun, --지번
+    CASE
+        WHEN #{SELECT_SAN}::integer = 1 AND (COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) = 0) THEN #{SELECT_BON}
+        WHEN #{SELECT_SAN}::integer = 1 AND (COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) <> 0) THEN #{SELECT_BON} || '-' || LTRIM(#{SELECT_BU},'0')
+        WHEN #{SELECT_SAN}::integer = 2 AND (COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) = 0) THEN '산' || #{SELECT_BON}
+        WHEN #{SELECT_SAN}::integer = 2 AND (COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) <> 0) THEN '산' || #{SELECT_BON} || '-' || LTRIM(#{SELECT_BU},'0')
+    END AS jibun_full, --지번지목
+    '' AS jimok_cd, --지목코드
+    left(b_code,8), --flag
+    'N' AS gover_own_yn, --국공유지 여부
+    'N' AS jisang_status, --지상권 여부
+    'N' AS pipe_overlap_yn, --관로중첩 여부
+    'N' AS tmp, --tmp
+    'N' AS gover_own_yn_bk, --국공유지 여부(백업)
+    CASE
+        WHEN #{SELECT_SAN}::integer = 1 AND (COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) = 0) THEN REPLACE(CONCAT_WS(' ', sido_nm, sgg_nm, emd_nm, ri_nm, #{SELECT_BON}), '  ', ' ')
+        WHEN #{SELECT_SAN}::integer = 1 AND (COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) <> 0) THEN REPLACE(CONCAT_WS(' ', sido_nm, sgg_nm, emd_nm, ri_nm, CONCAT(#{SELECT_BON}, '-', LTRIM(#{SELECT_BU},'0'))), '  ', ' ')
+        WHEN #{SELECT_SAN}::integer = 2 AND (COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) = 0) THEN REPLACE(CONCAT_WS(' ', sido_nm, sgg_nm, emd_nm, ri_nm, CONCAT('산', #{SELECT_BON})), '  ', ' ')
+        WHEN #{SELECT_SAN}::integer = 2 AND (COALESCE(NULLIF(#{SELECT_BU}, '')::integer, 0) <> 0) THEN REPLACE(CONCAT_WS(' ', sido_nm, sgg_nm, emd_nm, ri_nm, CONCAT('산', #{SELECT_BON}, '-', LTRIM(#{SELECT_BU},'0'))), '  ', ' ')
+    END AS juso, --주소
+    'Y' AS jijuk_status,
+    now() AS jijuk_update, --지적도추가시간
+    '' AS desc1 --지사명칭
+FROM
+    jijuk_addr_2024
+WHERE
+    1 = 1
+    AND sido_nm = #{SELECT_SIDO}
+    AND sgg_nm  = #{SELECT_SIGUNGU}
+    AND emd_nm  = #{SELECT_EMD}
+	]]><if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(SEQ)" ><![CDATA[
+	AND ri_nm   = #{SELECT_RI}
+]]></if>
+	RETURNING *;
+</select>
 
 </mapper>

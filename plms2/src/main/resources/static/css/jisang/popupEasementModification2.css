@@ -510,6 +510,15 @@ textarea:focus {
 
 /* 팝업 checkbox */
 
+#sanCheckYn input[type="checkbox"] ~ label {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: #adb6c1;
+  display: inline-block;
+  position: relative;
+}
+
 .popupWrap input[type="checkbox"] {
   display: none;
 }
@@ -549,7 +558,7 @@ textarea:focus {
   width: 144px;
 }
 #land_searchResultsPopup .popupWrap .popTitles .popTitle_address {
-  width: 413px;
+  width: 545px;
 }
 #land_searchResultsPopup .popupWrap .popupCont .popContents .popContent {
   width: 144px;
@@ -569,8 +578,23 @@ textarea:focus {
   .popupCont
   .popContents
   .popContent.popTitle_address {
-  width: 413px;
+  width: 547px;
   /*text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;*/
+}
+
+/*****/
+/* inputbox 넘버일때 나오는 화살표 제거 */
+* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* inputbox 넘버일때 나오는 화살표 제거 */
+/* Firefox  */
+input[type='number'] {
+  -moz-appearance: textfield;
 }

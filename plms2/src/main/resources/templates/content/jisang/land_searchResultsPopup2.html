@@ -120,6 +120,22 @@
                     </div>
                 </div>
                 <div class="depth3" style="display:flex;">
+                	<!-- 산여부[S] -->
+                	<div class="selectContBox" style="padding-right:30px;">
+                        <div class="selectCont">
+                            <ul class="titles">
+                                <li class="title">산여부</li>
+                            </ul>
+                            <ul class="contents">
+                                <li class="content">
+                                    <input type="checkbox" id="sanCheckYn" />
+                                    <label for="sanCheckYn" style="background: #adb6c1; margin-top:10px; margin-left:8px;"></label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                	<!-- 산여부[E] -->
+                	<!-- 본번[S] -->
                 	<div class="selectContBox">
                         <div class="selectCont">
                             <ul class="titles">
@@ -127,11 +143,13 @@
                             </ul>
                             <ul class="contents">
                                 <li class="content">
-                                    <input type="text" placeholder="본번입력" />
+                                    <input type="text" placeholder="본번입력" id="bonbunInputBox" maxlength="4" oninput="onlyNumberInput(this)"/>
                                 </li>
                             </ul>
                         </div>
                     </div>
+                    <!-- 본번[E] -->
+                    <!-- 부번[S] -->
                     <div class="selectContBox">
                         <div class="selectCont">
                             <ul class="titles">
@@ -139,161 +157,61 @@
                             </ul>
                             <ul class="contents">
                                 <li class="content">
-                                    <input type="text" placeholder="부번입력" />
+                                    <input type="text" placeholder="부번입력" id="bubunInputBox" maxlength="4" oninput="onlyNumberInput(this)"/>
                                 </li>
                             </ul>
                         </div>
                     </div>
+                    <!-- 부번[E] -->
                 </div>
-                <button class="searchBtn finalBtn vividBlueBtn">조회하기</button>
+                <button class="searchBtn finalBtn vividBlueBtn" onclick="commonAddressSearchGo()">조회하기</button>
             </div>
 
             <div class="popupCont">
                 <ul class="popTitles">
                     <li class="selectLabel">선택</li>
-                    <li class="popTitle_num">지상권 번호</li>
                     <li class="popTitle_address">주소</li>
                     <li class="popTitle_num">지번</li>
                 </ul>
-                <div class="popContentBox">
+                <div class="popContentBox" id="targetSearchAddrList_body">
                     <ul class="popContents">
                         <li class="popContent selectLabel">
                             <input type="checkbox" id="PopupLandCheckBoxResult01" />
                             <label for="PopupLandCheckBoxResult01"></label>
                         </li>
-                        <li class="popContent popTitle_num">J_014097</li>
                         <li class="popContent popTitle_address">
                             충청북도 청주시 홍덕구 수의동 62-14
                         </li>
                         <li class="popContent popTitle_num">62-14</li>
                     </ul>
-                    <ul class="popContents">
-                        <li class="popContent selectLabel">
-                            <input type="checkbox" id="PopupLandCheckBoxResult02" />
-                            <label for="PopupLandCheckBoxResult02"></label>
-                        </li>
-                        <li class="popContent popTitle_num">J_014097</li>
-                        <li class="popContent popTitle_address">
-                            충청북도 청주시 홍덕구 수의동 62-14
-                        </li>
-                        <li class="popContent popTitle_num">62-14</li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent selectLabel">
-                            <input type="checkbox" id="PopupLandCheckBoxResult03" />
-                            <label for="PopupLandCheckBoxResult03"></label>
-                        </li>
-                        <li class="popContent popTitle_num">J_014097</li>
-                        <li class="popContent popTitle_address">
-                            충청북도 청주시 홍덕구 수의동 62-14
-                        </li>
-                        <li class="popContent popTitle_num">62-14</li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent selectLabel">
-                            <input type="checkbox" id="PopupLandCheckBoxResult04" />
-                            <label for="PopupLandCheckBoxResult04"></label>
-                        </li>
-                        <li class="popContent popTitle_num">J_014097</li>
-                        <li class="popContent popTitle_address">
-                            충청북도 청주시 홍덕구 수의동 62-14
-                        </li>
-                        <li class="popContent popTitle_num">62-14</li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent selectLabel">
-                            <input type="checkbox" id="PopupLandCheckBoxResult05" />
-                            <label for="PopupLandCheckBoxResult05"></label>
-                        </li>
-                        <li class="popContent popTitle_num">J_014097</li>
-                        <li class="popContent popTitle_address">
-                            충청북도 청주시 홍덕구 수의동 62-14
-                        </li>
-                        <li class="popContent popTitle_num">62-14</li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent selectLabel">
-                            <input type="checkbox" id="PopupLandCheckBoxResult06" />
-                            <label for="PopupLandCheckBoxResult06"></label>
-                        </li>
-                        <li class="popContent popTitle_num">J_014097</li>
-                        <li class="popContent popTitle_address">
-                            충청북도 청주시 홍덕구 수의동 62-14
-                        </li>
-                        <li class="popContent popTitle_num">1-14</li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent selectLabel">
-                            <input type="checkbox" id="PopupLandCheckBoxResult07" />
-                            <label for="PopupLandCheckBoxResult07"></label>
-                        </li>
-                        <li class="popContent popTitle_num">J_014097</li>
-                        <li class="popContent popTitle_address">
-                            충청북도 청주시 홍덕구 수의동 62-14
-                        </li>
-                        <li class="popContent popTitle_num">62-14</li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent selectLabel">
-                            <input type="checkbox" id="PopupLandCheckBoxResult08" />
-                            <label for="PopupLandCheckBoxResult08"></label>
-                        </li>
-                        <li class="popContent popTitle_num">J_014097</li>
-                        <li class="popContent popTitle_address">
-                            충청북도 청주시 홍덕구 수의동 62-14
-                        </li>
-                        <li class="popContent popTitle_num">1-1</li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent selectLabel">
-                            <input type="checkbox" id="PopupLandCheckBoxResult09" />
-                            <label for="PopupLandCheckBoxResult09"></label>
-                        </li>
-                        <li class="popContent popTitle_num">J_014097</li>
-                        <li class="popContent popTitle_address">
-                            충청북도 청주시 홍덕구 수의동 62-14
-                        </li>
-                        <li class="popContent popTitle_num">62-14</li>
-                    </ul>
-                    <ul class="popContents">
-                        <li class="popContent selectLabel">
-                            <input type="checkbox" id="PopupLandCheckBoxResult10" />
-                            <label for="PopupLandCheckBoxResult10"></label>
-                        </li>
-                        <li class="popContent popTitle_num">J_014097</li>
-                        <li class="popContent popTitle_address">
-                            충청북도 청주시 홍덕구 수의동 62-14
-                        </li>
-                        <li class="popContent popTitle_num">62-14</li>
-                    </ul>
+                    
                     <ul class="popContents">
                         <li class="popContent selectLabel">
                             <input type="checkbox" id="PopupLandCheckBoxResult11" />
                             <label for="PopupLandCheckBoxResult11"></label>
                         </li>
-                        <li class="popContent popTitle_num">J_014097</li>
                         <li class="popContent popTitle_address">
                             충청북도 청주시 홍덕구 수의동 62-14
                         </li>
                         <li class="popContent popTitle_num">62-14</li>
                     </ul>
+                    
                     <ul class="popContents">
                         <li class="popContent selectLabel">
                             <input type="checkbox" id="PopupLandCheckBoxResult12" />
                             <label for="PopupLandCheckBoxResult12"></label>
                         </li>
-                        <li class="popContent popTitle_num">J_014097</li>
                         <li class="popContent popTitle_address">
                             충청북도 청주시 홍덕구 수의동 62-14
                         </li>
                         <li class="popContent popTitle_num">62-14</li>
                     </ul>
+                    
                     <ul class="popContents">
                         <li class="popContent selectLabel">
                             <input type="checkbox" id="PopupLandCheckBoxResult13" />
                             <label for="PopupLandCheckBoxResult13"></label>
                         </li>
-                        <li class="popContent popTitle_num">J_014097</li>
                         <li class="popContent popTitle_address">
                             충청북도 청주시 홍덕구 수의동 62-14
                         </li>
@@ -303,8 +221,10 @@
             </div>
 
             <div class="lastBtnBox btnWrap">
-                <button class="backBtn grayBtn finalBtn">닫기</button>
-                <button class="vividBlueBtn finalBtn">선택등록</button>
+            	<!-- 닫기 버튼은 common.js에서 작동 -->
+                <button class="backBtn grayBtn finalBtn" onclick="commonAddressSearchPopupClose()">닫기</button>
+                <button class="vividBlueBtn finalBtn" onclick="selectTargetAddress()">선택등록</button>
+                <button class="grayBtn finalBtn" id="makeNewPNU_Btn" onclick="makeNewPNU_Go()">PNU 생성</button>
             </div>
         </div>
     </div>

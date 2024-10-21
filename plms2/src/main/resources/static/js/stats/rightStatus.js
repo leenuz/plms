@@ -805,13 +805,16 @@ $(document).on("click","#excelDownGoverTogiBtn",function(){
 
 $(document).on("click","#permitExcelBtn",function(){
 	
-		var jisa=$("#jisaText").text();
+		/*var jisa=$("#jisaText").text();
 		if (jisa=="전체") jisa="";
 		else jisa=jisa;
 		if (jisa=="") {
 			alert("지사를 선택해주세요");
 			return;
-		}
+		}*/
+		var jisa=$("#jisaText").text();
+		if (jisa=="전체") jisa="";
+				else jisa=jisa;
 		var allData={"jisa":jisa,"gubun":"1"};
 		console.log(allData);
 		
@@ -831,27 +834,45 @@ $(document).on("click","#permitExcelBtn",function(){
 					 ,'등기여부','겨약유형','취득일','점용기간','점용납부일','설정면적','설정연장','자산금액','납부금액'
 					 ,'PNU','등기/점용여부','계약/허가여부','이슈유형대분류','이슈유형중분류','이슈유형세분류','허가증보유여부','영구무상점유','소액미청구','점용료선납','선납기한'];*/
 					/* dataArr.push(head);	*/
+					var jisaTmp="";
+					//pay : 서울 납부
+									 //pcount1 :정상필지수
+									 //pcount2:경과필지수
+									 //pcount3:납부필지수
+									 //pcount4:영구무상필지수
+									 //pcount5:소액미청구 필지
+									 //pcount6:선납필지수
+									 //nopay:기타미납부
+									 //perm1:서울정상
+									 //perm2:경과
+									 //nonpay2:서울 소액미청구
+									 //onpay : 선납
+									 //nonpay1:서울 영구무상
+									 //nopay:기타 미납부
 					for(var i=0;i<data.length;i++){
-						var togi_type="";
-						if (data[i].gover_own_yn=="Y") togi_type="국유지";
-						else togi_type="사유지";
-						var jisangStatus="";
-						if (data[i].jisang_status=="jisang") jisangStatus="지상권";
-						else if (data[i].jisang_status=="gover") jisangStatus="점용";
-						else if (data[i].jisang_status=="notset") jisangStatus="미설정";
-						else if (data[i].jisang_status=="dopco") jisangStatus="매입";
-						else jisangStatus="";
-						var pmtDate = data[i].pmt_st_date == undefined ? "" : data[i].pmt_st_date + " ~ " + data[i].pmt_ed_date; //점용기간
-						var occunonpayreasonTitle1 ="";
-						var occunonpayreasonTitle2 ="";
-						//var occunonpayreasonTitle3 ="";
-						if (data[i].occunonpayreason==1) occunonpayreasonTitle1="영구 무상점용";
-						if (data[i].occunonpayreason==2) occunonpayreasonTitle1="소액 미청구";
-						//if (data[i].occunonpayreason==2) occunonpayreasonTitle1="소액 미청구";
+						var tmpArray;
+						//console.log("dataList.desc1"+dataList[i].desc1+":"+jisaTmp);
+						//var gubun="";
+						//if (dataList[i].jisang_status=="ALL") dataList[i].jisang_status="전체"; 
+						var perm12sum=parseInt(data[i].perm1)+parseInt(data[i].perm2);
+						var paysum=parseInt(data[i].pay)+parseInt(data[i].nonpay1)+parseInt(data[i].nonpay2)+parseInt(data[i].onpay);
+						var nopaysum=paysum+parseInt(data[i].nopay);
+						var pcount12sum=parseInt(data[i].pcount1)+parseInt(data[i].pcount2);
+						var pcount36sum=parseInt(data[i].pcount3)+parseInt(data[i].pcount6);
+						var pcount45sum=parseInt(data[i].pcount4)+parseInt(data[i].pcount5);
+						var pcountallsum=pcount36sum+pcount45sum;
+						var pcount3456sum=parseInt(data[i].pcount3)+parseInt(data[i].pcount4)+parseInt(data[i].pcount5)+parseInt(data[i].pcount6);
+						var nonpay12sum=parseInt(data[i].nonpay1)+parseInt(data[i].nonpay2);
 						
+						var payonsum=parseInt(data[i].pay)+parseInt(data[i].onpay);
+						var payallsum=nonpay12sum+payonsum
+						tmpArray=[data[i].jisa,'건수',data[i].perm1,data[i].perm2,perm12sum,data[i].pay,data[i].nonpay1,data[i].nonpay2,data[i].onpay,payonsum,nonpay12sum,payallsum];
+						dataArr.push(tmpArray);
+						tmpArray=['','필지수',data[i].pcount1,data[i].pcount2,pcount12sum,data[i].pcount3,data[i].pcount4,data[i].pcount5,data[i].pcount6,pcount36sum,pcount45sum,pcountallsum];
+							
 						
-						var rowArr=[data[i].no,data[i].sido_nm,data[i].sgg_nm,data[i].emd_nm,data[i].ri_nm,data[i].jibun,data[i].jijuk_area,data[i].jimok_text,'국',data[i].jisang_status,data[i].bigo,data[i].jasan_no,data[i].comple_yn,data[i].pipe_overlap_yn,data[i].pmt_no,data[i].dosiplan];
-						dataArr.push(rowArr);	
+						dataArr.push(tmpArray);
+						jisaTmp=data[i].jisa;
 					}
 					console.log("--------------excel data------------------");
 					console.log(dataArr);
@@ -862,31 +883,35 @@ $(document).on("click","#permitExcelBtn",function(){
 					   var worksheet = workbook.addWorksheet('Sheet1');
 
 
-					   // ExcelJS 워크북과 워크시트 생성
-					   var workbook = new ExcelJS.Workbook();
-					   var worksheet = workbook.addWorksheet('Sheet1');
+					  
 
-					   // 첫 번째 행의 병합된 셀 설정 (1행)
-					   worksheet.mergeCells('A1:A2');  // '구분' 열 병합
-					   worksheet.mergeCells('B1:D1');  // '점용허가 기간' 병합
-					   worksheet.mergeCells('E1:E2');  // '합계' 병합
-					   worksheet.mergeCells('F1:J1');  // '납부' 병합
-					   worksheet.mergeCells('K1:K2');  // '미납부' 병합
-					   worksheet.mergeCells('L1:L2');  // '합계' 병합
 
-					   // 첫 번째 행의 셀 값 설정
-					   worksheet.getCell('A1').value = '구분';
-					   worksheet.getCell('B1').value = '점용허가 기간';
-					   worksheet.getCell('E1').value = '합계';
-					   worksheet.getCell('F1').value = '납부';
-					   worksheet.getCell('K1').value = '미납부';
-					   worksheet.getCell('L1').value = '합계';
+					   worksheet.getRow(1).values = ['구분', '', '점용허가 기간', '', '', '납부', '', '', '', '','',''];
+					   // "구분"은 가로와 세로로 병합 (한 번에 병합하여 오류 방지)
+					   worksheet.mergeCells('A1:B1');  // 구분 (세로 병합)
+					   worksheet.mergeCells('A2:B2');  // 구분 (세로 병합)
+					  // worksheet.mergeCells('A1:A2');  // 구분 (세로 병합)
+						
+					   // 나머지 셀 병합 (점용허가 기간과 납부 영역)
+					   worksheet.mergeCells('C1:E1');  // 점용허가 기간
+					   worksheet.mergeCells('F1:L1');  // 납부(영구무상)
+					   
 
-					   // 두 번째 행의 세부적인 열 제목 설정 (2행)
-					   worksheet.getRow(2).values = [
-					       '구분', '정상', '경과', '합계', '납부', '영구무상', '소액미청구', '선납', '납부(계)', '미납부', '합계'
-					   ];
+					   /*// 두 번째 행 병합
+					   worksheet.mergeCells('B2:B2');  // 정상
+					   worksheet.mergeCells('C2:C2');  // 경과
+					   worksheet.mergeCells('D2:D2');  // 합계
+					   worksheet.mergeCells('F2:F2');  // 선납
+					   worksheet.mergeCells('G2:H2');  // 납부 계
+					   worksheet.mergeCells('I2:I2');  // 미납부
+					   worksheet.mergeCells('J2:J2');  // 합계*/
 
+					   // 첫 번째 행 데이터 입력
+					  
+					   worksheet.getRow(2).values = ['', '','정상', '경과', '합계', '납부', '영구무상','소액미청구', '선납', '납부(계)', '미납부', '합계'];
+
+
+					  
 					   // 셀 스타일 정의 (폰트, 정렬, 테두리, 배경색)
 					   const headerStyle = {
 					       font: { bold: true },
@@ -913,7 +938,7 @@ $(document).on("click","#permitExcelBtn",function(){
 					       [1, "서울지사", "A123", "M456", "서울특별시", "강남구", "삼성동", "리", "123-45", "대지", "100", "홍길동", "Y", "매매", "50", "2022-01-01", "2022-02-01", "Y", "PNU001"],
 					       // 데이터 생략
 					   ];*/
-
+						
 					   dataArr.forEach((row, index) => {
 					       worksheet.addRow(row);
 					   });
