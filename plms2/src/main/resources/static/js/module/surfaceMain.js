@@ -126,6 +126,9 @@ function menuListLoad() {
 		success : function(res) {
 			if(res.result == 'Y') {
 				menuListSet(res.menuList, res.menu2pms);
+				
+				//2024-10-21 session 시간 초기값
+				updateTimerDisplay(res.sessionTime);
 			} else {
 				alert('메뉴 조회중 오류가 발생했습니다.');
 			}

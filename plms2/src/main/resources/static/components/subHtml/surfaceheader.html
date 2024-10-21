@@ -51,7 +51,37 @@ console.log("-----------start openMapWindow-----------------");
     	console.log("Received message from map window:", event.data);
   }, false);
 
+//2024-10-21 session 체크 및 연장
+function fetchAndUpdateRemainingTime() {
+    $.post("/land/common/getSessionRemain", function (response) {
+        var countdown = parseInt(response, 10);
+        if (countdown == 0) {
+			$("#sessionTimer").text("00:00");
+			clearInterval(sessionInterval);
+			alert("세션이 만료되었습니다.");
+        } else {
+            updateTimerDisplay(countdown);
+        }
+    });
+}
 
+function updateTimerDisplay(countdown) {
+    var minutes = Math.floor(countdown / 60);
+    var seconds = countdown % 60;
+    var formattedTime = ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+    $("#sessionTimer").text(formattedTime);
+}
+
+let sessionInterval = setInterval(fetchAndUpdateRemainingTime, 1000);
+
+function sessionExtension() {
+	console.log("click");
+    $.ajax({
+        type:"POST", dataType:'json', data:{}, url:"/land/common/sessionExtension",
+        //success, error function
+    });
+}
+//2024-10-21 session 체크 및 연장
 </script>
 <script>
   const surfaceMenuWrapOpen = () => {
@@ -222,11 +252,17 @@ console.log("-----------start openMapWindow-----------------");
   </div>
   <nav>
     <ul class="navBtn">
-      <li>
+      <li style="display: none;">
         <button class="navOpen">
           <img src="/assets/media/nav/nav.png" alt="navIcon" />
         </button>
       </li>
+		<li>
+            <span id="sessionTimer" th:text=${session.sessionTime} style="color: white; font-weight: bold;"></span>
+        </li>
+		<li>
+            <button type="button" id="sessionExtension" onClick="sessionExtension()" style="color: white; font-weight: bold; border: 4px solid white;">연장</button>
+        </li>
     </ul>
     <!-- ul-2 [S] -->
     
