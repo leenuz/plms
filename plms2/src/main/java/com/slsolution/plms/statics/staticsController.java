@@ -33,6 +33,7 @@ import com.slsolution.plms.MainService;
 import com.slsolution.plms.ParameterParser;
 import com.slsolution.plms.ParameterUtil;
 import com.slsolution.plms.config.GlobalConfig;
+import com.slsolution.plms.json.JSONException;
 import com.slsolution.plms.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -72,14 +73,21 @@ public class staticsController {
 	@Transactional
 	@PostMapping(path="/deadlineProcess")
 	public void deadlineProcess(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String requestParams = ParameterUtil.getRequestBodyToStr(request);
-		 JSONObject requestParamObj=new JSONObject(requestParams);
+		HashMap map = selectTogiMgtStateListReturn1(request, response);
+//		String requestParams = ParameterUtil.getRequestBodyToStr(request);
+//		 JSONObject requestParamObj=new JSONObject(requestParams);
 		ParameterParser parser = new ParameterParser(request);
-		String SAVE_YEAR = requestParamObj.getString("SAVE_YEAR");
-		String SAVE_QUARTER = requestParamObj.getString("SAVE_QUARTER");
-		String PROCESS_DATE = requestParamObj.getString("PROCESS_DATE");
+//		String SAVE_YEAR = requestParamObj.getString("SAVE_YEAR");
+//		String SAVE_QUARTER = requestParamObj.getString("SAVE_QUARTER");
+//		String PROCESS_DATE = requestParamObj.getString("PROCESS_DATE");
+		String SAVE_YEAR = parser.getString("SAVE_YEAR");
+		String SAVE_QUARTER = parser.getString("SAVE_QUARTER");
+		String PROCESS_DATE = parser.getString("PROCESS_DATE");
+		log.info("SAVE_YEAR:"+SAVE_YEAR);
+		log.info("SAVE_QUARTER:"+SAVE_QUARTER);
+		log.info("PROCESS_DATE:"+PROCESS_DATE);
 //
-		HashMap map = new HashMap<>();
+		//HashMap map = new HashMap<>();
 //
 		try {
 
@@ -94,7 +102,7 @@ public class staticsController {
 
 			String excelFIleBase = GC.getStatisFileDataDir();
 
-			map = selectTogiMgtStateListReturn(request, response);
+			
 
 			HashMap rst = (HashMap) map.get("result");
 
@@ -103,81 +111,99 @@ public class staticsController {
 			rst.put("PROCESS_DATE", PROCESS_DATE);
 			rst.put("SAYUJI_TOTAL", String.valueOf(Long.valueOf((String) rst.get("SAYUJI_N")) + Long.valueOf((String) rst.get("SAYUJI_Y_Y")) + Long.valueOf((String) rst.get("SAYUJI_Y_N"))));
 			rst.put("GUKYUJI_TOTAL", String.valueOf(Long.valueOf((String) rst.get("GUKYUJI_Y")) + Long.valueOf((String) rst.get("GUKYUJI_N")) + Long.valueOf((String) rst.get("GUKYUJI_J"))));
-
+			//log.info("rst:"+rst);
 			// 엑셀파일 제작
 			HashMap params = new HashMap();
 			params.put("JISANG_STATUS", "'GOVER','JISANG','NOTSET'");
-			HashMap<String,Object> ma=mainService.selectHashmapQuery("songyuSQL.selectSonguList", params);
-			ArrayList<HashMap<String, Object>> list = new ArrayList();
-			list.add(ma);
+			//HashMap<String,Object> ma=mainService.selectQuery("songyuSQL.selectSonguList", params);
+			//ArrayList list1 = (ArrayList) mainService.selectQuery("songyuSQL.selectSonguList1", params);
+			//ArrayList<HashMap<String, Object>> list1 = (ArrayList<HashMap<String, Object>>) mainService.selectQuery("songyuSQL.selectSonguList1", params);
+			ArrayList<HashMap> list1 = (ArrayList<HashMap>) mainService.selectQuery("songyuSQL.selectSonguList1", params);
+			// 새로운 ArrayList<HashMap<String, Object>> 생성
+			ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+
+			// 각각의 HashMap을 변환하여 새로운 리스트에 추가
+			for (HashMap map1 : list1) {
+			    HashMap<String, Object> castedMap = new HashMap<>();
+			    for (Object key : map1.keySet()) {
+			        // key가 String이라고 가정하고, Object로 값을 저장
+			        castedMap.put((String) key, map1.get(key));
+			    }
+			    list.add(castedMap);
+			}
+			//HashMap<String,Object> ma=(HashMap<String,Object>) list1.get(0);
+			log.info("ma:"+list);
+//			ArrayList<HashMap<String, Object>> list = new ArrayList();
+//			list.add(resultList);
 			//ArrayList<HashMap<String, Object>> list =(ArrayList) aaaa;
 			//ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) mainService.selectHashmapQuery("songyuSQL.selectSonguList", params);
 //
 //			// 일부 문자열 처리
 			for (HashMap excelMap : list) {
+				//log.info("excelMap:"+excelMap);
 				// 관경
-				if (excelMap.get("PIPE_METER2") != null && !"".equals(excelMap.get("PIPE_METER2"))) {
-					excelMap.put("PIPE_METER_XLS", String.valueOf(excelMap.get("PIPE_METER")) + ", " + String.valueOf(excelMap.get("PIPE_METER2")));
+				if (excelMap.get("pipe_meter2") != null && !"".equals(excelMap.get("pipe_meter2"))) {
+					excelMap.put("PIPE_METER_XLS", String.valueOf(excelMap.get("pipe_meter")) + ", " + String.valueOf(excelMap.get("pipe_meter2")));
 				} else {
-					excelMap.put("PIPE_METER_XLS", CommonUtil.nvl("" + excelMap.get("PIPE_METER")));
+					excelMap.put("PIPE_METER_XLS", CommonUtil.nvl("" + excelMap.get("pipe_meter")));
 				}
 				// 소유자
-				if (excelMap.get("SOUJA_CNT") != null && Integer.parseInt("" + excelMap.get("SOUJA_CNT")) > 0) {
-					excelMap.put("SOUJA_NAME_XLS", String.valueOf(excelMap.get("SOUJA_NAME")) + " 외" + excelMap.get("SOUJA_CNT") + "명");
+				if (excelMap.get("souja_cnt") != null && Integer.parseInt("" + excelMap.get("souja_cnt")) > 0) {
+					excelMap.put("SOUJA_NAME_XLS", String.valueOf(excelMap.get("souja_name")) + " 외" + excelMap.get("souja_cnt") + "명");
 				} else {
-					excelMap.put("SOUJA_NAME_XLS", CommonUtil.evl("" + excelMap.get("SOUJA_NAME"), ""));
+					excelMap.put("SOUJA_NAME_XLS", CommonUtil.evl("" + excelMap.get("souja_name"), ""));
 				}
 				// 토지유형 문자열
-				if (excelMap.get("GOVER_OWN_YN") != null && "Y".equals(excelMap.get("GOVER_OWN_YN"))) {
+				if (excelMap.get("gover_own_yn") != null && "Y".equals(excelMap.get("gover_own_yn"))) {
 					excelMap.put("GOVER_OWN_YN_XLS", "국유지");
 				} else {
 					excelMap.put("GOVER_OWN_YN_XLS", "사유지");
 				}
 				// 권리확보
-				if (excelMap.get("MASTER_NO") != null) {
-					if (String.valueOf(excelMap.get("MASTER_NO")).startsWith("J")) {
+				if (excelMap.get("master_no") != null) {
+					if (String.valueOf(excelMap.get("master_no")).startsWith("J")) {
 						excelMap.put("MASTER_TYPE", "지상권");
-					} else if (String.valueOf(excelMap.get("MASTER_NO")).startsWith("G")) {
+					} else if (String.valueOf(excelMap.get("master_no")).startsWith("G")) {
 						excelMap.put("MASTER_TYPE", "점용");
-					} else if (String.valueOf(excelMap.get("MASTER_NO")).startsWith("N")) {
+					} else if (String.valueOf(excelMap.get("master_no")).startsWith("N")) {
 						excelMap.put("MASTER_TYPE", "미설정");
-					} else if (String.valueOf(excelMap.get("MASTER_NO")).startsWith("L")) {
+					} else if (String.valueOf(excelMap.get("master_no")).startsWith("L")) {
 						excelMap.put("MASTER_TYPE", "매입");
 					} else {
 						excelMap.put("MASTER_TYPE", "미설정");
 					}
 				}
 				// 점용기간
-				if (excelMap.get("PMT_ST_DATE") != null && !"".equals(excelMap.get("PMT_ST_DATE")) && excelMap.get("PMT_ED_DATE") != null && !"".equals(excelMap.get("PMT_ED_DATE"))) {
-					excelMap.put("GOVER_PERIOD", CommonUtil.nvl((String) excelMap.get("PMT_ST_DATE")) + " ~ " + CommonUtil.nvl((String) excelMap.get("PMT_ED_DATE")));
+				if (excelMap.get("pmt_st_date") != null && !"".equals(excelMap.get("pmt_st_date")) && excelMap.get("pmt_ed_date") != null && !"".equals(excelMap.get("pmt_ed_date"))) {
+					excelMap.put("GOVER_PERIOD", CommonUtil.nvl((String) excelMap.get("pmt_st_date")) + " ~ " + CommonUtil.nvl((String) excelMap.get("pmt_ed_date")));
 				} else {
 					excelMap.put("GOVER_PERIOD", "-");
 				}
 			}
 
-			String[] mapNames = { "RN", // 순번
-					"JISA", // 담당지사
-					"PIPE_OVERLAP_YN", // 관로저촉
+			String[] mapNames = { "rn", // 순번
+					"jisa", // 담당지사
+					"pipe_overlap_yn", // 관로저촉
 					"PIPE_METER_XLS", // 관경
-					"SIDO_NM", // 시도
-					"SGG_NM", // 시군구
-					"EMD_NM", // 읍면동
-					"RI_NM", // 리
-					"JIBUN", // 지번
-					"JIMOK_TEXT", // 지목
+					"sido_nm", // 시도
+					"sgg_nm", // 시군구
+					"emd_nm", // 읍면동
+					"ri_nm", // 리
+					"jibun", // 지번
+					"jimok_text", // 지목
 					"SOUJA_NAME_XLS", // 소유자
-					"JIJUK_AREA", // 면적
+					"jijuk_area", // 면적
 					"GOVER_OWN_YN_XLS", // 토지유형
 					"MASTER_TYPE", // 권리확보
-					"JASAN_NO", // 자산번호
-					"MASTER_NO", // 관리번호
-					"CHUIDEUK_DATE", // 취득일
+					"jasan_no", // 자산번호
+					"master_no", // 관리번호
+					"chuideuk_date", // 취득일
 					"GOVER_PERIOD", // 점용기간
-					"PAY_DATE", // 점용납부일
-					"GOVER_AREA", // 설정면적
-					"GOVER_LENGTH", // 설정연장
-					"JASAN_MONEY", // 자산금액
-					"PAY_MONEY" // 납부금액
+					"pay_date", // 점용납부일
+					"gover_area", // 설정면적
+					"gover_length", // 설정연장
+					"jasan_money", // 자산금액
+					"pay_money" // 납부금액
 			};
 			ArrayList<String> headerStr = new ArrayList<String>();
 			headerStr.add("순번");
@@ -204,11 +230,11 @@ public class staticsController {
 			headerStr.add("자산금액");
 			headerStr.add("납부금액");
 
-			String excelFileName = ExcelUtil.makeMapList2Excel(excelFIleBase + "/uploadfile/statExcel", "권리확보현황", headerStr, mapNames, list);
-
-			rst.put("FILE_PATH", "/uploadfile/statExcel/" + excelFileName);
+			String excelFileName = ExcelUtil.makeMapList2Excel(excelFIleBase, "권리확보현황", headerStr, mapNames, list);
+			//log.info("excelFileName:"+excelFileName);
+			rst.put("FILE_PATH", excelFIleBase+"/" + excelFileName);
 			rst.put("FILE_NAME", excelFileName);
-			System.out.println("권리확보현황 마감처리 ::: " + rst.toString());
+		//	System.out.println("권리확보현황 마감처리 ::: " + rst.toString());
 			int result =(int) mainService.InsertQuery("staticSQL.insertStatisticsDeadlineProcess", rst);
 
 			if (result > 0) {
@@ -498,14 +524,17 @@ public class staticsController {
 	
 	// 토지 관리 현황(권리확보현황) 조회리스트 리턴
 		public HashMap selectTogiMgtStateListReturn(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			log.info("requset:"+request.toString());
 			String requestParams = ParameterUtil.getRequestBodyToStr(request);
+			log.info("requestParams:"+requestParams);
+			
 			 JSONObject requestParamObj=new JSONObject(requestParams);
 			ParameterParser parser = new ParameterParser(request);
-			String SIDO = requestParamObj.getString("SIDO");
-			String SGG = requestParamObj.getString("SGG");
-			String JISA = requestParamObj.getString("JISA").replaceAll("전체", "");
-			String ADDRCODE = requestParamObj.getString("ADDRCODE");
-			String KIJUN =requestParamObj.getString("KIJUN");
+			String SIDO = requestParamObj.has("SIDO")?requestParamObj.getString("SIDO"):"";
+			String SGG = requestParamObj.has("SGG")?requestParamObj.getString("SGG"):"";
+			String JISA = requestParamObj.has("JISA")?requestParamObj.getString("JISA").replaceAll("전체", ""):"";
+			String ADDRCODE = requestParamObj.has("ADDRCODE")?requestParamObj.getString("ADDRCODE"):"";
+			String KIJUN =requestParamObj.has("KIJUN")?requestParamObj.getString("KIJUN"):"";
 			if(KIJUN.isEmpty()){
 				KIJUN = "JISA";
 			}
@@ -592,6 +621,108 @@ public class staticsController {
 
 			return map;
 		}
+		
+		
+		
+		// 토지 관리 현황(권리확보현황) 조회리스트 리턴 json 으로 전달시 문제가 되는듯 해서 새로 생성
+				public HashMap selectTogiMgtStateListReturn1(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//					log.info("requset:"+request.toString());
+//					String requestParams = ParameterUtil.getRequestBodyToStr(request);
+//					log.info("requestParams:"+requestParams);
+					
+					 //JSONObject requestParamObj=new JSONObject(requestParams);
+					ParameterParser parser = new ParameterParser(request);
+					String SIDO = parser.getString("SIDO", "");
+					String SGG = parser.getString("SGG", "");
+					String JISA = parser.getString("JISA", "");
+					String ADDRCODE = parser.getString("ADDRCODE", "");
+					String KIJUN = parser.getString("KIJUN", "JISA");
+					if(KIJUN.isEmpty()){
+						KIJUN = "JISA";
+					}
+
+					CommonUtil cu = new CommonUtil();
+					HashMap map = new HashMap();
+					HashMap result = new HashMap();
+					ArrayList sayujiList = new ArrayList();
+					ArrayList gukyujiList = new ArrayList();
+					ArrayList issueList = new ArrayList();
+					// String SAYUJI_N = "0"; // 사유지 - 미설정
+					// String SAYUJI_Y_Y = "0"; // 사유지 - 설정(등기)
+					// String SAYUJI_Y_N = "0"; // 사유지 - 설정(미등기)
+					// String GUKYUJI_Y = "0"; // 국유지 - 점용
+					// String GUKYUJI_N = "0"; // 국유지 - 미점용
+					// String GUKYUJI_J = "0"; // 국유지 - 지상권
+
+					Long l_SAYUJI_N = 0l; // 사유지 - 미설정
+					Long l_SAYUJI_Y_Y = 0l; // 사유지 - 설정(등기)
+					Long l_SAYUJI_Y_N = 0l; // 사유지 - 설정(미등기)
+					Long l_GUKYUJI_Y = 0l; // 국유지 - 점용
+					Long l_GUKYUJI_N = 0l; // 국유지 - 미점용
+					Long l_GUKYUJI_J = 0l; // 국유지 - 지상권
+
+					try {
+						HashMap params = new HashMap();
+						params.put("SIDO", SIDO);
+						params.put("SGG", SGG);
+						params.put("JISA", JISA);
+						params.put("ADDRCODE", ADDRCODE);
+						params.put("KIJUN", KIJUN);
+						// System.out.println(params);
+
+						sayujiList = (ArrayList) mainService.selectQuery("issueSQL.selectTogiMgtJisangSearch", params);
+						gukyujiList = (ArrayList) mainService.selectQuery("goverSQL.selectTogiMgtGoverSearch", params);
+						issueList = (ArrayList) mainService.selectQuery("staticSQL.searchStatisticsTojiCount", params);
+
+						if (sayujiList.size() > 0) {
+							for (int i = 0; i < sayujiList.size(); i++) {
+								String JISANG_STATUS = cu.nvl((String) ((HashMap) sayujiList.get(i)).get("jisang_status"));
+								String COMPLE_YN = cu.nvl((String) ((HashMap) sayujiList.get(i)).get("comple_yn"));
+								Long CNT = Long.parseLong(String.valueOf(((HashMap) sayujiList.get(i)).get("cnt")));
+
+								if (JISANG_STATUS.equals("JISANG") && COMPLE_YN.equals("Y")) //등기
+									l_SAYUJI_Y_Y += CNT;
+								else if (JISANG_STATUS.equals("JISANG") && COMPLE_YN.equals("N")) //미등기
+									l_SAYUJI_Y_N += CNT;
+								else if (JISANG_STATUS.equals("N") || JISANG_STATUS.equals("NOTSET")) //미설정
+									l_SAYUJI_N += CNT;
+							}
+						}
+						if (gukyujiList.size() > 0) {
+							for (int i = 0; i < gukyujiList.size(); i++) {
+								String JISANG_STATUS = cu.nvl((String) ((HashMap) gukyujiList.get(i)).get("jisang_status"));
+								// String CNT = cu.nvl(String.valueOf(((HashMap) gukyujiList.get(i)).get("CNT")));
+								Long CNT = Long.parseLong(String.valueOf(((HashMap) gukyujiList.get(i)).get("cnt")));
+
+								if (JISANG_STATUS.equals("GOVER")) //점용
+									l_GUKYUJI_Y += CNT;
+								else if (JISANG_STATUS.equals("JISANG"))  //지상권
+									l_GUKYUJI_J += CNT;
+								else if (JISANG_STATUS.equals("N") || JISANG_STATUS.equals("NOTSET")) //미점용
+									l_GUKYUJI_N += CNT;
+							}
+						}
+
+						result.put("SAYUJI_N", String.valueOf(l_SAYUJI_N));
+						result.put("SAYUJI_Y_Y", String.valueOf(l_SAYUJI_Y_Y));
+						result.put("SAYUJI_Y_N", String.valueOf(l_SAYUJI_Y_N));
+						result.put("GUKYUJI_Y", String.valueOf(l_GUKYUJI_Y));
+						result.put("GUKYUJI_N", String.valueOf(l_GUKYUJI_N));
+						result.put("GUKYUJI_J", String.valueOf(l_GUKYUJI_J));
+						result.put("issueList", issueList);
+						// System.out.println("result="+result);
+
+					} catch (Exception e) {
+						map.put("code", "N");
+						e.printStackTrace();
+					}
+
+					map.put("code", "Y");
+					map.put("message", "success");
+					map.put("result", result);
+
+					return map;
+				}
 		
 		
 		

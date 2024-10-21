@@ -3,7 +3,7 @@
 <div id="searchResultsPopup">
     <div class="popupWrap active" id="popupWrap" style="width:800px">
         <h2>
-            <p>필지 정보</p>
+            <p>필지 정보3</p>
             <span class="topCloseBtn"></span>
         </h2>
         <div class="pilji_total">
@@ -59,6 +59,7 @@
         </section>
         <div class="lastBtnBox btnWrap">
             <button class="backBtn finalBtn" id="popupCloseBtn">닫기</button>
+             <button class="backbtn finalBtn" id="excelDownloadBtn3" style="background: green;">엑셀다운로드</button>
         </div>
     </div>
 </div>
@@ -166,4 +167,157 @@
         pageNo = no;
         display();
     }
+    
+    
+    $(document).on("click","#excelDownloadBtn3",function(){
+   	 console.log("-------------excelDownloadBtn3-------------");
+   	var url="/statics/selectFieldInDeStatusBoardChangeListDetailUpDown?" + allData;
+   	console.log(url);
+   	 
+   	 
+   	 		parcelExcelDownLoad4(url);	
+   	 
+
+   	 })
+
+
+   	 function parcelExcelDownLoad4(url){
+   	 	var requestUrl = url;
+   	 	
+   	 	
+   	 	
+   	 	$.ajax({
+   	 			
+   	 		    
+   	 		    url: requestUrl,
+	   	 		 data: JSON.stringify(allData),
+	             async: true,
+	             type: "POST",
+	             dataType: "json",
+	             contentType: 'application/json; charset=utf-8',
+   	 			success : function(response) {
+   	 				resultData = response.dataList;
+
+   	                 console.log(response);
+   	 				var data=response.dataList;
+   	 				              
+   	 				                
+   	                 var dataArr=[];
+   	 				var head=['순번','발생지사','주소','권리확보'];
+   	 				 dataArr.push(head);	
+   	 				for(var i=0;i<data.length;i++){
+   	 					var togi_type="";
+   	 					if (data[i].gover_own_yn=="Y") togi_type="국유지";
+   	 					else togi_type="사유지";
+   	 					var jisangStatus="";
+   	 					var jisangStatusTmp = data[i].jisang_status ? data[i].jisang_status.toLowerCase() : '';
+   	 					if (jisangStatusTmp=="jisang") jisangStatus="지상권";
+   	 					else if (jisangStatusTmp=="gover") jisangStatus="점용";
+   	 					else if (jisangStatusTmp=="notset") jisangStatus="미설정";
+   	 					else if (jisangStatusTmp=="dopco") jisangStatus="매입";
+   	 					else jisangStatus="";
+   	 					var pmtDate = data[i].pmt_st_date == undefined ? "" : data[i].pmt_st_date + " ~ " + data[i].pmt_ed_date; //점용기간
+   	 					var occunonpayreasonTitle1 ="";
+   	 					var occunonpayreasonTitle2 ="";
+   	 					//var occunonpayreasonTitle3 ="";
+   	 					if (data[i].occunonpayreason==1) occunonpayreasonTitle1="영구 무상점용";
+   	 					if (data[i].occunonpayreason==2) occunonpayreasonTitle1="소액 미청구";
+   	 					//if (data[i].occunonpayreason==2) occunonpayreasonTitle1="소액 미청구";
+   	 					var mw_status_title="";
+   	 					//if (data[i].mm_status==)
+   	 					var juso=data[i].mp_sido_nm+" "+data[i].mp_sgg_nm+" "+data[i].mp_emd_nm+" "+data[i].mp_ri_nm+" "+data[i].mp_jibun;
+   	 					var rowArr=[(i+1),data[i].desc1,data[i].juso,data[i].jisang_status];
+   	 					dataArr.push(rowArr);	
+   	 				}
+   	 				console.log("--------------excel data------------------");
+   	 				console.log(dataArr);
+   	 				
+   	 				
+   	 				// ExcelJS를 이용해 워크북과 워크시트 생성
+   	 		          var workbook = new ExcelJS.Workbook();
+   	 		          var worksheet = workbook.addWorksheet('Sheet1');
+   	 		      
+   	 		          // 헤더와 데이터 추가 (빈 셀도 미리 생성)
+   	 		          worksheet.columns = head.map(h => ({ header: h, key: h, width: 20 }));
+   	 		          
+   	 		      worksheet.columns = [
+ 	  	              { width: 15 }, // 지사구분
+ 	  	              { width: 10 }, // 기준년월 - 권리
+ 	  	              { width: 80 }, // 기준년월 - 필지수
+ 	  	              { width: 10 }, // 비교년월 - 권리
+ 	  	             
+ 	  	          ];
+   	 		      
+   	 		          
+   	 		          
+   	 				  dataArr.slice(1).forEach(row => {
+   	 				          var rowObject = worksheet.addRow(row);
+   	 				          rowObject.eachCell({ includeEmpty: true }, function(cell, colNumber) {
+   	 				              cell.value = cell.value || '';  // 공백일 경우 빈 문자열로 초기화
+   	 				          });
+   	 				      });
+
+   	 					  
+   	 				
+   	 					  
+   	 		          // 스타일 정의 (글꼴, 테두리, 정렬)
+   	 		          worksheet.eachRow((row, rowNumber) => {
+   	 					if (rowNumber>1){
+   	 						row.eachCell((cell, colNumber) => {
+   	 			                  cell.font = { size: 10, bold: false };
+   	 			                  cell.alignment = { vertical: 'middle', horizontal: 'center' };
+   	 			                  cell.border = {
+   	 			                      top: { style: 'thin' },
+   	 			                      left: { style: 'thin' },
+   	 			                      bottom: { style: 'thin' },
+   	 			                      right: { style: 'thin' }
+   	 			                  };
+   	 			              });
+   	 					}
+   	 					else{
+   	 						row.eachCell((cell, colNumber) => {
+   	 			                  cell.font = { size: 12, bold: true };
+   	 			                  cell.alignment = { vertical: 'middle', horizontal: 'center' };
+   	 			                  cell.border = {
+   	 			                      top: { style: 'thin' },
+   	 			                      left: { style: 'thin' },
+   	 			                      bottom: { style: 'thin' },
+   	 			                      right: { style: 'thin' }
+   	 			                  };
+   	 			              });
+   	 					}
+   	 		              
+   	 		          });
+
+   	 				  
+   	 				  var unixTime = Date.now();
+   	 				  
+   	 				  var date = new Date(unixTime);  // Unix 타임스탬프를 Date 객체로 변환
+
+   	 				  // 년-월-일 형식으로 변환
+   	 				  var year = date.getFullYear();
+   	 				  var month = String(date.getMonth() + 1).padStart(2, '0');  // 월은 0부터 시작하므로 1을 더함
+   	 				  var day = String(date.getDate()).padStart(2, '0');  // 일
+
+   	 				  var formattedDate = year + '-' + month + '-' + day;
+   	 				  
+   	 				  
+   	 				      var fileName = '관리필지증감현황_변동사유_필지정보.xlsx';  // 파일명 생성
+   	 		          // 엑셀 파일 다운로드
+   	 		          workbook.xlsx.writeBuffer().then(function (buffer) {
+   	 		              var blob = new Blob([buffer], { type: 'application/octet-stream' });
+   	 		              var link = document.createElement('a');
+   	 		              link.href = URL.createObjectURL(blob);
+   	 		              link.download = fileName;
+   	 		              link.click();
+   	 		          });
+   	 				
+   	 			},
+   	 			error:function(request,status,error){
+   	 	 			alert("code:"+request.resultCode+"\n"+"message:"+request.resultMessage+"\n"+"error:"+error);
+   	 	 		}	
+   	 		});
+
+
+   	 }
 </script>

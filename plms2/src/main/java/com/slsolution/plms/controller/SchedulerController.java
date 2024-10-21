@@ -2,6 +2,7 @@ package com.slsolution.plms.controller;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import com.slsolution.plms.CommonUtil;
+import com.slsolution.plms.MailUtil;
 import com.slsolution.plms.MainService;
 import com.slsolution.plms.config.GlobalConfig;
 import com.slsolution.plms.json.JSONObject;
@@ -43,6 +45,7 @@ public class SchedulerController {
 	        if ("LOCAL".equalsIgnoreCase(GC.getServerName())) {
 	            System.out.println("LOCAL 환경에서 jobs() 메서드를 한 번 실행");
 	            jobs(); // 한 번만 실행
+	           // dosiMail();
 	        }
 	    }
 
@@ -1062,12 +1065,12 @@ public class SchedulerController {
 
 	}
 //
-//	public void dosiMail() throws SQLException {
-//		System.out.println("스케줄러 메일 확인용입니다.");
-//		try {
+	public void dosiMail() throws SQLException {
+		System.out.println("스케줄러 메일 확인용입니다.");
+		try {
 //			Database.getInstance().startTransaction();
-//			MailUtil mailUtil = new MailUtil();
-//
+			MailUtil mailUtil = new MailUtil();
+
 //			Properties env = new Properties();
 //			InputStream is = getClass().getResourceAsStream("/db.properties");
 //			try {
@@ -1076,49 +1079,68 @@ public class SchedulerController {
 //				es.printStackTrace();
 //				System.err.println("Can't read the properties file. " + "Make sure env.properties is in the CLASSPATH");
 //			}
-//
-//			String serverName = env.getProperty("SERVER_NAME");
-//
-//			if (!"DEV".equals(serverName)) {
-//				List<Map<String, Object>> listHalfMonth = Database.getInstance().queryForList("Json.selectAfterFullMoonDosiMail", null);
-//				if (listHalfMonth != null && listHalfMonth.size() > 0) {
-//					for (int i = 0; i < listHalfMonth.size(); i++) {
-//						List<HashMap<String, String>> deptList = Database.getInstance().queryForList("Json.selectDosiRowDetail_deptInfo", listHalfMonth.get(i));
-//						listHalfMonth.get(i).put("deptList", deptList);
-//						listHalfMonth.get(i).put("day", "15일");
-//					}
-//					mailUtil.sendMailList(listHalfMonth, "dosi");
-//				}
-//
-//				List<Map<String, Object>> listOneMonth = Database.getInstance().queryForList("Json.selectOneMonthLaterDosiMail", null);
-//				if (listOneMonth != null && listOneMonth.size() > 0) {
-//					for (int i = 0; i < listOneMonth.size(); i++) {
-//						List<HashMap<String, String>> deptList = Database.getInstance().queryForList("Json.selectDosiRowDetail_deptInfo", listOneMonth.get(i));
-//						listOneMonth.get(i).put("deptList", deptList);
-//						listOneMonth.get(i).put("day", "1개월");
-//					}
-//					mailUtil.sendMailList(listOneMonth, "dosi");
-//				}
-//
-//				List<Map<String, Object>> listTwoMonth = Database.getInstance().queryForList("Json.selectTwoMonthLaterDosiMail", null);
-//				if (listTwoMonth != null && listTwoMonth.size() > 0) {
-//					for (int i = 0; i < listTwoMonth.size(); i++) {
-//						List<HashMap<String, String>> deptList = Database.getInstance().queryForList("Json.selectDosiRowDetail_deptInfo", listTwoMonth.get(i));
-//						listTwoMonth.get(i).put("deptList", deptList);
-//						listTwoMonth.get(i).put("day", "2개월");
-//					}
-//					mailUtil.sendMailList(listTwoMonth, "dosi");
-//				}
-//			}
-//
-//			Database.getInstance().commitTransaction();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			Database.getInstance().endTransaction();
-//		}
-//
-//	}
+
+			String serverName = GC.getServerName();
+
+			if (!"DEV".equals(serverName)) {
+				//ArrayList<HashMap> listHalfMonth = mainService.selectQuery("commonSQL.selectAfterFullMoonDosiMail", null);
+				ArrayList<HashMap> listHalfMonthTmp = mainService.selectQuery("commonSQL.selectAfterFullMoonDosiMail", null);
+				List<Map<String, Object>> listHalfMonth = new ArrayList<>();
+				for (HashMap oldMap : listHalfMonthTmp) {
+					listHalfMonth.add(new HashMap<>(oldMap));
+				}
+				if (listHalfMonth != null && listHalfMonth.size() > 0) {
+					for (int i = 0; i < listHalfMonth.size(); i++) {
+						HashMap<String, Object> hashMap = (HashMap<String, Object>) listHalfMonth.get(i);
+						ArrayList<HashMap> deptList = mainService.selectQuery("commonSQL.selectDosiRowDetail_deptInfo",hashMap);
+						
+						listHalfMonth.get(i).put("deptList", deptList);
+						listHalfMonth.get(i).put("day", "15일");
+					}
+					mailUtil.sendMailList(listHalfMonth, "dosi");
+				}
+
+				//List<Map<String, Object>> listOneMonth = mainService.selectQuery("commonSQL.selectOneMonthLaterDosiMail", null);
+				ArrayList<HashMap> listOneMonthTmp = (ArrayList<HashMap>) mainService.selectQuery("commonSQL.selectOneMonthLaterDosiMail", null);
+				List<Map<String, Object>> listOneMonth = new ArrayList<>();
+				for (HashMap oldMap : listOneMonthTmp) {
+					listOneMonth.add(new HashMap<>(oldMap));
+				}
+
+				if (listOneMonth != null && listOneMonth.size() > 0) {
+					for (int i = 0; i < listOneMonth.size(); i++) {
+						HashMap<String, Object> hashMap = (HashMap<String, Object>) listOneMonth.get(i);
+						List<HashMap> deptList =  (ArrayList<HashMap>) mainService.selectQuery("commonSQL.selectDosiRowDetail_deptInfo",hashMap);
+						listOneMonth.get(i).put("deptList", deptList);
+						listOneMonth.get(i).put("day", "1개월");
+					}
+					mailUtil.sendMailList(listOneMonth, "dosi");
+				}
+
+				ArrayList<HashMap> listTwoMonthTmp = (ArrayList<HashMap>)  mainService.selectQuery("commonSQL.selectTwoMonthLaterDosiMail", null);
+				List<Map<String, Object>> listTwoMonth = new ArrayList<>();
+				for (HashMap oldMap : listTwoMonthTmp) {
+					listTwoMonth.add(new HashMap<>(oldMap));
+				}
+				if (listTwoMonth != null && listTwoMonth.size() > 0) {
+					for (int i = 0; i < listTwoMonth.size(); i++) {
+						HashMap<String, Object> hashMap = (HashMap<String, Object>) listTwoMonth.get(i);
+						List<HashMap> deptList =(ArrayList<HashMap>) mainService.selectQuery("commonSQL.selectDosiRowDetail_deptInfo", hashMap);
+						listTwoMonth.get(i).put("deptList", deptList);
+						listTwoMonth.get(i).put("day", "2개월");
+					}
+					mailUtil.sendMailList(listTwoMonth, "dosi");
+				}
+			}
+
+			//Database.getInstance().commitTransaction();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			//Database.getInstance().endTransaction();
+		}
+
+	}
 //
 //	public void goverMail() throws SQLException {
 //		System.out.println("스케줄러 메일 확인용입니다.");

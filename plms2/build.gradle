@@ -112,6 +112,10 @@ dependencies {
 	
 			
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+	
+	//mail
+	//implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'javax.mail:javax.mail-api:1.6.2'
 }
 
 tasks.named('test') {

@@ -142,6 +142,7 @@ public class ExcelUtil {
 
 		// 엑셀 내용 작성
 		for (int i = 0; i < dataList.size(); i++) {
+			//System.out.println(i+":"+dataList.get(i));
 			// 로우 생성
 			HSSFRow row = sheet.createRow(i + 1);
 
@@ -153,8 +154,10 @@ public class ExcelUtil {
 
 					if ( dataList.get(i).get(mapNames[j]) == null || "".equals(dataList.get(i).get(mapNames[j]))) {
 						cell.setCellValue("");
+						//System.out.println("@@@@@@@@@@@@@");
 					} else {
 						cell.setCellValue(CommonUtil.evl(""+dataList.get(i).get(mapNames[j]), ""));
+						//System.out.println("###"+dataList.get(i).get(mapNames[j]));
 					}
 
 				} // Cell FOR 문
