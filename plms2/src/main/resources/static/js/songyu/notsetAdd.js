@@ -726,9 +726,7 @@ $(document).ready(function () {
 		dataObj.zone=dataObj.pipe_name;
 		dataObj.sunGubun=dataObj.sun_gubun;
 		dataObj.gubun="insert";
-		if(dataObj.nm_manage == 'on') {
-			dataObj.nm_manage = 'Y';
-		}else {
+		if(!dataObj.hasOwnProperty('nm_manage')) {
 			dataObj.nm_manage = 'N';
 		}
         console.log("------dataObj--------");
