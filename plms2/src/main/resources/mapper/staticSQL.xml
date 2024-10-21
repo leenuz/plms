@@ -1169,16 +1169,16 @@ FROM (
 				select desc1,desc1_num 
 				from static_deadline_info group by desc1,desc1_num
 					),
-			ref_tb as (select * from static_deadline where jisang_status = '지상권' and  jisang_manage='N' and year = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null), --기준년월
-			tg_tb as (select * from static_deadline where jisang_status = '지상권' and  jisang_manage='N' and year = #{YYYY_TG} and month = #{MM_TG} and desc1 is not null), --비교년월
+			ref_tb as (select * from static_deadline where jisang_status in ('지상권','미설정') and  jisang_manage='N' and year = #{YYYY_REF} and month = #{MM_REF} and desc1 is not null and not (jisang_status = '미설정' and gover_own_yn='국유지')), --기준년월
+			tg_tb as (select * from static_deadline where jisang_status in ('지상권','미설정') and  jisang_manage='N' and year = #{YYYY_TG} and month = #{MM_TG} and desc1 is not null and not (jisang_status = '미설정' and gover_own_yn='국유지')), --비교년월
 			ref_stat_cmpY as (
 				select desc1,count(*) from ref_tb where comple_yn = 'Y' group by desc1
 				), --기준 등기
 			ref_stat_cmpN_pmtY as (
-				select desc1,count(*) from ref_tb where comple_yn <![CDATA[<>]]> 'Y' and permitted_yn <![CDATA[<>]]> '없음' group by desc1
+				select desc1,count(*) from ref_tb where comple_yn <![CDATA[<>]]> 'Y' and jisang_status = '지상권' group by desc1
 				), --기준 미등기/계약
 			ref_stat_cmpN_pmtN as (
-				select desc1,count(*) from ref_tb where comple_yn <![CDATA[<>]]> 'Y' and permitted_yn = '없음' group by desc1
+				select desc1,count(*) from ref_tb where comple_yn <![CDATA[<>]]> 'Y' and jisang_status = '미설정' group by desc1
 				), --기준 미등기/미계약
 			ref_stat_cmpN as (
 				select desc1,count(*) from ref_tb where comple_yn <![CDATA[<>]]> 'Y' group by desc1
@@ -1190,10 +1190,10 @@ FROM (
 				select desc1,count(*) from tg_tb where comple_yn = 'Y' group by desc1
 				), --비교 등기
 			tg_stat_cmpN_pmtY as (
-				select desc1,count(*) from tg_tb where comple_yn <![CDATA[<>]]> 'Y' and permitted_yn <![CDATA[<>]]> '없음' group by desc1
+				select desc1,count(*) from tg_tb where comple_yn <![CDATA[<>]]> 'Y' and jisang_status = '지상권' group by desc1
 				), --비교 미등기/계약
 			tg_stat_cmpN_pmtN as (
-				select desc1,count(*) from tg_tb where comple_yn <![CDATA[<>]]> 'Y' and permitted_yn = '없음' group by desc1
+				select desc1,count(*) from tg_tb where comple_yn <![CDATA[<>]]> 'Y' and jisang_status = '미설정' group by desc1
 				), --비교 미등기/미계약
 			tg_stat_cmpN as (
 				select desc1,count(*) from tg_tb where comple_yn <![CDATA[<>]]> 'Y' group by desc1
@@ -1279,7 +1279,8 @@ FROM (
 			and year = #{YYYY}
 			and month = #{MM} 
 			and desc1 = #{JISA}
-			and jisang_status = '지상권'
+			and jisang_status in ('지상권','미설정')
+			and not (jisang_status = '미설정' and gover_own_yn='국유지')
 			and comple_yn = 'Y'
 			and jisang_manage = 'N'
 	</select>
@@ -1297,9 +1298,10 @@ FROM (
 			and year = #{YYYY}
 			and month = #{MM} 
 			and desc1 = #{JISA}
-			and jisang_status = '지상권'
+			and jisang_status in ('지상권','미설정')
+			and not (jisang_status = '미설정' and gover_own_yn='국유지')
 			and comple_yn <![CDATA[<>]]> 'Y'
-			and permitted_yn <![CDATA[<>]]> '없음'
+			and jisang_status = '지상권' 
 			and jisang_manage = 'N'
 	</select>
 	
@@ -1316,9 +1318,10 @@ FROM (
 			and year = #{YYYY}
 			and month = #{MM} 
 			and desc1 = #{JISA}
-			and jisang_status = '지상권'
+			and jisang_status in ('지상권','미설정')
+			and not (jisang_status = '미설정' and gover_own_yn='국유지')
 			and comple_yn <![CDATA[<>]]> 'Y'
-			and permitted_yn = '없음'
+			and jisang_status = '미설정'
 			and jisang_manage = 'N'
 	</select>
 	
@@ -1335,7 +1338,8 @@ FROM (
 			and year = #{YYYY}
 			and month = #{MM} 
 			and desc1 = #{JISA}
-			and jisang_status = '지상권'
+			and jisang_status in ('지상권','미설정')
+			and not (jisang_status = '미설정' and gover_own_yn='국유지')
 			and comple_yn <![CDATA[<>]]> 'Y'
 			and jisang_manage = 'N'
 	</select>
@@ -1353,7 +1357,8 @@ FROM (
 			and year = #{YYYY}
 			and month = #{MM} 
 			and desc1 = #{JISA}
-			and jisang_status = '지상권'
+			and jisang_status in ('지상권','미설정')
+			and not (jisang_status = '미설정' and gover_own_yn='국유지')
 			and jisang_manage = 'N'
 	</select>	
 	
@@ -2022,21 +2027,21 @@ FROM (
 			del_cancle as (select desc1,count(*) from del_tb_fin where gubun_del = '해지' group by desc1),
 			del_merge as (select desc1,count(*) from del_tb_fin where gubun_del = '합필' group by desc1),
 			del_change as (select desc1,count(*) from del_tb_fin where gubun_del = '권리전환' group by desc1),
-			del_all as (select desc1,count(*) from del_tb_fin group by desc1),
+			del_all as (select desc1,count(*) from del_tb_fin where gubun_del  <![CDATA[<>]]> '권리전환' group by desc1),
 			add_bunhal as (select desc1,count(*) from add_tb_fin where gubun_add = '분할' group by desc1),
 			add_priv as (select desc1,count(*) from add_tb_fin where gubun_add = '사유지' group by desc1),
 			add_merge as (select desc1,count(*) from add_tb_fin where gubun_add = '권리전환' group by desc1),
-			add_all as (select desc1,count(*) from add_tb_fin group by desc1),
+			add_all as (select desc1,count(*) from add_tb_fin where gubun_add  <![CDATA[<>]]> '권리전환' group by desc1),
 			fin as (select
 				a.desc1,
 				coalesce(b.count,'0') as del_bunhal_cnt,
 				coalesce(c.count,'0') as del_cancle_cnt,
 				coalesce(d.count,'0') as del_merge_cnt,
-				coalesce(e.count,'0') as del_change_cnt,
+				0 as del_change_cnt,
 				coalesce(f.count,'0') as del_all_cnt,		
 				coalesce(g.count,'0') as add_bunhal_cnt,
 				coalesce(h.count,'0') as add_priv_cnt,
-				coalesce(i.count,'0') as add_merge_cnt,
+				0 as add_merge_cnt,
 				coalesce(j.count,'0') as add_all_cnt	
 			from
 				all_tb a 
@@ -2135,9 +2140,12 @@ FROM (
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
 			and desc1 = #{JISA} -- 지사명칭 / " " ( 제거시 전체(=계) )
 			</if>
+			
+			AND gubun_del != '권리전환'
 
-			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STATUS)" > 
-			and gubun_del = #{STATUS};  --분할/해지/합필/권리전환
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STATUS) and STATUS != '권리전환'" >
+			-- Data 부정확함으로 인한 강제 주석처리 (권리전환 사유에 대한 명확한게 없음 : 241022)
+			and gubun_del = #{STATUS}  -- 분할/해지/합필/권리전환
 			</if>
 
 	</select>
@@ -2199,9 +2207,13 @@ FROM (
 			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(JISA)" > 
 				and desc1 = #{JISA} -- 지사명칭 / " " ( 제거시 전체(=계) )
 			</if>
-			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STATUS)" > 
-			and gubun_add = #{STATUS};  --분할 / 사유지 / 권리전환 
+			
+			 AND gubun_add != '권리전환'  --분할 / 사유지 / 권리전환
+			<if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(STATUS) and STATUS != '권리전환'" >
+			-- Data 부정확함으로 인한 강제 주석처리 (권리전환 사유에 대한 명확한게 없음 : 241022)
+			  AND gubun_add = #{STATUS}
 			</if>
+			
 	</select>
 	
 		
