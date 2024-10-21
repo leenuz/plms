@@ -1436,7 +1436,7 @@ public class goverController {
 		return mav;
 	}
 
-	// feeDetail 상세 조회
+	// 점용료 납부/전자결재 상세정보
 	@GetMapping(path = "/feeDetail") // http://localhost:8080/api/get/dbTest
 	public ModelAndView feeDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		log.info("feeDetail 컨트롤러 동작");
@@ -1534,7 +1534,7 @@ public class goverController {
 		return mav;
 	}
 
-	// useDetail 상세 조회
+	// 점용 내역 해지 - 상세정보
 	@GetMapping(path = "/useDetail") // http://localhost:8080/api/get/dbTest
 	public ModelAndView useDetail(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		log.info("useDetail 컨트롤러 동작");
@@ -1577,7 +1577,7 @@ public class goverController {
 		return mav;
 	}
 
-	// occupancyEndReg 상세 조회
+	// 점용 해지등록
 	@GetMapping(path = "/occupancyEndReg") // http://localhost:8080/api/get/dbTest
 	public ModelAndView occupancyEndReg(HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
